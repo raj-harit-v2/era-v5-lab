@@ -1,0 +1,6 @@
+doc_id,read,verdict,diseases,evidence,hex,note
+78952e0fa6f58c9b,full,clean,,,,auto-scan: Deva-only news essay; no A1/A2/B/HTML/ghost
+e7de1c726bc776a6,full,fix,D3,"Latin title 'Fish Tank Care' at offset 15; natural HI-EN mix",,D3 natural code-mix; keep; not A1
+e49a90539eea7e8d,full,drop,F3;D3,"adult/sexual webpage text; EN tokens at offsets 75,447,547,555; copyright U+00A9 at 624",U+00A9,F3 candidate from content+xxx URL; confirm before submit
+75f4f997eab9b2bc,full,fix,C1,"CMS footer 'Categories:' at offset 4354",,mild end boilerplate; body is fine Hindi news
+00de47afca2e7911,full,clean,,,,auto-scan: Deva crime report; no disease signals found
