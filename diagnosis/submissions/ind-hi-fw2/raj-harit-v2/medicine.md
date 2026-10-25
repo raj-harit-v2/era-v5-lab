@@ -1,6 +1,8 @@
 # Medicine sheet: ind-hi-fw2 https://github.com/raj-harit-v2/era-v5-lab
 
+
 Write one section for each disease that you found more than five times.
+
 
 ## Medicine 1
 
