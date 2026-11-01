@@ -25,6 +25,7 @@ model:                  # fields of models.config.ModelConfig, nothing else
   n_embd: 256
   attn_impl: eager      # sdpa | eager (explicit softmax, G5 config_v0: two seeds match)
   mlp_ratio: 4
+  activation: gelu      # gelu | swiglu (SiLU(gate) * up, 3 matrices, no biases): dense MLP and every expert
   embedding: ke2        # table | ke1 | ke2 (G4 raw table, teams/04-ke2)
   ke_max_pos: 32
   ke_mode: dynamic      # dynamic | cached

@@ -17,6 +17,9 @@ The one place these numbers are computed: perfkit.bench calls it, and G8 gets th
 
 FLOPs per token (T = sequence length, L = layers, d = width, N_active from GPT.param_counts):
     model_flops_per_token = 6 * N_active + 12 * L * d * T      (PaLM; attention scores counted non-causal)
+                            N_active counts each FFN's matrices: 2 * d * h for GELU, 3 * d * h for SwiGLU
+                            (gate, up, down), times (top_k + shared) for an MoE layer; the elementwise
+                            SiLU * up, like GELU, is not counted
     hw_flops_per_token    = model + 2 forwards of the stack when reversible (invert + recompute)
                             + 2 * head again when ce_impl=chunked (it recomputes the head)
                             + optimizer FLOPs per step (Muon Newton-Schulz) / tokens per step

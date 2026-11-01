@@ -55,9 +55,30 @@ def _switch_value(config: dict, path: tuple):
     return config
 
 
+def _model_defaults_filled(model: dict) -> dict:
+    """A run's model config with every ModelConfig field it lacks set to the field's default. A field is added
+    with a default that keeps the old behaviour (models/config.py), so a run written before the field existed
+    (e.g. week-1 runs without model.activation) still compares equal to a new run that uses that default."""
+    try:
+        from dataclasses import MISSING, fields
+
+        from models.config import ModelConfig
+    except ImportError:                                  # report run outside teams/06-performance: compare as is
+        return model
+    out = dict(model)
+    for f in fields(ModelConfig):
+        if f.name not in out:
+            out[f.name] = f.default_factory() if f.default is MISSING else f.default
+    return out
+
+
 def compare_config_value(config: dict, section: str, key: str | None):
-    """config[section] (key None) or config[section][key], without the IMPL_SWITCHES."""
-    value = config.get(section, {}) if key is None else config.get(section, {}).get(key)
+    """config[section] (key None) or config[section][key], without the IMPL_SWITCHES. Model fields a run lacks
+    count as their ModelConfig default (_model_defaults_filled)."""
+    sect = config.get(section, {})
+    if section == "model" and isinstance(sect, dict):
+        sect = _model_defaults_filled(sect)
+    value = sect if key is None else sect.get(key)
     if key is not None or not isinstance(value, dict):
         return value
     for path in IMPL_SWITCHES:

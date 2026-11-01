@@ -22,6 +22,10 @@ hw_flops_per_token    = model_flops_per_token
   includes the MTP head, so the model FLOPs grow with it (normal 247 MFLOP per token, MTP 448).
 - One forward of the stack (`stack_fwd`) = `2 * (N_active - head - KE projection) + 4 * L * d * T` per token: the
   head and the KE projection are not part of the stack, so the reversible term does not count them again.
+- The FFN part of `N_active` is every matrix the FFN multiplies with: `2 * d * h` for `model.activation=gelu`
+  (`c_fc`, `c_proj`) and `3 * d * h` for `swiglu` (`c_gate`, `c_fc`, `c_proj`), with `h` the FFN width. An MoE
+  layer counts the router plus `top_k + num_shared` experts. So at the same `h` a SwiGLU FFN has 1.5x the FFN FLOPs
+  of a GELU one. The elementwise `SiLU(gate) * up` (like GELU) is not counted, as in PaLM.
 - The optimizer FLOPs come from `Optimizers.flops()` in `models/optim.py`.
 - Code: `flops_per_token()` in `perfkit/metrics.py`.
 

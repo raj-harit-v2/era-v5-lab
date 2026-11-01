@@ -24,6 +24,7 @@ import yaml
 MOE_KEYS = {"num_experts", "top_k", "num_shared", "bias_gamma", "dispatch"}   # SparseMoE keyword arguments
 CE_IMPLS = ("torch", "chunked")
 ATTN_IMPLS = ("sdpa", "eager")
+ACTIVATIONS = ("gelu", "swiglu")
 
 
 @dataclass
@@ -36,6 +37,8 @@ class ModelConfig:
     n_embd: int = 256                # d_model
     attn_impl: str = "sdpa"          # sdpa (F.scaled_dot_product_attention) | eager (explicit softmax; G5 config_v0)
     mlp_ratio: int = 4               # MLP / expert hidden = mlp_ratio * n_embd
+    activation: str = "gelu"         # gelu: c_proj(GELU(c_fc x)), with biases | swiglu: c_proj(SiLU(c_gate x) * c_fc x),
+                                     # no biases. Dense MLP, routed experts (every dispatch) and shared experts
     embedding: str = "table"         # table (tied head) | ke1 (Kronecker v1, untied head) | ke2 (Kronecker v2, G4 raw table, untied head)
     ke_max_pos: int = 32             # KE v1 byte positions: codec dim = 256 * ke_max_pos
     ke_mode: str = "dynamic"         # KE v1: dynamic (codec every step) | cached (V x D table)
@@ -53,6 +56,7 @@ class ModelConfig:
         assert self.ffn in ("mlp", "moe"), f"ffn={self.ffn!r}"
         assert self.n_embd % self.n_head == 0, "n_embd must be divisible by n_head"
         assert self.attn_impl in ATTN_IMPLS, f"attn_impl={self.attn_impl!r} not in {ATTN_IMPLS}"
+        assert self.activation in ACTIVATIONS, f"activation={self.activation!r} not in {ACTIVATIONS}"
         assert self.ce_impl in CE_IMPLS, f"ce_impl={self.ce_impl!r} not in {CE_IMPLS}"
         unknown = sorted(set(self.moe) - MOE_KEYS)
         assert not unknown, f"unknown moe keys {unknown}; known: {sorted(MOE_KEYS)}"

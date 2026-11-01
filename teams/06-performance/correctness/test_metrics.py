@@ -145,3 +145,36 @@ def test_schema_accepts_null_metric_with_reason_and_rejects_unknown_reason():
 def test_peak_tflops_for_gpu_name_across_supported_dtypes(gpu, spec, peaks):
     for dtype in ("bf16", "fp16", "fp32", "fp8", "fp4"):
         assert peak_tflops(gpu, dtype) == (peaks.get(dtype), spec), f"{gpu}, dtype={dtype}"
+
+
+# ------------------------------------------------------------------------------ SwiGLU (week-2 Task 0)
+
+@pytest.mark.parametrize("ffn", ["mlp", "moe"])
+def test_swiglu_model_flops_count_three_ffn_matrices(ffn):
+    """MFU numerator from the shapes: an FFN is 2 matrices (d x h) for GELU and 3 for SwiGLU (gate, up, down).
+    Written out here, not read from GPT.param_counts, so a param_counts that misses c_gate fails."""
+    V, T, L, d, ratio, E, k, shared = 32, 5, 2, 8, 3, 4, 2, 1
+    h = ratio * d
+    kw = dict(vocab_size=V, block_size=8, n_layer=L, n_head=2, n_embd=d, mlp_ratio=ratio, ffn=ffn,
+              moe=dict(num_experts=E, top_k=k, num_shared=shared))
+    attn = 3 * d * d + d * d                                          # c_attn (q, k, v) + c_proj weights
+    out = {}
+    for act, n_mat in (("gelu", 2), ("swiglu", 3)):
+        ffn_weights = n_mat * d * h if ffn == "mlp" else d * E + n_mat * d * h * (k + shared)
+        active = V * d + L * (attn + ffn_weights)                    # tied head + blocks
+        out[act] = flops_per_token(GPT(ModelConfig(activation=act, **kw)), T)
+        assert out[act]["params_active"] == active, act
+        assert out[act]["model_flops_per_token"] == 6 * active + 12 * L * d * T, act
+    experts = 1 if ffn == "mlp" else k + shared
+    assert out["swiglu"]["model_flops_per_token"] - out["gelu"]["model_flops_per_token"] == 6 * L * d * h * experts
+
+
+def test_swiglu_hardware_flops_count_the_gate_in_the_reversible_recompute():
+    """HFU adds 2 stack forwards for the reversible stack; with SwiGLU each forward has the gate matmul too."""
+    T, L, d, ratio = 5, 2, 8, 3
+    kw = dict(vocab_size=32, block_size=8, n_layer=L, n_head=2, n_embd=d, mlp_ratio=ratio, reversible=True)
+    gelu = flops_per_token(GPT(ModelConfig(**kw)), T)
+    swiglu = flops_per_token(GPT(ModelConfig(activation="swiglu", **kw)), T)
+    gate = L * d * ratio * d                                          # c_gate weights over the stack
+    # model: 6 per weight; hardware: + 2 extra forwards of 2 FLOPs per weight each
+    assert swiglu["hw_flops_per_token"] - gelu["hw_flops_per_token"] == 6 * gate + 2 * 2 * gate

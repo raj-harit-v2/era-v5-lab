@@ -21,7 +21,10 @@ change only the key named, so each other choice of base.yaml is still covered wh
   model.base.mtp         model.mtp=true (t+2 head, loss = ntp + mtp), fp32. The reference adds the t+2 loss.
   model.base.mtp.chunked the same with model.ce_impl=chunked: both heads in checkpointed pieces.
   model.base.<key>       model.embedding = table / ke1 / ke2, model.ffn = mlp / moe, model.attn_impl = sdpa / eager,
-                         model.reversible = true / false: the values base.yaml does not select.
+                         model.reversible = true / false, model.activation = gelu / swiglu: the values base.yaml
+                         does not select.
+  model.base.activation_<a>.bf16 / .moe   the activation base.yaml does not select, under bf16 autocast (routing
+                         replayed as in model.base.bf16) and with model.ffn=moe (routed + shared experts), fp32.
   model.base.bf16        base.yaml under bf16 autocast, TOLERANCES[bfloat16]. In bf16 a few tokens go to other
                          experts than in fp64 (4 of 128 here), and a flipped token makes the expert gradients
                          noise (13-26%). So this reference REPLAYS the fast routing (the expert choice only, from
@@ -126,6 +129,11 @@ def ref_ln(x, ln):
 
 
 def ref_mlp(m, x):
+    """Dense MLP or one expert. GELU by its erf formula, with biases; SwiGLU (the module has a c_gate):
+    W_down @ (SiLU(W_gate x) * W_up x), SiLU(z) = z / (1 + exp(-z)), no biases."""
+    if hasattr(m, "c_gate"):
+        g = x @ m.c_gate.weight.T
+        return ((g / (1.0 + torch.exp(-g))) * (x @ m.c_fc.weight.T)) @ m.c_proj.weight.T
     h = x @ m.c_fc.weight.T + m.c_fc.bias
     return (0.5 * h * (1.0 + torch.erf(h / math.sqrt(2.0)))) @ m.c_proj.weight.T + m.c_proj.bias
 
@@ -240,17 +248,25 @@ _fp32_pair("model.base.mtp.chunked", ["model.mtp=true", "model.ce_impl=chunked"]
 
 # The choices base.yaml does not make, one key at a time (base.yaml is read when this file is collected).
 CHOICES = {"embedding": ["table", "ke1", "ke2"], "ffn": ["mlp", "moe"], "attn_impl": ["sdpa", "eager"],
-           "reversible": [True, False]}
+           "reversible": [True, False], "activation": ["gelu", "swiglu"]}
 for _key, _values in CHOICES.items():
     for _v in _values:
         if getattr(_base(), _key) != _v:
             _fp32_pair(f"model.base.{_key}_{str(_v).lower()}", [f"model.{_key}={str(_v).lower()}"])
 
 
-@pair("model.base.bf16", dtype=torch.bfloat16)
-def _base_bf16(device):
+def _bf16_pair(name, overrides=()):
+    PAIR_OVERRIDES[name] = list(overrides)
+
+    @pair(name, dtype=torch.bfloat16)
+    def build(device):                                # a function of this module, so pairs_in() finds it
+        return _bf16_case(device, list(overrides))
+    return build
+
+
+def _bf16_case(device, overrides=()):
     from models.reversible import _forward_recording
-    fast, mcfg = _model(device)
+    fast, mcfg = _model(device, overrides)
     ref = to64(fast)
     idx, targets = _batch(device)
 
@@ -269,6 +285,15 @@ def _base_bf16(device):
 
     return Case(ref=lambda i, t: ref_forward(ref, mcfg, i, t, routes=routes), fast=fast_fn,
                 inputs=[idx, targets], params_ref=_params(ref), params_fast=_params(fast))
+
+
+_bf16_pair("model.base.bf16")
+# The activation base.yaml does not select, in bf16 and with MoE experts (the fp32 dense case is in CHOICES above).
+for _a in CHOICES["activation"]:
+    if _base().activation != _a:
+        _bf16_pair(f"model.base.activation_{_a}.bf16", [f"model.activation={_a}"])
+        if _base().ffn != "moe":
+            _fp32_pair(f"model.base.activation_{_a}.moe", [f"model.activation={_a}", "model.ffn=moe"])
 
 
 @pytest.mark.parametrize("name", pairs_in(__name__))

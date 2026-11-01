@@ -97,6 +97,12 @@ def forward_costs(mcfg: dict, B: int, T: int, dtype: str) -> dict:
         raise ValueError("n_kv_head must divide n_head")
     V = _positive_int("vocab_size", cfg.get("vocab_size", 131072))
     h = _positive_int("mlp_ratio", cfg.get("mlp_ratio", 4)) * d
+    activation = cfg.get("activation", "gelu")
+    if activation not in ("gelu", "swiglu"):
+        raise ValueError(f"unsupported activation {activation!r}; choose gelu or swiglu")
+    # FFN shape per row: GELU = 2 matrices (d x h, h x d) with biases, GELU ~8 flops per hidden value;
+    # SwiGLU = 3 matrices (gate, up, down), no biases, SiLU(gate) * up ~6 flops per hidden value.
+    n_mat, act_flops, act_reads = (3, 6, 3) if activation == "swiglu" else (2, 8, 2)
     M, item = B * T, DTYPE_BYTES[dtype]
     hd, kv = d // n_head, n_kv_head
     moe_cfg = cfg.get("moe") or {}
@@ -182,9 +188,9 @@ def forward_costs(mcfg: dict, B: int, T: int, dtype: str) -> dict:
             children.append(f"{prefix}.moe.router")
 
             routes = M * top_k
-            expert_flops = 4 * routes * d * h + 8 * routes * h
-            active_expert_weights = E * 2 * d * h * item
-            dispatch_bytes = active_expert_weights + routes * (2 * d + h) * item
+            expert_flops = 2 * n_mat * routes * d * h + act_flops * routes * h
+            active_expert_weights = E * n_mat * d * h * item
+            dispatch_bytes = active_expert_weights + routes * (2 * d + (n_mat - 1) * h) * item
             dispatch = moe_cfg.get("dispatch", "loop")
             dispatch_kernels = max(1, E * 4) if dispatch == "loop" else 8
             put(f"{prefix}.moe.dispatch", expert_flops + 5 * routes,
@@ -193,15 +199,16 @@ def forward_costs(mcfg: dict, B: int, T: int, dtype: str) -> dict:
             children.append(f"{prefix}.moe.dispatch")
 
             if shared:
-                shared_flops = shared * (4 * M * d * h + 8 * M * h)
-                shared_bytes = shared * (2 * d * h * item + M * (d + h) * item)
+                shared_flops = shared * (2 * n_mat * M * d * h + act_flops * M * h)
+                shared_bytes = shared * (n_mat * d * h * item + M * (d + (n_mat - 1) * h) * item)
                 put(f"{prefix}.moe.shared", shared_flops, shared_bytes, shared * 4)
                 children.append(f"{prefix}.moe.shared")
         else:
-            mlp_flops = 4 * M * d * h + 8 * M * h
-            mlp_bytes = 2 * d * h * item + M * (2 * d + 2 * h) * item
-            put(f"{prefix}.mlp", mlp_flops, mlp_bytes, 6,
-                assumption="two linear layers, GELU and activation movement")
+            mlp_flops = 2 * n_mat * M * d * h + act_flops * M * h
+            mlp_bytes = n_mat * d * h * item + M * (2 * d + act_reads * h) * item
+            put(f"{prefix}.mlp", mlp_flops, mlp_bytes, 6 if activation == "gelu" else 5,
+                assumption=("two linear layers, GELU and activation movement" if activation == "gelu" else
+                            "three linear layers (gate, up, down), SiLU(gate) * up and activation movement"))
             children.append(f"{prefix}.mlp")
 
         # Midpoint/residual adds are inside the block region, not separate timing markers.
