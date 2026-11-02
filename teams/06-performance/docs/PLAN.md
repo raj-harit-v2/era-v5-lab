@@ -72,6 +72,7 @@ class ModelConfig:
     n_embd: int = 256
     attn_impl: str = "sdpa"      # sdpa | eager (explicit softmax; base.yaml: eager)
     mlp_ratio: int = 4
+    activation: str = "gelu"    # gelu | swiglu (SiLU(c_gate x) * c_fc x -> c_proj, no biases): MLP + all experts
     embedding: str = "table"     # table (tied head) | ke1 | ke2 (untied head; base.yaml: ke2)
     ke_max_pos: int = 32         # KE: 256 bytes x 32 positions = 8192-dim code
     ke_mode: str = "dynamic"     # KE v1: dynamic (codec every step) | cached (V x D table)

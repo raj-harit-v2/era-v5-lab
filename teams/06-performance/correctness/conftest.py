@@ -43,6 +43,14 @@ def _config():
     return cfg, model_config(cfg)
 
 
+@functools.cache
+def _dispatches():
+    """Every MoE dispatch in models.moe.DISPATCH (loop, sorted, grouped, ...): a test_moe.py test parametrized by a
+    dispatch needs model.moe.dispatch set to it. Read from the code, so a new dispatch needs no edit here."""
+    from models.moe import DISPATCH
+    return tuple(DISPATCH)
+
+
 def _attn_kind(n_head, n_kv_head):
     return "mha" if n_kv_head == n_head else "mqa" if n_kv_head == 1 else "gqa"
 
@@ -58,10 +66,13 @@ def _pair_needs(name):
     if name.startswith("ke2"):
         return [("model.embedding", "ke2")]
     if name.startswith("moe."):
-        return [("model.ffn", "moe"), ("model.moe.dispatch", name.split(".")[1])]
+        return [("model.ffn", "moe"), ("model.moe.dispatch", name.split(".")[1]),
+                ("model.activation", "swiglu" if ".swiglu" in name else "gelu")]
+    if name.startswith("mlp."):                      # test_swiglu.py: the dense MLP with an activation
+        return [("model.ffn", "mlp"), ("model.activation", name.split(".")[1])]
     if name.startswith("reversible."):
         return [("model.reversible", True), ("model.ffn", name.split(".")[1])]
-    if re.match(r"model\.base\.(embedding|ffn|attn_impl|reversible)_", name):
+    if re.match(r"model\.base\.(embedding|ffn|attn_impl|reversible|activation)_", name):
         return None                  # a choice base.yaml does not make (test_model.CHOICES)
     needs = []
     if name.endswith(".bf16"):
@@ -92,8 +103,10 @@ def _test_needs(item):
         return [("model.embedding", "ke1")] + ([("model.ke_mode", param)] if param in ("dynamic", "cached") else [])
     if file == "test_ke2.py":
         return [("model.embedding", "ke2")]
+    if file == "test_swiglu.py":
+        return [("model.activation", "swiglu")]
     if file == "test_moe.py":
-        return [("model.ffn", "moe")] + ([("model.moe.dispatch", param)] if param in ("loop", "sorted") else [])
+        return [("model.ffn", "moe")] + ([("model.moe.dispatch", param)] if param in _dispatches() else [])
     if file == "test_reversible.py":
         moe = "moe" in fn or param == "moe" or fn == "test_bf16_grad_agrees_with_plain"
         return [("model.reversible", True)] + ([("model.ffn", "moe")] if moe else

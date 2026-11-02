@@ -9,7 +9,10 @@ Parts and where they come from:
     cfg.attn_impl "eager" (G5 config_v0: fast attention backward does not repeat, so two seeds would not match):
     repeat_interleave k, v to n_head heads, then softmax(q k^T / sqrt(hd) + causal mask) v by explicit matmuls.
     Same region names as SDPA (".sdpa" times the attention core either way).
-  * MLP: c_fc = Linear(d, mlp_ratio*d), GELU, c_proj = Linear(mlp_ratio*d, d).
+  * MLP, h = mlp_ratio*d. cfg.activation "gelu": c_fc = Linear(d, h), GELU, c_proj = Linear(h, d), with biases.
+    "swiglu": c_proj(SiLU(c_gate(x)) * c_fc(x)), c_gate and c_fc = Linear(d, h), c_proj = Linear(h, d), no biases
+    (Shazeer 2020; LLaMA). Three matrices instead of two: at the same h it has 1.5x the FFN parameters and FLOPs.
+    The routed and shared experts of models.moe use the same two forms (ExpertMLP).
   * Block i: pre-LN. ffn = MLP, or models.moe.SparseMoE when cfg.ffn == "moe".
         f(p) = a + FFN(LN2(p + a)),  a = Attn(LN1(p))
     Pre-LN only: Post-LN, LN(x + f(x)), normalises the residual stream, and a LayerNorm cannot be
@@ -73,6 +76,11 @@ def _residual_std(cfg: ModelConfig) -> float:
     return 0.02 / math.sqrt(2 * cfg.n_layer)
 
 
+def _matmul_weights(module: nn.Module) -> int:
+    """Weights of every nn.Linear in an FFN (dense MLP or one expert): 2 * d * h for GELU, 3 * d * h for SwiGLU."""
+    return sum(m.weight.numel() for m in module.modules() if isinstance(m, nn.Linear))
+
+
 class GQAttention(nn.Module):
     def __init__(self, cfg: ModelConfig, name: str):
         super().__init__()
@@ -113,14 +121,20 @@ class MLP(nn.Module):
     def __init__(self, cfg: ModelConfig, name: str):
         super().__init__()
         d, h = cfg.n_embd, cfg.mlp_ratio * cfg.n_embd
-        self.name = name
-        self.c_fc = nn.Linear(d, h)
-        self.c_proj = nn.Linear(h, d)
+        self.name, self.swiglu = name, cfg.activation == "swiglu"
+        bias = not self.swiglu                       # SwiGLU: no biases (G6 Task 0, until G5 says otherwise)
+        self.c_fc = nn.Linear(d, h, bias=bias)       # gelu: the input projection; swiglu: the "up" (linear) branch
+        self.c_proj = nn.Linear(h, d, bias=bias)
         _init_linear(self.c_fc)
         _init_linear(self.c_proj, _residual_std(cfg))
+        if self.swiglu:                              # made last, so the GELU model draws the same init as before
+            self.c_gate = nn.Linear(d, h, bias=False)
+            _init_linear(self.c_gate)
 
     def forward(self, x):
         with region(self.name, 3):
+            if self.swiglu:
+                return self.c_proj(F.silu(self.c_gate(x)) * self.c_fc(x))
             return self.c_proj(F.gelu(self.c_fc(x)))
 
 
@@ -135,7 +149,7 @@ class Block(nn.Module):
         if cfg.ffn == "moe":
             from models.moe import SparseMoE
             self.ffn = SparseMoE(d, expert_hidden=cfg.mlp_ratio * d, name=f"{self.name}.moe",
-                                 proj_std=_residual_std(cfg), **cfg.moe)
+                                 proj_std=_residual_std(cfg), activation=cfg.activation, **cfg.moe)
         else:
             self.ffn = MLP(cfg, f"{self.name}.mlp")
 
@@ -253,6 +267,7 @@ class GPT(nn.Module):
     def param_counts(self):
         """(total, active). active = matmul weights one token multiplies with: attention, router,
         top_k + shared experts, KE projection, LM head (and MTP head). Not biases, norms, lookup tables. Used for MFU.
+        An FFN counts every Linear weight it has: 2 matrices for GELU, 3 for SwiGLU (c_gate, c_fc, c_proj).
         Counted by module, not by parameter name: a tied head shares its tensor with the embedding
         table and would otherwise drop out of the count."""
         total = sum(p.numel() for p in self.parameters())
@@ -263,9 +278,9 @@ class GPT(nn.Module):
             active += blk.attn.c_attn.weight.numel() + blk.attn.c_proj.weight.numel()
             ffn = blk.ffn
             if isinstance(ffn, MLP):
-                active += ffn.c_fc.weight.numel() + ffn.c_proj.weight.numel()
+                active += _matmul_weights(ffn)
             else:
-                per_expert = ffn.experts[0].c_fc.weight.numel() + ffn.experts[0].c_proj.weight.numel()
+                per_expert = _matmul_weights(ffn.experts[0])
                 active += ffn.router.weight.numel() + per_expert * (ffn.top_k + len(ffn.shared))
         return total, active
 

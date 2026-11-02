@@ -32,7 +32,7 @@ The "Likely bottleneck" column was written before the baseline. The v0 traces (`
 | QKV matmul + head split | `blockN.attn.qkv` (3) | | compute | tensor-core-friendly shapes, fused split |
 | Attention kernel | `blockN.attn.sdpa` (3) | `model.attn_impl: eager \| sdpa` (default eager) → flash3 / flex | compute / memory | FlashAttention-3 (H100), FA4 / cuDNN (B200) |
 | Output copy + projection | `blockN.attn.proj` (3) | | memory (the copy) | a layout that needs no copy |
-| Dense MLP | `blockN.mlp` (3) | | compute | fused GELU |
+| Dense MLP | `blockN.mlp` (3) | `model.activation: gelu → swiglu` (a model choice, not an A/B switch) | compute | fused GELU / fused SiLU * up |
 | MoE router: matmul, softmax, top-k, gates | `blockN.moe.router` (3) | | launch | one fused router kernel |
 | MoE dispatch: gather, experts, combine | `blockN.moe.dispatch` (3), `.dispatch.expertE` (3); sorted path adds `.dispatch.grouped` | `model.moe.dispatch: loop → sorted` | **host syncs + launch** | sort routes, pack them per expert, run one batched matmul per projection (one host sync for the largest group) |
 | Shared experts | `blockN.moe.shared` (3) | | compute | batch with the routed experts |

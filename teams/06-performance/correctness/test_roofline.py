@@ -98,3 +98,19 @@ def test_render_table_includes_aligned_estimates_and_optional_measurements():
     assert "0.200" in table and "2.50x" in table
     assert "Total (top-level regions)" in table
     assert "saved-run.json" in table
+
+
+def test_forward_costs_swiglu_has_three_ffn_matrices():
+    """SwiGLU: gate, up and down matmuls (6 * M * d * h) and 3 weight matrices of traffic; GELU stays at 2."""
+    B, T = 2, 4
+    M, d, h = B * T, 8, 16
+    gelu = forward_costs(_cfg(), B=B, T=T, dtype="bf16")["regions"]["fwd:block0.mlp"]
+    swiglu = forward_costs(_cfg(activation="swiglu"), B=B, T=T, dtype="bf16")["regions"]["fwd:block0.mlp"]
+    assert gelu["flops"] == 4 * M * d * h + 8 * M * h
+    assert swiglu["flops"] == 6 * M * d * h + 6 * M * h
+    assert swiglu["bytes"] - gelu["bytes"] == d * h * 2 + M * h * 2          # one more bf16 matrix and hidden read
+    moe = _cfg(ffn="moe", activation="swiglu", moe={"num_experts": 2, "top_k": 1, "num_shared": 1, "dispatch": "loop"})
+    regions = forward_costs(moe, B=B, T=T, dtype="bf16")["regions"]
+    assert regions["fwd:block0.moe.shared"]["flops"] == 6 * M * d * h + 6 * M * h
+    with pytest.raises(ValueError, match="activation"):
+        forward_costs(_cfg(activation="relu"), B=B, T=T, dtype="bf16")

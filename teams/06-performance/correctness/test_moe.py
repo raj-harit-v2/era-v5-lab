@@ -13,6 +13,10 @@ Pairs, one set per dispatch (a new fast dispatch in DISPATCH is tested with no c
   moe.<d>.bf16       the lab init under bf16 autocast, TOLERANCES[bfloat16]. In bf16 a token can pick other experts
                      than in fp64, so this reference REPLAYS the fast routing (the expert choice only; gates and
                      experts are still fp64). bf16 pairs are not in the 1.01 drill (framework.py: Precision).
+  moe.<d>.swiglu     as moe.<d>, every routed and shared expert SwiGLU (model.activation=swiglu): the reference
+                     expert is W_down @ (SiLU(W_gate x) * W_up x), SiLU by its formula, no biases. Gate and up
+                     weights x10 so SiLU works in its curved region, not at z ~ 0 where SiLU(z) ~ z/2.
+  moe.<d>.swiglu.bf16  moe.<d>.bf16 with SwiGLU experts (routing replayed, as above).
 The fp32 pairs route in the reference on their own (no replay), so the pairs check the expert choice too, not only
 expert math, gates and gradients. They use a large router init (logits std ~4) and a non-zero router_bias, and the
 builder asserts every routing margin is > 1e-6, so fp32 and fp64 never pick different experts. The seed is fixed, so
@@ -60,8 +64,15 @@ def ref_gelu(h):
     return 0.5 * h * (1.0 + torch.erf(h / math.sqrt(2.0)))
 
 
+def ref_silu(z):
+    return z / (1.0 + torch.exp(-z))
+
+
 def ref_expert(m, x):
-    """One ExpertMLP on one token x [dim], fp64."""
+    """One ExpertMLP on one token x [dim], fp64. GELU: c_proj(GELU(c_fc x + b) ) + b. SwiGLU (the module has a
+    c_gate): c_proj(SiLU(c_gate x) * c_fc x), no biases."""
+    if hasattr(m, "c_gate"):
+        return m.c_proj.weight @ (ref_silu(m.c_gate.weight @ x) * (m.c_fc.weight @ x))
     return m.c_proj.weight @ ref_gelu(m.c_fc.weight @ x + m.c_fc.bias) + m.c_proj.bias
 
 
@@ -95,17 +106,23 @@ def reference_moe(moe, x, forced=None, margins=None):
 
 # ------------------------------------------------------------------------------ pairs
 
-def _moe(dispatch, num_experts=8, top_k=2, num_shared=1, seed=SEED, router_std=ROUTER_STD, bias_std=0.05):
+def _moe(dispatch, num_experts=8, top_k=2, num_shared=1, seed=SEED, router_std=ROUTER_STD, bias_std=0.05,
+         activation="gelu"):
     torch.manual_seed(seed)
-    m = SparseMoE(DIM, num_experts, top_k, num_shared=num_shared, dispatch=dispatch, router_init_std=router_std)
+    m = SparseMoE(DIM, num_experts, top_k, num_shared=num_shared, dispatch=dispatch, router_init_std=router_std,
+                  activation=activation)
     g = torch.Generator().manual_seed(seed + 1)
     with torch.no_grad():
         m.router.bias.copy_(torch.randn(num_experts, generator=g) * 0.5)
         m.router_bias.copy_(torch.randn(num_experts, generator=g) * bias_std)
-        # random biases everywhere, so a dropped bias term shows (the init zeros them)
+        # random biases everywhere, so a dropped bias term shows (the init zeros them; SwiGLU has none)
         for mod in m.modules():
-            if isinstance(mod, nn.Linear) and mod is not m.router:
+            if isinstance(mod, nn.Linear) and mod is not m.router and mod.bias is not None:
                 mod.bias.copy_(torch.randn(mod.bias.shape, generator=g) * 0.02)
+        if activation == "swiglu":       # gate and up std 0.2: SiLU(W_gate x) away from its linear part near 0
+            for e in [*m.experts, *m.shared]:
+                e.c_gate.weight.mul_(10.0)
+                e.c_fc.weight.mul_(10.0)
     return m
 
 
@@ -135,11 +152,12 @@ def _fp32_case(name, dispatch, **kw):
     return build
 
 
-def _bf16_case(dispatch):
+def _bf16_case(dispatch, activation="gelu"):
     def build(device):
         torch.manual_seed(SEED)
         cfg = ModelConfig(n_embd=DIM)
-        fast = SparseMoE(DIM, 8, 2, num_shared=1, dispatch=dispatch, proj_std=_residual_std(cfg)).to(device)
+        fast = SparseMoE(DIM, 8, 2, num_shared=1, dispatch=dispatch, proj_std=_residual_std(cfg),
+                         activation=activation).to(device)
         # small: at the lab init the scores are ~1/8 +- 1e-3, and a 0.05 bias would route alone (4 experts idle)
         with torch.no_grad():
             fast.router_bias.copy_(torch.randn(8, generator=torch.Generator().manual_seed(SEED)) * 1e-3)
@@ -167,6 +185,8 @@ for _d in DISPATCH:
     pair(f"moe.{_d}.idle")(_fp32_case(f"moe.{_d}.idle", _d, idle=True))
     pair(f"moe.{_d}.top3")(_fp32_case(f"moe.{_d}.top3", _d, num_experts=4, top_k=3, num_shared=0))
     pair(f"moe.{_d}.bf16", dtype=torch.bfloat16)(_bf16_case(_d))
+    pair(f"moe.{_d}.swiglu")(_fp32_case(f"moe.{_d}.swiglu", _d, activation="swiglu"))
+    pair(f"moe.{_d}.swiglu.bf16", dtype=torch.bfloat16)(_bf16_case(_d, activation="swiglu"))
 
 
 @pytest.mark.parametrize("name", pairs_in(__name__))
@@ -177,7 +197,7 @@ def test_pair(name, device):
 
 
 def test_one_set_of_pairs_per_dispatch():
-    want = [f"moe.{d}{s}" for d in DISPATCH for s in ("", ".idle", ".top3", ".bf16")]
+    want = [f"moe.{d}{s}" for d in DISPATCH for s in ("", ".idle", ".top3", ".bf16", ".swiglu", ".swiglu.bf16")]
     assert sorted(pairs_in(__name__)) == sorted(want)
 
 
