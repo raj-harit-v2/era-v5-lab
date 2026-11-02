@@ -26,16 +26,20 @@ Lab setting (model.ffn=moe in configs/base.yaml): 1 shared expert (always on) + 
     Without it a reconstructed input that differs by 1e-5 can flip a near-tie token to other experts,
     and the reversible backward rebuilds the wrong state (bf16: gradient errors up to 23%).
     Gates are always recomputed from the router scores, so the router still gets its gradient.
-  * DISPATCH = {"loop": dispatch_loop, "sorted": dispatch_sorted}. The loop path gathers per expert and is
-    the reference. The sorted path sorts token/expert assignments, packs them into a padded
-    [experts, cap, dim] buffer and runs each expert MLP as one batched matmul. Every scatter and gather uses
+  * DISPATCH = {"loop": dispatch_loop, "sorted": dispatch_sorted, "grouped": dispatch_grouped}. The loop path
+    gathers per expert and is the reference. The sorted path sorts token/expert assignments, packs them into a
+    padded [experts, cap, dim] buffer and runs each expert MLP as one batched matmul. Every scatter and gather uses
     unique indices, so two runs give identical gradients on CUDA. It reads only the largest per-expert route
-    count back to the host (one sync per call; the loop syncs twice per expert).
+    count back to the host (one sync per call; the loop syncs twice per expert). The grouped path is sorted with
+    a fixed cap = N*k (N tokens, k = top_k): the worst-case route count for one expert, so nothing is dropped and
+    the result matches, but cap is a host-side constant (no int(counts.max()) read) so the dispatch has zero host
+    syncs, at the cost of a larger (E * N*k) buffer.
     Both paths compute token counts with a device-side compare-and-sum over topk_idx. Since sorted packs all
     expert parameters together, idle experts receive zero gradients rather than None; the loop remains default
     until the optimizer-state effect of that difference is resolved and server timings are collected.
   * Regions (level 3): f"{name}.router", f"{name}.dispatch", f"{name}.shared"; inside dispatch, the loop path
-    has f"{name}.dispatch.expert{e}" and the sorted path f"{name}.dispatch.grouped".
+    has f"{name}.dispatch.expert{e}", the sorted path f"{name}.dispatch.grouped" and the grouped path
+    f"{name}.dispatch.grouped_fixed".
 
 Extra: "dense" dispatch (every expert on every token, exact, slow), capacity factor, aux / z loss.
 Done when: correctness/test_moe.py passes for every entry in DISPATCH.
@@ -124,7 +128,57 @@ def dispatch_sorted(moe, x, topk_idx, gates):
     return out, counts
 
 
-DISPATCH = {"loop": dispatch_loop, "sorted": dispatch_sorted}
+def dispatch_grouped(moe, x, topk_idx, gates):
+    """Like dispatch_sorted, but with a fixed buffer height, so there is no host sync at all.
+
+    dispatch_sorted reads cap = int(counts_i.max()) back to the host (one sync) to size the
+    [E, cap, dim] buffer to the busiest expert. Here cap is fixed to N*k (N = number of tokens, k =
+    top_k), the total number of routes, which is the most any single expert could ever receive. It is a
+    host-side constant from x.shape and moe.top_k, never read from the GPU, so the whole dispatch runs
+    without a sync and the CPU can queue ahead (and the step can later be captured as a CUDA graph).
+
+    Nothing is dropped (N*k can never overflow), so the output and every gradient match the loop
+    reference exactly, as dispatch_sorted does. The trade is memory: the buffer is E * N*k rows rather
+    than E * (busiest count). The extra padded rows are run through the expert GEMM but never gathered
+    back, and the gradient flowing into them is zero, so they change neither the output nor any weight
+    gradient (dispatch_sorted already relies on this for its own padding).
+    """
+    n_tokens, dim = x.shape
+    E, k = moe.num_experts, moe.top_k
+    flat = topk_idx.reshape(-1)                                              # [N*k] expert of each route
+    counts_i = (flat.reshape(-1, 1) == torch.arange(E, device=x.device)).sum(0)
+    counts = counts_i.float()
+    if flat.numel() == 0:
+        return torch.zeros_like(x), counts
+    order = torch.argsort(flat, stable=True)                                 # routes grouped by expert
+    sorted_e = flat[order]
+    start = counts_i.cumsum(0) - counts_i                                    # first sorted position of each expert
+    pos = torch.arange(flat.numel(), device=x.device) - start[sorted_e]      # position inside its expert
+    cap = n_tokens * k                                                       # fixed bound = N*k routes; host int, no sync
+    slot = sorted_e * cap + pos                                              # unique buffer row per route
+
+    routes_in = x.unsqueeze(1).expand(n_tokens, k, dim).reshape(-1, dim)     # backward: sum over k
+    buf = x.new_zeros(E * cap, dim).index_copy(0, slot, routes_in[order])    # unique indices
+
+    w1 = torch.stack([e.c_fc.weight for e in moe.experts]).to(buf.dtype)     # [E, hidden, dim]
+    b1 = torch.stack([e.c_fc.bias for e in moe.experts]).to(buf.dtype)
+    w2 = torch.stack([e.c_proj.weight for e in moe.experts]).to(buf.dtype)   # [E, dim, hidden]
+    b2 = torch.stack([e.c_proj.bias for e in moe.experts]).to(buf.dtype)
+    # Region named .grouped_fixed, not .grouped: dispatch_sorted already labels its batched GEMM
+    # "{name}.dispatch.grouped", and Task 4 times sorted against grouped, so a distinct name keeps the
+    # two paths unambiguous in traces and in the per-part timing table.
+    with region(f"{moe.name}.dispatch.grouped_fixed", 3):
+        h = torch.baddbmm(b1.unsqueeze(1), buf.view(E, cap, dim), w1.transpose(1, 2))
+        y = torch.baddbmm(b2.unsqueeze(1), F.gelu(h), w2.transpose(1, 2))    # [E, cap, dim]
+
+    where = torch.empty_like(order)
+    where[order] = slot                                                      # buffer row of route r, original order
+    routes_out = y.reshape(E * cap, dim)[where].reshape(n_tokens, k, dim)
+    out = (routes_out.to(x.dtype) * gates.unsqueeze(-1).to(x.dtype)).sum(dim=1)
+    return out, counts
+
+
+DISPATCH = {"loop": dispatch_loop, "sorted": dispatch_sorted, "grouped": dispatch_grouped}
 
 
 @contextmanager
