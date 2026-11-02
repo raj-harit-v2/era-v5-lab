@@ -21,7 +21,7 @@ FLOPs per token (T = sequence length, L = layers, d = width, N_active from GPT.p
                             (gate, up, down), times (top_k + shared) for an MoE layer; the elementwise
                             SiLU * up, like GELU, is not counted
     hw_flops_per_token    = model + 2 forwards of the stack when reversible (invert + recompute)
-                            + 2 * head again when ce_impl=chunked (it recomputes the head)
+                            + 2 * head again when ce_impl=chunked or fused_cce (recompute the head)
                             + optimizer FLOPs per step (Muon Newton-Schulz) / tokens per step
 MFU uses model FLOPs, HFU hardware FLOPs; both against the dense vendor peak for the dtype the run used.
 
@@ -383,7 +383,8 @@ def flops_per_token(model, T: int, opt_flops_per_step: float = 0.0, tokens_per_s
     head = model.head.weight.numel() + (model.mtp_head.weight.numel() if m.mtp else 0)
     ke = model.tok.proj.weight.numel() if m.embedding in ("ke1", "ke2") else 0
     stack_fwd = 2 * (active - head - ke) + 4 * L * d * T
-    hw = model_fpt + (2 * stack_fwd if m.reversible else 0) + (2 * head if m.ce_impl == "chunked" else 0)
+    hw = model_fpt + (2 * stack_fwd if m.reversible else 0) \
+        + (2 * head if m.ce_impl in ("chunked", "fused_cce") else 0)
     if opt_flops_per_step and tokens_per_step:
         hw += opt_flops_per_step / tokens_per_step
     return {"model_flops_per_token": model_fpt, "hw_flops_per_token": hw,

@@ -13,8 +13,8 @@ model_flops_per_token = 6 * N_active + 12 * L * d * T
                         (PaLM formula; attention scores counted non-causal)
 
 hw_flops_per_token    = model_flops_per_token
-                      + 2 extra forwards of the stack when reversible (invert + recompute)
-                      + 2 * head again when ce_impl=chunked (it recomputes the head)
+                      + 2 forwards of the stack when reversible (invert + recompute)
+                      + 2 * head again when ce_impl=chunked or fused_cce (they recompute the head)
                       + optimizer FLOPs per step (Muon Newton-Schulz) / tokens per step
 ```
 

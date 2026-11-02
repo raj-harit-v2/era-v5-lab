@@ -57,6 +57,8 @@ def _attn_kind(n_head, n_kv_head):
 
 def _pair_needs(name):
     """[(key, value)] a registered pair needs from base.yaml; None = always skipped by default."""
+    if name.startswith("ce."):
+        return []                         # direct linear-CE pairs do not depend on the selected GPT config
     if name.startswith("attention."):
         impl = "eager" if "eager" in name else "sdpa"
         kind = "mha" if "mha" in name else "mqa" if "mqa" in name else "gqa"
@@ -114,7 +116,15 @@ def _test_needs(item):
     if file == "test_model.py" and fn == "test_mtp_loss_parts":
         return [("model.mtp", True)]
     if file == "test_ce.py":
-        return [("model.ce_impl", "chunked")]
+        if fn == "test_source_inspired_impls_match_plain_loss_and_all_gradients":
+            return []
+        if fn.startswith("test_fused_liger"):
+            return [("model.ce_impl", "fused_liger")]
+        if fn.startswith("test_fused_cce"):
+            return [("model.ce_impl", "fused_cce")]
+        if fn.startswith("test_fused_cached"):
+            return [("model.ce_impl", "fused_cached")]
+        return [("model.ce_impl", "fused" if fn.startswith("test_fused") else "chunked")]
     if file == "test_optimizer.py":
         if "polar" in fn:
             return [("optim.name", "polar_muon_adamw")]

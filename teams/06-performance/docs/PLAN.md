@@ -81,8 +81,10 @@ class ModelConfig:
                                  # lab: num_shared 1; dispatch: loop | sorted; unknown keys fail
     reversible: bool = False     # True: midpoint stack
     rev_h: float = 1.0           # midpoint step size
-    ce_impl: str = "torch"       # torch (full fp32 logits) | chunked (ce_chunks pieces, checkpointed)
+    ce_impl: str = "torch"       # torch | chunked | fused | fused_cached | fused_liger | fused_cce
     ce_chunks: int = 8
+    ce_vocab_chunk: int = 4096
+    ce_token_chunk: int = 16
     mtp: bool = False            # True: second untied head on token t+2; loss = ntp + mtp
 ```
 
@@ -218,7 +220,7 @@ Status "Stub": the file raises `NotImplementedError`. Its docstring has the full
 |---|---|---|
 | `configs/*.yaml` | `base` (every setting; the lab model), `tiny_cpu` (laptop) | Implemented |
 | `models/config.py` | `ModelConfig`, YAML with `inherit:`, `key=value` overrides; unknown or bad keys fail early | Implemented |
-| `models/gpt.py` | GQA attention, pre-LN blocks, plain or reversible stack, untied head for KE, `ce_impl` torch / chunked loss (both average over non-ignored targets) | Verified against fp64 references and on an A100 |
+| `models/gpt.py`, `models/linear_ce.py` | GQA attention, pre-LN blocks, plain or reversible stack, untied head for KE, `ce_impl` torch / chunked / fused variants (all average over non-ignored targets) | Liger-style cached-gradient and Apple CCE-style streamed-vocabulary PyTorch references; CPU/CUDA correctness in `test_ce.py`; upstream kernels remain future backend integrations |
 | `models/ke1.py` | Kronecker Embedding v1 (ported from theschoolofai/kronecker-embeddings), `ke_mode` dynamic and cached, Brahmic source vocabulary byte table | Bit-identical to the upstream package |
 | `models/ke2.py` | Kronecker Embedding v2 on G4's raw byte table (`teams/04-ke2`), one `embedding_bag` over the support columns plus a row sum; the per-token tables are built once at init | Verified against G4's fp64 dense encoder (`test_ke2.py`) |
 | `models/moe.py` | 1 shared + top-2 of 8 routed experts, fp32 router, bias balancing, routing replay; `DISPATCH` = `loop` (reference, default) and `sorted` (padded per-expert batched matmul, one host sync per call) | Both dispatches verified against a token-by-token fp64 reference |
@@ -259,8 +261,8 @@ Status "Stub": the file raises `NotImplementedError`. Its docstring has the full
 | `correctness/test_ke2.py` | KE2 vs G4's dense fp64 encoder: random, edge-case and G4's committed table, fp32 and bf16 | Implemented |
 | `correctness/test_moe.py` | Token-by-token fp64 MoE vs every entry in `DISPATCH`; routing replay (near-tie test); bias balancing; fp32 router; shared expert; init scale | Implemented |
 | `correctness/test_reversible.py` | Custom backward vs plain autograd (MLP and MoE); inversion; bf16 reconstruction (CUDA bf16 only) | Implemented |
-| `correctness/test_ce.py` | `ce_impl=chunked` vs `torch` and a definition, with masked targets | Implemented |
-| `correctness/test_model.py` | The whole GPT (`base.yaml` and one variant per choice: chunked loss, MTP, sdpa, KE1, table, MoE, plain stack; fp32 and bf16) vs an fp64 model from the definitions, real Brahmic tokens | Implemented; catches 6 injected model bugs |
+| `correctness/test_ce.py` | `torch`, `chunked`, token-chunked `fused`/`fused_cached`/`fused_liger`, and vocabulary-tiled `fused_cce`; masks, uneven chunk counts, MTP, native/autocast bf16, saved-gradient-only backward, loss scaling, and the 1.01 drill | Implemented; target-GPU timing remains to be recorded |
+| `correctness/test_model.py` | The whole GPT (lab_small, base; fp32 and bf16) vs an fp64 model from the definitions, real Brahmic tokens | Implemented; catches 6 injected model bugs |
 | `correctness/test_optimizer.py`, `test_tokenizer.py`, `test_metrics.py`, `test_report.py` | Optimizer assignment, updates, state restore and FLOPs; tokenizer contract; metric formulas and GPU peaks; report 5% gate and Markdown output; real-tokenizer + KE + optimizer integration is folded into `test_optimizer.py` | Implemented; CUDA bf16 loop/batched tolerance still needs validation on target GPU |
 
 ### Gate 1

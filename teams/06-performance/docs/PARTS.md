@@ -37,7 +37,7 @@ The "Likely bottleneck" column was written before the baseline. The v0 traces (`
 | MoE dispatch: gather, experts, combine | `blockN.moe.dispatch` (3), `.dispatch.expertE` (3); sorted path adds `.dispatch.grouped` | `model.moe.dispatch: loop → sorted` | **host syncs + launch** | sort routes, pack them per expert, run one batched matmul per projection (one host sync for the largest group) |
 | Shared experts | `blockN.moe.shared` (3) | | compute | batch with the routed experts |
 | Residual / midpoint arithmetic | inside `blockN` (2) | | memory | fusion |
-| Final LN + LM head + cross-entropy | `head+loss` (2) | `model.ce_impl: torch → chunked → fused` | **memory (fp32 logits)** | fused linear + cross-entropy |
+| Final LN + LM head + cross-entropy | `head+loss` (2) | `model.ce_impl: torch → chunked → fused` | **memory (fp32 logits)** | token-chunked fused linear CE caches gradients in forward |
 | MTP head + its cross-entropy (`model.mtp=true`) | `head+loss.mtp` (3), inside `head+loss` | `model.mtp` | memory (a second set of fp32 logits) | the same fused cross-entropy |
 | Backward of every part above | `bwd:<part>` | same switches | ~2× forward | follows the forward fixes |
 | Reversible: invert, recompute, local backward | `bwd.invert:blockN`, `bwd.recompute:blockN`, `bwd:blockN.grad` (3) | `model.reversible` | ~2× extra forward | fuse invert + recompute, cache cheap pieces |
@@ -93,12 +93,12 @@ The "Likely bottleneck" column was written before the baseline. The v0 traces (`
 | `model.embedding` | `ke2` \| `ke1` \| `table` | a different model, not an A/B |
 | `model.attn_impl` | `eager` \| `sdpa` | a different kernel with the same maths; compared as a different config |
 | `model.mtp` | `false` \| `true` | a second head: a different model |
-| `model.ce_impl` | `torch` \| `chunked` | `chunked` runs head + loss in `model.ce_chunks` checkpointed pieces |
+| `model.ce_impl` | `torch` \| `chunked` \| `fused` \| `fused_cached` \| `fused_liger` \| `fused_cce` | `fused` caches gradients in forward using `ce_chunks` token chunks; `fused_cached` / `fused_liger` use fixed `ce_token_chunk` tiles; `fused_cce` streams vocabulary and recomputes; all are PyTorch paths, see `docs/LINEAR_CE.md` |
 | `model.ke_mode` | `dynamic` \| `cached` | `cached` keeps a V x 8192 fp32 table (4 GiB at V = 131072) |
 | `optim.name` | `polar_muon_adamw` \| `muon` \| `adamw` | a different update, so a different config, not an A/B |
 | `run.compile` | `false` \| `true` | regions inside compiled code are not timed reliably |
 
-Implementation switches (`report.IMPL_SWITCHES`: `model.moe.dispatch`, `optim.muon_impl`, `optim.adamw_impl`,
-`data.prefetch`) are the only config differences `--against` accepts; the verdict is then labelled A/B. The
-planned switches in the tables above (`model.norm_impl`, `dist.strategy`, `model.moe.parallel`, `ckpt.mode`, fp8,
-`model.ce_impl: fused`) are not in `configs/base.yaml` yet.
+Implementation switches (`report.IMPL_SWITCHES`: `model.moe.dispatch`, `model.ce_impl`, `optim.muon_impl`,
+`optim.adamw_impl`, `data.prefetch`) are the only config differences `--against` accepts; the verdict is then
+labelled A/B. The planned switches in the tables above (`model.norm_impl`, `dist.strategy`,
+`model.moe.parallel`, `ckpt.mode`, fp8) are not in `configs/base.yaml` yet.

@@ -1,6 +1,9 @@
 """Optimizer parameter assignment, numerical updates, state restore, and scaler checks."""
 import copy
 import os
+from unittest.mock import patch
+
+import numpy as np
 import pytest
 import torch
 from torch import nn
@@ -14,6 +17,99 @@ from models.ke1 import KroneckerEmbedding
 from models.optim import (Muon, MuonAdamW, Optimizers, build_optimizer,
                           zeropower_via_newtonschulz5, zeropower_via_newtonschulz5_batched)
 
+
+
+@pair("optim.muon_ns.batched", tol=5e-3, grad_tol=5e-3)
+def _batched_muon_ns_case(device):
+    """Compare the same Newton-Schulz transform and input gradients, loop vs batched."""
+    if device.type == "cuda":
+        torch.cuda.init()
+    generator = torch.Generator(device=device).manual_seed(73)
+    wide = torch.randn(5, 4, 3, generator=generator, device=device).requires_grad_()
+    tall = torch.randn(5, 3, 4, generator=generator, device=device).requires_grad_()
+
+    def loop(wide_grad, tall_grad):
+        return (torch.stack([zeropower_via_newtonschulz5(g) for g in wide_grad]),
+                torch.stack([zeropower_via_newtonschulz5(g) for g in tall_grad]))
+
+    def batched(wide_grad, tall_grad):
+        return (zeropower_via_newtonschulz5_batched(wide_grad),
+                zeropower_via_newtonschulz5_batched(tall_grad))
+
+    return Case(ref=loop, fast=batched, inputs=[wide, tall])
+
+
+def _optimizer_updates_case(device, kind):
+    """Same initial parameters and gradient sequence, replayed through loop and optimized updates."""
+    generator = torch.Generator(device=device).manual_seed(101)
+    initial = torch.randn(4, 4, 4, generator=generator, device=device)
+    gradients = torch.randn(4, 4, 4, 4, generator=generator, device=device)
+
+    def run(initial_params, grad_steps, impl):
+        params = [torch.nn.Parameter(p.clone()) for p in initial_params]
+        if kind == "muon":
+            optimizer = Muon(params, lr=0.012, momentum=0.8, ns_steps=5,
+                             weight_decay=0.03, impl=impl)
+        else:
+            optimizer = MuonAdamW([{
+                "params": params, "kind": "adamw", "lr": 0.012,
+                "betas": (0.9, 0.95), "eps": 1e-8, "weight_decay": 0.03,
+                "impl": impl,
+            }])
+        for step_grads in grad_steps:
+            for param, grad in zip(params, step_grads):
+                param.grad = grad.clone()
+            optimizer.step()
+        return torch.stack([p.detach() for p in params])
+
+    return Case(
+        ref=lambda p, gs: run(p, gs, "loop"),
+        fast=lambda p, gs: run(p, gs, "batched" if kind == "muon" else "foreach"),
+        inputs=[initial, gradients], grads=False,
+    )
+
+
+@pair("opt.muon.batched", tol=5e-3, grad_tol=5e-3)
+def _muon_batched_case(device):
+    return _optimizer_updates_case(device, "muon")
+
+
+@pair("opt.adamw.foreach", tol=5e-4, grad_tol=5e-4)
+def _adamw_foreach_case(device):
+    return _optimizer_updates_case(device, "adamw")
+
+
+def _synthetic_loader(device, prefetch):
+    """A real Loader with a tiny stand-in tokenizer; synthetic batches need no tokenizer operations."""
+    class StubTokenizer:
+        def __init__(self, _path=None):
+            self.vocab_size = 131072
+
+    with patch("dataio.loader.BrahmicTokenizer", StubTokenizer):
+        return Loader(source="synthetic", batch_size=3, block_size=7, device=device,
+                      vocab_size=131072, seed=223, prefetch=prefetch)
+
+
+@pair("data.prefetch", tol=1e-7, grad_tol=1e-7)
+def _data_prefetch_case(device):
+    def batches(prefetch):
+        loader = _synthetic_loader(device, prefetch)
+        result = []
+        for _ in range(4):
+            result.extend(loader.next_batch())
+            if prefetch:
+                loader.prefetch()
+        return tuple(result)
+
+    return Case(ref=lambda: batches(False), fast=lambda: batches(True), inputs=[], grads=False)
+
+
+@pytest.mark.parametrize("name", pairs_in(__name__))
+def test_pair(name, device):
+    errors = check(PAIRS[name], device)
+    assert any(key.startswith("out[") for key in errors)
+    if name == "optim.muon_ns.batched":
+        assert any(key.startswith("grad_in[") for key in errors)
 
 
 @pytest.mark.parametrize("embedding", ["table", "ke1"])
