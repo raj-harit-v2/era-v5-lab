@@ -148,8 +148,17 @@ class Block(nn.Module):
         self.ln2 = nn.LayerNorm(d)
         if cfg.ffn == "moe":
             from models.moe import SparseMoE
-            self.ffn = SparseMoE(d, expert_hidden=cfg.mlp_ratio * d, name=f"{self.name}.moe",
-                                 proj_std=_residual_std(cfg), activation=cfg.activation, **cfg.moe)
+            hidden = cfg.moe.get("ffn_hidden")
+            if hidden is None:
+                hidden = cfg.mlp_ratio * d
+            moe_kwargs = {
+                key: value for key, value in cfg.moe.items()
+                if key != "ffn_hidden"
+            }
+            self.ffn = SparseMoE(
+                d, expert_hidden=hidden, name=f"{self.name}.moe",
+                proj_std=_residual_std(cfg), activation=cfg.activation, **moe_kwargs
+            )
         else:
             self.ffn = MLP(cfg, f"{self.name}.mlp")
 

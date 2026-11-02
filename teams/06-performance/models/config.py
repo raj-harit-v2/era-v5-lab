@@ -21,7 +21,7 @@ from pathlib import Path
 
 import yaml
 
-MOE_KEYS = {"num_experts", "top_k", "num_shared", "bias_gamma", "dispatch"}   # SparseMoE keyword arguments
+MOE_KEYS = {"num_experts", "top_k", "num_shared", "bias_gamma", "dispatch", "ffn_hidden"}   # SparseMoE keyword arguments
 CE_IMPLS = ("torch", "chunked")
 ATTN_IMPLS = ("sdpa", "eager")
 ACTIVATIONS = ("gelu", "swiglu")
@@ -44,7 +44,7 @@ class ModelConfig:
     ke_mode: str = "dynamic"         # KE v1: dynamic (codec every step) | cached (V x D table)
     ffn: str = "mlp"                 # mlp | moe
     moe: dict = field(default_factory=lambda: dict(num_experts=8, top_k=2, num_shared=0,
-                                                   bias_gamma=0.01, dispatch="loop"))
+                                                   bias_gamma=0.01, dispatch="loop", ffn_hidden=None))
     reversible: bool = False         # True: midpoint reversible stack
     rev_h: float = 1.0               # midpoint step size
     ce_impl: str = "torch"           # torch: full fp32 logits (baseline) | chunked: ce_chunks pieces, checkpointed
@@ -60,6 +60,14 @@ class ModelConfig:
         assert self.ce_impl in CE_IMPLS, f"ce_impl={self.ce_impl!r} not in {CE_IMPLS}"
         unknown = sorted(set(self.moe) - MOE_KEYS)
         assert not unknown, f"unknown moe keys {unknown}; known: {sorted(MOE_KEYS)}"
+        hidden = self.moe.get("ffn_hidden")
+        assert hidden is None or (type(hidden) is int and hidden > 0), (
+            "model.moe.ffn_hidden must be a positive integer or null"
+        )
+        if self.ffn == "moe" and hidden is None:
+            assert type(self.mlp_ratio) is int and self.mlp_ratio > 0, (
+                "MoE requires ffn_hidden or positive mlp_ratio"
+            )
         if self.n_kv_head is None:
             self.n_kv_head = self.n_head
         assert self.n_kv_head > 0 and self.n_head % self.n_kv_head == 0, "n_kv_head must be > 0 and divide n_head"
