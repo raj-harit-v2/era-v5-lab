@@ -5,12 +5,14 @@ import pytest
 import torch
 from torch import nn
 
+from correctness.framework import PAIRS, Case, check, pair, pairs_in
+from dataio.loader import Loader
+from dataio.tokenizer import BrahmicTokenizer
 from models.config import ModelConfig
 from models.gpt import GPT
+from models.ke1 import KroneckerEmbedding
 from models.optim import (Muon, MuonAdamW, Optimizers, build_optimizer,
                           zeropower_via_newtonschulz5, zeropower_via_newtonschulz5_batched)
-from dataio.tokenizer import BrahmicTokenizer
-from models.ke1 import KroneckerEmbedding
 
 
 
@@ -434,6 +436,115 @@ def test_cosine_learning_rate_schedule():
     optimizers.set_lr(4, 5, schedule="cosine", warmup_steps=2, min_lr_ratio=0.1)
     assert optimizers.named[0][1].param_groups[0]["lr"] == pytest.approx(0.02)
 
+
+# ---- @pair correctness checks (Task 3) -----------------------------------------
+
+@pair("opt.muon.batched", tol=2e-3, grad_tol=5e-5)
+def _(device):
+    # Keep loop as the reference; batched is fast.  Same 3 params, 3 steps, missing grad
+    # on step 1 param 1 — matches the existing non-pair test so we can cross-check.
+    torch.manual_seed(42)
+    shape = (4, 3)
+    initial = [torch.randn(shape), torch.randn(shape), torch.randn(shape)]
+    step_grads = [
+        [torch.linspace(-0.3, 0.4, shape[0] * shape[1]).reshape(shape) * (s + i + 1)
+         for i in range(3)]
+        for s in range(3)
+    ]
+    kwargs = dict(lr=0.025, momentum=0.8, ns_steps=5, weight_decay=0.03)
+
+    def _run(impl, *init):
+        # CPU-only: NS uses bf16 internally on CUDA (bmm vs mm accumulation differs
+        # ~4% on A100), already covered by test_batched_muon_matches_loop_on_cuda_bf16.
+        # This pair tests fp32 math correctness of batched vs loop.
+        params = [nn.Parameter(p.float().cpu().clone()) for p in init]
+        opt = Muon(params, impl=impl, **kwargs)
+        for s in range(3):
+            for i, p in enumerate(params):
+                p.grad = None if (s == 1 and i == 1) else step_grads[s][i].float().to(p.device).clone()
+            opt.step()
+        return torch.stack([p.detach() for p in params])
+
+    return Case(
+        ref=lambda *inputs: _run("loop", *inputs),
+        fast=lambda *inputs: _run("batched", *inputs),
+        inputs=initial,
+        grads=False,
+    )
+
+
+@pair("opt.adamw.foreach", tol=1e-6, grad_tol=5e-5)
+def _(device):
+    # Two 2D params share one _foreach bucket (same step count); one 1D param runs alone.
+    # Loop is the reference; foreach is fast.
+    torch.manual_seed(42)
+    initial = [torch.randn(3, 4), torch.randn(2, 3), torch.randn(5)]
+    adamw_kw = dict(lr=0.001, betas=(0.9, 0.95), eps=1e-8)
+
+    def _grads(step):
+        return [
+            torch.linspace(-0.1, 0.1, 12).reshape(3, 4) * (step + 1) * 0.1,
+            torch.linspace(0.05, 0.15, 6).reshape(2, 3) * (step + 2) * 0.1,
+            torch.ones(5) * (step + 3) * 0.01,
+        ]
+
+    def _run(impl, *init):
+        params = [nn.Parameter(p.float().clone()) for p in init]
+        groups = [
+            {"params": [params[0], params[1]], "kind": "adamw", "weight_decay": 0.01,
+             "impl": impl, **adamw_kw},
+            {"params": [params[2]], "kind": "adamw", "weight_decay": 0.0,
+             "impl": impl, **adamw_kw},
+        ]
+        opt = MuonAdamW(groups)
+        for step in range(3):
+            for p, g in zip(params, _grads(step)):
+                p.grad = g.float().to(p.device).clone()
+            opt.step()
+        return torch.cat([p.detach().flatten() for p in params])
+
+    return Case(
+        ref=lambda *inputs: _run("loop", *inputs),
+        fast=lambda *inputs: _run("foreach", *inputs),
+        inputs=initial,
+        grads=False,
+    )
+
+
+@pair("data.prefetch", tol=0.0, grad_tol=5e-5)
+def _(device):
+    # prefetch=True pre-samples the next batch while the GPU is busy; both paths must yield
+    # identical token IDs because they advance the RNG in the same order.
+    batch_size, block_size, n_steps, seed = 2, 8, 4, 17
+    tokenizer_path = os.environ.get("BRAHMIC_TOKENIZER_PATH")
+
+    def _run(prefetch, _dummy):
+        loader = Loader("synthetic", batch_size, block_size, "cpu", seed=seed,
+                        prefetch=prefetch, tokenizer_path=tokenizer_path)
+        chunks = []
+        for _ in range(n_steps):
+            if prefetch:
+                loader.prefetch()
+            x, y = loader.next_batch()
+            chunks.append(x.float())
+            chunks.append(y.float())
+        return torch.cat([c.flatten() for c in chunks])
+
+    return Case(
+        ref=lambda d: _run(False, d),
+        fast=lambda d: _run(True, d),
+        inputs=[torch.zeros(1)],
+        grads=False,
+    )
+
+
+@pytest.mark.parametrize("name", pairs_in(__name__))
+def test_pair(name, device):
+    errors = check(PAIRS[name], device)
+    assert "out[0]" in errors, f"{name}: output must be compared"
+
+
+# ---- fixtures and integration tests --------------------------------------------
 
 @pytest.fixture(scope="module")
 def tokenizer():

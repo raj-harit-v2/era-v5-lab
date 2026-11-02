@@ -189,6 +189,8 @@ def _used(err, tol) -> str:
     """How much of the tolerance the error uses: '3%' (fine) ... '100%+' (over)."""
     if err is None:
         return ""
+    if tol == 0.0:
+        return "exact" if err == 0.0 else "OVER"
     pct = 100 * err / tol
     return "<1%" if pct < 1 else f"{pct:.0f}%"
 
