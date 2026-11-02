@@ -14,6 +14,7 @@ Each task is a GitHub issue titled `[G3] ...`. The issue is the source of truth;
 | Issue | Task | Owner | State |
 |---|---|---|---|
 | - | FLORES harness on v2 | @riyaagrahari | open |
+| - | TSAI job: fresh C3 sample-v0 build gives sha256 `15468e66…` (Gate 2 evidence), `jobs/2026-11-02-c3-s0-rebuild.md` | @sohamniyogi | job requested |
 
 ### Done
 
@@ -29,7 +30,7 @@ Each task is a GitHub issue titled `[G3] ...`. The issue is the source of truth;
 | #166 | v2: o200k pruning by usage (13,850 never-used base tokens swapped for English/code o200k tokens; specials and all script ids unchanged), slot split chosen on held-out FineWeb-2: held-out English +1.74% → −0.10% vs baseline, no Indic language worse than v1-c1; counts as C3, sha256 sent to G4 (closes #163) | @sohamniyogi |
 | #173 | v0.1: G10 ChatML v0 markers, `g10_slot_00..04` renamed in place to `<|endoftext|>`, `<|think|>`, `<|/think|>`, `<|/tool_call|>`, `<|/tool_result|>`; ids and `special: true` unchanged, sha256 `a33c9907…e578` (closes #132) | @sohamniyogi |
 | #183 | Week-2 candidates (closes #182) with v0.1 specials: C1 (o200k swap only), C2 (+slots_v1), C3 (+normalizer v1 = v2); manifests with corpus hashes in `train/` | @sohamniyogi |
-| this PR | C1–C3 retrained with the week-2 tokenizer sample v0: per-script text mix (`mix_search.py`, `train_bpe.py --mix`), Devanagari, Gujarati and Oriya changed; check mean Indic −0.12%, sample held-out −0.36% vs the committed C1–C3, no language worse beyond 3 tokens; manifests `train/c*_s0_manifest.json` | @sohamniyogi |
+| #195 | C1–C3 retrained with the week-2 tokenizer sample v0: per-script text mix (`mix_search.py`, `train_bpe.py --mix`), Devanagari, Gujarati and Oriya changed; check mean Indic −0.12%, sample held-out −0.36% vs the committed C1–C3, no language worse beyond 3 tokens; manifests `train/c*_s0_manifest.json` | @sohamniyogi |
 
 ### Areas
 

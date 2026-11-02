@@ -1,0 +1,218 @@
+{
+  "pack": "code-js-ts.parquet",
+  "pack_sha256": "4aa4dea19a83b8db922156838b6772e107f39c4ce6af76bf19b3008a57b27018",
+  "gold": "code-js-ts_gold.csv",
+  "gold_sha256": "518cf5c367f088a324b94167e03b224ffa48e38cf429003fbe2ba7c705a2ad1a",
+  "gold_count": 204,
+  "rules": "teams/01-data-a/spec_v1/clean.py",
+  "rules_file_sha256": "76ac8b21af7c3481f68e6fc2d317c48044250fe1a1eb0331b8b47eb7de112872",
+  "code_sha256": "76ac8b21af7c3481f68e6fc2d317c48044250fe1a1eb0331b8b47eb7de112872",
+  "limit_percent": "1",
+  "limit_documents": 2,
+  "status": "PASS",
+  "results": [
+    {
+      "rule": "A1",
+      "changed": 0,
+      "dropped": 0,
+      "affected_unique": 0,
+      "errors": 0,
+      "error_types": [],
+      "percent": "0.000000",
+      "result": "PASS",
+      "changed_ids": [],
+      "dropped_ids": [],
+      "affected_ids": []
+    },
+    {
+      "rule": "A2",
+      "changed": 0,
+      "dropped": 0,
+      "affected_unique": 0,
+      "errors": 0,
+      "error_types": [],
+      "percent": "0.000000",
+      "result": "PASS",
+      "changed_ids": [],
+      "dropped_ids": [],
+      "affected_ids": []
+    },
+    {
+      "rule": "A6",
+      "changed": 0,
+      "dropped": 0,
+      "affected_unique": 0,
+      "errors": 0,
+      "error_types": [],
+      "percent": "0.000000",
+      "result": "PASS",
+      "changed_ids": [],
+      "dropped_ids": [],
+      "affected_ids": []
+    },
+    {
+      "rule": "A4",
+      "changed": 0,
+      "dropped": 0,
+      "affected_unique": 0,
+      "errors": 0,
+      "error_types": [],
+      "percent": "0.000000",
+      "result": "PASS",
+      "changed_ids": [],
+      "dropped_ids": [],
+      "affected_ids": []
+    },
+    {
+      "rule": "B3",
+      "changed": 0,
+      "dropped": 0,
+      "affected_unique": 0,
+      "errors": 0,
+      "error_types": [],
+      "percent": "0.000000",
+      "result": "PASS",
+      "changed_ids": [],
+      "dropped_ids": [],
+      "affected_ids": []
+    },
+    {
+      "rule": "E1",
+      "changed": 0,
+      "dropped": 0,
+      "affected_unique": 0,
+      "errors": 0,
+      "error_types": [],
+      "percent": "0.000000",
+      "result": "PASS",
+      "changed_ids": [],
+      "dropped_ids": [],
+      "affected_ids": []
+    },
+    {
+      "rule": "E2",
+      "changed": 0,
+      "dropped": 0,
+      "affected_unique": 0,
+      "errors": 0,
+      "error_types": [],
+      "percent": "0.000000",
+      "result": "PASS",
+      "changed_ids": [],
+      "dropped_ids": [],
+      "affected_ids": []
+    },
+    {
+      "rule": "C3",
+      "changed": 0,
+      "dropped": 0,
+      "affected_unique": 0,
+      "errors": 0,
+      "error_types": [],
+      "percent": "0.000000",
+      "result": "PASS",
+      "changed_ids": [],
+      "dropped_ids": [],
+      "affected_ids": []
+    },
+    {
+      "rule": "C4",
+      "changed": 0,
+      "dropped": 0,
+      "affected_unique": 0,
+      "errors": 0,
+      "error_types": [],
+      "percent": "0.000000",
+      "result": "PASS",
+      "changed_ids": [],
+      "dropped_ids": [],
+      "affected_ids": []
+    },
+    {
+      "rule": "E4",
+      "changed": 1,
+      "dropped": 0,
+      "affected_unique": 1,
+      "errors": 0,
+      "error_types": [],
+      "percent": "0.490196",
+      "result": "PASS",
+      "changed_ids": [
+        "67c9226601f26da9"
+      ],
+      "dropped_ids": [],
+      "affected_ids": [
+        "67c9226601f26da9"
+      ]
+    },
+    {
+      "rule": "C1",
+      "changed": 0,
+      "dropped": 0,
+      "affected_unique": 0,
+      "errors": 0,
+      "error_types": [],
+      "percent": "0.000000",
+      "result": "PASS",
+      "changed_ids": [],
+      "dropped_ids": [],
+      "affected_ids": []
+    },
+    {
+      "rule": "B4",
+      "changed": 0,
+      "dropped": 0,
+      "affected_unique": 0,
+      "errors": 0,
+      "error_types": [],
+      "percent": "0.000000",
+      "result": "PASS",
+      "changed_ids": [],
+      "dropped_ids": [],
+      "affected_ids": []
+    },
+    {
+      "rule": "E3",
+      "changed": 0,
+      "dropped": 0,
+      "affected_unique": 0,
+      "errors": 0,
+      "error_types": [],
+      "percent": "0.000000",
+      "result": "PASS",
+      "changed_ids": [],
+      "dropped_ids": [],
+      "affected_ids": []
+    },
+    {
+      "rule": "F1",
+      "changed": 0,
+      "dropped": 0,
+      "affected_unique": 0,
+      "errors": 0,
+      "error_types": [],
+      "percent": "0.000000",
+      "result": "PASS",
+      "changed_ids": [],
+      "dropped_ids": [],
+      "affected_ids": []
+    },
+    {
+      "rule": "ALL IN ORDER",
+      "changed": 1,
+      "dropped": 0,
+      "affected_unique": 1,
+      "errors": 0,
+      "error_types": [],
+      "percent": "0.490196",
+      "result": "PASS",
+      "changed_ids": [
+        "67c9226601f26da9"
+      ],
+      "dropped_ids": [],
+      "affected_ids": [
+        "67c9226601f26da9"
+      ]
+    }
+  ]
+}

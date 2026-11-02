@@ -1,0 +1,70 @@
+commit cef1e6f36697a7f685e0fc9d35b7b7dd8c318923 (origin/main, contains #195 e81fa97: yes); rebuild_c3_s0.py sha256 fa94da2eb7172e81d75104bae2de7e222de52178341bb8a95c3298db74cac894
+network: denied (macOS sandbox-exec deny network*)
+python 3.11.5  tiktoken 0.14.0  tokenizers 0.23.3  macOS-26.3-arm64-arm-64bit
+1. pinned inputs
+  ok   corpus60/Hi.txt: f9a7d43e3b7c48822bfb7a3db914c4d40d07070476f9614e559884b1caa9d2b5
+  ok   corpus60/Mr.txt: a88050d1f29f60ab38b13476c0c68d66181ee931a4863c68ba559ee4eddd6a63
+  ok   corpus60/Bn.txt: e0b4300e27dc38c3adccaea323d79ab6fb8684d4a93da6334cfa546775535512
+  ok   corpus60/As.txt: e70f690035803f74eef34a635b2af81b97bf1cbb667524a64e3b8a7684fe5ad3
+  ok   corpus60/Ta.txt: 7a6833efc3a544d16f90970a3af833c735e1332ab359248ab2da18ee55896221
+  ok   corpus60/Te.txt: ad33037ec2ffae002b160f9da71e3c0611a3430d9ef58cee8b4cca44f17c8d7f
+  ok   corpus60/Kn.txt: 8d7d649451a755d582f1f1bdb76406e2c31287e502ff020b8226efa980734f13
+  ok   corpus60/Ml.txt: b5f8785268ef1431b456f172a4fe957ace886f3a16803ff71484e1cc4c9ab1e5
+  ok   corpus60/Gu.txt: 943f95aa574095336246f027e8fdf48a285cae030eae6a17afcc24aaaa1eb254
+  ok   corpus60/Pa.txt: 2e3afa28202e7fad167cb3ec48ce82ba85f2363bb56ec353f03c18c39e85c7ac
+  ok   corpus60/Or.txt: 0135111913bfddf8d720790a2c7f49740f32552099ee7824d69890e57cddfbdf
+  ok   sample v0 manifest: 7fd647c8d4662d17e2310efbcc20981d70656fdad2fabb7663c266a2153a1b7e
+  ok   sample v0 SHA256SUMS: 0b7da76396a7078b07a5e5f96a4ced88279e77205c164a35f284f387b0546faa
+  ok   BrahmicTokenizer-131K tokenizer.json: 01d968a7970b029c071b29f060abf6104b66168dedf2ff3b1a0290a545739fff
+  ok   o200k_base.tiktoken: 446a9538cb6c348e3516120d7c08b09f57c36495e2acfffe59a5bf8b0cfb1a2d
+2. tokenizer v0 and v0.1
+$ python teams/03-tokenizer/v0/build_v0.py inputs/BrahmicTokenizer-131K/tokenizer.json out/v0/tokenizer.json
+renamed 128 reserved slots
+sha256 2de039f20d17afd17615095c406c43087359673b767ed0fe2c480b995f2af8e5  out/v0/tokenizer.json
+$ python teams/03-tokenizer/v0/build_v0_1.py out/v0/tokenizer.json out/v0.1/tokenizer.json
+renamed 5 G10 slots
+sha256 a33c9907ec16876bc57b011714e8380879919fba1327d84bfb0d60407fe6e578  out/v0.1/tokenizer.json
+3. corpus_s0 from sample v0 train/
+$ python teams/03-tokenizer/train/sample_to_corpus.py --sample inputs/sample_v0 --out out/corpus_s0 --fallback inputs/corpus60 --fallback-langs Pa,As
+Hi: 5 packs, 156831 docs, 416.5 MB, sha256 1180b24b3a0f
+Bn: 2 packs, 21533 docs, 137.2 MB, sha256 a4245d2141f6
+Ta: 3 packs, 17898 docs, 137.4 MB, sha256 f78af8755ac8
+Te: 3 packs, 19388 docs, 137.8 MB, sha256 0c65b4b218d7
+Kn: 3 packs, 21576 docs, 137.4 MB, sha256 15287a58ea71
+Ml: 1 packs, 18976 docs, 137.6 MB, sha256 293d0d273bef
+Mr: 2 packs, 23632 docs, 137.5 MB, sha256 ef2735f30950
+Gu: 1 packs, 23118 docs, 137.4 MB, sha256 ac6ffb384d05
+Pa: copied from corpus60, 20.1 MB
+Or: 1 packs, 33684 docs, 137.5 MB, sha256 f9c15bf27936
+As: copied from corpus60, 20.0 MB
+wrote out/corpus_s0/corpus_manifest.json
+  ok   mix Hi: corpus60/Hi.txt: f9a7d43e3b7c48822bfb7a3db914c4d40d07070476f9614e559884b1caa9d2b5
+  ok   mix Hi: corpus_s0/Hi.txt: 1180b24b3a0f2092898cc11b40fab6c698944789a69dc3a29dfe1e13d379151e
+  ok   mix Mr: corpus60/Mr.txt: a88050d1f29f60ab38b13476c0c68d66181ee931a4863c68ba559ee4eddd6a63
+  ok   mix Mr: corpus_s0/Mr.txt: ef2735f30950529359d7b422d3da62848909f0f93146d1fed37815eab5261356
+  ok   mix Gu: corpus_s0/Gu.txt: ac6ffb384d05acc822647d32dbb64abe9031c09f83916343c22c8666a8590f96
+  ok   mix Or: corpus_s0/Or.txt: f9c15bf2793669143c1e524729f4440c985034a1ffad3ccf763bc7766913e298
+4. train_bpe.py (C3 flags + mix_s0.json)
+$ python teams/03-tokenizer/train/train_bpe.py --corpus inputs/corpus60 --out out/c3_s0 --slots teams/03-tokenizer/train/slots_v2.json --special-layout v0 --v0-tokenizer out/v0.1/tokenizer.json --normalizer v1 --mix out/mix_s0_resolved.json
+layout: base=114332  scripts=16384  specials=356 (v0)  total=131072
+base: 114332 o200k tokens, 114076 merges, dropped {'over_32_bytes': 130, 'cross_script': 22} (1s)
+o200k swap: 13850 unused base tokens replaced in place
+Devanagari: 1056187 unique words, 110584090 occurrences -> ids [114333, 117405)  (121s)
+Bengali: 228399 unique words, 2371595 occurrences -> ids [117405, 119453)  (12s)
+Tamil: 404626 unique words, 2377356 occurrences -> ids [119453, 121245)  (20s)
+Telugu: 388667 unique words, 2780704 occurrences -> ids [121245, 123165)  (20s)
+Kannada: 413087 unique words, 2671959 occurrences -> ids [123165, 125085)  (21s)
+Malayalam: 513339 unique words, 2128226 occurrences -> ids [125085, 127133)  (26s)
+Gujarati: 404595 unique words, 8826395 occurrences -> ids [127133, 128157)  (31s)
+Gurmukhi: 80684 unique words, 1526620 occurrences -> ids [128157, 129183)  (5s)
+Oriya: 336561 unique words, 7663279 occurrences -> ids [129183, 130725)  (46s)
+wrote out/c3_s0/tokenizer.json  sha256=15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3
+wrote out/c3_s0/manifest.json  (305s)
+{
+  "question": "Does a fresh build of C3 sample-v0 at the #195 commit give the committed sha256?",
+  "expected_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3",
+  "built_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3",
+  "result": "PASS",
+  "seconds": 319
+}
+exit=0

@@ -1,0 +1,10 @@
+{
+ "_comment": "Inputs for rebuild_c3_s0.py, relative to the job's working directory. corpus60 hashes and the sample v0 manifest hash are read from c3_s0_manifest.json.",
+ "corpus60": "inputs/corpus60",
+ "sample_v0": "inputs/sample_v0",
+ "sample_v0_sha256sums_sha256": "0b7da76396a7078b07a5e5f96a4ced88279e77205c164a35f284f387b0546faa",
+ "brahmic_tokenizer": "inputs/BrahmicTokenizer-131K/tokenizer.json",
+ "brahmic_tokenizer_sha256": "01d968a7970b029c071b29f060abf6104b66168dedf2ff3b1a0290a545739fff",
+ "o200k_base": "inputs/o200k_base.tiktoken",
+ "o200k_base_sha256": "446a9538cb6c348e3516120d7c08b09f57c36495e2acfffe59a5bf8b0cfb1a2d"
+}

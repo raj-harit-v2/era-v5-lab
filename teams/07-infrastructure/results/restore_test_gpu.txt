@@ -1,0 +1,27 @@
+Restore test on 1 GPU, Team 05 tiny MoE (TSAI job result)
+Date: 2 Nov 2026
+Run by: TSAI on the lab GPU node, as the job request of PR #196
+
+Command (from teams/07-infrastructure/jobs/restore_test/):
+  python restore_test.py --nproc 1 --device cuda
+  defaults: steps 200, save at 100, run B stops at 150
+
+Commit: 733c633 (PR #196 head at the time of the run)
+
+Environment:
+  torch 2.14.1 (CUDA 13.0)
+  teams/04-ke2/src/requirements.txt pins, without its torch line
+
+Team 05 config:
+  teams/05-architecture/configs/config_v0.yaml + teams/05-architecture/configs/small/tiny_moe.yaml
+  seed 1234 (run.seed in config_v0.yaml)
+
+Result: PASS
+  last line: PASS restore_test nproc=1 cuda: steps 101-200: loss_ntp and loss_mtp bit-equal, data ids equal
+  result.json: pass true, first_diff null, compared steps 101 to 200, 200 records in run A and in run B
+  sha256 of result.json: bb7646b4772eabc810227478625d74788404925c120816db1e7251f49e66f02a
+
+Wall time: 45 s
+
+2 GPUs: needs a node with 2 GPUs; moved to after Gate 2. Until then the 2-process CPU run in
+restore_test_cpu.txt is the 2-device evidence.

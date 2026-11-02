@@ -1,0 +1,49 @@
+Restore test on CPU, Team 05 tiny MoE
+Date: 2 Nov 2026
+
+Commands (from the repo root; CUDA_VISIBLE_DEVICES="" hides any GPU so the run is CPU only;
+the output goes to teams/07-infrastructure/jobs/restore_test/out/, which is git-ignored):
+  CUDA_VISIBLE_DEVICES="" python teams/07-infrastructure/jobs/restore_test/restore_test.py              # 1 process
+  CUDA_VISIBLE_DEVICES="" python teams/07-infrastructure/jobs/restore_test/restore_test.py --nproc 2    # 2 processes (gloo, DDP)
+  
+Environment:
+  Python 3.13.9
+  torch  2.14.1 (CPU only)
+  numpy  2.2.6
+  OS     Ubuntu 24.04.5 LTS, Linux 7.0.0-42-generic x86_64
+
+Team 05 config:
+  teams/05-architecture/configs/config_v0.yaml + teams/05-architecture/configs/small/tiny_moe.yaml
+  seed 1234 (run.seed in config_v0.yaml)
+
+Steps:
+  checkpoint step 100, stop step 150 (run B's first launch), end step 200
+
+Result: PASS on 1 and 2 processes
+  | processes | last line                                                                                       | exit | wall time |
+  | 1         | PASS restore_test nproc=1 cpu: steps 101-200: loss_ntp and loss_mtp bit-equal, data ids equal | 0    | 13.2 s    |
+  | 2         | PASS restore_test nproc=2 cpu: steps 101-200: loss_ntp and loss_mtp bit-equal, data ids equal | 0    | 15.0 s    |
+  Both runs:
+  steps compared: 100 (steps 101 to 200)
+  max loss difference, run A vs run B (loss_ntp and loss_mtp): 0.0 (all float bits equal)
+  data IDs (batch position + sha256 of the batch tokens): equal at every compared step
+  Wall time is the whole script: run A, both launches of run B, compare.
+
+First and last compared losses, 1 process:
+  step | run | loss_ntp             | loss_mtp             | batch position
+  101  | A   | 0.032292719930410385 | 0.03213804215192795  | 100
+  101  | B   | 0.032292719930410385 | 0.03213804215192795  | 100
+  200  | A   | 0.010667883791029453 | 0.01074808556586504  | 199
+  200  | B   | 0.010667883791029453 | 0.01074808556586504  | 199
+
+First and last compared losses, 2 processes (each loss is the mean over the 2 ranks):
+  step | run | loss_ntp             | loss_mtp             | batch position
+  101  | A   | 0.032292723655700684 | 0.032138049602508545 | 100
+  101  | B   | 0.032292723655700684 | 0.032138049602508545 | 100
+  200  | A   | 0.010667881928384304 | 0.010748086497187614 | 199
+  200  | B   | 0.010667881928384304 | 0.010748086497187614 | 199
+
+The last bits differ between 1 and 2 processes; that is expected. The test compares run A with run B on the
+same process count only.
+
+Test: pytest teams/07-infrastructure/support/tests/test_ckpt.py -k restore_job: 2 passed (1 and 2 processes).

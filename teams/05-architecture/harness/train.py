@@ -177,7 +177,8 @@ def run(cfg: dict, out_dir: Path, device: torch.device) -> None:
                 tokens[:, 2:].reshape(-1),
             )
             (ntp + mtp).backward()
-            torch.nn.utils.clip_grad_norm_(model.parameters(), clip)
+            # The norm before clipping. The G8 alarms watch it for spikes.
+            grad_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), clip)
             optimizer.step()
             value = float(ntp.detach())
             mtp_value = float(mtp.detach())
@@ -193,6 +194,7 @@ def run(cfg: dict, out_dir: Path, device: torch.device) -> None:
                 "loss": value,
                 "lr": float(cfg["optim.lr"]),
                 "gpu_alloc_gb": gpu_alloc_gb(device),
+                "gradient_norm": float(grad_norm),
             }
             handle.write(json.dumps(row) + "\n")
     (out_dir / "losses.txt").write_text("\n".join(f"{item:.8f}" for item in losses) + "\n")

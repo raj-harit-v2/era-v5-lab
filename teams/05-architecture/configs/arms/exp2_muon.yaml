@@ -1,4 +1,5 @@
-# EXP-2 Muon arm. Learning rate comes from the T1 Muon screen in plan_v1.md.
+# EXP-2 Muon arm. muon_lr stays empty until the T1 screen names a winner.
+# 0.02 from base.yaml is not that screen.
 inherit: t2.yaml
 intended:
   arm: exp2-muon
@@ -6,3 +7,4 @@ intended:
 optim:
   name: muon
   lr: null
+  muon_lr: null

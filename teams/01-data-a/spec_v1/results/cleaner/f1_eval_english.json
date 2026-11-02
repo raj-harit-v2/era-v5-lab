@@ -1,0 +1,400 @@
+{
+  "real": {
+    "en-dclm": {
+      "DA-F1-005": {
+        "fixed": 2,
+        "dropped": 0,
+        "gold_touched": [],
+        "limit": 1,
+        "tags": {
+          "<EMAIL>": 4,
+          "<PHONE>": 0,
+          "<ADDRESS>": 0
+        }
+      },
+      "shared F1 (in memory)": {
+        "fixed": 14,
+        "dropped": 0,
+        "gold_touched": [
+          "09319f191c620efe"
+        ],
+        "limit": 1,
+        "tags": {
+          "<EMAIL>": 7,
+          "<PHONE>": 8,
+          "<ADDRESS>": 7
+        }
+      }
+    },
+    "en-fineweb-edu": {
+      "DA-F1-005": {
+        "fixed": 0,
+        "dropped": 0,
+        "gold_touched": [],
+        "limit": 1,
+        "tags": {}
+      },
+      "shared F1 (in memory)": {
+        "fixed": 6,
+        "dropped": 0,
+        "gold_touched": [],
+        "limit": 1,
+        "tags": {
+          "<EMAIL>": 0,
+          "<PHONE>": 6,
+          "<ADDRESS>": 4
+        }
+      }
+    },
+    "en-nemotroncc": {
+      "DA-F1-005": {
+        "fixed": 1,
+        "dropped": 0,
+        "gold_touched": [],
+        "limit": 1,
+        "tags": {
+          "<EMAIL>": 1,
+          "<PHONE>": 0,
+          "<ADDRESS>": 0
+        }
+      },
+      "shared F1 (in memory)": {
+        "fixed": 14,
+        "dropped": 0,
+        "gold_touched": [],
+        "limit": 1,
+        "tags": {
+          "<EMAIL>": 8,
+          "<PHONE>": 7,
+          "<ADDRESS>": 1
+        }
+      }
+    },
+    "en-nemotroncc-synth": {
+      "DA-F1-005": {
+        "fixed": 2,
+        "dropped": 0,
+        "gold_touched": [],
+        "limit": 1,
+        "tags": {
+          "<EMAIL>": 2,
+          "<PHONE>": 1,
+          "<ADDRESS>": 0
+        }
+      },
+      "shared F1 (in memory)": {
+        "fixed": 8,
+        "dropped": 0,
+        "gold_touched": [],
+        "limit": 1,
+        "tags": {
+          "<EMAIL>": 3,
+          "<PHONE>": 4,
+          "<ADDRESS>": 2
+        }
+      }
+    }
+  },
+  "planted": {
+    "email plain": {
+      "DA-F1-005": [
+        68,
+        154
+      ],
+      "shared F1 (in memory)": [
+        154,
+        154
+      ]
+    },
+    "email country domain": {
+      "DA-F1-005": [
+        0,
+        154
+      ],
+      "shared F1 (in memory)": [
+        154,
+        154
+      ]
+    },
+    "phone with a word": {
+      "DA-F1-005": [
+        68,
+        154
+      ],
+      "shared F1 (in memory)": [
+        138,
+        154
+      ]
+    },
+    "phone +44": {
+      "DA-F1-005": [
+        68,
+        154
+      ],
+      "shared F1 (in memory)": [
+        138,
+        154
+      ]
+    },
+    "phone (555)": {
+      "DA-F1-005": [
+        68,
+        154
+      ],
+      "shared F1 (in memory)": [
+        138,
+        154
+      ]
+    },
+    "phone US plain": {
+      "DA-F1-005": [
+        68,
+        154
+      ],
+      "shared F1 (in memory)": [
+        138,
+        154
+      ]
+    },
+    "phone +91": {
+      "DA-F1-005": [
+        0,
+        154
+      ],
+      "shared F1 (in memory)": [
+        138,
+        154
+      ]
+    },
+    "phone India no code": {
+      "DA-F1-005": [
+        0,
+        154
+      ],
+      "shared F1 (in memory)": [
+        138,
+        154
+      ]
+    },
+    "phone digits only": {
+      "DA-F1-005": [
+        0,
+        154
+      ],
+      "shared F1 (in memory)": [
+        138,
+        154
+      ]
+    },
+    "address road": {
+      "DA-F1-005": [
+        68,
+        154
+      ],
+      "shared F1 (in memory)": [
+        138,
+        154
+      ]
+    },
+    "address 221B": {
+      "DA-F1-005": [
+        68,
+        154
+      ],
+      "shared F1 (in memory)": [
+        138,
+        154
+      ]
+    },
+    "address India": {
+      "DA-F1-005": [
+        0,
+        154
+      ],
+      "shared F1 (in memory)": [
+        138,
+        154
+      ]
+    },
+    "address lower case": {
+      "DA-F1-005": [
+        0,
+        154
+      ],
+      "shared F1 (in memory)": [
+        0,
+        154
+      ]
+    }
+  },
+  "keep": {
+    "org role email": {
+      "DA-F1-005": [
+        154,
+        154
+      ],
+      "shared F1 (in memory)": [
+        154,
+        154
+      ]
+    },
+    "office gov email": {
+      "DA-F1-005": [
+        154,
+        154
+      ],
+      "shared F1 (in memory)": [
+        154,
+        154
+      ]
+    },
+    "org phone": {
+      "DA-F1-005": [
+        154,
+        154
+      ],
+      "shared F1 (in memory)": [
+        154,
+        154
+      ]
+    },
+    "org address": {
+      "DA-F1-005": [
+        154,
+        154
+      ],
+      "shared F1 (in memory)": [
+        154,
+        154
+      ]
+    },
+    "example email": {
+      "DA-F1-005": [
+        154,
+        154
+      ],
+      "shared F1 (in memory)": [
+        154,
+        154
+      ]
+    },
+    "git address": {
+      "DA-F1-005": [
+        154,
+        154
+      ],
+      "shared F1 (in memory)": [
+        154,
+        154
+      ]
+    },
+    "date": {
+      "DA-F1-005": [
+        154,
+        154
+      ],
+      "shared F1 (in memory)": [
+        154,
+        154
+      ]
+    },
+    "version": {
+      "DA-F1-005": [
+        154,
+        154
+      ],
+      "shared F1 (in memory)": [
+        154,
+        154
+      ]
+    },
+    "ip": {
+      "DA-F1-005": [
+        86,
+        154
+      ],
+      "shared F1 (in memory)": [
+        154,
+        154
+      ]
+    },
+    "digit groups": {
+      "DA-F1-005": [
+        86,
+        154
+      ],
+      "shared F1 (in memory)": [
+        154,
+        154
+      ]
+    },
+    "retina file": {
+      "DA-F1-005": [
+        154,
+        154
+      ],
+      "shared F1 (in memory)": [
+        154,
+        154
+      ]
+    },
+    "npm scope": {
+      "DA-F1-005": [
+        154,
+        154
+      ],
+      "shared F1 (in memory)": [
+        154,
+        154
+      ]
+    },
+    "package version": {
+      "DA-F1-005": [
+        154,
+        154
+      ],
+      "shared F1 (in memory)": [
+        154,
+        154
+      ]
+    },
+    "uuid": {
+      "DA-F1-005": [
+        154,
+        154
+      ],
+      "shared F1 (in memory)": [
+        154,
+        154
+      ]
+    },
+    "byte size street": {
+      "DA-F1-005": [
+        86,
+        154
+      ],
+      "shared F1 (in memory)": [
+        16,
+        154
+      ]
+    }
+  },
+  "second_run": {
+    "en-dclm": {
+      "docs_with_new_tags": 2,
+      "changed_again": []
+    },
+    "en-fineweb-edu": {
+      "docs_with_new_tags": 0,
+      "changed_again": []
+    },
+    "en-nemotroncc": {
+      "docs_with_new_tags": 1,
+      "changed_again": []
+    },
+    "en-nemotroncc-synth": {
+      "docs_with_new_tags": 2,
+      "changed_again": []
+    }
+  }
+}

@@ -635,3 +635,25 @@ def test_t30_other_data_manifest_refused(env, monkeypatch):
         def state_dict(self):
             return {k: v for k, v in super().state_dict().items() if k != "manifest"}
     assert any("manifest" in p for p in check(lambda r, w: NoManifest(SEED, 8, r, w)))
+
+
+@parametrize("nproc", [1, pytest.param(2, marks=needs(2))])
+def test_restore_job(tmp_path, nproc):
+    """jobs/restore_test: Team 05's tiny MoE, restored from our step-10 checkpoint in new processes, gives
+    bit-equal losses and equal data IDs at steps 11-20. Its stream loader passes the loader contract."""
+    pytest.importorskip("kronecker_embeddings")
+    from ckpt.loader_contract import check
+    job = os.path.join(SUB, "jobs", "restore_test")
+    sys.path.insert(0, job)
+    import restore_test
+    cfg = restore_test.load_cfg(restore_test.CONFIGS / "config_v0.yaml",
+                                restore_test.CONFIGS / "small" / "tiny_moe.yaml", 20)
+    assert check(lambda r, w: restore_test.StreamLoader(cfg, SEED, r, w)) == []
+    out = tmp_path / "out"
+    cmd = [sys.executable, os.path.join(job, "restore_test.py"), "--steps", "20", "--save-at", "10",
+           "--stop-at", "15", "--nproc", str(nproc), "--device", DEVICE, "--out", str(out)]
+    p = subprocess.run(cmd, capture_output=True, text=True, timeout=600)
+    assert p.returncode == 0, p.stdout + p.stderr
+    assert p.stdout.splitlines()[-1].startswith("PASS")  # gloo prints its own lines first
+    res = json.loads((out / "result.json").read_text())
+    assert res["pass"] and [r["step"] for r in res["run_b"]] == list(range(1, 21))

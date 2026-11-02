@@ -1,0 +1,107 @@
+{
+  "tools_checkout": {
+    "branch": "g1-harm-test",
+    "commit": "bae516367e250e9fa5f8a6895fff2653588e778e (git archive export)",
+    "note": "harm_test.py there is byte for byte the file at PR 140's head (c3cb003)"
+  },
+  "spec_v1_checkout": {
+    "branch": "g1-specv1",
+    "commit": "2a0b3665deaaabb098d7c6b47650b149b8f50d28"
+  },
+  "tools": {
+    "harm_test.py": "4dcc04bf8ac553c9c0b39c8812bd7275aee9c8727b80a7a5a026d0e3f7bbafd2",
+    "medicine_extract.py": "23620f492ad8fdc96202db7f1ed10436ea4471f5c90c44817229ee2178f262e1",
+    "fetch_medicines.py": "e8821c5fa8ad306104f182b48bd8364b210dfb29bb174f06ed96c42847b5da30",
+    "build_gold.py": "cddd9208ed110e120ea50d63fcd691545ba278b414acd667dc0980260bc55468",
+    "rule_report.py": "e25d0ca35d2c04194ba321f6d7fc460801eabff48f7777d9bb9e75e2109c9ac7",
+    "medicine_conflicts.py": "0c3ef73fa79cfbb899b7b2c3752676f6fa3f6a066253b4b92f7d0d09e89e7692"
+  },
+  "team_tools": {
+    "teams/01-data-a/tools/build_clean.py": "02b62d300650e17464d49256e2af6cf7be4a22130accd67700dc207d75b697a2",
+    "teams/01-data-a/tools/f1_rule.py": "a13073f13bfe839ffd83296cd512a97e0d59d58fcb3d12be7665236b0ce11ee8",
+    "teams/01-data-a/tools/f1_eval.py": "254889d9bfd160d670b5d2b36e83e9be0977ebbf0d2fa2cdfc3311737ef9c613"
+  },
+  "packs": {
+    "en-dclm": "d5ae1e7e991de478eb443ec6ca991308473c22922a986c3ebbba71ebfe0fa2b4",
+    "en-fineweb-edu": "3a0ad16983c03e9d8b6a40d8e58d769d9b89e68406a3b86e79fd7b8d68e022de",
+    "en-nemotroncc": "6eae1507bc689c79ec8b73011b264f5b4558ef8eb3ddbf866a598588b7cf0fbb",
+    "en-nemotroncc-synth": "0f1c3a9866ada7fb5ea2a244135d9766375351bec366c13cd9c5abfb3d82573c"
+  },
+  "gold": {
+    "en-dclm": "8165439648189b96fb5b7986435761a05fd34a50474a6d30a196c5308d27767d",
+    "en-fineweb-edu": "a06212a5f4952b9bf0922d3e21dc72ee3110e53dec60fec533af9deb87084190",
+    "en-nemotroncc": "0175e5d0afa8d66195fdd200c3daa4484ec279b363c61deb09c59487f905d69c",
+    "en-nemotroncc-synth": "72216094cbebbf7b913cc16061b202820c1ed9a9710ef6af6a132c5f89910315"
+  },
+  "stress_gold": {
+    "en-dclm": "9a2b0e704423b6f2f46b07f4c352fa044e36fe73f62a7477a6b3588f846e2677",
+    "en-fineweb-edu": "8011a0128873bc6121dc790c425b0c9a7390126fd0032a7ccc99ff7aa1cd82a5",
+    "en-nemotroncc": "0175e5d0afa8d66195fdd200c3daa4484ec279b363c61deb09c59487f905d69c",
+    "en-nemotroncc-synth": "72216094cbebbf7b913cc16061b202820c1ed9a9710ef6af6a132c5f89910315"
+  },
+  "medicine_md": {
+    "en-dclm/mittalutkarsh": {
+      "sha256": "21ff94e7acffda2beacc2d9f336bc2694a33c29d1f595a4dac76a4aa0dc39fe7",
+      "pr": 34
+    },
+    "en-dclm/shekar-maker": {
+      "sha256": "15131138f6df6e2b10953de4729f1440c93520a758bf03457dec7626cad8e356",
+      "pr": 29
+    },
+    "en-fineweb-edu/deepjyotisaha": {
+      "sha256": "b322f86def3a2217bb4d0249d4af78cdffc0df687e69bc86708e7f271864fcf3",
+      "pr": 10
+    },
+    "en-fineweb-edu/shivman": {
+      "sha256": "998f19efb2a0732d8e1b4d35d271b687e1a0d028ca5425925921f5d935acd903",
+      "pr": 66
+    },
+    "en-nemotroncc/HariniJasti": {
+      "sha256": "f510a79661eef2f51c5ff122db3d8e3ab9ee7af77da713ed53cc4140f600eb9a",
+      "pr": 79
+    },
+    "en-nemotroncc/s9k96": {
+      "sha256": "14d68d4abe7c7238d3fa1211b74d33e71001429ace1cc5ebce59667c3751822f",
+      "pr": 62
+    },
+    "en-nemotroncc-synth/AJJAPUSIVA": {
+      "sha256": "10e3daf26b18e20ec63847c12eaad410f1c77d64923d5edd9616bf9611112953",
+      "pr": 68
+    },
+    "en-nemotroncc-synth/maheshsv": {
+      "sha256": "f321f1120b3502f736bc9a8a8b0cce61c4adb7b5bcf6ba569d747870362e69d7",
+      "pr": 5
+    }
+  },
+  "labels": {
+    "en-dclm/brajeshpal466": "fff75e5ffa53d6497d98ef94803626ce714e4952e6dae57f3a63265a5cb53b2f",
+    "en-dclm/mittalutkarsh": "e9980c922e1f76860071230da693bd49b2f58175e43a1f574d15253216d6dce4",
+    "en-dclm/shekar-maker": "17d5d883ccfa3ad0cbf95a0f8cfddb60aec70525b11b6dc6248e457689089ea4",
+    "en-fineweb-edu/arunnayan": "84302c9b98faa1c4a962878e1ba772d68a42499195ef03d4192f237805928971",
+    "en-fineweb-edu/deepjyotisaha": "d8d33aa241fd7e13eb21ed73f83dca5816e40978915947724b7fe1d4475f6c19",
+    "en-fineweb-edu/shivman": "5ffc1553079e1dce3926f77f3190be063ab0e3d910231ae42e748e5346a37d33",
+    "en-nemotroncc/HariniJasti": "967ba7ce1bb3c84689cf50244760c64182dce2a1bc24933f9db8aeea1550f639",
+    "en-nemotroncc/s9k96": "dcc88d7239c869092029a41d9d564886d1cded7d769aae178b6f537424411036",
+    "en-nemotroncc-synth/AJJAPUSIVA": "6d42a7e2c4d32657f4cd2c44e01e0141a582adf4d3ecf2d08ae3388fd99d47bd",
+    "en-nemotroncc-synth/maheshsv": "6a764d7a741a25c7949b74294a982fe4efce33d41117d6e2bfa6f2faff687b7b"
+  },
+  "registry": "e31cbfe5f262c728a473b7d4e56b13c1029e453732a14d1a024213d38aa1ca37",
+  "sheet_29oct": {
+    "file": "medicine_en_29oct.md (kept with the compile scripts, outside this repo)",
+    "sha256": "00bd447008ac29b3c18d3010ef221daf8216696fefdcd611a57ad0c8d02374e2",
+    "from": "g1-harm-test-aneeshads:teams/01-data-a/en-medicines/medicine_en.md"
+  },
+  "pr16_code_ids": "9e62868d89be73acb17e46de470e37210a698f82597b213ec2c8a6446d1a4f8a",
+  "da_f1_005_source": "41d42a8c4c3bdb5bee859de1cea60929540940936889eba98b30aa37ee7fdff7",
+  "sheet": {
+    "file": "teams/01-data-a/spec_v1/medicine_english.md",
+    "sha256": "904c63b621515fc07bdd07cfff3553b6cff49504c89f41c2ec1fce2d27b0652c",
+    "code_sha256": "d41fec876ec84923d633d0f741eea2282c48f876f4deac4a367fc17b66464e78"
+  },
+  "generated": {
+    "teams/01-data-a/spec_v1/clean.py": "76ac8b21af7c3481f68e6fc2d317c48044250fe1a1eb0331b8b47eb7de112872",
+    "teams/01-data-a/spec_v1/clean_english.py": "4a8454a1315e9999ed3ea32a9b05808fecde457d0321a0a7138871f450ccf16f",
+    "teams/01-data-a/spec_v1/scripts/clean_english.py": "5b616a0c8294093fbcaaf6b386d6a5f1ad3d56c83188ff193e4c9a4470fb11bd"
+  },
+  "generated_note": "clean.py: every sheet but the English one (the committed file); clean_english.py: the code and English sheets; scripts/clean_english.py: the English sheet alone"
+}

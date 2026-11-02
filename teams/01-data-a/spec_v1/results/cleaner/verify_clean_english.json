@@ -1,0 +1,84 @@
+{
+  "cleaner": "teams/01-data-a/spec_v1/clean.py",
+  "sheet": "teams/01-data-a/spec_v1/specv1.md (its English rules)",
+  "rules": [
+    "DA-A1-004",
+    "DA-A2-008",
+    "DA-A5-001",
+    "DA-A3-002",
+    "DA-B1-002",
+    "DA-B2-002",
+    "DA-C3-001",
+    "DA-C3-003",
+    "DA-C5-002",
+    "DA-D4-001",
+    "DA-C1-006",
+    "DA-C2-003",
+    "DA-C5-005",
+    "DA-D3-003",
+    "DA-B4-007",
+    "DA-B4-008",
+    "DA-B4-012",
+    "DA-B4-010",
+    "DA-B4-011",
+    "DA-F1-005"
+  ],
+  "packs": {
+    "en-dclm": {
+      "docs": 500,
+      "clean_actions": {
+        "keep": 437,
+        "fix": 54,
+        "drop": 9
+      },
+      "function_vs_sheet_blocks": {},
+      "clean_vs_sheet": [],
+      "all_in_order_vs_clean": [],
+      "second_run_changes": [],
+      "docs_with_joiners": 0,
+      "joiners_lost_in_kept_lines": []
+    },
+    "en-fineweb-edu": {
+      "docs": 500,
+      "clean_actions": {
+        "keep": 487,
+        "fix": 12,
+        "drop": 1
+      },
+      "function_vs_sheet_blocks": {},
+      "clean_vs_sheet": [],
+      "all_in_order_vs_clean": [],
+      "second_run_changes": [],
+      "docs_with_joiners": 0,
+      "joiners_lost_in_kept_lines": []
+    },
+    "en-nemotroncc": {
+      "docs": 500,
+      "clean_actions": {
+        "keep": 421,
+        "fix": 62,
+        "drop": 17
+      },
+      "function_vs_sheet_blocks": {},
+      "clean_vs_sheet": [],
+      "all_in_order_vs_clean": [],
+      "second_run_changes": [],
+      "docs_with_joiners": 0,
+      "joiners_lost_in_kept_lines": []
+    },
+    "en-nemotroncc-synth": {
+      "docs": 500,
+      "clean_actions": {
+        "keep": 467,
+        "fix": 32,
+        "drop": 1
+      },
+      "function_vs_sheet_blocks": {},
+      "clean_vs_sheet": [],
+      "all_in_order_vs_clean": [],
+      "second_run_changes": [],
+      "docs_with_joiners": 0,
+      "joiners_lost_in_kept_lines": []
+    }
+  }
+}

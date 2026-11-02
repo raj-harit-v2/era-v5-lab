@@ -86,7 +86,7 @@ The five learning rates are a log grid chosen in this plan so the sweep can see 
 
 EXP-1 by Tue 3 Nov is seed 1234 of each of the five arms. Seeds 1235 and 1236 are required before any arm is called the winner, and they are due Wed 4 Nov so a job request can be queued for the break.
 
-Muon screen, before the T2 job: three T1 runs, Muon learning rates 1e-3, 1e-2 and 1e-1, seed 1234, 30 min each. The T2 Muon arm uses the lowest of those three. This grid is also set here, for the same reason as the AdamW grid. The AdamW arm at T2 uses the EXP-1 winner learning rate. If EXP-1 has no winner yet, the AdamW arm uses 1e-3 and the run file says the comparison is not final.
+Muon screen, before the T2 job: three T1 runs, Muon learning rates 1e-3, 1e-2 and 1e-1, seed 1234, 30 min each. The T2 Muon arm uses the learning rate with the lowest bits per byte of those three runs. This grid is also set here, for the same reason as the AdamW grid. The AdamW arm at T2 uses the EXP-1 winner learning rate. If EXP-1 has no winner yet, the AdamW arm uses 1e-3 and the run file says the comparison is not final.
 
 EXP-3 runs only those four rows. The counts are the T1 count (8), the T2 count (16), and one doubling (32). Shared-expert off changes that one value and leaves the expert count at 16.
 
@@ -106,7 +106,9 @@ Their loader (`teams/06-performance/models/config.py`) accepts the files below. 
 
 `t2.yaml` and `t3.yaml` set `mlp_ratio` to null. They inherit `base.yaml`, and leaving the key out would keep its `mlp_ratio` 4. That would time an expert width of 2,048 at T2 and 2,560 at T3. Null is there so that mistake cannot happen quietly.
 
-T1 is exact on every loader field and may be timed as the T1 shape. EXP-1 changes only the learning rate, so one T1 step time covers all five learning-rate arms. `t1.yaml` sets `optim.lr` to null so Team 6's timing default of 0.0006 is not inherited as if it were a chosen learning rate.
+T1 is exact on every loader field and may be timed as the T1 shape. EXP-1 changes only the learning rate, so one T1 step time covers all five learning-rate arms. `t1.yaml`, `t2.yaml`, and `t3.yaml` set `optim.lr` to 0.001 so the loader can take a step. That number is a timing placeholder. It is not a chosen learning rate, and config v0 keeps `optim.lr` null. The EXP-1 files set their own rates. `exp2_adamw.yaml` uses 0.001 until EXP-1 names a winner, and that comparison is not final. `exp2_muon.yaml` sets `optim.muon_lr` to null so base.yaml's 0.02 is not inherited. The T1 screen chooses that rate.
+
+Pull request 167 is on main. Every arm file sets `model.reversible` false, `model.ce_impl` torch, and `moe.dispatch` loop, so those three cannot move with `base.yaml`. `t1.yaml`, `t2.yaml`, and `t3.yaml` also set `model.attn_impl` eager and `model.mtp` false. The loader's own default for attention is sdpa, so leaving attention unset would not keep eager. `run.dtype` is already bf16 on those three files. SwiGLU, RoPE, and a rope theta are not selected in these files.
 
 | File | Loadable shape | Official step time |
 |---|---|---|
