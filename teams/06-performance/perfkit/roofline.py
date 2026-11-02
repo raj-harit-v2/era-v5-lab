@@ -96,7 +96,12 @@ def forward_costs(mcfg: dict, B: int, T: int, dtype: str) -> dict:
     if n_head % n_kv_head:
         raise ValueError("n_kv_head must divide n_head")
     V = _positive_int("vocab_size", cfg.get("vocab_size", 131072))
-    h = _positive_int("mlp_ratio", cfg.get("mlp_ratio", 4)) * d
+    moe_cfg = cfg.get("moe") or {}
+    ffn_kind = cfg.get("ffn", "mlp")
+    if ffn_kind == "moe" and moe_cfg.get("ffn_hidden") is not None:
+        h = _positive_int("moe.ffn_hidden", moe_cfg["ffn_hidden"])
+    else:
+        h = _positive_int("mlp_ratio", cfg.get("mlp_ratio", 4)) * d
     activation = cfg.get("activation", "gelu")
     if activation not in ("gelu", "swiglu"):
         raise ValueError(f"unsupported activation {activation!r}; choose gelu or swiglu")
@@ -105,7 +110,6 @@ def forward_costs(mcfg: dict, B: int, T: int, dtype: str) -> dict:
     n_mat, act_flops, act_reads = (3, 6, 3) if activation == "swiglu" else (2, 8, 2)
     M, item = B * T, DTYPE_BYTES[dtype]
     hd, kv = d // n_head, n_kv_head
-    moe_cfg = cfg.get("moe") or {}
     E = _positive_int("num_experts", moe_cfg.get("num_experts", 8))
     top_k = _positive_int("top_k", moe_cfg.get("top_k", 2))
     shared = max(0, int(moe_cfg.get("num_shared", 0)))
