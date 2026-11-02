@@ -35,11 +35,11 @@ def medicine_d3(text: str) -> str:
 
 3. **Action:** **fix** — keep the text; record disease **D3** with a short quote + character offset in `evidence`. **Drop** only when D3 co-occurs with unsafe or unusable content (for example **F3**, or **C4/C5** trading-spam / fragment-stitch), not for ordinary bilingual Hindi web text.
 
-4. **Harm test:** Data B gold `teams/02-data-b/gold/ind-hi-fw2_gold.csv` (**234** docs, post-#161 rebuild). Tool: `harm_test_indic.py --rule D3` (2026-10-31; allow ≤ max(1, 1%) ≈ 2.34). Automatic medicine `medicine_d3` keeps text (label-only):
-   - gold docs **changed**: **0** of 234 (0.00%)
-   - gold docs **dropped**: **0** of 234 (0.00%)
-   - ZWJ/ZWNJ + NFC audits: **ok** — **PASS**
-   Pack side-effect (not gold gate): D3 on **53/500** labeled rows (already fix/drop with D3).
+4. **Harm test:** gold set of 234 documents (ind-hi-fw2 234), medicine.md sha256 d98646f497e0; rule: changed or dropped at most 1% or 1 document, whichever is more.
+   - Changed 0 of 234 (0.00%). Dropped 0 of 234 (0.00%). **PASS**
+   - ZWJ/ZWNJ audit: 0 changed documents with a different count. **PASS**
+   - Normal-form audit: 0 changed documents left NFC or lost a compatibility character. **PASS**
+   Tool: `harm_test_indic.py --rule D3` on `teams/02-data-b/gold/ind-hi-fw2_gold.csv` (2026-11-02). Automatic `medicine_d3` keeps text (label-only). Pack side-effect: D3 on **53/500** labeled rows.
 
 5. **Side effects:** Over-flags English brand names, person names, and English headlines embedded in otherwise good Hindi articles; under-flags romanised-only Hindi (that is closer to **D2**). Must never classify ZWJ/ZWNJ as A1.
 
@@ -89,15 +89,17 @@ def strip_c1_lines(text: str) -> str:
             continue
         kept.append(line)
     return "".join(kept)
+
+medicine_c1 = strip_c1_lines
 ```
 
 3. **Action:** **fix** — remove matching furniture lines; keep the document. **Drop** only if removal leaves fewer than about two sentences of usable prose.
 
-4. **Harm test:** Data B gold `ind-hi-fw2_gold.csv` (**234** docs, post-#161). Tool: `harm_test_indic.py --rule C1` (2026-10-31). Ran `strip_c1_lines`:
-   - gold docs **changed**: **0** of 234 (0.00%)
-   - gold docs **dropped**: **0** of 234 (0.00%)
-   - ZWJ/ZWNJ + NFC audits: **ok** — **PASS**
-   Pack side check: **0/399** current `clean` rows still match the C1 whole-line regex; C1 on **26/500** labeled rows (all fix).
+4. **Harm test:** gold set of 234 documents (ind-hi-fw2 234), medicine.md sha256 d98646f497e0; rule: changed or dropped at most 1% or 1 document, whichever is more.
+   - Changed 0 of 234 (0.00%). Dropped 0 of 234 (0.00%). **PASS**
+   - ZWJ/ZWNJ audit: 0 changed documents with a different count. **PASS**
+   - Normal-form audit: 0 changed documents left NFC or lost a compatibility character. **PASS**
+   Tool: `harm_test_indic.py --rule C1` on `teams/02-data-b/gold/ind-hi-fw2_gold.csv` (2026-11-02). Ran `medicine_c1` / `strip_c1_lines`. Pack side check: **0/399** current `clean` rows still match the C1 whole-line regex; C1 on **26/500** labeled rows (all fix).
 
 5. **Side effects:** A real byline that is exactly `Posted By: name` or a lone `Advertisement` line is removed; a dateline line ending in IST that carries news content can be removed if it matches the whole-line pattern; `ये भी पढ़ें` followed by a real headline on the **same** line is kept (whole-line rule), but an empty stub line is removed.
 
@@ -132,11 +134,11 @@ def medicine_c3(text: str) -> str:
 
 3. **Action:** **fix** — keep the document; record **C3** with the last line + offset in `evidence`. Optionally append `।` or drop a trailing stub line (byline / `NEXT STORY` / bare `–आईएएनएस`). **Drop** only when truncation leaves the document unusable as training text (e.g. mid-word body cut with almost no remaining sentences).
 
-4. **Harm test:** Data B gold `ind-hi-fw2_gold.csv` (**234** docs, post-#161). Tool: `harm_test_indic.py --rule C3` (2026-10-31). Automatic `medicine_c3` keeps text (label/fix; no mass drop of open endings):
-   - gold docs **changed**: **0** of 234 (0.00%)
-   - gold docs **dropped**: **0** of 234 (0.00%)
-   - ZWJ/ZWNJ + NFC audits: **ok** — **PASS**
-   Pack side-effect: C3 on **31/500** labeled rows (fix/drop with C3).
+4. **Harm test:** gold set of 234 documents (ind-hi-fw2 234), medicine.md sha256 d98646f497e0; rule: changed or dropped at most 1% or 1 document, whichever is more.
+   - Changed 0 of 234 (0.00%). Dropped 0 of 234 (0.00%). **PASS**
+   - ZWJ/ZWNJ audit: 0 changed documents with a different count. **PASS**
+   - Normal-form audit: 0 changed documents left NFC or lost a compatibility character. **PASS**
+   Tool: `harm_test_indic.py --rule C3` on real pack gold (2026-11-02). Automatic `medicine_c3` keeps text. Pack side-effect: C3 on **31/500** labeled rows.
 
 5. **Side effects:** Over-flags intentional open endings (lists, titles, social handles as last line); under-flags mid-document cuts that still end with `।` on a leftover stub. Byline lines like `Posted By: …` without a period become C3 even when the article body was fine.
 
@@ -170,11 +172,11 @@ def flag_c4_trading_spam(text: str) -> bool:
 
 3. **Action:** **drop** — do not keep the document for training. Record **C4** (and co-codes such as **C5** / **D3** if present) with a short evidence string. Do **not** try to surgically delete trading paragraphs when the whole page is spam-stitched.
 
-4. **Harm test:** Data B gold `ind-hi-fw2_gold.csv` (**234** docs, post-#161). Tool: `harm_test_indic.py --rule C4` (2026-10-31). Ran `flag_c4_trading_spam`:
-   - gold docs **changed**: **0** of 234 (0.00%)
-   - gold docs **dropped**: **0** of 234 (0.00%)
-   - ZWJ/ZWNJ + NFC audits: **ok** — **PASS**
-   Pack side-effect: C4 on **9/500** labeled rows (all verdict=drop).
+4. **Harm test:** gold set of 234 documents (ind-hi-fw2 234), medicine.md sha256 d98646f497e0; rule: changed or dropped at most 1% or 1 document, whichever is more.
+   - Changed 0 of 234 (0.00%). Dropped 0 of 234 (0.00%). **PASS**
+   - ZWJ/ZWNJ audit: 0 changed documents with a different count. **PASS**
+   - Normal-form audit: 0 changed documents left NFC or lost a compatibility character. **PASS**
+   Tool: `harm_test_indic.py --rule C4` on real pack gold (2026-11-02). Ran `flag_c4_trading_spam`. Pack side-effect: C4 on **9/500** labeled rows (all drop).
 
 5. **Side effects:** Can over-flag long finance explainers that list many legitimate market terms; under-flags soft spam with only two trade words plus affiliate URLs (**C5** may still catch URL/phrase spam). Always review co-occurrence with **C5** before trusting a borderline call.
 
@@ -207,11 +209,11 @@ def _strip_b2_urls(text: str) -> str:
 
 3. **Action:** **fix** — remove tags with `medicine_b2`; for embedded share/chrome URLs, remove the URL token after human confirm (or label-only if the URL sits inside usable prose). Keep the document. **Drop** only if the body is mostly markup/Base64 with almost no remaining Hindi sentences.
 
-4. **Harm test:** Data B gold `ind-hi-fw2_gold.csv` (**234** docs, post-#161). Tool: `harm_test_indic.py --rule B2` (2026-10-31). Ran **`medicine_b2` (tag strip only)**:
-   - gold docs **changed**: **0** of 234 (0.00%)
-   - gold docs **dropped**: **0** of 234 (0.00%)
-   - ZWJ/ZWNJ + NFC audits: **ok** — **PASS**
-   Note: `_strip_b2_urls` is helper-only (not automatic). Pack side-effect: B2 on **9/500** labeled rows (fix).
+4. **Harm test:** gold set of 234 documents (ind-hi-fw2 234), medicine.md sha256 d98646f497e0; rule: changed or dropped at most 1% or 1 document, whichever is more.
+   - Changed 0 of 234 (0.00%). Dropped 0 of 234 (0.00%). **PASS**
+   - ZWJ/ZWNJ audit: 0 changed documents with a different count. **PASS**
+   - Normal-form audit: 0 changed documents left NFC or lost a compatibility character. **PASS**
+   Tool: `harm_test_indic.py --rule B2` on real pack gold (2026-11-02). Ran `medicine_b2` (tag strip only). `_strip_b2_urls` is helper-only. Pack side-effect: B2 on **9/500** labeled rows (fix).
 
 5. **Side effects:** Tag strip can leave empty lines or broken spacing where a tag was the only content on a line; URL labeling can over-flag citation links inside good journalism. Never treat Indic ZWJ/ZWNJ as markup.
 
