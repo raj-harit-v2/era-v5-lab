@@ -104,14 +104,6 @@ def _data_prefetch_case(device):
     return Case(ref=lambda: batches(False), fast=lambda: batches(True), inputs=[], grads=False)
 
 
-@pytest.mark.parametrize("name", pairs_in(__name__))
-def test_pair(name, device):
-    errors = check(PAIRS[name], device)
-    assert any(key.startswith("out[") for key in errors)
-    if name == "optim.muon_ns.batched":
-        assert any(key.startswith("grad_in[") for key in errors)
-
-
 @pytest.mark.parametrize("embedding", ["table", "ke1"])
 @pytest.mark.parametrize("muon_impl", ["loop", "batched"])
 def test_optimizer_ownership_and_norm_gains(embedding, muon_impl):
@@ -534,8 +526,9 @@ def test_cosine_learning_rate_schedule():
 
 
 # ---- @pair correctness checks (Task 3) -----------------------------------------
+# Cases the pairs above do not cover, so the names differ (a pair name is registered once).
 
-@pair("opt.muon.batched", tol=2e-3, grad_tol=5e-5)
+@pair("opt.muon.batched.missing_grad", tol=2e-3, grad_tol=5e-5)
 def _(device):
     # Keep loop as the reference; batched is fast.  Same 3 params, 3 steps, missing grad
     # on step 1 param 1 — matches the existing non-pair test so we can cross-check.
@@ -569,7 +562,7 @@ def _(device):
     )
 
 
-@pair("opt.adamw.foreach", tol=1e-6, grad_tol=5e-5)
+@pair("opt.adamw.foreach.groups", tol=1e-6, grad_tol=5e-5)
 def _(device):
     # Two 2D params share one _foreach bucket (same step count); one 1D param runs alone.
     # Loop is the reference; foreach is fast.
@@ -607,7 +600,7 @@ def _(device):
     )
 
 
-@pair("data.prefetch", tol=0.0, grad_tol=5e-5)
+@pair("data.prefetch.first", tol=0.0, grad_tol=5e-5)
 def _(device):
     # prefetch=True pre-samples the next batch while the GPU is busy; both paths must yield
     # identical token IDs because they advance the RNG in the same order.
@@ -634,10 +627,13 @@ def _(device):
     )
 
 
+# After the last @pair: pairs_in() lists the pairs registered so far.
 @pytest.mark.parametrize("name", pairs_in(__name__))
 def test_pair(name, device):
     errors = check(PAIRS[name], device)
-    assert "out[0]" in errors, f"{name}: output must be compared"
+    assert any(key.startswith("out[") for key in errors)
+    if name == "optim.muon_ns.batched":
+        assert any(key.startswith("grad_in[") for key in errors)
 
 
 # ---- fixtures and integration tests --------------------------------------------
