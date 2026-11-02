@@ -42,7 +42,7 @@ import pytest
 import torch
 
 from correctness.framework import PAIRS, Case, check, pair, pairs_in, to64
-from models.config import load_config, model_config
+from models.config import ModelConfig, load_config, model_config
 # Bare name, as pytest and test_framework.py import test files: correctness.test_attention would load the file a
 # second time and register its pairs twice.
 from test_attention import naive_attention
@@ -253,6 +253,33 @@ for _key, _values in CHOICES.items():
     for _v in _values:
         if getattr(_base(), _key) != _v:
             _fp32_pair(f"model.base.{_key}_{str(_v).lower()}", [f"model.{_key}={str(_v).lower()}"])
+
+# Tied / untied table head (base.yaml uses ke2 + tie_embeddings=false).
+_fp32_pair("model.base.tie_embeddings_true",
+           ["model.embedding=table", "model.tie_embeddings=true"])
+_fp32_pair("model.base.tie_embeddings_false",
+           ["model.embedding=table", "model.tie_embeddings=false"])
+
+
+def test_tie_embeddings_requires_table():
+    with pytest.raises(AssertionError, match="tie_embeddings=True requires model.embedding='table'"):
+        ModelConfig(embedding="ke1", tie_embeddings=True)
+    with pytest.raises(AssertionError, match="tie_embeddings=True requires model.embedding='table'"):
+        ModelConfig(embedding="ke2", tie_embeddings=True)
+
+
+def test_param_counts_active_same_tied_or_untied_table():
+    """Active matmul count is the same; untied table adds V*d to total parameters only."""
+    from models.config import ModelConfig as MC
+    V, d = 97, 32
+    tied = GPT(MC(vocab_size=V, block_size=8, n_layer=1, n_head=2, n_embd=d,
+                  embedding="table", tie_embeddings=True, reversible=False, ffn="mlp"))
+    untied = GPT(MC(vocab_size=V, block_size=8, n_layer=1, n_head=2, n_embd=d,
+                    embedding="table", tie_embeddings=False, reversible=False, ffn="mlp"))
+    tt, ta = tied.param_counts()
+    ut, ua = untied.param_counts()
+    assert ta == ua
+    assert ut == tt + V * d
 
 
 def _bf16_pair(name, overrides=()):

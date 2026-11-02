@@ -17,7 +17,14 @@ import torch
 from correctness.framework import PAIRS, Case, check, pair, pairs_in, rel_err, to64
 from models.config import ModelConfig
 from models.gpt import Block
-from models.reversible import ReversibleStack, plain_forward, reconstruction_error, _forward_recording, _replaying
+from models.reversible import (
+    ReversibleOnePassStack,
+    ReversibleStack,
+    plain_forward,
+    reconstruction_error,
+    _forward_recording,
+    _replaying,
+)
 
 N_EMBD, N_HEAD, N_LAYER_PAIR = 32, 4, 3
 B, T = 2, 17
@@ -102,6 +109,37 @@ _register("mlp")
 _register("moe")
 
 
+def _register_one_pass(ffn: str):
+    name = f"reversible.one_pass.{ffn}"
+
+    @pair(name, tol=1e-5, grad_tol=5e-5)
+    def build(device):
+        fast_blocks = _blocks(ffn, N_LAYER_PAIR, seed=0).to(device)
+        ref_blocks = to64(fast_blocks)
+        x = torch.randn(
+            B, T, N_EMBD, device=device,
+            generator=torch.Generator(device=device).manual_seed(1),
+        ).requires_grad_(True)
+
+        def fast_fn(inp):
+            return ReversibleOnePassStack.apply(inp, fast_blocks)
+
+        def ref_fn(inp):
+            return plain_forward(inp, ref_blocks)
+
+        return Case(
+            ref=ref_fn,
+            fast=fast_fn,
+            inputs=[x],
+            params_ref=_all_params(ref_blocks),
+            params_fast=_all_params(fast_blocks),
+        )
+
+    return build
+
+
+_register_one_pass("mlp")
+_register_one_pass("moe")
 
 
 @pytest.mark.parametrize("name", pairs_in(__name__))

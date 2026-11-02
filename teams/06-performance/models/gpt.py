@@ -212,8 +212,9 @@ class GPT(nn.Module):
         self.blocks = nn.ModuleList(Block(cfg, i) for i in range(cfg.n_layer))
         self.ln_f = nn.LayerNorm(d)
         self.head = nn.Linear(d, cfg.vocab_size, bias=False)
-        if cfg.embedding == "table":
-            self.head.weight = self.tok.weight          # tied
+        # Tie when embedding=table and tie_embeddings is not False (None keeps the legacy table-tied default).
+        if cfg.embedding == "table" and cfg.tie_embeddings is not False:
+            self.head.weight = self.tok.weight
         else:
             nn.init.normal_(self.head.weight, mean=0.0, std=0.02)
         if cfg.mtp:
@@ -233,8 +234,9 @@ class GPT(nn.Module):
         x = mark(x, "stack", 1)
         with region("stack", 1):
             if self.cfg.reversible:
-                from models.reversible import ReversibleStack
-                x = ReversibleStack.apply(x, self.blocks)
+                from models.reversible import ReversibleOnePassStack, ReversibleStack
+                stack = ReversibleOnePassStack if self.cfg.rev_impl == "one_pass" else ReversibleStack
+                x = stack.apply(x, self.blocks)
             else:
                 for i, blk in enumerate(self.blocks):
                     x = mark(x, f"block{i}", 2)

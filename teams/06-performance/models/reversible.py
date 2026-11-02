@@ -17,6 +17,9 @@ This needs a purely additive stream: the LayerNorms sit inside f (pre-LN), never
     So a reversible block costs ~4x its forward in backward (vs ~2x for a plain block): the price of
     O(1) activation memory. Backward re-enters autocast with the forward's dtype, or the
     reconstruction drifts.
+  * ReversibleOnePassStack: same forward as ReversibleStack; backward evaluates f once on the curr
+    state (b = po), rebuilds prev as co - 2h f(b), and backprops 2h g_curr through that f. Same
+    MoE routing replay. Selected when model.rev_impl=one_pass; two_pass stays the reference.
   * plain_forward(x, blocks): the same maths with normal autograd. The reference for tests.
   * reconstruction_error(x, blocks): run forward, invert every block, return ||x' - x|| / ||x||.
     Grows with depth: check it for every new config (bf16: ~1e-4 at 6 to 9 layers).
@@ -118,6 +121,44 @@ class ReversibleStack(torch.autograd.Function):
                         with region(f"block{i}.grad", 3):
                             torch.autograd.backward(d, g_curr)
                     g_prev, g_curr = a.grad, g_prev + b.grad
+                    po, co = rec_prev, po
+        ctx.routes = None
+        return g_prev + g_curr, None
+
+
+class ReversibleOnePassStack(torch.autograd.Function):
+    """Same forward as ReversibleStack; backward runs f once on the curr state."""
+
+    @staticmethod
+    def forward(ctx, x, blocks):
+        ctx.blocks, ctx.dev = blocks, x.device.type
+        ctx.amp_on, ctx.amp_dtype = _autocast_state(ctx.dev)
+        with torch.no_grad():
+            a, b, ctx.routes = _forward_recording(blocks, x)
+        ctx.save_for_backward(a, b)
+        return b
+
+    @staticmethod
+    def backward(ctx, grad_out):
+        blocks = ctx.blocks
+        po, co = ctx.saved_tensors
+
+        def amp():
+            return torch.autocast(device_type=ctx.dev, dtype=ctx.amp_dtype, enabled=ctx.amp_on)
+
+        g_prev, g_curr = torch.zeros_like(grad_out), grad_out
+        with torch.no_grad():
+            for i in reversed(range(len(blocks))):
+                blk = blocks[i]
+                with region(f"block{i}", 2), _replaying(blk, ctx.routes[i]):
+                    with torch.enable_grad():
+                        b = po.detach().requires_grad_(True)
+                        with phase("bwd.recompute"), region(f"block{i}", 3), amp():
+                            f_b = blk.f(b)
+                        with region(f"block{i}.grad", 3):
+                            torch.autograd.backward(f_b, 2.0 * blk.h * g_curr)
+                    rec_prev = (co - 2.0 * blk.h * f_b.detach())
+                    g_prev, g_curr = g_curr, g_prev + b.grad
                     po, co = rec_prev, po
         ctx.routes = None
         return g_prev + g_curr, None

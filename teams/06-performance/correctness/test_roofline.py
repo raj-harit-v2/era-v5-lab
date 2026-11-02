@@ -49,6 +49,22 @@ def test_forward_costs_rejects_invalid_shapes_and_dtypes(args):
         forward_costs(_cfg(), *args)
 
 
+def test_forward_costs_moe_ffn_hidden_when_mlp_ratio_null():
+    """T2/T3 arms set mlp_ratio: null and moe.ffn_hidden; roofline must not crash."""
+    costs = forward_costs(
+        _cfg(
+            mlp_ratio=None,
+            ffn="moe",
+            n_embd=64,
+            moe={"num_experts": 4, "top_k": 2, "num_shared": 0, "dispatch": "loop",
+                 "ffn_hidden": 896},
+        ),
+        B=2, T=4, dtype="bf16",
+    )
+    assert "fwd:block0.moe.router" in costs["regions"]
+    assert costs["totals"]["flops"] > 0
+
+
 def test_estimate_costs_reports_separate_compute_bandwidth_and_launch_bounds():
     costs = {
         "dtype": "bf16", "notes": [],

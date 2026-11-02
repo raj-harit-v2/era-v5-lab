@@ -44,8 +44,20 @@ COMPARE_CONFIG = [
 # Implementation switches: the same model and update, computed another way. Two runs that differ only in
 # these are compared (an A/B timing), and the verdict is labelled A/B: a part outside tol_pct there is the
 # change being measured. The 5% repeat check stays two runs of one implementation (bench --repeat).
-IMPL_SWITCHES = [("model", "moe", "dispatch"), ("model", "ce_impl"), ("optim", "muon_impl"),
-                 ("optim", "adamw_impl"), ("data", "prefetch")]
+IMPL_SWITCHES = [
+    ("model", "moe", "dispatch"),
+    ("model", "ce_impl"),
+    ("model", "rev_impl"),  # two_pass vs one_pass: same update, different backward
+    ("optim", "muon_impl"),
+    ("optim", "adamw_impl"),
+    ("data", "prefetch"),
+]
+
+# Keys added after early run JSONs; missing == these defaults so old vs new baselines still compare.
+_MODEL_COMPARE_DEFAULTS = {
+    "tie_embeddings": False,  # base.yaml; ke* was always untied; table+missing was legacy-tied but rare in runs
+    "rev_impl": "two_pass",
+}
 
 
 def _switch_value(config: dict, path: tuple):
@@ -86,6 +98,8 @@ def compare_config_value(config: dict, section: str, key: str | None):
     value = sect if key is None else sect.get(key)
     if key is not None or not isinstance(value, dict):
         return value
+    if section == "model":
+        value = {**_MODEL_COMPARE_DEFAULTS, **value}
     for path in IMPL_SWITCHES:
         if path[0] != section:
             continue
