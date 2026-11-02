@@ -30,7 +30,7 @@ model:                  # fields of models.config.ModelConfig, nothing else
   ke_max_pos: 32
   ke_mode: dynamic      # dynamic | cached
   ffn: mlp              # mlp | moe
-  moe: {num_experts: 8, top_k: 2, num_shared: 1, bias_gamma: 0.01, dispatch: loop}
+  moe: {num_experts: 8, top_k: 2, num_shared: 1, bias_gamma: 0.01, dispatch: loop, ffn_hidden: null}
   reversible: true
   rev_h: 1.0
   ce_impl: torch        # torch (full fp32 logits, the baseline) | chunked (ce_chunks pieces, checkpointed)
