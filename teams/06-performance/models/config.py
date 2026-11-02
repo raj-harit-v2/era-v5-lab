@@ -22,7 +22,7 @@ from pathlib import Path
 import yaml
 
 MOE_KEYS = {"num_experts", "top_k", "num_shared", "bias_gamma", "dispatch", "ffn_hidden"}   # SparseMoE keyword arguments
-CE_IMPLS = ("torch", "chunked")
+CE_IMPLS = ("torch", "chunked", "fused", "fused_cached", "fused_liger", "fused_cce")
 ATTN_IMPLS = ("sdpa", "eager")
 ACTIVATIONS = ("gelu", "swiglu")
 
@@ -47,8 +47,10 @@ class ModelConfig:
                                                    bias_gamma=0.01, dispatch="loop", ffn_hidden=None))
     reversible: bool = False         # True: midpoint reversible stack
     rev_h: float = 1.0               # midpoint step size
-    ce_impl: str = "torch"           # torch: full fp32 logits (baseline) | chunked: ce_chunks pieces, checkpointed
-    ce_chunks: int = 8
+    ce_impl: str = "torch"           # torch | chunked | fused | fused_cached | fused_liger | fused_cce
+    ce_chunks: int = 8                # number of token chunks for chunked / fused
+    ce_vocab_chunk: int = 4096        # vocabulary tile size for fused_cce
+    ce_token_chunk: int = 16           # token tile size for fused_cached / fused_liger
     mtp: bool = False                # True: second untied head predicts token t+2 (G5 config_v0); loss = ntp + mtp
 
     def __post_init__(self):
@@ -58,6 +60,8 @@ class ModelConfig:
         assert self.attn_impl in ATTN_IMPLS, f"attn_impl={self.attn_impl!r} not in {ATTN_IMPLS}"
         assert self.activation in ACTIVATIONS, f"activation={self.activation!r} not in {ACTIVATIONS}"
         assert self.ce_impl in CE_IMPLS, f"ce_impl={self.ce_impl!r} not in {CE_IMPLS}"
+        assert self.ce_chunks > 0 and self.ce_vocab_chunk > 0 and self.ce_token_chunk > 0, \
+            "cross-entropy chunk sizes must be positive"
         unknown = sorted(set(self.moe) - MOE_KEYS)
         assert not unknown, f"unknown moe keys {unknown}; known: {sorted(MOE_KEYS)}"
         hidden = self.moe.get("ffn_hidden")

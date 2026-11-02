@@ -156,6 +156,10 @@ python -m perfkit.smoke                                      # configs/base.yaml
 python -m perfkit.smoke model.embedding=table model.reversible=false optim.name=adamw   # plain NanoGPT for comparison
 python -m perfkit.smoke --config configs/tiny_cpu.yaml       # laptop, seconds; numbers mean nothing
 python -m perfkit.smoke model.ce_impl=chunked                # if out of memory; then lower run.batch_size (8 on a T4)
+python -m perfkit.smoke model.ce_impl=fused                  # token chunks, computes and caches head gradients in forward
+python -m perfkit.smoke model.ce_impl=fused_cached           # token-tiled CE, caches head gradients (measure memory too)
+python -m perfkit.smoke model.ce_impl=fused_liger            # Liger-style token chunks, PyTorch reference
+python -m perfkit.smoke model.ce_impl=fused_cce              # Apple CCE-style vocab streaming, PyTorch reference
 python -m perfkit.smoke --steps 500 --warmup 0               # longer training run (every step is a real train step)
 ```
 
@@ -163,6 +167,21 @@ Device, precision, batch and step counts come from the config only (`run.device`
 `key=value` overrides work for any key of `configs/base.yaml`. A good run: reconstruction error below
 1e-3 (`OK`), loss starting at about ln(131072) = 11.78 and falling, p10 / p90 within a few % of the median,
 `all weights finite: True`.
+
+`model.ce_impl=fused` splits tokens into up to `model.ce_chunks` pieces (tail chunks may be shorter), computes
+`dh` and `dW` while each chunk's logits are live, and saves only these gradients for backward. The head
+matmul uses fp32 or the active autocast/native bf16 dtype; loss reductions and gradient buffers use fp32.
+In bf16 mode the two head-gradient matrix products also use bf16, with fp32 accumulation.
+Both NTP and MTP use this path. This is a portable PyTorch custom-autograd implementation.
+`fused_cached` and `fused_liger` use the same cached-gradient algorithm with a fixed maximum token tile
+size, `model.ce_token_chunk`. `fused_cce` preserves the vocabulary-streaming/recomputing implementation,
+with `model.ce_vocab_chunk` classes per tile. The cached-gradient paths require a full head-gradient
+buffer; compare step time and peak memory before choosing a configuration.
+`fused_liger` and `fused_cce` expose source-inspired variants for direct A/B comparisons. They are portable
+PyTorch reference implementations, not upstream Liger or Apple Triton kernels; see
+[`docs/LINEAR_CE.md`](docs/LINEAR_CE.md) for algorithm mapping, correctness coverage, and source links.
+For an A/B timing against the plain head, run `perfkit.bench` once with the default `model.ce_impl=torch`, then
+rerun with `--against results/runs/<torch-tag>.json model.ce_impl=fused`; the report labels this implementation A/B.
 
 **6. Training schedule:** timing runs use a constant learning rate by default. To inspect training
 loss with cosine decay and optional linear warmup, add optimizer overrides; schedule duration follows

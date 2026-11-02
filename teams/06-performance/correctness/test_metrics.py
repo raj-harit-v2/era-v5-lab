@@ -31,7 +31,9 @@ def test_flops_per_token_matches_documented_model_and_hardware_formulas():
 
 @pytest.mark.parametrize(
     ("overrides", "extra"),
-    [({"reversible": True}, "reversible"), ({"ce_impl": "chunked"}, "chunked")],
+    [({"reversible": True}, "reversible"), ({"ce_impl": "chunked"}, "recompute"),
+     ({"ce_impl": "fused"}, "cached"), ({"ce_impl": "fused_cce"}, "recompute"),
+     ({"ce_impl": "fused_liger"}, "cached")],
 )
 def test_flops_per_token_counts_extra_reversible_or_chunked_work(overrides, extra):
     model = _tiny_model(**overrides)
@@ -44,7 +46,7 @@ def test_flops_per_token_counts_extra_reversible_or_chunked_work(overrides, extr
     if extra == "reversible":
         stack_fwd = 2 * (active - head - ke) + 4 * model.cfg.n_layer * model.cfg.n_embd * seq_len
         expected += 2 * stack_fwd
-    else:
+    elif extra == "recompute":
         expected += 2 * head
     result = flops_per_token(model, seq_len)
     assert result["model_flops_per_token"] == model_fpt

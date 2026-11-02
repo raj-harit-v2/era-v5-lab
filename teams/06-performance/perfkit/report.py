@@ -44,7 +44,8 @@ COMPARE_CONFIG = [
 # Implementation switches: the same model and update, computed another way. Two runs that differ only in
 # these are compared (an A/B timing), and the verdict is labelled A/B: a part outside tol_pct there is the
 # change being measured. The 5% repeat check stays two runs of one implementation (bench --repeat).
-IMPL_SWITCHES = [("model", "moe", "dispatch"), ("optim", "muon_impl"), ("optim", "adamw_impl"), ("data", "prefetch")]
+IMPL_SWITCHES = [("model", "moe", "dispatch"), ("model", "ce_impl"), ("optim", "muon_impl"),
+                 ("optim", "adamw_impl"), ("data", "prefetch")]
 
 
 def _switch_value(config: dict, path: tuple):

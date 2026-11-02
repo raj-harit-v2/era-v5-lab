@@ -33,8 +33,10 @@ model:                  # fields of models.config.ModelConfig, nothing else
   moe: {num_experts: 8, top_k: 2, num_shared: 1, bias_gamma: 0.01, dispatch: loop, ffn_hidden: null}
   reversible: true
   rev_h: 1.0
-  ce_impl: torch        # torch (full fp32 logits, the baseline) | chunked (ce_chunks pieces, checkpointed)
-  ce_chunks: 8
+  ce_impl: torch        # torch | chunked | fused | fused_cached | fused_liger | fused_cce
+  ce_chunks: 8          # token chunk count for chunked / fused (need not divide B*T)
+  ce_vocab_chunk: 4096  # vocabulary tile size for fused_cce
+  ce_token_chunk: 16    # token tile size for fused_cached / fused_liger
   mtp: false            # true: second untied head on token t+2 (G5 config_v0); trained loss = ntp + mtp
 
 optim:

@@ -2,7 +2,7 @@
 
   * compare(): refuses a baseline pair that does not time the same committed code (other commit, dirty or unknown
     tree) or that changes a MoE setting other than dispatch; accepts and labels A/B a pair that differs only in
-    optim.muon_impl or model.moe.dispatch.
+    optim.muon_impl, model.moe.dispatch or model.ce_impl.
   * render(): the CUDA timing-event allocation diagnostics per stage and the run's warnings, word for word.
 """
 from __future__ import annotations
@@ -43,6 +43,15 @@ def test_same_commit_moe_dispatch_variants_can_be_compared():
     assert ok and problems == []
     assert "model.moe.dispatch: loop vs sorted" in report.ab_note(a, b)
     assert "A/B" in report.baseline_md(a, b, [], ok, problems)
+
+
+def test_same_commit_cross_entropy_variants_can_be_compared():
+    a, b = _pair()
+    a["config"]["model"].update(ce_impl="torch")
+    b["config"]["model"].update(ce_impl="fused")
+    _, ok, problems = report.compare(a, b, 5.0, 2, 0.0)
+    assert ok and problems == []
+    assert "model.ce_impl: torch vs fused" in report.ab_note(a, b)
 
 
 def test_same_implementation_is_not_labelled_ab():

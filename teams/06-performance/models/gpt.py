@@ -28,9 +28,11 @@ Parts and where they come from:
   * MTP (cfg.mtp, G5 config_v0): a second untied head, mtp_head = Linear(d, V, bias=False), reads the same ln_f
     output and predicts token t+2 (targets shifted by one more; the last position has none). The returned loss is
     ntp + mtp, the sum G5 backpropagates; model.loss_parts holds both, detached, for logging (G5 logs ntp as loss).
-  * Loss: cfg.ce_impl "torch" materialises fp32 logits [B*T, V] (~8 GB with grads at B=32, T=512);
-    "chunked" runs head + cross-entropy in cfg.ce_chunks pieces under activation checkpointing and
-    returns logits=None when targets are given. Both paths average over the targets that are not IGNORE_INDEX.
+  * Loss: cfg.ce_impl "torch" materialises logits [B*T, V]; "chunked" checkpoints position chunks;
+    "fused" tiles tokens by ce_chunks and saves head gradients computed while logits are resident;
+    "fused_cached" / "fused_liger" use fixed token tile sizes; "fused_cce" streams vocabulary tiles
+    and recomputes logits during backward.
+    Memory-bounded paths return logits=None when targets are given. Loss averages non-ignored targets.
 
 Timing markers (roofline and report read these names; keep them)
   region("embed", 2)                       around tok + pos embedding (KE adds "embed.ke" at level 3 inside)
@@ -46,7 +48,8 @@ Timing markers (roofline and report read these names; keep them)
   mark(x, "head+loss", 1)                  on the stack output
   How bench turns these points into bwd:<name> segments (bwd:stack = the whole stack): perfkit/bench.py step 6.
 
-Follow-up: fused linear-cross-entropy kernel; aux / z loss for non-reversible MoE.
+The fused CE path is a portable PyTorch custom-autograd implementation; a single-kernel Triton/CUDA
+backend and aux / z loss for non-reversible MoE remain follow-ups.
 """
 from __future__ import annotations
 
@@ -58,12 +61,15 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 from models.config import ModelConfig
+from models.linear_ce import (linear_cross_entropy_fused, linear_cross_entropy_cached,
+                              linear_cross_entropy_cce, linear_cross_entropy_liger)
 from perfkit.regions import mark, region
 
 
 _SDPA_GQA = tuple(int(v) for v in torch.__version__.split(".")[:2]) >= (2, 5)
 
 IGNORE_INDEX = -100              # a target with this value is left out of the loss and of its divisor (loss masks)
+MEMORY_BOUNDED_CE_IMPLS = ("chunked", "fused", "fused_cached", "fused_liger", "fused_cce")
 
 
 def _init_linear(lin: nn.Linear, std: float = 0.02):
@@ -237,8 +243,8 @@ class GPT(nn.Module):
         x = mark(x, "head+loss", 1)
         with region("head+loss", 2):
             x = self.ln_f(x)
-            if targets is not None and self.cfg.ce_impl == "chunked":
-                loss = self._chunked_ce(self.head, x.reshape(B * T, -1), targets.reshape(B * T))
+            if targets is not None and self.cfg.ce_impl in MEMORY_BOUNDED_CE_IMPLS:
+                loss = self._head_ce(self.head, x.reshape(B * T, -1), targets.reshape(B * T))
                 return None, self._add_mtp(loss, x, targets)
             logits = self.head(x)
             loss = None
@@ -254,8 +260,8 @@ class GPT(nn.Module):
             return ntp
         with region("head+loss.mtp", 3):
             xm, ym = x[:, :-1].reshape(-1, x.shape[-1]), targets[:, 1:].reshape(-1)
-            if self.cfg.ce_impl == "chunked":
-                mtp = self._chunked_ce(self.mtp_head, xm, ym)
+            if self.cfg.ce_impl in MEMORY_BOUNDED_CE_IMPLS:
+                mtp = self._head_ce(self.mtp_head, xm, ym)
             else:
                 mtp = F.cross_entropy(self.mtp_head(xm).float(), ym, ignore_index=IGNORE_INDEX)
         self.loss_parts = {"ntp": ntp.detach(), "mtp": mtp.detach()}
@@ -272,6 +278,29 @@ class GPT(nn.Module):
         total = sum(torch.utils.checkpoint.checkpoint(piece, xc, yc, use_reentrant=False)
                     for xc, yc in zip(x.chunk(self.cfg.ce_chunks), y.chunk(self.cfg.ce_chunks)))
         return total / (y != IGNORE_INDEX).sum().clamp_min(1)
+
+    def _head_ce(self, head, x, y):
+        if self.cfg.ce_impl == "fused":
+            return linear_cross_entropy_fused(
+                x, head.weight, y, bias=head.bias,
+                chunks=self.cfg.ce_chunks, ignore_index=IGNORE_INDEX,
+            )
+        if self.cfg.ce_impl == "fused_cached":
+            return linear_cross_entropy_cached(
+                x, head.weight, y, bias=head.bias,
+                token_chunk=self.cfg.ce_token_chunk, ignore_index=IGNORE_INDEX,
+            )
+        if self.cfg.ce_impl == "fused_liger":
+            return linear_cross_entropy_liger(
+                x, head.weight, y, bias=head.bias,
+                token_chunk=self.cfg.ce_token_chunk, ignore_index=IGNORE_INDEX,
+            )
+        if self.cfg.ce_impl == "fused_cce":
+            return linear_cross_entropy_cce(
+                x, head.weight, y, bias=head.bias,
+                vocab_chunk=self.cfg.ce_vocab_chunk, ignore_index=IGNORE_INDEX,
+            )
+        return self._chunked_ce(head, x, y)
 
     def param_counts(self):
         """(total, active). active = matmul weights one token multiplies with: attention, router,
