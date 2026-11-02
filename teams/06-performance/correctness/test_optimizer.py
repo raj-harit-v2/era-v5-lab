@@ -104,14 +104,6 @@ def _data_prefetch_case(device):
     return Case(ref=lambda: batches(False), fast=lambda: batches(True), inputs=[], grads=False)
 
 
-@pytest.mark.parametrize("name", pairs_in(__name__))
-def test_pair(name, device):
-    errors = check(PAIRS[name], device)
-    assert any(key.startswith("out[") for key in errors)
-    if name == "optim.muon_ns.batched":
-        assert any(key.startswith("grad_in[") for key in errors)
-
-
 @pytest.mark.parametrize("embedding", ["table", "ke1"])
 @pytest.mark.parametrize("muon_impl", ["loop", "batched"])
 def test_optimizer_ownership_and_norm_gains(embedding, muon_impl):
@@ -633,6 +625,15 @@ def _(device):
         inputs=[torch.zeros(1)],
         grads=False,
     )
+
+
+# After the last @pair: pairs_in() lists the pairs registered so far.
+@pytest.mark.parametrize("name", pairs_in(__name__))
+def test_pair(name, device):
+    errors = check(PAIRS[name], device)
+    assert any(key.startswith("out[") for key in errors)
+    if name == "optim.muon_ns.batched":
+        assert any(key.startswith("grad_in[") for key in errors)
 
 
 # ---- fixtures and integration tests --------------------------------------------
