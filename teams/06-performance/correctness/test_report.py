@@ -153,3 +153,19 @@ def test_a_model_key_added_later_counts_as_its_default():
     new["config"]["model"]["activation"] = "swiglu"
     _, ok, problems = report.compare(old, new, 5.0, 2, 0.0)
     assert not ok and "different model config" in problems
+
+
+def test_a_key_added_later_inside_model_moe_counts_as_its_default():
+    """The same one level down: a run whose model.moe lacks a key compares equal to a run that sets that key to
+    the ModelConfig default (a new moe key such as an expert width keeps old baselines comparable), and is
+    refused when the value differs."""
+    from models.config import ModelConfig
+    default = ModelConfig().moe
+    old, new = _pair()
+    old["config"]["model"]["moe"] = {k: v for k, v in default.items() if k != "bias_gamma"}
+    new["config"]["model"]["moe"] = dict(default)
+    _, ok, problems = report.compare(old, new, 5.0, 2, 0.0)
+    assert ok and problems == []
+    new["config"]["model"]["moe"]["bias_gamma"] = default["bias_gamma"] * 2
+    _, ok, problems = report.compare(old, new, 5.0, 2, 0.0)
+    assert not ok and "different model config" in problems

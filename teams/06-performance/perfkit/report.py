@@ -58,7 +58,8 @@ def _switch_value(config: dict, path: tuple):
 def _model_defaults_filled(model: dict) -> dict:
     """A run's model config with every ModelConfig field it lacks set to the field's default. A field is added
     with a default that keeps the old behaviour (models/config.py), so a run written before the field existed
-    (e.g. week-1 runs without model.activation) still compares equal to a new run that uses that default."""
+    (e.g. week-1 runs without model.activation) still compares equal to a new run that uses that default. The same
+    holds one level down for a dict field: a key added to model.moe's default is filled into a run's moe section."""
     try:
         from dataclasses import MISSING, fields
 
@@ -67,8 +68,11 @@ def _model_defaults_filled(model: dict) -> dict:
         return model
     out = dict(model)
     for f in fields(ModelConfig):
+        default = f.default_factory() if f.default is MISSING else f.default
         if f.name not in out:
-            out[f.name] = f.default_factory() if f.default is MISSING else f.default
+            out[f.name] = default
+        elif isinstance(default, dict) and isinstance(out[f.name], dict):      # e.g. a key added to model.moe later
+            out[f.name] = {**{k: v for k, v in default.items() if k not in out[f.name]}, **out[f.name]}
     return out
 
 
