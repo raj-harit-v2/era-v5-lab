@@ -21,7 +21,7 @@ Weights are drawn with std 0.15, so W_gate @ x has std ~1.2 and SiLU works in it
 training init SiLU(z) ~ z/2 and a reference with the wrong nonlinearity could still pass.
 
 Properties (no pair): GELU modules keep their layout and their init draws (the GELU model is unchanged);
-SwiGLU has exactly c_gate, c_fc, c_proj and no biases; loop and sorted dispatch agree and an idle expert gets no
+SwiGLU has exactly c_gate, c_fc, c_proj and no biases; every fast dispatch agrees with loop and an idle expert gets no
 gradient in the loop path; c_gate is trained by Muon like the other block matrices; the parameter count and the
 MFU FLOPs count 3 matrices; an unknown activation is refused.
 """
@@ -36,7 +36,7 @@ import torch.nn as nn
 from correctness.framework import PAIRS, Case, check, pair, pairs_in, rel_err, to64
 from models.config import ModelConfig
 from models.gpt import GPT, MLP
-from models.moe import ExpertMLP, SparseMoE
+from models.moe import DISPATCH, ExpertMLP, SparseMoE
 
 D, RATIO, B, T, SEED = 64, 3, 2, 37, 0
 WEIGHT_STD = 0.15
@@ -137,28 +137,29 @@ def test_unknown_activation_is_refused():
         ExpertMLP(D, 2 * D, activation="geglu")
 
 
-def test_loop_and_sorted_dispatch_agree_and_idle_expert_has_no_loop_gradient(device):
-    """Both dispatch paths run the same SwiGLU experts. The sorted path packs the gate and up weights into one
-    batched matmul, so this compares that packing with the per-expert path directly."""
+@pytest.mark.parametrize("dispatch", [d for d in DISPATCH if d != "loop"])
+def test_fast_dispatch_agrees_with_loop_and_idle_expert_has_no_loop_gradient(dispatch, device):
+    """Every dispatch runs the same SwiGLU experts. The batched paths (sorted, grouped) pack the gate and up weights
+    into one batched matmul, so this compares that packing with the per-expert loop path directly."""
     torch.manual_seed(SEED)
     loop = SparseMoE(D, 4, 2, expert_hidden=2 * D, num_shared=1, dispatch="loop", activation="swiglu").to(device)
-    sorted_ = SparseMoE(D, 4, 2, expert_hidden=2 * D, num_shared=1, dispatch="sorted", activation="swiglu").to(device)
-    sorted_.load_state_dict(loop.state_dict())
+    fast = SparseMoE(D, 4, 2, expert_hidden=2 * D, num_shared=1, dispatch=dispatch, activation="swiglu").to(device)
+    fast.load_state_dict(loop.state_dict())
     with torch.no_grad():
-        for m in (loop, sorted_):
+        for m in (loop, fast):
             m.router_bias[-1] = -10.0                                 # expert 3 is never chosen
     x = _x(device)
     xs = x.detach().clone().requires_grad_(True)
-    y_loop, y_sorted = loop(x), sorted_(xs)
-    assert rel_err(y_sorted, y_loop) < 1e-5
+    y_loop, y_fast = loop(x), fast(xs)
+    assert rel_err(y_fast, y_loop) < 1e-5
     y_loop.square().sum().backward()
-    y_sorted.square().sum().backward()
+    y_fast.square().sum().backward()
     assert rel_err(xs.grad, x.grad) < 1e-5
     for e in range(3):
         for n in ("c_gate", "c_fc", "c_proj"):
-            a = getattr(sorted_.experts[e], n).weight.grad
+            a = getattr(fast.experts[e], n).weight.grad
             b = getattr(loop.experts[e], n).weight.grad
-            assert rel_err(a, b) < 1e-5, f"expert {e} {n}"
+            assert rel_err(a, b) < 1e-5, f"{dispatch}: expert {e} {n}"
     assert loop.experts[3].c_gate.weight.grad is None, "the loop path must not run an expert with no tokens"
 
 
