@@ -386,7 +386,11 @@ def run_metadata(device) -> dict:
 #          6 * N_active + 12 * L * d * T.
 #   g6-v2: proposed. The KE2 projection is counted by its real lookup cost and the MTP head on T-1 positions.
 METHODS = MFU_METHODS
-DEFAULT_METHOD = "g6-v1"                     # stays until the G6 and G8 leads approve g6-v2
+# Approval of g6-v2 does not switch anything by itself. To move to it: change DEFAULT_METHOD, have perfkit.bench pass
+# ke2_mean_support_len in the same change (g6-v2 raises an error on a KE2 model without it, and base.yaml uses KE2), and
+# update the tests that pin the default and METRICS.md. New runs are then labelled g6-v2; old run files keep their
+# numbers, and a file with no mfu_method counts as g6-v1. mfu_run needs no switch.
+DEFAULT_METHOD = "g6-v1"
 KE2_FLOPS_PER_SUPPORT_CELL_PER_CHANNEL = 4   # embedding_bag: 2 FLOP forward + 2 FLOP backward per support cell per channel
 
 
@@ -396,7 +400,7 @@ def flops_per_token(model, T: int, opt_flops_per_step: float = 0.0, tokens_per_s
 
     method "g6-v1" (default, the legacy count G8 has ingested): every active matmul weight costs 6 FLOP per token,
         including the KE2 projection and the whole MTP head.
-    method "g6-v2" (Task 6, pending G6/G8 approval):
+    method "g6-v2" (MFU task, pending G6/G8 approval):
         * KE2: the projection is not a dense matmul (forward is one embedding_bag over the token's support columns),
           so it leaves the 6N term and its real lookup cost, 4 * ke2_mean_support_len * d_model FLOP per token, is
           added. ke2_mean_support_len (mean bytes per token) is required for a ke2 model.

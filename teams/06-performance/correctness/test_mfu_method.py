@@ -1,12 +1,12 @@
-"""Task 6 (G6 week 2): MFU/HFU method, run-level scope and the G6 -> G8 contract.  CPU only.
+"""MFU task: MFU/HFU method, run-level scope and the G6 -> G8 contract.  CPU only.
 
 Method and field names are in docs/METRICS.md section 2.
 
 How to read this file
 ---------------------
-* Tests tagged "[GUARD]" pin behaviour that g6/dev already has. They must keep passing: they stop the Task 6
+* Tests tagged "[GUARD]" pin behaviour that g6/dev already has. They must keep passing: they stop the MFU task
   change from silently moving numbers G8 already ingested.
-* Tests tagged "[NEW]" pin the Task 6 behaviour. Their expected values are worked out by hand in the comments, never read back from the
+* Tests tagged "[NEW]" pin the MFU task behaviour. Their expected values are worked out by hand in the comments, never read back from the
   function under test. The method itself is still a proposal until both leads approve it.
 * Proposed names used here (change them together with the implementation if the leads decide differently):
     perfkit.metrics.mfu_run(flops, global_tokens_per_s, peaks_tflops, ranks=None)
@@ -18,7 +18,7 @@ How to read this file
 Terms: FLOP = one add or multiply; a matmul of (m x k) by (k x n) is 2*m*k*n FLOP. MFU = model FLOP/s divided
 by the hardware's peak FLOP/s. HFU also counts extra work the hardware really did (recompute, optimizer).
 
-Run:  python -m pytest correctness/test_mfu_task6.py -q     (from teams/06-performance)
+Run:  python -m pytest correctness/test_mfu_method.py -q     (from teams/06-performance)
 """
 import math
 from types import SimpleNamespace
@@ -225,13 +225,16 @@ def test_c4_documented_a100_mtp_example_still_reproduces():   # [GUARD]
 
 def test_c4_default_method_equals_explicit_legacy_method():   # [NEW]
     # Why: until both leads approve g6-v2, the default must stay g6-v1, so calling without `method` is unchanged.
+    # Approval does not switch anything by itself. Moving to g6-v2 means changing metrics.DEFAULT_METHOD, having bench
+    # pass ke2_mean_support_len, and updating this test and test_c14_bench_writes_the_method_and_scope.
+    # Old run files keep their numbers: a file with no mfu_method counts as g6-v1.
     for kw in ({}, {"mtp": True}, {"reversible": True}, {"ce_impl": "chunked"}):
         m = _tiny(**kw)
         assert flops_per_token(m, 4) == flops_per_token(m, 4, method="g6-v1")
 
 
 # =================================================================================================== C5
-# Why: this is the Siva/G8 question ("world_size * peak_tflops in the denominator") turned into a test.
+# Why: this is the G6/G8 scope question ("world_size * peak_tflops in the denominator") turned into a test.
 # If k identical GPUs each do the same work, run-level utilization must equal the single-GPU utilization.
 # A bench that divided local throughput by k * peak would report 1/k of this.
 

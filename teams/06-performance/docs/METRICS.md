@@ -34,7 +34,9 @@ hw_flops_per_token    = model_flops_per_token
   model: about 18 KFLOP per token at `base.yaml`, or 0.0075% of the count (by hand).
 
 **Method id:** the formulas above are `g6-v1`, the method of every run so far and still the default. Section 2.1
-proposes `g6-v2`. It changes nothing until the G6 and G8 leads approve it.
+proposes `g6-v2`. Approval alone changes nothing: moving to it means changing `metrics.DEFAULT_METHOD` and having
+`bench` pass `ke2_mean_support_len`. New runs are then labelled `g6-v2`; old run files keep their numbers, and a file
+with no `mfu_method` counts as `g6-v1`.
 
 ## 2. MFU and HFU
 
@@ -65,7 +67,7 @@ MTP:  model_flops_per_token - 6 * MTP head weights / T                  the head
 
 - **KE2.** `6 * N_active` charges the projection (256 x 8192 = 2.1M weights, 12.6 of 247 MFLOP) as a dense matmul,
   but it runs as one `embedding_bag` over `L` columns, so `g6-v1` reads about 5% high. PyTorch's FLOP counter finds no
-  dense projection matmul (`test_mfu_task6.py`). The `4 * L * d` term is a hand count (2 forward, 2 backward, per
+  dense projection matmul (`test_mfu_method.py`). The `4 * L * d` term is a hand count (2 forward, 2 backward, per
   support cell and channel), because the counter does not see `embedding_bag`. It has no default: a KE2 model without
   `L` raises an error, and `bench` does not supply `L` yet. A token-weighted mean is correct. The vocabulary mean is
   6.585; MFU changes by under 0.001 percentage points for `L` from 3 to 10.
@@ -281,7 +283,7 @@ written yet.
 | `correctness/test_metrics.py` | FLOPs-per-token formulas, MFU / HFU conversion, peak lookups for known and unknown GPUs and dtypes (bf16, fp16, fp32, fp8, fp4 for every listed test GPU) |
 | `correctness/test_optimizer.py` | the Newton-Schulz FLOP count, including that AdamW-only parameters add nothing |
 | `correctness/test_report.py` | the 5% gate and the Markdown output |
-| `correctness/test_mfu_task6.py` | hand-counted FLOP ledgers, the PyTorch FLOP counter as an independent check, `g6-v1` vs `g6-v2`, `mfu_run`, RoPE, the worked examples in this file |
+| `correctness/test_mfu_method.py` | hand-counted FLOP ledgers, the PyTorch FLOP counter as an independent check, `g6-v1` vs `g6-v2`, `mfu_run`, RoPE, the worked examples in this file |
 
 ```bash
 python -m pytest correctness/test_metrics.py correctness/test_optimizer.py correctness/test_report.py -q
