@@ -1,0 +1,40 @@
+# G5 harness-only runtime defaults; algorithm, budgets and limits reviewed against G5 Week-2 plan. Arm-owned settings are read only from configs/arms. Unset values require agreement; smoke values are not decisions.
+contract:
+  lead_snapshot: 3a2f898b990d253d8422419f31e147ae65ec1747
+model:
+  activation: swiglu
+  position: rope
+  rope_theta: null
+  rotary_fraction: 1.0
+  norm_eps: null
+  mtp_weight: null
+  moe:
+    bias: null
+    bias_gamma: 0.0
+optim:
+  betas:
+  - 0.9
+  - 0.999
+  eps: 1.0e-08
+  schedule: constant
+run:
+  micro_batch_size: 1
+  eval_every_steps: 50
+  compile: false
+  flush_every_steps: 10
+approval:
+  status: pending
+  reference: null
+evaluation:
+  boundary_policy: bos_then_all_text_tokens_document_isolated
+  approved: false
+budgets:
+  T1:
+    steps: 245
+    max_time_min: 30
+  T2:
+    steps: 1221
+    max_time_min: 90
+  T3:
+    steps: 1221
+    max_time_min: 120

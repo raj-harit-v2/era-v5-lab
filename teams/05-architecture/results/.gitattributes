@@ -1,0 +1,2 @@
+# Keep checksum files byte for byte, so sha256sum -c reads them on every OS.
+*.sha256 -text

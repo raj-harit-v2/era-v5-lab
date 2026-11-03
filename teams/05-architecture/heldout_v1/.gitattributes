@@ -1,0 +1,5 @@
+# Keep the held-out bytes exactly as built, so their sha256 values stay valid on every OS.
+*.jsonl -text
+*.json -text
+*.txt -text
+SHA256SUMS -text

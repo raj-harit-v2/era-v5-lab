@@ -8,12 +8,14 @@
 #
 # Keys of an active benchmark:
 #   source    "hf" (repo + revision), "url" (url per file) or "local" (path per file)
-#   files     list of {path, sha256}; format from the extension: parquet, jsonl, json, csv
+#   files     list of {path, sha256} (+ url for source "url"); format from the extension: parquet,
+#             jsonl, json, csv. 'format' overrides it: "jsonl" for JSON Lines named .json (BFCL),
+#             "task_dirs" for a .tar.gz of task folders (Terminal-Bench: id, instruction, solution, canary)
 #   split     label in the item reference <id>:<split>:<item>
 #   id        template for the item id (default: row number)
 #   dedupe    true: skip a row whose id came before (the same item in two splits)
 #   texts     prose templates of the text forms to fingerprint. "{field|filter}"; filters in
-#             registry.py: lines, lettered, no_calc, diff_added, guid
+#             registry.py: lines, lettered, no_calc, diff_added, guid, user_turns
 #   code      code templates (run length n_code, default 20 tokens)
 #   mixed     prose with pasted code, for example a GitHub issue. Split into prose and code.
 #   canaries  templates of canary strings in the rows. One exact match flags a document.
@@ -180,7 +182,15 @@ status = "planned"
 tags = ["code", "agentic"]
 licence = "Apache-2.0"
 repo = "harbor-framework/terminal-bench-2"
-reason = "Tasks are folders in a GitHub repo. Needs a reader for task instructions and solutions."
+note = "GitHub harbor-framework/terminal-bench-2 @ 2fd12b8, read from the archive. 89 task folders (task.toml). Fingerprints instruction.md (prose) and solution/solve.sh (code), not environment/ or tests/."
+source = "url"
+files = [{ path = "terminal-bench-2-2fd12b8.tar.gz", format = "task_dirs", url = "https://codeload.github.com/harbor-framework/terminal-bench-2/tar.gz/2fd12b88aafdd04a52c298e3940bcb189f9766d6", sha256 = "6718ca1bd5c3536c9099cb1b2cf22a78c7c7159a85a26053a2d85d20dc0b6f4d" }]
+split = "test"
+id = "{id}"
+texts = ["{instruction}"]
+code = ["{solution}"]
+canaries = ["{canary}"]
+reason = "Reader and pinned files ready (B1). A2 sets status = \"active\" when it builds fingerprints v2: the shipped set must match the active rows (test_shipped_set_matches_the_registry)."
 
 [tau2_bench]
 name = "tau2-bench"
@@ -195,8 +205,32 @@ name = "BFCL v3"
 status = "planned"
 tags = ["code", "agentic"]
 licence = "Apache-2.0"
-repo = "gorilla-llm/Berkeley-Function-Calling-Leaderboard"
-reason = "Many JSON files with different fields. Needs a reader for each category."
+repo = "ShishirPatil/gorilla"
+note = "GitHub ShishirPatil/gorilla @ cd9429c, the last commit with v3 data; the Hugging Face copy differs in 8 of these 17 files. Non-live 1,390 + live 2,251 + multi-turn 800 = 4,441. The files are JSON Lines named .json. Fingerprints the user turns only; about 100 very short questions (under 8 words) get no fingerprint."
+source = "url"
+files = [
+  { path = "BFCL_v3_simple.json", format = "jsonl", url = "https://raw.githubusercontent.com/ShishirPatil/gorilla/cd9429ccf3d4d04156affe883c495b3b047e6b64/berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v3_simple.json", sha256 = "fbc37b2ad252bf9af985582e0e07b456173fe627d957491472ea9cef5fb83158" },
+  { path = "BFCL_v3_multiple.json", format = "jsonl", url = "https://raw.githubusercontent.com/ShishirPatil/gorilla/cd9429ccf3d4d04156affe883c495b3b047e6b64/berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v3_multiple.json", sha256 = "aef168155ebd74b7ac2401198b201343bc7d16d7a3d7e0d4e6d8ee82c6969b2a" },
+  { path = "BFCL_v3_parallel.json", format = "jsonl", url = "https://raw.githubusercontent.com/ShishirPatil/gorilla/cd9429ccf3d4d04156affe883c495b3b047e6b64/berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v3_parallel.json", sha256 = "fad375d68295776efb63e5aa331dd884f8635e7bb50e05908113c74f14281c3c" },
+  { path = "BFCL_v3_parallel_multiple.json", format = "jsonl", url = "https://raw.githubusercontent.com/ShishirPatil/gorilla/cd9429ccf3d4d04156affe883c495b3b047e6b64/berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v3_parallel_multiple.json", sha256 = "8863ea8433239f55c5f016154cf0830853c89f693c6ea270396a2fa121960579" },
+  { path = "BFCL_v3_java.json", format = "jsonl", url = "https://raw.githubusercontent.com/ShishirPatil/gorilla/cd9429ccf3d4d04156affe883c495b3b047e6b64/berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v3_java.json", sha256 = "261d327d50c1bb505614dd5f75a29167d5bd9f938e5cefefef989c325cb67848" },
+  { path = "BFCL_v3_javascript.json", format = "jsonl", url = "https://raw.githubusercontent.com/ShishirPatil/gorilla/cd9429ccf3d4d04156affe883c495b3b047e6b64/berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v3_javascript.json", sha256 = "b69b6a99548f72e151be7abed4beb0ed70873d3370d5b78feed75b66f33795d3" },
+  { path = "BFCL_v3_irrelevance.json", format = "jsonl", url = "https://raw.githubusercontent.com/ShishirPatil/gorilla/cd9429ccf3d4d04156affe883c495b3b047e6b64/berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v3_irrelevance.json", sha256 = "8237162db28f3cf2e3f7d0b0380333fdf829c2ff15234506b0f2205399c8c655" },
+  { path = "BFCL_v3_live_simple.json", format = "jsonl", url = "https://raw.githubusercontent.com/ShishirPatil/gorilla/cd9429ccf3d4d04156affe883c495b3b047e6b64/berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v3_live_simple.json", sha256 = "10e5cedb6dc73cd16bc430755643c658d6032a69363dfc41a22a84988eaa312a" },
+  { path = "BFCL_v3_live_multiple.json", format = "jsonl", url = "https://raw.githubusercontent.com/ShishirPatil/gorilla/cd9429ccf3d4d04156affe883c495b3b047e6b64/berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v3_live_multiple.json", sha256 = "791d1faaf5ba5579196cd45a5fb37fa096d88848d6077f33cb6e2d22ebf58206" },
+  { path = "BFCL_v3_live_parallel.json", format = "jsonl", url = "https://raw.githubusercontent.com/ShishirPatil/gorilla/cd9429ccf3d4d04156affe883c495b3b047e6b64/berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v3_live_parallel.json", sha256 = "6c26e9fdc3350cf596e6d1ea9c179cbff834761bccf562f4141ed29a839ca421" },
+  { path = "BFCL_v3_live_parallel_multiple.json", format = "jsonl", url = "https://raw.githubusercontent.com/ShishirPatil/gorilla/cd9429ccf3d4d04156affe883c495b3b047e6b64/berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v3_live_parallel_multiple.json", sha256 = "21d4b9319c1faac431e22757b367ea28917fe467364c3a4b17f16ec06d4f6e79" },
+  { path = "BFCL_v3_live_irrelevance.json", format = "jsonl", url = "https://raw.githubusercontent.com/ShishirPatil/gorilla/cd9429ccf3d4d04156affe883c495b3b047e6b64/berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v3_live_irrelevance.json", sha256 = "0d259e1c3ab6ba06c2a51911e2f49ecaa2eac3723a4a14f183a7687955e61338" },
+  { path = "BFCL_v3_live_relevance.json", format = "jsonl", url = "https://raw.githubusercontent.com/ShishirPatil/gorilla/cd9429ccf3d4d04156affe883c495b3b047e6b64/berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v3_live_relevance.json", sha256 = "9ce547600184f700de6995cbfaa310d50ccb79e69bc84a94f36a3b5e89bfafa9" },
+  { path = "BFCL_v3_multi_turn_base.json", format = "jsonl", url = "https://raw.githubusercontent.com/ShishirPatil/gorilla/cd9429ccf3d4d04156affe883c495b3b047e6b64/berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v3_multi_turn_base.json", sha256 = "fe5c442849bdb2c2cdedc91f377411ff7fc6cd11af299766f4554d71d3d40f98" },
+  { path = "BFCL_v3_multi_turn_miss_func.json", format = "jsonl", url = "https://raw.githubusercontent.com/ShishirPatil/gorilla/cd9429ccf3d4d04156affe883c495b3b047e6b64/berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v3_multi_turn_miss_func.json", sha256 = "4a3a862f3e897d121ad94aa2c3f29ea752b7f7ac4eac6a23c8d502d1143e3492" },
+  { path = "BFCL_v3_multi_turn_miss_param.json", format = "jsonl", url = "https://raw.githubusercontent.com/ShishirPatil/gorilla/cd9429ccf3d4d04156affe883c495b3b047e6b64/berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v3_multi_turn_miss_param.json", sha256 = "25509d5c441017c51de784e7670647dbec11a22fe0640990b0dafabf32e8c8d1" },
+  { path = "BFCL_v3_multi_turn_long_context.json", format = "jsonl", url = "https://raw.githubusercontent.com/ShishirPatil/gorilla/cd9429ccf3d4d04156affe883c495b3b047e6b64/berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v3_multi_turn_long_context.json", sha256 = "17898c71fc5ceca4538e812602bc0338efafe665594380094bd4288f10394f51" },
+]
+split = "test"
+id = "{id}"
+texts = ["{question|user_turns}"]
+reason = "Reader and pinned files ready (B1). A2 sets status = \"active\" when it builds fingerprints v2: the shipped set must match the active rows (test_shipped_set_matches_the_registry)."
 
 [webarena]
 name = "WebArena"

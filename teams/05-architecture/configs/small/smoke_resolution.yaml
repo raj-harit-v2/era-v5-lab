@@ -1,0 +1,12 @@
+# Development fixture only; not approved experiment settings.
+approval:
+  status: smoke_only
+  reference: G5 implementation check; NOT an approved experimental baseline
+model:
+  rope_theta: 10000.0
+  norm_eps: 1.0e-06
+  mtp_weight: 0.0
+  moe:
+    bias: false
+evaluation:
+  approved: false

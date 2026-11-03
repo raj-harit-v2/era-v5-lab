@@ -10,7 +10,7 @@ EXP-4 (code share) is week 3. It is not an arm here.
 The 31 Oct test-size line, on every arm, except the one value that arm changes:
 
 - vocabulary 131,072
-- tied embeddings
+- dense untied output head
 - 1 shared expert
 - top-2
 - GQA with RoPE
@@ -37,6 +37,8 @@ The held-out set is the one named by `results/heldout_v1.sha256` (Data owner, Mo
 Seed spread of an arm is the maximum bits per byte across its seeds minus the minimum. An arm with fewer than 2 finished seeds has no spread and cannot win.
 
 Winner rule, unless the arm says otherwise: the arm's mean bits per byte is lower than the baseline mean by more than the larger of the two seed spreads. Otherwise the config v0 default stays. A run that hits its max time before the step count below is not a result.
+
+TSAI, 2 Nov: English bits per byte alone does not decide. Report every slice. The mean in the winner rule is the mean of three groups: English, code, and the mean of the 11 Indic slices. An arm must also not be worse than the runner-up on code, or on that Indic mean, by more than the seed spread of seeds 1234, 1235, and 1236.
 
 A run is void if any logged loss is NaN or inf.
 
@@ -76,8 +78,6 @@ GPU runs use bf16. A CPU run uses fp32 and is a smoke check, not a bits-per-byte
 | attn-2 | Revant Gupta | T2 | arm 2 of `docs/attention_candidates.md` | bits per byte | winner rule against attn-0 | 3 | 90 min | that doc, one change from attn-0 |
 | attn-3 | Revant Gupta | T2 | arm 3 of `docs/attention_candidates.md` | bits per byte | winner rule against attn-0 | 3 | 90 min | that doc, one change from attn-0 |
 | attn-4 | Revant Gupta | T2 | arm 4 of `docs/attention_candidates.md` | bits per byte | winner rule against attn-0 | 3 | 90 min | that doc, one change from attn-0 |
-| exp5-dense | Deepjyoti Saha | T2 | dense output head | bits per byte | winner rule against exp5-ke2 | 3 | 90 min | after Team 4 agrees the design |
-| exp5-ke2 | Deepjyoti Saha | T2 | KE2 output head | bits per byte | winner rule against exp5-dense | 3 | 90 min | after Team 4 agrees the design |
 | t3-confirm | the owner of that family | T3 | the single winning value only | bits per byte | still beats its baseline by more than the seed spread | 3 | 120 min | a copy of the winning arm with the T3 shape |
 
 EXP-1 rule: rank the five means. The top arm wins only if it is lower than the second by more than the larger of their seed spreads. If it is not, `optim.lr` stays null in config v0.
@@ -86,13 +86,13 @@ The five learning rates are a log grid chosen in this plan so the sweep can see 
 
 EXP-1 by Tue 3 Nov is seed 1234 of each of the five arms. Seeds 1235 and 1236 are required before any arm is called the winner, and they are due Wed 4 Nov so a job request can be queued for the break.
 
-Muon screen, before the T2 job: three T1 runs, Muon learning rates 1e-3, 1e-2 and 1e-1, seed 1234, 30 min each. The T2 Muon arm uses the learning rate with the lowest bits per byte of those three runs. This grid is also set here, for the same reason as the AdamW grid. The AdamW arm at T2 uses the EXP-1 winner learning rate. If EXP-1 has no winner yet, the AdamW arm uses 1e-3 and the run file says the comparison is not final.
+Muon screen, before the T2 job: Deepjyoti Saha runs three T1 runs, Muon learning rates 1e-3, 1e-2 and 1e-1, seed 1234, 30 min each. The T2 Muon arm uses the learning rate with the lowest bits per byte of those three runs. This grid is also set here, for the same reason as the AdamW grid. The AdamW arm at T2 uses the EXP-1 winner learning rate. If EXP-1 has no winner yet, the AdamW arm uses 1e-3 and the run file says the comparison is not final.
 
 EXP-3 runs only those four rows. The counts are the T1 count (8), the T2 count (16), and one doubling (32). Shared-expert off changes that one value and leaves the expert count at 16.
 
 Attention rows 1 to 4 take their layer pattern, window, position method and reason from `docs/attention_candidates.md`. This plan does not invent a fifth pattern. An arm missing any of those four fields is not run. More than four arms is not run.
 
-EXP-5 does not start until Team 4 has agreed KE2 output head or dense head. `embedding.ke2_output_dim` stays empty until `teams/04-ke2/output_shape.md` gives one output number. The input recommendation there (P = 32, D = 8,192) is not the output dim.
+EXP-5 is removed. TSAI decides the output head for config v1. Every test model uses the dense untied output head. `embedding.ke2_output_dim` stays empty. The input side stays `embedding: ke1`, and the KE2 input table still comes from Team 4. The input recommendation there (P = 32, D = 8,192) is not an output dimension.
 
 ## What Team 6 can time on 1 Nov
 
@@ -102,7 +102,7 @@ Their loader (`teams/06-performance/models/config.py`) accepts the files below. 
 - Their positions are a learned table. The instructor method is RoPE. No file selects RoPE.
 - Expert hidden is `mlp_ratio * d_model`, and `mlp_ratio` is an integer. T1 is exact: 2 × 256 = 512. T2's 768 and T3's 896 are not integer ratios. `t2.yaml` and `t3.yaml` set `mlp_ratio` to null. Leaving the key out would keep the inherited value 4 and time the wrong width. Do not publish a step time from that default. An official T2 or T3 step time waits until the loader takes an absolute expert width.
 
-`embedding: ke1` is used because `config_v0.yaml` sets `embedding.type` to kronecker, and ke1 is the Kronecker path in their loader. ke1's head is untied. The tied-head question is EXP-5, not something these files decide.
+`embedding: ke1` is the input embedding. ke1 is the Kronecker path in the Team 6 loader. The output head is the dense untied head. `embedding.ke2_output_dim` stays empty.
 
 `t2.yaml` and `t3.yaml` set `mlp_ratio` to null. They inherit `base.yaml`, and leaving the key out would keep its `mlp_ratio` 4. That would time an expert width of 2,048 at T2 and 2,560 at T3. Null is there so that mistake cannot happen quietly.
 
@@ -133,4 +133,4 @@ Pull request 167 is on main. Every arm file sets `model.reversible` false, `mode
 
 ## Who files the job
 
-T1 fits the 30 minute cap on one GPU. T2 and T3 go by `JOB_REQUEST.md` if the owner's machine hits the cap. One job, one question. Attach a Colab or CPU log of the same script. The harness owner lands tokenizer v0, the raw byte table, bits per byte, and the T1 T2 T3 configs on Mon 2 Nov. Until that harness exists, a job request has no script and is not sent.
+T1 fits the 30 minute cap on one GPU. T2 and T3 go by `JOB_REQUEST.md` if the owner's machine hits the cap. One job, one question. Attach a Colab or CPU log of the same script. EXP-1 uses one harness for the whole sweep: `harness/train_week2.py`. `harness/train.py` does not score bits per byte, so it is not that harness. The EXP-1 job request is not sent until `train_week2.py` passes its tests on CPU.

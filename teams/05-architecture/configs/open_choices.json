@@ -1,0 +1,34 @@
+{
+  "model.mtp_weight": {
+    "owner": "G5 lead",
+    "note": "Unset by lead; inactive while MTP is off. Required before enabling MTP."
+  },
+  "model.rope_theta": {
+    "owner": "G5 lead / attention owner",
+    "note": "finite positive number"
+  },
+  "model.moe.bias_gamma": {
+    "owner": "G5 lead / G6",
+    "supported": [
+      0.0
+    ],
+    "note": "dynamic bias controller not implemented; nonzero fails"
+  },
+  "evaluation.boundary_policy": {
+    "owner": "data owner / G5 lead",
+    "supported": [
+      "bos_then_all_text_tokens_document_isolated"
+    ]
+  },
+  "optim.lr": {
+    "owner": "experiment owner",
+    "note": "Baseline 0.001 is timing-only; EXP-1 owns its rates; EXP-2 waits for screening/winner."
+  },
+  "model.moe.bias": {
+    "owner": "G5 lead / G6",
+    "supported": [
+      false
+    ],
+    "note": "Current runtime accepts explicit bias-free experts only; true must not be advertised as supported."
+  }
+}

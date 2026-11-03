@@ -1,0 +1,191 @@
+{
+  "selection": "Rows in the order the source stores them (code: the six languages in turn); text stripped; empty texts skipped; code only when every repo licence is permissive; a document with an email address, a phone number or a secret-looking string is skipped (no personal data in the repo, and pr-guard rejects emails); documents found in review are dropped by id (DROPPED_IN_REVIEW) and still count toward the size budget; stop at --docs documents or once --mb megabytes of text are reached. No shuffling, no other filtering.",
+  "licence": "ODC-By 1.0 (C4, FineWeb-2, OpenWebMath, peS2o); MIT (The Vault)",
+  "line_format": "{\"id\": ..., \"text\": ...}, UTF-8, one document per line",
+  "excluded_benchmark_matches": {
+    "owm-test-000011": "shares 13-word runs with LiveCodeBench release_v6 items (coverage 1%); fingerprints v1, 1 Nov 2026"
+  },
+  "dropped_in_review": {
+    "c4-val-000018": "phone number (US format), lead review of PR #191, 2 Nov 2026",
+    "c4-val-000030": "phone numbers (US format), lead review of PR #191, 2 Nov 2026",
+    "c4-val-000059": "phone number (US format, dots), lead review of PR #191, 2 Nov 2026",
+    "c4-val-000094": "phone number (US format), lead review of PR #191, 2 Nov 2026",
+    "fw2-or-test-000030": "email address (email@example.com placeholder), lead review of PR #191, 2 Nov 2026",
+    "fw2-or-test-000046": "phone number written in Odia digits, lead review of PR #191, 2 Nov 2026"
+  },
+  "file": {
+    "name": "heldout_v1.jsonl",
+    "docs": 1059,
+    "text_bytes": 3775551,
+    "sha256": "21c6e4b2df8dae9d69e254f4a00fc934d2a3c70f0675065a03724299d94312bb"
+  },
+  "sources_file": {
+    "name": "heldout_v1_sources.jsonl",
+    "docs": 1059,
+    "sha256": "95585a25bdccb077130432d49b6427c5ff5f756d5b43b9c7033803326f65e0d6",
+    "fields": [
+      "id",
+      "slice",
+      "dataset",
+      "revision",
+      "file",
+      "row",
+      "source_id",
+      "url",
+      "licence",
+      "text_sha256"
+    ]
+  },
+  "slices": {
+    "en": {
+      "dataset": "allenai/c4",
+      "revision": "1588ec454efa1a09f29cd18ddd04fe05fc8653a2",
+      "part": "en/c4-validation.00000-of-00008.json.gz",
+      "id_prefix": "c4-val",
+      "docs": 140,
+      "text_bytes": 247056,
+      "skipped_personal": 3,
+      "dropped_in_review": 4
+    },
+    "hi": {
+      "dataset": "HuggingFaceFW/fineweb-2",
+      "revision": "af9c13333eb981300149d5ca60a8e9d659b276b9",
+      "part": "hin_Deva test",
+      "id_prefix": "fw2-hi-test",
+      "docs": 34,
+      "text_bytes": 255134,
+      "skipped_personal": 0,
+      "dropped_in_review": 0
+    },
+    "bn": {
+      "dataset": "HuggingFaceFW/fineweb-2",
+      "revision": "af9c13333eb981300149d5ca60a8e9d659b276b9",
+      "part": "ben_Beng test",
+      "id_prefix": "fw2-bn-test",
+      "docs": 27,
+      "text_bytes": 265042,
+      "skipped_personal": 0,
+      "dropped_in_review": 0
+    },
+    "ta": {
+      "dataset": "HuggingFaceFW/fineweb-2",
+      "revision": "af9c13333eb981300149d5ca60a8e9d659b276b9",
+      "part": "tam_Taml test",
+      "id_prefix": "fw2-ta-test",
+      "docs": 37,
+      "text_bytes": 256545,
+      "skipped_personal": 0,
+      "dropped_in_review": 0
+    },
+    "te": {
+      "dataset": "HuggingFaceFW/fineweb-2",
+      "revision": "af9c13333eb981300149d5ca60a8e9d659b276b9",
+      "part": "tel_Telu test",
+      "id_prefix": "fw2-te-test",
+      "docs": 21,
+      "text_bytes": 255189,
+      "skipped_personal": 0,
+      "dropped_in_review": 0
+    },
+    "kn": {
+      "dataset": "HuggingFaceFW/fineweb-2",
+      "revision": "af9c13333eb981300149d5ca60a8e9d659b276b9",
+      "part": "kan_Knda test",
+      "id_prefix": "fw2-kn-test",
+      "docs": 38,
+      "text_bytes": 250459,
+      "skipped_personal": 0,
+      "dropped_in_review": 0
+    },
+    "ml": {
+      "dataset": "HuggingFaceFW/fineweb-2",
+      "revision": "af9c13333eb981300149d5ca60a8e9d659b276b9",
+      "part": "mal_Mlym test",
+      "id_prefix": "fw2-ml-test",
+      "docs": 30,
+      "text_bytes": 251018,
+      "skipped_personal": 0,
+      "dropped_in_review": 0
+    },
+    "mr": {
+      "dataset": "HuggingFaceFW/fineweb-2",
+      "revision": "af9c13333eb981300149d5ca60a8e9d659b276b9",
+      "part": "mar_Deva test",
+      "id_prefix": "fw2-mr-test",
+      "docs": 38,
+      "text_bytes": 250524,
+      "skipped_personal": 0,
+      "dropped_in_review": 0
+    },
+    "gu": {
+      "dataset": "HuggingFaceFW/fineweb-2",
+      "revision": "af9c13333eb981300149d5ca60a8e9d659b276b9",
+      "part": "guj_Gujr test",
+      "id_prefix": "fw2-gu-test",
+      "docs": 31,
+      "text_bytes": 250826,
+      "skipped_personal": 0,
+      "dropped_in_review": 0
+    },
+    "pa": {
+      "dataset": "HuggingFaceFW/fineweb-2",
+      "revision": "af9c13333eb981300149d5ca60a8e9d659b276b9",
+      "part": "pan_Guru test",
+      "id_prefix": "fw2-pa-test",
+      "docs": 27,
+      "text_bytes": 254686,
+      "skipped_personal": 0,
+      "dropped_in_review": 0
+    },
+    "or": {
+      "dataset": "HuggingFaceFW/fineweb-2",
+      "revision": "af9c13333eb981300149d5ca60a8e9d659b276b9",
+      "part": "ory_Orya test",
+      "id_prefix": "fw2-or-test",
+      "docs": 53,
+      "text_bytes": 225421,
+      "skipped_personal": 0,
+      "dropped_in_review": 2
+    },
+    "as": {
+      "dataset": "HuggingFaceFW/fineweb-2",
+      "revision": "af9c13333eb981300149d5ca60a8e9d659b276b9",
+      "part": "asm_Beng test",
+      "id_prefix": "fw2-as-test",
+      "docs": 20,
+      "text_bytes": 253230,
+      "skipped_personal": 0,
+      "dropped_in_review": 0
+    },
+    "math": {
+      "dataset": "EleutherAI/proof-pile-2",
+      "revision": "901a9273a770e9d4138c5ddd91802f9c5c6cdc4b",
+      "part": "open-web-math/test/test.jsonl.zst",
+      "id_prefix": "owm-test",
+      "docs": 55,
+      "text_bytes": 259449,
+      "skipped_personal": 1,
+      "dropped_in_review": 0
+    },
+    "sci": {
+      "dataset": "allenai/peS2o",
+      "revision": "636a503e44a3ca1b58e01fb61eab0825cd574de0",
+      "part": "data/v2/validation-00000-of-00002.json.gz",
+      "id_prefix": "pes2o-val",
+      "docs": 170,
+      "text_bytes": 250710,
+      "skipped_personal": 0,
+      "dropped_in_review": 0
+    },
+    "code": {
+      "dataset": "Fsoft-AIC/the-vault-function",
+      "revision": "505c679056e49a2a269b64777ee7c496d22e1440",
+      "part": "data/test/{python,cpp,go,java,javascript,rust}",
+      "id_prefix": "vault-<lang>-test",
+      "docs": 338,
+      "text_bytes": 250262,
+      "skipped_personal": 3,
+      "dropped_in_review": 0
+    }
+  }
+}
