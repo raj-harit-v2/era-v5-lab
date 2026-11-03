@@ -115,6 +115,7 @@ def forward_costs(mcfg: dict, B: int, T: int, dtype: str) -> dict:
     shared = max(0, int(moe_cfg.get("num_shared", 0)))
     if top_k > E:
         raise ValueError("top_k cannot exceed num_experts")
+    rope = cfg.get("position", "learned") == "rope"
 
     regions: dict[str, dict] = {}
 
@@ -151,13 +152,16 @@ def forward_costs(mcfg: dict, B: int, T: int, dtype: str) -> dict:
         ke_flops = proj_flops + codec_flops
         ke_bytes = proj_bytes + codec_bytes
         put("fwd:embed.ke", ke_flops, ke_bytes, codec_kernels + 2, assumption=codec_assumption)
-        # Parent region also includes position lookup and the token+position addition.
+        # Parent region also includes position lookup and the token+position addition (none with RoPE).
         embed_flops = ke_flops
-        embed_bytes = ke_bytes + 3 * M * d * item
-        embed_kernels = codec_kernels + 5
+        embed_bytes = ke_bytes + (0 if rope else 3 * M * d * item)
+        embed_kernels = codec_kernels + (2 if rope else 5)
         put("fwd:embed", embed_flops, embed_bytes, embed_kernels, count_in_total=True,
             assumption="inclusive KE projection/codec plus position lookup and add")
         regions["fwd:embed.ke"]["inclusive"] = False
+    elif rope:
+        put("fwd:embed", 0, 2 * M * d * item, 1, count_in_total=True,
+            assumption="token table gather (RoPE: no position table)")
     else:
         # Token/position gathers plus their sum; traffic approximates two reads and a write.
         put("fwd:embed", 0, 5 * M * d * item, 3, count_in_total=True,
@@ -171,6 +175,15 @@ def forward_costs(mcfg: dict, B: int, T: int, dtype: str) -> dict:
         children.append(f"{prefix}.ln1")
         qkv_out = d + 2 * kv * hd
         linear(f"{prefix}.attn.qkv", M, d, qkv_out)
+        if rope:
+            # Rotate q and k in one call: 2 multiplies and 1 add per element, read and write q and k (fp32 cos / sin
+            # are tiny); mul, roll and addcmul (it writes q's dtype itself, out=) = 3 kernels.
+            rot = M * (d + kv * hd)
+            row = regions[f"{prefix}.attn.qkv"]
+            row["flops"] += 3 * rot
+            row["bytes"] += 2 * rot * item
+            row["kernels"] += 3
+            row["assumption"] = "QKV GEMM plus RoPE on q and k"
         children.append(f"{prefix}.attn.qkv")
         # Causal QK and AV products; flash attention avoids materializing the full score matrix.
         sdpa_flops = 2 * B * n_head * T * T * hd

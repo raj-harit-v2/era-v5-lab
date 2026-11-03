@@ -24,6 +24,8 @@ model:                  # fields of models.config.ModelConfig, nothing else
   n_kv_head: null       # GQA key/value heads; null = n_head (plain multi-head)
   n_embd: 256
   attn_impl: eager      # sdpa | eager (explicit softmax, G5 config_v0: two seeds match)
+  position: learned     # learned (position table) | rope (rotary q and k, full head dim)
+  rope_theta: null      # RoPE base; required with position: rope (no default: G5 to confirm), ignored by learned
   mlp_ratio: 4
   activation: gelu      # gelu | swiglu (SiLU(gate) * up, 3 matrices, no biases): dense MLP and every expert
   embedding: ke2        # table | ke1 | ke2 (G4 raw table, teams/04-ke2)

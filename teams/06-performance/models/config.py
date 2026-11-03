@@ -26,6 +26,7 @@ CE_IMPLS = ("torch", "chunked", "fused", "fused_cached", "fused_liger", "fused_c
 ATTN_IMPLS = ("sdpa", "eager")
 ACTIVATIONS = ("gelu", "swiglu")
 REV_IMPLS = ("two_pass", "one_pass")
+POSITIONS = ("learned", "rope")
 
 
 @dataclass
@@ -37,6 +38,9 @@ class ModelConfig:
     n_kv_head: int | None = None     # GQA: key/value heads, divides n_head; None = n_head (plain multi-head)
     n_embd: int = 256                # d_model
     attn_impl: str = "sdpa"          # sdpa (F.scaled_dot_product_attention) | eager (explicit softmax; G5 config_v0)
+    position: str = "learned"        # learned (block_size x d table added to the embedding) | rope (rotary q, k)
+    rope_theta: float | None = None  # RoPE base: pair i of a head turns by t * rope_theta^(-2i / head_dim);
+                                     # required with position=rope (no silent default), unused by learned
     mlp_ratio: int = 4               # MLP / expert hidden = mlp_ratio * n_embd
     activation: str = "gelu"         # gelu: c_proj(GELU(c_fc x)), with biases | swiglu: c_proj(SiLU(c_gate x) * c_fc x),
                                      # no biases. Dense MLP, routed experts (every dispatch) and shared experts
@@ -68,6 +72,12 @@ class ModelConfig:
         assert self.attn_impl in ATTN_IMPLS, f"attn_impl={self.attn_impl!r} not in {ATTN_IMPLS}"
         assert self.activation in ACTIVATIONS, f"activation={self.activation!r} not in {ACTIVATIONS}"
         assert self.rev_impl in REV_IMPLS, f"rev_impl={self.rev_impl!r} not in {REV_IMPLS}"
+        assert self.position in POSITIONS, f"position={self.position!r} not in {POSITIONS}"
+        if self.position == "rope":
+            assert (self.n_embd // self.n_head) % 2 == 0, "position=rope needs an even head dim"
+            assert self.rope_theta is not None, (
+                "position=rope needs model.rope_theta (e.g. model.rope_theta=10000); null is for learned only")
+            assert self.rope_theta > 0, "rope_theta must be > 0"
         assert self.ce_impl in CE_IMPLS, f"ce_impl={self.ce_impl!r} not in {CE_IMPLS}"
         assert self.ce_chunks > 0 and self.ce_vocab_chunk > 0 and self.ce_token_chunk > 0, \
             "cross-entropy chunk sizes must be positive"

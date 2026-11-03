@@ -28,6 +28,15 @@ def test_forward_costs_uses_model_shapes_and_named_leaf_regions():
                                              ("fwd:embed", "fwd:stack", "fwd:head+loss"))
 
 
+def test_forward_costs_rope_adds_qk_rotation_and_drops_position_table():
+    learned = forward_costs(_cfg(), B=2, T=4, dtype="bf16")["regions"]
+    rope = forward_costs(_cfg(position="rope"), B=2, T=4, dtype="bf16")["regions"]
+    m, d, kv_width = 8, 8, 4
+    assert rope["fwd:block0.attn.qkv"]["flops"] - learned["fwd:block0.attn.qkv"]["flops"] == 3 * m * (d + kv_width)
+    assert rope["fwd:embed"]["bytes"] < learned["fwd:embed"]["bytes"]
+    assert rope["fwd:block0.attn.sdpa"] == learned["fwd:block0.attn.sdpa"]
+
+
 def test_forward_costs_exposes_moe_ke_and_dtype_bytes():
     moe = _cfg(ffn="moe", moe={"num_experts": 4, "top_k": 2, "num_shared": 1, "dispatch": "sorted"})
     costs = forward_costs(moe, B=2, T=4, dtype="bf16")

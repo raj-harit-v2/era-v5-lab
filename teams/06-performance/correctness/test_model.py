@@ -11,7 +11,7 @@ uniform, and a loss-side bug (label smoothing 0.01) then moves the loss by only 
 Reference (never calls the model's forward; reads only its weights): KE v1 codec built byte by byte; KE2 from
 G4's dense fp64 encoder (ke2.codec.encode_f64) on G4's raw table; LayerNorm,
 GELU and cross-entropy by formula; naive GQA attention (test_attention.naive_attention); MoE computed densely
-(every expert on every token, gate 0 when not chosen); the stack by its recurrence (midpoint p_next = p_prev +
+(every expert on every token, gate 0 when not chosen); RoPE by formula (test_attention.ref_rope); the stack by its recurrence (midpoint p_next = p_prev +
 2h f(p_curr), or plain x + f(x)) with ordinary autograd.
 
 Pairs (outputs logits and loss; every parameter gradient). Every pair is configs/base.yaml as it is; the variants
@@ -21,14 +21,15 @@ change only the key named, so each other choice of base.yaml is still covered wh
   model.base.mtp         model.mtp=true (t+2 head, loss = ntp + mtp), fp32. The reference adds the t+2 loss.
   model.base.mtp.chunked the same with model.ce_impl=chunked: both heads in checkpointed pieces.
   model.base.<key>       model.embedding = table / ke1 / ke2, model.ffn = mlp / moe, model.attn_impl = sdpa / eager,
-                         model.reversible = true / false, model.activation = gelu / swiglu: the values base.yaml
-                         does not select.
+                         model.reversible = true / false, model.activation = gelu / swiglu,
+                         model.position = learned / rope: the values base.yaml does not select.
   model.base.activation_<a>.bf16 / .moe   the activation base.yaml does not select, under bf16 autocast (routing
                          replayed as in model.base.bf16) and with model.ffn=moe (routed + shared experts), fp32.
   model.base.bf16        base.yaml under bf16 autocast, TOLERANCES[bfloat16]. In bf16 a few tokens go to other
                          experts than in fp64 (4 of 128 here), and a flipped token makes the expert gradients
                          noise (13-26%). So this reference REPLAYS the fast routing (the expert choice only, from
                          models.reversible._forward_recording); gates and experts are still computed in fp64.
+  model.base.position_<v>.bf16  the same bf16 pair with the model.position base.yaml does not select.
 The fp32 builder asserts that no routing decision is a near tie (margin > 1e-6): a near tie could flip between
 fp32 and fp64 and fail the pair for no bug. If that fires after a model change, change SEED.
 """
@@ -169,11 +170,13 @@ def ref_forward(rm, cfg, idx, targets, routes=None, margins=None):
         x = (codes @ rm.tok.proj.weight.T).view(*idx.shape, -1)
     else:
         x = rm.tok.weight[idx]
-    x = x + rm.pos.weight[:idx.shape[1]]
+    if cfg.position == "learned":
+        x = x + rm.pos.weight[:idx.shape[1]]
+    theta = cfg.rope_theta if cfg.position == "rope" else None
 
     def f(i, blk, p):
         a = naive_attention(ref_ln(p, blk.ln1), blk.attn.c_attn.weight, blk.attn.c_attn.bias,
-                            blk.attn.c_proj.weight, blk.attn.c_proj.bias, cfg.n_head, cfg.n_kv_head)
+                            blk.attn.c_proj.weight, blk.attn.c_proj.bias, cfg.n_head, cfg.n_kv_head, theta)
         h = ref_ln(p + a, blk.ln2)
         if cfg.ffn == "moe":
             return a + ref_moe(blk.ffn, h, None if routes is None else routes[i], margins)
@@ -248,11 +251,15 @@ _fp32_pair("model.base.mtp.chunked", ["model.mtp=true", "model.ce_impl=chunked"]
 
 # The choices base.yaml does not make, one key at a time (base.yaml is read when this file is collected).
 CHOICES = {"embedding": ["table", "ke1", "ke2"], "ffn": ["mlp", "moe"], "attn_impl": ["sdpa", "eager"],
-           "reversible": [True, False], "activation": ["gelu", "swiglu"]}
+           "reversible": [True, False], "activation": ["gelu", "swiglu"], "position": ["learned", "rope"]}
+# A choice that needs another key with it: position=rope has no default theta (models.config).
+ROPE_THETA = 10000.0                  # G5 to confirm; the pairs hold for any theta
+CHOICE_NEEDS = {("position", "rope"): [f"model.rope_theta={ROPE_THETA}"]}
 for _key, _values in CHOICES.items():
     for _v in _values:
         if getattr(_base(), _key) != _v:
-            _fp32_pair(f"model.base.{_key}_{str(_v).lower()}", [f"model.{_key}={str(_v).lower()}"])
+            _fp32_pair(f"model.base.{_key}_{str(_v).lower()}",
+                       [f"model.{_key}={str(_v).lower()}"] + CHOICE_NEEDS.get((_key, _v), []))
 
 # Tied / untied table head (base.yaml uses ke2 + tie_embeddings=false).
 _fp32_pair("model.base.tie_embeddings_true",
@@ -303,7 +310,7 @@ def _bf16_case(device, overrides=()):
     routes = None
     if mcfg.ffn == "moe" and mcfg.reversible:         # the bf16 expert choice, layer by layer
         with torch.no_grad(), amp():
-            emb = fast.tok(idx) + fast.pos(torch.arange(idx.shape[1], device=device))
+            emb = fast.embed(idx)
             routes = [r[0] for r in _forward_recording(fast.blocks, emb)[2]]
 
     def fast_fn(i, t):
@@ -321,6 +328,10 @@ for _a in CHOICES["activation"]:
         _bf16_pair(f"model.base.activation_{_a}.bf16", [f"model.activation={_a}"])
         if _base().ffn != "moe":
             _fp32_pair(f"model.base.activation_{_a}.moe", [f"model.activation={_a}", "model.ffn=moe"])
+# The position base.yaml does not select, in bf16 (the fp32 case is in CHOICES above).
+for _v in CHOICES["position"]:
+    if _base().position != _v:
+        _bf16_pair(f"model.base.position_{_v}.bf16", [f"model.position={_v}"] + CHOICE_NEEDS.get(("position", _v), []))
 
 
 @pytest.mark.parametrize("name", pairs_in(__name__))

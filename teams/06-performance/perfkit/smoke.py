@@ -78,7 +78,7 @@ def main(argv=None):
     if m.reversible:
         x, _ = ld.next_batch()
         with autocast():
-            err = reconstruction_error(model.tok(x) + model.pos(torch.arange(m.block_size, device=dev)), model.blocks)
+            err = reconstruction_error(model.embed(x), model.blocks)
         print(f"reversible reconstruction error: {err:.1e}  ({'OK' if err < 1e-3 else 'TOO HIGH'})")
 
     def step(step_index):
