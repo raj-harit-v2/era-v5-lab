@@ -92,6 +92,7 @@ The "Likely bottleneck" column was written before the baseline. The v0 traces (`
 | `data.prefetch` | `true` \| `false` | next batch sampled and pinned after backward is queued; same batches; implementation switch |
 | `model.embedding` | `ke2` \| `ke1` \| `table` | a different model, not an A/B |
 | `model.attn_impl` | `eager` \| `sdpa` | a different kernel with the same maths; compared as a different config |
+| `model.position` | `learned` \| `rope` | `rope`: rotary q and k, needs `model.rope_theta` (no default), no position table; a different model |
 | `model.mtp` | `false` \| `true` | a second head: a different model |
 | `model.ce_impl` | `torch` \| `chunked` \| `fused` \| `fused_cached` \| `fused_liger` \| `fused_cce` | `fused` caches gradients in forward using `ce_chunks` token chunks; `fused_cached` / `fused_liger` use fixed `ce_token_chunk` tiles; `fused_cce` streams vocabulary and recomputes; all are PyTorch paths, see `docs/LINEAR_CE.md` |
 | `model.ke_mode` | `dynamic` \| `cached` | `cached` keeps a V x 8192 fp32 table (4 GiB at V = 131072) |

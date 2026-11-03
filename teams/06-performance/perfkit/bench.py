@@ -286,7 +286,7 @@ def reversible_check(s: Setup) -> float:
     s.core.eval()                         # do not count these tokens for the MoE bias update
     try:
         with torch.no_grad(), s.autocast():
-            emb = s.core.tok(x) + s.core.pos(torch.arange(s.mcfg.block_size, device=s.device))
+            emb = s.core.embed(x)
             return reconstruction_error(emb, s.core.blocks)
     finally:
         s.core.train()

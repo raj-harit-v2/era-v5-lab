@@ -62,7 +62,8 @@ def _pair_needs(name):
     if name.startswith("attention."):
         impl = "eager" if "eager" in name else "sdpa"
         kind = "mha" if "mha" in name else "mqa" if "mqa" in name else "gqa"
-        return [("model.attn_impl", impl), ("attention", kind)]
+        needs = [("model.attn_impl", impl), ("attention", kind)]
+        return needs + [("model.position", "rope")] if name.startswith("attention.rope") else needs
     if name.startswith("ke1."):
         return [("model.embedding", "ke1"), ("model.ke_mode", name.split(".")[1])]
     if name.startswith("ke2"):
@@ -79,7 +80,7 @@ def _pair_needs(name):
         if "one_pass" in parts:
             needs.append(("model.rev_impl", "one_pass"))
         return needs
-    if re.match(r"model\.base\.(embedding|ffn|attn_impl|reversible|activation|tie_embeddings)_", name):
+    if re.match(r"model\.base\.(embedding|ffn|attn_impl|reversible|activation|tie_embeddings|position)_", name):
         return None                  # a choice base.yaml does not make (test_model.CHOICES)
     needs = []
     if name.endswith(".bf16"):
@@ -104,6 +105,8 @@ def _test_needs(item):
             return [("model.attn_impl", "sdpa"), ("attention", "gqa" if param != "1" else "mqa")]
         if fn == "test_eager_matches_sdpa":
             return [("model.attn_impl", "sdpa")]
+        if fn.startswith("test_rope"):
+            return [("model.position", "rope")]
     if fn == "test_a_token_longer_than_P_is_normalised_with_L_truncated_to_P":
         return []                    # a recorded contract gap (strict xfail): shown in every run until it is fixed
     if file in ("test_ke.py", "test_tokenizer_optimizer.py"):
