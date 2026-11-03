@@ -381,6 +381,10 @@ def run_metadata(device) -> dict:
 
 # ------------------------------------------------------------------------------ FLOPs, MFU, memory
 
+# How model FLOPs are counted. A run file records its method in metrics.mfu_method.
+#   g6-v1: today's count, used by every run so far and by the baselines G8 has ingested:
+#          6 * N_active + 12 * L * d * T.
+#   g6-v2: proposed. The KE2 projection is counted by its real lookup cost and the MTP head on T-1 positions.
 METHODS = MFU_METHODS
 DEFAULT_METHOD = "g6-v1"                     # stays until the G6 and G8 leads approve g6-v2
 KE2_FLOPS_PER_SUPPORT_CELL_PER_CHANNEL = 4   # embedding_bag: 2 FLOP forward + 2 FLOP backward per support cell per channel
