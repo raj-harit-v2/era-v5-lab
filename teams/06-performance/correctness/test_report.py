@@ -125,7 +125,7 @@ def test_render_preserves_exact_warning_text_and_no_false_ke_claim():
     assert "## Five slowest leaf parts" in md
 
 
-# Sunil PR24 review regression: distinct pool-counter diagnostics
+# PR24 review regression: distinct pool-counter diagnostics
 def test_render_flags_inner_pool_allocation_when_timer_count_is_zero():
     run = example_run()
     run["layer"] = {"events_created_during_steps": 0,

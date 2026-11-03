@@ -29,10 +29,14 @@ hw_flops_per_token    = model_flops_per_token
 - The optimizer FLOPs come from `Optimizers.flops()` in `models/optim.py`.
 - Code: `flops_per_token()` in `perfkit/metrics.py`.
 
-**Open point for G8 (MFU method, week 2):** `6 * N_active` counts the KE2 projection (256 x 8192 = 2.1M
-parameters) as a dense matmul, but KE2 runs as an `embedding_bag` over a few columns per token. That adds about
-12.6 of the 247 MFLOP per token, so MFU reads about 5% high. The PaLM formula usually leaves embeddings out of N.
-To be agreed with G8 before it changes.
+- Elementwise work is not counted. That includes GELU, `SiLU(gate) * up` and the RoPE rotation of q and k, so
+  `model.position` does not change these numbers. `perfkit/roofline.py` does count the rotation, because it is a cost
+  model: about 18 KFLOP per token at `base.yaml`, or 0.0075% of the count (by hand).
+
+**Method id:** the formulas above are `g6-v1`, the method of every run so far and still the default. Section 2.1
+proposes `g6-v2`. Approval alone changes nothing: moving to it means changing `metrics.DEFAULT_METHOD` and having
+`bench` pass `ke2_mean_support_len`. New runs are then labelled `g6-v2`; old run files keep their numbers, and a file
+with no `mfu_method` counts as `g6-v1`.
 
 ## 2. MFU and HFU
 
@@ -52,10 +56,65 @@ HFU                = tokens_per_s * hw_flops_per_token / 1e12 / peak_tflops
 is 23.6 TFLOPS, so MFU = 7.6%. `hw_flops_per_token` is 276 MFLOP, so HFU = 8.4%. With `model.mtp=true`
 (74.0M parameters): 448 / 477 MFLOP per token, 59,691 tokens/s, MFU 8.6%, HFU 9.1%.
 
+### 2.1 Proposed method `g6-v2` (pending G6 and G8 approval)
+
+`flops_per_token(..., method="g6-v2", ke2_mean_support_len=L)` changes two terms:
+
+```text
+KE2:  model_flops_per_token - 6 * KE projection weights + 4 * L * d     L = mean bytes per token
+MTP:  model_flops_per_token - 6 * MTP head weights / T                  the head runs on T-1 positions
+```
+
+- **KE2.** `6 * N_active` charges the projection (256 x 8192 = 2.1M weights, 12.6 of 247 MFLOP) as a dense matmul,
+  but it runs as one `embedding_bag` over `L` columns, so `g6-v1` reads about 5% high. PyTorch's FLOP counter finds no
+  dense projection matmul (`test_mfu_method.py`). The `4 * L * d` term is a hand count (2 forward, 2 backward, per
+  support cell and channel), because the counter does not see `embedding_bag`. It has no default: a KE2 model without
+  `L` raises an error, and `bench` does not supply `L` yet. A token-weighted mean is correct. The vocabulary mean is
+  6.585; MFU changes by under 0.001 percentage points for `L` from 3 to 10.
+- **Left out on purpose:** the row sum `low[L] * W.sum(1)` in `models/ke2.py`, by hand about
+  `2 * D * d / (B * T) + 4 * d` FLOP per token, 2,048 at `base.yaml`, or 0.001%.
+- **MTP.** The head runs on T-1 positions (`GPT._add_mtp`). Masked targets still go through the matmul, so they are
+  not subtracted. The FLOP counter matches `g6-v2` exactly on a small model. This is 0.79 of 448 MFLOP at T=256.
+- **Unchanged:** `params_total`, `params_active`, and the extra work in `hw_flops_per_token`. KE1 stays as in `g6-v1`.
+
+The same timing recomputed with `g6-v2`. These are derived from the rounded numbers above, not new runs:
+
+| Baseline | `g6-v1` MFLOP/token (model / hw) | MFU / HFU | `g6-v2` MFLOP/token (model / hw) | MFU / HFU |
+|---|---:|---:|---:|---:|
+| Normal, 95,459 tokens/s | 247 / 276 | 7.6% / 8.4% | 234.4 / 263.4 | 7.2% / 8.1% |
+| MTP, 59,691 tokens/s | 448 / 477 | 8.6% / 9.1% | 434.6 / 463.6 | 8.3% / 8.9% |
+
+### 2.2 Scope: selected GPU and run level
+
+`metrics.mfu_scope` says what a value covers. `metrics.mfu_method` says how it was counted. A run file with neither is
+`g6-v1` / `selected_gpu`.
+
+- `selected_gpu`: what `bench` writes, as described above. Local tokens/s over one GPU's peak.
+- `run`: `metrics.mfu_run()`, for a distributed trainer once there is one:
+
+```text
+MFU_run = global_tokens_per_s * model_flops_per_token / (sum of participating peaks * 1e12)
+```
+
+- With identical GPUs the sum is `world_size * peak_tflops`, which is the formula Team 8 described, as long as the
+  tokens/s is **global**. Never divide `bench`'s local tokens/s by `world_size * peak`: it reads 1/`world_size` of the truth.
+- Participants are passed in explicitly, never taken from `torch.cuda.device_count()`, because a machine can show idle GPUs.
+- **Worked example (illustrative, not measured):** 2 x A100, 190,918 tokens/s globally, peaks 312 + 312 = 624 TFLOPS,
+  247 MFLOP per token: MFU 7.6%, the same as one GPU doing half the work.
+- **Parallelism (proposed):** each data-parallel replica adds tokens. Tensor, pipeline and expert parallel ranks work on
+  the same tokens, so they add to the peak sum and not to the tokens. `participants.topology` is optional for now,
+  because G6 has no distributed trainer; settle it when the trainer exists.
+- **Across runs:** never average percentages. A combined figure, if wanted, is total model FLOPs over total
+  peak-capacity-seconds, for runs with the same method id.
+- **Evidence:** the algebra is tested on CPU, and `perfkit/mfu_fixture.py` measures it across real processes.
+- A value above 1 is stored as it is, never clipped, and `report` warns. It means a wrong peak or over-counted FLOPs.
+
 ### Fields in `run["metrics"]`
 
 `mfu`, `hfu`, `model_tflops_per_s`, `model_flops_per_token`, `hw_flops_per_token`, `params_total`,
-`params_active`, `peak_tflops`, and one reason field per metric: `mfu_unavailable_reason`, `hfu_unavailable_reason`.
+`params_active`, `peak_tflops`, `mfu_method`, `mfu_scope`, and one reason field per metric: `mfu_unavailable_reason`,
+`hfu_unavailable_reason`. A `run` scope value also has `global_tokens_per_s` and `participants` (`world_size`,
+`peak_tflops_sum`, `devices`, optional `topology`).
 
 ### When MFU or HFU is missing
 
@@ -69,9 +128,13 @@ reason is `null`.
 | `peak_tflops_unavailable` | no usable vendor peak was found | MFU and HFU |
 | `invalid_peak_tflops` | a peak set by hand is not positive | MFU and HFU |
 | `hw_flops_unavailable` | hardware FLOPs are missing | HFU only (MFU stays) |
+| `participants_unavailable` | `mfu_run`: no participants were given | MFU and HFU |
+| `participant_peak_unavailable` | `mfu_run`: a participant has no valid peak | MFU and HFU |
+| `invalid_global_throughput` | `mfu_run`: global tokens/s is not a positive number | MFU and HFU |
+| `duplicate_participants` | `mfu_run`: a rank was listed twice | MFU and HFU |
 
 **For readers (G8):** a `null` MFU or HFU means missing, not zero. Do not average MFU / HFU fractions across GPUs
-or runs without an agreed rule.
+or runs. Section 2.2 gives the run-level formula.
 
 **G5's harness** computes every expert before it picks the top-k, so G6's active-expert FLOPs do not apply to
 it. G5 supplies its own executed-FLOPs estimate and agrees comparability with G8 before cross-team reporting; the
@@ -220,6 +283,7 @@ written yet.
 | `correctness/test_metrics.py` | FLOPs-per-token formulas, MFU / HFU conversion, peak lookups for known and unknown GPUs and dtypes (bf16, fp16, fp32, fp8, fp4 for every listed test GPU) |
 | `correctness/test_optimizer.py` | the Newton-Schulz FLOP count, including that AdamW-only parameters add nothing |
 | `correctness/test_report.py` | the 5% gate and the Markdown output |
+| `correctness/test_mfu_method.py` | hand-counted FLOP ledgers, the PyTorch FLOP counter as an independent check, `g6-v1` vs `g6-v2`, `mfu_run`, RoPE, the worked examples in this file |
 
 ```bash
 python -m pytest correctness/test_metrics.py correctness/test_optimizer.py correctness/test_report.py -q

@@ -30,7 +30,12 @@ REGION_KEYS = ("median", "p10", "p90", "iqr", "n", "level", "calls_per_step")
 METRIC_UNAVAILABLE_REASONS = {
     "unknown_gpu", "unsupported_dtype", "peak_tflops_unavailable", "invalid_peak_tflops",
     "hw_flops_unavailable",
+    # run-level MFU (metrics.mfu_run)
+    "participants_unavailable", "participant_peak_unavailable", "invalid_global_throughput",
+    "duplicate_participants",
 }
+MFU_SCOPES = ("selected_gpu", "run")
+MFU_METHODS = ("g6-v1", "g6-v2")          # see docs/METRICS.md; a file with no mfu_method is g6-v1
 
 
 def _get(d, dotted):
@@ -69,6 +74,18 @@ def validate_run(run: dict) -> list:
             problems.append(f"metrics.{reason_key} is required when metrics.{metric} is null")
         if value is not None and reason is not None:
             problems.append(f"metrics.{reason_key} must be null when metrics.{metric} is available")
+    method = metrics.get("mfu_method")
+    if method is not None and method not in MFU_METHODS:
+        problems.append(f"metrics.mfu_method {method!r} not in {MFU_METHODS}")
+    scope = metrics.get("mfu_scope")
+    if scope is not None and scope not in MFU_SCOPES:
+        problems.append(f"metrics.mfu_scope {scope!r} not in {MFU_SCOPES}")
+    if scope == "run":
+        parts = metrics.get("participants")
+        if not isinstance(parts, dict) or not all(k in parts for k in ("world_size", "peak_tflops_sum", "devices")):
+            problems.append("metrics.participants (world_size, peak_tflops_sum, devices) is required when mfu_scope is 'run'")
+        if "global_tokens_per_s" not in metrics:
+            problems.append("metrics.global_tokens_per_s is required when mfu_scope is 'run'")
     memory = run.get("memory")
     if memory is not None:
         if not isinstance(memory, dict):

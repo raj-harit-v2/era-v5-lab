@@ -795,7 +795,7 @@ def test_communication_warning_is_emitted_only_for_nonzero_counter():
     assert "3 CUDA timing events" in warns[0] and "communication" in warns[0]
 
 
-# Sunil PR24 review regression: inner recorder-pool reporting
+# PR24 review regression: inner recorder-pool reporting
 def test_inner_pool_warning_and_json(tmp_path, monkeypatch):
     real = bench.run_layer
     def injected(s, n, level, warm):

@@ -348,7 +348,7 @@ def test_cuda_reset_synchronizes_before_event_reuse(monkeypatch):
     assert t.events_created_during_steps == 0
 
 
-# Sunil PR24 review regression: cumulative fallback allocation count
+# PR24 review regression: cumulative fallback allocation count
 def test_cuda_counter_remains_cumulative_across_reset(monkeypatch):
     class FakeEvent:
         def __init__(self, enable_timing=False):

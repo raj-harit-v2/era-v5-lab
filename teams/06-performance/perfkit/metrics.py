@@ -5,9 +5,11 @@ The one place these numbers are computed: perfkit.bench calls it, and G8 gets th
     gpu_peak(device_name)          {"spec": "A100", "bf16": 312, "fp16": 312, "fp32": 19.5}, {} when unknown
     peak_tflops(device_name, dtype)  (dense peak TFLOPS for this dtype or None, spec or None)
     run_metadata(device)           the device, version and git fields of the run JSON "meta" (perfkit/schema.py)
-    flops_per_token(model, T, opt_flops_per_step=0, tokens_per_step=None)
+    flops_per_token(model, T, opt_flops_per_step=0, tokens_per_step=None, method="g6-v1", ke2_mean_support_len=None)
                                    model_flops_per_token, hw_flops_per_token, params_total, params_active
-    mfu(flops, tokens_per_s, peak_tflops)   MFU/HFU and explicit unavailable-reason fields
+    mfu(flops, tokens_per_s, peak_tflops)   MFU/HFU of the selected GPU and explicit unavailable-reason fields
+    mfu_run(flops, global_tokens_per_s, peaks_tflops, ranks=None)
+                                   run-level MFU/HFU: global throughput over the summed peak of the participants
     memory(device)                 peak allocated / reserved GB (None off CUDA)
     gpu_telemetry(device)          SM clock, temperature, power, throttle reasons from nvidia-smi (None off CUDA)
     telemetry_during(device, work) the same, sampled while work() keeps the GPU busy
@@ -25,6 +27,8 @@ FLOPs per token (T = sequence length, L = layers, d = width, N_active from GPT.p
                             + 2 * head again when ce_impl=chunked or fused_cce (recompute the head)
                             + optimizer FLOPs per step (Muon Newton-Schulz) / tokens per step
 MFU uses model FLOPs, HFU hardware FLOPs; both against the dense vendor peak for the dtype the run used.
+Elementwise work (GELU, SiLU * up, the RoPE rotation) is not counted, so model.position does not change these.
+The formula above is method g6-v1. Method g6-v2 (proposed, see flops_per_token) changes the KE2 and MTP terms.
 
 Extra, still to write: goodput (time and tokens, badput buckets).
 """
@@ -41,6 +45,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import torch
+
+from perfkit.schema import MFU_METHODS
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -375,8 +381,35 @@ def run_metadata(device) -> dict:
 
 # ------------------------------------------------------------------------------ FLOPs, MFU, memory
 
-def flops_per_token(model, T: int, opt_flops_per_step: float = 0.0, tokens_per_step: int | None = None) -> dict:
-    """model: a models.gpt.GPT. See the module docstring for the formulas."""
+# How model FLOPs are counted. A run file records its method in metrics.mfu_method.
+#   g6-v1: today's count, used by every run so far and by the baselines G8 has ingested:
+#          6 * N_active + 12 * L * d * T.
+#   g6-v2: proposed. The KE2 projection is counted by its real lookup cost and the MTP head on T-1 positions.
+METHODS = MFU_METHODS
+# Approval of g6-v2 does not switch anything by itself. To move to it: change DEFAULT_METHOD, have perfkit.bench pass
+# ke2_mean_support_len in the same change (g6-v2 raises an error on a KE2 model without it, and base.yaml uses KE2), and
+# update the tests that pin the default and METRICS.md. New runs are then labelled g6-v2; old run files keep their
+# numbers, and a file with no mfu_method counts as g6-v1. mfu_run needs no switch.
+DEFAULT_METHOD = "g6-v1"
+KE2_FLOPS_PER_SUPPORT_CELL_PER_CHANNEL = 4   # embedding_bag: 2 FLOP forward + 2 FLOP backward per support cell per channel
+
+
+def flops_per_token(model, T: int, opt_flops_per_step: float = 0.0, tokens_per_step: int | None = None,
+                    method: str = DEFAULT_METHOD, ke2_mean_support_len: float | None = None) -> dict:
+    """model: a models.gpt.GPT. See the module docstring for the formulas.
+
+    method "g6-v1" (default, the legacy count G8 has ingested): every active matmul weight costs 6 FLOP per token,
+        including the KE2 projection and the whole MTP head.
+    method "g6-v2" (MFU task, pending G6/G8 approval):
+        * KE2: the projection is not a dense matmul (forward is one embedding_bag over the token's support columns),
+          so it leaves the 6N term and its real lookup cost, 4 * ke2_mean_support_len * d_model FLOP per token, is
+          added. ke2_mean_support_len (mean bytes per token) is required for a ke2 model.
+        * MTP: the head runs on T-1 positions, so its 6 * weights term is scaled by (T-1)/T per input token.
+        The extra-work terms of hw_flops_per_token (reversible recompute, head recompute, optimizer) are the same
+        in both methods.
+    """
+    if method not in METHODS:
+        raise ValueError(f"method {method!r} not in {METHODS}")
     m = model.cfg
     total, active = model.param_counts()
     L, d = m.n_layer, m.n_embd
@@ -388,11 +421,60 @@ def flops_per_token(model, T: int, opt_flops_per_step: float = 0.0, tokens_per_s
         rev_extra = stack_fwd if getattr(m, "rev_impl", "two_pass") == "one_pass" else 2 * stack_fwd
     else:
         rev_extra = 0
-    hw = model_fpt + rev_extra + (2 * head if m.ce_impl in ("chunked", "fused_cce") else 0)
+    extra = rev_extra + (2 * head if m.ce_impl in ("chunked", "fused_cce") else 0)
     if opt_flops_per_step and tokens_per_step:
-        hw += opt_flops_per_step / tokens_per_step
-    return {"model_flops_per_token": model_fpt, "hw_flops_per_token": hw,
+        extra += opt_flops_per_step / tokens_per_step
+    if method == "g6-v2":
+        if m.embedding == "ke2":
+            if ke2_mean_support_len is None:
+                raise ValueError("method g6-v2 with embedding=ke2 needs ke2_mean_support_len")
+            model_fpt += -6 * ke + KE2_FLOPS_PER_SUPPORT_CELL_PER_CHANNEL * ke2_mean_support_len * d
+        if m.mtp:
+            if T < 2:
+                raise ValueError("mtp needs T >= 2")
+            model_fpt -= 6 * model.mtp_head.weight.numel() / T
+    return {"model_flops_per_token": model_fpt, "hw_flops_per_token": model_fpt + extra,
             "params_total": total, "params_active": active}
+
+
+def _positive_finite(x) -> bool:
+    return isinstance(x, (int, float)) and not isinstance(x, bool) and math.isfinite(x) and x > 0
+
+
+def mfu_run(flops: dict, global_tokens_per_s: float, peaks_tflops: list, ranks: list | None = None) -> dict:
+    """Run-level MFU/HFU: global throughput over the summed dense peak of the GPUs that took part.
+
+        MFU_run = global_tokens_per_s * model_flops_per_token / (sum(peaks_tflops) * 1e12)
+
+    peaks_tflops: one dense peak per participating GPU (an explicit list, never torch.cuda.device_count()).
+    ranks: optional ids of those participants; a repeated id is rejected so a double-reported rank cannot count twice.
+    Bad input gives None with a reason code, never 0 and never a value clipped to 1."""
+    out = {"model_tflops_per_s": None, "mfu": None, "hfu": None,
+           "mfu_unavailable_reason": None, "hfu_unavailable_reason": None}
+
+    def fail(reason):
+        out["mfu_unavailable_reason"] = out["hfu_unavailable_reason"] = reason
+        return out
+
+    if not peaks_tflops:
+        return fail("participants_unavailable")
+    if ranks is not None:
+        if len(ranks) != len(peaks_tflops):
+            raise ValueError("ranks and peaks_tflops must have the same length")
+        if len(set(ranks)) != len(ranks):
+            return fail("duplicate_participants")
+    if not _positive_finite(global_tokens_per_s):
+        return fail("invalid_global_throughput")
+    if not all(_positive_finite(p) for p in peaks_tflops):
+        return fail("participant_peak_unavailable")
+    capacity = sum(peaks_tflops) * 1e12
+    out["model_tflops_per_s"] = flops["model_flops_per_token"] * global_tokens_per_s / 1e12
+    out["mfu"] = flops["model_flops_per_token"] * global_tokens_per_s / capacity
+    if flops.get("hw_flops_per_token") is not None:
+        out["hfu"] = flops["hw_flops_per_token"] * global_tokens_per_s / capacity
+    else:
+        out["hfu_unavailable_reason"] = "hw_flops_unavailable"
+    return out
 
 
 def mfu(flops: dict, tokens_per_s: float, peak_tflops: float | None,
