@@ -2,7 +2,7 @@
 
   * Puts teams/06-performance on sys.path, so `pytest teams/06-performance/correctness` works from the
     repo root (the Gate 1 command) as well as from teams/06-performance.
-  * `device` fixture: cuda if available, else cpu.
+  * `device` fixture: cuda if available, else cpu. Each test's GPU memory is freed when it ends.
   * A test that hits a stub (NotImplementedError) is reported as SKIPPED with the stub's name, not failed.
     `pytest -rs` lists them. At Gate 1 no stub skip may be left (skips for missing CUDA / bf16 are expected
     on a laptop).
@@ -17,6 +17,7 @@
 from __future__ import annotations
 
 import functools
+import gc
 import re
 import sys
 from pathlib import Path
@@ -29,6 +30,17 @@ sys.path.insert(0, str(ROOT))
 
 CONFIG = ROOT / "configs" / "base.yaml"
 ATTN_TEST_HEADS = 8                  # N_HEAD in test_attention.py: test_causal's first parameter is n_kv_head
+
+
+@pytest.fixture(autouse=True)
+def _free_gpu_memory():
+    """Free a test's GPU memory when it ends. Models and graphs sit in reference cycles, which only the garbage collector
+    frees, so without this they pile up until it happens to run: the all-configs suite reached 14.5 GiB and ran out of
+    memory on a 16 GB GPU, at a point that moved with the number of tests."""
+    yield
+    if torch.cuda.is_available():
+        gc.collect()
+        torch.cuda.empty_cache()
 
 
 def pytest_addoption(parser):
