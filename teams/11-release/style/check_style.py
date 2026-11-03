@@ -16,6 +16,10 @@ counts as an error; the other paths are still checked.
 --numbers also lists every number as a warning: each number needs TSAI approval before it is published.
 Numbers written as words (two to ninety, hundred, thousand, million, billion, dozen) are warnings too; "one"
 is left out because it is too common. List markers such as "1." are not numbers.
+Rule 1 of public_internal.md says the date of an update and the week number need no approval, so --numbers skips
+"week 1" and a date up to the update's date ("31 Oct 2026", "24 Oct to 31 Oct 2026", "24 to 31 Oct 2026").
+The update's date is the date on its "Date:" line, or today. A later date is still listed: a future date needs approval.
+A pull request number such as "#6" is a name, not a count, so --numbers skips it too.
 Banned words are not checked inside code blocks, inline code, URLs and link targets.
 The phrases in ALLOWED (such as "magic number") are not banned-word errors.
 Em-dashes, en-dashes and emails are checked everywhere.
@@ -24,6 +28,7 @@ A folder means every .md and .txt file in it, except in tests/ folders (the test
 The self-test also checks that style_guide.md lists the same banned words as BANNED.
 """
 import argparse
+import datetime
 import os
 import re
 import sys
@@ -47,6 +52,24 @@ NUMBER = re.compile(r"(?<![\w.])\d+(?:[.,]\d+)*%?")
 NUMBER_WORD = re.compile(r"\b(?:two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|"
                          r"sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|"
                          r"hundreds?|thousands?|millions?|billions?|trillions?|dozens?)\b", re.IGNORECASE)
+MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+MON = "(" + "|".join(MONTHS) + ")"
+WEEK = re.compile(r"\bweek \d+\b", re.IGNORECASE)
+# DD Mon YYYY, or a range that ends in one: "24 Oct to 31 Oct 2026", "24 to 31 Oct 2026"
+DATE = re.compile(r"(?<![\w.])(?:\d{1,2}(?: " + MON + r")? to )?(\d{1,2}) " + MON + r" (\d{4})(?!\w)")
+DATE_LINE = re.compile(r"^\W*Date:\W*(\d{1,2}) " + MON + r" (\d{4})(?!\w)", re.MULTILINE)
+PR = re.compile(r"(?<![\w&])#\d+\b")   # a pull request or issue number, such as the sources in the review record
+
+def as_date(day, mon, year):
+    try:
+        return datetime.date(int(year), MONTHS.index(mon) + 1, int(day))
+    except ValueError:
+        return None
+
+def update_date(text):
+    """The date on the 'Date:' line of an update, or today."""
+    m = DATE_LINE.search(text)
+    return (m and as_date(*m.groups())) or datetime.date.today()
 
 def banned_pattern(words):
     parts = []
@@ -121,6 +144,7 @@ def check_text(text, max_words=25, numbers=False):
         for m in EMAIL.finditer(raw):
             out.append((n, m.start() + 1, "error", "email: no email addresses in public text"))
     lines = list(prose_lines(text))
+    until = update_date(text)
     for n, line in lines:
         allowed = [m.span() for m in ALLOWED_RE.finditer(line)]
         for m in BANNED_RE.finditer(line):
@@ -128,8 +152,12 @@ def check_text(text, max_words=25, numbers=False):
             out.append((n, m.start() + 1, "error", f"banned-word: '{m.group()}'"))
         if numbers:
             marker = re.match(r"\s*\d+[.)](?=\s)", line)   # a list marker, not a number
+            free = [m.span() for m in WEEK.finditer(line)]   # Rule 1: the week number and past dates need no approval
+            free += [m.span() for m in DATE.finditer(line) if (d := as_date(*m.groups()[-3:])) and d <= until]
+            free += [m.span() for m in PR.finditer(line)]   # a pull request number is a name, not a count
             for m in NUMBER.finditer(line):
                 if marker and m.start() < marker.end(): continue
+                if any(a <= m.start() < b for a, b in free): continue
                 out.append((n, m.start() + 1, "warning", f"number '{m.group()}': has TSAI approved it?"))
             for m in NUMBER_WORD.finditer(line):
                 out.append((n, m.start() + 1, "warning", f"number '{m.group()}': has TSAI approved it?"))
@@ -181,6 +209,12 @@ def self_test():
     nums = re.findall(r"number '([^']+)'", " ".join(x[3] for x in check_text("1. At step 200, twelve teams met.\n", numbers=True)))
     ok = ok and nums == ["200", "twelve"]
     print(f"self-test: --numbers on '1. At step 200, twelve teams met.' finds {nums} (want ['200', 'twelve'])")
+    update = ("**Date:** 31 Oct 2026\n**Period:** 24 Oct to 31 Oct 2026\n\n"
+              "In week 1 we read 300 pages from 24 to 30 Oct 2026 (see #6). We meet again on 7 Dec 2026.\n")
+    nums = re.findall(r"number '([^']+)'", " ".join(x[3] for x in check_text(update, numbers=True)))
+    ok = ok and nums == ["300", "7", "2026"]
+    print(f"self-test: --numbers skips the week number, pull request numbers and dates up to the update's date, "
+          f"finds {nums} (want ['300', '7', '2026'])")
     table = len(check_text("| " + " | ".join(["word " * 10] * 4) + "|\n"))
     ok = ok and table == 0
     print(f"self-test: a table row of four 10-word cells gives {table} errors")

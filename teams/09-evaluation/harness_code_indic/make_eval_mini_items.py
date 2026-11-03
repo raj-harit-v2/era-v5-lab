@@ -9,7 +9,8 @@ The items are the exact documents listed in eval_mini_v0_spec.json, loaded throu
 items are hashed the same way the spec was built; if a hash differs (the hub dataset changed), nothing is written.
 The output contains benchmark questions and answers: keep it local. It is gitignored; never commit or redistribute it.
 
-Output schema: {"name", "spec_sha256", "counts", "items": [{"id", "question", "choices", "answer", "kind", "subset"}]}
+Output schema: {"canary", "name", "spec_sha256", "counts", "items": [{"canary", "id", "question", "choices", "answer", "kind", "subset"}]}
+  "canary" is the lab canary line (../decontam/lab_canary.py), in the file and in every item, so a copied item is found too.
   kind "mcq": choices is a list and answer is a letter (A, B, ...); kind "numeric": answer is the final number (GSM8K).
 Code tasks (HumanEval+, MBPP+) are not included: they need execution, see run_codegen.py and code_eval_colab.ipynb.
 """
@@ -20,7 +21,7 @@ import json
 from lm_eval.tasks import TaskManager, get_task_dict
 
 from make_eval_mini_spec import items_sha256
-from run_lm_eval import HERE, RUNS
+from run_lm_eval import HERE, RUNS, stamp  # stamp: the lab canary (../decontam/lab_canary.py)
 
 LETTERS = "ABCDEFGHIJ"
 GATED = {"ai4bharat/MILU"}
@@ -68,13 +69,13 @@ def main():
         if got != v["items_sha256"]:
             raise SystemExit(f"{task}: items sha256 {got[:12]} != spec {v['items_sha256'][:12]}; dataset changed, not writing")
         for doc_id in v["doc_ids"]:
-            items.append({"id": f"{task}/{doc_id}", **to_item(task, doc_id, docs[doc_id])})
+            items.append(stamp({"id": f"{task}/{doc_id}", **to_item(task, doc_id, docs[doc_id])}))
         counts[task] = len(v["doc_ids"])
         print(f"{task:22s} {len(v['doc_ids']):4d} items  sha256 ok", flush=True)
 
-    out = {"name": f"eval-mini v0 items ({sum(counts.values())}{', MILU skipped' if a.skip_gated else ''})",
-           "spec_sha256": hashlib.sha256(spec_bytes).hexdigest(), "counts": counts,
-           "note": "benchmark items: keep local, never commit or redistribute", "items": items}
+    out = stamp({"name": f"eval-mini v0 items ({sum(counts.values())}{', MILU skipped' if a.skip_gated else ''})",
+                 "spec_sha256": hashlib.sha256(spec_bytes).hexdigest(), "counts": counts,
+                 "note": "benchmark items: keep local, never commit or redistribute", "items": items})
     RUNS.mkdir(parents=True, exist_ok=True)
     # Pure ASCII (\\uXXXX escapes): readers that open the file without encoding="utf-8" still parse it on Windows,
     # where the default is cp1252 (Team 12's load_eval in PR #49 does this). The data is unchanged.

@@ -20,6 +20,8 @@ from importlib import metadata
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+sys.path.append(str(HERE.parent / "decontam"))  # append: decontam/registry.py must not shadow other modules
+from lab_canary import stamp  # noqa: E402  the lab canary goes on every logged sample (they hold the items)
 RUNS = HERE / "runs"  # gitignored (.gitignore in this folder); never commit run outputs, caches or samples
 
 
@@ -198,7 +200,7 @@ def main():
             with open(out_dir / f"samples_{nshot}.jsonl", "w", encoding="utf-8", newline="\n") as f:
                 for task, rows in res.get("samples", {}).items():
                     for row in rows:
-                        f.write(json.dumps({"task": task, **row}, ensure_ascii=False, default=str) + "\n")
+                        f.write(json.dumps(stamp({"task": task, **row}), ensure_ascii=False, default=str) + "\n")
     wall = time.time() - t0
 
     record = {

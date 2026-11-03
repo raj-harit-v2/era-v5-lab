@@ -55,10 +55,10 @@ HARNESS_FIXES = [  # bugs in the tools themselves; every affected result was reg
     "`max_new_tokens=768`) never used it.",
 ]
 
-DEFERRED = {  # (model, task) gate pairs deferred on 25 Oct by the lead: week-1 focus is code. Shown as DEFERRED, never FAIL.
-    ("gemma-2-2b", "milu_Hindi"), ("gemma-2-2b", "milu_Telugu"), ("gemma-2-2b", "milu"),
-    ("llama-3.2-3b", "milu_English"), ("llama-3.2-3b", "milu_Hindi"), ("llama-3.2-3b", "milu_Telugu"), ("llama-3.2-3b", "milu"),
+DEFERRED = {  # (model, task) gate pairs shown as DEFERRED, never FAIL, until their runs exist: MILU-avg needs all 11 languages.
+    ("gemma-2-2b", "milu"), ("llama-3.2-3b", "milu"),
 }
+MILU_LANGS = ["Bengali", "English", "Gujarati", "Hindi", "Kannada", "Malayalam", "Marathi", "Odia", "Punjabi", "Tamil", "Telugu"]
 NOT_RUN = {  # optional gate pairs never queued (BBH: MMLU-Pro already covers general ability against the same leaderboard)
     ("qwen2.5-1.5b", "leaderboard_bbh"), ("gemma-2-2b", "leaderboard_bbh"), ("llama-3.2-3b", "leaderboard_bbh"),
 }
@@ -105,6 +105,21 @@ def count_timeouts(models):
     return n
 
 
+def milu_avg(model):
+    """MILU-avg: simple mean of the 11 per-language full runs, as (avg, {language: score}); None until all 11 exist."""
+    scores = {}
+    for lang in MILU_LANGS:
+        task = f"milu_{lang}"
+        run = load(RUNS / model / f"gate_{task}" / "results.json")
+        if not run or run.get("limit") or run.get("samples_file"):
+            return None
+        value, _ = metric_of(task, run["results"].get(task) or {})
+        if value is None:
+            return None
+        scores[lang] = round(100 * value, 2)
+    return round(sum(scores.values()) / len(scores), 2), scores
+
+
 def ours_for(anchor):
     """Our full-set score for one anchor, or None while the run is missing."""
     model, task = anchor["model"], anchor["task"]
@@ -114,10 +129,13 @@ def ours_for(anchor):
         if not sc:
             return None
         return sc["plus"] if anchor["benchmark"].endswith("+") else sc["base"]
+    if task == "milu":  # the paper's avg column: simple mean of the 11 per-language runs, not lm-eval's size-weighted group score
+        avg = milu_avg(model)
+        return None if avg is None else avg[0]
     run = load(RUNS / model / f"gate_{task}" / "results.json")
     if not run or run.get("limit") or run.get("samples_file"):
         return None  # only unrestricted full-set runs count for the gate
-    row = run["results"].get(task)  # for "milu" (the paper's avg) this is lm-eval's size-weighted group score
+    row = run["results"].get(task)
     value, _ = metric_of(task, row or {})
     return None if value is None else round(100 * value, 2)
 
@@ -158,6 +176,7 @@ def main():
     (RESULTS / EVAL_MINI_OUT).write_text(json.dumps(eval_mini, indent=1, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
 
     rows, counts = [], {"PASS": 0, "FAIL": 0, "PENDING": 0, "DEFERRED": 0, "NOT RUN": 0}
+    milu_notes = []
     for a in [a for a in pub["anchors"] if a["use_for_gate"]]:
         ours = ours_for(a)
         diff = ""
@@ -167,6 +186,8 @@ def main():
             d = ours - a["published"]
             verdict, diff = ("PASS" if abs(d) <= 2.0 else "FAIL"), f"{d:+.2f}"
         counts[verdict] += 1
+        if a["task"] == "milu" and ours is not None:
+            milu_notes.append(f"- MILU-avg {a['model']}, the 11 scores: " + ", ".join(f"{k} {v:.2f}" for k, v in milu_avg(a["model"])[1].items()))
         rows.append(f"| {a['model']} | {a['benchmark']} | {a['published']:.2f} | {'' if ours is None else f'{ours:.2f}'} | {diff} | "
                     f"**{verdict}** | [{a['source']['name']}]({a['source']['url']}) |")
 
@@ -191,7 +212,9 @@ def main():
           "- Code scoring agrees with the EvalPlus leaderboard for DeepSeek-Coder-1.3B-base (within 1.2) and phi-2 on 3 of 4.",
           f"- The two FAILs are on the stricter `+` tests, just past the line (−2.41, −2.88). evalplus recorded {timeouts} timeouts "
           "across all executed code, so a slow executor does not explain them. They stand under the pre-registered rule.",
-          "- DEFERRED: the two MILU-avg rows (all 11 languages, 79,608 items per model).",
+          "- MILU-avg (both rows) is the simple mean of the 11 per-language `gate_milu_<Language>` full runs (79,608 items per model), "
+          "computed only when all 11 exist; until then the row is DEFERRED. The rule was fixed before the remaining runs (see the README).",
+          *milu_notes,
           "- MILU per-language rows: the five deferred on 25 Oct were run on 29-30 Oct on a second machine (RTX 4060 Ti 16 GB, Windows) with this harness at the pinned revisions; all PASS (largest |Δ| 0.88). As a cross-machine check, gemma-2-2b MILU-en scored 51.16 there against 51.05 in the gate row.",
           "- NOT RUN: BBH (optional; MMLU-Pro already covers general ability against the same leaderboard).", "",
           "| Model | Benchmark | Published | Ours | Δ | Verdict | Source |", "|---|---|---|---|---|---|---|", *rows, "",
@@ -225,7 +248,8 @@ def main():
           "- Qwen's code anchors come from a table that names no harness; its one code FAIL (HumanEval+ −2.41) may be protocol, not a bug.",
           "- The leaderboard used a pinned lm-eval fork (commits `d4631ea6` / `121ee91`) on Linux GPUs; we use release 0.4.13 on Windows (RTX 3070 Laptop; MILU per-language rows on an RTX 4060 Ti 16 GB).",
           "- Small models score close to chance (25%) on MILU's Indic languages, so MILU agreement is a weaker check than MMLU-Pro.",
-          "- The MILU paper's `avg` column does not state its aggregation; per-language rows are the primary check.", ""]
+          "- The MILU paper's `avg` column does not state its aggregation. We use the simple mean of the 11 languages, which reproduces "
+          "the paper's 31.43 / 32.85; lm-eval's size-weighted mean would give 33.51 / 34.87. Per-language rows are still the primary check.", ""]
     (RESULTS / COMPARE_OUT).write_text("\n".join(md), encoding="utf-8", newline="\n")
     print(f"{EVAL_MINI_OUT}: {sum(v['status'] == 'done' for v in models.values())}/{len(models)} models done | gate: {status} | timeouts {timeouts}")
 

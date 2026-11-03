@@ -10,7 +10,7 @@ Run the checker before you ask for a review:
 python teams/11-release/style/check_style.py <your file>
 ```
 
-The checker must give 0 errors. Add `--numbers` to list every number in your text.
+The checker must give 0 errors. Add `--numbers` to list the numbers in your text that need TSAI approval.
 
 ## Rules the checker enforces
 
@@ -46,7 +46,10 @@ The technical phrase `magic number` is allowed. The word `magic` on its own is n
 
 5. **Numbers need TSAI approval.** Ask TSAI before you publish any number. See `public_internal.md`. Until TSAI
    approves a number, write `[number: waiting for TSAI]` in its place. `--numbers` does not find every number
-   written as a word, so the reviewer checks for those too.
+   written as a word, so the reviewer checks for those too. The week number and the date of the update need no
+   approval, so `--numbers` skips `week 1` and dates up to the date on the `Date:` line, such as `31 Oct 2026`.
+   It still lists a later date, because a future date needs approval. It also skips pull request numbers such as
+   `#6`: they name a source and do not count anything.
 6. **Say what we did.** Write about work that is done. Do not promise dates, sizes or results.
 7. **Names need consent.** Name a person only if they signed `consent_form.md`. Use the name the way
    they chose.

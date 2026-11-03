@@ -359,7 +359,7 @@ def test_shipped_set_false_hits_on_clean_text(v1):
 
 @shipped
 def test_shipped_set_finds_benchmark_canaries(v1):
-    assert v1.canaries, "GPQA and HLE ship canary strings"
+    assert {"gpqa_diamond", "hle"} <= set(v1.canaries.values()), "GPQA and HLE ship canary strings"
     for c in v1.canaries:
         assert v1.check("Some page.\n" + c + "\nMore text.")[0]
 

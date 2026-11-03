@@ -407,7 +407,7 @@
     "url": "https://arxiv.org/abs/2411.02538"
    },
    "use_for_gate": true,
-   "note": "the avg column's aggregation is not stated in the paper; compare per language first"
+   "note": "MILU-avg = simple mean of the 11 per-language full runs (rule fixed before the remaining runs); it reproduces the paper's avg, the size-weighted mean would give 33.51"
   },
   {
    "model": "llama-3.2-3b",
@@ -647,7 +647,7 @@
     "url": "https://arxiv.org/abs/2411.02538"
    },
    "use_for_gate": true,
-   "note": "the avg column's aggregation is not stated in the paper; compare per language first"
+   "note": "MILU-avg = simple mean of the 11 per-language full runs (rule fixed before the remaining runs); it reproduces the paper's avg, the size-weighted mean would give 34.87"
   },
   {
    "model": "qwen2.5-1.5b",

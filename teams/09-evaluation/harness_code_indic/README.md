@@ -108,3 +108,13 @@ Each fix is verified, and all are written up in `compare_v0_code_indic.md`.
 | NOT RUN | 3 | BBH (optional) |
 
 See `../results/compare_v0_code_indic.md` for every row, its source and the limitations.
+
+## MILU-avg aggregation (decision)
+
+MILU-avg is the **simple mean of the 11 per-language `gate_milu_<Language>` full runs** (Bengali, English, Gujarati, Hindi, Kannada,
+Malayalam, Marathi, Odia, Punjabi, Tamil, Telugu). `compare.py` computes it only when all 11 runs exist; otherwise the row is DEFERRED.
+The `milu` group task is not used, because lm-eval's group score is size-weighted.
+
+The MILU paper does not state how its avg column is aggregated. The simple mean of the paper's own 11 per-language scores gives
+31.43 (gemma-2-2b) and 32.85 (llama-3.2-3b), the published avg; the size-weighted mean would give 33.51 and 34.87. The rule is fixed
+before the remaining runs, so it cannot be tuned to a score. The pass rule is unchanged (|ours - published| <= 2.0), and a FAIL stands.
