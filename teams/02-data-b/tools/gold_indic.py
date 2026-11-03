@@ -3,6 +3,7 @@
 
 The rule is the one in Data A's build_gold.py (DISEASES.md section 5). A document is gold when at least two
 different readers marked it read=full, verdict=clean with no disease code, and no reader marked it fix or drop.
+D3 (mixed language) is a label only: a clean row whose only code is D3 is a clean vote (TSAI, G1, 31 Oct).
 What differs: it needs no GitHub token (you give it the sheets), a bad sheet is skipped and reported instead of
 stopping the run, and it also writes one file for the whole language.
 
@@ -35,9 +36,10 @@ def read_votes(path, warnings):
             doc, read, verdict = r.get("doc_id"), r.get("read", "").lower(), r.get("verdict", "").lower()
             if not doc or read not in ("full", "partial") or verdict not in ("clean", "fix", "drop"):
                 continue
-            if verdict == "clean" and read == "full" and not r.get("diseases"):
+            codes = {c.strip().upper() for c in r.get("diseases", "").replace(",", ";").split(";") if c.strip()} - {"D3"}
+            if verdict == "clean" and read == "full" and not codes:
                 vote = "clean"
-            elif verdict in ("fix", "drop") or r.get("diseases"):
+            elif verdict in ("fix", "drop") or codes:
                 vote = "negative"
             else:
                 vote = "seen"  # clean but only partly read, or clean with a code: not a clean vote, not a dispute

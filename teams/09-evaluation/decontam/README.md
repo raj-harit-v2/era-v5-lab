@@ -96,6 +96,27 @@ The summary goes to stderr (`docs N with_canary N hits N`). Exit code 1 means a 
 could not be read (it is named on stderr and skipped, the scan goes on); else 0. A pipeline can stop on any non-zero code. `decontam_check.py` also flags the lab canary (item `era-v5-lab:canary`), so the full
 check covers it too.
 
+## Normalize
+
+Before the cut into runs, the text of an item and of a document is normalized, so that
+`Janet’s DUCKS, lay 16-eggs!` and `janet's ducks lay 16 eggs` give the same words. The build and
+the check must use the same normalizer, or the hashes do not match and the check finds nothing.
+
+Each set names its normalizer in `MANIFEST.json` (`normalize_id`, also in each benchmark
+`MANIFEST.json`). `decontam_check.py` reads that ID and uses the same normalizer. An unknown ID,
+or a set with two normalizers, is refused. The normalizers are in `normalize.py`:
+
+| ID | Set | What it does |
+|---|---|---|
+| `g9-v1` | v1 | Words are runs of Unicode letters, marks and numbers. Each word: NFKC, then lower case. |
+| `spec-v1` | v2 | The spec v1 normalize function of Team 1 (`g1-spec-v1`). Words as in `g9-v1`, then NFC, a short list of compatibility folds and `casefold()`. No NFKC, so Indic digits and superscripts stay. ZWJ and ZWNJ stay. Training text goes through spec v1, so benchmark text must go through it too. |
+
+`g1_spec_v1_normalize.py` is a byte-for-byte copy of `teams/01-data-a/spec_v1/tools/normalize.py` (commit `c7a3da375efdbecb14188465f4d830a8ff34bdc5`, PR #194). Do not edit it. A test checks its sha256 against `G1_SPEC_V1_SHA256` in `normalize.py`. A new Team 1 version means new words, so it needs new fingerprints.
+
+```
+python build_fingerprints.py --data-dir ~/bench-cache --version v2 --normalize spec-v1
+```
+
 ## The fingerprint set (v1)
 
 `../fingerprints/v1/`: `MANIFEST.json` (rules, benchmark revisions, item counts, `set_sha256`,

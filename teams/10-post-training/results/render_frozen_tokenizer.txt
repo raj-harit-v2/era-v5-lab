@@ -1,0 +1,48 @@
+================================================================================
+G10 Post-Training: Frozen Tokenizer Verification Report
+Team 10 (Post-Training) & Team 3 (Tokenizer) Interface Audit
+================================================================================
+
+[1] Tokenizer Artifact Verification:
+    Path:   /home/opc/.cache/era-v5/v0_1_tokenizer.json
+    SHA256: a33c9907ec16876bc57b011714e8380879919fba1327d84bfb0d60407fe6e578
+    Status: PASS (Exact match with teams/03-tokenizer/v0/SHA256SUMS)
+
+[2] G10 Special Markers Atomic Encoding Audit:
+    PASS: <|im_start|>       -> Token ID 129994  (Single atomic token, name: im_start)
+    PASS: <|im_end|>         -> Token ID 130816  (Single atomic token, name: im_end)
+    PASS: <|tool_call|>      -> Token ID 130773  (Single atomic token, name: tool_call)
+    PASS: <|tool_result|>    -> Token ID 130774  (Single atomic token, name: tool_result)
+    PASS: <|endoftext|>      -> Token ID 130822  (Single atomic token, name: endoftext)
+    PASS: <|think|>          -> Token ID 130823  (Single atomic token, name: think)
+    PASS: <|/think|>         -> Token ID 130824  (Single atomic token, name: think_end)
+    PASS: <|/tool_call|>     -> Token ID 130825  (Single atomic token, name: tool_call_end)
+    PASS: <|/tool_result|>   -> Token ID 130826  (Single atomic token, name: tool_result_end)
+
+[3] Look-alike & Base Marker Smuggling Prevention:
+    PASS: Base '<think>' encodes as [128512] (never maps to G10 <|think|> 130823)
+    PASS: Plain lookalike '</think>' encodes as normal text (subwords: 1)
+    PASS: Plain lookalike '<tool_call>' encodes as normal text (subwords: 1)
+    PASS: Plain lookalike '</tool_call>' encodes as normal text (subwords: 1)
+    PASS: Plain lookalike '<tool_result>' encodes as normal text (subwords: 4)
+    PASS: Plain lookalike '</tool_result>' encodes as normal text (subwords: 4)
+    PASS: Plain lookalike '<｜think｜>' encodes as normal text (subwords: 5)
+    PASS: Plain lookalike '＜think＞' encodes as normal text (subwords: 3)
+
+[4] Indic Text Orthography & Joiner Integrity (ZWJ/ZWNJ):
+    PASS: Marathi (FineWeb-2, eyelash-ra ZWJ)    -> 18  tokens (Roundtrip 100% faithful)
+    PASS: Hindi (HPLT 3.0 / IndicCorp, ZWNJ)     -> 17  tokens (Roundtrip 100% faithful)
+    PASS: Telugu (Chandassu, ZWNJ)               -> 23  tokens (Roundtrip 100% faithful)
+    PASS: Kannada (FineWeb-2, conjunct ZWJ)      -> 11  tokens (Roundtrip 100% faithful)
+    PASS: Tamil (Sangraha Verified)              -> 13  tokens (Roundtrip 100% faithful)
+
+[5] Multi-Turn Agentic Dialogue End-to-End Roundtrip:
+    PASS: Multi-turn dialogue (effort: 1k ) -> 210 tokens, exact decode match
+    PASS: Multi-turn dialogue (effort: 4k ) -> 210 tokens, exact decode match
+    PASS: Multi-turn dialogue (effort: 16k) -> 210 tokens, exact decode match
+    PASS: Multi-turn dialogue (effort: 64k) -> 210 tokens, exact decode match
+
+================================================================================
+SUMMARY: ALL FROZEN TOKENIZER CHECKS PASSED (100% VERIFIED)
+Gate 2 Evidence Requirement Satisfied for Member A (Amit T).
+================================================================================

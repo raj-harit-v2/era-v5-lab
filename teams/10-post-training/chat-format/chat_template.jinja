@@ -1,0 +1,42 @@
+{%- set effort_val = effort | default('4k') -%}
+{%- if messages[0]['role'] != 'system' -%}
+    {{- '<|im_start|>system\nReasoning effort: ' + effort_val + '<|im_end|>\n' -}}
+{%- endif -%}
+{%- for message in messages -%}
+    {%- if loop.first and message['role'] == 'system' -%}
+        {{- '<|im_start|>system\nReasoning effort: ' + effort_val -}}
+        {%- if message['content'] -%}
+            {{- '\n\n' + message['content'] -}}
+        {%- endif -%}
+        {{- '<|im_end|>\n' -}}
+    {%- elif message['role'] == 'system' -%}
+        {{- '<|im_start|>system\n' + message['content'] + '<|im_end|>\n' -}}
+    {%- elif message['role'] == 'user' -%}
+        {{- '<|im_start|>user\n' + message['content'] + '<|im_end|>\n' -}}
+    {%- elif message['role'] == 'assistant' -%}
+        {{- '<|im_start|>assistant\n' -}}
+        {%- if message.get('think') -%}
+            {{- '<|think|>\n' + message['think'] + '\n<|/think|>\n' -}}
+        {%- endif -%}
+        {%- for call in message.get('tool_calls', []) -%}
+            {{- '<|tool_call|>\n' -}}
+            {%- if call is string -%}
+                {{- call -}}
+            {%- else -%}
+                {{- call | tojson -}}
+            {%- endif -%}
+            {{- '\n<|/tool_call|>\n' -}}
+        {%- endfor -%}
+        {%- if message.get('content') -%}
+            {{- message['content'] -}}
+        {%- endif -%}
+        {{- '<|im_end|>\n' -}}
+    {%- elif message['role'] == 'tool' -%}
+        {{- '<|im_start|>tool\n<|tool_result|>\n' + message['content'] + '\n<|/tool_result|><|im_end|>\n' -}}
+    {%- endif -%}
+{%- endfor -%}
+{%- if add_generation_prompt -%}
+    {{- '<|im_start|>assistant\n' -}}
+{%- else -%}
+    {{- '<|endoftext|>' -}}
+{%- endif -%}

@@ -1,0 +1,6 @@
+FROM python:3.12-slim
+WORKDIR /team
+COPY chat-format/render.py chat-format/
+COPY swe-task/hindi_text_prep.py swe-task/run_hindi_e2e.py swe-task/
+COPY tests/test_hindi_text_prep.py tests/
+CMD ["python", "-B", "swe-task/run_hindi_e2e.py", "--output-dir", "/evidence"]

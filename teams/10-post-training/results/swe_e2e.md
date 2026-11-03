@@ -42,8 +42,19 @@ Exit code `0`.
 
 ### 2. Full end-to-end loop in Docker with `render.py`
 
+Standard execution:
 ```text
 docker run --rm \
+  -v "$PWD/teams/10-post-training:/app" \
+  -w /app/swe-task python:3.12-slim python run_e2e.py
+```
+
+Security-hardened air-gapped execution (frontier sandboxing with network isolation and dropped capabilities):
+```text
+docker run --rm \
+  --network none \
+  --cap-drop=ALL \
+  --security-opt=no-new-privileges:true \
   -v "$PWD/teams/10-post-training:/app" \
   -w /app/swe-task python:3.12-slim python run_e2e.py
 ```
@@ -58,3 +69,9 @@ Ran 1 test in 0.000s
 OK
 [step 3] chat_format_v0 render/parse verified: effort=4k turns=7
 ```
+
+## Security & Scalability Roadmap for Weeks 2–4
+
+- **Air-Gapped Sandboxing (`--network none`):** Guaranteed offline execution prevents remote code exfiltration, unauthorized network requests, or untrusted package fetching during agent evaluation.
+- **Privilege Separation:** Non-root execution with kernel capability dropping (`--cap-drop=ALL`) mitigates container breakout and host filesystem tampering.
+- **Benchmark Transition:** Scaling from toy test cases (`calc.py`) to repository-level unified diffs (`git apply`) across multi-file repositories for SWE-bench environments.

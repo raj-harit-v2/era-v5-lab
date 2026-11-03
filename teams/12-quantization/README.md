@@ -38,6 +38,7 @@ the benchmarks cannot. Q4_K_M is the smallest format with no significant benchma
 | [`scripts/quantize_eval.py`](scripts/quantize_eval.py) | makes the GGUFs (output tensor Q8_0) and measures size, quantize time and speed; its own eval is the 25 Oct stand-in, whose scores in runs.csv were replaced by eval_mini | script docstring |
 | [`quantize/quantize_olmoe.sh`](quantize/quantize_olmoe.sh) | an alternative recipe (output BF16, down to Q3_K_M); **not** the one measured here | script header |
 | [`tools/tools.md`](tools/tools.md) | survey of quantization and serving tools: licences, MoE support | |
+| [`tokenizer/gguf_roundtrip.py`](tokenizer/gguf_roundtrip.py) | week 2: does llama.cpp give the same token ids as the HF tokenizer after GGUF conversion? Tokenizer v0: yes with pre-tokenizer `granite-embed-multi-97m` (0 of 22,033 lines differ); `gpt-4o` differs on 14,517 | [`results/gguf_roundtrip_v0.md`](results/gguf_roundtrip_v0.md) |
 
 **Rerun.**
 - **Benchmarks:** import `eval_mini/eval_mini.ipynb` into Kaggle (GPU T4 x2, Internet on), set `FORMATS`, then

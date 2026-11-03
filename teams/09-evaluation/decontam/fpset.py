@@ -14,10 +14,13 @@ import hashlib
 import json
 from pathlib import Path
 
+import normalize as norms
 from lab_canary import LAB_CANARY, LAB_CANARY_ID, read_canary_file
-from normalize import DESCRIPTION, NORMALIZE_ID, normalize, words_with_offsets
 
 VERSION = "v1"
+DEFAULT_NORM = norms.get(norms.DEFAULT_ID)
+# The benchmark MANIFEST.json files of v1 were written before they named their normalizer.
+UNSTATED_NORMALIZE_ID = "g9-v1"
 HASH_BYTES = 8  # blake2b, 64 bits, written as 16 hex characters
 MAX_SHARD_BYTES = 4_000_000  # the repo limit is 5 MB for each file
 
@@ -43,13 +46,14 @@ def gram_hash(gram_words):
 
 
 class Boilerplate:
-    def __init__(self, folder=BOILERPLATE_DIR):
+    def __init__(self, folder=BOILERPLATE_DIR, norm=DEFAULT_NORM):
         self.files = {}
         self.grams = set()
+        self.normalize_id = norm.id
         for f in sorted(Path(folder).glob("*.txt")) if folder else []:
             data = f.read_bytes()
             self.files[f.name] = hashlib.sha256(data).hexdigest()
-            ws = normalize(data.decode("utf-8"))
+            ws = norm.normalize(data.decode("utf-8"))
             self.grams.update(tuple(ws[i:i + BOILERPLATE_N]) for i in range(len(ws) - BOILERPLATE_N + 1))
 
     def covered(self, ws):
@@ -69,7 +73,8 @@ class Boilerplate:
 SHORT_MIN = 8
 
 
-def item_hashes(texts, n, gram_filters=DEFAULT_GRAM_FILTERS, boilerplate=None, short_min=None):
+def item_hashes(texts, n, gram_filters=DEFAULT_GRAM_FILTERS, boilerplate=None, short_min=None,
+                norm=DEFAULT_NORM):
     """Hashes of the texts of one item (an item can have several text forms): {run length: set}.
 
     Every n-gram, and with short_min, the whole text when it has short_min to n-1 words.
@@ -77,7 +82,7 @@ def item_hashes(texts, n, gram_filters=DEFAULT_GRAM_FILTERS, boilerplate=None, s
     drop = [GRAM_FILTERS[f] for f in gram_filters]
     out = {}
     for t in texts:
-        ws = normalize(t)
+        ws = norm.normalize(t)
         if short_min and short_min <= len(ws) < n:
             if not any(f(ws) for f in drop):
                 out.setdefault(len(ws), set()).add(gram_hash(ws))
@@ -92,7 +97,7 @@ def item_hashes(texts, n, gram_filters=DEFAULT_GRAM_FILTERS, boilerplate=None, s
 
 
 def write_benchmark(set_dir, bid, items, n, meta=None, gram_filters=DEFAULT_GRAM_FILTERS, canaries=None,
-                    boilerplate=None, short_min=SHORT_MIN):
+                    boilerplate=None, short_min=SHORT_MIN, norm=DEFAULT_NORM):
     """Write one benchmark folder.
 
     items: iterable of (item_ref, {"prose": [texts], "code": [texts]}).
@@ -100,7 +105,10 @@ def write_benchmark(set_dir, bid, items, n, meta=None, gram_filters=DEFAULT_GRAM
     canaries: a set that the items iterator fills while it runs (benchmark canary strings,
     for example the GPQA and HLE GUIDs). They are written to canaries.txt after the items.
     short_min: store whole short prose texts (see SHORT_MIN). None: no short texts.
+    norm: the normalizer (normalize.get). The boilerplate must use the same one.
     """
+    if boilerplate and boilerplate.normalize_id != norm.id:
+        raise ValueError(f"boilerplate uses normalize {boilerplate.normalize_id}, the build uses {norm.id}")
     out = Path(set_dir) / bid
     out.mkdir(parents=True, exist_ok=True)
     for old in list(out.glob("*.tsv")) + list(out.glob("canaries.txt")):
@@ -113,7 +121,7 @@ def write_benchmark(set_dir, bid, items, n, meta=None, gram_filters=DEFAULT_GRAM
         for kind, ts in texts.items():
             if ts:
                 sm = short_min if kind == "prose" else None
-                for length, hs in item_hashes(ts, n[kind], gram_filters, boilerplate, sm).items():
+                for length, hs in item_hashes(ts, n[kind], gram_filters, boilerplate, sm, norm).items():
                     by_len.setdefault(length, set()).update(hs)
         for length, hs in by_len.items():
             if length < n["prose"]:
@@ -159,12 +167,15 @@ def write_benchmark(set_dir, bid, items, n, meta=None, gram_filters=DEFAULT_GRAM
         flush(length)
     if canaries:
         (out / "canaries.txt").write_text("".join(c + "\n" for c in sorted(canaries)), encoding="utf-8", newline="\n")
-    manifest = {**(meta or {}), "id": bid, "n": n, "gram_filters": list(gram_filters),
+    manifest = {**(meta or {}), "id": bid, "normalize_id": norm.id, "n": n, "gram_filters": list(gram_filters),
                 "boilerplate": boilerplate.files if boilerplate else {},
                 "short_min": short_min, "short_texts": n_short, "short_templates_dropped": len(templates),
                 "items": n_items, "items_without_ngram": n_empty, "item_grams": n_grams,
                 "canaries": len(canaries or ()),
                 "shards": {str(k): v for k, v in sorted(shards.items())}}
+    if norm.id == UNSTATED_NORMALIZE_ID:
+        # v1 files do not name their normalizer. Leave the key out, so a v1 rebuild gives the v1 bytes.
+        del manifest["normalize_id"]
     (out / "MANIFEST.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8", newline="\n")
     return manifest
 
@@ -184,12 +195,19 @@ def _summary(bm):
     return {k: bm[k] for k in SUMMARY_KEYS if k in bm}
 
 
-def write_index(set_dir, not_covered=None):
-    """Write the top MANIFEST.json, not_covered.json and SHA256SUMS. Returns set_sha256."""
+def write_index(set_dir, not_covered=None, norm=DEFAULT_NORM, version=VERSION):
+    """Write the top MANIFEST.json, not_covered.json and SHA256SUMS. Returns set_sha256.
+
+    Every benchmark folder must be built with norm: a set with two normalizers finds nothing
+    in the benchmarks of the other one.
+    """
     d = Path(set_dir)
     benches, sums = {}, []
     for m in sorted(d.glob("*/MANIFEST.json")):
         bm = json.loads(m.read_text(encoding="utf-8"))
+        built = bm.get("normalize_id", UNSTATED_NORMALIZE_ID)
+        if built != norm.id:
+            raise ValueError(f"{m.parent.name}: built with normalize {built}, the set uses {norm.id}")
         benches[bm["id"]] = _summary(bm)
         for fname in [m.name] + _files(bm):
             rel = f"{m.parent.name}/{fname}"
@@ -201,10 +219,10 @@ def write_index(set_dir, not_covered=None):
     (d / "SHA256SUMS").write_text(sums_text, encoding="utf-8", newline="\n")
     set_id = hashlib.sha256(sums_text.encode("utf-8")).hexdigest()
     manifest = {
-        "version": VERSION,
+        "version": version,
         "set_sha256": set_id,
-        "normalize_id": NORMALIZE_ID,
-        "normalize": DESCRIPTION,
+        "normalize_id": norm.id,
+        "normalize": norm.description,
         "hash": f"blake2b, digest_size={HASH_BYTES}, hex, of the n words joined by one space (UTF-8)",
         "line_format": "<item_ref>\\t<hash> <hash> ...",
         "benchmarks": benches,
@@ -219,13 +237,13 @@ class Fingerprints:
 
     benchmarks: list of benchmark IDs. tags: list of tags; a benchmark with any of them is loaded.
     With neither, all benchmarks are loaded. Only the full set counts as the formal check.
+    Documents are normalized with the normalizer that the set names in MANIFEST.json.
     """
 
     def __init__(self, set_dir, benchmarks=None, verify=True, tags=None):
         d = Path(set_dir)
         self.manifest = json.loads((d / "MANIFEST.json").read_text(encoding="utf-8"))
-        if self.manifest["normalize_id"] != NORMALIZE_ID:
-            raise ValueError(f"set uses normalize {self.manifest['normalize_id']}, this code uses {NORMALIZE_ID}")
+        self.norm = norms.get(self.manifest["normalize_id"])
         sums = (d / "SHA256SUMS").read_text(encoding="utf-8")
         if verify:
             if hashlib.sha256(sums.encode("utf-8")).hexdigest() != self.manifest["set_sha256"]:
@@ -242,6 +260,9 @@ class Fingerprints:
                 bm = json.loads((d / bid / "MANIFEST.json").read_text(encoding="utf-8"))
                 if summary != _summary(bm):
                     raise ValueError(f"{bid}: MANIFEST.json does not match {bid}/MANIFEST.json")
+                built = bm.get("normalize_id", UNSTATED_NORMALIZE_ID)
+                if built != self.norm.id:
+                    raise ValueError(f"{bid}: built with normalize {built}, the set uses {self.norm.id}")
             if NOT_COVERED_FILE not in rels:
                 raise ValueError(f"{NOT_COVERED_FILE} is not in SHA256SUMS")
             nc = json.loads((d / NOT_COVERED_FILE).read_text(encoding="utf-8"))
@@ -292,7 +313,7 @@ class Fingerprints:
 
     def check(self, text, min_hits=1):
         """Return (flagged, hits). hits: list of dicts, best item first."""
-        ws = words_with_offsets(text)
+        ws = self.norm.words_with_offsets(text)
         matched, first = {}, {}   # matched: item -> unique grams found
         for n, table in self.owner.items():
             seen = set()

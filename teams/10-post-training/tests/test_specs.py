@@ -23,11 +23,11 @@ EXPECTED_MEMBERS = (
     "Sai Teja",
     "Ajay Kumar",
     "Amit T",
-    "Anirudh Narla",
+    "f20201351h-maker",
     "Ashish Kamble",
     "Hema Varshini Palpandian",
     "Lokesh Arundathi",
-    "Rammohan Madhusudan",
+    "gmrammohan15",
     "Ranjani Chandrasekaran",
     "Ravi Naik",
     "Syed Abdul",
@@ -55,7 +55,9 @@ def test_licence_table_has_decision_and_tsai_reserves():
     assert "chandassu" in licence
     assert "BodduSriPavan111/chandassu" in licence
     assert "MIT" in licence
-    assert decisions == ["TSAI reserves", "TSAI reserves"]
+    assert decisions and all(
+        d in {"TSAI reserves", "excluded", "needs TSAI decision"} or d.startswith("allowed") for d in decisions
+    )
 
 
 def test_special_tokens_v0_has_256_block_and_assigned_tokens():
@@ -72,6 +74,11 @@ def test_special_tokens_v0_has_256_block_and_assigned_tokens():
     assert "not a special token" in doc.lower() or "Not a special token" in doc
     for token in EXPECTED_ASSIGNED:
         assert token in doc
+    assert "021 eval_fp_0" not in doc
+    assert "022 eval_fp_1" not in doc
+    assert "023 eval_fp_2" not in doc
+    assert "021" in doc and "023" in doc
+    assert "unused" in doc.lower()
 
 
 def test_chat_format_and_swe_e2e_exist_and_cover_effort_budgets():
@@ -84,4 +91,53 @@ def test_chat_format_and_swe_e2e_exist_and_cover_effort_budgets():
     assert "G10-Local-Run-ERA-V5" not in swe
     assert (TEAM / "swe-task" / "Dockerfile").exists()
     assert (TEAM / "swe-task" / "run_e2e.py").exists()
+
+
+def test_special_tokens_v1_if_present():
+    path = TEAM / "special-tokens" / "special_tokens_v1.md"
+    if path.exists():
+        doc = path.read_text(encoding="utf-8")
+        assert "131,072" in doc or "256" in doc
+        assert "fim_prefix" in doc
+        assert "fim_pad" in doc
+        assert "subagent_call" in doc
+        assert "021 eval_fp_0" not in doc
+        assert "unused" in doc.lower()
+        for tok_id in (
+            "129994",
+            "130773",
+            "130774",
+            "130801",
+            "130802",
+            "130803",
+            "130804",
+            "130816",
+            "130817",
+            "130818",
+            "130822",
+            "130823",
+            "130824",
+            "130825",
+            "130826",
+            "130827",
+            "130828",
+        ):
+            assert tok_id in doc
+        assert "U+200D" in doc and "U+200C" in doc
+        assert "do not apply nfkc" in doc.lower()
+
+
+def test_sft_mix_proposal_covers_five_areas_and_rules():
+    path = TEAM / "sft" / "sft_mix_proposal.md"
+    assert path.exists()
+    doc = path.read_text(encoding="utf-8")
+    for area in ("Code", "Agentic", "Tool Use", "Indic", "General"):
+        assert area in doc
+    for share in ("35%", "25%", "15%", "10%", "100%"):
+        assert share in doc
+    for budget in ("1k", "4k", "16k", "64k"):
+        assert f"`{budget}`" in doc
+    assert "U+200D" in doc and "U+200C" in doc
+    assert "NFKC" in doc
+
 

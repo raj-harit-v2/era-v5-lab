@@ -11,12 +11,13 @@ with both tools. What this tool adds, because Indic text needs it:
   - Normal form: a document that is NFC must still be NFC, and a rule must not replace compatibility characters
     (half-width letters, fractions: what NFKC does). This also flags a lost no-break space (U+00A0) or ellipsis
     (U+2026), so a whitespace fix can fail this audit even when it is a good fix.
-  - Several packs of one language are one gold set (Data A's tool takes one pack at a time).
+  - Several packs in one run: each pack is judged on its own gold set (TSAI, CAP 31 Oct: per pack, never pooled).
+    A pack whose gold file is missing or empty is reported as "gold set empty, not testable" and the others still run.
 
 Usage
   python3 harm_test_indic.py --medicine medicine.md --pack P1.parquet [P2.parquet ...] --gold-dir GOLD_DIR
                              [--rule all|A6] [--limit 1] [--show N] [--timeout 5] [--md-out FILE]
-  GOLD_DIR/<pack file name without .parquet>_gold.csv must exist for each pack (columns doc_id,reader_1,reader_2).
+  GOLD_DIR/<pack file name without .parquet>_gold.csv is the gold set of each pack (columns doc_id,reader_1,reader_2).
   A pack may also be a .jsonl file with doc_id and text.
 Exit codes: 0 pass, 1 fail, 2 could not run.
 
@@ -190,8 +191,6 @@ def read_gold(path):
         ids = [r["doc_id"].strip() for r in reader if (r["doc_id"] or "").strip()]
     if len(ids) != len(set(ids)):
         raise Fatal(f"{path}: the same doc_id twice")
-    if not ids:
-        raise Fatal(f"{path}: the gold set is empty, so there is nothing to test (an empty set does not pass)")
     return ids
 
 
@@ -233,11 +232,16 @@ def main(argv=None):
     try:
         limit = Fraction(a.limit)
         rules, uses_doc = load_rules(a.medicine)
-        docs, per_pack = [], []
+        sets, untested = [], []  # (pack, gold documents) for each pack that has a gold set; packs without one
         for pack in a.pack:
-            ids = read_gold(a.gold_dir / f"{pack.stem}_gold.csv")
-            docs += read_docs(pack, ids)
-            per_pack.append(f"{pack.stem} {len(ids)}")
+            gold = a.gold_dir / f"{pack.stem}_gold.csv"
+            ids = read_gold(gold) if gold.exists() else []
+            if ids:
+                sets.append((pack.stem, read_docs(pack, ids)))
+            else:
+                untested.append(pack.stem)
+        if not sets:
+            raise Fatal(f"{', '.join(untested)}: gold set empty, not testable (an empty set does not pass)")
         if a.rule.lower() != "all" and a.rule.upper() not in {c for c, _ in rules}:
             raise Fatal(f"no section for {a.rule} in {a.medicine.name}")
         wanted = [c for c in uses_doc if a.rule.lower() in ("all", c.lower())]
@@ -247,9 +251,7 @@ def main(argv=None):
     except (Fatal, OSError, ValueError) as e:
         print(f"error: {e}", file=sys.stderr)
         return 2
-    n = len(docs)
     sha = hashlib.sha256(a.medicine.read_bytes()).hexdigest()[:12]
-    print(f"gold set: {n} documents in {len(a.pack)} pack(s) ({', '.join(per_pack)})   medicine: {a.medicine.name} sha256 {sha}")
     if not HAS_ALARM:
         print("warning: no per-document time limit on this system", file=sys.stderr)
     todo = [(c, [f], f) for c, f in rules if f is not None and a.rule.lower() in ("all", c.lower())]
@@ -261,30 +263,38 @@ def main(argv=None):
     if not todo:
         print("error: no rule to test", file=sys.stderr)
         return 2
-    print(f"a rule may change or drop at most {float(allowed_docs(n, limit)):g} of {n} documents ({a.limit}% or {MIN_DOCS}, whichever is more)")
-    print(f"{'rule':<14}{'changed':>8}{'dropped':>8}{'percent':>9}  joiners  form   result")
+    for stem in untested:
+        print(f"{stem}: gold set empty, not testable")
     worst, blocks = "PASS", []
-    for name, steps, _ in todo:
-        res = run_rule(name, steps, docs, a.timeout)
-        v = verdict_of(res, n, limit)
-        worst = "FAIL" if v == "FAIL" else worst
-        pct = 100 * (len(res["changed"]) + len(res["dropped"])) / n
-        print(f"{name:<14}{len(res['changed']):>8}{len(res['dropped']):>8}{pct:>8.2f}%  "
-              f"{'FAIL' if res['joiners'] else 'ok':<8}{'FAIL' if res['form'] else 'ok':<7}{v}")
-        if v == "FAIL" or a.show:
-            for label, key in (("changed", "changed"), ("dropped", "dropped"), ("joiner count changed", "joiners"),
-                               ("normal form broken", "form")):
-                if res[key] and (a.show or key in ("joiners", "form")):
-                    print(f"    {label}: " + ", ".join(f"{p}:{i}" for p, i in res[key][:a.show or 5]))
-            for p, i, why in res["errors"][:a.show or 5]:
-                print(f"    error: {p}:{i} {why}")
-        blocks.append((name, res, v))
+    for stem, docs in sets:  # each pack against its own gold set and its own limit
+        n = len(docs)
+        print(f"gold set: {n} documents in 1 pack(s) ({stem} {n})   medicine: {a.medicine.name} sha256 {sha}")
+        print(f"a rule may change or drop at most {float(allowed_docs(n, limit)):g} of {n} documents ({a.limit}% or {MIN_DOCS}, whichever is more)")
+        print(f"{'rule':<14}{'changed':>8}{'dropped':>8}{'percent':>9}  joiners  form   result")
+        for name, steps, _ in todo:
+            res = run_rule(name, steps, docs, a.timeout)
+            v = verdict_of(res, n, limit)
+            worst = "FAIL" if v == "FAIL" else worst
+            pct = 100 * (len(res["changed"]) + len(res["dropped"])) / n
+            print(f"{name:<14}{len(res['changed']):>8}{len(res['dropped']):>8}{pct:>8.2f}%  "
+                  f"{'FAIL' if res['joiners'] else 'ok':<8}{'FAIL' if res['form'] else 'ok':<7}{v}")
+            if v == "FAIL" or a.show:
+                for label, key in (("changed", "changed"), ("dropped", "dropped"), ("joiner count changed", "joiners"),
+                                   ("normal form broken", "form")):
+                    if res[key] and (a.show or key in ("joiners", "form")):
+                        print(f"    {label}: " + ", ".join(f"{p}:{i}" for p, i in res[key][:a.show or 5]))
+                for p, i, why in res["errors"][:a.show or 5]:
+                    print(f"    error: {p}:{i} {why}")
+            blocks.append((stem, n, name, res, v))
     print(f"result: {worst}")
     if a.md_out:
         lines = []
-        for name, res, v in blocks:
+        for stem in untested:
+            lines += [f"## {stem}", "4. **Harm test:** gold set empty, not testable.", ""]
+        for stem, n, name, res, v in blocks:
             ch, dr = len(res["changed"]), len(res["dropped"])
-            lines += [f"## {name}", f"4. **Harm test:** gold set of {n} documents ({', '.join(per_pack)}), medicine.md sha256 {sha}; rule: changed or dropped at most {a.limit}% or {MIN_DOCS} document, whichever is more.",
+            head = f"## {name}" if len(sets) == 1 else f"## {name} ({stem})"
+            lines += [head, f"4. **Harm test:** gold set of {n} documents ({stem} {n}), medicine.md sha256 {sha}; rule: changed or dropped at most {a.limit}% or {MIN_DOCS} document, whichever is more.",
                       f"   - Changed {ch} of {n} ({100 * ch / n:.2f}%). Dropped {dr} of {n} ({100 * dr / n:.2f}%). **{v}**",
                       f"   - ZWJ/ZWNJ audit: {len(res['joiners'])} changed documents with a different count. **{'FAIL' if res['joiners'] else 'PASS'}**",
                       f"   - Normal-form audit: {len(res['form'])} changed documents left NFC or lost a compatibility character. **{'FAIL' if res['form'] else 'PASS'}**", ""]

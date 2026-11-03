@@ -1,18 +1,23 @@
-"""Render and parse ChatML-style chat format v0.
+"""Render and parse ChatML-style chat format v0 using Team 3's tokenizer IDs.
 
-Rule (instructor, 27 Oct): special tokens only for structure the model must never confuse
-with normal text: role-turn start/end, tool-call start/end, tool-result start/end, thinking
-start/end. Values inside that structure (tool names, arguments, effort level, options) are plain
-text. Effort is a plain-text line at the top of the first system turn.
-The 9 assigned markers and 247 reserved slots (256 total) are sent to
-Team 3 (G3 Tokenizer) by Sat 31 Oct so G3 reserves the token IDs.
+Rule (instructor, 27 Oct & Week 2 brief):
+- Special tokens only for structure the model must never confuse with normal text:
+  role-turn start/end, tool-call start/end, tool-result start/end, thinking start/end.
+- Values inside that structure (tool names, arguments, effort level, options) are plain text.
+- Effort is a plain-text line at the top of the first system turn: `Reasoning effort: {level}`.
+- Token IDs are read from Team 3's tokenizer specification (`teams/03-tokenizer/v0/build_v0_1.py`
+  / `special_slots.md`, or a `tokenizer.json` file). The old 000..255 slot numbering is removed:
+  IDs 0..255 are byte tokens in BrahmicTokenizer-131K.
 """
 
 from __future__ import annotations
 
+import ast
 import json
+from pathlib import Path
 
-COUNT = 256
+G10_SLOT_START = 130822
+G10_SLOT_COUNT = 64  # g10_slot_00 (130822) .. g10_slot_63 (130885)
 
 EFFORT_BUDGETS = {
     "1k": 1024,
@@ -21,25 +26,94 @@ EFFORT_BUDGETS = {
     "64k": 65536,
 }
 
-# Fixed token ID -> (name, atomic special-token surface).
-# Every chat marker in ChatML v0 is a single special token in the tokenizer.
-ASSIGNED_SURFACES: dict[int, tuple[str, str]] = {
-    0: ("endoftext", "<|endoftext|>"),
-    1: ("im_start", "<|im_start|>"),
-    2: ("im_end", "<|im_end|>"),
-    24: ("think", "<|think|>"),
-    25: ("think_end", "<|/think|>"),
-    26: ("tool_call", "<|tool_call|>"),
-    27: ("tool_call_end", "<|/tool_call|>"),
-    28: ("tool_result", "<|tool_result|>"),
-    29: ("tool_result_end", "<|/tool_result|>"),
+# Surface -> canonical G10 marker name for the 9 active ChatML v0 markers.
+MARKER_NAMES: dict[str, str] = {
+    "<|endoftext|>": "endoftext",
+    "<|im_start|>": "im_start",
+    "<|im_end|>": "im_end",
+    "<|think|>": "think",
+    "<|/think|>": "think_end",
+    "<|tool_call|>": "tool_call",
+    "<|/tool_call|>": "tool_call_end",
+    "<|tool_result|>": "tool_result",
+    "<|/tool_result|>": "tool_result_end",
 }
 
+_HERE = Path(__file__).resolve().parent
+_TEAM = _HERE.parent
+_REPO_ROOT = _TEAM.parent.parent
+TEAM3_BUILD_V0_1 = _REPO_ROOT / "teams" / "03-tokenizer" / "v0" / "build_v0_1.py"
+TEAM3_SPECIAL_SLOTS = _REPO_ROOT / "teams" / "03-tokenizer" / "v0" / "special_slots.md"
+G10_SPECIAL_TOKENS_V1 = _TEAM / "special-tokens" / "special_tokens_v1.md"
+
+
+def load_team3_marker_ids(tokenizer_path: Path | str | None = None) -> dict[int, tuple[str, str]]:
+    """Read G10's ChatML v0 marker IDs from Team 3's tokenizer file.
+
+    1. If `tokenizer_path` is a Hugging Face `tokenizer.json`, reads `added_tokens`.
+    2. Otherwise reads `EXISTING` and `RENAMES` from `teams/03-tokenizer/v0/build_v0_1.py`.
+    3. If running in an isolated container where only `teams/10-post-training` is mounted,
+       reads the machine-readable table in `special-tokens/special_tokens_v1.md`.
+    """
+    if tokenizer_path is not None:
+        path = Path(tokenizer_path)
+        data = json.loads(path.read_text(encoding="utf-8"))
+        by_surface = {
+            tok["content"]: int(tok["id"])
+            for tok in data.get("added_tokens", [])
+            if tok.get("special")
+        }
+        mapped: dict[int, tuple[str, str]] = {}
+        for surf, name in MARKER_NAMES.items():
+            if surf not in by_surface:
+                raise ValueError(f"missing special token {surf} in {path}")
+            mapped[by_surface[surf]] = (name, surf)
+        return dict(sorted(mapped.items()))
+
+    if TEAM3_BUILD_V0_1.is_file():
+        tree = ast.parse(TEAM3_BUILD_V0_1.read_text(encoding="utf-8"), filename=str(TEAM3_BUILD_V0_1))
+        existing: dict[str, int] = {}
+        renames: dict[str, tuple[int, str]] = {}
+        for node in tree.body:
+            if isinstance(node, ast.Assign) and len(node.targets) == 1 and isinstance(node.targets[0], ast.Name):
+                target = node.targets[0].id
+                if target == "EXISTING":
+                    existing = ast.literal_eval(node.value)
+                elif target == "RENAMES":
+                    renames = ast.literal_eval(node.value)
+        surface_to_id: dict[str, int] = dict(existing)
+        for tok_id, surf in renames.values():
+            surface_to_id[surf] = int(tok_id)
+        mapped = {
+            surface_to_id[surf]: (name, surf)
+            for surf, name in MARKER_NAMES.items()
+            if surf in surface_to_id
+        }
+        if len(mapped) == len(MARKER_NAMES):
+            return dict(sorted(mapped.items()))
+
+    if G10_SPECIAL_TOKENS_V1.is_file():
+        mapped = {}
+        for line in G10_SPECIAL_TOKENS_V1.read_text(encoding="utf-8").splitlines():
+            parts = line.strip().split()
+            if len(parts) >= 3 and parts[0].isdigit() and parts[2] in MARKER_NAMES:
+                tok_id = int(parts[0])
+                surf = parts[2]
+                mapped[tok_id] = (MARKER_NAMES[surf], surf)
+        if len(mapped) == len(MARKER_NAMES):
+            return dict(sorted(mapped.items()))
+
+    raise RuntimeError("Could not load Team 3 tokenizer marker IDs")
+
+
+# Exact Team 3 tokenizer ID -> (name, atomic special-token surface).
+ASSIGNED_SURFACES: dict[int, tuple[str, str]] = load_team3_marker_ids()
 ASSIGNED: dict[int, str] = {idx: name for idx, (name, _) in ASSIGNED_SURFACES.items()}
 ROLES = ("system", "user", "assistant", "tool")
 EFFORT_PREFIX = "Reasoning effort: "
 
-# Plain-text XML tags that must NEVER be used in place of atomic special tokens.
+# Plain-text XML tags and Unicode look-alikes that must NEVER be used in place of atomic special tokens.
+# Note: bare <think> (ID 128512 in the base tokenizer) is never used by chat_format_v0.
 _PLAIN_TEXT_LOOKALIKES = (
     "<think>",
     "</think>",
@@ -47,30 +121,46 @@ _PLAIN_TEXT_LOOKALIKES = (
     "</tool_call>",
     "<tool_result>",
     "</tool_result>",
+    "<｜think｜>",
+    "<｜/think｜>",
+    "<｜tool_call｜>",
+    "<｜/tool_call｜>",
+    "<｜tool_result｜>",
+    "<｜/tool_result｜>",
+    "＜think＞",
+    "＜/think＞",
+    "＜tool_call＞",
+    "＜/tool_call＞",
+    "＜tool_result＞",
+    "＜/tool_result＞",
 )
 
 
 def surface(name: str) -> str:
-    for _, (n, surf) in ASSIGNED_SURFACES.items():
+    for n, surf in ASSIGNED_SURFACES.values():
         if n == name:
             return surf
     return f"<|{name}|>"
 
 
-def reserved_name(index: int) -> str:
-    return f"reserved_{index:03d}"
+def g10_slot_name(slot_index: int) -> str:
+    return f"g10_slot_{slot_index:02d}"
 
 
 def all_tokens() -> list[tuple[int, str, str, str]]:
-    """Return (index, name, surface, status) for all 256 reserved token IDs (0..255)."""
+    """Return (token_id, name, surface, status) for G10's existing base specials and 64 G10 slots (130822..130885)."""
     rows: list[tuple[int, str, str, str]] = []
-    for index in range(COUNT):
-        if index in ASSIGNED_SURFACES:
-            name, surf = ASSIGNED_SURFACES[index]
-            rows.append((index, name, surf, "assigned"))
+    for tok_id, (name, surf) in sorted(ASSIGNED_SURFACES.items()):
+        if tok_id < G10_SLOT_START:
+            rows.append((tok_id, name, surf, "assigned"))
+    for slot_idx in range(G10_SLOT_COUNT):
+        tok_id = G10_SLOT_START + slot_idx
+        if tok_id in ASSIGNED_SURFACES:
+            name, surf = ASSIGNED_SURFACES[tok_id]
+            rows.append((tok_id, name, surf, "assigned"))
         else:
-            name = reserved_name(index)
-            rows.append((index, name, f"<|{name}|>", "reserved"))
+            name = g10_slot_name(slot_idx)
+            rows.append((tok_id, name, f"<|{name}|>", "reserved"))
     return rows
 
 
@@ -130,9 +220,12 @@ def _call_json(call: object) -> str:
         raise RenderError("tool call name must be a non-empty string")
     if not isinstance(arguments, dict):
         raise RenderError("tool call arguments must be an object")
+    call_dict = {"arguments": arguments, "name": name}
+    if "id" in call and isinstance(call["id"], str):
+        call_dict["id"] = call["id"]
     try:
         payload = json.dumps(
-            {"name": name, "arguments": arguments},
+            call_dict,
             sort_keys=True,
             ensure_ascii=False,
             separators=(",", ":"),
@@ -204,7 +297,8 @@ def tokenize_markers(text: str) -> list[tuple[str, int | str]]:
     """Split rendered text into ('special', token_id) and ('text', str) items.
 
     Proves for Team 3 (G3) that every chat marker is tokenized as a single
-    special token ID in 0..255 and never left in a plain-text span.
+    Team 3 special token ID (129994, 130773, 130774, 130816, 130822..130826)
+    and never left in a plain-text span.
     """
     items: list[tuple[str, int | str]] = []
     pos = 0
@@ -234,7 +328,7 @@ def _parse_system_effort(body: str) -> tuple[str, str]:
     if not body.startswith(EFFORT_PREFIX):
         raise RenderError(f"first system turn must start with {EFFORT_PREFIX!r}")
     rest = body[len(EFFORT_PREFIX) :]
-    level, sep, content = rest.partition("\n\n")
+    level, _sep, content = rest.partition("\n\n")
     if level not in EFFORT_BUDGETS:
         raise RenderError(f"effort must be one of {', '.join(EFFORT_BUDGETS)}")
     return level, content

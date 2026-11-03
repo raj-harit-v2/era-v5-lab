@@ -116,14 +116,24 @@ class HarmTestCase(unittest.TestCase):
         docs["d0"] = "é"  # NFC: one code point
         self.assertEqual(self.run_tool(md, {"p1": docs})[0], 1)
 
-    def test_several_packs_are_one_gold_set(self):
+    def test_each_pack_is_judged_on_its_own_gold_set(self):
+        # TSAI, CAP 31 Oct: per pack, never pooled. 2 of 210 pooled would pass; 2 of pb's 10 does not.
         md = medicine(("G3", "def medicine_g3(text):\n    return text.replace('()', '')"))
-        a = {f"a{i}": "ok" for i in range(60)}
-        b = {f"b{i}": "ok" for i in range(40)}
-        b["b0"] = "x () y"
+        a = {f"a{i}": "ok" for i in range(200)}
+        b = {f"b{i}": "ok" for i in range(10)}
+        b["b0"] = b["b1"] = "x () y"
         code, out, _ = self.run_tool(md, {"pa": a, "pb": b})
-        self.assertEqual(code, 0, out)  # 1 of 100
-        self.assertIn("gold set: 100 documents in 2 pack(s)", out)
+        self.assertEqual(code, 1, out)
+        self.assertIn("gold set: 200 documents in 1 pack(s) (pa 200)", out)
+        self.assertIn("gold set: 10 documents in 1 pack(s) (pb 10)", out)
+
+    def test_a_pack_with_an_empty_gold_set_is_not_testable_and_the_others_run(self):
+        md = medicine(("G3", "def medicine_g3(text):\n    return text"))
+        code, out, _ = self.run_tool(md, {"pa": {"a0": "ok"}, "pb": {"b0": "ok"}}, gold_ids={"pb": []},
+                                     extra=("--md-out", str(self.tmp / "blocks.md")))
+        self.assertEqual(code, 0, out)
+        self.assertIn("pb: gold set empty, not testable", out)
+        self.assertIn("gold set empty, not testable", (self.tmp / "blocks.md").read_text(encoding="utf-8"))
 
     def test_only_gold_documents_are_tested(self):
         md = medicine(("G3", "def medicine_g3(text):\n    return text.replace('()', '')"))
@@ -260,6 +270,12 @@ class GoldCase(unittest.TestCase):
         self.sheet("p1", "amy", [("d1", "full", "clean", ""), ("d2", "full", "clean", "")])
         self.sheet("p1", "bob", [("d1", "partial", "clean", ""), ("d2", "full", "clean", "A6")])
         self.assertEqual(self.build()[1]("p1_gold.csv"), [])
+
+    def test_a_clean_row_whose_only_code_is_d3_is_a_clean_vote(self):
+        # TSAI, G1 31 Oct: D3 is a label only. With another code, or with a fix verdict, it is still not clean.
+        self.sheet("p1", "amy", [("d1", "full", "clean", "D3"), ("d2", "full", "clean", "D3;A6"), ("d3", "full", "fix", "D3")])
+        self.sheet("p1", "bob", [("d1", "full", "clean", ""), ("d2", "full", "clean", ""), ("d3", "full", "clean", "")])
+        self.assertEqual(self.build()[1]("p1_gold.csv"), [["d1", "amy", "bob"]])
 
     def test_a_sheet_with_a_bad_header_is_skipped_and_reported(self):
         self.sheet("p1", "amy", [("d1", "full", "clean", "")])
