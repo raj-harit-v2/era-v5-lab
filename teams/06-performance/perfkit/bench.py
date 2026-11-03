@@ -617,6 +617,7 @@ def compute_metrics(s: Setup, step_ms: float, peak, peak_reason: str | None = No
     f = M.flops_per_token(s.core, s.loader.T, s.opt.flops(), tokens)
     tps = tokens / (step_ms / 1e3)
     return {"tokens_per_step": tokens, "tokens_per_s": tps, **f, "peak_tflops": peak,
+            "mfu_method": M.DEFAULT_METHOD, "mfu_scope": "selected_gpu",   # local tokens/s over this GPU's peak
             **M.mfu(f, tps, peak, peak_reason)}
 
 

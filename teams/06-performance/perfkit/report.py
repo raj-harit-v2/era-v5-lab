@@ -221,6 +221,12 @@ def _pct_delta(x, y) -> float | None:
     return math.inf
 
 
+def _utilization_warnings(metrics: dict) -> list[str]:
+    """MFU or HFU above 1 is stored as it is, never clipped: it means a wrong peak or over-counted FLOPs."""
+    return [f"{name.upper()} is {100 * metrics[name]:.1f}%, above 100%: check peak_tflops and the FLOP count"
+            for name in ("mfu", "hfu") if metrics.get(name) is not None and metrics[name] > 1]
+
+
 def _batch_size(run: dict):
     meta = run.get("meta") or {}
     if "batch_size" in meta and meta["batch_size"] is not None:
@@ -374,7 +380,7 @@ def render(run: dict) -> str:
         ("layer.inner_pass.recorder_pool", (layer.get("inner_pass") or {}).get("events_created_while_measuring")),
         ("communication.max_rank", comm.get("events_created_during_steps")),
     ]
-    warnings = run.get("warnings") or []
+    warnings = [*(run.get("warnings") or []), *_utilization_warnings(metrics)]
     lines += ["## Diagnostics", "", "### CUDA timing-event allocations", ""]
     for stage, count in allocations:
         if count is not None:

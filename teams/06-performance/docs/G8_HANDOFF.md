@@ -100,8 +100,13 @@ When `mfu` or `hfu` is `null`, its reason field (`mfu_unavailable_reason`, `hfu_
 | `peak_tflops_unavailable` | MFU and HFU |
 | `invalid_peak_tflops` | MFU and HFU |
 | `hw_flops_unavailable` | HFU only |
+| `participants_unavailable`, `participant_peak_unavailable`, `invalid_global_throughput`, `duplicate_participants` | MFU and HFU, `run` scope only (new, proposed) |
 
 The reason is `null` when the metric is present.
+
+**New, additive:** `metrics.mfu_method` (`g6-v1` today) and `metrics.mfu_scope` (`selected_gpu` from `bench`). A file
+without them means `g6-v1` / `selected_gpu`, so the ingested baselines stay valid. `bench`'s values stay per GPU. The
+proposed `g6-v2` method and the run-level formula, with `run` scope, are in `METRICS.md` sections 2.1 and 2.2.
 
 ## 4. Run identity and scope
 
@@ -111,7 +116,8 @@ The reason is `null` when the metric is present.
 - One collector covers one node and all its visible GPUs. For several nodes: one collector per node, the
   **same** run ID, **different** node IDs (`--node-id`), and separate tags or output folders.
 - The `torchrun` path of bench is the isolated all-to-all measurement, not distributed-training monitoring.
-- Evidence so far is single-GPU (A100); no multi-node end-to-end test is claimed.
+- Evidence so far is single-GPU (A100); no multi-node end-to-end test is claimed. `perfkit/mfu_fixture.py` checks the
+  run-level arithmetic across processes, but it is a fixture and not a trainer.
 
 ## 5. Evidence
 
@@ -127,16 +133,28 @@ Other runs:
 - [H200, earlier `lab_small` configuration](https://github.com/theschoolofai/era-v5-lab/pull/135)
 - Second Colab session, same commit: `results/baseline_v0.md`, Other machines
 
-## 6. Open: G8 to confirm
+## 6. Status with G8
 
-1. The `gpu_sample` and `step_timing` shapes and `schema_version: 1` are ingestible by G8's live alarms.
+**Confirmed by G8 (chat, 29 Oct to 1 Nov):**
+
+1. The `gpu_sample` and `step_timing` shapes and `schema_version: 1` work with G8's writer, alarms and loader.
 2. `gpu.uuid` is the GPU identity; `"[Unknown Error]"` in `pci_bus_id` is treated as missing.
-3. MFU / HFU as fractions, per selected GPU, `null` = missing, and the reason codes, as in section 3.
+3. MFU / HFU are ingested as fractions, `null` = missing, with the five reason codes that existed then.
 4. G8 owns the N-second rollups and the MiB-to-bytes conversion.
-5. The shared `run_id` + one collector per node convention is suitable (pending G5 adopting `--run-id`).
-6. **MFU and KE2:** `6 * N_active` counts the KE2 projection (256 x 8192 = 2.1M parameters) as a dense matmul,
-   but KE2 runs as an `embedding_bag`: about 12.6 of the 247 MFLOP per token, so MFU reads about 5% high. Count
-   it as a matmul (today), at its real cost, or leave embeddings out of N (the usual PaLM convention)?
-7. Format: does G8 ingest the run JSON and JSONL as they are, or need CSV / Parquet? Any missing field?
+5. All 8 final baseline files load with no missing fields. The format stays the run JSON and JSONL.
+
+**Proposed, waiting for G6 and G8 lead approval:**
+
+| # | Decision | Proposal | G6 | G8 |
+|---|---|---|---|---|
+| 1 | KE2 in N | Projection out of `6 * N`, real lookup cost in; about 5% lower MFU (`METRICS.md` 2.1) | pending | pending |
+| 2 | MTP | Head counted on T-1 positions (`METRICS.md` 2.1) | pending | pending |
+| 3 | RoPE | The rotation is elementwise, so it is not counted (`METRICS.md` 2) | pending | pending |
+| 4 | Scope | `mfu` stays per GPU; run level is a separate value, global tokens/s over the sum of peaks. G8's message calls `metrics.mfu` run-level; it is not (`METRICS.md` 2.2) | pending | pending |
+| 5 | Combining | Never average percentages (`METRICS.md` 2.2) | pending | pending |
+| 6 | New fields and codes | `mfu_method`, `mfu_scope`, `participants`, `global_tokens_per_s`, 4 reason codes | pending | pending |
+| 7 | Above 1 | Stored, not clipped; `report` warns. G8 describes the range as `[0, 1]` | pending | pending |
+
+Still to confirm: the shared `run_id` + one collector per node convention (pending G5 adopting `--run-id`).
 
 Not done yet on the G6 side: time and token goodput, measured HBM bandwidth for the roofline, multi-GPU runs.
