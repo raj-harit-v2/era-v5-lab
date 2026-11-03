@@ -1,0 +1,57 @@
+........................................................................ [ 22%]
+........................................................................ [ 44%]
+........................................x............................... [ 67%]
+........................................................................ [ 89%]
+..................................                                       [100%]
+=============================== warnings summary ===============================
+correctness/test_bench.py::test_trace_with_layer_writes_one_small_trace_per_slowest_part
+  /usr/local/lib/python3.13/dist-packages/torch/profiler/profiler.py:224: UserWarning: Warning: Profiler clears events at the end of each cycle.Only events from the current cycle will be reported.To keep events across cycles, set acc_events=True.
+    _warn_once(
+
+correctness/test_timer.py::test_recording_regions_does_not_sync_the_host
+  /usr/local/lib/python3.13/dist-packages/torch/cuda/__init__.py:1270: UserWarning: Synchronization debug mode is a prototype feature and does not yet detect all synchronizing operations (Triggered internally at /pytorch/torch/csrc/cuda/Module.cpp:1003.)
+    torch._C._cuda_set_sync_debug_mode(debug_mode)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+==== correctness: every pair, fast vs fp64 reference (worst relative error) ====
+used = error / tolerance. repeat = two runs of the fast code are bit-identical.
+pair                             dtype        output  used    gradient  used   repeat     result
+------------------------------------------------------------------------------------------------
+_framework.output_structure      float32    0.00e+00   <1%           -         same       PASS
+_framework.toy                   float32    0.00e+00   <1%    2.21e-08   <1%   same       PASS
+_framework.two_outputs           float32    9.83e-09   <1%    4.35e-08   <1%   same       PASS
+_framework.unused_param          float32    6.58e-09   <1%    1.51e-08   <1%   same       PASS
+
+attention.causal.eager_mha       float32    1.97e-07    2%    2.68e-07   <1%   same       PASS
+
+ce.fused                         float32    6.40e-08   <1%    1.18e-07   <1%   same       PASS
+ce.fused.bf16                    bfloat16   4.59e-04    5%    4.05e-03   14%   same       PASS
+ce.fused_cached                  float32    6.40e-08   <1%    1.18e-07   <1%   same       PASS
+ce.fused_cached.bf16             bfloat16   4.59e-04    5%    4.05e-03   14%   same       PASS
+ce.fused_cce                     float32    6.40e-08   <1%    1.08e-07   <1%   same       PASS
+ce.fused_cce.bf16                bfloat16   4.27e-08   <1%    1.58e-03    5%   same       PASS
+ce.fused_liger                   float32    6.40e-08   <1%    1.18e-07   <1%   same       PASS
+ce.fused_liger.bf16              bfloat16   4.59e-04    5%    4.05e-03   14%   same       PASS
+
+data.prefetch                    float32    0.00e+00   <1%           -         same       PASS
+data.prefetch.first              float32    0.00e+00 exact           -         same       PASS
+
+ke2                              float32    5.12e-08   <1%    4.93e-08   <1%   same       PASS
+ke2.bf16                         bfloat16   5.26e-08   <1%    4.93e-08   <1%   same       PASS
+ke2.edge                         float32    9.39e-08   <1%    5.62e-08   <1%   same       PASS
+ke2.g4_table                     float32    6.21e-08   <1%    5.56e-08   <1%   same       PASS
+
+model.base                       float32    3.03e-07    3%    1.32e-06    3%   same       PASS
+model.base.bf16                  bfloat16   2.92e-03   29%    7.65e-03   26%   same       PASS
+
+opt.adamw.foreach                float32    0.00e+00   <1%           -         same       PASS
+opt.adamw.foreach.groups         float32    0.00e+00   <1%           -         same       PASS
+opt.muon.batched                 float32    7.74e-08   <1%           -         same       PASS
+opt.muon.batched.missing_grad    float32    0.00e+00   <1%           -         same       PASS
+
+optim.muon_ns.batched            float32    0.00e+00   <1%    4.30e-07   <1%   same       PASS
+
+reversible.mlp                   float32    3.62e-08   <1%    3.95e-07   <1%   same       PASS
+------------------------------------------------------------------------------------------------
+27 pairs: 27 PASS, 0 FAIL.   tolerance (output / gradient): float32 1e-05 / 5e-05, bfloat16 0.01 / 0.03
+321 passed, 349 deselected, 1 xfailed, 2 warnings in 58.67s

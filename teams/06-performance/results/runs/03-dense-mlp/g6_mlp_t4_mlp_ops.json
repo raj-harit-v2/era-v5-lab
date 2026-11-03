@@ -1,0 +1,57 @@
+{
+ "trace": "/root/.cache/era-perf/traces/g6_mlp_t4.json",
+ "gpu": "Tesla T4",
+ "commit": "a2c6656604d4a0cdbb848c6abc32658e8298a1bf",
+ "regions": [
+  {
+   "region": "fwd:block3.mlp",
+   "calls_in_step": 1,
+   "windows_ms": 0.367625,
+   "gpu_ms": 0.155582,
+   "gpu_span_ms": 0.16140576171875,
+   "gpu_busy_pct": 96.39186953009902,
+   "kernels": 8,
+   "copies": 0,
+   "ops": [
+    {
+     "op": "aten::linear",
+     "calls": 2,
+     "kernels": 7,
+     "copies": 0,
+     "gpu_ms": 0.11862199999999999,
+     "gpu_pct": 76.24403851345271,
+     "cpu_ms": 0.2834,
+     "kernel_names": [
+      {
+       "name": "turing_fp16_s1688gemm_fp16_128x128_ldg8_relu_f2f_stages_32x1_tn",
+       "gpu_ms": 0.051199
+      },
+      {
+       "name": "turing_fp16_s1688gemm_fp16_128x128_ldg8_relu_f2f_tn",
+       "gpu_ms": 0.039296
+      },
+      {
+       "name": "void at::native::vectorized_elementwise_kernel<4, at::native::float16_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(float)#1}, std::array<char*, 2ul> >(int, at::native::float16_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(float)#1}, std::array<char*, 2ul>)",
+       "gpu_ms": 0.028127000000000003
+      }
+     ]
+    },
+    {
+     "op": "aten::gelu",
+     "calls": 1,
+     "kernels": 1,
+     "copies": 0,
+     "gpu_ms": 0.03696,
+     "gpu_pct": 23.75596148654729,
+     "cpu_ms": 0.019614999999999997,
+     "kernel_names": [
+      {
+       "name": "void at::native::vectorized_elementwise_kernel<4, at::native::GeluCUDAKernelImpl(at::TensorIteratorBase&, at::native::GeluType)::{lambda()#2}::operator()() const::{lambda()#3}::operator()() const::{lambda(c10::Half)#1}, std::array<char*, 2ul> >(int, at::native::GeluCUDAKernelImpl(at::TensorIteratorBase&, at::native::GeluType)::{lambda()#2}::operator()() const::{lambda()#3}::operator()() const::{lambda(c10::Half)#1}, std::array<char*, 2ul>)",
+       "gpu_ms": 0.03696
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
