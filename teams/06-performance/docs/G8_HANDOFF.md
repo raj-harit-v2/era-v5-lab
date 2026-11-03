@@ -135,7 +135,7 @@ Other runs:
 
 ## 6. Status with G8
 
-**Confirmed by G8 (chat, 29 Oct to 1 Nov):**
+**Confirmed by G8 (chat, 28 Oct to 1 Nov):**
 
 1. The `gpu_sample` and `step_timing` shapes and `schema_version: 1` work with G8's writer, alarms and loader.
 2. `gpu.uuid` is the GPU identity; `"[Unknown Error]"` in `pci_bus_id` is treated as missing.
