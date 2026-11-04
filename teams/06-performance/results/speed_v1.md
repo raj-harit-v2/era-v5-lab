@@ -15,7 +15,7 @@ dispatch).
 | Config | bf16, B=8. T1: T=1024, `mlp_ratio=2` (no `ffn_hidden`). T2 family: T=2048, `model.moe.ffn_hidden=768`, `model.ce_impl=chunked`. All arms `model.reversible=false`, `optim.lr=0.001`, `data.source=synthetic`. |
 | Modes | `clean,layer`, level 3, `--repeat 2`, 100 measured steps after 10 warmup, each dispatch in its own process |
 | Dispatches | `model.moe.dispatch` ∈ {`loop`, `sorted`, `grouped`} per arm |
-| Evidence | Colab notebook `task4_exp3_timing_chunked.ipynb` (A100, full run log); not committed |
+| Evidence | Colab notebook `task4_exp3_timing_chunked.ipynb` (A100, full run log): https://colab.research.google.com/drive/11xd7DV07nf1HGyNjVpJ3bQHfGijLDKpV — not committed to the repo |
 | Method | `moe.dispatch(ms)` = sum of the per-layer `fwd:block*.moe.dispatch` medians (level-3 layer mode). `step` = clean-mode median. `vs loop` = loop's dispatch ÷ this dispatch. Each arm's `--repeat 2` passed the 5% check except T1 `loop` (lab-GPU variance on one bwd block; the dispatch signal is unaffected). |
 
 **Why `ce_impl=chunked` on the T2 family.** At T=2048 the fp32 `[B·T, V]` head logits are ~8 GB (16 GB with the
