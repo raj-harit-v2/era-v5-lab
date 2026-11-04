@@ -40,7 +40,7 @@ Parts and where they come from:
   * Loss: cfg.ce_impl "torch" materialises logits [B*T, V]; "chunked" checkpoints position chunks;
     "fused" tiles tokens by ce_chunks and saves head gradients computed while logits are resident;
     "fused_cached" / "fused_liger" use fixed token tile sizes; "fused_cce" streams vocabulary tiles
-    and recomputes logits during backward.
+    and recomputes logits during backward. "triton_ce" uses the in-repo Triton CE reduction kernel.
     Memory-bounded paths return logits=None when targets are given. Loss averages non-ignored targets.
 
 Timing markers (roofline and report read these names; keep them)
@@ -57,8 +57,8 @@ Timing markers (roofline and report read these names; keep them)
   mark(x, "head+loss", 1)                  on the stack output
   How bench turns these points into bwd:<name> segments (bwd:stack = the whole stack): perfkit/bench.py step 6.
 
-The fused CE path is a portable PyTorch custom-autograd implementation; a single-kernel Triton/CUDA
-backend and aux / z loss for non-reversible MoE remain follow-ups.
+The optional in-repo Triton CE path is in kernels/linear_ce_fused.py; aux / z loss for non-reversible MoE
+remains a follow-up.
 """
 from __future__ import annotations
 
@@ -72,13 +72,15 @@ import torch.nn.functional as F
 from models.config import ModelConfig
 from models.linear_ce import (linear_cross_entropy_fused, linear_cross_entropy_cached,
                               linear_cross_entropy_cce, linear_cross_entropy_liger)
+from kernels.linear_ce_fused import linear_cross_entropy_fused_triton
 from perfkit.regions import mark, region
 
 
 _SDPA_GQA = tuple(int(v) for v in torch.__version__.split(".")[:2]) >= (2, 5)
 
 IGNORE_INDEX = -100              # a target with this value is left out of the loss and of its divisor (loss masks)
-MEMORY_BOUNDED_CE_IMPLS = ("chunked", "fused", "fused_cached", "fused_liger", "fused_cce")
+MEMORY_BOUNDED_CE_IMPLS = ("chunked", "fused", "fused_cached", "fused_liger", "fused_cce",
+                           "triton_ce")
 
 
 def _init_linear(lin: nn.Linear, std: float = 0.02):
@@ -357,6 +359,10 @@ class GPT(nn.Module):
         return total / (y != IGNORE_INDEX).sum().clamp_min(1)
 
     def _head_ce(self, head, x, y):
+        if self.cfg.ce_impl == "triton_ce":
+            return linear_cross_entropy_fused_triton(x.reshape(-1, x.shape[-1]), head.weight,
+                                                      y.reshape(-1), bias=head.bias,
+                                                      ignore_index=IGNORE_INDEX)
         if self.cfg.ce_impl == "fused":
             return linear_cross_entropy_fused(
                 x, head.weight, y, bias=head.bias,

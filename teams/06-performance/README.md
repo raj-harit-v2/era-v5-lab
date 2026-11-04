@@ -35,6 +35,8 @@ Everything is driven by config: a new model is a new YAML file in `configs/`, no
 
 `optim.muon_impl=loop|batched` selects the per-matrix Muon reference or the shape-batched path (default `batched`: same-shaped matrices are stacked and updated at once, for `muon` and `polar_muon_adamw`). `optim.adamw_impl=loop|foreach` does the same for the AdamW part of `polar_muon_adamw` (default `foreach`: `torch._foreach` multi-tensor ops). `data.prefetch=true|false` samples, checks and pins the next batch after backward is queued (default `true`; the same batches either way).
 
+`model.ce_impl=triton_ce` selects the in-repo Triton CE reduction kernel. Existing `torch`, `chunked`, `fused`, `fused_cached`, `fused_liger`, and `fused_cce` values remain available for comparison; the last two are PyTorch references inspired by upstream algorithms. See [`docs/LINEAR_CE.md`](docs/LINEAR_CE.md) for A100/H100 correctness checks and matched benchmark commands.
+
 ## Folder layout
 
 ```

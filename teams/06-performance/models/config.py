@@ -22,7 +22,8 @@ from pathlib import Path
 import yaml
 
 MOE_KEYS = {"num_experts", "top_k", "num_shared", "bias_gamma", "dispatch", "ffn_hidden"}   # SparseMoE keyword arguments
-CE_IMPLS = ("torch", "chunked", "fused", "fused_cached", "fused_liger", "fused_cce")
+CE_IMPLS = ("torch", "chunked", "fused", "fused_cached", "fused_liger", "fused_cce",
+            "triton_ce")
 ATTN_IMPLS = ("sdpa", "eager")
 ACTIVATIONS = ("gelu", "swiglu")
 REV_IMPLS = ("two_pass", "one_pass")
@@ -54,7 +55,7 @@ class ModelConfig:
     reversible: bool = False         # True: midpoint reversible stack
     rev_h: float = 1.0               # midpoint step size
     rev_impl: str = "two_pass"       # two_pass (invert + recompute) | one_pass (single f in backward)
-    ce_impl: str = "torch"           # torch | chunked | fused | fused_cached | fused_liger | fused_cce
+    ce_impl: str = "torch"           # torch | chunked | fused | fused_cached | fused_liger | fused_cce | triton_ce
     ce_chunks: int = 8                # number of token chunks for chunked / fused
     ce_vocab_chunk: int = 4096        # vocabulary tile size for fused_cce
     ce_token_chunk: int = 16           # token tile size for fused_cached / fused_liger

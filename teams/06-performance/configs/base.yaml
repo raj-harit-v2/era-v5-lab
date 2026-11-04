@@ -37,7 +37,7 @@ model:                  # fields of models.config.ModelConfig, nothing else
   reversible: true
   rev_h: 1.0
   rev_impl: two_pass    # two_pass (invert + recompute) | one_pass (single f in backward)
-  ce_impl: torch        # torch | chunked | fused | fused_cached | fused_liger | fused_cce
+  ce_impl: torch        # torch | chunked | fused | fused_cached | fused_liger | fused_cce | triton_ce
   ce_chunks: 8          # token chunk count for chunked / fused (need not divide B*T)
   ce_vocab_chunk: 4096  # vocabulary tile size for fused_cce
   ce_token_chunk: 16    # token tile size for fused_cached / fused_liger
