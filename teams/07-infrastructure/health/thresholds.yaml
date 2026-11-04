@@ -21,10 +21,10 @@ nccl:
   ops: [all_reduce, reduce_scatter, all_gather, all_to_all]   # millermuttu's four collectives (team 07)
   nvlink_inactive_fail: 1      # any inactive NVLink link halves all-reduce speed with no error: drain
 xid:                           # NVIDIA Xid catalog; reviewed each dry run. 61/62/92/140 from millermuttu's list (team 07)
-  fatal: [48, 61, 62, 63, 64, 74, 79, 92, 95, 119, 120, 140]
-  restart: [94]                # contained ECC: the job restarts, the GPU stays; drain only if it repeats
+  fatal: [48, 61, 62, 64, 74, 79, 92, 95, 119, 120, 140]   # 63 is a successful row-remap (recoverable); 64 is the remap *failure* (fatal)
+  restart: [63, 94]            # recoverable: row-remap event (63) and contained ECC (94); warn once, drain only on a repeat
   restart_window_h: 24         # a second restart-class Xid on the same GPU within this window drains the node
-  warn: [13, 31, 43]           # usually the application, not the GPU
+  warn: [13, 31, 43, 45]       # usually the application, not the GPU (45 added to match Team 08's WARN_XIDS)
 runtime:
   prolog_budget_s: 30
   full_budget_s: 900

@@ -4,12 +4,16 @@ contract:
 model:
   activation: swiglu
   position: rope
-  rope_theta: null
+  # Test setting TSAI accepted on 3 Nov. Not a config v1 decision.
+  rope_theta: 10000.0
   rotary_fraction: 1.0
-  norm_eps: null
-  mtp_weight: null
+  # Test setting TSAI accepted on 3 Nov. Not a config v1 decision.
+  norm_eps: 1.0e-5
+  # MTP is off, so the weight is 0. Not a config v1 decision.
+  mtp_weight: 0.0
   moe:
-    bias: null
+    # Bias off. The harness accepts only explicit false. Not a config v1 decision.
+    bias: false
     bias_gamma: 0.0
 optim:
   betas:

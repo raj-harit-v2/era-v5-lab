@@ -1,11 +1,11 @@
 {
   "model.mtp_weight": {
     "owner": "G5 lead",
-    "note": "Unset by lead; inactive while MTP is off. Required before enabling MTP."
+    "note": "0 while MTP is off. Test setting, not a config v1 decision."
   },
   "model.rope_theta": {
     "owner": "G5 lead / attention owner",
-    "note": "finite positive number"
+    "note": "10000 for these test models. Not a config v1 decision."
   },
   "model.moe.bias_gamma": {
     "owner": "G5 lead / G6",

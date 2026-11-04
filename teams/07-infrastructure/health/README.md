@@ -128,12 +128,14 @@ When a GPU breaks, the driver writes `NVRM: Xid (PCI:…): <number>` into the ke
 
 | Class | Codes | Action |
 |---|---|---|
-| **fatal** | 48, 63, 64, 74, **79** (GPU fell off the bus), **94/95** (memory errors), 119, 120 | drain |
-| warn | 13, 31, 43 (usually an application fault) | report |
+| **fatal** | 48, 61, 62, 64, 74, **79** (GPU fell off the bus), 92, **95** (uncontained memory error), 119, 120, 140 | drain |
+| **restart** | **63** (row-remap event), **94** (contained memory error) | warn the first time; the same GPU again within 24 h → fail (drain) |
+| warn | 13, 31, 43, 45 (usually an application fault) | report |
 | unknown | anything else | reported as warn, **never ignored** |
 
-We store a hash of every Xid line already seen on the node, so **an old error does not drain a repaired node
-again**.
+Xid 63 is a *successful* row-remap event (recoverable, needs a GPU reset); Xid 64 is the row-remap **failure**
+(the GPU cannot repair its memory) and stays fatal. We store a hash of every Xid line already seen on the node,
+so **an old error does not drain a repaired node again**.
 
 ### The all-reduce test, explained
 
@@ -209,10 +211,12 @@ slow:
 
 | File | What it does |
 |---|---|
+| `gpu_health.sh` | the `v5-health/1` producer named in Team 08's contract; a thin wrapper over `health_check.py` that writes one JSON report to stdout (and `--out`) |
 | `health_check.py` | runs all checks, prints the JSON report, gives the verdict; in periodic mode drains and moves jobs on `fail` |
 | `xid_scan.py` | reads the kernel log, classifies Xid codes, remembers lines already seen |
 | `allreduce_test.py` | exact-sum and bus-bandwidth test (NCCL on GPUs, gloo on CPU) |
 | `thresholds.yaml` | every limit, with its source |
+| `results/health_sample_v5.json` | a committed, validated `v5-health/1` sample report (see §6.1) |
 
 Draining the node and asking its jobs to save is done by `../queue/job_queue.py` (`drain()`,
 `ask_jobs_to_save_and_stop()`), shared with the spot watcher. In `support/` (optional): `tests/test_health.py`,
@@ -247,6 +251,38 @@ echo "drill" > /var/lib/v5-health/force_fail     # remove the file to clear
 
 `V5_EXPECT_GPUS` overrides the expected GPU count (the Docker test sets 0); `V5_HEALTH_STATE` moves the state
 folder.
+
+### 6.1 Producer entrypoint (`gpu_health.sh`) and validating against Team 08
+
+Team 08's contract (`teams/08-monitoring/health-check/README.md`) names `gpu_health.sh` as the script that
+emits `v5-health/1`. It is a thin wrapper over `health_check.py`: it writes one JSON object to stdout (and, with
+`--out`, to a file) and never drains a node, so it is safe to run anywhere for a sample.
+
+```bash
+# from teams/07-infrastructure/ — one v5-health/1 report to stdout (prolog mode, read-only)
+health/gpu_health.sh --mode prolog
+
+# reproducible sample from the test fixtures (planted ECC on GPU 3 + Xids 13/79/94/157): a "fail" report
+V5_EXPECT_GPUS=8 health/gpu_health.sh --mode prolog \
+  --kernel-log support/tests/fixtures/health/kernel_xid.log \
+  --nvidia-smi-fixture support/tests/fixtures/health/nvidia_smi_bad.csv \
+  --out health/results/health_sample_v5.json
+```
+
+The committed `results/health_sample_v5.json` was produced by the second command and **passes Team 08's
+validator unchanged**:
+
+```bash
+# validate the sample against Team 08's validator (exit 0, "record 1: PASS")
+python ../08-monitoring/health-check/health_check.py --validate health/results/health_sample_v5.json
+
+# the same report also maps to one Week-2 ClickHouse node_health row (validator reads JSONL, so compact it first)
+python -c "import json;print(json.dumps(json.load(open('health/results/health_sample_v5.json'))))" \
+  | python ../08-monitoring/health-check/health_check.py --clickhouse-jsonl -
+```
+
+The sample is a `verdict="fail"` report (`drain_reason="ecc_uncorrectable,xid"`): the one fatal Xid is 79, while
+94 is `restart`→`warn` under the corrected classification above.
 
 ---
 
