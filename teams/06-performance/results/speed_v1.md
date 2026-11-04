@@ -1,4 +1,58 @@
-# Speed v1: MoE dispatch A/B — loop vs sorted vs grouped (T1 and the exp3 arms)
+# Speed v1 — Gate 2 evidence pack
+
+One table of measured runs for baseline, CE A/B, and MoE dispatch. Fill empty arm-job rows when TSAI returns logs. MFU/HFU and lab GPU model stay scrubbed in public chat; full numbers may sit in private job artifacts.
+
+| Section | Status |
+| :--- | :--- |
+| Baseline (Week-1 ref + #239 clean) | Filled |
+| Fused / Triton CE A/B | Filled (cross-SHA; see notes) |
+| MoE loop / sorted / grouped | Filled (#53 / Adinath) |
+| Config arms t1–t3 (job requests) | TBD |
+| Recommendation | Draft below |
+
+---
+
+## 1. Baseline (clean step)
+
+| Run | GPU | Commit | Config | step_ms med | tokens/s | peak_alloc GiB | Notes |
+| :--- | :--- | :--- | :--- | ---: | ---: | ---: | :--- |
+| baseline_v0 (ref) | A100-SXM4-40GB | `f1ed7f2` | `configs/base.yaml` | 42.9 | 95,400 | 6.54 | Week-1 tip baseline |
+| baseline_v1 (job) | one lab GPU | `9b43b9a` (job #239) | wrapper `--synthetic`; `clean,layer` L3; bf16; B×T 16×256 | **86.09 / 86.99** (1.0%) | **47,576 / 47,086** | — | Gate-2 **clean** baseline. Layer `--repeat 2` FAIL (heat pause in run 2). MFU/HFU scrubbed. |
+
+Sources: Week-1 docs; [class PR #239](https://github.com/theschoolofai/era-v5-lab/pull/239) TSAI wrapper result (4 Nov).
+
+---
+
+## 2. CE A/B (fused family + Triton)
+
+Same GPU class (A100-SXM4-40GB), synthetic data, `--repeat 2`. **Different tip SHAs** — cross-branch evidence, not a single-commit A/B.
+
+### 2a. Fused linear CE (`g6/fused-linear-ce` @ `f84ac3d`)
+
+| ce_impl | step_ms | peak_GB | vs torch step |
+| :--- | ---: | ---: | :--- |
+| torch | 43.09 | 6.54 | baseline |
+| chunked | 57.93 | 1.36 | +34% slower |
+| fused | 57.88 | 1.31 | +34% slower |
+| fused_cce | 100.90 | 0.89 | +134% slower |
+| fused_cached | 245.55 | 0.89 | ~5.7× slower |
+| fused_liger | 245.62 | 0.89 | ~5.7× slower |
+
+Evidence: Colab from Tharun / PR #35 path (`Colab_35_Tharun`).
+
+### 2b. Triton CE (`g6/triton-kernels` @ `d18d20a`)
+
+| ce_impl | step_ms | peak_GB | --repeat 2 |
+| :--- | ---: | ---: | :--- |
+| triton_ce | 94.25 | 0.89 | PASS |
+
+Cmd: `python -m perfkit.bench --level 3 --modes clean,layer --repeat 2 --tag ce_triton data.source=synthetic model.ce_impl=triton_ce`
+
+**Reading:** On A100-40GB, **torch remains fastest** on step_ms. Triton (~94 ms) sits near `fused_cce`, with peak mem ~0.89 GiB (~7× below torch). Prefer torch (or fused if mem OK) when step binds; Triton/fused_cce when memory binds — confirm later on one SHA if claiming a hard %.
+
+---
+
+## 3. MoE dispatch A/B — loop vs sorted vs grouped (T1 and the exp3 arms)
 
 **Result: `sorted` is the default.** On every arm, `sorted` gives the fastest (or tied-fastest) step and a
 faster MoE dispatch than `loop` (1.33×–5.43×). `grouped` is **slower than `loop` on all four T2 arms** and only
@@ -23,7 +77,7 @@ gradient) and OOM a 24 GB card before the dispatch runs. `chunked` avoids materi
 changes head/loss timing only, not the MoE dispatch being measured. Within each arm all three dispatches use the
 same CE, so the A/B is clean. Across arms, compare the **dispatch** column, not raw step (T1 is not chunked).
 
-## Results
+### Results
 
 | arm | dispatch | moe.dispatch (ms) | step (ms) | vs loop | peak mem (GB) |
 |---|---|---:|---:|---:|---:|
@@ -43,7 +97,7 @@ same CE, so the A/B is clean. Across arms, compare the **dispatch** column, not 
 | | sorted | 43.22 | 379.65 | **1.56×** | 28.18 |
 | | grouped | 81.27 | 474.97 | 0.83× | 36.25 |
 
-## Reading
+### Reading
 
 1. **`sorted` wins on every arm.** It removes the per-expert host syncs of `loop` without a large fixed buffer:
    1.33×–1.56× faster dispatch on the T2 arms and 5.43× on T1, and the lowest step time everywhere. Its extra
@@ -64,7 +118,23 @@ same CE, so the A/B is clean. Across arms, compare the **dispatch** column, not 
    the opposite regime, so `grouped` loses. Capturing where the tradeoff flips needs a `reversible=true` A/B
    (follow-up); until then, `sorted` is the robust production default across T1 and the exp3 arms.
 
-## Follow-up
+### Follow-up (MoE)
 
 - `reversible=true` A/B on the same arms to find the sync-heavy crossover where `grouped` should win.
 - `exp3_experts_32` `grouped` needs the `N·k` cap (or a per-expert cap) before it is usable below 80 GB.
+
+---
+
+## 4. Config arm jobs (TBD)
+
+| Run | Config | Status |
+| :--- | :--- | :--- |
+| arm t1 | `arms/t1.yaml` | Job not filed / awaiting TSAI |
+| arm t2 | `arms/t2.yaml` | Job not filed / awaiting TSAI |
+| arm t3 | `arms/t3.yaml` | Job not filed / awaiting TSAI |
+
+---
+
+## 5. Draft trainer recommendation (Gate 2)
+
+Until arm jobs and a cooled layer re-run land: use **#239 clean** (~87 ms / ~47k tok/s on `9b43b9a`, synthetic) as the lab baseline; keep **`moe.dispatch=sorted`** as the MoE default for the measured single-pass regime; treat fused/Triton CE as **memory wins, not step wins** vs torch on A100-40GB cross-SHA evidence. Revisit after layer re-run and same-SHA CE confirm.
