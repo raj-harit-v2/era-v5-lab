@@ -1,0 +1,648 @@
+W1103 18:10:40.951000 1835 torch/_opaque_base.py:6] torch._opaque_base is deprecated, use torch._custom_class_base instead
+W1103 18:10:40.952000 1835 torch/_library/opaque_object.py:288] register_opaque_type is deprecated, use register_custom_class instead
+W1103 18:10:40.953000 1835 torch/_library/opaque_object.py:211] typ='value' is deprecated, use typ='constant' instead
+(MainProcess pid=1835) INFO 11-03 18:10:52 [startup.py:96] non-default args: {'dtype': 'float16', 'seed': 42, 'max_model_len': 2048, 'tensor_parallel_size': 2, 'gpu_memory_utilization': 0.85, 'disable_log_stats': True, 'model': '/kaggle/tmp/OLMoE-W4A16-gptq'}
+(MainProcess pid=1835) INFO 11-03 18:10:52 [model.py:744] Resolved architecture: OlmoeForCausalLM
+(MainProcess pid=1835) WARNING 11-03 18:10:52 [model.py:2516] Casting torch.bfloat16 to torch.float16.
+(MainProcess pid=1835) INFO 11-03 18:10:52 [model.py:2170] Using max model len 2048
+(MainProcess pid=1835) INFO 11-03 18:10:55 [scheduler.py:310] Chunked prefill is enabled with max_num_batched_tokens=8192.
+(MainProcess pid=1835) INFO 11-03 18:10:55 [kernel.py:480] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'], gelu_and_mul_sparse=['triton', 'native'])
+(MainProcess pid=1835) WARNING 11-03 18:10:57 [system_utils.py:154] We must use the `spawn` multiprocessing start method. Overriding VLLM_WORKER_MULTIPROC_METHOD to 'spawn'. See https://docs.vllm.ai/en/latest/usage/troubleshooting.html#python-multiprocessing for more information. Reasons: CUDA is initialized
+W1103 18:11:01.505000 1875 torch/_opaque_base.py:6] torch._opaque_base is deprecated, use torch._custom_class_base instead
+W1103 18:11:01.506000 1875 torch/_library/opaque_object.py:288] register_opaque_type is deprecated, use register_custom_class instead
+W1103 18:11:01.508000 1875 torch/_library/opaque_object.py:211] typ='value' is deprecated, use typ='constant' instead
+(EngineCore pid=1875) INFO 11-03 18:11:10 [core.py:139] Initializing a V1 LLM engine (v0.33.0) with config: model='/kaggle/tmp/OLMoE-W4A16-gptq', speculative_config=None, tokenizer='/kaggle/tmp/OLMoE-W4A16-gptq', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.float16, max_seq_len=2048, download_dir=None, load_format=auto, tensor_parallel_size=2, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=False, quantization=compressed-tensors, quantization_config=None, enforce_eager=False, aux_output_config=AuxOutputConfig(enable_return_routed_experts=False, max_bytes=None), kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, per_request_spec_decode_metrics='none', kv_cache_metrics=False, kv_cache_metrics_sample=0.01, custom_histogram_buckets=None, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False, jit_monitor_mode='warn', jit_monitor_verbose=False), seed=42, served_model_name=/kaggle/tmp/OLMoE-W4A16-gptq, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'ir_enable_torch_wrap': True, 'splitting_ops': ['vllm::unified_attention_with_output', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::qwen4_exp_ple_short_conv', 'vllm::qwen4_exp_qsa_with_output', 'vllm::qwen4_exp_qsa_prepare_with_output', 'vllm::linear_attention', 'vllm::qwen_gdn_attention_core', 'vllm::qwen_gdn_attention_core_fused_norm_packed', 'vllm::gdn_attention_core_xpu', 'vllm::olmo_hybrid_gdn_full_forward', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::deepseek_v4_attention', 'vllm::hpc_rope_norm_forward', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_vision_items_per_batch': 0, 'encoder_cudagraph_max_frames_per_batch': None, 'cudagraph_decoder_replay': True, 'decoder_replay_cudagraph_capture_sizes': [], 'decoder_replay_trim_threshold': 768, 'compile_sizes': [], 'compile_ranges_endpoints': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'fuse_allreduce_rms': False, 'enable_qk_norm_rope_fusion': False, 'fuse_rope_kvcache_cat_mla': False, 'fuse_act_padding': False, 'fuse_qk_norm_rope_kvcache': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': False, 'static_all_moe_layers': []}, kernel_config=KernelConfig(ir_op_priority=IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'], gelu_and_mul_sparse=['triton', 'native']), enable_flashinfer_autotune=True, enable_rocm_segmented_attn_autotune=False, enable_cutedsl_warmup=True, enable_jit_warmup=True, monokernel=False, moe_backend='auto', sparse_indexer_topk_backend='auto', linear_backend='auto', linear_backend_per_quant=None)
+(EngineCore pid=1875) INFO 11-03 18:11:10 [multiproc_executor.py:167] DP group leader: node_rank=0, node_rank_within_dp=0, master_addr=127.0.0.1, mq_connect_ip=172.19.2.2 (local), world_size=2, local_world_size=2
+W1103 18:11:16.887000 1907 torch/_opaque_base.py:6] torch._opaque_base is deprecated, use torch._custom_class_base instead
+W1103 18:11:16.888000 1907 torch/_library/opaque_object.py:288] register_opaque_type is deprecated, use register_custom_class instead
+W1103 18:11:16.889000 1907 torch/_library/opaque_object.py:211] typ='value' is deprecated, use typ='constant' instead
+W1103 18:11:16.904000 1906 torch/_opaque_base.py:6] torch._opaque_base is deprecated, use torch._custom_class_base instead
+W1103 18:11:16.905000 1906 torch/_library/opaque_object.py:288] register_opaque_type is deprecated, use register_custom_class instead
+W1103 18:11:16.906000 1906 torch/_library/opaque_object.py:211] typ='value' is deprecated, use typ='constant' instead
+(Worker pid=1906) INFO 11-03 18:11:27 [parallel_state.py:1929] world_size=2 rank=0 local_rank=0 distributed_init_method=file:///tmp/vllm_dist_f078ffef52c04d42a202ff5abf8d41fc backend=nccl
+(Worker pid=1907) INFO 11-03 18:11:28 [parallel_state.py:1929] world_size=2 rank=1 local_rank=1 distributed_init_method=file:///tmp/vllm_dist_f078ffef52c04d42a202ff5abf8d41fc backend=nccl
+(Worker pid=1906) INFO 11-03 18:11:31 [pynccl.py:148] vLLM is using nccl==2.30.7
+(Worker pid=1906) WARNING 11-03 18:11:32 [symm_mem.py:67] SymmMemCommunicator: Device capability 7.5 not supported, communicator is not available.
+(Worker pid=1907) WARNING 11-03 18:11:32 [symm_mem.py:67] SymmMemCommunicator: Device capability 7.5 not supported, communicator is not available.
+(Worker pid=1907) WARNING 11-03 18:11:32 [flashinfer_all_reduce.py:424] FlashInfer All Reduce is disabled because it is not supported for world_size=2.
+(Worker pid=1906) WARNING 11-03 18:11:32 [flashinfer_all_reduce.py:424] FlashInfer All Reduce is disabled because it is not supported for world_size=2.
+(Worker pid=1906) INFO 11-03 18:11:32 [cuda_communicator.py:353] Using ['CUSTOM', 'PYNCCL'] all-reduce backends (in dispatch order) for group 'tp:0' out of potential backends: ['FLASHINFER_PCIE_IPC', 'FLASHINFER', 'NCCL_SYMM_MEM', 'QUICK_REDUCE', 'AITER_CUSTOM', 'CUSTOM', 'SYMM_MEM', 'PYNCCL'].
+(Worker pid=1906) INFO 11-03 18:11:32 [cuda_communicator.py:353] Using ['PYNCCL'] all-reduce backends (in dispatch order) for group 'ep:0' out of potential backends: ['FLASHINFER_PCIE_IPC', 'FLASHINFER', 'NCCL_SYMM_MEM', 'QUICK_REDUCE', 'AITER_CUSTOM', 'CUSTOM', 'SYMM_MEM', 'PYNCCL'].
+(Worker pid=1906) INFO 11-03 18:11:32 [parallel_state.py:2385] rank 0 in world size 2 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, ETP rank 0, EP rank 0, EPLB rank N/A
+(Worker pid=1906) INFO 11-03 18:11:32 [gpu_worker.py:513] Using V2 Model Runner
+(Worker_TP0 pid=1906) INFO 11-03 18:11:35 [model_runner.py:399] Loading model from scratch...
+(Worker_TP0 pid=1906) INFO 11-03 18:11:35 [__init__.py:945] Using MarlinLinearKernel for mixed-precision linear
+(Worker_TP0 pid=1906) INFO 11-03 18:11:35 [compressed_tensors_wNa16.py:153] Using MarlinLinearKernel for CompressedTensorsWNA16
+(Worker_TP0 pid=1906) ERROR 11-03 18:11:35 [fa_utils.py:212] Cannot use FA version 2 is not supported due to FA2 is only supported on devices with compute capability >= 8
+(Worker_TP1 pid=1907) INFO 11-03 18:11:35 [compressed_tensors_wNa16.py:153] Using MarlinLinearKernel for CompressedTensorsWNA16
+(Worker_TP0 pid=1906) INFO 11-03 18:11:35 [cuda.py:508] Using TRITON_ATTN attention backend out of potential backends: ['TRITON_ATTN', 'FLEX_ATTENTION'].
+(Worker_TP0 pid=1906) INFO 11-03 18:11:35 [compressed_tensors_moe.py:139] Using CompressedTensorsWNA16MoEMethod
+(Worker_TP0 pid=1906) INFO 11-03 18:11:35 [int_wna16.py:356] Using 'MARLIN' WNA16 MoE backend.
+(Worker_TP1 pid=1907) ERROR 11-03 18:11:35 [fa_utils.py:212] Cannot use FA version 2 is not supported due to FA2 is only supported on devices with compute capability >= 8
+(Worker_TP0 pid=1906) INFO 11-03 18:11:36 [base_loader.py:82] Initializing model took 1.019777 seconds
+(Worker_TP0 pid=1906) INFO 11-03 18:11:36 [weight_utils.py:1144] Filesystem type for checkpoints: OVERLAY. Checkpoint size: 3.61 GiB. Available RAM: 1.40 GiB.
+(Worker_TP0 pid=1906) INFO 11-03 18:11:36 [weight_utils.py:1174] Auto-prefetch is disabled because the filesystem (OVERLAY) is not a recognized network FS (NFS/Lustre) and the checkpoint size (3.61 GiB) exceeds 90% of available RAM (1.40 GiB).
+Loading safetensors checkpoint shards:   0% Completed | 0/1 [00:00<?, ?it/s]
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:36 [utils.py:333] Attempted to load weight lm_head.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:36 [utils.py:333] Attempted to load weight lm_head.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:36 [utils.py:333] Attempted to load weight model.embed_tokens.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:37 [utils.py:333] Attempted to load weight model.embed_tokens.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:37 [utils.py:333] Attempted to load weight model.layers.0.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:38 [utils.py:333] Attempted to load weight model.layers.0.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:38 [utils.py:333] Attempted to load weight model.layers.0.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:38 [utils.py:333] Attempted to load weight model.layers.0.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:38 [utils.py:333] Attempted to load weight model.layers.0.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:38 [utils.py:333] Attempted to load weight model.layers.0.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:38 [utils.py:333] Attempted to load weight model.layers.0.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:38 [utils.py:333] Attempted to load weight model.layers.0.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:38 [utils.py:333] Attempted to load weight model.layers.0.self_attn.o_proj.weight_scale with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:38 [utils.py:333] Attempted to load weight model.layers.0.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:38 [utils.py:333] Attempted to load weight model.layers.0.self_attn.o_proj.weight_scale with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:38 [utils.py:333] Attempted to load weight model.layers.0.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:38 [utils.py:333] Attempted to load weight model.layers.1.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:38 [utils.py:333] Attempted to load weight model.layers.1.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:39 [utils.py:333] Attempted to load weight model.layers.1.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:39 [utils.py:333] Attempted to load weight model.layers.1.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:39 [utils.py:333] Attempted to load weight model.layers.1.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:39 [utils.py:333] Attempted to load weight model.layers.1.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:39 [utils.py:333] Attempted to load weight model.layers.1.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:39 [utils.py:333] Attempted to load weight model.layers.1.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:39 [utils.py:333] Attempted to load weight model.layers.1.self_attn.o_proj.weight_scale with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:39 [utils.py:333] Attempted to load weight model.layers.1.self_attn.o_proj.weight_scale with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:39 [utils.py:333] Attempted to load weight model.layers.1.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:39 [utils.py:333] Attempted to load weight model.layers.1.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:39 [utils.py:333] Attempted to load weight model.layers.10.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:39 [utils.py:333] Attempted to load weight model.layers.10.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:40 [utils.py:333] Attempted to load weight model.layers.10.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:40 [utils.py:333] Attempted to load weight model.layers.10.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:40 [utils.py:333] Attempted to load weight model.layers.10.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:40 [utils.py:333] Attempted to load weight model.layers.10.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:40 [utils.py:333] Attempted to load weight model.layers.10.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:40 [utils.py:333] Attempted to load weight model.layers.10.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:40 [utils.py:333] Attempted to load weight model.layers.10.self_attn.o_proj.weight_scale with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:40 [utils.py:333] Attempted to load weight model.layers.10.self_attn.o_proj.weight_scale with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:40 [utils.py:333] Attempted to load weight model.layers.10.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:40 [utils.py:333] Attempted to load weight model.layers.10.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:40 [utils.py:333] Attempted to load weight model.layers.11.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:40 [utils.py:333] Attempted to load weight model.layers.11.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:41 [utils.py:333] Attempted to load weight model.layers.11.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:41 [utils.py:333] Attempted to load weight model.layers.11.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:41 [utils.py:333] Attempted to load weight model.layers.11.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:41 [utils.py:333] Attempted to load weight model.layers.11.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:41 [utils.py:333] Attempted to load weight model.layers.11.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:41 [utils.py:333] Attempted to load weight model.layers.11.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:41 [utils.py:333] Attempted to load weight model.layers.11.self_attn.o_proj.weight_scale with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:41 [utils.py:333] Attempted to load weight model.layers.11.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:41 [utils.py:333] Attempted to load weight model.layers.11.self_attn.o_proj.weight_scale with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:41 [utils.py:333] Attempted to load weight model.layers.11.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:41 [utils.py:333] Attempted to load weight model.layers.12.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:41 [utils.py:333] Attempted to load weight model.layers.12.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:42 [utils.py:333] Attempted to load weight model.layers.12.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:42 [utils.py:333] Attempted to load weight model.layers.12.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:42 [utils.py:333] Attempted to load weight model.layers.12.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:42 [utils.py:333] Attempted to load weight model.layers.12.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:42 [utils.py:333] Attempted to load weight model.layers.12.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:42 [utils.py:333] Attempted to load weight model.layers.12.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:42 [utils.py:333] Attempted to load weight model.layers.12.self_attn.o_proj.weight_scale with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:42 [utils.py:333] Attempted to load weight model.layers.12.self_attn.o_proj.weight_scale with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:42 [utils.py:333] Attempted to load weight model.layers.12.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:42 [utils.py:333] Attempted to load weight model.layers.12.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:42 [utils.py:333] Attempted to load weight model.layers.13.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:42 [utils.py:333] Attempted to load weight model.layers.13.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:42 [utils.py:333] Attempted to load weight model.layers.13.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:42 [utils.py:333] Attempted to load weight model.layers.13.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:42 [utils.py:333] Attempted to load weight model.layers.13.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:42 [utils.py:333] Attempted to load weight model.layers.13.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:42 [utils.py:333] Attempted to load weight model.layers.13.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:42 [utils.py:333] Attempted to load weight model.layers.13.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:43 [utils.py:333] Attempted to load weight model.layers.13.self_attn.o_proj.weight_scale with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:43 [utils.py:333] Attempted to load weight model.layers.13.self_attn.o_proj.weight_scale with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:43 [utils.py:333] Attempted to load weight model.layers.13.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:43 [utils.py:333] Attempted to load weight model.layers.13.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:43 [utils.py:333] Attempted to load weight model.layers.14.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:43 [utils.py:333] Attempted to load weight model.layers.14.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:43 [utils.py:333] Attempted to load weight model.layers.14.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:43 [utils.py:333] Attempted to load weight model.layers.14.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:43 [utils.py:333] Attempted to load weight model.layers.14.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:43 [utils.py:333] Attempted to load weight model.layers.14.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:43 [utils.py:333] Attempted to load weight model.layers.14.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:43 [utils.py:333] Attempted to load weight model.layers.14.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:43 [utils.py:333] Attempted to load weight model.layers.14.self_attn.o_proj.weight_scale with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:43 [utils.py:333] Attempted to load weight model.layers.14.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:43 [utils.py:333] Attempted to load weight model.layers.14.self_attn.o_proj.weight_scale with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:43 [utils.py:333] Attempted to load weight model.layers.14.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:43 [utils.py:333] Attempted to load weight model.layers.15.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:43 [utils.py:333] Attempted to load weight model.layers.15.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:44 [utils.py:333] Attempted to load weight model.layers.15.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:44 [utils.py:333] Attempted to load weight model.layers.15.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:44 [utils.py:333] Attempted to load weight model.layers.15.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:44 [utils.py:333] Attempted to load weight model.layers.15.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:44 [utils.py:333] Attempted to load weight model.layers.15.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:44 [utils.py:333] Attempted to load weight model.layers.15.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:44 [utils.py:333] Attempted to load weight model.layers.15.self_attn.o_proj.weight_scale with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:44 [utils.py:333] Attempted to load weight model.layers.15.self_attn.o_proj.weight_scale with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:44 [utils.py:333] Attempted to load weight model.layers.15.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:44 [utils.py:333] Attempted to load weight model.layers.15.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:44 [utils.py:333] Attempted to load weight model.layers.2.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:44 [utils.py:333] Attempted to load weight model.layers.2.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:45 [utils.py:333] Attempted to load weight model.layers.2.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:45 [utils.py:333] Attempted to load weight model.layers.2.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:45 [utils.py:333] Attempted to load weight model.layers.2.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:45 [utils.py:333] Attempted to load weight model.layers.2.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:45 [utils.py:333] Attempted to load weight model.layers.2.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:45 [utils.py:333] Attempted to load weight model.layers.2.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:45 [utils.py:333] Attempted to load weight model.layers.2.self_attn.o_proj.weight_scale with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:45 [utils.py:333] Attempted to load weight model.layers.2.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:45 [utils.py:333] Attempted to load weight model.layers.2.self_attn.o_proj.weight_scale with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:45 [utils.py:333] Attempted to load weight model.layers.2.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:45 [utils.py:333] Attempted to load weight model.layers.3.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:45 [utils.py:333] Attempted to load weight model.layers.3.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:46 [utils.py:333] Attempted to load weight model.layers.3.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:46 [utils.py:333] Attempted to load weight model.layers.3.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:46 [utils.py:333] Attempted to load weight model.layers.3.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:46 [utils.py:333] Attempted to load weight model.layers.3.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:46 [utils.py:333] Attempted to load weight model.layers.3.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:46 [utils.py:333] Attempted to load weight model.layers.3.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:46 [utils.py:333] Attempted to load weight model.layers.3.self_attn.o_proj.weight_scale with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:46 [utils.py:333] Attempted to load weight model.layers.3.self_attn.o_proj.weight_scale with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:46 [utils.py:333] Attempted to load weight model.layers.3.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:46 [utils.py:333] Attempted to load weight model.layers.3.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:46 [utils.py:333] Attempted to load weight model.layers.4.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:46 [utils.py:333] Attempted to load weight model.layers.4.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:47 [utils.py:333] Attempted to load weight model.layers.4.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:47 [utils.py:333] Attempted to load weight model.layers.4.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:47 [utils.py:333] Attempted to load weight model.layers.4.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:47 [utils.py:333] Attempted to load weight model.layers.4.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:47 [utils.py:333] Attempted to load weight model.layers.4.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:47 [utils.py:333] Attempted to load weight model.layers.4.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:47 [utils.py:333] Attempted to load weight model.layers.4.self_attn.o_proj.weight_scale with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:47 [utils.py:333] Attempted to load weight model.layers.4.self_attn.o_proj.weight_scale with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:47 [utils.py:333] Attempted to load weight model.layers.4.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:47 [utils.py:333] Attempted to load weight model.layers.4.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:47 [utils.py:333] Attempted to load weight model.layers.5.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:47 [utils.py:333] Attempted to load weight model.layers.5.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:48 [utils.py:333] Attempted to load weight model.layers.5.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:48 [utils.py:333] Attempted to load weight model.layers.5.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:48 [utils.py:333] Attempted to load weight model.layers.5.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:48 [utils.py:333] Attempted to load weight model.layers.5.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:48 [utils.py:333] Attempted to load weight model.layers.5.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:48 [utils.py:333] Attempted to load weight model.layers.5.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:48 [utils.py:333] Attempted to load weight model.layers.5.self_attn.o_proj.weight_scale with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:48 [utils.py:333] Attempted to load weight model.layers.5.self_attn.o_proj.weight_scale with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:48 [utils.py:333] Attempted to load weight model.layers.5.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:48 [utils.py:333] Attempted to load weight model.layers.5.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:48 [utils.py:333] Attempted to load weight model.layers.6.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:48 [utils.py:333] Attempted to load weight model.layers.6.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:49 [utils.py:333] Attempted to load weight model.layers.6.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:49 [utils.py:333] Attempted to load weight model.layers.6.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:49 [utils.py:333] Attempted to load weight model.layers.6.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:49 [utils.py:333] Attempted to load weight model.layers.6.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:49 [utils.py:333] Attempted to load weight model.layers.6.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:49 [utils.py:333] Attempted to load weight model.layers.6.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:49 [utils.py:333] Attempted to load weight model.layers.6.self_attn.o_proj.weight_scale with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:49 [utils.py:333] Attempted to load weight model.layers.6.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:49 [utils.py:333] Attempted to load weight model.layers.6.self_attn.o_proj.weight_scale with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:49 [utils.py:333] Attempted to load weight model.layers.6.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:49 [utils.py:333] Attempted to load weight model.layers.7.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:49 [utils.py:333] Attempted to load weight model.layers.7.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:49 [utils.py:333] Attempted to load weight model.layers.7.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:49 [utils.py:333] Attempted to load weight model.layers.7.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:49 [utils.py:333] Attempted to load weight model.layers.7.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:49 [utils.py:333] Attempted to load weight model.layers.7.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:49 [utils.py:333] Attempted to load weight model.layers.7.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:49 [utils.py:333] Attempted to load weight model.layers.7.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:49 [utils.py:333] Attempted to load weight model.layers.7.self_attn.o_proj.weight_scale with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:49 [utils.py:333] Attempted to load weight model.layers.7.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:49 [utils.py:333] Attempted to load weight model.layers.7.self_attn.o_proj.weight_scale with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:49 [utils.py:333] Attempted to load weight model.layers.7.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:49 [utils.py:333] Attempted to load weight model.layers.8.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:49 [utils.py:333] Attempted to load weight model.layers.8.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:50 [utils.py:333] Attempted to load weight model.layers.8.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:50 [utils.py:333] Attempted to load weight model.layers.8.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:50 [utils.py:333] Attempted to load weight model.layers.8.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:50 [utils.py:333] Attempted to load weight model.layers.8.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:50 [utils.py:333] Attempted to load weight model.layers.8.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:50 [utils.py:333] Attempted to load weight model.layers.8.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:50 [utils.py:333] Attempted to load weight model.layers.8.self_attn.o_proj.weight_scale with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:50 [utils.py:333] Attempted to load weight model.layers.8.self_attn.o_proj.weight_scale with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:50 [utils.py:333] Attempted to load weight model.layers.8.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:50 [utils.py:333] Attempted to load weight model.layers.8.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:50 [utils.py:333] Attempted to load weight model.layers.9.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:50 [utils.py:333] Attempted to load weight model.layers.9.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:51 [utils.py:333] Attempted to load weight model.layers.9.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:51 [utils.py:333] Attempted to load weight model.layers.9.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:51 [utils.py:333] Attempted to load weight model.layers.9.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:51 [utils.py:333] Attempted to load weight model.layers.9.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:51 [utils.py:333] Attempted to load weight model.layers.9.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:51 [utils.py:333] Attempted to load weight model.layers.9.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:51 [utils.py:333] Attempted to load weight model.layers.9.self_attn.o_proj.weight_scale with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:51 [utils.py:333] Attempted to load weight model.layers.9.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:51 [utils.py:333] Attempted to load weight model.layers.9.self_attn.o_proj.weight_scale with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:51 [utils.py:333] Attempted to load weight model.layers.9.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:51 [utils.py:333] Attempted to load weight model.norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:51 [utils.py:333] Attempted to load weight model.norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:15<00:00, 15.55s/it]
+Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:15<00:00, 15.55s/it]
+
+(Worker_TP0 pid=1906) INFO 11-03 18:11:51 [default_loader.py:506] Loading weights took 15.59 seconds
+(Worker_TP0 pid=1906) INFO 11-03 18:11:52 [int_wna16.py:471] Using MoEPrepareAndFinalizeNoDPEPModular
+(Worker_TP0 pid=1906) INFO 11-03 18:11:52 [int_wna16.py:472] Using MarlinExperts
+(Worker_TP0 pid=1906) INFO 11-03 18:11:53 [model_runner.py:428] Model loading took 1.81 GiB memory and 19.781028 seconds
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:53 [topk_topp_sampler.py:156] FlashInfer top-p/top-k sampling unavailable: unsupported compute capability 7.5; falling back. Set VLLM_USE_FLASHINFER_SAMPLER=0 to silence.
+(Worker_TP0 pid=1906) INFO 11-03 18:11:53 [torch_utils.py:281] Reducing Torch threads from 2 to 1 for serving. Set OMP_NUM_THREADS in the external environment to override.
+(Worker_TP0 pid=1906) WARNING 11-03 18:11:53 [cpu_resource_utils.py:148] Cgroup memory preflight for shared-memory allocation: 240 MiB required, 30702 MiB current usage, 18 MiB available under 30720 MiB limit, -222 MiB remaining after allocation based on current usage; current headroom is below the requested allocation; allocation will still be attempted because cgroup usage may be reclaimable.
+(Worker_TP1 pid=1907) INFO 11-03 18:11:53 [model_runner.py:428] Model loading took 1.81 GiB memory and 19.552012 seconds
+(Worker_TP1 pid=1907) WARNING 11-03 18:11:54 [cpu_resource_utils.py:148] Cgroup memory preflight for shared-memory allocation: 240 MiB required, 30703 MiB current usage, 17 MiB available under 30720 MiB limit, -223 MiB remaining after allocation based on current usage; current headroom is below the requested allocation; allocation will still be attempted because cgroup usage may be reclaimable.
+(EngineCore pid=1875) INFO 11-03 18:11:54 [torch_utils.py:281] Reducing Torch threads from 2 to 1 for serving. Set OMP_NUM_THREADS in the external environment to override.
+(EngineCore pid=1875) INFO 11-03 18:11:54 [utils.py:381] Using LBNHC KV cache layout.
+(Worker_TP1 pid=1907) INFO 11-03 18:11:56 [monitor.py:40] [backbone] Starting torch.compile
+(Worker_TP0 pid=1906) INFO 11-03 18:11:56 [monitor.py:40] [backbone] Starting torch.compile
+(Worker_TP1 pid=1907) INFO 11-03 18:12:02 [backends.py:1125] [backbone] Using cache directory: /root/.cache/vllm/torch_compile_cache/cd4e715b3f/rank_1_0/backbone for vLLM's torch.compile
+(Worker_TP1 pid=1907) INFO 11-03 18:12:02 [backends.py:1187] [backbone] Dynamo bytecode transform time: 5.88 s
+(Worker_TP0 pid=1906) INFO 11-03 18:12:02 [backends.py:1125] [backbone] Using cache directory: /root/.cache/vllm/torch_compile_cache/cd4e715b3f/rank_0_0/backbone for vLLM's torch.compile
+(Worker_TP0 pid=1906) INFO 11-03 18:12:02 [backends.py:1187] [backbone] Dynamo bytecode transform time: 5.76 s
+[rank1]:W1103 18:12:07.898000 1907 torch/_inductor/utils.py:1806] Not enough SMs to use max_autotune_gemm mode
+[rank0]:W1103 18:12:07.993000 1906 torch/_inductor/utils.py:1806] Not enough SMs to use max_autotune_gemm mode
+(Worker_TP0 pid=1906) INFO 11-03 18:12:10 [backends.py:417] [backbone] Compiling a graph for compile range (1, 8192) takes 7.93 s
+(Worker_TP1 pid=1907) INFO 11-03 18:12:10 [backends.py:417] [backbone] Compiling a graph for compile range (1, 8192) takes 8.16 s
+(Worker_TP0 pid=1906) INFO 11-03 18:12:14 [backends.py:948] collected artifacts: 17 entries, 3 artifacts, 3805885 bytes total
+(Worker_TP0 pid=1906) INFO 11-03 18:12:14 [decorators.py:752] [backbone] saved AOT compiled function to /root/.cache/vllm/torch_compile_cache/torch_aot_compile/7e901cfe36f01cb6521596df07998560032b3100936b965374f7dc7dcb22479c/rank_0_0/model
+(Worker_TP0 pid=1906) INFO 11-03 18:12:14 [monitor.py:62] [backbone] torch.compile took 18.04 s in total
+(Worker_TP1 pid=1907) INFO 11-03 18:12:14 [backends.py:948] collected artifacts: 17 entries, 3 artifacts, 3811689 bytes total
+(Worker_TP1 pid=1907) INFO 11-03 18:12:14 [decorators.py:752] [backbone] saved AOT compiled function to /root/.cache/vllm/torch_compile_cache/torch_aot_compile/7e901cfe36f01cb6521596df07998560032b3100936b965374f7dc7dcb22479c/rank_1_0/model
+(Worker_TP1 pid=1907) INFO 11-03 18:12:14 [monitor.py:62] [backbone] torch.compile took 18.39 s in total
+(Worker_TP0 pid=1906) INFO 11-03 18:12:14 [monitor.py:91] [backbone] Initial profiling/warmup run took 0.18 s
+(Worker_TP1 pid=1907) INFO 11-03 18:12:14 [monitor.py:91] [backbone] Initial profiling/warmup run took 0.13 s
+Capturing CUDA graphs (PIECEWISE):   0%|          | 0/51 [00:00<?, ?it/s]Capturing CUDA graphs (PIECEWISE):   2%|▏         | 1/51 [00:01<01:03,  1.27s/it]Capturing CUDA graphs (PIECEWISE):   4%|▍         | 2/51 [00:01<00:29,  1.67it/s]Capturing CUDA graphs (PIECEWISE):   6%|▌         | 3/51 [00:01<00:18,  2.65it/s]Capturing CUDA graphs (PIECEWISE):  10%|▉         | 5/51 [00:01<00:10,  4.57it/s]Capturing CUDA graphs (PIECEWISE):  12%|█▏        | 6/51 [00:01<00:08,  5.37it/s]Capturing CUDA graphs (PIECEWISE):  16%|█▌        | 8/51 [00:02<00:06,  6.90it/s]Capturing CUDA graphs (PIECEWISE):  20%|█▉        | 10/51 [00:02<00:05,  7.95it/s]Capturing CUDA graphs (PIECEWISE):  24%|██▎       | 12/51 [00:02<00:04,  8.74it/s]Capturing CUDA graphs (PIECEWISE):  27%|██▋       | 14/51 [00:02<00:03,  9.29it/s]Capturing CUDA graphs (PIECEWISE):  31%|███▏      | 16/51 [00:02<00:03,  9.65it/s]Capturing CUDA graphs (PIECEWISE):  35%|███▌      | 18/51 [00:03<00:08,  3.88it/s]Capturing CUDA graphs (PIECEWISE):  39%|███▉      | 20/51 [00:04<00:06,  4.83it/s]Capturing CUDA graphs (PIECEWISE):  43%|████▎     | 22/51 [00:04<00:05,  5.78it/s]Capturing CUDA graphs (PIECEWISE):  47%|████▋     | 24/51 [00:04<00:04,  6.69it/s]Capturing CUDA graphs (PIECEWISE):  51%|█████     | 26/51 [00:04<00:03,  7.53it/s]Capturing CUDA graphs (PIECEWISE):  55%|█████▍    | 28/51 [00:04<00:02,  8.30it/s]Capturing CUDA graphs (PIECEWISE):  59%|█████▉    | 30/51 [00:05<00:02,  8.92it/s]Capturing CUDA graphs (PIECEWISE):  63%|██████▎   | 32/51 [00:05<00:02,  9.48it/s]Capturing CUDA graphs (PIECEWISE):  67%|██████▋   | 34/51 [00:05<00:01, 10.01it/s]Capturing CUDA graphs (PIECEWISE):  71%|███████   | 36/51 [00:05<00:01, 10.41it/s]Capturing CUDA graphs (PIECEWISE):  75%|███████▍  | 38/51 [00:05<00:01, 10.69it/s]Capturing CUDA graphs (PIECEWISE):  78%|███████▊  | 40/51 [00:05<00:01, 10.95it/s]Capturing CUDA graphs (PIECEWISE):  82%|████████▏ | 42/51 [00:06<00:00, 11.17it/s]Capturing CUDA graphs (PIECEWISE):  86%|████████▋ | 44/51 [00:06<00:00, 11.33it/s]Capturing CUDA graphs (PIECEWISE):  90%|█████████ | 46/51 [00:06<00:00, 11.48it/s]Capturing CUDA graphs (PIECEWISE):  94%|█████████▍| 48/51 [00:08<00:01,  2.68it/s]Capturing CUDA graphs (PIECEWISE):  98%|█████████▊| 50/51 [00:08<00:00,  3.47it/s]Capturing CUDA graphs (PIECEWISE): 100%|██████████| 51/51 [00:09<00:00,  2.35it/s]Capturing CUDA graphs (PIECEWISE): 100%|██████████| 51/51 [00:09<00:00,  5.21it/s]
+Capturing CUDA graphs (FULL):   0%|          | 0/2 [00:00<?, ?it/s]Capturing CUDA graphs (FULL): 100%|██████████| 2/2 [00:00<00:00,  9.30it/s]Capturing CUDA graphs (FULL): 100%|██████████| 2/2 [00:00<00:00,  9.28it/s]
+(Worker_TP1 pid=1907) INFO 11-03 18:12:37 [model_runner.py:1163] Graph capturing finished in 11 secs, took 0.50 GiB
+(Worker_TP0 pid=1906) INFO 11-03 18:12:37 [model_runner.py:1163] Graph capturing finished in 11 secs, took 0.50 GiB
+(Worker_TP1 pid=1907) INFO 11-03 18:12:37 [gpu_worker.py:787] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.8500 is equivalent to --gpu-memory-utilization=0.8122 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.8878. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.
+(Worker_TP0 pid=1906) INFO 11-03 18:12:37 [gpu_worker.py:772] Available KV cache memory: 9.2 GiB
+(Worker_TP0 pid=1906) INFO 11-03 18:12:37 [gpu_worker.py:787] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.8500 is equivalent to --gpu-memory-utilization=0.8122 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.8878. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.
+(EngineCore pid=1875) INFO 11-03 18:12:37 [kv_cache_utils.py:1147] GPU KV cache size: 150,688 tokens, Maximum concurrency for 2,048 tokens per request: 73.58x
+(Worker_TP1 pid=1907) INFO 11-03 18:12:38 [kernel_warmup.py:179] JIT kernel warmup starting.
+(Worker_TP0 pid=1906) INFO 11-03 18:12:38 [kernel_warmup.py:179] JIT kernel warmup starting.
+(Worker_TP0 pid=1906) INFO 11-03 18:12:38 [kernel_warmup.py:192] JIT kernel warmup finished in 0.00s.
+(Worker_TP1 pid=1907) INFO 11-03 18:12:38 [kernel_warmup.py:192] JIT kernel warmup finished in 0.00s.
+Capturing CUDA graphs (PIECEWISE):   0%|          | 0/51 [00:00<?, ?it/s]Capturing CUDA graphs (PIECEWISE):   2%|▏         | 1/51 [00:00<00:07,  6.60it/s]Capturing CUDA graphs (PIECEWISE):   4%|▍         | 2/51 [00:00<00:07,  6.93it/s]Capturing CUDA graphs (PIECEWISE):   6%|▌         | 3/51 [00:00<00:06,  7.20it/s]Capturing CUDA graphs (PIECEWISE):   8%|▊         | 4/51 [00:00<00:06,  7.48it/s]Capturing CUDA graphs (PIECEWISE):  10%|▉         | 5/51 [00:00<00:05,  7.67it/s]Capturing CUDA graphs (PIECEWISE):  12%|█▏        | 6/51 [00:00<00:05,  7.99it/s]Capturing CUDA graphs (PIECEWISE):  16%|█▌        | 8/51 [00:00<00:04,  8.94it/s]Capturing CUDA graphs (PIECEWISE):  20%|█▉        | 10/51 [00:01<00:04,  9.34it/s]Capturing CUDA graphs (PIECEWISE):  24%|██▎       | 12/51 [00:01<00:04,  9.73it/s]Capturing CUDA graphs (PIECEWISE):  27%|██▋       | 14/51 [00:01<00:03, 10.03it/s]Capturing CUDA graphs (PIECEWISE):  31%|███▏      | 16/51 [00:01<00:03,  9.98it/s]Capturing CUDA graphs (PIECEWISE):  35%|███▌      | 18/51 [00:01<00:03, 10.07it/s]Capturing CUDA graphs (PIECEWISE):  39%|███▉      | 20/51 [00:02<00:03, 10.05it/s]Capturing CUDA graphs (PIECEWISE):  41%|████      | 21/51 [00:02<00:03,  9.97it/s]Capturing CUDA graphs (PIECEWISE):  45%|████▌     | 23/51 [00:02<00:02, 10.02it/s]Capturing CUDA graphs (PIECEWISE):  49%|████▉     | 25/51 [00:02<00:02, 10.24it/s]Capturing CUDA graphs (PIECEWISE):  53%|█████▎    | 27/51 [00:02<00:02, 10.36it/s]Capturing CUDA graphs (PIECEWISE):  57%|█████▋    | 29/51 [00:03<00:02, 10.52it/s]Capturing CUDA graphs (PIECEWISE):  61%|██████    | 31/51 [00:03<00:01, 10.53it/s]Capturing CUDA graphs (PIECEWISE):  65%|██████▍   | 33/51 [00:03<00:01, 10.67it/s]Capturing CUDA graphs (PIECEWISE):  69%|██████▊   | 35/51 [00:03<00:01, 10.78it/s]Capturing CUDA graphs (PIECEWISE):  73%|███████▎  | 37/51 [00:03<00:01, 10.88it/s]Capturing CUDA graphs (PIECEWISE):  76%|███████▋  | 39/51 [00:03<00:01, 10.77it/s]Capturing CUDA graphs (PIECEWISE):  80%|████████  | 41/51 [00:04<00:00, 10.46it/s]Capturing CUDA graphs (PIECEWISE):  84%|████████▍ | 43/51 [00:04<00:00, 10.21it/s]Capturing CUDA graphs (PIECEWISE):  88%|████████▊ | 45/51 [00:04<00:00, 10.46it/s]Capturing CUDA graphs (PIECEWISE):  92%|█████████▏| 47/51 [00:04<00:00, 10.19it/s]Capturing CUDA graphs (PIECEWISE):  96%|█████████▌| 49/51 [00:04<00:00, 10.36it/s]Capturing CUDA graphs (PIECEWISE): 100%|██████████| 51/51 [00:05<00:00, 10.47it/s]Capturing CUDA graphs (PIECEWISE): 100%|██████████| 51/51 [00:05<00:00,  9.97it/s]
+Capturing CUDA graphs (FULL):   0%|          | 0/35 [00:00<?, ?it/s]Capturing CUDA graphs (FULL):   6%|▌         | 2/35 [00:00<00:02, 11.03it/s]Capturing CUDA graphs (FULL):  11%|█▏        | 4/35 [00:00<00:02, 11.18it/s]Capturing CUDA graphs (FULL):  17%|█▋        | 6/35 [00:00<00:02, 11.35it/s]Capturing CUDA graphs (FULL):  23%|██▎       | 8/35 [00:00<00:02, 11.25it/s]Capturing CUDA graphs (FULL):  29%|██▊       | 10/35 [00:00<00:02, 11.34it/s]Capturing CUDA graphs (FULL):  34%|███▍      | 12/35 [00:01<00:02, 11.37it/s]Capturing CUDA graphs (FULL):  40%|████      | 14/35 [00:01<00:01, 11.37it/s]Capturing CUDA graphs (FULL):  46%|████▌     | 16/35 [00:01<00:01, 11.57it/s]Capturing CUDA graphs (FULL):  51%|█████▏    | 18/35 [00:01<00:01, 11.76it/s]Capturing CUDA graphs (FULL):  57%|█████▋    | 20/35 [00:01<00:01, 11.90it/s]Capturing CUDA graphs (FULL):  63%|██████▎   | 22/35 [00:01<00:01, 12.00it/s]Capturing CUDA graphs (FULL):  69%|██████▊   | 24/35 [00:02<00:00, 12.15it/s]Capturing CUDA graphs (FULL):  74%|███████▍  | 26/35 [00:02<00:00, 12.40it/s]Capturing CUDA graphs (FULL):  80%|████████  | 28/35 [00:02<00:00, 12.61it/s]Capturing CUDA graphs (FULL):  86%|████████▌ | 30/35 [00:02<00:00, 12.75it/s]Capturing CUDA graphs (FULL):  91%|█████████▏| 32/35 [00:02<00:00, 12.73it/s]Capturing CUDA graphs (FULL):  97%|█████████▋| 34/35 [00:02<00:00, 12.74it/s]Capturing CUDA graphs (FULL): 100%|██████████| 35/35 [00:02<00:00, 12.04it/s]
+(Worker_TP1 pid=1907) INFO 11-03 18:13:01 [model_runner.py:1163] Graph capturing finished in 9 secs, took 0.28 GiB
+(Worker_TP1 pid=1907) INFO 11-03 18:13:01 [gpu_worker.py:1003] CUDA graph pool memory: 0.28 GiB (actual), 0.55 GiB (estimated), difference: 0.27 GiB (94.5%).
+(Worker_TP1 pid=1907) INFO 11-03 18:13:01 [gpu_worker.py:1066] Free memory on device (14.29/14.56 GiB) on startup. Desired GPU memory utilization is (0.85, 12.38 GiB). Actual usage is 2.39 GiB for consumed memory (weights + non-torch), 0.79 GiB for peak activation, and 0.28 GiB for CUDAGraph memory. Replace gpu_memory_utilization config with `--kv-cache-memory=9414751540` (8.77 GiB) to fit into requested memory, or `--kv-cache-memory=11465638400` (10.68 GiB) to fully utilize gpu memory. Current kv cache memory in use is 9.2 GiB.
+(Worker_TP0 pid=1906) INFO 11-03 18:13:01 [model_runner.py:1163] Graph capturing finished in 9 secs, took 0.28 GiB
+(Worker_TP0 pid=1906) INFO 11-03 18:13:01 [gpu_worker.py:1003] CUDA graph pool memory: 0.28 GiB (actual), 0.55 GiB (estimated), difference: 0.27 GiB (94.5%).
+(Worker_TP0 pid=1906) INFO 11-03 18:13:01 [gpu_worker.py:1066] Free memory on device (14.29/14.56 GiB) on startup. Desired GPU memory utilization is (0.85, 12.38 GiB). Actual usage is 2.39 GiB for consumed memory (weights + non-torch), 0.79 GiB for peak activation, and 0.28 GiB for CUDAGraph memory. Replace gpu_memory_utilization config with `--kv-cache-memory=9414751540` (8.77 GiB) to fit into requested memory, or `--kv-cache-memory=11465638400` (10.68 GiB) to fully utilize gpu memory. Current kv cache memory in use is 9.2 GiB.
+(Worker_TP1 pid=1907) INFO 11-03 18:13:01 [jit_monitor.py:84] Kernel JIT monitor activated; monitored JIT compilations during inference will use mode=warn.
+(Worker_TP0 pid=1906) INFO 11-03 18:13:01 [jit_monitor.py:84] Kernel JIT monitor activated; monitored JIT compilations during inference will use mode=warn.
+(EngineCore pid=1875) INFO 11-03 18:13:02 [core.py:405] init engine (profile, create kv cache, warmup model) took 68.40 s (compilation: 18.39 s)
+(EngineCore pid=1875) INFO 11-03 18:13:03 [kernel.py:480] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'], gelu_and_mul_sparse=['triton', 'native'])
+(MainProcess pid=1835) INFO 11-03 18:13:03 [hf.py:736] Detected the chat template content format to be 'string'. You can set `--chat-template-content-format` to override this.
+Tokenizing inputs:   0%|          | 0/1 [00:00<?, ?it/s][transformers] Ignoring clean_up_tokenization_spaces=True for BPE tokenizer CachedGPTNeoXTokenizer. The clean_up_tokenization post-processing step is designed for WordPiece tokenizers and is destructive for BPE (it strips spaces before punctuation). Set clean_up_tokenization_spaces=False to suppress this warning, or set clean_up_tokenization_spaces_for_bpe_even_though_it_will_corrupt_output=True to force cleanup anyway.
+Tokenizing inputs: 100%|██████████| 1/1 [00:00<00:00, 634.06it/s]
+Running loglikelihood requests:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s][ARendering prompts: 100%|██████████| 1/1 [00:00<00:00, 1039.22it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s][A
+Processed prompts: 100%|██████████| 1/1 [00:00<00:00, 35.83it/s, est. speed input: 218.79 toks/s, output: 36.44 toks/s][AProcessed prompts: 100%|██████████| 1/1 [00:00<00:00, 35.31it/s, est. speed input: 218.79 toks/s, output: 36.44 toks/s]
+Running loglikelihood requests: 100%|██████████| 1/1 [00:00<00:00, 32.29it/s]
+W4A16: log p('The capital of France is', ' Paris') = -0.584, greedy=True
+W4A16: 237.1 tok/s (one stream, 256 tokens)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+  0%|          | 0/500 [00:00<?, ?it/s] 10%|▉         | 48/500 [00:00<00:00, 473.14it/s] 19%|█▉        | 96/500 [00:00<00:00, 473.56it/s] 29%|██▉       | 144/500 [00:00<00:00, 471.96it/s] 38%|███▊      | 192/500 [00:00<00:00, 468.66it/s] 48%|████▊     | 240/500 [00:00<00:00, 469.97it/s] 58%|█████▊    | 288/500 [00:00<00:00, 467.49it/s] 67%|██████▋   | 335/500 [00:00<00:00, 467.25it/s] 76%|███████▋  | 382/500 [00:00<00:00, 467.07it/s] 86%|████████▌ | 429/500 [00:00<00:00, 465.31it/s] 95%|█████████▌| 476/500 [00:01<00:00, 465.05it/s]100%|██████████| 500/500 [00:01<00:00, 467.79it/s]
+Tokenizing inputs:   0%|          | 0/1997 [00:00<?, ?it/s]Tokenizing inputs:  17%|█▋        | 335/1997 [00:00<00:00, 3346.99it/s]Tokenizing inputs:  36%|███▌      | 716/1997 [00:00<00:00, 3618.50it/s]Tokenizing inputs:  54%|█████▍    | 1078/1997 [00:00<00:00, 3324.22it/s]Tokenizing inputs:  72%|███████▏  | 1433/1997 [00:00<00:00, 3406.72it/s]Tokenizing inputs:  89%|████████▉ | 1776/1997 [00:00<00:00, 3368.45it/s]Tokenizing inputs: 100%|██████████| 1997/1997 [00:00<00:00, 3399.79it/s]
+Running loglikelihood requests:   0%|          | 0/1997 [00:00<?, ?it/s]
+Rendering prompts:   0%|          | 0/1997 [00:00<?, ?it/s][A
+Rendering prompts:  12%|█▏        | 237/1997 [00:00<00:00, 2368.54it/s][A
+Rendering prompts:  24%|██▍       | 479/1997 [00:00<00:00, 2397.62it/s][A
+Rendering prompts:  36%|███▌      | 719/1997 [00:00<00:00, 2378.69it/s][A
+Rendering prompts:  48%|████▊     | 957/1997 [00:00<00:00, 2332.96it/s][A
+Rendering prompts:  60%|██████    | 1205/1997 [00:00<00:00, 2383.35it/s][A
+Rendering prompts:  74%|███████▎  | 1468/1997 [00:00<00:00, 2464.47it/s][A
+Rendering prompts:  87%|████████▋ | 1728/1997 [00:00<00:00, 2508.39it/s][A
+Rendering prompts: 100%|██████████| 1997/1997 [00:00<00:00, 2563.42it/s][ARendering prompts: 100%|██████████| 1997/1997 [00:00<00:00, 2470.51it/s]
+
+Processed prompts:   0%|          | 0/1997 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s][A(Worker_TP0 pid=1906) WARNING 11-03 18:13:20 [jit_monitor.py:140] Triton kernel JIT compilation during inference: kernel_unified_attention. This causes a latency spike; consider extending warmup to cover this shape/config.
+
+Processed prompts:   0%|          | 1/1997 [00:00<22:06,  1.50it/s, est. speed input: 257.31 toks/s, output: 1.50 toks/s][A
+Processed prompts:   0%|          | 4/1997 [00:02<16:12,  2.05it/s, est. speed input: 341.14 toks/s, output: 1.99 toks/s][A
+Processed prompts:   5%|▍         | 93/1997 [00:04<01:08, 27.63it/s, est. speed input: 2159.87 toks/s, output: 22.93 toks/s][A
+Processed prompts:  11%|█         | 214/1997 [00:04<00:23, 74.50it/s, est. speed input: 4008.65 toks/s, output: 50.71 toks/s][A
+Processed prompts:  17%|█▋        | 349/1997 [00:05<00:15, 103.21it/s, est. speed input: 4873.43 toks/s, output: 69.18 toks/s][A
+Processed prompts:  24%|██▎       | 470/1997 [00:05<00:13, 113.86it/s, est. speed input: 5165.05 toks/s, output: 79.13 toks/s][A
+Processed prompts:  30%|███       | 605/1997 [00:07<00:12, 108.32it/s, est. speed input: 5064.54 toks/s, output: 83.08 toks/s][A
+Processed prompts:  36%|███▋      | 726/1997 [00:07<00:09, 131.69it/s, est. speed input: 5376.42 toks/s, output: 93.07 toks/s][A
+Processed prompts:  49%|████▉     | 982/1997 [00:08<00:05, 184.92it/s, est. speed input: 5954.83 toks/s, output: 113.85 toks/s][A
+Processed prompts:  56%|█████▌    | 1117/1997 [00:08<00:04, 214.61it/s, est. speed input: 6205.83 toks/s, output: 124.30 toks/s][A
+Processed prompts:  62%|██████▏   | 1238/1997 [00:09<00:03, 221.12it/s, est. speed input: 6260.85 toks/s, output: 130.51 toks/s][A
+Processed prompts:  69%|██████▉   | 1373/1997 [00:09<00:02, 255.77it/s, est. speed input: 6428.84 toks/s, output: 139.90 toks/s][A
+Processed prompts:  75%|███████▍  | 1494/1997 [00:10<00:01, 252.99it/s, est. speed input: 6421.28 toks/s, output: 144.96 toks/s][A
+Processed prompts:  82%|████████▏ | 1629/1997 [00:10<00:01, 238.46it/s, est. speed input: 6335.30 toks/s, output: 148.81 toks/s][A
+Processed prompts:  94%|█████████▍| 1885/1997 [00:11<00:00, 369.63it/s, est. speed input: 6679.49 toks/s, output: 168.68 toks/s][A
+Processed prompts: 100%|██████████| 1997/1997 [00:11<00:00, 369.63it/s, est. speed input: 6839.29 toks/s, output: 178.66 toks/s][AProcessed prompts: 100%|██████████| 1997/1997 [00:11<00:00, 178.66it/s, est. speed input: 6839.29 toks/s, output: 178.66 toks/s]
+Running loglikelihood requests:   0%|          | 1/1997 [00:11<6:39:10, 12.00s/it]Running loglikelihood requests: 100%|██████████| 1997/1997 [00:12<00:00, 165.77it/s]
+fatal: not a git repository (or any parent up to mount point /kaggle)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+W4A16/arc_challenge: acc_norm=0.4720 +/- 0.0223 n=500 in 26s, 500 per-item rows
+  0%|          | 0/400 [00:00<?, ?it/s] 29%|██▉       | 117/400 [00:00<00:00, 1169.19it/s] 58%|█████▊    | 234/400 [00:00<00:00, 1160.99it/s] 88%|████████▊ | 351/400 [00:00<00:00, 1157.63it/s]100%|██████████| 400/400 [00:00<00:00, 1161.86it/s]
+Tokenizing inputs:   0%|          | 0/1600 [00:00<?, ?it/s]Tokenizing inputs:  22%|██▏       | 344/1600 [00:00<00:00, 3432.20it/s]Tokenizing inputs:  43%|████▎     | 695/1600 [00:00<00:00, 3477.01it/s]Tokenizing inputs:  65%|██████▌   | 1043/1600 [00:00<00:00, 3408.35it/s]Tokenizing inputs:  87%|████████▋ | 1394/1600 [00:00<00:00, 3445.29it/s]Tokenizing inputs: 100%|██████████| 1600/1600 [00:00<00:00, 3441.80it/s]
+Running loglikelihood requests:   0%|          | 0/1600 [00:00<?, ?it/s]
+Rendering prompts:   0%|          | 0/1600 [00:00<?, ?it/s][A
+Rendering prompts:  16%|█▌        | 257/1600 [00:00<00:00, 2567.49it/s][A
+Rendering prompts:  32%|███▏      | 514/1600 [00:00<00:00, 2312.68it/s][A
+Rendering prompts:  47%|████▋     | 747/1600 [00:00<00:00, 2224.32it/s][A
+Rendering prompts:  61%|██████    | 971/1600 [00:00<00:00, 2093.92it/s][A
+Rendering prompts:  74%|███████▍  | 1190/1600 [00:00<00:00, 2123.22it/s][A
+Rendering prompts:  88%|████████▊ | 1412/1600 [00:00<00:00, 2151.73it/s][ARendering prompts: 100%|██████████| 1600/1600 [00:00<00:00, 2190.87it/s]
+
+Processed prompts:   0%|          | 0/1600 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s][A
+Processed prompts:   0%|          | 8/1600 [00:00<02:21, 11.22it/s, est. speed input: 1042.40 toks/s, output: 11.22 toks/s][A
+Processed prompts:   8%|▊         | 123/1600 [00:02<00:30, 48.23it/s, est. speed input: 3274.04 toks/s, output: 45.31 toks/s][A
+Processed prompts:  24%|██▎       | 379/1600 [00:05<00:15, 76.44it/s, est. speed input: 4389.73 toks/s, output: 69.96 toks/s][A
+Processed prompts:  40%|███▉      | 635/1600 [00:05<00:06, 153.40it/s, est. speed input: 6612.56 toks/s, output: 114.99 toks/s][A
+Processed prompts:  48%|████▊     | 770/1600 [00:05<00:04, 181.68it/s, est. speed input: 7201.00 toks/s, output: 130.19 toks/s][A
+Processed prompts:  56%|█████▌    | 891/1600 [00:06<00:04, 171.09it/s, est. speed input: 7081.68 toks/s, output: 132.27 toks/s][A
+Processed prompts:  64%|██████▍   | 1026/1600 [00:07<00:03, 185.98it/s, est. speed input: 7263.87 toks/s, output: 140.32 toks/s][A
+Processed prompts:  72%|███████▏  | 1147/1600 [00:07<00:02, 184.59it/s, est. speed input: 7230.70 toks/s, output: 143.72 toks/s][A
+Processed prompts:  80%|████████  | 1282/1600 [00:08<00:01, 206.76it/s, est. speed input: 7393.18 toks/s, output: 151.63 toks/s][A
+Processed prompts:  88%|████████▊ | 1403/1600 [00:08<00:00, 214.33it/s, est. speed input: 7406.97 toks/s, output: 156.47 toks/s][A
+Processed prompts:  96%|█████████▌| 1538/1600 [00:09<00:00, 289.25it/s, est. speed input: 7733.98 toks/s, output: 169.60 toks/s][A
+Processed prompts: 100%|██████████| 1600/1600 [00:09<00:00, 289.25it/s, est. speed input: 7882.80 toks/s, output: 176.39 toks/s][AProcessed prompts: 100%|██████████| 1600/1600 [00:09<00:00, 176.36it/s, est. speed input: 7882.80 toks/s, output: 176.39 toks/s]
+Running loglikelihood requests:   0%|          | 1/1600 [00:09<4:21:32,  9.81s/it]Running loglikelihood requests:  94%|█████████▎| 1496/1600 [00:09<00:00, 214.60it/s]Running loglikelihood requests: 100%|██████████| 1600/1600 [00:09<00:00, 161.32it/s]
+fatal: not a git repository (or any parent up to mount point /kaggle)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+W4A16/hellaswag: acc_norm=0.6600 +/- 0.0237 n=400 in 26s, 400 per-item rows
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 596.28it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 609.71it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 587.33it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 611.95it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 601.24it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 594.30it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 608.06it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 582.23it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 607.50it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 616.00it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 613.41it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 475.86it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 472.89it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 601.43it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 618.00it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 603.47it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 608.91it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 614.21it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 612.66it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 607.49it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 594.81it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 615.13it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 624.22it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 595.52it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 599.54it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 606.68it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 570.63it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 604.36it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 564.02it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 533.78it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 572.06it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 604.98it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 608.58it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 615.42it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 589.34it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 591.66it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 607.69it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 598.33it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 614.27it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 611.22it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 621.20it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 589.15it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 616.23it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 609.97it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 564.36it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 619.51it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 605.17it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 605.17it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 602.86it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 619.44it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 621.20it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 609.17it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 601.15it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 619.53it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 610.67it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 617.06it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 621.53it/s]
+Tokenizing inputs:   0%|          | 0/2280 [00:00<?, ?it/s]Tokenizing inputs:   9%|▊         | 198/2280 [00:00<00:01, 1967.44it/s]Tokenizing inputs:  17%|█▋        | 395/2280 [00:00<00:01, 1851.92it/s]Tokenizing inputs:  26%|██▌       | 588/2280 [00:00<00:00, 1881.35it/s]Tokenizing inputs:  34%|███▍      | 777/2280 [00:00<00:00, 1768.75it/s]Tokenizing inputs:  42%|████▏     | 965/2280 [00:00<00:00, 1804.67it/s]Tokenizing inputs:  52%|█████▏    | 1188/2280 [00:00<00:00, 1942.60it/s]Tokenizing inputs:  61%|██████    | 1384/2280 [00:00<00:00, 1835.64it/s]Tokenizing inputs:  69%|██████▉   | 1580/2280 [00:00<00:00, 1872.11it/s]Tokenizing inputs:  78%|███████▊  | 1769/2280 [00:00<00:00, 1784.11it/s]Tokenizing inputs:  85%|████████▌ | 1949/2280 [00:01<00:00, 1222.52it/s]Tokenizing inputs:  93%|█████████▎| 2116/2280 [00:01<00:00, 1320.14it/s]Tokenizing inputs: 100%|█████████▉| 2269/2280 [00:01<00:00, 1335.80it/s]Tokenizing inputs: 100%|██████████| 2280/2280 [00:01<00:00, 1580.56it/s]
+Running loglikelihood requests:   0%|          | 0/2280 [00:00<?, ?it/s]
+Rendering prompts:   0%|          | 0/2280 [00:00<?, ?it/s][A
+Rendering prompts:  11%|█         | 245/2280 [00:00<00:00, 2445.98it/s][A
+Rendering prompts:  21%|██▏       | 490/2280 [00:00<00:00, 2344.64it/s][A
+Rendering prompts:  32%|███▏      | 725/2280 [00:00<00:00, 2309.29it/s][A
+Rendering prompts:  42%|████▏     | 957/2280 [00:00<00:00, 2171.68it/s][A
+Rendering prompts:  52%|█████▏    | 1176/2280 [00:00<00:00, 2137.49it/s][A
+Rendering prompts:  61%|██████    | 1391/2280 [00:00<00:00, 2083.85it/s][A
+Rendering prompts:  71%|███████   | 1618/2280 [00:00<00:00, 2140.71it/s][A
+Rendering prompts:  81%|████████▏ | 1856/2280 [00:00<00:00, 2211.20it/s][A
+Rendering prompts:  91%|█████████ | 2078/2280 [00:00<00:00, 2200.11it/s][ARendering prompts: 100%|██████████| 2280/2280 [00:01<00:00, 2195.12it/s]
+
+Processed prompts:   0%|          | 0/2280 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s][A
+Processed prompts:   0%|          | 6/2280 [00:01<07:56,  4.77it/s, est. speed input: 4088.83 toks/s, output: 4.77 toks/s][A
+Processed prompts:   1%|          | 20/2280 [00:02<04:23,  8.58it/s, est. speed input: 5130.12 toks/s, output: 8.01 toks/s][A
+Processed prompts:   2%|▏         | 40/2280 [00:03<03:04, 12.16it/s, est. speed input: 5671.90 toks/s, output: 10.80 toks/s][A
+Processed prompts:   3%|▎         | 64/2280 [00:05<02:32, 14.53it/s, est. speed input: 5826.28 toks/s, output: 12.67 toks/s][A
+Processed prompts:   4%|▍         | 90/2280 [00:06<02:01, 18.02it/s, est. speed input: 6175.39 toks/s, output: 14.86 toks/s][A
+Processed prompts:   5%|▌         | 119/2280 [00:07<01:46, 20.35it/s, est. speed input: 6318.21 toks/s, output: 16.49 toks/s][A
+Processed prompts:   7%|▋         | 151/2280 [00:08<01:33, 22.74it/s, est. speed input: 6431.16 toks/s, output: 18.04 toks/s][A
+Processed prompts:   8%|▊         | 187/2280 [00:09<01:22, 25.38it/s, est. speed input: 6496.68 toks/s, output: 19.62 toks/s][A
+Processed prompts:  10%|▉         | 227/2280 [00:10<01:12, 28.31it/s, est. speed input: 6572.61 toks/s, output: 21.26 toks/s][A
+Processed prompts:  12%|█▏        | 270/2280 [00:12<01:11, 27.99it/s, est. speed input: 6393.54 toks/s, output: 22.05 toks/s][A
+Processed prompts:  14%|█▍        | 321/2280 [00:13<01:08, 28.71it/s, est. speed input: 6210.72 toks/s, output: 23.01 toks/s][A
+Processed prompts:  17%|█▋        | 378/2280 [00:14<00:49, 38.35it/s, est. speed input: 6479.58 toks/s, output: 25.85 toks/s][A
+Processed prompts:  19%|█▉        | 440/2280 [00:15<00:42, 43.42it/s, est. speed input: 6544.29 toks/s, output: 27.97 toks/s][A
+Processed prompts:  22%|██▏       | 505/2280 [00:16<00:38, 45.99it/s, est. speed input: 6535.82 toks/s, output: 29.72 toks/s][A
+Processed prompts:  25%|██▌       | 575/2280 [00:18<00:32, 51.76it/s, est. speed input: 6616.71 toks/s, output: 31.88 toks/s][A
+Processed prompts:  28%|██▊       | 648/2280 [00:19<00:29, 54.85it/s, est. speed input: 6634.93 toks/s, output: 33.72 toks/s][A
+Processed prompts:  32%|███▏      | 725/2280 [00:20<00:27, 57.58it/s, est. speed input: 6641.46 toks/s, output: 35.49 toks/s][A
+Processed prompts:  35%|███▌      | 808/2280 [00:20<00:19, 76.62it/s, est. speed input: 6907.86 toks/s, output: 38.79 toks/s][A
+Processed prompts:  39%|███▉      | 893/2280 [00:21<00:18, 76.49it/s, est. speed input: 6928.31 toks/s, output: 40.69 toks/s][A
+Processed prompts:  43%|████▎     | 982/2280 [00:23<00:17, 75.21it/s, est. speed input: 6916.79 toks/s, output: 42.38 toks/s][A
+Processed prompts:  47%|████▋     | 1074/2280 [00:25<00:18, 63.97it/s, est. speed input: 6726.39 toks/s, output: 42.89 toks/s][A
+Processed prompts:  51%|█████▏    | 1171/2280 [00:26<00:15, 71.59it/s, est. speed input: 6773.29 toks/s, output: 44.91 toks/s][A
+Processed prompts:  56%|█████▌    | 1275/2280 [00:27<00:13, 74.44it/s, est. speed input: 6755.37 toks/s, output: 46.60 toks/s][A
+Processed prompts:  61%|██████    | 1384/2280 [00:27<00:08, 105.82it/s, est. speed input: 7009.53 toks/s, output: 50.27 toks/s][A
+Processed prompts:  66%|██████▌   | 1499/2280 [00:29<00:09, 81.46it/s, est. speed input: 6801.28 toks/s, output: 50.67 toks/s] [A
+Processed prompts:  71%|███████   | 1618/2280 [00:29<00:05, 117.07it/s, est. speed input: 7047.61 toks/s, output: 54.46 toks/s][A
+Processed prompts:  76%|███████▋  | 1743/2280 [00:30<00:04, 114.01it/s, est. speed input: 7049.96 toks/s, output: 56.48 toks/s][A
+Processed prompts:  82%|████████▏ | 1874/2280 [00:32<00:04, 90.21it/s, est. speed input: 6854.71 toks/s, output: 56.92 toks/s] [A
+Processed prompts:  93%|█████████▎| 2130/2280 [00:33<00:01, 134.56it/s, est. speed input: 7112.32 toks/s, output: 62.98 toks/s][A
+Processed prompts: 100%|██████████| 2280/2280 [00:33<00:00, 134.56it/s, est. speed input: 7336.11 toks/s, output: 67.39 toks/s][AProcessed prompts: 100%|██████████| 2280/2280 [00:33<00:00, 67.39it/s, est. speed input: 7336.11 toks/s, output: 67.39 toks/s] 
+Running loglikelihood requests:   0%|          | 1/2280 [00:34<22:05:48, 34.91s/it]Running loglikelihood requests:  16%|█▌        | 359/2280 [00:35<02:11, 14.62it/s] Running loglikelihood requests:  55%|█████▍    | 1245/2280 [00:35<00:15, 65.83it/s]Running loglikelihood requests: 100%|██████████| 2280/2280 [00:35<00:00, 64.81it/s]
+fatal: not a git repository (or any parent up to mount point /kaggle)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+W4A16/mmlu: acc=0.5123 +/- 0.0200 n=570 in 69s, 570 per-item rows
+Overwriting default num_fewshot of gsm8k from 5 to 5
+  0%|          | 0/200 [00:00<?, ?it/s] 10%|█         | 20/200 [00:00<00:00, 193.73it/s] 20%|██        | 40/200 [00:00<00:00, 195.05it/s] 30%|███       | 60/200 [00:00<00:00, 196.29it/s] 40%|████      | 80/200 [00:00<00:00, 194.59it/s] 50%|█████     | 100/200 [00:00<00:00, 194.90it/s] 60%|██████    | 120/200 [00:00<00:00, 194.46it/s] 70%|███████   | 140/200 [00:00<00:00, 194.48it/s] 80%|████████  | 160/200 [00:00<00:00, 194.92it/s] 90%|█████████ | 180/200 [00:00<00:00, 195.30it/s]100%|██████████| 200/200 [00:01<00:00, 193.99it/s]100%|██████████| 200/200 [00:01<00:00, 194.58it/s]
+Running generate_until requests:   0%|          | 0/200 [00:00<?, ?it/s]
+Rendering prompts:   0%|          | 0/200 [00:00<?, ?it/s][A
+Rendering prompts:  94%|█████████▎| 187/200 [00:00<00:00, 1862.07it/s][ARendering prompts: 100%|██████████| 200/200 [00:00<00:00, 1846.30it/s]
+
+Processed prompts:   0%|          | 0/200 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s][A
+Processed prompts:   0%|          | 1/200 [00:27<1:30:08, 27.18s/it, est. speed input: 37.53 toks/s, output: 0.88 toks/s][A
+Processed prompts:   1%|          | 2/200 [00:28<39:53, 12.09s/it, est. speed input: 72.80 toks/s, output: 1.92 toks/s]  [A
+Processed prompts:   2%|▏         | 3/200 [00:30<24:12,  7.37s/it, est. speed input: 102.63 toks/s, output: 2.99 toks/s][A
+Processed prompts:   3%|▎         | 6/200 [00:31<09:08,  2.83s/it, est. speed input: 178.20 toks/s, output: 5.47 toks/s][A
+Processed prompts:   4%|▎         | 7/200 [00:32<07:37,  2.37s/it, est. speed input: 202.35 toks/s, output: 6.50 toks/s][A
+Processed prompts:   5%|▌         | 10/200 [00:33<03:51,  1.22s/it, est. speed input: 281.87 toks/s, output: 9.70 toks/s][A
+Processed prompts:   6%|▋         | 13/200 [00:34<02:35,  1.20it/s, est. speed input: 357.82 toks/s, output: 12.78 toks/s][A
+Processed prompts:   8%|▊         | 17/200 [00:34<01:36,  1.89it/s, est. speed input: 445.90 toks/s, output: 16.48 toks/s][A
+Processed prompts:  10%|█         | 20/200 [00:35<01:25,  2.11it/s, est. speed input: 507.66 toks/s, output: 19.35 toks/s][A
+Processed prompts:  10%|█         | 21/200 [00:36<01:29,  2.00it/s, est. speed input: 521.89 toks/s, output: 20.12 toks/s][A
+Processed prompts:  11%|█         | 22/200 [00:36<01:22,  2.15it/s, est. speed input: 539.56 toks/s, output: 20.97 toks/s][A
+Processed prompts:  12%|█▏        | 23/200 [00:37<01:20,  2.20it/s, est. speed input: 558.13 toks/s, output: 21.98 toks/s][A
+Processed prompts:  14%|█▎        | 27/200 [00:37<00:54,  3.16it/s, est. speed input: 633.08 toks/s, output: 25.80 toks/s][A
+Processed prompts:  14%|█▍        | 28/200 [00:38<01:06,  2.59it/s, est. speed input: 642.85 toks/s, output: 26.48 toks/s][A
+Processed prompts:  16%|█▌        | 31/200 [00:38<00:45,  3.72it/s, est. speed input: 703.58 toks/s, output: 29.78 toks/s][A
+Processed prompts:  16%|█▌        | 32/200 [00:39<00:47,  3.50it/s, est. speed input: 717.30 toks/s, output: 30.62 toks/s][A
+Processed prompts:  16%|█▋        | 33/200 [00:39<00:58,  2.84it/s, est. speed input: 727.61 toks/s, output: 31.38 toks/s][A
+Processed prompts:  17%|█▋        | 34/200 [00:40<00:58,  2.82it/s, est. speed input: 746.01 toks/s, output: 32.51 toks/s][A
+Processed prompts:  18%|█▊        | 35/200 [00:40<00:58,  2.82it/s, est. speed input: 762.70 toks/s, output: 33.60 toks/s][A
+Processed prompts:  18%|█▊        | 36/200 [00:41<01:01,  2.65it/s, est. speed input: 778.92 toks/s, output: 34.67 toks/s][A
+Processed prompts:  18%|█▊        | 37/200 [00:41<00:57,  2.86it/s, est. speed input: 798.24 toks/s, output: 35.89 toks/s][A
+Processed prompts:  20%|██        | 41/200 [00:41<00:28,  5.53it/s, est. speed input: 879.77 toks/s, output: 40.99 toks/s][A
+Processed prompts:  22%|██▏       | 44/200 [00:41<00:22,  6.88it/s, est. speed input: 939.50 toks/s, output: 44.79 toks/s][A
+Processed prompts:  23%|██▎       | 46/200 [00:42<00:21,  7.08it/s, est. speed input: 975.86 toks/s, output: 47.24 toks/s][A
+Processed prompts:  24%|██▍       | 48/200 [00:42<00:20,  7.27it/s, est. speed input: 1007.99 toks/s, output: 49.43 toks/s][A
+Processed prompts:  24%|██▍       | 49/200 [00:42<00:30,  5.03it/s, est. speed input: 1013.87 toks/s, output: 50.05 toks/s][A
+Processed prompts:  25%|██▌       | 50/200 [00:43<00:52,  2.85it/s, est. speed input: 1017.54 toks/s, output: 50.61 toks/s][A
+Processed prompts:  26%|██▋       | 53/200 [00:44<00:39,  3.73it/s, est. speed input: 1063.64 toks/s, output: 53.82 toks/s][A
+Processed prompts:  28%|██▊       | 56/200 [00:44<00:28,  5.14it/s, est. speed input: 1116.09 toks/s, output: 57.89 toks/s][A
+Processed prompts:  30%|███       | 61/200 [00:44<00:17,  8.06it/s, est. speed input: 1202.23 toks/s, output: 64.71 toks/s][A
+Processed prompts:  32%|███▏      | 63/200 [00:45<00:23,  5.79it/s, est. speed input: 1220.44 toks/s, output: 66.68 toks/s][A
+Processed prompts:  32%|███▎      | 65/200 [00:45<00:21,  6.28it/s, est. speed input: 1247.82 toks/s, output: 68.46 toks/s][A
+Processed prompts:  34%|███▍      | 68/200 [00:46<00:17,  7.62it/s, est. speed input: 1298.60 toks/s, output: 72.11 toks/s][A
+Processed prompts:  35%|███▌      | 70/200 [00:46<00:16,  7.88it/s, est. speed input: 1334.84 toks/s, output: 75.19 toks/s][A
+Processed prompts:  36%|███▋      | 73/200 [00:46<00:13,  9.20it/s, est. speed input: 1382.60 toks/s, output: 78.75 toks/s][A
+Processed prompts:  38%|███▊      | 75/200 [00:46<00:13,  9.15it/s, est. speed input: 1410.01 toks/s, output: 81.39 toks/s][A
+Processed prompts:  38%|███▊      | 77/200 [00:47<00:16,  7.34it/s, est. speed input: 1437.71 toks/s, output: 84.11 toks/s][A
+Processed prompts:  39%|███▉      | 78/200 [00:47<00:17,  6.78it/s, est. speed input: 1449.46 toks/s, output: 85.39 toks/s][A
+Processed prompts:  40%|████      | 81/200 [00:47<00:13,  8.62it/s, est. speed input: 1493.43 toks/s, output: 88.42 toks/s][A
+Processed prompts:  43%|████▎     | 86/200 [00:47<00:09, 12.59it/s, est. speed input: 1574.91 toks/s, output: 95.49 toks/s][A
+Processed prompts:  45%|████▌     | 90/200 [00:48<00:13,  8.38it/s, est. speed input: 1621.73 toks/s, output: 100.01 toks/s][A
+Processed prompts:  46%|████▌     | 92/200 [00:48<00:12,  8.81it/s, est. speed input: 1655.13 toks/s, output: 103.33 toks/s][A
+Processed prompts:  47%|████▋     | 94/200 [00:49<00:15,  6.67it/s, est. speed input: 1673.50 toks/s, output: 105.77 toks/s][A
+Processed prompts:  48%|████▊     | 95/200 [00:49<00:16,  6.49it/s, est. speed input: 1683.22 toks/s, output: 107.08 toks/s][A
+Processed prompts:  48%|████▊     | 97/200 [00:49<00:13,  7.36it/s, est. speed input: 1708.75 toks/s, output: 109.41 toks/s][A
+Processed prompts:  50%|█████     | 100/200 [00:49<00:12,  7.76it/s, est. speed input: 1740.58 toks/s, output: 112.34 toks/s][A
+Processed prompts:  50%|█████     | 101/200 [00:50<00:13,  7.38it/s, est. speed input: 1748.43 toks/s, output: 112.97 toks/s][A
+Processed prompts:  51%|█████     | 102/200 [00:50<00:16,  5.81it/s, est. speed input: 1750.51 toks/s, output: 113.28 toks/s][A
+Processed prompts:  52%|█████▏    | 103/200 [00:50<00:16,  5.84it/s, est. speed input: 1762.37 toks/s, output: 114.84 toks/s][A
+Processed prompts:  52%|█████▏    | 104/200 [00:50<00:16,  5.86it/s, est. speed input: 1773.75 toks/s, output: 116.39 toks/s][A
+Processed prompts:  52%|█████▎    | 105/200 [00:51<00:16,  5.90it/s, est. speed input: 1784.25 toks/s, output: 117.89 toks/s][A
+Processed prompts:  54%|█████▎    | 107/200 [00:51<00:18,  4.97it/s, est. speed input: 1796.43 toks/s, output: 119.83 toks/s][A
+Processed prompts:  55%|█████▍    | 109/200 [00:51<00:14,  6.38it/s, est. speed input: 1817.28 toks/s, output: 121.74 toks/s][A
+Processed prompts:  55%|█████▌    | 110/200 [00:51<00:17,  5.24it/s, est. speed input: 1823.97 toks/s, output: 123.06 toks/s][A
+Processed prompts:  56%|█████▋    | 113/200 [00:52<00:10,  7.94it/s, est. speed input: 1866.05 toks/s, output: 127.85 toks/s][A
+Processed prompts:  57%|█████▊    | 115/200 [00:52<00:13,  6.29it/s, est. speed input: 1887.44 toks/s, output: 131.09 toks/s][A
+Processed prompts:  59%|█████▉    | 118/200 [00:52<00:09,  8.64it/s, est. speed input: 1928.73 toks/s, output: 136.47 toks/s][A
+Processed prompts:  60%|██████    | 120/200 [00:53<00:09,  8.01it/s, est. speed input: 1949.72 toks/s, output: 139.85 toks/s][A
+Processed prompts:  61%|██████    | 122/200 [00:53<00:10,  7.64it/s, est. speed input: 1967.12 toks/s, output: 142.39 toks/s][A
+Processed prompts:  62%|██████▏   | 123/200 [00:53<00:11,  6.44it/s, est. speed input: 1975.08 toks/s, output: 143.91 toks/s][A
+Processed prompts:  62%|██████▏   | 124/200 [00:53<00:11,  6.58it/s, est. speed input: 1988.20 toks/s, output: 145.81 toks/s][A
+Processed prompts:  64%|██████▎   | 127/200 [00:54<00:10,  6.95it/s, est. speed input: 2018.45 toks/s, output: 150.38 toks/s][A
+Processed prompts:  64%|██████▍   | 128/200 [00:54<00:11,  6.07it/s, est. speed input: 2022.77 toks/s, output: 151.77 toks/s][A
+Processed prompts:  64%|██████▍   | 129/200 [00:54<00:13,  5.45it/s, est. speed input: 2026.14 toks/s, output: 152.59 toks/s][A
+Processed prompts:  65%|██████▌   | 130/200 [00:54<00:13,  5.01it/s, est. speed input: 2033.32 toks/s, output: 154.21 toks/s][A
+Processed prompts:  66%|██████▌   | 131/200 [00:55<00:14,  4.69it/s, est. speed input: 2041.08 toks/s, output: 155.89 toks/s][A
+Processed prompts:  66%|██████▋   | 133/200 [00:55<00:10,  6.61it/s, est. speed input: 2061.57 toks/s, output: 158.64 toks/s][A
+Processed prompts:  67%|██████▋   | 134/200 [00:55<00:09,  6.86it/s, est. speed input: 2070.73 toks/s, output: 160.50 toks/s][A
+Processed prompts:  68%|██████▊   | 135/200 [00:55<00:09,  7.11it/s, est. speed input: 2083.35 toks/s, output: 162.59 toks/s][A
+Processed prompts:  68%|██████▊   | 136/200 [00:55<00:08,  7.38it/s, est. speed input: 2094.82 toks/s, output: 164.62 toks/s][A
+Processed prompts:  69%|██████▉   | 138/200 [00:55<00:06,  9.64it/s, est. speed input: 2115.42 toks/s, output: 168.03 toks/s][A
+Processed prompts:  70%|███████   | 140/200 [00:55<00:05, 11.46it/s, est. speed input: 2135.82 toks/s, output: 170.90 toks/s][A
+Processed prompts:  71%|███████   | 142/200 [00:56<00:04, 12.98it/s, est. speed input: 2164.33 toks/s, output: 175.44 toks/s][A
+Processed prompts:  72%|███████▏  | 144/200 [00:56<00:09,  6.18it/s, est. speed input: 2176.36 toks/s, output: 178.61 toks/s][A
+Processed prompts:  73%|███████▎  | 146/200 [00:57<00:14,  3.81it/s, est. speed input: 2166.18 toks/s, output: 179.64 toks/s][A
+Processed prompts:  74%|███████▎  | 147/200 [00:57<00:12,  4.29it/s, est. speed input: 2174.59 toks/s, output: 181.24 toks/s][A
+Processed prompts:  74%|███████▍  | 149/200 [00:57<00:08,  5.88it/s, est. speed input: 2196.73 toks/s, output: 185.35 toks/s][A
+Processed prompts:  76%|███████▌  | 151/200 [00:59<00:15,  3.20it/s, est. speed input: 2185.30 toks/s, output: 187.27 toks/s][A
+Processed prompts:  76%|███████▌  | 152/200 [00:59<00:13,  3.44it/s, est. speed input: 2194.99 toks/s, output: 189.55 toks/s][A
+Processed prompts:  76%|███████▋  | 153/200 [00:59<00:15,  3.03it/s, est. speed input: 2189.55 toks/s, output: 190.23 toks/s][A
+Processed prompts:  77%|███████▋  | 154/200 [01:00<00:20,  2.22it/s, est. speed input: 2176.61 toks/s, output: 190.70 toks/s][A
+Processed prompts:  78%|███████▊  | 156/200 [01:00<00:13,  3.26it/s, est. speed input: 2198.80 toks/s, output: 195.51 toks/s][A
+Processed prompts:  78%|███████▊  | 157/200 [01:01<00:16,  2.65it/s, est. speed input: 2189.04 toks/s, output: 196.49 toks/s][A
+Processed prompts:  79%|███████▉  | 158/200 [01:03<00:32,  1.30it/s, est. speed input: 2128.71 toks/s, output: 192.80 toks/s][A
+Processed prompts:  80%|███████▉  | 159/200 [01:04<00:31,  1.29it/s, est. speed input: 2116.62 toks/s, output: 193.91 toks/s][A
+Processed prompts:  80%|████████  | 160/200 [01:06<00:45,  1.14s/it, est. speed input: 2066.25 toks/s, output: 191.50 toks/s][A
+Processed prompts:  82%|████████▏ | 164/200 [01:06<00:17,  2.11it/s, est. speed input: 2128.17 toks/s, output: 206.45 toks/s][A
+Processed prompts:  84%|████████▍ | 168/200 [01:06<00:08,  3.58it/s, est. speed input: 2180.97 toks/s, output: 221.07 toks/s][A
+Processed prompts:  85%|████████▌ | 170/200 [01:06<00:07,  4.27it/s, est. speed input: 2202.51 toks/s, output: 228.07 toks/s][A
+Processed prompts:  87%|████████▋ | 174/200 [01:07<00:03,  6.69it/s, est. speed input: 2251.44 toks/s, output: 242.94 toks/s][A
+Processed prompts:  90%|█████████ | 180/200 [01:07<00:01, 11.04it/s, est. speed input: 2322.89 toks/s, output: 265.28 toks/s][A
+Processed prompts:  94%|█████████▍| 188/200 [01:07<00:00, 18.51it/s, est. speed input: 2415.89 toks/s, output: 295.31 toks/s][A
+Processed prompts:  99%|█████████▉| 198/200 [01:07<00:00, 24.11it/s, est. speed input: 2519.78 toks/s, output: 332.06 toks/s][A
+Processed prompts: 100%|██████████| 200/200 [01:07<00:00, 24.11it/s, est. speed input: 2535.36 toks/s, output: 339.04 toks/s][AProcessed prompts: 100%|██████████| 200/200 [01:07<00:00,  2.96it/s, est. speed input: 2535.36 toks/s, output: 339.04 toks/s]
+Running generate_until requests:   0%|          | 1/200 [01:07<3:44:46, 67.77s/it]Running generate_until requests: 100%|██████████| 200/200 [01:07<00:00,  2.95it/s]
+fatal: not a git repository (or any parent up to mount point /kaggle)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+W4A16/gsm8k: exact_match=0.1050 +/- 0.0217 n=200 in 80s, 400 per-item rows
+  0%|          | 0/200 [00:00<?, ?it/s] 26%|██▋       | 53/200 [00:00<00:00, 524.29it/s] 53%|█████▎    | 106/200 [00:00<00:00, 522.14it/s] 80%|███████▉  | 159/200 [00:00<00:00, 523.27it/s]100%|██████████| 200/200 [00:00<00:00, 523.55it/s]
+Tokenizing inputs:   0%|          | 0/1476 [00:00<?, ?it/s]Tokenizing inputs:   6%|▋         | 95/1476 [00:00<00:01, 949.28it/s]Tokenizing inputs:  13%|█▎        | 192/1476 [00:00<00:01, 956.00it/s]Tokenizing inputs:  20%|█▉        | 288/1476 [00:00<00:01, 951.07it/s]Tokenizing inputs:  26%|██▌       | 384/1476 [00:00<00:01, 954.08it/s]Tokenizing inputs:  33%|███▎      | 482/1476 [00:00<00:01, 962.12it/s]Tokenizing inputs:  39%|███▉      | 579/1476 [00:00<00:00, 960.39it/s]Tokenizing inputs:  46%|████▌     | 676/1476 [00:00<00:00, 951.48it/s]Tokenizing inputs:  52%|█████▏    | 772/1476 [00:00<00:00, 942.68it/s]Tokenizing inputs:  59%|█████▊    | 867/1476 [00:00<00:00, 925.08it/s]Tokenizing inputs:  65%|██████▌   | 960/1476 [00:01<00:00, 914.67it/s]Tokenizing inputs:  71%|███████▏  | 1054/1476 [00:01<00:00, 920.60it/s]Tokenizing inputs:  78%|███████▊  | 1152/1476 [00:01<00:00, 935.60it/s]Tokenizing inputs:  84%|████████▍ | 1247/1476 [00:01<00:00, 938.39it/s]Tokenizing inputs:  91%|█████████ | 1342/1476 [00:01<00:00, 940.57it/s]Tokenizing inputs:  97%|█████████▋| 1437/1476 [00:01<00:00, 940.79it/s]Tokenizing inputs: 100%|██████████| 1476/1476 [00:01<00:00, 941.32it/s]
+Running loglikelihood requests:   0%|          | 0/1476 [00:00<?, ?it/s]
+Rendering prompts:   0%|          | 0/1476 [00:00<?, ?it/s][A
+Rendering prompts:  14%|█▍        | 214/1476 [00:00<00:00, 2138.27it/s][A
+Rendering prompts:  29%|██▉       | 428/1476 [00:00<00:00, 2125.98it/s][A
+Rendering prompts:  43%|████▎     | 641/1476 [00:00<00:00, 2047.19it/s][A
+Rendering prompts:  57%|█████▋    | 847/1476 [00:00<00:00, 1937.48it/s][A
+Rendering prompts:  72%|███████▏  | 1059/1476 [00:00<00:00, 1998.25it/s][A
+Rendering prompts:  87%|████████▋ | 1278/1476 [00:00<00:00, 2059.97it/s][ARendering prompts: 100%|██████████| 1476/1476 [00:00<00:00, 2046.43it/s]
+
+Processed prompts:   0%|          | 0/1476 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s][A
+Processed prompts:   0%|          | 2/1476 [00:01<21:54,  1.12it/s, est. speed input: 236.54 toks/s, output: 1.12 toks/s][A
+Processed prompts:   6%|▌         | 83/1476 [00:02<00:40, 34.53it/s, est. speed input: 5719.06 toks/s, output: 28.41 toks/s][A
+Processed prompts:   8%|▊         | 125/1476 [00:04<00:42, 31.92it/s, est. speed input: 5683.08 toks/s, output: 28.58 toks/s][A
+Processed prompts:  11%|█▏        | 168/1476 [00:05<00:34, 37.94it/s, est. speed input: 6410.91 toks/s, output: 32.55 toks/s][A
+Processed prompts:  14%|█▍        | 211/1476 [00:06<00:33, 38.10it/s, est. speed input: 6564.21 toks/s, output: 33.59 toks/s][A
+Processed prompts:  17%|█▋        | 255/1476 [00:07<00:31, 38.57it/s, est. speed input: 6695.30 toks/s, output: 34.49 toks/s][A
+Processed prompts:  20%|██        | 299/1476 [00:08<00:34, 34.18it/s, est. speed input: 6426.86 toks/s, output: 33.28 toks/s][A
+Processed prompts:  23%|██▎       | 343/1476 [00:09<00:28, 40.42it/s, est. speed input: 6833.89 toks/s, output: 35.56 toks/s][A
+Processed prompts:  26%|██▌       | 387/1476 [00:10<00:27, 39.99it/s, est. speed input: 6875.18 toks/s, output: 35.93 toks/s][A
+Processed prompts:  29%|██▉       | 431/1476 [00:12<00:28, 36.59it/s, est. speed input: 6733.05 toks/s, output: 35.32 toks/s][A
+Processed prompts:  32%|███▏      | 476/1476 [00:13<00:24, 40.83it/s, est. speed input: 6943.30 toks/s, output: 36.55 toks/s][A
+Processed prompts:  35%|███▌      | 521/1476 [00:14<00:23, 40.56it/s, est. speed input: 6972.99 toks/s, output: 36.82 toks/s][A
+Processed prompts:  38%|███▊      | 566/1476 [00:15<00:25, 35.73it/s, est. speed input: 6784.61 toks/s, output: 35.94 toks/s][A
+Processed prompts:  41%|████▏     | 611/1476 [00:16<00:23, 37.54it/s, est. speed input: 6844.17 toks/s, output: 36.35 toks/s][A
+Processed prompts:  44%|████▍     | 656/1476 [00:18<00:24, 33.32it/s, est. speed input: 6655.31 toks/s, output: 35.44 toks/s][A
+Processed prompts:  47%|████▋     | 701/1476 [00:18<00:18, 42.78it/s, est. speed input: 6959.62 toks/s, output: 37.15 toks/s][A
+Processed prompts:  51%|█████     | 747/1476 [00:19<00:16, 44.75it/s, est. speed input: 7054.20 toks/s, output: 37.75 toks/s][A
+Processed prompts:  54%|█████▎    | 792/1476 [00:20<00:15, 43.03it/s, est. speed input: 7055.54 toks/s, output: 37.84 toks/s][A
+Processed prompts:  57%|█████▋    | 838/1476 [00:22<00:15, 42.16it/s, est. speed input: 7063.60 toks/s, output: 37.97 toks/s][A
+Processed prompts:  60%|█████▉    | 884/1476 [00:23<00:15, 39.41it/s, est. speed input: 7009.19 toks/s, output: 37.75 toks/s][A
+Processed prompts:  63%|██████▎   | 930/1476 [00:24<00:13, 41.70it/s, est. speed input: 7070.61 toks/s, output: 38.16 toks/s][A
+Processed prompts:  66%|██████▌   | 976/1476 [00:25<00:12, 41.35it/s, est. speed input: 7076.07 toks/s, output: 38.27 toks/s][A
+Processed prompts:  69%|██████▉   | 1023/1476 [00:26<00:10, 41.20it/s, est. speed input: 7082.81 toks/s, output: 38.38 toks/s][A
+Processed prompts:  72%|███████▏  | 1069/1476 [00:27<00:09, 41.05it/s, est. speed input: 7086.91 toks/s, output: 38.48 toks/s][A
+Processed prompts:  76%|███████▌  | 1116/1476 [00:28<00:08, 41.14it/s, est. speed input: 7094.33 toks/s, output: 38.59 toks/s][A
+Processed prompts:  79%|███████▊  | 1162/1476 [00:30<00:07, 40.87it/s, est. speed input: 7092.81 toks/s, output: 38.65 toks/s][A
+Processed prompts:  82%|████████▏ | 1209/1476 [00:31<00:06, 40.97it/s, est. speed input: 7097.02 toks/s, output: 38.75 toks/s][A
+Processed prompts:  85%|████████▌ | 1256/1476 [00:32<00:05, 41.01it/s, est. speed input: 7098.99 toks/s, output: 38.83 toks/s][A
+Processed prompts:  88%|████████▊ | 1303/1476 [00:33<00:04, 41.10it/s, est. speed input: 7101.02 toks/s, output: 38.91 toks/s][A
+Processed prompts:  92%|█████████▏| 1351/1476 [00:34<00:03, 41.12it/s, est. speed input: 7101.06 toks/s, output: 38.99 toks/s][A
+Processed prompts:  95%|█████████▍| 1399/1476 [00:35<00:01, 41.25it/s, est. speed input: 7101.86 toks/s, output: 39.07 toks/s][A
+Processed prompts:  98%|█████████▊| 1447/1476 [00:36<00:00, 47.62it/s, est. speed input: 7199.50 toks/s, output: 39.69 toks/s][A
+Processed prompts: 100%|██████████| 1476/1476 [00:36<00:00, 47.62it/s, est. speed input: 7332.95 toks/s, output: 40.48 toks/s][AProcessed prompts: 100%|██████████| 1476/1476 [00:36<00:00, 40.48it/s, est. speed input: 7332.95 toks/s, output: 40.48 toks/s]
+Running loglikelihood requests:   0%|          | 1/1476 [00:37<15:14:54, 37.22s/it]Running loglikelihood requests:  31%|███       | 456/1476 [00:37<00:58, 17.43it/s] Running loglikelihood requests:  64%|██████▎   | 939/1476 [00:37<00:12, 43.57it/s]Running loglikelihood requests:  98%|█████████▊| 1449/1476 [00:37<00:00, 82.51it/s]Running loglikelihood requests: 100%|██████████| 1476/1476 [00:37<00:00, 39.34it/s]
+fatal: not a git repository (or any parent up to mount point /kaggle)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+W4A16/truthfulqa_mc2: acc=0.3657 +/- 0.0272 n=200 in 51s, 200 per-item rows
+(MainProcess pid=1835) INFO 11-03 18:17:19 [utils.py:628] [shutdown] Process manager: send sigterm to process EngineCore
+(EngineCore pid=1875) INFO 11-03 18:17:19 [core.py:1525] [shutdown] EngineCore: trigger received signal=SIGTERM
+(EngineCore pid=1875) INFO 11-03 18:17:19 [core.py:1712] [shutdown] EngineCore: start mode=abort timeout=0s
+(EngineCore pid=1875) INFO 11-03 18:17:19 [core.py:1743] [shutdown] EngineCore: request processing complete; starting resource teardown
+(EngineCore pid=1875) INFO 11-03 18:17:19 [core.py:1573] [shutdown] EngineCore: exiting busy loop
+(EngineCore pid=1875) INFO 11-03 18:17:19 [multiproc_executor.py:580] [shutdown] Executor: waiting for worker exit count=2
+(Worker_TP0 pid=1906) INFO 11-03 18:17:19 [multiproc_executor.py:944] Parent process exited, terminating worker queues
+(MainProcess pid=1835) WARNING 11-03 18:17:24 [utils.py:648] [shutdown] Process manager: force killing remaining processes count=1
+(MainProcess pid=1835) WARNING 11-03 18:17:24 [utils.py:653] [shutdown] Process manager: force killing remaining process EngineCore pid 1875
+(MainProcess pid=1835) WARNING 11-03 18:17:24 [system_utils.py:248] [shutdown] force killing sub process VLLM::Worker_TP0 pid 1906
+(MainProcess pid=1835) WARNING 11-03 18:17:24 [system_utils.py:248] [shutdown] force killing sub process VLLM::Worker_TP1 pid 1907
+/usr/lib/python3.12/multiprocessing/resource_tracker.py:254: UserWarning: resource_tracker: There appear to be 2 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '
+/usr/lib/python3.12/multiprocessing/resource_tracker.py:254: UserWarning: resource_tracker: There appear to be 2 leaked shared_memory objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '

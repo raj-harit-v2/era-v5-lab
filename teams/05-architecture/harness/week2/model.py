@@ -59,26 +59,56 @@ class RMSNorm(nn.Module):
     def forward(self,x):return (x.float()*torch.rsqrt(x.float().square().mean(-1,keepdim=True)+self.eps)*self.weight).to(x.dtype)
 
 class GQA(nn.Module):
-    def __init__(self,m):
+    def __init__(self,m,layer_index=0):
         super().__init__();w=m["n_embd"];self.nh=m["n_head"];self.nkv=m["n_kv_head"];self.d=w//self.nh
         self.q=nn.Linear(w,w,bias=False);self.k=nn.Linear(w,self.nkv*self.d,bias=False);self.v=nn.Linear(w,self.nkv*self.d,bias=False);self.o=nn.Linear(w,w,bias=False)
         self.theta=m["rope_theta"]
+        self.rotary_dim=2*math.floor(m.get("rotary_fraction",1.0)*self.d/2)
+        pattern=m.get("attn_pattern",["G"]*m["n_layer"])
+        self.local=pattern[layer_index]=="L"
+        self.window=m.get("attn_window") if self.local else None
+        self.sink=nn.Parameter(torch.zeros(self.nh,dtype=torch.float32)) if self.local and m.get("attn_sink",False) else None
+        self.gate=None
+        if m.get("attn_gate",False):
+            required=["attn_gate_input","attn_gate_bias","attn_gate_init"]
+            if any(m.get(k) is None for k in required):raise ValueError("Gate choices must be explicit")
+            if m["attn_gate_input"] not in ("normalized","residual"):raise ValueError("Invalid gate input")
+            self.gate_input=m["attn_gate_input"]
+            self.gate=nn.Linear(w,w,bias=m["attn_gate_bias"])
+            if m["attn_gate_init"]=="zero":
+                nn.init.zeros_(self.gate.weight)
+                if self.gate.bias is not None:nn.init.zeros_(self.gate.bias)
+            elif m["attn_gate_init"]!="linear_default":raise ValueError("Invalid gate initialization")
     def rotary(self,x):
         # One window per document; position offset zero for each independent window.
-        inv=self.theta**(-torch.arange(0,self.d,2,device=x.device).float()/self.d)
+        inv=self.theta**(-torch.arange(0,self.rotary_dim,2,device=x.device).float()/self.rotary_dim)
         angle=torch.arange(x.shape[-2],device=x.device).float()[:,None]*inv[None,:]
-        a,b=x.float()[...,0::2],x.float()[...,1::2]
-        return torch.stack((a*angle.cos()-b*angle.sin(),a*angle.sin()+b*angle.cos()),-1).flatten(-2).to(x.dtype)
-    def forward(self,x):
+        a,b=x.float()[...,:self.rotary_dim:2],x.float()[...,1:self.rotary_dim:2]
+        rotated=torch.stack((a*angle.cos()-b*angle.sin(),a*angle.sin()+b*angle.cos()),-1).flatten(-2).to(x.dtype)
+        return rotated if self.rotary_dim==self.d else torch.cat((rotated,x[...,self.rotary_dim:]),dim=-1)
+    def forward(self,x,residual=None):
         b,t,w=x.shape
         q=self.rotary(self.q(x).view(b,t,self.nh,self.d).transpose(1,2))
         k=self.rotary(self.k(x).view(b,t,self.nkv,self.d).transpose(1,2)).repeat_interleave(self.nh//self.nkv,dim=1)
         v=self.v(x).view(b,t,self.nkv,self.d).transpose(1,2).repeat_interleave(self.nh//self.nkv,dim=1)
         logits=q.float()@k.float().transpose(-2,-1)/math.sqrt(self.d)
         mask=torch.ones(t,t,dtype=torch.bool,device=x.device).tril()
+        if self.local:
+            positions=torch.arange(t,device=x.device)
+            mask=mask & ((positions[:,None]-positions[None,:])<self.window)
         logits=logits.masked_fill(~mask,float("-inf"))
-        a=logits.softmax(-1).to(v.dtype)
-        return self.o((a@v).transpose(1,2).reshape(b,t,w))
+        # A disabled (-inf) sink takes the exact legacy softmax path. This also
+        # avoids changing reduction shape in the equivalence regression test.
+        if self.sink is not None and not bool(torch.isneginf(self.sink).all()):
+            sink=self.sink.float().view(1,self.nh,1,1).expand(b,-1,t,-1)
+            a=torch.cat((logits,sink),dim=-1).softmax(-1)[...,:t].to(v.dtype)
+        else:a=logits.softmax(-1).to(v.dtype)
+        out=(a@v).transpose(1,2).reshape(b,t,w)
+        if self.gate is not None:
+            gate_input=x if self.gate_input=="normalized" else residual
+            if gate_input is None:raise ValueError("Residual gate input requires the pre-norm residual")
+            out=out*torch.sigmoid(self.gate(gate_input))
+        return self.o(out)
 
 class SwiGLU(nn.Module):
     def __init__(self,w,h,bias=False):super().__init__();self.gate=nn.Linear(w,h,bias=bias);self.up=nn.Linear(w,h,bias=bias);self.down=nn.Linear(h,w,bias=bias)
@@ -108,15 +138,15 @@ class MoE(nn.Module):
         return output.reshape(shape)
 
 class Block(nn.Module):
-    def __init__(self,m):
-        super().__init__();self.n1=RMSNorm(m["n_embd"],m["norm_eps"]);self.n2=RMSNorm(m["n_embd"],m["norm_eps"]);self.attn=GQA(m);self.moe=MoE(m)
+    def __init__(self,m,layer_index=0):
+        super().__init__();self.n1=RMSNorm(m["n_embd"],m["norm_eps"]);self.n2=RMSNorm(m["n_embd"],m["norm_eps"]);self.attn=GQA(m,layer_index);self.moe=MoE(m)
     def forward(self,x,valid):
-        x=x+self.attn(self.n1(x));return x+self.moe(self.n2(x),valid)
+        x=x+self.attn(self.n1(x),residual=x);return x+self.moe(self.n2(x),valid)
 
 class LanguageModel(nn.Module):
     def __init__(self,m,rows,lengths):
         super().__init__();self.spec=m;self.embedding=KE2(rows,lengths,m["n_embd"])
-        self.blocks=nn.ModuleList(Block(m) for _ in range(m["n_layer"]))
+        self.blocks=nn.ModuleList(Block(m,i) for i in range(m["n_layer"]))
         self.norm=RMSNorm(m["n_embd"],m["norm_eps"])
         self.mtp_head=nn.Linear(m["n_embd"],m["vocab_size"],bias=False) if m["mtp"] else None
         self.head=nn.Linear(m["n_embd"],m["vocab_size"],bias=False)

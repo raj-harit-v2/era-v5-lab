@@ -17,7 +17,9 @@ from pathlib import Path
 import normalize as norms
 from lab_canary import LAB_CANARY, LAB_CANARY_ID, read_canary_file
 
-VERSION = "v1"
+VERSION = "v2"
+# The normalizer of each shipped set. build_fingerprints.py uses it when --normalize is not given.
+SET_NORMALIZE = {"v1": "g9-v1", "v2": "g9-v2"}
 DEFAULT_NORM = norms.get(norms.DEFAULT_ID)
 # The benchmark MANIFEST.json files of v1 were written before they named their normalizer.
 UNSTATED_NORMALIZE_ID = "g9-v1"
@@ -37,6 +39,9 @@ DEFAULT_GRAM_FILTERS = ("numeric_only", "single_chars")
 # Boilerplate: text that is in benchmark items but also in millions of other documents
 # (licence headers in SWE-bench patches, lorem ipsum). A gram is not written when at least
 # half of its words are inside a boilerplate run of BOILERPLATE_N words.
+# The *.txt files in BOILERPLATE_DIR apply to every benchmark. A benchmark can add its own files
+# ('boilerplate' in benchmarks.toml, paths relative to BOILERPLATE_DIR, for example
+# "scoped/heldout_g5_v1.txt"). Those apply only to that benchmark, so other benchmarks do not change.
 BOILERPLATE_DIR = Path(__file__).resolve().parent / "boilerplate"
 BOILERPLATE_N = 8
 
@@ -46,13 +51,15 @@ def gram_hash(gram_words):
 
 
 class Boilerplate:
-    def __init__(self, folder=BOILERPLATE_DIR, norm=DEFAULT_NORM):
+    def __init__(self, folder=BOILERPLATE_DIR, norm=DEFAULT_NORM, extra=()):
         self.files = {}
         self.grams = set()
         self.normalize_id = norm.id
-        for f in sorted(Path(folder).glob("*.txt")) if folder else []:
-            data = f.read_bytes()
-            self.files[f.name] = hashlib.sha256(data).hexdigest()
+        paths = sorted(Path(folder).glob("*.txt")) if folder else []
+        paths += [Path(folder or BOILERPLATE_DIR) / rel for rel in extra]
+        for f in paths:
+            data = f.read_bytes()  # a missing extra file stops the build
+            self.files[f.relative_to(Path(folder or BOILERPLATE_DIR)).as_posix()] = hashlib.sha256(data).hexdigest()
             ws = norm.normalize(data.decode("utf-8"))
             self.grams.update(tuple(ws[i:i + BOILERPLATE_N]) for i in range(len(ws) - BOILERPLATE_N + 1))
 
@@ -237,10 +244,12 @@ class Fingerprints:
 
     benchmarks: list of benchmark IDs. tags: list of tags; a benchmark with any of them is loaded.
     With neither, all benchmarks are loaded. Only the full set counts as the formal check.
+    exclude: benchmark IDs to leave out. Use it to check a protected set against the others,
+    for example the G5 held-out file without heldout_g5_v1, which would match itself.
     Documents are normalized with the normalizer that the set names in MANIFEST.json.
     """
 
-    def __init__(self, set_dir, benchmarks=None, verify=True, tags=None):
+    def __init__(self, set_dir, benchmarks=None, verify=True, tags=None, exclude=None):
         d = Path(set_dir)
         self.manifest = json.loads((d / "MANIFEST.json").read_text(encoding="utf-8"))
         self.norm = norms.get(self.manifest["normalize_id"])
@@ -271,13 +280,16 @@ class Fingerprints:
         self.set_sha256 = self.manifest["set_sha256"]
         all_b = self.manifest["benchmarks"]
         chosen = list(benchmarks or all_b)
-        unknown = set(chosen) - set(all_b)
+        unknown = (set(chosen) | set(exclude or ())) - set(all_b)
         if unknown:
             raise ValueError(f"not in this set: {sorted(unknown)}")
         if tags:
             chosen = [b for b in chosen if set(tags) & set(all_b[b].get("tags", []))]
             if not chosen:
                 raise ValueError(f"no benchmark has the tags {tags}")
+        chosen = [b for b in chosen if b not in set(exclude or ())]
+        if not chosen:
+            raise ValueError("no benchmark is left after exclude")
         self.benchmarks = chosen
         self.refs, self.size = [], []   # per item: ref and number of grams (all run lengths)
         index = {}                      # ref -> item index

@@ -94,7 +94,7 @@ def load_runtime(arm_path, runtime_path=None):
     for obj in reversed(nodes):
         declared = merge(declared, obj)
     src = declared["model"]
-    _unknown(src, ["vocab_size", "block_size", "n_layer", "n_head", "n_kv_head", "n_embd", "mlp_ratio", "embedding", "ke_max_pos", "ke_mode", "ffn", "moe", "activation", "position", "rope_theta", "reversible", "mtp", "mtp_weight", "attn_impl", "ce_impl", "norm_eps", "rotary_fraction"], "lead model")
+    _unknown(src, ["vocab_size", "block_size", "n_layer", "n_head", "n_kv_head", "n_embd", "mlp_ratio", "embedding", "ke_max_pos", "ke_mode", "ffn", "moe", "activation", "position", "rope_theta", "reversible", "mtp", "mtp_weight", "attn_impl", "ce_impl", "norm_eps", "rotary_fraction", "attn_pattern", "attn_window", "attn_sink", "attn_gate", "attn_gate_input", "attn_gate_bias", "attn_gate_init"], "lead model")
     _unknown(src["moe"], ["num_experts", "num_shared", "top_k", "ffn_hidden", "bias", "dispatch", "bias_gamma"], "lead model.moe")
     _unknown(declared["optim"], ["name", "lr", "weight_decay", "muon_lr", "schedule", "warmup_steps", "betas", "eps"], "lead optim")
     _unknown(declared["run"], ["seed", "batch_size", "grad_clip", "dtype", "compile", "steps", "max_time_min"], "lead run")
@@ -112,7 +112,7 @@ def load_runtime(arm_path, runtime_path=None):
         if key not in src:
             raise ValueError("Missing explicit lead dimension: model." + key)
         model[key] = src[key]
-    for key in ["activation", "position", "rope_theta", "reversible", "mtp", "mtp_weight", "attn_impl", "ce_impl", "norm_eps", "rotary_fraction"]:
+    for key in ["activation", "position", "rope_theta", "reversible", "mtp", "mtp_weight", "attn_impl", "ce_impl", "norm_eps", "rotary_fraction", "attn_pattern", "attn_window", "attn_sink", "attn_gate", "attn_gate_input", "attn_gate_bias", "attn_gate_init"]:
         if key in src:
             model[key] = src[key].lower() if key in ["activation", "position"] and isinstance(src[key], str) else src[key]
     model["moe"] = merge(model["moe"], src["moe"])
@@ -168,7 +168,24 @@ def validate(c):
     if m.get("activation")!="swiglu" or m.get("position")!="rope":errors.append("Week2 requires SwiGLU/RoPE")
     if not number(m.get("rope_theta")) or m["rope_theta"]<=0:errors.append("Explicit positive RoPE theta required")
     if not number(m.get("norm_eps")) or not 0<m["norm_eps"]<1:errors.append("Explicit norm epsilon required")
-    if m.get("rotary_fraction")!=1.0:errors.append("Partial rotary not implemented")
+    fraction=m.get("rotary_fraction",1.0)
+    if not number(fraction) or fraction not in (0.5,1.0):errors.append("rotary_fraction must be 0.5 or 1.0")
+    elif 2*math.floor(fraction*(m["n_embd"]//m["n_head"])/2)<2:errors.append("Rotary dimension must be at least 2")
+    pattern=m.get("attn_pattern",["G"]*m["n_layer"])
+    pattern_ok=isinstance(pattern,list) and len(pattern)==m["n_layer"] and all(x in ("G","L") for x in pattern)
+    if not pattern_ok:errors.append("attn_pattern must have one G/L entry per layer")
+    local=pattern_ok and "L" in pattern
+    window=m.get("attn_window")
+    if local and (not positive(window) or window>m["block_size"]):errors.append("Local attention needs attn_window in [1, block_size]")
+    if not local and window is not None:errors.append("attn_window set without local layers")
+    for key in ["attn_sink","attn_gate"]:
+        if type(m.get(key,False)) is not bool:errors.append(key+" must be boolean")
+    if m.get("attn_sink",False) and not local:errors.append("attn_sink requires local layers")
+    if m.get("attn_gate",False):
+        if m.get("attn_gate_input") not in ("normalized","residual"):errors.append("Explicit attn_gate_input required: normalized/residual")
+        if type(m.get("attn_gate_bias")) is not bool:errors.append("Explicit boolean attn_gate_bias required")
+        if m.get("attn_gate_init") not in ("zero","linear_default"):errors.append("Explicit attn_gate_init required: zero/linear_default")
+    elif any(m.get(k) is not None for k in ["attn_gate_input","attn_gate_bias","attn_gate_init"]):errors.append("Gate choices set while attn_gate is disabled")
     if m.get("reversible") is not False:errors.append("Reversibility unresolved or unsupported; must be explicit false")
     if type(m.get("mtp")) is not bool:errors.append("MTP must be explicitly true/false")
     if m.get("mtp") is True and (not number(m.get("mtp_weight")) or m["mtp_weight"]<0):errors.append("Explicit finite nonnegative MTP weight required")
@@ -177,7 +194,9 @@ def validate(c):
     if "head_mode" in m or "tie_embeddings" in m:errors.append("Output head is fixed dense untied; head switches are removed")
     if m.get("embedding")!="ke1":errors.append("Only arm embedding ke1 is implemented with G4 raw-code projection")
     if r["batch_size"]%r["micro_batch_size"]:errors.append("Batch not divisible by microbatch")
-    if o.get("name")!="adamw":errors.append("Muon backend is an EXP-2 integration dependency, never replaced silently")
+    if o.get("name") not in ["adamw","muon"]:errors.append("Only AdamW and Muon are implemented; never replaced silently")
+    if o.get("name")=="muon" and (not number(o.get("muon_lr")) or o["muon_lr"]<=0):errors.append("Explicit finite positive Muon LR (muon_lr) required")
+    if o.get("name")=="adamw" and o.get("muon_lr") is not None:errors.append("muon_lr set on an AdamW arm would be ignored")
     if o.get("schedule")!="constant":errors.append("Only lead's constant schedule supported")
     if not number(o.get("lr")) or o["lr"]<=0:errors.append("Explicit finite positive arm LR required")
     betas=o.get("betas")

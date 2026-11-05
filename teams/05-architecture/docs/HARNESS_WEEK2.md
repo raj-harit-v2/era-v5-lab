@@ -6,9 +6,9 @@ Input: arm setting `embedding: ke1`, implemented by the native G4 raw-byte-code 
 
 Output: dense untied `nn.Linear(d_model, vocab_size, bias=False)` only, per TSAI's 1 Nov decision. No KE-tied output code, output-head switch or EXP-5 remains. Input projection and output parameters are independent.
 
-`embedding`, `attn_impl`, `mtp`, `reversible`, `ce_impl` and `moe.dispatch` must come explicitly from the arm chain. The native harness does not load mutable G6 defaults. Unknown/unsupported settings fail. Muon and alternate attention are pending owner integration; no DDP/EP implementation is claimed.
+`embedding`, `attn_impl`, `mtp`, `reversible`, `ce_impl` and `moe.dispatch` must come explicitly from the arm chain. The native harness does not load mutable G6 defaults. Unknown/unsupported settings fail. Muon is `optim.name: muon` (`harness/week2/optim.py`, Team 6's plain Muon): `muon_lr` for the 2D block matrices (attention, router, experts), `optim.lr` through AdamW for the embedding projection, output head and norm gains; the manifest records the split. Alternate attention is pending owner integration; no DDP/EP implementation is claimed.
 
-RoPE theta, expert bias and normalization are pending. Router bias_gamma 0 and rotary_fraction 1 are implementation limits, not selected experiment values. Smoke choices must not be copied into approved arms. Production runs require an agreement reference, scoring agreement and holdout provenance. G8 writer is optional follow-up integration, not a Monday submission blocker.
+PR #253 supplies test values: RoPE theta 10000, norm epsilon 1e-5, expert bias false and inactive MTP weight 0. These are test settings, not config-v1 decisions. Router bias_gamma 0 and rotary_fraction 1 are implementation limits, not selected experiment values. Smoke choices must not be copied into approved arms. Production runs require an agreement reference, scoring agreement and holdout provenance. G8 writer is optional follow-up integration, not a Monday submission blocker.
 
 ## Run from repository root
 
@@ -17,9 +17,13 @@ Requires the #188 arm pins (explicit eager attention and MTP off). Exact top-lev
 ```bash
 python -m pytest teams/05-architecture/tests/test_week2_*.py -q
 python -m unittest discover -s teams/05-architecture/tests -p 'test_week2*.py' -v
-python teams/05-architecture/harness/check_week2.py teams/05-architecture/configs/arms/exp1/lr_1e-3.yaml --resolution teams/05-architecture/configs/small/smoke_resolution.yaml --tokenizer /path/tokenizer_v0.json --byte-table /path/raw_table.npz
+python teams/05-architecture/harness/check_week2.py teams/05-architecture/configs/arms/exp1/lr_1e-3.yaml --tokenizer /path/tokenizer_v0.json --byte-table /path/raw_table.npz
 python teams/05-architecture/harness/train_week2.py --config teams/05-architecture/configs/arms/exp1/lr_1e-3.yaml --tokenizer /path/tokenizer_v0.json --byte-table /path/raw_table.npz --train-data /path/train.jsonl --heldout-data /path/heldout.jsonl --device cpu --seed 1234 --smoke --smoke-steps 2 --smoke-seq-len 8 --smoke-batch-size 1 --out /path/fresh-output
 ```
+
+Default `--smoke` keeps the current arm/runtime model settings, including #253's norm epsilon 1e-5. It no longer automatically loads `configs/small/smoke_resolution.yaml`. That file remains an explicitly selectable development fixture (norm epsilon 1e-6), not approved experiment settings. An explicit `--resolution` still goes through the same allowlist and arm-choice conflict checks.
+
+Smoke mode still applies its requested step/shape/CPU-precision reductions and always labels outputs as smoke, ineligible for quality comparison. It does not grant approval or change `approval.status` / `evaluation.approved`. Non-smoke runs still require an explicit resolution and all existing approval/data/device checks.
 
 On Windows use explicit test filenames or unittest discovery if the shell does not expand wildcards. Data is materialized in RAM: start with bounded text slices.
 

@@ -4,7 +4,7 @@ Licence and item count for each benchmark in the V5 evaluation suite.
 Priority order: Coding & Agentic → Indic → everything else.
 
 Status: ✅ checked against an official source · ⚠️ to be rechecked or licence unclear · ❓ information still to collect.
-Use: **Evaluation** = cleared for evaluation · **Internal only** = run internally; never publish its items and never copy its items into this repo · **Decontamination only** = fingerprinted so training data can be checked against it; not evaluated · **Not available** = cannot be run (private).
+Use: **Evaluation** = cleared for evaluation · **Internal only** = run internally; never publish its items and never copy its items into this repo · **Decontamination only** = fingerprinted so training data can be checked against it; not evaluated · **Not available** = cannot be run (private) · **Harness check** = run on public models only, to check the harness or a quantization against published scores; not a score for our model.
 
 ## 1. Coding & Agentic
 
@@ -79,6 +79,21 @@ Approved by the lead: RULER, HELMET, LongBench v2 and ONERULER. ONERULER is kept
 | LongBench v2 | `zai-org/LongBench-v2` | 503 | Apache-2.0 (dataset card); code MIT | ✅ | Evaluation |
 | ONERULER | `mungg/OneRuler` | 7 tasks × 26 languages (kept for Indic coverage: hi, ta) | MIT | ✅ | Evaluation |
 
+## 6. Harness checks
+
+Benchmarks the harness runs on public models (`results/compare_v0.md`, `results/compare_v0_code_indic.md`, eval-mini).
+
+| Benchmark | Source | Items | Licence | Status | Use |
+|---|---|---|---|---|---|
+| ARC (Challenge, Easy) | `allenai/ai2_arc` | 1,172 + 2,376 (test) | CC-BY-SA-4.0 | ✅ | Harness check |
+| HellaSwag | `Rowan/hellaswag` | 10,042 (validation) | Dataset card states none; GitHub blocks the source repo `rowanz/hellaswag` (wikiHow DMCA notice, 14 Sep 2026) | ⚠️ | Internal only |
+| TruthfulQA (mc2) | `truthfulqa/truthful_qa` | 817 (validation, multiple_choice) | Apache-2.0 | ✅ | Harness check |
+| MMLU-Pro | `TIGER-Lab/MMLU-Pro` | 12,032 (test) | MIT | ✅ | Harness check |
+| BBH (Open LLM Leaderboard subset) | `SaylorTwift/bbh` | 5,761 (test, 24 tasks) | MIT (source repo `suzgunmirac/BIG-Bench-Hard`; dataset card states none) | ✅ | Harness check |
+| HumanEval / HumanEval+ | `openai/openai_humaneval`; EvalPlus 0.3.1 | 164 | HumanEval MIT; EvalPlus Apache-2.0 | ✅ | Harness check |
+| MBPP / MBPP+ | `google-research-datasets/mbpp`; EvalPlus 0.3.1 | 378 (MBPP+ set) | MBPP CC-BY-4.0; EvalPlus Apache-2.0 | ✅ | Harness check |
+| Belebele (hi, te, ta) | `facebook/belebele` | 900 per language (test) | CC-BY-SA-4.0 | ✅ | Harness check |
+
 ## Decisions (lead, 25 Oct 2026)
 
 1. **Long context:** use RULER, HELMET, LongBench v2 and ONERULER. Keep ONERULER for the Indic coverage.
@@ -88,10 +103,12 @@ Approved by the lead: RULER, HELMET, LongBench v2 and ONERULER. ONERULER is kept
 4. **Accepted licences for evaluation:** MIT, Apache-2.0, CC-BY-4.0, CC-BY-SA-4.0, CC-BY-NC-SA-4.0 and ODC-By-4.0.
 5. **GAIA** is internal only (its gated terms are not on the accepted list).
 6. **FLORES-200, IN22 and GSM8K** are decontamination only.
+7. **Harness checks** (lead, 31 Oct 2026): ARC, TruthfulQA, MMLU-Pro, BBH, HumanEval(+), MBPP(+) and Belebele check the harness and quantizations against published scores on public models. GSM8K stays decontamination only for our model's scores; eval-mini also uses it as a harness check.
+8. **HellaSwag** (lead, 31 Oct 2026): internal only. The dataset card states no licence, and GitHub blocks the source repo under a wikiHow DMCA notice (14 Sep 2026). Never copy its items into the repo.
 
 ## Verification
 
-Where and when each ✅ row was checked. Hugging Face revisions are the ones PR #31 builds its fingerprints from.
+Where and when each ✅ row was checked. Hugging Face revisions in sections 1–5 are the ones PR #31 builds its fingerprints from. Section 6 revisions are the ones current on 31 Oct 2026; the harness does not pin dataset revisions.
 
 | Benchmark | Checked at | Split | How | Date |
 |---|---|---|---|---|
@@ -119,3 +136,10 @@ Where and when each ✅ row was checked. Hugging Face revisions are the ones PR 
 | RULER | GitHub `NVIDIA/RULER` @ `c3f5e3b` | synthetic | 13 tasks in `scripts/synthetic.yaml`; LICENSE file | 27 Oct 2026 |
 | LongBench v2 | HF `zai-org/LongBench-v2` @ `2b48e49` | test | count: PR #31 build (503); licence: dataset card (apache-2.0) | 27 Oct 2026 |
 | ONERULER | GitHub `mungg/OneRuler` @ `a3fe6af` | synthetic | 26 language folders in the repo; 7 tasks from the ONERULER paper (arXiv 2503.01996); LICENSE file | 27 Oct 2026 |
+| ARC | HF `allenai/ai2_arc` @ `210d026` | test (ARC-Challenge, ARC-Easy) | count: HF split sizes; licence: dataset card | 31 Oct 2026 |
+| TruthfulQA (mc2) | HF `truthfulqa/truthful_qa` @ `741b827` | validation (multiple_choice) | count: HF split sizes; licence: dataset card | 31 Oct 2026 |
+| MMLU-Pro | HF `TIGER-Lab/MMLU-Pro` @ `b189ec7` | test | count: our full gate runs (12,032) and HF split sizes; licence: dataset card | 31 Oct 2026 |
+| BBH | HF `SaylorTwift/bbh` @ `b5306be`; licence: GitHub `suzgunmirac/BIG-Bench-Hard` @ `9ee07bd` | test, the 24 tasks of lm-eval `leaderboard_bbh` | count: HF split sizes of the 24 configs in lm-eval 0.4.13 `tasks/leaderboard/bbh_mc/`; licence: LICENSE file | 31 Oct 2026 |
+| HumanEval / HumanEval+ | HF `openai/openai_humaneval` @ `7dce605`; GitHub `evalplus/evalplus` (package 0.3.1) | all | count: our EvalPlus runs (164); licence: dataset card (MIT), EvalPlus LICENSE file (Apache-2.0) | 31 Oct 2026 |
+| MBPP / MBPP+ | HF `google-research-datasets/mbpp` @ `4bb6404`; GitHub `evalplus/evalplus` (package 0.3.1) | MBPP+ set | count: our EvalPlus runs (378); licence: dataset card (CC-BY-4.0), EvalPlus LICENSE file (Apache-2.0) | 31 Oct 2026 |
+| Belebele | HF `facebook/belebele` @ `7899cdf` | test (hin_Deva, tel_Telu, tam_Taml) | count: our eval-mini runs (900 each) and HF split sizes; licence: dataset card | 31 Oct 2026 |

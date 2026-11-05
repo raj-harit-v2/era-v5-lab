@@ -1,0 +1,13 @@
+# Attention arm from Revant PR274; TSAI accepted window+sink bundling and not-worse rules.
+# AdamW LR inherited as timing/provisional fallback until the common EXP-1 choice is pinned.
+inherit: t2.yaml
+intended:
+  arm: attn-4
+  official_step_time: false
+  comparison_final: false
+  acceptance_rule: winner
+model:
+  attn_gate: true
+  attn_gate_input: normalized # source: Revant attention-owner clarification
+  attn_gate_bias: false # source: Revant attention-owner clarification
+  attn_gate_init: linear_default # source: Revant; nn.Linear initialization, no extra init

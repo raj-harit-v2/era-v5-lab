@@ -4,9 +4,11 @@ A fingerprint set records the ID of its normalizer in MANIFEST.json. fpset.py re
 uses the same normalizer to check documents, so a set is always read the way it was built.
 
     g9-v1    fingerprints v1. Words, NFKC, lower().
-    spec-v1  fingerprints v2. The spec v1 normalize function of Team 1 (NORMALIZE_ID "g1-spec-v1"):
+    spec-v1  The spec v1 normalize function of Team 1 (NORMALIZE_ID "g1-spec-v1"):
              words, NFC, a short list of compatibility folds, casefold(). No NFKC, ZWJ and ZWNJ kept.
-             Training text goes through spec v1, so benchmark text must go through it too.
+    g9-v2    fingerprints v2. The spec-v1 words, then ZWJ (U+200D) and ZWNJ (U+200C) removed from
+             each word. Only the match key changes: the training text keeps ZWJ and ZWNJ. Benchmark
+             items often have them, web text almost never does, so a copy without them must still match.
 
 g1_spec_v1_normalize.py is a byte-for-byte copy of teams/01-data-a/spec_v1/tools/normalize.py from
 Team 1 (commit c7a3da375efdbecb14188465f4d830a8ff34bdc5, PR #194).
@@ -92,6 +94,20 @@ class Normalizer:
         return [w for w, _ in self.words_with_offsets(text)]
 
 
+JOINERS = ("‌", "‍")  # ZWNJ, ZWJ
+
+
+def _spec_v1_match_words(text):
+    """The spec-v1 words with ZWJ and ZWNJ removed. Offsets stay the spec-v1 offsets."""
+    out = []
+    for w, off in g1_spec_v1.words_with_offsets(text):
+        for j in JOINERS:
+            w = w.replace(j, "")
+        if w:
+            out.append((w, off))
+    return out
+
+
 NORMALIZERS = {
     "g9-v1": Normalizer(
         "g9-v1",
@@ -100,6 +116,11 @@ NORMALIZERS = {
         "spec-v1",
         f"spec v1 normalize of Team 1 ({g1_spec_v1.NORMALIZE_ID}): {g1_spec_v1.DESCRIPTION}",
         words=g1_spec_v1.words_with_offsets),
+    "g9-v2": Normalizer(
+        "g9-v2",
+        f"spec v1 normalize of Team 1 ({g1_spec_v1.NORMALIZE_ID}), then ZWJ and ZWNJ removed from each word "
+        "(match key only; the training text keeps them)",
+        words=_spec_v1_match_words),
 }
 
 # The Team 1 file that spec-v1 uses (see the top of this file).

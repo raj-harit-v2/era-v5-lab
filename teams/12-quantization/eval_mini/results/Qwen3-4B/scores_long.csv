@@ -1,0 +1,11 @@
+format,task,points,stderr,n,seconds
+Q4_K_M,arc_challenge,51.8,2.2,500,172.5
+Q4_K_M,hellaswag,56.5,2.5,400,204.0
+Q4_K_M,mmlu,71.4,1.8,570,189.2
+Q4_K_M,gsm8k,86.0,2.5,200,648.3
+Q4_K_M,truthfulqa_mc2,53.9,3.2,200,165.5
+bf16,arc_challenge,53.2,2.2,500,213.0
+bf16,hellaswag,58.0,2.5,400,212.2
+bf16,mmlu,73.9,1.7,570,211.1
+bf16,gsm8k,85.5,2.5,200,777.8
+bf16,truthfulqa_mc2,52.9,3.2,200,156.3

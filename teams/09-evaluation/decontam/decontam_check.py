@@ -4,6 +4,7 @@
     python decontam_check.py docs.jsonl --id-field id     # one JSON object per line
     python decontam_check.py a.txt b.txt                  # plain text files
     python decontam_check.py pack.parquet --benchmarks mmlu gsm8k
+    python decontam_check.py heldout_v1.jsonl --id-field id --exclude heldout_g5_v1   # a protected set itself
 
 A document is flagged when it shares at least --min-hits n-grams with one benchmark item.
 The script writes one JSON line per flagged document (use --all for every document)
@@ -48,6 +49,9 @@ def main():
     ap.add_argument("--tags", nargs="+", metavar="TAG",
                     help="check only benchmarks with one of these tags, for example code or indic. "
                          "Only the full set (no --benchmarks, no --tags) is the formal check.")
+    ap.add_argument("--exclude", nargs="+", metavar="ID",
+                    help="leave out these benchmarks. Only to check a protected set (for example the G5 held-out "
+                         "file, without heldout_g5_v1) against all the others.")
     ap.add_argument("--id-field", default="doc_id")
     ap.add_argument("--text-field", default="text")
     ap.add_argument("--min-hits", type=int, default=1, help="n-grams shared with one item to flag (default 1)")
@@ -55,8 +59,13 @@ def main():
     ap.add_argument("--all", action="store_true", help="write a line for every document, not only flagged ones")
     args = ap.parse_args()
 
-    fp = Fingerprints(args.fingerprints, args.benchmarks, tags=args.tags)
-    scope = "full set" if not (args.benchmarks or args.tags) else f"PARTIAL: {' '.join(fp.benchmarks)}"
+    fp = Fingerprints(args.fingerprints, args.benchmarks, tags=args.tags, exclude=args.exclude)
+    if args.benchmarks or args.tags:
+        scope = f"PARTIAL: {' '.join(fp.benchmarks)}"
+    elif args.exclude:
+        scope = f"full set except {' '.join(sorted(args.exclude))}"
+    else:
+        scope = "full set"
     print(f"fingerprints {fp.manifest['version']} set_sha256 {fp.set_sha256} ({scope})", file=sys.stderr)
     n_docs = n_flagged = 0
     per_bench = Counter()

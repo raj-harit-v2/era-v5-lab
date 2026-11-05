@@ -200,6 +200,36 @@ def test_spec_v1_keeps_zwj_and_zwnj():
     assert [spec.normalize(w) for w in ka_ssa] == [[w] for w in ka_ssa]
 
 
+# ---- g9-v2: the spec-v1 words without ZWJ and ZWNJ (fingerprints v2) ----
+
+def _no_joiners(pairs):
+    out = []
+    for w, off in pairs:
+        w = w.replace("\u200c", "").replace("\u200d", "")
+        if w:
+            out.append((w, off))
+    return out
+
+
+def test_g9_v2_is_spec_v1_words_without_joiners():
+    g9v2, spec = norms.get("g9-v2"), norms.get("spec-v1")
+    for t in SAMPLES:
+        assert g9v2.words_with_offsets(t) == _no_joiners(spec.words_with_offsets(t))
+
+
+def test_g9_v2_matches_a_copy_with_or_without_joiners():
+    g9v2 = norms.get("g9-v2")
+    ka_ssa = ["\u0915\u094d\u200d\u0937", "\u0915\u094d\u200c\u0937", "\u0915\u094d\u0937"]
+    assert len({tuple(g9v2.normalize(w)) for w in ka_ssa}) == 1
+    # A zero-width space where the item has a ZWNJ.
+    assert g9v2.normalize("\u09a8\u09cd\u200c\u09a4") == g9v2.normalize("\u09a8\u09cd\u200b\u09a4")
+
+
+def test_each_shipped_version_names_its_normalizer():
+    assert fpset.SET_NORMALIZE == {"v1": "g9-v1", "v2": "g9-v2"}
+    assert fpset.VERSION == "v2"
+
+
 def test_a_normalizer_takes_prepare_or_words_not_both():
     with pytest.raises(ValueError, match="not both"):
         norms.Normalizer("x", "x", prepare=str.lower, words=lambda t: [])
@@ -299,13 +329,32 @@ def test_shipped_registry_is_valid():
     assert {"mmlu", "gsm8k"} <= {k for k, b in reg.items() if b["status"] == "active"}
 
 
-def test_github_rows_are_valid_once_active():
-    # Terminal-Bench 2 and BFCL v3 stay "planned" until fingerprints v2 is built (see their 'reason').
+def test_github_rows_are_active_and_pinned():
+    # Terminal-Bench 2 and BFCL v3 are active from fingerprints v2.
     reg = registry.load()
     for bid in ("terminal_bench_2", "bfcl_v3"):
-        b = dict(reg[bid], status="active")
+        b = reg[bid]
+        assert b["status"] == "active" and "reason" not in b, bid
         assert registry.validate(bid, b) == [], bid
         assert all(f.get("url") and f.get("sha256") for f in b["files"]), bid
+
+
+def test_heldout_row_is_a_pinned_protected_set():
+    b = registry.load()["heldout_g5_v1"]
+    assert b["status"] == "active" and "protected" in b["tags"]
+    assert registry.validate("heldout_g5_v1", b) == []
+    assert b["files"][0]["sha256"] == "21c6e4b2df8dae9d69e254f4a00fc934d2a3c70f0675065a03724299d94312bb"
+
+
+def test_relative_local_path_is_from_the_repo_root():
+    f = {"path": "teams/05-architecture/heldout_v1/data/heldout_v1.jsonl"}
+    assert registry._fetch_local("x", {}, f, None) == registry.REPO_ROOT / f["path"]
+    assert (registry.REPO_ROOT / f["path"]).is_file()
+
+
+def test_missing_scoped_boilerplate_is_refused():
+    b = dict(registry.load()["heldout_g5_v1"], boilerplate=["scoped/nope.txt"])
+    assert any("boilerplate file not found" in p for p in registry.validate("heldout_g5_v1", b))
 
 
 def test_user_turns_filter():
@@ -409,6 +458,18 @@ def test_licence_boilerplate_is_not_written():
               "except in compliance with the License. You may obtain a copy of the License at")
     assert fpset.item_hashes([header], 13, boilerplate=None)
     assert not fpset.item_hashes([header + " package main"], 13, boilerplate=fpset.Boilerplate())
+
+
+def test_scoped_boilerplate_applies_only_to_its_benchmark(tmp_path):
+    (tmp_path / "scoped").mkdir()
+    passage = ("Thank you for using the timer this advanced tool can estimate your performance "
+               "and suggest more practice questions")
+    (tmp_path / "scoped" / "x.txt").write_text(passage, encoding="utf-8")
+    shared = fpset.Boilerplate(tmp_path)
+    scoped = fpset.Boilerplate(tmp_path, extra=["scoped/x.txt"])
+    assert shared.files == {} and list(scoped.files) == ["scoped/x.txt"]
+    assert fpset.item_hashes([passage], 13, boilerplate=shared)
+    assert not fpset.item_hashes([passage], 13, boilerplate=scoped)
 
 
 def test_mixed_text_is_split_into_prose_and_code():
@@ -530,6 +591,14 @@ def test_load_only_some_benchmarks(toy):
         Fingerprints(out, tags=["code"])
 
 
+def test_exclude_leaves_a_benchmark_out(toy):
+    out, _, _ = toy
+    with pytest.raises(ValueError, match="no benchmark is left"):
+        Fingerprints(out, exclude=["toy"])
+    with pytest.raises(ValueError, match="not in this set"):
+        Fingerprints(out, exclude=["nope"])
+
+
 # ---- the shipped fingerprint set ----
 
 shipped = pytest.mark.skipif(not (DEFAULT_SET / "MANIFEST.json").exists(), reason="no shipped set")
@@ -537,46 +606,69 @@ clean_pack = pytest.mark.skipif("ERA_CLEAN_DOCS" not in os.environ, reason="set 
 
 
 @module_fixture
-def v1():
+def shipped_set():
     return Fingerprints(DEFAULT_SET)  # also checks every sha256
 
 
 @shipped
-def test_shipped_set_matches_the_registry(v1):
+def test_shipped_set_matches_the_registry(shipped_set):
     active = {k for k, b in registry.load().items() if b["status"] == "active"}
-    assert set(v1.manifest["benchmarks"]) == active
-    assert v1.norm.id == "g9-v1"
-    assert set(v1.manifest["not_covered"]) == set(registry.load()) - active
-    assert v1.manifest["benchmarks"]["gsm8k"]["items"] == 1319
-    assert v1.manifest["benchmarks"]["mmlu"]["items"] == 14042
+    assert set(shipped_set.manifest["benchmarks"]) == active
+    assert shipped_set.manifest["version"] == fpset.VERSION
+    assert shipped_set.norm.id == fpset.SET_NORMALIZE[fpset.VERSION] == "g9-v2"
+    assert set(shipped_set.manifest["not_covered"]) == set(registry.load()) - active
+    items = {bid: b["items"] for bid, b in shipped_set.manifest["benchmarks"].items()}
+    assert items["gsm8k"] == 1319 and items["mmlu"] == 14042
+    assert items["terminal_bench_2"] == 89 and items["bfcl_v3"] == 4441
+    assert items["heldout_g5_v1"] == 1059
+
+
+HELDOUT = registry.REPO_ROOT / "teams/05-architecture/heldout_v1/data/heldout_v1.jsonl"
 
 
 @shipped
-def test_shipped_set_finds_a_real_gsm8k_leak(v1):
+def test_shipped_set_finds_every_heldout_document(shipped_set):
+    docs = [json.loads(line) for line in HELDOUT.read_text(encoding="utf-8").splitlines()]
+    for d in random.Random(0).sample(docs, 50):
+        flagged, hits = shipped_set.check(d["text"])
+        assert flagged and any(h["item"] == f"heldout_g5_v1:heldout:{d['id']}" for h in hits)
+
+
+@shipped
+def test_heldout_file_is_clean_against_the_benchmarks():
+    # The G5 re-check: the held-out set's own entry left out, or every document matches itself.
+    fp = Fingerprints(DEFAULT_SET, exclude=["heldout_g5_v1"])
+    docs = [json.loads(line) for line in HELDOUT.read_text(encoding="utf-8").splitlines()]
+    assert len(docs) == 1059
+    assert not any(fp.check(d["text"])[0] for d in docs)
+
+
+@shipped
+def test_shipped_set_finds_a_real_gsm8k_leak(shipped_set):
     # gsm8k test item 0, as it appears on many web pages.
     q = ("Janet’s ducks lay 16 eggs per day. She eats three for breakfast every morning and "
          "bakes muffins for her friends every day with four. She sells the remainder at the "
          "farmers' market daily for $2 per fresh duck egg. How much in dollars does she make "
          "every day at the farmers' market?")
-    flagged, hits = v1.check(random.choice(CLEAN) + "\n" + q)
+    flagged, hits = shipped_set.check(random.choice(CLEAN) + "\n" + q)
     assert flagged and hits[0]["item"] == "gsm8k:test:0"
 
 
 @shipped
-def test_shipped_set_false_hits_on_clean_text(v1):
-    assert not any(v1.check(t)[0] for t in CLEAN)
+def test_shipped_set_false_hits_on_clean_text(shipped_set):
+    assert not any(shipped_set.check(t)[0] for t in CLEAN)
 
 
 @shipped
-def test_shipped_set_finds_benchmark_canaries(v1):
-    assert {"gpqa_diamond", "hle"} <= set(v1.canaries.values()), "GPQA and HLE ship canary strings"
-    for c in v1.canaries:
-        assert v1.check("Some page.\n" + c + "\nMore text.")[0]
+def test_shipped_set_finds_benchmark_canaries(shipped_set):
+    assert {"gpqa_diamond", "hle"} <= set(shipped_set.canaries.values()), "GPQA and HLE ship canary strings"
+    for c in shipped_set.canaries:
+        assert shipped_set.check("Some page.\n" + c + "\nMore text.")[0]
 
 
 @clean_pack
 @shipped
-def test_false_hit_rate_on_clean_pack_is_at_most_1_percent(v1):
+def test_false_hit_rate_on_clean_pack_is_at_most_1_percent(shipped_set):
     import pyarrow.parquet as pq
     rows = pq.read_table(os.environ["ERA_CLEAN_DOCS"], columns=["doc_id", "text"]).to_pylist()
     if "ERA_CLEAN_LABELS" in os.environ:
@@ -584,5 +676,5 @@ def test_false_hit_rate_on_clean_pack_is_at_most_1_percent(v1):
             keep = {r["doc_id"] for r in csv.DictReader(f) if r["verdict"] == "clean"}
         rows = [r for r in rows if r["doc_id"] in keep]
     assert rows
-    flagged = sum(v1.check(r["text"])[0] for r in rows)
+    flagged = sum(shipped_set.check(r["text"])[0] for r in rows)
     assert flagged / len(rows) <= 0.01, f"{flagged} of {len(rows)} clean docs flagged"

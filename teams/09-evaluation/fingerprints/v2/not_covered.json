@@ -1,0 +1,46 @@
+{
+  "frontiermath": {
+    "status": "skip",
+    "reason": "The problems are private (Epoch AI). Only 12 are public. Use source = 'local' if TSAI gets them."
+  },
+  "tau2_bench": {
+    "status": "planned",
+    "reason": "Tasks are JSON files in a GitHub repo. Needs a reader for the task files."
+  },
+  "webarena": {
+    "status": "planned",
+    "reason": "Tasks are short intents in a GitHub repo. Needs a reader and a team decision if intents are worth it."
+  },
+  "workarena": {
+    "status": "planned",
+    "reason": "Tasks are generated in a ServiceNow environment. Decide if anything fixed can be fingerprinted."
+  },
+  "browsecomp": {
+    "status": "planned",
+    "reason": "The questions are encrypted in the source CSV. Needs a decrypt step before fingerprinting."
+  },
+  "osworld": {
+    "status": "planned",
+    "reason": "Tasks are JSON files in a GitHub repo. Needs a reader for the task files."
+  },
+  "aider_polyglot": {
+    "status": "planned",
+    "reason": "225 exercises in 6 languages, as folders in a GitHub repo. Needs a reader for the instructions and solutions."
+  },
+  "indicgenbench": {
+    "status": "planned",
+    "reason": "A GitHub repo, not on Hugging Face. Needs the URL of each data file. Flores-IN is FLORES in Indian languages, which flores200 covers."
+  },
+  "ruler": {
+    "status": "skip",
+    "reason": "Synthetic: examples are generated for each length at eval time. There is no fixed item to fingerprint."
+  },
+  "helmet": {
+    "status": "planned",
+    "reason": "21 source datasets with different fields, and some tasks are generated at eval time. Needs a reader for each dataset with fixed items. Not the long contexts."
+  },
+  "oneruler": {
+    "status": "skip",
+    "reason": "Synthetic, like RULER: random needles are put into public-domain books at eval time, so there is no fixed item. The fixed text is only two prompt templates in 26 languages, which give no answers. The books must not be fingerprinted: they are common web text (Ponniyin Selvan, Chandrakanta)."
+  }
+}

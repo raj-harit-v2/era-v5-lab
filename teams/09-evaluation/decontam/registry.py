@@ -17,6 +17,8 @@ import urllib.request
 from pathlib import Path
 
 REGISTRY = Path(__file__).resolve().parent / "benchmarks.toml"
+REPO_ROOT = Path(__file__).resolve().parents[3]  # a relative 'local' path is relative to the repo root
+BOILERPLATE_DIR = Path(__file__).resolve().parent / "boilerplate"  # same folder as fpset.BOILERPLATE_DIR
 STATUSES = ("active", "planned", "skip")
 
 # Text kinds. A code token is shorter than a prose word ("import numpy as np" is 4 tokens),
@@ -91,6 +93,9 @@ def validate(bid, b):
                     p.append(f"unknown filter '{name}'")
     if not isinstance(b.get("tags", []), list):
         p.append("'tags' must be a list")
+    for rel in b.get("boilerplate", []):
+        if not (BOILERPLATE_DIR / rel).is_file():
+            p.append(f"boilerplate file not found: {rel}")
     return p
 
 
@@ -141,8 +146,9 @@ def _fetch_url(bid, b, f, cache):
 
 
 def _fetch_local(bid, b, f, cache):
-    # For private sets (for example FrontierMath, if TSAI gets it) and for tests.
-    return Path(os.path.expanduser(f["path"]))
+    # For private sets (for example FrontierMath, if TSAI gets it), files in this repo and tests.
+    path = Path(os.path.expanduser(f["path"]))
+    return path if path.is_absolute() else REPO_ROOT / path
 
 
 SOURCES = {"hf": _fetch_hf, "url": _fetch_url, "local": _fetch_local}

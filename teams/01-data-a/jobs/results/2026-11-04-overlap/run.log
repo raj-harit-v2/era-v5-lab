@@ -1,0 +1,591 @@
+queued 2026-11-05T04:25:11Z
+start 2026-11-05T04:25:11Z
+commit 86ecdd4460a4137baf78597e83eb0f872642dc55
+86 cleaned parts found (input checksum verification deferred)
+train/cadj-commits/part-00000.parquet: 74753 documents (13s)
+train/cadj-notebooks/part-00000.parquet: 15563 documents (27s)
+train/cadj-stackexchange/part-00000.parquet: 41396 documents (44s)
+train/code-cpp/part-00000.parquet: 40418 documents (66s)
+train/code-cpp/part-00001.parquet: 14170 documents (73s)
+train/code-go/part-00000.parquet: 56702 documents (93s)
+train/code-go/part-00001.parquet: 20253 documents (101s)
+train/code-java/part-00000.parquet: 62443 documents (121s)
+train/code-java/part-00001.parquet: 22236 documents (128s)
+train/code-js-ts/part-00000.parquet: 85595 documents (150s)
+train/code-js-ts/part-00001.parquet: 30468 documents (158s)
+train/code-python/part-00000.parquet: 53419 documents (180s)
+train/code-python/part-00001.parquet: 19185 documents (188s)
+train/code-rust/part-00000.parquet: 43155 documents (212s)
+train/code-rust/part-00001.parquet: 15045 documents (221s)
+train/en-dclm/part-00000.parquet: 45369 documents (262s)
+train/en-dclm/part-00001.parquet: 14843 documents (275s)
+train/en-fineweb-edu/part-00000.parquet: 53598 documents (316s)
+train/en-fineweb-edu/part-00001.parquet: 17776 documents (330s)
+train/en-nemotroncc/part-00000.parquet: 66074 documents (369s)
+train/en-nemotroncc/part-00001.parquet: 22194 documents (382s)
+train/en-nemotroncc-synth/part-00000.parquet: 147598 documents (419s)
+train/en-nemotroncc-synth/part-00001.parquet: 49309 documents (431s)
+train/ind-bn-fw2/part-00000.parquet: 10645 documents (440s)
+train/ind-bn-sangraha-v/part-00000.parquet: 10113 documents (449s)
+train/ind-gu-fw2/part-00000.parquet: 22773 documents (459s)
+train/ind-hi-fw2/part-00000.parquet: 14125 documents (471s)
+train/ind-hi-hplt/part-00000.parquet: 8626 documents (483s)
+train/ind-hi-indiccorp/part-00000.parquet: 110757 documents (493s)
+train/ind-hi-sangraha-s/part-00000.parquet: 8280 documents (505s)
+train/ind-hi-sangraha-v/part-00000.parquet: 14709 documents (517s)
+train/ind-kn-fw2/part-00000.parquet: 7685 documents (523s)
+train/ind-kn-sangraha-s/part-00000.parquet: 5169 documents (529s)
+train/ind-kn-sangraha-v/part-00000.parquet: 8361 documents (535s)
+train/ind-ml-fw2/part-00000.parquet: 18976 documents (553s)
+train/ind-mr-fw2/part-00000.parquet: 11271 documents (558s)
+train/ind-mr-sangraha-v/part-00000.parquet: 12172 documents (563s)
+train/ind-or-fw2/part-00000.parquet: 33684 documents (581s)
+train/ind-sa-fw2/part-00000.parquet: 5667 documents (587s)
+train/ind-ta-fw2/part-00000.parquet: 6766 documents (593s)
+train/ind-ta-sangraha-s/part-00000.parquet: 4336 documents (599s)
+train/ind-ta-sangraha-v/part-00000.parquet: 6761 documents (604s)
+train/ind-te-fw2/part-00000.parquet: 4957 documents (606s)
+train/ind-te-sangraha-s/part-00000.parquet: 4424 documents (609s)
+train/ind-te-sangraha-v/part-00000.parquet: 8095 documents (611s)
+train/math-finemath/part-00000.parquet: 28522 documents (635s)
+train/math-megamath/part-00000.parquet: 17634 documents (657s)
+train/sci-finepdfs/part-00000.parquet: 6011 documents (684s)
+heldout/cadj-commits/part-00000.parquet: 826 documents (685s)
+heldout/cadj-notebooks/part-00000.parquet: 169 documents (685s)
+heldout/cadj-stackexchange/part-00000.parquet: 409 documents (685s)
+heldout/code-cpp/part-00000.parquet: 607 documents (685s)
+heldout/code-go/part-00000.parquet: 810 documents (686s)
+heldout/code-java/part-00000.parquet: 839 documents (686s)
+heldout/code-js-ts/part-00000.parquet: 1145 documents (686s)
+heldout/code-python/part-00000.parquet: 701 documents (687s)
+heldout/code-rust/part-00000.parquet: 595 documents (687s)
+heldout/en-dclm/part-00000.parquet: 590 documents (688s)
+heldout/en-fineweb-edu/part-00000.parquet: 726 documents (688s)
+heldout/en-nemotroncc/part-00000.parquet: 915 documents (689s)
+heldout/en-nemotroncc-synth/part-00000.parquet: 1970 documents (689s)
+heldout/ind-bn-fw2/part-00000.parquet: 105 documents (689s)
+heldout/ind-bn-sangraha-v/part-00000.parquet: 100 documents (689s)
+heldout/ind-gu-fw2/part-00000.parquet: 238 documents (689s)
+heldout/ind-hi-fw2/part-00000.parquet: 132 documents (690s)
+heldout/ind-hi-hplt/part-00000.parquet: 93 documents (690s)
+heldout/ind-hi-indiccorp/part-00000.parquet: 1094 documents (690s)
+heldout/ind-hi-sangraha-s/part-00000.parquet: 88 documents (690s)
+heldout/ind-hi-sangraha-v/part-00000.parquet: 122 documents (690s)
+heldout/ind-kn-fw2/part-00000.parquet: 79 documents (690s)
+heldout/ind-kn-sangraha-s/part-00000.parquet: 53 documents (690s)
+heldout/ind-kn-sangraha-v/part-00000.parquet: 87 documents (690s)
+heldout/ind-ml-fw2/part-00000.parquet: 185 documents (690s)
+heldout/ind-mr-fw2/part-00000.parquet: 94 documents (690s)
+heldout/ind-mr-sangraha-v/part-00000.parquet: 127 documents (690s)
+heldout/ind-or-fw2/part-00000.parquet: 328 documents (691s)
+heldout/ind-sa-fw2/part-00000.parquet: 54 documents (691s)
+heldout/ind-ta-fw2/part-00000.parquet: 58 documents (691s)
+heldout/ind-ta-sangraha-s/part-00000.parquet: 36 documents (691s)
+heldout/ind-ta-sangraha-v/part-00000.parquet: 65 documents (691s)
+heldout/ind-te-fw2/part-00000.parquet: 52 documents (691s)
+heldout/ind-te-sangraha-s/part-00000.parquet: 44 documents (691s)
+heldout/ind-te-sangraha-v/part-00000.parquet: 79 documents (691s)
+heldout/math-finemath/part-00000.parquet: 308 documents (691s)
+heldout/math-megamath/part-00000.parquet: 169 documents (691s)
+heldout/sci-finepdfs/part-00000.parquet: 63 documents (691s)
+1416236 documents, 524579102 distinct shingles, 13689095 of them in 2+ documents; about 15,014,676,570 intersection steps
+  rows 256/1416236: 0s, about 429s left
+  rows 13056/1416236: 5s, about 485s left
+  rows 25856/1416236: 8s, about 451s left
+  rows 38656/1416236: 12s, about 430s left
+  rows 51456/1416236: 16s, about 414s left
+  rows 64256/1416236: 19s, about 399s left
+  rows 77056/1416236: 23s, about 402s left
+  rows 89856/1416236: 31s, about 461s left
+  rows 102656/1416236: 32s, about 415s left
+  rows 115456/1416236: 33s, about 375s left
+  rows 128256/1416236: 34s, about 343s left
+  rows 141056/1416236: 36s, about 327s left
+  rows 153856/1416236: 39s, about 317s left
+  rows 166656/1416236: 41s, about 306s left
+  rows 179456/1416236: 43s, about 296s left
+  rows 192256/1416236: 47s, about 300s left
+  rows 205056/1416236: 53s, about 313s left
+  rows 217856/1416236: 58s, about 322s left
+  rows 230656/1416236: 64s, about 327s left
+  rows 243456/1416236: 68s, about 327s left
+  rows 256256/1416236: 72s, about 326s left
+  rows 269056/1416236: 75s, about 320s left
+  rows 281856/1416236: 77s, about 309s left
+  rows 294656/1416236: 79s, about 300s left
+  rows 307456/1416236: 80s, about 290s left
+  rows 320256/1416236: 82s, about 281s left
+  rows 333056/1416236: 84s, about 272s left
+  rows 345856/1416236: 85s, about 263s left
+  rows 358656/1416236: 86s, about 254s left
+  rows 371456/1416236: 87s, about 244s left
+  rows 384256/1416236: 88s, about 235s left
+  rows 397056/1416236: 88s, about 227s left
+  rows 409856/1416236: 89s, about 219s left
+  rows 422656/1416236: 90s, about 211s left
+  rows 435456/1416236: 90s, about 204s left
+  rows 448256/1416236: 91s, about 197s left
+  rows 461056/1416236: 92s, about 190s left
+  rows 473856/1416236: 93s, about 185s left
+  rows 486656/1416236: 95s, about 181s left
+  rows 499456/1416236: 96s, about 177s left
+  rows 512256/1416236: 98s, about 173s left
+  rows 525056/1416236: 99s, about 169s left
+  rows 537856/1416236: 101s, about 165s left
+  rows 550656/1416236: 102s, about 160s left
+  rows 563456/1416236: 103s, about 156s left
+  rows 576256/1416236: 104s, about 152s left
+  rows 589056/1416236: 105s, about 147s left
+  rows 601856/1416236: 106s, about 143s left
+  rows 614656/1416236: 106s, about 139s left
+  rows 627456/1416236: 107s, about 135s left
+  rows 640256/1416236: 108s, about 131s left
+  rows 653056/1416236: 109s, about 127s left
+  rows 665856/1416236: 109s, about 123s left
+  rows 678656/1416236: 110s, about 120s left
+  rows 691456/1416236: 111s, about 116s left
+  rows 704256/1416236: 111s, about 113s left
+  rows 717056/1416236: 112s, about 109s left
+  rows 729856/1416236: 113s, about 106s left
+  rows 742656/1416236: 113s, about 103s left
+  rows 755456/1416236: 114s, about 99s left
+  rows 768256/1416236: 114s, about 96s left
+  rows 781056/1416236: 115s, about 93s left
+  rows 793856/1416236: 115s, about 90s left
+  rows 806656/1416236: 115s, about 87s left
+  rows 819456/1416236: 116s, about 84s left
+  rows 832256/1416236: 116s, about 81s left
+  rows 845056/1416236: 116s, about 79s left
+  rows 857856/1416236: 116s, about 76s left
+  rows 870656/1416236: 117s, about 73s left
+  rows 883456/1416236: 117s, about 70s left
+  rows 896256/1416236: 117s, about 68s left
+  rows 909056/1416236: 117s, about 65s left
+  rows 921856/1416236: 117s, about 63s left
+  rows 934656/1416236: 117s, about 60s left
+  rows 947456/1416236: 117s, about 58s left
+  rows 960256/1416236: 118s, about 56s left
+  rows 973056/1416236: 118s, about 54s left
+  rows 985856/1416236: 118s, about 52s left
+  rows 998656/1416236: 118s, about 49s left
+  rows 1011456/1416236: 118s, about 47s left
+  rows 1024256/1416236: 118s, about 45s left
+  rows 1037056/1416236: 118s, about 43s left
+  rows 1049856/1416236: 118s, about 41s left
+  rows 1062656/1416236: 118s, about 39s left
+  rows 1075456/1416236: 119s, about 38s left
+  rows 1088256/1416236: 119s, about 36s left
+  rows 1101056/1416236: 119s, about 34s left
+  rows 1113856/1416236: 119s, about 32s left
+  rows 1126656/1416236: 119s, about 31s left
+  rows 1139456/1416236: 119s, about 29s left
+  rows 1152256/1416236: 119s, about 27s left
+  rows 1165056/1416236: 119s, about 26s left
+  rows 1177856/1416236: 119s, about 24s left
+  rows 1190656/1416236: 119s, about 23s left
+  rows 1203456/1416236: 119s, about 21s left
+  rows 1216256/1416236: 119s, about 20s left
+  rows 1229056/1416236: 119s, about 18s left
+  rows 1241856/1416236: 119s, about 17s left
+  rows 1254656/1416236: 119s, about 15s left
+  rows 1267456/1416236: 119s, about 14s left
+  rows 1280256/1416236: 120s, about 13s left
+  rows 1293056/1416236: 120s, about 11s left
+  rows 1305856/1416236: 120s, about 10s left
+  rows 1318656/1416236: 120s, about 9s left
+  rows 1331456/1416236: 120s, about 8s left
+  rows 1344256/1416236: 120s, about 6s left
+  rows 1357056/1416236: 120s, about 5s left
+  rows 1369856/1416236: 121s, about 4s left
+  rows 1382656/1416236: 122s, about 3s left
+  rows 1395456/1416236: 123s, about 2s left
+  rows 1408256/1416236: 124s, about 1s left
+  rows 1416236/1416236: 124s, about 0s left
+Applying H1/H2 rules; scoring code token pairs independently of raw word scores
+{
+  "status": "complete",
+  "normalize_id": "g1-spec-v1",
+  "key": "h1_key of h1_sha256.py: normalize.match_key, then NFKC, casefold, whitespace runs to one space",
+  "shingles": "word 5-grams of the key as 8-byte BLAKE2b digests; a key under 5 words is one shingle",
+  "documents": {
+    "cadj-commits": {
+      "train": 74753,
+      "heldout": 826,
+      "all": 75579
+    },
+    "cadj-notebooks": {
+      "train": 15563,
+      "heldout": 169,
+      "all": 15732
+    },
+    "cadj-stackexchange": {
+      "train": 41396,
+      "heldout": 409,
+      "all": 41805
+    },
+    "code-cpp": {
+      "train": 54588,
+      "heldout": 607,
+      "all": 55195
+    },
+    "code-go": {
+      "train": 76955,
+      "heldout": 810,
+      "all": 77765
+    },
+    "code-java": {
+      "train": 84679,
+      "heldout": 839,
+      "all": 85518
+    },
+    "code-js-ts": {
+      "train": 116063,
+      "heldout": 1145,
+      "all": 117208
+    },
+    "code-python": {
+      "train": 72604,
+      "heldout": 701,
+      "all": 73305
+    },
+    "code-rust": {
+      "train": 58200,
+      "heldout": 595,
+      "all": 58795
+    },
+    "en-dclm": {
+      "train": 60212,
+      "heldout": 590,
+      "all": 60802
+    },
+    "en-fineweb-edu": {
+      "train": 71374,
+      "heldout": 726,
+      "all": 72100
+    },
+    "en-nemotroncc": {
+      "train": 88268,
+      "heldout": 915,
+      "all": 89183
+    },
+    "en-nemotroncc-synth": {
+      "train": 196907,
+      "heldout": 1970,
+      "all": 198877
+    },
+    "ind-bn-fw2": {
+      "train": 10645,
+      "heldout": 105,
+      "all": 10750
+    },
+    "ind-bn-sangraha-v": {
+      "train": 10113,
+      "heldout": 100,
+      "all": 10213
+    },
+    "ind-gu-fw2": {
+      "train": 22773,
+      "heldout": 238,
+      "all": 23011
+    },
+    "ind-hi-fw2": {
+      "train": 14125,
+      "heldout": 132,
+      "all": 14257
+    },
+    "ind-hi-hplt": {
+      "train": 8626,
+      "heldout": 93,
+      "all": 8719
+    },
+    "ind-hi-indiccorp": {
+      "train": 110757,
+      "heldout": 1094,
+      "all": 111851
+    },
+    "ind-hi-sangraha-s": {
+      "train": 8280,
+      "heldout": 88,
+      "all": 8368
+    },
+    "ind-hi-sangraha-v": {
+      "train": 14709,
+      "heldout": 122,
+      "all": 14831
+    },
+    "ind-kn-fw2": {
+      "train": 7685,
+      "heldout": 79,
+      "all": 7764
+    },
+    "ind-kn-sangraha-s": {
+      "train": 5169,
+      "heldout": 53,
+      "all": 5222
+    },
+    "ind-kn-sangraha-v": {
+      "train": 8361,
+      "heldout": 87,
+      "all": 8448
+    },
+    "ind-ml-fw2": {
+      "train": 18976,
+      "heldout": 185,
+      "all": 19161
+    },
+    "ind-mr-fw2": {
+      "train": 11271,
+      "heldout": 94,
+      "all": 11365
+    },
+    "ind-mr-sangraha-v": {
+      "train": 12172,
+      "heldout": 127,
+      "all": 12299
+    },
+    "ind-or-fw2": {
+      "train": 33684,
+      "heldout": 328,
+      "all": 34012
+    },
+    "ind-sa-fw2": {
+      "train": 5667,
+      "heldout": 54,
+      "all": 5721
+    },
+    "ind-ta-fw2": {
+      "train": 6766,
+      "heldout": 58,
+      "all": 6824
+    },
+    "ind-ta-sangraha-s": {
+      "train": 4336,
+      "heldout": 36,
+      "all": 4372
+    },
+    "ind-ta-sangraha-v": {
+      "train": 6761,
+      "heldout": 65,
+      "all": 6826
+    },
+    "ind-te-fw2": {
+      "train": 4957,
+      "heldout": 52,
+      "all": 5009
+    },
+    "ind-te-sangraha-s": {
+      "train": 4424,
+      "heldout": 44,
+      "all": 4468
+    },
+    "ind-te-sangraha-v": {
+      "train": 8095,
+      "heldout": 79,
+      "all": 8174
+    },
+    "math-finemath": {
+      "train": 28522,
+      "heldout": 308,
+      "all": 28830
+    },
+    "math-megamath": {
+      "train": 17634,
+      "heldout": 169,
+      "all": 17803
+    },
+    "sci-finepdfs": {
+      "train": 6011,
+      "heldout": 63,
+      "all": 6074
+    }
+  },
+  "documents_all": 1416236,
+  "ids_used_by_2_or_more_documents": 0,
+  "h1_exact_groups": 71,
+  "documents_in_h1_exact_groups": 150,
+  "empty_documents": 7,
+  "distinct_shingles": 524579102,
+  "shingles_in_2_or_more_documents": 13689095,
+  "pairs_compared": 1002861495730,
+  "pairs_sharing_a_shingle": 2347235732,
+  "pairs_at_or_above": {
+    "0.70": 4620,
+    "0.75": 3396,
+    "0.80": 2407,
+    "0.85": 1576,
+    "0.90": 860,
+    "0.95": 314
+  },
+  "pairs_stored": 32738,
+  "qualifying_pairs_by_rule": {
+    "H1": 98,
+    "H2": 2613
+  },
+  "matrix_definition": "distinct documents in row source with another qualifying H1/H2 match in column source / row source documents",
+  "duplicate_rules": {
+    "prose": "word Jaccard >= 0.80; both >= 50 words",
+    "math": "word Jaccard >= 0.90; identical signed number multisets",
+    "code": "token Jaccard >= 0.85; both >= 20 nonblank lines after comment removal",
+    "mixed_domains": "both domains' rules must pass on both documents",
+    "h1": "same H1 SHA256; bypasses H2 guards",
+    "translations": "not detected"
+  },
+  "pack_domains": {
+    "cadj-commits": "prose",
+    "cadj-notebooks": "prose",
+    "cadj-stackexchange": "prose",
+    "code-cpp": "code",
+    "code-go": "code",
+    "code-java": "code",
+    "code-js-ts": "code",
+    "code-python": "code",
+    "code-rust": "code",
+    "en-dclm": "prose",
+    "en-fineweb-edu": "prose",
+    "en-nemotroncc": "prose",
+    "en-nemotroncc-synth": "prose",
+    "ind-bn-fw2": "prose",
+    "ind-bn-sangraha-v": "prose",
+    "ind-gu-fw2": "prose",
+    "ind-hi-fw2": "prose",
+    "ind-hi-hplt": "prose",
+    "ind-hi-indiccorp": "prose",
+    "ind-hi-sangraha-s": "prose",
+    "ind-hi-sangraha-v": "prose",
+    "ind-kn-fw2": "prose",
+    "ind-kn-sangraha-s": "prose",
+    "ind-kn-sangraha-v": "prose",
+    "ind-ml-fw2": "prose",
+    "ind-mr-fw2": "prose",
+    "ind-mr-sangraha-v": "prose",
+    "ind-or-fw2": "prose",
+    "ind-sa-fw2": "prose",
+    "ind-ta-fw2": "prose",
+    "ind-ta-sangraha-s": "prose",
+    "ind-ta-sangraha-v": "prose",
+    "ind-te-fw2": "prose",
+    "ind-te-sangraha-s": "prose",
+    "ind-te-sangraha-v": "prose",
+    "math-finemath": "math",
+    "math-megamath": "math",
+    "sci-finepdfs": "prose"
+  },
+  "wall_seconds": 3350.0,
+  "peak_rss_mb": 9835.6,
+  "versions": {
+    "python": "3.12.16",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "pyarrow": "26.0.1",
+    "pygments": "2.21.0",
+  },
+  "output_mb": 44.0
+}
+
+Pairs at Jaccard 0.80 and above:
+  cadj-commits x cadj-commits                   1094
+  cadj-commits x code-cpp                       3
+  cadj-commits x code-go                        3
+  cadj-commits x code-java                      3
+  cadj-commits x code-js-ts                     3
+  cadj-commits x code-python                    6
+  cadj-commits x code-rust                      6
+  cadj-notebooks x cadj-notebooks               15
+  cadj-stackexchange x cadj-stackexchange       208
+  code-cpp x code-cpp                           6
+  code-cpp x code-java                          4
+  code-cpp x code-js-ts                         2
+  code-go x code-go                             8
+  code-java x code-java                         8
+  code-java x code-js-ts                        8
+  code-js-ts x code-js-ts                       1
+  code-python x code-python                     1
+  code-rust x code-rust                         3
+  en-dclm x en-dclm                             14
+  en-dclm x en-fineweb-edu                      4
+  en-dclm x en-nemotroncc                       1
+  en-fineweb-edu x en-fineweb-edu               7
+  en-fineweb-edu x en-nemotroncc                5
+  en-fineweb-edu x en-nemotroncc-synth          1
+  en-fineweb-edu x math-finemath                1
+  en-fineweb-edu x math-megamath                1
+  en-nemotroncc x en-nemotroncc                 23
+  en-nemotroncc-synth x en-nemotroncc-synth     1
+  ind-bn-fw2 x ind-bn-sangraha-v                1
+  ind-hi-fw2 x ind-hi-sangraha-v                1
+  ind-hi-indiccorp x ind-hi-indiccorp           29
+  ind-hi-indiccorp x ind-hi-sangraha-v          1
+  ind-hi-sangraha-s x ind-hi-sangraha-s         545
+  ind-hi-sangraha-v x ind-hi-sangraha-v         134
+  ind-kn-fw2 x ind-kn-sangraha-v                3
+  ind-kn-sangraha-s x ind-kn-sangraha-s         20
+  ind-mr-fw2 x ind-mr-sangraha-v                5
+  ind-sa-fw2 x ind-sa-fw2                       13
+  ind-ta-fw2 x ind-ta-sangraha-v                1
+  ind-ta-sangraha-s x ind-ta-sangraha-s         55
+  ind-te-fw2 x ind-te-sangraha-v                2
+  ind-te-sangraha-s x ind-te-sangraha-s         32
+  math-finemath x math-finemath                 18
+  math-finemath x math-megamath                 7
+  math-megamath x math-megamath                 100
+
+Pairs at Jaccard 1.00 and above:
+  cadj-commits x cadj-commits                   48
+  code-cpp x code-cpp                           2
+  code-cpp x code-java                          4
+  code-cpp x code-js-ts                         2
+  code-java x code-java                         6
+  code-java x code-js-ts                        8
+  code-js-ts x code-js-ts                       1
+  code-rust x code-rust                         1
+  en-nemotroncc x en-nemotroncc                 18
+  ind-hi-indiccorp x ind-hi-indiccorp           2
+  ind-hi-indiccorp x ind-hi-sangraha-v          1
+  ind-kn-fw2 x ind-kn-sangraha-v                1
+  ind-sa-fw2 x ind-sa-fw2                       5
+  ind-ta-sangraha-s x ind-ta-sangraha-s         1
+  ind-te-fw2 x ind-te-sangraha-v                1
+
+Pairs at exact (same H1 key):
+  cadj-commits x cadj-commits                   45
+  code-cpp x code-cpp                           2
+  code-cpp x code-java                          4
+  code-cpp x code-js-ts                         2
+  code-java x code-java                         6
+  code-java x code-js-ts                        8
+  code-js-ts x code-js-ts                       1
+  code-rust x code-rust                         1
+  en-nemotroncc x en-nemotroncc                 18
+  ind-hi-indiccorp x ind-hi-indiccorp           2
+  ind-hi-indiccorp x ind-hi-sangraha-v          1
+  ind-kn-fw2 x ind-kn-sangraha-v                1
+  ind-sa-fw2 x ind-sa-fw2                       5
+  ind-ta-sangraha-s x ind-ta-sangraha-s         1
+  ind-te-fw2 x ind-te-sangraha-v                1
+
+Top 20 pairs:
+  1.0000  exact cadj-commits-4c59d124ee8e224a  cadj-commits-03e0caa644d7d42f
+  1.0000  exact cadj-commits-0df75dc85c53d8a5  cadj-commits-f45af9c0c484a270
+  1.0000  exact cadj-commits-dcc8f4a85f35abb5  cadj-commits-89529adfbda0bb3e
+  1.0000  exact cadj-commits-efd4b745e2bdc927  cadj-commits-32ebd7122c5b9384
+  1.0000  exact cadj-commits-0e6053ef84af60b8  cadj-commits-4394592b6f6e9598
+  1.0000  exact cadj-commits-3a2e9f123f1d5253  cadj-commits-363f5df3f95b2b5c
+  1.0000  exact cadj-commits-b456cf9b2561fcfb  cadj-commits-988083d50061df29
+  1.0000  exact cadj-commits-80cbf56879e6b4c3  cadj-commits-64d8670662fd4cfb
+  1.0000  exact cadj-commits-09eea98602f1b6ed  cadj-commits-37bca680327274d1
+  1.0000  exact cadj-commits-a06fdf6aeef32702  cadj-commits-996fa521f036d325
+  1.0000  exact cadj-commits-dd8b82fd1b03409c  cadj-commits-7c75ff32051e1860
+  1.0000  exact cadj-commits-16b7f81a57a59166  cadj-commits-3d6bf283451175e9
+  1.0000  exact cadj-commits-b474bde5539bb080  cadj-commits-87b260b7bc7531b3
+  1.0000  exact cadj-commits-3041592f59fd92e2  cadj-commits-aef88ad7415596e1
+  1.0000  exact cadj-commits-2ee2154b7d548566  cadj-commits-e212f2474bebf470
+  1.0000  exact cadj-commits-53a59afa647e52ca  cadj-commits-cae3f15846941152
+  1.0000  exact cadj-commits-22bd03fe86484799  cadj-commits-f0b0325db861cdd8
+  1.0000  exact cadj-commits-c2d4ef0d82079d02  cadj-commits-f59d5c4fb8083fa0
+  1.0000  exact cadj-commits-3d4d9a3aab70864d  cadj-commits-165a2ce3c8718579
+  1.0000  exact cadj-commits-fb9328a90a61b625  cadj-commits-eed054525f87e596
+
+Wrote overlap_pairs.csv, overlap_matrix.npz, overlap_docs.parquet, overlap_by_pack.csv, overlap_histogram.csv, overlap_matches.csv, overlap_matrix.csv, overlap_matrix_counts.csv and overlap_summary.json to out/overlap (44.0 MB)
+     3351.01 real      3311.12 user        29.87 sys
+         10313334784  maximum resident set size
+end 2026-11-05T05:21:16Z exit 0

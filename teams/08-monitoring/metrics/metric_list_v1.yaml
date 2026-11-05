@@ -1,0 +1,207 @@
+# Draft metric list for G8 monitoring. Each metric has a name, unit, cadence (how often it is collected), source and notes.
+# Values from the G5 training script (train.py) and G4 KE2 check scripts are checked against their code.
+# Other entries retain their existing implementation or proposal notes.
+# Training collection cadences remain proposals; G4 check cadences follow the scripts.
+# Collection cadence is separate from the logger, which writes to storage every 10 steps.
+# G6 metrics are described in teams/06-performance/docs/METRICS.md. Today G6 writes them as a summary after each
+# benchmark run. G8 has asked for per-GPU records it can read during the run; waiting for G6 to confirm.
+# Unit "nats": average loss per predicted token, using the natural log. Lower is better.
+# Other data loader metrics (cache, shard reads, packing), recovery and multi-GPU communication metrics are
+# left out until something produces them.
+# train.py also writes a field called loss. It is a copy of loss_ntp, so it is left out of this list and should not
+# be counted as a separate loss.
+
+metrics:
+# --- Written by the G5 training script today ---
+# Is the model learning to predict the next token?
+- name: loss_ntp
+  unit: nats
+  cadence: Every training step
+  source: G5 train.py, one row per step in metrics.jsonl.
+  notes: Loss for predicting the next token, averaged over the positions that have a next token. The model trains on
+    loss_ntp + loss_mtp, so this is only part of the training loss. To confirm for real runs - masking and
+    combining values across GPUs.
+# The other part of the training loss. Without it, a broken second head would go unnoticed.
+- name: loss_mtp
+  unit: nats
+  cadence: Every training step
+  source: G5 train.py, one row per step in metrics.jsonl.
+  notes: Loss for predicting the token two positions ahead, from a second output head. No field holds the total
+    loss_ntp + loss_mtp. The second head is always on in train.py. To confirm - what happens when it is off.
+# Helps explain changes in the loss and check that the learning-rate schedule ran as planned.
+- name: lr
+  unit: dimensionless
+  cadence: Every training step
+  source: G5 train.py, one row per step in metrics.jsonl.
+  notes: Learning rate for the step. train.py has no schedule, so it writes the same configured value every step.
+    Later versions should log the value the optimizer actually used.
+# Training speed. A drop can reveal a slowdown even when the loss looks fine.
+- name: tokens_per_second
+  unit: tokens_per_second
+  cadence: Every training step
+  source: G5 train.py, one row per step in metrics.jsonl.
+  notes: All input tokens in the batch divided by the step time. The timer covers the GPU work of the step, not
+    loading the batch or writing the log row. Step 0 is slower because of one-time setup. To confirm for real
+    runs - padding and counting across GPUs.
+# Memory PyTorch is using (weights, gradients, optimizer state). A steady rise may point to a leak or a coming
+# out-of-memory crash.
+- name: gpu_alloc_gb
+  unit: GiB
+  cadence: Every training step
+  source: G5 train.py, one row per step in metrics.jsonl.
+  notes: Memory PyTorch has allocated after the step. The name says gb, but the value is GiB (divided by 1024^3).
+    Name kept to match train.py. Does not include memory PyTorch has reserved or other processes are using
+    (see gpu_memory_used). 0.0 when running on CPU.
+
+# --- Training health; proposed, waiting for G5 to confirm ---
+# Early warning of unstable training. It often spikes before the loss does.
+- name: gradient_norm
+  unit: gradient_units
+  cadence: Every training step
+  source: G5 train_week2.py, one row per step in metrics.jsonl. The value that clip_grad_norm_ returns.
+  notes: Size of all gradients combined, before clipping. To confirm for real runs - combining across GPUs.
+# Clipping on most steps is worth checking. The threshold may be wrong or training may be unstable.
+- name: gradient_clipping_applied
+  unit: boolean
+  cadence: Every training step
+  source: G5 train_week2.py writes it as true / false (gradient_norm > run.grad_clip). metrics_writer.py stores it as
+    1 / 0, and works it out when the trainer passes gradient_norm and grad_clip (the threshold) instead.
+  notes: 1 when gradient_norm is above the threshold and clip_grad_norm_ scaled the gradients down, else 0. Equal to
+    the threshold is 0. No value when gradient_norm is NaN or the threshold is missing. Grafana panel 19 shows the
+    share of clipped steps per step bucket; clipping on most steps is worth checking.
+# How big each update is compared with the weights. Very large may mean unstable training; very small may mean
+# learning has stalled.
+- name: update_weight_ratio
+  unit: dimensionless
+  cadence: Every N training steps (N to be agreed)
+  source: Not written yet. Proposed for G5 to add around the optimizer step in train.py.
+  notes: Proposed formula is L2 norm of (weights after - weights before) / L2 norm of weights before. A copy of
+    the weights is needed only on the steps being measured. To agree - one value for the whole model or one per
+    layer, and what to do when the weights are zero.
+# Are the experts sharing the work? A few experts getting most of the routing may mean routing has collapsed.
+- name: expert_load
+  unit: fraction
+  cadence: Every training step
+  source: Not written yet. Proposed for G5 to count which experts the router picks in train.py.
+  notes: Each token picks top-k experts. Proposed value is each expert's share of all these picks (tokens x k), so
+    the shares add up to 1 for each expert layer. This is a list of values, not one number. To agree - this
+    definition, and a single summary number for alarms, such as busiest expert / average expert.
+# The main check in this list that the model improves on data it has not trained on. Helps spot overfitting.
+- name: validation_loss
+  unit: nats
+  cadence: Each validation run - G5 train_week2.py runs it at step 0, every run.eval_every_steps steps and at the
+    last step, so only those rows have it
+  source: G5 train_week2.py, from week2.evaluation.evaluate() in the same metrics.jsonl row, as val/nll_nats (the
+    summed loss) and val/scored_tokens. metrics_writer.py works out validation_loss = val/nll_nats /
+    val/scored_tokens.
+  notes: Mean loss in nats per scored token on G5's fixed held-out set (15 slices in official runs), the same quantity as
+    loss_ntp on training batches, so the two are compared on one axis (Grafana panel 20). Equal to
+    ln(val/perplexity). G5's main held-out number is val/bpb (bits per byte), which does not depend on the
+    tokenizer; validation_loss does, so compare it only between runs with the same tokenizer.
+
+# --- System metrics; G6 to supply ---
+# Are the GPUs busy? Low values may mean GPU time is being wasted.
+- name: gpu_utilization
+  unit: percent
+  cadence: G6 samples every 1 second; G8 rolls up into 10-second windows (mean and min)
+  source: G6 GpuSampler field gpu_util_pct (nvidia-smi utilization.gpu).
+  notes: Percentage of time at least one GPU kernel was running. This is not how fully the GPU is used, so one
+    small kernel at a time can still show 100%.
+# Total memory used on the GPU, including what PyTorch does not count. Closer to what triggers out-of-memory
+# crashes than gpu_alloc_gb.
+- name: gpu_memory_used
+  unit: bytes
+  cadence: G6 samples every 1 second; G8 rolls up into 10-second windows (max)
+  source: G6 GpuSampler field mem_used_mib (nvidia-smi memory.used). G6 sends MiB; G8 converts to bytes
+    (x 1,048,576).
+  notes: Memory used on the whole GPU by all processes, not only PyTorch. Stored in bytes, while gpu_alloc_gb
+    is in GiB, so convert before comparing them.
+# Model FLOPs utilization (MFU): how much of the GPUs' peak compute is actually used. G6 owns the method.
+- name: model_flops_utilization
+  unit: fraction
+  cadence: One value per G6 benchmark run today (from the median step time)
+  source: G6 run JSON field metrics.mfu. G8 uses this value as is and does not recalculate it.
+  notes: G6 formula is tokens per second x model FLOPs per token / peak FLOPs per second for the run's dtype.
+    Model FLOPs per token counts only the chosen experts. null means the peak is unknown; treat it as missing,
+    not 0. To confirm with G6 - whether it works for G5's train.py (which runs every expert), whether it covers
+    one GPU or the whole run, and the field that gives the reason when it is null.
+
+# --- Data ---
+# Tells a slow data loader apart from slow GPU work.
+- name: loader_wait_time
+  unit: seconds
+  cadence: Every training step
+  source: Proposed - G6 field data_ms (milliseconds; G8 converts to seconds). Not written by G5's train.py.
+  notes: Time the training loop waits for the next batch. G6's data_ms times only the host-side next_batch() call,
+    and today it is a run summary, not one value per step. To confirm with G6 - that this is the right boundary,
+    and adding per-step values.
+
+# --- KE2 metrics from G4 check scripts, collected separately from training ---
+# Collision rows need extraction (raw or decode), P (byte capacity), script_class and n_tokens.
+# Keep the matching collisions_meta.json tokenizer_sha256 to identify the tokenizer.
+# Decoder rows need kind (raw or decode), pos_dim (P), table_sha256, vectors (queries tested),
+# and candidate_count (vocabulary entries searched), plus the file-level sample details.
+# Samples use sample.n and sample.seed and include edge and special IDs; compare the same query IDs.
+- name: n_colliding_tokens
+  unit: tokens
+  cadence: Each collision audit run, per extraction method, P and script class
+  source: teams/04-ke2/src/collisions/build_collisions.py writes field n_colliding_tokens in
+    teams/04-ke2/results/collisions_summary.csv.
+  notes: Number of tokens in the script class that belong to any group sharing a stored byte row.
+    Counts every member of a collision group, including its first token. Not the experiment summary's
+    colliding_tokens field, which counts excess tokens instead.
+- name: rate_colliding
+  unit: fraction
+  cadence: Each collision audit run, per extraction method, P and script class
+  source: teams/04-ke2/src/collisions/build_collisions.py writes field rate_colliding in
+    teams/04-ke2/results/collisions_summary.csv.
+  notes: n_colliding_tokens / n_tokens for the script class, rounded to six decimal places by the producer.
+    Values range from 0 to 1; this is not a percentage.
+- name: n_excess_tokens
+  unit: tokens
+  cadence: Each collision audit run, per extraction method, P and script class
+  source: teams/04-ke2/src/collisions/build_collisions.py writes field n_excess_tokens in
+    teams/04-ke2/results/collisions_summary.csv.
+  notes: Tokens beyond the first token in each collision group, attributed to those tokens' script classes.
+    Summing across classes gives vocabulary size minus distinct stored byte rows for the extraction and P.
+- name: ids_recovered
+  unit: queries
+  cadence: Each reference-decoder experiment run, per table kind and P
+  source: teams/04-ke2/src/run_experiment.py writes runs.<kind>_P<P>.ids_recovered in
+    teams/04-ke2/results/decode_ref/summary.json.
+  notes: Number of sampled query token IDs recovered exactly after encoding and exhaustive reference decoding.
+    Interpret against vectors (the number of queries) and candidate_count (the vocabulary searched).
+    The sample includes fixed edge and special IDs, so its recovery share is not an unbiased vocabulary rate.
+    This is an exact-code round-trip check, not model prediction accuracy.
+- name: bytes_recovered
+  unit: queries
+  cadence: Each reference-decoder experiment run, per table kind and P
+  source: teams/04-ke2/src/run_experiment.py writes runs.<kind>_P<P>.bytes_recovered in
+    teams/04-ke2/results/decode_ref/summary.json.
+  notes: Number of queries whose decoded bytes match the input ID's stored table-row bytes, out of vectors.
+    Raw rows keep at most P bytes; they preserve original payloads when tokens fit in P (true for
+    BrahmicTokenizer-131K at P=32 and P=64). Decode-text tables can already be lossy. Matching bytes does not
+    imply the token ID was recovered when several IDs share a row.
+- name: ties
+  unit: queries
+  cadence: Each reference-decoder experiment run, per table kind and P
+  source: teams/04-ke2/src/run_experiment.py writes runs.<kind>_P<P>.ties in
+    teams/04-ke2/results/decode_ref/summary.json.
+  notes: Number of sampled queries with exactly zero best-minus-second-best cosine margin, out of vectors.
+    The exhaustive reference decoder resolves equal best scores by choosing the lowest token ID.
+    A tie can still recover the correct ID when the query ID is the lowest in the tied group.
+- name: min_margin
+  unit: dimensionless
+  cadence: Each reference-decoder experiment run, per table kind and P
+  source: teams/04-ke2/src/run_experiment.py writes runs.<kind>_P<P>.min_margin in
+    teams/04-ke2/results/decode_ref/summary.json.
+  notes: Minimum across sampled queries of best cosine similarity minus second-best cosine similarity over
+    all vocabulary candidates. Zero indicates at least one tie. Not a probability or a distance gap.
+- name: fresh_process_sha256_equal
+  unit: boolean
+  cadence: Each reference-decoder experiment run, per table kind and P
+  source: teams/04-ke2/src/run_experiment.py writes runs.<kind>_P<P>.fresh_process_sha256_equal in
+    teams/04-ke2/results/decode_ref/summary.json.
+  notes: Whether a fresh decoder process produces the same result hash as the in-process decoder for the
+    same queries and table. The hash covers table identity, IDs, stored bytes, scores and margins.
+    Checks reproducibility in the tested environment; does not establish cross-platform bitwise equality.

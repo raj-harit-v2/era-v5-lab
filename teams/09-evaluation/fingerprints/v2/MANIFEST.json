@@ -1,0 +1,378 @@
+{
+  "version": "v2",
+  "set_sha256": "2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a",
+  "normalize_id": "g9-v2",
+  "normalize": "spec v1 normalize of Team 1 (g1-spec-v1), then ZWJ and ZWNJ removed from each word (match key only; the training text keeps them)",
+  "hash": "blake2b, digest_size=8, hex, of the n words joined by one space (UTF-8)",
+  "line_format": "<item_ref>\\t<hash> <hash> ...",
+  "benchmarks": {
+    "aime_2024": {
+      "name": "AIME 2024",
+      "tags": [
+        "english",
+        "math"
+      ],
+      "n": {
+        "prose": 13,
+        "code": 20
+      },
+      "items": 30,
+      "items_without_ngram": 0,
+      "item_grams": 24747,
+      "short_texts": 0,
+      "canaries": 0
+    },
+    "aime_2025": {
+      "name": "AIME 2025",
+      "tags": [
+        "english",
+        "math"
+      ],
+      "n": {
+        "prose": 13,
+        "code": 20
+      },
+      "items": 30,
+      "items_without_ngram": 0,
+      "item_grams": 1742,
+      "short_texts": 0,
+      "canaries": 0
+    },
+    "bfcl_v3": {
+      "name": "BFCL v3",
+      "tags": [
+        "code",
+        "agentic"
+      ],
+      "n": {
+        "prose": 13,
+        "code": 20
+      },
+      "items": 4441,
+      "items_without_ngram": 728,
+      "item_grams": 136956,
+      "short_texts": 625,
+      "canaries": 0
+    },
+    "codeforces": {
+      "name": "Codeforces",
+      "tags": [
+        "code"
+      ],
+      "n": {
+        "prose": 13,
+        "code": 20
+      },
+      "items": 468,
+      "items_without_ngram": 0,
+      "item_grams": 263466,
+      "short_texts": 3,
+      "canaries": 0
+    },
+    "flores200": {
+      "name": "FLORES-200 (FLORES+)",
+      "tags": [
+        "indic",
+        "english",
+        "translation"
+      ],
+      "n": {
+        "prose": 13,
+        "code": 20
+      },
+      "items": 22099,
+      "items_without_ngram": 461,
+      "item_grams": 158493,
+      "short_texts": 3768,
+      "canaries": 0
+    },
+    "gaia": {
+      "name": "GAIA",
+      "tags": [
+        "english",
+        "agentic"
+      ],
+      "n": {
+        "prose": 13,
+        "code": 20
+      },
+      "items": 466,
+      "items_without_ngram": 0,
+      "item_grams": 19014,
+      "short_texts": 6,
+      "canaries": 0
+    },
+    "gpqa_diamond": {
+      "name": "GPQA (extended set, includes Diamond)",
+      "tags": [
+        "english",
+        "reasoning"
+      ],
+      "n": {
+        "prose": 13,
+        "code": 20
+      },
+      "items": 546,
+      "items_without_ngram": 0,
+      "item_grams": 123133,
+      "short_texts": 7,
+      "canaries": 1
+    },
+    "gsm8k": {
+      "name": "GSM8K",
+      "tags": [
+        "english",
+        "math"
+      ],
+      "n": {
+        "prose": 13,
+        "code": 20
+      },
+      "items": 1319,
+      "items_without_ngram": 0,
+      "item_grams": 161315,
+      "short_texts": 2,
+      "canaries": 0
+    },
+    "heldout_g5_v1": {
+      "name": "G5 held-out set v1",
+      "tags": [
+        "protected",
+        "heldout"
+      ],
+      "n": {
+        "prose": 13,
+        "code": 20
+      },
+      "items": 1059,
+      "items_without_ngram": 0,
+      "item_grams": 295741,
+      "short_texts": 7,
+      "canaries": 0
+    },
+    "hle": {
+      "name": "HLE (Humanity's Last Exam)",
+      "tags": [
+        "english",
+        "reasoning"
+      ],
+      "n": {
+        "prose": 13,
+        "code": 20
+      },
+      "items": 2500,
+      "items_without_ngram": 2,
+      "item_grams": 987421,
+      "short_texts": 100,
+      "canaries": 1
+    },
+    "in22_conv": {
+      "name": "IN22-Conv",
+      "tags": [
+        "indic",
+        "english",
+        "translation"
+      ],
+      "n": {
+        "prose": 13,
+        "code": 20
+      },
+      "items": 1503,
+      "items_without_ngram": 283,
+      "item_grams": 48386,
+      "short_texts": 11324,
+      "canaries": 0
+    },
+    "in22_gen": {
+      "name": "IN22-Gen",
+      "tags": [
+        "indic",
+        "english",
+        "translation"
+      ],
+      "n": {
+        "prose": 13,
+        "code": 20
+      },
+      "items": 1024,
+      "items_without_ngram": 2,
+      "item_grams": 292344,
+      "short_texts": 3148,
+      "canaries": 0
+    },
+    "livecodebench": {
+      "name": "LiveCodeBench",
+      "tags": [
+        "code"
+      ],
+      "n": {
+        "prose": 13,
+        "code": 20
+      },
+      "items": 1055,
+      "items_without_ngram": 0,
+      "item_grams": 273462,
+      "short_texts": 0,
+      "canaries": 0
+    },
+    "longbench_v2": {
+      "name": "LongBench v2",
+      "tags": [
+        "english",
+        "long_context"
+      ],
+      "n": {
+        "prose": 13,
+        "code": 20
+      },
+      "items": 503,
+      "items_without_ngram": 0,
+      "item_grams": 74162,
+      "short_texts": 88,
+      "canaries": 0
+    },
+    "milu": {
+      "name": "MILU",
+      "tags": [
+        "indic",
+        "english",
+        "knowledge"
+      ],
+      "n": {
+        "prose": 13,
+        "code": 20
+      },
+      "items": 79608,
+      "items_without_ngram": 0,
+      "item_grams": 2292927,
+      "short_texts": 34249,
+      "canaries": 0
+    },
+    "mmlu": {
+      "name": "MMLU",
+      "tags": [
+        "english",
+        "knowledge"
+      ],
+      "n": {
+        "prose": 13,
+        "code": 20
+      },
+      "items": 14042,
+      "items_without_ngram": 1,
+      "item_grams": 1237715,
+      "short_texts": 3115,
+      "canaries": 0
+    },
+    "swe_bench_live": {
+      "name": "SWE-bench Live",
+      "tags": [
+        "code",
+        "agentic"
+      ],
+      "n": {
+        "prose": 13,
+        "code": 20
+      },
+      "items": 1272,
+      "items_without_ngram": 0,
+      "item_grams": 1227620,
+      "short_texts": 7,
+      "canaries": 0
+    },
+    "swe_bench_pro": {
+      "name": "SWE-bench Pro",
+      "tags": [
+        "code",
+        "agentic"
+      ],
+      "n": {
+        "prose": 13,
+        "code": 20
+      },
+      "items": 731,
+      "items_without_ngram": 0,
+      "item_grams": 1046032,
+      "short_texts": 2,
+      "canaries": 0
+    },
+    "swe_bench_verified": {
+      "name": "SWE-bench Verified",
+      "tags": [
+        "code",
+        "agentic"
+      ],
+      "n": {
+        "prose": 13,
+        "code": 20
+      },
+      "items": 500,
+      "items_without_ngram": 0,
+      "item_grams": 161496,
+      "short_texts": 2,
+      "canaries": 0
+    },
+    "terminal_bench_2": {
+      "name": "Terminal-Bench 2.0",
+      "tags": [
+        "code",
+        "agentic"
+      ],
+      "n": {
+        "prose": 13,
+        "code": 20
+      },
+      "items": 89,
+      "items_without_ngram": 0,
+      "item_grams": 114129,
+      "short_texts": 0,
+      "canaries": 1
+    }
+  },
+  "not_covered": {
+    "frontiermath": {
+      "status": "skip",
+      "reason": "The problems are private (Epoch AI). Only 12 are public. Use source = 'local' if TSAI gets them."
+    },
+    "tau2_bench": {
+      "status": "planned",
+      "reason": "Tasks are JSON files in a GitHub repo. Needs a reader for the task files."
+    },
+    "webarena": {
+      "status": "planned",
+      "reason": "Tasks are short intents in a GitHub repo. Needs a reader and a team decision if intents are worth it."
+    },
+    "workarena": {
+      "status": "planned",
+      "reason": "Tasks are generated in a ServiceNow environment. Decide if anything fixed can be fingerprinted."
+    },
+    "browsecomp": {
+      "status": "planned",
+      "reason": "The questions are encrypted in the source CSV. Needs a decrypt step before fingerprinting."
+    },
+    "osworld": {
+      "status": "planned",
+      "reason": "Tasks are JSON files in a GitHub repo. Needs a reader for the task files."
+    },
+    "aider_polyglot": {
+      "status": "planned",
+      "reason": "225 exercises in 6 languages, as folders in a GitHub repo. Needs a reader for the instructions and solutions."
+    },
+    "indicgenbench": {
+      "status": "planned",
+      "reason": "A GitHub repo, not on Hugging Face. Needs the URL of each data file. Flores-IN is FLORES in Indian languages, which flores200 covers."
+    },
+    "ruler": {
+      "status": "skip",
+      "reason": "Synthetic: examples are generated for each length at eval time. There is no fixed item to fingerprint."
+    },
+    "helmet": {
+      "status": "planned",
+      "reason": "21 source datasets with different fields, and some tasks are generated at eval time. Needs a reader for each dataset with fixed items. Not the long contexts."
+    },
+    "oneruler": {
+      "status": "skip",
+      "reason": "Synthetic, like RULER: random needles are put into public-domain books at eval time, so there is no fixed item. The fixed text is only two prompt templates in 26 languages, which give no answers. The books must not be fingerprinted: they are common web text (Ponniyin Selvan, Chandrakanta)."
+    }
+  }
+}

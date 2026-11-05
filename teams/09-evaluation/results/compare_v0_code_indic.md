@@ -1,14 +1,17 @@
 # Harness agreement with published scores (v0, code + Indic)
 
-Generated 2026-10-27. Rule, fixed before any run: **PASS if |ours − published| ≤ 2.0 points** on the full test set, same protocol.
+Generated 2026-11-05. Rule, fixed before any run: **PASS if |ours − published| ≤ 2.0 points** on the full test set, same protocol.
 Companion report for the general tasks: `compare_v0.md` (PR #21).
 
-**Status: 19 PASS, 2 FAIL, 2 DEFERRED, 3 NOT RUN.**
+**Status: 21 PASS, 2 FAIL, 3 NOT RUN.**
 
 - MMLU-Pro agrees with the Open LLM Leaderboard's own lm-eval runs for all three models (within 0.31).
 - Code scoring agrees with the EvalPlus leaderboard for DeepSeek-Coder-1.3B-base (within 1.2) and phi-2 on 3 of 4.
 - The two FAILs are on the stricter `+` tests, just past the line (−2.41, −2.88). evalplus recorded 0 timeouts across all executed code, so a slow executor does not explain them. They stand under the pre-registered rule.
-- DEFERRED: the two MILU-avg rows (all 11 languages, 79,608 items per model).
+- MILU-avg (both rows) is the simple mean of the 11 per-language `gate_milu_<Language>` full runs (79,608 items per model), computed only when all 11 exist; until then the row is DEFERRED. The rule was fixed before the remaining runs (see the README).
+- MILU-avg gemma-2-2b, the 11 scores: Bengali 29.53, English 51.05, Gujarati 30.00, Hindi 32.72, Kannada 29.37, Malayalam 28.67, Marathi 30.99, Odia 24.46, Punjabi 30.67, Tamil 29.76, Telugu 29.34
+- MILU-avg llama-3.2-3b, the 11 scores: Bengali 32.41, English 50.76, Gujarati 31.33, Hindi 35.10, Kannada 31.17, Malayalam 29.18, Marathi 33.46, Odia 28.35, Punjabi 31.74, Tamil 31.59, Telugu 29.45
+- MILU-avg llama-3.2-3b: Bengali, Kannada, Malayalam, Odia, Punjabi, Tamil ran with `--full-logits`. Each has answer options longer than the 512 positions the default path keeps (up to 1,112 tokens), so the guard stops the default run. Same log-likelihoods either way: on milu_Marathi (200 items, both paths) all 800 option log-likelihoods were identical.
 - MILU per-language rows: the five deferred on 25 Oct were run on 29-30 Oct on a second machine (RTX 4060 Ti 16 GB, Windows) with this harness at the pinned revisions; all PASS (largest |Δ| 0.88). As a cross-machine check, gemma-2-2b MILU-en scored 51.16 there against 51.05 in the gate row.
 - NOT RUN: BBH (optional; MMLU-Pro already covers general ability against the same leaderboard).
 
@@ -23,11 +26,11 @@ Companion report for the general tasks: `compare_v0.md` (PR #21).
 | gemma-2-2b | MILU-en | 50.86 | 51.05 | +0.19 | **PASS** | [MILU paper, Table 3](https://arxiv.org/abs/2411.02538) |
 | gemma-2-2b | MILU-hi | 32.32 | 32.72 | +0.40 | **PASS** | [MILU paper, Table 3](https://arxiv.org/abs/2411.02538) |
 | gemma-2-2b | MILU-te | 28.46 | 29.34 | +0.88 | **PASS** | [MILU paper, Table 3](https://arxiv.org/abs/2411.02538) |
-| gemma-2-2b | MILU-avg | 31.43 |  |  | **DEFERRED** | [MILU paper, Table 3](https://arxiv.org/abs/2411.02538) |
+| gemma-2-2b | MILU-avg | 31.43 | 31.51 | +0.08 | **PASS** | [MILU paper, Table 3](https://arxiv.org/abs/2411.02538) |
 | llama-3.2-3b | MILU-en | 50.25 | 50.76 | +0.51 | **PASS** | [MILU paper, Table 3](https://arxiv.org/abs/2411.02538) |
 | llama-3.2-3b | MILU-hi | 34.63 | 35.10 | +0.47 | **PASS** | [MILU paper, Table 3](https://arxiv.org/abs/2411.02538) |
 | llama-3.2-3b | MILU-te | 29.75 | 29.45 | -0.30 | **PASS** | [MILU paper, Table 3](https://arxiv.org/abs/2411.02538) |
-| llama-3.2-3b | MILU-avg | 32.85 |  |  | **DEFERRED** | [MILU paper, Table 3](https://arxiv.org/abs/2411.02538) |
+| llama-3.2-3b | MILU-avg | 32.85 | 33.14 | +0.29 | **PASS** | [MILU paper, Table 3](https://arxiv.org/abs/2411.02538) |
 | qwen2.5-1.5b | HumanEval | 37.20 | 35.37 | -1.83 | **PASS** | [Qwen2.5 blog, base-model table](https://qwenlm.github.io/blog/qwen2.5-llm/) |
 | qwen2.5-1.5b | HumanEval+ | 32.90 | 30.49 | -2.41 | **FAIL** | [Qwen2.5 blog, base-model table](https://qwenlm.github.io/blog/qwen2.5-llm/) |
 | qwen2.5-1.5b | MBPP | 60.20 | 59.52 | -0.68 | **PASS** | [Qwen2.5 blog, base-model table](https://qwenlm.github.io/blog/qwen2.5-llm/) |
@@ -74,7 +77,7 @@ The Qwen2.5 report ([arXiv 2412.15115](https://arxiv.org/abs/2412.15115), Table 
 - This PyTorch build (Windows) has no flash SDPA kernel, and its memory-efficient kernel rejects `enable_gqa`, so grouped-query models fell back to the math kernel, which builds the full attention matrix (Llama-3.2-3B OOM). `run_lm_eval.py` repeats the KV heads first (transformers' own path when a mask is present), so the memory-efficient kernel runs. Not bit-identical: on the same 45 Qwen items, mean |Δ log-likelihood| = 0.053 nats (max 0.23), 44/45 identical choices (the flip was an exact tie in the reference), identical task accuracies. Qwen's MMLU-Pro gate run predates this change (math kernel); all three eval-mini runs use the current code (Qwen's was rerun on 26 Oct). gemma-2 uses eager attention and is unaffected. The leaderboard used yet another kernel (flash, Linux).
 - evalplus 0.3.1 sets `self.eos = EOS` (the module-level list) and then extends it in place, so in one process MBPP inherited HumanEval's stop strings (`\ndef `, `\nclass `, `\nimport `, `\nfrom `), confirmed in every MBPP run log. MBPP answers were cut at their first or second function (phi-2: 346/378 empty). `run_codegen.py` gives each decoder its own copy. **All MBPP/MBPP+ results before 26 Oct were invalid and were regenerated** (the invalid files are kept locally, not committed). HumanEval ran first in each process and was unaffected.
 - transformers 5 rebuilt deepseek-coder-1.3b-base's tokenizer from its config class (LlamaTokenizerFast) instead of its byte-level `tokenizer.json`, dropping every space and newline (`def f(x):\n    return x + 1` → `deff(x):returnx+1`). `run_codegen.py` checks a round trip and falls back to the repo's own `tokenizer.json`, or stops. The other four tokenizers round-trip correctly (code, Devanagari, Telugu), so no other result was affected.
-- Qwen2.5 ships `max_new_tokens: 2048` in `generation_config.json`, which transformers lets override lm-eval's own generation cap (`max_gen_toks`, 256 for GSM8K). `run_lm_eval.py` now clears it, as standard lm-eval behaviour intends (found by Mahesh Sv, PR #21). Only Qwen's eval-mini GSM8K was affected (51 → 52 after a fresh rerun; the earlier run is kept locally). gemma-2-2b and Llama-3.2-3B have no such override, and gate tasks (log-likelihood) and code generation (explicit `max_new_tokens=768`) never used it.
+- Qwen2.5 ships `max_new_tokens: 2048` in `generation_config.json`, which transformers lets override lm-eval's own generation cap (`max_gen_toks`, 256 for GSM8K). `run_lm_eval.py` now clears it, as standard lm-eval behaviour intends (found by `maheshsv`, PR #21). Only Qwen's eval-mini GSM8K was affected (51 → 52 after a fresh rerun; the earlier run is kept locally). gemma-2-2b and Llama-3.2-3B have no such override, and gate tasks (log-likelihood) and code generation (explicit `max_new_tokens=768`) never used it.
 
 ## Protocol changes after seeing results
 
@@ -85,4 +88,4 @@ The Qwen2.5 report ([arXiv 2412.15115](https://arxiv.org/abs/2412.15115), Table 
 - Qwen's code anchors come from a table that names no harness; its one code FAIL (HumanEval+ −2.41) may be protocol, not a bug.
 - The leaderboard used a pinned lm-eval fork (commits `d4631ea6` / `121ee91`) on Linux GPUs; we use release 0.4.13 on Windows (RTX 3070 Laptop; MILU per-language rows on an RTX 4060 Ti 16 GB).
 - Small models score close to chance (25%) on MILU's Indic languages, so MILU agreement is a weaker check than MMLU-Pro.
-- The MILU paper's `avg` column does not state its aggregation; per-language rows are the primary check.
+- The MILU paper's `avg` column does not state its aggregation. We use the simple mean of the 11 languages, which reproduces the paper's 31.43 / 32.85; lm-eval's size-weighted mean would give 33.51 / 34.87. Per-language rows are still the primary check.

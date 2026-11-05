@@ -17,6 +17,7 @@ from week2.config import load, load_runtime, merge, validate
 from week2.data import DocumentWindows, BatchStream
 from week2.model import LanguageModel
 from week2.evaluation import evaluate, token_nll
+from week2.optim import build_optimizer, describe
 
 class JsonWriter:
     def __init__(self, out, cadence=10):
@@ -56,12 +57,20 @@ def apply_resolution(cfg,resolution):
                 raise ValueError("Resolution conflicts with explicit lead choice: "+key)
     return merge(cfg,resolution)
 
+
+def resolve_run_config(cfg,resolution_path,smoke):
+    """Only an explicitly supplied resolution may override the runtime baseline."""
+    if resolution_path is None:
+        if not smoke:raise ValueError("Baseline choices pending: supply an agreed resolution file")
+        return merge(cfg,{})
+    return apply_resolution(cfg,load(resolution_path))
+
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     for name in ["config","tokenizer","byte-table","train-data","heldout-data","out"]:
         p.add_argument("--"+name,type=Path,required=True)
     p.add_argument("--runtime",type=Path,help="Harness-only runtime contract; dimensions remain lead-owned")
-    p.add_argument("--resolution",type=Path,help="Reviewed baseline choices, separate from fixed sizes")
+    p.add_argument("--resolution",type=Path,help="Explicit baseline overrides; smoke without this option preserves runtime settings")
     p.add_argument("--heldout-sources",type=Path,help="PR191 per-document source/slice sidecar")
     p.add_argument("--heldout-sha256",type=Path,help="Official results/heldout_v1.sha256 file")
     p.add_argument("--heldout-report",type=Path,help="Data-owner JSON provenance; see HARNESS_WEEK2.md")
@@ -79,10 +88,8 @@ def main():
     args=p.parse_args();started=time.perf_counter()
     if args.out.exists() and any(args.out.iterdir()):p.error("Use a fresh output directory")
     cfg=load_runtime(args.config,args.runtime)
-    if args.resolution is None:
-        if not args.smoke:p.error("Baseline choices pending: supply an agreed resolution file")
-        args.resolution=Path(__file__).resolve().parents[1]/"configs/small/smoke_resolution.yaml"
-    cfg=apply_resolution(cfg,load(args.resolution))
+    try:cfg=resolve_run_config(cfg,args.resolution,args.smoke)
+    except ValueError as error:p.error(str(error))
     if args.lr is not None:cfg["optim"]["lr"]=args.lr
     if args.seed is not None:cfg["run"]["seed"]=args.seed
     if args.smoke:
@@ -129,7 +136,7 @@ def main():
             or report.get("docs_checked")!=val.document_count):
             p.error("Heldout report must bind this file/document count to full-set zero matches")
     model=LanguageModel(cfg["model"],artifacts.bytes,artifacts.lengths).to(device)
-    optimizer=torch.optim.AdamW(model.parameters(),lr=cfg["optim"]["lr"],betas=tuple(cfg["optim"]["betas"]),eps=cfg["optim"]["eps"],weight_decay=cfg["optim"]["weight_decay"])
+    optimizer=build_optimizer(model,cfg["optim"])
     stream=BatchStream(train,cfg["run"]["batch_size"],seed)
     def amp():
         return torch.autocast(device_type="cuda",dtype=torch.bfloat16) if device.type=="cuda" and cfg["run"]["dtype"]=="bf16" else nullcontext()
@@ -142,7 +149,7 @@ def main():
     identity_hash=hashlib.sha256(json.dumps(identity,sort_keys=True).encode()).hexdigest()
     args.out.mkdir(parents=True,exist_ok=True)
     manifest={**identity,"identity_sha256":identity_hash,"baseline_commit":cfg["provenance"]["lead_snapshot"],
-              "parameters":model.parameter_count(),"gpu":torch.cuda.get_device_name() if device.type=="cuda" else None,
+              "parameters":model.parameter_count(),"optimizer":describe(model,cfg["optim"]),"gpu":torch.cuda.get_device_name() if device.type=="cuda" else None,
               "status":"SMOKE_NOT_A_QUALITY_RESULT" if args.smoke else "AGREED_BASELINE_RUN",
               "heldout_provenance":report,"g8_external_writer":bool(args.logger_factory),
               "token_budget_note":"Input positions include right padding; scored tokens/bytes reported separately",
@@ -208,6 +215,7 @@ def main():
                  "gpu_alloc_gb":torch.cuda.memory_allocated()/1024**3 if device.type=="cuda" else 0.0}
             if step%cfg["run"]["eval_every_steps"]==0 or step==cfg["run"]["steps"]:
                 row.update(evaluate(model,val,1,device,amp))
+            if cfg["optim"]["name"]=="muon":row["muon_lr"]=cfg["optim"]["muon_lr"]
             rows.append(row);log(row)
         # Interrupted segments must not introduce extra validation events into resume history.
         writer.flush()

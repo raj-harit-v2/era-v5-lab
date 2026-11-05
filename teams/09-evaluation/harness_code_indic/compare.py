@@ -50,7 +50,7 @@ HARNESS_FIXES = [  # bugs in the tools themselves; every affected result was reg
     "(code, Devanagari, Telugu), so no other result was affected.",
     "Qwen2.5 ships `max_new_tokens: 2048` in `generation_config.json`, which transformers lets override lm-eval's own "
     "generation cap (`max_gen_toks`, 256 for GSM8K). `run_lm_eval.py` now clears it, as standard lm-eval behaviour intends "
-    "(found by Mahesh Sv, PR #21). Only Qwen's eval-mini GSM8K was affected (51 → 52 after a fresh rerun; the earlier run is kept "
+    "(found by `maheshsv`, PR #21). Only Qwen's eval-mini GSM8K was affected (51 → 52 after a fresh rerun; the earlier run is kept "
     "locally). gemma-2-2b and Llama-3.2-3B have no such override, and gate tasks (log-likelihood) and code generation (explicit "
     "`max_new_tokens=768`) never used it.",
 ]
@@ -118,6 +118,12 @@ def milu_avg(model):
             return None
         scores[lang] = round(100 * value, 2)
     return round(sum(scores.values()) / len(scores), 2), scores
+
+
+def full_logits_runs(model):
+    """MILU per-language gate runs made with --full-logits (scored_logits_only false in results.json)."""
+    return [lang for lang in MILU_LANGS
+            if (load(RUNS / model / f"gate_milu_{lang}" / "results.json") or {}).get("scored_logits_only") is False]
 
 
 def ours_for(anchor):
@@ -188,6 +194,12 @@ def main():
         counts[verdict] += 1
         if a["task"] == "milu" and ours is not None:
             milu_notes.append(f"- MILU-avg {a['model']}, the 11 scores: " + ", ".join(f"{k} {v:.2f}" for k, v in milu_avg(a["model"])[1].items()))
+            full = full_logits_runs(a["model"])
+            if full:
+                milu_notes.append(f"- MILU-avg {a['model']}: {', '.join(full)} ran with `--full-logits`. Each has answer options longer "
+                                  "than the 512 positions the default path keeps (up to 1,112 tokens), so the guard stops the default "
+                                  "run. Same log-likelihoods either way: on milu_Marathi (200 items, both paths) all 800 option "
+                                  "log-likelihoods were identical.")
         rows.append(f"| {a['model']} | {a['benchmark']} | {a['published']:.2f} | {'' if ours is None else f'{ours:.2f}'} | {diff} | "
                     f"**{verdict}** | [{a['source']['name']}]({a['source']['url']}) |")
 
