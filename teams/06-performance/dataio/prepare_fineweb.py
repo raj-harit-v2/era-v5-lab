@@ -17,6 +17,7 @@ from dataio.tokenizer import BrahmicTokenizer, REVISION, SHA256, VOCAB_SIZE
 
 
 def write_shard(path, tokens):
+    """One shard: a 256 x int32 header (magic, version, count), then the tokens as uint32."""
     tokens = np.asarray(tokens, dtype=np.int64)
     if tokens.ndim != 1 or not len(tokens) or (tokens < 0).any() or (tokens >= VOCAB_SIZE).any():
         raise ValueError("Expected nonempty Brahmic token IDs in [0, 131072)")
@@ -28,6 +29,7 @@ def write_shard(path, tokens):
 
 
 def prepare(out=DEFAULT_DIR, train_shards=1, tokens_per_shard=1_000_000, tokenizer_path=None):
+    """Stream FineWeb, encode it, write val + train_shards shards, then the metadata file that marks them complete."""
     from datasets import load_dataset
     if train_shards < 1 or not 0 < tokens_per_shard < 2**31:
         raise ValueError("Need train_shards >= 1 and 0 < tokens_per_shard < 2**31")
@@ -41,7 +43,7 @@ def prepare(out=DEFAULT_DIR, train_shards=1, tokens_per_shard=1_000_000, tokeniz
     eos = tokenizer.spec["model"]["vocab"]["<|end_of_text|>"]
     pending, shard = [], 0
     for doc in docs:
-        pending.extend(tokenizer.encode(doc["text"]) + [eos])
+        pending.extend(tokenizer.encode(doc["text"]) + [eos])     # documents joined by end-of-text
         while len(pending) >= tokens_per_shard:
             split = "val" if shard == 0 else "train"
             path = out / f"fineweb_{split}_{shard:06d}.bin"

@@ -1,27 +1,19 @@
-"""Kronecker Embedding v1 (input side), drop-in for nn.Embedding.  [implemented]
+"""Kronecker Embedding v1 (input side), drop-in for nn.Embedding.
 
-Ported from the reference implementation https://github.com/theschoolofai/kronecker-embeddings
-(src/kronecker_embeddings/codec.py and embedding.py, Apache-2.0, Copyright 2026 The School of AI).
-Same maths, same defaults; only the constructor takes our byte-table tuple instead of an HF tokenizer.
+Ported from https://github.com/theschoolofai/kronecker-embeddings (codec.py, embedding.py; Apache-2.0,
+Copyright 2026 The School of AI). Same maths and defaults; the constructor takes our byte table, not a tokenizer.
 
-Definition:
+Definition (correctness/test_ke.py is written from this):
     kappa(t) = (1/sqrt(L)) * sum_p onehot256(b_p) (x) onehot_P(p)        D = 256 * P (P = 32: 8192)
     index of byte b at slot p = b * P + p;  L = number of bytes (truncated to P)
     kappa is then z-normalised per token: (kappa - mean) / (std + 1e-6)  (std with Bessel correction)
     embedding(t) = W @ kappa(t),  W learned [d_model, D], no bias, init normal(0, 1/sqrt(D)).
-    The codec itself is fixed (no parameters).
 
-Token byte table (the data contract, used by tests too): a tuple
-    (bytes [V, P] uint8, lens [V] int64); bytes past lens[t] are ignored; lens >= 1.
+Byte table (the data contract, used by tests too): (bytes [V, P] uint8, lens [V] int64); bytes past lens[t]
+are ignored; lens >= 1.
 
-Modes (upstream names):
-    dynamic  keep only the [V, P] byte table, recompute the codec every forward (default)
-    cached   precompute the [V, D] codec table once, forward is an index_select
-Both give the same output. Memory at B=32, T=512: dynamic builds a [16384, 8192] fp32 codec (512 MB,
-plus ~512 MB of z-norm temporaries; 256 MB bf16 saved for backward); cached keeps a [V, D] fp32 table
-(4 GiB for V = 131072). A sparse path (never building the D-dim codec) is a week-2 fast version:
-z-norm of a vector with L entries of 1/sqrt(L) has mean sqrt(L)/D and a closed-form std, so
-W @ z = (W[:, idx].sum / sqrt(L) - mean * W.sum(1)) / std.
+Modes: dynamic recomputes the codec every forward (default); cached precomputes the [V, D] table
+(4 GiB fp32 at V = 131072). Both give the same output.
 """
 from __future__ import annotations
 
@@ -49,9 +41,9 @@ def kronecker_codec(byte_seqs: torch.Tensor, lens: torch.Tensor, pos_dim: int = 
     """byte_seqs [N, pos_dim] uint8/long, lens [N] -> [N, 256 * pos_dim] fp32 (upstream kronecker_codec)."""
     N, dev = byte_seqs.size(0), byte_seqs.device
     pos = torch.arange(pos_dim, device=dev).unsqueeze(0).expand(N, -1)
-    lin_idx = byte_seqs.long() * pos_dim + pos
+    lin_idx = byte_seqs.long() * pos_dim + pos          # column of byte b at slot p
     lens = lens.long()
-    src = (pos < lens.unsqueeze(1)).float()
+    src = (pos < lens.unsqueeze(1)).float()             # 1 on the token's bytes, 0 past its length
     if length_normalize:
         src = src * torch.rsqrt(lens.clamp_min(1).float()).unsqueeze(1)
     out = torch.zeros((N, N_BYTES * pos_dim), device=dev, dtype=torch.float32)
@@ -63,6 +55,8 @@ def kronecker_codec(byte_seqs: torch.Tensor, lens: torch.Tensor, pos_dim: int = 
 
 
 class KroneckerEmbedding(nn.Module):
+    """The fixed Kronecker codec of each token's bytes, then a learned projection to d_model."""
+
     def __init__(self, token_bytes, d_model: int, max_pos: int = 32, mode: str = "dynamic"):
         super().__init__()
         assert mode in MODES, f"KE mode {mode!r} not in {MODES}"

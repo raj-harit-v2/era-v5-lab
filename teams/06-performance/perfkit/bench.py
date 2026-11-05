@@ -1,83 +1,22 @@
-"""Time each part of the training step and write run JSON plus live JSONL events.  [implemented]
+"""Time each part of the training step; write the run JSON, its Markdown and the live JSONL events.
 
-    cd teams/06-performance
-    python -m perfkit.bench [--config configs/base.yaml] [--tag name] [--run-id id] [--against run.json] [key=value ...]
-
-Examples
     python -m perfkit.bench --config configs/tiny_cpu.yaml                    # laptop: proves it runs (~30 s)
-    python -m perfkit.bench --config configs/base.yaml --level 3 --modes clean,layer,trace,checkpoint
-    python -m perfkit.bench --config configs/base.yaml --level 3 --against results/runs/<first>.json
-    python -m perfkit.bench --config configs/base.yaml --level 3 --repeat 2   # two runs, fail above 5%
-    torchrun --nproc_per_node 2 -m perfkit.bench --config configs/base.yaml --modes comm   # 2+ GPUs
+    python -m perfkit.bench --level 3 --modes clean,layer,trace,checkpoint
+    python -m perfkit.bench --level 3 --against results/runs/<first>.json     # 5% check against an earlier run
+    python -m perfkit.bench --level 3 --repeat 2                              # two runs, each in a new process
+    torchrun --nproc_per_node 2 -m perfkit.bench --modes comm model.ffn=moe   # MoE all-to-all, 2+ GPUs
 
-Flags --modes, --level, --steps, --warmup are shortcuts for bench.modes=..., bench.level=..., and so
-on; any key of configs/base.yaml can be overridden as key=value. Every override is written to meta.
+--modes, --level, --steps, --warmup, --peak-tflops are shortcuts for bench.<key>; any key of configs/base.yaml
+can be given as key=value. Modes (clean always runs):
+  clean       step time, tokens/s, MFU / HFU, memory, GPU samples
+  layer       every region up to bench.level, recorder overhead from alternating steps
+  trace       torch.profiler trace (~/.cache/era-perf/traces/), top ops, host syncs; with layer, one small trace
+              per slowest part
+  checkpoint  model + optimizer save time and size
+  comm        MoE all-to-all with the real payload (timed on 2+ GPUs under torchrun; one GPU records the payload)
 
---repeat N (Task 2 of G6_Team_Task_Plan.md: "run the benchmark twice and fail if any part differs by more
-than 5%"): run the whole benchmark N times, each from scratch (new model, new loader), write one run JSON
-per run (<tag>.json, <tag>-run2.json, ...) and compare every later run with the first one, exactly as
---against does. The exit code is 2 when any gated part differs by more than report.tol_pct. These are the
-two runs that baseline_v0.md needs. One GPU only (not under torchrun).
-Every run, the first one too, is a NEW Python process (repeat_run), and the process that starts them never
-touches the GPU. Measured on an A100: a second run in the same process, after the first run's profiler (trace
-mode), was 26% slower on every host-bound part (blocks, Muon) and equal on the GPU-bound ones; two separate
-processes agreed within 2.5%. And a second process started while the first still held its GPU memory ran out of
-memory. Without --tag the runs are named <config>_repeat_<time>.
-
-What a run does (the numbered steps of the original stub)
-  1. load_config + model_config; device (run.device auto: cuda, else mps, else cpu); seed everything.
-  2. Build Loader (data.source, data.dir, data.tokenizer_path, vocab_size=model.vocab_size; it checks the
-     pinned BrahmicTokenizer-131K vocabulary even for synthetic runs), GPT (with the KE byte table when
-     embedding == ke1), build_optimizer, autocast for bf16 / fp16, GradScaler for fp16. bf16 on a GPU without native bf16 (T4 / P100 / V100) falls back
-     to fp16 and says so in meta.
-  3. One training step = data, fwd, bwd, opt as level-1 regions; no sync and no .item() inside it.
-     Optimizer order (fp16 needs it): unscale, clip, step, scaler.update, MoE bias update, zero_grad.
-  4. Reversible stack: reconstruction_error on one batch under the run dtype (meta.reconstruction_err,
-     warning above 1e-3). Then the first step (compile / autotune) and the warmup. Build, first step and
-     warmup are wall-clock buckets in goodput.badput_s (startup, first_step, warmup).
-  5. clean: one CUDA event pair per step (StepTimer), nothing else. Step time, tokens/s and MFU come
-     from here. The data fetch is timed on the host (perf_counter, no sync).
-  6. layer: steps ALTERNATE recorder off / on, so overhead_pct comes from neighbouring steps.
-     Backward parts are cut from the mark() points (perfkit.timer.backward_segments): bwd:head+loss,
-     bwd:block{i}, bwd:stack (the whole stack in both stacks), bwd:embed. The reversible backward
-     times its own blocks: bwd:block{i}, and at level 3 bwd.invert / bwd.recompute / bwd:block{i}.grad.
-     Two passes when bench.level >= 3: the gated parts (level <= 2) come from a level-2 pass, the
-     parts inside a block from a level-3 pass, so the many level-3 events cannot slow the gated
-     numbers. Each region keeps its level ("pass" says which pass measured it).
-  7. Metrics from perfkit.metrics (the one place MFU / HFU are computed), run JSON to
-     <bench.out_dir>/<tag>.json, live JSONL events to <tag>.jsonl, Markdown next to it (<tag>.md).
-     perfkit.schema.validate_run must return [] (exit code 1 otherwise).
-
-Modes (bench.modes; clean always runs: meta, config, clean and metrics are required)
-  clean       step time, data time, memory, tokens/s, MFU / HFU; on CUDA, GPU utilization, memory, clocks,
-              power and temperature sampled through the clean steps (run["system"], perfkit.metrics.GpuSampler)
-  layer       every part of the step at its level, recorder overhead
-  trace       torch.profiler over bench.trace_steps steps with the region names: Chrome trace in
-              ~/.cache/era-perf/traces/ (outside the repo), top GPU ops, GPU busy %, kernels per step,
-              host syncs per step and the source lines that cause them. With layer mode too: the five
-              slowest parts (perfkit.parts) and one small trace per part in <out_dir>/<tag>_parts/ (committed,
-              for results/slowest5_v0.md), listed in trace.parts
-  checkpoint  save model + optimizer + scaler state: ms (GPU -> CPU copy, write + fsync), MB, MB/s.
-              Written to ~/.cache/era-perf/ckpt/ and deleted after.
-  comm        MoE expert-parallel all-to-all with this config's real payload. Needs 2+ GPUs under
-              torchrun (Kaggle T4 x2 works); on one GPU the payload and calls per step are recorded
-              and the time is marked as not measured.
-
-Instructor rules this follows (G6 group, 25 Oct)
-  1a  Timings must use the real vocabulary: BrahmicTokenizer-131K has 131,072 tokens (the KE table
-      depends on it). meta.vocab_size and meta.tokenizer (revision, sha256) record it; a run with any
-      other vocabulary size is flagged.
-  3a  The 5% rule applies to whole blocks and to the step parts (level <= report.gate_level); the
-      parts inside a block are timed and reported (bench.level=3) but not gated.
-  3b  MoE all-to-all time (comm) and checkpoint save time (checkpoint) are measured parts.
-  Compute: everything runs on Colab, Kaggle or your own GPU; tiny_cpu.yaml runs on a laptop.
-
-5% rule (TSAI, 30 Oct): a gated part passes --against / --repeat when the two runs are within report.tol_pct
-OR less than report.abs_tol_ms apart (0.05 ms); both run times and the difference in ms are printed for every part.
-
-Exit codes: 0 ok, 1 run JSON incomplete, 2 --against found a part outside tol_pct and abs_tol_ms, 3 out of memory,
-4 no data. With --repeat: 2 when any later run is outside tol_pct; a run that ends with any other code, or is
-killed by a signal (out-of-memory killer), stops the repeat with its code (1 for a signal), never a PASS.
+Exit codes: 0 ok, 1 run JSON incomplete, 2 --against / --repeat found a part outside the 5% rule (report.gate),
+3 out of memory, 4 no data. With --repeat, the first run that ends with another code stops the repeat with that code.
 """
 from __future__ import annotations
 
@@ -131,6 +70,8 @@ COMPARE_CONFIG = [("model", None), ("optim", None), ("run", "compile"), ("run", 
 
 @dataclass
 class Setup:
+    """Everything one run needs, made once by build()."""
+
     cfg: dict
     mcfg: object
     device: torch.device
@@ -151,6 +92,7 @@ class Setup:
 
 
 def pick_device(name: str) -> torch.device:
+    """run.device: auto picks cuda, then mps, then cpu; cuda without an index uses the current device."""
     if name == "auto":
         if torch.cuda.is_available():
             name = "cuda"
@@ -169,6 +111,7 @@ def pick_device(name: str) -> torch.device:
 
 
 def native_bf16() -> bool:
+    """True when the GPU has native (not emulated) bf16."""
     try:
         return torch.cuda.is_bf16_supported(including_emulation=False)
     except TypeError:  # torch < 2.4
@@ -176,6 +119,7 @@ def native_bf16() -> bool:
 
 
 def choose_dtype(want: str, device: torch.device, notes: list) -> str:
+    """The dtype the run can use, with a note for every fallback (bf16 -> fp16 without native bf16, ...)."""
     want = want or "fp32"
     if want not in AMP:
         raise ValueError(f"run.dtype={want!r}: bf16 | fp16 | fp32")
@@ -197,13 +141,14 @@ def choose_dtype(want: str, device: torch.device, notes: list) -> str:
 
 def resolve_batch(want) -> int:
     """run.batch_size: a positive number from the config. Nothing is picked from the device: set it in the
-    YAML (B=32 does not fit a T4: the fp32 logits of the 131K vocabulary alone are 8 GB)."""
+    YAML (B=32 does not fit a T4: at T=256 the fp32 logits of the 131K vocabulary and their gradient are 8 GiB)."""
     if isinstance(want, bool) or not isinstance(want, int) or want < 1:
         raise SystemExit(f"run.batch_size={want!r}: set a positive number in the config (e.g. 32, or 8 on a T4)")
     return want
 
 
 def seed_everything(seed: int):
+    """Seed Python, NumPy (when installed) and torch on every GPU."""
     random.seed(seed)
     try:
         import numpy as np
@@ -216,6 +161,7 @@ def seed_everything(seed: int):
 
 
 def build(cfg: dict, device: torch.device) -> Setup:
+    """Config -> Setup: the loader, model, optimizer, scaler and dtype of one run."""
     mcfg = model_config(cfg)
     run, data = cfg["run"], cfg["data"]
     notes = []
@@ -235,7 +181,7 @@ def build(cfg: dict, device: torch.device) -> Setup:
     scaler = torch.amp.GradScaler("cuda") if (device.type == "cuda" and dtype == "fp16") else None
     if scaler is not None:
         notes.append("fp16 + GradScaler: scaler.step reads found_inf on the host, one sync per step inside opt "
-                     "(PLAN 2.5 rule 1 cannot hold for fp16)")
+                     "(docs/PARTS.md timing rule cannot hold for fp16)")
     clip = run["grad_clip"] or None
     return Setup(cfg, mcfg, device, dtype, loader, core, model, opt, scaler, clip, notes)
 
@@ -243,17 +189,15 @@ def build(cfg: dict, device: torch.device) -> Setup:
 # ------------------------------------------------------------------------------ one step
 
 def train_step(s: Setup):
-    """One training step. Regions cost nothing when no recorder is active (clean mode).
-    Returns (host ms of the data fetch, the loss tensor). Nothing here waits for the GPU.
-    With data.prefetch the next batch is prepared right after backward is queued, while the GPU still runs it
-    (the step start, where the GPU queue is empty, then only issues the copy); its host time is counted in the
-    returned data ms, so data ms stays the whole host cost of loading one batch."""
+    """One training step. Returns (host ms of the data fetch, loss tensor). Nothing here waits for the GPU; the step
+    itself may (the fp16 GradScaler, the MoE loop dispatch).
+    With data.prefetch the next batch is prepared after backward is queued; its host time is in the data ms."""
     t0 = time.perf_counter()
     with region("data", 1):
         x, y = s.loader.next_batch()
     data_ms = (time.perf_counter() - t0) * 1e3
     with region("fwd", 1), phase("fwd"), s.autocast():
-        loss = s.model(x, y)[1]          # with ce_impl=chunked the logits are None: use only [1]
+        loss = s.model(x, y)[1]          # a memory-bounded ce_impl returns logits=None: use only [1]
     with region("bwd", 1), phase("bwd"):
         point("__bwd_start__")
         (s.scaler.scale(loss) if s.scaler is not None else loss).backward()
@@ -281,6 +225,7 @@ def train_step(s: Setup):
 
 
 def reversible_check(s: Setup) -> float:
+    """Reconstruction error of the reversible stack on one batch, in the run dtype."""
     from models.reversible import reconstruction_error
     x, _ = s.loader.next_batch()
     s.core.eval()                         # do not count these tokens for the MoE bias update
@@ -295,6 +240,8 @@ def reversible_check(s: Setup) -> float:
 # ------------------------------------------------------------------------------ modes
 
 def run_clean(s: Setup, n: int):
+    """clean mode: n steps, one timer pair each (CUDA events on a GPU).
+    Returns (clean section, last loss, peak memory)."""
     st = T.StepTimer(s.device, expected_steps=n)
     data, loss = [], None
     if s.device.type == "cuda":
@@ -316,7 +263,8 @@ def run_clean(s: Setup, n: int):
 
 
 def layer_pass(s: Setup, n: int, max_level: int, warm: int) -> dict:
-    """n steps with the recorder, n without, alternating. Returns the layer section for this level."""
+    """warm recorded steps, then n steps with the recorder and n without, alternating. Returns the layer section
+    for this max_level."""
     pool = T.EventPool() if s.device.type == "cuda" else None
     n_ev = 0
     for _ in range(warm):                 # the first recorded steps touch every region once
@@ -326,13 +274,13 @@ def layer_pass(s: Setup, n: int, max_level: int, warm: int) -> dict:
         n_ev = rec.n_events()
         rec.collect()
     if pool is not None:
-        pool.reserve(4 * n_ev + 64)       # no event is created inside a measured step
+        pool.reserve(4 * n_ev + 64)       # room for a few steps in flight: no event is created while measuring
         created = pool.created
     on_t, off_t = (T.StepTimer(s.device, expected_steps=n),
                    T.StepTimer(s.device, expected_steps=n))
     order, pending, parts, data_host = [], deque(), [], []
     for i in range(2 * n):
-        on = i % 2 == 1
+        on = i % 2 == 1                   # recorder on every other step: overhead from neighbouring steps
         if on:
             rec = T.EventRecorder(s.device, max_level, pool)
             on_t.start()
@@ -374,6 +322,7 @@ def layer_pass(s: Setup, n: int, max_level: int, warm: int) -> dict:
 
 
 def run_layer(s: Setup, n: int, level: int, warm: int) -> dict:
+    """layer mode: gated parts from a level <= 2 pass; at level 3, the parts inside a block from a second pass."""
     gated = min(level, 2)
     main = layer_pass(s, n, gated, warm)
     for r in main["regions"].values():
@@ -400,6 +349,8 @@ def run_layer(s: Setup, n: int, level: int, warm: int) -> dict:
 
 
 def run_trace(s: Setup, steps: int, tag: str) -> dict:
+    """trace mode: torch.profiler over `steps` steps after one warmup step; the kernel summary, the trace file and,
+    on CUDA, the host syncs per step."""
     from torch.profiler import ProfilerActivity, profile, schedule
 
     tdir = CACHE / "traces"
@@ -426,7 +377,7 @@ def run_trace(s: Setup, steps: int, tag: str) -> dict:
     T.sync(s.device)
     if cuda:
         out = T.kernel_summary(T.profiler_device_events(prof), steps)
-    else:
+    else:                                 # no CUDA (CPU or MPS): rank ops by their own CPU time instead
         ka = sorted(prof.key_averages(), key=lambda e: e.self_cpu_time_total, reverse=True)[:15]
         tot = sum(e.self_cpu_time_total for e in prof.key_averages()) or 1
         out = {"top_ops": [{"name": e.key[:160], "ms_per_step": e.self_cpu_time_total / 1e3 / steps,
@@ -436,7 +387,7 @@ def run_trace(s: Setup, steps: int, tag: str) -> dict:
     out["trace_file"] = str(path)
     out["steps"] = steps
     if cuda:
-        n, sites = T.count_syncs(lambda: train_step(s), root=ROOT)
+        n, sites = T.count_syncs(lambda: train_step(s), root=ROOT)     # one extra step in sync debug mode
         out["host_syncs_per_step"] = n
         out["sync_sites"] = dict(list(sites.items())[:12])
     return out
@@ -509,17 +460,8 @@ def run_checkpoint(s: Setup, repeats: int, tag: str) -> dict:
 
 
 def a2a_plan(cfg: dict, mcfg, dtype: str) -> dict | None:
-    """The expert-parallel all-to-all this config would do, from the config alone.
-
-    Each rank sends every token's top-k copies (an upper bound: some stay on their own rank), so one
-    call moves B * T * top_k * d values. Per MoE layer and step: dispatch + combine in the forward and
-    their backward (4 calls); the reversible stack runs the forward twice more in backward (invert and
-    recompute), which adds 4 (8 calls).
-
-    The values are fp32 whatever run.dtype is: the MoE input is the LayerNorm output, which autocast
-    keeps in fp32 (checked on models.gpt). An expert-parallel version that casts to the compute dtype
-    before sending would halve the payload; that is a week-2 optimization, not the baseline.
-    """
+    """The expert-parallel all-to-all this config would do: B * T * top_k * d fp32 values per call (an upper bound),
+    4 calls per MoE layer and step, 8 with the reversible stack."""
     if mcfg.ffn != "moe":
         return None
     B, Tn = cfg["run"]["batch_size"], mcfg.block_size
@@ -537,10 +479,10 @@ def run_comm(plan: dict, device: torch.device, reps: int) -> dict:
     W = dist.get_world_size()
     dt = {"fp32": torch.float32, "fp16": torch.float16, "bf16": torch.bfloat16}[plan["payload_dtype"]]
     n = plan["bytes_per_call"] // torch.tensor([], dtype=dt).element_size()
-    n -= n % W
+    n -= n % W                            # all_to_all_single splits the buffer evenly across ranks
     inp = torch.randn(n, device=device).to(dt)
     out = torch.empty_like(inp)
-    for _ in range(5):
+    for _ in range(5):                    # warm the communicator before timing
         dist.all_to_all_single(out, inp)
     T.sync(device)
     dist.barrier()
@@ -612,7 +554,7 @@ def memory_with_identity(memory: dict | None, meta: dict) -> dict | None:
 
 
 def compute_metrics(s: Setup, step_ms: float, peak, peak_reason: str | None = None) -> dict:
-    """Tokens/s from the clean step time; MFU and HFU from perfkit.metrics (formulas in its docstring)."""
+    """Tokens/s from the clean step time; MFU and HFU from perfkit.metrics (method: docs/METRICS.md)."""
     tokens = s.loader.B * s.loader.T
     f = M.flops_per_token(s.core, s.loader.T, s.opt.flops(), tokens)
     tps = tokens / (step_ms / 1e3)
@@ -624,10 +566,12 @@ def compute_metrics(s: Setup, step_ms: float, peak, peak_reason: str | None = No
 # ------------------------------------------------------------------------------ output
 
 def _f(x, nd=2):
+    """x with nd decimals, or '-' for None / NaN."""
     return "-" if x is None or (isinstance(x, float) and math.isnan(x)) else f"{x:.{nd}f}"
 
 
 def summary(run: dict, gate_level: int) -> str:
+    """The console summary printed after a run."""
     m, c, me = run["metrics"], run["clean"], run["meta"]
     st = c["step_ms"]
     lines = [
@@ -655,7 +599,7 @@ def summary(run: dict, gate_level: int) -> str:
         inner = {}
         for name, r in lay["regions"].items():
             if r["level"] > gate_level:
-                key = re.sub(r"expert\d+", "expert*", re.sub(r"block\d+", "block*", name))
+                key = re.sub(r"expert\d+", "expert*", re.sub(r"block\d+", "block*", name))   # one row per part type
                 inner[key] = inner.get(key, 0.0) + r["median"]
         if inner:
             lines += ["", "inside the blocks (information only, not gated; summed over layers), top 15:"]
@@ -695,11 +639,8 @@ def summary(run: dict, gate_level: int) -> str:
 
 
 def quick_compare(a: dict, b: dict, tol_pct: float, gate_level: int, abs_tol_ms: float) -> tuple:
-    """This run (a) against an earlier one (b): the whole step and every part at level <= gate_level in
-    either run, plus checkpoint save and all-to-all when both runs have them. diff = slower / faster - 1;
-    a part passes within tol_pct or less than abs_tol_ms apart (perfkit.report.gate).
-    Refused (problems) when the GPU, dtype, shapes or COMPARE_CONFIG differ. A part only one run has is
-    MISSING. A quick look on the console; the official check is perfkit.report.compare."""
+    """Console comparison of this run (a) with an earlier one (b), by the perfkit.report.gate rule.
+    The official check is perfkit.report.compare."""
     problems = []
     for k in ("gpu", "dtype", "batch_size", "seq_len", "vocab_size"):
         if a["meta"].get(k) != b["meta"].get(k):
@@ -744,6 +685,7 @@ def free_path(out_dir: Path, tag: str) -> Path:
 
 
 def write_run(run: dict, out_dir: Path, tag: str, path: Path | None = None) -> Path:
+    """Write the run JSON (NaN / inf as null) to path or a free path; returns the path."""
     out_dir.mkdir(parents=True, exist_ok=True)
     path = path or free_path(out_dir, tag)
     path.write_text(json.dumps(_finite(run), indent=1, default=str, allow_nan=False) + "\n")
@@ -770,12 +712,14 @@ def _show(p: Path) -> str:
 
 
 def _slug(s: str) -> str:
+    """A GPU name as a tag fragment: 'NVIDIA A100-SXM4-40GB' -> 'a100-sxm4-40gb'."""
     return re.sub(r"[^a-z0-9]+", "-", s.lower().replace("nvidia", "")).strip("-") or "cpu"
 
 
 # ------------------------------------------------------------------------------ main
 
 def parse(argv):
+    """(args, overrides): the shortcut flags become bench.<key>=value overrides."""
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--config", default=str(Path(__file__).resolve().parents[1] / "configs" / "base.yaml"),
                     help="default: configs/base.yaml")
@@ -809,8 +753,7 @@ def warn_timing_allocations(warns: list, count: int, mode: str) -> None:
 
 def run_once(a, overrides):
     """One complete benchmark run. Returns (exit code, path of the run JSON or None).
-
-    This is the body of the old main(). Each --repeat run calls it in its own process (repeat_run)."""
+    Each --repeat run calls it in its own process (repeat_run)."""
     cfg = load_config(a.config, overrides)
     mcfg = model_config(cfg)              # fail early on a bad config
     b = cfg["bench"]
@@ -871,7 +814,7 @@ def run_once(a, overrides):
             meta["reconstruction_err"] = err
             if err > 1e-3:
                 warns.append(f"reversible reconstruction error {err:.1e} > 1e-3: the backward rebuilds wrong inputs")
-        with buckets("first_step"):
+        with buckets("first_step"):          # compile / autotune happen here, timed apart from warmup
             _, loss0 = train_step(s)
         with buckets("warmup"):
             for _ in range(max(0, b["warmup"] - 1)):
@@ -880,7 +823,7 @@ def run_once(a, overrides):
         tel0 = M.gpu_telemetry(device)
 
         print("[bench] clean ...", flush=True)
-        def emit_gpu_sample(row, step):
+        def emit_gpu_sample(row, step):           # one live gpu_sample JSONL event per nvidia-smi row
             reason_field = next((field for field in M.REASON_FIELDS if field in row), None)
             reason = row.get(reason_field) if reason_field else None
             gpu_index = row.get("index")
@@ -966,7 +909,7 @@ def run_once(a, overrides):
         return 3, None
 
     peak, _ = M.peak_tflops(meta["gpu"], s.dtype)
-    peak = b["peak_tflops"] if b["peak_tflops"] is not None else peak
+    peak = b["peak_tflops"] if b["peak_tflops"] is not None else peak     # bench.peak_tflops overrides the table
     peak_reason = M.peak_unavailable_reason(meta["gpu"], s.dtype, peak)
     if peak_reason == "invalid_peak_tflops":
         peak = None
@@ -1060,14 +1003,17 @@ def repeat_cmd(argv, tag: str, against=None) -> list:
 
 
 def repeat_run(argv, tag: str, against=None) -> int:
-    """One --repeat run in a new Python process (module docstring: why). Returns its exit code."""
+    """One --repeat run in a new Python process. Returns its exit code.
+
+    A second run in the same process after trace mode was 26% slower on host-bound parts (A100), and a second
+    process started while the first held its GPU memory ran out of memory; separate processes agree within 2.5%."""
     env = {**os.environ, "PYTHONPATH": os.pathsep.join(filter(None, [str(ROOT), os.environ.get("PYTHONPATH")]))}
     print(f"\n[bench] repeat: {tag} in a new process", flush=True)
     return subprocess.run(repeat_cmd(argv, tag, against), env=env).returncode
 
 
 def main(argv=None):
-    """One run, or --repeat N runs compared with the first. Returns the exit code (see the module docstring)."""
+    """One run, or --repeat N runs compared with the first. Returns the exit code (module docstring)."""
     a, overrides = parse(argv)
     if a.repeat > 1 and a.run_id:
         raise SystemExit("--run-id is for one benchmark invocation; omit it with --repeat so each run gets a unique ID")
@@ -1094,8 +1040,9 @@ def main(argv=None):
 
 
 def throttle_warnings(busy: dict | None, end: dict | None) -> list:
-    """From the sample taken while steps ran. The driver's slowdown reasons decide; the SM clock alone
-    only when the driver does not report them (an idle GPU drops its clock: A100 1095 of 1410 MHz at 60 W)."""
+    """From the samples taken while steps ran and at the end: a GPU at 83 C or more, then the driver's slowdown
+    reasons; the SM clock alone only when the driver does not report them (an idle GPU drops its clock: A100
+    1095 of 1410 MHz at 60 W)."""
     out = []
     try:
         hot = max((float(t["temperature.gpu"]) for t in (busy, end) if t), default=0.0)
@@ -1114,7 +1061,7 @@ def throttle_warnings(busy: dict | None, end: dict | None) -> list:
 
 
 def rule_checks(run: dict, modes: list, cfg: dict) -> list:
-    """The instructor's rules (25 Oct) that a run can check about itself."""
+    """Checks a run can make about itself: committed code, vocabulary, level, modes, spread, MPS, compile."""
     out = []
     me = run["meta"]
     if me.get("dirty"):

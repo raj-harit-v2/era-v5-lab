@@ -19,7 +19,7 @@ class JsonlWriter:
 
     def __enter__(self):
         self.path.parent.mkdir(parents=True, exist_ok=True)
-        self._file = self.path.open("x", encoding="utf-8", newline="\n")
+        self._file = self.path.open("x", encoding="utf-8", newline="\n")    # "x": never overwrite an earlier run
         return self
 
     def __exit__(self, exc_type, exc, tb):
@@ -30,7 +30,7 @@ class JsonlWriter:
         return False
 
     def write(self, record: dict) -> None:
-        """Append and flush a record. A lock allows the sampler and step loop to share the writer."""
+        """Append and flush a record. The lock lets the GPU-sampler thread and the step-event thread share it."""
         line = json.dumps(record, separators=(",", ":"), allow_nan=False)
         with self._lock:
             if self._file is None:
@@ -58,7 +58,7 @@ def gpu_sample_record(*, run_id: str, node_id: str, gpu: dict, metrics: dict,
 
 def step_timing_record(*, run_id: str, node_id: str, rank: int, local_rank: int, step: int,
                        data_ms: float, raw_step_ms: float, timestamp: str) -> dict:
-    """Build one clean-step timing record; data_ms is host-side next_batch() time."""
+    """Build one clean-step timing record; data_ms is host time: next_batch(), plus prefetch() when it is on."""
     return {
         "schema_version": 1,
         "event": "step_timing",
@@ -74,11 +74,7 @@ def step_timing_record(*, run_id: str, node_id: str, rank: int, local_rank: int,
 
 
 class StepTimingStreamer:
-    """Resolve existing step timer pairs and write step events on a worker thread.
-
-    CUDA pairs are polled with Event.query(); elapsed_time() is called only after completion. No event
-    synchronization or JSONL I/O occurs on the training thread. CPU/MPS timers already return host timestamps.
-    """
+    """Resolve step timer pairs and write step events on a worker thread; the training thread never syncs or writes."""
 
     def __init__(self, writer: JsonlWriter, *, run_id: str, node_id: str, rank: int, local_rank: int,
                  poll_interval_s: float = 0.001):
@@ -100,6 +96,7 @@ class StepTimingStreamer:
         self._queue.put_nowait((step, data_ms, timer_kind, pair))
 
     def _run(self):
+        """Worker: wait for each step's end event, then write its step_timing record; None stops it."""
         while True:
             item = self._queue.get()
             try:
@@ -124,6 +121,7 @@ class StepTimingStreamer:
                 self._queue.task_done()
 
     def __exit__(self, exc_type, exc, tb):
+        """Write every queued step, then stop the worker."""
         self._queue.put(None)
         self._queue.join()
         if self._thread is not None:

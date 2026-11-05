@@ -1,4 +1,4 @@
-"""perfkit/report.py.
+"""perfkit/report.py: the 5% comparison's refusals and A/B labels, and the run Markdown diagnostics.
 
   * compare(): refuses a baseline pair that does not time the same committed code (other commit, dirty or unknown
     tree) or that changes a MoE setting other than dispatch; accepts and labels A/B a pair that differs only in

@@ -1,19 +1,11 @@
-"""Named timing regions that cost nothing when timing is off.  [CONTRACT implemented]
+"""Named timing regions that cost nothing when timing is off.  The API below is a contract: do not change it.
 
-The module-level API (region / phase / point / mark / use_recorder) is the contract every
-other file uses: do not change its signatures. The recorders that implement the protocol below
-(EventRecorder, ProfilerRecorder) live in perfkit/timer.py and are re-exported at the end of this file.
+    with region("block3.attn", level=2): ...      # a named piece of work
+    x = mark(x, "block3")                         # backward boundary: grad reached x
+    with phase("bwd.recompute"): ...              # prefix region names inside
 
-Model code:
-    with region("block3.attn", level=2):   ...        # a named piece of work
-    x = mark(x, "block3")                             # backward boundary: grad reached x
-    with phase("bwd.recompute"):   ...                # prefix region names inside
-
-Names become "<phase>:<name>" (e.g. "fwd:block3.attn.qkv"). Levels: 1 phases (data, fwd, bwd, opt),
-2 per layer / big parts, 3 inside a layer. A recorder ignores regions above its max_level.
-
-With no recorder active: region() returns ONE shared no-op context, mark() returns its input
-(no autograd node), phase() does nothing.
+Names become "<phase>:<name>". Levels: 1 phases, 2 per layer / big parts, 3 inside a layer. With no recorder,
+region() returns one shared no-op context and mark() returns its input. Recorders live in perfkit/timer.py.
 
 Recorder protocol:
     rec.max_level: int
@@ -32,11 +24,13 @@ _PHASE = ""    # current phase prefix
 
 
 def active():
+    """The recorder in use, or None when timing is off."""
     return _REC
 
 
 @contextmanager
 def use_recorder(rec):
+    """Send region / point / mark to rec inside the block."""
     global _REC
     prev, _REC = _REC, rec
     try:
@@ -47,6 +41,7 @@ def use_recorder(rec):
 
 @contextmanager
 def phase(name: str):
+    """Prefix region names inside the block with `name:` (nothing when timing is off)."""
     global _PHASE
     if _REC is None:
         yield
@@ -59,6 +54,7 @@ def phase(name: str):
 
 
 def region(name: str, level: int = 2):
+    """A timing context named <phase>:<name>; the shared no-op when timing is off or level > max_level."""
     rec = _REC
     if rec is None or level > rec.max_level:
         return _NULL
@@ -66,6 +62,7 @@ def region(name: str, level: int = 2):
 
 
 def point(name: str, level: int = 1):
+    """Record one instant (bench marks __bwd_start__ and __bwd_end__ with it)."""
     rec = _REC
     if rec is not None and level <= rec.max_level:
         rec.point(name, level)
@@ -83,7 +80,7 @@ class _Mark(torch.autograd.Function):
     @staticmethod
     def forward(ctx, x, rec, name, level):
         ctx.rec, ctx.name, ctx.level = rec, name, level
-        return x.view_as(x)
+        return x.view_as(x)                  # a new tensor, so autograd records this node
 
     @staticmethod
     def backward(ctx, g):

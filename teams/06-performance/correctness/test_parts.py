@@ -1,14 +1,7 @@
-"""perfkit/parts.py (the slowest parts and one trace each) and perfkit.metrics.GpuSampler (system metrics for G8).
+"""perfkit/parts.py (the slowest parts and one trace each) and perfkit.metrics.GpuSampler (no GPU needed).
 
-  * slowest_parts: leaf regions summed over layers; phases, fwd:stack / bwd:stack and regions with parts inside are
-    not parts; <x>.expert<E> is folded into <x>; the plain stack's bwd:block<i> segments are parts.
-  * cut_trace on a hand-made GPU trace: only the last profiled step; the CPU events inside the region; the kernels
-    it launched (by correlation ID), even when they run after the CPU range ends; not the kernels of other parts;
-    launch arrows and thread names kept; bwd:<name> segments cut between mark() points; the size cap keeps
-    an evenly spaced sample of a repeated region's calls (first to last, not the front half) before it drops
-    CPU detail.
-  * GpuSampler: nothing off CUDA; CSV parsing and the summary; end to end against a fake nvidia-smi on PATH.
-No GPU needed.
+Covers which regions are parts, cut_trace on a hand-made trace (last step, correlation IDs, arrows, the size cap)
+and GpuSampler against a fake nvidia-smi.
 """
 from __future__ import annotations
 

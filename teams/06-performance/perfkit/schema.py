@@ -1,11 +1,9 @@
-"""The run JSON: what bench writes and what report and G8 read.  [CONTRACT]
+"""The run JSON that bench writes and report and G8 read.  REQUIRED is the source of truth (contract).
 
-bench.py must produce it; report.py and the G8 exporter consume it. REQUIRED below is the source of truth:
-docs/PLAN.md section 2.6 is a copy of it.
-New fields can be added freely. Renaming or removing one breaks report, metrics and G8: agree it first.
+New fields can be added freely; renaming or removing one breaks report, metrics and G8, so agree it first.
 
     problems = validate_run(run_dict)      # [] when the run has every required field
-    run = example_run()                    # a hand-made run, so the report can be built before bench exists
+    run = example_run()                    # a hand-made run, for tests
 """
 from __future__ import annotations
 
@@ -39,6 +37,7 @@ MFU_METHODS = ("g6-v1", "g6-v2")          # see docs/METRICS.md; a file with no 
 
 
 def _get(d, dotted):
+    """d[a][b]... for 'a.b'; KeyError naming the dotted path when a level is missing."""
     for k in dotted.split("."):
         if not isinstance(d, dict) or k not in d:
             raise KeyError(dotted)
@@ -47,6 +46,7 @@ def _get(d, dotted):
 
 
 def validate_run(run: dict) -> list:
+    """[] when the run has every required field and consistent MFU fields; else one line per problem."""
     problems = []
     for section, keys in REQUIRED.items():
         if section not in run:
@@ -103,6 +103,7 @@ def validate_run(run: dict) -> list:
 
 
 def _s(median):
+    """Example stats around a median."""
     return {"median": median, "p10": median * 0.98, "p90": median * 1.03, "iqr": median * 0.02, "n": 50}
 
 

@@ -4,7 +4,7 @@
 run:
   device: auto          # auto | cuda | cpu | mps
   dtype: bf16           # bf16 | fp16 (T4 / P100 / V100) | fp32
-  batch_size: 16        # B, always from here. 32 fits A100 / L4 / H100; use 8 on T4 / P100 / V100 (fp32 logits are 8 GB at 32)
+  batch_size: 16        # B, always from here. 32 fits A100 / L4 / H100; 8 on T4 / P100 / V100 (fp32 logits + grad: 8 GiB at 32)
   seed: 42
   compile: false
   grad_clip: 1.0

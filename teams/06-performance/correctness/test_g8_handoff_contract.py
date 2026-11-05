@@ -1,11 +1,7 @@
-"""Focused G6 Task 6 -> G8 producer-side handoff regression tests.
+"""G6 -> G8 hand-off, producer side: the run JSON and JSONL events G8 ingests.
 
-Place in teams/06-performance/correctness/test_g8_handoff_contract.py.
-These tests cover only NEW boundary cases beyond correctness/test_events.py:
-shared run IDs across nodes, strict JSON numbers, G6/G8 timing units,
-and compatibility between interleaved GPU/step JSONL records.
-
-They do NOT test G8 ClickHouse ingestion, Grafana, or review/sign-off.
+Covers shared run IDs across nodes, strict JSON numbers, timing units and interleaved GPU / step records, beyond
+test_events.py. Not G8 ingestion or dashboards.
 """
 
 import json

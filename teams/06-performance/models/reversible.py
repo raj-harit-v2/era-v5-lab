@@ -1,31 +1,14 @@
-"""Reversible midpoint stack.  [implemented: MVP]
+"""Reversible midpoint stack: p_next = p_prev + 2h * f(p_curr), inverse p_prev = p_next - 2h * f(p_curr).
 
-    p_next = p_prev + 2h * f(p_curr)        inverse: p_prev = p_next - 2h * f(p_curr)
-Blocks provide update(prev, curr) and invert(prev_out, curr_out) (models/gpt.py: Block).
-This needs a purely additive stream: the LayerNorms sit inside f (pre-LN), never LN(x + f(x)).
+Blocks provide update(prev, curr) and invert(prev_out, curr_out) (models/gpt.py: Block); f must be pre-LN.
 
-  * ReversibleStack(torch.autograd.Function): apply(x, blocks) -> final state.
-    Forward under no_grad, start a = b = x, then a, b = b, blk.update(a, b). Saves only (a, b), plus
-    the MoE routing of every layer (top-k indices, uint8: ~300 KB at B=32, T=512, 9 layers).
-    Backward per block, in reverse, each part timed:
-        with region(f"block{i}", 2):
-            with phase("bwd.invert"), region(f"block{i}", 3):     rebuild the previous state
-            with phase("bwd.recompute"), region(f"block{i}", 3):  forward of f again with grad
-            with region(f"block{i}.grad", 3):                     local backward
-    Invert and recompute REPLAY the forward's routing (models/moe.py): a rebuilt state is off by ~1e-5,
-    enough to flip near-tie tokens to other experts, and then the rebuilt state is wrong.
-    So a reversible block costs ~4x its forward in backward (vs ~2x for a plain block): the price of
-    O(1) activation memory. Backward re-enters autocast with the forward's dtype, or the
-    reconstruction drifts.
-  * ReversibleOnePassStack: same forward as ReversibleStack; backward evaluates f once on the curr
-    state (b = po), rebuilds prev as co - 2h f(b), and backprops 2h g_curr through that f. Same
-    MoE routing replay. Selected when model.rev_impl=one_pass; two_pass stays the reference.
-  * plain_forward(x, blocks): the same maths with normal autograd. The reference for tests.
-  * reconstruction_error(x, blocks): run forward, invert every block, return ||x' - x|| / ||x||.
-    Grows with depth: check it for every new config (bf16: ~1e-4 at 6 to 9 layers).
-  * Forward regions: region(f"block{i}", 2) around each update.
-
-Done when: correctness/test_reversible.py passes (gradients vs plain_forward, and inversion rebuilds x).
+  * ReversibleStack.apply(x, blocks): forward under no_grad from a = b = x, saving only (a, b) and each layer's
+    MoE routing. Backward per block, in reverse: invert, recompute f with grad, local backward, each timed
+    (region block{i}, level 2; bwd.invert / bwd.recompute / block{i}.grad, level 3). Invert and recompute replay
+    the routing, or near-tie tokens flip experts. Backward re-enters autocast with the forward's dtype.
+  * ReversibleOnePassStack: one f evaluation in backward (model.rev_impl=one_pass); two_pass is the reference.
+  * plain_forward(x, blocks): the same maths with normal autograd, the test reference.
+  * reconstruction_error(x, blocks): ||x' - x|| / ||x|| after invert; grows with depth, check every new config.
 """
 from __future__ import annotations
 
@@ -40,6 +23,7 @@ no_grad = torch.no_grad
 
 
 def _autocast_state(device_type):
+    """(enabled, dtype) of autocast on this device, so backward can re-enter the forward's precision."""
     try:
         return torch.is_autocast_enabled(device_type), torch.get_autocast_dtype(device_type)
     except TypeError:  # torch < 2.4
@@ -49,6 +33,7 @@ def _autocast_state(device_type):
 
 
 def _moes(blk):
+    """Every SparseMoE in a block, in module order: the order routes are recorded and replayed in."""
     return [m for m in blk.modules() if isinstance(m, SparseMoE)]
 
 
@@ -66,6 +51,7 @@ def _forward_recording(blocks, x):
 
 
 def _replaying(blk, route):
+    """A context in which every MoE of blk replays its recorded routing."""
     st = ExitStack()
     for m, idx in zip(_moes(blk), route):
         st.enter_context(replay_routing(m, idx))
@@ -73,6 +59,7 @@ def _replaying(blk, route):
 
 
 def plain_forward(x, blocks):
+    """The same midpoint recurrence with ordinary autograd: the test reference."""
     a, b = x, x
     for blk in blocks:
         a, b = b, blk.update(a, b)
@@ -81,6 +68,7 @@ def plain_forward(x, blocks):
 
 @no_grad()
 def reconstruction_error(x, blocks) -> float:
+    """||x' - x|| / ||x|| after running the stack forward and inverting every block."""
     po, co, routes = _forward_recording(blocks, x)
     for i in reversed(range(len(blocks))):
         with _replaying(blocks[i], routes[i]):
@@ -89,6 +77,8 @@ def reconstruction_error(x, blocks) -> float:
 
 
 class ReversibleStack(torch.autograd.Function):
+    """Two-pass backward: per block, invert to rebuild prev, recompute f with grad, then the local backward."""
+
     @staticmethod
     def forward(ctx, x, blocks):
         ctx.blocks, ctx.dev = blocks, x.device.type
@@ -120,7 +110,7 @@ class ReversibleStack(torch.autograd.Function):
                             d = blk.update(a, b)
                         with region(f"block{i}.grad", 3):
                             torch.autograd.backward(d, g_curr)
-                    g_prev, g_curr = a.grad, g_prev + b.grad
+                    g_prev, g_curr = a.grad, g_prev + b.grad     # gradients of (prev, curr) from (curr, next)
                     po, co = rec_prev, po
         ctx.routes = None
         return g_prev + g_curr, None
@@ -157,7 +147,7 @@ class ReversibleOnePassStack(torch.autograd.Function):
                             f_b = blk.f(b)
                         with region(f"block{i}.grad", 3):
                             torch.autograd.backward(f_b, 2.0 * blk.h * g_curr)
-                    rec_prev = (co - 2.0 * blk.h * f_b.detach())
+                    rec_prev = (co - 2.0 * blk.h * f_b.detach())   # invert with the f just computed: no second pass
                     g_prev, g_curr = g_curr, g_prev + b.grad
                     po, co = rec_prev, po
         ctx.routes = None

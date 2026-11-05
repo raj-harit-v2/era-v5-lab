@@ -1,43 +1,13 @@
 """MoE: every dispatch in models.moe.DISPATCH against a token-by-token fp64 reference.
 
-Reference (written from the models/moe.py docstring, never by calling SparseMoE.forward or a dispatch; it reads only
-the module's weights): for each token on its own, fp64 router logits -> softmax -> top-k on (scores + router_bias)
-by a plain sort -> gates = the chosen scores renormalised to 1 -> sum gate * expert(token) + every shared expert.
-GELU by its erf formula. Only the chosen experts run, so an expert with no tokens has no gradient on either side.
+Reference (from the models/moe.py docstring, reading only the weights): per token, fp64 router -> softmax ->
+top-k on (scores + router_bias) by a sort -> renormalised gates -> sum gate * expert + every shared expert.
 
-Pairs, one set per dispatch (a new fast dispatch in DISPATCH is tested with no change here):
-  moe.<d>            lab shape: 8 experts, top-2, 1 shared; x [2, 37, 64]; fp32, outputs and every gradient
-  moe.<d>.idle       as above, expert 7 never chosen (router_bias -10): the dispatch skips it, its gradient is None
-  moe.<d>.top3       top-3 of 4, no shared expert. Not top-1: renormalised top-1 gates are s / s = 1, so the router
-                     gradient is exactly 0 and fp32 rounding noise (~1e-8) against 0 is not a relative error
-  moe.<d>.bf16       the lab init under bf16 autocast, TOLERANCES[bfloat16]. In bf16 a token can pick other experts
-                     than in fp64, so this reference REPLAYS the fast routing (the expert choice only; gates and
-                     experts are still fp64). bf16 pairs are not in the 1.01 drill (framework.py: Precision).
-  moe.<d>.swiglu     as moe.<d>, every routed and shared expert SwiGLU (model.activation=swiglu): the reference
-                     expert is W_down @ (SiLU(W_gate x) * W_up x), SiLU by its formula, no biases. Gate and up
-                     weights x10 so SiLU works in its curved region, not at z ~ 0 where SiLU(z) ~ z/2.
-  moe.<d>.swiglu.bf16  moe.<d>.bf16 with SwiGLU experts (routing replayed, as above).
-The fp32 pairs route in the reference on their own (no replay), so the pairs check the expert choice too, not only
-expert math, gates and gradients. They use a large router init (logits std ~4) and a non-zero router_bias, and the
-builder asserts every routing margin is > 1e-6, so fp32 and fp64 never pick different experts. The seed is fixed, so
-the margins are too; if that assert fires after a change, change SEED.
-The 1.01 drill and the determinism check run on every registered pair (test_framework.py, framework.check).
-
-Routing replay (models/reversible.py relies on it), deterministic:
-  * replay_routing(moe, idx) with idx from record_routing gives exactly the normal forward and gradients.
-  * near tie: router row 2 = row 1 + 1e-6 * noise, and a selection bias that makes experts 1 and 2 compete for the
-    second slot of every token. Record on x, then run x + 1e-4 * noise: without replay some token's top-k changes,
-    with replay none does, and the router still gets a gradient (the gates come from the router scores).
-    Measured: without the selection bias the flips depend on the seed (0 flips for 2 seeds of 5 at 74 tokens).
-    This is the reversible failure: a reconstructed input ~1e-5 off flips a near-tie token.
-  * clear switch: experts 1 and 2 differ only on coordinate 0, and x moves from -1e-3 to +1e-3 there, so every token
-    switches from expert 1 to expert 2 without replay, and replay must hold expert 1. No dependence on rounding.
-
-Property tests (no pair): router_bias changes the selection but not the gate values; update_bias() moves the bias
-by +-gamma toward balance and clears the counts; counts sum to N * top_k in training and are not kept in eval;
-the shared expert runs on every token; the router runs in fp32 under bf16 autocast (same expert choice as
-fp32); with the lab init f is on the dense MLP's scale (measured 1.22x at
-lab_small width; PyTorch's default Linear init gives 9.4x).
+Pairs per dispatch <d>: moe.<d> (8 experts, top-2, 1 shared), .idle (one expert never chosen), .top3 (top-3 of 4,
+no shared), .bf16 (routing replayed), .swiglu, .swiglu.bf16. The fp32 pairs route on their own, and the builder
+asserts every routing margin is > 1e-6; if that fires after a change, change SEED.
+Routing replay: replay gives the normal forward, holds the choice across a near tie and a clear switch.
+Properties: router_bias changes selection not gates, update_bias, counts, shared expert, fp32 router, init scale.
 """
 from __future__ import annotations
 
@@ -77,11 +47,8 @@ def ref_expert(m, x):
 
 
 def reference_moe(moe, x, forced=None, margins=None):
-    """fp64 MoE one token at a time. moe: an fp64 copy of the module; x [..., dim] fp64.
-
-    forced [N, k]: use this expert choice instead of the top-k (the replayed routing). margins: if a list, the gap
-    between the k-th and (k+1)-th biased score of every token is appended (a near tie could flip fp32 vs fp64).
-    """
+    """fp64 MoE one token at a time; moe is an fp64 copy of the module, x [..., dim] fp64.
+    forced [N, k]: replay this expert choice. margins: a list to append each token's k-th vs (k+1)-th score gap to."""
     shape = x.shape
     x = x.reshape(-1, shape[-1])
     E, k = moe.num_experts, moe.top_k

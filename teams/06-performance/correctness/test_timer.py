@@ -1,25 +1,10 @@
-"""Task 1 (G6-W1-01), step timer: the "Done when" of G6_Team_Task_Plan.md, as tests.
+"""perfkit/timer.py and perfkit/regions.py: the off switch costs nothing, and times are recorded correctly.
 
-    "a unit test proves the off switch adds no overhead and that the times are recorded correctly"
-
-The timer was written in perfkit/timer.py and perfkit/regions.py (first version: shank343, vaibh27/era-v5-lab#2,
-reviewed and merged since). It had no test of its own. This file adds the two proofs the plan asks for:
-
-  1. The off switch. With no recorder active, region() / phase() / point() / mark() must do nothing:
-     region() returns ONE shared no-op context, mark() returns its input (no autograd node), nothing is
-     recorded and nothing is allocated. We prove it by structure (identity checks and a spy recorder that must
-     never be called), and with a loose time bound as a safety net. We do not assert a tight time: a
-     microsecond-level timing test would be flaky on a shared CI machine.
-  2. The times are recorded correctly. A known sleep must show up as about that many ms, nested regions must
-     nest, levels above max_level must be ignored, names get their phase prefix, points keep their order, and
-     stats() must return the right numbers for a known list.
-  3. (CUDA only, skipped without a GPU) Deferred sync: no host sync happens while regions are recorded; the
-     events are read once, afterwards.
-  4. StepTimer and EventPool bookkeeping: expected_steps validation, CUDA events made before the steps (and
-     an error when they run out), reset() refuses an open step and syncs before reusing events on CUDA, and the
-     created-events counter stays cumulative across resets.
-
-Everything except the CUDA test runs on the CPU, where perf_counter is exact.
+  1. Off switch: with no recorder, region() is one shared no-op, mark() returns its input, nothing is recorded
+     (checked by identity and a spy recorder, with a loose time bound).
+  2. Recording: a known sleep, nesting, max_level, phase prefixes, point order, stats() on a known list.
+  3. CUDA only: no host sync while regions are recorded.
+  4. StepTimer and EventPool bookkeeping, reset() rules, cumulative counters.
 """
 from __future__ import annotations
 
@@ -188,8 +173,7 @@ def test_stats_of_a_known_list():
 
 
 def test_stats_has_mean_and_std():
-    # Task 2 of the team plan asks for "p50, p90, mean and std". The median stays the number we gate on;
-    # mean and std are extra keys.
+    # The median stays the number we gate on; mean and std are extra keys.
     s = stats([2, 4, 4, 4, 5, 5, 7, 9])
     assert s["mean"] == pytest.approx(5.0)
     assert s["std"] == pytest.approx(2.13809, rel=1e-4)      # sample std (n - 1): sqrt(32 / 7)
