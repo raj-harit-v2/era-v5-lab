@@ -1,5 +1,7 @@
 # Task 8, Part 3: Dense MLP (`blockN.mlp`)
 
+**Author:** @narasimhatejav
+
 ## Task
 Rotation task (G6, Task 8): profile one part of the training step. This report covers **Part 3, Dense MLP
 (`blockN.mlp`)**. It reports:
@@ -7,9 +9,13 @@ Rotation task (G6, Task 8): profile one part of the training step. This report c
 - whether each one is compute-bound, memory-bound or launch-bound, and one idea to speed it up
 - the trace file, the GPU name and the commit ID
 
+## Raw outputs
+Full JSON/JSONL logs, parts and head-loss traces: https://gist.github.com/narasimhatejav/6edc31929c89a2ca036837083bfb2189
+
 ## Setup
 | | |
 |---|---|
+| **Author** | @narasimhatejav |
 | **GPU** | Tesla T4 (1 of 2 on Kaggle), fp16 autocast (T4 has no native bf16) |
 | **Commit** | `a2c6656604d4a0cdbb848c6abc32658e8298a1bf` (g6/dev) |
 | **Shape** | B x T = 8 x 256, n_embd 256, MLP 256 → 1024 → 256, GELU, 6 layers |
