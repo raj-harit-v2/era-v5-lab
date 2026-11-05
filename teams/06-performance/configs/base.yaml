@@ -23,6 +23,7 @@ model:                  # fields of models.config.ModelConfig, nothing else
   n_head: 8
   n_kv_head: null       # GQA key/value heads; null = n_head (plain multi-head)
   n_embd: 256
+  ln_impl: torch_ln    # torch_ln | triton_ln (CUDA/Triton)
   attn_impl: eager      # sdpa | eager (explicit softmax, G5 config_v0: two seeds match)
   position: learned     # learned (position table) | rope (rotary q and k, full head dim)
   rope_theta: null      # RoPE base; required with position: rope (no default: G5 to confirm), ignored by learned

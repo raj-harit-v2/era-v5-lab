@@ -28,7 +28,7 @@ The "Likely bottleneck" column was written before the baseline. The v0 traces (`
 | KE2 code + projection | `embed.ke` (3) | `model.embedding: ke2` (default) | memory | already one `embedding_bag` over the support columns; fuse the position add |
 | KE v1 codec + projection | `embed.ke` (3) | `model.ke_mode: dynamic \| cached` → sparse | memory (8192-dim codec) | gather + sum (`embedding_bag`), fuse the position add |
 | Position add | `embed` (2) | | memory | fuse into the KE kernel |
-| LayerNorm × 2 per block | `blockN.ln1`, `blockN.ln2` (3) | `model.norm_impl: torch → fused` | memory | fuse with the residual add or the next matmul |
+| LayerNorm × 2 per block | `blockN.ln1`, `blockN.ln2` (3) | `model.ln_impl: torch_ln → triton_ln` | memory | compare the Triton row-wise kernel with PyTorch; fusion with surrounding ops is a later option |
 | QKV matmul + head split | `blockN.attn.qkv` (3) | | compute | tensor-core-friendly shapes, fused split |
 | Attention kernel | `blockN.attn.sdpa` (3) | `model.attn_impl: eager \| sdpa` (default eager) → flash3 / flex | compute / memory | FlashAttention-3 (H100), FA4 / cuDNN (B200) |
 | Output copy + projection | `blockN.attn.proj` (3) | | memory (the copy) | a layout that needs no copy |
@@ -37,7 +37,7 @@ The "Likely bottleneck" column was written before the baseline. The v0 traces (`
 | MoE dispatch: gather, experts, combine | `blockN.moe.dispatch` (3), `.dispatch.expertE` (3); sorted path adds `.dispatch.grouped` | `model.moe.dispatch: loop → sorted` | **host syncs + launch** | sort routes, pack them per expert, run one batched matmul per projection (one host sync for the largest group) |
 | Shared experts | `blockN.moe.shared` (3) | | compute | batch with the routed experts |
 | Residual / midpoint arithmetic | inside `blockN` (2) | | memory | fusion |
-| Final LN + LM head + cross-entropy | `head+loss` (2) | `model.ce_impl: torch → chunked → fused` | **memory (fp32 logits)** | token-chunked fused linear CE caches gradients in forward |
+| Final LN + LM head + cross-entropy | `head+loss` (2); `head+loss.ln_f` (3) isolates the final LN forward | `model.ln_impl`, `model.ce_impl` | **memory (fp32 logits)** | compare LN separately and token-chunked/fused CE options |
 | MTP head + its cross-entropy (`model.mtp=true`) | `head+loss.mtp` (3), inside `head+loss` | `model.mtp` | memory (a second set of fp32 logits) | the same fused cross-entropy |
 | Backward of every part above | `bwd:<part>` | same switches | ~2× forward | follows the forward fixes |
 | Reversible: invert, recompute, local backward | `bwd.invert:blockN`, `bwd.recompute:blockN`, `bwd:blockN.grad` (3) | `model.reversible` | ~2× extra forward | fuse invert + recompute, cache cheap pieces |
