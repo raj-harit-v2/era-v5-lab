@@ -11,7 +11,11 @@ One table of measured runs for baseline, CE A/B, and MoE dispatch. Fill empty ar
 | Recommendation | Draft below |
 | Repeat check scope | Windows WDDM out of scope ([repeat_check_v1 §4](repeat_check_v1.md#4-rtx-5070-ti-windows-wddm--out-of-scope-2727-code-parts-pass-windows-disk-gap-recorded)) |
 
-**Windows WDDM is out of scope for benchmark gating.** No row in this pack comes from a Windows run. On Windows, all 27 code parts passed the repeat check (at most 2.18%); only `checkpoint save` failed, with gaps of 7.65–9.52% attributed to Windows disk variance. The same GPU passes `checkpoint save` on Linux at 0.29–2.8%. Evidence and decision: [repeat_check_v1 §4](repeat_check_v1.md#4-rtx-5070-ti-windows-wddm--out-of-scope-2727-code-parts-pass-windows-disk-gap-recorded).
+---
+
+## Repeat check
+
+Windows WDDM is out of scope for benchmark gating. No row in this pack comes from a Windows run. On Windows, all 27 code parts passed the repeat check (at most 2.18%); only `checkpoint save` failed, with gaps of 7.65–9.52% attributed to Windows disk variance. The same GPU passes `checkpoint save` on Linux at 0.29–2.8%. Evidence and decision: [repeat_check_v1 §4](repeat_check_v1.md#4-rtx-5070-ti-windows-wddm--out-of-scope-2727-code-parts-pass-windows-disk-gap-recorded).
 
 ---
 
