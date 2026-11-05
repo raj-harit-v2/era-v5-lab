@@ -107,6 +107,7 @@ sys.path.insert(0, str(ROOT))
 from dataio.loader import Loader  # noqa: E402
 from dataio.tokenizer import REVISION as TOKENIZER_REVISION, SHA256 as TOKENIZER_SHA256, VOCAB_SIZE as BRAHMIC_VOCAB  # noqa: E402
 from models.config import load_config, model_config  # noqa: E402
+from kernels.layer_norm import layer_norm_backend_report  # noqa: E402
 from models.gpt import GPT  # noqa: E402
 from models.optim import build_optimizer  # noqa: E402
 from perfkit import metrics as M  # noqa: E402
@@ -230,6 +231,10 @@ def build(cfg: dict, device: torch.device) -> Setup:
         notes.append(f"optim.schedule={schedule} is ignored: bench times every step at the base learning rate")
     core = GPT(mcfg, loader.token_bytes(mcfg.ke_max_pos) if mcfg.embedding == "ke1" else None).to(device)
     core.train()
+    if mcfg.ln_impl == "triton_ln":
+        for entry in layer_norm_backend_report(core):
+            if entry["backend"] != "triton_ln":
+                notes.append(f"LayerNorm {entry['module']} falls back to torch_ln: {entry['reason']}")
     model = torch.compile(core) if run["compile"] else core
     opt = build_optimizer(core, cfg["optim"])
     scaler = torch.amp.GradScaler("cuda") if (device.type == "cuda" and dtype == "fp16") else None
@@ -581,6 +586,7 @@ def run_metadata(s: Setup, config_file: str, overrides: list, tag: str,
         "tokenizer": {"name": "BrahmicTokenizer-131K", "revision": TOKENIZER_REVISION, "sha256": TOKENIZER_SHA256,
                       "vocab_size": s.loader.vocab_size},
         "lr_schedule": s.cfg["optim"]["schedule"],
+        "layer_norm": {"requested": s.mcfg.ln_impl, "modules": layer_norm_backend_report(s.core)},
         "bench_version": BENCH_VERSION,
         "timing": {"cuda": "cuda_events", "mps": "sync_per_boundary", "cpu": "perf_counter"}.get(s.device.type),
     })

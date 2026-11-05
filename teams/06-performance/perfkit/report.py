@@ -47,6 +47,7 @@ COMPARE_CONFIG = [
 IMPL_SWITCHES = [
     ("model", "moe", "dispatch"),
     ("model", "ce_impl"),
+    ("model", "ln_impl"),
     ("model", "rev_impl"),  # two_pass vs one_pass: same update, different backward
     ("optim", "muon_impl"),
     ("optim", "adamw_impl"),
@@ -57,6 +58,7 @@ IMPL_SWITCHES = [
 _MODEL_COMPARE_DEFAULTS = {
     "tie_embeddings": False,  # base.yaml; ke* was always untied; table+missing was legacy-tied but rare in runs
     "rev_impl": "two_pass",
+    "ln_impl": "torch_ln",
 }
 
 

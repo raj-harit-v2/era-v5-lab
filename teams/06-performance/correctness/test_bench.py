@@ -177,6 +177,18 @@ def test_run_metadata_records_the_tokenizer():
     assert len(auto_ids) == 2 and all(len(run_id) == 32 for run_id in auto_ids)
 
 
+def test_layer_norm_fallback_is_reported_in_notes_and_metadata():
+    cfg = tiny_cfg()
+    cfg["model"]["ln_impl"] = "triton_ln"
+    s = bench.build(cfg, torch.device("cpu"))
+    meta = bench.run_metadata(s, "configs/tiny_cpu.yaml", [], "ln-fallback")
+    assert meta["layer_norm"]["requested"] == "triton_ln"
+    assert meta["layer_norm"]["modules"]
+    assert all(entry["backend"] == "torch_ln" and entry["reason"]
+               for entry in meta["layer_norm"]["modules"])
+    assert any("falls back to torch_ln" in note for note in meta["notes"])
+
+
 def test_run_id_and_node_id_can_be_set_for_g8_handover():
     s = bench.build(tiny_cfg(), torch.device("cpu"))
     meta = bench.run_metadata(s, "configs/tiny_cpu.yaml", [], "t", run_id="shared-exp", node_id="node-a")
@@ -295,6 +307,15 @@ def test_quick_compare_allows_muon_implementation_variant():
     a, b = _two_runs()
     a["config"]["optim"]["muon_impl"] = "loop"
     b["config"]["optim"]["muon_impl"] = "batched"
+    rows, ok, problems = bench.quick_compare(a, b, 5.0, 2, 0.0)
+    assert ok and not problems
+    assert "step (clean)" in [row[0] for row in rows]
+
+
+def test_quick_compare_allows_layer_norm_variant():
+    a, b = _two_runs()
+    a["config"]["model"]["ln_impl"] = "torch_ln"
+    b["config"]["model"]["ln_impl"] = "triton_ln"
     rows, ok, problems = bench.quick_compare(a, b, 5.0, 2, 0.0)
     assert ok and not problems
     assert "step (clean)" in [row[0] for row in rows]

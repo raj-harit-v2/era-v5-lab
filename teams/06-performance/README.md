@@ -37,7 +37,7 @@ Everything is driven by config: a new model is a new YAML file in `configs/`, no
 
 `model.ce_impl=triton_ce` selects the in-repo Triton CE reduction kernel. Existing `torch`, `chunked`, `fused`, `fused_cached`, `fused_liger`, and `fused_cce` values remain available for comparison; the last two are PyTorch references inspired by upstream algorithms. See [`docs/LINEAR_CE.md`](docs/LINEAR_CE.md) for A100/H100 correctness checks and matched benchmark commands.
 
-`model.ln_impl=torch_ln|triton_ln` selects PyTorch LayerNorm (default) or the in-repo Triton version for both pre-LN block norms and `ln_f`. Level-3 layer timing records `fwd:blockN.ln1`, `fwd:blockN.ln2`, and `fwd:head+loss.ln_f`. See [`docs/LAYER_NORM.md`](docs/LAYER_NORM.md) for correctness and benchmark commands.
+`model.ln_impl=torch_ln|triton_ln` selects PyTorch LayerNorm (default) or the in-repo Triton version for both pre-LN block norms and `ln_f`. The Triton module falls back to PyTorch for unsupported inputs; `meta.layer_norm` and printed notes identify each resolved backend. Its deterministic backward scratch is bounded by GPU SM count and skips frozen parameter gradients. Level-3 timing records `fwd:blockN.ln1`, `fwd:blockN.ln2`, `fwd:head+loss.ln_f`, and the eager backward stages `bwd:ln.triton.rows` / `bwd:ln.triton.params`. See [`docs/LAYER_NORM.md`](docs/LAYER_NORM.md) for correctness and benchmark commands.
 
 ## Folder layout
 
