@@ -132,7 +132,10 @@ class ConfigTests(unittest.TestCase):
         c=load_runtime(TEAM/"configs/arms/t1.yaml")
         self.assertIs(c["model"]["reversible"],False)
         self.assertIs(c["model"]["mtp"],False)
-        self.assertIsNone(c["model"]["mtp_weight"])
+        self.assertEqual(c["model"]["mtp_weight"],0.0)
+        self.assertEqual(c["model"]["rope_theta"],10000.0)
+        self.assertEqual(c["model"]["norm_eps"],1.0e-5)
+        self.assertIs(c["model"]["moe"]["bias"],False)
         self.assertEqual(c["model"]["moe"]["dispatch"],"loop")
         self.assertEqual(c["model"]["ce_impl"],"torch")
         self.assertEqual(c["optim"]["lr"],0.001)
@@ -151,8 +154,8 @@ class ConfigTests(unittest.TestCase):
             for component in path.split("."):
                 self.assertIn(component,node,path);node=node[component]
         self.assertEqual(metadata["evaluation.boundary_policy"]["supported"],[config["evaluation"]["boundary_policy"]])
-    def test_unresolved_baseline_rejected(self):
-        self.assertTrue(validate(load_runtime(TEAM/"configs/arms/t1.yaml")))
+    def test_runtime_test_settings_resolve(self):
+        self.assertEqual(validate(load_runtime(TEAM/"configs/arms/t1.yaml")),[])
     def test_all_five_lead_lr_arms(self):
         for filename,expected in [("lr_1e-4.yaml",1e-4),("lr_3e-4.yaml",3e-4),("lr_1e-3.yaml",1e-3),("lr_3e-3.yaml",3e-3),("lr_1e-2.yaml",1e-2)]:
             c=load_runtime(TEAM/"configs/arms/exp1"/filename)

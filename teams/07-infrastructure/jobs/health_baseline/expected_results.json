@@ -1,0 +1,81 @@
+{
+  "schema": "v5-health-baseline-expected/1",
+  "about": "What a known-good node must show. summarize_baseline.py checks every run against the profile that matches expected_gpus. 'status' lists the allowed statuses for every instance of that check (per-GPU checks appear once per GPU). 'optional' means the check may be absent. Nothing here is a bandwidth number: those are what the job measures.",
+  "runs": 5,
+  "run_to_run": {
+    "min_bytes": 67108864,
+    "max_busbw_spread_pct": 10,
+    "about": "(max - min) / median of busbw across the runs, for messages of at least min_bytes. A larger spread is reported as a WARNING, not a failure: it means 0.9 x median is not a safe floor yet."
+  },
+  "profiles": {
+    "cpu": {
+      "when": "expected_gpus == 0",
+      "mode": "full",
+      "backend": "gloo",
+      "min_world_size": 2,
+      "bandwidth_is_meaningful": false,
+      "verdict": ["pass"],
+      "admit_training": true,
+      "checks": {
+        "gpu_inventory": {"status": ["skipped", "pass"]},
+        "xid": {"status": ["pass", "skipped"]},
+        "clock_offset": {"status": ["pass", "skipped"], "optional": true},
+        "nvme_free": {"status": ["pass", "skipped"], "optional": true},
+        "host_mem": {"status": ["pass"]},
+        "dcgm_diag": {"status": ["pass", "skipped"], "optional": true},
+        "nccl_all_reduce": {"status": ["pass"]},
+        "nccl_reduce_scatter": {"status": ["pass"]},
+        "nccl_all_gather": {"status": ["pass"]},
+        "nccl_all_to_all": {"status": ["pass"]}
+      }
+    },
+    "gpu1": {
+      "when": "expected_gpus == 1",
+      "mode": "prolog",
+      "about": "One GPU cannot run a collective (it needs at least 2 ranks), so there is no bandwidth baseline. This profile still checks GPU count, ECC, temperature, Xid and the host.",
+      "verdict": ["pass"],
+      "admit_training": true,
+      "checks": {
+        "gpu_inventory": {"status": ["pass"]},
+        "ecc_uncorrectable": {"status": ["pass"]},
+        "gpu_temperature": {"status": ["pass"], "optional": true},
+        "pcie_link": {"status": ["pass"], "optional": true},
+        "gpu_throttle": {"status": ["pass"], "optional": true},
+        "remapped_rows": {"status": ["pass", "skipped"], "optional": true},
+        "nvlink": {"status": ["pass", "skipped"], "optional": true},
+        "xid": {"status": ["pass", "skipped"]},
+        "clock_offset": {"status": ["pass", "skipped"], "optional": true},
+        "nvme_free": {"status": ["pass", "skipped"], "optional": true},
+        "host_mem": {"status": ["pass"]},
+        "dcgm_diag": {"status": ["pass", "skipped"], "optional": true}
+      }
+    },
+    "gpu": {
+      "when": "expected_gpus >= 2",
+      "mode": "full",
+      "backend": "nccl",
+      "min_world_size": 2,
+      "bandwidth_is_meaningful": true,
+      "verdict": ["pass"],
+      "admit_training": true,
+      "checks": {
+        "gpu_inventory": {"status": ["pass"]},
+        "ecc_uncorrectable": {"status": ["pass"]},
+        "gpu_temperature": {"status": ["pass"], "optional": true},
+        "pcie_link": {"status": ["pass"], "optional": true},
+        "gpu_throttle": {"status": ["pass"], "optional": true},
+        "remapped_rows": {"status": ["pass", "skipped"], "optional": true},
+        "nvlink": {"status": ["pass", "skipped"], "optional": true},
+        "xid": {"status": ["pass", "skipped"]},
+        "clock_offset": {"status": ["pass", "skipped"], "optional": true},
+        "nvme_free": {"status": ["pass", "skipped"], "optional": true},
+        "host_mem": {"status": ["pass"]},
+        "dcgm_diag": {"status": ["pass", "skipped"], "optional": true},
+        "nccl_all_reduce": {"status": ["pass"]},
+        "nccl_reduce_scatter": {"status": ["pass"]},
+        "nccl_all_gather": {"status": ["pass"]},
+        "nccl_all_to_all": {"status": ["pass"]}
+      }
+    }
+  }
+}

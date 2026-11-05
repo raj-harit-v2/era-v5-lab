@@ -1,0 +1,351 @@
+{
+ "schema": "v5-health/1",
+ "timestamp_utc": "2026-11-01T14:58:04.587Z",
+ "time": "2026-11-01T14:58:04.587Z",
+ "host": "pop-os",
+ "mode": "prolog",
+ "expected_gpus": 8,
+ "checks": [
+  {
+   "name": "gpu_inventory",
+   "status": "pass",
+   "required": true,
+   "detail": "8 GPUs, expected 8",
+   "metrics": {
+    "count": 8,
+    "gpus": [
+     "0, 41, 690.5, 0, 0, 3, Not Active, 16, 16",
+     "1, 44, 701.2, 0, 0, 0, Not Active, 16, 16",
+     "2, 87, 702.0, 0, 0, 0, Active, 16, 16",
+     "3, 42, 688.1, 2, 2, 11, Not Active, 16, 16",
+     "4, 40, 690.0, 0, 0, 0, Not Active, 8, 16",
+     "5, 43, 699.9, 0, 0, 0, Not Active, 16, 16",
+     "6, 42, 695.3, 0, 0, 0, Not Active, 16, 16",
+     "7, 41, 694.0, 0, 0, 0, Not Active, 16, 16"
+    ]
+   },
+   "gpu": null,
+   "seconds": 0.0
+  },
+  {
+   "name": "gpu_temperature",
+   "status": "pass",
+   "required": true,
+   "detail": "41.0 C",
+   "metrics": {
+    "temp_c": 41.0
+   },
+   "gpu": 0,
+   "seconds": 0.0
+  },
+  {
+   "name": "pcie_link",
+   "status": "pass",
+   "required": false,
+   "detail": "x16 of x16",
+   "metrics": {},
+   "gpu": 0,
+   "seconds": 0.0
+  },
+  {
+   "name": "gpu_temperature",
+   "status": "pass",
+   "required": true,
+   "detail": "44.0 C",
+   "metrics": {
+    "temp_c": 44.0
+   },
+   "gpu": 1,
+   "seconds": 0.0
+  },
+  {
+   "name": "pcie_link",
+   "status": "pass",
+   "required": false,
+   "detail": "x16 of x16",
+   "metrics": {},
+   "gpu": 1,
+   "seconds": 0.0
+  },
+  {
+   "name": "gpu_temperature",
+   "status": "warn",
+   "required": true,
+   "detail": "87.0 C",
+   "metrics": {
+    "temp_c": 87.0
+   },
+   "gpu": 2,
+   "seconds": 0.0
+  },
+  {
+   "name": "gpu_throttle",
+   "status": "warn",
+   "required": false,
+   "detail": "hardware slowdown active",
+   "metrics": {},
+   "gpu": 2,
+   "seconds": 0.0
+  },
+  {
+   "name": "pcie_link",
+   "status": "pass",
+   "required": false,
+   "detail": "x16 of x16",
+   "metrics": {},
+   "gpu": 2,
+   "seconds": 0.0
+  },
+  {
+   "name": "gpu_temperature",
+   "status": "pass",
+   "required": true,
+   "detail": "42.0 C",
+   "metrics": {
+    "temp_c": 42.0
+   },
+   "gpu": 3,
+   "seconds": 0.0
+  },
+  {
+   "name": "pcie_link",
+   "status": "pass",
+   "required": false,
+   "detail": "x16 of x16",
+   "metrics": {},
+   "gpu": 3,
+   "seconds": 0.0
+  },
+  {
+   "name": "gpu_temperature",
+   "status": "pass",
+   "required": true,
+   "detail": "40.0 C",
+   "metrics": {
+    "temp_c": 40.0
+   },
+   "gpu": 4,
+   "seconds": 0.0
+  },
+  {
+   "name": "pcie_link",
+   "status": "warn",
+   "required": false,
+   "detail": "x8 of x16",
+   "metrics": {},
+   "gpu": 4,
+   "seconds": 0.0
+  },
+  {
+   "name": "gpu_temperature",
+   "status": "pass",
+   "required": true,
+   "detail": "43.0 C",
+   "metrics": {
+    "temp_c": 43.0
+   },
+   "gpu": 5,
+   "seconds": 0.0
+  },
+  {
+   "name": "pcie_link",
+   "status": "pass",
+   "required": false,
+   "detail": "x16 of x16",
+   "metrics": {},
+   "gpu": 5,
+   "seconds": 0.0
+  },
+  {
+   "name": "gpu_temperature",
+   "status": "pass",
+   "required": true,
+   "detail": "42.0 C",
+   "metrics": {
+    "temp_c": 42.0
+   },
+   "gpu": 6,
+   "seconds": 0.0
+  },
+  {
+   "name": "pcie_link",
+   "status": "pass",
+   "required": false,
+   "detail": "x16 of x16",
+   "metrics": {},
+   "gpu": 6,
+   "seconds": 0.0
+  },
+  {
+   "name": "gpu_temperature",
+   "status": "pass",
+   "required": true,
+   "detail": "41.0 C",
+   "metrics": {
+    "temp_c": 41.0
+   },
+   "gpu": 7,
+   "seconds": 0.0
+  },
+  {
+   "name": "pcie_link",
+   "status": "pass",
+   "required": false,
+   "detail": "x16 of x16",
+   "metrics": {},
+   "gpu": 7,
+   "seconds": 0.0
+  },
+  {
+   "name": "ecc_uncorrectable",
+   "status": "fail",
+   "required": true,
+   "detail": "uncorrectable on GPU 3 (2)",
+   "metrics": {
+    "values": [
+     0,
+     0,
+     0,
+     2,
+     0,
+     0,
+     0,
+     0
+    ],
+    "correctable": [
+     3.0,
+     0.0,
+     0.0,
+     11.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "gpu": 3,
+   "seconds": 0.0
+  },
+  {
+   "name": "nvlink",
+   "status": "skipped",
+   "required": false,
+   "detail": "nvidia-smi not found",
+   "metrics": {},
+   "gpu": null,
+   "seconds": 0.0
+  },
+  {
+   "name": "xid",
+   "status": "fail",
+   "required": false,
+   "detail": "new Xid codes [13, 79, 94, 157]",
+   "metrics": {
+    "counts": {
+     "13": 1,
+     "79": 1,
+     "94": 1,
+     "157": 1
+    },
+    "events": [
+     {
+      "pci_bdf": "0000:3b:00",
+      "code": 13,
+      "severity": "warn",
+      "reason": "warn: pid=4242, Graphics Exception: ESR 0x404600=0x80000002"
+     },
+     {
+      "pci_bdf": "0000:5c:00",
+      "code": 79,
+      "severity": "fail",
+      "reason": "fatal: pid=4242, GPU has fallen off the bus."
+     },
+     {
+      "pci_bdf": "0000:5c:00",
+      "code": 94,
+      "severity": "warn",
+      "reason": "restart: pid=4242, Contained ECC error."
+     },
+     {
+      "pci_bdf": "0000:3b:00",
+      "code": 157,
+      "severity": "warn",
+      "reason": "unknown: pid=4242, an unknown code"
+     }
+    ],
+    "new": [
+     {
+      "pci": "0000:3b:00",
+      "xid": 13,
+      "class": "warn",
+      "text": "pid=4242, Graphics Exception: ESR 0x404600=0x80000002"
+     },
+     {
+      "pci": "0000:5c:00",
+      "xid": 79,
+      "class": "fatal",
+      "text": "pid=4242, GPU has fallen off the bus."
+     },
+     {
+      "pci": "0000:5c:00",
+      "xid": 94,
+      "class": "restart",
+      "text": "pid=4242, Contained ECC error.",
+      "repeats_in_window": 1
+     },
+     {
+      "pci": "0000:3b:00",
+      "xid": 157,
+      "class": "unknown",
+      "text": "pid=4242, an unknown code"
+     }
+    ],
+    "already_seen": 0
+   },
+   "gpu": null,
+   "seconds": 0.0
+  },
+  {
+   "name": "clock_offset",
+   "status": "skipped",
+   "required": false,
+   "detail": "chronyc not found",
+   "metrics": {},
+   "gpu": null,
+   "seconds": 0.0
+  },
+  {
+   "name": "nvme_free",
+   "status": "skipped",
+   "required": false,
+   "detail": "/nvme not present",
+   "metrics": {},
+   "gpu": null,
+   "seconds": 0.0
+  },
+  {
+   "name": "host_mem",
+   "status": "pass",
+   "required": false,
+   "detail": "4.2 GiB available",
+   "metrics": {
+    "available_gb": 4.24
+   },
+   "gpu": null,
+   "seconds": 0.0
+  },
+  {
+   "name": "dcgm_diag",
+   "status": "skipped",
+   "required": false,
+   "detail": "dcgmi not found",
+   "metrics": {},
+   "gpu": null,
+   "seconds": 0.0
+  }
+ ],
+ "verdict": "fail",
+ "admit_training": false,
+ "drain_reason": "ecc_uncorrectable,xid",
+ "runtime_seconds": 0.002
+}
