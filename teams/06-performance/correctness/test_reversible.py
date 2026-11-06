@@ -1,11 +1,7 @@
-"""Reversible stack: custom backward against plain autograd, plus inversion.
+"""Reversible stack: custom backward against plain autograd (plain_forward on fp64 copies), plus inversion.
 
-Pairs: ReversibleStack.apply(x, blocks) (fast) vs models.reversible.plain_forward on an fp64 copy
-of the same blocks (ref), for ffn="mlp" and ffn="moe"; gradients of x and of every parameter.
-Extra test: run forward, then invert every block in reverse: the input comes back (rel err < 1e-4).
-Pairs run in fp32 / fp64 (correctness/framework.py: precision). bf16 is a property test, not a pair:
-with ffn="moe" under bf16 autocast, models.reversible.reconstruction_error < 1e-3 at 9 and 24 layers
-(measured ~2.5e-4 on CPU and A100), and the custom-backward gradient of x is within 1e-3 of plain_forward's.
+Pairs for ffn="mlp" and "moe": the gradients of x and every parameter. Inversion rebuilds x (rel err < 1e-4).
+bf16 is a property test: reconstruction_error < 1e-3 at 9 and 24 layers, x gradient within 1e-3.
 """
 from __future__ import annotations
 

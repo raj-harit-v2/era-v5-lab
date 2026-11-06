@@ -1,12 +1,8 @@
-"""A deliberately approximate forward-pass roofline estimator.
+"""Approximate forward-pass roofline from ModelConfig shapes: compute, bandwidth and launch lower bounds.
 
-It estimates work from ModelConfig shapes, then compares compute, memory-bandwidth, and
-kernel-launch lower bounds. It is for forming profiling hypotheses, not replacing measured
-regions. The byte and launch counts are analytical approximations; validate them on each GPU.
+For forming profiling hypotheses, not for replacing measured regions (docs/ROOFLINE.md).
 
-Example (from teams/06-performance):
-    python -m perfkit.roofline --config configs/base.yaml --gpu "NVIDIA A100-SXM4-40GB" \
-        --run results/runs/baseline_v0.json
+    python -m perfkit.roofline --config configs/base.yaml --gpu "NVIDIA A100-SXM4-40GB" --run results/runs/<tag>.json
 """
 from __future__ import annotations
 
@@ -48,6 +44,7 @@ DEFAULT_LAUNCH_US = 5.0  # heuristic; replace with an empirical per-GPU value wh
 
 
 def _model_dict(mcfg) -> dict:
+    """The model section from a ModelConfig, a model dict or a whole config."""
     if hasattr(mcfg, "to_dict"):
         return mcfg.to_dict()
     if not isinstance(mcfg, dict):
@@ -63,6 +60,7 @@ def _positive_int(name: str, value) -> int:
 
 
 def _rollup(regions: dict, name: str, children: list[str], *, total: bool = False) -> None:
+    """Add a parent row summing its children (inclusive: not added to the total a second time)."""
     rows = [regions[child] for child in children]
     regions[name] = {
         "flops": sum(row["flops"] for row in rows),
@@ -75,14 +73,8 @@ def _rollup(regions: dict, name: str, children: list[str], *, total: bool = Fals
 
 
 def forward_costs(mcfg: dict, B: int, T: int, dtype: str) -> dict:
-    """Estimate forward FLOPs, bytes moved, and kernel count by timed region.
-
-    ``mcfg`` may be a ModelConfig, the model section of a YAML config, or the complete
-    loaded YAML config. The returned regions include inclusive roll-ups matching the
-    region names in the model; only the top-level forward regions count in the total.
-    FLOPs count a multiply-add as two operations. Byte counts use a simple one-pass
-    activation/weight model and do not predict cache reuse or fused-kernel behavior.
-    """
+    """Forward FLOPs (multiply-add = 2), bytes and kernel count per timed region, from a ModelConfig or YAML config.
+    Only top-level regions count in the total; bytes ignore cache reuse and fusion."""
     cfg = _model_dict(mcfg)
     B, T = _positive_int("B", B), _positive_int("T", T)
     if dtype not in DTYPE_BYTES:
@@ -290,7 +282,7 @@ def estimate_costs(costs: dict, gpu_name: str, *, compute_tflops: float | None =
         launch_ms = row["kernels"] * launch_us / 1000.0
         roofline_ms = max(compute_ms, memory_ms)
         bound = "compute" if compute_ms >= memory_ms else "bandwidth"
-        predicted_ms = max(roofline_ms, launch_ms)
+        predicted_ms = max(roofline_ms, launch_ms)        # at least the compute or memory time, and the launches
         if row.get("count_in_total"):
             total_flops += row["flops"]
             total_bytes += row["bytes"]
@@ -388,6 +380,7 @@ def render_table(estimate: dict) -> str:
 
 
 def _default_batch(run_cfg: dict, gpu_name: str) -> int:
+    """run.batch_size from the config; else 32 on the large-memory GPUs, 8 elsewhere."""
     configured = run_cfg.get("batch_size")
     if isinstance(configured, int):
         return configured
@@ -395,6 +388,7 @@ def _default_batch(run_cfg: dict, gpu_name: str) -> int:
 
 
 def main(argv=None) -> int:
+    """Print the roofline table of a config on a GPU, optionally against a measured run."""
     parser = argparse.ArgumentParser(description="Estimate forward-region compute, bandwidth and launch ceilings")
     parser.add_argument("--config", required=True, help="Model config YAML")
     parser.add_argument("--gpu", required=True, help="GPU name, e.g. NVIDIA A100-SXM4-40GB")

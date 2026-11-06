@@ -85,7 +85,7 @@ def _linear_ce_pair(device, impl, dtype=torch.float32):
 
 @pair("ce.fused", tol=1e-5, grad_tol=1e-4)
 def _fused_pair(device):
-    """Task-5 token-chunked cached-gradient implementation against the torch reference."""
+    """The token-chunked cached-gradient implementation against the torch reference."""
     return _linear_ce_pair(device, "fused")
 
 

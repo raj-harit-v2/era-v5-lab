@@ -1,18 +1,11 @@
-"""Kronecker Embedding v2 (input side), drop-in for nn.Embedding.  [implemented]
+"""Kronecker Embedding v2 (input side), drop-in for nn.Embedding, built on G4's ke2 package (teams/04-ke2/src).
 
-Built on G4's KE2 code in teams/04-ke2/src (the ke2 package), not a copy of it:
-    * the byte table is G4's committed raw table, teams/04-ke2/results/tables/raw_table_P{P}.npz, loaded with
-      ke2.tables.ByteTable.load, which re-checks its content hash and that it was built for our pinned
-      tokenizer.json (dataio.tokenizer.SHA256). Raw = exact token bytes, so no two tokens share a row.
-    * the code values come from ke2.codec.code_values (G4 proof.md, Lemma 1): after z-normalisation a token of
-      L bytes has only two values, high[L] on its L support cells and low[L] on the other D - L cells.
-
-Shape (G4 output_shape.md): token IDs [B, T] -> fixed code [B, T, D], D = 256 * P -> Linear(D, d_model, bias=False).
+The byte table is G4's committed raw table (teams/04-ke2/results/tables/raw_table_P{P}.npz), hash-checked against
+our pinned tokenizer. After z-normalisation a token of L bytes has two values (ke2.codec.code_values):
     kappa(t)     = high[L] on cells b_p * P + p (p < L), low[L] everywhere else
     embedding(t) = W @ kappa(t) = (high[L] - low[L]) * sum_{p<L} W[:, b_p * P + p] + low[L] * W.sum(1)
-The second form is what forward computes: one embedding_bag over the L support columns of W plus one row sum,
-so the [N, D] code (512 MB fp32 at B=32, T=512) is never built. W is proj.weight [d_model, D], init
-normal(0, 1/sqrt(D)); it is an embedding parameter, so the optimizer gives it AdamW.
+forward computes the second form (one embedding_bag plus a row sum), so the [N, D] code is never built.
+W = proj.weight [d_model, D], init normal(0, 1/sqrt(D)); an embedding parameter, so it gets AdamW.
 """
 from __future__ import annotations
 
@@ -27,6 +20,7 @@ import torch.nn.functional as F
 from perfkit.regions import region
 
 N_BYTES = 256
+# G4's ke2 package, imported from their team folder
 G4_SRC = Path(__file__).resolve().parents[2] / "04-ke2" / "src"
 
 
@@ -61,6 +55,8 @@ def code_values(max_pos: int):
 
 
 class KE2Embedding(nn.Module):
+    """W @ kappa(t) as one embedding_bag over the token's support columns plus a row sum."""
+
     def __init__(self, vocab_size: int, d_model: int, max_pos: int = 32, token_bytes=None):
         """token_bytes: optional (bytes [V, P], lens [V]) for tests; default is G4's raw table."""
         super().__init__()
@@ -85,8 +81,10 @@ class KE2Embedding(nn.Module):
             flat = idx.reshape(-1)
             L = self.lens.index_select(0, flat)
             cols = self.cols.index_select(0, flat).long()
+            # (high[L] - low[L]) on the L support cells, 0 past the token's length
             w = (self.pos < L.unsqueeze(1)).float() * (self.high - self.low).index_select(0, L).unsqueeze(1)
             W = self.proj.weight.float()
             out = F.embedding_bag(cols, W.t(), per_sample_weights=w, mode="sum")
+            # every cell also carries low[L]: low[L] times the row sum of W
             out = out + self.low.index_select(0, L).unsqueeze(1) * W.sum(1)
             return out.view(*idx.shape, -1)

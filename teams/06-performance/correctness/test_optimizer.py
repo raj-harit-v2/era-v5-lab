@@ -525,7 +525,7 @@ def test_cosine_learning_rate_schedule():
     assert optimizers.named[0][1].param_groups[0]["lr"] == pytest.approx(0.02)
 
 
-# ---- @pair correctness checks (Task 3) -----------------------------------------
+# ---- @pair correctness checks --------------------------------------------------
 # Cases the pairs above do not cover, so the names differ (a pair name is registered once).
 
 @pair("opt.muon.batched.missing_grad", tol=2e-3, grad_tol=5e-5)

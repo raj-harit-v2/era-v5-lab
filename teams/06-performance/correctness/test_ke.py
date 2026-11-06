@@ -1,27 +1,10 @@
-"""Task 4 (G6-W1-04): Kronecker Embedding v1 against an fp64 codec built byte by byte.
+"""Kronecker Embedding v1 (models/ke1.py) against an fp64 codec built byte by byte from its docstring definition.
 
-What this file proves (G6_Team_Task_Plan.md, Task 4: "compare the reference against the fast version, forward and
-backward, using the framework; pytest passes, and fails under the 1.01x mutation"):
-
-  * One @pair per KE mode in models.ke1.MODES ("ke1.dynamic", "ke1.cached"; a future "ke1.sparse" is picked up
-    by the loop below with no change here). Each pair compares the fast module (fp32) with the reference (fp64)
-    on the outputs and on the gradient of the projection weight (grad_param[0]).
-  * A second pair per mode, ".edge", on a hand-made byte table with the awkward tokens: one byte, exactly P bytes,
-    all-zero bytes, all-255 bytes, repeated bytes.
-  * Properties that no parity pair states: dynamic and cached agree, every codec row is z-normalised,
-    bytes past lens[t] are ignored, leading dimensions of the ids are kept, and bad constructor arguments fail.
-  * The 1.01x mutation and the determinism check are not repeated here: test_framework.py runs both on EVERY
-    registered pair, so these pairs are covered the moment they are registered.
-
-The reference is written from the definition in the models/ke1.py docstring and never calls kronecker_codec:
-
-    kappa(t) = (1/sqrt(L)) * sum_p onehot256(b_p) (x) onehot_P(p)         index of byte b at slot p = b * P + p
-    z-normalised per token: (kappa - mean) / (std + 1e-6), std with Bessel correction
-    embedding(t) = W @ kappa(t)
-
-Not covered here: the source tokenizer's byte table (all 131072 rows, special tokens, partial UTF-8) lives in
-test_tokenizer.py. KE2 is not covered: the plan waits for G4's KE2 decode reference (DEP-G4, 28 Oct) and
-its function signature (open question Q02); when it arrives, add a pair next to these and swap the reference.
+  * one @pair per mode in models.ke1.MODES ("ke1.<mode>"), outputs and the projection gradient
+  * ".edge" pairs on awkward tokens: one byte, exactly P bytes, all 0x00, all 0xFF, repeats
+  * properties: the modes agree, rows are z-normalised, bytes past lens[t] are ignored, bad arguments fail
+The 1.01 drill and determinism check run on every pair in test_framework.py. The source byte table is tested in
+test_tokenizer.py.
 """
 from __future__ import annotations
 
@@ -42,11 +25,8 @@ B, T = 2, 37              # T is not a power of 2, like the attention pairs
 # ------------------------------------------------------------------------------ the reference
 
 def reference_codec(byte_table, lens, ids, pos_dim=P, eps=1e-6):
-    """fp64 kappa(t) for each id, built one byte at a time. Returns [len(ids), 256 * pos_dim] fp64 (CPU).
-
-    This follows the definition in the models/ke1.py docstring and deliberately shares no code with
-    kronecker_codec (which builds the same thing with one scatter_add_ over the whole batch).
-    """
+    """fp64 kappa(t) for each id, built one byte at a time from the models/ke1.py definition; shares no code with
+    kronecker_codec. Returns [len(ids), 256 * pos_dim] fp64 (CPU)."""
     rows = []
     for t in ids.tolist():
         n_bytes = min(int(lens[t]), pos_dim)             # docstring: L = number of bytes, truncated to P
@@ -133,7 +113,7 @@ for _mode in MODES:
     pair(f"ke1.{_mode}")(make_case(_mode, random_table, random_ids))
     pair(f"ke1.{_mode}.edge")(make_case(_mode, edge_table, edge_ids))
     # bf16 autocast pair, like moe.<d>.bf16 in test_moe.py: tolerances from TOLERANCES[bfloat16], kept out
-    # of the 1.01 drill (a bf16 tolerance cannot catch a 1% error, framework.py: Precision).
+    # of the 1.01 drill (a bf16 tolerance cannot catch a 1% error, framework.py: TOLERANCES).
     pair(f"ke1.{_mode}.bf16", dtype=torch.bfloat16)(make_bf16_case(_mode))
 
 

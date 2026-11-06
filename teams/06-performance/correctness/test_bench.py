@@ -1,25 +1,8 @@
-"""perfkit/bench.py: the harness runs end to end, writes a valid run JSON, and follows the Instructor's rules.
+"""perfkit/bench.py runs end to end, writes a valid run JSON and applies its rule checks.
 
-Everything runs on the CPU with a tiny model and a fake Loader, so the tests need no GPU, no data download and no
-network (the real Loader fetches the pinned BrahmicTokenizer-131K artifact). The fake Loader has the same
-constructor and attributes as dataio.loader.Loader.
-
-  * build: the Loader gets data.tokenizer_path; dtype fallbacks (B3); the LR-schedule note.
-  * run metadata: tokenizer revision and sha256, vocab size (rule 1a).
-  * rule_checks: dirty tree, wrong vocabulary (1a), level < 3 (3a), checkpoint / comm not measured (3b; comm
-    only for MoE models).
-  * quick_compare: the 5% check on the whole step and every part at level <= gate_level; refuses runs with a
-    different model, optimizer, compile, grad_clip or data source; a part only one run has is MISSING.
-  * checkpoint: tied weights are copied to the CPU once.
-  * write_run / _finite: unique file names, NaN and inf become null.
-  * main, for the reversible and the plain stack: clean + layer + checkpoint run, validate_run returns [],
-    the parts are there and add up, exit codes 0 and 2.
-  * quick_compare also accepts an A/B of optim.muon_impl or model.moe.dispatch, and gates checkpoint save and
-    the all-to-all when both runs have them.
-  * throttle warnings: an idle GPU is not flagged; slowdown reasons are named; the SM clock is the fallback.
-  * --repeat: every run in a child process, one JSON per run, PASS / exit 2, a killed run stops the repeat.
-  * trace: kernels counted (not annotations); with layer mode, one small trace per slowest part.
-  * CUDA timing-event counters (clean, layer and its inner pass, comm) in the JSON, and their warnings.
+CPU only, with a tiny model and a fake Loader (same constructor and attributes as dataio.loader.Loader), so no GPU,
+data or network. Covers: build and dtype fallbacks, run metadata, rule_checks, quick_compare (5% rule, refusals,
+A/B, MISSING), checkpoint, write_run, main for both stacks, throttle warnings, --repeat, trace mode, event counters.
 """
 from __future__ import annotations
 
@@ -568,7 +551,7 @@ def test_main_rejects_an_unknown_mode(tmp_path):
         _run_main(tmp_path / "runs", "x", "--modes", "clean,nonsense")
 
 
-# ------------------------------------------------------------------------------ --repeat (Task 2)
+# ------------------------------------------------------------------------------ --repeat
 # "Automatically run the benchmark twice and fail if any part differs by more than 5%."
 
 def test_parse_repeat_defaults_to_one_run():

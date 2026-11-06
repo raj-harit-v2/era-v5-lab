@@ -1,47 +1,23 @@
-"""Reference-vs-fast checks.  [CONTRACT: Case / Pair / pair registry + checks]
-
-Registering a pair (anyone, in correctness/test_<topic>.py):
+"""Reference-vs-fast checks.  Contract: Case / Pair / the pair registry and the checks.
 
     @pair("moe.loop")                                  # fp32, tolerances from TOLERANCES
     @pair("moe.loop", tol=1e-5, grad_tol=1e-4)         # or your own, < 1e-2 for fp32
-    @pair("model.bf16", dtype=torch.bfloat16)          # fast inputs cast to bf16 (or the fast fn runs autocast)
+    @pair("model.bf16", dtype=torch.bfloat16)          # fast inputs cast to bf16
     def _(device):
-        ...
         return Case(ref=ref_fn, fast=fast_fn, inputs=[x], params_ref=[...], params_fast=[...])
 
-Rules: the reference is written independently from the definition, in fp64, never by calling the
-fast code. fp32 tolerances < 1e-2 always (so a 1.01 error fails).
+Rules: the reference is written from the definition in fp64, never by calling the fast code; fp32 tolerances stay
+below 1e-2, so a 1.01 error fails. Do not use torch.allclose defaults (bf16 rtol lets a 1% error pass).
 
-  * rel_err(fast, ref) = ||fast - ref|| / ||ref|| in fp64; AssertionError on shape mismatch or NaN/Inf.
-  * check(pair, device, fast_override=None): build the Case; clone the inputs (fp64 for ref, pair.dtype for
-    fast); compare every output; backpropagate the SAME seeded random cotangent through both, in one backward
-    per side (a custom backward such as the reversible stack runs once); compare the grads of inputs that
-    require grad and of params_fast vs params_ref (a None grad counts as zeros: an MoE expert with no tokens).
-    AssertionError naming the pair, the tensor, the error and the tolerance. Returns {name: error}, and
-    records the worst errors in RESULTS (conftest prints them at the end of the run).
-  * scaled(k=1.01): returns a wrapper factory; check applies fast_override(case.fast). Outputs * k.
-  * determinism (Task 3 of G6_Team_Task_Plan.md, decision D02): after the parity checks, check() runs the fast
-    side a SECOND time on fresh copies of the same inputs, with the same cotangent, and requires the outputs
-    and the gradients to be bit-identical (torch.equal). The parity tolerance cannot see this: a kernel that
-    is wrong by 1e-9 from run to run passes parity but breaks reproducible training and the 5% repeat check.
-    A pair whose fast code is non-deterministic by design (CUDA atomics, e.g. an index_add_ scatter) opts out
-    with @pair(..., deterministic=False) and says why in a comment. The 1.01 drill (fast_override) skips it.
-Do not use torch.allclose defaults: in bf16 (rtol 1.6e-2) they let a 1% error pass.
+  * rel_err(fast, ref) = ||fast - ref|| / ||ref|| in fp64; fails on a shape mismatch or NaN / Inf.
+  * check(pair, device, fast_override=None): compare every output, then the input and parameter gradients from
+    one backward per side with the same seeded cotangent (a None grad counts as zeros). Then the fast side runs
+    again and must be bit-identical (not under the drill); opt out with @pair(..., deterministic=False) and a
+    comment saying why. Returns {tensor name: error}; any failure is an AssertionError naming the pair.
+  * scaled(k=1.01): the drill override, every top-level tensor output * k.
 
-Precision (TOLERANCES, measured on the full lab_small model, correctness/test_model.py):
-  fp32  clean errors: outputs <= 3e-7, gradients <= 1.9e-5 (after 30 training steps). A KE bug that changes
-        the embedding by 6e-5 shows 9e-6 in the logits but 1.2e-4 in the gradients: so outputs 1e-5,
-        gradients 5e-5. These pairs are in the 1.01 drill (test_framework.py). model.lab_small.chunked uses 1e-4:
-        its ln_f gradient is an fp32 sum over the 131072-token vocabulary (6.2e-5, test_model.py).
-  bf16  lab_small under CPU bf16 autocast, MoE routing replayed (test_model.py), T = 64 and 512 alike: outputs
-        3.8e-3, gradients <= 1.3e-2 (router; attention and LayerNorm ~1e-2, experts 8e-3). So outputs 1e-2,
-        gradients 3e-2. Without the replay a few tokens change experts and expert gradients are off by up to
-        26%. A bf16 tolerance cannot catch a 1% error, so bf16 pairs are NOT in the 1.01 drill; they catch
-        large bf16 regressions.
-        Measured again on an A100-SXM4-40GB (torch 2.11, CUDA 13.0, 27 Oct): model.lab_small.bf16 outputs 4.1e-3,
-        gradients 9.4e-3; moe.loop.bf16 4.9e-3 / 5.8e-3; fp32 pairs at most 4.1e-7 / 1.4e-6. All inside the
-        tolerances above with 2.4x (bf16 outputs) to 37x (fp32 gradients) to spare.
-  fp8   no fp8 code yet. Add an entry here, with the measurement, when an fp8 path exists.
+TOLERANCES (measured on the full model, test_model.py): fp32 outputs 1e-5, gradients 5e-5; bf16 outputs 1e-2,
+gradients 3e-2. bf16 pairs are not in the 1.01 drill: a bf16 tolerance cannot see a 1% error. No fp8 entry yet.
 """
 from __future__ import annotations
 
@@ -69,7 +45,7 @@ class Case:
     inputs: list
     params_ref: list = field(default_factory=list)
     params_fast: list = field(default_factory=list)
-    grads: bool = True
+    grads: bool = True                   # False: compare the outputs only, no backward
 
 
 @dataclass
@@ -79,7 +55,7 @@ class Pair:
     tol: float = DEFAULT_TOL
     grad_tol: float | None = None    # None: TOLERANCES[dtype] gradient tolerance
     dtype: torch.dtype = torch.float32
-    # Task 3: True = check() also requires two identical runs of the fast code to give identical bits.
+    # True = check() also requires two identical runs of the fast code to give identical bits.
     deterministic: bool = True
 
     @property
@@ -92,6 +68,8 @@ class Pair:
 
 
 def pair(name, tol=None, grad_tol=None, dtype=torch.float32, deterministic=True):
+    """Register the decorated builder (device -> Case) as a pair. Tolerances default to TOLERANCES[dtype];
+    fp32 tolerances must stay below DRILL_TOL."""
     assert dtype in TOLERANCES, f"{name}: no tolerances for {dtype}; measure them and add them to TOLERANCES"
     tol = TOLERANCES[dtype][0] if tol is None else tol
     grad_tol = TOLERANCES[dtype][1] if grad_tol is None else grad_tol
@@ -202,7 +180,7 @@ def rel_err(fast, ref) -> float:
 
 
 def scaled(k=1.01):
-    """Return a factory: scaled(k)(fast_fn) multiplies every tensor output by k."""
+    """Return a factory: scaled(k)(fast_fn) multiplies the tensor output, or each tensor of a tuple / list, by k."""
 
     def decorate(fn):
         def wrapped(*args, **kwargs):
@@ -235,13 +213,8 @@ def _grad_or_zeros(t: torch.Tensor) -> torch.Tensor:
 
 
 def _check_determinism(p: Pair, case: Case, fast_fn, fast_inputs: list, fast_tensors: list, device) -> None:
-    """Task 3: run the fast side a second time and require the same bits.
-
-    Called by check() after the parity checks, when the first fast run has left its outputs in fast_tensors
-    and its gradients in .grad of the fast inputs and params_fast. We keep copies of those, clear the
-    gradients, run the fast code again on FRESH copies of the same inputs, push the SAME seeded cotangent
-    back, and compare with torch.equal (exact, not a tolerance). Nothing here touches the reference.
-    """
+    """Run the fast side again on fresh copies of the inputs, with the same cotangent, and require torch.equal
+    outputs and gradients. Called by check() after the parity checks; never touches the reference."""
     first_out = [t.detach().clone() for t in fast_tensors]
     watched = [(f"grad_in[{i}]", t) for i, t in enumerate(fast_inputs)
                if isinstance(t, torch.Tensor) and t.requires_grad]
@@ -278,6 +251,8 @@ def _check_determinism(p: Pair, case: Case, fast_fn, fast_inputs: list, fast_ten
 
 
 def check(p: Pair, device, fast_override=None) -> dict:
+    """Outputs, then gradients, within the pair's tolerances, then determinism. Returns {tensor name: error}.
+    fast_override(case.fast) replaces the fast function (the 1.01 drill)."""
     case = p.build(device)
     fast_fn = case.fast
     if fast_override is not None:
@@ -327,13 +302,12 @@ def check(p: Pair, device, fast_override=None) -> dict:
                 continue
             _compare(p, name, _grad_or_zeros(f), _grad_or_zeros(r), p.gtol, errors)
 
-    # Task 3: the third check of the plan (parity above, determinism here, the 1.01 drill via fast_override).
-    # Skipped when fast_override is set: the drill wants check() to fail on the parity step, and a wrapped
-    # function would not be a fair test of the real fast code's determinism.
+    # Determinism: the fast side again, bit for bit. Skipped under fast_override: the drill must fail on the
+    # parity step above, and a wrapped function is not a fair test of the real fast code.
     if p.deterministic and fast_override is None:
         _check_determinism(p, case, fast_fn, fast_inputs, fast_tensors, device)
 
-    if fast_override is None:
+    if fast_override is None:            # the worst errors of a clean check, for conftest's end-of-run table
         outs = [v for k, v in errors.items() if k.startswith("out")]
         grads = [v for k, v in errors.items() if k.startswith("grad")]
         RESULTS[p.name] = {"dtype": str(p.dtype).replace("torch.", ""), "tol": p.tol, "grad_tol": p.gtol,

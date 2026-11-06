@@ -1,17 +1,11 @@
-"""Model config and YAML loading.  [CONTRACT]
-
-Changing a field name or meaning changes a shared interface: bench, report and tests read these.
-
-Rule: no number about the model is hard-coded anywhere else. Everything reads ModelConfig.
-G5's configs become new configs/g5_*.yaml files. If they need a field we do not have,
-add it here with a default, so every old config still loads.
+"""Model config and YAML loading.  Contract: bench, report and tests read these field names.
 
     cfg = load_config("configs/base.yaml", ["model.n_layer=4", "run.batch_size=8"])
-    mcfg = model_config(cfg)          # ModelConfig; unknown or missing keys are an error, not ignored
+    mcfg = model_config(cfg)          # ModelConfig
 
-The YAML is the only source of values: a key written twice in one file, an override of a key the config
-does not have (a typo such as run.batchsize=16 would otherwise be ignored), and a model field missing from
-the YAML are all errors. The dataclass defaults below only serve tests that build one part directly.
+No model number is hard-coded anywhere else. The YAML is the only source of values: a key written twice, an
+override of a key the config lacks, or a model field missing from the YAML is an error. New fields get a default,
+so old configs still load; the dataclass defaults only serve tests that build one part directly.
 """
 from __future__ import annotations
 
@@ -100,6 +94,7 @@ class ModelConfig:
 
 
 def _merge(base, over):
+    """base with over's values on top; nested dicts merge key by key (inherit: child over parent)."""
     out = copy.deepcopy(base)
     for k, v in (over or {}).items():
         out[k] = _merge(out[k], v) if isinstance(v, dict) and isinstance(out.get(k), dict) else v
@@ -146,6 +141,7 @@ def load_config(path, overrides=()):
 
 
 def model_config(cfg: dict) -> ModelConfig:
+    """ModelConfig from a whole config (its model section) or a model dict; every field must be set."""
     m = dict(cfg.get("model", cfg))
     known = {f.name for f in fields(ModelConfig)}
     unknown = sorted(set(m) - known)

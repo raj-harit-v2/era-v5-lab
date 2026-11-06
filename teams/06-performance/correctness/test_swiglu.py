@@ -1,29 +1,10 @@
-"""SwiGLU (model.activation=swiglu, G6 week-2 Task 0): the dense MLP against an fp64 formula, and its properties.
+"""SwiGLU (model.activation=swiglu): the dense MLP against an fp64 formula, and its properties.
 
-Formula (Shazeer 2020, "GLU Variants Improve Transformer"; the LLaMA FFN), no biases:
+    SwiGLU(x) = W_down @ (SiLU(W_gate @ x) * (W_up @ x)),    SiLU(z) = z / (1 + exp(-z)),   no biases
+    W_gate = c_gate, W_up = c_fc, W_down = c_proj
 
-    SwiGLU(x) = W_down @ (SiLU(W_gate @ x) * (W_up @ x)),    SiLU(z) = z * sigmoid(z) = z / (1 + exp(-z))
-
-In the code W_gate = c_gate, W_up = c_fc, W_down = c_proj (models/gpt.py MLP, models/moe.py ExpertMLP).
-The reference below is written from that formula in fp64: SiLU by its definition (no F.silu), plain matmuls on the
-module's own weights (no nn.Linear call), so a wrong branch, a swapped gate/up, a missing SiLU or a stray bias in
-the fast code shows up as an error.
-
-Pairs (outputs, the input gradient and the gradient of all 3 weights):
-  mlp.swiglu        gpt.MLP, d=64, h=3*64 (mlp_ratio 3: not a power of 2), x [2, 37, 64], fp32
-  mlp.swiglu.bf16   the same under bf16 autocast, TOLERANCES[bfloat16] (bf16 pairs are not in the 1.01 drill:
-                    a bf16 tolerance cannot see a 1% error, framework.py: Precision)
-The routed and shared experts are paired in test_moe.py (moe.<dispatch>.swiglu, for every dispatch) and the whole
-model in test_model.py (model.base.activation_swiglu, .bf16 and .moe). The 1.01 drill runs on every fp32 pair
-(test_framework.py).
-
-Weights are drawn with std 0.15, so W_gate @ x has std ~1.2 and SiLU works in its curved region; at the 0.02
-training init SiLU(z) ~ z/2 and a reference with the wrong nonlinearity could still pass.
-
-Properties (no pair): GELU modules keep their layout and their init draws (the GELU model is unchanged);
-SwiGLU has exactly c_gate, c_fc, c_proj and no biases; every fast dispatch agrees with loop and an idle expert gets no
-gradient in the loop path; c_gate is trained by Muon like the other block matrices; the parameter count and the
-MFU FLOPs count 3 matrices; an unknown activation is refused.
+Pairs: mlp.swiglu (d=64, h=192, fp32) and mlp.swiglu.bf16. Weights have std 0.15 so SiLU is in its curved region.
+Experts are paired in test_moe.py, the whole model in test_model.py.
 """
 from __future__ import annotations
 

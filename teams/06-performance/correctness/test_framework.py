@@ -1,17 +1,10 @@
 """The framework must catch broken code.
 
-Checks, for EVERY registered pair:
-
-  * import every correctness/test_*.py so all pairs are registered
-  * for each pair below the drill tolerance (every fp32 pair): check(pair, device, fast_override=scaled(1.01))
-    must raise AssertionError
-  * a toy pair: correct passes; wrong gradient (x1.01 in backward only) fails; NaN fails; wrong shape fails
-  * rel_err(x * 1.01, x) == 0.01
-  * check on model-like cases: two outputs through a backward that may run only once (the reversible stack),
-    a parameter with no gradient on both sides (an MoE expert with no tokens), a detached fast output fails
-  * tolerances: fp32 defaults from TOLERANCES, fp32 >= 1e-2 refused, bf16 pairs are kept out of the drill
-  * output structure: tuples, lists, None, nested containers and Python floats / metadata in the outputs must
-    match between ref and fast (type, length, values), and a wrong tensor nested inside still fails
+  * every fp32 pair fails under the 1.01 drill (check with fast_override=scaled(1.01))
+  * a toy pair: correct passes; a wrong gradient, NaN or a wrong shape fails; rel_err(x * 1.01, x) == 0.01
+  * model-like cases: a backward that runs once, a parameter with no gradient, a detached fast output fails
+  * tolerances: fp32 >= 1e-2 refused, bf16 pairs kept out of the drill
+  * nested outputs (tuples, lists, None, floats) must match in structure and values
 """
 from __future__ import annotations
 

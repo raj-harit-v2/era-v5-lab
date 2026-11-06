@@ -1,21 +1,11 @@
-"""Measure run-level MFU across real processes and GPUs.  A fixture for the metric, not a training benchmark.
+"""Measure run-level MFU across real processes and GPUs. A check of metrics.mfu_run, not a throughput result.
 
-G6 has no distributed trainer yet (perfkit.bench under torchrun only times the all-to-all), so this file gives
-metrics.mfu_run real inputs: each rank runs the same steps of the configured model on its own random tokens, the ranks
-share their token counts and times, and rank 0 writes one JSON. The optimizer is plain SGD and the tokens are synthetic,
-so the numbers answer "does the run-level arithmetic match reality?". They are not a throughput result for G8 or a
-substitute for perfkit.bench.
-
-    python -m perfkit.mfu_fixture --config configs/tiny_cpu.yaml --out out.json              # one process
-    torchrun --standalone --nproc_per_node 2 -m perfkit.mfu_fixture --out out.json           # one rank per GPU
+    python -m perfkit.mfu_fixture --config configs/tiny_cpu.yaml --out out.json             # one process
+    torchrun --standalone --nproc_per_node 2 -m perfkit.mfu_fixture --out out.json          # one rank per GPU
     torchrun --standalone --nproc_per_node 2 -m perfkit.mfu_fixture --sync-grads --out out.json
 
---sync-grads averages the gradients across ranks after each backward, which adds the communication a data-parallel
-trainer pays. Without it the ranks are independent, so per-rank and run-level MFU must agree.
-
-The window: all ranks pass a barrier, run --steps steps, wait for their GPU, and pass a second barrier. Global tokens/s
-is all tokens over the slowest rank's time, because the slowest rank decides how long a synchronized step takes.
-Visible GPUs are recorded but never used in the formula: participants are the ranks of this process group.
+Each rank trains the config on random tokens with SGD between two barriers; global tokens/s is all tokens over
+the slowest rank's time. --sync-grads adds a gradient all-reduce; without it per-rank and run-level MFU agree.
 """
 from __future__ import annotations
 
@@ -50,6 +40,7 @@ def _gather(value, device, dtype=torch.float64) -> list:
 
 
 def _barrier():
+    """dist.barrier() when distributed, else nothing."""
     if dist.is_initialized():
         dist.barrier()
 
@@ -71,6 +62,7 @@ def _name(device) -> str:
 
 
 def measure(a) -> dict | None:
+    """Run the steps on every rank; rank 0 returns the run-level MFU JSON, the others None."""
     world = int(os.environ.get("WORLD_SIZE", "1"))
     cuda = torch.cuda.is_available()
     if world > 1:
@@ -138,7 +130,7 @@ def measure(a) -> dict | None:
     peaks = [a.peak_tflops if a.peak_tflops else peak_tflops(n, dtype)[0] for n, _ in all_names]
     f1 = flops_per_token(model, T)
     f2 = flops_per_token(model, T, method="g6-v2", ke2_mean_support_len=mean_support)
-    global_tps = tokens * world / max(seconds)
+    global_tps = tokens * world / max(seconds)                # all tokens over the slowest rank's time
     run = mfu_run(f1, global_tps, peaks, ranks=ranks)
     per_rank = [mfu(f1, tokens / s, p) for s, p in zip(seconds, peaks)]
     known = [r["mfu"] for r in per_rank if r["mfu"] is not None]

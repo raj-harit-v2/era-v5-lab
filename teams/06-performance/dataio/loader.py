@@ -9,11 +9,12 @@ from dataio.tokenizer import BrahmicTokenizer, VOCAB_SIZE, REVISION, SHA256
 import numpy as np
 import torch
 
-MAGIC, VERSION, HEADER_BYTES = 20261025, 2, 1024
+MAGIC, VERSION, HEADER_BYTES = 20261025, 2, 1024     # shard header: magic, version, token count (256 int32)
 DEFAULT_DIR = "~/.cache/era-perf/fineweb-brahmic131k"
 
 
 def open_shard(path: Path) -> np.memmap:
+    """One shard's tokens as a read-only memmap, after checking its header and size."""
     header = np.fromfile(path, dtype="<i4", count=256)
     if len(header) != 256 or header[0] != MAGIC or header[1] != VERSION or header[2] <= 0:
         raise ValueError(f"{path}: not a Brahmic uint32 shard; prepare data again")
@@ -53,7 +54,7 @@ class Loader:
             sizes = np.array([len(s) - block_size for s in self.shards], dtype=np.float64)
             if (sizes <= 0).any():
                 raise ValueError("Each shard must contain at least block_size + 1 tokens")
-            self.p_shard = sizes / sizes.sum()
+            self.p_shard = sizes / sizes.sum()       # pick shards in proportion to their size
         elif source != "synthetic":
             raise ValueError(f"data.source={source!r}: fineweb10b | synthetic")
 
@@ -63,6 +64,7 @@ class Loader:
             self._next = self._host_batch()
 
     def next_batch(self):
+        """(x, y) [B, T] on the device; y is x shifted by one token."""
         buf, self._next = (self._next if self._next is not None else self._host_batch()), None
         buf = buf.to(self.device, non_blocking=True)
         return buf[:, :-1].contiguous(), buf[:, 1:].contiguous()
@@ -83,4 +85,5 @@ class Loader:
         return buf
 
     def token_bytes(self, max_pos: int):
+        """The tokenizer's KE byte table: (bytes [V, max_pos] uint8, lens [V])."""
         return self.tokenizer.token_bytes(max_pos)

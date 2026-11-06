@@ -149,7 +149,7 @@ def test_peak_tflops_for_gpu_name_across_supported_dtypes(gpu, spec, peaks):
         assert peak_tflops(gpu, dtype) == (peaks.get(dtype), spec), f"{gpu}, dtype={dtype}"
 
 
-# ------------------------------------------------------------------------------ SwiGLU (week-2 Task 0)
+# ------------------------------------------------------------------------------ SwiGLU
 
 @pytest.mark.parametrize("ffn", ["mlp", "moe"])
 def test_swiglu_model_flops_count_three_ffn_matrices(ffn):
