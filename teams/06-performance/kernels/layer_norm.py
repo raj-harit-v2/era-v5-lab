@@ -40,6 +40,14 @@ def backward_groups(m: int, rows: int, sms: int) -> int:
     return min((m + rows - 1) // rows, sms * 4)
 
 
+def _parameter_dtype_reason(input_dtype, weight_dtype, bias_dtype):
+    if (weight_dtype != bias_dtype or
+            (input_dtype != weight_dtype and not (input_dtype in (torch.float16, torch.bfloat16)
+                                                 and weight_dtype == torch.float32))):
+        return "unsupported_parameter_dtype_combination"
+    return None
+
+
 def _support_reason(device, dtype, normalized_shape, weight, bias):
     if triton is None:
         return "triton_unavailable"
@@ -55,10 +63,9 @@ def _support_reason(device, dtype, normalized_shape, weight, bias):
         return "unsupported_dtype"
     if weight.device != device or bias.device != device:
         return "parameter_device_mismatch"
-    if not torch.is_autocast_enabled("cuda") and (weight.dtype != bias.dtype or
-            (dtype != weight.dtype and not (dtype in (torch.float16, torch.bfloat16)
-                                           and weight.dtype == torch.float32))):
-        return "unsupported_parameter_dtype_combination"
+    combo = _parameter_dtype_reason(dtype, weight.dtype, bias.dtype)
+    if combo is not None and not torch.is_autocast_enabled("cuda"):
+        return combo
     return None
 
 
@@ -95,8 +102,8 @@ if triton is not None:
         col = tl.arange(0, BLOCK)
         if NEED_DX:
             w = tl.load(W + col, col < N, 0., eviction_policy="evict_last").to(tl.float32)
-        acc_w = tl.full((ROWS, BLOCK), 0., tl.float32)
-        acc_b = tl.full((ROWS, BLOCK), 0., tl.float32)
+        acc_w = tl.full((BLOCK,), 0., tl.float32)
+        acc_b = tl.full((BLOCK,), 0., tl.float32)
         stride = GROUPS.to(tl.int64) * ROWS
         for tile in range(tl.cdiv(M.to(tl.int64), stride)):
             row = group * ROWS + tile.to(tl.int64) * stride + offsets
@@ -116,13 +123,13 @@ if triton is not None:
                 dx = (wdy - xhat * c1[:, None] - c2[:, None]) * rstd[:, None]
                 tl.store(DX + _offset(row[:, None], col[None, :], N), dx, mask)
             if NEED_DW:
-                acc_w += dy * xhat
+                acc_w += tl.sum(dy * xhat, 0)
             if NEED_DB:
-                acc_b += dy
+                acc_b += tl.sum(dy, 0)
         if NEED_DW:
-            tl.store(PART_DW + _offset(group, col, N), tl.sum(acc_w, 0), col < N)
+            tl.store(PART_DW + _offset(group, col, N), acc_w, col < N)
         if NEED_DB:
-            tl.store(PART_DB + _offset(group, col, N), tl.sum(acc_b, 0), col < N)
+            tl.store(PART_DB + _offset(group, col, N), acc_b, col < N)
 
     @triton.jit(do_not_specialize=["GROUPS"])
     def _backward_params(PART_DW, PART_DB, DW, DB, GROUPS, N: tl.constexpr,
@@ -153,15 +160,10 @@ class _LayerNorm(torch.autograd.Function):
         reason = _support_reason(x.device, x.dtype, weight.shape, weight, bias)
         if reason is not None:
             raise ValueError(f"triton_ln cannot handle this input: {reason}")
-        if x.ndim < 1 or x.numel() == 0 or weight.ndim != 1 or bias.ndim != 1:
-            raise ValueError("triton_ln requires nonempty input and 1D affine parameters")
-        if x.shape[-1] != weight.numel() or weight.shape != bias.shape:
-            raise ValueError("LayerNorm parameters must match the last input dimension")
-        if x.device != weight.device or x.device != bias.device:
-            raise ValueError("LayerNorm input and parameters must share a device")
-        if weight.dtype != bias.dtype or (x.dtype != weight.dtype and
-                not (x.dtype in (torch.float16, torch.bfloat16) and weight.dtype == torch.float32)):
-            raise ValueError("unsupported LayerNorm input/parameter dtype combination")
+        if (x.ndim < 1 or x.numel() == 0 or weight.ndim != 1 or bias.ndim != 1
+                or x.shape[-1] != weight.numel() or weight.shape != bias.shape):
+            raise ValueError("triton_ln requires a nonempty input normalized along its last "
+                             "dimension with 1D affine parameters of matching shape")
         n = x.shape[-1]
         xc, wc, bc = x.contiguous(), weight.contiguous(), bias.contiguous()
         m = xc.numel() // n
@@ -224,7 +226,9 @@ class TritonLayerNorm(nn.LayerNorm):
         return {"backend": "triton_ln" if reason is None else "torch_ln", "reason": reason}
 
     def forward(self, input: torch.Tensor) -> torch.Tensor:
-        if self.backend_info(input.device, input.dtype)["backend"] != "triton_ln" or input.numel() == 0:
+        if (input.ndim < 1 or len(self.normalized_shape) != 1
+                or input.shape[-1] != self.normalized_shape[0] or input.numel() == 0
+                or self.backend_info(input.device, input.dtype)["backend"] != "triton_ln"):
             return super().forward(input)
         return layer_norm_triton(input, self.weight, self.bias, self.eps)
 

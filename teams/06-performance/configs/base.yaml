@@ -42,8 +42,12 @@ model:                  # fields of models.config.ModelConfig, nothing else
   ce_chunks: 8          # token chunk count for chunked / fused (need not divide B*T)
   ce_vocab_chunk: 4096  # vocabulary tile size for fused_cce
   ce_token_chunk: 16    # token tile size for fused_cached / fused_liger
-  ce_triton_backward: chunked  # chunked (reuse dLogits) | recompute (old hidden-tile path)
+  ce_triton_backward: auto     # auto | vocab | chunked | recompute (slow old comparison)
   ce_triton_chunk: 128         # max token rows in backward scratch; memory/time tradeoff
+  ce_triton_vocab_chunk: 4096  # max vocabulary columns per derivative tile
+  ce_triton_scratch_mb: 64     # MiB cap for derivative or forward-statistics scratch
+  ce_triton_grad_precision: auto  # auto (fp16 -> fp32 products; bf16 -> bf16) | fp32
+  ce_triton_validate_targets: false  # debug ID bounds check; incurs GPU synchronization
   mtp: false            # true: second untied head on token t+2 (G5 config_v0); trained loss = ntp + mtp
 
 optim:

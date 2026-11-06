@@ -371,7 +371,11 @@ class GPT(nn.Module):
                                                       y.reshape(-1), bias=head.bias,
                                                       ignore_index=IGNORE_INDEX,
                                                       backward_impl=self.cfg.ce_triton_backward,
-                                                      token_chunk=self.cfg.ce_triton_chunk)
+                                                      token_chunk=self.cfg.ce_triton_chunk,
+                                                      vocab_chunk=self.cfg.ce_triton_vocab_chunk,
+                                                      scratch_mb=self.cfg.ce_triton_scratch_mb,
+                                                      grad_precision=self.cfg.ce_triton_grad_precision,
+                                                      validate_targets=self.cfg.ce_triton_validate_targets)
         if self.cfg.ce_impl == "fused":
             return linear_cross_entropy_fused(
                 x, head.weight, y, bias=head.bias,

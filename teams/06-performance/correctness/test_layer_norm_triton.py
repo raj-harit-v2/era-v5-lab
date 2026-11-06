@@ -210,6 +210,14 @@ def test_scratch_group_count_is_bounded():
         assert backward_groups(10**9, rows, 108) == 108 * 4
 
 
+def test_launch_config_heuristics_are_pinned():
+    expected = {1: (1, 4, 1), 33: (64, 4, 1), 127: (128, 4, 1), 256: (256, 4, 1),
+                513: (1024, 4, 4), 1024: (1024, 4, 4), 1025: (2048, 1, 8),
+                8192: (8192, 1, 8)}
+    for n, geometry in expected.items():
+        assert launch_config(n) == geometry, n
+
+
 def test_backward_stage_regions_are_recorded(device):
     _cuda(device)
 
@@ -292,6 +300,51 @@ def test_strict_function_rejects_fp64(device):
         layer_norm_triton(torch.randn(3, 8, device=device, dtype=torch.float64),
                            torch.ones(8, device=device, dtype=torch.float64),
                            torch.zeros(8, device=device, dtype=torch.float64))
+
+
+def test_functional_rejects_cross_device_parameters(device):
+    _cuda(device)
+    x = torch.randn(2, 8, device=device)
+    with pytest.raises(ValueError, match="parameter_device_mismatch"):
+        layer_norm_triton(x, torch.ones(8), torch.zeros(8))
+
+
+def test_module_reports_and_natively_errors_on_parameter_device_mismatch(device):
+    _cuda(device)
+    module = TritonLayerNorm(8)
+    x = torch.randn(2, 8, device=device)
+    assert module.backend_info(x.device, torch.float32) == {
+        "backend": "torch_ln", "reason": "parameter_device_mismatch"}
+    with pytest.raises(RuntimeError):
+        module(x)
+
+
+def test_functional_rejects_unsupported_parameter_dtype_combination(device):
+    _cuda(device)
+    x = torch.randn(2, 8, device=device)
+    with pytest.raises(ValueError, match="unsupported_parameter_dtype_combination"):
+        layer_norm_triton(x, torch.ones(8, device=device),
+                          torch.zeros(8, device=device, dtype=torch.bfloat16))
+    with pytest.raises(ValueError, match="unsupported_parameter_dtype_combination"):
+        layer_norm_triton(x, torch.ones(8, device=device, dtype=torch.bfloat16),
+                          torch.zeros(8, device=device, dtype=torch.bfloat16))
+
+
+@pytest.mark.parametrize("input_dtype", [torch.float16, torch.bfloat16])
+def test_functional_accepts_mixed_precision_parameters(device, input_dtype):
+    _cuda(device)
+    if input_dtype == torch.bfloat16 and not torch.cuda.is_bf16_supported():
+        pytest.skip("bf16 unsupported")
+    torch.manual_seed(211)
+    x = torch.randn(5, 17, device=device, dtype=input_dtype, requires_grad=True)
+    w = torch.randn(17, device=device, requires_grad=True)
+    b = torch.randn(17, device=device, requires_grad=True)
+    y = layer_norm_triton(x, w, b)
+    assert y.dtype == input_dtype
+    dx, dw, db = torch.autograd.grad(y, (x, w, b), torch.randn_like(y))
+    assert dx.dtype == input_dtype and dw.dtype == db.dtype == torch.float32
+    ref = F.layer_norm(x.detach().float(), (17,), w, b).to(input_dtype)
+    torch.testing.assert_close(y, ref, atol=1e-2, rtol=1e-2)
 
 
 if ln.triton is not None:
