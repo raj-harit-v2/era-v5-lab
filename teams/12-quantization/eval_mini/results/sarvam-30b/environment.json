@@ -1,0 +1,39 @@
+{
+ "run_by": "RaviNaik",
+ "finished": "2026-11-06T09:14:54",
+ "model": "sarvamai/sarvam-30b",
+ "revision": "071ae95e933605ca1104a6b4524a36a98488efa4",
+ "llama_cpp_tag": "b11669",
+ "llama_cpp_python": "0.3.36",
+ "lab_commit": "048de644e7b5e85e23177add0458f7fe124566b5",
+ "gpus": "NVIDIA RTX 6000 Ada Generation, 49140 MiB, 8.9 + NVIDIA RTX 6000 Ada Generation, 49140 MiB, 8.9",
+ "packages": {
+  "python": "3.13.18",
+  "llama_cpp_python": "0.3.36",
+  "lm_eval": "0.4.13",
+  "datasets": "5.1.0",
+  "gpu_offload": true,
+  "torch_visible": false,
+  "transformers_visible": false
+ },
+ "formats": {
+  "bf16": {
+   "gguf_bytes": 64339517696,
+   "n_params": 32152650368,
+   "architecture": "bailingmoe2",
+   "n_ctx": 2048,
+   "n_gpu_layers": -1,
+   "backend": "llama-cpp-python 0.3.36 (in-process, logits_all)",
+   "lm_eval": "0.4.13"
+  },
+  "Q4_K_M": {
+   "gguf_bytes": 19839148288,
+   "n_params": 32152650368,
+   "architecture": "bailingmoe2",
+   "n_ctx": 2048,
+   "n_gpu_layers": -1,
+   "backend": "llama-cpp-python 0.3.36 (in-process, logits_all)",
+   "lm_eval": "0.4.13"
+  }
+ }
+}

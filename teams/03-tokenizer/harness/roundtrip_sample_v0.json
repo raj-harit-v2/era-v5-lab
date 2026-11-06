@@ -1,0 +1,778 @@
+{
+  "BrahmicTokenizer-131K": {
+    "source": "/tmp/g3/BrahmicTokenizer-131K/tokenizer.json",
+    "revision": null,
+    "heldout": {
+      "cadj-commits": {
+        "docs": 826,
+        "tok_per_char": 0.2404,
+        "tok_per_word": 2.3845
+      },
+      "cadj-notebooks": {
+        "docs": 169,
+        "tok_per_char": 0.2752,
+        "tok_per_word": 2.4911
+      },
+      "cadj-stackexchange": {
+        "docs": 409,
+        "tok_per_char": 0.258,
+        "tok_per_word": 1.8483
+      },
+      "code-cpp": {
+        "docs": 613,
+        "tok_per_char": 0.2875,
+        "tok_per_word": 3.1629
+      },
+      "code-go": {
+        "docs": 872,
+        "tok_per_char": 0.2955,
+        "tok_per_word": 2.6949
+      },
+      "code-java": {
+        "docs": 847,
+        "tok_per_char": 0.2334,
+        "tok_per_word": 2.7382
+      },
+      "code-js-ts": {
+        "docs": 1234,
+        "tok_per_char": 0.2548,
+        "tok_per_word": 2.7411
+      },
+      "code-python": {
+        "docs": 718,
+        "tok_per_char": 0.2516,
+        "tok_per_word": 2.9347
+      },
+      "code-rust": {
+        "docs": 612,
+        "tok_per_char": 0.2554,
+        "tok_per_word": 2.7937
+      },
+      "en-dclm": {
+        "docs": 608,
+        "tok_per_char": 0.2192,
+        "tok_per_word": 1.2815
+      },
+      "en-fineweb-edu": {
+        "docs": 732,
+        "tok_per_char": 0.2112,
+        "tok_per_word": 1.2959
+      },
+      "en-nemotroncc": {
+        "docs": 954,
+        "tok_per_char": 0.2115,
+        "tok_per_word": 1.266
+      },
+      "en-nemotroncc-synth": {
+        "docs": 1975,
+        "tok_per_char": 0.2001,
+        "tok_per_word": 1.3102
+      },
+      "ind-bn-fw2": {
+        "docs": 112,
+        "tok_per_char": 0.3575,
+        "tok_per_word": 2.3298
+      },
+      "ind-bn-sangraha-v": {
+        "docs": 102,
+        "tok_per_char": 0.3671,
+        "tok_per_word": 2.3314
+      },
+      "ind-gu-fw2": {
+        "docs": 239,
+        "tok_per_char": 0.369,
+        "tok_per_word": 2.18
+      },
+      "ind-hi-fw2": {
+        "docs": 132,
+        "tok_per_char": 0.3096,
+        "tok_per_word": 1.5831
+      },
+      "ind-hi-hplt": {
+        "docs": 93,
+        "tok_per_char": 0.3164,
+        "tok_per_word": 1.6168
+      },
+      "ind-hi-indiccorp": {
+        "docs": 1094,
+        "tok_per_char": 0.311,
+        "tok_per_word": 1.5772
+      },
+      "ind-hi-sangraha-s": {
+        "docs": 88,
+        "tok_per_char": 0.3375,
+        "tok_per_word": 1.7545
+      },
+      "ind-hi-sangraha-v": {
+        "docs": 122,
+        "tok_per_char": 0.3108,
+        "tok_per_word": 1.6098
+      },
+      "ind-kn-fw2": {
+        "docs": 82,
+        "tok_per_char": 0.3668,
+        "tok_per_word": 2.9641
+      },
+      "ind-kn-sangraha-s": {
+        "docs": 53,
+        "tok_per_char": 0.3976,
+        "tok_per_word": 3.385
+      },
+      "ind-kn-sangraha-v": {
+        "docs": 89,
+        "tok_per_char": 0.3731,
+        "tok_per_word": 3.0095
+      },
+      "ind-ml-fw2": {
+        "docs": 185,
+        "tok_per_char": 0.3419,
+        "tok_per_word": 3.2874
+      },
+      "ind-mr-fw2": {
+        "docs": 95,
+        "tok_per_char": 0.3643,
+        "tok_per_word": 2.4915
+      },
+      "ind-mr-sangraha-v": {
+        "docs": 127,
+        "tok_per_char": 0.3667,
+        "tok_per_word": 2.5227
+      },
+      "ind-or-fw2": {
+        "docs": 328,
+        "tok_per_char": 0.5967,
+        "tok_per_word": 3.9345
+      },
+      "ind-sa-fw2": {
+        "docs": 55,
+        "tok_per_char": 0.473,
+        "tok_per_word": 3.672
+      },
+      "ind-ta-fw2": {
+        "docs": 58,
+        "tok_per_char": 0.343,
+        "tok_per_word": 3.0915
+      },
+      "ind-ta-sangraha-s": {
+        "docs": 36,
+        "tok_per_char": 0.354,
+        "tok_per_word": 3.2043
+      },
+      "ind-ta-sangraha-v": {
+        "docs": 65,
+        "tok_per_char": 0.3421,
+        "tok_per_word": 3.0408
+      },
+      "ind-te-fw2": {
+        "docs": 59,
+        "tok_per_char": 0.3836,
+        "tok_per_word": 2.9942
+      },
+      "ind-te-sangraha-s": {
+        "docs": 47,
+        "tok_per_char": 0.4097,
+        "tok_per_word": 3.1236
+      },
+      "ind-te-sangraha-v": {
+        "docs": 83,
+        "tok_per_char": 0.3939,
+        "tok_per_word": 3.1287
+      },
+      "math-finemath": {
+        "docs": 312,
+        "tok_per_char": 0.2903,
+        "tok_per_word": 1.6887
+      },
+      "math-megamath": {
+        "docs": 169,
+        "tok_per_char": 0.2438,
+        "tok_per_word": 1.4713
+      },
+      "sci-finepdfs": {
+        "docs": 63,
+        "tok_per_char": 0.2377,
+        "tok_per_word": 1.4675
+      }
+    },
+    "roundtrip": {
+      "cadj-commits": {
+        "docs": 826,
+        "failures": 0,
+        "normalised": 0
+      },
+      "cadj-notebooks": {
+        "docs": 169,
+        "failures": 0,
+        "normalised": 0
+      },
+      "cadj-stackexchange": {
+        "docs": 409,
+        "failures": 0,
+        "normalised": 0
+      },
+      "code-cpp": {
+        "docs": 613,
+        "failures": 0,
+        "normalised": 0
+      },
+      "code-go": {
+        "docs": 872,
+        "failures": 0,
+        "normalised": 0
+      },
+      "code-java": {
+        "docs": 847,
+        "failures": 0,
+        "normalised": 0
+      },
+      "code-js-ts": {
+        "docs": 1000,
+        "failures": 0,
+        "normalised": 0
+      },
+      "code-python": {
+        "docs": 718,
+        "failures": 0,
+        "normalised": 0
+      },
+      "code-rust": {
+        "docs": 612,
+        "failures": 0,
+        "normalised": 0
+      },
+      "en-dclm": {
+        "docs": 608,
+        "failures": 0,
+        "normalised": 0
+      },
+      "en-fineweb-edu": {
+        "docs": 732,
+        "failures": 0,
+        "normalised": 0
+      },
+      "en-nemotroncc": {
+        "docs": 954,
+        "failures": 0,
+        "normalised": 0
+      },
+      "en-nemotroncc-synth": {
+        "docs": 1000,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-bn-fw2": {
+        "docs": 112,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-bn-sangraha-v": {
+        "docs": 102,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-gu-fw2": {
+        "docs": 239,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-hi-fw2": {
+        "docs": 132,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-hi-hplt": {
+        "docs": 93,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-hi-indiccorp": {
+        "docs": 1000,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-hi-sangraha-s": {
+        "docs": 88,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-hi-sangraha-v": {
+        "docs": 122,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-kn-fw2": {
+        "docs": 82,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-kn-sangraha-s": {
+        "docs": 53,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-kn-sangraha-v": {
+        "docs": 89,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-ml-fw2": {
+        "docs": 185,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-mr-fw2": {
+        "docs": 95,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-mr-sangraha-v": {
+        "docs": 127,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-or-fw2": {
+        "docs": 328,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-sa-fw2": {
+        "docs": 55,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-ta-fw2": {
+        "docs": 58,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-ta-sangraha-s": {
+        "docs": 36,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-ta-sangraha-v": {
+        "docs": 65,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-te-fw2": {
+        "docs": 59,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-te-sangraha-s": {
+        "docs": 47,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-te-sangraha-v": {
+        "docs": 83,
+        "failures": 0,
+        "normalised": 0
+      },
+      "math-finemath": {
+        "docs": 312,
+        "failures": 0,
+        "normalised": 0
+      },
+      "math-megamath": {
+        "docs": 169,
+        "failures": 0,
+        "normalised": 0
+      },
+      "sci-finepdfs": {
+        "docs": 63,
+        "failures": 0,
+        "normalised": 0
+      }
+    }
+  },
+  "c3": {
+    "source": "/Users/riya.agrahari/Downloads/c3-sample-v0/tokenizer.json",
+    "revision": null,
+    "heldout": {
+      "cadj-commits": {
+        "docs": 826,
+        "tok_per_char": 0.2414,
+        "tok_per_word": 2.3945
+      },
+      "cadj-notebooks": {
+        "docs": 169,
+        "tok_per_char": 0.2702,
+        "tok_per_word": 2.4458
+      },
+      "cadj-stackexchange": {
+        "docs": 409,
+        "tok_per_char": 0.2592,
+        "tok_per_word": 1.8572
+      },
+      "code-cpp": {
+        "docs": 613,
+        "tok_per_char": 0.289,
+        "tok_per_word": 3.1796
+      },
+      "code-go": {
+        "docs": 872,
+        "tok_per_char": 0.2973,
+        "tok_per_word": 2.7114
+      },
+      "code-java": {
+        "docs": 847,
+        "tok_per_char": 0.2324,
+        "tok_per_word": 2.7275
+      },
+      "code-js-ts": {
+        "docs": 1234,
+        "tok_per_char": 0.2538,
+        "tok_per_word": 2.7308
+      },
+      "code-python": {
+        "docs": 718,
+        "tok_per_char": 0.2512,
+        "tok_per_word": 2.9296
+      },
+      "code-rust": {
+        "docs": 612,
+        "tok_per_char": 0.2569,
+        "tok_per_word": 2.8097
+      },
+      "en-dclm": {
+        "docs": 608,
+        "tok_per_char": 0.2189,
+        "tok_per_word": 1.2801
+      },
+      "en-fineweb-edu": {
+        "docs": 732,
+        "tok_per_char": 0.2107,
+        "tok_per_word": 1.293
+      },
+      "en-nemotroncc": {
+        "docs": 954,
+        "tok_per_char": 0.2114,
+        "tok_per_word": 1.2652
+      },
+      "en-nemotroncc-synth": {
+        "docs": 1975,
+        "tok_per_char": 0.1998,
+        "tok_per_word": 1.308
+      },
+      "ind-bn-fw2": {
+        "docs": 112,
+        "tok_per_char": 0.338,
+        "tok_per_word": 2.2029
+      },
+      "ind-bn-sangraha-v": {
+        "docs": 102,
+        "tok_per_char": 0.3472,
+        "tok_per_word": 2.2045
+      },
+      "ind-gu-fw2": {
+        "docs": 239,
+        "tok_per_char": 0.3561,
+        "tok_per_word": 2.1038
+      },
+      "ind-hi-fw2": {
+        "docs": 132,
+        "tok_per_char": 0.3065,
+        "tok_per_word": 1.5674
+      },
+      "ind-hi-hplt": {
+        "docs": 93,
+        "tok_per_char": 0.3111,
+        "tok_per_word": 1.5897
+      },
+      "ind-hi-indiccorp": {
+        "docs": 1094,
+        "tok_per_char": 0.3061,
+        "tok_per_word": 1.5521
+      },
+      "ind-hi-sangraha-s": {
+        "docs": 88,
+        "tok_per_char": 0.3316,
+        "tok_per_word": 1.7238
+      },
+      "ind-hi-sangraha-v": {
+        "docs": 122,
+        "tok_per_char": 0.3058,
+        "tok_per_word": 1.5843
+      },
+      "ind-kn-fw2": {
+        "docs": 82,
+        "tok_per_char": 0.3084,
+        "tok_per_word": 2.4926
+      },
+      "ind-kn-sangraha-s": {
+        "docs": 53,
+        "tok_per_char": 0.3391,
+        "tok_per_word": 2.8866
+      },
+      "ind-kn-sangraha-v": {
+        "docs": 89,
+        "tok_per_char": 0.3153,
+        "tok_per_word": 2.5428
+      },
+      "ind-ml-fw2": {
+        "docs": 185,
+        "tok_per_char": 0.2915,
+        "tok_per_word": 2.8026
+      },
+      "ind-mr-fw2": {
+        "docs": 95,
+        "tok_per_char": 0.2928,
+        "tok_per_word": 2.0026
+      },
+      "ind-mr-sangraha-v": {
+        "docs": 127,
+        "tok_per_char": 0.2923,
+        "tok_per_word": 2.0108
+      },
+      "ind-or-fw2": {
+        "docs": 328,
+        "tok_per_char": 0.3519,
+        "tok_per_word": 2.3204
+      },
+      "ind-sa-fw2": {
+        "docs": 55,
+        "tok_per_char": 0.4607,
+        "tok_per_word": 3.576
+      },
+      "ind-ta-fw2": {
+        "docs": 58,
+        "tok_per_char": 0.2854,
+        "tok_per_word": 2.5724
+      },
+      "ind-ta-sangraha-s": {
+        "docs": 36,
+        "tok_per_char": 0.2981,
+        "tok_per_word": 2.6984
+      },
+      "ind-ta-sangraha-v": {
+        "docs": 65,
+        "tok_per_char": 0.2877,
+        "tok_per_word": 2.5568
+      },
+      "ind-te-fw2": {
+        "docs": 59,
+        "tok_per_char": 0.3259,
+        "tok_per_word": 2.5439
+      },
+      "ind-te-sangraha-s": {
+        "docs": 47,
+        "tok_per_char": 0.3526,
+        "tok_per_word": 2.6881
+      },
+      "ind-te-sangraha-v": {
+        "docs": 83,
+        "tok_per_char": 0.3385,
+        "tok_per_word": 2.6888
+      },
+      "math-finemath": {
+        "docs": 312,
+        "tok_per_char": 0.2904,
+        "tok_per_word": 1.689
+      },
+      "math-megamath": {
+        "docs": 169,
+        "tok_per_char": 0.2446,
+        "tok_per_word": 1.4761
+      },
+      "sci-finepdfs": {
+        "docs": 63,
+        "tok_per_char": 0.2376,
+        "tok_per_word": 1.4667
+      }
+    },
+    "roundtrip": {
+      "cadj-commits": {
+        "docs": 826,
+        "failures": 0,
+        "normalised": 0
+      },
+      "cadj-notebooks": {
+        "docs": 169,
+        "failures": 0,
+        "normalised": 0
+      },
+      "cadj-stackexchange": {
+        "docs": 409,
+        "failures": 0,
+        "normalised": 1
+      },
+      "code-cpp": {
+        "docs": 613,
+        "failures": 0,
+        "normalised": 0
+      },
+      "code-go": {
+        "docs": 872,
+        "failures": 0,
+        "normalised": 0
+      },
+      "code-java": {
+        "docs": 847,
+        "failures": 0,
+        "normalised": 0
+      },
+      "code-js-ts": {
+        "docs": 1000,
+        "failures": 0,
+        "normalised": 0
+      },
+      "code-python": {
+        "docs": 718,
+        "failures": 0,
+        "normalised": 1
+      },
+      "code-rust": {
+        "docs": 612,
+        "failures": 0,
+        "normalised": 0
+      },
+      "en-dclm": {
+        "docs": 608,
+        "failures": 0,
+        "normalised": 0
+      },
+      "en-fineweb-edu": {
+        "docs": 732,
+        "failures": 0,
+        "normalised": 0
+      },
+      "en-nemotroncc": {
+        "docs": 954,
+        "failures": 0,
+        "normalised": 1
+      },
+      "en-nemotroncc-synth": {
+        "docs": 1000,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-bn-fw2": {
+        "docs": 112,
+        "failures": 0,
+        "normalised": 112
+      },
+      "ind-bn-sangraha-v": {
+        "docs": 102,
+        "failures": 0,
+        "normalised": 102
+      },
+      "ind-gu-fw2": {
+        "docs": 239,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-hi-fw2": {
+        "docs": 132,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-hi-hplt": {
+        "docs": 93,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-hi-indiccorp": {
+        "docs": 1000,
+        "failures": 0,
+        "normalised": 130
+      },
+      "ind-hi-sangraha-s": {
+        "docs": 88,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-hi-sangraha-v": {
+        "docs": 122,
+        "failures": 0,
+        "normalised": 2
+      },
+      "ind-kn-fw2": {
+        "docs": 82,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-kn-sangraha-s": {
+        "docs": 53,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-kn-sangraha-v": {
+        "docs": 89,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-ml-fw2": {
+        "docs": 185,
+        "failures": 0,
+        "normalised": 1
+      },
+      "ind-mr-fw2": {
+        "docs": 95,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-mr-sangraha-v": {
+        "docs": 127,
+        "failures": 0,
+        "normalised": 53
+      },
+      "ind-or-fw2": {
+        "docs": 328,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-sa-fw2": {
+        "docs": 55,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-ta-fw2": {
+        "docs": 58,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-ta-sangraha-s": {
+        "docs": 36,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-ta-sangraha-v": {
+        "docs": 65,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-te-fw2": {
+        "docs": 59,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-te-sangraha-s": {
+        "docs": 47,
+        "failures": 0,
+        "normalised": 0
+      },
+      "ind-te-sangraha-v": {
+        "docs": 83,
+        "failures": 0,
+        "normalised": 0
+      },
+      "math-finemath": {
+        "docs": 312,
+        "failures": 0,
+        "normalised": 2
+      },
+      "math-megamath": {
+        "docs": 169,
+        "failures": 0,
+        "normalised": 0
+      },
+      "sci-finepdfs": {
+        "docs": 63,
+        "failures": 0,
+        "normalised": 1
+      }
+    }
+  }
+}

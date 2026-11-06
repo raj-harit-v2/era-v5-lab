@@ -61,7 +61,7 @@ How to fill it:
 
 - [ ] `check_style.py` gives 0 errors
 - [ ] Every number in the text has TSAI approval
-- [ ] Every person named has signed the consent form
+- [ ] The text names teams only, and no person
 - [ ] Nothing from the internal list in `public_internal.md`
 - [ ] No `[number: waiting for TSAI]` left in the text
 - [ ] The G11 lead reviewed the pull request (a pull request from the lead: a team member commented)

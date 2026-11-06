@@ -51,8 +51,8 @@ The technical phrase `magic number` is allowed. The word `magic` on its own is n
    It still lists a later date, because a future date needs approval. It also skips pull request numbers such as
    `#6`: they name a source and do not count anything.
 6. **Say what we did.** Write about work that is done. Do not promise dates, sizes or results.
-7. **Names need consent.** Name a person only if they signed `consent_form.md`. Use the name the way
-   they chose.
+7. **No person names.** Public text names teams only. Write "the Tokenizer team", not the name or the GitHub
+   handle of a person. See Rule 3 in `public_internal.md`.
 8. **Plain words.** Write "use", not "make use of". Write "start", not "commence". Write "about", not
    "approximately".
 9. **Active voice.** Write "the Tokenizer team trained a tokenizer", not "a tokenizer was trained".

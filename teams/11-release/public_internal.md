@@ -12,13 +12,17 @@ a slide, a chat message or this repository. The date of an update and the week n
 
 Treat the item as internal. Ask in the G11 group. G11 asks TSAI.
 
+## Rule 3: name teams, not people
+
+Public text names teams only. It names no person, not even by a first name or a GitHub handle. This applies to the
+weekly updates, the dashboard text, the run report, the model card and the launch announcement.
+
 ## Public, after TSAI approves the text
 
 | Topic | What we may say |
 |---|---|
 | The lab | What the lab does, in plain words, as TSAI describes it. |
 | Teams | The names of the teams and what each team works on this week, at the level of the weekly update. |
-| People | Names of people who signed the consent form, in the form they chose. |
 | Data | The names of public data sources, and the kinds of problems we found in them. Short examples only if TSAI approves them and they hold no personal data. |
 | Benchmarks | The names of the benchmarks that G9 Evaluation gives us. Scores only after TSAI approves them. |
 | Methods | Methods that others have already published, described in general terms. |
@@ -33,7 +37,7 @@ Treat the item as internal. Ask in the G11 group. G11 asks TSAI.
 | Results | Results of experiments and evaluations before TSAI approves them. |
 | Unpublished work | Techniques, tricks and results that TSAI plans to publish later, for example in a paper. TSAI keeps the list of these topics. It is not in this public repository. |
 | Teaching material | Slides, worked examples, session recordings and chat messages, unless TSAI shares them publicly. |
-| Personal data | Emails, phone numbers and addresses of anyone. Names of people without a consent form. |
+| Personal data | Names, emails, phone numbers and addresses of anyone. Public text names teams only (Rule 3). |
 | Pack contents | Personal data or secrets found in the data packs. Never copy them anywhere. |
 | Secrets | Keys, tokens, passwords, internal links and machine names. |
 | Students | Grades, removals, the waitlist and the problems of any one person. |

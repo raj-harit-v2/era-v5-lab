@@ -56,5 +56,5 @@ This confirms the outline only. TSAI still approves the final text.
 
 - Write only about work that is done. Do not promise dates, sizes or results.
 - Write `[number: waiting for TSAI]` in place of any number that TSAI has not approved.
-- Name a person only if they signed the consent form.
+- Name teams only. Do not name any person. Contributors and Acknowledgments lists the teams.
 - Follow `teams/11-release/style/style_guide.md`.

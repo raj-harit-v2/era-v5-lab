@@ -1,0 +1,17 @@
+{
+ "file": "sarvam-30b-bf16.gguf",
+ "format": "bf16",
+ "architecture": "bailingmoe2",
+ "bytes": 64339517696,
+ "n_params": 32152650368,
+ "bits_per_weight": 16.01,
+ "router_type": "F32",
+ "expert_bias_type": "F32",
+ "output_type": "BF16",
+ "params_by_type": {
+  "BF16": 32143048704,
+  "F32": 9601664
+ },
+ "ok": true,
+ "problems": []
+}
