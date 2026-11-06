@@ -5,7 +5,7 @@ One table of measured runs for baseline, CE A/B, and MoE dispatch. Fill empty ar
 | Section | Status |
 | :--- | :--- |
 | Baseline (Week-1 ref + #239 clean) | Filled |
-| Fused / Triton CE A/B | Filled (cross-SHA; see notes) |
+| Fused / Triton CE A/B | Filled: 2a/2b cross-SHA (A100); 2c same-SHA on T4 (interim); same-SHA A100 pending |
 | MoE loop / sorted / grouped | Filled (#53 / Adinath) |
 | Config arms t1–t3 (job requests) | TBD |
 | Recommendation | Draft below |
@@ -56,6 +56,55 @@ Evidence: Colab from Tharun / PR #35 path (`Colab_35_Tharun`).
 Cmd: `python -m perfkit.bench --level 3 --modes clean,layer --repeat 2 --tag ce_triton data.source=synthetic model.ce_impl=triton_ce`
 
 **Reading:** On A100-40GB, **torch remains fastest** on step_ms. Triton (~94 ms) sits near `fused_cce`, with peak mem ~0.89 GiB (~7× below torch). Prefer torch (or fused if mem OK) when step binds; Triton/fused_cce when memory binds — confirm later on one SHA if claiming a hard %.
+
+### 2c. Same-SHA CE A/B (interim: Tesla T4)
+
+Every `ce_impl` on **one commit, one GPU, one config**, run back to back in one Colab session. The A100 run on the
+same commit is pending (no A100 available yet); it will be added here as a second table. **Do not compare the
+percentages below with 2a/2b**: those are A100, bf16, B=16 on other commits.
+
+| | |
+| :--- | :--- |
+| GPU | Tesla T4 (Colab), fp16 (no native bf16), torch 2.11.0+cu130 |
+| Commit | `7ef9f14` (`g6/triton-kernels`, PR #52 tip; the only commit with all seven `ce_impl`), clean tree |
+| Config | `configs/base.yaml`, `run.batch_size=8` (README setting for T4), B×T 8×256, `data.source=synthetic` |
+| Command | `python -m perfkit.bench --modes clean,layer --level 3 --repeat 2 --tag ce_<impl> data.source=synthetic model.ce_impl=<impl> run.batch_size=8` |
+| Steps | 100 measured after 10 warmup, `--repeat 2` (each run in its own process) |
+| Evidence | Run JSON / MD / JSONL, bench and CPU-smoke logs: [gist](https://gist.github.com/keshavamurali/f4213c3d45c60e31dc560e834a5fb89e) |
+
+| ce_impl | step_ms (run 1 / run 2) | tokens/s | peak GiB | vs torch step | fwd:head+loss ms | bwd:head+loss ms | repeat check (step gap) |
+| :--- | ---: | ---: | ---: | ---: | ---: | ---: | :--- |
+| torch | 128.87 / 128.84 | 15,892 | 3.54 | baseline | 30.21 | 35.45 | PASS (0.0%) |
+| chunked | 174.68 / 174.71 | 11,724 | 0.98 | +35.5% | 30.47 | 81.34 | PASS (0.0%) |
+| fused | 215.44 / 216.72 | 9,506 | 1.05 | +67.2% | 149.16 | 1.19 | PASS (0.6%) |
+| fused_cce | 244.76 / 244.10 | 8,367 | 0.89 | +89.9% | 42.29 | 133.33 | PASS (0.3%) |
+| fused_cached | 566.93 / 566.51 | 3,612 | 0.94 | +339.9% | 501.35 | 1.19 | PASS (0.1%) |
+| fused_liger | 566.74 / 566.51 | 3,614 | 0.94 | +339.8% | 501.24 | 1.19 | PASS (0.0%) |
+| triton_ce | 3,069.90 / 3,069.16 | 667 | 0.89 | +2282.1% | 172.19 | 2,834.96 | PASS (0.0%) |
+
+All seven pass the repeat check (step gap at most 0.6%). Caveat: the Colab T4 reported `SwPowerCap` (power-capped
+clocks) in every run, as in #40, so absolute times are for a capped T4; the ordering and the repeat agreement hold.
+`checkpoint` and `comm` modes were not run (clean step only, per the task). The `torch` row reproduces the independent T4 profile in
+[`headloss_fwd_t4.md`](headloss_fwd_t4.md) (step 128.2 ms, `fwd:head+loss` 30.24 ms, `bwd:head+loss` 35.45 ms, peak
+3.54 GiB). CPU smoke on the same commit: `pytest correctness/test_ce.py --all-configs` 104 passed; a tiny CPU bench
+(`configs/tiny_cpu.yaml`) exits 0 for each of the six PyTorch `ce_impl` (`triton_ce` needs CUDA, so it is not in the CPU smoke).
+
+**Reading (T4 only):**
+- **torch is fastest** and uses the most memory (3.54 GiB). Every other option trades step time for 3.4–4.0× less
+  peak memory. The step difference is almost all head + loss: for `chunked`, +45.8 ms step against +46.2 ms
+  `fwd+bwd:head+loss`.
+- **`chunked` is the cheapest low-memory option on T4:** +35.5% step for 0.98 GiB. `fused` (+67%) and `fused_cce`
+  (+90%) save a little more memory for a larger step cost. On A100 (2a, other commit) `chunked` and `fused` were
+  tied at +34%; the A100 same-SHA run decides that ordering.
+- `fused`, `fused_cached` and `fused_liger` compute the head gradients during the forward (their `bwd:head+loss` is
+  1.19 ms), so compare their total step, not the backward alone ([`docs/LINEAR_CE.md`](../docs/LINEAR_CE.md)).
+  `fused_cached` and `fused_liger` share one implementation, and their numbers are identical.
+- **`triton_ce` is 24× slower than torch on T4**, almost all in the backward (2,835 ms against a 172 ms forward,
+  16.5×). From the kernel code (`kernels/linear_ce_fused.py` on PR #52's branch, tiles `BM, BV, BK = 16, 128, 32`), both backward
+  kernels launch one program per hidden tile and each recomputes its logits over the full vocabulary, so the head
+  matmul is recomputed about 2 × (256 / 32) = 16 times. That matches the 16.5× ratio; it is a reading of the code,
+  not a kernel profile. It keeps the lowest peak memory (0.89 GiB). Recorded as evidence only; the kernel is
+  unchanged.
 
 ---
 
@@ -144,4 +193,4 @@ same CE, so the A/B is clean. Across arms, compare the **dispatch** column, not 
 
 ## 5. Draft trainer recommendation (Gate 2)
 
-Until arm jobs and a cooled layer re-run land: use **#239 clean** (~87 ms / ~47k tok/s on `9b43b9a`, synthetic) as the lab baseline; keep **`moe.dispatch=sorted`** as the MoE default for the measured single-pass regime; treat fused/Triton CE as **memory wins, not step wins** vs torch on A100-40GB cross-SHA evidence. Revisit after layer re-run and same-SHA CE confirm.
+Until arm jobs and a cooled layer re-run land: use **#239 clean** (~87 ms / ~47k tok/s on `9b43b9a`, synthetic) as the lab baseline; keep **`moe.dispatch=sorted`** as the MoE default for the measured single-pass regime; treat fused/Triton CE as **memory wins, not step wins** vs torch on A100-40GB cross-SHA evidence. The same-SHA run on T4 (2c) agrees: torch is fastest on step, every other `ce_impl` is a memory win at a step cost, and `chunked` is the cheapest of them on T4. Revisit after the layer re-run and the same-SHA A100 run on `7ef9f14`.
