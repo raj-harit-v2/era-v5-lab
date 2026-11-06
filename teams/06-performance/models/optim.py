@@ -212,7 +212,10 @@ class MuonAdamW(torch.optim.Optimizer):
     @staticmethod
     def _muon_step_batched(params, states, group):
         """_muon_step on same-shaped matrices at once: one chain of launches per shape instead of per matrix.
-        The state stays per parameter (same keys as the loop, so checkpoints work with either impl)."""
+        The state stays per parameter (same keys as the loop, so checkpoints work with either impl).
+        Fewer launches than the loop (the step is host-bound): each Polar Express iteration is one Gram matmul and
+        two baddbmm (scale and add inside the matmul), one fp32 copy feeds both input norms, and the cautious weight
+        decay terms are skipped when weight_decay is 0. Same math; rounding differs slightly from the loop."""
         rows, cols = params[0].shape
         for p, state in zip(params, states):
             if not state:
@@ -227,19 +230,21 @@ class MuonAdamW(torch.optim.Optimizer):
 
         # The same steps as _muon_step, on [n, rows, cols].
         x = g.to(torch.bfloat16 if g.is_cuda and _native_bf16() else torch.float32)
-        target = torch.linalg.vector_norm(x.float(), dim=(1, 2), keepdim=True) / (rows ** 0.5)
-        row_norm = x.float().norm(dim=-1, keepdim=True).clamp_min(1e-6)
+        xf = x.float()
+        target = torch.linalg.vector_norm(xf, dim=(1, 2), keepdim=True) / (rows ** 0.5)
+        row_norm = xf.norm(dim=-1, keepdim=True).clamp_min(1e-6)
         x = x * (target / row_norm).to(x.dtype)
         x = x / (torch.linalg.vector_norm(x, dim=(1, 2), keepdim=True) * 1.01 + 1e-6)
         red_dim = -1 if rows >= cols else -2
+        # b * gram + c * gram @ gram, then a * x + (x @ that or that @ x): two baddbmm instead of seven launches
         if rows > cols:
             for a, b, c in POLAR_EXPRESS_COEFFS[:group["ns_steps"]]:
                 gram = x.mT @ x
-                x = a * x + x @ (b * gram + c * (gram @ gram))
+                x = torch.baddbmm(x, x, torch.baddbmm(gram, gram, gram, beta=b, alpha=c), beta=a)
         else:
             for a, b, c in POLAR_EXPRESS_COEFFS[:group["ns_steps"]]:
                 gram = x @ x.mT
-                x = a * x + (b * gram + c * (gram @ gram)) @ x
+                x = torch.baddbmm(x, torch.baddbmm(gram, gram, gram, beta=b, alpha=c), x, beta=a)
 
         g = x.to(params[0].dtype)
         target_norm = min(rows, cols) ** 0.5
@@ -258,9 +263,11 @@ class MuonAdamW(torch.optim.Optimizer):
 
         lr = group["lr"] * max(1.0, rows / cols) ** 0.5
         wd = group["weight_decay"]
-        p = torch.stack(params)
-        mask = (g * p) >= 0
-        torch._foreach_sub_(params, list((lr * g + lr * wd * p * mask).unbind(0)))
+        if wd:
+            p = torch.stack(params)
+            mask = (g * p) >= 0
+            g = g + wd * p * mask
+        torch._foreach_add_(params, list(g.unbind(0)), alpha=-lr)
 
     @staticmethod
     def _adamw_step_foreach(params, states, group):
