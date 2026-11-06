@@ -506,21 +506,27 @@ def test_batched_polar_muon_matches_loop_with_missing_grad(shape, weight_decay):
 )
 @pytest.mark.parametrize("shape", [(64, 32), (32, 64), (48, 48)])
 def test_batched_polar_muon_matches_loop_on_cuda_bf16(shape):
-    # The Polar Express iterations run in bf16 on CUDA; baddbmm rounds once where the loop rounds after
-    # every op, so compare the parameter change, not the parameters, with a bf16 tolerance.
+    # The Polar Express iterations run in bf16 on CUDA, so neither impl matches exact math: the loop is
+    # 3-5% off an fp32 run and baddbmm (one rounding instead of one per op) about 1-2%. Comparing the two
+    # with each other measures the loop's error, so each is compared with the same steps in fp32 on CPU:
+    # the batched update must be no further from it than the loop's.
     torch.manual_seed(43)
     initial = [torch.randn(shape) for _ in range(3)]
+    grads = [[torch.randn(shape) * (step + 1) for _ in initial] for step in range(2)]
     (loop_params, loop), (batch_params, batched) = _polar_muon_loop_and_batched(initial, 0.0, "cuda")
-    for step in range(2):
-        for lp, bp in zip(loop_params, batch_params):
-            grad = torch.randn(shape, device="cuda") * (step + 1)
-            lp.grad, bp.grad = grad.clone(), grad.clone()
+    ref_params, ref = _polar_muon_loop_and_batched(initial, 0.0, "cpu")[0]
+    for step_grads in grads:
+        for lp, bp, rp, grad in zip(loop_params, batch_params, ref_params, step_grads):
+            lp.grad, bp.grad, rp.grad = grad.cuda(), grad.cuda(), grad.clone()
         loop.step()
         batched.step()
-    for lp, bp, p0 in zip(loop_params, batch_params, initial):
-        d_loop, d_batch = lp.detach() - p0.cuda(), bp.detach() - p0.cuda()
-        rel = ((d_batch - d_loop).norm() / d_loop.norm()).item()
-        assert rel < 0.02, f"CUDA bf16 polar Muon loop/batched update differs by {rel:.4f} (relative norm)"
+        ref.step()
+    for lp, bp, rp, p0 in zip(loop_params, batch_params, ref_params, initial):
+        d_ref = rp.detach() - p0
+        err_loop = ((lp.detach().cpu() - p0 - d_ref).norm() / d_ref.norm()).item()
+        err_batch = ((bp.detach().cpu() - p0 - d_ref).norm() / d_ref.norm()).item()
+        assert err_batch <= 1.1 * err_loop + 1e-3, (
+            f"CUDA bf16 polar Muon: batched update is {err_batch:.4f} off fp32, loop {err_loop:.4f} (relative norm)")
 
 
 def test_hybrid_optimizer_state_dict_resumes_identically():
