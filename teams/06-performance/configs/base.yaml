@@ -7,6 +7,7 @@ run:
   batch_size: 16        # B, always from here. 32 fits A100 / L4 / H100; 8 on T4 / P100 / V100 (fp32 logits + grad: 8 GiB at 32)
   seed: 42
   compile: false
+  compile_mode: default   # default | max-autotune-no-cudagraphs (used only when compile=true)
   grad_clip: 1.0
 
 data:

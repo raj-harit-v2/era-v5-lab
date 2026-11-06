@@ -160,6 +160,22 @@ def seed_everything(seed: int):
         torch.cuda.manual_seed_all(seed)
 
 
+def select_compile_model(core: torch.nn.Module, run: dict):
+    """Keep eager/default behavior unchanged; allow opt-in compiler autotuning.
+
+    The model configuration, optimizer, batch, dtype and LR schedule are untouched.
+    """
+    compile_mode = run.get("compile_mode", "default")
+    allowed = ("default", "max-autotune-no-cudagraphs")
+    if compile_mode not in allowed:
+        raise ValueError(f"run.compile_mode={compile_mode!r} not in {allowed}")
+    if not run["compile"]:
+        return core
+    if compile_mode == "default":
+        return torch.compile(core)  # preserve the original compilation call
+    return torch.compile(core, mode=compile_mode)
+
+
 def build(cfg: dict, device: torch.device) -> Setup:
     """Config -> Setup: the loader, model, optimizer, scaler and dtype of one run."""
     mcfg = model_config(cfg)
@@ -176,7 +192,7 @@ def build(cfg: dict, device: torch.device) -> Setup:
         notes.append(f"optim.schedule={schedule} is ignored: bench times every step at the base learning rate")
     core = GPT(mcfg, loader.token_bytes(mcfg.ke_max_pos) if mcfg.embedding == "ke1" else None).to(device)
     core.train()
-    model = torch.compile(core) if run["compile"] else core
+    model = select_compile_model(core, run)
     opt = build_optimizer(core, cfg["optim"])
     scaler = torch.amp.GradScaler("cuda") if (device.type == "cuda" and dtype == "fp16") else None
     if scaler is not None:
