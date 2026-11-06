@@ -42,6 +42,8 @@ model:                  # fields of models.config.ModelConfig, nothing else
   ce_chunks: 8          # token chunk count for chunked / fused (need not divide B*T)
   ce_vocab_chunk: 4096  # vocabulary tile size for fused_cce
   ce_token_chunk: 16    # token tile size for fused_cached / fused_liger
+  ce_triton_backward: chunked  # chunked (reuse dLogits) | recompute (old hidden-tile path)
+  ce_triton_chunk: 128         # max token rows in backward scratch; memory/time tradeoff
   mtp: false            # true: second untied head on token t+2 (G5 config_v0); trained loss = ntp + mtp
 
 optim:

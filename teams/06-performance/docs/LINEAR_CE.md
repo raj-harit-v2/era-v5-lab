@@ -11,7 +11,7 @@ uses the same LM head and average over non-ignored targets; the selection also a
 | `fused_cce` | Apple Cut Cross-Entropy style online vocabulary reduction | One vocabulary tile | Recompute vocabulary tiles |
 | `fused_liger` | Liger-style token chunk CE with cached head gradients | One token chunk | Return gradients computed during forward |
 | `fused_cached` | Existing token-tiled custom autograd reference | One token chunk | Return cached head gradients |
-| `triton_ce` | In-repo Triton linear projection plus online CE | No full logits or dLogits tensor | Recompute projection tiles and write dInput/dWeight directly |
+| `triton_ce` | In-repo Triton tiled projection plus CE | No full logits; bounded dLogits chunk in default backward | Recompute each chunk once, reuse its derivatives for dInput/dWeight |
 
 `fused_cce` and `fused_liger` are source-inspired **PyTorch correctness/reference implementations**.
 They do not vendor or call the upstream Triton kernels. This keeps the repo dependency-free and lets CPU
@@ -23,16 +23,27 @@ their timings as upstream Liger or Apple kernel timings.
 `triton_ce` is implemented in this repository under `kernels/linear_ce_fused.py`; it does not import
 Liger or Apple CCE. One custom autograd path uses Triton tile kernels: forward computes tiled matrix
 products and partial online log-sum-exp statistics, then reduces those statistics. It never writes the
-full `[tokens, vocab]` logits. Backward recomputes projection tiles and directly produces input,
-head-weight, and optional bias gradients without storing a full `dLogits` tensor or using atomics. It
+full `[tokens, vocab]` logits. The default backward reconstructs each token chunk once,
+forms its fp32 loss derivatives, and reuses that buffer for input, head-weight, and optional bias
+gradients. One scratch allocation is reused across chunks; no gradient atomics are used. It
 saves inputs, targets, and per-token log-normalizers. This combines
 the projection/recompute structure used by Liger with Apple's online reduction approach. Triton must be
 available in the CUDA PyTorch environment; CPU runs continue to use the reference implementations.
-The current `16 x 128 x 32` token/vocabulary/hidden tile fits the backward kernels' shared-memory
-budget on Ampere. Backward recomputes the projection separately for each hidden output tile in both
-the input-gradient and weight-gradient kernels. This can make a large hidden size compute-bound even
-though the full logits tensor is never stored. Treat the tile sizes and backward strategy as candidates
-for tuning after measuring total step time on A100 and H100.
+The `16 x 128 x 32` token/vocabulary/hidden tile is retained. The old backward is selectable with
+`model.ce_triton_backward=recompute`: it reconstructs the projection separately for every hidden
+output tile in both gradient kernels. At hidden width 256 and tile width 32, that is 16 complete
+projection-equivalents in backward before the actual gradient products. This is an arithmetic count,
+not a measured 16x slowdown.
+
+`model.ce_triton_backward=chunked` is the new default for `triton_ce`. It performs one complete
+projection-equivalent in backward plus the two gradient products. `model.ce_triton_chunk` (default
+128) caps derivative scratch at `min(tokens, ce_triton_chunk) * vocab * 4` bytes: 64 MiB at 128 tokens
+and vocabulary 131072. This trades recomputation for memory traffic and three kernel launches per
+chunk. Larger chunks reduce launches and dWeight accumulation traffic at the cost of more scratch.
+Head-weight and bias gradients accumulate in fp32 across chunks and cast once to parameter dtype;
+low-precision gradient matmuls retain the existing compute dtype. The full weight-gradient buffer
+remains a material memory cost. All existing CE modes and the old Triton strategy remain selectable.
+Performance and GPU correctness for this revision are pending server validation; no speedup is claimed.
 
 Algorithm references: [Liger's fused linear cross-entropy source](https://github.com/linkedin/Liger-Kernel/blob/main/src/liger_kernel/ops/fused_linear_cross_entropy.py),
 [Apple's Cut Cross-Entropy repository](https://github.com/apple/ml-cross-entropy), and [Triton's fused
@@ -110,6 +121,11 @@ The Triton CE correctness file covers direct kernel pairs and model integration;
 repeat correctness on H100 (or the actual official-run GPU) before timing. CPU reference tests work
 without Triton; the `triton_ce` mode itself requires CUDA.
 
+The Triton file also compares both backward strategies, covers uneven/one-token chunks, retained-graph
+loss scaling, native fp16/bf16 and autocast across multiple chunks, and verifies projection launch count
+does not grow with the number of hidden output tiles. It checks derivative scratch shape at the launch
+boundary to catch an accidental full-sequence allocation.
+
 Run each variant under the same CUDA/PyTorch environment, batch size, sequence length, vocabulary,
 precision, commit and available GPU. `--repeat 2` creates separate processes; each run records its own
 JSON summary. Run from `teams/06-performance` after committing the code (the bench reports dirty trees).
@@ -122,6 +138,21 @@ python -m perfkit.bench --level 3 --modes clean,layer --repeat 2 --tag ce_cached
 python -m perfkit.bench --level 3 --modes clean,layer --repeat 2 --tag ce_liger_ref data.source=synthetic model.ce_impl=fused_liger
 python -m perfkit.bench --level 3 --modes clean,layer --repeat 2 --tag ce_cce_ref data.source=synthetic model.ce_impl=fused_cce
 python -m perfkit.bench --level 3 --modes clean,layer --repeat 2 --tag ce_triton data.source=synthetic model.ce_impl=triton_ce
+```
+
+Compare the old and new Triton backward on the same server/commit/config:
+
+```bash
+python -m perfkit.bench --level 3 --modes clean,layer --repeat 2 --tag ce_recompute data.source=synthetic model.ce_impl=triton_ce model.ce_triton_backward=recompute
+python -m perfkit.bench --level 3 --modes clean,layer --repeat 2 --tag ce_chunk128 data.source=synthetic model.ce_impl=triton_ce model.ce_triton_backward=chunked model.ce_triton_chunk=128
+python -m perfkit.bench --level 3 --modes clean,layer --repeat 2 --tag ce_chunk256 data.source=synthetic model.ce_impl=triton_ce model.ce_triton_backward=chunked model.ce_triton_chunk=256
+```
+
+The report treats both Triton controls as A/B implementation switches. Use the same chunk size and
+backward strategy for the two runs inside each `--repeat 2` check. Run correctness first:
+
+```bash
+python -m pytest correctness/test_ce_triton.py correctness/test_bench.py -q
 ```
 
 Compare `clean.raw_step_ms`, `fwd:head+loss`, `bwd:head+loss`, peak allocated memory and tokens/s. The

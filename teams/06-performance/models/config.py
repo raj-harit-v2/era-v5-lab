@@ -61,6 +61,8 @@ class ModelConfig:
     ce_chunks: int = 8                # number of token chunks for chunked / fused
     ce_vocab_chunk: int = 4096        # vocabulary tile size for fused_cce
     ce_token_chunk: int = 16           # token tile size for fused_cached / fused_liger
+    ce_triton_backward: str = "chunked"  # chunked (reuse dLogits) | recompute (old comparison)
+    ce_triton_chunk: int = 128          # max token rows in Triton backward scratch
     mtp: bool = False                # True: second untied head predicts token t+2 (G5 config_v0); loss = ntp + mtp
 
     def __post_init__(self):
@@ -83,6 +85,9 @@ class ModelConfig:
                 "position=rope needs model.rope_theta (e.g. model.rope_theta=10000); null is for learned only")
             assert self.rope_theta > 0, "rope_theta must be > 0"
         assert self.ce_impl in CE_IMPLS, f"ce_impl={self.ce_impl!r} not in {CE_IMPLS}"
+        assert self.ce_triton_backward in ("chunked", "recompute"), "invalid ce_triton_backward"
+        assert type(self.ce_triton_chunk) is int and self.ce_triton_chunk > 0, \
+            "ce_triton_chunk must be a positive integer"
         assert self.ce_chunks > 0 and self.ce_vocab_chunk > 0 and self.ce_token_chunk > 0, \
             "cross-entropy chunk sizes must be positive"
         unknown = sorted(set(self.moe) - MOE_KEYS)

@@ -321,6 +321,19 @@ def test_quick_compare_allows_layer_norm_variant():
     assert "step (clean)" in [row[0] for row in rows]
 
 
+def test_quick_compare_allows_triton_ce_backward_variant():
+    a, b = _two_runs()
+    for run in (a, b):
+        run["config"]["model"]["ce_impl"] = "triton_ce"
+    a["config"]["model"]["ce_triton_backward"] = "chunked"
+    b["config"]["model"]["ce_triton_backward"] = "recompute"
+    a["config"]["model"]["ce_triton_chunk"] = 128
+    b["config"]["model"]["ce_triton_chunk"] = 64
+    rows, ok, problems = bench.quick_compare(a, b, 5.0, 2, 0.0)
+    assert ok and not problems
+    assert "step (clean)" in [row[0] for row in rows]
+
+
 def test_quick_compare_allows_moe_dispatch_variant():
     a, b = _two_runs()
     a["config"]["model"]["moe"] = {"dispatch": "loop", "num_experts": 8}

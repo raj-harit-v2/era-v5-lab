@@ -9,10 +9,11 @@ from correctness.framework import Case, PAIRS, check, pair, pairs_in, scaled
 from models.config import ModelConfig
 from models.gpt import GPT
 from kernels.linear_ce_fused import linear_cross_entropy_fused_triton
+from kernels import linear_ce_fused as ce
 
 
 def _require_cuda(device):
-    if device.type != "cuda":
+    if device.type != "cuda" or ce.triton is None:
         pytest.skip("triton_ce runs on CUDA; CPU reference modes remain available")
 
 
@@ -38,7 +39,8 @@ def _triton_pair(device):
 @pytest.mark.parametrize("n,h,v", [(5, 13, 53), (11, 13, 53), (17, 13, 53),
                                     (37, 70, 513)])
 @pytest.mark.parametrize("mask", ["none", "partial", "all"])
-def test_triton_loss_and_gradients_cover_masks_and_uneven_tiles(device, n, h, v, mask):
+@pytest.mark.parametrize("backward_impl", ["chunked", "recompute"])
+def test_triton_loss_and_gradients_cover_masks_and_uneven_tiles(device, n, h, v, mask, backward_impl):
     _require_cuda(device)
     torch.manual_seed(19)
     x = torch.randn(n, h, device=device, requires_grad=True)
@@ -52,7 +54,8 @@ def test_triton_loss_and_gradients_cover_masks_and_uneven_tiles(device, n, h, v,
     xr, wr, br = (v.detach().clone().requires_grad_() for v in (x, weight, bias))
     ref_sum = F.cross_entropy(F.linear(xr, wr, br), targets, ignore_index=-100, reduction="sum")
     ref = ref_sum / (targets != -100).sum().clamp_min(1)
-    got = linear_cross_entropy_fused_triton(x, weight, targets, bias=bias)
+    got = linear_cross_entropy_fused_triton(x, weight, targets, bias=bias,
+                                           backward_impl=backward_impl, token_chunk=16)
     ref_grads = torch.autograd.grad(ref, (xr, wr, br))
     got_grads = torch.autograd.grad(got, (x, weight, bias))
     torch.testing.assert_close(got, ref, atol=1e-5, rtol=1e-5)
@@ -100,12 +103,14 @@ def test_triton_noncontiguous_inputs(device):
 
 
 @pytest.mark.parametrize("mtp", [False, True], ids=["ntp", "mtp"])
-def test_triton_gpt_path_matches_torch(device, mtp):
+@pytest.mark.parametrize("backward_impl", ["chunked", "recompute"])
+def test_triton_gpt_path_matches_torch(device, mtp, backward_impl):
     _require_cuda(device)
     cfg = dict(vocab_size=53, block_size=8, n_layer=1, n_head=2, n_embd=16, mtp=mtp)
     torch.manual_seed(23)
     ref = GPT(ModelConfig(**cfg, ce_impl="torch")).to(device).train()
-    got = GPT(ModelConfig(**cfg, ce_impl="triton_ce", ce_token_chunk=3)).to(device).train()
+    got = GPT(ModelConfig(**cfg, ce_impl="triton_ce", ce_triton_chunk=3,
+                          ce_triton_backward=backward_impl)).to(device).train()
     got.load_state_dict(ref.state_dict())
     ids = torch.randint(0, 53, (2, 7), device=device)
     targets = torch.randint(0, 53, (2, 7), device=device)
@@ -134,7 +139,7 @@ def test_triton_bf16_autocast_matches_torch(device):
     wr = weight.detach().clone().requires_grad_()
     with torch.autocast("cuda", dtype=torch.bfloat16):
         ref = F.cross_entropy(F.linear(xr, wr), targets, ignore_index=-100)
-        got = linear_cross_entropy_fused_triton(x, weight, targets)
+        got = linear_cross_entropy_fused_triton(x, weight, targets, token_chunk=4)
     ref_grads = torch.autograd.grad(ref, (xr, wr))
     got_grads = torch.autograd.grad(got, (x, weight))
     torch.testing.assert_close(got, ref, atol=1e-2, rtol=1e-2)
@@ -154,7 +159,7 @@ def test_triton_native_low_precision_matches_torch(device, dtype):
     xr = x.detach().clone().requires_grad_()
     wr = weight.detach().clone().requires_grad_()
     ref = F.cross_entropy(F.linear(xr, wr).float(), targets)
-    got = linear_cross_entropy_fused_triton(x, weight, targets)
+    got = linear_cross_entropy_fused_triton(x, weight, targets, token_chunk=3)
     ref_grads = torch.autograd.grad(ref, (xr, wr))
     got_grads = torch.autograd.grad(got, (x, weight))
     torch.testing.assert_close(got, ref, atol=3e-2, rtol=3e-2)
@@ -176,6 +181,58 @@ def test_triton_rejects_invalid_shapes_before_launch():
         linear_cross_entropy_fused_triton(x, w, y.float())
     with pytest.raises(TypeError, match="same dtype"):
         linear_cross_entropy_fused_triton(x, w.double(), y)
+    with pytest.raises(ValueError, match="backward_impl"):
+        linear_cross_entropy_fused_triton(x, w, y, backward_impl="unknown")
+    with pytest.raises(ValueError, match="token_chunk"):
+        linear_cross_entropy_fused_triton(x, w, y, token_chunk=0)
+
+
+@pytest.mark.parametrize("token_chunk", [1, 17, 128])
+def test_chunked_backward_matches_recompute_with_scaled_retained_graph(device, token_chunk):
+    _require_cuda(device)
+    torch.manual_seed(53)
+    x = torch.randn(37, 70, device=device, requires_grad=True)
+    w = torch.randn(257, 70, device=device, requires_grad=True)
+    b = torch.randn(257, device=device, requires_grad=True)
+    y = torch.randint(0, 257, (37,), device=device)
+    y[::5] = -100
+    ref_args = [p.detach().clone().requires_grad_() for p in (x, w, b)]
+    ref = linear_cross_entropy_fused_triton(ref_args[0], ref_args[1], y, bias=ref_args[2],
+                                           backward_impl="recompute")
+    loss = linear_cross_entropy_fused_triton(x, w, y, bias=b, token_chunk=token_chunk)
+    expected = torch.autograd.grad(ref * 1.7, ref_args)
+    for _ in range(2):
+        actual = torch.autograd.grad(loss * 1.7, (x, w, b), retain_graph=True)
+        for got, want in zip(actual, expected):
+            torch.testing.assert_close(got, want, atol=4e-5, rtol=4e-5)
+
+
+@pytest.mark.parametrize("hidden", [32, 256])
+def test_projection_is_once_per_chunk_and_scratch_is_bounded(device, hidden, monkeypatch):
+    _require_cuda(device)
+    calls = []
+    original = ce._chunk_dlogits
+
+    class RecordProjection:
+        def __getitem__(self, grid):
+            launch = original[grid]
+
+            def run(*args, **kwargs):
+                calls.append((grid, args[8], tuple(args[7].shape)))
+                return launch(*args, **kwargs)
+            return run
+
+    monkeypatch.setattr(ce, "_chunk_dlogits", RecordProjection())
+    x = torch.randn(35, hidden, device=device, requires_grad=True)
+    w = torch.randn(257, hidden, device=device, requires_grad=True)
+    y = torch.randint(0, 257, (35,), device=device)
+    loss = linear_cross_entropy_fused_triton(x, w, y, token_chunk=16)
+    loss.backward()
+    # Both hidden sizes use exactly three projection launches, not one per
+    # hidden output tile. All launches reuse a 16x257 derivative scratch buffer.
+    assert [c for _, c, _ in calls] == [16, 16, 3]
+    assert all(shape == (16, 257) for _, _, shape in calls)
+    assert all(len(grid) == 2 for grid, _, _ in calls)
 
 
 @pytest.mark.parametrize("device", [torch.device("cuda")])

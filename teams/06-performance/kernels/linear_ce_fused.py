@@ -1,9 +1,9 @@
 """Fully fused linear-head cross entropy using in-repo Triton kernels.
 
-Forward computes vocabulary tiles with tl.dot and reduces online softmax
-statistics; it never stores [tokens, vocab] logits. Backward recomputes those
-tiles and directly writes dInput / dWeight (plus optional dBias), without a
-global dLogits buffer or atomics.
+Forward computes tiled logits and softmax statistics. The default backward
+reconstructs each token chunk once and reuses a bounded fp32 dLogits buffer for
+both gradient products. The original recompute-per-hidden-tile path remains an
+explicit comparison option. Neither path uses gradient atomics.
 """
 from __future__ import annotations
 
@@ -19,6 +19,7 @@ except ImportError:
 # Keep the live logits tile small enough for the backward kernels' shared
 # memory budget on Ampere as well as H100. Tune these only after profiling.
 BM, BV, BK = 16, 128, 32
+BACKWARD_IMPLS = ("chunked", "recompute")
 
 if triton is not None:
     @triton.jit
@@ -152,10 +153,114 @@ if triton is not None:
         if HAS_BIAS and ht == 0:
             tl.store(DB + cols, db, cols < V)
 
+    @triton.jit
+    def _chunk_dlogits(X, W, B, Y, LZ, COUNT, GO, DP,
+                       C: tl.constexpr, H: tl.constexpr, V: tl.constexpr,
+                       IGNORE: tl.constexpr, HAS_BIAS: tl.constexpr,
+                       BM: tl.constexpr, BV: tl.constexpr, BK: tl.constexpr):
+        # No hidden-output-tile axis: each logit tile is reconstructed once.
+        row = tl.program_id(0).to(tl.int64) * BM + tl.arange(0, BM)
+        col = tl.program_id(1).to(tl.int64) * BV + tl.arange(0, BV)
+        rk = tl.arange(0, BK)
+        logits = tl.full((BM, BV), 0., tl.float32)
+        for kt in range(tl.cdiv(H, BK)):
+            k = kt * BK + rk
+            a = tl.load(X + row[:, None] * H + k[None, :],
+                        (row[:, None] < C) & (k[None, :] < H), 0.)
+            b = tl.load(W + col[:, None] * H + k[None, :],
+                        (col[:, None] < V) & (k[None, :] < H), 0.)
+            logits += tl.dot(a, tl.trans(b), input_precision="ieee")
+        if HAS_BIAS:
+            logits += tl.load(B + col, col < V, 0.).to(tl.float32)[None, :]
+        logits = tl.where(col[None, :] < V, logits, -float("inf"))
+        lz = tl.load(LZ + row, row < C, 0.)
+        y = tl.load(Y + row, row < C, IGNORE)
+        p = tl.exp(logits - lz[:, None])
+        p = tl.where(col[None, :] == y[:, None], p - 1., p)
+        scale = tl.load(GO).to(tl.float32) / tl.load(COUNT).to(tl.float32)
+        valid = (row[:, None] < C) & (col[None, :] < V) & (y[:, None] != IGNORE)
+        tl.store(DP + row[:, None] * V + col[None, :],
+                 tl.where(valid, p * scale, 0.), (row[:, None] < C) & (col[None, :] < V))
+
+    @triton.jit
+    def _chunk_dx(DP, W, DX, C: tl.constexpr, H: tl.constexpr, V: tl.constexpr,
+                  BM: tl.constexpr, BV: tl.constexpr, BK: tl.constexpr):
+        row = tl.program_id(0).to(tl.int64) * BM + tl.arange(0, BM)
+        k = tl.program_id(1).to(tl.int64) * BK + tl.arange(0, BK)
+        vc = tl.arange(0, BV)
+        acc = tl.full((BM, BK), 0., tl.float32)
+        for vt in range(tl.cdiv(V, BV)):
+            col = vt * BV + vc
+            p = tl.load(DP + row[:, None] * V + col[None, :],
+                        (row[:, None] < C) & (col[None, :] < V), 0.)
+            w = tl.load(W + col[:, None] * H + k[None, :],
+                        (col[:, None] < V) & (k[None, :] < H), 0.)
+            acc += tl.dot(p.to(w.dtype), w, input_precision="ieee")
+        tl.store(DX + row[:, None] * H + k[None, :], acc,
+                 (row[:, None] < C) & (k[None, :] < H))
+
+    @triton.jit
+    def _chunk_dw(DP, X, DW, DB, C: tl.constexpr, H: tl.constexpr, V: tl.constexpr,
+                  HAS_BIAS: tl.constexpr, FIRST: tl.constexpr,
+                  BM: tl.constexpr, BV: tl.constexpr, BK: tl.constexpr):
+        col = tl.program_id(0).to(tl.int64) * BV + tl.arange(0, BV)
+        ht = tl.program_id(1)
+        k = ht.to(tl.int64) * BK + tl.arange(0, BK)
+        rm = tl.arange(0, BM)
+        acc = tl.full((BV, BK), 0., tl.float32)
+        db = tl.full((BV,), 0., tl.float32)
+        for mt in range(tl.cdiv(C, BM)):
+            row = mt * BM + rm
+            p = tl.load(DP + row[:, None].to(tl.int64) * V + col[None, :],
+                        (row[:, None] < C) & (col[None, :] < V), 0.)
+            x = tl.load(X + row[:, None].to(tl.int64) * H + k[None, :],
+                        (row[:, None] < C) & (k[None, :] < H), 0.)
+            acc += tl.dot(tl.trans(p.to(x.dtype)), x, input_precision="ieee")
+            if HAS_BIAS and ht == 0:
+                db += tl.sum(p, 0)
+        offsets = col[:, None] * H + k[None, :]
+        mask = (col[:, None] < V) & (k[None, :] < H)
+        if not FIRST:
+            acc += tl.load(DW + offsets, mask, 0.)
+        tl.store(DW + offsets, acc, mask)
+        if HAS_BIAS and ht == 0:
+            if not FIRST:
+                db += tl.load(DB + col, col < V, 0.)
+            tl.store(DB + col, db, col < V)
+
+
+def _chunked_backward(x, weight, bias, targets, lz, count, grad_output, token_chunk,
+                       dx_dtype, dw_dtype, db_dtype, ignore_index):
+    n, h = x.shape
+    v = weight.shape[0]
+    # Allocate once and reuse across all token chunks. Accumulate dW/dBias in
+    # fp32 across chunks, casting once at the end for native low-precision params.
+    dp = torch.empty((min(n, token_chunk), v), device=x.device, dtype=torch.float32)
+    dx = torch.empty(x.shape, device=x.device, dtype=dx_dtype)
+    dw = torch.empty(weight.shape, device=x.device, dtype=torch.float32)
+    db = torch.empty((v if bias is not None else 0,), device=x.device, dtype=torch.float32)
+    b = x if bias is None else bias
+    for start in range(0, n, token_chunk):
+        end = min(start + token_chunk, n)
+        c = end - start
+        _chunk_dlogits[(triton.cdiv(c, BM), triton.cdiv(v, BV))](
+            x[start:end], weight, b, targets[start:end], lz[start:end], count, grad_output,
+            dp, c, h, v, ignore_index, bias is not None, BM, BV, BK, num_warps=4)
+        _chunk_dx[(triton.cdiv(c, BM), triton.cdiv(h, BK))](
+            dp, weight, dx[start:end], c, h, v, BM, BV, BK, num_warps=4)
+        _chunk_dw[(triton.cdiv(v, BV), triton.cdiv(h, BK))](
+            dp, x[start:end], dw, db, c, h, v, bias is not None, start == 0,
+            BM, BV, BK, num_warps=4)
+    return dx, dw.to(dw_dtype), db.to(db_dtype) if bias is not None else None
+
 
 class _FusedLinearCE(torch.autograd.Function):
     @staticmethod
-    def forward(ctx, x, weight, bias, targets, ignore_index):
+    def forward(ctx, x, weight, bias, targets, ignore_index, backward_impl, token_chunk):
+        if backward_impl not in BACKWARD_IMPLS:
+            raise ValueError(f"backward_impl must be one of {BACKWARD_IMPLS}")
+        if type(token_chunk) is not int or token_chunk < 1:
+            raise ValueError("token_chunk must be a positive integer")
         if x.ndim != 2 or weight.ndim != 2:
             raise ValueError("x and weight must be [tokens, hidden] and [vocab, hidden]")
         n, h = x.shape
@@ -189,16 +294,18 @@ class _FusedLinearCE(torch.autograd.Function):
         ps, pt = torch.empty_like(pm), torch.empty_like(pm)
         loss = torch.empty((n,), device=x.device, dtype=torch.float32)
         lz = torch.empty_like(loss)
-        _forward[(triton.cdiv(n, BM), nt)](xc, wc, bc, targets, pm, ps, pt, n, h, v,
-            xc.stride(0), xc.stride(1), wc.stride(0), wc.stride(1), nt, bias is not None,
-            BM, BV, BK, num_warps=4)
-        _reduce[(n,)](targets, pm, ps, pt, loss, lz, n, nt, ignore_index,
-                      triton.next_power_of_2(nt), num_warps=4)
+        with torch.cuda.device(x.device):
+            _forward[(triton.cdiv(n, BM), nt)](xc, wc, bc, targets, pm, ps, pt, n, h, v,
+                xc.stride(0), xc.stride(1), wc.stride(0), wc.stride(1), nt, bias is not None,
+                BM, BV, BK, num_warps=4)
+            _reduce[(n,)](targets, pm, ps, pt, loss, lz, n, nt, ignore_index,
+                          triton.next_power_of_2(nt), num_warps=4)
         count = (targets != ignore_index).sum().clamp_min(1)
         result = loss.sum() / count
         bsave = x.new_empty((0,)) if bias is None else bias
         ctx.save_for_backward(x, weight, targets, lz, bsave, count)
         ctx.has_bias, ctx.ignore_index, ctx.dtype = bias is not None, ignore_index, dtype
+        ctx.backward_impl, ctx.token_chunk = backward_impl, token_chunk
         return result
 
     @staticmethod
@@ -208,17 +315,26 @@ class _FusedLinearCE(torch.autograd.Function):
         n, h, v = x.shape[0], x.shape[1], weight.shape[0]
         xc, wc = x.to(ctx.dtype).contiguous(), weight.to(ctx.dtype).contiguous()
         bc = xc if bias is None else bias.to(ctx.dtype).contiguous()
+        if ctx.backward_impl == "chunked":
+            with torch.cuda.device(x.device):
+                dx, dw, db = _chunked_backward(
+                    xc, wc, None if bias is None else bc, targets, lz, count, grad_output,
+                    ctx.token_chunk, x.dtype, weight.dtype, None if bias is None else bias.dtype,
+                    ctx.ignore_index)
+            return dx, dw, db, None, None, None, None
         dx, dw = torch.empty_like(x), torch.empty_like(weight)
         db = torch.empty_like(bias) if bias is not None else torch.empty((0,), device=x.device)
-        _grad_x[(triton.cdiv(n, BM), triton.cdiv(h, BK))](xc, wc, bc, targets, lz, count, grad_output, dx,
-            n, h, v, xc.stride(0), xc.stride(1), wc.stride(0), wc.stride(1), dx.stride(0), dx.stride(1),
-            ctx.ignore_index, ctx.has_bias, BM, BV, BK, num_warps=4)
-        _grad_w[(triton.cdiv(v, BV), triton.cdiv(h, BK))](xc, wc, bc, targets, lz, count, grad_output, dw, db,
-            n, h, v, xc.stride(0), xc.stride(1), wc.stride(0), wc.stride(1), dw.stride(0), dw.stride(1),
-            ctx.ignore_index, ctx.has_bias, BM, BV, BK, num_warps=4)
-        return dx, dw, db if ctx.has_bias else None, None, None
+        with torch.cuda.device(x.device):
+            _grad_x[(triton.cdiv(n, BM), triton.cdiv(h, BK))](xc, wc, bc, targets, lz, count, grad_output, dx,
+                n, h, v, xc.stride(0), xc.stride(1), wc.stride(0), wc.stride(1), dx.stride(0), dx.stride(1),
+                ctx.ignore_index, ctx.has_bias, BM, BV, BK, num_warps=4)
+            _grad_w[(triton.cdiv(v, BV), triton.cdiv(h, BK))](xc, wc, bc, targets, lz, count, grad_output, dw, db,
+                n, h, v, xc.stride(0), xc.stride(1), wc.stride(0), wc.stride(1), dw.stride(0), dw.stride(1),
+                ctx.ignore_index, ctx.has_bias, BM, BV, BK, num_warps=4)
+        return dx, dw, db if ctx.has_bias else None, None, None, None, None
 
 
-def linear_cross_entropy_fused_triton(x, weight, targets, *, bias=None, ignore_index=-100):
-    """One fused linear-CE implementation: no global logits or dLogits tensor."""
-    return _FusedLinearCE.apply(x, weight, bias, targets, ignore_index)
+def linear_cross_entropy_fused_triton(x, weight, targets, *, bias=None, ignore_index=-100,
+                                     backward_impl="chunked", token_chunk=128):
+    """Tiled forward; bounded-chunk backward by default, or old recompute comparison."""
+    return _FusedLinearCE.apply(x, weight, bias, targets, ignore_index, backward_impl, token_chunk)
