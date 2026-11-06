@@ -258,11 +258,42 @@ class _Span:
         return False
 
 
+class QueueFill:
+    """Layer mode with bench.layer_prefill (CUDA): fill() waits for the GPU, then queues a GPU busy-wait of ms.
+    Python sends the step while the GPU waits, so the GPU then runs every part back to back: the time between a
+    part's two events is GPU time, not the time Python took to send the part (which depends on the CPU).
+    layer_pass sizes ms in its warmup steps."""
+
+    def __init__(self, device, max_ms: float = 500.0):
+        self.device = _dev(device)
+        self.max_ms = max_ms
+        self.ms = 0.0
+        self.cycles_per_ms = self._calibrate()
+
+    def _calibrate(self) -> float:
+        """GPU clock cycles of torch.cuda._sleep per ms, timed once with two events."""
+        torch.cuda._sleep(1000)                       # load the kernel first
+        a, b = torch.cuda.Event(enable_timing=True), torch.cuda.Event(enable_timing=True)
+        cycles = 20_000_000
+        a.record()
+        torch.cuda._sleep(cycles)
+        b.record()
+        b.synchronize()
+        return cycles / max(a.elapsed_time(b), 1e-3)
+
+    def fill(self):
+        sync(self.device)
+        if self.ms > 0:
+            torch.cuda._sleep(int(self.ms * self.cycles_per_ms))
+
+
 class EventRecorder:
     """Layer mode recorder (perfkit/regions.py protocol), one per timed step; spans, points = rec.collect() later.
-    Safe from the autograd thread (locked appends, events on the current stream). collect() waits for this step only."""
+    Safe from the autograd thread (locked appends, events on the current stream). collect() waits for this step only.
+    check_idle: before each event, count the times the GPU had already finished the previous one (self.idle):
+    there the GPU ran out of queued work, so the next part's time includes Python's time to send it."""
 
-    def __init__(self, device, max_level: int = 2, pool: EventPool | None = None):
+    def __init__(self, device, max_level: int = 2, pool: EventPool | None = None, check_idle: bool = False):
         self.device = _dev(device)
         self.max_level = max_level
         self.kind = {"cuda": "event", "mps": "sync"}.get(self.device.type, "wall")
@@ -270,11 +301,15 @@ class EventRecorder:
         self._lock = threading.Lock()
         self._spans, self._points = [], []
         self._last = None
+        self.check_idle = check_idle and self.kind == "event"
+        self.idle = 0
         self._origin = self._now()
         self._result = None
 
     def _now(self):
         if self.kind == "event":
+            if self.check_idle and self._last is not None and self._last.query():
+                self.idle += 1
             ev = self.pool.get()
             ev.record()
             self._last = ev
