@@ -13,7 +13,9 @@ If a part is not in this file, the report and the 5% gate cannot see it: **add t
 3. **All shapes come from `ModelConfig`.**
 4. **Timing:** CUDA events only, read after the steps; no `synchronize`, `.item()` or `print` inside a timed step.
    10 warmup steps, then 100 measured (`report.min_compare_steps`). Gate on the median, p10, p90; mean and std are
-   for information. Steps alternate recorder on / off; overhead above 2% flags the numbers.
+   for information. Steps alternate recorder on / off; overhead above 2% flags the numbers. With
+   `bench.layer_prefill` (CUDA) each layer step starts with a GPU busy-wait, sent before the step timer starts, so
+   Python stays ahead of the GPU and every part is GPU time, not the CPU's time to send it.
 
 Bottlenecks below are from the v0 traces (`results/slowest5_v0.md`, A100, `base.yaml`).
 

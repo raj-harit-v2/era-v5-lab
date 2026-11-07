@@ -64,6 +64,7 @@ bench:
   ckpt_repeats: 10      # checkpoint saves timed (after one warm save that is not counted)
   max_overhead_pct: 2.0
   layer_warmup: 2       # recorded steps before the layer pass is measured (touch every region once)
+  layer_prefill: true   # CUDA: a GPU busy-wait before each layer step, so part times are GPU time on any CPU
   comm_reps: 30         # all_to_all calls timed per rank in comm mode (torchrun)
   peak_tflops: null     # null: from the GPU peak table (perfkit.metrics); a number for a GPU not in it
   out_dir: results/runs
