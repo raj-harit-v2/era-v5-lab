@@ -17,7 +17,7 @@ import yaml
 
 MOE_KEYS = {"num_experts", "top_k", "num_shared", "bias_gamma", "dispatch", "ffn_hidden", "router_impl"}   # SparseMoE keyword arguments
 CE_IMPLS = ("torch", "chunked", "fused", "fused_cached", "fused_liger", "fused_cce",
-            "triton_ce")
+            "triton_ce", "fused_triton")
 ATTN_IMPLS = ("sdpa", "eager", "triton")
 ACTIVATIONS = ("gelu", "swiglu")
 REV_IMPLS = ("two_pass", "one_pass")
@@ -68,7 +68,8 @@ class ModelConfig:
     rev_h: float = 1.0               # midpoint step size
     rev_impl: str = "two_pass"       # two_pass (invert + recompute) | one_pass (single f in backward)
     ce_impl: str = "torch"           # torch | chunked | fused | fused_cached | fused_liger | fused_cce | triton_ce
-    ce_chunks: int = 8                # number of token chunks for chunked / fused
+                                     # | fused_triton (kernels/linear_ce_cublas.py: cuBLAS matmuls + Triton softmax grad)
+    ce_chunks: int = 8                # number of token chunks for chunked / fused / fused_triton
     ce_vocab_chunk: int = 4096        # vocabulary tile size for fused_cce
     ce_token_chunk: int = 16           # token tile size for fused_cached / fused_liger
     ce_triton_backward: str = "auto"  # auto | vocab | chunked | recompute (slow comparison)

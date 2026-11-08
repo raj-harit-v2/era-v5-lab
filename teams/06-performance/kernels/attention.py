@@ -9,7 +9,8 @@ Backward without atomics, so two runs give the same bits (why base.yaml uses att
      the query blocks at or after the key block, in a fixed order.
 No repeat_interleave copies of k and v. o, dq, dk, dv are stored as [B, T, heads, hd] and returned as transposed
 views, so the transpose(1, 2).contiguous() before c_proj (and in the qkv backward) is free.
-fp32 inputs use IEEE fp32 dot products (no TF32), like the eager path's fp32 matmuls.
+fp32 inputs use IEEE fp32 dot products (no TF32), like the eager path's fp32 matmuls. Products with `scale` are cast
+back to fp32: under torch.compile, Inductor passes the Python float as fp64, which would change the loop types.
 """
 from __future__ import annotations
 
@@ -66,7 +67,7 @@ if triton is not None:
             cols = start_n + tl.arange(0, BLOCK)
             cmask = cols < T
             k = tl.load(kbase + cols[:, None].to(tl.int64) * KT + d[None, :], cmask[:, None] & dmask, 0.)
-            s = _dot(q, tl.trans(k), IEEE) * scale
+            s = (_dot(q, tl.trans(k), IEEE) * scale).to(tl.float32)
             s = tl.where((rows[:, None] >= cols[None, :]) & cmask[None, :], s, -float("inf"))
             m_new = tl.maximum(m_i, tl.max(s, 1))       # finite: key 0 is in the first block of every row
             p = tl.exp(s - m_new[:, None])
@@ -108,14 +109,14 @@ if triton is not None:
             cmask = cols < T
             k = tl.load(kbase + cols[:, None].to(tl.int64) * KT + d[None, :], cmask[:, None] & dmask, 0.)
             v = tl.load(vbase + cols[:, None].to(tl.int64) * VT + d[None, :], cmask[:, None] & dmask, 0.)
-            s = _dot(q, tl.trans(k), IEEE) * scale
+            s = (_dot(q, tl.trans(k), IEEE) * scale).to(tl.float32)
             valid = (rows[:, None] >= cols[None, :]) & cmask[None, :] & rmask[:, None]
             p = tl.where(valid, tl.exp(s - lse[:, None]), 0.)
             dp = _dot(do, tl.trans(v), IEEE)
             ds = p * (dp - delta[:, None])
             dq += _dot(ds.to(k.dtype), k, IEEE)
         out = DQ + (b * T + r64) * (H * D) + h * D + d[None, :]
-        tl.store(out, dq * scale, mask)
+        tl.store(out, (dq * scale).to(tl.float32), mask)
 
     @triton.jit(do_not_specialize=["T", "QB", "QH", "QT", "KB", "KH", "KT", "VB", "VH", "VT",
                                    "DB", "DH", "DT"])
@@ -145,7 +146,7 @@ if triton is not None:
                 do = tl.load(DO + b * DB + h * DH + r64 * DT + d[None, :], rmask[:, None] & dmask, 0.)
                 lse = tl.load(LSE + bh * T + rows, rmask, 0.)
                 delta = tl.load(DELTA + bh * T + rows, rmask, 0.)
-                st = _dot(k, tl.trans(q), IEEE) * scale                   # [keys, queries]
+                st = (_dot(k, tl.trans(q), IEEE) * scale).to(tl.float32)   # [keys, queries]
                 valid = (rows[None, :] >= cols[:, None]) & rmask[None, :] & cmask[:, None]
                 pt = tl.where(valid, tl.exp(st - lse[None, :]), 0.)
                 dv += _dot(pt.to(do.dtype), do, IEEE)
@@ -153,7 +154,7 @@ if triton is not None:
                 dst = pt * (dpt - delta[None, :])
                 dk += _dot(dst.to(q.dtype), q, IEEE)
         off = (b * T + c64) * (KV * D) + kvh * D + d[None, :]
-        tl.store(DK + off, dk * scale, cmask[:, None] & dmask)
+        tl.store(DK + off, (dk * scale).to(tl.float32), cmask[:, None] & dmask)
         tl.store(DV + off, dv, cmask[:, None] & dmask)
 
 
