@@ -25,12 +25,12 @@ Bottlenecks below are from the v0 traces (`results/slowest5_v0.md`, A100, `base.
 |---|---|---|---|
 | Batch sampling + host-to-device copy | `data` (1); `data:prefetch` (3) | `data.prefetch` | CPU, copy overlap |
 | KE2 / KE v1 code + projection | `embed.ke` (3), in `embed` (2) | `model.embedding`, `model.ke_mode` | memory |
-| LayerNorm x 2 per block | `blockN.ln1`, `blockN.ln2` (3) | `model.ln_impl` | memory |
-| QKV matmul (+ RoPE) | `blockN.attn.qkv` (3) | `model.position` | compute |
+| LayerNorm / RMSNorm x 2 per block (RMSNorm: LN2 adds `p + a` itself) | `blockN.ln1`, `blockN.ln2` (3) | `model.norm`, `model.ln_impl` | memory |
+| QKV matmul (+ RoPE) | `blockN.attn.qkv` (3) | `model.position`, `model.rope_impl` | compute |
 | Attention kernel | `blockN.attn.sdpa` (3) | `model.attn_impl` | compute / memory |
 | Output projection | `blockN.attn.proj` (3) | | memory |
-| Dense MLP | `blockN.mlp` (3) | `model.activation` | compute |
-| MoE router | `blockN.moe.router` (3) | | launch |
+| Dense MLP | `blockN.mlp` (3) | `model.activation`, `model.swiglu_impl` | compute |
+| MoE router | `blockN.moe.router` (3) | `model.moe.router_impl` | launch |
 | MoE dispatch: gather, experts, combine | `blockN.moe.dispatch` (3) and its `.expertE` / `.grouped` / `.grouped_fixed` | `model.moe.dispatch` | host syncs + launch |
 | MoE shared experts | `blockN.moe.shared` (3) | | compute |
 | Final LN + head + cross-entropy | `head+loss` (2); `head+loss.ln_f`, `head+loss.mtp` (3) | `model.ln_impl`, `model.ce_impl`, `model.mtp` | **memory (fp32 logits)** |

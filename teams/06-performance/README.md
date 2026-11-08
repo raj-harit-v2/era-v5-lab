@@ -32,6 +32,8 @@ For `triton_ce`, `model.ce_triton_backward=auto` chooses vocabulary or token str
 
 `model.ln_impl=torch_ln|triton_ln` selects PyTorch LayerNorm (default) or the in-repo Triton version for both pre-LN block norms and `ln_f`. The Triton module falls back to PyTorch for unsupported inputs; `meta.layer_norm` and printed notes identify each resolved backend. Its deterministic backward scratch is bounded by GPU SM count and skips frozen parameter gradients. Level-3 timing records `fwd:blockN.ln1`, `fwd:blockN.ln2`, `fwd:head+loss.ln_f`, and the eager backward stages `bwd:ln.triton.rows` / `bwd:ln.triton.params`. See [`docs/LAYER_NORM.md`](docs/LAYER_NORM.md) for correctness and benchmark commands.
 
+More Triton switches, each off by default with the torch code as the reference: `model.norm=rmsnorm` (G5's RMSNorm; with `ln_impl=triton_ln` one kernel that also does LN2's residual add), `model.swiglu_impl`, `model.rope_impl`, `model.attn_impl=triton` (flash attention with a deterministic backward) and `model.moe.router_impl`. See [`docs/TRITON_KERNELS.md`](docs/TRITON_KERNELS.md).
+
 ## Folder layout
 
 ```

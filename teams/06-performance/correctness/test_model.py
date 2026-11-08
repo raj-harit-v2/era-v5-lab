@@ -24,7 +24,7 @@ from models.config import ModelConfig, load_config, model_config
 # Bare name, as pytest and test_framework.py import test files: correctness.test_attention would load the file a
 # second time and register its pairs twice.
 from test_attention import naive_attention
-from models.gpt import GPT
+from models.gpt import GPT, MEMORY_BOUNDED_CE_IMPLS
 
 cache = functools.cache
 
@@ -188,8 +188,16 @@ def _params(m):
 PAIR_OVERRIDES = {}                                   # pair name -> the base.yaml overrides it builds with
 
 
+def _ce_impl(overrides):
+    """The ce_impl a pair builds with: its own override, else base.yaml's."""
+    given = [o.split("=", 1)[1] for o in overrides if o.startswith("model.ce_impl=")]
+    return given[-1] if given else _base().ce_impl
+
+
 def _fp32_pair(name, overrides=(), grad_tol=None):
     PAIR_OVERRIDES[name] = list(overrides)
+    if grad_tol is None and _ce_impl(overrides) in MEMORY_BOUNDED_CE_IMPLS:
+        grad_tol = 1e-4                               # the ln_f gradient of a 2-D head matmul (model.base.chunked)
 
     @pair(name, grad_tol=grad_tol)
     def build(device):
@@ -202,10 +210,10 @@ def _fp32_pair(name, overrides=(), grad_tol=None):
                 ref_forward(ref, mcfg, idx, targets, margins=margins)
             low = torch.cat(margins).min().item()
             assert low > MIN_MARGIN, f"{name}: routing near tie (margin {low:.1e}); change SEED"
-        if mcfg.ce_impl == "chunked":                 # chunked returns no logits with targets: compare the loss
+        if mcfg.ce_impl in MEMORY_BOUNDED_CE_IMPLS:  # no logits with targets (chunked, triton_ce, ...): the loss
             def fast_fn(i, t):
                 logits, loss = fast(i, t)
-                assert logits is None, "ce_impl=chunked must not build the logits"
+                assert logits is None, f"ce_impl={mcfg.ce_impl} must not build the logits"
                 return loss
             return Case(ref=lambda i, t: ref_forward(ref, mcfg, i, t)[1], fast=fast_fn,
                         inputs=[idx, targets], params_ref=_params(ref), params_fast=_params(fast))
@@ -290,11 +298,18 @@ def _bf16_case(device, overrides=()):
             emb = fast.embed(idx)
             routes = [r[0] for r in _forward_recording(fast.blocks, emb)[2]]
 
+    bounded = mcfg.ce_impl in MEMORY_BOUNDED_CE_IMPLS  # no logits with targets: compare the loss
+
     def fast_fn(i, t):
         with amp():
-            return fast(i, t)
+            out = fast(i, t)
+        return out[1] if bounded else out
 
-    return Case(ref=lambda i, t: ref_forward(ref, mcfg, i, t, routes=routes), fast=fast_fn,
+    def ref_fn(i, t):
+        out = ref_forward(ref, mcfg, i, t, routes=routes)
+        return out[1] if bounded else out
+
+    return Case(ref=ref_fn, fast=fast_fn,
                 inputs=[idx, targets], params_ref=_params(ref), params_fast=_params(fast))
 
 

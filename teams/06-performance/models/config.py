@@ -15,15 +15,17 @@ from pathlib import Path
 
 import yaml
 
-MOE_KEYS = {"num_experts", "top_k", "num_shared", "bias_gamma", "dispatch", "ffn_hidden"}   # SparseMoE keyword arguments
+MOE_KEYS = {"num_experts", "top_k", "num_shared", "bias_gamma", "dispatch", "ffn_hidden", "router_impl"}   # SparseMoE keyword arguments
 CE_IMPLS = ("torch", "chunked", "fused", "fused_cached", "fused_liger", "fused_cce",
             "triton_ce")
-ATTN_IMPLS = ("sdpa", "eager")
+ATTN_IMPLS = ("sdpa", "eager", "triton")
 ACTIVATIONS = ("gelu", "swiglu")
 REV_IMPLS = ("two_pass", "one_pass")
 POSITIONS = ("learned", "rope")
 LN_IMPLS = ("torch_ln", "triton_ln")
 VOCAB_PAD_MODES = ("slice", "mask")
+NORMS = ("layernorm", "rmsnorm")
+KERNEL_IMPLS = ("torch", "triton")        # swiglu_impl, rope_impl, moe.router_impl
 
 
 @dataclass
@@ -41,12 +43,17 @@ class ModelConfig:
     n_head: int = 8                  # query heads
     n_kv_head: int | None = None     # GQA: key/value heads, divides n_head; None = n_head (plain multi-head)
     n_embd: int = 256                # d_model
-    ln_impl: str = "torch_ln"        # torch_ln | triton_ln (CUDA/Triton)
+    norm: str = "layernorm"          # layernorm (with bias) | rmsnorm (G5 form, models/norm.py): every block norm and ln_f
+    norm_eps: float = 1e-5           # eps of either norm (1e-5 = nn.LayerNorm default)
+    ln_impl: str = "torch_ln"        # torch_ln | triton_ln (CUDA/Triton): backend of model.norm
     attn_impl: str = "sdpa"          # sdpa (F.scaled_dot_product_attention) | eager (explicit softmax; G5 config_v0)
+                                     # | triton (kernels/attention.py: flash, deterministic backward; else eager)
     position: str = "learned"        # learned (block_size x d table added to the embedding) | rope (rotary q, k)
     rope_theta: float | None = None  # RoPE base: pair i of a head turns by t * rope_theta^(-2i / head_dim);
                                      # required with position=rope (no silent default), unused by learned
     mlp_ratio: int = 4               # MLP / expert hidden = mlp_ratio * n_embd
+    swiglu_impl: str = "torch"       # torch | triton (kernels/swiglu.py): SiLU(gate) * up, activation=swiglu only
+    rope_impl: str = "torch"         # torch (apply_rope) | triton (kernels/rope.py), position=rope only
     activation: str = "gelu"         # gelu: c_proj(GELU(c_fc x)), with biases | swiglu: c_proj(SiLU(c_gate x) * c_fc x),
                                      # no biases. Dense MLP, routed experts (every dispatch) and shared experts
     embedding: str = "table"         # table (tied head) | ke1 (Kronecker v1, untied head) | ke2 (Kronecker v2, G4 raw table, untied head)
@@ -55,7 +62,8 @@ class ModelConfig:
     ke_mode: str = "dynamic"         # KE v1: dynamic (codec every step) | cached (V x D table)
     ffn: str = "mlp"                 # mlp | moe
     moe: dict = field(default_factory=lambda: dict(num_experts=8, top_k=2, num_shared=0,
-                                                   bias_gamma=0.01, dispatch="loop", ffn_hidden=None))
+                                                   bias_gamma=0.01, dispatch="loop", ffn_hidden=None,
+                                                   router_impl="torch"))
     reversible: bool = False         # True: midpoint reversible stack
     rev_h: float = 1.0               # midpoint step size
     rev_impl: str = "two_pass"       # two_pass (invert + recompute) | one_pass (single f in backward)
@@ -86,6 +94,12 @@ class ModelConfig:
         assert self.attn_impl in ATTN_IMPLS, f"attn_impl={self.attn_impl!r} not in {ATTN_IMPLS}"
         assert self.activation in ACTIVATIONS, f"activation={self.activation!r} not in {ACTIVATIONS}"
         assert self.ln_impl in LN_IMPLS, f"ln_impl={self.ln_impl!r} not in {LN_IMPLS}"
+        assert self.norm in NORMS, f"norm={self.norm!r} not in {NORMS}"
+        assert isinstance(self.norm_eps, (int, float)) and 0 < self.norm_eps < 1, "norm_eps must be in (0, 1)"
+        assert self.swiglu_impl in KERNEL_IMPLS, f"swiglu_impl={self.swiglu_impl!r} not in {KERNEL_IMPLS}"
+        assert self.rope_impl in KERNEL_IMPLS, f"rope_impl={self.rope_impl!r} not in {KERNEL_IMPLS}"
+        assert self.moe.get("router_impl", "torch") in KERNEL_IMPLS, (
+            f"moe.router_impl={self.moe.get('router_impl')!r} not in {KERNEL_IMPLS}")
         assert self.rev_impl in REV_IMPLS, f"rev_impl={self.rev_impl!r} not in {REV_IMPLS}"
         assert self.position in POSITIONS, f"position={self.position!r} not in {POSITIONS}"
         if self.position == "rope":

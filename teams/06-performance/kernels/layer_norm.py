@@ -241,13 +241,14 @@ def layer_norm_triton(x: torch.Tensor, weight: torch.Tensor, bias: torch.Tensor,
 
 def layer_norm_backend_report(model: nn.Module) -> list[dict]:
     """Resolve backends at setup, without a forward call or module mutation."""
+    from models.norm import RMSNorm      # LayerNorm and RMSNorm (model.norm) share ln_impl
     entries = []
     for name, module in model.named_modules():
-        if isinstance(module, nn.LayerNorm):
+        if isinstance(module, (nn.LayerNorm, RMSNorm)):
             param = next(module.parameters(), None)
             if param is None:
                 param = next(model.parameters(), torch.empty(0))
-            info = module.backend_info(param.device, param.dtype) if isinstance(module, TritonLayerNorm) else {
+            info = module.backend_info(param.device, param.dtype) if hasattr(module, "backend_info") else {
                 "backend": "torch_ln", "reason": None}
             entries.append({"module": name, **info})
     return entries

@@ -2,14 +2,18 @@
 
   * GQAttention: c_attn = Linear(d, (n_head + 2 * n_kv_head) * hd) gives q, k, v; c_proj = Linear(d, d); both with
     bias. attn_impl "sdpa" uses F.scaled_dot_product_attention(is_causal=True, enable_gqa=True); "eager" repeats
-    k, v to n_head heads and computes softmax(q k^T / sqrt(hd) + causal mask) v explicitly. The attention test
-    reads n_head and n_kv_head.
+    k, v to n_head heads and computes softmax(q k^T / sqrt(hd) + causal mask) v explicitly; "triton"
+    (kernels/attention.py) is the same causal GQA softmax as a flash kernel with a deterministic backward and no
+    k, v copies, eager where it is not supported. The attention test reads n_head and n_kv_head.
   * position "rope": q and k rotated over the full head dim, half-split layout (GPT-NeoX / LLaMA), pair
     i = (x[i], x[i + hd/2]), angle t * rope_theta^(-2i / hd); fp32 non-persistent cos / sin buffers.
-    "learned": a position table.
+    "learned": a position table. rope_impl "triton" (kernels/rope.py) rotates in one kernel each way.
   * MLP, h = mlp_ratio * d. "gelu": c_proj(GELU(c_fc(x))), with biases. "swiglu": c_proj(SiLU(c_gate(x)) * c_fc(x)),
-    no biases. models.moe experts use the same two forms.
+    no biases. models.moe experts use the same two forms. swiglu_impl "triton" (kernels/swiglu.py): SiLU(g) * u
+    in one kernel each way.
   * Block (pre-LN): f(p) = a + FFN(LN2(p + a)), a = Attn(LN1(p)); FFN = MLP or models.moe.SparseMoE.
+    norm "layernorm" (nn.LayerNorm, bias) | "rmsnorm" (models/norm.py, G5 form, weight only), eps norm_eps;
+    ln_impl "triton_ln" picks kernels/layer_norm.py or kernels/rms_norm.py (that one also does the p + a of LN2).
     Plain stack: x + f(x). Reversible (models/reversible.py): update(prev, curr) = prev + 2h * f(curr),
     invert(prev_out, curr_out) = curr_out - 2h * f(prev_out). Post-LN would not be invertible.
   * GPT: embedding (table tied with the head, or KE1 / KE2 with an untied head), blocks, ln_f, head, fp32 CE.
@@ -37,7 +41,12 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 from models.config import ModelConfig
+from kernels.attention import attention as triton_attention, supported as triton_attention_supported
 from kernels.layer_norm import TritonLayerNorm
+from kernels.rms_norm import TritonRMSNorm
+from kernels.rope import rope as triton_rope
+from kernels.swiglu import swiglu as triton_swiglu
+from models.norm import RMSNorm
 from models.linear_ce import (linear_cross_entropy_fused, linear_cross_entropy_cached,
                               linear_cross_entropy_cce, linear_cross_entropy_liger)
 from kernels.linear_ce_fused import linear_cross_entropy_fused_triton
@@ -64,7 +73,15 @@ def _residual_std(cfg: ModelConfig) -> float:
 
 
 def _layer_norm(cfg: ModelConfig) -> nn.Module:
-    return TritonLayerNorm(cfg.n_embd) if cfg.ln_impl == "triton_ln" else nn.LayerNorm(cfg.n_embd)
+    triton = cfg.ln_impl == "triton_ln"
+    if cfg.norm == "rmsnorm":
+        return (TritonRMSNorm if triton else RMSNorm)(cfg.n_embd, cfg.norm_eps)
+    return (TritonLayerNorm if triton else nn.LayerNorm)(cfg.n_embd, eps=cfg.norm_eps)
+
+
+def _silu_mul(impl: str):
+    """SiLU(g) * u for swiglu_impl: torch, or the Triton kernel (torch where it is not supported)."""
+    return triton_swiglu if impl == "triton" else (lambda g, u: F.silu(g) * u)
 
 
 def _matmul_weights(module: nn.Module) -> int:
@@ -119,7 +136,9 @@ class GQAttention(nn.Module):
         d = cfg.n_embd
         self.n_head, self.n_kv_head, self.name = cfg.n_head, cfg.n_kv_head, name
         self.eager = cfg.attn_impl == "eager"
+        self.triton = cfg.attn_impl == "triton"
         self.rope = cfg.position == "rope"
+        self.rotate = triton_rope if cfg.rope_impl == "triton" else apply_rope
         if self.rope:
             # fp32 on purpose: train under autocast, not model.to(bf16), which would cast these to bf16 as well and
             # lose the angle precision at large t (test_attention's pairs fail with bf16 tables).
@@ -142,18 +161,21 @@ class GQAttention(nn.Module):
                 cos, sin = self.rope_cos, self.rope_sin
                 if T != cos.size(0):
                     cos, sin = cos[:T], sin[:T]
-                q, k = apply_rope(qk, cos, sin).split([self.n_head, kv], dim=2)
+                q, k = self.rotate(qk, cos, sin).split([self.n_head, kv], dim=2)
                 v = v.view(B, T, kv, hd)
             else:
                 q, k, v = qkv.split([C, kv * hd, kv * hd], dim=2)
                 q, k, v = q.view(B, T, self.n_head, hd), k.view(B, T, kv, hd), v.view(B, T, kv, hd)
             q, k, v = q.transpose(1, 2), k.transpose(1, 2), v.transpose(1, 2)
             gqa = kv != self.n_head
-            if gqa and (self.eager or not _SDPA_GQA):    # copy each k / v head to its query heads
+            fused = self.triton and triton_attention_supported(q, k, v)
+            if gqa and not fused and (self.eager or self.triton or not _SDPA_GQA):   # copy k / v to query heads
                 k = k.repeat_interleave(self.n_head // kv, dim=1)
                 v = v.repeat_interleave(self.n_head // kv, dim=1)
         with region(f"{self.name}.sdpa", 3):
-            if self.eager:
+            if fused:                                    # [B, H, T, hd] view of [B, T, H, hd]: the copy below is free
+                y = triton_attention(q, k, v)
+            elif self.eager or self.triton:
                 # True above the diagonal: the future positions a query must not see
                 future = torch.triu(torch.ones(T, T, dtype=torch.bool, device=x.device), diagonal=1)
                 att = (q @ k.transpose(-2, -1)) / math.sqrt(hd)
@@ -171,6 +193,7 @@ class MLP(nn.Module):
         super().__init__()
         d, h = cfg.n_embd, cfg.mlp_ratio * cfg.n_embd
         self.name, self.swiglu = name, cfg.activation == "swiglu"
+        self.silu_mul = _silu_mul(cfg.swiglu_impl)
         bias = not self.swiglu                       # SwiGLU: no biases (until G5 says otherwise)
         self.c_fc = nn.Linear(d, h, bias=bias)       # gelu: the input projection; swiglu: the "up" (linear) branch
         self.c_proj = nn.Linear(h, d, bias=bias)
@@ -183,7 +206,7 @@ class MLP(nn.Module):
     def forward(self, x):
         with region(self.name, 3):
             if self.swiglu:
-                return self.c_proj(F.silu(self.c_gate(x)) * self.c_fc(x))
+                return self.c_proj(self.silu_mul(self.c_gate(x), self.c_fc(x)))
             return self.c_proj(F.gelu(self.c_fc(x)))
 
 
@@ -207,19 +230,24 @@ class Block(nn.Module):
             }
             self.ffn = SparseMoE(
                 d, expert_hidden=hidden, name=f"{self.name}.moe",
-                proj_std=_residual_std(cfg), activation=cfg.activation, **moe_kwargs
+                proj_std=_residual_std(cfg), activation=cfg.activation, swiglu_impl=cfg.swiglu_impl,
+                **moe_kwargs
             )
         else:
             self.ffn = MLP(cfg, f"{self.name}.mlp")
 
-    def _ln(self, ln, x, tag):
+    def _ln(self, ln, x, tag, residual=None):
+        """ln(x + residual). RMSNorm takes the residual itself (the Triton one adds in its kernel); for LayerNorm
+        the add stays outside the region, as before."""
+        if residual is not None and not getattr(ln, "fuses_add", False):
+            x, residual = x + residual, None
         with region(f"{self.name}.{tag}", 3):
-            return ln(x)
+            return ln(x) if residual is None else ln(x, residual)
 
     def f(self, p):
         """Residual function: both stacks add (a multiple of) it to the stream."""
         a = self.attn(self._ln(self.ln1, p, "ln1"))
-        return a + self.ffn(self._ln(self.ln2, p + a, "ln2"))
+        return a + self.ffn(self._ln(self.ln2, p, "ln2", a))
 
     def update(self, prev, curr):
         return prev + 2 * self.h * self.f(curr)

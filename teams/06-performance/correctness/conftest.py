@@ -167,6 +167,8 @@ def _value(key):
     cfg, mcfg = _config()
     if key == "attention":
         return _attn_kind(mcfg.n_head, mcfg.n_kv_head)
+    if key == "model.attn_impl" and mcfg.attn_impl == "triton":
+        return "eager"                   # the Triton kernel's reference and fallback: run the eager tests
     if key.startswith("model."):
         node = mcfg.to_dict()
         for k in key.split(".")[1:]:
