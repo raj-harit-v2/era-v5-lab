@@ -75,7 +75,7 @@ contribution files were staged for commit.*
 | HEAD SHA | `41b7fb031cbc49f0ac7e20287ca3f88193540923` |
 | Working tree | DIRTY — untracked files only (no tracked modifications) |
 | Untracked: correctness contribution | `teams/06-performance/correctness/test_loader.py` |
-| Untracked: this report | `teams/06-performance/b5_performance_validation_report.md` |
+| Untracked: this report | `teams/06-performance/results/b5_performance_validation_report.md` |
 | Untracked: ZIP archives (repo root) | `era_v5_team06.zip`, `era_v5_team06_colab.zip`, `era_v5_team06_with_ke2.zip` |
 | Untracked: generated cache | `__pycache__/` under `correctness/`, `dataio/`, `models/`, `perfkit/` |
 | Production files modified | None |
@@ -444,7 +444,7 @@ not demonstrated**
 
 1. Commit both contribution files to branch (requires explicit authorization):
    - `teams/06-performance/correctness/test_loader.py`
-   - `teams/06-performance/b5_performance_validation_report.md`
+   - `teams/06-performance/results/b5_performance_validation_report.md`
 2. Re-run the A/B benchmark on hardware without power-cap throttling and with native BF16 support
    to eliminate the GradScaler host synchronization.
 3. Run the FineWeb production-data comparison (`data.source=fineweb10b`) to assess real-world
