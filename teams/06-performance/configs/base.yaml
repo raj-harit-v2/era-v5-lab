@@ -19,7 +19,7 @@ data:
 
 model:                  # fields of models.config.ModelConfig, nothing else
   vocab_size: 131072
-  vocab_pad_mode: slice # slice | mask: how padded head columns are kept out of the loss (only with vocab_pad_multiple > 1)
+  vocab_pad_mode: mask  # mask | slice: how padded head columns are kept out of the loss (only with vocab_pad_multiple > 1)
   vocab_pad_multiple: 1 # round head rows UP to the next multiple of this (1 = off; B2 treatment 128). Not a pad amount: 131072 stays 131072
   block_size: 256
   n_layer: 6

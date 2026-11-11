@@ -31,9 +31,9 @@ class ModelConfig:
                                      # the next multiple of this. 1 = no padding; 128: 50257 -> 50304, 131072 stays
                                      # 131072 (already a multiple). Padded columns are sliced off the logits, so the
                                      # loss and outputs do not change. Applies to the head and a tied table only
-    vocab_pad_mode: str = "slice"    # how the padded columns leave the loss (only when padding is on): slice = cut them off
-                                     # the logits (one strided copy); mask = a -inf bias on those columns, fused into the
-                                     # head matmul, loss runs at the padded width. Same loss and gradients
+    vocab_pad_mode: str = "mask"     # how the padded columns leave the loss (only when padding is on): mask (default) = a
+                                     # -inf bias on those columns, added by the head matmul, loss runs at the padded width;
+                                     # slice = cut them off the logits (one strided copy, ~8% slower step). Same loss and grads
     block_size: int = 512            # sequence length T
     n_layer: int = 9
     n_head: int = 8                  # query heads
