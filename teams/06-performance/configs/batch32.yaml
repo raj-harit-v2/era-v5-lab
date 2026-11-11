@@ -1,0 +1,7 @@
+# Gate-2 speed item B3: larger batch. base.yaml with B=32 instead of 16; nothing else changes.
+# Fits A100 / L4 / H100 (bf16, ~13 GiB peak with ce_impl=torch); not a T4 / P100 / V100 (keep B=8 there).
+# LR is written out but unchanged from base.yaml: step time does not depend on it. Scaling it for the larger
+# batch (e.g. x sqrt(2)) is a training-quality question, not measured here.
+inherit: base.yaml
+run: {batch_size: 32}
+optim: {lr: 0.0006, muon_lr: 0.02}
