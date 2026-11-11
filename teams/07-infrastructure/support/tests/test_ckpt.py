@@ -157,7 +157,9 @@ def test_t5_renamed_key_strict_load(env, monkeypatch):
 
     m = Renamed()
     opt = torch.optim.AdamW(m.parameters())
-    ck = Checkpointer("s", env.local, env.remote, config_path=os.path.join(SIM, "config_v0.yaml"))
+    # same code_paths as the trainer that saved, so code_sha256 matches and the key check is what fails
+    ck = Checkpointer("s", env.local, env.remote, config_path=os.path.join(SIM, "config_v0.yaml"),
+                      code_paths=(TRAIN, os.path.join(SIM, "trainer", "tiny.py")))
     with pytest.raises(StrictLoadError) as e:
         ck.restore(m, opt, SyntheticLoader(SEED, 8, 0, 1), make_probe_fn(SEED))
     assert "model.ff1.weight" in str(e.value) and "model.ff_in.weight" in str(e.value)

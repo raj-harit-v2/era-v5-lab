@@ -1,0 +1,1195 @@
+{
+  "candidate_order": [
+    "v0",
+    "v0.1",
+    "v1-c1",
+    "C1",
+    "C2",
+    "C3"
+  ],
+  "candidates": {
+    "C1": {
+      "added_tokens": 356,
+      "collision_totals": {
+        "decode_P32": {
+          "causes": {
+            "decode_collapse": 14
+          },
+          "largest_group": 655,
+          "n_excess_tokens": 1095,
+          "n_groups": 14,
+          "n_tokens_in_groups": 1109
+        },
+        "decode_P64": {
+          "causes": {
+            "decode_collapse": 14
+          },
+          "largest_group": 655,
+          "n_excess_tokens": 1095,
+          "n_groups": 14,
+          "n_tokens_in_groups": 1109
+        },
+        "raw_P32": {
+          "causes": {},
+          "largest_group": 0,
+          "n_excess_tokens": 0,
+          "n_groups": 0,
+          "n_tokens_in_groups": 0
+        },
+        "raw_P64": {
+          "causes": {},
+          "largest_group": 0,
+          "n_excess_tokens": 0,
+          "n_groups": 0,
+          "n_tokens_in_groups": 0
+        }
+      },
+      "gate_zero_other_collision_groups": true,
+      "max_raw_byte_length": 32,
+      "mean_raw_byte_length": 7.083747863769531,
+      "special_ids": 356,
+      "tables": {
+        "decode_P32": {
+          "content_sha256": "688327cc849d7eb9de4a22a4ab8b7ef5fe56082be1084440aa1b57cba8034b4b",
+          "n_colliding_tokens": 1095,
+          "n_empty_rows": 0,
+          "n_rows_containing_U+FFFD": 1459,
+          "n_truncated": 0,
+          "n_unique_rows": 129977,
+          "shape": [
+            131072,
+            32
+          ]
+        },
+        "decode_P64": {
+          "content_sha256": "187c86c3fb562413a4976f2fa17ef0467734d1ac63215c2c1489143917d290f3",
+          "n_colliding_tokens": 1095,
+          "n_empty_rows": 0,
+          "n_rows_containing_U+FFFD": 1459,
+          "n_truncated": 0,
+          "n_unique_rows": 129977,
+          "shape": [
+            131072,
+            64
+          ]
+        },
+        "raw_P32": {
+          "content_sha256": "17473ed1f812d28e2215fea98bdf7aeabdf9987167da5b2bf7b08e713d486d10",
+          "n_colliding_tokens": 0,
+          "n_empty_rows": 0,
+          "n_rows_containing_U+FFFD": 13,
+          "n_truncated": 0,
+          "n_unique_rows": 131072,
+          "shape": [
+            131072,
+            32
+          ]
+        },
+        "raw_P64": {
+          "content_sha256": "0d7fc0aa24341eb19be4aacc32a87237fbdfbaaaae705beb8c0ede3b5fd98a28",
+          "n_colliding_tokens": 0,
+          "n_empty_rows": 0,
+          "n_rows_containing_U+FFFD": 13,
+          "n_truncated": 0,
+          "n_unique_rows": 131072,
+          "shape": [
+            131072,
+            64
+          ]
+        }
+      },
+      "tokenizer_sha256": "5d386e2ea359f0137b1a8383d161955894f1e6f634cf3179837b2cb59fe46db9",
+      "vocab_size": 131072
+    },
+    "C2": {
+      "added_tokens": 356,
+      "collision_totals": {
+        "decode_P32": {
+          "causes": {
+            "decode_collapse": 15
+          },
+          "largest_group": 655,
+          "n_excess_tokens": 1096,
+          "n_groups": 15,
+          "n_tokens_in_groups": 1111
+        },
+        "decode_P64": {
+          "causes": {
+            "decode_collapse": 15
+          },
+          "largest_group": 655,
+          "n_excess_tokens": 1096,
+          "n_groups": 15,
+          "n_tokens_in_groups": 1111
+        },
+        "raw_P32": {
+          "causes": {},
+          "largest_group": 0,
+          "n_excess_tokens": 0,
+          "n_groups": 0,
+          "n_tokens_in_groups": 0
+        },
+        "raw_P64": {
+          "causes": {},
+          "largest_group": 0,
+          "n_excess_tokens": 0,
+          "n_groups": 0,
+          "n_tokens_in_groups": 0
+        }
+      },
+      "gate_zero_other_collision_groups": true,
+      "max_raw_byte_length": 32,
+      "mean_raw_byte_length": 7.095573425292969,
+      "special_ids": 356,
+      "tables": {
+        "decode_P32": {
+          "content_sha256": "5da370e6da7a45ad0e4f872b26c02645e5c1679f77cab43acdeee8dcd5373a44",
+          "n_colliding_tokens": 1096,
+          "n_empty_rows": 0,
+          "n_rows_containing_U+FFFD": 1463,
+          "n_truncated": 0,
+          "n_unique_rows": 129976,
+          "shape": [
+            131072,
+            32
+          ]
+        },
+        "decode_P64": {
+          "content_sha256": "82d6617e0ab64718f5d079b34ca84a941629fe0ae56a4a9c4e039b354a6490bd",
+          "n_colliding_tokens": 1096,
+          "n_empty_rows": 0,
+          "n_rows_containing_U+FFFD": 1463,
+          "n_truncated": 0,
+          "n_unique_rows": 129976,
+          "shape": [
+            131072,
+            64
+          ]
+        },
+        "raw_P32": {
+          "content_sha256": "0f66510243e09955b1c231d2dfcf795db03807113d324ff3106214e4532452e4",
+          "n_colliding_tokens": 0,
+          "n_empty_rows": 0,
+          "n_rows_containing_U+FFFD": 13,
+          "n_truncated": 0,
+          "n_unique_rows": 131072,
+          "shape": [
+            131072,
+            32
+          ]
+        },
+        "raw_P64": {
+          "content_sha256": "72b8c9025699e31952e8fad363999bcbaf47b4ef6ce1bddd4803dbd1ff4cb900",
+          "n_colliding_tokens": 0,
+          "n_empty_rows": 0,
+          "n_rows_containing_U+FFFD": 13,
+          "n_truncated": 0,
+          "n_unique_rows": 131072,
+          "shape": [
+            131072,
+            64
+          ]
+        }
+      },
+      "tokenizer_sha256": "84204d7897d6677ac2e8ac7552d7472e5fed2baa3c67d392e40dbbfe63e35ad3",
+      "vocab_size": 131072
+    },
+    "C3": {
+      "added_tokens": 356,
+      "collision_totals": {
+        "decode_P32": {
+          "causes": {
+            "decode_collapse": 15
+          },
+          "largest_group": 655,
+          "n_excess_tokens": 1096,
+          "n_groups": 15,
+          "n_tokens_in_groups": 1111
+        },
+        "decode_P64": {
+          "causes": {
+            "decode_collapse": 15
+          },
+          "largest_group": 655,
+          "n_excess_tokens": 1096,
+          "n_groups": 15,
+          "n_tokens_in_groups": 1111
+        },
+        "raw_P32": {
+          "causes": {},
+          "largest_group": 0,
+          "n_excess_tokens": 0,
+          "n_groups": 0,
+          "n_tokens_in_groups": 0
+        },
+        "raw_P64": {
+          "causes": {},
+          "largest_group": 0,
+          "n_excess_tokens": 0,
+          "n_groups": 0,
+          "n_tokens_in_groups": 0
+        }
+      },
+      "gate_zero_other_collision_groups": true,
+      "max_raw_byte_length": 32,
+      "mean_raw_byte_length": 7.090553283691406,
+      "special_ids": 356,
+      "tables": {
+        "decode_P32": {
+          "content_sha256": "f7cc9acc1708d58ee2f56b9132e2fe2e3ac2068c1394db82a12c7467f1733891",
+          "n_colliding_tokens": 1096,
+          "n_empty_rows": 0,
+          "n_rows_containing_U+FFFD": 1463,
+          "n_truncated": 0,
+          "n_unique_rows": 129976,
+          "shape": [
+            131072,
+            32
+          ]
+        },
+        "decode_P64": {
+          "content_sha256": "a52a3586d89d4148091d0725cf2f8cff3af5d4f06f3a951841d5c476acdc3d36",
+          "n_colliding_tokens": 1096,
+          "n_empty_rows": 0,
+          "n_rows_containing_U+FFFD": 1463,
+          "n_truncated": 0,
+          "n_unique_rows": 129976,
+          "shape": [
+            131072,
+            64
+          ]
+        },
+        "raw_P32": {
+          "content_sha256": "f9b8c3b9c44cd88a68d809d040aa9591eb831f75afb0fd77aefa714a7a1fd8f7",
+          "n_colliding_tokens": 0,
+          "n_empty_rows": 0,
+          "n_rows_containing_U+FFFD": 13,
+          "n_truncated": 0,
+          "n_unique_rows": 131072,
+          "shape": [
+            131072,
+            32
+          ]
+        },
+        "raw_P64": {
+          "content_sha256": "a89b7ef2312a80698a84016626909dc4aa62c750d6ff8d70c22b0840a28038b6",
+          "n_colliding_tokens": 0,
+          "n_empty_rows": 0,
+          "n_rows_containing_U+FFFD": 13,
+          "n_truncated": 0,
+          "n_unique_rows": 131072,
+          "shape": [
+            131072,
+            64
+          ]
+        }
+      },
+      "tokenizer_sha256": "54f20825f61dd863e9bc15a0ece82fefc2f53b45005e1f71edec2d652a055306",
+      "vocab_size": 131072
+    },
+    "v0": {
+      "added_tokens": 356,
+      "collision_totals": {
+        "decode_P32": {
+          "causes": {
+            "decode_collapse": 10
+          },
+          "largest_group": 658,
+          "n_excess_tokens": 1141,
+          "n_groups": 10,
+          "n_tokens_in_groups": 1151
+        },
+        "decode_P64": {
+          "causes": {
+            "decode_collapse": 10
+          },
+          "largest_group": 658,
+          "n_excess_tokens": 1141,
+          "n_groups": 10,
+          "n_tokens_in_groups": 1151
+        },
+        "raw_P32": {
+          "causes": {},
+          "largest_group": 0,
+          "n_excess_tokens": 0,
+          "n_groups": 0,
+          "n_tokens_in_groups": 0
+        },
+        "raw_P64": {
+          "causes": {},
+          "largest_group": 0,
+          "n_excess_tokens": 0,
+          "n_groups": 0,
+          "n_tokens_in_groups": 0
+        }
+      },
+      "gate_zero_other_collision_groups": true,
+      "max_raw_byte_length": 32,
+      "mean_raw_byte_length": 6.5855255126953125,
+      "special_ids": 356,
+      "tables": {
+        "decode_P32": {
+          "content_sha256": "fbdc9f86eea0962b21cbdb2a9388873c1a0036051703530fd1122b6bf18f4153",
+          "n_colliding_tokens": 1141,
+          "n_empty_rows": 0,
+          "n_rows_containing_U+FFFD": 1326,
+          "n_truncated": 0,
+          "n_unique_rows": 129931,
+          "shape": [
+            131072,
+            32
+          ]
+        },
+        "decode_P64": {
+          "content_sha256": "ebb4e0a082b5ccf355542ffc7482110891d5ab4059b0a521d73e56c914276c10",
+          "n_colliding_tokens": 1141,
+          "n_empty_rows": 0,
+          "n_rows_containing_U+FFFD": 1326,
+          "n_truncated": 0,
+          "n_unique_rows": 129931,
+          "shape": [
+            131072,
+            64
+          ]
+        },
+        "raw_P32": {
+          "content_sha256": "47d411a9c6cae6fa2075935567243e51f4efbc377ccef3eef42c32fce66f869f",
+          "n_colliding_tokens": 0,
+          "n_empty_rows": 0,
+          "n_rows_containing_U+FFFD": 20,
+          "n_truncated": 0,
+          "n_unique_rows": 131072,
+          "shape": [
+            131072,
+            32
+          ]
+        },
+        "raw_P64": {
+          "content_sha256": "335a1d4898582bcf6c8a93a787231e6b20964ce2065d544764cfe98480535cd0",
+          "n_colliding_tokens": 0,
+          "n_empty_rows": 0,
+          "n_rows_containing_U+FFFD": 20,
+          "n_truncated": 0,
+          "n_unique_rows": 131072,
+          "shape": [
+            131072,
+            64
+          ]
+        }
+      },
+      "tokenizer_sha256": "2de039f20d17afd17615095c406c43087359673b767ed0fe2c480b995f2af8e5",
+      "vocab_size": 131072
+    },
+    "v0.1": {
+      "added_tokens": 356,
+      "collision_totals": {
+        "decode_P32": {
+          "causes": {
+            "decode_collapse": 10
+          },
+          "largest_group": 658,
+          "n_excess_tokens": 1141,
+          "n_groups": 10,
+          "n_tokens_in_groups": 1151
+        },
+        "decode_P64": {
+          "causes": {
+            "decode_collapse": 10
+          },
+          "largest_group": 658,
+          "n_excess_tokens": 1141,
+          "n_groups": 10,
+          "n_tokens_in_groups": 1151
+        },
+        "raw_P32": {
+          "causes": {},
+          "largest_group": 0,
+          "n_excess_tokens": 0,
+          "n_groups": 0,
+          "n_tokens_in_groups": 0
+        },
+        "raw_P64": {
+          "causes": {},
+          "largest_group": 0,
+          "n_excess_tokens": 0,
+          "n_groups": 0,
+          "n_tokens_in_groups": 0
+        }
+      },
+      "gate_zero_other_collision_groups": true,
+      "max_raw_byte_length": 32,
+      "mean_raw_byte_length": 6.585426330566406,
+      "special_ids": 356,
+      "tables": {
+        "decode_P32": {
+          "content_sha256": "f9a4e116e1321ddb0e71e196659c4a9462415107729e6f2478caa4752943ccd1",
+          "n_colliding_tokens": 1141,
+          "n_empty_rows": 0,
+          "n_rows_containing_U+FFFD": 1326,
+          "n_truncated": 0,
+          "n_unique_rows": 129931,
+          "shape": [
+            131072,
+            32
+          ]
+        },
+        "decode_P64": {
+          "content_sha256": "50abed0eaaadcb2a7bddaa4059a26597eb0d5b4f3c8904574c92be05c0531277",
+          "n_colliding_tokens": 1141,
+          "n_empty_rows": 0,
+          "n_rows_containing_U+FFFD": 1326,
+          "n_truncated": 0,
+          "n_unique_rows": 129931,
+          "shape": [
+            131072,
+            64
+          ]
+        },
+        "raw_P32": {
+          "content_sha256": "43127afb1267d585c2ff42d5261fc0cbf8f0379df854d0764f41ca6431522684",
+          "n_colliding_tokens": 0,
+          "n_empty_rows": 0,
+          "n_rows_containing_U+FFFD": 20,
+          "n_truncated": 0,
+          "n_unique_rows": 131072,
+          "shape": [
+            131072,
+            32
+          ]
+        },
+        "raw_P64": {
+          "content_sha256": "8ded4e25d5c4807fac0373054005ccecfbb51a6cf5aafacdc57ed71b796ee765",
+          "n_colliding_tokens": 0,
+          "n_empty_rows": 0,
+          "n_rows_containing_U+FFFD": 20,
+          "n_truncated": 0,
+          "n_unique_rows": 131072,
+          "shape": [
+            131072,
+            64
+          ]
+        }
+      },
+      "tokenizer_sha256": "a33c9907ec16876bc57b011714e8380879919fba1327d84bfb0d60407fe6e578",
+      "vocab_size": 131072
+    },
+    "v1-c1": {
+      "added_tokens": 356,
+      "collision_totals": {
+        "decode_P32": {
+          "causes": {
+            "decode_collapse": 17
+          },
+          "largest_group": 655,
+          "n_excess_tokens": 1098,
+          "n_groups": 17,
+          "n_tokens_in_groups": 1115
+        },
+        "decode_P64": {
+          "causes": {
+            "decode_collapse": 17
+          },
+          "largest_group": 655,
+          "n_excess_tokens": 1098,
+          "n_groups": 17,
+          "n_tokens_in_groups": 1115
+        },
+        "raw_P32": {
+          "causes": {},
+          "largest_group": 0,
+          "n_excess_tokens": 0,
+          "n_groups": 0,
+          "n_tokens_in_groups": 0
+        },
+        "raw_P64": {
+          "causes": {},
+          "largest_group": 0,
+          "n_excess_tokens": 0,
+          "n_groups": 0,
+          "n_tokens_in_groups": 0
+        }
+      },
+      "gate_zero_other_collision_groups": true,
+      "max_raw_byte_length": 32,
+      "mean_raw_byte_length": 7.140357971191406,
+      "special_ids": 356,
+      "tables": {
+        "decode_P32": {
+          "content_sha256": "d5b07064200631cdb9f99070044ba530601435bfcfdc6d51763dfd4e66da8caf",
+          "n_colliding_tokens": 1098,
+          "n_empty_rows": 0,
+          "n_rows_containing_U+FFFD": 1492,
+          "n_truncated": 0,
+          "n_unique_rows": 129974,
+          "shape": [
+            131072,
+            32
+          ]
+        },
+        "decode_P64": {
+          "content_sha256": "1a99865270b77d25f3b9b31f7062b6cadcb6e7df01c038f47d625be463589228",
+          "n_colliding_tokens": 1098,
+          "n_empty_rows": 0,
+          "n_rows_containing_U+FFFD": 1492,
+          "n_truncated": 0,
+          "n_unique_rows": 129974,
+          "shape": [
+            131072,
+            64
+          ]
+        },
+        "raw_P32": {
+          "content_sha256": "99f7721495b240fea2d46cbc18d07abd6ca8c82e5ec6178d79dfdedd9d295892",
+          "n_colliding_tokens": 0,
+          "n_empty_rows": 0,
+          "n_rows_containing_U+FFFD": 13,
+          "n_truncated": 0,
+          "n_unique_rows": 131072,
+          "shape": [
+            131072,
+            32
+          ]
+        },
+        "raw_P64": {
+          "content_sha256": "de72ffd17a139b424c354291833c6ac59d4e6db16f2c4edaa4a579c00bc14d62",
+          "n_colliding_tokens": 0,
+          "n_empty_rows": 0,
+          "n_rows_containing_U+FFFD": 13,
+          "n_truncated": 0,
+          "n_unique_rows": 131072,
+          "shape": [
+            131072,
+            64
+          ]
+        }
+      },
+      "tokenizer_sha256": "7d2cff92053170fdb17b301448964f1770d88df247b2e794256254227f86af44",
+      "vocab_size": 131072
+    }
+  },
+  "differences_from_previous_candidate": {
+    "C1": {
+      "decode_changed": {
+        "count": 25393,
+        "first_32_token_ids": [
+          23677,
+          23690,
+          23707,
+          23715,
+          23726,
+          23737,
+          23743,
+          23746,
+          23794,
+          23801,
+          23808,
+          23810,
+          23812,
+          23832,
+          23859,
+          23870,
+          23871,
+          23872,
+          23875,
+          23889,
+          23896,
+          23907,
+          23910,
+          23911,
+          23930,
+          23933,
+          23989,
+          23995,
+          24000,
+          24011,
+          24014,
+          24019
+        ],
+        "ids_sha256": "45cb287bb50489118e6411e638df64a5bc157e750d47792a6e8836421dcc150f",
+        "last_32_token_ids": [
+          130698,
+          130699,
+          130700,
+          130701,
+          130702,
+          130703,
+          130704,
+          130705,
+          130706,
+          130707,
+          130708,
+          130709,
+          130710,
+          130711,
+          130712,
+          130713,
+          130714,
+          130715,
+          130716,
+          130717,
+          130718,
+          130719,
+          130720,
+          130721,
+          130722,
+          130723,
+          130724,
+          130822,
+          130823,
+          130824,
+          130825,
+          130826
+        ]
+      },
+      "raw_changed": {
+        "count": 25393,
+        "first_32_token_ids": [
+          23677,
+          23690,
+          23707,
+          23715,
+          23726,
+          23737,
+          23743,
+          23746,
+          23794,
+          23801,
+          23808,
+          23810,
+          23812,
+          23832,
+          23859,
+          23870,
+          23871,
+          23872,
+          23875,
+          23889,
+          23896,
+          23907,
+          23910,
+          23911,
+          23930,
+          23933,
+          23989,
+          23995,
+          24000,
+          24011,
+          24014,
+          24019
+        ],
+        "ids_sha256": "45cb287bb50489118e6411e638df64a5bc157e750d47792a6e8836421dcc150f",
+        "last_32_token_ids": [
+          130698,
+          130699,
+          130700,
+          130701,
+          130702,
+          130703,
+          130704,
+          130705,
+          130706,
+          130707,
+          130708,
+          130709,
+          130710,
+          130711,
+          130712,
+          130713,
+          130714,
+          130715,
+          130716,
+          130717,
+          130718,
+          130719,
+          130720,
+          130721,
+          130722,
+          130723,
+          130724,
+          130822,
+          130823,
+          130824,
+          130825,
+          130826
+        ]
+      },
+      "reference": "v1-c1"
+    },
+    "C2": {
+      "decode_changed": {
+        "count": 8704,
+        "first_32_token_ids": [
+          120989,
+          120990,
+          120991,
+          120992,
+          120993,
+          120994,
+          120995,
+          120996,
+          120997,
+          120998,
+          120999,
+          121000,
+          121001,
+          121002,
+          121003,
+          121004,
+          121005,
+          121006,
+          121007,
+          121008,
+          121009,
+          121010,
+          121011,
+          121012,
+          121013,
+          121014,
+          121015,
+          121016,
+          121017,
+          121018,
+          121019,
+          121020
+        ],
+        "ids_sha256": "57bcf604598cc46e1a9892fdf19f85dbabb84417efaf920186b9e9dee43c974a",
+        "last_32_token_ids": [
+          130693,
+          130694,
+          130695,
+          130696,
+          130697,
+          130698,
+          130699,
+          130700,
+          130701,
+          130702,
+          130703,
+          130704,
+          130705,
+          130706,
+          130707,
+          130708,
+          130709,
+          130710,
+          130711,
+          130712,
+          130713,
+          130714,
+          130715,
+          130716,
+          130717,
+          130718,
+          130719,
+          130720,
+          130721,
+          130722,
+          130723,
+          130724
+        ]
+      },
+      "raw_changed": {
+        "count": 8704,
+        "first_32_token_ids": [
+          120989,
+          120990,
+          120991,
+          120992,
+          120993,
+          120994,
+          120995,
+          120996,
+          120997,
+          120998,
+          120999,
+          121000,
+          121001,
+          121002,
+          121003,
+          121004,
+          121005,
+          121006,
+          121007,
+          121008,
+          121009,
+          121010,
+          121011,
+          121012,
+          121013,
+          121014,
+          121015,
+          121016,
+          121017,
+          121018,
+          121019,
+          121020
+        ],
+        "ids_sha256": "57bcf604598cc46e1a9892fdf19f85dbabb84417efaf920186b9e9dee43c974a",
+        "last_32_token_ids": [
+          130693,
+          130694,
+          130695,
+          130696,
+          130697,
+          130698,
+          130699,
+          130700,
+          130701,
+          130702,
+          130703,
+          130704,
+          130705,
+          130706,
+          130707,
+          130708,
+          130709,
+          130710,
+          130711,
+          130712,
+          130713,
+          130714,
+          130715,
+          130716,
+          130717,
+          130718,
+          130719,
+          130720,
+          130721,
+          130722,
+          130723,
+          130724
+        ]
+      },
+      "reference": "C1"
+    },
+    "C3": {
+      "decode_changed": {
+        "count": 2844,
+        "first_32_token_ids": [
+          117405,
+          117406,
+          117408,
+          117409,
+          117410,
+          117411,
+          117412,
+          117413,
+          117414,
+          117415,
+          117416,
+          117417,
+          117418,
+          117419,
+          117420,
+          117421,
+          117422,
+          117423,
+          117424,
+          117425,
+          117426,
+          117427,
+          117428,
+          117429,
+          117430,
+          117431,
+          117432,
+          117433,
+          117434,
+          117435,
+          117436,
+          117437
+        ],
+        "ids_sha256": "ff99af52b8e1fea2b2729d8cfd95a5f9b918be68ad0114e945a87123c4b80614",
+        "last_32_token_ids": [
+          129149,
+          129150,
+          129153,
+          129154,
+          129155,
+          129156,
+          129157,
+          129158,
+          129159,
+          129160,
+          129161,
+          129162,
+          129163,
+          129164,
+          129165,
+          129166,
+          129167,
+          129168,
+          129169,
+          129170,
+          129171,
+          129172,
+          129173,
+          129174,
+          129175,
+          129176,
+          129177,
+          129178,
+          129179,
+          129180,
+          129181,
+          129182
+        ]
+      },
+      "raw_changed": {
+        "count": 2844,
+        "first_32_token_ids": [
+          117405,
+          117406,
+          117408,
+          117409,
+          117410,
+          117411,
+          117412,
+          117413,
+          117414,
+          117415,
+          117416,
+          117417,
+          117418,
+          117419,
+          117420,
+          117421,
+          117422,
+          117423,
+          117424,
+          117425,
+          117426,
+          117427,
+          117428,
+          117429,
+          117430,
+          117431,
+          117432,
+          117433,
+          117434,
+          117435,
+          117436,
+          117437
+        ],
+        "ids_sha256": "ff99af52b8e1fea2b2729d8cfd95a5f9b918be68ad0114e945a87123c4b80614",
+        "last_32_token_ids": [
+          129149,
+          129150,
+          129153,
+          129154,
+          129155,
+          129156,
+          129157,
+          129158,
+          129159,
+          129160,
+          129161,
+          129162,
+          129163,
+          129164,
+          129165,
+          129166,
+          129167,
+          129168,
+          129169,
+          129170,
+          129171,
+          129172,
+          129173,
+          129174,
+          129175,
+          129176,
+          129177,
+          129178,
+          129179,
+          129180,
+          129181,
+          129182
+        ]
+      },
+      "reference": "C2"
+    },
+    "v0.1": {
+      "decode_changed": {
+        "count": 5,
+        "ids_sha256": "d190d5344dbe282f199cbd98a09057d581b3d1c57e4dab9f009bd3214dc82590",
+        "token_ids": [
+          130822,
+          130823,
+          130824,
+          130825,
+          130826
+        ]
+      },
+      "raw_changed": {
+        "count": 5,
+        "ids_sha256": "d190d5344dbe282f199cbd98a09057d581b3d1c57e4dab9f009bd3214dc82590",
+        "token_ids": [
+          130822,
+          130823,
+          130824,
+          130825,
+          130826
+        ]
+      },
+      "reference": "v0"
+    },
+    "v1-c1": {
+      "decode_changed": {
+        "count": 130708,
+        "first_32_token_ids": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31
+        ],
+        "ids_sha256": "ff7e9035fefd4b9d8ed178bec1af52e1e6fb6f388d3532d9f9b81d18815fc39c",
+        "last_32_token_ids": [
+          130698,
+          130699,
+          130700,
+          130701,
+          130702,
+          130703,
+          130704,
+          130705,
+          130706,
+          130707,
+          130708,
+          130709,
+          130710,
+          130711,
+          130712,
+          130713,
+          130714,
+          130715,
+          130716,
+          130717,
+          130718,
+          130719,
+          130720,
+          130721,
+          130722,
+          130723,
+          130724,
+          130822,
+          130823,
+          130824,
+          130825,
+          130826
+        ]
+      },
+      "raw_changed": {
+        "count": 130720,
+        "first_32_token_ids": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31
+        ],
+        "ids_sha256": "b975cfd0032660722fbacd8999516f3127188f3eb90974b55ac5e207b2efc94c",
+        "last_32_token_ids": [
+          130698,
+          130699,
+          130700,
+          130701,
+          130702,
+          130703,
+          130704,
+          130705,
+          130706,
+          130707,
+          130708,
+          130709,
+          130710,
+          130711,
+          130712,
+          130713,
+          130714,
+          130715,
+          130716,
+          130717,
+          130718,
+          130719,
+          130720,
+          130721,
+          130722,
+          130723,
+          130724,
+          130822,
+          130823,
+          130824,
+          130825,
+          130826
+        ]
+      },
+      "reference": "v0.1"
+    }
+  },
+  "format": "ke2-tokenizer-candidate-revalidation-v2",
+  "pos_dims": [
+    32,
+    64
+  ],
+  "versions": {
+    "numpy": "2.5.3",
+    "python": "3.14.9",
+    "tokenizers": "0.23.3"
+  }
+}

@@ -169,7 +169,7 @@ class DSCheckpointer(Checkpointer):
 
         meta = None
         if rank() == 0:
-            env = dict(env_manifest(self.config_path), **ds_env(model))
+            env = dict(env_manifest(self.config_path, self.code_paths), **ds_env(model))
             meta = {
                 "schema": DS_SCHEMA, "backend": "deepspeed", "run_id": self.run_id, "branch": self.branch,
                 "step": step, "tokens": tokens, "world_size": world(), "reason": reason, "env": env,
@@ -226,7 +226,7 @@ class DSCheckpointer(Checkpointer):
                                f"resume at {world()} needs ds_to_universal.py first (an operator job)")
 
         # 3. Environment, now including the DeepSpeed version and config.
-        now = dict(env_manifest(self.config_path), **ds_env(model))
+        now = dict(env_manifest(self.config_path, self.code_paths), **ds_env(model))
         keys = tuple(ENV_MUST_MATCH) + ("deepspeed", "ds_config_sha256", "zero_stage")
         diff = env_diff(man["env"], now, keys)
         if diff and not allow_env_change:

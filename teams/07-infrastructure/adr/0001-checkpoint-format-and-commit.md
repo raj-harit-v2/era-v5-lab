@@ -2,7 +2,7 @@
 
 - Status: Proposed
 - Date: 2026-10-27 (revised from 2026-10-25; second revision after the week-1 review, see [review_week1.md](../support/docs/review_week1.md))
-- Area: Checkpoint (`ckpt/ckpt.py`, `support/tests/test_ckpt.py`, `support/simulation/trainer/train.py`, `support/docs/checkpoint_design.md`)
+- Area: Checkpoint (`ckpt/ckpt.py`, `support/tests/test_ckpt.py`, `support/simulation/trainer/train.py`, `docs/checkpoint_design_v0.md`)
 - Related: ADR 0002 (queue, exit codes, events), ADR 0003 (health, hang policy), ADR 0004 (cost, metrics)
 
 > **In simple words.** Training costs money every hour. A checkpoint is a saved copy of the training, so
@@ -114,7 +114,7 @@ Not saved: gradients, activations, NCCL state.
 - **an S3-compatible object store (optional):** `s3://bucket/prefix`, any store that speaks the S3 API (a
   self-hosted one such as MinIO, or a cloud's). It adds checksums verified by the store and conditional writes.
 
-`ops/launch.sh` runs `ckpt.py probe-store` on whichever store is configured: a store that cannot refuse a stale
+`launch/launch.sh` runs `ckpt.py probe-store` on whichever store is configured: a store that cannot refuse a stale
 write stops the launch. Every unit test runs on the folder store, the checkpoint tests also on an S3 emulator, and
 the whole Docker drill set runs on either (`run_sim.py --store folder` / `--store s3`). On S3 there is no append: `commits.jsonl` is read, extended and written back **only if nobody wrote it in
 between** (`If-Match`), else read again, so two writers never lose each other's line.

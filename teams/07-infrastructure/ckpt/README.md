@@ -1,7 +1,7 @@
 # Checkpoint (`ckpt/`): how we save training so we never pay for the same work twice
 
 Decision record: [ADR 0001](../adr/0001-checkpoint-format-and-commit.md). Longer design notes:
-[checkpoint_design.md](../support/docs/checkpoint_design.md). Queue side: [../queue/README.md](../queue/README.md).
+[checkpoint_design_v0.md](../docs/checkpoint_design_v0.md). Queue side: [../queue/README.md](../queue/README.md).
 Health side: [../health/README.md](../health/README.md).
 
 > **In one paragraph.** Training costs money every hour. A checkpoint is a saved copy of the training, so if
@@ -60,7 +60,7 @@ in the background:
 
 | When | What | Command / function |
 |---|---|---|
-| before the run | the store refuses a stale write (else fencing cannot work) | `ckpt.py probe-store --run <run>` (run by `ops/launch.sh`) |
+| before the run | the store refuses a stale write (else fencing cannot work) | `ckpt.py probe-store --run <run>` (run by `launch/launch.sh`) |
 | after a NaN or loss spike | restore an older step, skip some batches, continue on a new branch | `TRAIN_EXTRA="--from-step K --skip 5 --branch b1"` |
 | daily, as its own job | delete old checkpoints, never protected / pinned / latest ones | `ckpt.py retention`, `run_retention()` |
 | for Teams 09/11/12 | export one checked `safetensors` file | `export_safetensors()`, DeepSpeed: `ds_ckpt.export_ds()` |

@@ -23,7 +23,7 @@ before every job (prolog)    prolog     quick checks + vendor diagnostic level 1
 every 30 s (Slurm health)    periodic   quick checks + read the vendor's background health  drain the node itself
                                         (never the diagnostic: it would load busy GPUs)       (v5:<check>), its jobs
                                                                                               save and move (exit 75)
-before a dry run / repair    full       quick checks + diagnostic level 2 + 4 collectives     ops/launch.sh drains it
+before a dry run / repair    full       quick checks + diagnostic level 2 + 4 collectives     launch/launch.sh drains it
                              (≤ 15 min)                                                        (health: <check>)
 
 quick checks (every mode):

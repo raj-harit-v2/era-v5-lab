@@ -42,6 +42,15 @@ Each task is a GitHub issue titled `[G3] ...`. The issue is the source of truth;
 | Training (`train_bpe.py`, c0, v1 retrain) | `train/` | @sohamniyogi |
 | v0 special slots | `v0/` | @rjvim |
 
+## Verification setup
+If you run verification through `train_bpe.py --brahmic-dir ...`, UTF-8 mode is set
+automatically. If you run a verifier directly on Windows, set it first in
+PowerShell:
+
+```powershell
+$env:PYTHONUTF8 = "1"
+```
+
 ### Decisions (do not change without a team note)
 
 - Vocab size stays **131,072**, so G4 can size the embedding now.

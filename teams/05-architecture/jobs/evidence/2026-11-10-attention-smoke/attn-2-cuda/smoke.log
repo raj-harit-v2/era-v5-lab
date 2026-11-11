@@ -1,0 +1,30 @@
+ACTUAL TRAINER SMOKE EVIDENCE — NOT A QUALITY RESULT
+Source commit: c9cac5a0d5811e712212a37a01d6c540346ff1a1
+Project module path: /marimo/attention-smoke-lab/era-v5-lab/teams/05-architecture/harness
+Command: /tmp/uv-venv/bin/python /marimo/attention-smoke-lab/era-v5-lab/teams/05-architecture/harness/train_week2.py --config /marimo/attention-smoke-lab/era-v5-lab/teams/05-architecture/configs/arms/attn2_swa128_sink.yaml --tokenizer /marimo/attention-smoke-lab/inputs/tokenizer_v0.json --byte-table /marimo/attention-smoke-lab/inputs/tables/raw_table_P32.npz --train-data /marimo/attention-smoke-lab/inputs/synthetic_train.jsonl --heldout-data /marimo/attention-smoke-lab/inputs/synthetic_heldout.jsonl --device cuda --seed 1234 --smoke --smoke-steps 8 --smoke-seq-len 160 --smoke-batch-size 1 --no-checkpoint --out /marimo/attention-smoke-lab/runs/attn-2-cuda-8steps-ctx160
+
+The trainer writes structured files, not per-step stdout.
+The following sections reproduce those actual files.
+
+=== summary.json ===
+{
+  "status": "SMOKE",
+  "steps": 8,
+  "wall_seconds": 10.847494916999949,
+  "timed_out": false,
+  "first_ce": 11.880962371826172,
+  "last_ce": 5.942065715789795,
+  "final_model_sha256": "5d66ac7dde244d8dbe49e514c0e42f2803fd733f9446de5126772cad1c4ed571",
+  "eligible_for_quality_comparison": false
+}
+
+=== metrics.jsonl ===
+{"step": 0, "val/nll_nats": 338.9499568939209, "val/utf8_bytes": 152, "val/scored_tokens": 28, "val/bpb": 3.2171146178972867, "val/perplexity": 180837.7688000384, "tokens_per_second": 0.0, "loss_ntp": 0.0, "loss_mtp": 0.0, "loss": 0.0, "lr": 0.001, "gpu_alloc_gb": 0.0, "gradient_norm": 0.0}
+{"step": 1, "train/ce_loss": 11.880962371826172, "loss_total": 11.880962371826172, "loss_ntp": 11.880962371826172, "loss_mtp": 0.0, "mtp_weight": 0.0, "loss": 11.880962371826172, "lr": 0.001, "gradient_norm": 15.235631942749023, "gradient_clipping_applied": true, "train/scored_tokens": 160, "train/input_positions": 160, "train/utf8_bytes": 1432, "perf/step_ms": 659.3837890000032, "tokens_per_second": 242.65079407343336, "gpu_alloc_gb": 2.9840331077575684}
+{"step": 2, "train/ce_loss": 11.990129470825195, "loss_total": 11.990129470825195, "loss_ntp": 11.990129470825195, "loss_mtp": 0.0, "mtp_weight": 0.0, "loss": 11.990129470825195, "lr": 0.001, "gradient_norm": 15.704713821411133, "gradient_clipping_applied": true, "train/scored_tokens": 160, "train/input_positions": 160, "train/utf8_bytes": 867, "perf/step_ms": 718.604957000025, "tokens_per_second": 222.65362692174475, "gpu_alloc_gb": 3.4942870140075684}
+{"step": 3, "train/ce_loss": 12.015944480895996, "loss_total": 12.015944480895996, "loss_ntp": 12.015944480895996, "loss_mtp": 0.0, "mtp_weight": 0.0, "loss": 12.015944480895996, "lr": 0.001, "gradient_norm": 10.666969299316406, "gradient_clipping_applied": true, "train/scored_tokens": 160, "train/input_positions": 160, "train/utf8_bytes": 375, "perf/step_ms": 755.0097419998565, "tokens_per_second": 211.91779536009008, "gpu_alloc_gb": 3.5948729515075684}
+{"step": 4, "train/ce_loss": 11.300573348999023, "loss_total": 11.300573348999023, "loss_ntp": 11.300573348999023, "loss_mtp": 0.0, "mtp_weight": 0.0, "loss": 11.300573348999023, "lr": 0.001, "gradient_norm": 10.640973091125488, "gradient_clipping_applied": true, "train/scored_tokens": 160, "train/input_positions": 160, "train/utf8_bytes": 730, "perf/step_ms": 599.7563490000175, "tokens_per_second": 266.77499999253087, "gpu_alloc_gb": 3.4107909202575684}
+{"step": 5, "train/ce_loss": 7.915629863739014, "loss_total": 7.915629863739014, "loss_ntp": 7.915629863739014, "loss_mtp": 0.0, "mtp_weight": 0.0, "loss": 7.915629863739014, "lr": 0.001, "gradient_norm": 10.674671173095703, "gradient_clipping_applied": true, "train/scored_tokens": 160, "train/input_positions": 160, "train/utf8_bytes": 733, "perf/step_ms": 578.2879070000035, "tokens_per_second": 276.6787928006923, "gpu_alloc_gb": 3.3790526390075684}
+{"step": 6, "train/ce_loss": 7.5028395652771, "loss_total": 7.5028395652771, "loss_ntp": 7.5028395652771, "loss_mtp": 0.0, "mtp_weight": 0.0, "loss": 7.5028395652771, "lr": 0.001, "gradient_norm": 14.057581901550293, "gradient_clipping_applied": true, "train/scored_tokens": 160, "train/input_positions": 160, "train/utf8_bytes": 1431, "perf/step_ms": 630.7942569999341, "tokens_per_second": 253.64847289663373, "gpu_alloc_gb": 3.4420409202575684}
+{"step": 7, "train/ce_loss": 8.735098838806152, "loss_total": 8.735098838806152, "loss_ntp": 8.735098838806152, "loss_mtp": 0.0, "mtp_weight": 0.0, "loss": 8.735098838806152, "lr": 0.001, "gradient_norm": 40.130611419677734, "gradient_clipping_applied": true, "train/scored_tokens": 160, "train/input_positions": 160, "train/utf8_bytes": 862, "perf/step_ms": 656.2572960001489, "tokens_per_second": 243.80681323497802, "gpu_alloc_gb": 3.4601073265075684}
+{"step": 8, "train/ce_loss": 5.942065715789795, "loss_total": 5.942065715789795, "loss_ntp": 5.942065715789795, "loss_mtp": 0.0, "mtp_weight": 0.0, "loss": 5.942065715789795, "lr": 0.001, "gradient_norm": 17.059267044067383, "gradient_clipping_applied": true, "train/scored_tokens": 160, "train/input_positions": 160, "train/utf8_bytes": 365, "perf/step_ms": 704.1003159999946, "tokens_per_second": 227.2403468144463, "gpu_alloc_gb": 3.6002440452575684, "val/nll_nats": 261.86729550361633, "val/utf8_bytes": 152, "val/scored_tokens": 28, "val/bpb": 2.4854911091715266, "val/perplexity": 11526.493079535156}

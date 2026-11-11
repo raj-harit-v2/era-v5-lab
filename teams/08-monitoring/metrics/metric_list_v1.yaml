@@ -73,11 +73,14 @@ metrics:
 # learning has stalled.
 - name: update_weight_ratio
   unit: dimensionless
-  cadence: Every N training steps (N to be agreed)
-  source: Not written yet. Proposed for G5 to add around the optimizer step in train.py.
-  notes: Proposed formula is L2 norm of (weights after - weights before) / L2 norm of weights before. A copy of
-    the weights is needed only on the steps being measured. To agree - one value for the whole model or one per
-    layer, and what to do when the weights are zero.
+  cadence: Every 10 training steps by default (step % 10 == 0; every_n_steps is configurable, 1 in unit tests)
+  source: metrics_logger/metrics_writer.py compute_update_weight_ratio(...). G5 can call it around the optimizer
+    step and pass the scalar into MetricsWriter; not wired into train.py yet (G8-only helper keeps the PR inside
+    teams/08-monitoring/).
+  notes: One scalar for the whole model — ||lr * update||_2 / ||W||_2, i.e. sqrt(sum_p ||lr u_p||^2) /
+    sqrt(sum_p ||w_p||^2). Equals ||ΔW||_2 / ||W||_2 when each update is the parameter change (weights after -
+    weights before), or when update is the optimizer direction and lr is the effective step size. No value when
+    the weight norm is zero / not finite, or on non-logging steps. Grafana panel 24.
 # Are the experts sharing the work? A few experts getting most of the routing may mean routing has collapsed.
 - name: expert_load
   unit: fraction

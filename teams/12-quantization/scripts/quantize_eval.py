@@ -8,14 +8,15 @@ Steps (each one is skipped when its output already exists, so a rerun resumes):
   2. convert it to a bf16 GGUF with llama.cpp's convert_hf_to_gguf.py, at the same llama.cpp
      build as the installed binaries (a private Python 3.12 venv is made for this step only)
   3. quantize to each format; router gates (ffn_gate_inp) are never quantized by llama.cpp
-     and the output layer is forced to Q8_0; both are checked in the GGUF and written to runs.csv
+     and the output layer is forced to Q8_0; both are checked in the GGUF and written to runs.csv.
+     Each GGUF's SHA-256 is written to runs/manifest_<date>.json (same folder as runs.csv)
   4. serve each GGUF with llama-server, run the eval, append one row per format to runs.csv
 
 Needs: llama.cpp binaries on PATH (brew install llama.cpp) or --llama-bin, and uv or python3.12.
 Big files live in --work (default ~/.cache/era-v5-quant), never in the repo.
 Disk: about 14 GB HF + 14 GB bf16 GGUF + 28 GB for the six quants (use --delete-hf / --cleanup to save space).
 """
-import argparse, csv, datetime, json, os, platform, random, re, shutil, signal, socket, subprocess, sys, time
+import argparse, csv, datetime, hashlib, json, os, platform, random, re, shutil, signal, socket, subprocess, sys, time
 import urllib.parse, urllib.request
 from pathlib import Path
 
@@ -33,6 +34,32 @@ def log(*a):
 def run(cmd, **kw):
     log('$', ' '.join(map(str, cmd)))
     subprocess.run(list(map(str, cmd)), check=True, **kw)
+
+
+def file_sha256(path):
+    """SHA-256 of a GGUF. Chunked so a 14 GB baseline is not read into memory."""
+    h = hashlib.sha256()
+    with open(path, 'rb') as f:
+        for chunk in iter(lambda: f.read(16 << 20), b''):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def record_manifest(runs_csv, gguf, fmt, model, revision):
+    """Add this output file's SHA-256 to runs/manifest_<date>.json. A same-day rerun replaces that file's entry."""
+    day = datetime.date.today().isoformat()
+    path = Path(runs_csv).expanduser().parent / f'manifest_{day}.json'
+    path.parent.mkdir(parents=True, exist_ok=True)
+    doc = json.loads(path.read_text()) if path.exists() else {}
+    files = doc.setdefault('files', {})
+    digest = file_sha256(gguf)
+    files[gguf.name] = dict(format=fmt, model=model, revision=revision, sha256=digest, size_bytes=gguf.stat().st_size)
+    doc['date'] = day
+    tmp = path.with_suffix('.json.part')
+    tmp.write_text(json.dumps(doc, indent=2, sort_keys=True) + '\n')
+    tmp.replace(path)
+    log(f'{fmt}: sha256 {digest} -> {path.name}')
+    return path
 
 
 # ---------------------------------------------------------------- environment
@@ -278,7 +305,7 @@ def main():
     ap.add_argument('--max-tokens-mcq', type=int, default=16)
     ap.add_argument('--delete-hf', action='store_true', help='delete the HF download after the bf16 GGUF exists')
     ap.add_argument('--cleanup', action='store_true', help='delete each quantized GGUF after its eval')
-    ap.add_argument('--no-record', action='store_true', help='do not append to runs.csv')
+    ap.add_argument('--no-record', action='store_true', help='do not append to runs.csv or write runs/manifest_<date>.json')
     ap.add_argument('--notes', default='')
     args = ap.parse_args()
 
@@ -336,6 +363,8 @@ def main():
         size = out.stat().st_size
         if n_params is None:  # bf16 = 2 bytes per weight
             n_params = bf16.stat().st_size / 2
+        if not args.no_record:  # hash before eval, so a failed eval still records the file that was measured
+            record_manifest(args.runs_csv, out, fmt, args.model, args.revision)
         res = evaluate(sbin, out, items, args)
         row = dict(date=datetime.date.today().isoformat(), model=args.model, revision=args.revision[:12], format=fmt,
                    bpw=round(8 * size / n_params, 2), size_gb=round(size / 1e9, 2), router_type=types['router'],

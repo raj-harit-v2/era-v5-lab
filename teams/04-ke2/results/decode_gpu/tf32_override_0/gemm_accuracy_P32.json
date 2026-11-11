@@ -1,0 +1,166 @@
+{
+  "measurement": "float32 cosine scores of unit-norm KE codes vs float64 products of the same float32 inputs",
+  "inputs": {
+    "table": "results/tables/raw_table_P32.npz",
+    "table_sha256": "b3f5476ec6ae8a6bc3a8ca18e6662d2407645c2ed6f3b3ca4561a9bafd8d04db",
+    "candidates": "token IDs 0..16383",
+    "queries": "token IDs 0..4095 (a batch of size B uses the first B)",
+    "code_dim": 8192
+  },
+  "nvidia_tf32_override": "0",
+  "cublas_matmul": {
+    "tf32_off": {
+      "1": {
+        "max_abs_error": 1.0917825823297811e-05,
+        "median_abs_error": 2.1481922844301254e-09,
+        "at": {
+          "query_id": 0,
+          "candidate_id": 9160,
+          "exact": 0.5772797567082696
+        },
+        "max_abs_error_own_code": 6.321845749335253e-06
+      },
+      "7": {
+        "max_abs_error": 7.471800477665269e-06,
+        "median_abs_error": 3.3336067033987865e-09,
+        "at": {
+          "query_id": 5,
+          "candidate_id": 5,
+          "exact": 0.9999999191754745
+        },
+        "max_abs_error_own_code": 7.471800477665269e-06
+      },
+      "64": {
+        "max_abs_error": 2.451872887632156e-05,
+        "median_abs_error": 6.852733948218073e-09,
+        "at": {
+          "query_id": 40,
+          "candidate_id": 40,
+          "exact": 0.9999999191754816
+        },
+        "max_abs_error_own_code": 2.451872887632156e-05
+      },
+      "512": {
+        "max_abs_error": 7.175726574071284e-05,
+        "median_abs_error": 3.5120636884822254e-08,
+        "at": {
+          "query_id": 158,
+          "candidate_id": 158,
+          "exact": 1.0000000067265689
+        },
+        "max_abs_error_own_code": 7.175726574071284e-05
+      },
+      "1024": {
+        "max_abs_error": 0.00020314280519040384,
+        "median_abs_error": 9.712523559664201e-08,
+        "at": {
+          "query_id": 11,
+          "candidate_id": 5452,
+          "exact": 0.5772797567082361
+        },
+        "max_abs_error_own_code": 0.000149134864754763
+      },
+      "4096": {
+        "max_abs_error": 0.00020314280519040384,
+        "median_abs_error": 1.0859214479561931e-07,
+        "at": {
+          "query_id": 11,
+          "candidate_id": 5452,
+          "exact": 0.5772797567082361
+        },
+        "max_abs_error_own_code": 0.00017381118769177473
+      }
+    },
+    "tf32_on": {
+      "1": {
+        "max_abs_error": 1.0917825823297811e-05,
+        "median_abs_error": 2.1481922844301254e-09,
+        "at": {
+          "query_id": 0,
+          "candidate_id": 9160,
+          "exact": 0.5772797567082696
+        },
+        "max_abs_error_own_code": 6.321845749335253e-06
+      },
+      "7": {
+        "max_abs_error": 7.471800477665269e-06,
+        "median_abs_error": 3.3336067033987865e-09,
+        "at": {
+          "query_id": 5,
+          "candidate_id": 5,
+          "exact": 0.9999999191754745
+        },
+        "max_abs_error_own_code": 7.471800477665269e-06
+      },
+      "64": {
+        "max_abs_error": 2.451872887632156e-05,
+        "median_abs_error": 6.852733948218073e-09,
+        "at": {
+          "query_id": 40,
+          "candidate_id": 40,
+          "exact": 0.9999999191754816
+        },
+        "max_abs_error_own_code": 2.451872887632156e-05
+      },
+      "512": {
+        "max_abs_error": 7.175726574071284e-05,
+        "median_abs_error": 3.5120636884822254e-08,
+        "at": {
+          "query_id": 158,
+          "candidate_id": 158,
+          "exact": 1.0000000067265689
+        },
+        "max_abs_error_own_code": 7.175726574071284e-05
+      },
+      "1024": {
+        "max_abs_error": 0.00020314280519040384,
+        "median_abs_error": 9.712523559664201e-08,
+        "at": {
+          "query_id": 11,
+          "candidate_id": 5452,
+          "exact": 0.5772797567082361
+        },
+        "max_abs_error_own_code": 0.000149134864754763
+      },
+      "4096": {
+        "max_abs_error": 0.00020314280519040384,
+        "median_abs_error": 1.0859214479561931e-07,
+        "at": {
+          "query_id": 11,
+          "candidate_id": 5452,
+          "exact": 0.5772797567082361
+        },
+        "max_abs_error_own_code": 0.00017381118769177473
+      }
+    }
+  },
+  "control_elementwise_sum_tf32_off": {
+    "queries": 64,
+    "max_abs_error": 2.0003382039668338e-07,
+    "median_abs_error": 8.745365152537654e-11,
+    "at": {
+      "query_id": 10,
+      "candidate_id": 10,
+      "exact": 0.9999999191754692
+    },
+    "max_abs_error_own_code": 2.0003382039668338e-07
+  },
+  "environment": {
+    "python": "3.13.5",
+    "numpy": "2.5.4",
+    "torch": "2.14.1+cu130",
+    "cuda_runtime": "13.0",
+    "gpu": "NVIDIA RTX 5000 Ada Generation Laptop GPU",
+    "compute_capability": "8.9",
+    "gpu_memory_gib": 16.0,
+    "driver": "596.58",
+    "system": "Windows",
+    "machine": "AMD64",
+    "dtype": "float32",
+    "tf32_matmul": false,
+    "tf32_cudnn": false,
+    "float32_matmul_precision": "highest",
+    "deterministic_algorithms": true,
+    "cublas_workspace_config": ":4096:8"
+  }
+}

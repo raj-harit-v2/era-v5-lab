@@ -2,12 +2,15 @@ import hashlib, json, math, sys, tempfile, unittest
 from pathlib import Path
 from contextlib import nullcontext
 import torch
+from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'harness'))
 from week2.scoring import INDIC, group_metrics, source_slices, compare_arms
 from week2.data import DocumentWindows
 from week2.evaluation import evaluate
 from test_week2_bpb import ByteFixture, UniformModel
+from test_week2_model import fixture
+from week2.model import LanguageModel
 
 
 class SliceTests(unittest.TestCase):
@@ -46,6 +49,44 @@ class SliceTests(unittest.TestCase):
             ds.raw_bytes,
         )
         self.assertEqual(r, evaluate(UniformModel(), ds, 1, 'cpu', nullcontext))
+
+    def test_batched_eval_matches_reference_and_projects_only_scored_tokens(self):
+        ds = DocumentWindows(self.text, ByteFixture(), 7, True, self.sources)
+        c, rows, lengths = fixture()
+        # Map fixture bytes into the small model vocabulary. Keep byte counts
+        # and slice metadata from the real DocumentWindows construction.
+        ds.windows = [
+            ([i % 31 for i in x], [i % 31 for i in y], sizes)
+            for x, y, sizes in ds.windows
+        ]
+        ds.pad_id %= 31
+        torch.manual_seed(1234)
+        model = LanguageModel(c["model"], rows, lengths)
+        reference = evaluate(model, ds, 1, "cpu", nullcontext)
+        with (
+            patch.object(model, "hidden", wraps=model.hidden) as hidden,
+            patch.object(model.head, "forward", wraps=model.head.forward) as head,
+            patch("week2.evaluation.EVAL_HEAD_TOKENS", 5),
+        ):
+            state = torch.get_rng_state().clone()
+            actual = evaluate(model, ds, 1, "cpu", nullcontext, max_batch_tokens=24)
+            shapes = [call.args[0].shape for call in hidden.call_args_list]
+            projected = [call.args[0].shape for call in head.call_args_list]
+        self.assertEqual(actual.keys(), reference.keys())
+        for key, value in reference.items():
+            if key.endswith(("/utf8_bytes", "/scored_tokens")):
+                self.assertEqual(actual[key], value, key)
+            else:
+                self.assertTrue(
+                    math.isclose(actual[key], value, rel_tol=2e-6, abs_tol=2e-6), key
+                )
+        self.assertTrue(all(batch * width <= 24 for batch, width in shapes))
+        self.assertTrue(any(batch > 1 for batch, _ in shapes))
+        self.assertTrue(any(width < ds.seq_len for _, width in shapes))
+        self.assertTrue(all(len(shape) == 2 and shape[0] <= 5 for shape in projected))
+        self.assertEqual(sum(shape[0] for shape in projected), ds.tokens)
+        self.assertTrue(model.training)
+        self.assertTrue(torch.equal(torch.get_rng_state(), state))
 
     def test_source_order_mismatch(self):
         self.rows.reverse()

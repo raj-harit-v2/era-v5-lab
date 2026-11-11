@@ -1,0 +1,78 @@
+{
+ "schema": "g10-ocr2-policy/1",
+ "set": "sft-code-opencodereasoning-2",
+ "set_decision": "TSAI reserves",
+ "ruling": {
+  "set": "licences/licence_table.md, Stage 1 row of sft-code-opencodereasoning-2: TSAI reserves. prepare_ocr2.py and pack_admission.py read the table themselves and refuse a policy that says anything else.",
+  "teacher": "TSAI data rule of 3 Nov: output of open-weight models under MIT or Apache-2.0 is in; DeepSeek-R1 is named.",
+  "open": [
+   "TSAI decision for the OCR-2 SFT subset (today: reserves, so no training pack can be built)",
+   "per source: the producer's original revision and row order (see source manifest, identity)",
+   "Team 9 confirmation for the Codeforces pool before open-r1/codeforces rows are used",
+   "the target-quality thresholds below are a proposal for the lead and TSAI, not a ruling"
+  ]
+ },
+ "ocr2": {
+  "repo": "nvidia/OpenCodeReasoning-2",
+  "config": "python",
+  "distribution_licence": "cc-by-4.0"
+ },
+ "teacher": {
+  "field": "r1_generation",
+  "model": "DeepSeek-R1",
+  "licence": "MIT",
+  "approved": true,
+  "note": "qwq_critique (QwQ-32B) is a separate signal about the solution. It is never the SFT target."
+ },
+ "row_licences_allowed": ["apache-2.0", "mit", "cc-by-4.0"],
+ "target_quality": {
+  "admit_judgements": ["right"],
+  "min_pass_rate": 1.0,
+  "missing_execution_evidence": "admit_tagged",
+  "note": "A critique of 'wrong' or a pass_rate under min_pass_rate leaves the row out. pass_rate -1 means no execution evidence: kept, tagged exec_missing, never counted as a pass."
+ },
+ "sources": {
+  "taco": {
+   "repo": "BAAI/TACO",
+   "train_splits": ["train"],
+   "protected_splits": ["test"],
+   "statement_licence": "apache-2.0",
+   "attribution": "BAAI/TACO (Hub tag apache-2.0)",
+   "training_approved": false,
+   "hold_reason": "set is reserved; no pinned original snapshot yet, producer revision and row order not established"
+  },
+  "apps": {
+   "repo": "codeparrot/apps",
+   "train_splits": ["train"],
+   "protected_splits": ["test"],
+   "statement_licence": "mit",
+   "attribution": "codeparrot/apps (Hub tag mit)",
+   "training_approved": false,
+   "hold_reason": "set is reserved; no pinned original snapshot yet, producer revision and row order not established"
+  },
+  "code_contests": {
+   "repo": "deepmind/code_contests",
+   "train_splits": ["train"],
+   "protected_splits": ["valid", "test"],
+   "statement_licence": "cc-by-4.0",
+   "attribution": "deepmind/code_contests (CC BY 4.0); attribution is kept even where the OCR-2 row tag says apache-2.0",
+   "training_approved": false,
+   "hold_reason": "set is reserved; local identity evidence is diagnostic only (producer revision not established)"
+  },
+  "open-r1/codeforces": {
+   "repo": "open-r1/codeforces",
+   "train_splits": ["train"],
+   "protected_splits": ["test"],
+   "statement_licence": "",
+   "attribution": "",
+   "training_approved": false,
+   "hold_reason": "statement terms not recorded here; Team 9 confirmation for the Codeforces pool is open"
+  }
+ },
+ "protected_family_keys": [],
+ "pack": {
+  "approved_tokenizer_sha256": [],
+  "approved_fingerprint_set_sha256": ["2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a"],
+  "note": "No tokenizer is approved for packs until Team 3 publishes the frozen one. The fingerprint set is Team 9's full v2."
+ }
+}

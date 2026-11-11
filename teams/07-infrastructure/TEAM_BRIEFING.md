@@ -24,7 +24,7 @@ person is needed the system says what to do.**
 | **Share the GPUs fairly** (ADR 0002) | The main run first; every team gets a GPU share, a budget and per-job limits | the main run must never wait, and no team can take everything |
 | **Take out broken hardware early** (ADR 0003) | Check every node before each job and every 30 s; a failing node is drained and its jobs save and move | one bad GPU slows or crashes the whole run |
 | **Say what to do** (ADR 0004) | 74 measurements with LOW / MEDIUM / HIGH thresholds; every code and alert explains itself in plain words | a 3 a.m. page must tell the on-call person the next step |
-| **Start in the right order** | One script, `ops/launch.sh`, brings the cluster up step by step and stops at the first problem | a wrong start order is a common cause of a broken first day |
+| **Start in the right order** | One script, `launch/launch.sh`, brings the cluster up step by step and stops at the first problem | a wrong start order is a common cause of a broken first day |
 | **No dependence on a provider** | Runs on bare metal or any cloud; storage is a shared file system or any S3-compatible store | the course may run on bare metal; nothing should assume one vendor |
 
 **Evidence.** We cannot test on the real GPU cluster yet, so we built a small copy of it in Docker (a real Slurm
@@ -185,7 +185,7 @@ product or provider would force a rewrite later.
 
 ### 3.7 Starting the cluster (operations)
 
-**What.** `ops/launch.sh` starts everything in order and checks each step before the next: logins between machines
+**What.** `launch/launch.sh` starts everything in order and checks each step before the next: logins between machines
 (munge), the accounting database, a backup of it **that is test-restored**, the schedulers, the accounts, the
 GPU nodes, a deep health check of every node, the background services, a check of the shared store, and finally
 the main run. It stops at the first failure and says how to continue.
@@ -231,7 +231,7 @@ everything except the GPUs themselves; Kaggle covers the GPUs.
 | `health/` | node checks, GPU error codes, the four GPU data-exchange tests, thresholds | before every job, every 30 s, before a dry run |
 | `metrics/` | the 74-metric catalogue, live alert watcher, run report, `explain.py`, price assumptions | the controller |
 | `common/` | the event format every part writes, and every code's plain-words explanation | everywhere |
-| `ops/` | `launch.sh` (start-up in order) and its settings file | an admin machine |
+| `launch/` | `launch.sh` (start-up in order) and its settings file | an admin machine |
 | `support/tests/` | unit tests | a laptop or CI |
 | `support/simulation/` | the Docker Slurm cluster, the drills, the test trainer, results and evidence | a laptop with Docker |
 | `support/kaggle/` | the GPU check package | Kaggle |
@@ -261,7 +261,7 @@ in the code without reading all of it.
 | Job queue | [queue/README.md](queue/README.md#how-it-works-step-by-step) | submit → limits → prolog health check → wrapper → trainer → 0 / 75 / 78 → requeue, hold or done |
 | Node health | [health/README.md](health/README.md#how-it-works-step-by-step) | three modes (before a job, every 30 s, deep) → the same checks → pass / warn / fail → drain and move |
 | Monitoring | [metrics/README.md](metrics/README.md#how-it-works-step-by-step) | every part writes events → live alerts every 30 s → plain-words explanations → run report |
-| Operations | [ops/README.md](ops/README.md#how-it-works-step-by-step) | 12 checked start-up steps, from logins to the main run |
+| Operations | [launch/README.md](launch/README.md#how-it-works-step-by-step) | 12 checked start-up steps, from logins to the main run |
 
 Where to look in the code:
 
@@ -273,7 +273,7 @@ Where to look in the code:
 | Which limits, shares and priorities exist? | `slurm/setup_accounts.sh`, `slurm/slurm.conf` |
 | What does each health check test, and with which threshold? | `health/health_check.py`, `health/thresholds.yaml` |
 | What does each code or alert mean? | `common/reasons.py`, `metrics/catalog.yaml`, or `python metrics/explain.py <code>` |
-| How does the cluster start? | `ops/launch.sh` |
+| How does the cluster start? | `launch/launch.sh` |
 | What does a test or drill prove? | `support/tests/`, `support/simulation/run_sim.py`, results in `support/docs/sim_results*.md` |
 
 ## 5. What is still open

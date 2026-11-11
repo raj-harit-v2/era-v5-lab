@@ -1,8 +1,9 @@
-# Romanised Indic (D2): share and detector, v1
+# Romanised Indic (D2): share, detector and cap policy
 
 Issue #213, part 1. How much of each Indic language in the `ind-*` packs is written in Latin letters (D2 in
 `diagnosis/DISEASES.md`, for example Hindi as "aap kaise ho"), measured with a small detector that was tested on
-100 documents readers had already labelled. Part 2, the cap proposal, will be `romanised_policy_v1.md`.
+100 documents readers had already labelled. Part 2, the cap proposal, is `romanised_policy_v1.md` (summary in
+[Part 2](#part-2-cap-policy) below).
 
 ## Result
 
@@ -76,6 +77,23 @@ none is D2) the detector flags 0. Gold cannot measure recall, but it shows the d
   flags 7 more documents on the full packs; 3 words was kept. The full table is in `eval_v1.md`.
 - Precision on a test set that is half D2 is easier than on real packs, where D2 is rare (about 0.3%).
 
+## Part 2: cap policy
+
+`romanised_policy_v1.md` has the full policy. In short:
+
+- **Document rule** (`doc_detector.py`): a document is romanised when more than 50% of its words are in romanised
+  segments (TSAI's rule: a native article with one romanised heading stays native).
+- **Word list against IndicLID** (`eval_v2.py`, `eval_v2.md`): on the same 100 labelled documents and 1,957 gold
+  documents, the word list gets 100% / 48% (readers' labels) with 0 gold false positives; IndicLID gets 76% / 56% with
+  9. The word list is kept (TSAI's rule: better on the gold check). Tuning IndicLID with length and score thresholds
+  (`indiclid_variants.py`, `eval_v2_indiclid_variants.md`) does not reach 0 gold false positives.
+- **Token share** (`token_share.py`, `romanised_token_share_v1.csv`): no document in the 22 sample packs is mostly
+  romanised (highest 35%), so the cap share is 0% for every language. Romanised segments inside native documents are
+  0.025% of tokens. Tokens are counted with a stand-in, BrahmicTokenizer-131K (team 03's baseline), to be re-run
+  with the project tokenizer when it is final.
+- **Cap options** for the Gate 2 decision (14 Nov): 0%, 1% (proposed) or 2% of each language's tokens; over the cap,
+  whole romanised documents are dropped at random with seed 0.
+
 ## Reproduce
 
 ```bash
@@ -85,6 +103,17 @@ python3 ../tools/fetch_sheets.py --packs ind-hi-hplt ind-hi-fw2 ... --out sheets
 uv run --with pyarrow python build_testset.py      # testset_100.csv
 uv run --with pyarrow python eval_detector.py      # eval_v1.md
 uv run --with pyarrow python share.py              # romanised_share_v1.csv, romanised_share_by_pack_v1.csv
+```
+
+Part 2. IndicLID needs its own environment (Python 3.11, torch 2.2.2, transformers 4.40.2, fasttext-wheel, numpy<2,
+pandas, pyarrow 17) and its code and models in `indiclid/` (see `indiclid_segments.py`); the tokenizer is
+`tokenizer/tokenizer.json` from BrahmicTokenizer-131K, commit `7dfcf398`. Neither is committed.
+
+```bash
+.venv-lid/bin/python indiclid_segments.py          # IndicLID labels for every segment, cached in indiclid/
+.venv-lid/bin/python eval_v2.py                    # eval_v2.md
+.venv-lid/bin/python indiclid_variants.py          # eval_v2_indiclid_variants.md
+uv run --no-project --with 'numpy>=2' --with pyarrow --with tokenizers python token_share.py   # romanised_token_share_v1.csv
 ```
 
 `packs/` and `sheets/` are not committed (`.gitignore`): the packs are large and the sheets are other readers' files.

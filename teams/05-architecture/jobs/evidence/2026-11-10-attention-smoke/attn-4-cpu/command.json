@@ -1,0 +1,74 @@
+{
+  "command": [
+    "/tmp/uv-venv/bin/python",
+    "/marimo/attention-smoke-lab/era-v5-lab/teams/05-architecture/harness/train_week2.py",
+    "--config",
+    "/marimo/attention-smoke-lab/era-v5-lab/teams/05-architecture/configs/arms/attn4_gate.yaml",
+    "--tokenizer",
+    "/marimo/attention-smoke-lab/inputs/tokenizer_v0.json",
+    "--byte-table",
+    "/marimo/attention-smoke-lab/inputs/tables/raw_table_P32.npz",
+    "--train-data",
+    "/marimo/attention-smoke-lab/inputs/synthetic_train.jsonl",
+    "--heldout-data",
+    "/marimo/attention-smoke-lab/inputs/synthetic_heldout.jsonl",
+    "--device",
+    "cpu",
+    "--seed",
+    "1234",
+    "--smoke",
+    "--smoke-steps",
+    "6",
+    "--smoke-seq-len",
+    "160",
+    "--smoke-batch-size",
+    "1",
+    "--no-checkpoint",
+    "--out",
+    "/marimo/attention-smoke-lab/runs/attn-4-cpu-6steps-ctx160"
+  ],
+  "commit": "c9cac5a0d5811e712212a37a01d6c540346ff1a1",
+  "config_sha256": "c4fed5ddf6bab40ae035d8304476412b89ce0d15ea997461071aa4bf7859ba6c",
+  "inputs": {
+    "tokenizer_sha256": "2de039f20d17afd17615095c406c43087359673b767ed0fe2c480b995f2af8e5",
+    "table_file_sha256": "5e99508660799f43508a0df0060590e96fa253dd1bb69e2575d8e0f302fdd77f",
+    "table_content_sha256": "47d411a9c6cae6fa2075935567243e51f4efbc377ccef3eef42c32fce66f869f",
+    "vocab_size": 131072,
+    "pos_dim": 32,
+    "bos_id": 130725,
+    "pad_id": 130726,
+    "train_sha256": "0bb4246fc4c4700f6d5638abecf5a382ed9e2e2b0da0473fdc60c8eb3176a3ed",
+    "heldout_sha256": "993f3490c66d3c76ab8f83c0a5e7747f316a2941a7b3bcae1b70639f43e07550",
+    "data_kind": "synthetic smoke text; not official quality evaluation",
+    "documents": [
+      {
+        "document": "synthetic-train-en-1",
+        "tokens": 561
+      },
+      {
+        "document": "synthetic-train-en-2",
+        "tokens": 481
+      },
+      {
+        "document": "synthetic-train-code",
+        "tokens": 720
+      },
+      {
+        "document": "synthetic-train-hi",
+        "tokens": 701
+      },
+      {
+        "document": "synthetic-eval-en",
+        "tokens": 8
+      },
+      {
+        "document": "synthetic-eval-code",
+        "tokens": 10
+      },
+      {
+        "document": "synthetic-eval-hi",
+        "tokens": 10
+      }
+    ]
+  }
+}

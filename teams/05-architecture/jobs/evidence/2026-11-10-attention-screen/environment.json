@@ -1,0 +1,32 @@
+{
+  "repository": "https://github.com/revantg/era-v5-lab.git",
+  "commit": "c1849c1b9dd11eec9ed1958c07deee173ca73265",
+  "hardware": {
+    "python": "3.13.11",
+    "cpu_cores_visible": 20,
+    "ram_gib_visible": 160.0,
+    "packages": {
+      "marimo": "0.25.2",
+      "torch": "2.11.0",
+      "numpy": "2.4.6",
+      "tokenizers": "0.22.2",
+      "PyYAML": "6.0.3",
+      "matplotlib": "3.11.1"
+    },
+    "cuda_available": true,
+    "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "gpu_memory_gib": 95.0,
+    "compute_capability": "12.0",
+    "cuda_runtime": "13.0",
+    "bf16_supported": true,
+    "container_limits": {}
+  },
+  "execution_features": {
+    "data_implementation_sha256": "0bff11279729d373a10d1e43e5830029caac95cf4602d9f41de3f9e3bc0dd862",
+    "features": [
+      "CPU sampler RNG restore",
+      "verified numeric window cache"
+    ],
+    "model_and_optimizer_math_changed": false
+  }
+}

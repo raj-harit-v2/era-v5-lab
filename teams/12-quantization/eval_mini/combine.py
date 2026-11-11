@@ -10,8 +10,11 @@ per-item *.samples.jsonl files, plus environment.json. A format is accepted only
   model and revision, eval profile, seed, n_ctx, lm_eval version, backend (llama-cpp-python version),
   G9's run_eval_mini.py (sha256), LIMIT = None, and the full item count of every task.
 
+A run is refused if any *.samples.jsonl row carries eval item text (a `target` or `response` field). Team 9's eval
+firewall keeps item text out of the public repo, and notebooks made before that rule wrote it.
+
 The hardware may differ (it is recorded per format). The notebook fingerprint (NOTEBOOK_VERSION) is compared too,
-but runs made before it existed (the 28 Oct bf16 run) only get a warning. The same format in two inputs is an
+but runs made before it existed (the 28 Oct bf16 run) only get a warning. Fingerprints in SAME_SCORING count as equal. The same format in two inputs is an
 error unless both give identical scores.
 
 Writes to --out: one folder per format, provenance.json (who, where, how long), scores.csv / scores.md, and
@@ -25,6 +28,17 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 TASKS = {"arc_challenge": 500, "hellaswag": 400, "mmlu": 570, "gsm8k": 200, "truthfulqa_mc2": 200}  # G9's mini profile
 MUST_MATCH = ["model", "model_revision", "profile", "seed", "n_ctx", "lm_eval", "backend", "g9_harness_sha256"]
+ITEM_TEXT = {"target", "response"}   # eval firewall (Team 9): never in a result folder
+# Notebook fingerprints whose scoring is the same, so their runs combine. Add a fingerprint only after checking that the
+# change did not touch how an item is scored, and say what changed:
+#   70829160c1bd  the six OLMoE quantized runs of 29 Oct
+#   ec7db60966d6  + pinned installs, test_llamacpp_lm.py check (2) from the logit rows, a comment
+#   dbeeed2c28c3  + no target/response in the sample rows (paired.py output is byte-identical with and without them)
+SAME_SCORING = {"70829160c1bd", "ec7db60966d6", "dbeeed2c28c3"}
+
+
+def same_version(v: str) -> str:
+    return "same-scoring" if v in SAME_SCORING else v
 
 
 def unpack(path: Path, tmp: Path) -> Path:
@@ -41,6 +55,21 @@ def runs_in(folder: Path):
     env = json.loads(env_path.read_text()) if env_path.exists() else {}
     for summary in sorted(folder.glob("*/summary.json")):
         yield summary.parent, json.loads(summary.read_text()), env
+
+
+def item_text_in(folder: Path) -> list[str]:
+    """An error for the format folder if any of its sample rows has eval item text, else []."""
+    bad = {}
+    for f in sorted(folder.glob("*.samples.jsonl")):
+        with open(f, encoding="utf-8") as fh:
+            found = {k for line in fh if line.strip() for k in json.loads(line)} & ITEM_TEXT
+        if found:
+            bad[f.name] = sorted(found)
+    if not bad:
+        return []
+    return [f"{len(bad)} sample file(s) carry eval item text ({', '.join(sorted({k for v in bad.values() for k in v}))}), "
+            f"e.g. {next(iter(bad))}: written by a notebook older than the eval firewall. Rerun with the current "
+            "notebook, or delete those fields from every row"]
 
 
 def primary(summary: dict) -> dict[str, dict]:
@@ -63,7 +92,7 @@ def check(fmt: str, summary: dict, env: dict, ref_meta: dict, ref_env: dict) -> 
     if env.get("settings", {}).get("LIMIT") not in (None,):
         errors.append(f"run used LIMIT = {env['settings']['LIMIT']}: a test run, not combinable")
     v, ref_v = env.get("notebook_version"), ref_env.get("notebook_version")
-    if v and ref_v and v != ref_v:
+    if v and ref_v and same_version(v) != same_version(ref_v):
         errors.append(f"notebook version {v}, base run used {ref_v}")
     elif not (v and ref_v):
         warnings.append(f"notebook version not recorded (this run: {v or '-'}, base: {ref_v or '-'}); "
@@ -92,6 +121,7 @@ def main() -> None:
         accepted, problems = {}, []
         for fmt, folder, summary, env, src in found:
             errors, warnings = check(fmt, summary, env, ref_meta, ref_env)
+            errors += item_text_in(folder)
             for w in warnings:
                 print(f"warning {fmt} ({src}): {w}")
             if errors:
@@ -103,7 +133,8 @@ def main() -> None:
                     problems.append(f"{fmt}: two runs with different scores ({accepted[fmt][3]} and {src}); keep one")
                 continue
             accepted[fmt] = (folder, summary, env, src)
-        versions = {env.get("notebook_version") for _, (_, _, env, _) in accepted.items()} - {None}
+        versions = {same_version(env.get("notebook_version")) for _, (_, _, env, _) in accepted.items()
+                    if env.get("notebook_version")}
         if len(versions) > 1:   # runs that carry a fingerprint must all carry the same one
             problems.append("runs come from different notebook versions: " + ", ".join(
                 f"{fmt}={env.get('notebook_version')}" for fmt, (_, _, env, _) in accepted.items() if env.get("notebook_version")))

@@ -1,0 +1,827 @@
+{
+  "P": 32,
+  "vocab_size": 131072,
+  "queries": 10000,
+  "seed": 0,
+  "taus": [
+    0.0,
+    0.3,
+    0.5,
+    0.7,
+    0.9
+  ],
+  "conditions": [
+    {
+      "name": "clean_fp32",
+      "kind": "fp32",
+      "queries": 10000,
+      "unknown_truth": 0,
+      "target_cos": null,
+      "mix": null,
+      "mean_true_cos": 1.0,
+      "mean_best_cos": 1.0000000000000007,
+      "min_best_cos": 0.9999999999999526,
+      "max_best_cos": 1.0000000000000497,
+      "argmax_accuracy": 1.0,
+      "structural_accuracy": 1.0,
+      "taus": [
+        {
+          "tau": 0.0,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.3,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.5,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.7,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.9,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        }
+      ]
+    },
+    {
+      "name": "clean_bf16",
+      "kind": "bf16",
+      "queries": 10000,
+      "unknown_truth": 0,
+      "target_cos": null,
+      "mix": null,
+      "mean_true_cos": 0.9999999987447423,
+      "mean_best_cos": 0.9999999987447423,
+      "min_best_cos": 0.999999979599555,
+      "max_best_cos": 1.0,
+      "argmax_accuracy": 1.0,
+      "structural_accuracy": 1.0,
+      "taus": [
+        {
+          "tau": 0.0,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.3,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.5,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.7,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.9,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        }
+      ]
+    },
+    {
+      "name": "noise_cos_0.95",
+      "kind": "noise",
+      "queries": 10000,
+      "unknown_truth": 0,
+      "target_cos": 0.95,
+      "mix": null,
+      "mean_true_cos": 0.9500021131736452,
+      "mean_best_cos": 0.950002113173645,
+      "min_best_cos": 0.9467275444655698,
+      "max_best_cos": 0.953039798548497,
+      "argmax_accuracy": 1.0,
+      "structural_accuracy": 1.0,
+      "taus": [
+        {
+          "tau": 0.0,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.3,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.5,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.7,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.9,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        }
+      ]
+    },
+    {
+      "name": "noise_cos_0.9",
+      "kind": "noise",
+      "queries": 10000,
+      "unknown_truth": 0,
+      "target_cos": 0.9,
+      "mix": null,
+      "mean_true_cos": 0.8999872108174204,
+      "mean_best_cos": 0.8999872108174201,
+      "min_best_cos": 0.8939656891842592,
+      "max_best_cos": 0.9058465825407487,
+      "argmax_accuracy": 1.0,
+      "structural_accuracy": 1.0,
+      "taus": [
+        {
+          "tau": 0.0,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.3,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.5,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.7,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.9,
+          "accept_rate": 0.5001,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 0.5001,
+          "correct_accept_rate": 0.5001,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.4999
+        }
+      ]
+    },
+    {
+      "name": "noise_cos_0.8",
+      "kind": "noise",
+      "queries": 10000,
+      "unknown_truth": 0,
+      "target_cos": 0.8,
+      "mix": null,
+      "mean_true_cos": 0.7999805175018643,
+      "mean_best_cos": 0.7999805175018643,
+      "min_best_cos": 0.7885481782587719,
+      "max_best_cos": 0.8119339787831861,
+      "argmax_accuracy": 1.0,
+      "structural_accuracy": 1.0,
+      "taus": [
+        {
+          "tau": 0.0,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.3,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.5,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.7,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.9,
+          "accept_rate": 0.0,
+          "accuracy_among_accepted": null,
+          "accept_rate_among_correct": 0.0,
+          "correct_accept_rate": 0.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 1.0
+        }
+      ]
+    },
+    {
+      "name": "noise_cos_0.7",
+      "kind": "noise",
+      "queries": 10000,
+      "unknown_truth": 0,
+      "target_cos": 0.7,
+      "mix": null,
+      "mean_true_cos": 0.700085541793942,
+      "mean_best_cos": 0.7000855417939418,
+      "min_best_cos": 0.6815948814845266,
+      "max_best_cos": 0.7189639741499466,
+      "argmax_accuracy": 1.0,
+      "structural_accuracy": 1.0,
+      "taus": [
+        {
+          "tau": 0.0,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.3,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.5,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.7,
+          "accept_rate": 0.5051,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 0.5051,
+          "correct_accept_rate": 0.5051,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.4949
+        },
+        {
+          "tau": 0.9,
+          "accept_rate": 0.0,
+          "accuracy_among_accepted": null,
+          "accept_rate_among_correct": 0.0,
+          "correct_accept_rate": 0.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 1.0
+        }
+      ]
+    },
+    {
+      "name": "noise_cos_0.5",
+      "kind": "noise",
+      "queries": 10000,
+      "unknown_truth": 0,
+      "target_cos": 0.5,
+      "mix": null,
+      "mean_true_cos": 0.4999771775873953,
+      "mean_best_cos": 0.49997717758739507,
+      "min_best_cos": 0.4719152937387471,
+      "max_best_cos": 0.5257069112086105,
+      "argmax_accuracy": 1.0,
+      "structural_accuracy": 0.9857,
+      "taus": [
+        {
+          "tau": 0.0,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.3,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.5,
+          "accept_rate": 0.5007,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 0.5007,
+          "correct_accept_rate": 0.5007,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.4993
+        },
+        {
+          "tau": 0.7,
+          "accept_rate": 0.0,
+          "accuracy_among_accepted": null,
+          "accept_rate_among_correct": 0.0,
+          "correct_accept_rate": 0.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 1.0
+        },
+        {
+          "tau": 0.9,
+          "accept_rate": 0.0,
+          "accuracy_among_accepted": null,
+          "accept_rate_among_correct": 0.0,
+          "correct_accept_rate": 0.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 1.0
+        }
+      ]
+    },
+    {
+      "name": "noise_cos_0.3",
+      "kind": "noise",
+      "queries": 10000,
+      "unknown_truth": 0,
+      "target_cos": 0.3,
+      "mix": null,
+      "mean_true_cos": 0.30024636748601946,
+      "mean_best_cos": 0.30024636748601946,
+      "min_best_cos": 0.2647516138805635,
+      "max_best_cos": 0.3368122141174856,
+      "argmax_accuracy": 1.0,
+      "structural_accuracy": 0.0,
+      "taus": [
+        {
+          "tau": 0.0,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.3,
+          "accept_rate": 0.5077,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 0.5077,
+          "correct_accept_rate": 0.5077,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.4923
+        },
+        {
+          "tau": 0.5,
+          "accept_rate": 0.0,
+          "accuracy_among_accepted": null,
+          "accept_rate_among_correct": 0.0,
+          "correct_accept_rate": 0.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 1.0
+        },
+        {
+          "tau": 0.7,
+          "accept_rate": 0.0,
+          "accuracy_among_accepted": null,
+          "accept_rate_among_correct": 0.0,
+          "correct_accept_rate": 0.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 1.0
+        },
+        {
+          "tau": 0.9,
+          "accept_rate": 0.0,
+          "accuracy_among_accepted": null,
+          "accept_rate_among_correct": 0.0,
+          "correct_accept_rate": 0.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 1.0
+        }
+      ]
+    },
+    {
+      "name": "garbage",
+      "kind": "garbage",
+      "queries": 10000,
+      "unknown_truth": 0,
+      "target_cos": null,
+      "mix": null,
+      "mean_true_cos": null,
+      "mean_best_cos": 0.04516457653521533,
+      "min_best_cos": 0.03278673923132634,
+      "max_best_cos": 0.06489843605187205,
+      "argmax_accuracy": 0.0,
+      "structural_accuracy": null,
+      "taus": [
+        {
+          "tau": 0.0,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 0.0,
+          "accept_rate_among_correct": null,
+          "correct_accept_rate": 0.0,
+          "wrong_accept_rate": 1.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.3,
+          "accept_rate": 0.0,
+          "accuracy_among_accepted": null,
+          "accept_rate_among_correct": null,
+          "correct_accept_rate": 0.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.5,
+          "accept_rate": 0.0,
+          "accuracy_among_accepted": null,
+          "accept_rate_among_correct": null,
+          "correct_accept_rate": 0.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.7,
+          "accept_rate": 0.0,
+          "accuracy_among_accepted": null,
+          "accept_rate_among_correct": null,
+          "correct_accept_rate": 0.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.9,
+          "accept_rate": 0.0,
+          "accuracy_among_accepted": null,
+          "accept_rate_among_correct": null,
+          "correct_accept_rate": 0.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        }
+      ]
+    },
+    {
+      "name": "rival_mix_0.3",
+      "kind": "rival",
+      "queries": 10000,
+      "unknown_truth": 0,
+      "target_cos": null,
+      "mix": 0.3,
+      "mean_true_cos": 0.9876311904608978,
+      "mean_best_cos": 0.9876311904608985,
+      "min_best_cos": 0.9191375680775925,
+      "max_best_cos": 0.9980179153912854,
+      "argmax_accuracy": 1.0,
+      "structural_accuracy": 0.4946,
+      "taus": [
+        {
+          "tau": 0.0,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.3,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.5,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.7,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.9,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        }
+      ]
+    },
+    {
+      "name": "rival_mix_0.45",
+      "kind": "rival",
+      "queries": 10000,
+      "unknown_truth": 0,
+      "target_cos": null,
+      "mix": 0.45,
+      "mean_true_cos": 0.9714845535388973,
+      "mean_best_cos": 0.9714845535389002,
+      "min_best_cos": 0.7739262986015425,
+      "max_best_cos": 0.9955272807845463,
+      "argmax_accuracy": 1.0,
+      "structural_accuracy": 0.442,
+      "taus": [
+        {
+          "tau": 0.0,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.3,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.5,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.7,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 1.0,
+          "correct_accept_rate": 1.0,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.9,
+          "accept_rate": 0.9988,
+          "accuracy_among_accepted": 1.0,
+          "accept_rate_among_correct": 0.9988,
+          "correct_accept_rate": 0.9988,
+          "wrong_accept_rate": 0.0,
+          "reject_correct_rate": 0.0012
+        }
+      ]
+    },
+    {
+      "name": "rival_mix_0.55",
+      "kind": "rival",
+      "queries": 10000,
+      "unknown_truth": 0,
+      "target_cos": null,
+      "mix": 0.55,
+      "mean_true_cos": 0.9570037029596782,
+      "mean_best_cos": 0.9714845537698613,
+      "min_best_cos": 0.7739262986015274,
+      "max_best_cos": 0.9955272808393137,
+      "argmax_accuracy": 0.0,
+      "structural_accuracy": 0.4405,
+      "taus": [
+        {
+          "tau": 0.0,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 0.0,
+          "accept_rate_among_correct": null,
+          "correct_accept_rate": 0.0,
+          "wrong_accept_rate": 1.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.3,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 0.0,
+          "accept_rate_among_correct": null,
+          "correct_accept_rate": 0.0,
+          "wrong_accept_rate": 1.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.5,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 0.0,
+          "accept_rate_among_correct": null,
+          "correct_accept_rate": 0.0,
+          "wrong_accept_rate": 1.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.7,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 0.0,
+          "accept_rate_among_correct": null,
+          "correct_accept_rate": 0.0,
+          "wrong_accept_rate": 1.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.9,
+          "accept_rate": 0.9988,
+          "accuracy_among_accepted": 0.0,
+          "accept_rate_among_correct": null,
+          "correct_accept_rate": 0.0,
+          "wrong_accept_rate": 0.9988,
+          "reject_correct_rate": 0.0
+        }
+      ]
+    },
+    {
+      "name": "rival_mix_0.7",
+      "kind": "rival",
+      "queries": 10000,
+      "unknown_truth": 0,
+      "target_cos": null,
+      "mix": 0.7,
+      "mean_true_cos": 0.9301235409849719,
+      "mean_best_cos": 0.9876311905876084,
+      "min_best_cos": 0.919137568077577,
+      "max_best_cos": 0.9980179154221874,
+      "argmax_accuracy": 0.0,
+      "structural_accuracy": 0.4182,
+      "taus": [
+        {
+          "tau": 0.0,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 0.0,
+          "accept_rate_among_correct": null,
+          "correct_accept_rate": 0.0,
+          "wrong_accept_rate": 1.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.3,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 0.0,
+          "accept_rate_among_correct": null,
+          "correct_accept_rate": 0.0,
+          "wrong_accept_rate": 1.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.5,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 0.0,
+          "accept_rate_among_correct": null,
+          "correct_accept_rate": 0.0,
+          "wrong_accept_rate": 1.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.7,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 0.0,
+          "accept_rate_among_correct": null,
+          "correct_accept_rate": 0.0,
+          "wrong_accept_rate": 1.0,
+          "reject_correct_rate": 0.0
+        },
+        {
+          "tau": 0.9,
+          "accept_rate": 1.0,
+          "accuracy_among_accepted": 0.0,
+          "accept_rate_among_correct": null,
+          "correct_accept_rate": 0.0,
+          "wrong_accept_rate": 1.0,
+          "reject_correct_rate": 0.0
+        }
+      ]
+    }
+  ],
+  "proposed_tau": 0.3,
+  "proposal_satisfies_quality_floor": true,
+  "rule": {
+    "max_garbage_accept": 0.01,
+    "min_correct_accept": 0.99,
+    "quality_floor_cos": 0.7,
+    "quality_conditions": [
+      "noise_cos_0.95",
+      "noise_cos_0.9",
+      "noise_cos_0.8",
+      "noise_cos_0.7"
+    ]
+  },
+  "rival_wrong_accept_at_tau": {
+    "rival_mix_0.3": 0.0,
+    "rival_mix_0.45": 0.0,
+    "rival_mix_0.55": 1.0,
+    "rival_mix_0.7": 1.0
+  }
+}

@@ -9,3 +9,4 @@ ruff==0.14.2
 # Upstream codec, pinned to the commit the team reviewed (ke2.config.UPSTREAM_CODEC_COMMIT).
 kronecker-embeddings @ git+https://github.com/theschoolofai/kronecker-embeddings@d07cb543f03d7a72a7c35bc68cfb795bcb02e1ec
 # Optional: transformers, for test_tables.py's comparison with upstream build_byte_buffer.
+# Optional: a CUDA build of torch for determinism/decode_gpu.py, and psutil for determinism/resource_monitor.py.

@@ -1,0 +1,838 @@
+{
+ "counts": {
+  "by_source": {
+   "apps/test": {
+    "policy_protected_split": 238812
+   },
+   "apps/train": {
+    "eligible_joined": 145286,
+    "policy_protected_family": 3629,
+    "quality_critique_wrong": 17750,
+    "quality_execution_failed": 11094
+   },
+   "code_contests/train": {
+    "eligible_joined": 81092,
+    "quality_critique_wrong": 15678,
+    "quality_execution_failed": 30143
+   },
+   "code_contests/valid": {
+    "policy_protected_split": 1885
+   },
+   "open-r1/codeforces/train": {
+    "held_source_unavailable": 69690,
+    "quality_critique_wrong": 126187,
+    "quality_execution_failed": 32106
+   },
+   "taco/test": {
+    "policy_protected_split": 28055
+   },
+   "taco/train": {
+    "eligible_joined": 315908,
+    "quality_critique_wrong": 150404,
+    "quality_execution_failed": 130447
+   }
+  },
+  "codeforces_train": {
+   "joined": 0,
+   "outcomes": {
+    "held_source_unavailable": 69690,
+    "quality_critique_wrong": 126187,
+    "quality_execution_failed": 32106
+   },
+   "rows": 227983
+  },
+  "outcomes": {
+   "eligible_joined": 542286,
+   "held_source_unavailable": 69690,
+   "policy_protected_family": 3629,
+   "policy_protected_split": 268752,
+   "quality_critique_wrong": 310019,
+   "quality_execution_failed": 203790
+  },
+  "protected": {
+   "by_split": {
+    "apps/test": 238812,
+    "code_contests/valid": 1885,
+    "taco/test": 28055
+   },
+   "family": 3629,
+   "in_joined": 0,
+   "independent": 268752,
+   "mismatch_shards": [],
+   "rows": 268752
+  },
+  "shards_failing_identities": {},
+  "states": {
+   "complete": 70
+  },
+  "tokens": {
+   "rendered_tokens": 3638387133,
+   "rendered_trained_tokens": 3400978077
+  },
+  "total_identities": {
+   "clean = pack rejected + pack row checks passed": true,
+   "eligible joined = converter rejected + rendered": true,
+   "raw = policy excluded + malformed/unresolved + eligible joined": true,
+   "raw = sum of outcomes": true,
+   "rendered = removed + clean": true
+  },
+  "totals": {
+   "joined.eligible_joined": 542286,
+   "joined.malformed_or_unresolved": 69690,
+   "joined.policy_excluded": 786190,
+   "joined.raw_rows": 1398166,
+   "pack.admitted": 0,
+   "pack.attempted": 427152,
+   "pack.emitted": 0,
+   "pack.pack_rejected": 0,
+   "pack.row_checks_passed": 427152,
+   "rendered.converter_rejected": 67,
+   "rendered.rendered": 542219,
+   "screened.rows_canary": 0,
+   "screened.rows_flagged": 115067,
+   "screened.rows_kept": 427152,
+   "screened.rows_removed": 115067
+  }
+ },
+ "dedup": {
+  "families_F1": 19825,
+  "incremental_by_shard": {
+   "0": {
+    "new_clusters": 5529,
+    "new_positions": 5547,
+    "positions": 5547
+   },
+   "1": {
+    "new_clusters": 593,
+    "new_positions": 597,
+    "positions": 5574
+   },
+   "2": {
+    "new_clusters": 286,
+    "new_positions": 287,
+    "positions": 5559
+   },
+   "3": {
+    "new_clusters": 180,
+    "new_positions": 183,
+    "positions": 5618
+   },
+   "4": {
+    "new_clusters": 124,
+    "new_positions": 125,
+    "positions": 5605
+   },
+   "5": {
+    "new_clusters": 110,
+    "new_positions": 110,
+    "positions": 5598
+   },
+   "6": {
+    "new_clusters": 79,
+    "new_positions": 79,
+    "positions": 5571
+   },
+   "7": {
+    "new_clusters": 90,
+    "new_positions": 90,
+    "positions": 5572
+   },
+   "8": {
+    "new_clusters": 69,
+    "new_positions": 69,
+    "positions": 5535
+   },
+   "9": {
+    "new_clusters": 54,
+    "new_positions": 54,
+    "positions": 5564
+   },
+   "10": {
+    "new_clusters": 50,
+    "new_positions": 50,
+    "positions": 5588
+   },
+   "11": {
+    "new_clusters": 43,
+    "new_positions": 45,
+    "positions": 5566
+   },
+   "12": {
+    "new_clusters": 114,
+    "new_positions": 114,
+    "positions": 5466
+   },
+   "13": {
+    "new_clusters": 106,
+    "new_positions": 106,
+    "positions": 875
+   },
+   "14": {
+    "new_clusters": 46,
+    "new_positions": 46,
+    "positions": 4293
+   },
+   "15": {
+    "new_clusters": 3782,
+    "new_positions": 3891,
+    "positions": 7980
+   },
+   "16": {
+    "new_clusters": 5914,
+    "new_positions": 6142,
+    "positions": 9740
+   },
+   "17": {
+    "new_clusters": 500,
+    "new_positions": 531,
+    "positions": 9776
+   },
+   "18": {
+    "new_clusters": 176,
+    "new_positions": 192,
+    "positions": 9605
+   },
+   "19": {
+    "new_clusters": 131,
+    "new_positions": 142,
+    "positions": 9850
+   },
+   "20": {
+    "new_clusters": 52,
+    "new_positions": 60,
+    "positions": 9607
+   },
+   "21": {
+    "new_clusters": 65,
+    "new_positions": 67,
+    "positions": 9415
+   },
+   "22": {
+    "new_clusters": 45,
+    "new_positions": 46,
+    "positions": 11924
+   },
+   "23": {
+    "new_clusters": 44,
+    "new_positions": 46,
+    "positions": 11978
+   },
+   "24": {
+    "new_clusters": 29,
+    "new_positions": 29,
+    "positions": 9689
+   },
+   "25": {
+    "new_clusters": 33,
+    "new_positions": 36,
+    "positions": 9654
+   },
+   "26": {
+    "new_clusters": 37,
+    "new_positions": 38,
+    "positions": 10051
+   },
+   "27": {
+    "new_clusters": 57,
+    "new_positions": 57,
+    "positions": 864
+   },
+   "28": {
+    "new_clusters": 44,
+    "new_positions": 45,
+    "positions": 863
+   },
+   "29": {
+    "new_clusters": 27,
+    "new_positions": 29,
+    "positions": 5501
+   },
+   "30": {
+    "new_clusters": 112,
+    "new_positions": 118,
+    "positions": 911
+   },
+   "31": {
+    "new_clusters": 39,
+    "new_positions": 39,
+    "positions": 5467
+   },
+   "32": {
+    "new_clusters": 65,
+    "new_positions": 65,
+    "positions": 3677
+   },
+   "33": {
+    "new_clusters": 95,
+    "new_positions": 99,
+    "positions": 5690
+   },
+   "34": {
+    "new_clusters": 59,
+    "new_positions": 65,
+    "positions": 5709
+   },
+   "35": {
+    "new_clusters": 30,
+    "new_positions": 30,
+    "positions": 8664
+   },
+   "36": {
+    "new_clusters": 50,
+    "new_positions": 51,
+    "positions": 9396
+   },
+   "37": {
+    "new_clusters": 34,
+    "new_positions": 37,
+    "positions": 5759
+   },
+   "38": {
+    "new_clusters": 24,
+    "new_positions": 27,
+    "positions": 5677
+   },
+   "39": {
+    "new_clusters": 21,
+    "new_positions": 21,
+    "positions": 5628
+   },
+   "40": {
+    "new_clusters": 14,
+    "new_positions": 15,
+    "positions": 5710
+   },
+   "41": {
+    "new_clusters": 29,
+    "new_positions": 31,
+    "positions": 6260
+   },
+   "42": {
+    "new_clusters": 20,
+    "new_positions": 20,
+    "positions": 5581
+   },
+   "43": {
+    "new_clusters": 23,
+    "new_positions": 26,
+    "positions": 4654
+   },
+   "44": {
+    "new_clusters": 16,
+    "new_positions": 16,
+    "positions": 5616
+   },
+   "45": {
+    "new_clusters": 10,
+    "new_positions": 11,
+    "positions": 4978
+   },
+   "46": {
+    "new_clusters": 15,
+    "new_positions": 16,
+    "positions": 4496
+   },
+   "47": {
+    "new_clusters": 18,
+    "new_positions": 18,
+    "positions": 4452
+   },
+   "48": {
+    "new_clusters": 12,
+    "new_positions": 15,
+    "positions": 5657
+   },
+   "49": {
+    "new_clusters": 10,
+    "new_positions": 12,
+    "positions": 9904
+   },
+   "50": {
+    "new_clusters": 22,
+    "new_positions": 22,
+    "positions": 5565
+   },
+   "51": {
+    "new_clusters": 39,
+    "new_positions": 39,
+    "positions": 1218
+   },
+   "52": {
+    "new_clusters": 32,
+    "new_positions": 33,
+    "positions": 975
+   },
+   "53": {
+    "new_clusters": 11,
+    "new_positions": 11,
+    "positions": 936
+   },
+   "54": {
+    "new_clusters": 14,
+    "new_positions": 14,
+    "positions": 952
+   },
+   "55": {
+    "new_clusters": 20,
+    "new_positions": 20,
+    "positions": 947
+   },
+   "56": {
+    "new_clusters": 11,
+    "new_positions": 11,
+    "positions": 947
+   },
+   "57": {
+    "new_clusters": 14,
+    "new_positions": 15,
+    "positions": 944
+   },
+   "58": {
+    "new_clusters": 10,
+    "new_positions": 10,
+    "positions": 943
+   },
+   "59": {
+    "new_clusters": 7,
+    "new_positions": 7,
+    "positions": 939
+   },
+   "60": {
+    "new_clusters": 9,
+    "new_positions": 9,
+    "positions": 977
+   },
+   "61": {
+    "new_clusters": 7,
+    "new_positions": 7,
+    "positions": 952
+   },
+   "62": {
+    "new_clusters": 6,
+    "new_positions": 6,
+    "positions": 946
+   },
+   "63": {
+    "new_clusters": 8,
+    "new_positions": 9,
+    "positions": 942
+   },
+   "64": {
+    "new_clusters": 5,
+    "new_positions": 6,
+    "positions": 910
+   },
+   "65": {
+    "new_clusters": 7,
+    "new_positions": 8,
+    "positions": 878
+   },
+   "66": {
+    "new_clusters": 5,
+    "new_positions": 5,
+    "positions": 968
+   },
+   "67": {
+    "new_clusters": 4,
+    "new_positions": 4,
+    "positions": 943
+   },
+   "68": {
+    "new_clusters": 3,
+    "new_positions": 3,
+    "positions": 948
+   },
+   "69": {
+    "new_clusters": 1,
+    "new_positions": 1,
+    "positions": 939
+   }
+  },
+  "joined": {
+   "C@0.7": {
+    "by_source_positions": {
+     "apps": 4699,
+     "code_contests": 2519,
+     "taco": 12607
+    },
+    "clusters": 19096,
+    "clusters_spanning_sources": 552,
+    "collapse": 729,
+    "cross_source_collapse": 560,
+    "largest_cluster": 24,
+    "positions": 19825,
+    "spanning_by_sources": {
+     "apps+code_contests": 158,
+     "apps+code_contests+taco": 8,
+     "apps+taco": 128,
+     "code_contests+taco": 258
+    },
+    "within_source_collapse": 169
+   },
+   "C@0.8": {
+    "by_source_positions": {
+     "apps": 4699,
+     "code_contests": 2519,
+     "taco": 12607
+    },
+    "clusters": 19340,
+    "clusters_spanning_sources": 361,
+    "collapse": 485,
+    "cross_source_collapse": 365,
+    "largest_cluster": 14,
+    "positions": 19825,
+    "spanning_by_sources": {
+     "apps+code_contests": 118,
+     "apps+code_contests+taco": 4,
+     "apps+taco": 78,
+     "code_contests+taco": 161
+    },
+    "within_source_collapse": 120
+   },
+   "C@0.9": {
+    "by_source_positions": {
+     "apps": 4699,
+     "code_contests": 2519,
+     "taco": 12607
+    },
+    "clusters": 19684,
+    "clusters_spanning_sources": 88,
+    "collapse": 141,
+    "cross_source_collapse": 88,
+    "largest_cluster": 4,
+    "positions": 19825,
+    "spanning_by_sources": {
+     "apps+code_contests": 35,
+     "apps+taco": 22,
+     "code_contests+taco": 31
+    },
+    "within_source_collapse": 53
+   },
+   "F1": {
+    "by_source_positions": {
+     "apps": 4699,
+     "code_contests": 2519,
+     "taco": 12607
+    },
+    "clusters": 19825,
+    "clusters_spanning_sources": 0,
+    "collapse": 0,
+    "cross_source_collapse": 0,
+    "largest_cluster": 1,
+    "positions": 19825,
+    "spanning_by_sources": {},
+    "within_source_collapse": 0
+   },
+   "F2": {
+    "by_source_positions": {
+     "apps": 4699,
+     "code_contests": 2519,
+     "taco": 12607
+    },
+    "clusters": 19825,
+    "clusters_spanning_sources": 0,
+    "collapse": 0,
+    "cross_source_collapse": 0,
+    "largest_cluster": 1,
+    "positions": 19825,
+    "spanning_by_sources": {},
+    "within_source_collapse": 0
+   },
+   "P": {
+    "by_source_positions": {
+     "apps": 4699,
+     "code_contests": 2519,
+     "taco": 12607
+    },
+    "clusters": 19825,
+    "clusters_spanning_sources": 0,
+    "collapse": 0,
+    "cross_source_collapse": 0,
+    "largest_cluster": 1,
+    "positions": 19825,
+    "spanning_by_sources": {},
+    "within_source_collapse": 0
+   }
+  },
+  "kept": {
+   "C@0.7": {
+    "by_source_positions": {
+     "apps": 4147,
+     "code_contests": 1587,
+     "taco": 9936
+    },
+    "clusters": 15291,
+    "clusters_spanning_sources": 236,
+    "collapse": 379,
+    "cross_source_collapse": 242,
+    "largest_cluster": 24,
+    "positions": 15670,
+    "spanning_by_sources": {
+     "apps+code_contests": 48,
+     "apps+code_contests+taco": 6,
+     "apps+taco": 86,
+     "code_contests+taco": 96
+    },
+    "within_source_collapse": 137
+   },
+   "C@0.8": {
+    "by_source_positions": {
+     "apps": 4147,
+     "code_contests": 1587,
+     "taco": 9936
+    },
+    "clusters": 15402,
+    "clusters_spanning_sources": 165,
+    "collapse": 268,
+    "cross_source_collapse": 169,
+    "largest_cluster": 14,
+    "positions": 15670,
+    "spanning_by_sources": {
+     "apps+code_contests": 43,
+     "apps+code_contests+taco": 4,
+     "apps+taco": 48,
+     "code_contests+taco": 70
+    },
+    "within_source_collapse": 99
+   },
+   "C@0.9": {
+    "by_source_positions": {
+     "apps": 4147,
+     "code_contests": 1587,
+     "taco": 9936
+    },
+    "clusters": 15570,
+    "clusters_spanning_sources": 53,
+    "collapse": 100,
+    "cross_source_collapse": 53,
+    "largest_cluster": 4,
+    "positions": 15670,
+    "spanning_by_sources": {
+     "apps+code_contests": 13,
+     "apps+taco": 18,
+     "code_contests+taco": 22
+    },
+    "within_source_collapse": 47
+   },
+   "F1": {
+    "by_source_positions": {
+     "apps": 4147,
+     "code_contests": 1587,
+     "taco": 9936
+    },
+    "clusters": 15670,
+    "clusters_spanning_sources": 0,
+    "collapse": 0,
+    "cross_source_collapse": 0,
+    "largest_cluster": 1,
+    "positions": 15670,
+    "spanning_by_sources": {},
+    "within_source_collapse": 0
+   },
+   "F2": {
+    "by_source_positions": {
+     "apps": 4147,
+     "code_contests": 1587,
+     "taco": 9936
+    },
+    "clusters": 15670,
+    "clusters_spanning_sources": 0,
+    "collapse": 0,
+    "cross_source_collapse": 0,
+    "largest_cluster": 1,
+    "positions": 15670,
+    "spanning_by_sources": {},
+    "within_source_collapse": 0
+   },
+   "P": {
+    "by_source_positions": {
+     "apps": 4147,
+     "code_contests": 1587,
+     "taco": 9936
+    },
+    "clusters": 15670,
+    "clusters_spanning_sources": 0,
+    "collapse": 0,
+    "cross_source_collapse": 0,
+    "largest_cluster": 1,
+    "positions": 15670,
+    "spanning_by_sources": {},
+    "within_source_collapse": 0
+   }
+  },
+  "lsh": {
+   "bands": 32,
+   "candidate_pairs": 1885,
+   "f2_groups": 19825,
+   "pairs_ge": {
+    "0.5": 1456,
+    "0.7": 838,
+    "0.8": 503,
+    "0.9": 146,
+    "1.0": 2
+   },
+   "rows_per_band": 4
+  },
+  "positions": 19825,
+  "rows": 542286,
+  "tokens": {
+   "kept_content_clusters_C08": 15402,
+   "kept_exact_duplicate_rows": 0,
+   "kept_exact_duplicate_tokens": 0,
+   "kept_positions": 15670,
+   "kept_rows": 427152,
+   "kept_tokens": 2714970210,
+   "kept_tokens_distinct_rows": 2714970210,
+   "kept_trained_tokens": 2539177884,
+   "rows_per_content_cluster": {
+    "max": 349,
+    "mean": 27.734
+   },
+   "tokens_per_content_cluster_mean": 176273.9
+  }
+ },
+ "shards_loaded": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20,
+  21,
+  22,
+  23,
+  24,
+  25,
+  26,
+  27,
+  28,
+  29,
+  30,
+  31,
+  32,
+  33,
+  34,
+  35,
+  36,
+  37,
+  38,
+  39,
+  40,
+  41,
+  42,
+  43,
+  44,
+  45,
+  46,
+  47,
+  48,
+  49,
+  50,
+  51,
+  52,
+  53,
+  54,
+  55,
+  56,
+  57,
+  58,
+  59,
+  60,
+  61,
+  62,
+  63,
+  64,
+  65,
+  66,
+  67,
+  68,
+  69
+ ],
+ "sources": {
+  "0": "results/local-0-2/shard-00000.json.gz",
+  "1": "results/local-0-2/shard-00001.json.gz",
+  "10": "results/full-3-69/shard-00010.json.gz",
+  "11": "results/full-3-69/shard-00011.json.gz",
+  "12": "results/full-3-69/shard-00012.json.gz",
+  "13": "results/full-3-69/shard-00013.json.gz",
+  "14": "results/full-3-69/shard-00014.json.gz",
+  "15": "results/full-3-69/shard-00015.json.gz",
+  "16": "results/full-3-69/shard-00016.json.gz",
+  "17": "results/full-3-69/shard-00017.json.gz",
+  "18": "results/full-3-69/shard-00018.json.gz",
+  "19": "results/full-3-69/shard-00019.json.gz",
+  "2": "results/local-0-2/shard-00002.json.gz",
+  "20": "results/full-3-69/shard-00020.json.gz",
+  "21": "results/full-3-69/shard-00021.json.gz",
+  "22": "results/full-3-69/shard-00022.json.gz",
+  "23": "results/full-3-69/shard-00023.json.gz",
+  "24": "results/full-3-69/shard-00024.json.gz",
+  "25": "results/full-3-69/shard-00025.json.gz",
+  "26": "results/full-3-69/shard-00026.json.gz",
+  "27": "results/full-3-69/shard-00027.json.gz",
+  "28": "results/full-3-69/shard-00028.json.gz",
+  "29": "results/full-3-69/shard-00029.json.gz",
+  "3": "results/full-3-69/shard-00003.json.gz",
+  "30": "results/full-3-69/shard-00030.json.gz",
+  "31": "results/full-3-69/shard-00031.json.gz",
+  "32": "results/full-3-69/shard-00032.json.gz",
+  "33": "results/full-3-69/shard-00033.json.gz",
+  "34": "results/full-3-69/shard-00034.json.gz",
+  "35": "results/full-3-69/shard-00035.json.gz",
+  "36": "results/full-3-69/shard-00036.json.gz",
+  "37": "results/full-3-69/shard-00037.json.gz",
+  "38": "results/full-3-69/shard-00038.json.gz",
+  "39": "results/full-3-69/shard-00039.json.gz",
+  "4": "results/full-3-69/shard-00004.json.gz",
+  "40": "results/full-3-69/shard-00040.json.gz",
+  "41": "results/full-3-69/shard-00041.json.gz",
+  "42": "results/full-3-69/shard-00042.json.gz",
+  "43": "results/full-3-69/shard-00043.json.gz",
+  "44": "results/full-3-69/shard-00044.json.gz",
+  "45": "results/full-3-69/shard-00045.json.gz",
+  "46": "results/full-3-69/shard-00046.json.gz",
+  "47": "results/full-3-69/shard-00047.json.gz",
+  "48": "results/full-3-69/shard-00048.json.gz",
+  "49": "results/full-3-69/shard-00049.json.gz",
+  "5": "results/full-3-69/shard-00005.json.gz",
+  "50": "results/full-3-69/shard-00050.json.gz",
+  "51": "results/full-3-69/shard-00051.json.gz",
+  "52": "results/full-3-69/shard-00052.json.gz",
+  "53": "results/full-3-69/shard-00053.json.gz",
+  "54": "results/full-3-69/shard-00054.json.gz",
+  "55": "results/full-3-69/shard-00055.json.gz",
+  "56": "results/full-3-69/shard-00056.json.gz",
+  "57": "results/full-3-69/shard-00057.json.gz",
+  "58": "results/full-3-69/shard-00058.json.gz",
+  "59": "results/full-3-69/shard-00059.json.gz",
+  "6": "results/full-3-69/shard-00006.json.gz",
+  "60": "results/full-3-69/shard-00060.json.gz",
+  "61": "results/full-3-69/shard-00061.json.gz",
+  "62": "results/full-3-69/shard-00062.json.gz",
+  "63": "results/full-3-69/shard-00063.json.gz",
+  "64": "results/full-3-69/shard-00064.json.gz",
+  "65": "results/full-3-69/shard-00065.json.gz",
+  "66": "results/full-3-69/shard-00066.json.gz",
+  "67": "results/full-3-69/shard-00067.json.gz",
+  "68": "results/full-3-69/shard-00068.json.gz",
+  "69": "results/full-3-69/shard-00069.json.gz",
+  "7": "results/full-3-69/shard-00007.json.gz",
+  "8": "results/full-3-69/shard-00008.json.gz",
+  "9": "results/full-3-69/shard-00009.json.gz"
+ }
+}

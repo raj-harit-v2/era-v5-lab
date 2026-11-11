@@ -18,7 +18,7 @@ from week2.artifacts import Artifacts, sha256
 from week2.config import load, load_runtime, merge, validate
 from week2.data import DocumentWindows, BatchStream
 from week2.model import LanguageModel
-from week2.evaluation import evaluate, token_nll
+from week2.evaluation import EVAL_BATCH_TOKENS, evaluate, token_nll
 from week2.optim import build_optimizer, describe
 
 
@@ -383,7 +383,12 @@ def main():
         for row in rows:
             log(row)
         if not rows:
-            row = dict(step=0, **evaluate(model, val, 1, device, amp))
+            row = dict(
+                step=0,
+                **evaluate(
+                    model, val, 1, device, amp, max_batch_tokens=EVAL_BATCH_TOKENS
+                ),
+            )
             rows.append(row)
             log(row)
         steps = cfg["run"]["steps"]
@@ -474,7 +479,11 @@ def main():
                 step % cfg["run"]["eval_every_steps"] == 0
                 or step == cfg["run"]["steps"]
             ):
-                row.update(evaluate(model, val, 1, device, amp))
+                row.update(
+                    evaluate(
+                        model, val, 1, device, amp, max_batch_tokens=EVAL_BATCH_TOKENS
+                    )
+                )
             if cfg["optim"]["name"] == "muon":
                 row["muon_lr"] = cfg["optim"]["muon_lr"]
             rows.append(row)

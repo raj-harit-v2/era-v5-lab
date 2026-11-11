@@ -1,0 +1,162 @@
+{
+  "source_commit": "c9cac5a0d5811e712212a37a01d6c540346ff1a1",
+  "existing_tests_passed": 102,
+  "cpu_smokes_passed": 5,
+  "gpu_bf16_smokes_passed": 5,
+  "tracked_model_source_unchanged": true,
+  "quality_results": false,
+  "runs": [
+    {
+      "design": "attn-0",
+      "device": "cpu",
+      "status": "passed",
+      "steps": 6,
+      "first loss": 11.882505416870117,
+      "last loss": 7.435763359069824,
+      "wall seconds": 25.53
+    },
+    {
+      "design": "attn-1",
+      "device": "cpu",
+      "status": "passed",
+      "steps": 6,
+      "first loss": 11.889451026916504,
+      "last loss": 9.021093368530273,
+      "wall seconds": 25.81
+    },
+    {
+      "design": "attn-2",
+      "device": "cpu",
+      "status": "passed",
+      "steps": 6,
+      "first loss": 11.880956649780273,
+      "last loss": 7.487933158874512,
+      "wall seconds": 26.99
+    },
+    {
+      "design": "attn-3",
+      "device": "cpu",
+      "status": "passed",
+      "steps": 6,
+      "first loss": 11.87904167175293,
+      "last loss": 7.451058864593506,
+      "wall seconds": 26.97
+    },
+    {
+      "design": "attn-4",
+      "device": "cpu",
+      "status": "passed",
+      "steps": 6,
+      "first loss": 11.999740600585938,
+      "last loss": 5.566218376159668,
+      "wall seconds": 26.51
+    },
+    {
+      "design": "attn-0",
+      "device": "cuda",
+      "status": "passed",
+      "steps": 8,
+      "first loss": 11.882092475891113,
+      "last loss": 6.362252712249756,
+      "wall seconds": 11.72
+    },
+    {
+      "design": "attn-1",
+      "device": "cuda",
+      "status": "passed",
+      "steps": 8,
+      "first loss": 11.889921188354492,
+      "last loss": 6.426448345184326,
+      "wall seconds": 10.69
+    },
+    {
+      "design": "attn-2",
+      "device": "cuda",
+      "status": "passed",
+      "steps": 8,
+      "first loss": 11.880962371826172,
+      "last loss": 5.942065715789795,
+      "wall seconds": 10.85
+    },
+    {
+      "design": "attn-3",
+      "device": "cuda",
+      "status": "passed",
+      "steps": 8,
+      "first loss": 11.878402709960938,
+      "last loss": 6.176266670227051,
+      "wall seconds": 10.83
+    },
+    {
+      "design": "attn-4",
+      "device": "cuda",
+      "status": "passed",
+      "steps": 8,
+      "first loss": 11.999617576599121,
+      "last loss": 4.3698906898498535,
+      "wall seconds": 10.91
+    }
+  ],
+  "runtime": {
+    "python": "3.13.11",
+    "cpu_cores_visible": 20,
+    "ram_gib_visible": 160.0,
+    "packages": {
+      "marimo": "0.25.2",
+      "torch": "2.11.0",
+      "numpy": "2.4.6",
+      "tokenizers": "0.22.2",
+      "PyYAML": "6.0.3",
+      "matplotlib": "3.11.1"
+    },
+    "cuda_available": true,
+    "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "gpu_memory_gib": 95.0,
+    "compute_capability": "12.0",
+    "cuda_runtime": "13.0",
+    "bf16_supported": true,
+    "container_limits": {}
+  },
+  "inputs": {
+    "tokenizer_sha256": "2de039f20d17afd17615095c406c43087359673b767ed0fe2c480b995f2af8e5",
+    "table_file_sha256": "5e99508660799f43508a0df0060590e96fa253dd1bb69e2575d8e0f302fdd77f",
+    "table_content_sha256": "47d411a9c6cae6fa2075935567243e51f4efbc377ccef3eef42c32fce66f869f",
+    "vocab_size": 131072,
+    "pos_dim": 32,
+    "bos_id": 130725,
+    "pad_id": 130726,
+    "train_sha256": "0bb4246fc4c4700f6d5638abecf5a382ed9e2e2b0da0473fdc60c8eb3176a3ed",
+    "heldout_sha256": "993f3490c66d3c76ab8f83c0a5e7747f316a2941a7b3bcae1b70639f43e07550",
+    "data_kind": "synthetic smoke text; not official quality evaluation",
+    "documents": [
+      {
+        "document": "synthetic-train-en-1",
+        "tokens": 561
+      },
+      {
+        "document": "synthetic-train-en-2",
+        "tokens": 481
+      },
+      {
+        "document": "synthetic-train-code",
+        "tokens": 720
+      },
+      {
+        "document": "synthetic-train-hi",
+        "tokens": 701
+      },
+      {
+        "document": "synthetic-eval-en",
+        "tokens": 8
+      },
+      {
+        "document": "synthetic-eval-code",
+        "tokens": 10
+      },
+      {
+        "document": "synthetic-eval-hi",
+        "tokens": 10
+      }
+    ]
+  }
+}

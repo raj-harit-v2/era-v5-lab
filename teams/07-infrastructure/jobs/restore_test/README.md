@@ -109,6 +109,10 @@ Step 1 on one CPU process equals the first-step loss in Team 05's own evidence
 data as Team 05 does. The last bits differ between CPU, 2 processes and GPU; that is expected, and the test only
 compares run A with run B on the same device and process count.
 
+A second CPU run on Windows 11 (native PowerShell, not WSL) also passes on 1 and 2 processes, with
+`pytest ... -k restore_job` giving 2 passed: see `results/restore_test_cpu_windows.txt`. The Linux CPU run is in
+`results/restore_test_cpu.txt`.
+
 The test can fail: with the optimizer state dropped on purpose after the restore (a local change, not in this
 folder), it prints `FAIL ... first difference at step 12 in loss_ntp_bits` and exits 1, on 1 and 2 processes.
 

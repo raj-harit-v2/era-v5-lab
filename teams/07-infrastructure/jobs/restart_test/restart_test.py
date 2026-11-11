@@ -89,7 +89,8 @@ def trainer(a) -> int:
         return ntp.item()
 
     # R4: Checkpointer(run_id=<arm>, remote_root=./out/<run_id>/ckpt) writes ckpt/<arm>/...
-    ck = rt.Checkpointer(a.arm, str(a.root / "scratch"), str(a.root / "ckpt"), config_path=str(a.tiny), seed=seed)
+    ck = rt.Checkpointer(a.arm, str(a.root / "scratch"), str(a.root / "ckpt"), config_path=str(a.tiny), seed=seed,
+                         code_paths=rt.CODE_PATHS + (str(HERE / "restart_test.py"),))
     info = ck.restore(model, optim, loader, probe)          # newest COMPLETE checkpoint, or None: step 0
     step = info["step"] if info else 0
     attempt = int(os.environ.get("V5_RESTART_COUNT", "0"))

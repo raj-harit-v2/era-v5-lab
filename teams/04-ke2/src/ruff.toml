@@ -12,4 +12,4 @@ ignore = [
 ]
 
 [lint.isort]
-known-first-party = ["ke2", "decode_ref", "build_tables", "forward", "proof_checks", "codec_v1_cpu_mps", "tokenizer_decode_cpu", "run_experiment"]
+known-first-party = ["ke2", "decode_ref", "build_tables", "forward", "proof_checks", "codec_v1_cpu_mps", "tokenizer_decode_cpu", "run_experiment", "pair_margins", "dense_check", "build_min_margin", "decode_gpu", "tau_sweep", "decode_batches"]

@@ -54,7 +54,8 @@ Everything goes to `./out/<run_id>/`:
   of the oldest steps are deleted and the receipts (`latest.json`, `commits.jsonl`, `MANIFEST.json`,
   `sums_rank<r>.json`) are kept (R4).
 - **On a GPU:** the trainer uses `cuda:0`, and the job sets `CUBLAS_WORKSPACE_CONFIG=:4096:8` for
-  deterministic cuBLAS (R7). Not run on a GPU yet; that is what the job request is for.
+  deterministic cuBLAS (R7). Run by TSAI on 1 lab GPU on 4 Nov 2026: PASS
+  ([`results/restart_node.txt`](../../results/restart_node.txt)).
 
 **Locally**, with the plain-text report in `results/` (output in `jobs/restart_test/out/`, git-ignored):
 
@@ -79,4 +80,5 @@ stopped at the time limit.
 
 Bit equality is between run A and run B on the same machine; the numbers are not expected to match other OSes.
 
-Result on CPU: [`results/restart_cpu.txt`](../../results/restart_cpu.txt). One process only for now.
+Result on CPU: [`results/restart_cpu.txt`](../../results/restart_cpu.txt). Result on 1 GPU:
+[`results/restart_node.txt`](../../results/restart_node.txt). One process only for now.

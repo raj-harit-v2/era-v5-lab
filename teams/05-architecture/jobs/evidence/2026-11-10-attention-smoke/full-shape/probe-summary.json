@@ -1,0 +1,92 @@
+[
+  {
+    "design": "attn-0",
+    "steps": 3,
+    "context": 2048,
+    "global_batch": 8,
+    "microbatch": 1,
+    "seed": 1234,
+    "dtype": "bf16",
+    "step_seconds": [
+      1.4760959510003886,
+      0.9997792509993815,
+      1.3502639769994857
+    ],
+    "median_step_seconds": 1.3502639769994857,
+    "max_sampled_device_memory_mib": 11259,
+    "wall_seconds": 11.24453875600011,
+    "quality_result": false
+  },
+  {
+    "design": "attn-1",
+    "steps": 3,
+    "context": 2048,
+    "global_batch": 8,
+    "microbatch": 1,
+    "seed": 1234,
+    "dtype": "bf16",
+    "step_seconds": [
+      1.4931434810005157,
+      1.0541710090001288,
+      1.2702509430000646
+    ],
+    "median_step_seconds": 1.2702509430000646,
+    "max_sampled_device_memory_mib": 11243,
+    "wall_seconds": 11.247313316000145,
+    "quality_result": false
+  },
+  {
+    "design": "attn-2",
+    "steps": 3,
+    "context": 2048,
+    "global_batch": 8,
+    "microbatch": 1,
+    "seed": 1234,
+    "dtype": "bf16",
+    "step_seconds": [
+      1.3948437610006295,
+      0.9769115949993648,
+      1.2037743279997812
+    ],
+    "median_step_seconds": 1.2037743279997812,
+    "max_sampled_device_memory_mib": 12233,
+    "wall_seconds": 10.672391142999913,
+    "quality_result": false
+  },
+  {
+    "design": "attn-3",
+    "steps": 3,
+    "context": 2048,
+    "global_batch": 8,
+    "microbatch": 1,
+    "seed": 1234,
+    "dtype": "bf16",
+    "step_seconds": [
+      1.4235413639999024,
+      1.006874651000544,
+      1.2453981600001498
+    ],
+    "median_step_seconds": 1.2453981600001498,
+    "max_sampled_device_memory_mib": 11225,
+    "wall_seconds": 10.658214626999325,
+    "quality_result": false
+  },
+  {
+    "design": "attn-4",
+    "steps": 3,
+    "context": 2048,
+    "global_batch": 8,
+    "microbatch": 1,
+    "seed": 1234,
+    "dtype": "bf16",
+    "step_seconds": [
+      1.465923261000171,
+      1.1418073419999928,
+      1.255688000000191
+    ],
+    "median_step_seconds": 1.255688000000191,
+    "max_sampled_device_memory_mib": 11335,
+    "wall_seconds": 11.3258305319996,
+    "quality_result": false
+  }
+]

@@ -1,0 +1,42 @@
+{
+  "tokenizer_sha256": "2de039f20d17afd17615095c406c43087359673b767ed0fe2c480b995f2af8e5",
+  "table_file_sha256": "5e99508660799f43508a0df0060590e96fa253dd1bb69e2575d8e0f302fdd77f",
+  "table_content_sha256": "47d411a9c6cae6fa2075935567243e51f4efbc377ccef3eef42c32fce66f869f",
+  "vocab_size": 131072,
+  "pos_dim": 32,
+  "bos_id": 130725,
+  "pad_id": 130726,
+  "train_sha256": "0bb4246fc4c4700f6d5638abecf5a382ed9e2e2b0da0473fdc60c8eb3176a3ed",
+  "heldout_sha256": "993f3490c66d3c76ab8f83c0a5e7747f316a2941a7b3bcae1b70639f43e07550",
+  "data_kind": "synthetic smoke text; not official quality evaluation",
+  "documents": [
+    {
+      "document": "synthetic-train-en-1",
+      "tokens": 561
+    },
+    {
+      "document": "synthetic-train-en-2",
+      "tokens": 481
+    },
+    {
+      "document": "synthetic-train-code",
+      "tokens": 720
+    },
+    {
+      "document": "synthetic-train-hi",
+      "tokens": 701
+    },
+    {
+      "document": "synthetic-eval-en",
+      "tokens": 8
+    },
+    {
+      "document": "synthetic-eval-code",
+      "tokens": 10
+    },
+    {
+      "document": "synthetic-eval-hi",
+      "tokens": 10
+    }
+  ]
+}

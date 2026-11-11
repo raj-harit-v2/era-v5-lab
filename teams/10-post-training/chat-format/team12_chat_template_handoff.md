@@ -4,8 +4,7 @@
 **Author:** Member A (`@Amit T` / `@thinkTinkerGreen`), Team 10 (Post-Training and Agentic)  
 **Recipient:** Team 12 (Quantization and Serving)  
 **Artifacts:** 
-- `teams/10-post-training/chat-format/chat_template.jinja`
-- `teams/12-quantization/chat_template.jinja`
+- `teams/10-post-training/chat-format/chat_template.jinja` (Canonical Template SSOT)
 - Python validation suite: `teams/10-post-training/tests/test_chat_template.py`
 
 ---
@@ -14,9 +13,26 @@
 
 This handoff provides Team 12 with the production-ready Jinja2 chat template (`chat_template.jinja`) matching G10's ChatML v0 specification on the frozen Team 3 tokenizer (BrahmicTokenizer-131K v0.1).
 
+### Exact Paths for Team 12 Consumption:
+- **Canonical Source Path (G10 SSOT)**:  
+  `teams/10-post-training/chat-format/chat_template.jinja`
+- **Recommended In-Team Destination Path for Team 12**:  
+  `teams/12-quantization/tokenizer/chat_template.jinja`  
+  *(or alternatively `teams/12-quantization/chat-format/chat_template.jinja`)*
+
+> [!NOTE]
+> Per repo `pr-guard.yml` rules (lines 52–54), non-markdown files within `teams/` must reside inside a topic subdirectory (depth $\ge 4$). Placing the template under `teams/12-quantization/tokenizer/` or `teams/12-quantization/chat-format/` ensures full compliance with PR Guard.
+
+### Hand-off Note for Team 12 (`unsupported_parts.md`):
+Team 12's tracking document [`teams/12-quantization/docs/unsupported_parts.md`](../../12-quantization/docs/unsupported_parts.md#L179) notes:  
+`| Chat template | yes: Jinja in tokenizer.chat_template | yes | G10 sends it on 12 Nov; test it with llama-server and vLLM chat endpoints |`
+
+The update for Sreekanth (`@SreekanthZipsy`) to reference this delivered artifact is:  
+`| Chat template | yes: Jinja in tokenizer.chat_template | yes | G10 sent: teams/10-post-training/chat-format/chat_template.jinja (copy to teams/12-quantization/tokenizer/chat_template.jinja) |`
+
 It is fully compatible with:
 1. **Hugging Face `transformers` / `tokenizers`**: Embedded in `tokenizer_config.json` under `"chat_template"`.
-2. **`vLLM`**: Passed via `--chat-template teams/12-quantization/chat_template.jinja`.
+2. **`vLLM`**: Passed via `--chat-template teams/10-post-training/chat-format/chat_template.jinja` (or locally via `--chat-template teams/12-quantization/tokenizer/chat_template.jinja`).
 3. **`llama.cpp` / GGUF**: Embedded or passed via `--chat-template` during quantized GGUF inference (`llama-server`, `llama-cli`).
 
 ---
@@ -88,7 +104,7 @@ Every chat marker is a single atomic special token in Team 3's vocabulary:
 from transformers import AutoTokenizer
 
 tokenizer = AutoTokenizer.from_pretrained("/path/to/model")
-tokenizer.chat_template = open("teams/12-quantization/chat_template.jinja").read()
+tokenizer.chat_template = open("teams/10-post-training/chat-format/chat_template.jinja").read()
 
 prompt = tokenizer.apply_chat_template(
     messages=[
@@ -104,14 +120,14 @@ prompt = tokenizer.apply_chat_template(
 ```bash
 python -m vllm.entrypoints.openai.api_server \
     --model /path/to/quantized_model \
-    --chat-template teams/12-quantization/chat_template.jinja
+    --chat-template teams/10-post-training/chat-format/chat_template.jinja
 ```
 
 ### 4.3 llama.cpp CLI / Server
 ```bash
 ./llama-server \
     -m /path/to/model-Q4_K_M.gguf \
-    --chat-template-file teams/12-quantization/chat_template.jinja
+    --chat-template-file teams/10-post-training/chat-format/chat_template.jinja
 ```
 
 ---

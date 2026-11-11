@@ -1,0 +1,13 @@
+diff --git a/boltons/timeutils.py b/boltons/timeutils.py
+index 1ec31dd..65699dc 100644
+--- a/boltons/timeutils.py
++++ b/boltons/timeutils.py
+@@ -382,7 +382,7 @@ def daterange(start, stop, step=1, inclusive=False):
+ 
+     if stop is None:
+         finished = lambda now, stop: False
+-    elif start < stop:
++    elif start <= stop:
+         finished = operator.gt if inclusive else operator.ge
+     else:
+         finished = operator.lt if inclusive else operator.le

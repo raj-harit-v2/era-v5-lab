@@ -1,0 +1,49 @@
+{
+  "P": 32,
+  "table_sha256": "b3f5476ec6ae8a6bc3a8ca18e6662d2407645c2ed6f3b3ca4561a9bafd8d04db",
+  "tokenizer_sha256": "01d968a7970b029c071b29f060abf6104b66168dedf2ff3b1a0290a545739fff",
+  "dtypes": {
+    "fp32": {
+      "decoded_correctly": 131072,
+      "min_margin": 0.01580931970252164,
+      "argmin_id": 50346,
+      "median_margin": 0.13402747519004476,
+      "min_best_cos": 0.9999999999999476
+    },
+    "bf16": {
+      "decoded_correctly": 131072,
+      "min_margin": 0.015809319380004405,
+      "argmin_id": 83647,
+      "median_margin": 0.13402747515304414,
+      "min_best_cos": 0.999999979599555
+    }
+  },
+  "margin_pass_seconds": 269.0,
+  "proposed_tau": 0.3,
+  "proposal_satisfies_quality_floor": true,
+  "rule": {
+    "max_garbage_accept": 0.01,
+    "min_correct_accept": 0.99,
+    "quality_floor_cos": 0.7,
+    "quality_conditions": [
+      "noise_cos_0.95",
+      "noise_cos_0.9",
+      "noise_cos_0.8",
+      "noise_cos_0.7"
+    ]
+  },
+  "rival_wrong_accept_at_tau": {
+    "rival_mix_0.3": 0.0,
+    "rival_mix_0.45": 0.0,
+    "rival_mix_0.55": 1.0,
+    "rival_mix_0.7": 1.0
+  },
+  "external_vectors": null,
+  "tau_sweep_seconds": 131.0,
+  "environment": {
+    "python": "3.12.14",
+    "torch": "2.15.0",
+    "numpy": "2.5.4",
+    "device": "cpu"
+  }
+}

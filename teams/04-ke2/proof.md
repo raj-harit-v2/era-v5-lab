@@ -157,7 +157,7 @@ All 13 synthetic-data tests: `13 passed` (CPU, torch).
 
 **BrahmicTokenizer-131K** (`tokenizer.json` sha256 `01d968a7970b029c071b29f060abf6104b66168dedf2ff3b1a0290a545739fff`, 131,072 ids,
 356 special tokens, normalizer null, no byte fallback). Raw bytes come from the vocabulary strings by inverting the GPT-2
-byte-to-unicode map. The code is `src/proofs/proof_checks.py` (uses `forward.py`) and `tests/test_proof_checks.py`; run them as in section 5.
+byte-to-unicode map. The code is `src/proofs/proof_checks.py` (uses `forward.py`) and `tests/test_proof_checks.py`; run them as in section 7.
 Every number below is in `results/proof_checks.json`. The tokenizer files are not in this repository.
 
 | Table fed to the codec | P | distinct codes (of 131,072) | tokens that cannot be produced | pair causes |
@@ -179,9 +179,133 @@ Every number below is in `results/proof_checks.json`. The tokenizer files are no
   codec, but not the theorem. Whether to keep `<s>` text and the special token apart is a policy decision.
 - **Normalisation.** NFC or NFKC changes the bytes, so it changes the codes. The tokenizer has no normalizer, so this happens in the data pipeline. The proof starts from the bytes.
 - **Exact arithmetic.** The proof is exact. The checks cover fp32 and bf16 and show that the lit and unlit values stay apart.
-- **Decoding from a predicted vector** (noisy input, margins, tau) is week 2 and is not part of this proof.
+- **Decoding from a predicted vector** (noisy input, margins) is covered by Theorems 2 and 3 in sections 5 and 6. A rejection
+  threshold (tau) is not covered anywhere in this document.
 
-## 5. Run it
+## 5. Theorem 2: exact structural decode (week 2)
+
+Section 4 lists decoding from a predicted vector as not covered by the week-1 proof. This section and section 6 now
+cover it (noisy input and margins). The choice of tau is still not covered.
+
+**Decoder.** For a vector q of length D = 256P and a cut-off theta, let C = {cells i with q_i > theta}.
+
+- If C is empty, the decoder returns the empty string.
+- If C has exactly one cell in each position 0 .. |C|-1 and none elsewhere, the decoder returns the string s with
+  s_p = i div P for the cell i of position p (as in Lemma 1, step 4).
+- Otherwise it returns **invalid**.
+
+A returned string is looked up in the raw byte table. The result is the one token ID with that string, or **not a token**.
+Code: `decode_structural` and `decode_structural_batch` in `src/proofs/decode_theorems.py`.
+
+**Statement.** Let t be a token whose cut string s = tau_P(r) has 1 <= L <= P bytes, and let z = code(s).
+
+(a) **Clean codes.** With theta = 8, the decoder returns s from z, and the lookup returns t. This holds in exact
+    arithmetic, fp32 and bf16.
+(b) **Room for error.** If every entry of q is within delta of z, |q_i - z_i| < delta for all i, with
+    delta = min(h - theta, theta - u), the decoder still returns s and the lookup t. For theta = 8,
+    delta = 7.966 for every string of at most P bytes (P = 32 and 64). For the real tokens (L <= 32):
+    delta = 7.966 at P = 32 and 8.008 at P = 64 (`error_room`).
+(c) **The same answer everywhere.** The decoder uses only comparisons with theta and whole-number arithmetic
+    (div, mod, a table lookup). So the same input array gives the same output on any machine, in any batch size and
+    in any order. No floating-point sum is involved.
+
+**Proof.** (a) By Lemma 1, z has the value h on the L lit cells and u on the others. For 1 <= L <= P, the smallest h is
+15.966 (at L = P) and -0.063 < u < 0 (Lemma 1, step 3, evaluated with `code_values` for every L). So u < 0 < theta < h. bf16 rounding is monotone, so it keeps
+h above 15.87 and u below 0 (Lemma 1 remark). So C is exactly the lit cells, and Lemma 1 step 4 reads back s. The raw
+byte table gives 131,072 distinct strings (section 4), so exactly one ID has the string s.
+(b) If |q_i - z_i| < delta, a lit cell has q_i > h - delta >= theta, and any other cell has
+q_i < u + delta <= theta. So C is again exactly the lit cells.
+(c) Each output is a function of the boolean values q_i > theta, which IEEE 754 computes exactly. QED
+
+**What it does not say.** Outside the bound in (b), the decoder can return invalid, not a token, or **a different
+token**: noise that happens to form another token's pattern. The theorem promises nothing there. Part (c) is about
+the decoder only. Whether the vectors fed to it are identical across runs is the determinism task. The fixed cut-off
+of 8 and its room for error first appear in `proof_explained.md` (figure 6); this theorem states them formally and
+adds the ID lookup and (c).
+Structured noise is the realistic case and is outside (b): a mixture q = (1 - a) code(t) + a code(t') with a = 0.3
+already lifts a cell of t' above the cut-off when t' is shorter than 12 bytes (0.3 h(L') > 8 for L' <= 11), while
+cos(q, code(t)) is still about 0.988, so the decoder returns invalid or, for an extension rival, t'. The structural
+decoder is therefore not for predicted vectors: use nearest-code cosine (Theorem 3) and report the margin
+(`min_margin.md`).
+
+**Numerical checks** (`results/decode_checks.json`, `src/proofs/decode_checks.py`; tests `test_theorem2.py`):
+
+| Check | P = 32 | P = 64 |
+|---|---|---|
+| clean code of every token decodes to its own ID, fp32 and bf16 | 131,072 / 131,072 | 131,072 / 131,072 |
+| uniform noise of up to 0.999 delta, 2,000 tokens | all own ID | all own ID |
+| every cell pushed 0.999 delta towards theta, 2,000 tokens | all own ID | all own ID |
+| one lit cell of 32 spaces (ID 50346) moved just below theta | decodes as 31 spaces (ID 83647) | the same |
+| one at a time, as a batch, shuffled | identical | identical |
+
+The last-but-one row is an example for "what it does not say": at P = 32 a push of 7.976, just past delta, gives another
+token (at P = 64 the lit value is higher and the same cell has to move 14.61).
+
+## 6. Theorem 3: nearest-code cosine (week 2)
+
+**Statement.** For non-empty strings a and b with La and Lb bytes (at most P), let
+m = the number of positions p < min(La, Lb) with a_p = b_p, and D = 256P. Then
+
+    cos(code(a), code(b)) = ( m / sqrt(La * Lb)  -  sqrt(La * Lb) / D ) / sqrt( (1 - La/D) * (1 - Lb/D) )
+
+The value does not depend on eps (`closed_form_cosine`). Consequences:
+
+(a) cos(code(a), code(b)) = 1 if and only if a = b.
+(b) **Clean codes decode exactly.** Nearest-code decoding by cosine over the raw byte table returns t from code(t),
+    with no tie, for every token t.
+(c) **Worst case.** Over all pairs of different strings of at most 32 bytes (the longest real token), the largest
+    cosine is c* = 0.984191 at P = 32 (0.984221 at P = 64). It is reached when one string is the other minus its
+    last byte, at lengths 31 and 32 (`worst_case_cosine`). BrahmicTokenizer-131K has exactly one such pair:
+    31 spaces (ID 83647) and 32 spaces (ID 50346). So the smallest decode margin over the vocabulary is
+    1 - c* = 0.015809 at P = 32 (0.015779 at P = 64).
+(d) **Guarantee for a noisy vector.** For any non-zero q with cos(q, code(t)) > sqrt((1 + c*)/2) = 0.99604
+    (0.99605 at P = 64), nearest-code decoding returns t (`guarantee_cosine`).
+
+**Proof.** Write x_a for the vector before z-normalisation (La cells of 1/sqrt(La)) and mu_a = sqrt(La)/D for its mean.
+code(a) = (x_a - mu_a)/sigma_a with sigma_a > 0. A positive scale does not change a cosine, so eps cancels and
+cos(code(a), code(b)) = cos(x_a - mu_a, x_b - mu_b).
+
+- The lit cells of a and b coincide exactly where a_p = b_p, so <x_a, x_b> = m / sqrt(La * Lb).
+- The sum of x_a is sqrt(La), so <x_a - mu_a, x_b - mu_b> = <x_a, x_b> - sqrt(La * Lb)/D.
+- |x_a - mu_a|^2 = 1 - La/D. Dividing gives the formula.
+
+(a) Equality in Cauchy-Schwarz needs x_a - mu_a = c (x_b - mu_b) with c > 0. More than D - La - Lb > 0 cells are 0 in
+    both, and on those cells the equation gives mu_a = c mu_b. So x_a = c x_b, the lit cells are the same,
+    La = Lb, c = 1, and a = b by Lemma 1.
+(b) The raw byte table has 131,072 distinct strings (section 4), so by (a) every other token has cosine < 1 with
+    code(t).
+(c) The formula depends only on (La, Lb, m) with 1 <= La <= Lb <= 32 and 0 <= m <= La (m < La when La = Lb), and it
+    grows with m. These are finitely many cases; all were enumerated, and the maximum is at (31, 32, 31).
+(d) Let phi* = arccos c*, the smallest angle between two different codes. If the angle from q to code(t) is below
+    phi*/2, then for every other token t' the angle from q to code(t') is above phi* - phi*/2 = phi*/2, by the
+    triangle inequality for angles. So code(t) is strictly closest. cos(phi*/2) = sqrt((1 + c*)/2). QED
+
+**What it does not say.** (d) is a sufficient condition. A vector below 0.99604 can still decode correctly; the
+condition only rules out the worst case. Whether a trained model's output vectors come that close is not a question
+about the codec: static decodability is not contextual decodability. The 4,096-sample minimum margin in
+`results/decode_ref/summary.json` (0.0318) did not include the 31/32-space pair; (c) gives the full-vocabulary
+minimum. Both theorems are for the V1 codec (`kronecker-embeddings`), not for other codecs.
+
+**Numerical checks** (`results/decode_checks.json`; tests `test_theorem3.py`). 10,010 real token pairs of
+BrahmicTokenizer-131K, seed 0: 2,500 random, 2,500 prefix (one token is the other minus its last byte), 2,500 of the
+same length differing in one byte, 2,500 nearest neighbours (a sampled token and its closest other code over the whole
+vocabulary), and 10 hand-picked (space runs of 30, 31 and 32 bytes, the longest and shortest tokens).
+
+| Check | P = 32 | P = 64 |
+|---|---|---|
+| formula vs the codec's cosine, max abs error, float64 / float32 / bfloat16 | 1.4e-15 / 1.3e-15 / 4.6e-8 | 1.7e-15 / 1.6e-15 / 2.2e-8 |
+| largest cosine in any group, and the bound c* | 0.984191 (edge pairs) <= c* | 0.984221 <= c* |
+| largest cosine among the 2,500 nearest neighbours | 0.976949 | 0.976979 |
+| pairs of different tokens with cosine 1 | 0 | 0 |
+| cosine of 31 vs 32 spaces from the codec | 0.984191 = c* | 0.984221 = c* |
+| clean codes of 502 tokens decoded over the whole vocabulary | all own ID, min margin 0.015809 = 1 - c* | all own ID, min margin 0.015779 = 1 - c* |
+| q between 32 and 31 spaces, just above the guarantee (cosine to 32 spaces) | 0.996056: decodes 32 spaces | 0.996063: decodes 32 spaces |
+| the same, just below the guarantee | 0.996024: decodes 31 spaces | 0.996032: decodes 31 spaces |
+| 500 random tokens with noise at cosine 0.99614 (P = 64: 0.99615) to their code | all own ID | all own ID |
+
+The two "q between" rows show that (d) is tight: just past the guarantee, the worst pair swaps.
+
+## 7. Run it
 
 The commands use bash `export`; on Windows cmd use `set NAME=value`.
 
@@ -206,3 +330,15 @@ python teams/04-ke2/src/proofs/proof_checks.py $BRAHMIC_TOKENIZER_DIR       # re
 
 Section 4 gives the expected numbers. With the tokenizer all 16 proof tests pass (about 2.5 minutes on CPU), including one that
 compares `results/proof_checks.json` with a fresh run; without it, 13 pass and 3 are skipped.
+
+### Week-2 checks
+
+On the real tokenizer, with the same variables:
+
+```
+python teams/04-ke2/src/proofs/decode_checks.py      # rewrites results/decode_checks.json (about 4 minutes on a laptop CPU)
+pytest teams/04-ke2/tests/test_theorem2.py teams/04-ke2/tests/test_theorem3.py -q
+```
+
+Code: `src/proofs/decode_theorems.py`, `src/proofs/decode_checks.py`. Tests: `tests/test_theorem2.py`, `tests/test_theorem3.py`
+(14 tests, a few seconds; the 2 that read `results/decode_checks.json` are skipped without the tokenizer).

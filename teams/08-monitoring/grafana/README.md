@@ -9,6 +9,7 @@ A private dashboard that reads training metrics from ClickHouse. Panels:
 - GPU temperature and thermal throttle per step (panel 22, `metrics_raw`): `gpu_temp_c` with green / yellow / red at 75 C and 85 C, and `gpu_thermal_throttle` (0/1) on the right axis. Written by `metrics_logger/gpu_thermal.py`.
 - Gradient norm per step (panel 17, `metrics_raw`): `gradient_norm`, the norm before clipping, with a dashed red line at `run.grad_clip` = 1.0. Written by `teams/05-architecture/harness/train.py`.
 - Gradient clipping rate (panel 19, `metrics_raw`): share of steps with `gradient_clipping_applied` = 1 per `bucket`-step bucket (yellow from 0.5). Worked out by `metrics_logger/metrics_writer.py` from `gradient_norm` and `grad_clip`, or written by G5's `train_week2.py` as true / false.
+- Update-to-weight ratio (panel 24, `metrics_raw`): `update_weight_ratio`, global L2 `||lr * update|| / ||W||` (default every 10 steps). Worked out by `metrics_logger/metrics_writer.py` `compute_update_weight_ratio`.
 
 MFU and GPU panels stay empty until a run that logs those metrics is loaded.
 

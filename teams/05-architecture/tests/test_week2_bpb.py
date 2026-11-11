@@ -95,6 +95,23 @@ class BPBTests(unittest.TestCase):
             for x, y in zip(a.next(torch.device("cpu")), b.next(torch.device("cpu"))):
                 self.assertTrue(torch.equal(x, y))
 
+    @unittest.skipUnless(torch.cuda.is_available(), "CUDA checkpoint mapping required")
+    def test_sampler_resume_after_checkpoint_is_mapped_to_cuda(self):
+        reference = BatchStream(self.ds, 3, 1235)
+        reference.next(torch.device("cpu"))
+        checkpoint = Path(self.tmp.name) / "sampler.pt"
+        torch.save(reference.state_dict(), checkpoint)
+        state = torch.load(checkpoint, map_location="cuda", weights_only=False)
+        self.assertEqual(state["rng"].device.type, "cuda")
+
+        resumed = BatchStream(self.ds, 3, 0)
+        resumed.load_state_dict(state)
+        for _ in range(5):
+            expected = reference.next(torch.device("cpu"))
+            actual = resumed.next(torch.device("cpu"))
+            for left, right in zip(expected, actual):
+                self.assertTrue(torch.equal(left, right))
+
     def test_empty_input_rejected(self):
         self.path.write_text("", encoding="utf8")
         with self.assertRaises(ValueError):

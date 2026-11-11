@@ -22,6 +22,7 @@ Validates:
 from __future__ import annotations
 
 import hashlib
+import os
 import subprocess
 import sys
 import urllib.request
@@ -34,7 +35,7 @@ _TEAM = _HERE.parent
 _REPO = _TEAM.parent.parent
 
 sys.path.insert(0, str(_HERE))
-import render
+import render  # noqa: E402
 
 EXPECTED_V0_1_SHA256 = "a33c9907ec16876bc57b011714e8380879919fba1327d84bfb0d60407fe6e578"
 BASELINE_SHA256 = "01d968a7970b029c071b29f060abf6104b66168dedf2ff3b1a0290a545739fff"
@@ -55,7 +56,7 @@ EXPECTED_MARKERS = {
 
 def ensure_frozen_tokenizer() -> Path:
     """Ensure the frozen tokenizer v0.1 file is available and verified."""
-    cache_dir = Path("/home/opc/.cache/era-v5")
+    cache_dir = Path(os.environ.get("G10_TOKENIZER_CACHE") or Path.home() / ".cache" / "era-v5")
     cache_dir.mkdir(parents=True, exist_ok=True)
     v0_1_path = cache_dir / "v0_1_tokenizer.json"
 

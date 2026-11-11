@@ -37,6 +37,16 @@ validation run carry it. A value the trainer passes itself wins.
 
     writer.write(step, loss_ntp=..., **evaluate(model, val, ...))     # on the steps that run validation
 
+`update_weight_ratio` is the global L2 update-to-weight ratio ||lr * update||_2 / ||W||_2 (one scalar for the
+whole model). Call `compute_update_weight_ratio` around the optimizer step and pass the result when it is not
+None. By default it only returns a value every 10 steps (`every_n_steps=10`, matching `flush_every`); use
+`every_n_steps=1` in tests. A zero or non-finite weight norm yields None so the row gets no ratio instead of a
+wrong one.
+
+    ratio = compute_update_weight_ratio(zip(weights, deltas), step=step)
+    if ratio is not None:
+        writer.write(step, loss_ntp=..., update_weight_ratio=ratio)
+
     with MetricsWriter("metrics.jsonl") as writer:
         for step in range(n):
             ...
@@ -216,6 +226,130 @@ def validation_loss(nll_nats, scored_tokens):
     if not math.isfinite(total) or total < 0 or not math.isfinite(tokens) or tokens < 1 or tokens != int(tokens):
         return None
     return total / tokens
+
+
+def _sq_l2_norm(value):
+    """Squared L2 (Frobenius) norm of a tensor, array, or nested list; NaN if any value is not finite."""
+    if hasattr(value, "detach"):
+        value = value.detach()
+    if hasattr(value, "cpu"):
+        value = value.cpu()
+    if hasattr(value, "float") and not isinstance(value, (list, tuple)):
+        try:
+            value = value.float()
+        except (TypeError, ValueError):
+            pass
+    if hasattr(value, "norm") and not isinstance(value, (list, tuple)):
+        try:
+            n = float(value.norm().item() if hasattr(value.norm(), "item") else value.norm())
+        except (TypeError, ValueError):
+            n = float("nan")
+        return n * n if math.isfinite(n) else float("nan")
+    if hasattr(value, "tolist"):
+        value = value.tolist()
+    if isinstance(value, (list, tuple)):
+        total = 0.0
+        for part in value:
+            part_sq = _sq_l2_norm(part)
+            if not math.isfinite(part_sq):
+                return float("nan")
+            total += part_sq
+        return total
+    try:
+        x = float(value)
+    except (TypeError, ValueError):
+        return float("nan")
+    return x * x if math.isfinite(x) else float("nan")
+
+
+def _iter_weight_update_pairs(weights, updates=None, weights_after=None):
+    """Yield (weight, update) pairs from pairs, parallel sequences, or pre/post weights."""
+    if weights_after is not None:
+        if updates is not None:
+            raise ValueError("pass updates or weights_after, not both")
+        before = list(weights)
+        after = list(weights_after)
+        if len(before) != len(after):
+            raise ValueError("weights and weights_after must have the same length")
+        for w, w_after in zip(before, after):
+            if hasattr(w_after, "sub"):
+                yield w, w_after - w
+            elif hasattr(w_after, "__sub__") and not isinstance(w_after, (list, tuple)):
+                yield w, w_after - w
+            else:
+                # Nested Python lists: element-wise after - before via matching structure is not supported;
+                # require numeric tensors/arrays for the pre/post form.
+                raise TypeError("weights_after form needs tensor/array weights")
+        return
+    if updates is not None:
+        before = list(weights)
+        deltas = list(updates)
+        if len(before) != len(deltas):
+            raise ValueError("weights and updates must have the same length")
+        yield from zip(before, deltas)
+        return
+    # Iterable of (weight, update) pairs, or an nn.Module (parameters only — caller must pass updates).
+    if hasattr(weights, "parameters") and not isinstance(weights, (list, tuple)):
+        raise TypeError("pass (weight, update) pairs or weights with updates=/weights_after=; a bare module has no updates")
+    for item in weights:
+        if not isinstance(item, (list, tuple)) or len(item) != 2:
+            raise TypeError("expected (weight, update) pairs")
+        yield item[0], item[1]
+
+
+def compute_update_weight_ratio(
+    weights,
+    updates=None,
+    *,
+    weights_after=None,
+    lr=1.0,
+    step=None,
+    every_n_steps=FLUSH_EVERY,
+):
+    """Global L2 update-to-weight ratio ||lr * update||_2 / ||W||_2; None when not logged or cannot be told.
+
+    One scalar for the whole model: sqrt(sum_p ||lr * u_p||_2^2) / sqrt(sum_p ||w_p||_2^2). That matches
+    ||ΔW||_2 / ||W||_2 when each update is the parameter change (or when update is the optimizer direction and
+    `lr` is the effective step size).
+
+    `weights` may be an iterable of (weight, update) pairs, or a sequence of weights used with `updates=` or
+    `weights_after=` (update = after - before). Returns None when `step` is set and `step % every_n_steps != 0`
+    (default every_n_steps=10), when there are no parameters, when `lr` is not a finite number, or when the
+    weight norm is zero / not finite. Non-finite updates make the ratio NaN so a broken step is visible.
+    """
+    if every_n_steps < 1:
+        raise ValueError("every_n_steps must be >= 1")
+    if step is not None and step % every_n_steps != 0:
+        return None
+    if isinstance(lr, bool):
+        return None
+    try:
+        scale = float(lr)
+    except (TypeError, ValueError):
+        return None
+    if not math.isfinite(scale):
+        return None
+
+    weight_sq = 0.0
+    update_sq = 0.0
+    count = 0
+    try:
+        pairs = list(_iter_weight_update_pairs(weights, updates=updates, weights_after=weights_after))
+    except (TypeError, ValueError):
+        return None
+    for weight, update in pairs:
+        w_sq = _sq_l2_norm(weight)
+        u_sq = _sq_l2_norm(update)
+        if not math.isfinite(w_sq):
+            return None
+        if not math.isfinite(u_sq):
+            return float("nan")
+        weight_sq += w_sq
+        update_sq += u_sq
+        count += 1
+    if count == 0 or weight_sq <= 0:
+        return None
+    return math.sqrt(update_sq * (scale * scale)) / math.sqrt(weight_sq)
 
 
 class MetricsWriter:
