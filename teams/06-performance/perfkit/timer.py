@@ -291,7 +291,17 @@ class EventRecorder:
     """Layer mode recorder (perfkit/regions.py protocol), one per timed step; spans, points = rec.collect() later.
     Safe from the autograd thread (locked appends, events on the current stream). collect() waits for this step only.
     check_idle: before each event, count the times the GPU had already finished the previous one (self.idle):
-    there the GPU ran out of queued work, so the next part's time includes Python's time to send it."""
+    there the GPU ran out of queued work, so the next part's time includes Python's time to send it.
+
+    torch.compile: a region inside the compiled model makes its events in the graph, and Dynamo hands them back as plain
+    torch.Event (torch._dynamo.utils.build_event -> torch._C.Event), not torch.cuda.Event. torch.cuda.Event.elapsed_time
+    takes only a torch.cuda.Event, and torch.Event.elapsed_time cannot read a torch.cuda.Event's timestamp, so the two
+    kinds never time against each other. collect() then times each pair within its kind; to place both kinds on one
+    zero, every recorder made after a step that had plain events also records an origin of the other kind right after
+    its own (self._bridge, outside the timed step and outside compiled code). Times that still cannot be placed (the
+    first such step has no bridge) are left out and counted in self.unplaced. With only CUDA events, nothing changes."""
+
+    _plain_events_seen = False     # class-wide: set by the first collect() that meets a plain torch.Event
 
     def __init__(self, device, max_level: int = 2, pool: EventPool | None = None, check_idle: bool = False):
         self.device = _dev(device)
@@ -304,7 +314,18 @@ class EventRecorder:
         self.check_idle = check_idle and self.kind == "event"
         self.idle = 0
         self._origin = self._now()
+        self._bridge = self._record_bridge() if self.kind == "event" and EventRecorder._plain_events_seen else None
+        self.unplaced = 0
         self._result = None
+
+    def _record_bridge(self):
+        """An origin of the other event kind, recorded right after self._origin on the same (current) stream."""
+        if isinstance(self._origin, torch.cuda.Event):
+            ev = torch.Event(self.device, enable_timing=True)
+        else:
+            ev = torch.cuda.Event(enable_timing=True)
+        ev.record()
+        return ev
 
     def _now(self):
         if self.kind == "event":
@@ -346,11 +367,14 @@ class EventRecorder:
                 return a.elapsed_time(b)
 
             o = self._origin
-            spans = [(n, lv, ms(s, e)) for n, lv, s, e in self._spans]
-            starts = [ms(o, s) for _, _, s, _ in self._spans]
-            points = [(n, lv, Clock(ms(o, m))) for n, lv, m in self._points]
             used = [o] + [m for _, _, m in self._points] + [e for _, _, s, e in self._spans] + \
                    [s for _, _, s, _ in self._spans]
+            if all(isinstance(ev, torch.cuda.Event) for ev in used):     # every event a CUDA event: as before
+                spans = [(n, lv, ms(s, e)) for n, lv, s, e in self._spans]
+                starts = [ms(o, s) for _, _, s, _ in self._spans]
+                points = [(n, lv, Clock(ms(o, m))) for n, lv, m in self._points]
+            else:                                                         # plain torch.Event from compiled code
+                spans, starts, points = self._collect_mixed(ms)
             self.pool.put(used)
         else:
             o = self._origin
@@ -360,6 +384,47 @@ class EventRecorder:
         self._spans, self._points, self._last = [], [], None
         self._result = Collected(spans, points, starts)
         return self._result
+
+    def _collect_mixed(self, ms):
+        """collect() for a step with plain torch.Event objects (see the class doc). A pair of one kind is timed directly;
+        anything else goes through the origin of each kind (self._origin and self._bridge, recorded back to back).
+        A span whose time cannot be found is left out; a start that cannot be placed is None (step_parts drops it);
+        a point that cannot be placed is left out. Each one left out adds 1 to self.unplaced."""
+        def cuda(ev):
+            return isinstance(ev, torch.cuda.Event)
+
+        zero = {cuda(self._origin): self._origin}
+        if self._bridge is not None:
+            zero[cuda(self._bridge)] = self._bridge
+
+        def at(ev):                                    # ms since the origin, None without an origin of ev's kind
+            z = zero.get(cuda(ev))
+            return None if z is None else ms(z, ev)
+
+        def between(s, e):
+            if cuda(s) == cuda(e):
+                return ms(s, e)
+            a, b = at(s), at(e)
+            return None if a is None or b is None else b - a
+
+        spans, starts = [], []
+        for n, lv, s, e in self._spans:
+            t = between(s, e)
+            if t is None:
+                self.unplaced += 1
+                continue
+            spans.append((n, lv, t))
+            starts.append(at(s))
+        points = []
+        for n, lv, m in self._points:
+            t = at(m)
+            if t is None:
+                self.unplaced += 1
+                continue
+            points.append((n, lv, Clock(t)))
+        self.unplaced += sum(st is None for st in starts)
+        EventRecorder._plain_events_seen = True
+        return spans, starts, points
 
 
 class _ProfRange:
@@ -441,7 +506,8 @@ def step_parts(collected: Collected, max_level: int) -> list:
     for name, level, _ in spans:
         if name.startswith("fwd:"):
             fwd_levels[name] = min(level, fwd_levels.get(name, level))
-    parts = [(n, lv, ms, st) for (n, lv, ms), st in zip(spans, collected.starts)]
+    parts = [(n, lv, ms, st) if st is not None else (n, lv, ms)      # None: a compiled region not placed in time
+             for (n, lv, ms), st in zip(spans, collected.starts)]
     return parts + backward_segments(points, fwd_levels, max_level, with_start=True)
 
 

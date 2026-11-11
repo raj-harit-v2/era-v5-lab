@@ -352,3 +352,149 @@ def test_cuda_counter_remains_cumulative_across_reset(monkeypatch):
     timer.start()
     timer.stop()
     assert timer.events_created_during_steps == 2
+
+
+# ------------------------------------------------------------------------------ 5. events made inside torch.compile'd code
+# Under torch.compile, Dynamo builds the events of a region inside the compiled model in the graph and hands back plain
+# torch.Event objects (torch._dynamo.utils.build_event -> torch._C.Event), not torch.cuda.Event. torch.cuda.Event's
+# elapsed_time takes only another torch.cuda.Event (torch/csrc/cuda/Event.cpp, THCPEvent_elapsed_time), and a plain
+# torch.Event cannot time against a torch.cuda.Event either: the CUDA timestamp is in THCPEvent::cuda_event, not in the
+# THPEvent::event the plain method reads. M2-compile crashed in collect() on exactly this. The fakes keep those rules.
+
+class _FakeClock:
+    def __init__(self):
+        self.t = 0.0
+
+    def tick(self, ms):
+        self.t += ms
+
+
+def _fake_events(clock):
+    class FakePlainEvent:                      # torch.Event as Dynamo rebuilds it
+        made = 0
+
+        def __init__(self, device=None, *, enable_timing=False):
+            assert enable_timing
+            self.t = None
+            type(self).made += 1
+
+        def record(self, stream=None):
+            self.t = clock.t
+
+        def query(self):
+            return self.t is not None
+
+        def synchronize(self):
+            pass
+
+        def elapsed_time(self, other):
+            if isinstance(other, FakeCudaEvent) or not isinstance(other, FakePlainEvent):
+                raise RuntimeError("Both events must be recorded before calculating elapsed time.")
+            return other.t - self.t
+
+    class FakeCudaEvent(FakePlainEvent):       # torch.cuda.Event, a torch.Event subclass with its own timestamp
+        made = 0
+
+        def __init__(self, enable_timing=False):
+            super().__init__(enable_timing=enable_timing)
+
+        def elapsed_time(self, other):
+            if not isinstance(other, FakeCudaEvent):
+                raise RuntimeError("expected other to be a torch.cuda.Event object")
+            return other.t - self.t
+
+    return FakePlainEvent, FakeCudaEvent
+
+
+def _compiled_region(rec, clock, name, level, ms, plain):
+    """What a region inside compiled code leaves on the recorder: two plain events made in the graph, then the span
+    append that Dynamo replays after the graph ran."""
+    s = plain(enable_timing=True)
+    s.record()
+    clock.tick(ms)
+    e = plain(enable_timing=True)
+    e.record()
+    rec._spans.append((name, level, s, e))
+    rec._last = e
+
+
+@pytest.fixture
+def fake_cuda(monkeypatch):
+    clock = _FakeClock()
+    plain, cuda = _fake_events(clock)
+    monkeypatch.setattr(torch.cuda, "Event", cuda)
+    monkeypatch.setattr(torch, "Event", plain)
+    monkeypatch.setattr(EventRecorder, "_plain_events_seen", False, raising=False)  # class-wide; restored after
+    return clock, plain, cuda
+
+
+def test_all_cuda_events_keep_the_event_path_and_record_no_extra_event(fake_cuda):
+    clock, plain, cuda = fake_cuda
+    rec = EventRecorder(torch.device("cuda"), max_level=2)
+    clock.tick(1)
+    with rec.region("fwd", 1):
+        clock.tick(2)
+        with rec.region("fwd:block0", 2):
+            clock.tick(4)
+        clock.tick(1)
+    rec.point("__bwd_start__", 1)
+    used = rec.n_events()
+    spans, points = col = rec.collect()
+    assert spans == [("fwd:block0", 2, 4.0), ("fwd", 1, 7.0)]
+    assert col.starts == [3.0, 1.0]
+    assert [(n, lv, c.ms) for n, lv, c in points] == [("__bwd_start__", 1, 8.0)]
+    assert cuda.made == used and plain.made == 0           # no bridge event, nothing beyond n_events()
+    assert len(rec.pool) == used                           # every event back in the pool
+    assert EventRecorder._plain_events_seen is False and rec._bridge is None and rec.unplaced == 0
+
+
+def test_plain_events_from_compiled_code_do_not_crash_collect(fake_cuda):
+    """M2-compile: the first compiled step. Before the fix collect() raised 'expected other to be a torch.cuda.Event
+    object'. Same-kind times stay exact; a compiled region's start cannot be placed on the CUDA origin yet (None)."""
+    clock, plain, cuda = fake_cuda
+    rec = EventRecorder(torch.device("cuda"), max_level=2)          # origin: torch.cuda.Event at t=0
+    clock.tick(1)
+    with rec.region("fwd", 1):                                      # eager region around the compiled model
+        clock.tick(2)
+        _compiled_region(rec, clock, "fwd:block0", 2, 4.0, plain)  # t=3 .. 7, plain events
+        clock.tick(1)
+    col = rec.collect()
+    assert col.spans == [("fwd:block0", 2, 4.0), ("fwd", 1, 7.0)]
+    assert col.starts == [None, 1.0]
+    assert rec.unplaced == 1
+    assert EventRecorder._plain_events_seen is True
+    from perfkit.timer import aggregate, step_parts
+    regs = aggregate([step_parts(col, 2)])                          # downstream still works
+    assert regs["fwd:block0"]["median"] == 4.0 and regs["fwd"]["median"] == 7.0
+
+
+@pytest.mark.parametrize("origin_kind", ["cuda", "plain"])
+def test_after_a_compiled_step_every_time_is_placed_on_one_zero(fake_cuda, origin_kind):
+    """Once plain events were seen, a recorder also records an origin of the other kind next to its own, so plain
+    and CUDA events share a zero: starts, points and mixed spans become exact."""
+    clock, plain, cuda = fake_cuda
+    EventRecorder._plain_events_seen = True
+    pool = EventPool()
+    if origin_kind == "plain":                                       # the pool holds plain events from earlier steps
+        pool.put([plain(enable_timing=True)])
+    clock.tick(10)
+    rec = EventRecorder(torch.device("cuda"), max_level=2, pool=pool)  # origin + bridge at t=10
+    assert isinstance(rec._origin, cuda) is (origin_kind == "cuda")
+    clock.tick(1)
+    with rec.region("fwd", 1):                                      # t=11 .. 19, CUDA events
+        clock.tick(2)
+        _compiled_region(rec, clock, "fwd:block0", 2, 4.0, plain)  # t=13 .. 17, plain events
+        clock.tick(1)
+        rec.point("block0", 1)                                      # t=18, CUDA event
+        clock.tick(1)
+    s = plain(enable_timing=True)                                   # a span that starts in compiled code, ends eager
+    s.record()
+    clock.tick(2)
+    e = cuda(enable_timing=True)
+    e.record()
+    rec._spans.append(("odd", 2, s, e))
+    col = rec.collect()
+    assert col.spans == [("fwd:block0", 2, 4.0), ("fwd", 1, 8.0), ("odd", 2, 2.0)]
+    assert col.starts == [3.0, 1.0, 9.0]
+    assert [(n, c.ms) for n, _, c in col.points] == [("block0", 8.0)]
+    assert rec.unplaced == 0
