@@ -1,65 +1,31 @@
-"""NanoGPT, driven only by ModelConfig.  [implemented: dense core; MoE / KE v1 / reversible plug in]
+"""The lab model: NanoGPT built only from ModelConfig; the choices for each part are below.
 
-Parts and where they come from:
-  * GQAttention (grouped-query attention): hd = d / n_head; c_attn = Linear(d, (n_head + 2 * n_kv_head) * hd) gives
-    q, k, v; F.scaled_dot_product_attention(is_causal=True, enable_gqa=True) shares each k/v head with
-    n_head / n_kv_head query heads without copying (torch >= 2.5; older torch: repeat_interleave copies).
-    c_proj = Linear(d, d). Both Linears have bias.
-    Attributes n_head, n_kv_head. n_kv_head == n_head is plain multi-head. The attention test reads these names.
-    cfg.attn_impl "eager" (G5 config_v0: fast attention backward does not repeat, so two seeds would not match):
-    repeat_interleave k, v to n_head heads, then softmax(q k^T / sqrt(hd) + causal mask) v by explicit matmuls.
-    Same region names as SDPA (".sdpa" times the attention core either way).
-    cfg.position "rope": q and k are rotated before attention (RoFormer, half-split layout as in GPT-NeoX / LLaMA):
-    head dim hd, pair i = (x[i], x[i + hd/2]) for i < hd/2, angle t * rope_theta^(-2i / hd) at position t;
-        rope(x)[i] = x[i] cos - x[i + hd/2] sin,   rope(x)[i + hd/2] = x[i + hd/2] cos + x[i] sin.
-    Every dim of the head is rotated (no partial RoPE). cos / sin are non-persistent fp32 buffers [block_size, 1, hd]
-    (not in the state_dict); under autocast the rotation runs in fp32 and is written in q's dtype. Inside ".qkv".
-    q and k are rotated in one call, x * cos + roll(x) * sin, 3 kernels (apply_rope). The model is launch-bound at
-    d = 256, so RoPE's cost is mostly host time per kernel: the first per-element form (9 kernels per call, q and k
-    apart) added 456 kernels per step and 19% to the step on an A100.
-  * MLP, h = mlp_ratio*d. cfg.activation "gelu": c_fc = Linear(d, h), GELU, c_proj = Linear(h, d), with biases.
-    "swiglu": c_proj(SiLU(c_gate(x)) * c_fc(x)), c_gate and c_fc = Linear(d, h), c_proj = Linear(h, d), no biases
-    (Shazeer 2020; LLaMA). Three matrices instead of two: at the same h it has 1.5x the FFN parameters and FLOPs.
-    The routed and shared experts of models.moe use the same two forms (ExpertMLP).
-  * Block i: pre-LN. ffn = MLP, or models.moe.SparseMoE when cfg.ffn == "moe".
-        f(p) = a + FFN(LN2(p + a)),  a = Attn(LN1(p))
-    Pre-LN only: Post-LN, LN(x + f(x)), normalises the residual stream, and a LayerNorm cannot be
-    inverted, so the midpoint stack could not rebuild its inputs. The plain stack uses the same f:
-    forward(x) = x + f(x).
-    For the reversible stack the block also has update() and invert() (models/reversible.py):
-        update(prev, curr) = prev + 2h * f(curr)          invert(prev_out, curr_out) = curr_out - 2h * f(prev_out)
-  * GPT: token embedding (nn.Embedding tied with the head, or models.ke1.KroneckerEmbedding with an
-    untied head: the codec dim is not d_model), learned position table (cfg.position "learned"; none with
-    "rope"), blocks (plain loop or
-    models.reversible.ReversibleStack), ln_f, head, fp32 cross-entropy.
-  * Init (NanoGPT): weights normal(0, 0.02), biases zero, residual projections (c_proj)
-    normal(0, 0.02 / sqrt(2 * n_layer)); MoE experts get the same (proj_std). KE initialises its projection.
-  * MTP (cfg.mtp, G5 config_v0): a second untied head, mtp_head = Linear(d, V, bias=False), reads the same ln_f
-    output and predicts token t+2 (targets shifted by one more; the last position has none). The returned loss is
-    ntp + mtp, the sum G5 backpropagates; model.loss_parts holds both, detached, for logging (G5 logs ntp as loss).
-  * Loss: cfg.ce_impl "torch" materialises logits [B*T, V]; "chunked" checkpoints position chunks;
-    "fused" tiles tokens by ce_chunks and saves head gradients computed while logits are resident;
-    "fused_cached" / "fused_liger" use fixed token tile sizes; "fused_cce" streams vocabulary tiles
-    and recomputes logits during backward. "triton_ce" uses the in-repo Triton CE reduction kernel.
-    Memory-bounded paths return logits=None when targets are given. Loss averages non-ignored targets.
+  * GQAttention: c_attn = Linear(d, (n_head + 2 * n_kv_head) * hd) gives q, k, v; c_proj = Linear(d, d); both with
+    bias. attn_impl "sdpa" uses F.scaled_dot_product_attention(is_causal=True, enable_gqa=True); "eager" repeats
+    k, v to n_head heads and computes softmax(q k^T / sqrt(hd) + causal mask) v explicitly. The attention test
+    reads n_head and n_kv_head.
+  * position "rope": q and k rotated over the full head dim, half-split layout (GPT-NeoX / LLaMA), pair
+    i = (x[i], x[i + hd/2]), angle t * rope_theta^(-2i / hd); fp32 non-persistent cos / sin buffers.
+    "learned": a position table.
+  * MLP, h = mlp_ratio * d. "gelu": c_proj(GELU(c_fc(x))), with biases. "swiglu": c_proj(SiLU(c_gate(x)) * c_fc(x)),
+    no biases. models.moe experts use the same two forms.
+  * Block (pre-LN): f(p) = a + FFN(LN2(p + a)), a = Attn(LN1(p)); FFN = MLP or models.moe.SparseMoE.
+    Plain stack: x + f(x). Reversible (models/reversible.py): update(prev, curr) = prev + 2h * f(curr),
+    invert(prev_out, curr_out) = curr_out - 2h * f(prev_out). Post-LN would not be invertible.
+  * GPT: embedding (table tied with the head, or KE1 / KE2 with an untied head), blocks, ln_f, head, fp32 CE.
+    Init (NanoGPT): normal(0, 0.02), biases zero, residual projections normal(0, 0.02 / sqrt(2 * n_layer)).
+  * mtp: a second untied head on the same ln_f output predicts token t+2; loss = ntp + mtp, model.loss_parts
+    holds both, detached.
+  * ce_impl: "torch" materialises the logits; the others bound memory (docs/LINEAR_CE.md; "triton_ce" is the
+    in-repo Triton kernel, kernels/linear_ce_fused.py) and return logits=None
+    when targets are given. Every path averages over non-ignored targets.
 
-Timing markers (roofline and report read these names; keep them)
-  region("embed", 2)                       around tok (+ pos) embedding (KE adds "embed.ke" at level 3 inside)
-  region("stack", 1)                       around all blocks
-  region(f"block{i}", 2)                   around each block (plain stack; the reversible stack sets its own)
-  region(f"block{i}.ln1" / ".ln2", 3)      each LayerNorm
-  region(f"block{i}.attn.qkv" / ".attn.sdpa" / ".attn.proj", 3)
-  region(f"block{i}.mlp", 3)               dense FFN (MoE regions are set inside models/moe.py)
-  region("head+loss", 2)                   ln_f + head + cross-entropy (+ MTP head and its loss)
-  region("head+loss.ln_f", 3)              final LayerNorm forward
-  region("head+loss.mtp", 3)               MTP head + its cross-entropy (cfg.mtp only)
-  mark(x, "stack", 1)                      on the embedding output (backward of the stack ends here)
-  mark(x, f"block{i}", 2)                  on each block input (plain stack only)
-  mark(x, "head+loss", 1)                  on the stack output
-  How bench turns these points into bwd:<name> segments (bwd:stack = the whole stack): perfkit/bench.py step 6.
-
-The optional in-repo Triton CE path is in kernels/linear_ce_fused.py; aux / z loss for non-reversible MoE
-remains a follow-up.
+Timing markers (roofline and report read these names; keep them):
+  region("embed", 2), region("stack", 1), region(f"block{i}", 2), region(f"block{i}.ln1" / ".ln2", 3),
+  region(f"block{i}.attn.qkv" / ".attn.sdpa" / ".attn.proj", 3), region(f"block{i}.mlp", 3),
+  region("head+loss", 2), region("head+loss.ln_f", 3), region("head+loss.mtp", 3)
+  mark(x, "stack", 1) on the embedding output, mark(x, f"block{i}", 2) on each plain block input,
+  mark(x, "head+loss", 1) on the stack output
 """
 from __future__ import annotations
 
@@ -78,9 +44,11 @@ from kernels.linear_ce_fused import linear_cross_entropy_fused_triton
 from perfkit.regions import mark, region
 
 
+# torch >= 2.5: SDPA shares each k / v head with its query heads itself (enable_gqa); older torch needs copies
 _SDPA_GQA = tuple(int(v) for v in torch.__version__.split(".")[:2]) >= (2, 5)
 
 IGNORE_INDEX = -100              # a target with this value is left out of the loss and of its divisor (loss masks)
+# never build the full [B*T, V] logits, so forward returns logits=None with targets
 MEMORY_BOUNDED_CE_IMPLS = ("chunked", "fused", "fused_cached", "fused_liger", "fused_cce",
                            "triton_ce")
 
@@ -181,11 +149,12 @@ class GQAttention(nn.Module):
                 q, k, v = q.view(B, T, self.n_head, hd), k.view(B, T, kv, hd), v.view(B, T, kv, hd)
             q, k, v = q.transpose(1, 2), k.transpose(1, 2), v.transpose(1, 2)
             gqa = kv != self.n_head
-            if gqa and (self.eager or not _SDPA_GQA):
+            if gqa and (self.eager or not _SDPA_GQA):    # copy each k / v head to its query heads
                 k = k.repeat_interleave(self.n_head // kv, dim=1)
                 v = v.repeat_interleave(self.n_head // kv, dim=1)
         with region(f"{self.name}.sdpa", 3):
             if self.eager:
+                # True above the diagonal: the future positions a query must not see
                 future = torch.triu(torch.ones(T, T, dtype=torch.bool, device=x.device), diagonal=1)
                 att = (q @ k.transpose(-2, -1)) / math.sqrt(hd)
                 y = F.softmax(att.masked_fill(future, float("-inf")), dim=-1) @ v
@@ -202,7 +171,7 @@ class MLP(nn.Module):
         super().__init__()
         d, h = cfg.n_embd, cfg.mlp_ratio * cfg.n_embd
         self.name, self.swiglu = name, cfg.activation == "swiglu"
-        bias = not self.swiglu                       # SwiGLU: no biases (G6 Task 0, until G5 says otherwise)
+        bias = not self.swiglu                       # SwiGLU: no biases (until G5 says otherwise)
         self.c_fc = nn.Linear(d, h, bias=bias)       # gelu: the input projection; swiglu: the "up" (linear) branch
         self.c_proj = nn.Linear(h, d, bias=bias)
         _init_linear(self.c_fc)
@@ -231,6 +200,7 @@ class Block(nn.Module):
             hidden = cfg.moe.get("ffn_hidden")
             if hidden is None:
                 hidden = cfg.mlp_ratio * d
+            # ffn_hidden becomes expert_hidden above; the other cfg.moe keys are SparseMoE arguments as they are
             moe_kwargs = {
                 key: value for key, value in cfg.moe.items()
                 if key != "ffn_hidden"
@@ -279,7 +249,7 @@ class GPT(nn.Module):
             from models.ke2 import KE2Embedding
             self.tok = KE2Embedding(cfg.vocab_size, d, cfg.ke_max_pos, token_bytes)   # G4's raw table by default
         else:
-            self.tok = nn.Embedding(cfg.vocab_size, d)
+            self.tok = nn.Embedding(cfg.padded_vocab_size, d)   # padded rows are never indexed; tied head shares them
             nn.init.normal_(self.tok.weight, mean=0.0, std=0.02)
         self.pos = None
         if cfg.position == "learned":
@@ -287,15 +257,19 @@ class GPT(nn.Module):
             nn.init.normal_(self.pos.weight, mean=0.0, std=0.02)
         self.blocks = nn.ModuleList(Block(cfg, i) for i in range(cfg.n_layer))
         self.ln_f = _layer_norm(cfg)
-        self.head = nn.Linear(d, cfg.vocab_size, bias=False)
+        self.head = nn.Linear(d, cfg.padded_vocab_size, bias=False)
         # Tie when embedding=table and tie_embeddings is not False (None keeps the legacy table-tied default).
         if cfg.embedding == "table" and cfg.tie_embeddings is not False:
             self.head.weight = self.tok.weight
         else:
             nn.init.normal_(self.head.weight, mean=0.0, std=0.02)
         if cfg.mtp:
-            self.mtp_head = nn.Linear(d, cfg.vocab_size, bias=False)
+            self.mtp_head = nn.Linear(d, cfg.padded_vocab_size, bias=False)
             nn.init.normal_(self.mtp_head.weight, mean=0.0, std=0.02)
+        if cfg.vocab_pad_mode == "mask" and cfg.padded_vocab_size != cfg.vocab_size:
+            pad_bias = torch.zeros(cfg.padded_vocab_size)         # 0 on real ids, -inf on padding: exp(-inf) = 0
+            pad_bias[cfg.vocab_size:] = float("-inf")
+            self.register_buffer("pad_bias", pad_bias, persistent=False)   # not a parameter, not in the state_dict
         self.loss_parts = None
 
     def forward(self, idx: torch.Tensor, targets: torch.Tensor | None = None):
@@ -325,13 +299,34 @@ class GPT(nn.Module):
             if targets is not None and self.cfg.ce_impl in MEMORY_BOUNDED_CE_IMPLS:
                 loss = self._head_ce(self.head, x.reshape(B * T, -1), targets.reshape(B * T))
                 return None, self._add_mtp(loss, x, targets)
-            logits = self.head(x)
+            out = self._head_out(self.head, x)
+            logits = self._real_columns(out)                      # returned logits: [B, T, vocab_size] always
             loss = None
             if targets is not None:
-                loss = F.cross_entropy(logits.view(B * T, -1).float(), targets.reshape(B * T),
+                loss = F.cross_entropy(self._ce_input(out).reshape(B * T, -1), targets.reshape(B * T),
                                        ignore_index=IGNORE_INDEX)
                 loss = self._add_mtp(loss, x, targets)
         return logits, loss
+
+    def _head_out(self, head, x):
+        """head(x) at the padded width. vocab_pad_mode='mask': the padded columns get a -inf bias that the matmul adds
+        itself (no extra pass over the logits), so they drop out of the softmax and get zero gradient."""
+        if self.cfg.vocab_pad_mode == "mask" and head.weight.shape[0] != self.cfg.vocab_size:
+            return F.linear(x, head.weight, self.pad_bias)
+        return head(x)
+
+    def _real_columns(self, out):
+        """[..., vocab_size]: the padding columns cut off (a view; nothing is copied until it is used)."""
+        return out if out.shape[-1] == self.cfg.vocab_size else out[..., :self.cfg.vocab_size]
+
+    def _ce_input(self, out):
+        """fp32 logits the loss reads. slice: only the real columns (one strided copy). mask: the padded width, whose
+        extra columns are -inf (one contiguous copy, as for an unpadded head)."""
+        return (out if self.cfg.vocab_pad_mode == "mask" else self._real_columns(out)).float()
+
+    def _logits(self, head, x):
+        """head(x) with the padding columns cut off: [..., vocab_size], so no padded id is ever returned."""
+        return self._real_columns(self._head_out(head, x))
 
     def embed(self, idx: torch.Tensor) -> torch.Tensor:
         """Stack input: token embedding, plus the position table when cfg.position == 'learned'."""
@@ -345,30 +340,34 @@ class GPT(nn.Module):
         if not self.cfg.mtp:
             return ntp
         with region("head+loss.mtp", 3):
+            # targets[t] is token t+1, so token t+2 is targets[t+1]: drop the last position, shift the targets
             xm, ym = x[:, :-1].reshape(-1, x.shape[-1]), targets[:, 1:].reshape(-1)
             if self.cfg.ce_impl in MEMORY_BOUNDED_CE_IMPLS:
                 mtp = self._head_ce(self.mtp_head, xm, ym)
             else:
-                mtp = F.cross_entropy(self.mtp_head(xm).float(), ym, ignore_index=IGNORE_INDEX)
+                mtp = F.cross_entropy(self._ce_input(self._head_out(self.mtp_head, xm)), ym, ignore_index=IGNORE_INDEX)
         self.loss_parts = {"ntp": ntp.detach(), "mtp": mtp.detach()}
         return ntp + mtp
 
     def _chunked_ce(self, head, x, y):
-        """Compute mean CE of head(x) in checkpointed position chunks to bound saved logits memory.
-
-        Same value as the plain path: the mean is over the targets that are not IGNORE_INDEX, so masked
-        positions (SFT loss masks) do not count in the divisor. If every target is ignored the loss is 0
-        (the plain path gives NaN there)."""
+        """Mean CE of head(x) in checkpointed position chunks, to bound the saved logits.
+        Same value as the plain path (mean over non-ignored targets), except an all-ignored batch gives 0, not NaN."""
         def piece(xc, yc):
-            return F.cross_entropy(head(xc).float(), yc, reduction="sum", ignore_index=IGNORE_INDEX)
+            return F.cross_entropy(self._ce_input(self._head_out(head, xc)), yc, reduction="sum",
+                                   ignore_index=IGNORE_INDEX)
         total = sum(torch.utils.checkpoint.checkpoint(piece, xc, yc, use_reentrant=False)
                     for xc, yc in zip(x.chunk(self.cfg.ce_chunks), y.chunk(self.cfg.ce_chunks)))
         return total / (y != IGNORE_INDEX).sum().clamp_min(1)
 
     def _head_ce(self, head, x, y):
+        """Mean CE of head(x) by the memory-bounded cfg.ce_impl; chunked when it is none of the fused ones.
+        The fused kernels take the first vocab_size rows of the weight, so padding rows stay out of the softmax."""
+        V = self.cfg.vocab_size
+        weight = head.weight if head.weight.shape[0] == V else head.weight[:V]
+        bias = head.bias if head.bias is None or head.bias.shape[0] == V else head.bias[:V]   # heads are bias=False today
         if self.cfg.ce_impl == "triton_ce":
-            return linear_cross_entropy_fused_triton(x.reshape(-1, x.shape[-1]), head.weight,
-                                                      y.reshape(-1), bias=head.bias,
+            return linear_cross_entropy_fused_triton(x.reshape(-1, x.shape[-1]), weight,
+                                                      y.reshape(-1), bias=bias,
                                                       ignore_index=IGNORE_INDEX,
                                                       backward_impl=self.cfg.ce_triton_backward,
                                                       token_chunk=self.cfg.ce_triton_chunk,
@@ -378,34 +377,33 @@ class GPT(nn.Module):
                                                       validate_targets=self.cfg.ce_triton_validate_targets)
         if self.cfg.ce_impl == "fused":
             return linear_cross_entropy_fused(
-                x, head.weight, y, bias=head.bias,
+                x, weight, y, bias=bias,
                 chunks=self.cfg.ce_chunks, ignore_index=IGNORE_INDEX,
             )
         if self.cfg.ce_impl == "fused_cached":
             return linear_cross_entropy_cached(
-                x, head.weight, y, bias=head.bias,
+                x, weight, y, bias=bias,
                 token_chunk=self.cfg.ce_token_chunk, ignore_index=IGNORE_INDEX,
             )
         if self.cfg.ce_impl == "fused_liger":
             return linear_cross_entropy_liger(
-                x, head.weight, y, bias=head.bias,
+                x, weight, y, bias=bias,
                 token_chunk=self.cfg.ce_token_chunk, ignore_index=IGNORE_INDEX,
             )
         if self.cfg.ce_impl == "fused_cce":
             return linear_cross_entropy_cce(
-                x, head.weight, y, bias=head.bias,
+                x, weight, y, bias=bias,
                 vocab_chunk=self.cfg.ce_vocab_chunk, ignore_index=IGNORE_INDEX,
             )
         return self._chunked_ce(head, x, y)
 
     def param_counts(self):
-        """(total, active). active = matmul weights one token multiplies with: attention, router,
-        top_k + shared experts, KE projection, LM head (and MTP head). Not biases, norms, lookup tables. Used for MFU.
-        An FFN counts every Linear weight it has: 2 matrices for GELU, 3 for SwiGLU (c_gate, c_fc, c_proj).
-        Counted by module, not by parameter name: a tied head shares its tensor with the embedding
-        table and would otherwise drop out of the count."""
+        """(total, active). active = the matmul weights one token multiplies with (attention, router, top_k + shared
+        experts, KE projection, heads); not biases, norms or lookup tables. Counted by module, so a tied head counts."""
         total = sum(p.numel() for p in self.parameters())
-        active = self.head.weight.numel() + (self.mtp_head.weight.numel() if self.cfg.mtp else 0)
+        # head rows counted at vocab_size: padding (vocab_pad_multiple) is not model work, so active params and
+        # model FLOPs are the same padded or not. total (parameters()) is the real storage, padded rows included.
+        active = self.cfg.vocab_size * self.cfg.n_embd * (2 if self.cfg.mtp else 1)
         if self.cfg.embedding in ("ke1", "ke2"):
             active += self.tok.proj.weight.numel()
         for blk in self.blocks:

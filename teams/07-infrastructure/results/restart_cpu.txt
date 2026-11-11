@@ -1,0 +1,49 @@
+Restart test on CPU, Team 05 tiny MoE, ckpt/supervisor.py
+Date: 04 Nov 2026
+
+Commands (from teams/07-infrastructure/; CUDA_VISIBLE_DEVICES="" hides any GPU so it runs on CPU only):
+
+  CUDA_VISIBLE_DEVICES="" python jobs/restart_test/restart_test.py --also-kill-at 31,99,164 --report results/restart_cpu.txt
+      (output in jobs/restart_test/out/, git-ignored)
+  CUDA_VISIBLE_DEVICES="" python jobs/restart_test/restart_test.py --run-id g7-restart-test-20261104-01 --device cpu
+      (the job form, queue rules v1: output in ./out/g7-restart-test-20261104-01/, checked with
+       python queue/queue_rules.py check-out ./out --run-id g7-restart-test-20261104-01)
+
+Environment:
+  Python   3.13.14
+  torch    2.14.1 (CPU only)
+  numpy    2.2.6
+  OS       macOS-27.2-arm64-arm-64bit-Mach-O
+  Team 05 config: teams/05-architecture/configs/config_v0.yaml + teams/05-architecture/configs/small/tiny_moe.yaml
+  seed 1234 (run.seed in config_v0.yaml)
+
+What it does:
+  Run A: steps 1-200, no stop, checkpoint every 25 steps.
+  Run B: the same command under ckpt/supervisor.py. Killed with SIGKILL once past step 140 and a COMPLETE
+         checkpoint exists. The supervisor restarts the same command; the trainer restores latest.json.
+  Compared: loss_ntp and loss_mtp bits and the batch data ID for every step 1-200 (for steps run B did
+            twice, the value after the restart).
+
+Bit equality is between run A and run B on the same machine; the numbers are not expected to match other
+OSes (the restore test results are from Ubuntu and Windows).
+
+Result: PASS
+
+  killed after step          140
+  restarted from step        125 (first step of the restarted trainer, minus 1)
+  latest.json at the restart 125 (the last COMPLETE checkpoint: MANIFEST.json written, latest.json moved)
+  steps done twice           15 (step 126 to 140)
+  bit-equal steps            200 of 200, fields loss_ntp_bits, loss_mtp_bits, batch_id
+  wall time                  run A 2.4 s, run B 3.9 s
+
+Supervisor log (logs/supervisor.jsonl):
+  attempt 0: exit -9 (crash: killed by SIGKILL) -> restart (latest.json at step 125)
+  attempt 1: exit 0 (done) -> stop, supervisor exit 0
+
+Last line:
+  PASS restart_test cpu: SIGKILL after step 140, restarted from COMPLETE checkpoint step 125, steps 1-200: loss_ntp and loss_mtp bit-equal, data ids equal
+
+Other kill points (same command with --kill-at N):
+  PASS restart_test cpu: SIGKILL after step 32, restarted from COMPLETE checkpoint step 25, steps 1-200: loss_ntp and loss_mtp bit-equal, data ids equal
+  PASS restart_test cpu: SIGKILL after step 100, restarted from COMPLETE checkpoint step 75, steps 1-200: loss_ntp and loss_mtp bit-equal, data ids equal
+  PASS restart_test cpu: SIGKILL after step 165, restarted from COMPLETE checkpoint step 150, steps 1-200: loss_ntp and loss_mtp bit-equal, data ids equal

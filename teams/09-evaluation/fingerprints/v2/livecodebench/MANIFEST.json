@@ -1,0 +1,84 @@
+{
+  "name": "LiveCodeBench",
+  "tags": [
+    "code"
+  ],
+  "licence": "Unclear: code MIT, dataset card \"cc\"",
+  "note": "Internal only (benchmarks_v1.md). Hashes only: no item is published. release_v6 = the six files (1,055 problems).",
+  "source": "hf",
+  "repo": "livecodebench/code_generation_lite",
+  "revision": "0fe84c3912ea0c4d4a78037083943e8f0c4dd505",
+  "files": [
+    {
+      "path": "test.jsonl",
+      "sha256": "2bd02b38beb48e8c46b5b9987095d999ff38cd8efc255ea5d58974317c48f63f"
+    },
+    {
+      "path": "test2.jsonl",
+      "sha256": "095df7c5daf15f882c51a9deb84085cff1e073495a5dbcf95015a564d485f3a3"
+    },
+    {
+      "path": "test3.jsonl",
+      "sha256": "28ed26cc83363ce3f1fe2d5fad9f8393077beb1907b167a31bd3b32f80801b79"
+    },
+    {
+      "path": "test4.jsonl",
+      "sha256": "d711138ddaebfcf5f8ec6a4283ee677298c0f5c5d374a235af92aaf0584510da"
+    },
+    {
+      "path": "test5.jsonl",
+      "sha256": "7f77571c2a6df0c2a72a3277650309f67e01e0008e18117e624633df53f81214"
+    },
+    {
+      "path": "test6.jsonl",
+      "sha256": "bb4c364f71921c4495a6ad15abe1a927350b720009f4933e2e71f8af0f6fd1f5"
+    }
+  ],
+  "split": "release_v6",
+  "texts": [
+    "{question_content}"
+  ],
+  "id": "livecodebench",
+  "normalize_id": "g9-v2",
+  "n": {
+    "prose": 13,
+    "code": 20
+  },
+  "gram_filters": [
+    "numeric_only",
+    "single_chars"
+  ],
+  "boilerplate": {
+    "0BSD.txt": "e3f18c71e10d673590eb9856c1d79dd3b4b0d65404efb5e8584dbede7edd608b",
+    "AGPL-3.0-only.txt": "d8a6cc31abc16b6748c7a21f21611f5a1ec33f67d22ca23d7da1c19b95496bee",
+    "Apache-2.0.txt": "074e6e32c86a4c0ef8b3ed25b721ca23aca83df277cd88106ef7177c354615ff",
+    "BSD-2-Clause.txt": "f32fb3b417a194167cfad068223fc975ba96c5960513a10f66a3c28720aec1df",
+    "BSD-3-Clause.txt": "5a93d5831e1297ab10fe643e1a631e83be392896da14ee2951285a79012df69d",
+    "BSL-1.0.txt": "84c6ef3ea9e3254a54d0acf5d3e0c61ae011b8fef7dd6940591cf060e6380a8f",
+    "CC0-1.0.txt": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499",
+    "EPL-2.0.txt": "61616a4066701bc7888ad910de1633dbc55eb4d4d30d930feef55afb9492e33c",
+    "GPL-2.0-only.txt": "aaf135472f81c5b4a0dca9367e5bb5e9750032b5bebe5442b36e4c0a47430df3",
+    "GPL-3.0-only.txt": "fb981668c18a279e285fc4d83fba1e836cc84dd4daa73c9697d3cfd2d8aca6e0",
+    "ISC.txt": "f2ec607f67bb0dd3053b49835b02110d5cd0f8eb6da3aac4dc0b142a6b299be9",
+    "LGPL-2.1-only.txt": "5749785c8bdefafcb5d798270ed0a967036fe2ca63dcedade1627565dfef81d2",
+    "LGPL-3.0-only.txt": "996af0513df21f7496288951c41428a03c174e9e4a9d63665c57d670f845ccb1",
+    "MIT.txt": "b85dcd3e453d05982552c52b5fc9e0bdd6d23c6f8e844b984a88af32570b0cc0",
+    "MPL-2.0.txt": "66a3107d5ad6a058aab753eaac2047ccb2ed0e39465dd0fe5844da3e300d5172",
+    "Unlicense.txt": "0bdebfeda07d45dada625ae1317c6f833186e798b171d0db640bcf32e92a8240",
+    "Zlib.txt": "bfb1112d49db5b1daecdfef24bd7e2f3ea0bafb33aa67aa0ab51e2bf8407c03d",
+    "lorem-ipsum.txt": "56293a80e0394d252e995f2debccea8223e4b5b2b150bee212729b3b39ac4d46"
+  },
+  "short_min": 8,
+  "short_texts": 0,
+  "short_templates_dropped": 0,
+  "items": 1055,
+  "items_without_ngram": 0,
+  "item_grams": 273462,
+  "canaries": 0,
+  "shards": {
+    "13": [
+      "n13-000.tsv",
+      "n13-001.tsv"
+    ]
+  }
+}

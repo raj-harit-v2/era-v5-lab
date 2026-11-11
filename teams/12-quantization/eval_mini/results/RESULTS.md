@@ -87,12 +87,8 @@ HellaSwag and MMLU for Q8_0 to Q5_K_M (about 3 points on GSM8K, which has only 2
 | `runs_Q5_K_M-Q4_K_M` | Q5_K_M, Q4_K_M | therahulbhati | 29 Oct |
 | `runs_Q3_K_M-Q2_K` | Q3_K_M, Q2_K | s9k96 | 29 Oct |
 
-To keep the PR small, two things were cut:
+To keep the PR small, some things were cut:
 - the full Kaggle logs (about 2 MB per run, mostly compiler output), replaced by `logs/SUMMARY.md`;
-- the `target` and `response` text of each per-question row (3.9 MB down to 1.2 MB; scores and the paired tables are
-  unchanged).
-
-Both remain in the history of SreekanthZipsy/era-v5-lab, branch `G12-Week1`, commit `2e668bd`.
 
 **Rebuild the tables:** `python combine.py results/raw/* --out <dir>` from `eval_mini/`. It writes the same
 `scores.md` and `paired.md` as `combined/`, plus a copy of every format folder.

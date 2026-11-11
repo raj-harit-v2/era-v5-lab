@@ -6,7 +6,7 @@
 
 The task set, shot counts, limits, seed and record format are imported from G9's run_eval_mini.py, not copied,
 so a run here is like for like with G9's baseline. Per task it writes:
-  <out>/<format>/<task>_<k>shot.samples.jsonl   one line per item: task, doc_id, target, response, metric values
+  <out>/<format>/<task>_<k>shot.samples.jsonl   one line per item: task, doc_id, filter, metric values (no item text)
   <out>/<format>/summary.json                   run metadata + one record per (task, metric, filter)
 A task whose records are already in summary.json is skipped, so an interrupted run resumes where it stopped.
 """
@@ -40,13 +40,14 @@ def gpu_name() -> str:
 
 def sample_rows(results: dict, metric_names: set[str]) -> list[dict]:
     """Flatten lm_eval's per-sample logs (one list per leaf task) into slim rows keyed by (task, filter, doc_id);
-    GSM8K logs each item once per answer filter (strict-match, flexible-extract)."""
+    GSM8K logs each item once per answer filter (strict-match, flexible-extract).
+
+    Eval firewall (Team 9): only task, doc_id, filter and metric values are kept. Never write an item's target or
+    response text; combine.py refuses any row that has them."""
     rows = []
     for task, samples in (results.get("samples") or {}).items():
         for s in samples:
-            resp = s.get("filtered_resps")
-            rows.append({"task": task, "doc_id": s["doc_id"], "filter": s.get("filter", "none"), "target": s.get("target"),
-                         "response": resp if not isinstance(resp, list) or len(resp) > 1 else resp[0],
+            rows.append({"task": task, "doc_id": s["doc_id"], "filter": s.get("filter", "none"),
                          **{m: s[m] for m in metric_names if m in s}})
     return rows
 

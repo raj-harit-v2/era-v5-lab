@@ -1,0 +1,165 @@
+{
+  "name": "FLORES-200 (FLORES+)",
+  "tags": [
+    "indic",
+    "english",
+    "translation"
+  ],
+  "licence": "CC-BY-SA-4.0 (gated)",
+  "note": "dev (997) + devtest (1,012) sentences in the 10 pack languages and English. The English source is Wikinews, Wikivoyage and Wikibooks, so copies of those pages match.",
+  "source": "hf",
+  "repo": "openlanguagedata/flores_plus",
+  "revision": "e707e62e762a9e2faca3933aa315f4665cc3cd8f",
+  "files": [
+    {
+      "path": "dev/ben_Beng.jsonl",
+      "sha256": "5e7bc2c11c2943144ba3d79dac82aa60c9661e7aea23258a5d6d26708273a485"
+    },
+    {
+      "path": "dev/eng_Latn.jsonl",
+      "sha256": "5b0267273e0ccc7c2c935f9cb19070f26e4c04775180220ea1a33f72bacbe037"
+    },
+    {
+      "path": "dev/guj_Gujr.jsonl",
+      "sha256": "231b80f0f6fa762a0bc43e399fb01324c18c0f0d3aef09c08332a6db431b6c4d"
+    },
+    {
+      "path": "dev/hin_Deva.jsonl",
+      "sha256": "def135dec44a6e05e78b4e0481117065a1be01fe859cc532e07f94dcf6ba9109"
+    },
+    {
+      "path": "dev/kan_Knda.jsonl",
+      "sha256": "76da9f3484ab6afa7830744f1e42c4d0ad4b6ce4aaa4af9cab846ac8c855c881"
+    },
+    {
+      "path": "dev/mal_Mlym.jsonl",
+      "sha256": "97827e2f2c138552232f308e802ab18867e6118d3f7c04823f2611f84ca50bf3"
+    },
+    {
+      "path": "dev/mar_Deva.jsonl",
+      "sha256": "de8cc46a634d4fbcf60856fd45da497f5cd37eaf119b0631b2abe5ea3ce60322"
+    },
+    {
+      "path": "dev/ory_Orya.jsonl",
+      "sha256": "6d36a823635d07192387155db459fd17e426c54c8a898a43a77269688dd6c88d"
+    },
+    {
+      "path": "dev/san_Deva.jsonl",
+      "sha256": "9006d97fb7e436317da19ff4ab94f0a37d0268f08ecbfed635a84c8e966a3f67"
+    },
+    {
+      "path": "dev/tam_Taml.jsonl",
+      "sha256": "5f94fbd027f6bcb95054920e4d9034e58d3074ab7f65c42fbd1d09df7cb0a905"
+    },
+    {
+      "path": "dev/tel_Telu.jsonl",
+      "sha256": "58eb965294409ba56db29e1d4f7f63d771d417d7dce1d5a9182d3308e742abc1"
+    },
+    {
+      "path": "devtest/ben_Beng.jsonl",
+      "sha256": "a74c63b9ce85aa3450041096044c12baa095947b87edd6bbd41fbd9f14df683f"
+    },
+    {
+      "path": "devtest/eng_Latn.jsonl",
+      "sha256": "afa116a2ffb7de95aa320c11c229301d76a8108cba3125744c10304ffaa128bd"
+    },
+    {
+      "path": "devtest/guj_Gujr.jsonl",
+      "sha256": "f9e30c49d2d2254841427d053f40248e99bf9013dc4e9a564fc6b9f95bea43eb"
+    },
+    {
+      "path": "devtest/hin_Deva.jsonl",
+      "sha256": "71cdcc7eee9c23827403bb53e73466f9508d2335488e8cd7daabe90a8fb0c33a"
+    },
+    {
+      "path": "devtest/kan_Knda.jsonl",
+      "sha256": "329c733e268b3cdfbf0b3f33257c767d277bc5abbb0c885f8e55a4dd6af0de04"
+    },
+    {
+      "path": "devtest/mal_Mlym.jsonl",
+      "sha256": "1b212eb011711d682d377c1a0075cdd1b82b866645f29a689afce18b5f9fca3e"
+    },
+    {
+      "path": "devtest/mar_Deva.jsonl",
+      "sha256": "eed9a62b724948cb88c7bdd4a10d44b3dc990739c58960c6a5ae6e5d224319db"
+    },
+    {
+      "path": "devtest/ory_Orya.jsonl",
+      "sha256": "5ca57ff00ce9cd83de0b642110ce989a8c8496d97d99cc849e4f180e8f6fe15b"
+    },
+    {
+      "path": "devtest/san_Deva.jsonl",
+      "sha256": "029d12cc0904118c400d170b289ba4320f78bd0451bfe0a26efb5080fdaa591a"
+    },
+    {
+      "path": "devtest/tam_Taml.jsonl",
+      "sha256": "e67d804f9a6a2e2602f183e36d6392b27eb6165e5540e6cef5867f8cc330afbc"
+    },
+    {
+      "path": "devtest/tel_Telu.jsonl",
+      "sha256": "9516c69de61a55d945ef2876aac4e338f40ae1e0d2b0de5378ca594e5025ba1b"
+    }
+  ],
+  "split": "dev+devtest",
+  "texts": [
+    "{text}"
+  ],
+  "gated": true,
+  "id": "flores200",
+  "normalize_id": "g9-v2",
+  "n": {
+    "prose": 13,
+    "code": 20
+  },
+  "gram_filters": [
+    "numeric_only",
+    "single_chars"
+  ],
+  "boilerplate": {
+    "0BSD.txt": "e3f18c71e10d673590eb9856c1d79dd3b4b0d65404efb5e8584dbede7edd608b",
+    "AGPL-3.0-only.txt": "d8a6cc31abc16b6748c7a21f21611f5a1ec33f67d22ca23d7da1c19b95496bee",
+    "Apache-2.0.txt": "074e6e32c86a4c0ef8b3ed25b721ca23aca83df277cd88106ef7177c354615ff",
+    "BSD-2-Clause.txt": "f32fb3b417a194167cfad068223fc975ba96c5960513a10f66a3c28720aec1df",
+    "BSD-3-Clause.txt": "5a93d5831e1297ab10fe643e1a631e83be392896da14ee2951285a79012df69d",
+    "BSL-1.0.txt": "84c6ef3ea9e3254a54d0acf5d3e0c61ae011b8fef7dd6940591cf060e6380a8f",
+    "CC0-1.0.txt": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499",
+    "EPL-2.0.txt": "61616a4066701bc7888ad910de1633dbc55eb4d4d30d930feef55afb9492e33c",
+    "GPL-2.0-only.txt": "aaf135472f81c5b4a0dca9367e5bb5e9750032b5bebe5442b36e4c0a47430df3",
+    "GPL-3.0-only.txt": "fb981668c18a279e285fc4d83fba1e836cc84dd4daa73c9697d3cfd2d8aca6e0",
+    "ISC.txt": "f2ec607f67bb0dd3053b49835b02110d5cd0f8eb6da3aac4dc0b142a6b299be9",
+    "LGPL-2.1-only.txt": "5749785c8bdefafcb5d798270ed0a967036fe2ca63dcedade1627565dfef81d2",
+    "LGPL-3.0-only.txt": "996af0513df21f7496288951c41428a03c174e9e4a9d63665c57d670f845ccb1",
+    "MIT.txt": "b85dcd3e453d05982552c52b5fc9e0bdd6d23c6f8e844b984a88af32570b0cc0",
+    "MPL-2.0.txt": "66a3107d5ad6a058aab753eaac2047ccb2ed0e39465dd0fe5844da3e300d5172",
+    "Unlicense.txt": "0bdebfeda07d45dada625ae1317c6f833186e798b171d0db640bcf32e92a8240",
+    "Zlib.txt": "bfb1112d49db5b1daecdfef24bd7e2f3ea0bafb33aa67aa0ab51e2bf8407c03d",
+    "lorem-ipsum.txt": "56293a80e0394d252e995f2debccea8223e4b5b2b150bee212729b3b39ac4d46"
+  },
+  "short_min": 8,
+  "short_texts": 3768,
+  "short_templates_dropped": 0,
+  "items": 22099,
+  "items_without_ngram": 461,
+  "item_grams": 158493,
+  "canaries": 0,
+  "shards": {
+    "8": [
+      "n8-000.tsv"
+    ],
+    "9": [
+      "n9-000.tsv"
+    ],
+    "10": [
+      "n10-000.tsv"
+    ],
+    "11": [
+      "n11-000.tsv"
+    ],
+    "12": [
+      "n12-000.tsv"
+    ],
+    "13": [
+      "n13-000.tsv"
+    ]
+  }
+}

@@ -1,36 +1,18 @@
-"""MFU, HFU, memory, GPU telemetry, run metadata.  [implemented; time and token goodput still to write]
+"""MFU, HFU, memory, GPU telemetry and run metadata: the one place these are computed (method: docs/METRICS.md).
 
-The one place these numbers are computed: perfkit.bench calls it, and G8 gets the same formulas (docs/METRICS.md).
+    gpu_peak(device_name)              dense peak TFLOPS per dtype, {} when unknown
+    peak_tflops(device_name, dtype)    (peak or None, spec or None)
+    run_metadata(device)               device, version and git fields of the run JSON "meta"
+    flops_per_token(model, T, ...)     model and hardware FLOPs per token, total and active params
+    mfu(flops, tokens_per_s, peak)     MFU / HFU, with a reason when unavailable
+    mfu_run(flops, global_tokens_per_s, peaks_tflops, ranks=None)   run-level MFU / HFU over all participants
+    memory(device)                     peak allocated / reserved GB (None off CUDA)
+    gpu_telemetry(device)              SM clock, temperature, power, throttle reasons from nvidia-smi
+    telemetry_during(device, work)     the same, sampled while work() runs
+    throttle_flags(tel)                slowdown reasons in a sample
+    GpuSampler(device, on_sample=...)  per-GPU samples during the clean steps
 
-    gpu_peak(device_name)          {"spec": "A100", "bf16": 312, "fp16": 312, "fp32": 19.5}, {} when unknown
-    peak_tflops(device_name, dtype)  (dense peak TFLOPS for this dtype or None, spec or None)
-    run_metadata(device)           the device, version and git fields of the run JSON "meta" (perfkit/schema.py)
-    flops_per_token(model, T, opt_flops_per_step=0, tokens_per_step=None, method="g6-v1", ke2_mean_support_len=None)
-                                   model_flops_per_token, hw_flops_per_token, params_total, params_active
-    mfu(flops, tokens_per_s, peak_tflops)   MFU/HFU of the selected GPU and explicit unavailable-reason fields
-    mfu_run(flops, global_tokens_per_s, peaks_tflops, ranks=None)
-                                   run-level MFU/HFU: global throughput over the summed peak of the participants
-    memory(device)                 peak allocated / reserved GB (None off CUDA)
-    gpu_telemetry(device)          SM clock, temperature, power, throttle reasons from nvidia-smi (None off CUDA)
-    telemetry_during(device, work) the same, sampled while work() keeps the GPU busy
-    throttle_flags(tel)            slowdown reasons in a sample (power cap, thermal, ...), None if not reported
-    GpuSampler(device, on_sample=...) streams per-GPU node samples during clean steps; run["system"] summarizes
-                                   only the GPU used by the benchmark process
-
-FLOPs per token (T = sequence length, L = layers, d = width, N_active from GPT.param_counts):
-    model_flops_per_token = 6 * N_active + 12 * L * d * T      (PaLM; attention scores counted non-causal)
-                            N_active counts each FFN's matrices: 2 * d * h for GELU, 3 * d * h for SwiGLU
-                            (gate, up, down), times (top_k + shared) for an MoE layer; the elementwise
-                            SiLU * up, like GELU, is not counted
-    hw_flops_per_token    = model + 2 forwards of the stack when reversible/two_pass (invert + recompute)
-                            or + 1 stack forward when reversible/one_pass (single f in backward)
-                            + 2 * head again when ce_impl=chunked or fused_cce (recompute the head)
-                            + optimizer FLOPs per step (Muon Newton-Schulz) / tokens per step
-MFU uses model FLOPs, HFU hardware FLOPs; both against the dense vendor peak for the dtype the run used.
-Elementwise work (GELU, SiLU * up, the RoPE rotation) is not counted, so model.position does not change these.
-The formula above is method g6-v1. Method g6-v2 (proposed, see flops_per_token) changes the KE2 and MTP terms.
-
-Extra, still to write: goodput (time and tokens, badput buckets).
+Not written yet: time and token goodput.
 """
 from __future__ import annotations
 
@@ -79,6 +61,7 @@ PEAKS = [
 # ------------------------------------------------------------------------------ device and peak
 
 def gpu_peak(device_name: str) -> dict:
+    """The PEAKS row whose name is in device_name, with its spec name; {} for an unknown GPU."""
     for key, table in PEAKS:
         if key.lower() in device_name.lower():
             return {"spec": key, **table}
@@ -104,6 +87,7 @@ def peak_unavailable_reason(device_name: str, dtype: str, peak: float | None = N
 
 
 def device_name(device) -> str:
+    """The GPU name, 'Apple MPS', or the CPU model."""
     if device.type == "cuda":
         return torch.cuda.get_device_name(device)
     if device.type == "mps":
@@ -112,6 +96,7 @@ def device_name(device) -> str:
 
 
 def _sh(args, cwd=None):
+    """stdout of a command, or None on any failure (missing tool, non-zero exit, timeout)."""
     try:
         return subprocess.run(args, capture_output=True, text=True, timeout=10, check=True, cwd=cwd).stdout.strip()
     except Exception:
@@ -217,16 +202,10 @@ SAMPLE_FIELDS = {"utilization.gpu": "gpu_util_pct", "utilization.memory": "mem_u
 
 
 class GpuSampler:
-    """System metrics while the measured steps run, for G8 (docs/METRICS.md).
+    """GPU samples while the measured steps run (docs/METRICS.md): one nvidia-smi child for all visible GPUs.
 
-        with GpuSampler(device) as s:
-            run_clean(...)
-        run["system"] = s.summary()        # None off CUDA or without nvidia-smi
-
-    One nvidia-smi child process queries all visible GPUs on this node and writes samples to a reader thread.
-    Optional on_sample callbacks can stream each GPU sample to JSONL while training continues; no CUDA
-    synchronization is introduced. summary() returns aggregates for the benchmark's selected device only.
-    """
+        with GpuSampler(device) as s: run_clean(...)
+        run["system"] = s.summary()        # the benchmark's GPU only; None off CUDA or without nvidia-smi"""
 
     def __init__(self, device, interval_ms: int = 1000, on_sample=None):
         self.device, self.interval_ms = device, interval_ms
@@ -329,6 +308,7 @@ class GpuSampler:
         return [r for r in self.rows if r.get("index") == self.target_index]
 
     def summary(self) -> dict | None:
+        """Min / median / max / mean of each metric for the benchmark's GPU, and the slowdown counts."""
         if not self.started:
             return None
         from perfkit.timer import stats
@@ -396,32 +376,27 @@ KE2_FLOPS_PER_SUPPORT_CELL_PER_CHANNEL = 4   # embedding_bag: 2 FLOP forward + 2
 
 def flops_per_token(model, T: int, opt_flops_per_step: float = 0.0, tokens_per_step: int | None = None,
                     method: str = DEFAULT_METHOD, ke2_mean_support_len: float | None = None) -> dict:
-    """model: a models.gpt.GPT. See the module docstring for the formulas.
-
-    method "g6-v1" (default, the legacy count G8 has ingested): every active matmul weight costs 6 FLOP per token,
-        including the KE2 projection and the whole MTP head.
-    method "g6-v2" (MFU task, pending G6/G8 approval):
-        * KE2: the projection is not a dense matmul (forward is one embedding_bag over the token's support columns),
-          so it leaves the 6N term and its real lookup cost, 4 * ke2_mean_support_len * d_model FLOP per token, is
-          added. ke2_mean_support_len (mean bytes per token) is required for a ke2 model.
-        * MTP: the head runs on T-1 positions, so its 6 * weights term is scaled by (T-1)/T per input token.
-        The extra-work terms of hw_flops_per_token (reversible recompute, head recompute, optimizer) are the same
-        in both methods.
-    """
+    """model: a models.gpt.GPT. Formulas and the methods g6-v1 (default) and g6-v2 (proposed): docs/METRICS.md.
+    ke2_mean_support_len is required for g6-v2 on a ke2 model."""
     if method not in METHODS:
         raise ValueError(f"method {method!r} not in {METHODS}")
     m = model.cfg
     total, active = model.param_counts()
     L, d = m.n_layer, m.n_embd
-    model_fpt = 6 * active + 12 * L * d * T
-    head = model.head.weight.numel() + (model.mtp_head.weight.numel() if m.mtp else 0)
+    model_fpt = 6 * active + 12 * L * d * T          # 6 FLOP per active weight per token, plus attention scores
+    n_heads = 2 if m.mtp else 1
+    head = n_heads * m.vocab_size * d                  # useful head work; padding rows (vocab_pad_multiple) are not
+    pad_rows = m.padded_vocab_size - m.vocab_size      # counted here but run by torch / chunked (fused paths slice them off)
     ke = model.tok.proj.weight.numel() if m.embedding in ("ke1", "ke2") else 0
-    stack_fwd = 2 * (active - head - ke) + 4 * L * d * T
+    stack_fwd = 2 * (active - head - ke) + 4 * L * d * T     # one stack forward: what the reversible backward reruns
     if m.reversible:
         rev_extra = stack_fwd if getattr(m, "rev_impl", "two_pass") == "one_pass" else 2 * stack_fwd
     else:
         rev_extra = 0
-    extra = rev_extra + (2 * head if m.ce_impl in ("chunked", "fused_cce") else 0)
+    extra = rev_extra + (2 * head if m.ce_impl in ("chunked", "fused_cce") else 0)   # these recompute the head
+    if pad_rows and m.ce_impl in ("torch", "chunked"):   # hardware only: the padded-width head matmul (fwd 2 + bwd 4 FLOP)
+        pad_heads = 1 + ((T - 1) / T if m.mtp else 0)     # the t+2 head sees T - 1 of the T positions per sequence
+        extra += pad_heads * pad_rows * d * (6 + (2 if m.ce_impl == "chunked" else 0))
     if opt_flops_per_step and tokens_per_step:
         extra += opt_flops_per_step / tokens_per_step
     if method == "g6-v2":
@@ -432,7 +407,7 @@ def flops_per_token(model, T: int, opt_flops_per_step: float = 0.0, tokens_per_s
         if m.mtp:
             if T < 2:
                 raise ValueError("mtp needs T >= 2")
-            model_fpt -= 6 * model.mtp_head.weight.numel() / T
+            model_fpt -= 6 * m.vocab_size * d / T
     return {"model_flops_per_token": model_fpt, "hw_flops_per_token": model_fpt + extra,
             "params_total": total, "params_active": active}
 
@@ -442,13 +417,8 @@ def _positive_finite(x) -> bool:
 
 
 def mfu_run(flops: dict, global_tokens_per_s: float, peaks_tflops: list, ranks: list | None = None) -> dict:
-    """Run-level MFU/HFU: global throughput over the summed dense peak of the GPUs that took part.
-
-        MFU_run = global_tokens_per_s * model_flops_per_token / (sum(peaks_tflops) * 1e12)
-
-    peaks_tflops: one dense peak per participating GPU (an explicit list, never torch.cuda.device_count()).
-    ranks: optional ids of those participants; a repeated id is rejected so a double-reported rank cannot count twice.
-    Bad input gives None with a reason code, never 0 and never a value clipped to 1."""
+    """Run-level MFU / HFU: global tokens/s * FLOPs per token over the summed dense peak of the participants.
+    peaks_tflops: one per participating GPU. A repeated rank id or bad input gives None with a reason, never 0."""
     out = {"model_tflops_per_s": None, "mfu": None, "hfu": None,
            "mfu_unavailable_reason": None, "hfu_unavailable_reason": None}
 
@@ -497,6 +467,7 @@ def mfu(flops: dict, tokens_per_s: float, peak_tflops: float | None,
 
 
 def memory(device) -> dict | None:
+    """Peak allocated / reserved GiB since the last reset (None off CUDA)."""
     if device.type != "cuda":
         return None
     return {"peak_allocated_gb": torch.cuda.max_memory_allocated(device) / 2**30,

@@ -50,7 +50,7 @@ HARNESS_FIXES = [  # bugs in the tools themselves; every affected result was reg
     "(code, Devanagari, Telugu), so no other result was affected.",
     "Qwen2.5 ships `max_new_tokens: 2048` in `generation_config.json`, which transformers lets override lm-eval's own "
     "generation cap (`max_gen_toks`, 256 for GSM8K). `run_lm_eval.py` now clears it, as standard lm-eval behaviour intends "
-    "(found by Mahesh Sv, PR #21). Only Qwen's eval-mini GSM8K was affected (51 → 52 after a fresh rerun; the earlier run is kept "
+    "(found by `maheshsv`, PR #21). Only Qwen's eval-mini GSM8K was affected (51 → 52 after a fresh rerun; the earlier run is kept "
     "locally). gemma-2-2b and Llama-3.2-3B have no such override, and gate tasks (log-likelihood) and code generation (explicit "
     "`max_new_tokens=768`) never used it.",
 ]
@@ -61,6 +61,12 @@ DEFERRED = {  # (model, task) gate pairs shown as DEFERRED, never FAIL, until th
 MILU_LANGS = ["Bengali", "English", "Gujarati", "Hindi", "Kannada", "Malayalam", "Marathi", "Odia", "Punjabi", "Tamil", "Telugu"]
 NOT_RUN = {  # optional gate pairs never queued (BBH: MMLU-Pro already covers general ability against the same leaderboard)
     ("qwen2.5-1.5b", "leaderboard_bbh"), ("gemma-2-2b", "leaderboard_bbh"), ("llama-3.2-3b", "leaderboard_bbh"),
+}
+ISSUES = "https://github.com/theschoolofai/era-v5-lab/issues/"
+KNOWN_FAILURES = {  # (model, benchmark) -> GitHub issue: a FAIL that stands under the pre-registered rule. Label and link only:
+    # the verdict and the counts do not change. Keyed by benchmark, because HumanEval and HumanEval+ share one task.
+    ("qwen2.5-1.5b", "HumanEval+"): 334,
+    ("phi-2", "MBPP+"): 335,
 }
 QWEN_REPORT = "https://arxiv.org/abs/2412.15115"
 PR21_GSM8K_FIRST200 = 61.5  # PR #21 results/eval_mini_v0.json: Qwen/Qwen2.5-1.5B, profile mini, gsm8k 5-shot flexible-extract, n=200
@@ -120,6 +126,12 @@ def milu_avg(model):
     return round(sum(scores.values()) / len(scores), 2), scores
 
 
+def full_logits_runs(model):
+    """MILU per-language gate runs made with --full-logits (scored_logits_only false in results.json)."""
+    return [lang for lang in MILU_LANGS
+            if (load(RUNS / model / f"gate_milu_{lang}" / "results.json") or {}).get("scored_logits_only") is False]
+
+
 def ours_for(anchor):
     """Our full-set score for one anchor, or None while the run is missing."""
     model, task = anchor["model"], anchor["task"]
@@ -175,8 +187,10 @@ def main():
                  "units": "points (0-100)", "note": spec["scoring_note"], "noise_note": spec.get("noise_note"), "models": models}
     (RESULTS / EVAL_MINI_OUT).write_text(json.dumps(eval_mini, indent=1, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
 
+    if any(not isinstance(n, int) or n <= 0 for n in KNOWN_FAILURES.values()):
+        raise SystemExit(f"KNOWN_FAILURES needs a real GitHub issue number for each entry: {KNOWN_FAILURES}")
     rows, counts = [], {"PASS": 0, "FAIL": 0, "PENDING": 0, "DEFERRED": 0, "NOT RUN": 0}
-    milu_notes = []
+    milu_notes, labelled = [], set()
     for a in [a for a in pub["anchors"] if a["use_for_gate"]]:
         ours = ours_for(a)
         diff = ""
@@ -188,8 +202,21 @@ def main():
         counts[verdict] += 1
         if a["task"] == "milu" and ours is not None:
             milu_notes.append(f"- MILU-avg {a['model']}, the 11 scores: " + ", ".join(f"{k} {v:.2f}" for k, v in milu_avg(a["model"])[1].items()))
+            full = full_logits_runs(a["model"])
+            if full:
+                milu_notes.append(f"- MILU-avg {a['model']}: {', '.join(full)} ran with `--full-logits`. Each has answer options longer "
+                                  "than the 512 positions the default path keeps (up to 1,112 tokens), so the guard stops the default "
+                                  "run. Same log-likelihoods either way: on milu_Marathi (200 items, both paths) all 800 option "
+                                  "log-likelihoods were identical.")
+        cell, key = f"**{verdict}**", (a["model"], a["benchmark"])
+        if verdict == "FAIL" and key in KNOWN_FAILURES:
+            cell += f" (known failure, [#{KNOWN_FAILURES[key]}]({ISSUES}{KNOWN_FAILURES[key]}))"
+            labelled.add(key)
         rows.append(f"| {a['model']} | {a['benchmark']} | {a['published']:.2f} | {'' if ours is None else f'{ours:.2f}'} | {diff} | "
-                    f"**{verdict}** | [{a['source']['name']}]({a['source']['url']}) |")
+                    f"{cell} | [{a['source']['name']}]({a['source']['url']}) |")
+    stale = set(KNOWN_FAILURES) - labelled
+    if stale:  # no longer a FAIL (or a wrong key): update KNOWN_FAILURES and the issue; never print a stale label
+        raise SystemExit(f"KNOWN_FAILURES entries that match no FAIL row: {sorted(stale)}")
 
     diag = []
     for p in POSTHOC:
@@ -211,7 +238,9 @@ def main():
           "- MMLU-Pro agrees with the Open LLM Leaderboard's own lm-eval runs for all three models (within 0.31).",
           "- Code scoring agrees with the EvalPlus leaderboard for DeepSeek-Coder-1.3B-base (within 1.2) and phi-2 on 3 of 4.",
           f"- The two FAILs are on the stricter `+` tests, just past the line (−2.41, −2.88). evalplus recorded {timeouts} timeouts "
-          "across all executed code, so a slow executor does not explain them. They stand under the pre-registered rule.",
+          "across all executed code, so a slow executor does not explain them. They stand under the pre-registered rule"
+          + (" and are tracked as known failures: " + ", ".join(f"{m} {b} ([#{n}]({ISSUES}{n}))" for (m, b), n in KNOWN_FAILURES.items())
+             + "." if KNOWN_FAILURES else "."),
           "- MILU-avg (both rows) is the simple mean of the 11 per-language `gate_milu_<Language>` full runs (79,608 items per model), "
           "computed only when all 11 exist; until then the row is DEFERRED. The rule was fixed before the remaining runs (see the README).",
           *milu_notes,

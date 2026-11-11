@@ -1,0 +1,19 @@
+{
+ "file": "sarvam-30b-Q4_K_M.gguf",
+ "format": "Q4_K_M",
+ "architecture": "bailingmoe2",
+ "bytes": 19839148288,
+ "n_params": 32152650368,
+ "bits_per_weight": 4.94,
+ "router_type": "F32",
+ "expert_bias_type": "F32",
+ "output_type": "Q8_0",
+ "params_by_type": {
+  "Q8_0": 1073741824,
+  "F32": 9601664,
+  "Q4_K": 26537361408,
+  "Q6_K": 4531945472
+ },
+ "ok": true,
+ "problems": []
+}

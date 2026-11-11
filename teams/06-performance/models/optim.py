@@ -1,28 +1,14 @@
-"""Optimizers: AdamW; Muon on the 2D block weights + AdamW on the rest; or Polar Express MuonAdamW.  [implemented]
+"""Optimizers: adamw, muon (Muon + AdamW) or polar_muon_adamw (Polar Express Muon + AdamW, the default).
 
-  * build_optimizer(model, ocfg) -> Optimizers: zero_grad(), step(scaler=None), unscale(scaler), flops(),
-    set_lr(step, total_steps, schedule, warmup_steps, min_lr_ratio), state_dict(), load_state_dict(), and
-    .named = [(region name, torch optimizer)] (bench saves every one in checkpoint mode).
-    ocfg = cfg["optim"]: name adamw | muon | polar_muon_adamw, muon_impl, lr, muon_lr, weight_decay.
-  * adamw: torch.optim.AdamW (fused=True on CUDA).
-  * muon: Muon (Keller Jordan): momentum 0.95 nesterov, update = NS5(momentum grad) * max(1, rows/cols)**0.5,
-    Newton-Schulz coefficients (3.4445, -4.7750, 2.0315), 5 steps, bf16 (fp32 on GPUs without bf16: T4/P100/V100).
-    optim.muon_impl selects the per-matrix reference loop or a shape-batched torch.bmm implementation.
-    Muon handles 2D block weights (including routers). AdamW handles embedding parameters
-    (token table / KE projection / position table), output head, norm gains and biases. Decoupled
-    weight decay applies to AdamW matrices, not 1D biases or norm gains.
-    A parameter with grad=None is skipped, matching AdamW's unused-expert behavior.
-  * polar_muon_adamw: one torch optimizer combines AdamW with Polar Express Muon, row equilibration,
-    norm correction, factored variance reduction and cautious weight decay (single-process implementation).
-    optim.muon_impl=batched runs the Muon update on each group of same-shaped matrices at once (stacked, @ on
-    [n, rows, cols]); optim.adamw_impl=foreach runs its AdamW update as torch._foreach ops. loop is the
-    per-parameter reference for both; the state is per parameter either way.
-  * Regions (level 2): "opt.muon", "opt.adamw", or "opt.polar_muon_adamw" with "opt.muon" / "opt.adamw" inside;
-    (level 3): "opt.muon.ns" (once per matrix, or per shape group with muon_impl=batched; for polar_muon_adamw
-    it covers the whole Muon update of the matrix or group), "opt.zero_grad".
-  * flops(): Newton-Schulz FLOPs per step = sum over matrices of 5 * (4 m^2 n + 2 m^3), m <= n (for HFU).
-Cost to watch: one small matmul chain per matrix (8 experts x 2 x layers + attention + ...): likely
-launch-bound. `optim.muon_impl=batched` groups same-shaped matrices through bmm; `loop` remains the reference path.
+  build_optimizer(model, ocfg) -> Optimizers: zero_grad(), step(scaler=None), unscale(scaler), flops(), set_lr(...),
+  state_dict(), load_state_dict(), and .named = [(region name, torch optimizer)]. ocfg = cfg["optim"].
+
+Muon takes the 2D block weights (routers included); AdamW takes the embedding parameters (KE projection too), head,
+norm gains and biases. Weight decay applies to AdamW matrices only. A parameter with grad=None is skipped.
+muon: momentum 0.95 nesterov, NS5 (3.4445, -4.7750, 2.0315) in bf16 (fp32 without bf16), scaled by
+max(1, rows / cols) ** 0.5. muon_impl loop | batched (same-shaped matrices stacked); adamw_impl loop | foreach.
+flops(): Newton-Schulz FLOPs per step, sum of 5 * (4 m^2 n + 2 m^3), m <= n.
+Regions: level 2 "opt.muon", "opt.adamw", "opt.polar_muon_adamw"; level 3 "opt.muon.ns", "opt.zero_grad".
 """
 from __future__ import annotations
 
@@ -32,6 +18,7 @@ import torch
 
 from perfkit.regions import region
 
+# Quintic Newton-Schulz coefficients of the original Muon (5 steps).
 NS_COEFFS = (3.4445, -4.7750, 2.0315)
 
 # Polar Express Muon coefficients (five iterations).
@@ -45,6 +32,7 @@ POLAR_EXPRESS_COEFFS = (
 
 
 def _native_bf16():
+    """True when the GPU has native (not emulated) bf16."""
     try:
         return torch.cuda.is_bf16_supported(including_emulation=False)
     except TypeError:  # torch < 2.4
@@ -86,6 +74,8 @@ def zeropower_via_newtonschulz5_batched(G: torch.Tensor, steps: int = 5,
 
 
 class Muon(torch.optim.Optimizer):
+    """Nesterov momentum, then the Newton-Schulz orthogonalised update scaled by max(1, rows / cols) ** 0.5."""
+
     def __init__(self, params, lr=0.02, momentum=0.95, nesterov=True, ns_steps=5,
                  weight_decay=0.0, impl="loop"):
         if impl not in ("loop", "batched"):
@@ -147,16 +137,9 @@ class Muon(torch.optim.Optimizer):
 
 
 class MuonAdamW(torch.optim.Optimizer):
-    """Single-process combined optimizer using Polar Express Muon + AdamW updates.
-
-    Adapted from Andrej Karpathy's reference implementation:
-    https://github.com/karpathy/nanochat/blob/master/nanochat/optim.py
-    (MIT, Copyright 2025 Andrej Karpathy).
-    This port keeps the Polar Express, row equilibration, Muon+ norm correction, factored
-    variance reduction, and cautious decay update. Its collectives/sharded-state code is not
-    included, and these updates currently use ordinary PyTorch ops rather than its compiled
-    fused kernels; distributed use must go through a separately validated backend.
-    """
+    """Single-process Polar Express Muon + AdamW, ported from
+    https://github.com/karpathy/nanochat/blob/master/nanochat/optim.py (MIT, Copyright 2025 Andrej Karpathy).
+    Plain PyTorch ops; the collectives, sharded state and fused kernels are not ported."""
 
     def __init__(self, param_groups):
         super().__init__(param_groups, defaults={})
@@ -172,7 +155,7 @@ class MuonAdamW(torch.optim.Optimizer):
         p32, grad32 = p.float(), grad.float()
         exp_avg, exp_avg_sq = state["exp_avg"], state["exp_avg_sq"]
         beta1, beta2 = group["betas"]
-        p32.mul_(1 - group["lr"] * group["weight_decay"])
+        p32.mul_(1 - group["lr"] * group["weight_decay"])          # decoupled weight decay
         exp_avg.lerp_(grad32, 1 - beta1)
         exp_avg_sq.lerp_(grad32.square(), 1 - beta2)
         denom = (exp_avg_sq / (1 - beta2 ** step)).sqrt().add_(group["eps"])
@@ -191,6 +174,7 @@ class MuonAdamW(torch.optim.Optimizer):
         momentum_buffer.lerp_(grad, 1 - momentum)
         g = grad.lerp(momentum_buffer, momentum)
 
+        # Row equilibration: every row to the same norm, then the whole matrix just below norm 1.
         x = g.to(torch.bfloat16 if p.is_cuda and _native_bf16() else torch.float32)
         rows, cols = x.shape
         target = x.float().norm() / (rows ** 0.5)
@@ -198,7 +182,7 @@ class MuonAdamW(torch.optim.Optimizer):
         x = x * (target / row_norm).to(x.dtype)
         x = x / (x.norm() * 1.01 + 1e-6)
         red_dim = -1 if rows >= cols else -2
-        if rows > cols:
+        if rows > cols:                      # Polar Express iterations on the smaller Gram matrix
             for a, b, c in POLAR_EXPRESS_COEFFS[:group["ns_steps"]]:
                 gram = x.T @ x
                 x = a * x + x @ (b * gram + c * (gram @ gram))
@@ -208,8 +192,9 @@ class MuonAdamW(torch.optim.Optimizer):
                 x = a * x + (b * gram + c * (gram @ gram)) @ x
 
         g = x.to(p.dtype)
-        target_norm = min(rows, cols) ** 0.5
+        target_norm = min(rows, cols) ** 0.5        # norm correction: the norm of an orthogonal matrix
         g = g * (target_norm / g.float().norm().clamp_min(1e-6)).to(g.dtype)
+        # Factored variance reduction: an EMA of the per-row (or per-column) mean square, then keep g's norm.
         v_mean = g.float().square().mean(dim=red_dim, keepdim=True)
         second = state["second_momentum_buffer"]
         second.lerp_(v_mean.to(second.dtype), 1 - group["beta2"])
@@ -221,13 +206,16 @@ class MuonAdamW(torch.optim.Optimizer):
 
         lr = group["lr"] * max(1.0, rows / cols) ** 0.5
         wd = group["weight_decay"]
-        mask = (g * p) >= 0
+        mask = (g * p) >= 0                  # cautious decay: only where the update and the weight agree in sign
         p.sub_(lr * g + lr * wd * p * mask)
 
     @staticmethod
     def _muon_step_batched(params, states, group):
         """_muon_step on same-shaped matrices at once: one chain of launches per shape instead of per matrix.
-        The state stays per parameter (same keys as the loop, so checkpoints work with either impl)."""
+        The state stays per parameter (same keys as the loop, so checkpoints work with either impl).
+        Fewer launches than the loop (the step is host-bound): each Polar Express iteration is one Gram matmul and
+        two baddbmm (scale and add inside the matmul), one fp32 copy feeds both input norms, and the cautious weight
+        decay terms are skipped when weight_decay is 0. Same math; rounding differs slightly from the loop."""
         rows, cols = params[0].shape
         for p, state in zip(params, states):
             if not state:
@@ -240,20 +228,23 @@ class MuonAdamW(torch.optim.Optimizer):
         torch._foreach_lerp_(momentum_buffers, grads, 1 - momentum)
         g = torch.stack(torch._foreach_lerp(grads, momentum_buffers, momentum))      # [n, rows, cols]
 
+        # The same steps as _muon_step, on [n, rows, cols].
         x = g.to(torch.bfloat16 if g.is_cuda and _native_bf16() else torch.float32)
-        target = torch.linalg.vector_norm(x.float(), dim=(1, 2), keepdim=True) / (rows ** 0.5)
-        row_norm = x.float().norm(dim=-1, keepdim=True).clamp_min(1e-6)
+        xf = x.float()
+        target = torch.linalg.vector_norm(xf, dim=(1, 2), keepdim=True) / (rows ** 0.5)
+        row_norm = xf.norm(dim=-1, keepdim=True).clamp_min(1e-6)
         x = x * (target / row_norm).to(x.dtype)
         x = x / (torch.linalg.vector_norm(x, dim=(1, 2), keepdim=True) * 1.01 + 1e-6)
         red_dim = -1 if rows >= cols else -2
+        # b * gram + c * gram @ gram, then a * x + (x @ that or that @ x): two baddbmm instead of seven launches
         if rows > cols:
             for a, b, c in POLAR_EXPRESS_COEFFS[:group["ns_steps"]]:
                 gram = x.mT @ x
-                x = a * x + x @ (b * gram + c * (gram @ gram))
+                x = torch.baddbmm(x, x, torch.baddbmm(gram, gram, gram, beta=b, alpha=c), beta=a)
         else:
             for a, b, c in POLAR_EXPRESS_COEFFS[:group["ns_steps"]]:
                 gram = x @ x.mT
-                x = a * x + (b * gram + c * (gram @ gram)) @ x
+                x = torch.baddbmm(x, torch.baddbmm(gram, gram, gram, beta=b, alpha=c), x, beta=a)
 
         g = x.to(params[0].dtype)
         target_norm = min(rows, cols) ** 0.5
@@ -272,9 +263,11 @@ class MuonAdamW(torch.optim.Optimizer):
 
         lr = group["lr"] * max(1.0, rows / cols) ** 0.5
         wd = group["weight_decay"]
-        p = torch.stack(params)
-        mask = (g * p) >= 0
-        torch._foreach_sub_(params, list((lr * g + lr * wd * p * mask).unbind(0)))
+        if wd:
+            p = torch.stack(params)
+            mask = (g * p) >= 0
+            g = g + wd * p * mask
+        torch._foreach_add_(params, list(g.unbind(0)), alpha=-lr)
 
     @staticmethod
     def _adamw_step_foreach(params, states, group):
@@ -374,11 +367,7 @@ class Optimizers:
 
     def set_lr(self, step: int, total_steps: int, schedule="constant", warmup_steps=0,
                min_lr_ratio=0.1):
-        """Set each optimizer group's LR from its own base LR.
-
-        cosine warms linearly from zero, then decays to min_lr_ratio. constant
-        keeps timing runs at fixed rates unless a warmup is explicitly requested.
-        """
+        """Set each group's LR from its base LR: cosine (linear warmup from zero, decay to min_lr_ratio) or constant."""
         if schedule not in ("constant", "cosine"):
             raise ValueError(f"optim.schedule={schedule!r}: constant | cosine")
         if total_steps <= 0 or warmup_steps < 0 or warmup_steps >= total_steps:
@@ -428,13 +417,14 @@ class Optimizers:
 
 
 def build_optimizer(model, ocfg: dict):
+    """Optimizers for cfg["optim"]: 2D block weights to Muon, the rest to AdamW (everything to AdamW for adamw)."""
     named_params = [(n, p) for n, p in model.named_parameters() if p.requires_grad]
     params = [p for _, p in named_params]
     fused = params[0].is_cuda
 
     def adamw(named):
         decay, no_decay = [], []
-        for name, p in named:
+        for name, p in named:                # no decay for biases, norm gains and other 1D parameters
             (decay if p.ndim >= 2 and not name.endswith(".bias") else no_decay).append(p)
         groups = []
         if decay:
@@ -451,6 +441,7 @@ def build_optimizer(model, ocfg: dict):
         adamw_impl = ocfg.get("adamw_impl", "loop")
         if adamw_impl not in ("loop", "foreach"):
             raise ValueError(f"optim.adamw_impl={adamw_impl!r}: loop | foreach")
+        # 2D block weights go to Muon; embeddings, head, norms and biases to AdamW
         muon_params = [p for n, p in named_params
                        if p.dim() == 2 and n.startswith("blocks.") and n.endswith(".weight")]
         muon_ids = {id(p) for p in muon_params}

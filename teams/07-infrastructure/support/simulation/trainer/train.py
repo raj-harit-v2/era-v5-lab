@@ -26,6 +26,7 @@ import torch.distributed as dist
 import yaml
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+CODE_PATHS = (os.path.abspath(__file__), os.path.join(HERE, "tiny.py"))   # code_sha256: trainer, model, loader
 # support/simulation/ holds the trainer package; the team folder holds ckpt/ and common/.
 sys.path[:0] = [os.path.join(HERE, ".."), os.path.join(HERE, "..", "..", "..")]
 from ckpt.ckpt import (EXIT_DONE, EXIT_FATAL, EXIT_RETRY, Checkpointer, CheckpointError,  # noqa: E402
@@ -209,7 +210,7 @@ def main(argv=None) -> int:
     loader = SyntheticLoader(seed, a.global_batch, rank, ws)
     probe = make_probe_fn(seed)
     ck = (DSCheckpointer if a.deepspeed else Checkpointer)(a.run_id, a.local_root, a.remote_root, config_path=a.config, seed=seed,
-                                                       frozen_keys=FROZEN_KEYS)
+                                                       frozen_keys=FROZEN_KEYS, code_paths=CODE_PATHS)
 
     try:
         info = ck.restore(ddp, optim, loader, probe, from_step=a.from_step, skip=a.skip,

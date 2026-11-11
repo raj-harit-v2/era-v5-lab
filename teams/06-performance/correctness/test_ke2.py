@@ -1,15 +1,7 @@
-"""Kronecker Embedding v2 (models/ke2.py) against G4's fp64 dense codes.
+"""Kronecker Embedding v2 (models/ke2.py) against G4's dense fp64 encoder (teams/04-ke2/src/ke2/codec.py encode_f64).
 
-What this file proves:
-  * One @pair per byte table: "ke2" (random), "ke2.edge" (one byte, exactly P bytes, all 0x00, all 0xFF, repeats)
-    and "ke2.g4_table" (G4's committed raw table, all 131072 rows, sampled IDs). Each pair compares the fast
-    module (fp32, sparse: it never builds the D-dim code) with the reference (fp64, dense) on the outputs and on
-    the gradient of the projection weight. "ke2.bf16" is the same under bf16 autocast (TOLERANCES[bfloat16]).
-  * test_framework.py runs the 1.01x drill and the determinism check on every registered pair, so these are in both.
-  * G4's table is the one models/ke2.py loads by default, bound to our pinned tokenizer.json.
-
-The reference is G4's own dense fp64 encoder, teams/04-ke2/src/ke2/codec.py encode_f64 (G4 proof.md, Lemma 1),
-times the same weight in fp64. It shares no code with the fast path (embedding_bag over the support columns).
+Pairs: "ke2" (random table), "ke2.edge" (awkward tokens), "ke2.g4_table" (G4's committed table, sampled IDs) and
+"ke2.bf16"; outputs and the projection gradient. The reference shares no code with the fast embedding_bag path.
 """
 from __future__ import annotations
 

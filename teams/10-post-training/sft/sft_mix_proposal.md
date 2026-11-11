@@ -18,7 +18,7 @@ G10 post-trains an **agentic, code-first, multilingual (Indic + English) reasoni
      4. **Unknown generator:** any set whose generator model is unknown / not stated on the card is **out** (`excluded`).
    - **Record:** For every set in `licences/licence_table.md`, both the generator model and its licence are recorded.
 2. **Decontamination Gate (`sft/decontam_report.md`):**
-   - Every set is filtered through Team 9's `decontam_check.py` against `fingerprints/v2` (covering SWE-bench Verified/Live/Pro, Terminal-Bench 2, BFCL v3, HumanEval+, MBPP+, LiveCodeBench, Codeforces, AIME 2024/2025, GPQA Diamond, MMLU, MILU, FLORES-200, IN22, GSM8K) and recorded with its clean `set_sha256`.
+   - Every set that has converted chat rows is filtered through Team 9's `decontam_check.py` against `fingerprints/v2` and recorded with its clean `set_sha256`. The v2 set (`set_sha256` `2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a`) has 20 benchmarks, including SWE-bench Verified/Live/Pro, Terminal-Bench 2, BFCL v3, LiveCodeBench, Codeforces, AIME 2024/2025, GPQA Diamond, MMLU, MILU, FLORES-200, IN22, and GSM8K. It does not include HumanEval, HumanEval+, MBPP, or MBPP+.
 3. **ChatML `v0` & Loss Mask Gate (`chat-format/render.py`):**
    - Every sample renders deterministically with exact Team 3 token IDs (`<|im_start|>` `129994`, `<|im_end|>` `130816`, `<|endoftext|>` `130822`, `<|think|>` `130823`, `<|/think|>` `130824`, `<|tool_call|>` `130773`, `<|/tool_call|>` `130825`, `<|tool_result|>` `130774`, `<|/tool_result|>` `130826`).
    - **Loss masks** are `1` strictly on `assistant` turns (`<|think|>...<|/think|>`, `<|tool_call|>...<|/tool_call|>`, and final assistant reply) and `0` on `system`, `user`, and `tool` (`<|tool_result|>...<|/tool_result|>`) turns so the model never learns to hallucinate user prompts or untrusted tool outputs.
@@ -81,7 +81,7 @@ Because ERA V5 is an **agentic coding and reasoning model with first-class Indic
 - **SFT dataset list (all `TSAI reserves`):**
   - `sft-safety-indicguard` (`l3cube-pune/IndicGuard`): Indic/English safety labels and refusal supervision; derived from the Nemotron safety dataset.
   - `sft-safety-nemotron-guard-v3` (`nvidia/Nemotron-Safety-Guard-Dataset-v3`): English/Hindi and multilingual prompt/response safety supervision; derived from AEGIS 2.0.
-  - `sft-safety-aegis-v1` (`nvidia/Aegis-AI-Content-Safety-Dataset-1.0`): English dialogue-level guard/classification labels; uses HH-RLHF prompts with Mistral responses.
+  - `sft-safety-aegis-v1` (`nvidia/Aegis-AI-Content-Safety-Dataset-1.0`): English dialogue-level guard/classification labels; uses HH-RLHF prompts with Mistral responses. **Text-only: no assistant turn, so it is not SFT chat training data (see note below).**
   - `sft-safety-wildjailbreak` (`allenai/wildjailbreak`): Synthetic safety-response SFT with harmful/benign and vanilla/adversarial categories; generator and access-term facts are recorded for TSAI.
   - `sft-safety-nemotron-sft-v2` (`nvidia/Nemotron-SFT-Safety-v2`): Safe-response SFT for jailbreaks, over-refusal, bias and leakage. English reuses Safety-v1; six translated languages add no Indic coverage. The English teacher is unnamed; Riva-Translate-4B-Instruct-v1.1 translates. Keep shared v1/source content accounted for when selecting data.
 - **Training signal:** TSAI selects datasets and subsets after reviewing their licences, generators and intended use. Assistant-response SFT needs reviewed safe demonstrations; guard/classification records need their corresponding task format and label scope. Human safety labels and preference comparisons are different signals, and harmful assistant text is not a desired safe-response target. Balance refusal examples with helpful benign examples to avoid blanket refusal.
@@ -125,3 +125,37 @@ The five-set licence review above left the shares unchanged at that revision. Th
 - The separate safety evaluation list remains removed. The specifically requested alignment-faking-rl research artifact is documented in Stage 2 with its actual purpose and generator provenance.
 - **Commercial permission and lab eligibility are separate:** Anthropic/hh-rlhf is MIT-licensed, and Anthropic/alignment-faking-rl is CC-BY-4.0; those published licences permit commercial reuse subject to their terms. WildJailbreak's ODC-By licence covers database rights, not every right in its individual contents, and its Ai2 access conditions also apply. Closed-model provenance does not itself make a dataset non-commercial, but the week 2 rule still excludes closed-model-generated text. Keep these assessments as `TSAI reserves`; any exception to that rule requires an explicit TSAI decision before training. [HH-RLHF licence](https://github.com/anthropics/hh-rlhf/blob/master/LICENSE), [alignment-faking-rl card](https://huggingface.co/datasets/Anthropic/alignment-faking-rl), [CC-BY-4.0 terms](https://creativecommons.org/licenses/by/4.0/), [WildJailbreak card](https://huggingface.co/datasets/allenai/wildjailbreak), [ODC-By scope](https://opendatacommons.org/licenses/by/1-0/).
 - **Alignment-faking-rl training purpose:** Commercial reuse permission does not make its experimental evaluation transcripts desired safe-response demonstrations. The release contains misaligned reasoning and uses canaries/scrambling to limit accidental training contamination; preserve those precautions. TSAI decides whether it has a suitable mitigation/research role or any approved post-training use.
+
+## 7. Revision note (6 Nov): Indic quantity check
+
+Row counts for the Indic area, read from the Hugging Face datasets-server statistics and from `convert.py` runs on 6 Nov. Shares are not changed here.
+
+| Set | Rows for the ten proposal languages | Notes |
+| :--- | ---: | :--- |
+| `sft-indic-aya-dataset` | 41,261 | Tamil 14,133, Telugu 8,439, Panjabi 6,385, Gujarati 3,989, Marathi 3,545, Malayalam 1,749, Bengali 1,534, **Hindi 1,153**, Kannada 334, **Odia 0**. Single turn |
+| `sft-indic-aya-collection` (12 templated subsets) | 688,637 | 467,090 are `templated_telugu_news` and 170,848 are Hindi news or headlines (68% and 25%). Task-style, four scripts |
+| `sft-indic-indic-align-oasst-t` (new) | 19,909 | Human-written oasst1 conversations translated by IndicTrans2 (MIT). One language per conversation, about 2,000 each, Odia included. 12,686 have two or more assistant turns |
+| `sft-indic-indic-align-dolly-t` (new) | 10,541 of 15,011 | Human-written Dolly translated by IndicTrans2. 4,455 rows lost their context passage in translation; `convert.py` drops them (9 Nov) |
+
+What this means for the 15%:
+
+- **Human-written Indic chat is small and uneven.** `aya_dataset` has 1,153 Hindi rows and none in Odia, while Tamil alone is a third of it. Adding `oasst-t` gives the area its only multi-turn data and a near-even spread over the ten languages, roughly half again as many conversations as `aya_dataset`.
+- **`aya_collection` must be capped per subset.** Without a cap, Telugu news is two thirds of the Indic area. A cap of a few thousand rows per subset keeps the 12 subsets as task variety, not as the bulk.
+- **Proposed composition inside the 15%:** `aya_dataset` (all rows), `oasst-t` (all rows), `aya_collection` (capped per subset), `dolly-t` (10,541 rows after the context filter). All of them are short (effort `1k`), so the Indic share adds no long-reasoning data.
+- **Decontamination:** `oasst-t` was run on 6 Nov with fingerprints v2, full set: 9 of 19,909 rows flagged (`in22_conv`, `hle`) and removed, 0 canary, 19,900 kept. `dolly-t` was run on 9 Nov after the context filter: 0 of 10,541 flagged, 0 canary.
+
+## 8. Revision note (9 Nov): three more checks, and sets that are out
+
+The area shares stay **35 / 25 / 15 / 15 / 7 / 3**. Kept-row counts are not those shares.
+
+Added to `sft/decontam_report.md` on 9 Nov, same fingerprints, 0 canaries:
+
+| Set | Scope | Removed | Kept |
+|---|---|---:|---:|
+| `sft-code-commitpackft` | python split | 15 of 56,025 (0.03%) | 56,010 |
+| `sft-code-opencodereasoning-2` | all 70 python shards; questions joined from TACO, APPS, and code_contests | 115,067 of 542,219 (21.22%) | 427,152 |
+| `sft-math-nemotron-proofs-v3-sft` | first of 10 parts; only rows that fit the 64k budget | 42 of 1,757 (2.39%) | 1,715 |
+
+All 70 OpenCodeReasoning-2 python shards are converted. Of the 1,398,166 raw rows, 268,752 are upstream test splits, 3,629 are protected family, 513,809 fail the quality proposal and 69,690 are held because the `open-r1/codeforces` revision is not established; 542,286 join, 67 are rejected by the converter and 542,219 reach the scan, with 0 canaries. The joined rows are 19,825 distinct problems by position (19,340 by content at Jaccard 0.8). The 427,152 kept rows are 15,670 problems by position and 15,402 by content at Jaccard 0.8, about 2.54B trained tokens (2,539,177,884). In the proofs part, 18,266 of 20,023 source rows were over 64k and were not converted, so they were not checked.
+
+`sft-safety-aegis-v1` has no assistant turn. Its stored `text` column was still checked on 9 Nov (11,997 rows, 2 removed, 0 canary). That does not make it chat training data. `sft-safety-indicguard`, `sft-safety-nemotron-guard-v3`, `sft-safety-wildjailbreak`, `sft-safety-nemotron-sft-v2`, and `sft-code-self-oss-instruct` are `excluded`. So are `rl-community-alignment`, `rl-safety-hh-rlhf`, `rl-safety-alignment-faking`, and `rl-wildguardmix`. Until TSAI names an allowed safety set with chat rows, use the section 6 fallback: **0% Safety / 10% General**.

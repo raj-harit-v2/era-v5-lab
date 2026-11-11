@@ -59,3 +59,41 @@ def dec32(tables):
 @pytest.fixture(scope="session")
 def raw32(tables):
     return tables["raw", 32]
+
+
+@pytest.fixture
+def make_byte_table():
+    """Build a raw ``ByteTable`` from byte strings: ``make_byte_table(rows, P)``."""
+    import numpy as np
+
+    from ke2.tables import ByteTable
+
+    def build(rows, P):
+        buf = np.zeros((len(rows), P), np.uint8)
+        for i, r in enumerate(rows):
+            buf[i, : len(r)] = np.frombuffer(r, np.uint8)
+        lengths = np.array([len(r) for r in rows], np.int16)
+        return ByteTable("raw", P, buf, lengths, 0, 0, int((lengths == 0).sum()), "0" * 64)
+
+    return build
+
+
+@pytest.fixture(scope="session")
+def synthetic_p8():
+    """120 distinct non-empty tokens of 1..8 bytes at P = 8; row 7 is ``b"\\x00\\x01"`` (a real 0x00 byte)."""
+    import numpy as np
+
+    from ke2.tables import ByteTable
+
+    rng = np.random.default_rng(0)
+    P, rows = 8, []
+    while len(rows) < 120:
+        r = rng.integers(0, 256, rng.integers(1, P + 1)).astype(np.uint8).tobytes()
+        if r not in rows and r != b"\x00\x01":
+            rows.append(r)
+    rows[7] = b"\x00\x01"
+    buf = np.zeros((len(rows), P), np.uint8)
+    for i, r in enumerate(rows):
+        buf[i, : len(r)] = np.frombuffer(r, np.uint8)
+    lengths = np.array([len(r) for r in rows], np.int16)
+    return ByteTable("raw", P, buf, lengths, 0, 0, 0, "0" * 64)

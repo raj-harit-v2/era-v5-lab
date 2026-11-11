@@ -30,7 +30,7 @@ teams/07-infrastructure/
 ├── health/          node health     health_check.py, xid_scan.py, allreduce_test.py (4 collectives), thresholds.yaml
 ├── metrics/         monitoring      catalog.yaml (74 metrics), watch.py (live alerts), evaluate.py, explain.py, prices.yaml (cost inputs, no prices)
 ├── common/          shared          events.py (event format), reasons.py (every code → plain words + what to do)
-├── ops/             operations      launch.sh (start everything in order, checked), cluster.env.example
+├── launch/          operations      launch.sh (start everything in order, checked), cluster.env.example
 └── support/         optional: tests, the Docker Slurm simulation and its results, the test trainer, Kaggle GPU checks,
                      the cost model, reviews and merge plans
 ```
@@ -62,7 +62,7 @@ starts the test trainer from `support/simulation/trainer/` unless `V5_TRAIN_SCRI
 | How do we find broken GPUs? | checks before every job and every 30 s (GPUs, ECC, NVLink, Xid, 4 collectives); drain + save + move | a bad GPU costs seconds, not a crash |
 | How does a person know what to do? | every job, alert and drained node says what happened, what was done, what to do | `python metrics/explain.py <anything>` |
 
-## Starting production: `ops/launch.sh`
+## Starting production: `launch/launch.sh`
 
 > **In simple words.** A cluster must start in a fixed order: logins, the accounting database, the
 > controllers, the accounts, the GPU nodes. Then we prove the nodes are healthy and the checkpoint store is
@@ -71,11 +71,11 @@ starts the test trainer from `support/simulation/trainer/` unless `V5_TRAIN_SCRI
 > safe to run twice, so after a fix you go on with `--from <step>`.
 
 ```bash
-cp ops/cluster.env.example /etc/v5/cluster.env     # hosts, store, run id (no secrets)
-ops/launch.sh --list                               # the steps
-ops/launch.sh --dry-run                            # what would run where, nothing changed
-ops/launch.sh                                      # start everything
-ops/launch.sh --from health                        # continue after fixing a failed step
+cp launch/cluster.env.example /etc/v5/cluster.env     # hosts, store, run id (no secrets)
+launch/launch.sh --list                               # the steps
+launch/launch.sh --dry-run                            # what would run where, nothing changed
+launch/launch.sh                                      # start everything
+launch/launch.sh --from health                        # continue after fixing a failed step
 ```
 
 | Step | What it proves before going on |

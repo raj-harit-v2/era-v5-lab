@@ -1,37 +1,14 @@
 """The whole model: models.gpt.GPT against an fp64 model written from the definitions, on real Brahmic tokens.
 
-The parts have their own pairs (test_attention.py, test_ke.py, test_ke2.py, test_moe.py, test_reversible.py). This
-file checks that they fit together the way bench runs them: configs/base.yaml (the default config of bench and
-smoke) at full width and depth, so a change to base.yaml is tested as it is, the real
-BrahmicTokenizer-131K vocabulary and KE byte table, real text (English, Hindi, Tamil, Bengali, code), the reversible
-custom backward, the tied or untied 131072-row head and the fp32 cross-entropy. T is short (64) so it runs on a CPU.
-Weights: the model's own init, except the head x HEAD_SCALE. At init the softmax over 131072 tokens is nearly
-uniform, and a loss-side bug (label smoothing 0.01) then moves the loss by only 8e-6; with x10 by 5.8e-5.
+configs/base.yaml at full width and depth, the real vocabulary and KE byte table, real multilingual text, T = 64.
+The head is scaled by HEAD_SCALE so a loss-side bug moves the loss measurably. The reference reads only the
+model's weights: KE by its codec, LayerNorm / GELU / CE by formula, naive attention and RoPE (test_attention),
+dense MoE, and the stack by its recurrence with ordinary autograd.
 
-Reference (never calls the model's forward; reads only its weights): KE v1 codec built byte by byte; KE2 from
-G4's dense fp64 encoder (ke2.codec.encode_f64) on G4's raw table; LayerNorm,
-GELU and cross-entropy by formula; naive GQA attention (test_attention.naive_attention); MoE computed densely
-(every expert on every token, gate 0 when not chosen); RoPE by formula (test_attention.ref_rope); the stack by its recurrence (midpoint p_next = p_prev +
-2h f(p_curr), or plain x + f(x)) with ordinary autograd.
-
-Pairs (outputs logits and loss; every parameter gradient). Every pair is configs/base.yaml as it is; the variants
-change only the key named, so each other choice of base.yaml is still covered whatever base.yaml selects:
-  model.base             base.yaml, fp32. With MoE the reference routes by itself, so the router is checked too.
-  model.base.chunked     model.ce_impl=chunked, fp32: loss only (no logits), every gradient.
-  model.base.mtp         model.mtp=true (t+2 head, loss = ntp + mtp), fp32. The reference adds the t+2 loss.
-  model.base.mtp.chunked the same with model.ce_impl=chunked: both heads in checkpointed pieces.
-  model.base.<key>       model.embedding = table / ke1 / ke2, model.ffn = mlp / moe, model.attn_impl = sdpa / eager,
-                         model.reversible = true / false, model.activation = gelu / swiglu,
-                         model.position = learned / rope: the values base.yaml does not select.
-  model.base.activation_<a>.bf16 / .moe   the activation base.yaml does not select, under bf16 autocast (routing
-                         replayed as in model.base.bf16) and with model.ffn=moe (routed + shared experts), fp32.
-  model.base.bf16        base.yaml under bf16 autocast, TOLERANCES[bfloat16]. In bf16 a few tokens go to other
-                         experts than in fp64 (4 of 128 here), and a flipped token makes the expert gradients
-                         noise (13-26%). So this reference REPLAYS the fast routing (the expert choice only, from
-                         models.reversible._forward_recording); gates and experts are still computed in fp64.
-  model.base.position_<v>.bf16  the same bf16 pair with the model.position base.yaml does not select.
-The fp32 builder asserts that no routing decision is a near tie (margin > 1e-6): a near tie could flip between
-fp32 and fp64 and fail the pair for no bug. If that fires after a model change, change SEED.
+Pairs (logits, loss, every parameter gradient), each base.yaml with one key changed:
+  model.base, .chunked, .mtp, .mtp.chunked, .bf16 (routing replayed), .<key> for each value base.yaml does not
+  select (embedding, ffn, attn_impl, reversible, activation, position), and their bf16 / moe variants.
+The fp32 builder asserts no routing decision is a near tie; if that fires after a model change, change SEED.
 """
 from __future__ import annotations
 

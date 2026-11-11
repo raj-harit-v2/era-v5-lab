@@ -34,10 +34,12 @@ import platform
 import random
 import shutil
 import struct
+import subprocess
 import sys
 import threading
 import time
 import warnings
+from functools import lru_cache
 
 import numpy as np
 import torch
@@ -327,9 +329,54 @@ def device_class(model=None) -> str:
     return dev.type
 
 
-def env_manifest(config_path: str = None) -> dict:
+CKPT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+
+def _git(*args):
+    """stdout of a git command run in this file's checkout (not the cwd), or None without git metadata."""
+    try:
+        r = subprocess.run(["git", "-C", CKPT_DIR, *args], capture_output=True, text=True, timeout=10)
+    except (OSError, subprocess.SubprocessError):
+        return None
+    return r.stdout.strip() if r.returncode == 0 else None
+
+
+@lru_cache(maxsize=None)
+def provenance(env_sha: str) -> dict:
+    """Which source commit this process runs (issue #298). Recorded in the manifest, never must-match.
+
+    GIT_SHA wins if set (an exported tree, a job package); else the checkout's HEAD; else "none".
+    Cached per GIT_SHA value, so the warning events below fire once per process, not on every save.
+    """
+    head = _git("rev-parse", "HEAD")
+    dirty = None if head is None else bool(_git("status", "--porcelain", "--untracked-files=no"))
+    out = {"git_sha": env_sha or head or "none", "git_sha_source": "env" if env_sha else "git" if head else "none",
+           "git_dirty": dirty}
+    if env_sha and head and not (head.startswith(env_sha) or env_sha.startswith(head)):
+        out["git_sha_checkout"] = head
+        if rank() == 0:
+            emit("checkpoint.provenance_mismatch", git_sha_env=env_sha, git_sha_checkout=head)
+    if out["git_sha_source"] == "none" and rank() == 0:
+        emit("checkpoint.provenance_unknown", missing="git", detail="GIT_SHA unset and no git checkout")
+    return out
+
+
+def code_paths_from_env() -> list:
+    """V5_CODE_PATHS: extra files that change the numbers, separated by os.pathsep (':' on Linux/macOS)."""
+    return [p for p in os.environ.get("V5_CODE_PATHS", "").split(os.pathsep) if p]
+
+
+def code_sha256(paths=()) -> str:
+    """One sha256 over the contents of ckpt.py plus the files that change the numbers (trainer, model,
+    loader). Sorted per-file hashes, so the same files on another machine or path give the same value."""
+    files = {os.path.realpath(__file__)} | {os.path.realpath(p) for p in [*paths, *code_paths_from_env()]}
+    return hashlib.sha256("\n".join(sorted(sha256_file(f) for f in files)).encode()).hexdigest()
+
+
+def env_manifest(config_path: str = None, code_paths=()) -> dict:
     env = {
-        "git_sha": os.environ.get("GIT_SHA", "unknown"),
+        **provenance(os.environ.get("GIT_SHA", "")),
+        "code_sha256": code_sha256(code_paths),
         "image_digest": os.environ.get("IMAGE_DIGEST", "unknown"),
         "python": platform.python_version(),
         "torch": torch.__version__,
@@ -349,16 +396,20 @@ def env_manifest(config_path: str = None) -> dict:
 
 
 # Fields that must match to resume. A change in any of them changes the numbers training produces.
-ENV_MUST_MATCH = ("image_digest", "torch", "cuda", "nccl", "config_sha256", "tokenizer_sha", "git_sha",
+# git_sha is not here (issue #298): a docs-only commit must not hold the run; code_sha256 checks the code itself.
+ENV_MUST_MATCH = ("image_digest", "torch", "cuda", "nccl", "config_sha256", "tokenizer_sha", "code_sha256",
                   "omp_num_threads", "embedding_policy_id")
 # What a field means in a manifest written before the field existed.
 ENV_DEFAULTS = {"embedding_policy_id": "none"}
+# Fields not checked against a manifest written before they existed (we cannot know the old value).
+ENV_NOT_CHECKED_IF_MISSING = ("code_sha256",)
 
 
 def env_diff(saved: dict, now: dict, keys) -> dict:
     """{key: [saved, now]} for every key that differs."""
     return {k: [saved.get(k, ENV_DEFAULTS.get(k)), now.get(k)] for k in keys
-            if saved.get(k, ENV_DEFAULTS.get(k)) != now.get(k)}
+            if not (k in ENV_NOT_CHECKED_IF_MISSING and k not in saved)
+            and saved.get(k, ENV_DEFAULTS.get(k)) != now.get(k)}
 
 
 def load_loader_state(loader, state: dict):
@@ -419,7 +470,7 @@ class Checkpointer:
     def __init__(self, run_id: str, local_root: str, remote_root: str, branch: str = "main",
                  keep_local: int = 2, config_path: str = None, seed: int = 0,
                  frozen_keys: tuple = (), upload_timeout_s: float = 300.0, nvme_headroom: float = 1.2,
-                 verify_mode: str = None):
+                 verify_mode: str = None, code_paths=()):
         self.run_id = run_id
         self.branch = branch
         self.local_run = os.path.join(local_root, run_id)
@@ -427,6 +478,14 @@ class Checkpointer:
         self.store = open_store(self.remote_url)
         self.keep_local = keep_local
         self.config_path = config_path
+        # files whose change changes the numbers (code_sha256); checked now so a typo fails at start, not at save
+        self.code_paths = tuple(code_paths)
+        missing = [p for p in [*self.code_paths, *code_paths_from_env()] if not os.path.isfile(p)]
+        if missing:
+            raise FileNotFoundError(f"code_paths / V5_CODE_PATHS: no such file: {missing}")
+        if not self.code_paths and not code_paths_from_env() and rank() == 0:
+            emit("checkpoint.provenance_unknown", missing="code_paths",
+                 detail="code_sha256 covers ckpt.py only; pass code_paths or set V5_CODE_PATHS")
         self.seed = seed
         self.frozen_keys = tuple(frozen_keys)
         self.upload_timeout_s = upload_timeout_s
@@ -566,7 +625,7 @@ class Checkpointer:
             meta = {
                 "schema": SCHEMA, "run_id": self.run_id, "branch": self.branch, "step": step,
                 "tokens": tokens, "world_size": world(), "reason": reason,
-                "env": env_manifest(self.config_path),
+                "env": env_manifest(self.config_path, self.code_paths),
                 "keys": key_spec(state),
                 "state_digest": digest,
                 "frozen": {k[len("model."):]: v for k, v in frozen.items()},
@@ -752,7 +811,7 @@ class Checkpointer:
         verify_s = tv.s()
 
         # 2. Environment.
-        now = env_manifest(self.config_path)
+        now = env_manifest(self.config_path, self.code_paths)
         diff = env_diff(man["env"], now, ENV_MUST_MATCH)
         if diff and not allow_env_change:
             raise EnvMismatchError(f"environment differs from the checkpoint: {diff}")

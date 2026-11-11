@@ -1,18 +1,11 @@
 """pytest setup for the correctness tests.
 
-  * Puts teams/06-performance on sys.path, so `pytest teams/06-performance/correctness` works from the
-    repo root (the Gate 1 command) as well as from teams/06-performance.
-  * `device` fixture: cuda if available, else cpu. Each test's GPU memory is freed when it ends.
-  * A test that hits a stub (NotImplementedError) is reported as SKIPPED with the stub's name, not failed.
-    `pytest -rs` lists them. At Gate 1 no stub skip may be left (skips for missing CUDA / bf16 are expected
-    on a laptop).
-  * Only what configs/base.yaml uses runs by default. A test of a feature base.yaml does not select (MoE when
-    model.ffn is mlp, KE1 when model.embedding is ke2, SDPA when model.attn_impl is eager, ...) is DESELECTED:
-    it does not run and is not listed, and its 1.01 drill goes with it. `pytest correctness --all-configs` runs every test (Gate 1:
-    the KE, attention, MoE and reversible pairs must all pass). The rules are in config_requirements() below.
-    Exception: the strict xfail in test_ke.py (a recorded KE1 contract gap) always runs, so every run shows it.
-  * At the end of the run: one row per pair, grouped by area: the worst output and gradient error, how much
-    of the tolerance it uses, whether two runs were bit-identical, and PASS/FAIL with the first failure line.
+  * Puts teams/06-performance on sys.path, so the tests run from the repo root too.
+  * `device` fixture: cuda if available, else cpu; GPU memory freed after each test.
+  * A test that hits a stub (NotImplementedError) is SKIPPED with the stub's name (`pytest -rs`).
+  * Only what configs/base.yaml selects runs by default; `--all-configs` runs every test (rules in
+    config_requirements()). The strict xfail in test_ke.py always runs.
+  * At the end: one row per pair with its worst errors, tolerance use, determinism and PASS / FAIL.
 """
 from __future__ import annotations
 
@@ -245,7 +238,7 @@ def _used(err, tol) -> str:
 
 
 def pytest_terminal_summary(terminalreporter):
-    """Each pair's worst error against its tolerance (the Instructor asked for every test's error)."""
+    """Each pair's worst error against its tolerance."""
     from correctness.framework import RESULTS, TOLERANCES
     names = sorted(set(RESULTS) | set(FAILED_PAIRS))
     if not names:

@@ -1,0 +1,501 @@
+doc_id,read,verdict,diseases,evidence,hex,note
+c2926fcd7c9d9ef6,full,drop,D4,“ఇన్నింగ్స్ను 3 పరుగులకే నాటౌట్గా ముగించాడు” at offset 687 + “200 పరుగులకే ఆలౌట్ అయి” at offset 778 + “1/87 గణాంకాలతో ముగించడానికి ప్రకటించాడు” at offset 1052,,Match details garbled in a third of sentences.
+1476d4874c81f2a1,full,fix,D4;D5,“దండయాత్ర నిషేధం” at offset 1286 + “శిఖరాగ్ర స్థాయికి చేరుకోలేదు” at offset 857 + “మీటరుకు పెద్దదిగా మారుతుంది” at offset 2102 | “ప్రావిన్స్ యొక్క” at offset 128 + “యాత్ర యొక్క” at offset 1512 + “ప్రాంతం యొక్క” at offset 1750,,"Four యొక్క; empty () at 40, 69."
+e75cb610611b73de,full,drop,D4,“పెరోలి శాన్ ఆంటోనియో థండర్ యొక్క ప్రధాన కోచ్గా పేరు పెట్టారు” at offset 600 + “8 ఆటలను 1980 సీజన్లో తిరిగి” at offset 685 + “గేదె బ్లేజర్లతో” at offset 1018,,Career facts garbled in four of ten sentences.
+a28871107b0cefc2,full,fix,D4;D5,"“ఆమెకి, కొన్నిసార్లు వివాదాస్పద” at offset 166 + “స్ప్ చేసింది!దాని కారణంగా ts.” at offset 1923 + “అతి చిన్నవాడు” at offset 490 | “చీజ్ యొక్క స్మూత్ సాస్” at offset 918 + “కేఫ్ యొక్క గద్యం” at offset 1050 + “లైమ్ వ్యాధి యొక్క” at offset 2521",,Five యొక్క; visarga-as-colon x3; empty trailing headings.
+2c734bb02cc189c0,full,drop,D4,“తీరప్రాంత మరియు ఉప-తీరప్రాంత సిరలు” at offset 230 + “తరువాత మోచేయి వద్ద ఫెర్రూగినస్ పాచ్” at offset 659 + “వెనుక రెక్కల తీర ప్రాంతం” at offset 696,,Name and wing terms broken in half the sentences.
+bac1bebb9e10546c,full,fix,D5;G1,“మాలి యొక్క” at offset 25 + “నియాఫంకే యొక్క” at offset 57 + “నది యొక్క” at offset 148 | “-ిస్సా” at offset 172,172 U+002D + U+0C3F,Four chained యొక్క in two sentences.
+58ccc1772caa4323,full,fix,D4;G4,“చెప్పులు లేని వ్యాపారుల” at offset 889 + “డాగ్స్ ఆఫీస్ ఆఫ్ డాగ్స్” at offset 2155 + “చెప్పులు లేని పాదాలతో” at offset 2245 | “31⁄2” at offset 343,345 U+2044 FRACTION SLASH (expected U+00BD),Barefoot mistranslated as చెప్పులు లేని 11 times.
+c87b02ce78c6b01a,full,clean,,,,
+598eba99199f82ba,full,drop,D4,“గతంలో ఎస్. బి. పి. ఎన్.” at offset 55 + “విమానాశ్రయానికి సేవలు అందిస్తుంది” at offset 106,,Stub's core opening sentence broken by MT.
+d54c764be248da87,full,drop,D4;D5,“రేడియోని ప్రభావితం చేసింది” at offset 451 + “బెకెట్ దానిని తయారు చేశాడు” at offset 589 + “డ్రైవ్ చేసే వరకు అమ్మాయిని కలిగి ఉండాలని కలలు కంటారు” at offset 943 | “బ్యాండ్ యొక్క” at offset 222 + “ఎంటీవీ యొక్క” at offset 296 + “సింగిల్ యొక్క” at offset 498,,Context broken in a third of the sentences.
+e41f1014c0d989d5,full,fix,G3,“()” at offset 34,34 U+0028 + U+0029,Empty () left after the title.
+94111ca6a8b747be,full,drop,D4;D5,“22వ వ.” at offset 57 + “నిర్మించడానికి నిర్మించబడింది” at offset 317 | “రిచ్మండ్ యొక్క” at offset 78 + “ఫ్రీమాన్ యొక్క” at offset 184 + “వర్జినియా యొక్క” at offset 249,,"Address, location and purpose sentences broken."
+0f7559cb6c5f1f0b,full,fix,D4;D5,“అప్పుడు ముద్దు దాదాపు” at offset 753 + “పరస్పర మొదటి జట్టు మరియు ఎఫ్సి మిక్కెలి” at offset 1253 + “కోల్మోనెన్లో కిస్మేట్ ఆడారు” at offset 1809 | “ఫా యొక్క” at offset 177 + “మికీ యొక్క” at offset 1838 + “క్లబ్ యొక్క మూలాలు” at offset 1948,,Kissat as ముద్దు twice; 7 యొక్క; empty-trailing-headings.
+39a6ba9db8c951b9,full,drop,D4,“మూవ్స్ అనేది మొదట స్పై” at offset 19 + “నగదు కొరతను మరియు రుణం లేకుండా” at offset 1198 + “నిర్ణయం ఆటలు” at offset 1735,,MT breaks meaning in over a third of sentences.
+f6988fc2f6e4c95e,full,drop,D4,“వారికి మళ్లీ రుణం ఇచ్చాడు” at offset 325 + “అరంగేట్రం చేస్తాడు.సి.” at offset 435,,Loan story broken in most sentences of stub.
+aa7178c79c1a5228,full,fix,B3;D4;D5,"“<unk>” at offset 27 | “వేయించి, వేయించి ఉంటాయి” at offset 293 + “పిండి పిండి” at offset 349 + “వంటన్ను నింపడంతో సూచిస్తుంది” at offset 1057 | “విక్రయించబడుతుంది” at offset 173 + “వేయించబడుతుంది” at offset 1214 + “పిలువబడుతుంది” at offset 1341",,"ః used as colon at 25, 43."
+02f33ebabd373f9f,full,fix,D4,“కట్ చేశారు” at offset 824 + “స్టేసీ న్యాయశాస్త్రం” at offset 1324 + “క్రాస్ఓవర్ను మిస్ చేసిన మొదటి టీనేజ్గా చేస్తుంది” at offset 1498,,Also MT error at 682; empty headings near end.
+0a3d01b8c6658b82,full,fix,D4,“ఉత్పత్తి రేటు సంవత్సరానికి దిగువ గొయ్యి దగ్గరకు మందగించింది” at offset 2133 + “దీని బరువు మరియు పేరు” at offset 2247 + “మైనర్లను చిక్కుకుపోయింది” at offset 3636,,"MT nonsense in 5 places; empty parens, visarga-as-colon."
+f9d7cf6de63cc455,full,fix,D5,“ఏర్పాటు చేస్తారు” at offset 1008 + “క్షీణిస్తుంది” at offset 1068 + “కాలం యొక్క” at offset 139,,"Three present-tense past events, two యొక్క; visarga-as-colon 1529."
+9fbe66b3acd67921,full,clean,,,,
+d9d92df25bb9bbed,full,fix,D4;D5,“మూలిక లుబాలిన్” at offset 2810 + “ఇది రోండా.” at offset 2785 + “ఇది దాని రొండాకు అనుగుణంగా మరియు సరిపోయేలా ఉంటుంది” at offset 1943 | “హెర్బర్ట్ బేయర్ యొక్క” at offset 43 + “జో టేలర్ చేత” at offset 1709 + “బుర్కో బోల్డ్ యొక్క” at offset 1833,,ITC read as ఇది in 2 headings; 17 యొక్క.
+4b30858c5d979859,full,fix,D4,“ప్రాచుర్యం పొందిన మ్యాజిక్” at offset 560 + “పుష్కలంగా మేజిక్” at offset 3438 + “దిగ్గజాల నెట్బాల్” at offset 4211,,Team names mistranslated in seven places; male forms too.
+eb656d0cbf8d0add,full,fix,D5,“అరబిక్ ఫిక్షన్ యొక్క అంతర్జాతీయ బహుమతి” at offset 405 + “బిబిసి యొక్క 100 మంది” at offset 604 + “మహిళలను కలిగి ఉన్న” at offset 689,,Also four passive forms; gender slips are not D4.
+0a959795abcefb55,full,fix,D4,“ఎన్ని అనువర్తనాలను నిర్మించాలో కలిసి సమీకరించవచ్చు” at offset 126 + “యాహూ యొక్క ఏకకాల పరిచయంతో నమూనా లైబ్రరీ రూపకల్పన!” at offset 2147 + “నమూనాలను నమూనాలు అని పిలుస్తారు” at offset 3294,,Stripped list at 651.
+e61e3982f326eb8b,full,fix,C3;D4;D5,“6 మంది పిల్లలకు జన్మనిచ్చాడుః” at offset 63138 | “ఇంద్రియంలో” at offset 24533 + “నేను చనిపోయాను” at offset 60071 + “ఆర్ల్స్ యొక్క స్థిరాంకం” at offset 18630 | “రీమ్స్ యొక్క ఆర్చ్ బిషప్” at offset 4282 + “ఆరిల్లాక్ యొక్క గెర్బర్ట్” at offset 7518 + “బ్లోయిస్ యొక్క ఓడో II” at offset 20954,,Sens as ఇంద్రియం 4 times; ~230 యొక్క; empty parens.
+3cee2dafe3638c21,full,drop,B3;D4;D5,“<unk> <unk> <unk>” at offset 6106 | “యు యు యు ను యు. ఎస్” at offset 1610 + “కే రూ ని కాల్చుతుంది” at offset 3689 + “ప్లూరల్ ఎఫ్యూషన్ నుండి తిరిగి వేలాడదీశాడు” at offset 4897 | “అనీ చెన్ యొక్క నటన” at offset 3735 + “హుయాన్ యు యొక్క అత్త” at offset 2728,,Context broken in over a third of sentences.
+3411322a8c545381,full,fix,D4;D5,"“చెక్క గుర్రాల స్థానంలో” at offset 11968 + “ఆక్రమించడం, ఆక్రమించడం” at offset 7362 + “ఉపనది ఏర్పాటును” at offset 14490 | “అజరీకా యొక్క పునరుజ్జీవనం” at offset 1725 + “బదిలీ చేయడాన్ని చూసింది” at offset 1803 + “ఇరాక్ యొక్క శక్తివంతమైన” at offset 2010",,Strip 15 empty () and one ః colon.
+70686aeb9d01c41f,full,fix,D4;D5,“జూదం ఆడటం ద్వారా గాయపరిచారు” at offset 8286 + “గోధుమ రంగు చనిపోయింది” at offset 13345 + “ఆవులకు చేరుకుంది” at offset 9552 | “లాయిడ్ యొక్క జాబితా” at offset 3084 + “ద్వీపాల యొక్క బే” at offset 10573,,Names translated as common words; యొక్క calque 10 times.
+be350d2473cdb121,full,fix,D4,“సుమారు చేరుకోవచ్చు” at offset 496 + “సంభవిస్తారు” at offset 1066 + “మలం/మలం” at offset 1551,,"Also fragment at 142, larvae as వారు 1744."
+29d817ea07bbe2ef,full,drop,D4,“క్రింద నుండి మరియు మధ్య” at offset 253 + “ముఖానికి” at offset 439 + “యువరాజుల రహదారి” at offset 517,,Context broken in half the sentences.
+75b148520f49cdb3,full,fix,D4;D5,“తనను తాను వేరు చేసుకున్నాడు” at offset 853 + “సామ్రాజ్యం యొక్క గణన అయిన నెపోలియన్” at offset 1726 + “మార్షల్ గ్రౌచీని మార్చమని” at offset 2415 | “2 వ కార్ప్స్ యొక్క కమాండ్ను” at offset 1892 + “ఉత్తర సైన్యం యొక్క IV కార్ప్స్ యొక్క కమాండ్లో” at offset 2225 + “యాంట్వెర్ప్ కోట యొక్క” at offset 3181,,Wrong word senses in 5 places; 9 యొక్క calques.
+d78c631c2bf869ef,full,fix,A6,“ఫ్యూచర్ః” at offset 1296,1303 U+0C03,Visarga used as colon in a book title.
+e9288995d928919a,full,clean,,,,
+34c6cb0e205f3907,full,drop,D4,"“మొదటిది అతను గిటార్ను తన వాయిద్యం వలె వ్రాసాడు” at offset 238 + “తక్కువ సాక్స్ చికిత్సలు” at offset 572 + “వివా!"" లో ప్రత్యక్ష రూపం” at offset 1006",,Context broken in four of nine sentences.
+53644f0c34df4394,full,fix,G3,"“(,;” at offset 50",50 U+0028 + U+002C + U+003B,"Stripped dates leave '(,;' after the name."
+7cec415bb4bdc235,full,fix,D4;D5,“గడిపిన ముందు” at offset 286 + “అని పేరు పెట్టాడు” at offset 832 + “తన రాజీనామాను” at offset 960 | “చర్చి యొక్క” at offset 87 + “హోలీ సీ యొక్క” at offset 123 + “ప్రో-న్యూన్సియో టు ఇండోనేషియా” at offset 611,,Five యొక్క genitives and two English టు calques.
+7e27ab3473275db2,full,fix,D4,“దక్షిణాఫ్రికాలోని బులావేలో మధ్య” at offset 328 + “దాదాపు ఎక్కువ కాలం ఉంటుంది” at offset 502,,Two MT breaks; Bulawayo spelled three ways.
+053cde372562bf35,full,fix,D4,“ఉన్ని” at offset 8 + “బ్రిస్టోల్ నగరం” at offset 226,,"Two names mistranslated; stats table stripped, empty trailing headings."
+a87bb7429a970070,full,drop,D4,“హౌస్టన్ జూదగాళ్ళు” at offset 837 + “ఒక 33-21.” at offset 1197 + “మత్స్యకారుల స్థానంలో” at offset 1524,,"Names mistranslated, context broken in over a third."
+845c5979b164a551,full,fix,D4,"“మాకు $6,000” at offset 385 + “చురుకైన చిత్రంగా” at offset 1070 + “మోంటోయా.” at offset 1472",,"MT errors in four places, also 1502; rest usable."
+29196613cdcd085b,full,fix,C3;D4,“జాతీయ అలంకరణలను అందుకున్నారుః” at offset 1668 | “విలాసవంతమైన రాజకీయవేత్త” at offset 78 + “అధ్యక్షుడిగా పనిచేసిన డిప్యూటీస్ ఛాంబర్లో” at offset 128 + “ఇది ఏకైక పదం” at offset 1018,,MT errors also at 647; ః used as colon.
+048253a66db2c885,full,drop,D4,“రాపర్ అవకాశం ఇచ్చారు” at offset 187 + “శీర్షిక ప్రదర్శకులు” at offset 215,,Headliners garbled; half of a short stub broken.
+a46fcbf136a920a7,full,drop,D4;D5,“ఉనికిలో ఉన్నా లేదా ఉనికిలో ఉన్నా” at offset 5157 + “x అమలు చేయబడిన” at offset 4135 + “రస్సెల్ యొక్క పాత్రను స్ట్రాసన్ తప్పుగా విమర్శించారు” at offset 8377 | “రస్సెల్ యొక్క ఒక సూచించే పదబంధం యొక్క భావన” at offset 965 + “ఫ్రాన్స్ యొక్క ప్రస్తుత రాజు” at offset 2019,,Context broken in over a third of sentences.
+573657b0088d7648,full,clean,,,,
+95d7125b9d37e035,full,fix,D4,“ద్వంద్వయుద్ధంలో నమోదు చేయబడ్డాడు” at offset 516 + “ఒక ప్రయత్నం చేశాడు” at offset 650,,Wrong word senses in 2 of 7 sentences.
+5d65bd57a32f545d,full,drop,D4,“విత్తనాలు.” at offset 255 + “మొదటి నాలుగు విత్తనాలు” at offset 266,,Context broken in two of five lines (seeds).
+96d7b80d980f1d2e,full,fix,D4;D5,“సుగంధ” at offset 1255 + “ఎల్జిబిటిక్యు జనాభాకు చెందిన వారితో పోలిస్తే” at offset 8960 + “వివిధ యు ఉన్నాయి.ఎస్.” at offset 27432 | “మనస్తత్వశాస్త్రం యొక్క రంగం” at offset 110 + “ఈ వ్యక్తుల యొక్క” at offset 148 + “స్వలింగ సంపర్కం యొక్క పాథోలాజైజేషన్” at offset 5973,,"About 25 broken sentences, under a third; stripped lists."
+bae9636d02b0f6bb,full,fix,C3;D4;D5,“ఈ క్రింది వేదికలలో జరిగాయిః” at offset 2008 | “కమిటీవమెన్” at offset 1162 + “ప్రతి U నుండి” at offset 1463 + “ప్రతి చార్టర్డ్ యూనిట్ ఎన్ని ఓట్లు” at offset 1550 | “యునైటెడ్ స్టేట్స్ యొక్క డెమోక్రటిక్ పార్టీ యొక్క” at offset 80 + “సంస్థ యొక్క జాతీయ” at offset 489 + “yda యొక్క పాలక” at offset 814,,MT errors in 3 of 14 sentences; stripped lists.
+b24a823da79b8e29,full,drop,D4,“ఎర్ర దాడి చేసేవారు” at offset 1 + “కెన్ మేనార్డ్ నటించిన రోజెల్” at offset 120 + “మొదటి జాతీయ చిత్రాలు” at offset 157,,MT breaks 3 of 5 sentences in short stub.
+e828e080f1bc993a,full,fix,D4,“అభ్యర్థిత్వం కోసం ఎన్నికయ్యారు” at offset 1662 + “ప్రతి ఒక్కరి అధికారంలో ఉన్నారు” at offset 2002 + “ఆమె అధ్యక్షతన మంత్రి మండలి” at offset 2219,,MT breaks four of ~21 sentences; visarga-as-colon at 2515.
+c181e86973c9c464,full,fix,D4,“తాహేరా హెచ్ ప్రకారం.” at offset 671 + “అతను నివసించిన వెనిస్ కు వలస వచ్చి” at offset 992 + “భద్రపరచబడ్డాయి. పీటర్స్బర్గ్” at offset 1957,,MT breaks in about 4 of 17 sentences.
+3df020a2e6e4795d,full,fix,D4;D5,“నా అంత్యక్రియలు” at offset 682 + “వాంతుల రికార్డులపై” at offset 1321 + “చాప రికార్డులపై” at offset 1397 | “చేత హాకావిట్జ్ స్థాపించబడింది” at offset 426 + “విడుదల చేయబడ్డాయి” at offset 580 + “బ్యాండ్ యొక్క మునుపటి” at offset 1184,,Label names mistranslated in two of eleven sentences.
+7ec35da72069c62f,full,drop,D4,“ఆవు జీను ఉత్తరాన” at offset 86 + “ఒలివిన్ నదిపై పడి” at offset 158 + “విస్తృతంగా ప్రవహిస్తుంది” at offset 400,,Context broken in three of four sentences.
+e8d9b29cc44a0bed,full,fix,D4,"“సమీకరించడానికి రాబర్ట్స్.” at offset 1793 + “ల్యూక్, మరియు కాలేజియేట్ చోరేల్.” at offset 2354",,Two broken sentences of about 22; rest usable.
+e1b95a344ee931ad,full,fix,D4;D5,“ఆర్క్టిక్ కోతులు” at offset 109 + “లియోన్ రాజులు” at offset 127 + “బెట్టీ సర్వ్ చేయడానికి” at offset 967 | “రింబాడ్ యొక్క” at offset 200 + “బోహేమ్ల యొక్క” at offset 252 + “బ్యాండ్ యొక్క” at offset 511,,Band names mistranslated; strip stray '<' at three lines.
+77736f9e9be4c1ea,full,fix,D5,“ఉంచడానికి అనుకూలంగా ఉంది” at offset 209 + “యొక్క వారసులు ఉండటం” at offset 484 + “మరియు మూడవది” at offset 582,,Translationese throughout; last sentence broken; empty () removed.
+7fa0ec3272bae6f2,full,drop,D4,“అనేక గాలి యొక్క” at offset 357 + “గాలి సభ్యుల” at offset 464 + “అని చెప్పారు” at offset 527,,Context broken in two of four prose sentences.
+560e3887460bf27d,full,fix,D4,“ప్రత్యర్థులు నాలుగు నక్షత్రాల నియామకంగా పరిగణిస్తారు.కామ్” at offset 716 + “క్లీవ్లాండ్ కవళికలచే” at offset 7829 + “మిన్నేసోటా కలప తోడేళ్ళు” at offset 8646,,MT breaks meaning in about 7 places; most readable.
+07c362973462b492,full,fix,D4,"“యు లో ఒక ప్రవాహం.ఎస్.” at offset 26 + “మోంగాప్ లోయ, న్యూయార్క్.” at offset 701 + “ఊగుతున్న వంతెన జలాశయంలోకి” at offset 784",,About six local MT slips; final list stripped.
+cb70d94a91aa878f,full,fix,G3,"“""""” at offset 527",527 U+0022 + U+0022,Empty quotes left where a stats table was stripped.
+ce2bc614c90e48e1,full,clean,,,,One MT slip at 205; below D4 threshold.
+cea4bcd57ffee3d5,full,clean,,,,One MT slip only: LL.B. split at 282.
+ae7453a3683bcbc4,full,fix,D4;D5,"“ప్రవేశించారు.వర్డి "".” at offset 219 + “సిడిని ఊహించండి” at offset 1342 + “బ్యాండ్ను పక్కన పెట్టాడు” at offset 2484 | “శాస్త్రీయ సంగీతం యొక్క టురిన్” at offset 180 + “టురిన్ యొక్క సింఫోనిక్” at offset 412 + “మైఖేల్ పోర్టల్ యొక్క” at offset 1879",,MT breaks 4 of ~25 sentences; 4 visarga-as-colon.
+685f75e6485e4b41,full,clean,,,,
+8ee3a4fd303f802a,full,fix,D4;D5,"“""అసాధ్యం"" గా ఉండటం నుండి ఒర్టెగా బలం పొందింది” at offset 1027 + “దక్షిణాన యు. ఎస్. ఫిల్మ్ ఫెస్టివల్లో ""అసాధ్యం"" అని ఆమె కనుగొంది” at offset 1149 + “""అసాధ్యమైనది"" గా ఒర్టెగా ఉత్తమ దర్శకుడు” at offset 1381 | “వాణిజ్య విడుదలను చూసింది” at offset 800 + “ప్రదర్శన యొక్క వార్త” at offset 1214",,MT breaks about 4 of 18 sentences; visarga-as-colon twice.
+21f53eb34c325ee4,full,fix,D4;D5,“జన్మించిన అతని తల్లిదండ్రులు” at offset 305 + “ఆమె సన్నిహిత సహకారిని” at offset 3721 + “చివరి ముఖ్యమైన రచన ప్రచురించబడింది” at offset 6253 | “బ్రాసోవ్ యొక్క” at offset 1030 + “విశ్వవిద్యాలయం యొక్క” at offset 1620 + “హునాడి కుటుంబం యొక్క” at offset 1826,,About 5 broken sentences of 45; యొక్క 8 times.
+6aaa95b110924e1a,full,fix,A6;G3,“విభజించబడిందిః” at offset 549 | “1860లలో ఎన్నికలు.” at offset 1146 + “1870లలో ఎన్నికలు.” at offset 1166 + “1880లలో ఎన్నికలు.” at offset 1252,562 U+0C03 | 878 U+0020 (11x),Election tables stripped; ః used as colon once.
+d6284389fd69d7b6,full,fix,D4,“బ్లీడ్ బ్లీడ్ యొక్క” at offset 755 + “ఆరు పరుగులు” at offset 1107 + “ఒక టోపీని గెలుచుకున్నాడు” at offset 1287,,MT errors in three of eleven sentences.
+43b5c83edf48f270,full,fix,D4;D5,“జూల్స్ ఆంస్ట్.” at offset 340 + “అధిక సున్నితత్వం మరియు తక్కువ సున్నితత్వాన్ని” at offset 2222 + “బైపోలార్ ఐ మరియు బైపోలార్-ఐ” at offset 3639 | “హైపోమానియా యొక్క అంశాలు” at offset 359 + “అదే సమస్యలతో బాధపడుతోంది” at offset 2611 + “ఇప్పటికే ఉన్న చర్యలు” at offset 1260,,MT breaks five of 28 sentences.
+e8dbde5348f4a62a,full,fix,D4;D5,“అతనినిక్స్ వారసులు” at offset 1984 + “దాహక వ్యాసాల బెర్జ్స్కు” at offset 2588 + “1990 నుండి ఇవ్వబడిన ఈ సంస్థను స్థాపించింది” at offset 8308 | “మాడ్రిడ్ యొక్క ఎల్ సోల్” at offset 1049 + “రెండవ గణతంత్రం యొక్క” at offset 3066 + “బోర్డు యొక్క ఆర్కైవ్” at offset 4144,,MT breaks in ~12 of 50 sentences; stripped list.
+992948360b701835,full,drop,D4,“ఎస్ఆర్ ఉన్నాయి” at offset 314 + “జె. గాలాగర్” at offset 636 + “మొక్కజొన్న మార్పిడి” at offset 925,,Context broken in 5 of about 10 sentences.
+549012cfc4968754,full,fix,D4,“0:30 శకంతో” at offset 641 + “2.17 శకానికి” at offset 792 + “మట్టి కోళ్ళకు” at offset 930,,ERA as శకం twice; Mud Hens literal; rest sound.
+8981a4a65f1c3273,full,drop,D4,"“భవనం. జోసెఫ్, మిసౌరీ.” at offset 102 + “సెయింట్ లో ఉంది. జోసెఫ్” at offset 572 + “హృదయ భూమి ఆరోగ్యం” at offset 759",,Context broken in about half the sentences.
+2faf82eb1e33cbb3,full,drop,D4;D5,"“ఇప్పుడు అది 32 మంది కూర్చున్నారు” at offset 2486 + “ఎసి కార్లు కోసం జిస్బోర్న్” at offset 3812 + “తలపాగా మోసుకెళ్లడం” at offset 4487 | “ప్రయత్నం"" యొక్క క్యారేజీలు” at offset 724 + “రైలు యొక్క విశ్వసనీయత” at offset 5949",,Context broken in about 20 of 57 sentences.
+c6a8902c73289b17,full,drop,D4;D5,“ఒక జట్టు ఆటగాడు” at offset 1137 + “పాలు తాగుతూ పట్టుబడ్డాడు” at offset 4628 + “లించింగ్ బీన్ చేస్తానని” at offset 7407 | “శాంతి యొక్క న్యాయం” at offset 5830 + “బీన్ యొక్క కీర్తి” at offset 10489,,Context broken in about 35 of 90 sentences.
+d0693c2069163e1a,full,fix,C3,“రెండు జ్ఞాపకాల పుస్తకాలను రాశారుః” at offset 925,,Memoir list stripped after lead-in; quotes garbled once.
+92a1ce500a4c7f4f,full,drop,D4,“బిచ్చగాళ్ల విందు రికార్డులలో” at offset 1175 + “ఈ ప్రాణాంతకమైన కాయిల్ను” at offset 1363 + “మార్టిన్ మిల్లులకు” at offset 2037,,Context broken in about 7 of 17 sentences.
+f0820cdf267da330,full,drop,B3;D4,“<unk>” at offset 3951 + “<unk>” at offset 4441 + “<unk>” at offset 4552 | “కండ్లకలకల బంధాలను” at offset 2028 + “తగినప్పుడు లేదా తగినప్పుడు” at offset 1813 + “తలపోటు కలిగి” at offset 6038,,Context broken in a third of sentences; 11 <unk>.
+1dfc15bd899c7864,full,fix,D4;D5,"“ఏకీకృతం చేయవచ్చు.ఎస్. బి. వి, మరియు.” at offset 9193 + “కాగితం అభ్యర్థులను ఎన్నుకోబడతారు” at offset 11595 + “మద్దతు ఇవ్వడానికి ఇది.” at offset 643 | “ప్రచారం యొక్క సందేశంలో” at offset 500 + “సిబ్బంది యొక్క పొందికైన” at offset 1886 + “చెల్లింపు మీడియా యొక్క ప్రయోజనం” at offset 5377",,శాతం loops 217 times; about 8 MT slips; visarga-as-colon.
+5f614eee83dcd7bb,full,drop,D4;D5,“కోట తర్వాత” at offset 390 + “త్వరగా ముందు భాగానికి వెళ్ళాడు” at offset 503 + “తన సొంత పట్టుకోడానికి” at offset 1390 | “సామ్రాజ్యం యొక్క” at offset 98 + “కేథడ్రల్ యొక్క” at offset 672 + “చార్లెస్ v యొక్క” at offset 1672,,Context broken in about 6 of 14 sentences.
+86a81c1cd07ae575,full,fix,D4,“ఈ రెండూ మరియు నియమాలు” at offset 855 + “బుక్ వన్లో చేర్చండి” at offset 1029 + “గుర్రపు ఆదేశాలతో” at offset 1157,,MT errors in four of thirteen sentences.
+6bc1b77d89c11606,full,fix,D4,“జన్మించింది” at offset 210 + “ఫలితంగా వచ్చే జ్ఞానం” at offset 458,,"Broken clause; neuter verbs for a man, three times."
+c2179a0380a08f68,full,fix,D4;D5,“ఈ చిత్రం 1942లో రద్దు” at offset 212 + “జోవారియా వాహనాన్ని” at offset 3638 + “జపాన్ వృత్తి” at offset 5791 | “ఇండీస్ యొక్క చిత్ర పరిశ్రమ” at offset 1225 + “కళ యొక్క నాణ్యతను” at offset 1738 + “తారాగణం యొక్క నాన్-థియేట్రికల్” at offset 3877,,MT errors in about 12 of 47 sentences; visarga-as-colon.
+0afba23d206d1d2a,full,fix,D4,“వారికి మెరుగైన జీవితాన్ని అందించగలరు” at offset 1535 + “నేటి ప్రదర్శన విభాగంలో” at offset 1644 + “ఆందోళనలతో పాటు;” at offset 1889,,MT errors in 3-4 of 11 sentences; local.
+5bec6a3ca4355008,full,fix,D4;D5,“బంగారం కళాకృతి” at offset 1189 + “చార్లోట్టే సమూహం” at offset 1616 + “p లో ప్రసారం చేయబడింది.o.వి.” at offset 2487 | “శాంటియాగో ఆల్వారెజ్ యొక్క” at offset 314 + “పొగాకు పరిశ్రమ యొక్క” at offset 2555 + “ఫెస్టివల్ యొక్క” at offset 3190,,MT errors in about 7 of 30 sentences; visarga-as-colon.
+14c6c67a1af2e07f,full,fix,D4;D5,“పార్క్ ఉంది.” at offset 278 + “సంతోషకరమైన” at offset 583 + “ఉంటుంది.-పొడవైన” at offset 1489 | “పార్క్ యొక్క సైట్” at offset 291 + “చర్చి యొక్క భవనం” at offset 1367 + “విధి యొక్క ఒకే” at offset 2254,,MT errors in ~6 of 30 sentences; stripped list.
+79aae4509fe0dbcc,full,fix,D4;D5,“ఉల్లంఘనకారుడిగా” at offset 3285 + “వాణిజ్యపరంగా వంపుతిరిగిన” at offset 3666 + “అత్యవసర కుమార్తెచే” at offset 10103 | “ఈ ప్రజలలో” at offset 2586 + “దాని భాగం కోసం” at offset 8012,,MT errors in 15 of 78 sentences; 3 visarga-colons.
+49147b9da4e02fc1,full,fix,D4;D5,"“"""" ఏంజెలా లాన్స్బరీ ""నిర్మాణంలో""” at offset 1160 + “తులసి పాత్రకు” at offset 1469 + “నోయెల్ పిరికి” at offset 1901 | “గ్రానడా టీవీ యొక్క” at offset 754 + “డిస్నీ యొక్క” at offset 1383 + “""ప్రేమ యొక్క అంశాలు"" యొక్క” at offset 1588",,MT breaks in about 5 of 22 sentences.
+c17982dd660f65a2,full,drop,D4,“డిక్.” at offset 86 + “మరణిస్తున్న గ్రహం రెక్సర్ IV కి తిరిగి వస్తాడు” at offset 279 + “డిక్ యొక్క విద్యుత్ కలలు.” at offset 562,,Context broken in three of six sentences.
+84906b62c9dff33d,full,clean,,,,
+b62103db46cc8dad,full,fix,D4;D5,“8వ నిర్లిప్తతకు” at offset 1163 + “రెడౌట్ను దళం చేస్తున్నప్పుడు” at offset 2948 + “దళాలను ఒడ్డుకు వెళ్ళాడు” at offset 7038 | “కార్ప్స్ యొక్క” at offset 1148 + “అవమానకరమైన చిన్న నృత్యం” at offset 5614 + “జూదం చెల్లించబడింది” at offset 7980,,MT errors in a fifth of sentences.
+114cf608cc0c8dc8,full,fix,D4,“వేరేవారు” at offset 361 + “వ్యాయామశాలలో” at offset 525 + “వేరే వోల్హీమ్ను” at offset 647,,Three local MT slips; visarga-as-colon at 732.
+9cef2e47112c6d13,full,fix,D4;D5,“చాలా భక్తురాలు మరియు స్వలింగ సంపర్కం” at offset 2040 + “ఎప్పుడూ వృద్ధుడైన బాలుడు” at offset 3689 + “జాక్ యొక్క మారుపేరు బ్రియాన్” at offset 5129 | “ప్రదర్శన యొక్క ఐదేళ్ల రన్” at offset 391 + “చేత చిత్రీకరించబడింది” at offset 453 + “పిట్స్బర్గ్ యొక్క లిబర్టీ” at offset 731,,MT errors in about 12 of 65 sentences; visarga-as-colon.
+8ca3d3f03062fb27,full,fix,D4,“పెంచడానికి” at offset 799 + “శిఖరాగ్ర సదస్సులో” at offset 1156 + “HTTP:// చిన్నది.కామ్” at offset 1777,,"MT slips in four sentences; stripped list, ః-colon."
+59d01088b35a7cbd,full,fix,D4,“తరువాత అతను జేమ్స్ సి కి విక్రయించబడ్డాడు” at offset 486 + “రెండు రజత ఒలింపిక్ పతకాలు గెలుచుకుంది” at offset 529 + “అతను గ్రాజియానో మాన్సినెల్లికి విక్రయించబడ్డాడు” at offset 610,,MT errors in 3 of about 13 sentences.
+4a736329549610db,full,drop,D4,“యూకి సలహాదారుగా” at offset 400 + “ముందస్తుగా ముందుకు వచ్చి” at offset 1795 + “కెన్నెత్ ఎ విజయం సాధించాడు” at offset 2070,,Context broken in about 7 of 17 sentences.
+10c38833da843d90,full,clean,,,,
+19284c53604dfc22,full,clean,,,,
+2a1bf5ca4cf5f93c,full,fix,D4,“వచ్చింది.ఎస్. కాంగ్రెస్” at offset 615 + “ఒక CA ని” at offset 2163,,MT breaks two sentences; visarga-as-colon once.
+2bdad06abedeaa1c,full,fix,D4,“జన్మించాడు” at offset 138 + “చాలా మంది హిబ్రూ” at offset 415 + “మరణించాడు” at offset 1430,,Masculine verbs for a woman thrice; one quantifier mismatch.
+e8a9171224ef5845,full,fix,D4;D5,“గుర్రపు పందెం” at offset 5103 + “కొమ్ముల ఓటమి” at offset 9984 + “గౌరవాన్ని ఓడించాడు” at offset 10511 | “సమ్మనియ క్రమం యొక్క” at offset 102 + “బోధన యొక్క విస్తృతమైన ప్రాధాన్యత” at offset 2938 + “సూఫీ సంప్రదాయం యొక్క అంశాల” at offset 5257,,MT errors in ~25 of 139 sentences; visarga-as-colon.
+b04d22c04ea47594,full,clean,,,,
+e6db2988cb9bcdf2,full,fix,D4;D5,"“చోక్పాయింట్గా పరిగణించబడుతుంది.జి.” at offset 1353 + “సీషెల్స్ లోని ఊహ ద్వీపం” at offset 8294 + “ఫెన్సింగ్ ఏర్పాటు చేయడానికి” at offset 11588 | “భారత సాయుధ దళాల యొక్క” at offset 77 + “భద్రత, భద్రత” at offset 1558",,MT errors in about a quarter of sentences; visarga-as-colon.
+06c9843d503a8007,full,clean,,,,Name spelled three ways; one MT slip only.
+05248ba6824d9f1f,full,clean,,,,One MT slip at 462; not D4.
+d7d13ed37c277bea,full,fix,A6;B2,“λαki” at offset 26 | “<బిఆర్>” at offset 300,26 U+03BB + U+03B1,Also empty (;) and empty trailing heading.
+a33b1897b1457dc1,full,drop,D4;D5,“రెండు పర్యాయాలు పనిచేసిన పెద్దవాళ్ళు” at offset 509 + “ఒక బాధితుడు” at offset 1321 + “మీరు నా జాబితాను నడిపిస్తారు” at offset 3481 | “కోర్ట్ ఆఫ్ అప్పీల్స్ యొక్క” at offset 116 + “డెలావేర్ యొక్క అటార్నీ” at offset 354 + “ఎస్టేట్ యొక్క” at offset 1339,,Context broken in about 12 of 28 sentences.
+68f14759c20fb768,full,drop,D4,“ఎంసింటీ మరియు” at offset 67 + “ప్లాట్లు.” at offset 234 + “ఉబ్బిన యుద్ధంలో” at offset 268,,Context broken in three of four sentences.
+89d9603f0bc9ba86,full,fix,C3,“సభ్యులలోః” at offset 1241,,Final list stripped; mid-text list stripped at 1045.
+5166aabb4861ff4f,full,fix,C3,“పర్యాయపదము ఉంది;” at offset 270,,Synonym list stripped after semicolon lead-in.
+80dffad903accbeb,full,fix,D4;D5,“చిన్నవారి టార్టాన్” at offset 1772 + “సంతాపం చెప్పినట్లుగా” at offset 2318 + “ఇతరుల పట్ల ఆకర్షితుడయ్యాడు” at offset 2465 | “హాంకాక్ యొక్క అరగంట” at offset 1337 + “ఫ్రెడ్ యొక్క పై స్టాల్ యొక్క” at offset 1359 + “బిబిసి స్కూల్స్ యొక్క” at offset 1655,,MT errors in about six of 24 sentences.
+b578d52805722e28,full,fix,D5,“ఏంజిల్స్ యొక్క వెబ్” at offset 1 + “వెబ్ యొక్క హ్యాకర్” at offset 93 + “గిబ్సన్ యొక్క” at offset 414,,Calqued యొక్క three times; author name split once.
+d352fb4e6a80de95,full,fix,C3,“ఈ క్రింది 11 గ్రామాలు ఉన్నాయిః” at offset 807,,Village list stripped; empty () at 62; population missing.
+5a7b61b6960f11d8,full,drop,D4,“బరువు నుండి ఉంటాయి” at offset 537 + “వేర్లు వేస్తుంది” at offset 2143 + “చిన్నపిల్లల చెత్తకు” at offset 2319,,Meaning or grammar broken in 8 of 19 sentences.
+57b555b2a05b7a98,full,fix,G3,“()” at offset 30,30 U+0028 + U+0029,Empty () after the name; one grammar slip.
+3508443f21ce5514,full,fix,D4,“తన పాలనను ఏక ఇస్లామిక్” at offset 484 + “బహుశా అతని రచనలలో బాగా ప్రసిద్ధి చెందింది” at offset 842 + “మహమ్మద్ వి” at offset 649,,Meaning broken in 2 of 9 sentences; local.
+1f88aae063554937,full,fix,D4;D5,“ఇంట్లో తదుపరి” at offset 489 + “పని యొక్క” at offset 912 + “వేదికపై అతని భాగస్వామి” at offset 1046 | “నికో ముహ్లీ యొక్క” at offset 512 + “పుక్కినీ యొక్క” at offset 555 + “మోజార్ట్ యొక్క” at offset 728,,"MT errors local, 3 of 11 sentences; 7 యొక్క."
+03fb9b401e1502bc,full,fix,D4,“రెండవ అధ్యక్ష ప్రాధమిక వేదిక” at offset 127 + “ఆ తర్వాత 2007” at offset 325 + “టస్క్ అనేది సంభావ్య నామినీగా భావించారు” at offset 466,,Lead paragraph MT-broken in 3 places; rest clean.
+956be202bc7290d8,full,drop,C3;D4,“ఒక శిక్షకుడు సాధించిన అత్యధిక విజయాలుః” at offset 735 | “ఎనిమిదవ” at offset 263 + “మురికి మీద” at offset 291 + “నెలల తొలగింపు” at offset 474,,Context broken in 2 of 4 prose sentences.
+5b95cabc1c6bb77b,full,fix,C3;D4,"“ఇవి ఉన్నాయిః” at offset 5889 | “పుట్నం మరియు అతని కుమారుడు, ఎస్.” at offset 281 + “కార్పొరేటర్లు కుప్పకూలారు” at offset 1888 + “వైద్య మరియు వైద్య సంరక్షణ రోగులకు” at offset 2422",,MT errors in 6 of 45 sentences.
+30dba6607c964642,full,fix,D4,“సుగంధ ద్రవ్యాలు కలిగి ఉండవు” at offset 7413 + “ప్ర పరంగా” at offset 4079 + “దానిది మరియు” at offset 11492,,MT errors in about 20 of 100 sentences.
+e48ce213509a7e61,full,fix,A6;D4;D5;G4,“న౉కల్లా” at offset 2595 + “న౉కల్లా” at offset 11576 | “శవం ఆక్రమించిందని” at offset 6058 + “అభిమానులపై వైకింగ్లు” at offset 7195 | “ఫ్యానాడ్ యొక్క ప్రకృతి దృశ్యం ఆకారంలో ఉంది” at offset 2766 + “మానవ జోక్యానికి రుణపడి ఉంటుంది” at offset 3984 | “1⁄2 మైళ్ళు” at offset 11124,2596 U+0C49 (2x) | 11124 U+0031 + U+2044 + U+0032 (expected U+00BD) (4x),పెద్ద repeated 227x; 4 U+2044; visarga as colon.
+9a70c84e0864dda8,full,drop,D4;D5,"“రుణ సొరచేపకు” at offset 724 + “ఇశినోసుకే, మిస్టర్. మునుపటి” at offset 1181 + “ముందస్తు యొక్క యమురా” at offset 1423 | “శ్రీమతి యొక్క కఠినమైన” at offset 262 + “వ్యాపారవేత్త యొక్క” at offset 343 + “దుష్ప్రవర్తన యొక్క” at offset 1839",,Context broken in about 9 of 22 sentences.
+2af91e27831c93ec,full,drop,D4;D5,“దుకాణాలు ఆక్రమించబడి” at offset 535 + “మిస్టర్. కుంభకోణం” at offset 766 + “రాండీ వాస్తవానికి ప్రభువు” at offset 1135 | “యొక్క స్వరబద్ధమైన స్వరంగా” at offset 424 + “పట్టికలు చివరకు తిరగడం” at offset 5360 + “యొక్క ప్రైవేట్ బాత్రూమ్” at offset 1488,,Context broken in a third; యస్ loops 127x.
+26cd044e77de9c0e,full,clean,,,,
+c479291220807749,full,fix,D4,“పసుపు జాకెట్లు” at offset 535 + “షారే రీడ్ కోసం గెలుచుకున్నాడు” at offset 1547 + “వారి కొత్త సంవత్సరం” at offset 1671,,MT errors in 6 of 35 sentences.
+6c464db945054a12,full,drop,D4,“బాల సంస్కృతి” at offset 406 + “గమనించబడింది.కె.” at offset 2205 + “కీలక దశలో 2 మంది” at offset 5685,,Context broken in about 13 of 41 sentences.
+318ea9dc78a95835,full,fix,G3,“()” at offset 38,38 U+0028 + U+0029,Empty () left after the title.
+dc2be05c6c9e6383,full,fix,D4,“చీజ్ క్లబ్” at offset 879 + “నాకౌట్ ఫార్మాట్లో జరిగింది” at offset 1450 + “మచ్నాన్ ఆర్ తో కలిసి” at offset 1590,,MT breaks 3 of ~22 sentences; stripped list.
+e2f3aa550af80ad3,full,fix,D4,“ఇమ్మాన్యుయేల్ జె. నిర్మించారు” at offset 135 + “డా. తిరిగేది” at offset 1374 + “పొగ పొగను కార్బెల్” at offset 5545,,MT breaks about 18 of 73 sentences.
+df223df450d13dda,full,drop,D4,"“ఒక కౌంట్ సింప్లిసియస్, మరియు” at offset 301 + “ఎర్విగ్ను జనరల్ కౌన్సిల్ అని పిలిచారు” at offset 572 + “బిషప్ హాజరైనవారుః” at offset 845",,Context broken in three of seven sentences.
+092a8d42f599af0d,full,fix,C3,“నిర్మాణానికి ఉదాహరణలుః” at offset 737,,Stripped list at end; remove last lead-in line.
+310cdd8998973fd0,full,fix,D4;D5,“U లో ప్రారంభ యూరోపియన్ అన్వేషకులు.ఎస్.” at offset 513 + “ఒక పుష్పం కోసం” at offset 1658 + “ఆగ్నేయ యు యొక్క కర్రలు.ఎస్.” at offset 5593 | “వెదురు యొక్క ఒక జాతి” at offset 50 + “సరిహద్దుల యొక్క వారి చుట్టుకొలతలను” at offset 4668 + “కర్రల యొక్క” at offset 1987,,8 of ~50 sentences broken; 18 యొక్క; stripped-list.
+bb1309ec2ecee6c7,full,drop,D4;D5,“కఠినమైన ఎంబ్రాయిడరీ” at offset 1 + “దీనిని అప్పుడు పిలిచేవారు” at offset 1093 + “గట్టి దుస్తులు ఇప్పటికీ” at offset 3772 | “ఎంబ్రాయిడరీ యొక్క ఒక రూపం” at offset 196 + “పత్తి యొక్క రెండు బరువులు” at offset 2248 + “ఫాబ్రిక్ యొక్క ప్రాంతాలను” at offset 2948,,Context broken in 12 of 32 sentences.
+2a211903b3901e31,full,drop,D4;D5,“పూజించబడేవి” at offset 461 + “నార్విచ్ పాఠశాల నగరంలో” at offset 696 + “రాజు యొక్క లిన్” at offset 3613 | “నోర్ఫోక్ యొక్క” at offset 95 + “గర్నీ యొక్క బ్యాంకు యొక్క” at offset 863 + “ఆంగ్లియా యొక్క విస్తృత ప్రాంతం యొక్క” at offset 2934,,Context broken in about 11 of 30 sentences.
+3255998c61e1ab38,full,fix,D4,“తుప్పు” at offset 234 + “సెనేట్ (7 వ డి.)” at offset 565,,MT errors in two of about ten sentences.
+663df53aed17ecfd,full,drop,D4;D5,“ఆమె సమయం నుండి ఒక పాట” at offset 357 + “ఘర్షణ” at offset 424 + “ప్రతిజ్ఞాత్మకమైనవిగా” at offset 667 | “సోలో సింగిల్స్ యొక్క” at offset 219 + “2018 యొక్క” at offset 1150 + “బిఫ్కో యొక్క” at offset 1258,,Context broken in five of eight sentences.
+38c7656aa2d5cb66,full,fix,D4,“(మొదలైనవి)” at offset 3415 + “వారికి అవసరమైనవి మొదలైనవి” at offset 3757 + “ఇందులో క్రైస్తవ మరియు ముస్లిం సెలవులు ఉంటాయి” at offset 4696,,Three local MT errors; ః-as-colon four times; stripped list.
+9766b168bdd949a9,full,drop,D4;D5,“ఆమె తన పుస్తకం” at offset 353 + “సంస్కరించబడిన మంత్రి” at offset 641 + “వర్గీకరించబడ్డాయి” at offset 994 | “యొక్క” at offset 279 + “పాఠాలను అనుసరించింది” at offset 331 + “సెట్ చేయబడింది” at offset 883,,Context broken in 4 of 8 sentences.
+a6b4cfc20494b4ad,full,fix,D4,“ధరిస్తారు” at offset 394 + “సాధారణ ఆర్డర్ అని పిలిచే” at offset 961 + “అంతర్జాతీయ ప్రజాదరణను కొలిచారు” at offset 1201,,MT breaks 5 of 22 sentences; remove empty ().
+65cacfc1caebf8fe,full,clean,,,,
+5913f75a9f71a35b,full,fix,A6,“ఉన్నాయిః” at offset 324,331 U+0C03,Visarga used as colon once.
+d0133fed9adbee93,full,drop,D4,“ప్రధానమైనది మరియు ఎస్ఎంటి.” at offset 183 + “పాఠశాల కార్యదర్శి షిల్పీ సిన్హా” at offset 210,,Context broken in two of four sentences.
+961c0be4cd1d5bef,full,drop,D4,“నిద్రిస్తున్న బోలు” at offset 142 + “ఎస్టేట్ల పుట్టగొడుగుతో” at offset 660 + “ఎన్. పీపుల్స్” at offset 906,,Context broken in five of eleven sentences.
+3dbf4ee7290f1569,full,drop,D4,“తక్కువ దూరంలో లేదు” at offset 774 + “ఐడి1” at offset 1129 + “అడుగులు అందుబాటులో” at offset 1272,,Context broken in about a third of sentences.
+ef6a2d0eae34eb6d,full,fix,D4,"“1993లో పతనం తరువాత, పతనం కంపెనీ” at offset 171 + “2022లో పంపిణీ చేయబడిన” at offset 2422 + “సౌకర్యవంతమైన స్థాయి” at offset 2562",,Three local MT slips; two visarga-as-colon fixes.
+2fc2496d4435083f,full,fix,D4,“ఇల్క్లీ నుండి మరియు ఓట్లీ నుండి ఉంది” at offset 265 + “గోపురం పుస్తకంలో” at offset 559 + “సేలం చర్చిని నియమించారు” at offset 4026,,MT errors in about 7 of 37 sentences.
+b61666502c18b14f,full,fix,D4,“ఒక సౌండ్ కంపెనీకి అందించాడు” at offset 361 + “టోంగర్లోని పరిచయం చేశాడు” at offset 411 + “రెస్టారెంట్లుగా ఉండేవారు” at offset 543,,MT errors in 4 of ~20 sentences; visarga-as-colon.
+79167d66fe9ef5eb,full,fix,B2;D4,“<</Â>” at offset 1534 | “హగ్ డిల్లాన్ను నటించింది” at offset 192 + “హక్కులను మాకు” at offset 1417 + “బాగా వెళ్ళండి” at offset 2036,,"Episode table stripped; headings ఆవరణ, గాలి also mistranslated."
+7119840a32b605ff,full,fix,D4,"“డి లో జన్మించాడు.సి.” at offset 268 + “మార్చారు.""మరియు” at offset 1467 + “తిరిగి వచ్చాడు.ఎం.” at offset 2070",,MT breaks in 7 of 25 sentences.
+ba750845c856a1ae,full,drop,D4,“చివరికి ఫైనల్లో రజత పతకాన్ని గెలుచుకుంది” at offset 422 + “ఆమె ఆరవ స్థానంలో ఇటలీ” at offset 464 + “అతను 800 మీటర్లలో” at offset 121,,Context broken in two of five sentences.
+fddde8575acbed55,full,clean,,,,
+2a84780c85c5ac81,full,fix,D4,“తన మొదటి ప్రొఫెషనల్ గోల్ను” at offset 476 + “3-3తో హోమ్ ఓటమి” at offset 670 + “ఫ్రాంఛైజీని రోమాకు తిరిగి పిలవబడింది” at offset 754,,MT grammar breaks in 4 of 11 sentences.
+93550f19023585c6,full,drop,D4,"“జనాభా 22,880,2005” at offset 158 + “పట్టణ, మరియు క్రూస్” at offset 518",,"MT breaks two of five sentences, including population."
+b6884bf86d98b4cd,full,fix,D4;D5,"“తన పట్ల ఉన్న అభిమానం కారణంగా” at offset 1566 + “రాబందు యొక్క జస్టిన్” at offset 4511 + “""గ్లో"" ఆల్బమ్ విడుదలతో” at offset 3276 | “క్లార్క్సన్ యొక్క సాటిలేని” at offset 2099 + “అదే శీర్షిక యొక్క” at offset 938 + “ప్రధాన విక్రయ బిందువుగా” at offset 4153",,About 5 of 25 sentences broken; empty headings.
+28c06d56fa392fa3,full,drop,D4,"“ఎథెల్రెడ్, ఒక వసంతకాలంలో నిర్మించబడింది” at offset 119 + “వసంతకాలం కోరింత దగ్గును నయం చేస్తుందని” at offset 1359 + “కోలన్ పూర్తిగా చంపబడ్డాడు మరియు ప్రాణాంతకంగా గాయపడ్డాడు” at offset 1732",,Context broken in about 6 of 14 sentences.
+7e48733cced1144d,full,fix,D4,“ఐరోపా చుట్టూ ప్రదర్శించబడింది” at offset 974 + “ఈ జీవితచరిత్ర చిత్రం చుట్టూ తిరిగింది” at offset 2238 + “మాన్యుస్క్రిప్ట్ను దర్శకత్వం వహించి” at offset 2501,,MT errors in 3 of about 26 sentences.
+67fc17f08368c2ea,full,fix,D4;D5,“ఈ పాట యొక్క క్లాప్టన్ యొక్క వివరణ” at offset 1075 + “స్వర బలహీనతలను పెంచడానికి” at offset 1588 + “అవి అండ్ ఫేర్ వెదర్ లో” at offset 2304 | “స్టీవీ వండర్ యొక్క” at offset 57 + “గ్యాప్ బ్యాండ్ యొక్క” at offset 424 + “వీడియో యొక్క ఇతర” at offset 2489,,MT errors in 4 of 22 sentences; యొక్క 9x.
+c377b3bbc45b322d,full,fix,D4,"“పర్యటించింది.ఎస్.కెనడా” at offset 913 + “""గ్రామ వాయిస్"" ""కొరుకు""” at offset 1205 + “""చక్రవర్తి యొక్క కొత్త లింగం"" ""2000లో""” at offset 2878",,MT broken in about 5 of 30 sentences.
+19d2d10b976535b1,full,fix,G3,“()” at offset 38,38 U+0028 + U+0029,Empty () left after the title.
+22790fca42e6d292,full,fix,D4;D5,“గోధుమ-కర్టిస్” at offset 1776 + “ఏమీ తక్కువకు పెంచలేదు” at offset 11937 + “గుర్రం యొక్క ఇనుప శిలువను” at offset 38807 | “ఓడ యొక్క వేగవంతమైన ప్రయాణ పరిధి” at offset 2090 + “బీటీ యొక్క నౌకలు” at offset 10693,,"MT errors local, about a fifth; empty ()."
+728b18e855d549a1,full,fix,D4;D5,“ప్లాట్లు.” at offset 473 + “అందరికీ ఉచితం” at offset 1502 + “కీర్తి యొక్క టాక్” at offset 214 | “చిత్రం యొక్క” at offset 393 + “వ్యక్తి యొక్క” at offset 643 + “చర్యల యొక్క” at offset 1195,,MT slips in 3 of ~12 sentences; empty ().
+0657bda400c18f9a,full,fix,G3,“ప్లేఆఫ్స్.” at offset 227 + “సెమీఫైనల్స్” at offset 238 + “ఫైనల్” at offset 250,237 U+000A,Four empty trailing headings; their content was stripped.
+13463b3601c38392,full,fix,A6;D4,“сahin” at offset 31 + “сahin” at offset 278 + “сahin” at offset 740 | “వెర్షన్లు.ష్.” at offset 157 + “(సాయ్) ఉత్పత్తి చేసే” at offset 607 + “తగ్గుతుంది.” at offset 4931,31 U+0441 CYRILLIC SMALL LETTER ES (12x),Cyrillic с in 12 сahin; visarga-as-colon at 3186.
+6a0c735d9a7d6783,full,drop,D4,“జలభూమి సానిచ్టన్లో నివసించింది” at offset 416 + “1986లో జలభూమి అటవీ మంత్రి” at offset 649 + “బి అధ్యక్షుడిగా పనిచేశాడు.సి.” at offset 727,,Context broken in about four of ten sentences.
+81d0e79dbe9aba06,full,clean,,,,
+aa6abb462d5f6cae,full,clean,,,,One MT slip at 231-276; below D4 threshold.
+c5d93e7ac79edc97,full,drop,D4,“నిరాశకు గురైనట్లు లేదా నిరాశకు గురైనట్లు” at offset 337 + “కాబోయే భర్త” at offset 541 + “వేడుక ద్వారా పరుగెత్తుతుంది” at offset 622,,"MT errors break 3 of 6 sentences, plus heading."
+976b619191078e2d,full,drop,B4;D4,“<ఐ. డి. 1>%” at offset 611 + “<ఐడి3” at offset 2108 | “కమ్యూనిటీ.ఎస్.” at offset 97 + “జనాభా సాంద్రత ఉండేది” at offset 1125 + “27.మొత్తం” at offset 1697,,Context broken in about nine of 30 sentences.
+5ade89f17cf9e6f2,full,fix,D4,“అతని మరణం తరువాత అతను ఈ ఆస్తిని” at offset 905 + “కార్ ఒక బానిస” at offset 1168 + “దయ (ముగ్గురు” at offset 1709,,MT meaning errors in 3 of 17 sentences.
+e6a72ee325a87204,full,fix,A6,“గతంలోః” at offset 117,122 U+0C03,Visarga used as colon once.
+3a893808e4e1c72e,full,drop,D4,“ఒక ప్రస్తావనగా విభజించబడింది” at offset 165 + “తగ్గించడం మరియు తగ్గించడాన్ని” at offset 674 + “మసక వీక్షణను” at offset 797,,Context broken in 3 of 7 sentences.
+f5f9ae9a76e4a3df,full,fix,D4,“ఆకు గొడ్డలిలో” at offset 736 + “5 దీర్ఘవృత్తాకారాలు” at offset 783 + “నాలుగు పుండు పుండు” at offset 1192,,MT breaks 3 of ~20 sentences; visarga-as-colon once.
+8c2d5e65feff784c,full,fix,D4,“అతని పెనాల్టీ సేవ్ ఎగువన” at offset 1428 + “తన కారు కేవలం 49వ ఏట” at offset 2374 + “అంతర్జాతీయ ఫ్రంట్కు అనువదించబడ్డాయి” at offset 2919,,MT broken in 3 of ~20 sentences; trailing headings.
+5c1b142ee4cd51b6,full,drop,B2;D4,“<</Â>” at offset 434 | “ఎ అని పిలుస్తారు” at offset 111 + “చైనీస్ పాత్ర” at offset 201 + “కేంద్ర అక్షరాన్ని” at offset 253,,MT breaks two of three sentences; tag junk.
+ea61bb9b483c1a1c,full,fix,C3;D4,“ఆపరేటింగ్ యూనిట్లు ఉన్నాయిః” at offset 3384 | “యు లో దాఖలు చేయబడింది.ఎస్.” at offset 750 + “సాంకేతిక రంగుల సృజనాత్మక” at offset 2257 + “ఎంపీసీ బ్రాండ్ కింద x.” at offset 2552,,MT breaks about 5 of 25 sentences; ః-colon.
+d9629ff60f5f0525,full,fix,D4,“అత్యల్ప ఎత్తులో ఏర్పడింది” at offset 590 + “ఏ వ్యక్తి యొక్క భూమిలో” at offset 8190 + “బురద యుద్ధ విరమణ” at offset 10072,,"MT errors in ~15 of 150 sentences; visarga-as-colon, stripped-list."
+54046acf611d189c,full,fix,D4;D5,“వాక్యాలు ఏకకాలంలో నడిచాయి” at offset 945 + “సగం ఇంట్లో” at offset 2273 + “దుస్తులు లేదా గొడ్డలిని” at offset 13610 | “దాడి యొక్క నిరంతర ఒత్తిడి” at offset 1183 + “న్యాయం యొక్క అపసవ్యమని” at offset 5815 + “వాలా వాలా యొక్క మరణశిక్షలో” at offset 11012,,MT errors in about 20 of 116 sentences.
+537ff595a138062b,full,drop,D4;D5,“నక్క నెట్వర్క్ గ్రూపుతో” at offset 105 + “21వ శతాబ్దం కాని నక్క” at offset 527 + “అత్యున్నత చిత్రాల అధ్యక్షుడయ్యాడు” at offset 3587 | “సెంటర్ థియేటర్ గ్రూప్ యొక్క” at offset 998 + “స్టూడియో యొక్క” at offset 3788 + “యాక్సిలరేటర్ యొక్క” at offset 4750,,Context broken in about a third of sentences.
+157a782ff76c4f62,full,fix,D4,“అతను ఈ రహస్యాన్ని రాష్ట్రం నుండి ఉంచుతాడు” at offset 1539 + “ప్రివీ కౌన్సిల్లో క్రైస్తవులకు” at offset 1894 + “కుళ్ళిన టమోటాలు” at offset 6395,,About 8 of 55 sentences broken; empty ().
+0031a75f67b7686b,full,fix,G3,“సిబ్బంది.” at offset 250,259 U+000A,Personnel list stripped under the heading.
+edbdd66ba7126402,full,fix,D4,“పతనం సీజన్” at offset 441 + “50 పెంచుతారు” at offset 1848 + “#ఆఫ్ టైమ్స్” at offset 2166,,MT errors in 4 of 20 sentences; stripped lists.
+ade1aec14e02e1d1,full,drop,D4,“గోధుమలో ఉన్న గోధుమ సెంట్రల్” at offset 324 + “యు. ఎస్ లో చేరాడు.ఎస్.” at offset 595 + “అగ్నిపర్వతపు ఘోరమైన వడగండ్ల వాన” at offset 2168,,Context broken in about half the sentences.
+a24c90404fdf16bd,full,fix,G3,“()” at offset 25 + “()” at offset 387 + “()” at offset 403,25 U+0028 + U+0029 (5x),Five empty () left; last sentence garbled.
+44b2e14122ab4d48,full,drop,D4,“విలియం హెచ్ నిర్మించారు. పార్కర్.” at offset 256 + “పార్కర్ ఈ ప్రదర్శన కోసం ఉద్దేశించబడింది” at offset 526,,Context broken in two of five sentences.
+79ffa3922340ae95,full,drop,D4;D5,“స్నేహాన్ని అందిస్తాయిః” at offset 661 + “సుమారు ఘన ట్రాక్ గుండా” at offset 814 + “నిటారుగా వంపు కంటే తక్కువ ఎత్తులో ఎక్కుతుంది” at offset 1063 | “కొత్త స్వర్గధామం నగరం యొక్క” at offset 76 + “పశ్చిమ నది యొక్క” at offset 527 + “సొరంగం యొక్క” at offset 712,,Context broken in about 5 of 12 sentences.
+c279797705afc4b8,full,clean,,,,
+7a21f952cbcb1596,full,fix,G3,“()” at offset 116,116 U+0028 + U+0029,Empty () left after the league name.
+3794ab209c947058,full,drop,D4,“స్టేషన్ ఆగిపోయింది” at offset 17 + “రోఫ్ గ్లాస్కోడ్ చేయడానికి” at offset 557 + “పెంచబడ్డాయి” at offset 758,,Context broken in 4 of 8 sentences.
+4cee5e326be6f4f2,full,fix,D4,“వివాహం చేసుకున్నాడు l.” at offset 373 + “ఎద్దుల పరుగు” at offset 714 + “గౌరవప్రదమైన విధ్వంసం” at offset 759,,MT breaks 4 of 16 sentences; under a third.
+3874fcb6df40d6d7,full,fix,D4,"“అధికారంలో స్పాన్సర్” at offset 1793 + “ప్రదానం చేయబడింది” at offset 2696 + “అనువర్తిత సూక్ష్మ నమూనాలు, తయారీదారులు” at offset 2898",,MT breaks 3 of about 27 sentences.
+0ad351f0927c623b,full,fix,G3,“(;” at offset 41,41 U+0028 + U+003B,Stripped pronunciation leaves '(;' after the name.
+144dc2c7be45c5d0,full,drop,C3;D4,“అదనపు సిబ్బందిః” at offset 2108 | “తోలుబొమ్మల కోసం స్వీడిష్ క్విన్టెట్ విచారకరమైన రోజు” at offset 64 + “దిగువ లేని రాతి గిటార్” at offset 1597 + “నేను తోలుబొమ్మ యొక్క యాంప్లిఫైయర్ కోసం విచారకరమైన రోజున” at offset 1697,,Context broken in about a third of sentences.
+ece2c016b6dd2f17,full,fix,D4;D5,“బ్యాంకుగా ఉన్నందున” at offset 1371 + “కవి నాన్ గొర్రెల కాపరి” at offset 3591 + “అలెగ్జాండర్ గ్రాహం గంట” at offset 5981 | “పౌండ్ స్టెర్లింగ్ యొక్క” at offset 150 + “స్కాట్లాండ్ యొక్క అత్యంత ప్రసిద్ధ” at offset 2369 + “వంతెనల యొక్క అదే” at offset 2435,,MT breaks in ~8 of 45 sentences; visarga-as-colon x3.
+bb81ff91fdb77c98,full,fix,D4,“చిన్న వంటకాలపై” at offset 1071 + “ఒక్కొక్కటి ట్రాన్స్పాండర్ మరియు” at offset 1706 + “సహ-ఉన్న సెస్-5 ఉపగ్రహం.” at offset 1857,,MT breaks 3 of about 14 sentences.
+4fb50057ff02d750,full,fix,D4,“మరియు లేదు. 99” at offset 661 + “లేదా ల్యాండో” at offset 3184 + “ప్రజలకు పరిమితులు లేకుండా” at offset 4449,,MT breaks in about 10 of 45 sentences; visarga-as-colon.
+d6907e91acaf7eed,full,drop,D4,“నారింజ రంగు తాళాలను కలుసుకున్నారు” at offset 899 + “జట్టు సభ్యులు అధ్యక్షత వహించారు” at offset 2655 + “16-10 పై సాధువులు” at offset 3794,,Context broken in about 12 of 28 sentences.
+2090feda89270c9e,full,fix,D4,"“యోషిటోమోలో చేరాడు” at offset 773 + “నేను ప్రతిదానికీ” at offset 1046 + “పక్షులు, మృగం మరియు పూల గ్యాలరీ జింక్” at offset 1571",,MT errors in 3 places; stripped list at 1330.
+8e4eccf6fd0875e3,full,drop,D4,“నకిలీ తల్లిదండ్రుల” at offset 441 + “రాజులు ఓగుండు చిందా” at offset 563 + “అందం a. చిందా” at offset 1417,,Context broken in about seven of twelve sentences.
+07e4bfc491689567,full,fix,G3,“అవిః” at offset 493 + “నిర్వహిస్తారుః” at offset 690,496 U+0C03 (2x),Two lists stripped after lead-ins ending in ః.
+f59064977fc40969,full,drop,D4;D5,“యు లోని ఒక కౌంటీ.ఎస్.” at offset 53 + “గేదె జాతీయ నది” at offset 664 + “వీటిలో% మంది” at offset 5507 | “అర్కాన్సాస్ యొక్క 66వ కౌంటీ” at offset 174 + “సమాజం యొక్క జీవితంలో” at offset 984 + “కౌంటీ యొక్క జాతి అలంకరణ” at offset 5200,,Context broken in about 40 of 110 sentences.
+ef9445145a1d8e04,full,fix,D4,“గాడిద ఆల్టెన్బర్గర్” at offset 1 + “వర్సెస్” at offset 1846 + “దగ్గరగా ఉంది” at offset 5850,,"Brand as గాడిద 14x, వర్సెస్ 6x; mid-text stripped lists."
+b141ce00326b9099,full,drop,D4,"“యూ డా. కు మేనకోడలు” at offset 617 + “మీరు కొలంబియా విశ్వవిద్యాలయంలో చదివారు” at offset 655 + “అంతర్జాతీయంగా ప్రసిద్ధి చెందిన, మీరు డా.” at offset 2474",,Context broken in about 40% of sentences.
+cdebb429b9a9e4fb,full,fix,C3;D4,"“ఉపవిభజన చేయబడిందిః” at offset 1882 | “తెల్ల వేట” at offset 681 + “ఒక ప్రాంతం ఉండేది” at offset 1483 + “161,885,1891” at offset 1534",,MT breaks 4 of 20 sentences; empty ().
+77c22702a4210404,full,drop,D4,“10లో మొదటిది అమెరికా ప్రో మోడ్” at offset 366 + “చూడటానికి డ్రాగ్ రేస్ అనే టైటిల్ను కలిగి ఉంది” at offset 666 + “కాంక్రీట్ ప్రయోగశాల పర్యటనలో” at offset 869,,Context broken in about a third of sentences.
+135bc37cf2e5f3ce,full,fix,B4;D4,"“!కొల్న్ = 9 శైలి = "" |” at offset 911 + “!కొల్న్ = 9 శైలి = "" |” at offset 948 | “కౌంటర్గా ఉండేది” at offset 523 + “మొత్తం రికార్డుతో సీజన్ ముగించి” at offset 787",,Wikitable lines; 2/7 sentences MT-broken; empty headings.
+69131e3f36723659,full,fix,D4,“ఇండియన్ బాణాల కోసం” at offset 584 + “ఎఫ్ తో ఆడతాడు.సి.” at offset 695 + “భారత బాణాలు 0-1తో” at offset 760,,Team name as arrows thrice; broken F.C. sentence.
+b7ab4eb273edc7ce,full,drop,D4,“పచ్చిక బయళ్ళు” at offset 27 + “మహిళల జతల విక్టోరియా” at offset 92,,Short stub's event name broken; also at offset 78.
+43c6009c4c3fa9d1,full,fix,D4,"“ఈ చిత్రాలను” at offset 406 + “లాటిన్ (""అందించబడింది"") నుండి వచ్చింది” at offset 774 + “చుట్టడానికి, తద్వారా” at offset 932",,MT errors in 3 of about 10 sentences.
+5bd30f6858dc8fd2,full,drop,C3;D4,“జాతీయ దళ కమాండర్లుః” at offset 2998 | “కోయ్ మరియు కోయ్ మాత్రమే” at offset 925 + “పంపిన విమానాలను కూడా మోహరించారు” at offset 1769 + “ప్రముఖమైన హెచ్ఎంఎస్ లో” at offset 1884,,Context broken in about ten of 25 sentences.
+9602048f8864f4cf,full,fix,D4,“71వ తేదీని” at offset 1344 + “లొంగిపోయారు” at offset 1426,,MT slips in 3 of 17 sentences; empty ().
+09241043f91d59cf,full,fix,B3;D4;G4,“<unk>బోలు అనేది” at offset 9 + “<unk>ebolu యొక్క” at offset 344 + “<unk> నది” at offset 6933 | “నేటి నగరమైన కురె” at offset 691 + “మీరు సహజంగా మిమ్మల్ని మీరు సంబోధించే” at offset 1335 + “పశువులను సాగు చేస్తారు” at offset 5613 | “̃నేబోలుని” at offset 392 + “̃nebolu ద్వారా” at offset 1602,391 U+0020 + U+0303 COMBINING TILDE (expected U+02DC) (5x),"14 unk, 8 stray tildes; MT broken ~12/100 sentences."
+9f04c92239e38c58,full,fix,B2,“>” at offset 219,,Stray '>' left from a removed tag.
+c16371299da8e911,full,fix,C3,“ఈ క్రీడలలో పోటీపడతాయిః” at offset 437,,Sports list stripped after final lead-in; visarga-as-colon.
+a2e4b096338c321b,full,drop,D4,“చర్చి అడ్మిరాలిటీకి” at offset 1478 + “ముద్ర ప్రకారంః” at offset 2269 + “కంటి చూపు వద్ద” at offset 6879,,Context broken in about a third of sentences.
+a159bb53277b0e87,full,fix,B2,“<బిఆర్>” at offset 379 + “<బిఆర్>” at offset 397 + “<బిఆర్>” at offset 415,,"Six transliterated br tags; stripped-list, empty headings."
+e1b7e347f30e22d7,full,fix,D4,“దీనిని” at offset 71 + “భరించాడు” at offset 436 + “ఆమె మరియు చంద్రుడు మరియు సూర్యుని సోదరుడు” at offset 463,,"MT errors in 3 of 9 sentences, local."
+416a45e735f685a7,full,drop,C3;D4;D5,“వర్గీకరించే స్టేషన్లోః” at offset 2763 | “ఈ కర్మాగారం తెరిచి ఉండింది” at offset 500 + “ఈ మొక్కను” at offset 1128 + “ఆరుగురు ప్రయాణీకులు-ద్వారా” at offset 1587 | “అక్వీ టెర్మ్ యొక్క” at offset 187 + “పట్టణం యొక్క” at offset 310 + “ట్రాక్ పార్క్ యొక్క” at offset 1190,,Context broken in about 8 of 19 sentences.
+5dd0659c3ff06dea,full,clean,,,,
+af0c232e95ad3ab5,full,fix,D4,“అతను హెచ్ సభ్యుడిగా” at offset 172 + “బొగ్గు వ్యతిరేక ఉదారవాది” at offset 2819 + “మెక్కిన్నాన్ కలపను” at offset 3545,,MT errors in about 7 of 35 sentences.
+c6f7f5d8fac58f5a,full,fix,G3,“పతకం సారాంశం.” at offset 395 + “పురుషుల సంఘటనలు.” at offset 409 + “మహిళల సంఘటనలు.” at offset 449,408 U+000A,Medal tables stripped; five empty headings remain.
+8d5070fe1957af3b,full,clean,,,,
+c5ed70b9cedc6bbc,full,fix,D4,“భారతదేశం మరియు భారతదేశం” at offset 172 + “చిన్నగది కారును” at offset 591 + “కత్తిరింపు” at offset 1172,,Wrong word senses in 3 places; rest sound.
+05f0dcb3cff077db,full,fix,G3,“()” at offset 475,475 U+0028 + U+0029,Empty () left; stray (మరియు) once.
+ea9772556018ee4d,full,drop,D4,“బ్రుమ్మ్మ్మ్” at offset 115,,Syllable మ్ loops 249 times; stub unusable.
+e4fe07a89c880285,full,drop,D4,“యు ని నియంత్రిస్తారు.ఎస్.” at offset 782 + “ఓడించాడు.ఎస్.” at offset 1204 + “గోధుమ రంగు సాధారణంగా” at offset 1498,,Context broken in about half the sentences.
+cac8249415d4b54b,full,fix,D4,“ఎత్తు వరకు పెరుగుతుంది” at offset 536 + “ఈ పొదలు గులాబీ” at offset 808 + “అలెక్స్ జార్జ్ ఈ జాతిని” at offset 2201,,About 5 of 27 sentences broken; mid-text stripped list.
+f7327893ff4e3b8d,full,fix,D4;D5,“భావోద్వేగాన్ని భావోద్వేగానికి తగ్గించదు” at offset 1946 + “బిల్లీల నుండి యుద్ధ బిల్లులను” at offset 2288 + “పురాణం మరియు పురాణం యొక్క త్రవ్వకం” at offset 2851 | “అడవి యుద్ధం యొక్క” at offset 2661 + “ఆస్ట్రేలియా యొక్క” at offset 3288 + “మానవత్వం యొక్క” at offset 3359,,"7 of 35 sentences broken; ః-colons, stripped list."
+a00bfbdbeaf2afaa,full,drop,D4,"“ఉదయం నాటికి” at offset 264 + “అది మిమ్మల్ని చంపుతుందా?""నరకం వీడ్కోలు” at offset 328 + “అనేది పురాణం” at offset 404",,Album-list sentence broken; one of three sentences.
+ac54e8ff5b932c53,full,fix,D4,“ప్రధానమైనవాడు” at offset 641 + “పాత డొమినియన్” at offset 1268,,"Two local MT errors; remove empty (,) at 30."
+077a7f9accc6c7a0,full,fix,D4,“సంతకం చేశారు” at offset 328 + “సరిపోల్చడం” at offset 413,,MT wrong sense in 2 of 8 sentences; visarga-as-colon.
+f9269dfb3df3a314,full,drop,D4,“అందమైన బ్యాంకు” at offset 23 + “ఎటువంటి భాగం లేదా చాలా లేదని” at offset 860 + “అందరూ లేని మరియు స్నేహితులను” at offset 1084,,Context broken in 4 of 9 sentences.
+36ab1f706ebfae61,full,clean,,,,
+53a7be3900247795,full,fix,D4,"“ఇక్కడ అతను 1930లో” at offset 374 + “సుసాన్ రీనోల్డ్స్, భూస్వామ్య భావనను ప్రశ్నించుతుంది” at offset 957 + “f లో ఉంది.ఎల్.” at offset 1726",,MT breaks 3 of about 17 sentences; visarga-as-colon fixed.
+cda92050f0bc99ee,full,clean,,,,
+4c66553f2e36df76,full,fix,B4;D4,“(ID1)” at offset 616 | “రంగాలలో ఉన్నారు” at offset 1448 + “పాదముద్రను” at offset 1686 + “అతను గెస్టాల్ట్” at offset 126,,PII placeholder; MT errors in 5/14 sentences; visarga-as-colon.
+fbc06e41a24bff00,full,drop,A6;D4,“оталооvá” at offset 125 | “2 యొక్క 13వ సీజన్” at offset 50 + “сесссссссече” at offset 112 + “జట్టు మారుతుంది” at offset 140,125 U+043E CYRILLIC SMALL LETTER O | 131 U+0076 LATIN SMALL LETTER V,Stub core facts broken; rest are empty headings.
+b30684846f8f4a97,full,fix,D4,“అధ్యక్ష డిక్రీ నెం. 557 అధ్యక్షుడు ఫెర్డినాండ్ మార్కోస్” at offset 622 + “మంచి సెరానో అవెన్యూ” at offset 1461 + “పవిత్ర ప్రజలు” at offset 2428,,MT breaks in about 6 of 25 sentences.
+df8e875e2715bcfb,full,drop,C3;D4;D5,“మూలంః” at offset 2285 | “డేవిడ్ మిల్లులను” at offset 1063 + “బుధవారం షెఫీల్డ్” at offset 1188 + “మూడు రౌండ్ల చర్చలు” at offset 1873 | “మిడ్ ల్యాండర్స్ యొక్క ఛార్జ్ లో” at offset 271 + “పెద్ద డబ్బు సంతకాలు” at offset 1003 + “అల్బియాన్ యొక్క రూపం” at offset 1497,,Context broken in about 5 of 14 sentences.
+77edfaefcbac75c3,full,fix,D4;D5,"“తాగుబోతులు మరియు పక్షపాతం యొక్క ప్రదర్శన విచారణ” at offset 5307 + “ముగిసిందిః ఉదాహరణకు, పెన్షనర్పై” at offset 5654 + “పొలాల్లో పెరిగిన రొట్టెలో సగం వరకు మిగిలిపోయాయి” at offset 5784 | “విప్లవం యొక్క రక్షణ” at offset 1571 + “ప్రావిన్స్ యొక్క కౌన్సిల్ ల” at offset 2296",,MT errors in ~4 of 45 sentences; visarga-as-colon twice.
+aa79126198fa8867,full,clean,,,,
+2bc2da3fd7fdcacc,full,fix,D4,“వారి జీవితాలు ఆమె చాలా వరకు కథాంశంపై” at offset 714 + “కొత్త మధ్య యుగ విభజనను” at offset 954 + “జన్మించాడు” at offset 258,,MT errors in 3 of 11 sentences; ః-colon.
+dad2d7fc7b4910af,full,drop,D4,“ఒక కొత్త నేపథ్యం కనిపించింది” at offset 377 + “కర్రలతో ప్రేమలో ఉంది” at offset 566 + “కుందేళ్లు టిబర్ను” at offset 828,,Context broken in about 5 of 12 sentences.
+db81f2eeb4b69cb2,full,drop,D4,"“ఒకే మాంసకృత్తులు” at offset 307 + “సీపాల్లు మరియు రేకులను మాంసకృత్తులు” at offset 1093 + “వాడ్స్వర్త్ ""రావెన్షూ సమీపంలో.” at offset 1535",,Context broken in 6 of 17 sentences; double virama.
+27d1a633ecc02115,full,fix,D4,“దగ్గరి మరియు తెల్లటి రంగుతో (చల్లబడిన)” at offset 263 + “ఇది చేరుకోలేదు” at offset 653 + “బూడిద రంగు ఊపిరాడక” at offset 861,,MT breaks meaning in 2 of 8 sentences.
+6fb6318370f468bc,full,fix,D4;D5,“ఆసక్తిగా ఉంది” at offset 673 + “చాలా ధరించిన” at offset 762 + “పురాణాలను అతిగా కొట్టడానికి” at offset 852 | “చేత పునరుద్ధరించబడింది” at offset 585 + “తయారు చేయబడుతోంది” at offset 377 + “కరిగించబడ్డాయి” at offset 1228,,MT errors in 3 of 8 sentences; meaning recoverable.
+52b4c4aa1992d0b7,full,fix,D4,“ఇక్కడతో సమన్వయంతో” at offset 1275 + “ఫోరమ్లో చేరిన” at offset 1751,,MT meaning errors in two of about nineteen sentences.
+d8a9e57fbdf31722,full,fix,D4,“వ్యతిరేకంగా వ్యవహరిస్తోంది” at offset 1395 + “ఏజెంట్లు ఇప్పుడు మన తోటి పౌరుడైన డా. ఫరహాద్ మీసామీ.” at offset 3492 + “దేశస్థుల సమూహాన్ని ఖైదు చేసి” at offset 5547,,MT breaks about 8 of 45 sentences; ః-colon.
+5d9ff314c5fe17fb,full,fix,D4,“విలియం డబ్ల్యూ. అబ్బాయి” at offset 1141 + “గుర్రాన్ని కాల్చుకున్నాడు” at offset 2305 + “అతను ఖననం చేసిన కొత్త దుస్తులు” at offset 3614,,MT broken in about 9 of 37 sentences.
+d67129d9a3cb3e84,full,fix,D4,“చరిత్రకారుడు ప్రకారం a.జె.” at offset 181 + “మంచు అలమారాల” at offset 428,,MT breaks in 2 of 8 sentences; ః-colon.
+45d9ad1f54a61a55,full,fix,D4;D5,“మాట్లాడబడ్డాడు” at offset 515 + “దేవుళ్ళు చేశారు” at offset 3124 + “శంకువుల మధ్యవర్తికి” at offset 5784 | “లింకన్ యొక్క సత్రం యొక్క” at offset 1744 + “డర్హామ్ యొక్క పూర్వగామి” at offset 2225,,MT errors in about 12 of 45 sentences.
+2c0b26f8c7cd8404,full,clean,,,,One garbled Ph.D. phrase; stray quote marks only.
+9f96e33ccdc08643,full,fix,D4,“శిక్షకుడిగా పనిచేస్తున్న పెన్సకోలాలో” at offset 518 + “కొంతకాలం పాటు ఈ-1 సేవ నుండి పదవీ విరమణ చేయబడింది” at offset 629,,MT errors in 2 of 8 sentences.
+771c0f08a49b1dae,full,fix,D4,“ప్లాట్లు.” at offset 215 + “అతన్ని కోల్పోయిన గౌరవం” at offset 379 + “కుళ్ళిన టమోటాలపై” at offset 441,,Three local MT slips; lead sentence intact.
+db5971223c129ca5,full,drop,D4,"“ఒకటి, టాన్జియర్” at offset 165 + “మొజాంబిక్ బాల్టాసర్ గవర్నర్ జనరల్” at offset 405",,Context broken in two of four sentences.
+70beb1399e476a55,full,drop,D4,"“విచిత్రమైన మరియు ట్రాన్స్” at offset 311 + “సిద్ధాంతం మరియు సంఘటన"" లో షేడ్ మలాక్లో” at offset 1551 + “మహిళా రంగు సలహా మండలిలో” at offset 2433",,Context broken in about half the sentences.
+5652787cc6fcb38f,full,fix,C3,“కొన్ని ప్రాజెక్టులలో కూడా పాల్గొంటుందిః” at offset 1245,,Four more lists stripped mid-text; ః used as colon.
+af7fac9891cabc16,full,fix,D4,“మైక్రోటోపోనిమ్ మరియు లేదా అనే పేరుతో” at offset 449 + “ఒక రాష్ట్రం వేట అధికారి” at offset 1010,,MT broken in 2 of 13 sentences; empty parens.
+c27bce4b3981c575,full,clean,,,,Single name slip ఉన్ని at 88; not D4.
+fd45a88deb7f7934,full,drop,A6;D4,“n.వై.” at offset 860 + “జి.o.” at offset 898 | “మెరైన్ కార్ప్స్ లో చేరిన తరువాత.” at offset 357 + “యు బోర్డులో.ఎస్.ఎస్.” at offset 943 + “స్ప్రోల్ సముద్ర రక్షకుల పురుషులను ప్రేరేపించింది” at offset 1210,860 U+006E LATIN SMALL LETTER N | 901 U+006F LATIN SMALL LETTER O,Context broken in about four of eleven sentences.
+b67960295a3d37e9,full,fix,D4,“సెయింట్ తో గడిపాడు. లూయిస్ బ్లూస్” at offset 264 + “ఒక తెగులు పాత్రలో” at offset 324 + “టొరంటో మాపుల్ ఆకు” at offset 521,,"MT breaks 4 of 13 sentences, also at 1165."
+75aeac5515e87641,full,clean,,,,One verbless sentence only; otherwise sound.
+87e146382b28623f,full,fix,D4;D5,“అధికారిక opening.480” at offset 1532 + “కేవలం పెళ్లయిన” at offset 2052 + “ఆమె ఘనమైన కిరీటం” at offset 6736 | “సులేఖనం యొక్క” at offset 32 + “కాలిగ్రఫీ యొక్క” at offset 1447 + “ప్రదర్శన యొక్క చట్రంలో” at offset 3018,,MT broken in ~6 of 50 sentences; stripped lists.
+ac13e2b997b297a8,full,drop,D4;D5,"“ప్రాధాన్యతను స్వీకరించే బెర్రీ” at offset 410 + “బాగుంది.""” at offset 515 + “పాదరసం తో” at offset 715 | “చక్ బెర్రీ యొక్క” at offset 45 + “ఇతివృత్తాల యొక్క” at offset 232 + “రికార్డు యొక్క” at offset 317",,Context broken in about 3 of 7 sentences.
+214219cb9ad1cac8,full,fix,D4,“u తో నడుస్తుంది.ఎస్.” at offset 325 + “మాతో 77 తో ఒక ఉమ్మడి కరెన్సీ” at offset 782 + “మమ్మల్ని 59 మందిగా” at offset 1837,,U.S. route mistranslated in 4 of ~27 sentences; visarga-as-colon.
+104ce5fe1250f6ec,full,fix,D4,“తెలివితేటలు” at offset 16 + “ఉండేవారు.ఎస్.” at offset 296 + “35 సంవత్సరాలు సంస్థ కోసం పనిచేస్తోంది” at offset 336,,MT breaks title sense and 2 of 7 sentences.
+bb7127429832f619,full,fix,B3;D4,"“<unk> <unk> <unk>” at offset 71 | “హోవార్డ్ కౌగిలించుకునే” at offset 4282 + “సంపన్న కుర్చీ” at offset 4100 + “కనుగొన్నారు., మరియు” at offset 7393",,117 <unk> markers; MT errors local; ః as colon.
+b7e04900b65204d8,full,fix,D4,"“కుక్కపిల్లల సరిహద్దుకు సమీపంలో ""చాలా""” at offset 159 + “""మరియు ఇతరులు.""1925లో దీనిని నక్షత్రంగా జాబితా చేశారు” at offset 1036 + “బీ స్టార్ వేడి, చాలా తక్కువ భారీ” at offset 1372",,MT breaks 3-4 of 12 sentences; under a third.
+df8bfb1d7dd22a16,full,drop,D4,“ఎల్ఎల్ సంపాదించింది.బి.” at offset 322 + “దీనిని డా.” at offset 767 + “సంపాదకుడు.మంచిదే.సి)” at offset 958,,Context broken in about half the sentences.
+c8c8acf9a10af3dc,full,clean,,,,One wrong word sense at 411; otherwise sound.
+d4492131f05d9697,full,clean,,,,
+781cc8e304c8a02e,full,fix,A6;C3;D4,“γεολογοραzvedké” at offset 784 + “σεVERNAIA” at offset 801 | “తేయా వాతావరణంః” at offset 2540 | “705 కి. మీ. ల క్రాస్నోయార్స్క్” at offset 91 + “కొత్త పాండిత్య” at offset 1934 + “ఎంబోయు స్ష్నో2” at offset 2265,792 U+03B1 + U+007A | 802 U+03B5 + U+0056,MT errors in 4 of ~30 sentences; empty ().
+b1aa1bf8cb147fc0,full,fix,B4;D4,“<ఐ. డి. 1>” at offset 1524 | “ప్రేక్షకుల సామర్ధ్యం స్వాగతించింది” at offset 1881 + “ధన్యవాదాలు” at offset 4386 + “కోడి పార్టీ” at offset 5195,,Placeholder token; five MT slips; visarga-as-colon four times.
+68317d656f3ebdde,full,clean,,,,Single title slip only (Bootleg); not D4.
+00edb81a29bf7393,full,fix,D4,“ఇందులో యువరాజు కూడా ఉన్నాడు” at offset 6370 + “ఇవి ప్రామాణికమైనవి లేదా ప్రామాణికమైనవి కావచ్చు” at offset 7439 + “కోర్టుకు భాగస్వాముల” at offset 3293,,About 8 of 60 sentences broken; stripped lists.
+a5cac6ff54aedfa6,full,fix,D4,“యువ స్కస్టర్ వినడం మరియు అతని ప్రతిభతో ఆకట్టుకున్నాడు” at offset 235 + “అతి పిన్న వయస్కుడైన వ్యక్తి అయిన ఫర్త్వాంగ్లర్” at offset 602 + “వాద్యవృందాలతో కలిసి పాడారు” at offset 1755,,MT breaks 6 of 22 sentences; under a third.
+4577bd9375caf867,full,fix,G3,“()” at offset 30,30 U+0028 + U+0029,Empty () left after the title.
+522f90a78230162f,full,drop,D4,"“రెండవ స్థానంలో ఉన్నారు” at offset 384 + “మరొక కుమార్తె, మరియు ఒక కుమారుడు” at offset 664 + “ఫిరంగి దళంగా కూడా పనిచేశారు” at offset 745",,Context broken in two of six sentences.
+370a3a140a25f40a,full,fix,D4,“డాక్టర్ ఏ సిబ్బందిని” at offset 1055 + “వర్షపు నీరు షవర్లో పూడ్చివేయబడింది” at offset 1591 + “సిబ్బంది వర్షాన్ని దెబ్బతీయాలని” at offset 3271,,MT errors in about 6 of 30 sentences.
+a64c07209593e1e1,full,fix,D4,"“ఒక పురాతన నీరు” at offset 1642 + “సుమారు ఎత్తు, వెడల్పు మరియు పొడవుగా” at offset 1729 + “గర్భాశయ అక్షం” at offset 4537",,"6 of 74 sentences broken; empty (), ః-colon."
+e4dad6b96dc51f21,full,fix,D4,“తడి నర్సు” at offset 764 + “యోరిటోమోలో చేరాడు” at offset 1395,,Two local MT errors; rest reads soundly.
+05787c529c79cb73,full,fix,D4,“అనుమానిస్తాడు” at offset 507 + “కామేలియా కోసం ఒక టేప్ను” at offset 569 + “వాటిని కిందికి దించడానికి” at offset 625,,MT errors in 2 of 6 sentences; visarga-as-colon x3.
+e6a7b21336357186,full,fix,D4,“అసలు అలంకార జెండా అయిన జోన్స్” at offset 1536 + “ఎడమ అపార్ట్మెంట్లు” at offset 2839 + “అంతరిక్ష నౌక ఆవిష్కరణలో” at offset 3283,,MT errors in about 5 of 32 sentences; local.
+734d977a4606f7ef,full,fix,C3,“వెళ్లే మార్గం ఇలా ఉందిః” at offset 1143,,Route list stripped after last lead-in; drop it.
+252c9eed2e798f3d,full,clean,,,,One gender slip at 427; below D4 threshold.
+c9e8816c38b496b6,full,drop,D4;D5,“చేతివృత్తం” at offset 611 + “ఆవిరి మరియు వినయపూర్వకమైన దుకాణం” at offset 2990 + “తప్పించుకునేవాడు” at offset 5210 | “ఆట యొక్క డీమేక్” at offset 373 + “విమానం యొక్క స్థానం” at offset 864 + “ఆట యొక్క ఆర్కేడ్” at offset 1413,,Context broken in about a third of sentences.
+f94e9d5d5b935e79,full,drop,B4;D4,"“ఐడి1” at offset 1006 + “ఐడి2” at offset 1183 | “1838లో బెర్లిన్లో.” at offset 341 + “పారిస్లో ఫ్రాంక్.” at offset 532 + “బెర్లిన్, జె లో మరణించాడు” at offset 1907",,Context broken in about 8 of 20 sentences.
+b73844b2394105da,full,clean,,,,
+06de468c0348edf0,full,fix,D4,“గాయపడిన వారు నెదర్లాండ్స్” at offset 15 + “అనాథెమా మరియు నివారణ” at offset 268,,Band name translated literally 6 times; visarga-as-colon once.
+2fc091a216a6c8e2,full,fix,D4,“1914లో.” at offset 144 + “తీరపు చుక్కలతో” at offset 323 + “పెద్దలు రెక్కలపై నమోదు చేయబడ్డారు” at offset 444,,MT errors in 3 of 8 sentences; doubled పచ్చని.
+93acb6b1d0004ce7,full,clean,,,,One MT slip డబ్బులలో at 511; below D4.
+a550fbd1f02f72cb,full,fix,D4,“దీని ఛాంబర్ సంగీతం వారు” at offset 460 + “ఇంకా.” at offset 683 + “డిస్కోగ్రఫీని ఎంచుకున్నారు.” at offset 868,,MT errors in 4 of 13 sentences; list stripped.
+10c4d4e1b3aa964d,full,clean,,,,
+5f680528d9ebbcf1,full,fix,D4,“ఆమెకు ముందు ఆమె పూర్వగామిగా” at offset 445 + “వ్యక్తిగత సంపద కలిగి ఉండదని” at offset 1110 + “ఏకైక చిత్రం పియట్రో డా ఫానో” at offset 1653,,MT breaks in 3 of ~16 sentences; ః-colon.
+55f1c5d1f0eadc93,full,drop,D4,“విమానాశ్రయాలకు మరియు నుండి” at offset 308 + “గుర్తించదగినదిః ఎల్ఆర్ఎన్” at offset 501,,MT breaks grammar in two of four sentences.
+5f3489c999860e0a,full,fix,D4,"“అనుసరణ; మరియు.” at offset 468 + “1985లో, (మగ-మగ” at offset 483 + “24 మంది గ్రూప్ సభ్యులు” at offset 866",,MT breaks in 3 of 10 sentences; ః-colon.
+ac416a912cfbe059,full,clean,,,,
+c6c6765b694bf410,full,drop,B4;D4,“<ఐ. డి. 1>” at offset 2418 | “మూడు హామీ నివాసులు” at offset 444 + “అతను ఇంకా పరిశోధించని జాతులు” at offset 2248 + “ఫుట్బాల్ లేదా ఇతర బేస్బాల్” at offset 3713,,Context broken in about a third of sentences (~15/45).
+327641747832fd77,full,fix,D4,“అధికారంపై నివేదించబడిందిః” at offset 435 + “150ఏ సంవత్సరంలో మరణించారు.హెచ్.” at offset 612,,"MT breaks 2 of ~12 sentences; empty (), ః-colon."
+93dbc7e6a9800781,full,fix,D4,"“దిగ్బంధించబడే వరకు” at offset 190 + “అపూర్వమైన స్పెల్ కు” at offset 355 + “డివిజాన్, అధికారిక” at offset 415",,MT broken in 3 of about 12 sentences.
+61eef6993edc61ad,full,fix,G3,"“(,” at offset 42",42 U+0028 + U+002C,"Stripped original title leaves '(,'."
+ee42e8d54baaeabb,full,clean,,,,One verbless fragment at 268; below D4 threshold.
+805b60b877660bc0,full,drop,B4;D4,“<ఐ. డి. 1>” at offset 226 + “<ఐ. డి. 2>” at offset 270 | “ఆగ్నేయ సదస్సు (సెకను)” at offset 245 + “మరొక వేలానికి మంచిది” at offset 1144 + “జట్టు నెం. టోర్నమెంట్” at offset 1166,,Context broken in about 7 of 17 sentences.
+a2ec84dee5cfae77,full,fix,D4,“ఇది ఎస్ ద్వారా” at offset 104 + “నవజాత అమ్మోనియా” at offset 811 + “అనేది-ఆస్పర్టేట్” at offset 1033,,MT breaks about 4 of 15 sentences; visarga-as-colon once.
+3d87299a77851c5d,full,fix,D4,“అన్ని ఉన్నత స్థాయి కుస్తీ” at offset 55 + “దుమ్ముగల రోడ్లచే” at offset 983 + “మేము కలిగి ఉన్నాము” at offset 2818,,MT errors in about 5 of 18 sentences.
+9a9840643b1c605e,full,clean,,,,
+e6a63e91713be5b2,full,fix,C3,“కుటుంబానికి చెందినవిః” at offset 234,,Stripped genus list after final lead-in; visarga-as-colon.
+362ffddae7c97ed8,full,fix,D4,“కలుసుకున్నారు.” at offset 915 + “పునరావృత్తం.” at offset 1848 + “ఆయనకు” at offset 1778,,"D4 in about 6 places; empty (), lead-ins."
+57a65aa824d6d1b5,full,fix,C3,“పట్టణాలుః” at offset 609,,Three stripped lead-ins at end; empty () at 16.
+bc51bc59da52e930,full,fix,D4,“పెద్ద దక్షిణ సభ్యుడిగా” at offset 924 + “అనుమతించబడుతుంది 2024” at offset 1531 + “యువరాజును” at offset 2289,,MT errors in 3 places; stripped lists after ః.
+489444e264033f55,full,clean,,,,One gender slip మారింది; name spellings vary.
+e8f923f1105c4dbe,full,fix,D4,“రెడ్ కోళ్ల పత్రిక” at offset 1440 + “మీపై దృష్టి పెట్టండి.ఎస్.” at offset 3455 + “2000లో ఫ్రాన్సిస్కోలో అరాగాన్ చేత డేవిస్ లో” at offset 9635,,MT breaks about 10 of 80 sentences; ః-colon.
+82f9cbf4a835ed3f,full,clean,,,,
+c54b4d8e577f106f,full,clean,,,,
+92f44d8142dce6e7,full,drop,D4,“చార్లెస్ పి. కుటుంబం” at offset 286 + “1979లో విశ్వవిద్యాలయానికి అడ్మ్స్.” at offset 326,,Context broken in two of six sentences.
+1746261eeb670c32,full,fix,D4,“(ఎ/హెచ్9ఎన్2) అనేది ఇన్ఫ్లుఎంజా” at offset 84 + “హెచ్9ఎన్2 వైరస్ల కీలక పాత్ర.” at offset 713 + “ఒక/చికెన్/బీజింగ్” at offset 1193,,MT errors in 4 of about 27 sentences; local.
+c13bcbda6fee6ece,full,fix,D4,“అనే రెండవ బిడ్డ అయిన జేమ్స్” at offset 1318 + “యు గా నియమించబడ్డాడు.ఎస్.” at offset 2231 + “తేలికపాటి వేయించడానికి” at offset 2432,,MT broken in about 7 of 30 sentences; visarga-as-colon.
+e6d46678def70d65,full,drop,D4,“ఐదు వేగవంతమైన ప్రధాన లేబుల్ ఒప్పందాన్ని” at offset 1354 + “సహాయం చేయడానికి మౌనంగా ఉండింది” at offset 2562 + “(మందులు మొదలైనవి) సమస్యలు.)” at offset 3519,,Context broken in about 11 of 25 sentences.
+09f09f03808d41c4,full,clean,,,,
+d302462cf4a3140a,full,fix,D4,“జె అధ్యక్షతన” at offset 301 + “ఎం. వాతావరణ” at offset 446 + “దాని పక్షపాతాలు” at offset 1345,,MT breaks 3 of 12 sentences; mid-text stripped list.
+051839dee9cee5c3,full,clean,,,,
+ac9c7c95866d0c3e,full,fix,D4,“శక్తి కారణంగా” at offset 454 + “ఊదా గుండె” at offset 1079 + “ద్వారా నలుగురు కుమార్తెలు” at offset 1700,,MT errors in 4 of ~22 sentences; visarga-as-colon.
+a0ab5e0d8d686153,full,fix,G3,“;;;” at offset 25,25 U+003B + U+003B + U+003B,Stripped names leave ';;;' inside the parentheses.
+c9c2feb115b138cb,full,fix,D4,“కాంగో సమర్పణల డెమొక్రాటిక్ రిపబ్లిక్ జాబితా” at offset 51 + “ఆంగ్లం మాట్లాడే చిత్రాల కోసం” at offset 559,,MT breaks meaning in two of nine sentences.
+8de299edb3fa913e,full,fix,G3,“జాబితా క్రింద ఇవ్వబడింది” at offset 122,226 U+000A,Place list stripped after its lead-in sentence.
+1f588902c429938c,full,fix,D4,“నిలిచడంతో” at offset 307 + “బాక్స్టర్ ధర” at offset 1324 + “పాత మొబైల్” at offset 1595,,MT broken in about 5 of 20 sentences.
+5bd40b2bf6b94d69,full,fix,D4;D5,“పాకెట్ తెలిసే” at offset 1745 + “ఇందులో 'మాక్ డ్రాఫ్ట్'” at offset 2015 + “ఆర్థర్ సి ఉన్నాయి” at offset 2721 | “సరైన ఆపాదింపు యొక్క” at offset 1270 + “పేపర్ యొక్క తుది డ్రాఫ్ట్ యొక్క” at offset 2039 + “కనుగొనడాన్ని జారీ చేయదు” at offset 2568,,MT breaks 4 of 16 sentences; visarga-as-colon at 2408.
+0c22acd014d0b7a2,full,fix,D4,"“ఉత్తరాన అవెన్యూ” at offset 145 + “పన్ను చెల్లింపుదారులు విలీనం చేశారు” at offset 2082 + “ఉన్ని, జూదాలు, సురక్షిత మార్గం” at offset 2208",,MT errors in about 4 of 24 sentences.
+76ec6882306890c4,full,fix,D4,“రోచెస్టర్ సందర్శనకు నామినేట్” at offset 578 + “ప్రదర్శనల మండలికి” at offset 811 + “పూర్వ-సంస్కరణ దేవతల్లో” at offset 1009,,Wrong word senses in 3 of ~20 sentences; visarga-as-colon.
+f1178c2340b7e585,full,fix,D4,“తయారుగా ఉన్న వేడి తో బూగీ” at offset 1 + “తయారుగా ఉన్న వేడి బూగీలు” at offset 593 + “లయ విభాగంలో గాడిదగా ఉంటుంది” at offset 1248,,MT errors in about 3 of 12 sentences.
+d60717af22ab14d4,full,fix,D4,“ఇంగల్స్ కుటుంబం కొంతకాలం తర్వాత జెన్నీ కుటుంబం” at offset 2150 + “s′ (హీథర్ విలియమ్స్ గా)” at offset 4627 + “రెస్టారెంట్ను ఎలా వండాలో” at offset 7020,,MT broken in 7 of 70 sentences; ః-colon.
+1d1c0c43fc7eb07a,full,fix,D4,“పాయింట్ ఆహ్లాదకరమైన” at offset 659 + “పేలని నగరాల్లో” at offset 2125 + “శత్రువు మునిగిపోయేది అప్పటికే చంపబడింది” at offset 4349,,MT errors in about 11 of 45 sentences.
+0e70448c6d28cac8,full,fix,D4,“పెద్ద సంఖ్యలో మద్దతు ఇస్తున్నారు” at offset 951 + “ఇసుక దిబ్బలను దాదాపు ఎత్తైన అడ్డంకులు” at offset 1521,,MT broken in 2 of 13 sentences; empty ().
+b3e8ca9995891903,full,fix,D4,"“గాయకుడు మరియు పాటల రచయిత, ఆయన” at offset 62 + “చిత్రాన్ని” at offset 446 + “11-ముక్కల” at offset 491",,MT slips in 3 places; visarga colon; empty headings.
+30fe6ded617757f6,full,clean,,,,One MT slip at 38; below D4 threshold.
+550070b5c186be89,full,fix,D4,“దీని భౌగోళిక స్థానం మరియు దాని ఎత్తు” at offset 345 + “గొప్ప వ్యక్తిని గెర్ట్రూడ్ చేయడం” at offset 1348 + “యు. కు సామూహిక వలసల బాధితురాలు.ఎస్.” at offset 2544,,MT broken in about 4 of 35 sentences; visarga-as-colon.
+0205227b791abfd2,full,fix,D4,"“గ్రంథం, లింకన్” at offset 786 + “వారి ప్రస్తుత 1850” at offset 986 + “ఆంగ్లియన్ టిపో లో” at offset 3309",,MT errors in four places; timetable stripped mid-text.
+b2a0ff73fa71d96d,full,fix,A6,“παmyatnik” at offset 76 + “χo” at offset 86 + “miνу” at offset 93,76 U+03C0 + U+03B1 | 86 U+03C7 GREEK SMALL LETTER CHI | 95 U+03BD + U+0443,"Five look-alike letters; visarga-as-colon at 74, 1224."
+3ca9fef936298941,full,fix,B2;D5,“<Â>” at offset 336 + “</Â>” at offset 358 | “జూలియన్ క్యాలెండర్ యొక్క” at offset 38 + “హోదాలు యొక్క” at offset 190 + “9 వ శతాబ్దం యొక్క” at offset 256,,Strip tags; five యొక్క chained; drop empty trailing headings.
+56c8b98383d09ab9,full,drop,D4,“కోటలు కుమార్తె” at offset 255 + “దంతాల తీరం” at offset 960 + “పరిగణించబడ్డాయి” at offset 1164,,MT errors break about 4 of 12 sentences.
+1aa28983376de797,full,drop,D4,"“ఎనిమిది సార్లు అగ్రస్థానంలో నిలిచిన స్విమ్మర్లు, వేడిగా ఉన్నా” at offset 295 + “ఎనిమిది సార్లు అగ్రస్థానంలో నిలిచిన స్విమ్మర్లు, వేడిగా ఉన్నా” at offset 462 + “ఎనిమిది సార్లు అగ్రస్థానంలో నిలిచిన స్విమ్మర్లు, వేడిగా ఉన్నా” at offset 635",,Garbled heats sentence breaks 8 of ~27 sentences.
+82106d91be204c1f,full,fix,D4,“సింగింగ్ జైలులో” at offset 85 + “వెలాజ్క్వెజ్ బదులుగా న్యాయనిర్ణేతను తప్పుగా గుర్తించాడు” at offset 1977 + “అతని కొత్త కదలికకు” at offset 3033,,MT errors in about six of 27 sentences.
+c7c3aabee90b565f,full,fix,D4,“రెక్కలు ఉన్నాయి.” at offset 252 + “సుడిగాలి వైపు” at offset 558,,MT breaks 2 of 7 sentences; rest sound.
+63fa45ed66afa86a,full,clean,,,,
+e1ee05e923f7bf39,full,fix,D4,“పౌరులు కాకూడదని నిషేధించింది” at offset 833 + “డియోసెస్ పేరుతో వ్రాయబడిన భౌగోళిక ప్రాంతాల నుండి” at offset 1753 + “సెయింట్ లో జరిగింది” at offset 2115,,MT breaks 3 of ~20 sentences; list stripped.
+db82247dd0ea20e4,full,fix,D4,"“సామర్థ్యం ఉన్న ఈ సంస్థ,” at offset 1181 + “ఇసుక నుండి మంచు జాతీయ స్మారక చిహ్నంగా నియమించారు” at offset 1544",,MT broken in 2 of about 14 sentences.
+01d9e3f5ce86abaf,full,fix,D4,“ఇక్కడ ఆమె ప్రదర్శనశాలలో” at offset 1675 + “ఆమెతో ఆమెకు” at offset 2031,,MT meaning breaks in 2 of about 22 sentences.
+5016565f32a35fc0,full,fix,C3,“ధైర్యసాహసాల కోసంః” at offset 265,,"Recipient lists stripped, also after lead-in at 175."
+c68ec9bb6224db8b,full,clean,,,,
+31d65597692ffa02,full,drop,D4,“స్తంభాల ఊచకోతలో” at offset 396 + “స్తంభాలను బహిష్కరించారు” at offset 483,,Context broken in two of four sentences; empty ().
+5c238401d66cd9f0,full,fix,C3,"“లైవ్ ""-జోడీ చియాంగ్” at offset 311",,Winners list cut off after one item.
+409f4b49359e71ac,full,clean,,,,
+1a37e023ff717504,full,fix,G3,“జాబితా క్రింద ఇవ్వబడింది.” at offset 64,127 U+000A,Announced crime list is missing after the lead-in.
+8287cb49fd1d497f,full,fix,D4,“గారీ శక్తులను” at offset 602 + “వరుడు సరస్సు” at offset 27915 + “కరోనావైరస్ ఉపగ్రహ” at offset 52467,,MT sense errors in ~100 sentences; empty () removed.
+cd681170cc9fc146,full,fix,C3;D4,“ఇవి ఉన్నాయిః” at offset 8719 | “నజారెత్ ఏరియా హైస్కూల్లోని 11 పాఠశాలలు” at offset 1194 + “ఇక్కడ 2012 లో ప్రారంభమై” at offset 2481 + “న్యూయార్క్ దిగ్గజాలు” at offset 5773,,MT breaks about 10 of 59 sentences; stripped list.
+06246a8108ac4997,full,fix,B2,“<బిఆర్>” at offset 305,,Transliterated br tag; empty trailing References heading.
+476adb96b7ee4094,full,drop,D4,“సెయింట్ లో ఒక శిఖరం” at offset 22 + “ఇది గరిష్ట ఎత్తును కలిగి ఉంది” at offset 70 + “తూర్పున మరియు చిన్న కొండకు” at offset 108,,Context broken in five of seven stub sentences.
+a9d2a7179e708dc4,full,fix,D4,"“ఆయన ""యు"" అని రాశారు” at offset 652 + “తడిసిన గాజు కిటికీ” at offset 1657 + “క్లెఫ్)” at offset 2491",,MT broken in 5 of 25 sentences; visarga-as-colon.
+24e3a8d5e9b2fe70,full,fix,D4,“నిజమైన అకాడెమియా” at offset 188 + “స్థిరమైన జీవులను” at offset 359,,Two wrong word senses in seven sentences.
+336e3aa7541b10ad,full,clean,,,,
+e8c5e2b9f0eb14e9,full,fix,D4,“అబద్ధానికి మొదటి తోడు” at offset 654 + “పని చేస్తుంది.” at offset 1235 + “నటించారు” at offset 2869,,Local MT errors in about 4 sentences; visarga-as-colon once.
+531a125bbe84fafe,full,fix,C3,“వ్యాసాలుః” at offset 301,,Stub; stripped list and two empty trailing headings.
+738c106b67066d2b,full,fix,D4;D5,“లిబ్రెట్టి రాసినవారు ఉన్నారు” at offset 1839 + “హెలెనిజం ఎంతగా అంటే” at offset 2192 + “ఎస్. ఇంగ్లాండ్లో ఎలియట్” at offset 3173 | “బాటిసెల్లీ యొక్క” at offset 441 + “హ్యాండెల్ యొక్క” at offset 1719 + “టెన్నిసన్ యొక్క” at offset 2176,,MT breaks 3 of ~22 sentences; యొక్క 12 times.
+8a40002318bf63bb,full,fix,D4,“మీ ముఖంలోని మరింత చేష్టలకు ప్రత్యక్ష రేకు” at offset 1439 + “అగ్ర గేర్ మ్యాగజైన్” at offset 1841 + “చూడాలని కోరుకుంటున్నానని” at offset 2051,,MT errors in about 3 of 20 sentences.
+4576289d39c80242,full,drop,D4,“తన సొంత జట్టును వదిలివేస్తోంది” at offset 159 + “3 వర్సెస్ గెలిచిన తరువాత” at offset 922 + “ఎడమ జట్టు జిమ్” at offset 3591,,Context broken in about 13 of 33 sentences.
+7d359474e94c39ff,full,clean,,,,
+710d290e8dfb748c,full,clean,,,,"One MT slip: name split, named p."
+464cb33ef0c83159,full,fix,B2,“<బిఆర్>” at offset 1113,,Transliterated br tag; empty trailing track-list heading.
+58089be55699f213,full,fix,D4;D5,“ఇంగ్లాండ్ జాన్ ఓటమి” at offset 433 + “కిరీటానికి పడిపోయింది” at offset 548 | “అంగౌలేమ్ యొక్క మాథిల్డే” at offset 26 + “లుసిగ్నాన్ యొక్క హుగ్ఇక్స్” at offset 251 + “ఆంగౌలేమ్ యొక్క అమీర్” at offset 327,,MT errors in 1 of 5 sentences; యొక్క 5x.
+d8b5d80d32bf49db,full,fix,G4,“̃జ్మిర్” at offset 16,15 U+0020 + U+0303 COMBINING TILDE (expected U+02DC),Stray NFKC tilde in title; text otherwise sound.
+5d9cb7c14f3c12bc,full,drop,D4,"“ఎస్. టెంగ్చోంగెన్సిస్ "", అని నివేదించబడింది” at offset 503 + “ఎస్"" తో పాటు.” at offset 548 + “ద్వారా ఐలాండికస్ కణాలు.” at offset 792",,Context broken in about four of eight sentences.
+e808415ae2b9b225,full,drop,D4,“సినిమా సంవత్సరానికి” at offset 207 + “ఆదర్శప్రాయంగా రూపొందించబడింది” at offset 528 + “దిగుమతి చేసుకోవడం.” at offset 708,,Context broken in about five of nine sentences.
+7bd8b0dff21acaaf,full,clean,,,,
+370c6d555dcf4c55,full,fix,D4,"“ఫోకస్డ్” at offset 299 + “(నవంబర్./డి. సి., 1993), మరియు” at offset 1028 + “కుట్ర మరియు కుట్ర” at offset 1295",,MT breaks in four spots; visarga-as-colon twice.
+541ded1442b07220,full,fix,D4,“2024 వరకు 2026 వరకు” at offset 1114 + “ఏదీ చేయలేదు” at offset 2592 + “స్వతంత్ర జట్టును” at offset 2918,,"MT errors local, about six of thirty sentences."
+0faf415036640696,full,fix,D4,“కొరంబా విమానాశ్రయానికి సేవలు” at offset 75 + “ఈ నౌక” at offset 378 + “ప్రయోగశాలతో” at offset 1439,,MT errors in 4 of 22 sentences; visarga-as-colon once.
+c9542caf5753e633,full,fix,D4,“ఇది వ్యాసంలో కొలుస్తారు” at offset 353 + “తద్వారా అవి నిటారుగా ఉన్న రకానికి తక్కువ కాదు” at offset 1284 + “హార్ప్ను ముందు వైపున ప్రదర్శించకపోవడం” at offset 1488,,MT breaks 5 of 19 sentences; remove empty ().
+1a95170270b09373,full,fix,D4,"“ఈ చట్టం ప్రకారం, ఈ రహదారి” at offset 688 + “గాలులు వీస్తుంది” at offset 4212 + “నకిలీ పూర్తయింది” at offset 13718",,"About 25 of 125 sentences broken; stripped names, ః-as-colon."
+951ec132772b2e08,full,fix,C2;D4,“డిగ్రీ మరియు సాఫ్ట్వేర్ ఇంజనీరింగ్లో డిగ్రీని అందించే” at offset 8119 | “ఎం ఉంటుంది.ఎస్.” at offset 1322 + “ఇంగా హెచ్ ప్రకారం.” at offset 2609 + “20 మంది మైనర్లకు” at offset 3714,,MT breaks about 14 of 75 sentences; local.
+57187a63e91abe08,full,fix,D4,“మైక్ రక్తస్రావం” at offset 7918 + “దుమ్ముగల స్ప్రింగ్ఫీల్డ్” at offset 14205 + “మాంసం రొట్టె” at offset 16558,,About ten literal name translations; ః-as-colon and stripped quotes.
+8b2fed358cc3160a,full,fix,D4,“లోహాలు లేదా తక్కువ” at offset 208 + “ప్రశ్నార్థకం అయిన” at offset 708 + “ఆ ప్రభుత్వ ఉపాధి” at offset 755,,MT sense errors in 2 of 9 sentences.
+56b62a846fb7c848,full,fix,A6,“తూర్పునః” at offset 1325 + “ఉత్తరంః” at offset 1354 + “పశ్చిమానః” at offset 1397,1332 U+0C03 (4x),ః used as colon in four boundary lines.
+0423e8bdd33d304f,full,fix,D4,“సెయింట్ లో యునైటెడ్” at offset 291 + “మున్.” at offset 610 + “రీనోల్డ్స్.” at offset 904,,Name-initial splits break about 8 of 28 sentences; visarga-as-colon.
+3a934860ee14fdc3,full,fix,D4,“కానీ వారు వాటిని” at offset 611 + “తరువాత భారీ వర్షాలు” at offset 2053 + “ఎక్కువగా లాడినో” at offset 2166,,MT breaks 3 of ~18 sentences; empty () removed.
+903b75dc36ffe447,full,clean,,,,
+517abad8a2354b18,full,fix,D4,“సూర్యాస్తమయం పత్రికను” at offset 568 + “ఈ దారులు” at offset 3077 + “కలిసి జీవించారు” at offset 3940,,Names mistranslated in about 6 of 30 sentences.
+dbb8379777b3794e,full,fix,C3;D4,“ఆటలుః” at offset 9409 | “సెల్ట్జర్ను ప్రసవించాడు” at offset 707 + “పనిచేశారు.ఎస్.” at offset 1758 + “బంగారం యొక్క ముఖ్యమైన” at offset 5990,,About 5 local MT slips; trailing lead-ins stripped.
+c04ef20d74d8a6fd,full,fix,D4,“ఎర్న్స్ట్ యొక్క హేకెల్ యొక్క” at offset 1165 + “జుట్టు లాంటి అంచనాలు” at offset 2717 + “నృత్యం చేసే వెంట్రుకలు” at offset 2987,,MT errors in 3 of about 25 sentences.
+3adf45c208031841,full,fix,D4,“బివాజిమా జంక్షన్ మరియు 26 రైళ్లు” at offset 549 + “పరిమిత వ్యక్తీకరణలు” at offset 1726 + “రెండు మార్గాలు అనుసరించబడ్డాయి” at offset 2472,,MT errors in about six of thirty sentences.
+7a1b365dae271e2b,full,clean,,,,
+6ca1c8543a6cef8f,full,fix,D4,"“దానికి బదులుగా ఇల్యూషిన్ ఇల్-28 ఇదే విధమైన విమానానికి కోల్పోయింది” at offset 272 + “10,000 మీటర్ల ఇన్ 21.4 నిమిషాలు” at offset 653",,MT broken in 2 of 7 sentences.
+8bf2a2adba25b45a,full,clean,,,,Initials N. E. split once; single slip.
+5c2516752c918c2f,full,fix,D4;D5,“లాంగ్డన్ విజేత” at offset 243 + “స్వర్ణం.” at offset 801 + “కాదు.ఎస్.” at offset 2495 | “సాంకేతికత యొక్క” at offset 210 + “జనాభా యొక్క” at offset 2001 + “అవగాహన యొక్క” at offset 5007,,MT broken in ~8 of 35 sentences; stripped-list.
+7bca1ff6c1a0afe9,full,fix,A6;G3,"“స్లోవాక్ః” at offset 53 | “(,” at offset 50",61 U+0C03 | 50 U+0028 + U+002C,Empty parens left; ః used as colon.
+dee0e56c12d7ca51,full,clean,,,,
+a42cd491fbb0de02,full,fix,C3;D4,“పరీక్షించడం ఉండవచ్చుః” at offset 13547 | “అభిమానుల కోసం” at offset 5579 + “తగినంత లేదా సరికాని” at offset 9224 + “దీని క్రింద ప్రతిదానికి” at offset 11083,,"Four local MT errors; strip lead-ins at 4855, 13521."
+d6485ad6eefc72e0,full,clean,,,,
+3b8daab6a05352a9,full,fix,A6;G3,“గమనికః” at offset 441 | “ఛాంపియన్షిప్ ఫలితాలు.” at offset 419,446 U+0C03 | 440 U+000A,Results table stripped; ః used as colon.
+56b84cbf5978ccc2,full,fix,G3,“గణాంకాలు.” at offset 131 + “పోటీలు.” at offset 143 + “ఎఫ్.ఎ. కప్పు.” at offset 230,140 U+000A,Empty trailing headings and 24 blank lines.
+e157b805fa2100b2,full,fix,G3,“()” at offset 42,42 U+0028 + U+0029,Empty () left after the unit name.
+80d2444f3ce72f2f,full,drop,D4,“సి కోసం ఫార్వర్డ్గా ఆడతాడు.డి.” at offset 114 + “మొదటి సంతకం చేసినట్లుగా” at offset 184 + “నాటికి సంపాదించాడు” at offset 592,,Context broken in three of five sentences.
+fc97a555b0f09231,full,drop,D4,“అహంకారం ఆ సమూహంలో ఏకైక సభ్యత్వం పొందింది” at offset 544 + “పర్యటన గర్వం లేకుండా” at offset 2304 + “జెఫ్రీ స్టార్ రక్తంపై” at offset 9845,,Names mistranslated; context broken in about half the sentences.
+793901dbea21ba96,full,clean,,,,One agreement slip at 725; below D4 threshold.
+ef5f7cb9344c9a4c,full,fix,B2,“<బిఆర్>” at offset 290,,Telugu br tag; also empty () and trailing heading.
+312fea7ed92d1eae,full,drop,D4,“వ్యవసాయ పాట” at offset 22 + “విద్యుత్ కేంద్రంలో” at offset 1620 + “అణు పిల్లి పిల్లి” at offset 5624,,Context broken in about a third of 73 sentences.
+8e27f975f080efe7,full,clean,,,,
+eba43cb19b243506,full,fix,D4,"“20వ శతాబ్దపు నక్కతో” at offset 1523 + “పది జన్యు ఆట్రీ చిత్రాలలో” at offset 2311 + “మరీనా, ను జన్మించింది” at offset 3980",,MT errors in about 7 of 45 sentences; visarga-as-colon.
+b419cc52aac60380,full,fix,D4,“అతను సి నుండి పట్టభద్రుడయ్యాడు” at offset 1170 + “ఖగోళ శాస్త్రవేత్తలు” at offset 4382 + “చిన్న పనిమనిషి ఉద్యానవనం” at offset 4753,,MT sense errors in about 12 sentences; stripped lists.
+f5e50fd0ab29e380,full,drop,D4,“ప్రతి పడవలో” at offset 1601 + “చేతులు చిందించారు” at offset 2296 + “విశాల బాణానికి” at offset 2484,,Context broken in about a third of sentences.
+ee148f6cd62aa3d2,full,fix,A6,“అక్షాంశాలుః” at offset 361 + “అక్షాంశంః” at offset 397 + “రేఖాంశః” at offset 417,371 U+0C03 (3x),ః used as colon three times.
+63aa68f315beff74,full,fix,D4,"“""స్వీట్హార్ట్స్ డ్యాన్స్"" గా విడుదలైంది” at offset 202 + “యు లో 55వ స్థానంలో ప్రారంభమైంది.ఎస్.” at offset 1286",,MT breaks 2 of 13 sentences; personnel list stripped.
+7cb3f4da9a5af61f,full,drop,D4,“ఉన్నారు.ఎస్. విద్యా విభాగం” at offset 156 + “నామినేట్ చేయబడ్డాడు.ఎస్. అధ్యక్షుడు” at offset 2606 + “మాథ్యూ రాండాజో విజయం సాధించారు” at offset 4099,,Context broken in about 13 of 30 sentences.
+e4371635e9a4fa36,full,drop,D4;D5,“ఫోటోగ్రాఫర్ రిచర్డ్ ఆస్టిన్ అనే మారుపేరు” at offset 267 + “సంరక్షకుడు ఈ కథను” at offset 767 + “కోత పళ్ళు ధరించినప్పుడు” at offset 957 | “చంపబడ్డాడని నివేదించబడింది” at offset 89 + “కనుగొనబడినట్లు సమాచారం” at offset 424 + “చంపబడినట్లు నివేదించబడింది” at offset 478,,Context broken in about a third of sentences.
+e67d22a2868c8c75,full,fix,C3,“ఈ క్రింది విధంగా ఉన్నాయిః” at offset 334,,Trailing population lead-in; list stripped.
+6387ba5c1021a057,full,fix,D4,“రబ్బరు అలసిపోయిన మెట్రో” at offset 586 + “నిలిపివేయాలని ఆదేశించబడింది” at offset 1322,,"Two MT sense errors; one empty (), two ః-colons."
+dd471c0547e13809,full,clean,,,,
+222050ca30b24174,full,fix,D4,"“గత రాక క్షిపణులను పొందడానికి” at offset 335 + “ఇది బరువు, పరిధిని కలిగి ఉంది” at offset 950 + “డ్రోన్ చేరుకోగల గరిష్ట వేగం.” at offset 1025",,MT broken in 3 of about 20 sentences.
+f4b6cba0ef7d37f9,full,fix,D4,“మార్చబడింది.జిబి.కామ్” at offset 1253 + “కంపెనీ UK.” at offset 2187 + “ఆర్థిక కాలం” at offset 3787,,MT breaks about 9 of 45 sentences; visarga-as-colon twice.
+b599f68aadb90f26,full,fix,C3;D4,“ఈ క్రింది వాటితో జంటగా ఉంటుందిః” at offset 6063 | “బానిస కాని భాషలలోకి” at offset 4351 + “అగ్నిమాపక దళ బంతి” at offset 4824 + “దాచు-ప్రాసెసింగ్” at offset 5411,,"6 of 45 sentences broken; empty (), stripped list."
+9258dc99e3c71f58,full,drop,D4,“కెమెరా మరియు యుఎన్” at offset 369 + “కెమెరా రాజధాని యాండే” at offset 458 + “వదిలివేయబడ్డాడు” at offset 954,,Context broken in about a third of sentences.
+a353e9f3e75263f1,full,fix,D4;D5,“ఒక ఫ్లెమిష్ చెక్కడం మరియు ప్రింట్ మేకర్” at offset 113 + “సంతకం ప్రచురించబడిన” at offset 750 + “ఒక చెక్కగా పనిచేశారు” at offset 1990 | “పోర్ట్రెయిట్ల తర్వాత” at offset 181 + “డిజైన్ల తరువాత” at offset 2039 + “సెయింట్ లూక్ యొక్క” at offset 612,,MT breaks about 6 of 25 sentences; 6 యొక్క.
+6ea5d3fe1172d4e7,full,clean,,,,Only quote-mark slips and one gender slip.
+38e8d9dd5f83093e,full,fix,G3,“()” at offset 74,74 U+0028 + U+0029,Empty () left after the title.
+9980cd28e8138fa6,full,fix,D4;D5,“ఇది 2005లో వాంగ్” at offset 814 + “తూర్పు వైపు” at offset 1529 + “జెన్పెంగ్ను హాజరుకాకుండా” at offset 2580 | “కష్టపడటం చూస్తుంది” at offset 639 + “ఆడటం చూసింది” at offset 2047,,MT breaks in about 4 of 14 sentences.
+07a5fbec993fa310,full,fix,D4,"“ఆ తరువాత అలబామా మరియు ఫ్లోరిడా రైల్రోడ్, ఈ పట్టణం” at offset 528 + “ఉపశమన పలకలు” at offset 1757 + “బంగారు ఆకు స్వరాలతో” at offset 2042",,Local MT errors in about 6 of 30 sentences.
+38f1caefdd1468a8,full,fix,D4,"“ఆరోపించడం, అతను” at offset 1041 + “సహాయపడింది, అతనిని తొలగించడానికి” at offset 1319 + “ముగ్గురు విషయ పాలకులను” at offset 2275",,MT breaks about 4 of 20 sentences; visarga-as-colon.
+b98743bac7cd11a8,full,drop,D4,“దేవతలకు తాము అర్హులమని” at offset 408 + “తమ కుమార్తెలను విడిచిపెట్టి” at offset 541 + “ఆమె తండ్రి జోధాభాయిని ఆమె తండ్రి ఇచ్చి” at offset 713,,Context broken in 4 of 7 sentences.
+ba73b7e358792c35,full,fix,D4,“ఆశ్చర్యకరమైన విల్లాకు” at offset 1423 + “ప్రత్యర్థుల ఆయుధాగారంతో” at offset 1709 + “అనుకూలంగా లేకుండా పోయింది” at offset 1967,,MT errors in about 5 of 20 sentences; visarga-as-colon.
+9ddafdb5cc6cca56,full,drop,D4,“చికాగో ఎలుగుబంట్లకు” at offset 113 + “ఫుట్బాల్ భద్రత” at offset 145 + “13 చిత్రాలలో” at offset 540,,Context broken in three of five sentences.
+601b67e98b9da27b,full,fix,A6,“గడిపారుః” at offset 585,592 U+0C03,Visarga used as colon once.
+8f8b6c20356359f5,full,clean,,,,
+da1dbea365ee70e8,full,fix,D4,"“ఇది పొడవుగా మరియు వెడల్పుగా ఉంది” at offset 156 + “నై-అలెసండ్, కార్బోనిఫెరస్ మరియు పెర్మియన్ వంటి భూగర్భ శాస్త్రాన్ని” at offset 604",,MT errors in 2 of 8 sentences.
+948ab5fe0b666e7c,full,fix,D4;D5,“పనిచేశారు.సి.అక్కడ” at offset 1234 + “ఒకప్పుడు తొలగించబడిన” at offset 3209 + “వేదాంతి రెవ్.” at offset 3294 | “థీసిస్ యొక్క” at offset 1057 + “కూప్మన్స్ యొక్క” at offset 2094 + “ఉత్పత్తి యొక్క” at offset 2408,,MT errors in about 5 of 30 sentences; local.
+eb365c666ec6bd45,full,clean,,,,
+0d07ed0540f5d192,full,clean,,,,
+5557996e707306e5,full,drop,D4,“జరిగాయి.ఎస్.” at offset 119 + “యు ని ఓడించాడు.ఎస్.” at offset 276 + “ప్రజాస్వామ్య టిక్కెట్లను” at offset 489,,Context broken in four of five sentences.
+5cffa410c4bbfc31,full,clean,,,,
+4969f47c1a0134bc,full,clean,,,,
+74eebb237927ebf7,full,fix,D4,“పక్షపాతంపై” at offset 312 + “సౌలభ్యం” at offset 749 + “లోదుస్తుల” at offset 1043,,MT errors in 3 of about 13 sentences.
+80d43579cc6201cd,full,fix,D4;D5,“అప్పుడు ఇప్పుడు ఇటలీలో” at offset 331 + “పదహారు కంపెనీలతో కూడిన పదహారు మంది” at offset 2049 + “గొప్ప మరియు క్రూరమైనవారు” at offset 4323 | “నికోలస్ మావ్రోజెన్స్ యొక్క” at offset 540 + “ఆమె యొక్క పెద్ద జీవిత విగ్రహం” at offset 4837 + “1988-2001 యొక్క” at offset 5238,,MT breaks about ten of ~40 sentences.
+addc72ff2e4d6ec2,full,fix,D4,“పోటీ పడ్డాడు” at offset 514 + “గెలుచుకున్నాడు” at offset 725,,"Masculine verbs for a female athlete, twice."
+0bf9fb0db515d011,full,drop,D4;D5,“సెయింట్ యొక్క చాపెల్. బర్బరా” at offset 258 + “సెయింట్ యొక్క ఉపశమనం ఉంది. 1525 నుండి.” at offset 4086 + “కొన్నిసార్లు యజమానులతో” at offset 4153 | “వర్జిన్ మేరీ యొక్క ఊహ యొక్క చర్చి” at offset 204 + “పిల్సేన్ యొక్క 1433-1444” at offset 1095,,Context broken in about 40% of sentences.
+45196af2c15ab578,full,clean,,,,
+dea821fa45e8754d,full,fix,D4,“ఇల్లినాయిస్లోని రివర్ గ్రోవ్ లోని గ్రాండ్ అవెన్యూ.” at offset 89 + “రెండు అదనపు వస్తువులను ఉంచి” at offset 540,,Two MT errors in eight sentences; rest sound.
+e51e73752edf5e2d,full,clean,,,,
+62c4648805373246,full,clean,,,,
+c69641cad48a15e5,full,drop,D4,“ప్రారంభ రద్దు అయినప్పటి నుండి” at offset 118 + “పద్నాలుగు జట్లు పూర్తయ్యాయి” at offset 259 + “(డెర్డే డివిజీ) ప్రమోషన్/రిగ్రేగేషన్” at offset 668,,Context broken in about half the sentences.
+6ad485fe0e30c540,full,fix,D4,“ముందున్న వారు” at offset 203 + “కొండపైనున్నవాడు” at offset 2318 + “పున un కలయికలో” at offset 2438,,MT errors in about seven of 25 sentences.
+2b92fd99af416a30,full,fix,D4,“సభ్యుడు హెచ్.ఆర్.హెచ్.” at offset 851 + “ఇష్టపడిన 1920లో” at offset 930,,"Two verbless MT sentences of ~26; empty (,)."
+d5e24a1047dff7a8,full,fix,D4,“కెప్టెన్ ప్రకారం.” at offset 450 + “మీరు ఎప్పుడు.” at offset 539 + “ఉన్నాయి.నౌకాదళ సిబ్బంది.” at offset 1071,,MT breaks 4 of 17 sentences; stripped list.
+56ba9d52d70f2a5b,full,fix,D4,“దుఃఖ సూచిక మరియు సమాధి” at offset 385 + “చెక్కతో చేసిన రికార్డులకు” at offset 865 + “హింసాకాండకు పాల్పడిన వ్యక్తితో” at offset 2318,,Band names literal in ~10/38 sentences; empty trailing headings.
+cefb0d9e81cdd290,full,fix,D4;D5,“కెల్లీని 11 సార్లు మూసివేసింది” at offset 7423 + “న్యూయార్క్ 2-0తో విజయం” at offset 5801 + “అతను 2011లో అతన్ని విడుదల చేశాడు” at offset 951 | “వెళ్ళే ముందు.” at offset 369 + “చేరడానికి ముందు.” at offset 865 + “నియమించబడటానికి ముందు.” at offset 1300,,MT errors in ~15 of ~80 sentences; empty heading.
+d63cabdb4bc61d6c,full,fix,A6,“అందిస్తుందిః” at offset 290,301 U+0C03,Visarga used as colon once.
+a8ff76283699b780,full,clean,,,,
+e5c77d0bd3e12745,full,drop,D4;D5,“విషం సుమారు 5 అడుగుల” at offset 3384 + “నక్షత్రాన్ని చేయగలదు” at offset 10317 + “గుర్రపు ఓడతో” at offset 13728 | “వీడియో గేమ్స్ యొక్క” at offset 27 + “జీన్ బాసోన్ యొక్క” at offset 369,,Context broken in about half the sentences.
+c96d25b6d797fe8d,full,clean,,,,
+03437360cbd7d340,full,fix,D4,“ధ్యాతకులు షెల్-షాక్” at offset 1143 + “ధన్మాదులకు పదేపదే” at offset 1204 + “ధియాలు తన” at offset 3086,,"Garbled subject in 3 sentences, stray fragment at 1118."
+b8817912cb0756de,full,fix,D4;D5,"“కమిటీ ""పదోన్నతి""” at offset 5658 + “దుర్భరమైన దయతో దెబ్బతింది” at offset 8089 + “చదరంగం ఎప్పుడూ లేదు” at offset 8669 | “లండన్ యొక్క” at offset 490 + “స్టాంటన్ యొక్క” at offset 2584 + “ఐరోపా యొక్క” at offset 7372",,MT breaks ~10 sentences; 12 యొక్క; ః-as-colon thrice.
+1b6a888f6e57f5a4,full,fix,D4,“ఛాన్సలును G రూపొందించారు.ఎఫ్. బోడ్లీ” at offset 509 + “పనిచేసే రేంజ్మోర్ హాల్.” at offset 1510 + “నారింజ వంటి” at offset 1699,,MT breaks 5 of 16 sentences; under a third.
+707579ed6e233d5f,full,drop,C2;D4;D5,“ఈ ఆలయం శిథిలావస్థలో ఉంది” at offset 586 | “ఇది మొదటిదానికి ముందు మరియు తరువాతి తేదీలకు ముందు” at offset 197 + “మొదట చౌ చెప్పారు” at offset 1463 + “గరుడ మరియు నాగుల రాజు అని అర్థం” at offset 3311 | “కొంపాంగ్ యొక్క ప్రేహ్ ఖాన్” at offset 448 + “రామాయణ పురాణం యొక్క” at offset 3629,,Context broken in about 13 of 40 sentences.
+0df58aaedb63bff2,full,fix,D4,"“జాన్ గ్లేడ్, ఒక విముక్తివాది” at offset 1198 + “వేటగాళ్ల కొండ” at offset 2592 + “తరువాత ఏ మతం 27.3% మరియు ఆంగ్ల 11.7% లేవు” at offset 5873",,MT breaks 7 of 75 sentences; stripped lists.
+24a102246d171d23,full,fix,A3;D4,“Â” at offset 845 | “ఛాంపియన్గా సహా” at offset 532 + “రెండు దేశాలు జార్జియా చూపించలేదు” at offset 586 + “16 నాకౌట్ దశకు” at offset 718,845 U+00C2 LATIN CAPITAL LETTER A WITH CIRCUMFLEX,MT broken in two of eight sentences; stray Â.
+c2f93c88598796ae,full,fix,D4,“1937 నుండి బోధనా పదవిని నిర్వహించిన తరువాత 1925లో” at offset 440 + “ప్రారంభ ప్రభావం ఇవాన్ లిన్ఫోర్త్ మీద పడింది” at offset 526 + “రాజకీయాలు సామ్యవాదులుగా” at offset 677,,MT breaks meaning in 3 of 11 sentences.
+dd4f802444ec44d3,full,clean,,,,One wrong sense only: ఆదేశాన్ని for order.
+1b4a03f865f59279,full,fix,G3,“తారాగణం.” at offset 566 + “మొదలైనవి.” at offset 575,574 U+000A,Cast heading holds only 'etc.'; list stripped.
+8876003946a7ed16,full,fix,C3;D4,“శీర్షికలలో కొన్నిః” at offset 882 | “ఇతర పత్రికలు న్యూయార్క్” at offset 15 + “స్థాపించబడిన ఇతర పత్రికలు” at offset 185 + “ప్రపంచవ్యాప్తంగా నుండి” at offset 558,,Press name mistranslated 5 times; list lead-in stripped.
+acc71ae1ef49519c,full,clean,,,,
+848b0e5143ea8151,full,clean,,,,
+00d56c4063f454b9,full,fix,C3,“కలిగిన ప్రముఖ వ్యక్తులుః” at offset 283,,"Also stripped list at 250, empty () at 14."
+bf129d7b0fb16731,full,fix,D4,“కనిపించాయి.కె.” at offset 1562 + “ఆర్ కోసం ఉత్పత్తి చేయబడ్డాయి.ఎ.ఎఫ్.” at offset 2166 + “మూలికా స్వీట్ల శ్రేణి.” at offset 2435,,Split abbreviations break about 4 of 30 sentences.
+767cad4c9059e88c,full,fix,D4,"“ఉచ్చు డ్రమ్స్” at offset 755 + “1987లో వేణువు, పియానో మరియు పెర్కషన్ కోసం టింపానీ ఐచ్ఛికం అవుతుంది” at offset 1038 + “పేరులేని భయానకతల గుసగుసలాడే” at offset 2616",,About 4 of 20 sentences broken; visarga-as-colon twice.
+3d5ae25a9e759fd3,full,fix,D4,“నిద్రలోకి (ముఖం పైకి)” at offset 75 + “జి-దళాలను” at offset 7322 + “ఈ చిత్రానికి అధ్యక్షులుగా” at offset 8686,,"About 18 MT breaks, under a third; stripped lists."
+7d58bf32a982ecc4,full,fix,D4,“ప్రత్యేకత కలిగిన ఫ్రెంచ్ సాహిత్యంలో బ్రిటిష్” at offset 108 + “ఫ్రెంచ్ సాహిత్యం నుండి పాఠకుడు” at offset 1422 + “ఆమె అతన్ని దాటింది” at offset 2042,,Four local MT slips; ః used as colon once.
+7cc069c0d85e74d7,full,fix,D4;D5,"“మానసిక మనోజ్ఞుల క్రింద” at offset 1239 + “రాపర్లు వాపు వచ్చిన సభ్యులను” at offset 5082 + “ఆనందం, వ్యాఖ్య లేదు” at offset 9352 | “సమూహం యొక్క ఉత్తమ” at offset 3127 + “పుట్టగొడుగుల యొక్క అత్యధికంగా” at offset 4173 + “మెక్సికో యొక్క” at offset 10488",,MT breaks 20 of 80 sentences; ః-colon.
+d9847acee9859373,full,fix,A6;G3,“ఉన్నాయిః” at offset 765 | “()” at offset 34,772 U+0C03 | 34 U+0028 + U+0029,Empty () left; ః used as colon.
+a30457e199dd2637,full,drop,D4,“ఆమె మునుపటి రాత్రి వాదించింది” at offset 666 + “మృతదేహాలను మార్చడానికి” at offset 2035 + “బ్రిడ్జెట్ వడ్రంగి” at offset 7457,,Context broken in about 19 of 59 sentences.
+e0e4ea33e65d8ae9,full,clean,,,,
+421e47a34ed96d40,full,fix,D4,“గుర్రపు పిల్లిగా” at offset 2653 + “బానిస కాలంలో” at offset 3601,,Two local MT word-sense errors; stripped list at 3005.
+1c78e3a6979d25f9,full,fix,D4,“ఎం/30లు మరియు ఎం/42లు పనిచేస్తున్నాయి” at offset 509 + “నియమించబడని టాండమ్ సైకిళ్ళు” at offset 590 + “ఒక పోరాట నుండి మరింత ఉపయోగకరమైనదానికి మారింది” at offset 996,,MT broken in 3 of 16 sentences; empty ().
+3560139a7ca4624b,full,fix,G3,“(;)” at offset 26,26 U+0028 + U+003B + U+0029,Empty '(;)' left after the title.
+31985dae173327f2,full,fix,G3,"“(,” at offset 86",86 U+0028 + U+002C,"Stripped name leaves '(,' in the text."
+787078aadb759cf4,full,clean,,,,One wrong sense (పూర్వీకులు at 669) only; not D4.
+eaf27eb729589217,full,fix,D4,“పురుష-వారింగా సముద్రపు ఈగల్స్” at offset 501 + “నాలుగు ప్రయత్నాలు” at offset 609 + “*మూలం మ్యాచ్ యొక్క స్థితి తరువాత ఆట” at offset 994,,MT errors in 3 of 11 sentences; table debris.
+3607bf9ff1c3372b,full,fix,C2;D4,"“ఎగరకపోవచ్చు. ఈ జాతి రూపాన్ని ""హెచ్"" తో చాలా పోలి ఉంటుంది.” at offset 869 + “ఈ జాతి న్యూజిలాండ్కు స్థానికమైనది” at offset 1098 | “ఎలక్ట్రా ""అయితే"" హెచ్.” at offset 256 + “స్థానిక పొదలు మరియు గుర్రాలలో” at offset 538",,Lead repeated in 3 sections; 2 MT breaks.
+c7f0c868062a5f18,full,fix,D4,“పెరిగాడు” at offset 210 + “నియమించబడ్డాడు” at offset 800 + “యువతను కించపరిచే” at offset 830,,Masculine verbs for a woman thrice; sense errors local.
+6994a7e486656719,full,fix,D4,“జలపాతం నది” at offset 1837 + “కొత్త స్వర్గధామం” at offset 3173 + “ఈ చిత్రం 2002” at offset 8300,,Name mistranslations in ~8 of 60 sentences; visarga-as-colon twice.
+d71953b1566640e4,full,fix,D4,"“""e"" యొక్క” at offset 297 + “డెన్స్-కానిస్ "".” at offset 335 + “ఉదా.""సన్డిస్క్""” at offset 1137",,D4 in 3 of ~18 sentences; mid-text stripped list.
+324497f7bb99a5d6,full,clean,,,,Gender slips and పరుగులు for points; meaning intact.
+4dcde722151b36f7,full,fix,G3,“సినిమా” at offset 415 + “టెలివిజన్” at offset 422,421 U+000A,Empty headings; vowel sign after virama at 406.
+f4b98df749e11443,full,drop,D4,“కమ్యూనిటీ.ఎస్. వాషింగ్టన్ రాష్ట్రం” at offset 95 + “ఉంది.ఎస్. మార్గం 395” at offset 183 + “థామస్ వార్డ్ అనే పేరు ఉంది” at offset 300,,Context broken in half the stub sentences.
+d520816bafc27893,full,fix,D4,“అలినియాతో ఉంది” at offset 289 + “ఏటా డి. కె. కె.” at offset 908,,MT breaks 2 of 11 sentences; rest sound.
+72a438285bbc75b2,full,fix,D4,“బోధించాడు.) అకాడమీ” at offset 458 + “తొలగించబడే వరకు” at offset 731 + “మిస్ చేయడానికి” at offset 1210,,MT broken in 5 of ~16 sentences; visarga-as-colon.
+baecda72a1d0edfa,full,drop,D4;D5,"“1931లో సంతకం చేసింది” at offset 500 + “కొంతకాలం కుంగుబాటు కాలం వరకు” at offset 1892 + “దీనికి లైసెన్స్ ఇచ్చి శ్రీమతి స్థాపించారు” at offset 2192 | “ప్రసారం చేయబడి” at offset 191 + “బ్రాండ్ చేయబడ్డాయి” at offset 960 + “ఉత్పత్తి చేయబడి, ప్రోగ్రామ్ చేయబడి” at offset 2045",,Context broken in about 11 of 27 sentences.
+b7e01e64e8d5c6ff,full,drop,D4,“మొదటి గర్భాశయ డోర్సల్” at offset 37 + “మొదటి గర్భాశయ వెన్నుపూస” at offset 143 + “హీనమైన కండరాలను” at offset 435,,Wrong word sense breaks three of five sentences.
+e132c4544801c6b2,full,fix,D4,“ఆంథోనీ నార్టన్ నిషేధం” at offset 1 + “ఏమీ తెలియని సభ్యుడు” at offset 233 + “తన మొదటి భార్య హెచ్. అయితే” at offset 1532,,MT errors in about 5 of 22 sentences.
+bf276cd0b33cad7d,full,fix,D4,“ఎర్రని గొర్రె” at offset 473 + “బెన్నీకి గొర్రెల సంరక్షణ బాధ్యత వహిస్తారు” at offset 552 + “సరైన మానసిక స్థితితో” at offset 2670,,MT errors in 5 of 20 sentences; ః-as-colon thrice.
+4497b1e165d495a9,full,clean,,,,
+0474f0f4c0421365,full,fix,D4,“సిబ్బంది” at offset 813 + “దీనిని జె.” at offset 2037 + “కఠినమైన దుస్తులు ధరించిన రాతితో” at offset 2357,,MT errors in about 5 of 29 sentences; visarga-as-colon.
+b6df7eeb2c033aa8,full,drop,D4;G4,“వంద పురుగుల పుచ్చులో” at offset 354 + “సజీవ జీవి” at offset 2198 + “చాలా మంచు చర్చ్తో” at offset 7320 | “341⁄2” at offset 10237 + “201⁄2” at offset 10301 + “161⁄2” at offset 10340,10240 U+2044 FRACTION SLASH (expected U+00BD) | 10304 U+2044 FRACTION SLASH (expected U+00BD) | 10343 U+2044 FRACTION SLASH (expected U+00BD),Context broken in about a third of sentences.
+220b5360e3753bb7,full,clean,,,,

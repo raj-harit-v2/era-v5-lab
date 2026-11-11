@@ -1,0 +1,28 @@
+ACTUAL TRAINER SMOKE EVIDENCE — NOT A QUALITY RESULT
+Source commit: c9cac5a0d5811e712212a37a01d6c540346ff1a1
+Project module path: /marimo/attention-smoke-lab/era-v5-lab/teams/05-architecture/harness
+Command: /tmp/uv-venv/bin/python /marimo/attention-smoke-lab/era-v5-lab/teams/05-architecture/harness/train_week2.py --config /marimo/attention-smoke-lab/era-v5-lab/teams/05-architecture/configs/arms/attn2_swa128_sink.yaml --tokenizer /marimo/attention-smoke-lab/inputs/tokenizer_v0.json --byte-table /marimo/attention-smoke-lab/inputs/tables/raw_table_P32.npz --train-data /marimo/attention-smoke-lab/inputs/synthetic_train.jsonl --heldout-data /marimo/attention-smoke-lab/inputs/synthetic_heldout.jsonl --device cpu --seed 1234 --smoke --smoke-steps 6 --smoke-seq-len 160 --smoke-batch-size 1 --no-checkpoint --out /marimo/attention-smoke-lab/runs/attn-2-cpu-6steps-ctx160
+
+The trainer writes structured files, not per-step stdout.
+The following sections reproduce those actual files.
+
+=== summary.json ===
+{
+  "status": "SMOKE",
+  "steps": 6,
+  "wall_seconds": 26.988898125000105,
+  "timed_out": false,
+  "first_ce": 11.880956649780273,
+  "last_ce": 7.487933158874512,
+  "final_model_sha256": "97283f05a5829603e0c74b37ba7f350bfb5063ea7904aa0d280c17d45676c026",
+  "eligible_for_quality_comparison": false
+}
+
+=== metrics.jsonl ===
+{"step": 0, "val/nll_nats": 338.9396963119507, "val/utf8_bytes": 152, "val/scored_tokens": 28, "val/bpb": 3.2170172304583065, "val/perplexity": 180771.51305653556, "tokens_per_second": 0.0, "loss_ntp": 0.0, "loss_mtp": 0.0, "loss": 0.0, "lr": 0.001, "gpu_alloc_gb": 0.0, "gradient_norm": 0.0}
+{"step": 1, "train/ce_loss": 11.880956649780273, "loss_total": 11.880956649780273, "loss_ntp": 11.880956649780273, "loss_mtp": 0.0, "mtp_weight": 0.0, "loss": 11.880956649780273, "lr": 0.001, "gradient_norm": 15.216447830200195, "gradient_clipping_applied": true, "train/scored_tokens": 160, "train/input_positions": 160, "train/utf8_bytes": 1432, "perf/step_ms": 6741.882250000117, "tokens_per_second": 23.732244804482786, "gpu_alloc_gb": 0.0}
+{"step": 2, "train/ce_loss": 11.990323066711426, "loss_total": 11.990323066711426, "loss_ntp": 11.990323066711426, "loss_mtp": 0.0, "mtp_weight": 0.0, "loss": 11.990323066711426, "lr": 0.001, "gradient_norm": 15.68913459777832, "gradient_clipping_applied": true, "train/scored_tokens": 160, "train/input_positions": 160, "train/utf8_bytes": 867, "perf/step_ms": 4331.324538999979, "tokens_per_second": 36.94020121543258, "gpu_alloc_gb": 0.0}
+{"step": 3, "train/ce_loss": 12.015527725219727, "loss_total": 12.015527725219727, "loss_ntp": 12.015527725219727, "loss_mtp": 0.0, "mtp_weight": 0.0, "loss": 12.015527725219727, "lr": 0.001, "gradient_norm": 10.651813507080078, "gradient_clipping_applied": true, "train/scored_tokens": 160, "train/input_positions": 160, "train/utf8_bytes": 375, "perf/step_ms": 3402.760060999981, "tokens_per_second": 47.02065297927008, "gpu_alloc_gb": 0.0}
+{"step": 4, "train/ce_loss": 11.298523902893066, "loss_total": 11.298523902893066, "loss_ntp": 11.298523902893066, "loss_mtp": 0.0, "mtp_weight": 0.0, "loss": 11.298523902893066, "lr": 0.001, "gradient_norm": 10.620833396911621, "gradient_clipping_applied": true, "train/scored_tokens": 160, "train/input_positions": 160, "train/utf8_bytes": 730, "perf/step_ms": 2596.8717959999594, "tokens_per_second": 61.61259105915543, "gpu_alloc_gb": 0.0}
+{"step": 5, "train/ce_loss": 7.91455078125, "loss_total": 7.91455078125, "loss_ntp": 7.91455078125, "loss_mtp": 0.0, "mtp_weight": 0.0, "loss": 7.91455078125, "lr": 0.001, "gradient_norm": 10.588601112365723, "gradient_clipping_applied": true, "train/scored_tokens": 160, "train/input_positions": 160, "train/utf8_bytes": 733, "perf/step_ms": 2452.9609849998906, "tokens_per_second": 65.22729100805782, "gpu_alloc_gb": 0.0}
+{"step": 6, "train/ce_loss": 7.487933158874512, "loss_total": 7.487933158874512, "loss_ntp": 7.487933158874512, "loss_mtp": 0.0, "mtp_weight": 0.0, "loss": 7.487933158874512, "lr": 0.001, "gradient_norm": 13.996652603149414, "gradient_clipping_applied": true, "train/scored_tokens": 160, "train/input_positions": 160, "train/utf8_bytes": 1431, "perf/step_ms": 2423.7261910000143, "tokens_per_second": 66.01405744350396, "gpu_alloc_gb": 0.0, "val/nll_nats": 283.4241511821747, "val/utf8_bytes": 152, "val/scored_tokens": 28, "val/bpb": 2.6900961669650476, "val/perplexity": 24891.735348666905}

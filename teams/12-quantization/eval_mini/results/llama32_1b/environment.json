@@ -1,0 +1,50 @@
+{
+ "started": "2026-11-04T14:43:33",
+ "platform": "colab",
+ "output_dir": "/content/eval_mini_out",
+ "run_by": "vpw",
+ "notebook_version": "110f8c0fa532",
+ "settings": {
+  "LIMIT": null,
+  "FORMATS": [
+   "bf16",
+   "Q4_K_M"
+  ],
+  "BASE": "bf16",
+  "MODEL": "unsloth/Llama-3.2-1B-Instruct",
+  "REVISION": "5a8abab4a5d6f164389b1079fb721cfab8d7126c",
+  "LLAMA_TAG": "b11669",
+  "LLAMA_CPP_PYTHON": "0.3.36",
+  "BF16_FALLBACK_GPU_LAYERS": 12
+ },
+ "python": "3.13.16",
+ "formats": {
+  "bf16": {
+   "gpu_layers": -1,
+   "gguf_bytes": 2479595200,
+   "wall_clock_s": 1206,
+   "finished": "2026-11-04T16:14:57"
+  },
+  "Q4_K_M": {
+   "gpu_layers": -1,
+   "gguf_bytes": 871308992,
+   "wall_clock_s": 776,
+   "finished": "2026-11-04T16:27:53"
+  }
+ },
+ "gpu": "Tesla T4, 15360 MiB, 580.82.07",
+ "cuda_arch": [
+  "75"
+ ],
+ "packages": {
+  "python": "3.13.16",
+  "llama_cpp_python": "0.3.36",
+  "lm_eval": "0.4.13",
+  "datasets": "5.1.0",
+  "gpu_offload": true,
+  "torch_visible": false,
+  "transformers_visible": false
+ },
+ "bf16_gguf_bytes": 2479595200,
+ "finished": "2026-11-04T16:27:54"
+}

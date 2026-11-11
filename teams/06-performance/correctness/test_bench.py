@@ -1,30 +1,14 @@
-"""perfkit/bench.py: the harness runs end to end, writes a valid run JSON, and follows the Instructor's rules.
+"""perfkit/bench.py runs end to end, writes a valid run JSON and applies its rule checks.
 
-Everything runs on the CPU with a tiny model and a fake Loader, so the tests need no GPU, no data download and no
-network (the real Loader fetches the pinned BrahmicTokenizer-131K artifact). The fake Loader has the same
-constructor and attributes as dataio.loader.Loader.
-
-  * build: the Loader gets data.tokenizer_path; dtype fallbacks (B3); the LR-schedule note.
-  * run metadata: tokenizer revision and sha256, vocab size (rule 1a).
-  * rule_checks: dirty tree, wrong vocabulary (1a), level < 3 (3a), checkpoint / comm not measured (3b; comm
-    only for MoE models).
-  * quick_compare: the 5% check on the whole step and every part at level <= gate_level; refuses runs with a
-    different model, optimizer, compile, grad_clip or data source; a part only one run has is MISSING.
-  * checkpoint: tied weights are copied to the CPU once.
-  * write_run / _finite: unique file names, NaN and inf become null.
-  * main, for the reversible and the plain stack: clean + layer + checkpoint run, validate_run returns [],
-    the parts are there and add up, exit codes 0 and 2.
-  * quick_compare also accepts an A/B of optim.muon_impl or model.moe.dispatch, and gates checkpoint save and
-    the all-to-all when both runs have them.
-  * throttle warnings: an idle GPU is not flagged; slowdown reasons are named; the SM clock is the fallback.
-  * --repeat: every run in a child process, one JSON per run, PASS / exit 2, a killed run stops the repeat.
-  * trace: kernels counted (not annotations); with layer mode, one small trace per slowest part.
-  * CUDA timing-event counters (clean, layer and its inner pass, comm) in the JSON, and their warnings.
+CPU only, with a tiny model and a fake Loader (same constructor and attributes as dataio.loader.Loader), so no GPU,
+data or network. Covers: build and dtype fallbacks, run metadata, rule_checks, quick_compare (5% rule, refusals,
+A/B, MISSING), checkpoint, write_run, main for both stacks, throttle warnings, --repeat, trace mode, event counters.
 """
 from __future__ import annotations
 
 import copy
 import json
+import time
 from pathlib import Path
 
 import pytest
@@ -33,6 +17,8 @@ import torch
 from models.config import load_config, model_config
 from models.ke1 import token_bytes_random
 from perfkit import bench
+from perfkit import timer as T
+from perfkit.regions import region, use_recorder
 from perfkit.report import compare_lines
 from perfkit.schema import example_run, validate_run
 
@@ -129,7 +115,7 @@ def test_build_uses_the_config_batch():
 
 def test_bench_constants_are_config_keys():
     b = load_config(ROOT / "configs" / "base.yaml")["bench"]
-    assert {"layer_warmup", "comm_reps", "peak_tflops", "ckpt_repeats", "trace_steps"} <= set(b)
+    assert {"layer_warmup", "layer_prefill", "comm_reps", "peak_tflops", "ckpt_repeats", "trace_steps"} <= set(b)
     a, ov = bench.parse(["--config", "x.yaml", "--peak-tflops", "100"])
     assert "bench.peak_tflops=100.0" in ov
 
@@ -602,7 +588,7 @@ def test_main_rejects_an_unknown_mode(tmp_path):
         _run_main(tmp_path / "runs", "x", "--modes", "clean,nonsense")
 
 
-# ------------------------------------------------------------------------------ --repeat (Task 2)
+# ------------------------------------------------------------------------------ --repeat
 # "Automatically run the benchmark twice and fail if any part differs by more than 5%."
 
 def test_parse_repeat_defaults_to_one_run():
@@ -841,6 +827,36 @@ def test_inner_pool_warning_and_json(tmp_path, monkeypatch):
     run = json.loads((tmp_path / "runs" / "inner-pool.json").read_text())
     assert run["layer"]["inner_pass"]["events_created_while_measuring"] == 57
     assert any("57 recorder-pool CUDA events" in w and "layer.inner_pass" in w for w in run["warnings"])
+
+
+def test_layer_prefill_is_a_no_op_off_cuda():
+    s = bench.build(tiny_cfg("bench.layer_prefill=true"), torch.device("cpu"))
+    result = bench.run_layer(s, 2, 3, 1)
+    assert "queue_fill" not in result and "queue_fill" not in result["inner_pass"]
+
+
+@pytest.mark.skipif(not torch.cuda.is_available(), reason="CUDA events and the queue fill need a GPU")
+def test_queue_fill_turns_a_host_bound_part_into_gpu_time():
+    # Python sends 20 tiny kernels 2 ms apart: without a fill the part's events time Python (~40 ms) and the GPU
+    # runs out of queued work; with the fill the GPU runs them back to back (well under 5 ms) and never runs dry.
+    x = torch.ones(1024, device="cuda")
+
+    def timed(fill_ms):
+        fill = T.QueueFill("cuda")
+        fill.ms = fill_ms
+        fill.fill()
+        rec = T.EventRecorder("cuda", 1, check_idle=True)
+        with use_recorder(rec), region("part", 1):
+            for _ in range(20):
+                x.add_(1)
+                time.sleep(0.002)
+        spans, _ = rec.collect()
+        return spans[0][2], rec.idle
+
+    host_bound_ms, host_bound_idle = timed(0.0)
+    filled_ms, filled_idle = timed(200.0)
+    assert host_bound_ms > 30 and host_bound_idle > 0
+    assert filled_ms < 5 and filled_idle == 0
 
 
 def test_run_layer_copies_inner_pool_count(monkeypatch):

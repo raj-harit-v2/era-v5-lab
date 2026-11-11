@@ -11,7 +11,7 @@ test trainer, GPU checks for Kaggle, the cost model, and generated reports.
 | `kaggle/` | GPU checks on Kaggle's free 2 GPUs (real `nvidia-smi`, NCCL all-reduce and timeout, checkpoint tests on CUDA, save speed); see [kaggle/README.md](kaggle/README.md) | a Kaggle account |
 | `cost/` | cost model (Young's interval, spot vs on-demand, hot spare), its report, and the "instances outside Slurm" check | Python |
 | `tools/` | `bench_save.py`: the real checkpoint stall on a GPU | a GPU |
-| `docs/` | [review_week1.md](docs/review_week1.md) (results, instructor questions, status), [sim_results.md](docs/sim_results.md), [metrics_catalog.md](docs/metrics_catalog.md), [codes_and_actions.md](docs/codes_and_actions.md), [checkpoint_design.md](docs/checkpoint_design.md), [deepspeed_impact.md](docs/deepspeed_impact.md) (proposal: what changes in each ADR if we train with DeepSpeed), [team08_contract_notes.md](docs/team08_contract_notes.md) (Team 08's health JSON contract: what we changed, what we suggest) | — |
+| `docs/` | [review_week1.md](docs/review_week1.md) (results, instructor questions, status), [sim_results.md](docs/sim_results.md), [metrics_catalog.md](docs/metrics_catalog.md), [codes_and_actions.md](docs/codes_and_actions.md), [deepspeed_impact.md](docs/deepspeed_impact.md) (proposal: what changes in each ADR if we train with DeepSpeed), [team08_contract_notes.md](docs/team08_contract_notes.md) (Team 08's health JSON contract: what we changed, what we suggest) | — |
 
 ## Run the evidence
 

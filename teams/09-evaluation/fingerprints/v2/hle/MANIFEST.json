@@ -1,0 +1,85 @@
+{
+  "name": "HLE (Humanity's Last Exam)",
+  "tags": [
+    "english",
+    "reasoning"
+  ],
+  "licence": "MIT (gated)",
+  "source": "hf",
+  "repo": "cais/hle",
+  "revision": "5a81a4c7271a2a2a312b9a690f0c2fde837e4c29",
+  "files": [
+    {
+      "path": "data/test-00000-of-00001.parquet",
+      "sha256": "6d0ee0602e8aea6b159509577e884f48ecac7b8e3f6822a35f51335a446c726a"
+    }
+  ],
+  "split": "test",
+  "texts": [
+    "{question}",
+    "{rationale}",
+    "{question}\n{answer}"
+  ],
+  "canaries": 1,
+  "gated": true,
+  "id": "hle",
+  "normalize_id": "g9-v2",
+  "n": {
+    "prose": 13,
+    "code": 20
+  },
+  "gram_filters": [
+    "numeric_only",
+    "single_chars"
+  ],
+  "boilerplate": {
+    "0BSD.txt": "e3f18c71e10d673590eb9856c1d79dd3b4b0d65404efb5e8584dbede7edd608b",
+    "AGPL-3.0-only.txt": "d8a6cc31abc16b6748c7a21f21611f5a1ec33f67d22ca23d7da1c19b95496bee",
+    "Apache-2.0.txt": "074e6e32c86a4c0ef8b3ed25b721ca23aca83df277cd88106ef7177c354615ff",
+    "BSD-2-Clause.txt": "f32fb3b417a194167cfad068223fc975ba96c5960513a10f66a3c28720aec1df",
+    "BSD-3-Clause.txt": "5a93d5831e1297ab10fe643e1a631e83be392896da14ee2951285a79012df69d",
+    "BSL-1.0.txt": "84c6ef3ea9e3254a54d0acf5d3e0c61ae011b8fef7dd6940591cf060e6380a8f",
+    "CC0-1.0.txt": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499",
+    "EPL-2.0.txt": "61616a4066701bc7888ad910de1633dbc55eb4d4d30d930feef55afb9492e33c",
+    "GPL-2.0-only.txt": "aaf135472f81c5b4a0dca9367e5bb5e9750032b5bebe5442b36e4c0a47430df3",
+    "GPL-3.0-only.txt": "fb981668c18a279e285fc4d83fba1e836cc84dd4daa73c9697d3cfd2d8aca6e0",
+    "ISC.txt": "f2ec607f67bb0dd3053b49835b02110d5cd0f8eb6da3aac4dc0b142a6b299be9",
+    "LGPL-2.1-only.txt": "5749785c8bdefafcb5d798270ed0a967036fe2ca63dcedade1627565dfef81d2",
+    "LGPL-3.0-only.txt": "996af0513df21f7496288951c41428a03c174e9e4a9d63665c57d670f845ccb1",
+    "MIT.txt": "b85dcd3e453d05982552c52b5fc9e0bdd6d23c6f8e844b984a88af32570b0cc0",
+    "MPL-2.0.txt": "66a3107d5ad6a058aab753eaac2047ccb2ed0e39465dd0fe5844da3e300d5172",
+    "Unlicense.txt": "0bdebfeda07d45dada625ae1317c6f833186e798b171d0db640bcf32e92a8240",
+    "Zlib.txt": "bfb1112d49db5b1daecdfef24bd7e2f3ea0bafb33aa67aa0ab51e2bf8407c03d",
+    "lorem-ipsum.txt": "56293a80e0394d252e995f2debccea8223e4b5b2b150bee212729b3b39ac4d46"
+  },
+  "short_min": 8,
+  "short_texts": 100,
+  "short_templates_dropped": 0,
+  "items": 2500,
+  "items_without_ngram": 2,
+  "item_grams": 987421,
+  "shards": {
+    "8": [
+      "n8-000.tsv"
+    ],
+    "9": [
+      "n9-000.tsv"
+    ],
+    "10": [
+      "n10-000.tsv"
+    ],
+    "11": [
+      "n11-000.tsv"
+    ],
+    "12": [
+      "n12-000.tsv"
+    ],
+    "13": [
+      "n13-000.tsv",
+      "n13-001.tsv",
+      "n13-002.tsv",
+      "n13-003.tsv",
+      "n13-004.tsv"
+    ]
+  }
+}

@@ -1,0 +1,83 @@
+Restore test on CPU, Windows, Team 05 tiny MoE
+Date: 3 Nov 2026 (first run); 4 Nov 2026 (rerun with exit codes, wall time and the pytest check)
+
+Why this file: a second run of the restore test on a different machine and OS, to check that the result does
+not depend on Linux. The first CPU run (results/restore_test_cpu.txt) was on Ubuntu. This one is on Windows,
+run natively in PowerShell, not in WSL.
+
+Code: commit 3a41a9538f871089793c31eb48eff6c2c07ca053 (main), teams/07-infrastructure/jobs/restore_test/restore_test.py
+
+Setup (PowerShell, from the repo root; a virtual environment made with Python 3.13):
+  py -3.13 -m venv .venv
+  .\.venv\Scripts\python.exe -m pip install -r teams\04-ke2\src\requirements.txt pyyaml
+
+Commands (PowerShell, from the repo root; the default device is CPU; each --out folder is under the git-ignored out/):
+  .\.venv\Scripts\python.exe teams\07-infrastructure\jobs\restore_test\restore_test.py --out teams\07-infrastructure\jobs\restore_test\out\np1
+  .\.venv\Scripts\python.exe teams\07-infrastructure\jobs\restore_test\restore_test.py --nproc 2 --out teams\07-infrastructure\jobs\restore_test\out\np2
+
+Environment:
+  Python 3.13.17 (MSC v.1944 64 bit, AMD64)
+  torch  2.14.1+cpu
+  numpy  2.2.6
+  OS     Windows 11 Home Single Language, x86_64
+  CPU    AMD Ryzen 7 8840U (laptop)
+  Run    native Windows (PowerShell), not WSL
+  USE_LIBUV not set (not needed)
+
+Team 05 config:
+  teams/05-architecture/configs/config_v0.yaml + teams/05-architecture/configs/small/tiny_moe.yaml
+  seed 1234 (run.seed in config_v0.yaml)
+
+Steps:
+  checkpoint step 100, stop step 150 (run B's first launch), end step 200
+
+Result: PASS on 1 and 2 processes
+  | processes | last line                                                                                       | exit | wall time |
+  | 1         | PASS restore_test nproc=1 cpu: steps 101-200: loss_ntp and loss_mtp bit-equal, data ids equal | 0    | 18.7 s    |
+  | 2         | PASS restore_test nproc=2 cpu: steps 101-200: loss_ntp and loss_mtp bit-equal, data ids equal | 0    | 14.6 s    |
+  Both runs:
+  steps compared: 100 (steps 101 to 200)
+  max loss difference, run A vs run B (loss_ntp and loss_mtp): 0.0 (all float bits equal)
+  data IDs (batch position + sha256 of the batch tokens): equal at every compared step
+  result.json: pass true, first_diff null, in both runs
+  result.json sha256: 1 process e501921ccaa481dc1f5663bf7959d63eefcb439f0f7d108fda153d7bdf7b3c7b
+                      2 processes 04bda61a4e398f50fc5c63c35175de59101ca08ac3fbbac68489b1fa14880678
+  The 4 Nov rerun gave the same result.json sha256 as the 3 Nov run, on 1 and 2 processes: the result is
+  repeatable on this machine, and the losses below hold for both runs.
+  Wall time is the whole script (run A, both launches of run B, compare), measured in PowerShell with
+  Measure-Command; the exit code is $LASTEXITCODE right after each run.
+
+First and last compared losses, 1 process:
+  step | run | loss_ntp             | loss_mtp             | batch position
+  101  | A   | 0.03229273483157158  | 0.032138049602508545 | 100
+  101  | B   | 0.03229273483157158  | 0.032138049602508545 | 100
+  200  | A   | 0.010667878203094006 | 0.010748101398348808 | 199
+  200  | B   | 0.010667878203094006 | 0.010748101398348808 | 199
+
+First and last compared losses, 2 processes (each loss is the mean over the 2 ranks):
+  step | run | loss_ntp             | loss_mtp             | batch position
+  101  | A   | 0.03229273855686188  | 0.03213804215192795  | 100
+  101  | B   | 0.03229273855686188  | 0.03213804215192795  | 100
+  200  | A   | 0.010667875409126282 | 0.010748099535703659 | 199
+  200  | B   | 0.010667875409126282 | 0.010748099535703659 | 199
+
+Test: pytest teams/07-infrastructure/support/tests/test_ckpt.py -k restore_job: 2 passed (1 and 2 processes),
+  23.1 s, on Windows with the same environment.
+
+Notes:
+- Equal bits across different machines are not a goal of this test. The test compares run A with run B on
+  the same machine and the same process count only. A different number from the Linux run is not a failure.
+- The losses differ in the last digits from the Linux run in results/restore_test_cpu.txt, and between 1 and
+  2 processes. restore_test.py fixes torch.set_num_threads(1), so the difference most likely comes from
+  different CPU math kernels on different hardware. The Linux file does not record its CPU model, so this
+  reason cannot be checked against it yet.
+- The 2-process run printed one pair of c10d warnings at each of the three launches (run A, and both launches
+  of run B):
+    [W ... socket.cpp:764] [c10d] The client socket has failed to connect to [<hostname>]:<port>
+    (system error: 10049 - The requested address is not valid in its context.).
+  restore_test.py sets MASTER_ADDR=127.0.0.1 and binds the port on 127.0.0.1. The run passed with that
+  setting, and the warnings appear anyway. They are warnings, not errors: a Windows user can ignore them.
+  The machine name is replaced by <hostname> here.
+- The gloo use_libuv error that can appear on Windows did not appear, so USE_LIBUV was not set.
+- Python 3.13 was used, the same minor version as the Linux run, so that the pinned versions in
+  teams/04-ke2/src/requirements.txt install from ready-made wheels.

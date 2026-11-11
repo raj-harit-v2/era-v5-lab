@@ -108,7 +108,7 @@ alternatives, test plan, admin sign-off) **with P's failure contract and M's sin
 ## Merged layout
 
 > **Done differently (30 Oct):** for the PR to the lab repo, `submission/` was flattened: its folders are now topic
-> folders directly under `teams/07-infrastructure/` (`launch.sh` in `ops/`). See the team [README](../../README.md).
+> folders directly under `teams/07-infrastructure/` (`launch.sh` in `launch/`). See the team [README](../../README.md).
 
 ```text
 teams/07-infrastructure/

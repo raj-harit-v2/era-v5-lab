@@ -1,0 +1,56 @@
+{
+ "label": "W4A16",
+ "dir": "OLMoE-W4A16-gptq",
+ "check": {
+  "router_dtypes": [
+   "BF16"
+  ],
+  "router_tensors": 16,
+  "output_dtype": "BF16",
+  "experts_linear": 3072,
+  "experts_packed": 3072,
+  "attn_linear": 64,
+  "attn_packed": 64,
+  "weight_bytes": 3878064608,
+  "size_gb": 3.88,
+  "base_params": 6919161856,
+  "bpw": 4.48
+ },
+ "files": [
+  {
+   "file": "config.json",
+   "bytes": 2144,
+   "sha256": "64312f41d154f9072645d87cf19206a2a4cc960348b9e2824820272b4f2a4663"
+  },
+  {
+   "file": "generation_config.json",
+   "bytes": 115,
+   "sha256": "347809cdf8ab280754e953102576d840162b8bb669f00c1fd4f4c2d84f03e97e"
+  },
+  {
+   "file": "model.safetensors",
+   "bytes": 3878064608,
+   "sha256": "dd9f7af8402a71f780d0ece65f1a5d1daef54cc7001498a396ef99759f02bd14"
+  },
+  {
+   "file": "quantize_meta.json",
+   "bytes": 616,
+   "sha256": "387eeb67d36d19fdf2b48f4db241a31bd79ea7df28e39538cb67d59a9c1c6e6e"
+  },
+  {
+   "file": "recipe.yaml",
+   "bytes": 323,
+   "sha256": "a1ba61a676da95ca517d4ea7d302a0996796cd44b8eccc6f81abda27c1763453"
+  },
+  {
+   "file": "tokenizer.json",
+   "bytes": 3565673,
+   "sha256": "aa06d9e86d0453dd1290a43094105dd417e7eb5b9cd1edd29b8ed9cb4bab5dbe"
+  },
+  {
+   "file": "tokenizer_config.json",
+   "bytes": 395,
+   "sha256": "7e980e6ec55c2e3f22ac8acfdb17f737d8c32f67b8049956569db74ed0bdfe25"
+  }
+ ]
+}

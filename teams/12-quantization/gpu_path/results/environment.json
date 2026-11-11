@@ -1,0 +1,32 @@
+{
+ "started": "2026-11-03T13:30:48",
+ "platform": "kaggle",
+ "run_by": "SomaKorada07",
+ "gpu": "Tesla T4, 15360 MiB, 7.5\nTesla T4, 15360 MiB, 7.5",
+ "tp": 2,
+ "settings": {
+  "LIMIT": null,
+  "SMOKE": false,
+  "METHOD": "gptq",
+  "FORMATS": [
+   "bf16",
+   "W4A16"
+  ],
+  "MODEL": "allenai/OLMoE-1B-7B-0924",
+  "REVISION": "6d84c48581ece794365f2b8e9cfb043c68ade9c5",
+  "BRANCH": "g12-week2-soma"
+ },
+ "packages": {
+  "quant": "{'llmcompressor': '0.15.0', 'compressed_tensors': '0.20.1', 'transformers': '5.21.0', 'torch': '2.14.1', 'datasets': '5.1.0'}",
+  "eval": "{'vllm': '0.33.0', 'lm_eval': '0.4.13', 'transformers': '5.20.2', 'torch': '2.14.0', 'datasets': '5.1.0'}"
+ },
+ "formats": {
+  "bf16": {
+   "wall_clock_s": 12225
+  },
+  "W4A16": {
+   "wall_clock_s": 411
+  }
+ },
+ "finished": "2026-11-03T18:17:28"
+}

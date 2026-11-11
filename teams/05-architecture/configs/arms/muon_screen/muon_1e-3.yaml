@@ -1,0 +1,15 @@
+# Muon screen arm (plan v1, before the T2 EXP-2 job). The only change from t1.yaml is the optimizer.
+# optim.lr (0.001, from t1.yaml) is the AdamW rate for the embedding projection, head and norm gains.
+inherit: ../t1.yaml
+intended:
+  arm: muon-screen-1e-3
+  owner: Deepjyoti Saha
+  test_size: T1
+  seeds: [1234]
+  max_time_min: 30
+  metric: bits_per_byte
+optim:
+  name: muon
+  muon_lr: 0.001
+run:
+  seed: 1234

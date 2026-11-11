@@ -1,31 +1,16 @@
-"""The slowest operations inside one part of the step.  [implemented]
-
-The rotation task profiles one part (embedding, attention, ...) and reports its three slowest operations, each with
-GPU time, calls and kernels, and whether it is compute-, memory- or launch-bound. perfkit.parts only cuts a trace for
-the five slowest parts of the whole step; a small part such as `embed` is not among them, and `trace.top_ops` in the
-run JSON ranks the kernels of the whole step. This file answers the question for any region of the trace.
+"""The slowest operations inside one region of a profiler trace: GPU time, calls, kernels and what bounds them.
 
     python -m perfkit.part_ops fwd:embed.ke bwd:embed --run results/runs/<tag>.json
     python -m perfkit.part_ops fwd:block3.attn.sdpa --trace ~/.cache/era-perf/traces/<tag>.json --top 5 --json out.json
 
-An operation is what the model code called: the outermost CPU op that starts inside the region (`aten::embedding_bag`,
-`aten::index_select`, or for a backward segment `autograd::engine::evaluate_function: EmbeddingBagBackward0`). The GPU
-work it launched is found through the correlation ID of its CUDA runtime calls, as in perfkit.parts, so a kernel that
-runs after the CPU range ends still counts.
-
     ops_in(cut)                the region summary and its operations, from a trace cut by parts.cut_trace
-    analyse(trace, region)     cut one region of the last profiled step and run ops_in; None if it is not in the trace
+    analyse(trace, region)     cut one region of the last profiled step and run ops_in; None if not in the trace
     render(result, top)        the report lines for one region
     gpu_name(trace)            the GPU named in the trace header
 
-Per operation: calls (instances that launched GPU work), kernels (compute kernels; copies and memsets are counted
-apart), gpu_ms (all of its GPU work), cpu_ms (the time its CPU ops took, the launch cost) and its biggest kernels.
-Per region: the GPU span (first kernel start to last kernel end), the time the GPU was busy in it and the share.
-Reading them: kernels of a few microseconds, a GPU busy share far below 100% and cpu_ms close to or above gpu_ms
-mean launch-bound; a long elementwise, reduction or gather kernel whose bytes / time is near the GPU's bandwidth
-means memory-bound; a long gemm or attention kernel near the dtype's peak TFLOPS means compute-bound
-(perfkit.roofline gives the bytes and FLOPs to compare with). The profiler slows the CPU side, so cpu_ms is an
-upper bound; gpu_ms is not affected.
+An operation is the outermost CPU op that starts in the region; its GPU work is found by correlation ID.
+Launch-bound: short kernels, low GPU busy share, cpu_ms near gpu_ms. cpu_ms is an upper bound (the profiler
+slows the CPU); gpu_ms is not affected.
 """
 from __future__ import annotations
 
@@ -50,11 +35,8 @@ def _inside(windows: list, t: float) -> bool:
 
 
 def _launching_ops(events: list, windows: list) -> dict:
-    """{correlation ID: the outermost CPU op that launched it and starts inside a window, or None}.
-
-    One sweep per thread over its ops and runtime calls in time order, with a stack of the ops that are still open.
-    An op that started before the region (a backward node that contains it) is skipped, so work is credited to what
-    the region itself called."""
+    """{correlation ID: the outermost CPU op inside the window that launched it, or None}. An op that started
+    before the region is skipped, so work is credited to what the region itself called."""
     threads = defaultdict(list)
     for e in events:
         if e.get("ph") != "X":
@@ -66,7 +48,7 @@ def _launching_ops(events: list, windows: list) -> dict:
         evs.sort(key=lambda e: (e["ts"], -e.get("dur", 0)))        # a parent before the children that start with it
         stack = []
         for e in evs:
-            while stack and stack[-1]["ts"] + stack[-1].get("dur", 0) <= e["ts"]:
+            while stack and stack[-1]["ts"] + stack[-1].get("dur", 0) <= e["ts"]:    # ops that ended before e
                 stack.pop()
             if e["cat"] == "cpu_op":
                 stack.append(e)
@@ -131,6 +113,7 @@ def analyse(trace: dict, region: str) -> dict | None:
 
 
 def gpu_name(trace: dict) -> str | None:
+    """The GPU named in the trace header, or None."""
     return next((d["name"] for d in trace.get("deviceProperties", []) if d.get("name")), None)
 
 
@@ -170,6 +153,7 @@ def render(result: dict, top: int = 3) -> list:
 # ------------------------------------------------------------------------------ main
 
 def main(argv=None) -> int:
+    """Print the slowest operations of each region; exit 1 if a region is not in the trace."""
     ap = argparse.ArgumentParser(description="The slowest operations inside regions of a profiled trace.")
     ap.add_argument("regions", nargs="+", help="region names as in the run JSON, e.g. fwd:embed.ke bwd:embed")
     ap.add_argument("--run", help="run JSON from perfkit.bench: the trace file, GPU name, commit and batch")

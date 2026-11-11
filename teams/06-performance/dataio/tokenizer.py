@@ -19,6 +19,8 @@ DEFAULT_PATH = "~/.cache/era-perf/BrahmicTokenizer-131K/tokenizer.json"
 
 
 class BrahmicTokenizer:
+    """The pinned tokenizer.json: downloaded once into the cache, SHA-256 checked on every load."""
+
     def __init__(self, path=None):
         artifact = Path(path or DEFAULT_PATH).expanduser()
         if not artifact.exists():
@@ -40,10 +42,12 @@ class BrahmicTokenizer:
 
     @staticmethod
     def _verify(raw):
+        """Raise unless raw is the pinned artifact."""
         if hashlib.sha256(raw).hexdigest() != SHA256:
             raise ValueError("Tokenizer checksum differs from the pinned GitHub source artifact")
 
     def encode(self, text):
+        """Token IDs of text, without special tokens."""
         if self._encoder is None:
             from tokenizers import Tokenizer
             self._encoder = Tokenizer.from_file(str(self.path))
@@ -51,7 +55,7 @@ class BrahmicTokenizer:
 
     def raw_token_bytes(self):
         """Return exact byte strings in token ID order, without lossy UTF-8 decode."""
-        # Inverse ByteLevel alphabet, not a GPT-2 tokenizer dependency.
+        # Inverse ByteLevel alphabet (the GPT-2 byte-to-unicode map), without a GPT-2 tokenizer dependency.
         bs = list(range(33, 127)) + list(range(161, 173)) + list(range(174, 256))
         cs = bs.copy()
         n = 0
@@ -68,6 +72,7 @@ class BrahmicTokenizer:
         return rows
 
     def token_bytes(self, max_pos=32):
+        """(bytes [V, max_pos] uint8, lens [V]) for KE; fails if a token is longer than max_pos."""
         import torch
         if max_pos < 1:
             raise ValueError("max_pos must be positive")

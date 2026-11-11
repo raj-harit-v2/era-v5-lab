@@ -1,7 +1,5 @@
 # runs_bf16: log summary
 
-Full logs (~1.9 MB) were cut to this summary for the PR; the originals are in this folder's history on SreekanthZipsy/era-v5-lab, branch G12-Week1 (commit 2e668bd).
-
 - Run by: s9k96; platform kaggle; GPU Tesla T4, 15360 MiB, 580.178.04 + Tesla T4, 15360 MiB, 580.178.04; CUDA arch 75
 - Notebook version: not recorded (run predates the fingerprint)
 - Model allenai/OLMoE-1B-7B-0924 @ 6d84c48581ec; LIMIT None; formats bf16

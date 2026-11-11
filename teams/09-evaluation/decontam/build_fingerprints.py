@@ -6,7 +6,9 @@ decontam_check.py looks for these hashes in training documents.
     python build_fingerprints.py --data-dir ~/bench-cache                       # all active benchmarks
     python build_fingerprints.py --data-dir ~/bench-cache --only swe_bench_verified
     python build_fingerprints.py --list                                         # show the registry
-    python build_fingerprints.py --data-dir ~/bench-cache --version v2 --normalize spec-v1
+
+The default version is fpset.VERSION (v2), built with its normalizer (fpset.SET_NORMALIZE, g9-v2).
+v1 was built from the registry of its own commit (only that commit rebuilds it byte for byte).
 
 The benchmarks are in benchmarks.toml. Each file is downloaded at a pinned revision and
 checked against its pinned sha256. Downloads stay in --data-dir, outside the repo.
@@ -30,8 +32,8 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--data-dir", help="cache folder for the benchmark files (outside the repo)")
     ap.add_argument("--version", default=fpset.VERSION, help=f"set version (default {fpset.VERSION})")
-    ap.add_argument("--normalize", default=norms.DEFAULT_ID, choices=sorted(norms.NORMALIZERS),
-                    help=f"normalize ID (default {norms.DEFAULT_ID})")
+    ap.add_argument("--normalize", choices=sorted(norms.NORMALIZERS),
+                    help=f"normalize ID (default: the one of the version, {fpset.SET_NORMALIZE})")
     ap.add_argument("--out", help="set folder (default ../fingerprints/<version>)")
     ap.add_argument("--registry", default=str(registry.REGISTRY))
     ap.add_argument("--only", nargs="+", metavar="ID", help="rebuild only these benchmarks, keep the others")
@@ -52,8 +54,11 @@ def main():
     if bad:
         ap.error(f"not active in the registry: {bad}")
 
+    normalize_id = args.normalize or fpset.SET_NORMALIZE.get(args.version)
+    if not normalize_id:
+        ap.error(f"--normalize is required for version {args.version}")
     try:
-        norm = norms.get(args.normalize)
+        norm = norms.get(normalize_id)
     except ValueError as e:
         ap.error(str(e))
     out = Path(args.out) if args.out else FINGERPRINTS / args.version
@@ -65,11 +70,12 @@ def main():
     boilerplate = fpset.Boilerplate(norm=norm)
     for bid in todo:
         b = reg[bid]
+        bp = fpset.Boilerplate(norm=norm, extra=b["boilerplate"]) if b.get("boilerplate") else boilerplate
         meta = {k: b[k] for k in META_KEYS if k in b}
         canaries = set()
         m = fpset.write_benchmark(out, bid, registry.items(bid, b, args.data_dir, canaries),
                                   registry.run_lengths(b), meta,
-                                  b.get("gram_filters", fpset.DEFAULT_GRAM_FILTERS), canaries, boilerplate,
+                                  b.get("gram_filters", fpset.DEFAULT_GRAM_FILTERS), canaries, bp,
                                   b.get("short_min", fpset.SHORT_MIN), norm)
         print(f"{bid:20s} items {m['items']:>6}  without n-gram {m['items_without_ngram']:>4}  "
               f"n-grams {m['item_grams']:>9}  shards {sum(map(len, m['shards'].values()))}", file=sys.stderr)

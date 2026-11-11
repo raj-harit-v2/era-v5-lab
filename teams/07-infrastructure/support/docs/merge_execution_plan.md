@@ -4,7 +4,7 @@ How we carry out [team07_merge_plan.md](team07_merge_plan.md) in this repo, step
 proven. Written 30 Oct 2026, on `2adaf11`.
 
 > **Layout note (30 Oct):** `submission/` was flattened into topic folders (`adr/`, `ckpt/`, `queue/`, `slurm/`,
-> `health/`, `metrics/`, `common/`, `ops/`) for the PR to the lab repo; file names below follow the old layout.
+> `health/`, `metrics/`, `common/`, `launch/`) for the PR to the lab repo; file names below follow the old layout.
 
 > **In simple words.** We port the good ideas from millermuttu's and uz9ai's repos into our code one piece at a time.
 > After each piece, a test must show it works, and at the end the whole Docker cluster simulation must pass
@@ -24,7 +24,7 @@ proven. Written 30 Oct 2026, on `2adaf11`.
 
 | Step | What | Source | Files | Proof |
 |---|---|---|---|---|
-| **A0** | `launch.sh` health step **drains** a node whose full check fails (today it only reports it; found while planning) | P bug | `ops/launch.sh` | `launch.sh --only health` with a planted fault: node `drain` in `sinfo` with reason `health:<check>` |
+| **A0** | `launch.sh` health step **drains** a node whose full check fails (today it only reports it; found while planning) | P bug | `launch/launch.sh` | `launch.sh --only health` with a planted fault: node `drain` in `sinfo` with reason `health:<check>` |
 | **A1** | Collective test runs **all-reduce, reduce-scatter, all-gather, all-to-all**, each with an exact-value check and busbw; one JSON result per op | M `allreduce.py` | `health/allreduce_test.py`, `health/health_check.py` (`nccl_allreduce` → `nccl_<op>` checks), `thresholds.yaml` (`nccl.ops`) | unit: gloo on 2 and 3 ranks, all 4 ops pass; a forced wrong value fails |
 | **A2** | **NVLink inactive-link** check (`nvidia-smi nvlink -s`) | M `gpu_health.sh` | `health/health_check.py` | unit with fixture: 1 inactive link → fail; none → pass; no NVLink → skipped |
 | **A3** | **Xid table merge**: add 61, 62, 92, 140 as fatal; 94 (contained ECC) becomes `restart` (job restarts, node drains only if it repeats within 24 h) | M + NVIDIA catalog | `health/thresholds.yaml`, `health/xid_scan.py` | unit: 94 once → warn, 94 twice in 24 h → fail; 61 → fail |

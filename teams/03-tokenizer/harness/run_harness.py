@@ -13,8 +13,18 @@ One benchmark for every tokenizer the team compares. It measures:
           test (code) and GSM8K train (question + "\\n" + answer). Same corpora as
           BrahmicTokenizer-131K/evaluate_code_math.py.
 
+  in22    IN22-Gen fertility (tokens / whitespace word), same method as flores and as
+          BrahmicTokenizer-131K/evaluate_fertility_in22.py. Needs the gated
+          ai4bharat/IN22-Gen parquet (--in22-parquet, or the Hugging Face cache).
+  heldout fertility on the held-out text of the tokenizer sample, one row per pack
+          (tokens / char and tokens / word). Needs --heldout-dir.
+  roundtrip  decode(encode(text)) must equal the tokenizer's own normalisation of
+          the text, on up to N documents per pack (default 1,000) of the held-out
+          text. Local tokenizer.json files only (the baseline and --candidate).
+
 Pass bar (Week plan): a candidate beats BrahmicTokenizer-131K on mean Indic
 fertility and is at most 2% worse on English fertility, HumanEval and MBPP.
+The in22, heldout and roundtrip suites are reported next to it; they do not change it.
 
 Usage
 -----
@@ -29,10 +39,17 @@ Usage
     python run_harness.py --tokenizers BrahmicTokenizer-131K,o200k_base \\
         --candidate mine=/path/to/tokenizer.json --suites flores,code
 
+    # Held-out text and the round-trip check on a candidate
+    python run_harness.py --tokenizers BrahmicTokenizer-131K --candidate c3=/path/to/tokenizer.json \\
+        --suites heldout,roundtrip --heldout-dir /path/to/sample/heldout
+
 Data: FLORES-200 under --flores-dir (see baseline/reproduce.md for the
 download). The code suite downloads public datasets through `datasets`.
+The held-out text is lab data: keep it on your machine, never on a public site.
 """
 import argparse
+import glob
+import hashlib
 import json
 import os
 import sys
@@ -118,8 +135,101 @@ def run_flores(enc, texts):
         tok = sum(len(enc(line)) for line in lines)
         words = sum(len(line.split()) for line in lines)
         row[lbl] = round(tok / max(words, 1), 4)
-    row["Mean"] = round(sum(row[lbl] for lbl in INDIC) / len(INDIC), 4)
+    have = [lbl for lbl in INDIC if lbl in row]          # a suite may lack a language (IN22)
+    row["Mean"] = round(sum(row[lbl] for lbl in have) / len(have), 4)
     return row
+
+
+def find_in22_parquet():
+    hits = sorted(glob.glob(os.path.expanduser(
+        "~/.cache/huggingface/hub/datasets--ai4bharat--IN22-Gen/snapshots/*/data/*.parquet")))
+    if not hits:
+        sys.exit("ERROR: IN22-Gen is gated on Hugging Face and is not cached. Accept the terms at "
+                 "https://huggingface.co/datasets/ai4bharat/IN22-Gen, log in, and load it once, "
+                 "or pass --in22-parquet PATH.")
+    return hits[0]
+
+
+def load_in22(path):
+    """IN22-Gen is one wide parquet: one column per FLORES language code, one row per sentence."""
+    import pyarrow.parquet as pq
+    table = pq.read_table(path or find_in22_parquet())
+    texts = {}
+    for code, lbl in LANGS:
+        if code in table.column_names:
+            texts[lbl] = [s for s in table[code].to_pylist() if isinstance(s, str) and s.strip()]
+        else:
+            print(f"  IN22: {lbl} ({code}) is missing, skipped", flush=True)
+    if not texts:
+        sys.exit("ERROR: no FLORES language columns found in the IN22 parquet.")
+    return texts
+
+
+def load_heldout(root):
+    """Held-out parquet files of the tokenizer sample -> {pack: [(doc_id, text), ...]}.
+
+    Columns used: text (required), doc_id and pack_id (optional; the pack falls back
+    to the name of the parent folder).
+    """
+    import pyarrow.parquet as pq
+    files = sorted(glob.glob(str(Path(root) / "**" / "*.parquet"), recursive=True))
+    if not files:
+        sys.exit(f"ERROR: no .parquet files under {root}. Pass --heldout-dir (the sample's heldout/ folder).")
+    packs = {}
+    for f in files:
+        t = pq.read_table(f)
+        if "text" not in t.column_names:
+            sys.exit(f"ERROR: {f} has no 'text' column (columns: {t.column_names}).")
+        texts = t["text"].to_pylist()
+        ids = t["doc_id"].to_pylist() if "doc_id" in t.column_names else [f"{Path(f).name}:{i}" for i in range(len(texts))]
+        pk = t["pack_id"].to_pylist() if "pack_id" in t.column_names else [Path(f).parent.name] * len(texts)
+        for d, p, x in zip(ids, pk, texts):
+            if isinstance(x, str) and x.strip():
+                packs.setdefault(p, []).append((d, x))
+    return packs
+
+
+def run_heldout(enc, packs):
+    row = {}
+    for pack, docs in sorted(packs.items()):
+        tok = sum(len(enc(x)) for _, x in docs)
+        chars = sum(len(x) for _, x in docs)
+        words = sum(len(x.split()) for _, x in docs)
+        row[pack] = {"docs": len(docs), "tok_per_char": round(tok / max(chars, 1), 4),
+                     "tok_per_word": round(tok / max(words, 1), 4)}
+    return row
+
+
+def sample_docs(docs, n):
+    """The first n documents by sha256(doc_id): the same documents on every run and machine."""
+    return sorted(docs, key=lambda d: hashlib.sha256(str(d[0]).encode()).hexdigest())[:n]
+
+
+def run_roundtrip(path, packs, n):
+    """decode(encode(text)) must equal the tokenizer's own normalisation of the text.
+
+    A candidate with a normalizer (v1: NFC + chillu + nukta re-join) changes some texts on
+    purpose, so the expected string is normalizer(text), not text. `normalised` counts
+    how many documents the normalizer changed. Only offsets are reported for a failure,
+    never the text: the held-out text is lab data.
+    """
+    from tokenizers import Tokenizer
+    t = Tokenizer.from_file(path)
+    norm = t.normalizer.normalize_str if t.normalizer is not None else (lambda s: s)
+    out = {}
+    for pack, docs in sorted(packs.items()):
+        sample = sample_docs(docs, n)
+        fails, changed = [], 0
+        for doc_id, text in sample:
+            expect = norm(text)
+            changed += expect != text
+            got = t.decode(t.encode(text, add_special_tokens=False).ids, skip_special_tokens=False)
+            if got != expect:
+                pos = next((i for i, (a, b) in enumerate(zip(got, expect)) if a != b), min(len(got), len(expect)))
+                fails.append({"doc_id": doc_id, "offset": pos})
+        out[pack] = {"docs": len(sample), "failures": len(fails), "normalised": changed,
+                     "first_failures": fails[:5]}
+    return out
 
 
 def run_code(enc, corpora):
@@ -174,6 +284,34 @@ def to_markdown(results):
             if "flores" in results[n]:
                 out.append(f"| {n} | " + " | ".join(f"{results[n]['flores'][c]:.4f}" for c in cols) + " |")
         out.append("")
+    if any("in22" in r for r in results.values()):
+        cols = [lbl for _, lbl in LANGS] + ["Mean"]
+        out += ["## IN22-Gen fertility (tokens / word, lower is better; Mean = Indic languages present)", "",
+                "| Tokenizer | " + " | ".join(cols) + " |", "|---" * (len(cols) + 1) + "|"]
+        for n in names:
+            if "in22" in results[n]:
+                out.append(f"| {n} | " + " | ".join(f"{results[n]['in22'].get(c, float('nan')):.4f}" for c in cols) + " |")
+        out.append("")
+    if any("heldout" in r for r in results.values()):
+        packs = sorted({p for r in results.values() for p in r.get("heldout", {})})
+        out += ["## Held-out text (tokens / char, lower is better; docs in brackets)", "",
+                "| Pack | docs | " + " | ".join(n for n in names if "heldout" in results[n]) + " |",
+                "|---" * (2 + sum("heldout" in results[n] for n in names)) + "|"]
+        for p in packs:
+            cells = [f"{results[n]['heldout'][p]['tok_per_char']:.4f}" if p in results[n].get("heldout", {}) else "-"
+                     for n in names if "heldout" in results[n]]
+            docs = next(results[n]["heldout"][p]["docs"] for n in names if p in results[n].get("heldout", {}))
+            out.append(f"| {p} | {docs} | " + " | ".join(cells) + " |")
+        out.append("")
+    if any("roundtrip" in r for r in results.values()):
+        out += ["## Round trip: decode(encode(text)) == normalizer(text)", "",
+                "| Tokenizer | packs | docs checked | failures | docs changed by the normalizer |", "|---|---|---|---|---|"]
+        for n in names:
+            if "roundtrip" in results[n]:
+                rt = results[n]["roundtrip"]
+                out.append(f"| {n} | {len(rt)} | {sum(v['docs'] for v in rt.values())} | "
+                           f"{sum(v['failures'] for v in rt.values())} | {sum(v['normalised'] for v in rt.values())} |")
+        out.append("")
     if any("code" in r for r in results.values()):
         out += ["## Code and math (tokens / char, lower is better)", "",
                 "| Tokenizer | " + " | ".join(CODE_CORPORA) + " |", "|---" * (len(CODE_CORPORA) + 1) + "|"]
@@ -189,7 +327,10 @@ def main():
     ap.add_argument("--tokenizers", default="all", help=f'"all" or comma list of {list(REGISTRY)}')
     ap.add_argument("--candidate", action="append", default=[], metavar="NAME=PATH",
                     help="a local tokenizer.json to evaluate and judge against the pass bar (repeatable)")
-    ap.add_argument("--suites", default="flores", help='comma list of "flores", "code"')
+    ap.add_argument("--suites", default="flores", help='comma list of "flores", "code", "in22", "heldout", "roundtrip"')
+    ap.add_argument("--in22-parquet", help="IN22-Gen parquet (default: the Hugging Face cache)")
+    ap.add_argument("--heldout-dir", help="folder with the held-out parquet files of the tokenizer sample")
+    ap.add_argument("--roundtrip-docs", type=int, default=1000, help="documents per pack for the round trip (default 1000)")
     ap.add_argument("--brahmic-dir", default="../BrahmicTokenizer-131K",
                     help="clone of github.com/theschoolofai/BrahmicTokenizer-131K")
     ap.add_argument("--flores-dir", default="/tmp/flores200_dataset")
@@ -226,6 +367,15 @@ def main():
         data["flores"] = load_flores(args.flores_dir)
     if "code" in suites:
         data["code"] = load_code()
+    if "in22" in suites:
+        data["in22"] = load_in22(args.in22_parquet)
+    if {"heldout", "roundtrip"} & set(suites):
+        if not args.heldout_dir:
+            sys.exit("ERROR: the heldout and roundtrip suites need --heldout-dir.")
+        data["packs"] = load_heldout(args.heldout_dir)
+    unknown = set(suites) - {"flores", "code", "in22", "heldout", "roundtrip"}
+    if unknown:
+        sys.exit(f"ERROR: unknown suites {sorted(unknown)}.")
 
     results = {}
     for n, kind, src, rev in jobs:
@@ -240,20 +390,48 @@ def main():
             r["flores"] = run_flores(enc, data["flores"])
         if "code" in data:
             r["code"] = run_code(enc, data["code"])
+        if "in22" in data:
+            r["in22"] = run_flores(enc, data["in22"])
+        if "heldout" in suites:
+            r["heldout"] = run_heldout(enc, data["packs"])
+        if "roundtrip" in suites:
+            if kind == "local":
+                r["roundtrip"] = run_roundtrip(src, data["packs"], args.roundtrip_docs)
+            else:
+                print(f"    {n}: roundtrip skipped (local tokenizer.json files only)", flush=True)
         results[n] = r
         summary = []
         if "flores" in r:
             summary.append(f"Indic mean={r['flores']['Mean']:.4f} En={r['flores']['En']:.4f}")
         if "code" in r:
             summary.append(" ".join(f"{k}={v:.4f}" for k, v in r["code"].items()))
+        if "in22" in r:
+            summary.append(f"IN22 Indic mean={r['in22']['Mean']:.4f}")
+        if "heldout" in r:
+            summary.append(f"heldout packs={len(r['heldout'])}")
+        if "roundtrip" in r:
+            rt = r["roundtrip"]
+            summary.append(f"roundtrip docs={sum(v['docs'] for v in rt.values())} "
+                           f"failures={sum(v['failures'] for v in rt.values())}")
         print(f"=== {n}: {'  '.join(summary)}  ({time.time() - t0:.1f}s)", flush=True)
 
     ok = True
     if args.check_reference:
         ok &= check_reference(results, brahmic_dir / "reference_outputs" / "evaluate_fertility_flores.json")
     for n in candidates:
-        if n in results:
+        if n in results and "flores" in results[n] and "flores" in results.get(BASELINE, {}):
             ok &= pass_bar(results, n)
+        elif n in results:
+            print(f"\nPass bar for {n}: skipped (needs the flores suite on {BASELINE} and on {n})")
+    for n, r in results.items():
+        if "roundtrip" in r:
+            bad_packs = {p: v for p, v in r["roundtrip"].items() if v["failures"]}
+            print(f"\nRound trip {n}: {sum(v['docs'] for v in r['roundtrip'].values())} docs in "
+                  f"{len(r['roundtrip'])} packs, {sum(v['failures'] for v in bad_packs.values())} failures "
+                  f"-> {'FAIL' if bad_packs else 'PASS'}")
+            for p, v in bad_packs.items():
+                print(f"  {p}: {v['failures']} of {v['docs']}; first {v['first_failures']}")
+            ok &= not bad_packs
 
     if args.out:
         Path(args.out).write_text(json.dumps(results, indent=2, ensure_ascii=False))

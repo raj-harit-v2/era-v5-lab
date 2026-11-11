@@ -1,0 +1,14 @@
+diff --git a/more_itertools/more.py b/more_itertools/more.py
+index f12c70f..f8361ab 100755
+--- a/more_itertools/more.py
++++ b/more_itertools/more.py
+@@ -609,6 +609,9 @@ def distinct_permutations(iterable, r=None):
+         return iter([()])
+     if r > item_count:
+         return iter(())
++    if item_count == 1:
++        # r != 0 and r <= item_count, so r = 1
++        return iter([(sorted_items[0],)])
+     initial_depth = r - 1 if (r == item_count) else r
+     return (res[:r] for res in helper(sorted_items, initial_depth))
+ 

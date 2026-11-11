@@ -39,7 +39,7 @@ def fetch(lang, config, out_dir, budget):
     ds = load_dataset("HuggingFaceFW/fineweb-2", name=config, split="train", streaming=True)
     h = hashlib.sha256()
     n_docs = n_bytes = 0
-    with path.open("w", encoding="utf-8") as f:
+    with path.open("w", encoding="utf-8", newline="\n") as f:
         for row in ds:
             text = row["text"].strip()
             if not text:

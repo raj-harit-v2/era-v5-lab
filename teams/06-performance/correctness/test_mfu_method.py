@@ -1,24 +1,7 @@
-"""MFU task: MFU/HFU method, run-level scope and the G6 -> G8 contract.  CPU only.
+"""MFU / HFU method, run-level scope and the G6 -> G8 contract (docs/METRICS.md section 2).  CPU only.
 
-Method and field names are in docs/METRICS.md section 2.
-
-How to read this file
----------------------
-* Tests tagged "[GUARD]" pin behaviour that g6/dev already has. They must keep passing: they stop the MFU task
-  change from silently moving numbers G8 already ingested.
-* Tests tagged "[NEW]" pin the MFU task behaviour. Their expected values are worked out by hand in the comments, never read back from the
-  function under test. The method itself is still a proposal until both leads approve it.
-* Proposed names used here (change them together with the implementation if the leads decide differently):
-    perfkit.metrics.mfu_run(flops, global_tokens_per_s, peaks_tflops, ranks=None)
-    perfkit.metrics.flops_per_token(..., method="g6-v1" | "g6-v2", ke2_mean_support_len=None)
-    new unavailable-reason codes: participants_unavailable, participant_peak_unavailable,
-                                  invalid_global_throughput, duplicate_participants
-    new run["metrics"] fields: mfu_method, mfu_scope ("selected_gpu" | "run"), participants, global_tokens_per_s
-
-Terms: FLOP = one add or multiply; a matmul of (m x k) by (k x n) is 2*m*k*n FLOP. MFU = model FLOP/s divided
-by the hardware's peak FLOP/s. HFU also counts extra work the hardware really did (recompute, optimizer).
-
-Run:  python -m pytest correctness/test_mfu_method.py -q     (from teams/06-performance)
+[GUARD] tests pin behaviour G8 already ingests; [NEW] tests pin the proposed g6-v2 method and mfu_run, with
+expected values worked out by hand in the comments. A matmul of (m x k) by (k x n) is 2*m*k*n FLOP.
 """
 import math
 from types import SimpleNamespace
@@ -113,7 +96,7 @@ def test_c1_hardware_flops_add_only_the_recompute_that_really_runs(overrides, ex
 
 
 def test_c1_swiglu_counts_three_ffn_matrices():   # [GUARD]
-    # Why: #39 merged SwiGLU. Gate, up and down are 3 matrices: 3 * 8 * 32 = 768, not 2 * 8 * 32 = 512.
+    # Why: SwiGLU's gate, up and down are 3 matrices: 3 * 8 * 32 = 768, not 2 * 8 * 32 = 512.
     # active = 128 + 256 + 768 = 1152 ; FLOPs = 6 * 1152 + 384 = 7296
     out = flops_per_token(_tiny(activation="swiglu"), 4)
     assert out["params_active"] == 1152
@@ -121,7 +104,7 @@ def test_c1_swiglu_counts_three_ffn_matrices():   # [GUARD]
 
 
 def test_c1_moe_counts_router_and_only_the_active_experts_at_their_own_width():   # [GUARD]
-    # Why: #41 and #42 merged grouped dispatch and model.moe.ffn_hidden. Compute follows the experts one token uses.
+    # Why: with grouped dispatch and model.moe.ffn_hidden, compute follows the experts one token uses.
     # router 8 * 4 = 32 ; one expert 2 * 8 * 16 = 256 ; top_k 1 + shared 1 = 2 experts = 512
     # active = 128 + 256 + 32 + 512 = 928 ; FLOPs = 6 * 928 + 384 = 5952
     moe = dict(num_experts=4, top_k=1, num_shared=1, bias_gamma=0.01, dispatch="loop", ffn_hidden=16)
@@ -459,7 +442,7 @@ def test_c12_rtx_5070_ti_has_no_table_peak_so_mfu_needs_an_override():   # [GUAR
 
 
 # =================================================================================================== C13
-# Why: #49 merged RoPE (model.position=rope). It removes the position table and adds an elementwise rotation of q
+# Why: RoPE (model.position=rope) removes the position table and adds an elementwise rotation of q
 # and k. The rotation is not a matmul, and MFU does not count elementwise work (the same as GELU and SiLU * up), so
 # switching to RoPE must not move MFU. perfkit/roofline.py does count the rotation, because it models real cost.
 

@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="484" viewBox="0 0 880 484" role="img" aria-label="GPU decode determinism: verdict for every run">
+<title>GPU decode determinism: verdict for every run</title>
+<style>
+.bg{fill:#fcfcfb}.card{fill:#fcfcfb;stroke:#0b0b0b;stroke-opacity:.12}
+.t1{fill:#0b0b0b}.t2{fill:#52514e}.t3{fill:#898781}
+.grid{stroke:#e1e0d9}.axis{stroke:#c3c2b7}.ref{stroke:#52514e}
+.s1{stroke:#2a78d6}.f1{fill:#2a78d6}.s2{stroke:#eb6834}.f2{fill:#eb6834}.s3{stroke:#1baf7a}.f3{fill:#1baf7a}
+.ok{fill:#0ca30c}.bad{fill:#d03b3b}.band{fill:#0b0b0b;fill-opacity:.04}.ring{stroke:#fcfcfb}.icon{stroke:#ffffff}
+@media (prefers-color-scheme: dark){
+.bg{fill:#1a1a19}.card{fill:#1a1a19;stroke:#ffffff;stroke-opacity:.14}
+.t1{fill:#f0efec}.t2{fill:#c3c2b7}
+.grid{stroke:#2c2c2a}.axis{stroke:#383835}.ref{stroke:#c3c2b7}
+.s1{stroke:#3987e5}.f1{fill:#3987e5}.s2{stroke:#d95926}.f2{fill:#d95926}.s3{stroke:#199e70}.f3{fill:#199e70}
+.band{fill:#ffffff;fill-opacity:.06}.ring{stroke:#1a1a19}
+}
+</style>
+<rect width="880" height="484" rx="10" class="bg"/>
+<text x="24.0" y="34.0" class="t1" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="16" font-weight="600" text-anchor="start">All 9 GPU runs decode every token ID to the CPU reference's ID</text>
+<text x="24.0" y="56.0" class="t2" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="400" text-anchor="start">131,072 token IDs · raw byte table, P = 32 · fp32, TF32 off · 3 batch sizes × 3 fresh processes</text>
+<rect x="24" y="96" width="208" height="308" rx="8" class="card"/>
+<text x="40.0" y="124.0" class="t1" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="14" font-weight="600" text-anchor="start">CPU reference</text>
+<text x="40.0" y="144.0" class="t2" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" font-weight="400" text-anchor="start">decode_ref.py · float64</text>
+<text x="40.0" y="162.0" class="t2" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" font-weight="400" text-anchor="start">all 131,072 IDs, one fresh run</text>
+<text x="40.0" y="200.0" class="t3" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="11" font-weight="400" text-anchor="start">ID hash</text>
+<text x="40.0" y="218.0" class="t1" font-family="Consolas, Menlo, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" text-anchor="start">31c8d0e0ac50cff5</text>
+<text x="40.0" y="236.0" class="t1" font-family="Consolas, Menlo, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" text-anchor="start">c8021f88a2b608de…</text>
+<circle cx="47.0" cy="272.0" r="7.5" class="ok"/><path d="M43.5,272.0 l2.5,2.6 l5,-5.4" fill="none" class="icon" stroke-width="1.8" stroke-linecap="round"/>
+<text x="62.0" y="276.5" class="t1" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" font-weight="400" text-anchor="start">every ID decodes to itself</text>
+<text x="40.0" y="310.0" class="t2" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" font-weight="400" text-anchor="start">smallest margin 0.0158</text>
+<text x="40.0" y="328.0" class="t3" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="11" font-weight="400" text-anchor="start">10.7 min on 8 CPU processes</text>
+<g><title>batch 1, run 1: ID hash 31c8d0e0ac50cff5c8021f88a2b608de2298fdbf216c620a40e83d2adbe26f9a; score hash 73e358ac73c30571da862b06187e4b72eed16fa2cd677596f297fb053653c357; decode 1484.961 s</title>
+<rect x="252" y="96" width="196" height="96" rx="8" class="card"/>
+<text x="266.0" y="118.0" class="t2" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" font-weight="600" text-anchor="start">batch 1 · run 1</text>
+<text x="266.0" y="138.0" class="t1" font-family="Consolas, Menlo, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" text-anchor="start">31c8d0e0ac50cff5…</text>
+<circle cx="273.0" cy="157.0" r="7.5" class="ok"/><path d="M269.5,157.0 l2.5,2.6 l5,-5.4" fill="none" class="icon" stroke-width="1.8" stroke-linecap="round"/>
+<text x="287.0" y="161.5" class="t1" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" font-weight="400" text-anchor="start">IDs = CPU, all</text>
+<text x="266.0" y="182.0" class="t3" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="11" font-weight="400" text-anchor="start">score 73e358ac · 24.7 min</text>
+</g>
+<g><title>batch 1, run 2: ID hash 31c8d0e0ac50cff5c8021f88a2b608de2298fdbf216c620a40e83d2adbe26f9a; score hash 73e358ac73c30571da862b06187e4b72eed16fa2cd677596f297fb053653c357; decode 1454.034 s</title>
+<rect x="458" y="96" width="196" height="96" rx="8" class="card"/>
+<text x="472.0" y="118.0" class="t2" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" font-weight="600" text-anchor="start">batch 1 · run 2</text>
+<text x="472.0" y="138.0" class="t1" font-family="Consolas, Menlo, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" text-anchor="start">31c8d0e0ac50cff5…</text>
+<circle cx="479.0" cy="157.0" r="7.5" class="ok"/><path d="M475.5,157.0 l2.5,2.6 l5,-5.4" fill="none" class="icon" stroke-width="1.8" stroke-linecap="round"/>
+<text x="493.0" y="161.5" class="t1" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" font-weight="400" text-anchor="start">IDs = CPU, all</text>
+<text x="472.0" y="182.0" class="t3" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="11" font-weight="400" text-anchor="start">score 73e358ac · 24.2 min</text>
+</g>
+<g><title>batch 1, run 3: ID hash 31c8d0e0ac50cff5c8021f88a2b608de2298fdbf216c620a40e83d2adbe26f9a; score hash 73e358ac73c30571da862b06187e4b72eed16fa2cd677596f297fb053653c357; decode 1599.591 s</title>
+<rect x="664" y="96" width="196" height="96" rx="8" class="card"/>
+<text x="678.0" y="118.0" class="t2" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" font-weight="600" text-anchor="start">batch 1 · run 3</text>
+<text x="678.0" y="138.0" class="t1" font-family="Consolas, Menlo, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" text-anchor="start">31c8d0e0ac50cff5…</text>
+<circle cx="685.0" cy="157.0" r="7.5" class="ok"/><path d="M681.5,157.0 l2.5,2.6 l5,-5.4" fill="none" class="icon" stroke-width="1.8" stroke-linecap="round"/>
+<text x="699.0" y="161.5" class="t1" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" font-weight="400" text-anchor="start">IDs = CPU, all</text>
+<text x="678.0" y="182.0" class="t3" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="11" font-weight="400" text-anchor="start">score 73e358ac · 26.7 min</text>
+</g>
+<g><title>batch 7, run 1: ID hash 31c8d0e0ac50cff5c8021f88a2b608de2298fdbf216c620a40e83d2adbe26f9a; score hash 2440126d66135020d2d36b670a38e41c03edf2858b53a5cb0ad78318e8948133; decode 223.643 s</title>
+<rect x="252" y="202" width="196" height="96" rx="8" class="card"/>
+<text x="266.0" y="224.0" class="t2" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" font-weight="600" text-anchor="start">batch 7 · run 1</text>
+<text x="266.0" y="244.0" class="t1" font-family="Consolas, Menlo, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" text-anchor="start">31c8d0e0ac50cff5…</text>
+<circle cx="273.0" cy="263.0" r="7.5" class="ok"/><path d="M269.5,263.0 l2.5,2.6 l5,-5.4" fill="none" class="icon" stroke-width="1.8" stroke-linecap="round"/>
+<text x="287.0" y="267.5" class="t1" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" font-weight="400" text-anchor="start">IDs = CPU, all</text>
+<text x="266.0" y="288.0" class="t3" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="11" font-weight="400" text-anchor="start">score 2440126d · 3.7 min</text>
+</g>
+<g><title>batch 7, run 2: ID hash 31c8d0e0ac50cff5c8021f88a2b608de2298fdbf216c620a40e83d2adbe26f9a; score hash 2440126d66135020d2d36b670a38e41c03edf2858b53a5cb0ad78318e8948133; decode 223.351 s</title>
+<rect x="458" y="202" width="196" height="96" rx="8" class="card"/>
+<text x="472.0" y="224.0" class="t2" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" font-weight="600" text-anchor="start">batch 7 · run 2</text>
+<text x="472.0" y="244.0" class="t1" font-family="Consolas, Menlo, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" text-anchor="start">31c8d0e0ac50cff5…</text>
+<circle cx="479.0" cy="263.0" r="7.5" class="ok"/><path d="M475.5,263.0 l2.5,2.6 l5,-5.4" fill="none" class="icon" stroke-width="1.8" stroke-linecap="round"/>
+<text x="493.0" y="267.5" class="t1" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" font-weight="400" text-anchor="start">IDs = CPU, all</text>
+<text x="472.0" y="288.0" class="t3" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="11" font-weight="400" text-anchor="start">score 2440126d · 3.7 min</text>
+</g>
+<g><title>batch 7, run 3: ID hash 31c8d0e0ac50cff5c8021f88a2b608de2298fdbf216c620a40e83d2adbe26f9a; score hash 2440126d66135020d2d36b670a38e41c03edf2858b53a5cb0ad78318e8948133; decode 224.562 s</title>
+<rect x="664" y="202" width="196" height="96" rx="8" class="card"/>
+<text x="678.0" y="224.0" class="t2" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" font-weight="600" text-anchor="start">batch 7 · run 3</text>
+<text x="678.0" y="244.0" class="t1" font-family="Consolas, Menlo, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" text-anchor="start">31c8d0e0ac50cff5…</text>
+<circle cx="685.0" cy="263.0" r="7.5" class="ok"/><path d="M681.5,263.0 l2.5,2.6 l5,-5.4" fill="none" class="icon" stroke-width="1.8" stroke-linecap="round"/>
+<text x="699.0" y="267.5" class="t1" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" font-weight="400" text-anchor="start">IDs = CPU, all</text>
+<text x="678.0" y="288.0" class="t3" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="11" font-weight="400" text-anchor="start">score 2440126d · 3.7 min</text>
+</g>
+<g><title>batch 4096, run 1: ID hash 31c8d0e0ac50cff5c8021f88a2b608de2298fdbf216c620a40e83d2adbe26f9a; score hash 169498b06d3cd8beb19adec4c208a07feb747f0d9e2a914fbb6eacf3e9fa0f0d; decode 24.419 s</title>
+<rect x="252" y="308" width="196" height="96" rx="8" class="card"/>
+<text x="266.0" y="330.0" class="t2" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" font-weight="600" text-anchor="start">batch 4,096 · run 1</text>
+<text x="266.0" y="350.0" class="t1" font-family="Consolas, Menlo, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" text-anchor="start">31c8d0e0ac50cff5…</text>
+<circle cx="273.0" cy="369.0" r="7.5" class="ok"/><path d="M269.5,369.0 l2.5,2.6 l5,-5.4" fill="none" class="icon" stroke-width="1.8" stroke-linecap="round"/>
+<text x="287.0" y="373.5" class="t1" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" font-weight="400" text-anchor="start">IDs = CPU, all</text>
+<text x="266.0" y="394.0" class="t3" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="11" font-weight="400" text-anchor="start">score 169498b0 · 24 s</text>
+</g>
+<g><title>batch 4096, run 2: ID hash 31c8d0e0ac50cff5c8021f88a2b608de2298fdbf216c620a40e83d2adbe26f9a; score hash 169498b06d3cd8beb19adec4c208a07feb747f0d9e2a914fbb6eacf3e9fa0f0d; decode 24.668 s</title>
+<rect x="458" y="308" width="196" height="96" rx="8" class="card"/>
+<text x="472.0" y="330.0" class="t2" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" font-weight="600" text-anchor="start">batch 4,096 · run 2</text>
+<text x="472.0" y="350.0" class="t1" font-family="Consolas, Menlo, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" text-anchor="start">31c8d0e0ac50cff5…</text>
+<circle cx="479.0" cy="369.0" r="7.5" class="ok"/><path d="M475.5,369.0 l2.5,2.6 l5,-5.4" fill="none" class="icon" stroke-width="1.8" stroke-linecap="round"/>
+<text x="493.0" y="373.5" class="t1" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" font-weight="400" text-anchor="start">IDs = CPU, all</text>
+<text x="472.0" y="394.0" class="t3" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="11" font-weight="400" text-anchor="start">score 169498b0 · 25 s</text>
+</g>
+<g><title>batch 4096, run 3: ID hash 31c8d0e0ac50cff5c8021f88a2b608de2298fdbf216c620a40e83d2adbe26f9a; score hash 169498b06d3cd8beb19adec4c208a07feb747f0d9e2a914fbb6eacf3e9fa0f0d; decode 24.56 s</title>
+<rect x="664" y="308" width="196" height="96" rx="8" class="card"/>
+<text x="678.0" y="330.0" class="t2" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" font-weight="600" text-anchor="start">batch 4,096 · run 3</text>
+<text x="678.0" y="350.0" class="t1" font-family="Consolas, Menlo, 'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" text-anchor="start">31c8d0e0ac50cff5…</text>
+<circle cx="685.0" cy="369.0" r="7.5" class="ok"/><path d="M681.5,369.0 l2.5,2.6 l5,-5.4" fill="none" class="icon" stroke-width="1.8" stroke-linecap="round"/>
+<text x="699.0" y="373.5" class="t1" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" font-weight="400" text-anchor="start">IDs = CPU, all</text>
+<text x="678.0" y="394.0" class="t3" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="11" font-weight="400" text-anchor="start">score 169498b0 · 25 s</text>
+</g>
+<text x="24.0" y="434.0" class="t1" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" font-weight="400" text-anchor="start">Same ID hash in every tile and in the CPU card: the decoded IDs are exact and repeat bit for bit.</text>
+<text x="24.0" y="456.0" class="t2" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="12" font-weight="400" text-anchor="start">Score hashes (fp32 cosine and margin) repeat within each batch size and take 3 values across the 3 sizes: cuBLAS uses a different kernel for each shape.</text>
+</svg>

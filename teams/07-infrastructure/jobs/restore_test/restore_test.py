@@ -32,6 +32,9 @@ import torch.nn.functional as F
 HERE = Path(__file__).resolve().parent
 TEAM = HERE.parents[1]                                   # teams/07-infrastructure
 HARNESS = TEAM.parent / "05-architecture" / "harness"    # Team 05's tiny MoE (imported, never edited)
+# code_sha256 (issue #298): this trainer and loss, Team 05's model, the synthetic data loader
+CODE_PATHS = (str(HERE / "restore_test.py"), str(HARNESS / "train.py"),
+              str(TEAM / "support" / "simulation" / "trainer" / "tiny.py"))
 sys.path[:0] = [str(TEAM), str(TEAM / "support" / "simulation"), str(HARNESS)]
 from check_config import errors_for, load_settings, merge  # noqa: E402
 from ckpt.ckpt import EXIT_FATAL, Checkpointer, float_bits  # noqa: E402
@@ -125,7 +128,7 @@ def segment(rank: int, world: int, a: argparse.Namespace, run_id: str, label: st
         return ntp.item()
 
     ck = Checkpointer(run_id, str(a.out / "ckpt_local" / label), str(a.out / "ckpt_store"),
-                      config_path=str(a.tiny), seed=seed)
+                      config_path=str(a.tiny), seed=seed, code_paths=CODE_PATHS)
     step = 0
     if restore:
         info = ck.restore(net, optim, loader, probe, from_step=a.save_at)

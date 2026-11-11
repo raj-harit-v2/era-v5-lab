@@ -1,7 +1,7 @@
 # G9 eval-mini v0: code + Indic, and the agreement check
 
 This folder (`teams/09-evaluation/harness_code_indic/`) holds G9's code and Indic half of eval-mini v0. The general half
-(ARC, HellaSwag, MMLU, GSM8K, TruthfulQA) is in `../harness/` (PR #21, Mahesh Sv). It does two jobs:
+(ARC, HellaSwag, MMLU, GSM8K, TruthfulQA) is in `../harness/` (PR #21, `maheshsv`). It does two jobs:
 
 1. **eval-mini v0 (code + Indic)**: a small, fixed battery for comparing checkpoints and model formats.
    - Definition: [`eval_mini_v0_spec.json`](eval_mini_v0_spec.json).
@@ -96,15 +96,15 @@ Each fix is verified, and all are written up in `compare_v0_code_indic.md`.
 - **lm-eval on 8 GB.** Logits for every position, and attention that falls back to the math kernel for grouped-query models, ran out of memory.
   `run_lm_eval.py` keeps only the scored logits (bit-identical) and uses the memory-efficient kernel (same accuracies).
 - **Qwen's `max_new_tokens: 2048`** in `generation_config.json` overrode lm-eval's 256-token GSM8K cap. `run_lm_eval.py` clears it
-  (found by Mahesh Sv, PR #21).
+  (found by `maheshsv`, PR #21).
 
 ## Week-1 agreement status (this half)
 
 | Status | Count | What |
 |---|---|---|
-| PASS | 19 | MMLU-Pro ×3 (Open LLM Leaderboard), MILU en/hi/te for both models, 10 of 12 code rows |
-| FAIL | 2 | Qwen HumanEval+ −2.41, phi-2 MBPP+ −2.88; no timeouts recorded |
-| DEFERRED | 2 | MILU-avg ×2, aggregation decided below |
+| PASS | 21 | MMLU-Pro ×3 (Open LLM Leaderboard), MILU en/hi/te for both models, MILU-avg ×2, 10 of 12 code rows |
+| FAIL | 2 | Qwen HumanEval+ −2.41, phi-2 MBPP+ −2.88; no timeouts recorded; known failures, #334 and #335 |
+| DEFERRED | 0 | — |
 | NOT RUN | 3 | BBH (optional) |
 
 See `../results/compare_v0_code_indic.md` for every row, its source and the limitations.

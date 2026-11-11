@@ -323,7 +323,7 @@ Each dry run, and the Docker simulation, runs these drills, timed and recorded a
 - **Paging path:** `metrics/watch.py` runs on the head node, recomputes the catalog every 30 s, and on a new
   severity writes `alert.fired` and posts to `V5_ALERT_WEBHOOK` (Team 08's pager or a chat webhook). HIGH pages
   the on-call person. Tested in the simulation (alerts fired live for the drills).
-- **Starting the stack:** `ops/launch.sh` starts munge, slurmdbd, the DB backup with a test restore, the
+- **Starting the stack:** `launch/launch.sh` starts munge, slurmdbd, the DB backup with a test restore, the
   controllers, the accounts, slurmd, a full health check on every node (a failing node is drained), the services,
   the checkpoint-store probe and the main run, in that order, checking each step and stopping on the first
   failure (`--from <step>` continues). Tested against the Docker cluster; the `services` step and the SSH

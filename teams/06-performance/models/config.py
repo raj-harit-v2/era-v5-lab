@@ -1,17 +1,11 @@
-"""Model config and YAML loading.  [CONTRACT]
-
-Changing a field name or meaning changes a shared interface: bench, report and tests read these.
-
-Rule: no number about the model is hard-coded anywhere else. Everything reads ModelConfig.
-G5's configs become new configs/g5_*.yaml files. If they need a field we do not have,
-add it here with a default, so every old config still loads.
+"""Model config and YAML loading.  Contract: bench, report and tests read these field names.
 
     cfg = load_config("configs/base.yaml", ["model.n_layer=4", "run.batch_size=8"])
-    mcfg = model_config(cfg)          # ModelConfig; unknown or missing keys are an error, not ignored
+    mcfg = model_config(cfg)          # ModelConfig
 
-The YAML is the only source of values: a key written twice in one file, an override of a key the config
-does not have (a typo such as run.batchsize=16 would otherwise be ignored), and a model field missing from
-the YAML are all errors. The dataclass defaults below only serve tests that build one part directly.
+No model number is hard-coded anywhere else. The YAML is the only source of values: a key written twice, an
+override of a key the config lacks, or a model field missing from the YAML is an error. New fields get a default,
+so old configs still load; the dataclass defaults only serve tests that build one part directly.
 """
 from __future__ import annotations
 
@@ -29,11 +23,19 @@ ACTIVATIONS = ("gelu", "swiglu")
 REV_IMPLS = ("two_pass", "one_pass")
 POSITIONS = ("learned", "rope")
 LN_IMPLS = ("torch_ln", "triton_ln")
+VOCAB_PAD_MODES = ("slice", "mask")
 
 
 @dataclass
 class ModelConfig:
     vocab_size: int = 131072         # exact BrahmicTokenizer-131K vocabulary, no padding
+    vocab_pad_multiple: int = 1      # ROUND-UP GRANULARITY, not an amount to add: head rows = vocab_size rounded up to
+                                     # the next multiple of this. 1 = no padding; 128: 50257 -> 50304, 131072 stays
+                                     # 131072 (already a multiple). Padded columns are sliced off the logits, so the
+                                     # loss and outputs do not change. Applies to the head and a tied table only
+    vocab_pad_mode: str = "mask"     # how the padded columns leave the loss (only when padding is on): mask (default) = a
+                                     # -inf bias on those columns, added by the head matmul, loss runs at the padded width;
+                                     # slice = cut them off the logits (one strided copy, ~8% slower step). Same loss and grads
     block_size: int = 512            # sequence length T
     n_layer: int = 9
     n_head: int = 8                  # query heads
@@ -77,6 +79,9 @@ class ModelConfig:
                 "tie_embeddings=True requires model.embedding='table' (KE1/KE2 has no [V, d] table)"
             )
         assert self.ffn in ("mlp", "moe"), f"ffn={self.ffn!r}"
+        assert self.vocab_pad_mode in VOCAB_PAD_MODES, f"vocab_pad_mode={self.vocab_pad_mode!r} not in {VOCAB_PAD_MODES}"
+        assert type(self.vocab_pad_multiple) is int and self.vocab_pad_multiple >= 1, \
+            f"vocab_pad_multiple={self.vocab_pad_multiple!r} must be a positive integer"
         assert self.n_embd % self.n_head == 0, "n_embd must be divisible by n_head"
         assert self.attn_impl in ATTN_IMPLS, f"attn_impl={self.attn_impl!r} not in {ATTN_IMPLS}"
         assert self.activation in ACTIVATIONS, f"activation={self.activation!r} not in {ACTIVATIONS}"
@@ -114,11 +119,18 @@ class ModelConfig:
             self.n_kv_head = self.n_head
         assert self.n_kv_head > 0 and self.n_head % self.n_kv_head == 0, "n_kv_head must be > 0 and divide n_head"
 
+    @property
+    def padded_vocab_size(self) -> int:
+        """Rows of the output head: vocab_size rounded up to a multiple of vocab_pad_multiple (== vocab_size at 1)."""
+        m = self.vocab_pad_multiple
+        return -(-self.vocab_size // m) * m
+
     def to_dict(self):
         return asdict(self)
 
 
 def _merge(base, over):
+    """base with over's values on top; nested dicts merge key by key (inherit: child over parent)."""
     out = copy.deepcopy(base)
     for k, v in (over or {}).items():
         out[k] = _merge(out[k], v) if isinstance(v, dict) and isinstance(out.get(k), dict) else v
@@ -165,6 +177,7 @@ def load_config(path, overrides=()):
 
 
 def model_config(cfg: dict) -> ModelConfig:
+    """ModelConfig from a whole config (its model section) or a model dict; every field must be set."""
     m = dict(cfg.get("model", cfg))
     known = {f.name for f in fields(ModelConfig)}
     unknown = sorted(set(m) - known)

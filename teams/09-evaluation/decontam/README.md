@@ -1,4 +1,4 @@
-# Decontamination check (G9, fingerprints v1)
+# Decontamination check (G9, fingerprints v2)
 
 Benchmark test questions are public, so copies of them are on the web, and the web is our
 training data. If the model trains on a test question, its score on that test is not true.
@@ -7,7 +7,7 @@ This folder finds benchmark text in training documents, so that the data teams c
 ## How it works
 
 1. `build_fingerprints.py` reads the benchmarks in `benchmarks.toml`. It cuts each item into
-   runs of words, hashes each run and writes the hashes to `../fingerprints/v1/`.
+   runs of words, hashes each run and writes the hashes to `../fingerprints/v2/`.
 2. `decontam_check.py` cuts each document in the same way and looks up each hash.
    A document is flagged when it shares one run with a benchmark item, or when it contains
    a benchmark canary string. The report gives the item and the character offset of the match.
@@ -29,6 +29,8 @@ python teams/09-evaluation/decontam/decontam_check.py docs.jsonl --id-field id -
 python teams/09-evaluation/decontam/decontam_check.py shard.parquet --tags code      # quick run: code benchmarks only
 ```
 
+The default set is v2 (`../fingerprints/v2/`). Use `--fingerprints teams/09-evaluation/fingerprints/v1` only to repeat an old v1 result.
+
 One output line per flagged document (the script never prints document text):
 
 ```
@@ -42,7 +44,8 @@ One output line per flagged document (the script never prints document text):
 - For a diagnosis label, write for example `mmlu:test:5817 at offset 1111191` (disease F2).
 
 The first stderr line gives the `set_sha256` and the scope. Only the **full set** (no `--benchmarks`,
-no `--tags`) is the formal check before a shard goes into training. Give the `set_sha256` in your report.
+no `--tags`, no `--exclude`) is the formal check before a shard goes into training. Give the `set_sha256` in your report.
+`--exclude` is only for a protected set itself (see "Protected sets" below).
 The script checks the sha256 of every file before it starts. It needs about 1.1 GB of memory.
 Build and run on Linux (cluster, Colab, Kaggle). On Windows, `../fingerprints/.gitattributes` makes Git keep the
 fingerprint files byte for byte. Without it, Git with `core.autocrlf=true` checks them out as CRLF, and every sha256 check fails.
@@ -109,15 +112,93 @@ or a set with two normalizers, is refused. The normalizers are in `normalize.py`
 | ID | Set | What it does |
 |---|---|---|
 | `g9-v1` | v1 | Words are runs of Unicode letters, marks and numbers. Each word: NFKC, then lower case. |
-| `spec-v1` | v2 | The spec v1 normalize function of Team 1 (`g1-spec-v1`). Words as in `g9-v1`, then NFC, a short list of compatibility folds and `casefold()`. No NFKC, so Indic digits and superscripts stay. ZWJ and ZWNJ stay. Training text goes through spec v1, so benchmark text must go through it too. |
+| `spec-v1` | none | The spec v1 normalize function of Team 1 (`g1-spec-v1`). Words as in `g9-v1`, then NFC, a short list of compatibility folds and `casefold()`. No NFKC, so Indic digits and superscripts stay. ZWJ and ZWNJ stay. |
+| `g9-v2` | v2 | The `spec-v1` words, then ZWJ (U+200D) and ZWNJ (U+200C) removed from each word. Only the match key changes: the training text keeps ZWJ and ZWNJ. See "Why g9-v2" below. |
 
 `g1_spec_v1_normalize.py` is a byte-for-byte copy of `teams/01-data-a/spec_v1/tools/normalize.py` (commit `c7a3da375efdbecb14188465f4d830a8ff34bdc5`, PR #194). Do not edit it. A test checks its sha256 against `G1_SPEC_V1_SHA256` in `normalize.py`. A new Team 1 version means new words, so it needs new fingerprints.
 
+`build_fingerprints.py` takes the normalizer of the version (`fpset.SET_NORMALIZE`): v2 is built with `g9-v2`.
+
 ```
-python build_fingerprints.py --data-dir ~/bench-cache --version v2 --normalize spec-v1
+python build_fingerprints.py --data-dir ~/bench-cache          # v2, g9-v2
 ```
 
+### Why g9-v2, not spec-v1 as is
+
+Training text goes through spec v1, so the match key starts from the spec v1 words. spec v1 keeps ZWJ and ZWNJ
+inside words (TSAI, PR #194), which is right for the training text. For matching it is a problem:
+
+- Benchmark items often have them: 1,723 FLORES-200 items and 3,700 MILU items.
+- The web text that we train on almost never has them: 23 of the 19,000 documents of the 38 sample packs
+  (19 in ind-hi-indiccorp, 3 in cadj-notebooks, 1 in ind-or-fw2). The Bengali, Hindi, Marathi, Malayalam and
+  Sanskrit FineWeb-2 packs have none. Malayalam uses the atomic chillu letters.
+
+So with `spec-v1` as is, an item that is copied without its joiners has other words, and it is not found.
+Recall test: each FLORES-200 and MILU item with a fingerprint, put into a clean document, changed in one way
+(items missed, FLORES-200 / MILU):
+
+| Change in the copy | `spec-v1` | `g9-v2` | `g9-v1` (v1) |
+|---|---|---|---|
+| none | 0 / 0 | 0 / 0 | 0 / 0 |
+| ZWJ and ZWNJ removed | 1,110 / 861 | 73 / 15 | 952 / 627 |
+| a ZWNJ replaced by a zero-width space | 963 / 811 | 0 / 0 | 0 / 0 |
+| a ZWNJ added after a Devanagari virama | 5,289 / 14,179 | 0 / 0 | 5,289 / 14,174 |
+| a ZWNJ replaced by a space | 963 / 811 | 842 / 580 | 0 / 0 |
+
+`g9-v1` splits words at ZWJ and ZWNJ, so it finds the last case. `g9-v2` keeps the spec v1 words whole, so it does
+not. That case is the only one where `g9-v2` is not the best.
+
+False hits: on the 38 sample packs, `spec-v1` and `g9-v2` flag the same 20 documents with the same top item.
+Only 23 of these documents have a joiner, so this test covers few documents with joiners.
+
+The 19 benchmarks of v2 built with `g9-v2` are byte for byte the set that these numbers were measured on.
+
+## The fingerprint set (v2)
+
+**set_sha256 (v2): `2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a`**, normalizer `g9-v2`.
+149 MB in 143 files, every file below 4 MB. Two builds give the same `set_sha256`.
+
+Changes from v1:
+
+| | v1 | v2 |
+|---|---|---|
+| Normalizer | `g9-v1` | `g9-v2` (spec v1 words, see "Normalize") |
+| Benchmarks | 17 | 19: + Terminal-Bench 2 (89 tasks) and BFCL v3 (4,441 items, PR #184) |
+| Protected sets | none | G5 held-out set v1 (1,059 documents, PR #191) |
+| Items / hashes | 127,696 / 8,406,653 | 133,285 / 8,940,301 |
+
+The hash counts of the other benchmarks change a little with the normalizer (for example MILU 2,300,558 to
+2,292,927, FLORES-200 160,356 to 158,493).
+
+## Protected sets
+
+A protected set is text that must never be in training data but is not a benchmark. v2 has one:
+`heldout_g5_v1`, the G5 held-out set v1 (`teams/05-architecture/heldout_v1/data/heldout_v1.jsonl`, sha256
+`21c6e4b2df8dae9d69e254f4a00fc934d2a3c70f0675065a03724299d94312bb`, tags `protected`, `heldout`). TSAI decided
+(2 Nov) that Team 9 adds it to fingerprints v2. The full check flags a training document that copies a held-out document.
+
+To check the held-out file itself against the benchmarks, leave its own entry out, or every document matches itself:
+
+```
+python teams/09-evaluation/decontam/decontam_check.py teams/05-architecture/heldout_v1/data/heldout_v1.jsonl --id-field id --exclude heldout_g5_v1
+```
+
+Result on v2: `docs 1059 flagged 0 (0.00%)`, scope `full set except heldout_g5_v1`.
+
+Some held-out documents contain text that is on many other web pages. Without a fix, the held-out entry flagged
+22 of the 19,000 sample-pack documents, all through such text: a GMAT Club timer (13), a CC BY licence line (4),
+Home Assistant code (2), and Springer notes and a book-series text (3). `boilerplate/scoped/heldout_g5_v1.txt`
+holds these 5 passages, cut from the held-out documents. It applies only to `heldout_g5_v1` (key `boilerplate`
+in `benchmarks.toml`), so the other benchmarks do not change. With it:
+
+- sample-pack documents flagged by the held-out entry: 22 to 0
+- held-out documents found by their own entry: 1,059 of 1,059, each with full coverage
+
 ## The fingerprint set (v1)
+
+v1 stays in `../fingerprints/v1/` for old results. It was built from the registry of its own commit: on the
+current registry, a rebuild gives another `set_sha256`, because `not_covered.json` holds the `reason` of rows
+that are now active.
 
 `../fingerprints/v1/`: `MANIFEST.json` (rules, benchmark revisions, item counts, `set_sha256`,
 the list of benchmarks not covered and why), `not_covered.json`, `SHA256SUMS`, and one folder for each benchmark
@@ -149,8 +230,8 @@ matches by accident is about 1 in 2 billion. With 6 bytes it would be 1 in 36,00
 | LongBench v2 (question and choices only) | english, long_context | 503 | 74,162 |
 | **Total: 17 benchmarks** | | **127,696** | **8,406,653** |
 
-The benchmark list is `../benchmarks/benchmarks_v1.md` (licences, item counts, and the Admin decisions of 25 Oct).
-GSM8K, FLORES-200 and IN22 are not on that list. We added them (team decision, 25 Oct). Their licences
+The benchmark list is `../benchmarks_v1.md` (licences, item counts, and the Admin decisions of 25 Oct).
+GSM8K, FLORES-200 and IN22 are on that list as "Decontamination only" (team decision, 25 Oct). Their licences
 (MIT, CC-BY-SA-4.0, CC-BY-4.0) are on the accepted list. AIME, LiveCodeBench and Codeforces are "Internal only"
 in `benchmarks_v1.md`, like GAIA: the repo has their hashes and item IDs only, never their text. Benchmarks that are not built yet are in
 `benchmarks.toml` as `planned` or `skip`, each with the reason. `python build_fingerprints.py --list` prints them.
@@ -168,8 +249,12 @@ A leak of any public item of a benchmark is a leak:
 
 ## Results
 
-Tests: `pytest teams/09-evaluation/decontam/tests -q` gives 30 passed with `ERA_CLEAN_DOCS` set,
-and 29 passed and 1 skipped without it.
+Tests: `pytest teams/09-evaluation/decontam/tests -q` gives 90 passed and 1 skipped (without `ERA_CLEAN_DOCS`).
+
+**v2 false hits.** All 38 sample packs, 19,000 documents: **20 flagged (0.11%)**, the same 20 documents as v1
+below. The two new benchmarks and the held-out set add none.
+
+The rest of this section is for v1.
 
 **False hits (limit 1% on all documents).** All 38 sample packs, 19,000 documents (English, code,
 math, science and the 10 Indic languages): **20 flagged (0.11%)**. The 339 documents labelled `clean` in the en-nemotroncc-synth diagnosis: 0.
@@ -214,17 +299,19 @@ The build and the tests need Python 3.11 or later (`tomllib`). The check needs o
 Code is needed only for a new source type, file format or text filter (`registry.py`).
 Gated sets need accepted terms on Hugging Face and a token in `HF_TOKEN` or `~/.cache/huggingface/token`.
 
-## Known limits of v1
+## Known limits
 
+- **BFCL v3.** 728 of the 4,441 items (16%) have no fingerprint: 606 of them are below 8 words, 409 of these in
+  `live_irrelevance`. A copy of only such a question is not found.
+- **ZWNJ replaced by a space.** `g9-v2` does not find this change (see "Why g9-v2").
 - **Very short items.** A text of fewer than 8 words is not found: a question without its choices,
   or a short conversation turn (282 of the 1,503 IN22-Conv turns are below 8 words in every language).
 - **Paraphrase and translation.** A reworded or translated item is not found. n-gram matching finds copies only.
 - **Shared public text.** Some items quote famous texts (Jefferson) or exam templates. A document with only these parts is flagged.
 - **Speed.** Plain Python, about 225 documents per second on one core. Good for sample packs, slow for full shards.
 
-## Next (v2, week 2)
+## Next
 
-- Rebuild with the spec v1 normalize function of Team 1 (`normalize.py`), and share the new `set_sha256`.
-- The GitHub-based rows of `benchmarks_v1.md` (Terminal-Bench, tau2, BFCL, WebArena, OSWorld, IndicGenBench, Aider Polyglot).
+- The other GitHub-based rows of `benchmarks_v1.md` (tau2, WebArena, OSWorld, IndicGenBench, Aider Polyglot).
 - HELMET: a reader for each of its source datasets with fixed items.
 - Source rule for SWE-bench (flag code files from the patched repositories), after a decision by G1 and TSAI.

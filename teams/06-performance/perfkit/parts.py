@@ -1,30 +1,12 @@
-"""The slowest parts of a step, and one small Chrome trace for each.  [implemented]
+"""The five slowest parts of a step, and one small Chrome trace for each (docs/PARTS.md).
 
-results/slowest5_v0.md needs "the five slowest parts, each with a trace". The full trace of trace mode is hundreds
-of MB and stays outside the repo (~/.cache/era-perf/traces/). This file ranks the parts from the layer regions and
-cuts one small trace per part out of that full trace, into results/runs/<tag>_parts/, which is committed. Each
-file is plain JSON under MAX_BYTES: pr-guard refuses .gz files and files over 5 MB.
-
-    slowest_parts(regions, step_ms, top=5)   [{"part", "ms", "pct", "instances", "level", "names"}]
-    cut_trace(trace, name)                   one region of the last profiled step, as a Chrome trace dict, or None
+    slowest_parts(regions, step_ms, top=5)          [{"part", "ms", "pct", "instances", "level", "names"}]
+    cut_trace(trace, name)                          one region of the last profiled step, as a trace dict, or None
     write_part_traces(trace_file, parts, out_dir)   writes <rank>_<region>.json files, returns what it wrote
 
-A part is a leaf region (no region inside it) with block<i> folded into block* and summed over the layers, so
-"fwd:block*.moe.dispatch" is one part. Not parts: the phases (data, fwd, bwd, opt) and fwd:stack / bwd:stack,
-which hold the blocks. The <x>.expert<E> regions are folded into <x>: eight per-expert rows would push real parts
-out of the top five. The bwd:<name> segments of the plain stack are leaves (they have no regions inside).
-
-How a part is cut (the last profiled step; for a block part, the middle layer):
-  CPU  every event on any thread that overlaps the region's time range: the record_function range of the region,
-       or for a bwd:<name> segment (cut from mark() points, not a range) the time from the previous
-       "__point__:*" to "__point__:<name>". A region called several times in a step (opt.muon.ns, once per
-       matrix) gives one range per call.
-  GPU  the kernels, copies and memsets launched from those ranges, found through the correlation ID of the CUDA
-       runtime calls (cudaLaunchKernel, ...) inside them; the GPU annotation ranges around those kernels; the
-       launch arrows (ac2g flow events). So the file shows when the CPU queued the part and when the GPU ran it.
-Process and thread names (ph "M") are kept. A file over MAX_BYTES first keeps every 2nd, 4th, ... call of a
-repeated region (spread over the whole step, not its front half), then loses the CPU events that are not
-annotations or CUDA runtime calls.
+A part is a leaf region with block<i> folded into block* and <x>.expert<E> into <x>, summed over the layers.
+A cut keeps the CPU events in the region's time range and the GPU work they launched (by correlation ID). Each file
+stays under MAX_BYTES, as pr-guard refuses files over 5 MB.
 """
 from __future__ import annotations
 
@@ -49,7 +31,7 @@ def slowest_parts(regions: dict, step_ms: float | None = None, top: int = 5) -> 
     names = [n for n in regions if not _EXPERT.search(n)]
     parts = {}
     for n in names:
-        if n in PHASES or n in CONTAINERS:
+        if n in PHASES or n in CONTAINERS:      # a part is a leaf: not a phase, a stack, or a region with parts in it
             continue
         if any(o != n and o.startswith(n + ".") for o in names):
             continue
@@ -88,7 +70,7 @@ def _windows(events: list, name: str) -> list:
     else:
         lo = min((e["ts"] for e in ann), default=0.0)
     found = [(e["ts"], _end(e)) for e in ann if e.get("name") == name]
-    if found or not name.startswith("bwd:"):
+    if found or not name.startswith("bwd:"):    # a backward segment has no range: previous point to its own point
         return sorted(found)
     target = "__bwd_end__" if name == "bwd:embed" else name[4:]
     points = sorted((e for e in ann if str(e.get("name", "")).startswith("__point__:")), key=lambda e: e["ts"])
@@ -162,7 +144,7 @@ def cut_trace(trace: dict, name: str, max_bytes: int = MAX_BYTES) -> dict | None
     if not windows:
         return None
     calls = len(windows)
-    for cpu_detail in (True, False):
+    for cpu_detail in (True, False):             # keep every 2nd, 4th, ... call until it fits; then drop CPU detail
         stride = 1
         while True:
             w = windows[::stride]

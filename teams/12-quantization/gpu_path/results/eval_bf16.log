@@ -1,0 +1,992 @@
+W1103 14:47:09.698000 387 torch/_opaque_base.py:6] torch._opaque_base is deprecated, use torch._custom_class_base instead
+W1103 14:47:09.699000 387 torch/_library/opaque_object.py:288] register_opaque_type is deprecated, use register_custom_class instead
+W1103 14:47:09.700000 387 torch/_library/opaque_object.py:211] typ='value' is deprecated, use typ='constant' instead
+(MainProcess pid=387) INFO 11-03 14:47:35 [startup.py:96] non-default args: {'dtype': 'float16', 'seed': 42, 'max_model_len': 2048, 'tensor_parallel_size': 2, 'gpu_memory_utilization': 0.85, 'disable_log_stats': True, 'model': '/kaggle/tmp/OLMoE-bf16'}
+(MainProcess pid=387) INFO 11-03 14:47:51 [model.py:744] Resolved architecture: OlmoeForCausalLM
+(MainProcess pid=387) WARNING 11-03 14:47:51 [model.py:2516] Casting torch.bfloat16 to torch.float16.
+(MainProcess pid=387) INFO 11-03 14:47:51 [model.py:2170] Using max model len 2048
+(MainProcess pid=387) INFO 11-03 14:47:51 [scheduler.py:310] Chunked prefill is enabled with max_num_batched_tokens=8192.
+(MainProcess pid=387) INFO 11-03 14:47:51 [kernel.py:480] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'], gelu_and_mul_sparse=['triton', 'native'])
+(MainProcess pid=387) WARNING 11-03 14:47:52 [system_utils.py:154] We must use the `spawn` multiprocessing start method. Overriding VLLM_WORKER_MULTIPROC_METHOD to 'spawn'. See https://docs.vllm.ai/en/latest/usage/troubleshooting.html#python-multiprocessing for more information. Reasons: CUDA is initialized
+W1103 14:47:56.828000 434 torch/_opaque_base.py:6] torch._opaque_base is deprecated, use torch._custom_class_base instead
+W1103 14:47:56.829000 434 torch/_library/opaque_object.py:288] register_opaque_type is deprecated, use register_custom_class instead
+W1103 14:47:56.830000 434 torch/_library/opaque_object.py:211] typ='value' is deprecated, use typ='constant' instead
+(EngineCore pid=434) INFO 11-03 14:48:03 [core.py:139] Initializing a V1 LLM engine (v0.33.0) with config: model='/kaggle/tmp/OLMoE-bf16', speculative_config=None, tokenizer='/kaggle/tmp/OLMoE-bf16', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.float16, max_seq_len=2048, download_dir=None, load_format=auto, tensor_parallel_size=2, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=False, quantization=None, quantization_config=None, enforce_eager=False, aux_output_config=AuxOutputConfig(enable_return_routed_experts=False, max_bytes=None), kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, per_request_spec_decode_metrics='none', kv_cache_metrics=False, kv_cache_metrics_sample=0.01, custom_histogram_buckets=None, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False, jit_monitor_mode='warn', jit_monitor_verbose=False), seed=42, served_model_name=/kaggle/tmp/OLMoE-bf16, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'ir_enable_torch_wrap': True, 'splitting_ops': ['vllm::unified_attention_with_output', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::qwen4_exp_ple_short_conv', 'vllm::qwen4_exp_qsa_with_output', 'vllm::qwen4_exp_qsa_prepare_with_output', 'vllm::linear_attention', 'vllm::qwen_gdn_attention_core', 'vllm::qwen_gdn_attention_core_fused_norm_packed', 'vllm::gdn_attention_core_xpu', 'vllm::olmo_hybrid_gdn_full_forward', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::deepseek_v4_attention', 'vllm::hpc_rope_norm_forward', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_vision_items_per_batch': 0, 'encoder_cudagraph_max_frames_per_batch': None, 'cudagraph_decoder_replay': True, 'decoder_replay_cudagraph_capture_sizes': [], 'decoder_replay_trim_threshold': 768, 'compile_sizes': [], 'compile_ranges_endpoints': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'fuse_allreduce_rms': False, 'enable_qk_norm_rope_fusion': False, 'fuse_rope_kvcache_cat_mla': False, 'fuse_act_padding': False, 'fuse_qk_norm_rope_kvcache': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': False, 'static_all_moe_layers': []}, kernel_config=KernelConfig(ir_op_priority=IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'], gelu_and_mul_sparse=['triton', 'native']), enable_flashinfer_autotune=True, enable_rocm_segmented_attn_autotune=False, enable_cutedsl_warmup=True, enable_jit_warmup=True, monokernel=False, moe_backend='auto', sparse_indexer_topk_backend='auto', linear_backend='auto', linear_backend_per_quant=None)
+(EngineCore pid=434) INFO 11-03 14:48:04 [multiproc_executor.py:167] DP group leader: node_rank=0, node_rank_within_dp=0, master_addr=127.0.0.1, mq_connect_ip=172.19.2.2 (local), world_size=2, local_world_size=2
+W1103 14:48:08.405000 461 torch/_opaque_base.py:6] torch._opaque_base is deprecated, use torch._custom_class_base instead
+W1103 14:48:08.407000 461 torch/_library/opaque_object.py:288] register_opaque_type is deprecated, use register_custom_class instead
+W1103 14:48:08.409000 461 torch/_library/opaque_object.py:211] typ='value' is deprecated, use typ='constant' instead
+W1103 14:48:08.430000 460 torch/_opaque_base.py:6] torch._opaque_base is deprecated, use torch._custom_class_base instead
+W1103 14:48:08.432000 460 torch/_library/opaque_object.py:288] register_opaque_type is deprecated, use register_custom_class instead
+W1103 14:48:08.433000 460 torch/_library/opaque_object.py:211] typ='value' is deprecated, use typ='constant' instead
+(Worker pid=461) INFO 11-03 14:48:24 [parallel_state.py:1929] world_size=2 rank=0 local_rank=0 distributed_init_method=file:///tmp/vllm_dist_5034678cd0bb432cb150b0d82df0adb0 backend=nccl
+(Worker pid=460) INFO 11-03 14:48:25 [parallel_state.py:1929] world_size=2 rank=1 local_rank=1 distributed_init_method=file:///tmp/vllm_dist_5034678cd0bb432cb150b0d82df0adb0 backend=nccl
+(Worker pid=461) INFO 11-03 14:48:32 [pynccl.py:148] vLLM is using nccl==2.30.7
+(Worker pid=461) WARNING 11-03 14:48:32 [symm_mem.py:67] SymmMemCommunicator: Device capability 7.5 not supported, communicator is not available.
+(Worker pid=460) WARNING 11-03 14:48:32 [symm_mem.py:67] SymmMemCommunicator: Device capability 7.5 not supported, communicator is not available.
+(Worker pid=460) WARNING 11-03 14:48:32 [flashinfer_all_reduce.py:424] FlashInfer All Reduce is disabled because it is not supported for world_size=2.
+(Worker pid=461) WARNING 11-03 14:48:32 [flashinfer_all_reduce.py:424] FlashInfer All Reduce is disabled because it is not supported for world_size=2.
+(Worker pid=461) INFO 11-03 14:48:32 [cuda_communicator.py:353] Using ['CUSTOM', 'PYNCCL'] all-reduce backends (in dispatch order) for group 'tp:0' out of potential backends: ['FLASHINFER_PCIE_IPC', 'FLASHINFER', 'NCCL_SYMM_MEM', 'QUICK_REDUCE', 'AITER_CUSTOM', 'CUSTOM', 'SYMM_MEM', 'PYNCCL'].
+(Worker pid=461) INFO 11-03 14:48:32 [cuda_communicator.py:353] Using ['PYNCCL'] all-reduce backends (in dispatch order) for group 'ep:0' out of potential backends: ['FLASHINFER_PCIE_IPC', 'FLASHINFER', 'NCCL_SYMM_MEM', 'QUICK_REDUCE', 'AITER_CUSTOM', 'CUSTOM', 'SYMM_MEM', 'PYNCCL'].
+(Worker pid=461) INFO 11-03 14:48:32 [parallel_state.py:2385] rank 0 in world size 2 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, ETP rank 0, EP rank 0, EPLB rank N/A
+(Worker pid=461) INFO 11-03 14:48:32 [gpu_worker.py:513] Using V2 Model Runner
+(Worker_TP0 pid=461) INFO 11-03 14:48:34 [model_runner.py:399] Loading model from scratch...
+(Worker_TP1 pid=460) ERROR 11-03 14:48:34 [fa_utils.py:212] Cannot use FA version 2 is not supported due to FA2 is only supported on devices with compute capability >= 8
+(Worker_TP0 pid=461) ERROR 11-03 14:48:34 [fa_utils.py:212] Cannot use FA version 2 is not supported due to FA2 is only supported on devices with compute capability >= 8
+(Worker_TP0 pid=461) INFO 11-03 14:48:34 [cuda.py:508] Using TRITON_ATTN attention backend out of potential backends: ['TRITON_ATTN', 'FLEX_ATTENTION'].
+(Worker_TP0 pid=461) INFO 11-03 14:48:34 [unquantized.py:365] Using TRITON Unquantized MoE backend out of potential backends: ['FlashInfer TRTLLM', 'FlashInfer CUTLASS', 'TRITON', 'BATCHED_TRITON'].
+(Worker_TP0 pid=461) INFO 11-03 14:48:35 [base_loader.py:82] Initializing model took 0.959229 seconds
+(Worker_TP1 pid=460) WARNING 11-03 14:48:35 [utils.py:333] Attempted to load weight model.embed_tokens.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) INFO 11-03 14:48:35 [weight_utils.py:1144] Filesystem type for checkpoints: OVERLAY. Checkpoint size: 12.89 GiB. Available RAM: 15.67 GiB.
+(Worker_TP0 pid=461) INFO 11-03 14:48:35 [weight_utils.py:1167] Auto-prefetch is disabled because the filesystem (OVERLAY) is not a recognized network FS (NFS/Lustre). If you want to force prefetching, start vLLM with --safetensors-load-strategy=prefetch.
+Loading safetensors checkpoint shards:   0% Completed | 0/3 [00:00<?, ?it/s]
+(Worker_TP0 pid=461) WARNING 11-03 14:48:35 [utils.py:333] Attempted to load weight model.embed_tokens.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:35 [utils.py:333] Attempted to load weight model.layers.0.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:36 [utils.py:333] Attempted to load weight model.layers.0.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:39 [utils.py:333] Attempted to load weight model.layers.0.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:39 [utils.py:333] Attempted to load weight model.layers.0.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:39 [utils.py:333] Attempted to load weight model.layers.0.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:39 [utils.py:333] Attempted to load weight model.layers.0.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:39 [utils.py:333] Attempted to load weight model.layers.0.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:39 [utils.py:333] Attempted to load weight model.layers.0.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:39 [utils.py:333] Attempted to load weight model.layers.0.self_attn.o_proj.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:39 [utils.py:333] Attempted to load weight model.layers.0.self_attn.o_proj.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:39 [utils.py:333] Attempted to load weight model.layers.0.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:39 [utils.py:333] Attempted to load weight model.layers.0.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:39 [utils.py:333] Attempted to load weight model.layers.1.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:39 [utils.py:333] Attempted to load weight model.layers.1.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:42 [utils.py:333] Attempted to load weight model.layers.1.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:42 [utils.py:333] Attempted to load weight model.layers.1.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:42 [utils.py:333] Attempted to load weight model.layers.1.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:42 [utils.py:333] Attempted to load weight model.layers.1.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:42 [utils.py:333] Attempted to load weight model.layers.1.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:42 [utils.py:333] Attempted to load weight model.layers.1.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:42 [utils.py:333] Attempted to load weight model.layers.1.self_attn.o_proj.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:42 [utils.py:333] Attempted to load weight model.layers.1.self_attn.o_proj.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:42 [utils.py:333] Attempted to load weight model.layers.1.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:42 [utils.py:333] Attempted to load weight model.layers.1.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:42 [utils.py:333] Attempted to load weight model.layers.2.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:42 [utils.py:333] Attempted to load weight model.layers.2.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:46 [utils.py:333] Attempted to load weight model.layers.2.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:46 [utils.py:333] Attempted to load weight model.layers.2.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:46 [utils.py:333] Attempted to load weight model.layers.2.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:46 [utils.py:333] Attempted to load weight model.layers.2.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:46 [utils.py:333] Attempted to load weight model.layers.2.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:46 [utils.py:333] Attempted to load weight model.layers.2.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:46 [utils.py:333] Attempted to load weight model.layers.2.self_attn.o_proj.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:46 [utils.py:333] Attempted to load weight model.layers.2.self_attn.o_proj.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:46 [utils.py:333] Attempted to load weight model.layers.2.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:46 [utils.py:333] Attempted to load weight model.layers.2.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:46 [utils.py:333] Attempted to load weight model.layers.3.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:46 [utils.py:333] Attempted to load weight model.layers.3.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:49 [utils.py:333] Attempted to load weight model.layers.3.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:49 [utils.py:333] Attempted to load weight model.layers.3.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:49 [utils.py:333] Attempted to load weight model.layers.3.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:49 [utils.py:333] Attempted to load weight model.layers.3.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:49 [utils.py:333] Attempted to load weight model.layers.3.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:49 [utils.py:333] Attempted to load weight model.layers.3.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:50 [utils.py:333] Attempted to load weight model.layers.3.self_attn.o_proj.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:50 [utils.py:333] Attempted to load weight model.layers.3.self_attn.o_proj.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:50 [utils.py:333] Attempted to load weight model.layers.3.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:50 [utils.py:333] Attempted to load weight model.layers.3.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:50 [utils.py:333] Attempted to load weight model.layers.4.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:50 [utils.py:333] Attempted to load weight model.layers.4.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:53 [utils.py:333] Attempted to load weight model.layers.4.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:53 [utils.py:333] Attempted to load weight model.layers.4.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:53 [utils.py:333] Attempted to load weight model.layers.4.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:53 [utils.py:333] Attempted to load weight model.layers.4.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:53 [utils.py:333] Attempted to load weight model.layers.4.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:53 [utils.py:333] Attempted to load weight model.layers.4.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:53 [utils.py:333] Attempted to load weight model.layers.4.self_attn.o_proj.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:53 [utils.py:333] Attempted to load weight model.layers.4.self_attn.o_proj.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:53 [utils.py:333] Attempted to load weight model.layers.4.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:53 [utils.py:333] Attempted to load weight model.layers.4.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:55 [utils.py:333] Attempted to load weight model.layers.5.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:56 [utils.py:333] Attempted to load weight model.layers.5.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:56 [utils.py:333] Attempted to load weight model.layers.5.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:56 [utils.py:333] Attempted to load weight model.layers.5.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:56 [utils.py:333] Attempted to load weight model.layers.5.self_attn.o_proj.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:56 [utils.py:333] Attempted to load weight model.layers.5.self_attn.o_proj.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:56 [utils.py:333] Attempted to load weight model.layers.5.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:56 [utils.py:333] Attempted to load weight model.layers.5.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+Loading safetensors checkpoint shards:  33% Completed | 1/3 [00:21<00:42, 21.07s/it]
+(Worker_TP0 pid=461) WARNING 11-03 14:48:56 [utils.py:333] Attempted to load weight model.layers.10.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:56 [utils.py:333] Attempted to load weight model.layers.10.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:59 [utils.py:333] Attempted to load weight model.layers.10.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:59 [utils.py:333] Attempted to load weight model.layers.10.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:59 [utils.py:333] Attempted to load weight model.layers.10.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:59 [utils.py:333] Attempted to load weight model.layers.10.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:59 [utils.py:333] Attempted to load weight model.layers.10.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:59 [utils.py:333] Attempted to load weight model.layers.10.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:59 [utils.py:333] Attempted to load weight model.layers.10.self_attn.o_proj.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:59 [utils.py:333] Attempted to load weight model.layers.10.self_attn.o_proj.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:48:59 [utils.py:333] Attempted to load weight model.layers.10.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:48:59 [utils.py:333] Attempted to load weight model.layers.10.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:02 [utils.py:333] Attempted to load weight model.layers.11.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:02 [utils.py:333] Attempted to load weight model.layers.11.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:02 [utils.py:333] Attempted to load weight model.layers.11.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:02 [utils.py:333] Attempted to load weight model.layers.11.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:02 [utils.py:333] Attempted to load weight model.layers.11.self_attn.o_proj.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:02 [utils.py:333] Attempted to load weight model.layers.11.self_attn.o_proj.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:02 [utils.py:333] Attempted to load weight model.layers.11.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:02 [utils.py:333] Attempted to load weight model.layers.11.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:02 [utils.py:333] Attempted to load weight model.layers.5.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:02 [utils.py:333] Attempted to load weight model.layers.5.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:03 [utils.py:333] Attempted to load weight model.layers.5.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:03 [utils.py:333] Attempted to load weight model.layers.6.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:03 [utils.py:333] Attempted to load weight model.layers.5.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:03 [utils.py:333] Attempted to load weight model.layers.6.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:06 [utils.py:333] Attempted to load weight model.layers.6.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:06 [utils.py:333] Attempted to load weight model.layers.6.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:06 [utils.py:333] Attempted to load weight model.layers.6.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:06 [utils.py:333] Attempted to load weight model.layers.6.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:06 [utils.py:333] Attempted to load weight model.layers.6.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:06 [utils.py:333] Attempted to load weight model.layers.6.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:06 [utils.py:333] Attempted to load weight model.layers.6.self_attn.o_proj.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:06 [utils.py:333] Attempted to load weight model.layers.6.self_attn.o_proj.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:06 [utils.py:333] Attempted to load weight model.layers.6.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:06 [utils.py:333] Attempted to load weight model.layers.6.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:06 [utils.py:333] Attempted to load weight model.layers.7.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:06 [utils.py:333] Attempted to load weight model.layers.7.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:09 [utils.py:333] Attempted to load weight model.layers.7.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:09 [utils.py:333] Attempted to load weight model.layers.7.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:09 [utils.py:333] Attempted to load weight model.layers.7.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:09 [utils.py:333] Attempted to load weight model.layers.7.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:09 [utils.py:333] Attempted to load weight model.layers.7.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:09 [utils.py:333] Attempted to load weight model.layers.7.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:09 [utils.py:333] Attempted to load weight model.layers.7.self_attn.o_proj.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:09 [utils.py:333] Attempted to load weight model.layers.7.self_attn.o_proj.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:09 [utils.py:333] Attempted to load weight model.layers.7.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:09 [utils.py:333] Attempted to load weight model.layers.7.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:09 [utils.py:333] Attempted to load weight model.layers.8.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:09 [utils.py:333] Attempted to load weight model.layers.8.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:13 [utils.py:333] Attempted to load weight model.layers.8.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:13 [utils.py:333] Attempted to load weight model.layers.8.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:13 [utils.py:333] Attempted to load weight model.layers.8.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:13 [utils.py:333] Attempted to load weight model.layers.8.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:13 [utils.py:333] Attempted to load weight model.layers.8.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:13 [utils.py:333] Attempted to load weight model.layers.8.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:13 [utils.py:333] Attempted to load weight model.layers.8.self_attn.o_proj.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:13 [utils.py:333] Attempted to load weight model.layers.8.self_attn.o_proj.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:13 [utils.py:333] Attempted to load weight model.layers.8.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:13 [utils.py:333] Attempted to load weight model.layers.8.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:13 [utils.py:333] Attempted to load weight model.layers.9.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:13 [utils.py:333] Attempted to load weight model.layers.9.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:16 [utils.py:333] Attempted to load weight model.layers.9.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:16 [utils.py:333] Attempted to load weight model.layers.9.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:16 [utils.py:333] Attempted to load weight model.layers.9.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:16 [utils.py:333] Attempted to load weight model.layers.9.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:16 [utils.py:333] Attempted to load weight model.layers.9.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:16 [utils.py:333] Attempted to load weight model.layers.9.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:17 [utils.py:333] Attempted to load weight model.layers.9.self_attn.o_proj.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:17 [utils.py:333] Attempted to load weight model.layers.9.self_attn.o_proj.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:17 [utils.py:333] Attempted to load weight model.layers.9.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:17 [utils.py:333] Attempted to load weight model.layers.9.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+Loading safetensors checkpoint shards:  67% Completed | 2/3 [00:42<00:21, 21.01s/it]
+(Worker_TP0 pid=461) WARNING 11-03 14:49:17 [utils.py:333] Attempted to load weight lm_head.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:17 [utils.py:333] Attempted to load weight lm_head.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:18 [utils.py:333] Attempted to load weight model.layers.11.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:18 [utils.py:333] Attempted to load weight model.layers.11.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:19 [utils.py:333] Attempted to load weight model.layers.11.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:19 [utils.py:333] Attempted to load weight model.layers.12.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:19 [utils.py:333] Attempted to load weight model.layers.11.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:19 [utils.py:333] Attempted to load weight model.layers.12.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:22 [utils.py:333] Attempted to load weight model.layers.12.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:22 [utils.py:333] Attempted to load weight model.layers.12.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:22 [utils.py:333] Attempted to load weight model.layers.12.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:22 [utils.py:333] Attempted to load weight model.layers.12.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:22 [utils.py:333] Attempted to load weight model.layers.12.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:22 [utils.py:333] Attempted to load weight model.layers.12.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:22 [utils.py:333] Attempted to load weight model.layers.12.self_attn.o_proj.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:22 [utils.py:333] Attempted to load weight model.layers.12.self_attn.o_proj.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:22 [utils.py:333] Attempted to load weight model.layers.12.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:22 [utils.py:333] Attempted to load weight model.layers.12.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:22 [utils.py:333] Attempted to load weight model.layers.13.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:22 [utils.py:333] Attempted to load weight model.layers.13.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:26 [utils.py:333] Attempted to load weight model.layers.13.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:26 [utils.py:333] Attempted to load weight model.layers.13.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:26 [utils.py:333] Attempted to load weight model.layers.13.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:26 [utils.py:333] Attempted to load weight model.layers.13.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:26 [utils.py:333] Attempted to load weight model.layers.13.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:26 [utils.py:333] Attempted to load weight model.layers.13.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:26 [utils.py:333] Attempted to load weight model.layers.13.self_attn.o_proj.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:26 [utils.py:333] Attempted to load weight model.layers.13.self_attn.o_proj.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:26 [utils.py:333] Attempted to load weight model.layers.13.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:26 [utils.py:333] Attempted to load weight model.layers.13.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:26 [utils.py:333] Attempted to load weight model.layers.14.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:26 [utils.py:333] Attempted to load weight model.layers.14.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:29 [utils.py:333] Attempted to load weight model.layers.14.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:29 [utils.py:333] Attempted to load weight model.layers.14.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:29 [utils.py:333] Attempted to load weight model.layers.14.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:29 [utils.py:333] Attempted to load weight model.layers.14.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:29 [utils.py:333] Attempted to load weight model.layers.14.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:29 [utils.py:333] Attempted to load weight model.layers.14.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:29 [utils.py:333] Attempted to load weight model.layers.14.self_attn.o_proj.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:29 [utils.py:333] Attempted to load weight model.layers.14.self_attn.o_proj.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:29 [utils.py:333] Attempted to load weight model.layers.14.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:29 [utils.py:333] Attempted to load weight model.layers.14.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:29 [utils.py:333] Attempted to load weight model.layers.15.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:29 [utils.py:333] Attempted to load weight model.layers.15.input_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:33 [utils.py:333] Attempted to load weight model.layers.15.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:33 [utils.py:333] Attempted to load weight model.layers.15.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:33 [utils.py:333] Attempted to load weight model.layers.15.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:33 [utils.py:333] Attempted to load weight model.layers.15.mlp.gate.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:33 [utils.py:333] Attempted to load weight model.layers.15.post_attention_layernorm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:33 [utils.py:333] Attempted to load weight model.layers.15.self_attn.k_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:33 [utils.py:333] Attempted to load weight model.layers.15.self_attn.o_proj.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:33 [utils.py:333] Attempted to load weight model.layers.15.self_attn.o_proj.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP1 pid=460) WARNING 11-03 14:49:33 [utils.py:333] Attempted to load weight model.layers.15.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:33 [utils.py:333] Attempted to load weight model.layers.15.self_attn.q_norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) WARNING 11-03 14:49:33 [utils.py:333] Attempted to load weight model.norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+Loading safetensors checkpoint shards: 100% Completed | 3/3 [00:58<00:00, 19.02s/it]
+Loading safetensors checkpoint shards: 100% Completed | 3/3 [00:58<00:00, 19.57s/it]
+
+(Worker_TP1 pid=460) WARNING 11-03 14:49:33 [utils.py:333] Attempted to load weight model.norm.weight with dtype torch.bfloat16 into parameter with dtype torch.float16
+(Worker_TP0 pid=461) INFO 11-03 14:49:33 [default_loader.py:506] Loading weights took 58.74 seconds
+(Worker_TP0 pid=461) INFO 11-03 14:49:34 [unquantized.py:529] Using MoEPrepareAndFinalizeNoDPEPModular
+(Worker_TP0 pid=461) INFO 11-03 14:49:34 [unquantized.py:530] Using TritonExperts MoE backend
+(Worker_TP1 pid=460) INFO 11-03 14:49:35 [model_runner.py:428] Model loading took 6.45 GiB memory and 62.118804 seconds
+(Worker_TP0 pid=461) INFO 11-03 14:49:35 [model_runner.py:428] Model loading took 6.45 GiB memory and 62.136771 seconds
+(Worker_TP1 pid=460) WARNING 11-03 14:49:35 [cpu_resource_utils.py:148] Cgroup memory preflight for shared-memory allocation: 240 MiB required, 30701 MiB current usage, 19 MiB available under 30720 MiB limit, -221 MiB remaining after allocation based on current usage; current headroom is below the requested allocation; allocation will still be attempted because cgroup usage may be reclaimable.
+(Worker_TP0 pid=461) WARNING 11-03 14:49:35 [topk_topp_sampler.py:156] FlashInfer top-p/top-k sampling unavailable: unsupported compute capability 7.5; falling back. Set VLLM_USE_FLASHINFER_SAMPLER=0 to silence.
+(Worker_TP0 pid=461) INFO 11-03 14:49:35 [torch_utils.py:281] Reducing Torch threads from 2 to 1 for serving. Set OMP_NUM_THREADS in the external environment to override.
+(Worker_TP0 pid=461) WARNING 11-03 14:49:35 [cpu_resource_utils.py:148] Cgroup memory preflight for shared-memory allocation: 240 MiB required, 30702 MiB current usage, 18 MiB available under 30720 MiB limit, -222 MiB remaining after allocation based on current usage; current headroom is below the requested allocation; allocation will still be attempted because cgroup usage may be reclaimable.
+(EngineCore pid=434) INFO 11-03 14:49:35 [torch_utils.py:281] Reducing Torch threads from 2 to 1 for serving. Set OMP_NUM_THREADS in the external environment to override.
+(EngineCore pid=434) INFO 11-03 14:49:35 [utils.py:381] Using LBNHC KV cache layout.
+(Worker_TP1 pid=460) INFO 11-03 14:49:39 [monitor.py:40] [backbone] Starting torch.compile
+(Worker_TP0 pid=461) INFO 11-03 14:49:39 [monitor.py:40] [backbone] Starting torch.compile
+(Worker_TP0 pid=461) INFO 11-03 14:49:45 [backends.py:1125] [backbone] Using cache directory: /root/.cache/vllm/torch_compile_cache/6af7ff38f3/rank_0_0/backbone for vLLM's torch.compile
+(Worker_TP0 pid=461) INFO 11-03 14:49:45 [backends.py:1187] [backbone] Dynamo bytecode transform time: 5.76 s
+(Worker_TP1 pid=460) INFO 11-03 14:49:45 [backends.py:1125] [backbone] Using cache directory: /root/.cache/vllm/torch_compile_cache/6af7ff38f3/rank_1_0/backbone for vLLM's torch.compile
+(Worker_TP1 pid=460) INFO 11-03 14:49:45 [backends.py:1187] [backbone] Dynamo bytecode transform time: 5.80 s
+[rank1]:W1103 14:49:47.800000 460 torch/_inductor/utils.py:1806] Not enough SMs to use max_autotune_gemm mode
+[rank0]:W1103 14:49:47.801000 461 torch/_inductor/utils.py:1806] Not enough SMs to use max_autotune_gemm mode
+(Worker_TP1 pid=460) INFO 11-03 14:49:55 [backends.py:417] [backbone] Compiling a graph for compile range (1, 8192) takes 10.37 s
+(Worker_TP0 pid=461) INFO 11-03 14:49:55 [backends.py:417] [backbone] Compiling a graph for compile range (1, 8192) takes 10.43 s
+(Worker_TP1 pid=460) INFO 11-03 14:49:59 [backends.py:948] collected artifacts: 17 entries, 3 artifacts, 3800076 bytes total
+(Worker_TP0 pid=461) INFO 11-03 14:49:59 [backends.py:948] collected artifacts: 17 entries, 3 artifacts, 3794528 bytes total
+(Worker_TP1 pid=460) INFO 11-03 14:49:59 [decorators.py:752] [backbone] saved AOT compiled function to /root/.cache/vllm/torch_compile_cache/torch_aot_compile/9793f58effe2353c3e139ab27ef8b2c0fba992e13a6766fd32894ae89f19f81f/rank_1_0/model
+(Worker_TP1 pid=460) INFO 11-03 14:49:59 [monitor.py:62] [backbone] torch.compile took 19.63 s in total
+(Worker_TP0 pid=461) INFO 11-03 14:49:59 [decorators.py:752] [backbone] saved AOT compiled function to /root/.cache/vllm/torch_compile_cache/torch_aot_compile/9793f58effe2353c3e139ab27ef8b2c0fba992e13a6766fd32894ae89f19f81f/rank_0_0/model
+(Worker_TP0 pid=461) INFO 11-03 14:49:59 [monitor.py:62] [backbone] torch.compile took 19.67 s in total
+(Worker_TP0 pid=461) WARNING 11-03 14:49:59 [fused_moe.py:1165] Using default MoE config. Performance might be sub-optimal! Config file not found at /kaggle/tmp/venv-eval/lib/python3.12/site-packages/vllm/model_executor/layers/fused_moe/configs/E=64,N=512,device_name=Tesla_T4.json
+(Worker_TP1 pid=460) INFO 11-03 14:50:09 [monitor.py:91] [backbone] Initial profiling/warmup run took 10.70 s
+(Worker_TP0 pid=461) INFO 11-03 14:50:10 [monitor.py:91] [backbone] Initial profiling/warmup run took 10.73 s
+(EngineCore pid=434) INFO 11-03 14:50:36 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+(EngineCore pid=434) INFO 11-03 14:51:36 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+Capturing CUDA graphs (PIECEWISE):   0%|          | 0/51 [00:00<?, ?it/s]Capturing CUDA graphs (PIECEWISE):   2%|▏         | 1/51 [00:04<03:34,  4.29s/it]Capturing CUDA graphs (PIECEWISE):   4%|▍         | 2/51 [00:04<01:30,  1.84s/it]Capturing CUDA graphs (PIECEWISE):   6%|▌         | 3/51 [00:04<00:50,  1.05s/it]Capturing CUDA graphs (PIECEWISE):  10%|▉         | 5/51 [00:04<00:23,  1.96it/s]Capturing CUDA graphs (PIECEWISE):  12%|█▏        | 6/51 [00:04<00:17,  2.52it/s]Capturing CUDA graphs (PIECEWISE):  16%|█▌        | 8/51 [00:05<00:11,  3.85it/s]Capturing CUDA graphs (PIECEWISE):  20%|█▉        | 10/51 [00:05<00:07,  5.17it/s]Capturing CUDA graphs (PIECEWISE):  24%|██▎       | 12/51 [00:05<00:06,  6.39it/s]Capturing CUDA graphs (PIECEWISE):  27%|██▋       | 14/51 [00:05<00:04,  7.44it/s]Capturing CUDA graphs (PIECEWISE):  31%|███▏      | 16/51 [00:05<00:04,  8.31it/s]Capturing CUDA graphs (PIECEWISE):  35%|███▌      | 18/51 [00:06<00:08,  3.74it/s]Capturing CUDA graphs (PIECEWISE):  39%|███▉      | 20/51 [00:07<00:06,  4.72it/s]Capturing CUDA graphs (PIECEWISE):  43%|████▎     | 22/51 [00:07<00:05,  5.74it/s]Capturing CUDA graphs (PIECEWISE):  47%|████▋     | 24/51 [00:07<00:03,  6.76it/s]Capturing CUDA graphs (PIECEWISE):  51%|█████     | 26/51 [00:07<00:03,  7.75it/s]Capturing CUDA graphs (PIECEWISE):  55%|█████▍    | 28/51 [00:07<00:02,  8.60it/s]Capturing CUDA graphs (PIECEWISE):  59%|█████▉    | 30/51 [00:07<00:02,  9.29it/s]Capturing CUDA graphs (PIECEWISE):  63%|██████▎   | 32/51 [00:08<00:01,  9.84it/s]Capturing CUDA graphs (PIECEWISE):  67%|██████▋   | 34/51 [00:15<00:19,  1.16s/it]Capturing CUDA graphs (PIECEWISE):  71%|███████   | 36/51 [00:15<00:12,  1.19it/s]Capturing CUDA graphs (PIECEWISE):  73%|███████▎  | 37/51 [00:18<00:17,  1.24s/it]Capturing CUDA graphs (PIECEWISE):  76%|███████▋  | 39/51 [00:18<00:10,  1.18it/s]Capturing CUDA graphs (PIECEWISE):  80%|████████  | 41/51 [00:22<00:11,  1.14s/it]Capturing CUDA graphs (PIECEWISE):  84%|████████▍ | 43/51 [00:22<00:06,  1.24it/s]Capturing CUDA graphs (PIECEWISE):  88%|████████▊ | 45/51 [00:24<00:05,  1.10it/s]Capturing CUDA graphs (PIECEWISE):  92%|█████████▏| 47/51 [00:25<00:03,  1.23it/s]Capturing CUDA graphs (PIECEWISE):  94%|█████████▍| 48/51 [00:26<00:02,  1.17it/s]Capturing CUDA graphs (PIECEWISE):  98%|█████████▊| 50/51 [00:29<00:00,  1.05it/s]Capturing CUDA graphs (PIECEWISE): 100%|██████████| 51/51 [00:32<00:00,  1.41s/it]Capturing CUDA graphs (PIECEWISE): 100%|██████████| 51/51 [00:32<00:00,  1.57it/s]
+Capturing CUDA graphs (FULL):   0%|          | 0/2 [00:00<?, ?it/s]Capturing CUDA graphs (FULL): 100%|██████████| 2/2 [00:00<00:00, 11.15it/s]Capturing CUDA graphs (FULL): 100%|██████████| 2/2 [00:00<00:00, 11.14it/s]
+(Worker_TP0 pid=461) INFO 11-03 14:52:28 [model_runner.py:1163] Graph capturing finished in 34 secs, took 0.51 GiB
+(Worker_TP1 pid=460) INFO 11-03 14:52:28 [model_runner.py:1163] Graph capturing finished in 34 secs, took 0.51 GiB
+(Worker_TP0 pid=461) INFO 11-03 14:52:29 [gpu_worker.py:772] Available KV cache memory: 4.32 GiB
+(Worker_TP0 pid=461) INFO 11-03 14:52:29 [gpu_worker.py:787] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.8500 is equivalent to --gpu-memory-utilization=0.8123 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.8877. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.
+(Worker_TP1 pid=460) INFO 11-03 14:52:29 [gpu_worker.py:787] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.8500 is equivalent to --gpu-memory-utilization=0.8123 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.8877. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.
+(EngineCore pid=434) INFO 11-03 14:52:29 [kv_cache_utils.py:1147] GPU KV cache size: 70,720 tokens, Maximum concurrency for 2,048 tokens per request: 34.53x
+(Worker_TP0 pid=461) INFO 11-03 14:52:29 [kernel_warmup.py:179] JIT kernel warmup starting.
+(Worker_TP0 pid=461) INFO 11-03 14:52:29 [kernel_warmup.py:192] JIT kernel warmup finished in 0.00s.
+(Worker_TP1 pid=460) INFO 11-03 14:52:29 [kernel_warmup.py:179] JIT kernel warmup starting.
+(Worker_TP1 pid=460) INFO 11-03 14:52:29 [kernel_warmup.py:192] JIT kernel warmup finished in 0.00s.
+Capturing CUDA graphs (PIECEWISE):   0%|          | 0/51 [00:00<?, ?it/s]Capturing CUDA graphs (PIECEWISE):   2%|▏         | 1/51 [00:00<00:07,  6.74it/s]Capturing CUDA graphs (PIECEWISE):   4%|▍         | 2/51 [00:00<00:06,  7.55it/s]Capturing CUDA graphs (PIECEWISE):   6%|▌         | 3/51 [00:00<00:06,  7.86it/s]Capturing CUDA graphs (PIECEWISE):   8%|▊         | 4/51 [00:00<00:05,  8.08it/s]Capturing CUDA graphs (PIECEWISE):  10%|▉         | 5/51 [00:00<00:05,  8.16it/s]Capturing CUDA graphs (PIECEWISE):  12%|█▏        | 6/51 [00:00<00:05,  8.30it/s]Capturing CUDA graphs (PIECEWISE):  16%|█▌        | 8/51 [00:00<00:04,  9.18it/s]Capturing CUDA graphs (PIECEWISE):  20%|█▉        | 10/51 [00:01<00:04,  9.56it/s]Capturing CUDA graphs (PIECEWISE):  24%|██▎       | 12/51 [00:01<00:03,  9.84it/s]Capturing CUDA graphs (PIECEWISE):  27%|██▋       | 14/51 [00:01<00:03,  9.95it/s]Capturing CUDA graphs (PIECEWISE):  31%|███▏      | 16/51 [00:01<00:03, 10.06it/s]Capturing CUDA graphs (PIECEWISE):  35%|███▌      | 18/51 [00:01<00:03, 10.05it/s]Capturing CUDA graphs (PIECEWISE):  37%|███▋      | 19/51 [00:02<00:03,  9.92it/s]Capturing CUDA graphs (PIECEWISE):  41%|████      | 21/51 [00:02<00:02, 10.11it/s]Capturing CUDA graphs (PIECEWISE):  45%|████▌     | 23/51 [00:02<00:02, 10.18it/s]Capturing CUDA graphs (PIECEWISE):  49%|████▉     | 25/51 [00:02<00:02, 10.29it/s]Capturing CUDA graphs (PIECEWISE):  53%|█████▎    | 27/51 [00:02<00:02, 10.42it/s]Capturing CUDA graphs (PIECEWISE):  57%|█████▋    | 29/51 [00:02<00:02, 10.53it/s]Capturing CUDA graphs (PIECEWISE):  61%|██████    | 31/51 [00:03<00:01, 10.60it/s]Capturing CUDA graphs (PIECEWISE):  65%|██████▍   | 33/51 [00:03<00:01, 10.63it/s]Capturing CUDA graphs (PIECEWISE):  69%|██████▊   | 35/51 [00:03<00:01, 10.76it/s]Capturing CUDA graphs (PIECEWISE):  73%|███████▎  | 37/51 [00:03<00:01, 10.83it/s]Capturing CUDA graphs (PIECEWISE):  76%|███████▋  | 39/51 [00:03<00:01, 10.88it/s]Capturing CUDA graphs (PIECEWISE):  80%|████████  | 41/51 [00:04<00:00, 10.88it/s]Capturing CUDA graphs (PIECEWISE):  84%|████████▍ | 43/51 [00:04<00:00, 10.85it/s]Capturing CUDA graphs (PIECEWISE):  88%|████████▊ | 45/51 [00:04<00:00, 10.85it/s]Capturing CUDA graphs (PIECEWISE):  92%|█████████▏| 47/51 [00:04<00:00, 10.83it/s]Capturing CUDA graphs (PIECEWISE):  96%|█████████▌| 49/51 [00:04<00:00, 10.87it/s]Capturing CUDA graphs (PIECEWISE): 100%|██████████| 51/51 [00:04<00:00, 11.00it/s]Capturing CUDA graphs (PIECEWISE): 100%|██████████| 51/51 [00:04<00:00, 10.22it/s]
+Capturing CUDA graphs (FULL):   0%|          | 0/35 [00:00<?, ?it/s]Capturing CUDA graphs (FULL):   6%|▌         | 2/35 [00:00<00:02, 11.48it/s]Capturing CUDA graphs (FULL):  11%|█▏        | 4/35 [00:00<00:02, 11.64it/s]Capturing CUDA graphs (FULL):  17%|█▋        | 6/35 [00:00<00:02, 11.48it/s]Capturing CUDA graphs (FULL):  23%|██▎       | 8/35 [00:00<00:02, 11.52it/s]Capturing CUDA graphs (FULL):  29%|██▊       | 10/35 [00:00<00:02, 11.64it/s]Capturing CUDA graphs (FULL):  34%|███▍      | 12/35 [00:01<00:01, 11.64it/s]Capturing CUDA graphs (FULL):  40%|████      | 14/35 [00:01<00:01, 11.73it/s]Capturing CUDA graphs (FULL):  46%|████▌     | 16/35 [00:01<00:01, 11.88it/s]Capturing CUDA graphs (FULL):  51%|█████▏    | 18/35 [00:01<00:01, 11.75it/s]Capturing CUDA graphs (FULL):  57%|█████▋    | 20/35 [00:01<00:01, 11.87it/s]Capturing CUDA graphs (FULL):  63%|██████▎   | 22/35 [00:01<00:01, 11.92it/s]Capturing CUDA graphs (FULL):  69%|██████▊   | 24/35 [00:02<00:00, 11.91it/s]Capturing CUDA graphs (FULL):  74%|███████▍  | 26/35 [00:02<00:00, 11.95it/s]Capturing CUDA graphs (FULL):  80%|████████  | 28/35 [00:02<00:00, 12.02it/s]Capturing CUDA graphs (FULL):  86%|████████▌ | 30/35 [00:02<00:00, 12.04it/s]Capturing CUDA graphs (FULL):  91%|█████████▏| 32/35 [00:02<00:00, 11.98it/s]Capturing CUDA graphs (FULL):  97%|█████████▋| 34/35 [00:02<00:00, 12.13it/s]Capturing CUDA graphs (FULL): 100%|██████████| 35/35 [00:02<00:00, 11.90it/s]
+(Worker_TP0 pid=461) INFO 11-03 14:52:56 [model_runner.py:1163] Graph capturing finished in 9 secs, took 0.28 GiB
+(Worker_TP0 pid=461) INFO 11-03 14:52:56 [gpu_worker.py:1003] CUDA graph pool memory: 0.28 GiB (actual), 0.55 GiB (estimated), difference: 0.27 GiB (96.5%).
+(Worker_TP0 pid=461) INFO 11-03 14:52:56 [gpu_worker.py:1066] Free memory on device (14.29/14.56 GiB) on startup. Desired GPU memory utilization is (0.85, 12.38 GiB). Actual usage is 7.27 GiB for consumed memory (weights + non-torch), 0.79 GiB for peak activation, and 0.28 GiB for CUDAGraph memory. Replace gpu_memory_utilization config with `--kv-cache-memory=4178162996` (3.89 GiB) to fit into requested memory, or `--kv-cache-memory=6229049856` (5.8 GiB) to fully utilize gpu memory. Current kv cache memory in use is 4.32 GiB.
+(Worker_TP1 pid=460) INFO 11-03 14:52:56 [model_runner.py:1163] Graph capturing finished in 9 secs, took 0.28 GiB
+(Worker_TP1 pid=460) INFO 11-03 14:52:56 [gpu_worker.py:1003] CUDA graph pool memory: 0.28 GiB (actual), 0.55 GiB (estimated), difference: 0.27 GiB (96.5%).
+(Worker_TP1 pid=460) INFO 11-03 14:52:56 [gpu_worker.py:1066] Free memory on device (14.29/14.56 GiB) on startup. Desired GPU memory utilization is (0.85, 12.38 GiB). Actual usage is 7.27 GiB for consumed memory (weights + non-torch), 0.79 GiB for peak activation, and 0.28 GiB for CUDAGraph memory. Replace gpu_memory_utilization config with `--kv-cache-memory=4178162996` (3.89 GiB) to fit into requested memory, or `--kv-cache-memory=6229049856` (5.8 GiB) to fully utilize gpu memory. Current kv cache memory in use is 4.32 GiB.
+(Worker_TP0 pid=461) INFO 11-03 14:52:59 [jit_monitor.py:84] Kernel JIT monitor activated; monitored JIT compilations during inference will use mode=warn.
+(Worker_TP1 pid=460) INFO 11-03 14:52:59 [jit_monitor.py:84] Kernel JIT monitor activated; monitored JIT compilations during inference will use mode=warn.
+(EngineCore pid=434) INFO 11-03 14:53:00 [core.py:405] init engine (profile, create kv cache, warmup model) took 204.34 s (compilation: 19.67 s)
+(EngineCore pid=434) INFO 11-03 14:53:00 [kernel.py:480] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'], gelu_and_mul_sparse=['triton', 'native'])
+(MainProcess pid=387) INFO 11-03 14:53:00 [hf.py:736] Detected the chat template content format to be 'string'. You can set `--chat-template-content-format` to override this.
+Tokenizing inputs:   0%|          | 0/1 [00:00<?, ?it/s][transformers] Ignoring clean_up_tokenization_spaces=True for BPE tokenizer CachedGPTNeoXTokenizer. The clean_up_tokenization post-processing step is designed for WordPiece tokenizers and is destructive for BPE (it strips spaces before punctuation). Set clean_up_tokenization_spaces=False to suppress this warning, or set clean_up_tokenization_spaces_for_bpe_even_though_it_will_corrupt_output=True to force cleanup anyway.
+Tokenizing inputs: 100%|██████████| 1/1 [00:00<00:00, 63.22it/s]
+Running loglikelihood requests:   0%|          | 0/1 [00:00<?, ?it/s]
+Rendering prompts:   0%|          | 0/1 [00:00<?, ?it/s][ARendering prompts: 100%|██████████| 1/1 [00:00<00:00, 956.51it/s]
+
+Processed prompts:   0%|          | 0/1 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s][A
+Processed prompts: 100%|██████████| 1/1 [00:00<00:00,  2.20it/s, est. speed input: 13.17 toks/s, output: 2.20 toks/s][A
+Processed prompts: 100%|██████████| 1/1 [00:00<00:00,  2.20it/s, est. speed input: 13.17 toks/s, output: 2.20 toks/s][AProcessed prompts: 100%|██████████| 1/1 [00:00<00:00,  2.19it/s, est. speed input: 13.17 toks/s, output: 2.20 toks/s]
+Running loglikelihood requests: 100%|██████████| 1/1 [00:00<00:00,  2.17it/s]Running loglikelihood requests: 100%|██████████| 1/1 [00:00<00:00,  2.17it/s]
+bf16: log p('The capital of France is', ' Paris') = -0.483, greedy=True
+bf16: 8.1 tok/s (one stream, 256 tokens)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Generating train split:   0%|          | 0/1119 [00:00<?, ? examples/s]Generating train split: 100%|██████████| 1119/1119 [00:00<00:00, 12374.05 examples/s]
+Generating test split:   0%|          | 0/1172 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 1172/1172 [00:00<00:00, 142691.56 examples/s]
+Generating validation split:   0%|          | 0/299 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 299/299 [00:00<00:00, 91546.60 examples/s]
+  0%|          | 0/500 [00:00<?, ?it/s]  9%|▉         | 44/500 [00:00<00:01, 436.69it/s] 18%|█▊        | 90/500 [00:00<00:00, 447.85it/s] 27%|██▋       | 135/500 [00:00<00:00, 448.03it/s] 36%|███▌      | 180/500 [00:00<00:00, 447.05it/s] 45%|████▌     | 226/500 [00:00<00:00, 450.79it/s] 54%|█████▍    | 272/500 [00:00<00:00, 451.84it/s] 64%|██████▎   | 318/500 [00:00<00:00, 451.74it/s] 73%|███████▎  | 364/500 [00:00<00:00, 451.80it/s] 82%|████████▏ | 410/500 [00:00<00:00, 448.20it/s] 91%|█████████ | 456/500 [00:01<00:00, 450.89it/s]100%|██████████| 500/500 [00:01<00:00, 450.70it/s]
+Tokenizing inputs:   0%|          | 0/1997 [00:00<?, ?it/s]Tokenizing inputs:  16%|█▌        | 313/1997 [00:00<00:00, 3124.39it/s]Tokenizing inputs:  35%|███▍      | 693/1997 [00:00<00:00, 3520.96it/s]Tokenizing inputs:  52%|█████▏    | 1046/1997 [00:00<00:00, 3436.75it/s]Tokenizing inputs:  70%|██████▉   | 1390/1997 [00:00<00:00, 3418.65it/s]Tokenizing inputs:  87%|████████▋ | 1733/1997 [00:00<00:00, 3390.98it/s]Tokenizing inputs: 100%|██████████| 1997/1997 [00:00<00:00, 3395.97it/s]
+Running loglikelihood requests:   0%|          | 0/1997 [00:00<?, ?it/s]
+Rendering prompts:   0%|          | 0/1997 [00:00<?, ?it/s][A
+Rendering prompts:  13%|█▎        | 258/1997 [00:00<00:00, 2576.85it/s][A
+Rendering prompts:  26%|██▌       | 516/1997 [00:00<00:00, 2334.87it/s][A
+Rendering prompts:  39%|███▉      | 780/1997 [00:00<00:00, 2464.23it/s][A
+Rendering prompts:  52%|█████▏    | 1046/1997 [00:00<00:00, 2538.55it/s][A
+Rendering prompts:  66%|██████▋   | 1324/1997 [00:00<00:00, 2620.84it/s][A
+Rendering prompts:  81%|████████  | 1611/1997 [00:00<00:00, 2702.14it/s][A
+Rendering prompts:  94%|█████████▍| 1882/1997 [00:00<00:00, 2592.34it/s][ARendering prompts: 100%|██████████| 1997/1997 [00:00<00:00, 2555.64it/s]
+
+Processed prompts:   0%|          | 0/1997 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s][A(Worker_TP0 pid=461) WARNING 11-03 14:54:26 [jit_monitor.py:140] Triton kernel JIT compilation during inference: kernel_unified_attention. This causes a latency spike; consider extending warmup to cover this shape/config.
+
+Processed prompts:   0%|          | 1/1997 [00:03<2:10:46,  3.93s/it, est. speed input: 43.50 toks/s, output: 0.25 toks/s][A(Worker_TP0 pid=461) WARNING 11-03 14:54:29 [jit_monitor.py:140] Triton kernel JIT compilation during inference: fused_moe_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+
+Processed prompts:   0%|          | 2/1997 [00:20<6:22:13, 11.50s/it, est. speed input: 16.50 toks/s, output: 0.10 toks/s][A(EngineCore pid=434) INFO 11-03 14:55:47 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:   0%|          | 5/1997 [02:05<15:35:50, 28.19s/it, est. speed input: 6.66 toks/s, output: 0.04 toks/s][A(EngineCore pid=434) INFO 11-03 14:57:30 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:   5%|▍         | 95/1997 [03:48<1:03:33,  2.01s/it, est. speed input: 38.95 toks/s, output: 0.42 toks/s][A(EngineCore pid=434) INFO 11-03 14:59:14 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  11%|█         | 217/1997 [05:24<35:50,  1.21s/it, est. speed input: 52.72 toks/s, output: 0.67 toks/s] [A(EngineCore pid=434) INFO 11-03 15:00:50 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  18%|█▊        | 351/1997 [06:43<24:33,  1.12it/s, est. speed input: 61.22 toks/s, output: 0.87 toks/s][A(EngineCore pid=434) INFO 11-03 15:02:08 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  24%|██▎       | 473/1997 [08:01<20:08,  1.26it/s, est. speed input: 64.06 toks/s, output: 0.98 toks/s][A(EngineCore pid=434) INFO 11-03 15:03:27 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  30%|███       | 607/1997 [09:07<15:45,  1.47it/s, est. speed input: 67.46 toks/s, output: 1.11 toks/s][A(EngineCore pid=434) INFO 11-03 15:04:33 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  37%|███▋      | 729/1997 [10:14<13:23,  1.58it/s, est. speed input: 68.49 toks/s, output: 1.19 toks/s][A
+Processed prompts:  43%|████▎     | 863/1997 [11:10<10:36,  1.78it/s, est. speed input: 70.33 toks/s, output: 1.29 toks/s][A
+Processed prompts:  49%|████▉     | 985/1997 [12:08<08:59,  1.87it/s, est. speed input: 70.69 toks/s, output: 1.35 toks/s][A
+Processed prompts:  56%|█████▌    | 1119/1997 [12:57<07:00,  2.09it/s, est. speed input: 71.84 toks/s, output: 1.44 toks/s][A
+Processed prompts:  62%|██████▏   | 1241/1997 [13:46<05:45,  2.19it/s, est. speed input: 71.95 toks/s, output: 1.50 toks/s][A
+Processed prompts:  69%|██████▉   | 1375/1997 [14:29<04:17,  2.41it/s, est. speed input: 72.59 toks/s, output: 1.58 toks/s][A
+Processed prompts:  75%|███████▍  | 1497/1997 [15:13<03:19,  2.51it/s, est. speed input: 72.51 toks/s, output: 1.64 toks/s][A
+Processed prompts:  82%|████████▏ | 1631/1997 [15:50<02:11,  2.78it/s, est. speed input: 73.01 toks/s, output: 1.72 toks/s][A
+Processed prompts:  88%|████████▊ | 1753/1997 [16:28<01:24,  2.90it/s, est. speed input: 72.89 toks/s, output: 1.77 toks/s][A
+Processed prompts:  94%|█████████▍| 1887/1997 [16:55<00:32,  3.34it/s, est. speed input: 73.56 toks/s, output: 1.86 toks/s][A
+Processed prompts: 100%|██████████| 1997/1997 [16:55<00:00,  3.34it/s, est. speed input: 75.30 toks/s, output: 1.97 toks/s][AProcessed prompts: 100%|██████████| 1997/1997 [16:55<00:00,  1.97it/s, est. speed input: 75.30 toks/s, output: 1.97 toks/s]
+Running loglikelihood requests:   0%|          | 1/1997 [16:56<563:21:35, 1016.08s/it]Running loglikelihood requests:  88%|████████▊ | 1752/1997 [16:56<01:39,  2.46it/s]   Running loglikelihood requests: 100%|██████████| 1997/1997 [16:56<00:00,  1.97it/s]
+fatal: not a git repository (or any parent up to mount point /kaggle)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+bf16/arc_challenge: acc_norm=0.4680 +/- 0.0223 n=500 in 1038s, 500 per-item rows
+Generating train split:   0%|          | 0/39905 [00:00<?, ? examples/s]Generating train split:  48%|████▊     | 19000/39905 [00:00<00:00, 133735.94 examples/s]Generating train split: 100%|██████████| 39905/39905 [00:00<00:00, 184416.56 examples/s]
+Generating test split:   0%|          | 0/10003 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 10003/10003 [00:00<00:00, 164220.80 examples/s]
+Generating validation split:   0%|          | 0/10042 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 10042/10042 [00:00<00:00, 181972.62 examples/s]
+Map:   0%|          | 0/39905 [00:00<?, ? examples/s]Map:   2%|▏         | 981/39905 [00:00<00:04, 9565.66 examples/s]Map:   5%|▌         | 2079/39905 [00:00<00:04, 8039.76 examples/s]Map:   8%|▊         | 3042/39905 [00:00<00:04, 8660.36 examples/s]Map:  10%|█         | 4028/39905 [00:00<00:03, 9088.21 examples/s]Map:  13%|█▎        | 5015/39905 [00:00<00:03, 9350.11 examples/s]Map:  16%|█▌        | 6330/39905 [00:00<00:03, 9100.90 examples/s]Map:  18%|█▊        | 7320/39905 [00:00<00:03, 9327.09 examples/s]Map:  22%|██▏       | 8581/39905 [00:00<00:03, 8955.77 examples/s]Map:  24%|██▍       | 9576/39905 [00:01<00:03, 9007.51 examples/s]Map:  27%|██▋       | 10587/39905 [00:01<00:03, 9248.47 examples/s]Map:  29%|██▉       | 11600/39905 [00:01<00:03, 9396.66 examples/s]Map:  32%|███▏      | 12601/39905 [00:01<00:02, 9565.20 examples/s]Map:  34%|███▍      | 13611/39905 [00:01<00:02, 9714.95 examples/s]Map:  38%|███▊      | 15000/39905 [00:02<00:06, 4069.47 examples/s]Map:  40%|████      | 16000/39905 [00:02<00:05, 4766.54 examples/s]Map:  43%|████▎     | 17000/39905 [00:02<00:04, 5508.44 examples/s]Map:  45%|████▌     | 18000/39905 [00:02<00:03, 6229.59 examples/s]Map:  48%|████▊     | 19000/39905 [00:02<00:03, 6877.09 examples/s]Map:  50%|█████     | 20000/39905 [00:02<00:02, 7458.84 examples/s]Map:  53%|█████▎    | 21000/39905 [00:02<00:02, 7918.70 examples/s]Map:  55%|█████▌    | 22000/39905 [00:02<00:02, 8289.89 examples/s]Map:  58%|█████▊    | 23000/39905 [00:03<00:02, 8312.49 examples/s]Map:  60%|██████    | 24000/39905 [00:03<00:01, 8390.20 examples/s]Map:  63%|██████▎   | 25000/39905 [00:03<00:01, 8489.45 examples/s]Map:  65%|██████▌   | 26000/39905 [00:03<00:01, 8682.03 examples/s]Map:  68%|██████▊   | 27000/39905 [00:03<00:01, 8801.12 examples/s]Map:  70%|███████   | 28000/39905 [00:03<00:01, 8835.38 examples/s]Map:  73%|███████▎  | 29000/39905 [00:03<00:01, 8907.48 examples/s]Map:  75%|███████▌  | 30000/39905 [00:03<00:01, 8994.09 examples/s]Map:  78%|███████▊  | 31000/39905 [00:03<00:00, 9053.90 examples/s]Map:  80%|████████  | 32000/39905 [00:04<00:00, 9065.61 examples/s]Map:  83%|████████▎ | 33000/39905 [00:04<00:00, 9046.98 examples/s]Map:  85%|████████▌ | 34000/39905 [00:04<00:00, 9078.46 examples/s]Map:  88%|████████▊ | 35000/39905 [00:04<00:00, 9076.73 examples/s]Map:  90%|█████████ | 36000/39905 [00:04<00:00, 9092.27 examples/s]Map:  93%|█████████▎| 37000/39905 [00:04<00:00, 9097.77 examples/s]Map:  95%|█████████▌| 38000/39905 [00:04<00:00, 9081.43 examples/s]Map:  98%|█████████▊| 39000/39905 [00:04<00:00, 9044.01 examples/s]Map: 100%|██████████| 39905/39905 [00:04<00:00, 8855.11 examples/s]Map: 100%|██████████| 39905/39905 [00:04<00:00, 8105.95 examples/s]
+Map:   0%|          | 0/10042 [00:00<?, ? examples/s]Map:  10%|▉         | 1000/10042 [00:00<00:00, 9305.27 examples/s]Map:  20%|██        | 2031/10042 [00:00<00:00, 9875.88 examples/s]Map:  31%|███       | 3066/10042 [00:00<00:00, 10085.02 examples/s]Map:  45%|████▌     | 4560/10042 [00:00<00:00, 9936.78 examples/s] Map:  55%|█████▌    | 5568/10042 [00:00<00:00, 9742.33 examples/s]Map:  65%|██████▌   | 6551/10042 [00:00<00:00, 9526.58 examples/s]Map:  75%|███████▌  | 7553/10042 [00:00<00:00, 9445.07 examples/s]Map:  85%|████████▌ | 8550/10042 [00:00<00:00, 9353.75 examples/s]Map:  95%|█████████▌| 9560/10042 [00:01<00:00, 9353.08 examples/s]Map: 100%|██████████| 10042/10042 [00:01<00:00, 9395.83 examples/s]
+  0%|          | 0/400 [00:00<?, ?it/s] 29%|██▉       | 115/400 [00:00<00:00, 1143.14it/s] 58%|█████▊    | 231/400 [00:00<00:00, 1152.58it/s] 87%|████████▋ | 347/400 [00:00<00:00, 1144.77it/s]100%|██████████| 400/400 [00:00<00:00, 1144.40it/s]
+Tokenizing inputs:   0%|          | 0/1600 [00:00<?, ?it/s]Tokenizing inputs:  20%|█▉        | 319/1600 [00:00<00:00, 3184.24it/s]Tokenizing inputs:  40%|███▉      | 638/1600 [00:00<00:00, 3092.15it/s]Tokenizing inputs:  59%|█████▉    | 948/1600 [00:00<00:00, 3029.02it/s]Tokenizing inputs:  80%|████████  | 1287/1600 [00:00<00:00, 3164.57it/s]Tokenizing inputs: 100%|██████████| 1600/1600 [00:00<00:00, 3168.12it/s]
+Running loglikelihood requests:   0%|          | 0/1600 [00:00<?, ?it/s]
+Rendering prompts:   0%|          | 0/1600 [00:00<?, ?it/s][A
+Rendering prompts:  16%|█▌        | 255/1600 [00:00<00:00, 2542.55it/s][A
+Rendering prompts:  32%|███▏      | 510/1600 [00:00<00:00, 2366.07it/s][A
+Rendering prompts:  47%|████▋     | 748/1600 [00:00<00:00, 2290.45it/s][A
+Rendering prompts:  61%|██████    | 978/1600 [00:00<00:00, 2288.94it/s][A
+Rendering prompts:  76%|███████▌  | 1208/1600 [00:00<00:00, 2291.19it/s][A
+Rendering prompts:  90%|████████▉ | 1438/1600 [00:00<00:00, 2184.38it/s][ARendering prompts: 100%|██████████| 1600/1600 [00:00<00:00, 2220.33it/s]
+
+Processed prompts:   0%|          | 0/1600 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s][A
+Processed prompts:   0%|          | 1/1600 [00:04<2:03:15,  4.62s/it, est. speed input: 21.84 toks/s, output: 0.22 toks/s][A
+Processed prompts:   0%|          | 2/1600 [00:18<4:23:56,  9.91s/it, est. speed input: 10.86 toks/s, output: 0.11 toks/s][A(EngineCore pid=434) INFO 11-03 15:13:05 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:   0%|          | 8/1600 [02:01<7:04:19, 15.99s/it, est. speed input: 6.12 toks/s, output: 0.07 toks/s] [A(EngineCore pid=434) INFO 11-03 15:14:49 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:   8%|▊         | 123/1600 [03:45<37:45,  1.53s/it, est. speed input: 39.48 toks/s, output: 0.55 toks/s][A(EngineCore pid=434) INFO 11-03 15:16:32 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  16%|█▌        | 258/1600 [05:11<21:59,  1.02it/s, est. speed input: 54.75 toks/s, output: 0.83 toks/s][A(EngineCore pid=434) INFO 11-03 15:17:58 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  24%|██▎       | 379/1600 [06:38<17:39,  1.15it/s, est. speed input: 59.64 toks/s, output: 0.95 toks/s][A(EngineCore pid=434) INFO 11-03 15:19:26 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  32%|███▏      | 514/1600 [07:54<13:23,  1.35it/s, est. speed input: 64.80 toks/s, output: 1.08 toks/s][A(EngineCore pid=434) INFO 11-03 15:20:40 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  40%|███▉      | 635/1600 [09:11<11:19,  1.42it/s, est. speed input: 66.26 toks/s, output: 1.15 toks/s][A(EngineCore pid=434) INFO 11-03 15:21:58 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  48%|████▊     | 770/1600 [10:17<08:42,  1.59it/s, est. speed input: 68.95 toks/s, output: 1.25 toks/s][A(EngineCore pid=434) INFO 11-03 15:23:05 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  56%|█████▌    | 891/1600 [11:27<07:15,  1.63it/s, est. speed input: 69.34 toks/s, output: 1.30 toks/s][A(EngineCore pid=434) INFO 11-03 15:24:15 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  64%|██████▍   | 1026/1600 [12:28<05:20,  1.79it/s, est. speed input: 70.96 toks/s, output: 1.37 toks/s][A(EngineCore pid=434) INFO 11-03 15:25:16 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  72%|███████▏  | 1147/1600 [13:31<04:08,  1.82it/s, est. speed input: 71.07 toks/s, output: 1.41 toks/s][A
+Processed prompts:  80%|████████  | 1282/1600 [14:24<02:37,  2.01it/s, est. speed input: 72.34 toks/s, output: 1.48 toks/s][A
+Processed prompts:  88%|████████▊ | 1403/1600 [15:14<01:33,  2.12it/s, est. speed input: 72.64 toks/s, output: 1.53 toks/s][A
+Processed prompts:  96%|█████████▌| 1538/1600 [15:37<00:23,  2.66it/s, est. speed input: 74.85 toks/s, output: 1.64 toks/s][A
+Processed prompts: 100%|██████████| 1600/1600 [15:37<00:00,  2.66it/s, est. speed input: 76.31 toks/s, output: 1.71 toks/s][AProcessed prompts: 100%|██████████| 1600/1600 [15:37<00:00,  1.71it/s, est. speed input: 76.31 toks/s, output: 1.71 toks/s]
+Running loglikelihood requests:   0%|          | 1/1600 [15:37<416:31:47, 937.78s/it]Running loglikelihood requests:  93%|█████████▎| 1489/1600 [15:37<00:48,  2.27it/s]  Running loglikelihood requests: 100%|██████████| 1600/1600 [15:37<00:00,  1.71it/s]
+fatal: not a git repository (or any parent up to mount point /kaggle)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+bf16/hellaswag: acc_norm=0.6600 +/- 0.0237 n=400 in 962s, 400 per-item rows
+Generating test split:   0%|          | 0/100 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 100/100 [00:00<00:00, 21376.61 examples/s]
+Generating validation split:   0%|          | 0/11 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 11/11 [00:00<00:00, 4583.03 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2014.75 examples/s]
+Generating test split:   0%|          | 0/135 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 135/135 [00:00<00:00, 41093.77 examples/s]
+Generating validation split:   0%|          | 0/14 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 14/14 [00:00<00:00, 5544.35 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2108.54 examples/s]
+Generating test split:   0%|          | 0/152 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 152/152 [00:00<00:00, 46733.19 examples/s]
+Generating validation split:   0%|          | 0/16 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 16/16 [00:00<00:00, 6684.15 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2042.02 examples/s]
+Generating test split:   0%|          | 0/144 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 144/144 [00:00<00:00, 42732.40 examples/s]
+Generating validation split:   0%|          | 0/16 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 16/16 [00:00<00:00, 6108.02 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2072.90 examples/s]
+Generating test split:   0%|          | 0/100 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 100/100 [00:00<00:00, 26662.67 examples/s]
+Generating validation split:   0%|          | 0/8 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 8/8 [00:00<00:00, 2958.42 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 1905.98 examples/s]
+Generating test split:   0%|          | 0/100 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 100/100 [00:00<00:00, 30826.87 examples/s]
+Generating validation split:   0%|          | 0/11 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 11/11 [00:00<00:00, 4379.43 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2091.71 examples/s]
+Generating test split:   0%|          | 0/100 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 100/100 [00:00<00:00, 31526.64 examples/s]
+Generating validation split:   0%|          | 0/11 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 11/11 [00:00<00:00, 4327.68 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2239.11 examples/s]
+Generating test split:   0%|          | 0/102 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 102/102 [00:00<00:00, 33795.64 examples/s]
+Generating validation split:   0%|          | 0/11 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 11/11 [00:00<00:00, 4863.22 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2291.47 examples/s]
+Generating test split:   0%|          | 0/100 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 100/100 [00:00<00:00, 31820.83 examples/s]
+Generating validation split:   0%|          | 0/11 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 11/11 [00:00<00:00, 4092.73 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2033.90 examples/s]
+Generating test split:   0%|          | 0/235 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 235/235 [00:00<00:00, 71305.90 examples/s]
+Generating validation split:   0%|          | 0/26 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 26/26 [00:00<00:00, 8701.18 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2290.22 examples/s]
+Generating test split:   0%|          | 0/145 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 145/145 [00:00<00:00, 41522.09 examples/s]
+Generating validation split:   0%|          | 0/16 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 16/16 [00:00<00:00, 5864.11 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 1992.16 examples/s]
+Generating test split:   0%|          | 0/378 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 378/378 [00:00<00:00, 96886.27 examples/s]
+Generating validation split:   0%|          | 0/41 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 41/41 [00:00<00:00, 15425.77 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2109.81 examples/s]
+Generating test split:   0%|          | 0/310 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 310/310 [00:00<00:00, 91340.66 examples/s]
+Generating validation split:   0%|          | 0/32 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 32/32 [00:00<00:00, 12748.64 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2016.10 examples/s]
+Generating test split:   0%|          | 0/203 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 203/203 [00:00<00:00, 62906.81 examples/s]
+Generating validation split:   0%|          | 0/22 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 22/22 [00:00<00:00, 8613.34 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2183.17 examples/s]
+Generating test split:   0%|          | 0/100 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 100/100 [00:00<00:00, 27778.69 examples/s]
+Generating validation split:   0%|          | 0/9 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 9/9 [00:00<00:00, 3786.99 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2139.73 examples/s]
+Generating test split:   0%|          | 0/270 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 270/270 [00:00<00:00, 80242.48 examples/s]
+Generating validation split:   0%|          | 0/29 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 29/29 [00:00<00:00, 9053.58 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2117.48 examples/s]
+Generating test split:   0%|          | 0/151 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 151/151 [00:00<00:00, 41378.54 examples/s]
+Generating validation split:   0%|          | 0/17 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 17/17 [00:00<00:00, 6681.33 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2167.60 examples/s]
+Generating test split:   0%|          | 0/216 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 216/216 [00:00<00:00, 61463.34 examples/s]
+Generating validation split:   0%|          | 0/23 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 23/23 [00:00<00:00, 9309.88 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2113.21 examples/s]
+Generating test split:   0%|          | 0/112 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 112/112 [00:00<00:00, 36682.96 examples/s]
+Generating validation split:   0%|          | 0/11 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 11/11 [00:00<00:00, 4651.41 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 1913.63 examples/s]
+Generating test split:   0%|          | 0/100 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 100/100 [00:00<00:00, 32091.08 examples/s]
+Generating validation split:   0%|          | 0/11 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 11/11 [00:00<00:00, 4482.40 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2126.07 examples/s]
+Generating test split:   0%|          | 0/265 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 265/265 [00:00<00:00, 78595.00 examples/s]
+Generating validation split:   0%|          | 0/29 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 29/29 [00:00<00:00, 12049.02 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2086.72 examples/s]
+Generating test split:   0%|          | 0/173 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 173/173 [00:00<00:00, 45060.83 examples/s]
+Generating validation split:   0%|          | 0/22 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 22/22 [00:00<00:00, 8824.20 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2043.41 examples/s]
+Generating test split:   0%|          | 0/100 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 100/100 [00:00<00:00, 33122.51 examples/s]
+Generating validation split:   0%|          | 0/10 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 10/10 [00:00<00:00, 4216.65 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 1959.04 examples/s]
+Generating test split:   0%|          | 0/223 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 223/223 [00:00<00:00, 71106.11 examples/s]
+Generating validation split:   0%|          | 0/23 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 23/23 [00:00<00:00, 8782.68 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2178.41 examples/s]
+Generating test split:   0%|          | 0/103 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 103/103 [00:00<00:00, 33737.86 examples/s]
+Generating validation split:   0%|          | 0/11 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 11/11 [00:00<00:00, 4305.46 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2107.06 examples/s]
+Generating test split:   0%|          | 0/234 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 234/234 [00:00<00:00, 74325.42 examples/s]
+Generating validation split:   0%|          | 0/25 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 25/25 [00:00<00:00, 10709.59 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2059.06 examples/s]
+Generating test split:   0%|          | 0/100 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 100/100 [00:00<00:00, 32950.77 examples/s]
+Generating validation split:   0%|          | 0/11 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 11/11 [00:00<00:00, 4225.03 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2238.16 examples/s]
+Generating test split:   0%|          | 0/783 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 783/783 [00:00<00:00, 190716.61 examples/s]
+Generating validation split:   0%|          | 0/86 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 86/86 [00:00<00:00, 30329.62 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2265.97 examples/s]
+Generating test split:   0%|          | 0/306 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 306/306 [00:00<00:00, 85466.94 examples/s]
+Generating validation split:   0%|          | 0/33 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 33/33 [00:00<00:00, 13535.31 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2213.82 examples/s]
+Generating test split:   0%|          | 0/282 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 282/282 [00:00<00:00, 75839.56 examples/s]
+Generating validation split:   0%|          | 0/31 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 31/31 [00:00<00:00, 12132.45 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 1983.31 examples/s]
+Generating test split:   0%|          | 0/272 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 272/272 [00:00<00:00, 76351.94 examples/s]
+Generating validation split:   0%|          | 0/31 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 31/31 [00:00<00:00, 12593.07 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2153.35 examples/s]
+Generating test split:   0%|          | 0/166 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 166/166 [00:00<00:00, 52290.98 examples/s]
+Generating validation split:   0%|          | 0/18 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 18/18 [00:00<00:00, 6890.34 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2067.99 examples/s]
+Generating test split:   0%|          | 0/114 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 114/114 [00:00<00:00, 34377.07 examples/s]
+Generating validation split:   0%|          | 0/12 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 12/12 [00:00<00:00, 4948.54 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2327.84 examples/s]
+Generating test split:   0%|          | 0/198 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 198/198 [00:00<00:00, 65324.64 examples/s]
+Generating validation split:   0%|          | 0/22 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 22/22 [00:00<00:00, 8761.36 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2027.02 examples/s]
+Generating test split:   0%|          | 0/193 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 193/193 [00:00<00:00, 55954.98 examples/s]
+Generating validation split:   0%|          | 0/21 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 21/21 [00:00<00:00, 8568.13 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2229.35 examples/s]
+Generating test split:   0%|          | 0/390 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 390/390 [00:00<00:00, 109460.56 examples/s]
+Generating validation split:   0%|          | 0/43 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 43/43 [00:00<00:00, 16513.01 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2083.40 examples/s]
+Generating test split:   0%|          | 0/238 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 238/238 [00:00<00:00, 69656.29 examples/s]
+Generating validation split:   0%|          | 0/26 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 26/26 [00:00<00:00, 9707.31 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 1803.69 examples/s]
+Generating test split:   0%|          | 0/545 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 545/545 [00:00<00:00, 144011.57 examples/s]
+Generating validation split:   0%|          | 0/60 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 60/60 [00:00<00:00, 23829.02 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2089.42 examples/s]
+Generating test split:   0%|          | 0/131 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 131/131 [00:00<00:00, 40448.60 examples/s]
+Generating validation split:   0%|          | 0/12 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 12/12 [00:00<00:00, 4746.93 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 1983.87 examples/s]
+Generating test split:   0%|          | 0/612 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 612/612 [00:00<00:00, 132090.47 examples/s]
+Generating validation split:   0%|          | 0/69 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 69/69 [00:00<00:00, 23429.97 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2004.54 examples/s]
+Generating test split:   0%|          | 0/110 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 110/110 [00:00<00:00, 35061.44 examples/s]
+Generating validation split:   0%|          | 0/12 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 12/12 [00:00<00:00, 4864.84 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2242.70 examples/s]
+Generating test split:   0%|          | 0/245 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 245/245 [00:00<00:00, 64792.21 examples/s]
+Generating validation split:   0%|          | 0/27 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 27/27 [00:00<00:00, 9357.64 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2236.25 examples/s]
+Generating test split:   0%|          | 0/201 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 201/201 [00:00<00:00, 57882.26 examples/s]
+Generating validation split:   0%|          | 0/22 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 22/22 [00:00<00:00, 7639.90 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 1986.50 examples/s]
+Generating test split:   0%|          | 0/100 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 100/100 [00:00<00:00, 33819.58 examples/s]
+Generating validation split:   0%|          | 0/11 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 11/11 [00:00<00:00, 3676.28 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2110.87 examples/s]
+Generating test split:   0%|          | 0/126 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 126/126 [00:00<00:00, 40999.40 examples/s]
+Generating validation split:   0%|          | 0/14 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 14/14 [00:00<00:00, 5870.85 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2080.51 examples/s]
+Generating test split:   0%|          | 0/165 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 165/165 [00:00<00:00, 38464.88 examples/s]
+Generating validation split:   0%|          | 0/18 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 18/18 [00:00<00:00, 6789.95 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 1897.53 examples/s]
+Generating test split:   0%|          | 0/204 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 204/204 [00:00<00:00, 49484.59 examples/s]
+Generating validation split:   0%|          | 0/22 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 22/22 [00:00<00:00, 8362.76 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2098.41 examples/s]
+Generating test split:   0%|          | 0/237 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 237/237 [00:00<00:00, 45615.37 examples/s]
+Generating validation split:   0%|          | 0/26 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 26/26 [00:00<00:00, 9569.31 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2182.94 examples/s]
+Generating test split:   0%|          | 0/121 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 121/121 [00:00<00:00, 35438.22 examples/s]
+Generating validation split:   0%|          | 0/13 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 13/13 [00:00<00:00, 4933.58 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2075.98 examples/s]
+Generating test split:   0%|          | 0/108 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 108/108 [00:00<00:00, 30615.36 examples/s]
+Generating validation split:   0%|          | 0/11 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 11/11 [00:00<00:00, 4743.22 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2236.72 examples/s]
+Generating test split:   0%|          | 0/163 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 163/163 [00:00<00:00, 50481.54 examples/s]
+Generating validation split:   0%|          | 0/18 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 18/18 [00:00<00:00, 6989.21 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2066.36 examples/s]
+Generating test split:   0%|          | 0/346 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 346/346 [00:00<00:00, 92252.82 examples/s]
+Generating validation split:   0%|          | 0/38 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 38/38 [00:00<00:00, 14926.35 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2125.20 examples/s]
+Generating test split:   0%|          | 0/895 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 895/895 [00:00<00:00, 196735.08 examples/s]
+Generating validation split:   0%|          | 0/100 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 100/100 [00:00<00:00, 41245.98 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2362.72 examples/s]
+Generating test split:   0%|          | 0/311 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 311/311 [00:00<00:00, 93260.07 examples/s]
+Generating validation split:   0%|          | 0/34 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 34/34 [00:00<00:00, 13799.72 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2158.01 examples/s]
+Generating test split:   0%|          | 0/324 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 324/324 [00:00<00:00, 82435.82 examples/s]
+Generating validation split:   0%|          | 0/35 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 35/35 [00:00<00:00, 14087.00 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2126.50 examples/s]
+Generating test split:   0%|          | 0/1534 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 1534/1534 [00:00<00:00, 155502.28 examples/s]
+Generating validation split:   0%|          | 0/170 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 170/170 [00:00<00:00, 57679.31 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 2123.70 examples/s]
+Generating test split:   0%|          | 0/171 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 171/171 [00:00<00:00, 57520.73 examples/s]
+Generating validation split:   0%|          | 0/19 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 19/19 [00:00<00:00, 7865.35 examples/s]
+Generating dev split:   0%|          | 0/5 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 5/5 [00:00<00:00, 1911.72 examples/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 457.60it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 513.66it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 569.09it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 552.91it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 564.87it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 554.39it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 549.36it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 540.04it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 534.93it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 559.28it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 545.42it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 501.93it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 572.76it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 552.05it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 567.94it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 552.80it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 557.52it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 578.89it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 571.42it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 558.54it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 527.55it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 516.85it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 545.77it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 535.26it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 542.20it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 557.42it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 537.02it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 566.05it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 534.16it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 532.79it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 542.57it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 567.52it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 550.51it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 577.12it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 566.35it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 569.37it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 536.25it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 540.04it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 420.24it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 591.97it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 600.20it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 537.43it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 605.38it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 596.68it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 612.01it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 615.25it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 616.49it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 593.33it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 626.32it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 574.89it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 412.44it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 455.35it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 528.87it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 600.86it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 576.93it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 592.42it/s]
+  0%|          | 0/10 [00:00<?, ?it/s]100%|██████████| 10/10 [00:00<00:00, 604.30it/s]
+Tokenizing inputs:   0%|          | 0/2280 [00:00<?, ?it/s]Tokenizing inputs:   8%|▊         | 179/2280 [00:00<00:01, 1787.90it/s]Tokenizing inputs:  16%|█▌        | 358/2280 [00:00<00:01, 1330.70it/s]Tokenizing inputs:  25%|██▌       | 572/2280 [00:00<00:01, 1636.67it/s]Tokenizing inputs:  33%|███▎      | 745/2280 [00:00<00:00, 1562.67it/s]Tokenizing inputs:  40%|████      | 915/2280 [00:00<00:00, 1604.98it/s]Tokenizing inputs:  50%|█████     | 1147/2280 [00:00<00:00, 1829.55it/s]Tokenizing inputs:  59%|█████▊    | 1335/2280 [00:00<00:00, 1706.31it/s]Tokenizing inputs:  67%|██████▋   | 1523/2280 [00:00<00:00, 1756.53it/s]Tokenizing inputs:  75%|███████▍  | 1703/2280 [00:01<00:00, 1688.95it/s]Tokenizing inputs:  82%|████████▏ | 1875/2280 [00:01<00:00, 1333.83it/s]Tokenizing inputs:  89%|████████▊ | 2021/2280 [00:01<00:00, 1188.87it/s]Tokenizing inputs:  96%|█████████▌| 2189/2280 [00:01<00:00, 1302.16it/s]Tokenizing inputs: 100%|██████████| 2280/2280 [00:01<00:00, 1459.27it/s]
+Running loglikelihood requests:   0%|          | 0/2280 [00:00<?, ?it/s]
+Rendering prompts:   0%|          | 0/2280 [00:00<?, ?it/s][A
+Rendering prompts:  10%|█         | 228/2280 [00:00<00:00, 2272.35it/s][A
+Rendering prompts:  20%|██        | 456/2280 [00:00<00:00, 2105.27it/s][A
+Rendering prompts:  29%|██▉       | 668/2280 [00:00<00:00, 2046.59it/s][A
+Rendering prompts:  39%|███▊      | 879/2280 [00:00<00:00, 2067.54it/s][A
+Rendering prompts:  49%|████▉     | 1125/2280 [00:00<00:00, 2203.68it/s][A
+Rendering prompts:  60%|█████▉    | 1360/2280 [00:00<00:00, 2251.74it/s][A
+Rendering prompts:  72%|███████▏  | 1632/2280 [00:00<00:00, 2400.60it/s][A
+Rendering prompts:  82%|████████▏ | 1873/2280 [00:00<00:00, 2326.75it/s][A
+Rendering prompts:  92%|█████████▏| 2107/2280 [00:00<00:00, 2278.06it/s][ARendering prompts: 100%|██████████| 2280/2280 [00:01<00:00, 2235.00it/s]
+
+Processed prompts:   0%|          | 0/2280 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s][A
+Processed prompts:   0%|          | 1/2280 [00:17<10:56:07, 17.27s/it, est. speed input: 57.60 toks/s, output: 0.06 toks/s][A
+Processed prompts:   0%|          | 2/2280 [00:35<11:12:13, 17.71s/it, est. speed input: 56.40 toks/s, output: 0.06 toks/s][A(EngineCore pid=434) INFO 11-03 15:30:15 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:   0%|          | 3/2280 [02:18<35:56:02, 56.81s/it, est. speed input: 21.53 toks/s, output: 0.02 toks/s][A(EngineCore pid=434) INFO 11-03 15:31:58 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:   1%|          | 16/2280 [04:02<8:16:03, 13.15s/it, est. speed input: 43.96 toks/s, output: 0.07 toks/s][A(EngineCore pid=434) INFO 11-03 15:33:41 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:   1%|▏         | 33/2280 [05:44<5:24:56,  8.68s/it, est. speed input: 53.51 toks/s, output: 0.10 toks/s][A(EngineCore pid=434) INFO 11-03 15:35:24 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:   2%|▏         | 56/2280 [07:27<3:56:25,  6.38s/it, est. speed input: 59.67 toks/s, output: 0.13 toks/s][A(EngineCore pid=434) INFO 11-03 15:37:07 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:   4%|▎         | 81/2280 [09:10<3:15:45,  5.34s/it, est. speed input: 63.13 toks/s, output: 0.15 toks/s][A(EngineCore pid=434) INFO 11-03 15:38:50 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:   5%|▍         | 110/2280 [10:53<2:45:15,  4.57s/it, est. speed input: 65.94 toks/s, output: 0.17 toks/s][A(EngineCore pid=434) INFO 11-03 15:40:33 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:   6%|▌         | 141/2280 [12:36<2:25:19,  4.08s/it, est. speed input: 67.88 toks/s, output: 0.19 toks/s][A(EngineCore pid=434) INFO 11-03 15:42:16 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:   8%|▊         | 176/2280 [14:19<2:07:18,  3.63s/it, est. speed input: 69.24 toks/s, output: 0.20 toks/s][A(EngineCore pid=434) INFO 11-03 15:43:59 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:   9%|▉         | 214/2280 [16:02<1:53:09,  3.29s/it, est. speed input: 70.19 toks/s, output: 0.22 toks/s][A(EngineCore pid=434) INFO 11-03 15:45:42 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  11%|█         | 256/2280 [17:45<1:40:12,  2.97s/it, est. speed input: 71.06 toks/s, output: 0.24 toks/s][A(EngineCore pid=434) INFO 11-03 15:47:25 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  13%|█▎        | 304/2280 [19:28<1:27:30,  2.66s/it, est. speed input: 71.93 toks/s, output: 0.26 toks/s][A(EngineCore pid=434) INFO 11-03 15:49:08 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  16%|█▌        | 360/2280 [21:11<1:14:52,  2.34s/it, est. speed input: 72.56 toks/s, output: 0.28 toks/s][A(EngineCore pid=434) INFO 11-03 15:50:51 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  18%|█▊        | 420/2280 [22:54<1:05:19,  2.11s/it, est. speed input: 73.03 toks/s, output: 0.31 toks/s][A(EngineCore pid=434) INFO 11-03 15:52:34 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  21%|██        | 484/2280 [24:36<57:38,  1.93s/it, est. speed input: 73.46 toks/s, output: 0.33 toks/s]  [A(EngineCore pid=434) INFO 11-03 15:54:16 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  24%|██▍       | 552/2280 [26:20<51:25,  1.79s/it, est. speed input: 73.81 toks/s, output: 0.35 toks/s][A(EngineCore pid=434) INFO 11-03 15:55:59 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  27%|██▋       | 625/2280 [28:02<45:26,  1.65s/it, est. speed input: 74.28 toks/s, output: 0.37 toks/s][A(EngineCore pid=434) INFO 11-03 15:57:42 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  31%|███       | 700/2280 [29:45<40:57,  1.56s/it, est. speed input: 74.52 toks/s, output: 0.39 toks/s][A(EngineCore pid=434) INFO 11-03 15:59:25 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  34%|███▍      | 781/2280 [31:28<36:22,  1.46s/it, est. speed input: 74.80 toks/s, output: 0.41 toks/s][A(EngineCore pid=434) INFO 11-03 16:01:08 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  38%|███▊      | 866/2280 [33:11<32:20,  1.37s/it, est. speed input: 75.07 toks/s, output: 0.43 toks/s][A(EngineCore pid=434) INFO 11-03 16:02:51 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  42%|████▏     | 954/2280 [34:54<28:49,  1.30s/it, est. speed input: 75.31 toks/s, output: 0.46 toks/s][A(EngineCore pid=434) INFO 11-03 16:04:34 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  46%|████▌     | 1045/2280 [36:37<25:39,  1.25s/it, est. speed input: 75.51 toks/s, output: 0.48 toks/s][A(EngineCore pid=434) INFO 11-03 16:06:17 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  50%|█████     | 1140/2280 [38:21<22:43,  1.20s/it, est. speed input: 75.64 toks/s, output: 0.50 toks/s][A(EngineCore pid=434) INFO 11-03 16:08:00 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  54%|█████▍    | 1242/2280 [40:03<19:32,  1.13s/it, est. speed input: 75.85 toks/s, output: 0.52 toks/s][A(EngineCore pid=434) INFO 11-03 16:09:42 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  59%|█████▉    | 1350/2280 [41:46<16:38,  1.07s/it, est. speed input: 75.98 toks/s, output: 0.54 toks/s][A(EngineCore pid=434) INFO 11-03 16:11:25 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  64%|██████▍   | 1462/2280 [43:29<13:56,  1.02s/it, est. speed input: 76.10 toks/s, output: 0.56 toks/s][A(EngineCore pid=434) INFO 11-03 16:13:09 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  69%|██████▉   | 1580/2280 [45:11<11:18,  1.03it/s, est. speed input: 76.25 toks/s, output: 0.58 toks/s][A(EngineCore pid=434) INFO 11-03 16:14:51 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  75%|███████▍  | 1703/2280 [46:55<08:55,  1.08it/s, est. speed input: 76.36 toks/s, output: 0.60 toks/s][A(EngineCore pid=434) INFO 11-03 16:16:34 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  80%|████████  | 1833/2280 [48:29<06:24,  1.16it/s, est. speed input: 76.70 toks/s, output: 0.63 toks/s][A(EngineCore pid=434) INFO 11-03 16:18:09 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  86%|████████▌ | 1959/2280 [50:04<04:25,  1.21it/s, est. speed input: 76.80 toks/s, output: 0.65 toks/s][A(EngineCore pid=434) INFO 11-03 16:19:44 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  92%|█████████▏| 2089/2280 [51:31<02:27,  1.29it/s, est. speed input: 77.07 toks/s, output: 0.68 toks/s][A
+Processed prompts:  97%|█████████▋| 2215/2280 [52:15<00:42,  1.55it/s, est. speed input: 78.15 toks/s, output: 0.71 toks/s][A
+Processed prompts: 100%|██████████| 2280/2280 [52:15<00:00,  1.55it/s, est. speed input: 79.15 toks/s, output: 0.73 toks/s][AProcessed prompts: 100%|██████████| 2280/2280 [52:15<00:00,  1.38s/it, est. speed input: 79.15 toks/s, output: 0.73 toks/s]
+Running loglikelihood requests:   0%|          | 1/2280 [52:16<1985:53:19, 3136.99s/it]Running loglikelihood requests:  65%|██████▌   | 1485/2280 [52:17<19:35,  1.48s/it]    Running loglikelihood requests: 100%|██████████| 2280/2280 [52:17<00:00,  1.38s/it]
+fatal: not a git repository (or any parent up to mount point /kaggle)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+bf16/mmlu: acc=0.5386 +/- 0.0202 n=570 in 3210s, 570 per-item rows
+Generating train split:   0%|          | 0/7473 [00:00<?, ? examples/s]Generating train split: 100%|██████████| 7473/7473 [00:00<00:00, 451923.15 examples/s]
+Generating test split:   0%|          | 0/1319 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 1319/1319 [00:00<00:00, 297466.77 examples/s]
+Overwriting default num_fewshot of gsm8k from 5 to 5
+  0%|          | 0/200 [00:00<?, ?it/s]  8%|▊         | 17/200 [00:00<00:01, 165.45it/s] 17%|█▋        | 34/200 [00:00<00:01, 164.49it/s] 26%|██▌       | 51/200 [00:00<00:00, 166.86it/s] 35%|███▌      | 70/200 [00:00<00:00, 174.15it/s] 44%|████▍     | 89/200 [00:00<00:00, 177.73it/s] 54%|█████▍    | 108/200 [00:00<00:00, 181.20it/s] 64%|██████▎   | 127/200 [00:00<00:00, 182.49it/s] 73%|███████▎  | 146/200 [00:00<00:00, 182.26it/s] 82%|████████▎ | 165/200 [00:00<00:00, 183.26it/s] 92%|█████████▏| 184/200 [00:01<00:00, 184.78it/s]100%|██████████| 200/200 [00:01<00:00, 180.37it/s]
+Running generate_until requests:   0%|          | 0/200 [00:00<?, ?it/s]
+Rendering prompts:   0%|          | 0/200 [00:00<?, ?it/s][A
+Rendering prompts:  84%|████████▎ | 167/200 [00:00<00:00, 1663.75it/s][ARendering prompts: 100%|██████████| 200/200 [00:00<00:00, 1690.57it/s]
+
+Processed prompts:   0%|          | 0/200 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s][A(EngineCore pid=434) INFO 11-03 16:22:49 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+(EngineCore pid=434) INFO 11-03 16:24:33 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+(EngineCore pid=434) INFO 11-03 16:26:16 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+(EngineCore pid=434) INFO 11-03 16:27:59 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+(EngineCore pid=434) INFO 11-03 16:29:42 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+(EngineCore pid=434) INFO 11-03 16:31:25 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+(EngineCore pid=434) INFO 11-03 16:33:08 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+(EngineCore pid=434) INFO 11-03 16:34:52 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:   0%|          | 1/200 [15:21<50:55:29, 921.25s/it, est. speed input: 1.11 toks/s, output: 0.03 toks/s][A
+Processed prompts:   1%|          | 2/200 [15:46<21:40:25, 394.07s/it, est. speed input: 2.21 toks/s, output: 0.06 toks/s][A
+Processed prompts:   2%|▏         | 3/200 [16:14<12:25:02, 226.92s/it, est. speed input: 3.14 toks/s, output: 0.09 toks/s][A
+Processed prompts:   2%|▏         | 4/200 [16:33<7:53:25, 144.92s/it, est. speed input: 4.13 toks/s, output: 0.13 toks/s] [A
+Processed prompts:   2%|▎         | 5/200 [16:54<5:25:40, 100.21s/it, est. speed input: 4.99 toks/s, output: 0.16 toks/s][A
+Processed prompts:   3%|▎         | 6/200 [17:29<4:12:22, 78.06s/it, est. speed input: 5.78 toks/s, output: 0.21 toks/s] [A
+Processed prompts:   4%|▎         | 7/200 [17:48<3:09:05, 58.78s/it, est. speed input: 6.60 toks/s, output: 0.26 toks/s][A
+Processed prompts:   4%|▍         | 8/200 [17:50<2:09:50, 40.57s/it, est. speed input: 7.51 toks/s, output: 0.31 toks/s][A
+Processed prompts:   4%|▍         | 9/200 [17:51<1:30:22, 28.39s/it, est. speed input: 8.44 toks/s, output: 0.37 toks/s][A
+Processed prompts:   5%|▌         | 10/200 [18:27<1:37:01, 30.64s/it, est. speed input: 9.10 toks/s, output: 0.41 toks/s][A
+Processed prompts:   6%|▌         | 12/200 [18:46<1:05:10, 20.80s/it, est. speed input: 10.88 toks/s, output: 0.52 toks/s][A
+Processed prompts:   6%|▋         | 13/200 [19:26<1:19:47, 25.60s/it, est. speed input: 11.38 toks/s, output: 0.56 toks/s][A
+Processed prompts:   7%|▋         | 14/200 [19:44<1:12:34, 23.41s/it, est. speed input: 12.02 toks/s, output: 0.60 toks/s][A
+Processed prompts:   8%|▊         | 16/200 [20:03<53:36, 17.48s/it, est. speed input: 13.44 toks/s, output: 0.70 toks/s]  [A
+Processed prompts:   8%|▊         | 17/200 [20:50<1:14:26, 24.40s/it, est. speed input: 13.79 toks/s, output: 0.73 toks/s][A
+Processed prompts:  10%|▉         | 19/200 [20:53<45:58, 15.24s/it, est. speed input: 15.36 toks/s, output: 0.85 toks/s]  [A
+Processed prompts:  10%|█         | 20/200 [21:31<1:00:50, 20.28s/it, est. speed input: 15.66 toks/s, output: 0.88 toks/s][A
+Processed prompts:  10%|█         | 21/200 [21:32<47:00, 15.76s/it, est. speed input: 16.37 toks/s, output: 0.94 toks/s]  [A
+Processed prompts:  11%|█         | 22/200 [22:31<1:19:20, 26.74s/it, est. speed input: 16.36 toks/s, output: 0.95 toks/s][A
+Processed prompts:  12%|█▏        | 23/200 [22:32<58:59, 20.00s/it, est. speed input: 17.04 toks/s, output: 1.01 toks/s]  [A
+Processed prompts:  12%|█▏        | 24/200 [22:38<46:44, 15.93s/it, est. speed input: 17.65 toks/s, output: 1.07 toks/s][A
+Processed prompts:  12%|█▎        | 25/200 [23:05<55:42, 19.10s/it, est. speed input: 18.01 toks/s, output: 1.11 toks/s][A
+Processed prompts:  13%|█▎        | 26/200 [23:06<40:44, 14.05s/it, est. speed input: 18.68 toks/s, output: 1.17 toks/s][A
+Processed prompts:  14%|█▎        | 27/200 [23:59<1:12:42, 25.22s/it, est. speed input: 18.83 toks/s, output: 1.19 toks/s][A
+Processed prompts:  14%|█▍        | 29/200 [24:02<41:13, 14.47s/it, est. speed input: 20.21 toks/s, output: 1.32 toks/s]  [A
+Processed prompts:  15%|█▌        | 30/200 [24:41<58:01, 20.48s/it, est. speed input: 20.30 toks/s, output: 1.34 toks/s][A
+Processed prompts:  16%|█▌        | 31/200 [24:58<55:28, 19.69s/it, est. speed input: 20.75 toks/s, output: 1.39 toks/s][A
+Processed prompts:  18%|█▊        | 35/200 [26:14<52:46, 19.19s/it, est. speed input: 22.17 toks/s, output: 1.53 toks/s][A
+Processed prompts:  18%|█▊        | 37/200 [26:15<37:11, 13.69s/it, est. speed input: 23.34 toks/s, output: 1.65 toks/s][A
+Processed prompts:  19%|█▉        | 38/200 [26:17<31:13, 11.57s/it, est. speed input: 23.92 toks/s, output: 1.71 toks/s][A
+Processed prompts:  20%|█▉        | 39/200 [26:46<40:22, 15.05s/it, est. speed input: 24.02 toks/s, output: 1.70 toks/s][A
+Processed prompts:  20%|██        | 40/200 [27:39<1:02:41, 23.51s/it, est. speed input: 23.80 toks/s, output: 1.70 toks/s][A
+Processed prompts:  20%|██        | 41/200 [27:40<48:16, 18.22s/it, est. speed input: 24.34 toks/s, output: 1.76 toks/s]  [A
+Processed prompts:  21%|██        | 42/200 [28:18<1:01:02, 23.18s/it, est. speed input: 24.34 toks/s, output: 1.79 toks/s][A
+Processed prompts:  22%|██▏       | 44/200 [28:20<35:39, 13.71s/it, est. speed input: 25.47 toks/s, output: 1.91 toks/s]  [A
+Processed prompts:  22%|██▎       | 45/200 [28:21<28:10, 10.90s/it, est. speed input: 26.04 toks/s, output: 1.98 toks/s][A
+Processed prompts:  24%|██▎       | 47/200 [29:14<43:41, 17.13s/it, est. speed input: 26.25 toks/s, output: 1.98 toks/s][A
+Processed prompts:  24%|██▍       | 48/200 [30:01<59:55, 23.65s/it, est. speed input: 26.06 toks/s, output: 1.96 toks/s][A
+Processed prompts:  24%|██▍       | 49/200 [30:21<57:29, 22.84s/it, est. speed input: 26.27 toks/s, output: 2.00 toks/s][A
+Processed prompts:  25%|██▌       | 50/200 [30:23<43:30, 17.41s/it, est. speed input: 26.91 toks/s, output: 2.07 toks/s][A
+Processed prompts:  26%|██▌       | 51/200 [30:41<43:57, 17.70s/it, est. speed input: 27.15 toks/s, output: 2.12 toks/s][A
+Processed prompts:  26%|██▌       | 52/200 [31:19<57:05, 23.14s/it, est. speed input: 27.11 toks/s, output: 2.14 toks/s][A
+Processed prompts:  27%|██▋       | 54/200 [31:59<53:22, 21.94s/it, est. speed input: 27.42 toks/s, output: 2.14 toks/s][A
+Processed prompts:  28%|██▊       | 55/200 [32:01<41:14, 17.07s/it, est. speed input: 27.84 toks/s, output: 2.15 toks/s][A
+Processed prompts:  28%|██▊       | 56/200 [32:26<45:28, 18.95s/it, est. speed input: 28.04 toks/s, output: 2.20 toks/s][A
+Processed prompts:  28%|██▊       | 57/200 [32:46<45:59, 19.30s/it, est. speed input: 28.20 toks/s, output: 2.23 toks/s][A
+Processed prompts:  30%|███       | 60/200 [32:47<21:39,  9.28s/it, est. speed input: 29.50 toks/s, output: 2.32 toks/s][A
+Processed prompts:  30%|███       | 61/200 [32:49<17:54,  7.73s/it, est. speed input: 29.91 toks/s, output: 2.35 toks/s][A
+Processed prompts:  31%|███       | 62/200 [33:34<37:13, 16.19s/it, est. speed input: 29.65 toks/s, output: 2.31 toks/s][A
+Processed prompts:  32%|███▏      | 63/200 [34:26<56:43, 24.84s/it, est. speed input: 29.32 toks/s, output: 2.28 toks/s][A
+Processed prompts:  32%|███▏      | 64/200 [34:39<49:30, 21.84s/it, est. speed input: 29.53 toks/s, output: 2.29 toks/s][A
+Processed prompts:  32%|███▎      | 65/200 [34:41<36:53, 16.40s/it, est. speed input: 29.91 toks/s, output: 2.31 toks/s][A
+Processed prompts:  34%|███▎      | 67/200 [34:43<21:19,  9.62s/it, est. speed input: 30.72 toks/s, output: 2.39 toks/s][A
+Processed prompts:  34%|███▍      | 69/200 [34:59<19:54,  9.12s/it, est. speed input: 31.33 toks/s, output: 2.47 toks/s][A
+Processed prompts:  35%|███▌      | 70/200 [36:00<43:53, 20.26s/it, est. speed input: 30.84 toks/s, output: 2.44 toks/s][A
+Processed prompts:  36%|███▌      | 71/200 [36:18<42:31, 19.78s/it, est. speed input: 30.96 toks/s, output: 2.43 toks/s][A
+Processed prompts:  36%|███▌      | 72/200 [36:37<41:17, 19.36s/it, est. speed input: 31.11 toks/s, output: 2.45 toks/s][A
+Processed prompts:  36%|███▋      | 73/200 [36:53<39:22, 18.60s/it, est. speed input: 31.34 toks/s, output: 2.51 toks/s][A
+Processed prompts:  37%|███▋      | 74/200 [36:55<29:16, 13.94s/it, est. speed input: 31.81 toks/s, output: 2.58 toks/s][A
+Processed prompts:  38%|███▊      | 76/200 [37:28<31:11, 15.09s/it, est. speed input: 32.16 toks/s, output: 2.66 toks/s][A
+Processed prompts:  40%|███▉      | 79/200 [38:47<41:37, 20.64s/it, est. speed input: 32.16 toks/s, output: 2.68 toks/s][A
+Processed prompts:  40%|████      | 80/200 [38:49<34:09, 17.08s/it, est. speed input: 32.53 toks/s, output: 2.75 toks/s][A
+Processed prompts:  42%|████▏     | 83/200 [39:07<23:39, 12.13s/it, est. speed input: 33.40 toks/s, output: 2.85 toks/s][A
+Processed prompts:  42%|████▏     | 84/200 [39:50<34:01, 17.60s/it, est. speed input: 33.13 toks/s, output: 2.82 toks/s][A
+Processed prompts:  43%|████▎     | 86/200 [40:35<36:22, 19.15s/it, est. speed input: 33.22 toks/s, output: 2.85 toks/s][A
+Processed prompts:  44%|████▎     | 87/200 [40:36<29:42, 15.78s/it, est. speed input: 33.55 toks/s, output: 2.89 toks/s][A
+Processed prompts:  44%|████▍     | 88/200 [41:11<36:58, 19.81s/it, est. speed input: 33.44 toks/s, output: 2.90 toks/s][A
+Processed prompts:  44%|████▍     | 89/200 [41:13<28:44, 15.53s/it, est. speed input: 33.87 toks/s, output: 2.97 toks/s][A
+Processed prompts:  45%|████▌     | 90/200 [41:55<40:52, 22.29s/it, est. speed input: 33.62 toks/s, output: 2.95 toks/s][A
+Processed prompts:  46%|████▌     | 91/200 [42:19<41:29, 22.84s/it, est. speed input: 33.63 toks/s, output: 2.95 toks/s][A
+Processed prompts:  46%|████▌     | 92/200 [42:21<30:38, 17.02s/it, est. speed input: 33.91 toks/s, output: 2.96 toks/s][A
+Processed prompts:  46%|████▋     | 93/200 [42:27<24:56, 13.98s/it, est. speed input: 34.16 toks/s, output: 2.99 toks/s][A
+Processed prompts:  47%|████▋     | 94/200 [42:43<25:42, 14.55s/it, est. speed input: 34.27 toks/s, output: 3.01 toks/s][A
+Processed prompts:  48%|████▊     | 95/200 [42:45<18:53, 10.80s/it, est. speed input: 34.57 toks/s, output: 3.03 toks/s][A
+Processed prompts:  48%|████▊     | 97/200 [43:01<16:31,  9.63s/it, est. speed input: 35.05 toks/s, output: 3.10 toks/s][A
+Processed prompts:  49%|████▉     | 98/200 [43:17<19:01, 11.19s/it, est. speed input: 35.17 toks/s, output: 3.13 toks/s][A
+Processed prompts:  50%|████▉     | 99/200 [44:31<45:59, 27.32s/it, est. speed input: 34.53 toks/s, output: 3.10 toks/s][A
+Processed prompts:  50%|█████     | 100/200 [44:32<33:58, 20.38s/it, est. speed input: 34.80 toks/s, output: 3.11 toks/s][A
+Processed prompts:  50%|█████     | 101/200 [44:51<32:56, 19.96s/it, est. speed input: 34.86 toks/s, output: 3.12 toks/s][A
+Processed prompts:  51%|█████     | 102/200 [45:07<30:37, 18.75s/it, est. speed input: 34.95 toks/s, output: 3.12 toks/s][A
+Processed prompts:  52%|█████▏    | 103/200 [45:25<30:08, 18.64s/it, est. speed input: 35.00 toks/s, output: 3.12 toks/s][A
+Processed prompts:  52%|█████▏    | 104/200 [45:43<29:17, 18.30s/it, est. speed input: 35.06 toks/s, output: 3.12 toks/s][A
+Processed prompts:  52%|█████▎    | 105/200 [45:58<27:46, 17.54s/it, est. speed input: 35.17 toks/s, output: 3.14 toks/s][A
+Processed prompts:  53%|█████▎    | 106/200 [46:00<20:05, 12.83s/it, est. speed input: 35.44 toks/s, output: 3.17 toks/s][A
+Processed prompts:  54%|█████▎    | 107/200 [46:48<36:11, 23.35s/it, est. speed input: 35.12 toks/s, output: 3.14 toks/s][A
+Processed prompts:  55%|█████▌    | 110/200 [46:52<16:18, 10.87s/it, est. speed input: 35.91 toks/s, output: 3.20 toks/s][A
+Processed prompts:  56%|█████▋    | 113/200 [47:31<17:17, 11.92s/it, est. speed input: 36.27 toks/s, output: 3.25 toks/s][A
+Processed prompts:  57%|█████▋    | 114/200 [48:03<22:00, 15.35s/it, est. speed input: 36.13 toks/s, output: 3.22 toks/s][A
+Processed prompts:  57%|█████▊    | 115/200 [48:19<21:57, 15.50s/it, est. speed input: 36.19 toks/s, output: 3.23 toks/s][A
+Processed prompts:  58%|█████▊    | 117/200 [48:42<19:21, 13.99s/it, est. speed input: 36.46 toks/s, output: 3.26 toks/s][A
+Processed prompts:  59%|█████▉    | 118/200 [49:07<22:14, 16.28s/it, est. speed input: 36.43 toks/s, output: 3.27 toks/s][A
+Processed prompts:  60%|█████▉    | 119/200 [49:21<21:29, 15.92s/it, est. speed input: 36.57 toks/s, output: 3.33 toks/s][A
+Processed prompts:  60%|██████    | 120/200 [49:44<23:23, 17.55s/it, est. speed input: 36.54 toks/s, output: 3.32 toks/s][A
+Processed prompts:  60%|██████    | 121/200 [50:00<22:43, 17.26s/it, est. speed input: 36.61 toks/s, output: 3.34 toks/s][A
+Processed prompts:  61%|██████    | 122/200 [50:02<16:56, 13.03s/it, est. speed input: 36.86 toks/s, output: 3.37 toks/s][A
+Processed prompts:  62%|██████▏   | 124/200 [50:04<09:45,  7.70s/it, est. speed input: 37.37 toks/s, output: 3.42 toks/s][A
+Processed prompts:  63%|██████▎   | 126/200 [50:07<06:36,  5.36s/it, est. speed input: 37.84 toks/s, output: 3.45 toks/s][A
+Processed prompts:  64%|██████▎   | 127/200 [50:10<05:58,  4.90s/it, est. speed input: 38.06 toks/s, output: 3.47 toks/s][A
+Processed prompts:  64%|██████▍   | 128/200 [50:16<06:18,  5.25s/it, est. speed input: 38.22 toks/s, output: 3.48 toks/s][A
+Processed prompts:  64%|██████▍   | 129/200 [50:23<06:32,  5.52s/it, est. speed input: 38.41 toks/s, output: 3.51 toks/s][A
+Processed prompts:  66%|██████▌   | 131/200 [50:24<04:04,  3.54s/it, est. speed input: 38.89 toks/s, output: 3.55 toks/s][A
+Processed prompts:  66%|██████▋   | 133/200 [50:27<03:07,  2.80s/it, est. speed input: 39.32 toks/s, output: 3.58 toks/s][A
+Processed prompts:  67%|██████▋   | 134/200 [50:29<02:47,  2.53s/it, est. speed input: 39.52 toks/s, output: 3.58 toks/s][A
+Processed prompts:  68%|██████▊   | 135/200 [50:30<02:29,  2.30s/it, est. speed input: 39.75 toks/s, output: 3.61 toks/s][A
+Processed prompts:  68%|██████▊   | 137/200 [50:32<01:46,  1.69s/it, est. speed input: 40.16 toks/s, output: 3.63 toks/s][A
+Processed prompts:  69%|██████▉   | 138/200 [50:35<01:58,  1.91s/it, est. speed input: 40.50 toks/s, output: 3.71 toks/s][A
+Processed prompts:  70%|██████▉   | 139/200 [50:36<01:45,  1.73s/it, est. speed input: 40.83 toks/s, output: 3.79 toks/s][A
+Processed prompts:  72%|███████▏  | 144/200 [50:37<00:43,  1.28it/s, est. speed input: 42.31 toks/s, output: 4.08 toks/s][A
+Processed prompts:  72%|███████▎  | 145/200 [50:38<00:45,  1.20it/s, est. speed input: 42.63 toks/s, output: 4.16 toks/s][A
+Processed prompts:  74%|███████▍  | 148/200 [50:39<00:33,  1.54it/s, est. speed input: 43.42 toks/s, output: 4.28 toks/s][A
+Processed prompts:  75%|███████▌  | 150/200 [50:40<00:31,  1.60it/s, est. speed input: 43.91 toks/s, output: 4.37 toks/s][A
+Processed prompts:  76%|███████▌  | 152/200 [50:41<00:29,  1.65it/s, est. speed input: 44.52 toks/s, output: 4.54 toks/s][A
+Processed prompts:  78%|███████▊  | 155/200 [50:43<00:23,  1.94it/s, est. speed input: 45.37 toks/s, output: 4.75 toks/s][A
+Processed prompts:  78%|███████▊  | 157/200 [50:46<00:34,  1.25it/s, est. speed input: 45.80 toks/s, output: 4.79 toks/s][A
+Processed prompts:  79%|███████▉  | 158/200 [50:47<00:34,  1.20it/s, est. speed input: 46.04 toks/s, output: 4.82 toks/s][A
+Processed prompts:  80%|████████  | 160/200 [50:48<00:29,  1.36it/s, est. speed input: 46.50 toks/s, output: 4.86 toks/s][A
+Processed prompts:  80%|████████  | 161/200 [50:49<00:31,  1.26it/s, est. speed input: 46.71 toks/s, output: 4.88 toks/s][A
+Processed prompts:  81%|████████  | 162/200 [50:53<00:56,  1.48s/it, est. speed input: 46.91 toks/s, output: 4.91 toks/s][A
+Processed prompts:  82%|████████▏ | 163/200 [50:54<00:50,  1.38s/it, est. speed input: 47.17 toks/s, output: 4.95 toks/s][A
+Processed prompts:  83%|████████▎ | 166/200 [51:01<01:02,  1.85s/it, est. speed input: 47.76 toks/s, output: 5.01 toks/s][A
+Processed prompts:  84%|████████▎ | 167/200 [51:04<01:08,  2.06s/it, est. speed input: 47.97 toks/s, output: 5.05 toks/s][A
+Processed prompts:  84%|████████▍ | 168/200 [51:06<01:05,  2.03s/it, est. speed input: 48.16 toks/s, output: 5.07 toks/s][A
+Processed prompts:  84%|████████▍ | 169/200 [51:10<01:20,  2.60s/it, est. speed input: 48.30 toks/s, output: 5.08 toks/s][A
+Processed prompts:  85%|████████▌ | 170/200 [51:12<01:11,  2.39s/it, est. speed input: 48.50 toks/s, output: 5.10 toks/s][A
+Processed prompts:  86%|████████▌ | 171/200 [51:14<01:04,  2.21s/it, est. speed input: 48.75 toks/s, output: 5.16 toks/s][A
+Processed prompts:  86%|████████▌ | 172/200 [51:17<01:10,  2.50s/it, est. speed input: 48.91 toks/s, output: 5.18 toks/s][A
+Processed prompts:  86%|████████▋ | 173/200 [51:18<00:54,  2.03s/it, est. speed input: 49.13 toks/s, output: 5.21 toks/s][A
+Processed prompts:  88%|████████▊ | 175/200 [51:21<00:46,  1.88s/it, est. speed input: 49.58 toks/s, output: 5.30 toks/s][A
+Processed prompts:  88%|████████▊ | 176/200 [51:23<00:43,  1.82s/it, est. speed input: 49.76 toks/s, output: 5.32 toks/s][A
+Processed prompts:  88%|████████▊ | 177/200 [51:32<01:27,  3.78s/it, est. speed input: 49.86 toks/s, output: 5.35 toks/s][A
+Processed prompts:  89%|████████▉ | 178/200 [51:34<01:09,  3.18s/it, est. speed input: 50.12 toks/s, output: 5.43 toks/s][A
+Processed prompts:  90%|████████▉ | 179/200 [51:35<00:56,  2.70s/it, est. speed input: 50.38 toks/s, output: 5.51 toks/s][A
+Processed prompts:  90%|█████████ | 180/200 [51:37<00:46,  2.33s/it, est. speed input: 50.61 toks/s, output: 5.56 toks/s][A
+Processed prompts:  90%|█████████ | 181/200 [51:39<00:43,  2.31s/it, est. speed input: 50.80 toks/s, output: 5.60 toks/s][A
+Processed prompts:  91%|█████████ | 182/200 [51:42<00:44,  2.46s/it, est. speed input: 50.94 toks/s, output: 5.62 toks/s][A
+Processed prompts:  92%|█████████▏| 183/200 [51:42<00:32,  1.92s/it, est. speed input: 51.21 toks/s, output: 5.70 toks/s][A
+Processed prompts:  92%|█████████▏| 184/200 [51:47<00:41,  2.58s/it, est. speed input: 51.39 toks/s, output: 5.75 toks/s][A
+Processed prompts:  92%|█████████▎| 185/200 [51:48<00:33,  2.23s/it, est. speed input: 51.62 toks/s, output: 5.80 toks/s][A
+Processed prompts:  93%|█████████▎| 186/200 [51:58<01:05,  4.68s/it, est. speed input: 51.65 toks/s, output: 5.82 toks/s][A
+Processed prompts:  94%|█████████▎| 187/200 [51:59<00:45,  3.47s/it, est. speed input: 51.91 toks/s, output: 5.91 toks/s][A
+Processed prompts:  94%|█████████▍| 188/200 [52:00<00:33,  2.78s/it, est. speed input: 52.16 toks/s, output: 5.99 toks/s][A
+Processed prompts:  94%|█████████▍| 189/200 [52:07<00:43,  3.94s/it, est. speed input: 52.27 toks/s, output: 6.02 toks/s][A
+Processed prompts:  95%|█████████▌| 190/200 [52:09<00:35,  3.51s/it, est. speed input: 52.49 toks/s, output: 6.10 toks/s][A
+Processed prompts:  96%|█████████▌| 191/200 [52:17<00:43,  4.80s/it, est. speed input: 52.56 toks/s, output: 6.14 toks/s][A
+Processed prompts:  96%|█████████▌| 192/200 [52:23<00:41,  5.14s/it, est. speed input: 52.72 toks/s, output: 6.21 toks/s][A
+Processed prompts:  96%|█████████▋| 193/200 [52:36<00:51,  7.40s/it, est. speed input: 52.75 toks/s, output: 6.26 toks/s][A
+Processed prompts:  97%|█████████▋| 194/200 [52:38<00:35,  5.85s/it, est. speed input: 52.96 toks/s, output: 6.34 toks/s][A
+Processed prompts:  98%|█████████▊| 196/200 [52:48<00:21,  5.33s/it, est. speed input: 53.27 toks/s, output: 6.48 toks/s][A
+Processed prompts:  98%|█████████▊| 197/200 [52:48<00:12,  4.08s/it, est. speed input: 53.50 toks/s, output: 6.56 toks/s][A
+Processed prompts:  99%|█████████▉| 198/200 [52:48<00:06,  3.16s/it, est. speed input: 53.72 toks/s, output: 6.64 toks/s][A
+Processed prompts: 100%|█████████▉| 199/200 [52:50<00:02,  2.70s/it, est. speed input: 53.92 toks/s, output: 6.72 toks/s][A
+Processed prompts: 100%|██████████| 200/200 [52:52<00:00,  2.67s/it, est. speed input: 54.06 toks/s, output: 6.79 toks/s][A
+Processed prompts: 100%|██████████| 200/200 [52:52<00:00,  2.67s/it, est. speed input: 54.06 toks/s, output: 6.79 toks/s][AProcessed prompts: 100%|██████████| 200/200 [52:52<00:00, 15.86s/it, est. speed input: 54.06 toks/s, output: 6.79 toks/s]
+Running generate_until requests:   0%|          | 1/200 [52:53<175:24:01, 3173.07s/it]Running generate_until requests: 100%|██████████| 200/200 [52:53<00:00, 15.87s/it]    
+fatal: not a git repository (or any parent up to mount point /kaggle)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+bf16/gsm8k: exact_match=0.1150 +/- 0.0226 n=200 in 3187s, 400 per-item rows
+Generating validation split:   0%|          | 0/817 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 817/817 [00:00<00:00, 117571.75 examples/s]
+  0%|          | 0/200 [00:00<?, ?it/s] 26%|██▌       | 51/200 [00:00<00:00, 504.31it/s] 51%|█████     | 102/200 [00:00<00:00, 487.67it/s] 76%|███████▌  | 152/200 [00:00<00:00, 492.66it/s]100%|██████████| 200/200 [00:00<00:00, 496.44it/s]
+Tokenizing inputs:   0%|          | 0/1476 [00:00<?, ?it/s]Tokenizing inputs:   6%|▌         | 87/1476 [00:00<00:01, 867.37it/s]Tokenizing inputs:  12%|█▏        | 178/1476 [00:00<00:01, 889.21it/s]Tokenizing inputs:  18%|█▊        | 271/1476 [00:00<00:01, 905.35it/s]Tokenizing inputs:  25%|██▍       | 363/1476 [00:00<00:01, 907.67it/s]Tokenizing inputs:  31%|███       | 455/1476 [00:00<00:01, 909.11it/s]Tokenizing inputs:  37%|███▋      | 546/1476 [00:00<00:01, 907.86it/s]Tokenizing inputs:  43%|████▎     | 637/1476 [00:00<00:00, 902.75it/s]Tokenizing inputs:  49%|████▉     | 730/1476 [00:00<00:00, 908.64it/s]Tokenizing inputs:  56%|█████▌    | 821/1476 [00:00<00:00, 904.47it/s]Tokenizing inputs:  62%|██████▏   | 912/1476 [00:01<00:00, 902.21it/s]Tokenizing inputs:  68%|██████▊   | 1003/1476 [00:01<00:00, 901.30it/s]Tokenizing inputs:  74%|███████▍  | 1094/1476 [00:01<00:00, 883.09it/s]Tokenizing inputs:  80%|████████  | 1184/1476 [00:01<00:00, 886.62it/s]Tokenizing inputs:  86%|████████▌ | 1273/1476 [00:01<00:00, 869.65it/s]Tokenizing inputs:  92%|█████████▏| 1361/1476 [00:01<00:00, 821.99it/s]Tokenizing inputs:  98%|█████████▊| 1451/1476 [00:01<00:00, 843.62it/s]Tokenizing inputs: 100%|██████████| 1476/1476 [00:01<00:00, 881.14it/s]
+Running loglikelihood requests:   0%|          | 0/1476 [00:00<?, ?it/s]
+Rendering prompts:   0%|          | 0/1476 [00:00<?, ?it/s][A
+Rendering prompts:  17%|█▋        | 254/1476 [00:00<00:00, 2532.21it/s][A
+Rendering prompts:  34%|███▍      | 508/1476 [00:00<00:00, 2275.74it/s][A
+Rendering prompts:  50%|█████     | 738/1476 [00:00<00:00, 2227.44it/s][A
+Rendering prompts:  65%|██████▌   | 962/1476 [00:00<00:00, 2224.24it/s][A
+Rendering prompts:  80%|████████  | 1185/1476 [00:00<00:00, 2210.57it/s][A
+Rendering prompts:  95%|█████████▌| 1408/1476 [00:00<00:00, 2215.29it/s][ARendering prompts: 100%|██████████| 1476/1476 [00:00<00:00, 2234.67it/s]
+
+Processed prompts:   0%|          | 0/1476 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s][A
+Processed prompts:   0%|          | 1/1476 [00:02<1:09:20,  2.82s/it, est. speed input: 75.16 toks/s, output: 0.35 toks/s][A
+Processed prompts:   0%|          | 2/1476 [00:31<7:16:31, 17.77s/it, est. speed input: 13.59 toks/s, output: 0.06 toks/s][A(EngineCore pid=434) INFO 11-03 17:15:49 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:   1%|          | 11/1476 [02:14<4:57:46, 12.20s/it, est. speed input: 17.08 toks/s, output: 0.08 toks/s][A(EngineCore pid=434) INFO 11-03 17:17:32 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:   3%|▎         | 51/1476 [03:57<1:36:01,  4.04s/it, est. speed input: 43.73 toks/s, output: 0.21 toks/s][A(EngineCore pid=434) INFO 11-03 17:19:15 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:   6%|▌         | 92/1476 [05:39<1:13:26,  3.18s/it, est. speed input: 54.34 toks/s, output: 0.27 toks/s][A(EngineCore pid=434) INFO 11-03 17:20:58 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:   9%|▉         | 135/1476 [07:23<1:03:13,  2.83s/it, est. speed input: 60.42 toks/s, output: 0.30 toks/s][A(EngineCore pid=434) INFO 11-03 17:22:41 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  12%|█▏        | 178/1476 [09:05<57:26,  2.65s/it, est. speed input: 64.10 toks/s, output: 0.33 toks/s]  [A(EngineCore pid=434) INFO 11-03 17:24:24 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  15%|█▍        | 221/1476 [10:48<53:35,  2.56s/it, est. speed input: 66.45 toks/s, output: 0.34 toks/s][A(EngineCore pid=434) INFO 11-03 17:26:07 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  18%|█▊        | 265/1476 [12:31<50:09,  2.49s/it, est. speed input: 68.34 toks/s, output: 0.35 toks/s][A(EngineCore pid=434) INFO 11-03 17:27:50 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  21%|██        | 309/1476 [14:15<47:26,  2.44s/it, est. speed input: 69.70 toks/s, output: 0.36 toks/s][A(EngineCore pid=434) INFO 11-03 17:29:33 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  24%|██▍       | 353/1476 [15:57<45:01,  2.41s/it, est. speed input: 70.76 toks/s, output: 0.37 toks/s][A(EngineCore pid=434) INFO 11-03 17:31:16 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  27%|██▋       | 397/1476 [17:40<42:55,  2.39s/it, est. speed input: 71.55 toks/s, output: 0.37 toks/s][A(EngineCore pid=434) INFO 11-03 17:32:59 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  30%|██▉       | 442/1476 [19:24<40:37,  2.36s/it, est. speed input: 72.32 toks/s, output: 0.38 toks/s][A(EngineCore pid=434) INFO 11-03 17:34:42 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  33%|███▎      | 486/1476 [21:07<38:49,  2.35s/it, est. speed input: 72.80 toks/s, output: 0.38 toks/s][A(EngineCore pid=434) INFO 11-03 17:36:25 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  36%|███▌      | 531/1476 [22:50<36:43,  2.33s/it, est. speed input: 73.34 toks/s, output: 0.39 toks/s][A(EngineCore pid=434) INFO 11-03 17:38:08 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  39%|███▉      | 576/1476 [24:33<34:47,  2.32s/it, est. speed input: 73.76 toks/s, output: 0.39 toks/s][A(EngineCore pid=434) INFO 11-03 17:39:51 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  42%|████▏     | 621/1476 [26:17<33:01,  2.32s/it, est. speed input: 74.09 toks/s, output: 0.39 toks/s][A(EngineCore pid=434) INFO 11-03 17:41:34 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  45%|████▌     | 666/1476 [27:59<31:04,  2.30s/it, est. speed input: 74.44 toks/s, output: 0.40 toks/s][A(EngineCore pid=434) INFO 11-03 17:43:17 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  48%|████▊     | 712/1476 [29:42<29:04,  2.28s/it, est. speed input: 74.79 toks/s, output: 0.40 toks/s][A(EngineCore pid=434) INFO 11-03 17:45:00 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  51%|█████▏    | 757/1476 [31:25<27:22,  2.28s/it, est. speed input: 75.01 toks/s, output: 0.40 toks/s][A(EngineCore pid=434) INFO 11-03 17:46:43 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  54%|█████▍    | 803/1476 [33:08<25:28,  2.27s/it, est. speed input: 75.26 toks/s, output: 0.40 toks/s][A(EngineCore pid=434) INFO 11-03 17:48:26 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  58%|█████▊    | 849/1476 [34:51<23:37,  2.26s/it, est. speed input: 75.49 toks/s, output: 0.41 toks/s][A(EngineCore pid=434) INFO 11-03 17:50:09 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  61%|██████    | 895/1476 [36:34<21:50,  2.25s/it, est. speed input: 75.68 toks/s, output: 0.41 toks/s][A(EngineCore pid=434) INFO 11-03 17:51:52 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  64%|██████▍   | 941/1476 [38:17<20:03,  2.25s/it, est. speed input: 75.85 toks/s, output: 0.41 toks/s][A(EngineCore pid=434) INFO 11-03 17:53:35 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  67%|██████▋   | 987/1476 [40:00<18:18,  2.25s/it, est. speed input: 76.00 toks/s, output: 0.41 toks/s][A(EngineCore pid=434) INFO 11-03 17:55:18 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  70%|██████▉   | 1033/1476 [41:43<16:34,  2.24s/it, est. speed input: 76.12 toks/s, output: 0.41 toks/s][A(EngineCore pid=434) INFO 11-03 17:57:01 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  73%|███████▎  | 1080/1476 [43:26<14:43,  2.23s/it, est. speed input: 76.28 toks/s, output: 0.41 toks/s][A(EngineCore pid=434) INFO 11-03 17:58:44 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  76%|███████▋  | 1126/1476 [45:09<13:00,  2.23s/it, est. speed input: 76.39 toks/s, output: 0.42 toks/s][A(EngineCore pid=434) INFO 11-03 18:00:27 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  79%|███████▉  | 1173/1476 [46:52<11:11,  2.22s/it, est. speed input: 76.52 toks/s, output: 0.42 toks/s][A(EngineCore pid=434) INFO 11-03 18:02:10 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  83%|████████▎ | 1220/1476 [48:35<09:26,  2.21s/it, est. speed input: 76.62 toks/s, output: 0.42 toks/s][A(EngineCore pid=434) INFO 11-03 18:03:53 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  86%|████████▌ | 1267/1476 [50:18<07:40,  2.20s/it, est. speed input: 76.72 toks/s, output: 0.42 toks/s][A(EngineCore pid=434) INFO 11-03 18:05:36 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  89%|████████▉ | 1314/1476 [52:01<05:56,  2.20s/it, est. speed input: 76.80 toks/s, output: 0.42 toks/s][A(EngineCore pid=434) INFO 11-03 18:07:19 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  92%|█████████▏| 1362/1476 [53:44<04:08,  2.18s/it, est. speed input: 76.91 toks/s, output: 0.42 toks/s][A(EngineCore pid=434) INFO 11-03 18:09:02 [shm_broadcast.py:878] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+
+Processed prompts:  96%|█████████▌| 1410/1476 [55:28<02:23,  2.18s/it, est. speed input: 76.97 toks/s, output: 0.42 toks/s][A
+Processed prompts:  99%|█████████▉| 1458/1476 [56:09<00:32,  1.78s/it, est. speed input: 78.44 toks/s, output: 0.43 toks/s][A
+Processed prompts: 100%|██████████| 1476/1476 [56:09<00:00,  1.78s/it, est. speed input: 79.33 toks/s, output: 0.44 toks/s][AProcessed prompts: 100%|██████████| 1476/1476 [56:09<00:00,  2.28s/it, est. speed input: 79.33 toks/s, output: 0.44 toks/s]
+Running loglikelihood requests:   0%|          | 1/1476 [56:10<1381:00:32, 3370.60s/it]Running loglikelihood requests:  33%|███▎      | 486/1476 [56:10<1:20:09,  4.86s/it]   Running loglikelihood requests:  68%|██████▊   | 1002/1476 [56:10<15:14,  1.93s/it] Running loglikelihood requests: 100%|██████████| 1476/1476 [56:10<00:00,  2.28s/it]
+fatal: not a git repository (or any parent up to mount point /kaggle)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+bf16/truthfulqa_mc2: acc=0.3720 +/- 0.0277 n=200 in 3386s, 200 per-item rows
+(MainProcess pid=387) INFO 11-03 18:10:28 [utils.py:628] [shutdown] Process manager: send sigterm to process EngineCore
+(EngineCore pid=434) INFO 11-03 18:10:28 [core.py:1525] [shutdown] EngineCore: trigger received signal=SIGTERM
+(EngineCore pid=434) INFO 11-03 18:10:28 [core.py:1712] [shutdown] EngineCore: start mode=abort timeout=0s
+(EngineCore pid=434) INFO 11-03 18:10:28 [core.py:1743] [shutdown] EngineCore: request processing complete; starting resource teardown
+(EngineCore pid=434) INFO 11-03 18:10:28 [core.py:1573] [shutdown] EngineCore: exiting busy loop
+(EngineCore pid=434) INFO 11-03 18:10:28 [multiproc_executor.py:580] [shutdown] Executor: waiting for worker exit count=2
+(Worker_TP0 pid=461) INFO 11-03 18:10:28 [multiproc_executor.py:944] Parent process exited, terminating worker queues
+(MainProcess pid=387) WARNING 11-03 18:10:33 [utils.py:648] [shutdown] Process manager: force killing remaining processes count=1
+(MainProcess pid=387) WARNING 11-03 18:10:33 [utils.py:653] [shutdown] Process manager: force killing remaining process EngineCore pid 434
+(MainProcess pid=387) WARNING 11-03 18:10:33 [system_utils.py:248] [shutdown] force killing sub process VLLM::Worker_TP1 pid 460
+(MainProcess pid=387) WARNING 11-03 18:10:33 [system_utils.py:248] [shutdown] force killing sub process VLLM::Worker_TP0 pid 461
+/usr/lib/python3.12/multiprocessing/resource_tracker.py:254: UserWarning: resource_tracker: There appear to be 2 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '
+/usr/lib/python3.12/multiprocessing/resource_tracker.py:254: UserWarning: resource_tracker: There appear to be 2 leaked shared_memory objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '

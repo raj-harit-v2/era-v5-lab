@@ -1,0 +1,523 @@
+{
+  "check": "decode every token ID on GPU three times per batch size; compare with the CPU reference",
+  "passed": true,
+  "hash_formats": {
+    "ke2-decode-gpu-ids-v1": "header '<format>|P=<P>|table=<table sha256>|n=<rows>' + LF; then per query, in ascending query ID order: query ID and decoded ID as big-endian uint32",
+    "ke2-decode-gpu-scores-v1": "header '<format>|P=<P>|table=<table sha256>|n=<rows>|dtype=<dtype>' + LF; then per query: best cosine and margin, little-endian (<f4 on GPU, <f8 for the CPU reference)"
+  },
+  "inputs": {
+    "table": "results/tables/raw_table_P32.npz",
+    "kind": "raw",
+    "pos_dim": 32,
+    "table_sha256": "b3f5476ec6ae8a6bc3a8ca18e6662d2407645c2ed6f3b3ca4561a9bafd8d04db",
+    "tokenizer_sha256": "01d968a7970b029c071b29f060abf6104b66168dedf2ff3b1a0290a545739fff",
+    "vocabulary_size": 131072,
+    "queries": 131072,
+    "full_vocabulary": true,
+    "upstream_codec_commit": "d07cb543f03d7a72a7c35bc68cfb795bcb02e1ec",
+    "upstream_codec_sha256": "d9613ac99f437ee8d309450eef3d3b43e729d1cbb780d835bf3a9b36353e516a",
+    "source_sha256": {
+      "decode_gpu.py": "c82e28ea70193b1eaef16e1bf8131b970d6e9361480f9a3bfc72cc30937c07d8",
+      "decode_ref.py": "b7b8f7eaf3a0c6fbdb56db32f1db79e09adc52117c1190395559cf1c4f8ed3ad"
+    }
+  },
+  "gpu_method": {
+    "encoder": "upstream kronecker_codec on the GPU, float32; query batch = the batch size",
+    "candidates": "all V codes, encoded on the GPU in chunks of 8192, rows scaled to unit norm",
+    "scores": "cosine = unit query rows @ unit candidate rows.T, float32, one matmul per batch",
+    "decision": "first maximum (ties to the lowest ID); margin = best minus second-best cosine",
+    "settings": "TF32 off (matmul and cuDNN), float32 matmul precision 'highest', deterministic algorithms on, CUBLAS_WORKSPACE_CONFIG=:4096:8",
+    "processes": "3 fresh processes per batch size"
+  },
+  "summary": {
+    "1": {
+      "three_id_hashes_match": true,
+      "three_score_hashes_match": true,
+      "id_hash_equals_cpu": true,
+      "ids_equal_cpu_every_run": true,
+      "ties": 0,
+      "max_abs_score_difference": 2.1934509277121705e-05,
+      "max_abs_margin_difference": 2.856131097894732e-05,
+      "decode_seconds": [
+        1484.961,
+        1454.034,
+        1599.591
+      ]
+    },
+    "7": {
+      "three_id_hashes_match": true,
+      "three_score_hashes_match": true,
+      "id_hash_equals_cpu": true,
+      "ids_equal_cpu_every_run": true,
+      "ties": 0,
+      "max_abs_score_difference": 7.462501525923315e-05,
+      "max_abs_margin_difference": 0.00011877570750029598,
+      "decode_seconds": [
+        223.643,
+        223.351,
+        224.562
+      ]
+    },
+    "4096": {
+      "three_id_hashes_match": true,
+      "three_score_hashes_match": true,
+      "id_hash_equals_cpu": true,
+      "ids_equal_cpu_every_run": true,
+      "ties": 0,
+      "max_abs_score_difference": 0.00023484230041515008,
+      "max_abs_margin_difference": 0.00040914890803434023,
+      "decode_seconds": [
+        24.419,
+        24.668,
+        24.56
+      ]
+    },
+    "all_batch_sizes": {
+      "id_hashes_match": true,
+      "score_hashes_match": false,
+      "distinct_score_hashes": 3
+    }
+  },
+  "cpu_reference": {
+    "chunk_rows": 1024,
+    "decoder": "decode_ref.decode, cosine, float64, CPU, exhaustive",
+    "device": "cpu",
+    "encoder": "upstream kronecker_codec, float32, CPU, one torch thread per worker",
+    "environment": {
+      "device": "cpu",
+      "machine": "AMD64",
+      "numpy": "2.5.4",
+      "python": "3.13.5",
+      "system": "Windows",
+      "torch": "2.14.1+cu130"
+    },
+    "id_sha256": "31c8d0e0ac50cff5c8021f88a2b608de2298fdbf216c620a40e83d2adbe26f9a",
+    "rows": 131072,
+    "score_sha256": "760bc2261898f14799fdce0d74f7355bd14e7f2ca6c186e606147408286766bb",
+    "seconds": 640.0,
+    "ties": 0,
+    "worker_processes": 8,
+    "min_margin": 0.015809319702521196,
+    "committed_sample": {
+      "file": "results/decode_ref/summary.json",
+      "sample_size": 4096,
+      "committed_sha256": "5808c83709a71f866ac3703318cf3b45cf5afcf67fc60283786a32942edcbb7c",
+      "recomputed_sha256": "8d98c8613370916f1af12b1182b5e4475fae982e4ea96bb1a06973f7247a1e08",
+      "equal": false
+    }
+  },
+  "gpu_min_margin": {
+    "margin": 0.015755057334899902,
+    "query_bytes_hex": "2020202020202020202020202020202020202020202020202020202020202020",
+    "query_id": 50346,
+    "runner_up_bytes_hex": "20202020202020202020202020202020202020202020202020202020202020",
+    "runner_up_id": 83647
+  },
+  "runs": [
+    {
+      "batch_size": 1,
+      "batches": 131072,
+      "candidate_encode_seconds": 0.555,
+      "decode_seconds": 1484.961,
+      "device": "cuda",
+      "environment": {
+        "compute_capability": "8.9",
+        "cublas_workspace_config": ":4096:8",
+        "cuda_runtime": "13.0",
+        "deterministic_algorithms": true,
+        "driver": "596.58",
+        "dtype": "float32",
+        "float32_matmul_precision": "highest",
+        "gpu": "NVIDIA RTX 5000 Ada Generation Laptop GPU",
+        "gpu_memory_gib": 16.0,
+        "machine": "AMD64",
+        "numpy": "2.5.4",
+        "python": "3.13.5",
+        "system": "Windows",
+        "tf32_cudnn": false,
+        "tf32_matmul": false,
+        "torch": "2.14.1+cu130"
+      },
+      "id_sha256": "31c8d0e0ac50cff5c8021f88a2b608de2298fdbf216c620a40e83d2adbe26f9a",
+      "min_margin": {
+        "margin": 0.015809357166290283,
+        "query_bytes_hex": "20202020202020202020202020202020202020202020202020202020202020",
+        "query_id": 83647,
+        "runner_up_bytes_hex": "2020202020202020202020202020202020202020202020202020202020202020",
+        "runner_up_id": 50346
+      },
+      "peak_gpu_memory_gib": 4.76,
+      "rows": 131072,
+      "score_sha256": "73e358ac73c30571da862b06187e4b72eed16fa2cd677596f297fb053653c357",
+      "ties": 0,
+      "run": 1,
+      "comparison": {
+        "ids_equal_cpu": true,
+        "mismatching_ids": 0,
+        "first_mismatches": [],
+        "max_abs_score_difference": 2.1934509277121705e-05,
+        "max_abs_margin_difference": 2.856131097894732e-05
+      }
+    },
+    {
+      "batch_size": 1,
+      "batches": 131072,
+      "candidate_encode_seconds": 0.478,
+      "decode_seconds": 1454.034,
+      "device": "cuda",
+      "environment": {
+        "compute_capability": "8.9",
+        "cublas_workspace_config": ":4096:8",
+        "cuda_runtime": "13.0",
+        "deterministic_algorithms": true,
+        "driver": "596.58",
+        "dtype": "float32",
+        "float32_matmul_precision": "highest",
+        "gpu": "NVIDIA RTX 5000 Ada Generation Laptop GPU",
+        "gpu_memory_gib": 16.0,
+        "machine": "AMD64",
+        "numpy": "2.5.4",
+        "python": "3.13.5",
+        "system": "Windows",
+        "tf32_cudnn": false,
+        "tf32_matmul": false,
+        "torch": "2.14.1+cu130"
+      },
+      "id_sha256": "31c8d0e0ac50cff5c8021f88a2b608de2298fdbf216c620a40e83d2adbe26f9a",
+      "min_margin": {
+        "margin": 0.015809357166290283,
+        "query_bytes_hex": "20202020202020202020202020202020202020202020202020202020202020",
+        "query_id": 83647,
+        "runner_up_bytes_hex": "2020202020202020202020202020202020202020202020202020202020202020",
+        "runner_up_id": 50346
+      },
+      "peak_gpu_memory_gib": 4.76,
+      "rows": 131072,
+      "score_sha256": "73e358ac73c30571da862b06187e4b72eed16fa2cd677596f297fb053653c357",
+      "ties": 0,
+      "run": 2,
+      "comparison": {
+        "ids_equal_cpu": true,
+        "mismatching_ids": 0,
+        "first_mismatches": [],
+        "max_abs_score_difference": 2.1934509277121705e-05,
+        "max_abs_margin_difference": 2.856131097894732e-05
+      }
+    },
+    {
+      "batch_size": 1,
+      "batches": 131072,
+      "candidate_encode_seconds": 0.496,
+      "decode_seconds": 1599.591,
+      "device": "cuda",
+      "environment": {
+        "compute_capability": "8.9",
+        "cublas_workspace_config": ":4096:8",
+        "cuda_runtime": "13.0",
+        "deterministic_algorithms": true,
+        "driver": "596.58",
+        "dtype": "float32",
+        "float32_matmul_precision": "highest",
+        "gpu": "NVIDIA RTX 5000 Ada Generation Laptop GPU",
+        "gpu_memory_gib": 16.0,
+        "machine": "AMD64",
+        "numpy": "2.5.4",
+        "python": "3.13.5",
+        "system": "Windows",
+        "tf32_cudnn": false,
+        "tf32_matmul": false,
+        "torch": "2.14.1+cu130"
+      },
+      "id_sha256": "31c8d0e0ac50cff5c8021f88a2b608de2298fdbf216c620a40e83d2adbe26f9a",
+      "min_margin": {
+        "margin": 0.015809357166290283,
+        "query_bytes_hex": "20202020202020202020202020202020202020202020202020202020202020",
+        "query_id": 83647,
+        "runner_up_bytes_hex": "2020202020202020202020202020202020202020202020202020202020202020",
+        "runner_up_id": 50346
+      },
+      "peak_gpu_memory_gib": 4.76,
+      "rows": 131072,
+      "score_sha256": "73e358ac73c30571da862b06187e4b72eed16fa2cd677596f297fb053653c357",
+      "ties": 0,
+      "run": 3,
+      "comparison": {
+        "ids_equal_cpu": true,
+        "mismatching_ids": 0,
+        "first_mismatches": [],
+        "max_abs_score_difference": 2.1934509277121705e-05,
+        "max_abs_margin_difference": 2.856131097894732e-05
+      }
+    },
+    {
+      "batch_size": 7,
+      "batches": 18725,
+      "candidate_encode_seconds": 0.568,
+      "decode_seconds": 223.643,
+      "device": "cuda",
+      "environment": {
+        "compute_capability": "8.9",
+        "cublas_workspace_config": ":4096:8",
+        "cuda_runtime": "13.0",
+        "deterministic_algorithms": true,
+        "driver": "596.58",
+        "dtype": "float32",
+        "float32_matmul_precision": "highest",
+        "gpu": "NVIDIA RTX 5000 Ada Generation Laptop GPU",
+        "gpu_memory_gib": 16.0,
+        "machine": "AMD64",
+        "numpy": "2.5.4",
+        "python": "3.13.5",
+        "system": "Windows",
+        "tf32_cudnn": false,
+        "tf32_matmul": false,
+        "torch": "2.14.1+cu130"
+      },
+      "id_sha256": "31c8d0e0ac50cff5c8021f88a2b608de2298fdbf216c620a40e83d2adbe26f9a",
+      "min_margin": {
+        "margin": 0.015755057334899902,
+        "query_bytes_hex": "2020202020202020202020202020202020202020202020202020202020202020",
+        "query_id": 50346,
+        "runner_up_bytes_hex": "20202020202020202020202020202020202020202020202020202020202020",
+        "runner_up_id": 83647
+      },
+      "peak_gpu_memory_gib": 4.76,
+      "rows": 131072,
+      "score_sha256": "2440126d66135020d2d36b670a38e41c03edf2858b53a5cb0ad78318e8948133",
+      "ties": 0,
+      "run": 1,
+      "comparison": {
+        "ids_equal_cpu": true,
+        "mismatching_ids": 0,
+        "first_mismatches": [],
+        "max_abs_score_difference": 7.462501525923315e-05,
+        "max_abs_margin_difference": 0.00011877570750029598
+      }
+    },
+    {
+      "batch_size": 7,
+      "batches": 18725,
+      "candidate_encode_seconds": 0.493,
+      "decode_seconds": 223.351,
+      "device": "cuda",
+      "environment": {
+        "compute_capability": "8.9",
+        "cublas_workspace_config": ":4096:8",
+        "cuda_runtime": "13.0",
+        "deterministic_algorithms": true,
+        "driver": "596.58",
+        "dtype": "float32",
+        "float32_matmul_precision": "highest",
+        "gpu": "NVIDIA RTX 5000 Ada Generation Laptop GPU",
+        "gpu_memory_gib": 16.0,
+        "machine": "AMD64",
+        "numpy": "2.5.4",
+        "python": "3.13.5",
+        "system": "Windows",
+        "tf32_cudnn": false,
+        "tf32_matmul": false,
+        "torch": "2.14.1+cu130"
+      },
+      "id_sha256": "31c8d0e0ac50cff5c8021f88a2b608de2298fdbf216c620a40e83d2adbe26f9a",
+      "min_margin": {
+        "margin": 0.015755057334899902,
+        "query_bytes_hex": "2020202020202020202020202020202020202020202020202020202020202020",
+        "query_id": 50346,
+        "runner_up_bytes_hex": "20202020202020202020202020202020202020202020202020202020202020",
+        "runner_up_id": 83647
+      },
+      "peak_gpu_memory_gib": 4.76,
+      "rows": 131072,
+      "score_sha256": "2440126d66135020d2d36b670a38e41c03edf2858b53a5cb0ad78318e8948133",
+      "ties": 0,
+      "run": 2,
+      "comparison": {
+        "ids_equal_cpu": true,
+        "mismatching_ids": 0,
+        "first_mismatches": [],
+        "max_abs_score_difference": 7.462501525923315e-05,
+        "max_abs_margin_difference": 0.00011877570750029598
+      }
+    },
+    {
+      "batch_size": 7,
+      "batches": 18725,
+      "candidate_encode_seconds": 0.483,
+      "decode_seconds": 224.562,
+      "device": "cuda",
+      "environment": {
+        "compute_capability": "8.9",
+        "cublas_workspace_config": ":4096:8",
+        "cuda_runtime": "13.0",
+        "deterministic_algorithms": true,
+        "driver": "596.58",
+        "dtype": "float32",
+        "float32_matmul_precision": "highest",
+        "gpu": "NVIDIA RTX 5000 Ada Generation Laptop GPU",
+        "gpu_memory_gib": 16.0,
+        "machine": "AMD64",
+        "numpy": "2.5.4",
+        "python": "3.13.5",
+        "system": "Windows",
+        "tf32_cudnn": false,
+        "tf32_matmul": false,
+        "torch": "2.14.1+cu130"
+      },
+      "id_sha256": "31c8d0e0ac50cff5c8021f88a2b608de2298fdbf216c620a40e83d2adbe26f9a",
+      "min_margin": {
+        "margin": 0.015755057334899902,
+        "query_bytes_hex": "2020202020202020202020202020202020202020202020202020202020202020",
+        "query_id": 50346,
+        "runner_up_bytes_hex": "20202020202020202020202020202020202020202020202020202020202020",
+        "runner_up_id": 83647
+      },
+      "peak_gpu_memory_gib": 4.76,
+      "rows": 131072,
+      "score_sha256": "2440126d66135020d2d36b670a38e41c03edf2858b53a5cb0ad78318e8948133",
+      "ties": 0,
+      "run": 3,
+      "comparison": {
+        "ids_equal_cpu": true,
+        "mismatching_ids": 0,
+        "first_mismatches": [],
+        "max_abs_score_difference": 7.462501525923315e-05,
+        "max_abs_margin_difference": 0.00011877570750029598
+      }
+    },
+    {
+      "batch_size": 4096,
+      "batches": 32,
+      "candidate_encode_seconds": 0.553,
+      "decode_seconds": 24.419,
+      "device": "cuda",
+      "environment": {
+        "compute_capability": "8.9",
+        "cublas_workspace_config": ":4096:8",
+        "cuda_runtime": "13.0",
+        "deterministic_algorithms": true,
+        "driver": "596.58",
+        "dtype": "float32",
+        "float32_matmul_precision": "highest",
+        "gpu": "NVIDIA RTX 5000 Ada Generation Laptop GPU",
+        "gpu_memory_gib": 16.0,
+        "machine": "AMD64",
+        "numpy": "2.5.4",
+        "python": "3.13.5",
+        "system": "Windows",
+        "tf32_cudnn": false,
+        "tf32_matmul": false,
+        "torch": "2.14.1+cu130"
+      },
+      "id_sha256": "31c8d0e0ac50cff5c8021f88a2b608de2298fdbf216c620a40e83d2adbe26f9a",
+      "min_margin": {
+        "margin": 0.015755116939544678,
+        "query_bytes_hex": "2020202020202020202020202020202020202020202020202020202020202020",
+        "query_id": 50346,
+        "runner_up_bytes_hex": "20202020202020202020202020202020202020202020202020202020202020",
+        "runner_up_id": 83647
+      },
+      "peak_gpu_memory_gib": 10.67,
+      "rows": 131072,
+      "score_sha256": "169498b06d3cd8beb19adec4c208a07feb747f0d9e2a914fbb6eacf3e9fa0f0d",
+      "ties": 0,
+      "run": 1,
+      "comparison": {
+        "ids_equal_cpu": true,
+        "mismatching_ids": 0,
+        "first_mismatches": [],
+        "max_abs_score_difference": 0.00023484230041515008,
+        "max_abs_margin_difference": 0.00040914890803434023
+      }
+    },
+    {
+      "batch_size": 4096,
+      "batches": 32,
+      "candidate_encode_seconds": 0.56,
+      "decode_seconds": 24.668,
+      "device": "cuda",
+      "environment": {
+        "compute_capability": "8.9",
+        "cublas_workspace_config": ":4096:8",
+        "cuda_runtime": "13.0",
+        "deterministic_algorithms": true,
+        "driver": "596.58",
+        "dtype": "float32",
+        "float32_matmul_precision": "highest",
+        "gpu": "NVIDIA RTX 5000 Ada Generation Laptop GPU",
+        "gpu_memory_gib": 16.0,
+        "machine": "AMD64",
+        "numpy": "2.5.4",
+        "python": "3.13.5",
+        "system": "Windows",
+        "tf32_cudnn": false,
+        "tf32_matmul": false,
+        "torch": "2.14.1+cu130"
+      },
+      "id_sha256": "31c8d0e0ac50cff5c8021f88a2b608de2298fdbf216c620a40e83d2adbe26f9a",
+      "min_margin": {
+        "margin": 0.015755116939544678,
+        "query_bytes_hex": "2020202020202020202020202020202020202020202020202020202020202020",
+        "query_id": 50346,
+        "runner_up_bytes_hex": "20202020202020202020202020202020202020202020202020202020202020",
+        "runner_up_id": 83647
+      },
+      "peak_gpu_memory_gib": 10.67,
+      "rows": 131072,
+      "score_sha256": "169498b06d3cd8beb19adec4c208a07feb747f0d9e2a914fbb6eacf3e9fa0f0d",
+      "ties": 0,
+      "run": 2,
+      "comparison": {
+        "ids_equal_cpu": true,
+        "mismatching_ids": 0,
+        "first_mismatches": [],
+        "max_abs_score_difference": 0.00023484230041515008,
+        "max_abs_margin_difference": 0.00040914890803434023
+      }
+    },
+    {
+      "batch_size": 4096,
+      "batches": 32,
+      "candidate_encode_seconds": 0.57,
+      "decode_seconds": 24.56,
+      "device": "cuda",
+      "environment": {
+        "compute_capability": "8.9",
+        "cublas_workspace_config": ":4096:8",
+        "cuda_runtime": "13.0",
+        "deterministic_algorithms": true,
+        "driver": "596.58",
+        "dtype": "float32",
+        "float32_matmul_precision": "highest",
+        "gpu": "NVIDIA RTX 5000 Ada Generation Laptop GPU",
+        "gpu_memory_gib": 16.0,
+        "machine": "AMD64",
+        "numpy": "2.5.4",
+        "python": "3.13.5",
+        "system": "Windows",
+        "tf32_cudnn": false,
+        "tf32_matmul": false,
+        "torch": "2.14.1+cu130"
+      },
+      "id_sha256": "31c8d0e0ac50cff5c8021f88a2b608de2298fdbf216c620a40e83d2adbe26f9a",
+      "min_margin": {
+        "margin": 0.015755116939544678,
+        "query_bytes_hex": "2020202020202020202020202020202020202020202020202020202020202020",
+        "query_id": 50346,
+        "runner_up_bytes_hex": "20202020202020202020202020202020202020202020202020202020202020",
+        "runner_up_id": 83647
+      },
+      "peak_gpu_memory_gib": 10.67,
+      "rows": 131072,
+      "score_sha256": "169498b06d3cd8beb19adec4c208a07feb747f0d9e2a914fbb6eacf3e9fa0f0d",
+      "ties": 0,
+      "run": 3,
+      "comparison": {
+        "ids_equal_cpu": true,
+        "mismatching_ids": 0,
+        "first_mismatches": [],
+        "max_abs_score_difference": 0.00023484230041515008,
+        "max_abs_margin_difference": 0.00040914890803434023
+      }
+    }
+  ]
+}

@@ -1,19 +1,11 @@
-"""Smoke test: does a config build, train and run at a sane speed on this machine?  [implemented]
+"""Smoke test: does a config build, train and run at a sane speed on this machine? Not the baseline (use bench).
 
-    cd teams/06-performance
-    python -m perfkit.smoke                                         # configs/base.yaml
-    python -m perfkit.smoke --config configs/tiny_cpu.yaml        # laptop
-    python -m perfkit.smoke run.batch_size=16 model.ce_impl=chunked  # key=value overrides as in bench
+    python -m perfkit.smoke                                          # configs/base.yaml
+    python -m perfkit.smoke --config configs/tiny_cpu.yaml           # laptop
+    python -m perfkit.smoke run.batch_size=16 model.ce_impl=chunked   # key=value overrides as in bench
 
-Prints: GPU, params, reversible reconstruction error, loss at the start and end, median step time
-with p10 / p90, tokens/s, peak memory, whether every weight is finite. Everything comes from the config, as in
-bench: run.device, run.dtype (bf16 on a GPU without native bf16 falls back to fp16 + GradScaler, bench's rule),
-run.batch_size, smoke.warmup and smoke.steps (--batch, --warmup, --steps are shortcuts for those keys).
-Every step, warmup included, is a real training step: optim.schedule / warmup_steps / min_lr_ratio are
-applied over smoke.warmup + smoke.steps.
-
-Not the baseline: plain wall-clock step times with one CUDA event pair, no per-part regions, no run JSON.
-Gate 1 numbers come from perfkit.bench on committed code.
+Prints params, reconstruction error, start and end loss, median step time with p10 / p90, tokens/s, peak memory
+and whether every weight is finite. --batch, --warmup, --steps are shortcuts for run.batch_size, smoke.*.
 """
 from __future__ import annotations
 
@@ -82,6 +74,7 @@ def main(argv=None):
         print(f"reversible reconstruction error: {err:.1e}  ({'OK' if err < 1e-3 else 'TOO HIGH'})")
 
     def step(step_index):
+        """One real training step: forward, backward, clip, LR schedule, optimizer, MoE bias."""
         x, y = ld.next_batch()
         with autocast():
             loss = model(x, y)[1]
@@ -115,7 +108,7 @@ def main(argv=None):
         loss = step(i)
         if dev.type == "cuda":
             end.record()
-            end.synchronize()
+            end.synchronize()                 # one sync per step: smoke times whole steps
             ms = start.elapsed_time(end)
         else:
             ms = (time.perf_counter() - t0) * 1e3

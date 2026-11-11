@@ -1,7 +1,7 @@
 # Checkpoint (`ckpt/`): how we save training so we never pay for the same work twice
 
 Decision record: [ADR 0001](../adr/0001-checkpoint-format-and-commit.md). Longer design notes:
-[checkpoint_design.md](../support/docs/checkpoint_design.md). Queue side: [../queue/README.md](../queue/README.md).
+[checkpoint_design_v0.md](../docs/checkpoint_design_v0.md). Queue side: [../queue/README.md](../queue/README.md).
 Health side: [../health/README.md](../health/README.md).
 
 > **In one paragraph.** Training costs money every hour. A checkpoint is a saved copy of the training, so if
@@ -60,7 +60,7 @@ in the background:
 
 | When | What | Command / function |
 |---|---|---|
-| before the run | the store refuses a stale write (else fencing cannot work) | `ckpt.py probe-store --run <run>` (run by `ops/launch.sh`) |
+| before the run | the store refuses a stale write (else fencing cannot work) | `ckpt.py probe-store --run <run>` (run by `launch/launch.sh`) |
 | after a NaN or loss spike | restore an older step, skip some batches, continue on a new branch | `TRAIN_EXTRA="--from-step K --skip 5 --branch b1"` |
 | daily, as its own job | delete old checkpoints, never protected / pinned / latest ones | `ckpt.py retention`, `run_retention()` |
 | for Teams 09/11/12 | export one checked `safetensors` file | `export_safetensors()`, DeepSpeed: `ds_ckpt.export_ds()` |
@@ -195,6 +195,20 @@ run is marked `<branch>-resharded-w<N>`.
 | `78` | "fatal": NaN, loss spike, failed checks, environment mismatch. Retrying will not help | **hold** and page a person (`RequeueExitHold=78`) |
 | anything else | unexplained crash (1, 137, 139…) | the job wrapper turns it into 75; **3 crashes in 30 min → 78** |
 
+Without Slurm (a single machine, the TSAI runner, the CPU tests), `ckpt/supervisor.py` applies the same rules
+itself: it runs the trainer as a child process and starts the same command again after a `75` or a crash, so
+the trainer restores the newest COMPLETE checkpoint (MANIFEST written, `latest.json` moved). It stops on `0`
+and `78`, after **3 crashes in 30 minutes** (same `CRASHLOOP_N` / `CRASHLOOP_WINDOW_S` as the job wrapper),
+after `--max-restarts` crashes (default 10) and after `--max-stops` exits 75 (default 100; 75 is the normal
+time-limit path, so it has its own larger limit). A stop signal (SIGTERM, or Ctrl-C passed on as SIGTERM) is
+passed to the trainer and no new trainer starts after it. It logs one JSON line per attempt (`--log`, and
+`supervisor.*` events).
+Proof: `jobs/restart_test/` (SIGKILL on CPU, equal loss), result in `results/restart_cpu.txt`.
+
+```bash
+RUN_ID=r1 V5_REMOTE_ROOT=/shared/ckpt python ckpt/supervisor.py --log out/supervisor.jsonl -- python my_train.py
+```
+
 ### The two "do not save" guards
 
 - **NaN guard:** checked before every save. A NaN/Inf state is never saved; exit 78.
@@ -259,6 +273,7 @@ old branch stays, so the run can be replayed exactly later. You can also restart
 |---|---|
 | `ckpt.py` | the `Checkpointer` (save, background upload and commit, restore with all checks), `run_retention`, `export_safetensors`, and a small CLI |
 | `store.py` | one interface, two stores: `LocalStore` (a folder) and `S3Store` (boto3: multipart above 64 MB, retries, SHA256 checksums). `open_store("s3://…")` picks S3 |
+| `supervisor.py` | restarts a killed or saved-and-stopped trainer from its last COMPLETE checkpoint, with crash, 75 and crash-loop limits; logs every attempt. Tests: `test_supervisor.py` |
 | `loader_contract.py` | the test Teams 01/02's real data loader must pass: `state_dict` (**one global ledger offset, the same on every rank**), `load_state_dict`, `next_batch_id`, `add_skip`, and a resume at another world size |
 In `support/` (optional): `tests/test_ckpt.py` (tests T1–T13, below), `tools/bench_save.py` (measures the real
 stall on a GPU: GPU-to-host copy speed, sync and async save), and `simulation/trainer/train.py`, a tiny trainer

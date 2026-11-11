@@ -1,30 +1,22 @@
-"""Step timing that does not change what it measures.  [implemented]
+"""Step timing from CUDA events on the work's stream, read back after the step; on CUDA nothing here syncs inside
+a timed step.
 
-GPU work is asynchronous: time.time() around loss.backward() measures how fast the CPU *queued* the
-kernels, and a synchronize() around every part removes the CPU/GPU overlap the step really has. So
-every number here comes from CUDA events recorded on the stream the work runs on, and is read back
-after the step. Nothing in this file synchronizes inside a timed step.
-
-  sync(device)                       wait for cuda / mps / cpu (only outside a timed step)
-  StepTimer(device)                  one event pair per step: start() / stop(); times_ms() syncs once
-  stats(xs)                          median, p10, p90, iqr, min, max, n, spread_pct (the numbers we gate on),
-                                     plus mean and std for information (Task 2 of G6_Team_Task_Plan.md).
-  Buckets(device)                    wall-clock seconds per named bucket (bench: startup, first_step, warmup)
+  sync(device)                       wait for the device (only outside a timed step)
+  StepTimer(device)                  one event pair per step
+  stats(xs)                          median, p10, p90, iqr, min, max, n, spread_pct, mean, std
+  Buckets(device)                    wall-clock seconds per named bucket (startup, first_step, warmup)
   EventPool()                        reusable CUDA events, so a timed step allocates none
   EventRecorder(device, max_level)   layer mode: the recorder protocol of perfkit/regions.py
   ProfilerRecorder(max_level)        trace mode: record_function + NVTX ranges with the same names
-  backward_segments(points, ...)     bwd:<part> times cut from mark() points (bench.py step 6)
-  aggregate(steps)                   per-region stats over steps, with level and calls_per_step
+  backward_segments(points, ...)     bwd:<part> times cut from mark() points
+  step_parts(collected, max_level)   every part of one recorded step: its regions plus its backward segments
+  aggregate(steps)                   per-region stats over steps
   paired_overhead(seq)               recorder cost from neighbouring on / off steps
-  kernel_summary(kernels, steps)     top GPU ops, GPU busy %, kernels per step (trace mode)
+  profiler_device_events(prof)       the GPU work of a finished profiler run
+  kernel_summary(kernels, steps)     top GPU ops, GPU busy %, kernels per step
   count_syncs(fn)                    host syncs a call makes, and the source lines that make them
 
-Rules (docs/PLAN.md 2.5): no synchronize / .item() / print inside a timed step; read events after
-the steps; gate on medians and percentiles. mean and std are reported next to them but never gated:
-one slow step moves the mean, which is why the 5% check uses the median.
-
-On CPU, perf_counter is exact (CPU work is synchronous). On MPS there are no timing events we rely
-on, so StepTimer and EventRecorder synchronize at every boundary there; MPS numbers are flagged.
+Rules: docs/PARTS.md (Rules, 4). On MPS the timers sync at every boundary, and bench flags the numbers.
 """
 from __future__ import annotations
 
@@ -38,7 +30,7 @@ from pathlib import Path
 
 import torch
 
-# mean and std are new (Task 2): the team plan asks for "p50, p90, mean and std". They are extra keys, so
+# mean and std were added after the other keys, for information only. They are extra keys, so
 # every reader of the old keys (bench, report, schema.validate_run) is unaffected.
 STAT_KEYS = ("median", "p10", "p90", "iqr", "min", "max", "n", "spread_pct", "mean", "std")
 
@@ -67,12 +59,7 @@ def _quantile(sorted_xs, q):
 
 
 def stats(xs) -> dict:
-    """median, p10, p90, iqr (p75 - p25), min, max, n, and spread_pct = (p90 - p10) / median * 100.
-    Also mean and std (sample standard deviation, n - 1; 0.0 for a single value), for information only.
-
-    spread_pct is the quick check for the 5% gate: a part whose own p10..p90 spread is above ~5% is
-    unlikely to agree within 5% between two runs.
-    """
+    """median, p10, p90, iqr, min, max, n and spread_pct = (p90 - p10) / median * 100; mean and std for information."""
     a = sorted(float(x) for x in xs)
     if not a:
         return {k: (0 if k == "n" else None) for k in STAT_KEYS}
@@ -83,7 +70,7 @@ def stats(xs) -> dict:
         "iqr": _quantile(a, 0.75) - _quantile(a, 0.25),
         "min": a[0], "max": a[-1], "n": len(a),
         "spread_pct": (p90 - p10) / med * 100 if med else None,
-        # Task 2: the plan asks for mean and std. n - 1 (sample std) because the steps are a sample of what the
+        # mean and std for information. n - 1 (sample std) because the steps are a sample of what the
         # GPU can do; one value has no spread, so 0.0.
         "mean": sum(a) / len(a),
         "std": math.sqrt(sum((x - sum(a) / len(a)) ** 2 for x in a) / (len(a) - 1)) if len(a) > 1 else 0.0,
@@ -91,19 +78,12 @@ def stats(xs) -> dict:
 
 
 class StepTimer:
-    """Times whole steps.
-
-        t = StepTimer(device)
-        for ...:
-            t.start(); step(); t.stop()
-        ms = t.times_ms()                 # one sync, then every step's time
-
-    CUDA: an event pair per step on the current stream, no sync until times_ms().
-    CPU: perf_counter (exact). MPS: synchronize + perf_counter at start and stop.
-    """
+    """Times whole steps: t.start(); step(); t.stop(), then t.times_ms() syncs once.
+    CUDA: an event pair per step. CPU: perf_counter. MPS: synchronize + perf_counter."""
 
     def __init__(self, device, expected_steps: int = 0):
         self.device = _dev(device)
+        # CUDA events; sync + wall clock on MPS; wall clock on CPU
         self.kind = {"cuda": "event", "mps": "sync"}.get(self.device.type, "wall")
         if expected_steps < 0:
             raise ValueError("expected_steps must be nonnegative")
@@ -165,14 +145,8 @@ class StepTimer:
         return out
 
     def reset(self):
-        """Clear recorded steps and recycle completed CUDA events.
-
-        Raises RuntimeError if a step is open. On CUDA, times_ms()
-        synchronizes completed measurements before events are reused.
-        events_created_during_steps counts Python CUDA Event objects allocated
-        by the fallback path and stays cumulative across reset() calls.
-        It does not track underlying CUDA runtime event-handle creation.
-        """
+        """Clear recorded steps and recycle completed CUDA events. Raises RuntimeError if a step is open.
+        events_created_during_steps is cumulative across resets."""
         if self._open is not None:
             raise RuntimeError("StepTimer.reset() during an open step")
         if self.kind == "event" and self._pairs:
@@ -186,15 +160,8 @@ class StepTimer:
 
 
 class Buckets:
-    """Wall-clock seconds per named bucket, for goodput / badput. bench uses startup, first_step and warmup
-    (run["goodput"]["badput_s"]); eval and checkpoint buckets are planned.
-
-        b = Buckets(device)
-        with b("startup"):  build()
-        b.seconds  -> {"startup": 3.2}
-
-    Synchronizes at bucket edges (the work must really be done), so never use it inside a timed step.
-    """
+    """Wall-clock seconds per named bucket: with b("startup"): build(); b.seconds -> {"startup": 3.2}.
+    Syncs at bucket edges, so never use it inside a timed step."""
 
     def __init__(self, device):
         self.device = _dev(device)
@@ -291,27 +258,52 @@ class _Span:
         return False
 
 
+class QueueFill:
+    """Layer mode with bench.layer_prefill (CUDA): fill() waits for the GPU, then queues a GPU busy-wait of ms.
+    Python sends the step while the GPU waits, so the GPU then runs every part back to back: the time between a
+    part's two events is GPU time, not the time Python took to send the part (which depends on the CPU).
+    layer_pass sizes ms in its warmup steps."""
+
+    def __init__(self, device, max_ms: float = 500.0):
+        self.device = _dev(device)
+        self.max_ms = max_ms
+        self.ms = 0.0
+        self.cycles_per_ms = self._calibrate()
+
+    def _calibrate(self) -> float:
+        """GPU clock cycles of torch.cuda._sleep per ms, timed once with two events."""
+        torch.cuda._sleep(1000)                       # load the kernel first
+        a, b = torch.cuda.Event(enable_timing=True), torch.cuda.Event(enable_timing=True)
+        cycles = 20_000_000
+        a.record()
+        torch.cuda._sleep(cycles)
+        b.record()
+        b.synchronize()
+        return cycles / max(a.elapsed_time(b), 1e-3)
+
+    def fill(self):
+        sync(self.device)
+        if self.ms > 0:
+            torch.cuda._sleep(int(self.ms * self.cycles_per_ms))
+
+
 class EventRecorder:
-    """Layer mode: the recorder of perfkit/regions.py (protocol: max_level, region, point, collect).
+    """Layer mode recorder (perfkit/regions.py protocol), one per timed step; spans, points = rec.collect() later.
+    Safe from the autograd thread (locked appends, events on the current stream). collect() waits for this step only.
+    check_idle: before each event, count the times the GPU had already finished the previous one (self.idle):
+    there the GPU ran out of queued work, so the next part's time includes Python's time to send it.
 
-    One recorder per timed step:
-        rec = EventRecorder(device, max_level=2, pool=pool)
-        with use_recorder(rec):  step()
-        ... later: spans, points = rec.collect()
+    torch.compile: a region inside the compiled model makes its events in the graph, and Dynamo hands them back as plain
+    torch.Event (torch._dynamo.utils.build_event -> torch._C.Event), not torch.cuda.Event. torch.cuda.Event.elapsed_time
+    takes only a torch.cuda.Event, and torch.Event.elapsed_time cannot read a torch.cuda.Event's timestamp, so the two
+    kinds never time against each other. collect() then times each pair within its kind; to place both kinds on one
+    zero, every recorder made after a step that had plain events also records an origin of the other kind right after
+    its own (self._bridge, outside the timed step and outside compiled code). Times that still cannot be placed (the
+    first such step has no bridge) are left out and counted in self.unplaced. With only CUDA events, nothing changes."""
 
-    region(name, level) -> context that records an event at entry and exit. point(name, level) records
-    one event (mark() calls it when the gradient reaches a tensor). Both may be called from the autograd
-    thread during a CUDA backward: appends are locked, and events go on the calling thread's current
-    stream, which autograd sets to the forward's stream.
+    _plain_events_seen = False     # class-wide: set by the first collect() that meets a plain torch.Event
 
-    collect() waits for this step's last event only (not the whole device) and returns
-        spans:  [(full_name, level, ms)]
-        points: [(name, level, Clock)] in the order they happened
-    then gives the events back to the pool. ready() says, without waiting, whether collect() would wait.
-    Cost: a few microseconds of CPU per event, ~0 GPU.
-    """
-
-    def __init__(self, device, max_level: int = 2, pool: EventPool | None = None):
+    def __init__(self, device, max_level: int = 2, pool: EventPool | None = None, check_idle: bool = False):
         self.device = _dev(device)
         self.max_level = max_level
         self.kind = {"cuda": "event", "mps": "sync"}.get(self.device.type, "wall")
@@ -319,11 +311,26 @@ class EventRecorder:
         self._lock = threading.Lock()
         self._spans, self._points = [], []
         self._last = None
+        self.check_idle = check_idle and self.kind == "event"
+        self.idle = 0
         self._origin = self._now()
+        self._bridge = self._record_bridge() if self.kind == "event" and EventRecorder._plain_events_seen else None
+        self.unplaced = 0
         self._result = None
+
+    def _record_bridge(self):
+        """An origin of the other event kind, recorded right after self._origin on the same (current) stream."""
+        if isinstance(self._origin, torch.cuda.Event):
+            ev = torch.Event(self.device, enable_timing=True)
+        else:
+            ev = torch.cuda.Event(enable_timing=True)
+        ev.record()
+        return ev
 
     def _now(self):
         if self.kind == "event":
+            if self.check_idle and self._last is not None and self._last.query():
+                self.idle += 1
             ev = self.pool.get()
             ev.record()
             self._last = ev
@@ -341,9 +348,11 @@ class EventRecorder:
             self._points.append((name, level, m))
 
     def n_events(self) -> int:
+        """Events this step used: the origin, two per span, one per point (bench sizes its EventPool from it)."""
         return 1 + 2 * len(self._spans) + len(self._points)
 
     def ready(self) -> bool:
+        """True when collect() would not wait."""
         return self._result is not None or self.kind != "event" or self._last.query()
 
     def collect(self) -> Collected:
@@ -358,11 +367,14 @@ class EventRecorder:
                 return a.elapsed_time(b)
 
             o = self._origin
-            spans = [(n, lv, ms(s, e)) for n, lv, s, e in self._spans]
-            starts = [ms(o, s) for _, _, s, _ in self._spans]
-            points = [(n, lv, Clock(ms(o, m))) for n, lv, m in self._points]
             used = [o] + [m for _, _, m in self._points] + [e for _, _, s, e in self._spans] + \
                    [s for _, _, s, _ in self._spans]
+            if all(isinstance(ev, torch.cuda.Event) for ev in used):     # every event a CUDA event: as before
+                spans = [(n, lv, ms(s, e)) for n, lv, s, e in self._spans]
+                starts = [ms(o, s) for _, _, s, _ in self._spans]
+                points = [(n, lv, Clock(ms(o, m))) for n, lv, m in self._points]
+            else:                                                         # plain torch.Event from compiled code
+                spans, starts, points = self._collect_mixed(ms)
             self.pool.put(used)
         else:
             o = self._origin
@@ -372,6 +384,47 @@ class EventRecorder:
         self._spans, self._points, self._last = [], [], None
         self._result = Collected(spans, points, starts)
         return self._result
+
+    def _collect_mixed(self, ms):
+        """collect() for a step with plain torch.Event objects (see the class doc). A pair of one kind is timed directly;
+        anything else goes through the origin of each kind (self._origin and self._bridge, recorded back to back).
+        A span whose time cannot be found is left out; a start that cannot be placed is None (step_parts drops it);
+        a point that cannot be placed is left out. Each one left out adds 1 to self.unplaced."""
+        def cuda(ev):
+            return isinstance(ev, torch.cuda.Event)
+
+        zero = {cuda(self._origin): self._origin}
+        if self._bridge is not None:
+            zero[cuda(self._bridge)] = self._bridge
+
+        def at(ev):                                    # ms since the origin, None without an origin of ev's kind
+            z = zero.get(cuda(ev))
+            return None if z is None else ms(z, ev)
+
+        def between(s, e):
+            if cuda(s) == cuda(e):
+                return ms(s, e)
+            a, b = at(s), at(e)
+            return None if a is None or b is None else b - a
+
+        spans, starts = [], []
+        for n, lv, s, e in self._spans:
+            t = between(s, e)
+            if t is None:
+                self.unplaced += 1
+                continue
+            spans.append((n, lv, t))
+            starts.append(at(s))
+        points = []
+        for n, lv, m in self._points:
+            t = at(m)
+            if t is None:
+                self.unplaced += 1
+                continue
+            points.append((n, lv, Clock(t)))
+        self.unplaced += sum(st is None for st in starts)
+        EventRecorder._plain_events_seen = True
+        return spans, starts, points
 
 
 class _ProfRange:
@@ -413,26 +466,15 @@ class ProfilerRecorder:
 
 # ------------------------------------------------------------------------------ turning events into parts
 
-# A backward segment takes the level of the forward region with the same name (bench.py step 6).
+# A backward segment takes the level of the forward region with the same name (backward_segments).
 # These are used only when that forward region was not recorded (its level is above max_level).
 _SEGMENT_LEVEL_FALLBACK = {"embed": 2, "head+loss": 2, "stack": 1}
 
 
 def backward_segments(points, fwd_levels: dict, max_level: int, with_start: bool = False) -> list:
-    """Cut bwd:<part> times from the points mark() recorded during one backward.
-
-    points: [(name, level, Clock)] in the order they happened, bracketed by "__bwd_start__" and
-    "__bwd_end__". A point of level L closes "bwd:<name>", which starts at the previous point of level
-    <= L. "__bwd_end__" closes "bwd:embed", which starts at the last "stack" point.
-
-        plain stack:      __bwd_start__  head+loss  block8 .. block0  stack  __bwd_end__
-          -> bwd:head+loss, bwd:block8 .. bwd:block0, bwd:stack (= all blocks), bwd:embed
-        reversible stack: __bwd_start__  head+loss  stack  __bwd_end__   (its backward times its blocks)
-          -> bwd:head+loss, bwd:stack, bwd:embed
-
-    fwd_levels: {"fwd:<name>": level} from the same step. Returns [(name, level, ms)] with level <= max_level
-    (with_start: [(name, level, ms, start ms)]).
-    """
+    """Cut bwd:<part> times from the mark() points of one backward, bracketed by __bwd_start__ / __bwd_end__.
+    A level-L point closes bwd:<name> from the previous point of level <= L; __bwd_end__ closes bwd:embed.
+    Returns [(name, level, ms)] with level <= max_level (with_start: plus the start ms)."""
     names = [p[0] for p in points]
     if "__bwd_start__" not in names:
         return []
@@ -442,13 +484,13 @@ def backward_segments(points, fwd_levels: dict, max_level: int, with_start: bool
     for j, (name, lvl, clk) in enumerate(seq):
         if j == 0:
             continue
-        if name == "__bwd_end__":
+        if name == "__bwd_end__":                  # bwd:embed: from the last "stack" point to the end
             start = next((p for p in reversed(seq[:j]) if p[0] == "stack"), None)
             if start is not None:
                 level = fwd_levels.get("fwd:embed", _SEGMENT_LEVEL_FALLBACK["embed"])
                 out.append(("bwd:embed", level, clk.ms_since(start[2]), start[2].ms))
             break
-        k = j - 1
+        k = j - 1                                  # start: the previous point of the same or a coarser level
         while k > 0 and seq[k][1] > lvl:
             k -= 1
         level = fwd_levels.get(f"fwd:{name}", _SEGMENT_LEVEL_FALLBACK.get(name, lvl))
@@ -464,17 +506,14 @@ def step_parts(collected: Collected, max_level: int) -> list:
     for name, level, _ in spans:
         if name.startswith("fwd:"):
             fwd_levels[name] = min(level, fwd_levels.get(name, level))
-    parts = [(n, lv, ms, st) for (n, lv, ms), st in zip(spans, collected.starts)]
+    parts = [(n, lv, ms, st) if st is not None else (n, lv, ms)      # None: a compiled region not placed in time
+             for (n, lv, ms), st in zip(spans, collected.starts)]
     return parts + backward_segments(points, fwd_levels, max_level, with_start=True)
 
 
 def aggregate(steps: list) -> dict:
     """steps: one list of (name, level, ms[, start ms]) per step -> {name: stats + level + calls_per_step}.
-
-    A part called several times in a step (opt.muon.ns once per matrix) is summed within the step,
-    then summarised over steps. A step that never entered a part counts as 0 ms for it.
-    Parts are listed in the order they run (median first start), a parent before its children.
-    """
+    Repeated calls are summed within a step; a missing part counts 0 ms; order is by median first start."""
     order, level, first = {}, {}, defaultdict(list)
     per_step = []
     for parts in steps:
@@ -491,7 +530,7 @@ def aggregate(steps: list) -> dict:
         per_step.append((tot, calls))
     meds = {n: stats([t.get(n, 0.0) for t, _ in per_step])["median"] for n in order}
 
-    def key(n):
+    def key(n):                                    # median first start; parts never started go last
         if first.get(n):
             return (stats(first[n])["median"], -meds[n], order[n])
         return (math.inf, 0, order[n])
@@ -500,17 +539,13 @@ def aggregate(steps: list) -> dict:
         st = stats([t.get(name, 0.0) for t, _ in per_step])
         c = sorted(cl.get(name, 0) for _, cl in per_step)
         st["level"] = level[name]
-        st["calls_per_step"] = c[len(c) // 2]
+        st["calls_per_step"] = c[len(c) // 2]          # the median step's call count
         out[name] = st
     return out
 
 
 def paired_overhead(seq) -> float | None:
-    """seq: [(recorder_on, ms)] in step order, alternating. Returns the recorder overhead in %.
-
-    Each on-step is compared with the mean of its off-step neighbours, so slow drift (clocks, heat)
-    cancels out; the median of those ratios is the overhead.
-    """
+    """seq: [(recorder_on, ms)] alternating. Recorder overhead in %: median of each on-step over its off neighbours."""
     ratios = []
     for i, (on, ms) in enumerate(seq):
         if not on:
@@ -526,11 +561,7 @@ def paired_overhead(seq) -> float | None:
 # ------------------------------------------------------------------------------ trace mode
 
 def profiler_device_events(prof) -> list:
-    """GPU activity (kernels, memcpy, memset) from a finished torch.profiler run: [(name, start_us, end_us)].
-
-    record_function ranges (our region names, torch's "Optimizer.step#Muon.step") also come back as
-    GPU-side events, spanning the gaps between kernels. They are user annotations, not work: counting
-    them inflated gpu_busy_pct and kernels_per_step and put region names in top_ops."""
+    """Kernels, memcpy and memset of a finished profiler run as [(name, start_us, end_us)]; annotations excluded."""
     cuda = getattr(torch.autograd.DeviceType, "CUDA", None)
     out = []
     for e in prof.events():
@@ -541,23 +572,18 @@ def profiler_device_events(prof) -> list:
 
 
 def _is_kernel(name: str) -> bool:
+    """True for compute kernels; copies and memsets are counted apart."""
     n = name.lower()
     return not (n.startswith("memcpy") or n.startswith("memset"))
 
 
 def kernel_summary(device_events, n_steps: int, top: int = 15) -> dict:
-    """top_ops, gpu_busy_pct and kernels_per_step from [(name, start_us, end_us)] over n_steps steps.
-
-    gpu_busy_pct = time the GPU runs anything / span from the first to the last activity. Gaps inside
-    that span are the GPU waiting for the CPU: launch overhead, host syncs (MoE loop dispatch),
-    Python. The bench traces steps back to back, so the gaps between steps (the next batch, the
-    optimizer's host work) are counted too: they are idle GPU time a training run really has.
-    """
+    """top_ops, gpu_busy_pct (busy time / first-to-last span, gaps between steps included) and kernels_per_step."""
     if not device_events:
         return {"top_ops": [], "gpu_busy_pct": None, "kernels_per_step": 0}
     n = max(1, n_steps)
     iv = sorted((s, e) for _, s, e in device_events)
-    busy, cur_s, cur_e = 0.0, iv[0][0], iv[0][1]
+    busy, cur_s, cur_e = 0.0, iv[0][0], iv[0][1]     # merge overlapping intervals: time the GPU runs anything
     for s, e in iv[1:]:
         if s > cur_e:
             busy += cur_e - cur_s
@@ -581,11 +607,8 @@ def kernel_summary(device_events, n_steps: int, top: int = 15) -> dict:
 
 
 def count_syncs(fn, root: Path | None = None) -> tuple:
-    """Run fn() with torch.cuda.set_sync_debug_mode("warn") and count host syncs.
-
-    Returns (count, {"file.py:line": count}): every .item(), nonzero(), tok.any() in an if, and so on.
-    Each one stops the CPU from queueing work ahead of the GPU (docs/PARTS.md section 3). CUDA only.
-    """
+    """Host syncs fn() makes (set_sync_debug_mode "warn"): (count, {"file.py:line": count}), paths relative to
+    root when they are inside it. CUDA only."""
     if not torch.cuda.is_available():
         return 0, {}
     prev = torch.cuda.get_sync_debug_mode()

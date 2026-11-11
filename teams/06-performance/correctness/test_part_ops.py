@@ -1,15 +1,7 @@
-"""perfkit/part_ops.py: the slowest operations inside one region of a trace.
+"""perfkit/part_ops.py: the slowest operations inside one region of a trace (no GPU needed).
 
-  * ops_in: an operation is the outermost CPU op that starts inside the region; a nested op (aten::_embedding_bag
-    inside aten::embedding_bag) is not a row of its own; an op that started before the region and contains it is
-    skipped; calls count the instances that launched GPU work; kernels and copies are counted apart; GPU work that
-    runs after the CPU range ends still counts; the kernels of other parts do not.
-  * the region summary: GPU time, span, busy share (overlapping kernels counted once).
-  * a backward segment (cut between mark() points) credits the backward node, not the _MarkBackward that holds the
-    start point.
-  * render, the command line (--run header, --json, exit code 1 for a region not in the trace) and a trace with no
-    GPU events (a CPU run).
-No GPU needed.
+Covers which op is credited (outermost in the region, not one that contains it), calls and kernel counts, GPU work
+after the CPU range, the region summary, backward segments, render, the command line and a CPU-only trace.
 """
 from __future__ import annotations
 

@@ -1,0 +1,50 @@
+{
+ "started": "2026-11-02T17:33:02",
+ "platform": "kaggle",
+ "output_dir": "/kaggle/working/eval_mini_out",
+ "run_by": "shishir13",
+ "notebook_version": "ec7db60966d6+phi3tol0.10",
+ "settings": {
+  "LIMIT": null,
+  "FORMATS": [
+   "bf16",
+   "Q4_K_M"
+  ],
+  "BASE": "bf16",
+  "MODEL": "microsoft/Phi-3-mini-4k-instruct",
+  "REVISION": "f39ac1d28e925b323eae81227eaba4464caced4e",
+  "LLAMA_TAG": "b11669",
+  "LLAMA_CPP_PYTHON": "0.3.36",
+  "BF16_FALLBACK_GPU_LAYERS": 12
+ },
+ "python": "3.13.15",
+ "formats": {
+  "bf16": {
+   "gpu_layers": -1,
+   "gguf_bytes": 7643296416,
+   "wall_clock_s": 2941,
+   "finished": "2026-11-02T18:55:48"
+  },
+  "Q4_K_M": {
+   "gpu_layers": -1,
+   "gguf_bytes": 2420626080,
+   "wall_clock_s": 1264,
+   "finished": "2026-11-02T19:16:52"
+  }
+ },
+ "gpu": "Tesla T4, 15360 MiB, 580.178.04\nTesla T4, 15360 MiB, 580.178.04",
+ "cuda_arch": [
+  "75"
+ ],
+ "packages": {
+  "python": "3.13.15",
+  "llama_cpp_python": "0.3.36",
+  "lm_eval": "0.4.13",
+  "datasets": "5.1.0",
+  "gpu_offload": true,
+  "torch_visible": false,
+  "transformers_visible": false
+ },
+ "bf16_gguf_bytes": 7643296416,
+ "finished": "2026-11-02T19:16:54"
+}

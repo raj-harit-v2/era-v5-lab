@@ -1,4 +1,4 @@
-"""perfkit/report.py.
+"""perfkit/report.py: the 5% comparison's refusals and A/B labels, and the run Markdown diagnostics.
 
   * compare(): refuses a baseline pair that does not time the same committed code (other commit, dirty or unknown
     tree) or that changes a MoE setting other than dispatch; accepts and labels A/B a pair that differs only in
@@ -52,6 +52,24 @@ def test_same_commit_cross_entropy_variants_can_be_compared():
     _, ok, problems = report.compare(a, b, 5.0, 2, 0.0)
     assert ok and problems == []
     assert "model.ce_impl: torch vs fused" in report.ab_note(a, b)
+
+
+def test_same_commit_vocab_padding_variants_can_be_compared():
+    a, b = _pair()
+    a["config"]["model"].update(vocab_pad_multiple=1)
+    b["config"]["model"].update(vocab_pad_multiple=128)
+    _, ok, problems = report.compare(a, b, 5.0, 2, 0.0)
+    assert ok and problems == []
+    assert "model.vocab_pad_multiple: 1 vs 128" in report.ab_note(a, b)
+
+
+def test_same_commit_vocab_pad_mode_variants_can_be_compared():
+    a, b = _pair()
+    a["config"]["model"].update(vocab_pad_multiple=128, vocab_pad_mode="slice")
+    b["config"]["model"].update(vocab_pad_multiple=128, vocab_pad_mode="mask")
+    _, ok, problems = report.compare(a, b, 5.0, 2, 0.0)
+    assert ok and problems == []
+    assert "model.vocab_pad_mode: slice vs mask" in report.ab_note(a, b)
 
 
 def test_same_implementation_is_not_labelled_ab():

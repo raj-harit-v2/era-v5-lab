@@ -1,0 +1,27 @@
+{
+  "command": [
+    "/tmp/uv-venv/bin/python",
+    "/marimo/attention-smoke-lab/era-v5-lab/teams/05-architecture/harness/train_week2.py",
+    "--config",
+    "/marimo/attention-smoke-lab/era-v5-lab/teams/05-architecture/configs/arms/t2.yaml",
+    "--tokenizer",
+    "/marimo/attention-smoke-lab/inputs/tokenizer_v0.json",
+    "--byte-table",
+    "/marimo/attention-smoke-lab/inputs/tables/raw_table_P32.npz",
+    "--train-data",
+    "/marimo/attention-smoke-lab/full-shape-probe/synthetic-long-train.jsonl",
+    "--heldout-data",
+    "/marimo/attention-smoke-lab/inputs/synthetic_heldout.jsonl",
+    "--device",
+    "cuda",
+    "--seed",
+    "1234",
+    "--smoke",
+    "--smoke-steps",
+    "3",
+    "--no-checkpoint",
+    "--out",
+    "/marimo/attention-smoke-lab/full-shape-probe/attn-0"
+  ],
+  "source": "c9cac5a0d5811e712212a37a01d6c540346ff1a1"
+}

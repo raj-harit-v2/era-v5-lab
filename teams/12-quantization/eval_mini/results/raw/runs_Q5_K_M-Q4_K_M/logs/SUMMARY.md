@@ -1,7 +1,5 @@
 # runs_Q5_K_M-Q4_K_M: log summary
 
-Full logs (~2.0 MB) were cut to this summary for the PR; the originals are in this folder's history on SreekanthZipsy/era-v5-lab, branch G12-Week1 (commit 2e668bd).
-
 - Run by: therahulbhati; platform kaggle; GPU Tesla T4, 15360 MiB, 580.178.04 + Tesla T4, 15360 MiB, 580.178.04; CUDA arch 75
 - Notebook version: 70829160c1bd
 - Model allenai/OLMoE-1B-7B-0924 @ 6d84c48581ec; LIMIT None; formats Q5_K_M, Q4_K_M

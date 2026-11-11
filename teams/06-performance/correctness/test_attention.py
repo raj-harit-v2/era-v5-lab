@@ -1,44 +1,13 @@
 """Attention: models.gpt.GQAttention against a naive fp64 attention.
 
-Reference (written from the definition, never by calling the fast code): from the module's c_attn / c_proj weights,
-q, k, v (GQA: k, v have n_kv_head heads; query head h uses kv head h // (n_head / n_kv_head)) ->
-softmax(q k^T / sqrt(d_head) + causal mask) v -> c_proj. One loop iteration per query head, an explicit mask and
-an explicit softmax: no F.scaled_dot_product_attention and no repeat_interleave.
-RoPE (model.position = rope) in the reference: ref_rope rotates each query and key head pair by pair, from the
-formula: pair i = (x[i], x[i + hd/2]), angle t * theta^(-2i / hd) with the angle of each pair from Python floats
-(no models.gpt.rope_tables, no apply_rope).
+Reference (from the definition): q, k, v from c_attn (query head h uses kv head h // (n_head / n_kv_head)) ->
+softmax(q k^T / sqrt(d_head) + causal mask) v -> c_proj, one loop per query head, explicit mask and softmax.
+ref_rope rotates each pair from the formula with Python-float angles (no rope_tables, no apply_rope).
 
-Pairs (fast fp32 vs reference fp64; outputs, the input gradient and all parameter gradients):
-  attention.causal              n_kv_head = n_head / 2, SDPA enable_gqa path
-  attention.causal.mha          n_kv_head = n_head      (plain multi-head)
-  attention.causal.mqa          n_kv_head = 1, SDPA enable_gqa path
-  attention.causal.lab          n_kv_head = n_head / 4 (lab_small: 8 query heads share 2 kv heads), SDPA enable_gqa
-  attention.causal.fallback     n_kv_head = n_head / 2, repeat_interleave path (models.gpt._SDPA_GQA = False)
-  attention.causal.mqa_fallback n_kv_head = 1, repeat_interleave path
-  attention.causal.lab_fallback n_kv_head = n_head / 4, repeat_interleave path
-  attention.causal.eager        n_kv_head = n_head / 2, attn_impl = eager (explicit softmax, G5 config_v0)
-  attention.causal.eager_mha    n_kv_head = n_head,     eager
-  attention.causal.eager_mqa    n_kv_head = 1,          eager
-  attention.causal.eager_lab    n_kv_head = n_head / 4, eager
-  attention.causal.eager_bf16   n_kv_head = n_head / 2, eager under bf16 autocast (TOLERANCES[bfloat16])
-  attention.rope                position = rope, theta 10000, n_kv_head = n_head / 2, SDPA enable_gqa path
-  attention.rope.mha / .mqa     position = rope, n_kv_head = n_head / 1, SDPA
-  attention.rope.fallback       position = rope, n_kv_head = n_head / 2, repeat_interleave path
-  attention.rope.eager          position = rope, n_kv_head = n_head / 2, eager
-  attention.rope.theta500       position = rope, theta 500: the angles wrap many times within T = 37
-  attention.rope.bf16           position = rope, SDPA under bf16 autocast (TOLERANCES[bfloat16])
-T = 37 is not a power of 2. Weights and biases are random and large enough that the softmax is not uniform, so
-the bias terms and the mask matter.
-
-The 1.01 drill for every pair runs in test_framework.py (test_every_registered_pair_scaled_fails).
-
-Property tests (no pair): causality on every code path (a change in the future leaves the past unchanged),
-the two GQA code paths agree with each other, and eager agrees with SDPA. RoPE: the scores depend only on the
-relative position (a query and key shifted together give the same score), the rotation keeps every pair's norm,
-and position 0 is not rotated.
-
-The gradient of the k part of c_attn.bias is exactly 0: adding q . b_k to every score of a query shifts its
-softmax row by a constant. That is why errors are taken over whole tensors; a k-bias-only error would be 0 / 0.
+Pairs: attention.causal[.mha|.mqa|.lab] (SDPA), [.fallback|.mqa_fallback|.lab_fallback] (repeat_interleave),
+.eager[_mha|_mqa|_lab|_bf16]; attention.rope[.mha|.mqa|.fallback|.eager|.theta500|.bf16]. T = 37.
+Properties: causality on every path, the paths agree, RoPE scores depend only on relative position.
+The k part of c_attn.bias has an exact zero gradient, so errors are taken over whole tensors.
 """
 from __future__ import annotations
 

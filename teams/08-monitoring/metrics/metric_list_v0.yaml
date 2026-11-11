@@ -56,25 +56,29 @@ metrics:
 - name: gradient_norm
   unit: gradient_units
   cadence: Every training step
-  source: Not written yet. train.py already calculates it (clip_grad_norm_) but does not log it. Proposed for G5
-    to log.
+  source: G5 train.py, one row per step in metrics.jsonl. The value that clip_grad_norm_ returns.
   notes: Size of all gradients combined, before clipping. To confirm for real runs - combining across GPUs.
 # Clipping on most steps is worth checking. The threshold may be wrong or training may be unstable.
 - name: gradient_clipping_applied
   unit: boolean
   cadence: Every training step
-  source: Not written yet. Proposed for G5 to work out from gradient_norm and the clipping threshold
-    (run.grad_clip).
-  notes: True when gradient_norm is above the threshold and the gradients were scaled down.
+  source: G5 train_week2.py writes it as true / false (gradient_norm > run.grad_clip). metrics_writer.py stores it as
+    1 / 0, and works it out when the trainer passes gradient_norm and grad_clip (the threshold) instead.
+  notes: 1 when gradient_norm is above the threshold and clip_grad_norm_ scaled the gradients down, else 0. Equal to
+    the threshold is 0. No value when gradient_norm is NaN or the threshold is missing. Grafana panel 19 shows the
+    share of clipped steps per step bucket; clipping on most steps is worth checking.
 # How big each update is compared with the weights. Very large may mean unstable training; very small may mean
 # learning has stalled.
 - name: update_weight_ratio
   unit: dimensionless
-  cadence: Every N training steps (N to be agreed)
-  source: Not written yet. Proposed for G5 to add around the optimizer step in train.py.
-  notes: Proposed formula is L2 norm of (weights after - weights before) / L2 norm of weights before. A copy of
-    the weights is needed only on the steps being measured. To agree - one value for the whole model or one per
-    layer, and what to do when the weights are zero.
+  cadence: Every 10 training steps by default (step % 10 == 0; every_n_steps is configurable, 1 in unit tests)
+  source: metrics_logger/metrics_writer.py compute_update_weight_ratio(...). G5 can call it around the optimizer
+    step and pass the scalar into MetricsWriter; not wired into train.py yet (G8-only helper keeps the PR inside
+    teams/08-monitoring/).
+  notes: One scalar for the whole model — ||lr * update||_2 / ||W||_2, i.e. sqrt(sum_p ||lr u_p||^2) /
+    sqrt(sum_p ||w_p||^2). Equals ||ΔW||_2 / ||W||_2 when each update is the parameter change (weights after -
+    weights before), or when update is the optimizer direction and lr is the effective step size. No value when
+    the weight norm is zero / not finite, or on non-logging steps. Grafana panel 24.
 # Are the experts sharing the work? A few experts getting most of the routing may mean routing has collapsed.
 - name: expert_load
   unit: fraction
@@ -86,10 +90,15 @@ metrics:
 # The main check in this list that the model improves on data it has not trained on. Helps spot overfitting.
 - name: validation_loss
   unit: nats
-  cadence: Each validation run
-  source: G5 evaluation script; not written by train.py.
-  notes: Loss on a fixed validation dataset for a given checkpoint. To confirm with G5 - who produces it, how it
-    is calculated and how often it runs.
+  cadence: Each validation run - G5 train_week2.py runs it at step 0, every run.eval_every_steps steps and at the
+    last step, so only those rows have it
+  source: G5 train_week2.py, from week2.evaluation.evaluate() in the same metrics.jsonl row, as val/nll_nats (the
+    summed loss) and val/scored_tokens. metrics_writer.py works out validation_loss = val/nll_nats /
+    val/scored_tokens.
+  notes: Mean loss in nats per scored token on G5's fixed held-out set (15 slices in official runs), the same quantity as
+    loss_ntp on training batches, so the two are compared on one axis (Grafana panel 20). Equal to
+    ln(val/perplexity). G5's main held-out number is val/bpb (bits per byte), which does not depend on the
+    tokenizer; validation_loss does, so compare it only between runs with the same tokenizer.
 
 # --- System metrics; G6 to supply ---
 # Are the GPUs busy? Low values may mean GPU time is being wasted.
@@ -108,6 +117,21 @@ metrics:
     (x 1,048,576).
   notes: Memory used on the whole GPU by all processes, not only PyTorch. Stored in bytes, while gpu_alloc_gb
     is in GiB, so convert before comparing them.
+# GPU heat. A hot GPU lowers its clocks (thermal slowdown), so steps get slower with no change in code or data.
+- name: gpu_temp_c
+  unit: degrees C
+  cadence: Every training step (per-step logger); 1 second in the GPU telemetry (gpu_telemetry_1s)
+  source: metrics_logger/gpu_thermal.py, NVML nvmlDeviceGetTemperature (NVML_TEMPERATURE_GPU) for the rank's own
+    GPU (LOCAL_RANK). Written nothing on a machine without an NVIDIA GPU. The writer also takes temp_c, the name
+    of G6's sampler field, and stores it as gpu_temp_c.
+  notes: GPU core temperature. Dashboard colours (panel 22) - green below 75, yellow from 75, red from 85.
+    The per-step value is one GPU (the writer runs on rank 0); every GPU is in gpu_telemetry_1s.
+- name: gpu_thermal_throttle
+  unit: 0 or 1
+  cadence: Every training step, with gpu_temp_c
+  source: metrics_logger/gpu_thermal.py, NVML clock throttle (clocks event) reasons of the same GPU.
+  notes: 1 when HW thermal slowdown (0x40) or SW thermal slowdown (0x20) is set, else 0. Other reasons (power
+    cap, idle, application clocks) do not count. A 1 next to slower steps means heat, not the code.
 # Model FLOPs utilization (MFU): how much of the GPUs' peak compute is actually used. G6 owns the method.
 - name: model_flops_utilization
   unit: fraction
@@ -127,3 +151,21 @@ metrics:
   notes: Time the training loop waits for the next batch. G6's data_ms times only the host-side next_batch() call,
     and today it is a run summary, not one value per step. To confirm with G6 - that this is the right boundary,
     and adding per-step values.
+# Data and tokenizer health. A rise means the tokenizer splits the batch's text into more tokens per byte, for
+# example a new language mix, a tokenizer swap, or text the normalizer did not expect.
+- name: tokens_per_byte
+  unit: tokens_per_byte
+  cadence: Every training step
+  source: G5 train_week2.py logs train/scored_tokens and train/utf8_bytes each step; the Grafana panel divides
+    them. A trainer that calls metrics_logger/tokens_per_byte.py logs tokens_per_byte directly.
+  notes: Scored (non-padding) tokens in the step's batch divided by the UTF-8 bytes they encode. Lower means
+    fewer tokens per byte. Summed over micro-batches and ranks before dividing. Reference for checking - G3's
+    harness measures the same tokenizer on held-out text (teams/03-tokenizer/COMPARE.md).
+- name: tokens_per_byte_by_lang
+  unit: tokens_per_byte
+  cadence: Every training step, when batch rows carry a language tag
+  source: metrics_logger/tokens_per_byte.py, given one G5 slice tag per row (DocumentWindows.window_slices).
+    Stored in metrics_raw as tokens_per_byte_by_lang.<slice>.
+  notes: The same ratio for each slice (en, code, math, sci, hi, bn, ta, te, kn, ml, mr, gu, pa, or, as). A slice
+    absent from a batch writes nothing that step. To confirm with G5 - tagging training rows (today only the
+    held-out set is built with sources_path).

@@ -1,0 +1,13 @@
+diff --git a/w3lib/html.py b/w3lib/html.py
+index a31d42b..0cff2ff 100644
+--- a/w3lib/html.py
++++ b/w3lib/html.py
+@@ -91,7 +91,7 @@ def replace_entities(
+                     return bytes((number,)).decode("cp1252")
+                 else:
+                     return chr(number)
+-            except ValueError:
++            except (ValueError, OverflowError):
+                 pass
+ 
+         return "" if remove_illegal and groups.get("semicolon") else m.group(0)

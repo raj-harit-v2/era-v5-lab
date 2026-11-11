@@ -1,7 +1,7 @@
 # G9 benchmark registry: which benchmark items go into the fingerprints.
 #
-# Rows follow teams/09-evaluation/benchmarks/benchmarks_v1.md, plus GSM8K,
-# FLORES-200 and IN22 (team decision, 25 Oct). Licences are as in benchmarks_v1.md.
+# Rows follow teams/09-evaluation/benchmarks_v1.md. GSM8K, FLORES-200 and IN22 are its
+# "Decontamination only" rows (team decision, 25 Oct). Licences are as in benchmarks_v1.md.
 # status = "active"  : built into the fingerprint set.
 #          "planned" : not built yet. 'reason' says what is missing.
 #          "skip"    : nothing to fingerprint. 'reason' says why.
@@ -178,7 +178,7 @@ code = ["{patch|diff_added}", "{test_patch|diff_added}"]
 
 [terminal_bench_2]
 name = "Terminal-Bench 2.0"
-status = "planned"
+status = "active"
 tags = ["code", "agentic"]
 licence = "Apache-2.0"
 repo = "harbor-framework/terminal-bench-2"
@@ -190,7 +190,6 @@ id = "{id}"
 texts = ["{instruction}"]
 code = ["{solution}"]
 canaries = ["{canary}"]
-reason = "Reader and pinned files ready (B1). A2 sets status = \"active\" when it builds fingerprints v2: the shipped set must match the active rows (test_shipped_set_matches_the_registry)."
 
 [tau2_bench]
 name = "tau2-bench"
@@ -202,11 +201,11 @@ reason = "Tasks are JSON files in a GitHub repo. Needs a reader for the task fil
 
 [bfcl_v3]
 name = "BFCL v3"
-status = "planned"
+status = "active"
 tags = ["code", "agentic"]
 licence = "Apache-2.0"
 repo = "ShishirPatil/gorilla"
-note = "GitHub ShishirPatil/gorilla @ cd9429c, the last commit with v3 data; the Hugging Face copy differs in 8 of these 17 files. Non-live 1,390 + live 2,251 + multi-turn 800 = 4,441. The files are JSON Lines named .json. Fingerprints the user turns only; about 100 very short questions (under 8 words) get no fingerprint."
+note = "GitHub ShishirPatil/gorilla @ cd9429c, the last commit with v3 data; the Hugging Face copy differs in 8 of these 17 files. Non-live 1,390 + live 2,251 + multi-turn 800 = 4,441. The files are JSON Lines named .json. Fingerprints the user turns only. 728 items get no fingerprint (fingerprints v2): 606 are under 8 words, 409 of these in live_irrelevance."
 source = "url"
 files = [
   { path = "BFCL_v3_simple.json", format = "jsonl", url = "https://raw.githubusercontent.com/ShishirPatil/gorilla/cd9429ccf3d4d04156affe883c495b3b047e6b64/berkeley-function-call-leaderboard/bfcl_eval/data/BFCL_v3_simple.json", sha256 = "fbc37b2ad252bf9af985582e0e07b456173fe627d957491472ea9cef5fb83158" },
@@ -230,7 +229,6 @@ files = [
 split = "test"
 id = "{id}"
 texts = ["{question|user_turns}"]
-reason = "Reader and pinned files ready (B1). A2 sets status = \"active\" when it builds fingerprints v2: the shipped set must match the active rows (test_shipped_set_matches_the_registry)."
 
 [webarena]
 name = "WebArena"
@@ -474,3 +472,18 @@ tags = ["indic", "english", "long_context"]
 licence = "MIT"
 repo = "mungg/OneRuler"
 reason = "Synthetic, like RULER: random needles are put into public-domain books at eval time, so there is no fixed item. The fixed text is only two prompt templates in 26 languages, which give no answers. The books must not be fingerprinted: they are common web text (Ponniyin Selvan, Chandrakanta)."
+
+# ---- protected sets: text that must never be in training data, but is not a benchmark ----
+
+[heldout_g5_v1]
+name = "G5 held-out set v1"
+status = "active"
+tags = ["protected", "heldout"]
+licence = "ODC-By-1.0 or MIT, per slice (teams/05-architecture/heldout_v1/README.md)"
+note = "Team 5 held-out set v1 (PR #191, final). 1,059 documents in 15 slices, one id per document. TSAI: add it to fingerprints v2 as a protected set. To check the held-out file itself, leave this entry out (decontam_check.py --exclude heldout_g5_v1), or every document matches itself. scoped/heldout_g5_v1.txt holds common passages of some held-out documents (a GMAT Club timer, a Springer note, a CC licence line, Home Assistant code) that are also on many other web pages."
+source = "local"
+files = [{ path = "teams/05-architecture/heldout_v1/data/heldout_v1.jsonl", sha256 = "21c6e4b2df8dae9d69e254f4a00fc934d2a3c70f0675065a03724299d94312bb" }]
+split = "heldout"
+id = "{id}"
+texts = ["{text}"]
+boilerplate = ["scoped/heldout_g5_v1.txt"]
