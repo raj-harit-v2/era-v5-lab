@@ -26,6 +26,10 @@ POSITIONS = ("learned", "rope")
 @dataclass
 class ModelConfig:
     vocab_size: int = 131072         # exact BrahmicTokenizer-131K vocabulary, no padding
+    vocab_pad_multiple: int = 1      # ROUND-UP GRANULARITY, not an amount to add: head rows = vocab_size rounded up to
+                                     # the next multiple of this. 1 = no padding; 128: 50257 -> 50304, 131072 stays
+                                     # 131072 (already a multiple). Padded columns are sliced off the logits, so the
+                                     # loss and outputs do not change. Applies to the head and a tied table only
     block_size: int = 512            # sequence length T
     n_layer: int = 9
     n_head: int = 8                  # query heads
@@ -62,6 +66,8 @@ class ModelConfig:
                 "tie_embeddings=True requires model.embedding='table' (KE1/KE2 has no [V, d] table)"
             )
         assert self.ffn in ("mlp", "moe"), f"ffn={self.ffn!r}"
+        assert type(self.vocab_pad_multiple) is int and self.vocab_pad_multiple >= 1, \
+            f"vocab_pad_multiple={self.vocab_pad_multiple!r} must be a positive integer"
         assert self.n_embd % self.n_head == 0, "n_embd must be divisible by n_head"
         assert self.attn_impl in ATTN_IMPLS, f"attn_impl={self.attn_impl!r} not in {ATTN_IMPLS}"
         assert self.activation in ACTIVATIONS, f"activation={self.activation!r} not in {ACTIVATIONS}"
@@ -88,6 +94,12 @@ class ModelConfig:
         if self.n_kv_head is None:
             self.n_kv_head = self.n_head
         assert self.n_kv_head > 0 and self.n_head % self.n_kv_head == 0, "n_kv_head must be > 0 and divide n_head"
+
+    @property
+    def padded_vocab_size(self) -> int:
+        """Rows of the output head: vocab_size rounded up to a multiple of vocab_pad_multiple (== vocab_size at 1)."""
+        m = self.vocab_pad_multiple
+        return -(-self.vocab_size // m) * m
 
     def to_dict(self):
         return asdict(self)

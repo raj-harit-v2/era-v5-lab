@@ -54,6 +54,15 @@ def test_same_commit_cross_entropy_variants_can_be_compared():
     assert "model.ce_impl: torch vs fused" in report.ab_note(a, b)
 
 
+def test_same_commit_vocab_padding_variants_can_be_compared():
+    a, b = _pair()
+    a["config"]["model"].update(vocab_pad_multiple=1)
+    b["config"]["model"].update(vocab_pad_multiple=128)
+    _, ok, problems = report.compare(a, b, 5.0, 2, 0.0)
+    assert ok and problems == []
+    assert "model.vocab_pad_multiple: 1 vs 128" in report.ab_note(a, b)
+
+
 def test_same_implementation_is_not_labelled_ab():
     a, b = _pair()
     assert report.ab_note(a, b) is None

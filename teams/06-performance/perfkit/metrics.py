@@ -384,7 +384,9 @@ def flops_per_token(model, T: int, opt_flops_per_step: float = 0.0, tokens_per_s
     total, active = model.param_counts()
     L, d = m.n_layer, m.n_embd
     model_fpt = 6 * active + 12 * L * d * T          # 6 FLOP per active weight per token, plus attention scores
-    head = model.head.weight.numel() + (model.mtp_head.weight.numel() if m.mtp else 0)
+    n_heads = 2 if m.mtp else 1
+    head = n_heads * m.vocab_size * d                  # useful head work; padding rows (vocab_pad_multiple) are not
+    pad_rows = m.padded_vocab_size - m.vocab_size      # counted here but run by torch / chunked (fused paths slice them off)
     ke = model.tok.proj.weight.numel() if m.embedding in ("ke1", "ke2") else 0
     stack_fwd = 2 * (active - head - ke) + 4 * L * d * T     # one stack forward: what the reversible backward reruns
     if m.reversible:
@@ -392,6 +394,9 @@ def flops_per_token(model, T: int, opt_flops_per_step: float = 0.0, tokens_per_s
     else:
         rev_extra = 0
     extra = rev_extra + (2 * head if m.ce_impl in ("chunked", "fused_cce") else 0)   # these recompute the head
+    if pad_rows and m.ce_impl in ("torch", "chunked"):   # hardware only: the padded-width head matmul (fwd 2 + bwd 4 FLOP)
+        pad_heads = 1 + ((T - 1) / T if m.mtp else 0)     # the t+2 head sees T - 1 of the T positions per sequence
+        extra += pad_heads * pad_rows * d * (6 + (2 if m.ce_impl == "chunked" else 0))
     if opt_flops_per_step and tokens_per_step:
         extra += opt_flops_per_step / tokens_per_step
     if method == "g6-v2":
@@ -402,7 +407,7 @@ def flops_per_token(model, T: int, opt_flops_per_step: float = 0.0, tokens_per_s
         if m.mtp:
             if T < 2:
                 raise ValueError("mtp needs T >= 2")
-            model_fpt -= 6 * model.mtp_head.weight.numel() / T
+            model_fpt -= 6 * m.vocab_size * d / T
     return {"model_flops_per_token": model_fpt, "hw_flops_per_token": model_fpt + extra,
             "params_total": total, "params_active": active}
 
