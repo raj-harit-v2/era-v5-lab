@@ -21,6 +21,7 @@ ATTN_IMPLS = ("sdpa", "eager")
 ACTIVATIONS = ("gelu", "swiglu")
 REV_IMPLS = ("two_pass", "one_pass")
 POSITIONS = ("learned", "rope")
+VOCAB_PAD_MODES = ("slice", "mask")
 
 
 @dataclass
@@ -30,6 +31,9 @@ class ModelConfig:
                                      # the next multiple of this. 1 = no padding; 128: 50257 -> 50304, 131072 stays
                                      # 131072 (already a multiple). Padded columns are sliced off the logits, so the
                                      # loss and outputs do not change. Applies to the head and a tied table only
+    vocab_pad_mode: str = "slice"    # how the padded columns leave the loss (only when padding is on): slice = cut them off
+                                     # the logits (one strided copy); mask = a -inf bias on those columns, fused into the
+                                     # head matmul, loss runs at the padded width. Same loss and gradients
     block_size: int = 512            # sequence length T
     n_layer: int = 9
     n_head: int = 8                  # query heads
@@ -66,6 +70,7 @@ class ModelConfig:
                 "tie_embeddings=True requires model.embedding='table' (KE1/KE2 has no [V, d] table)"
             )
         assert self.ffn in ("mlp", "moe"), f"ffn={self.ffn!r}"
+        assert self.vocab_pad_mode in VOCAB_PAD_MODES, f"vocab_pad_mode={self.vocab_pad_mode!r} not in {VOCAB_PAD_MODES}"
         assert type(self.vocab_pad_multiple) is int and self.vocab_pad_multiple >= 1, \
             f"vocab_pad_multiple={self.vocab_pad_multiple!r} must be a positive integer"
         assert self.n_embd % self.n_head == 0, "n_embd must be divisible by n_head"
