@@ -34,6 +34,8 @@ IMPL_SWITCHES = [
     ("model", "moe", "dispatch"),
     ("model", "ce_impl"),
     ("model", "rev_impl"),  # two_pass vs one_pass: same update, different backward
+    ("model", "vocab_pad_mode"),      # slice vs mask of the padded columns (B2)
+    ("model", "vocab_pad_multiple"),  # head rows rounded up (B2): same loss, padded logits sliced off
     ("optim", "muon_impl"),
     ("optim", "adamw_impl"),
     ("data", "prefetch"),

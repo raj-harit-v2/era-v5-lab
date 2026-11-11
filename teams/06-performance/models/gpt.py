@@ -241,7 +241,7 @@ class GPT(nn.Module):
             from models.ke2 import KE2Embedding
             self.tok = KE2Embedding(cfg.vocab_size, d, cfg.ke_max_pos, token_bytes)   # G4's raw table by default
         else:
-            self.tok = nn.Embedding(cfg.vocab_size, d)
+            self.tok = nn.Embedding(cfg.padded_vocab_size, d)   # padded rows are never indexed; tied head shares them
             nn.init.normal_(self.tok.weight, mean=0.0, std=0.02)
         self.pos = None
         if cfg.position == "learned":
@@ -249,15 +249,19 @@ class GPT(nn.Module):
             nn.init.normal_(self.pos.weight, mean=0.0, std=0.02)
         self.blocks = nn.ModuleList(Block(cfg, i) for i in range(cfg.n_layer))
         self.ln_f = nn.LayerNorm(d)
-        self.head = nn.Linear(d, cfg.vocab_size, bias=False)
+        self.head = nn.Linear(d, cfg.padded_vocab_size, bias=False)
         # Tie when embedding=table and tie_embeddings is not False (None keeps the legacy table-tied default).
         if cfg.embedding == "table" and cfg.tie_embeddings is not False:
             self.head.weight = self.tok.weight
         else:
             nn.init.normal_(self.head.weight, mean=0.0, std=0.02)
         if cfg.mtp:
-            self.mtp_head = nn.Linear(d, cfg.vocab_size, bias=False)
+            self.mtp_head = nn.Linear(d, cfg.padded_vocab_size, bias=False)
             nn.init.normal_(self.mtp_head.weight, mean=0.0, std=0.02)
+        if cfg.vocab_pad_mode == "mask" and cfg.padded_vocab_size != cfg.vocab_size:
+            pad_bias = torch.zeros(cfg.padded_vocab_size)         # 0 on real ids, -inf on padding: exp(-inf) = 0
+            pad_bias[cfg.vocab_size:] = float("-inf")
+            self.register_buffer("pad_bias", pad_bias, persistent=False)   # not a parameter, not in the state_dict
         self.loss_parts = None
 
     def forward(self, idx: torch.Tensor, targets: torch.Tensor | None = None):
@@ -286,13 +290,34 @@ class GPT(nn.Module):
             if targets is not None and self.cfg.ce_impl in MEMORY_BOUNDED_CE_IMPLS:
                 loss = self._head_ce(self.head, x.reshape(B * T, -1), targets.reshape(B * T))
                 return None, self._add_mtp(loss, x, targets)
-            logits = self.head(x)
+            out = self._head_out(self.head, x)
+            logits = self._real_columns(out)                      # returned logits: [B, T, vocab_size] always
             loss = None
             if targets is not None:
-                loss = F.cross_entropy(logits.view(B * T, -1).float(), targets.reshape(B * T),
+                loss = F.cross_entropy(self._ce_input(out).reshape(B * T, -1), targets.reshape(B * T),
                                        ignore_index=IGNORE_INDEX)
                 loss = self._add_mtp(loss, x, targets)
         return logits, loss
+
+    def _head_out(self, head, x):
+        """head(x) at the padded width. vocab_pad_mode='mask': the padded columns get a -inf bias that the matmul adds
+        itself (no extra pass over the logits), so they drop out of the softmax and get zero gradient."""
+        if self.cfg.vocab_pad_mode == "mask" and head.weight.shape[0] != self.cfg.vocab_size:
+            return F.linear(x, head.weight, self.pad_bias)
+        return head(x)
+
+    def _real_columns(self, out):
+        """[..., vocab_size]: the padding columns cut off (a view; nothing is copied until it is used)."""
+        return out if out.shape[-1] == self.cfg.vocab_size else out[..., :self.cfg.vocab_size]
+
+    def _ce_input(self, out):
+        """fp32 logits the loss reads. slice: only the real columns (one strided copy). mask: the padded width, whose
+        extra columns are -inf (one contiguous copy, as for an unpadded head)."""
+        return (out if self.cfg.vocab_pad_mode == "mask" else self._real_columns(out)).float()
+
+    def _logits(self, head, x):
+        """head(x) with the padding columns cut off: [..., vocab_size], so no padded id is ever returned."""
+        return self._real_columns(self._head_out(head, x))
 
     def embed(self, idx: torch.Tensor) -> torch.Tensor:
         """Stack input: token embedding, plus the position table when cfg.position == 'learned'."""
@@ -311,7 +336,7 @@ class GPT(nn.Module):
             if self.cfg.ce_impl in MEMORY_BOUNDED_CE_IMPLS:
                 mtp = self._head_ce(self.mtp_head, xm, ym)
             else:
-                mtp = F.cross_entropy(self.mtp_head(xm).float(), ym, ignore_index=IGNORE_INDEX)
+                mtp = F.cross_entropy(self._ce_input(self._head_out(self.mtp_head, xm)), ym, ignore_index=IGNORE_INDEX)
         self.loss_parts = {"ntp": ntp.detach(), "mtp": mtp.detach()}
         return ntp + mtp
 
@@ -319,31 +344,36 @@ class GPT(nn.Module):
         """Mean CE of head(x) in checkpointed position chunks, to bound the saved logits.
         Same value as the plain path (mean over non-ignored targets), except an all-ignored batch gives 0, not NaN."""
         def piece(xc, yc):
-            return F.cross_entropy(head(xc).float(), yc, reduction="sum", ignore_index=IGNORE_INDEX)
+            return F.cross_entropy(self._ce_input(self._head_out(head, xc)), yc, reduction="sum",
+                                   ignore_index=IGNORE_INDEX)
         total = sum(torch.utils.checkpoint.checkpoint(piece, xc, yc, use_reentrant=False)
                     for xc, yc in zip(x.chunk(self.cfg.ce_chunks), y.chunk(self.cfg.ce_chunks)))
         return total / (y != IGNORE_INDEX).sum().clamp_min(1)
 
     def _head_ce(self, head, x, y):
-        """Mean CE of head(x) by the memory-bounded cfg.ce_impl; chunked when it is none of the fused ones."""
+        """Mean CE of head(x) by the memory-bounded cfg.ce_impl; chunked when it is none of the fused ones.
+        The fused kernels take the first vocab_size rows of the weight, so padding rows stay out of the softmax."""
+        V = self.cfg.vocab_size
+        weight = head.weight if head.weight.shape[0] == V else head.weight[:V]
+        bias = head.bias if head.bias is None or head.bias.shape[0] == V else head.bias[:V]   # heads are bias=False today
         if self.cfg.ce_impl == "fused":
             return linear_cross_entropy_fused(
-                x, head.weight, y, bias=head.bias,
+                x, weight, y, bias=bias,
                 chunks=self.cfg.ce_chunks, ignore_index=IGNORE_INDEX,
             )
         if self.cfg.ce_impl == "fused_cached":
             return linear_cross_entropy_cached(
-                x, head.weight, y, bias=head.bias,
+                x, weight, y, bias=bias,
                 token_chunk=self.cfg.ce_token_chunk, ignore_index=IGNORE_INDEX,
             )
         if self.cfg.ce_impl == "fused_liger":
             return linear_cross_entropy_liger(
-                x, head.weight, y, bias=head.bias,
+                x, weight, y, bias=bias,
                 token_chunk=self.cfg.ce_token_chunk, ignore_index=IGNORE_INDEX,
             )
         if self.cfg.ce_impl == "fused_cce":
             return linear_cross_entropy_cce(
-                x, head.weight, y, bias=head.bias,
+                x, weight, y, bias=bias,
                 vocab_chunk=self.cfg.ce_vocab_chunk, ignore_index=IGNORE_INDEX,
             )
         return self._chunked_ce(head, x, y)
@@ -352,7 +382,9 @@ class GPT(nn.Module):
         """(total, active). active = the matmul weights one token multiplies with (attention, router, top_k + shared
         experts, KE projection, heads); not biases, norms or lookup tables. Counted by module, so a tied head counts."""
         total = sum(p.numel() for p in self.parameters())
-        active = self.head.weight.numel() + (self.mtp_head.weight.numel() if self.cfg.mtp else 0)
+        # head rows counted at vocab_size: padding (vocab_pad_multiple) is not model work, so active params and
+        # model FLOPs are the same padded or not. total (parameters()) is the real storage, padded rows included.
+        active = self.cfg.vocab_size * self.cfg.n_embd * (2 if self.cfg.mtp else 1)
         if self.cfg.embedding in ("ke1", "ke2"):
             active += self.tok.proj.weight.numel()
         for blk in self.blocks:
