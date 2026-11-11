@@ -29,7 +29,7 @@ model is a new YAML file in `configs/`, not new code.
 ## Folder layout
 
 ```
-configs/       base.yaml (every setting; the default of bench, smoke and the tests), tiny_cpu.yaml
+configs/       base.yaml (every setting; the default of bench, smoke and the tests), tiny_cpu.yaml, batch32.yaml
 models/        config.py, gpt.py, linear_ce.py, ke1.py, ke2.py, moe.py, reversible.py, optim.py
 dataio/        tokenizer.py (pinned BrahmicTokenizer-131K), prepare_fineweb.py, loader.py
 perfkit/       regions.py, timer.py, bench.py, parts.py, part_ops.py, metrics.py, mfu_fixture.py, events.py, report.py,
@@ -94,7 +94,8 @@ Exit codes: 0 ok, 1 run JSON incomplete, 2 a part outside the 5% rule, 3 out of 
 are cached in `~/.cache/era-perf/` (`data.dir`); bench's traces and checkpoints too (`ERA_PERF_CACHE` moves those).
 Offline: `data.tokenizer_path=<path>` (tests: `BRAHMIC_TOKENIZER_PATH`).
 
-**Batch size.** `run.batch_size` is 16 in `base.yaml`; use 8 on a T4 / P100 / V100. `run.dtype: bf16` on a GPU
+**Batch size.** `run.batch_size` is 16 in `base.yaml`; use 8 on a T4 / P100 / V100. `configs/batch32.yaml` is the
+same model at B=32 (A100 / L4 / H100), LR unchanged. `run.dtype: bf16` on a GPU
 without native bf16 runs fp16 + GradScaler.
 
 **A good smoke run:** reconstruction error below 1e-3, loss starting near ln(131072) = 11.78 and falling, p10 / p90
