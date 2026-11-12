@@ -1,0 +1,508 @@
+doc_id,read,verdict,diseases,evidence,hex,note
+80cfb7382898fb9c,full,clean,,,,clean text
+27c57f08b15a29a1,full,clean,,,,
+455c1baea7ecaeb4,full,fix,C3,C3: 'ಶೈಲಿ=|ಎನ್. ಸಿ. ಎ. ಎ. ಪಂದ್ಯಾವಳಿ' at offset 1104,,Sentence ended abruptly
+4a6a612a5b6fb085,full,clean,,,,
+bf0522a87aae2bf8,full,clean,,,,short document
+89fb3a8b796589aa,full,clean,,,,
+acbaffa712002d92,full,clean,,,,
+e97a65a809273803,full,clean,,,,clean text
+6334e341b04a84bc,full,clean,,,,clean text
+bd7252ce7767cbad,full,fix,C1;C3,C1: 'ಲ್ಯಾಟಿನ್ ಅಮೆರಿಕಾದ ಬಿಡುಗಡೆಯ ಬೋನಸ್ ಹಾಡುಗಳು' at offset 1142-1183 | C3: 'ೀತಗಾರರು\nಹಿನ್ನೆಲೆ ಗಾಯನ\nಉತ್ಪಾದನೆ' at offset 1196,,Text cut off mid-sentence at the end.
+831a2d2d0419a052,full,clean,,,,
+ec023cbb73c638e8,full,fix,D3,D3: 'St' at offset 2138-2140,,
+418db7f8ae6fded8,full,fix,A6;C3,A6: 'n-ಕ್ವೆನ್ಸ್' at offset 1007 | C3: '್ಯೆ.\nಇತರ ಕ್ಷೇತ್ರಗಳಲ್ಲಿ.\n34 ಸಹಃ' at offset 1366,A6: offset 1007: U+006E U+002D U+0C95 U+0CCD U+0CB5 U+0CC6 U+0CA8 U+0CCD,
+2a8d35db4e0859ef,full,clean,,,,clean text
+a5d45a2a2adeaea4,full,fix,C4,C4: document truncated at offset 268-270,,truncated doc. No meaningful sentence
+9490c2a31c186a65,full,clean,,,,
+cce65ac781b6ddc0,full,clean,,,,
+a4d51193fc62ceb9,full,clean,,,,
+8fbf46a27b8702cc,full,fix,D3,D3: 'CIAAಯಲ್ಲಿ' at offset 341,D3: offset 341: U+0043 U+0049 U+0041 U+0041 U+0CAF U+0CB2 U+0CCD U+0CB2,English is mixed and not translated
+9e20e8d482b36907,full,clean,,,,
+f2f4db8d9d329fe1,full,clean,,,,
+481a3b327a6bd1b0,full,clean,,,,
+dc78cbb98b87ca59,full,clean,,,,
+05aa148a93cb8119,full,fix,D4,D4: 'ರಾಡುಕಾ ಯು. ಗೆ ಮರಳಿತು.ಎಸ್. ಮಿಸ್ಸಿಗೆ ಮತ್ತೆ ಸೇರಲು' at offset 1488-1698,,"No meaningful sentence, gender mismatch"
+3a69a945a1b7aeaa,full,fix,B2,B2: '<ಬಿ. ಆರ್.>' at offset 573-583,,HTML tags machine-translated into Kannada like <ಬಿ. ಆರ್.>.
+865bb4af9d177158,full,clean,,,,
+8b535f844871126f,full,clean,,,,
+c3db2fd821c28710,partial,fix,B2;G1,B2: 'ಐ. ಡಿ. 1' at offset 37841-37849 | G1: 'ೊ' at offset 46054,G1: offset 46054: U+0CCA,<ID n> placeholders translated into Kannada with the brackets lost like ಐ. ಡಿ. 1; vowel signs or viramas with no base letter.
+cc5995b612e2748d,full,clean,,,,
+b1b67391f8db03cb,full,fix,D3,D3: 'Şükran pınar ovalı' at offset 13-31,,English mixed characters
+c90b1f9dac0dbf87,full,clean,,,,
+96ee156327a01637,partial,fix,D3,D3: 'kxbs-hd2' at offset 5949-5957,,English mixed characters
+9ad5aa93ce16df5f,full,clean,,,,
+ab411bfbfa80fe2a,full,fix,B2,B2: '<ಬಿ. ಆರ್.>' at offset 314-324,,HTML tags machine-translated into Kannada like <ಬಿ. ಆರ್.>.
+f1161ea20322b1f3,full,fix,B3,B3: '<' at offset 4346,,ghost character
+a5fa7edd03153452,full,clean,,,,
+c01cbc84df3c29d5,full,clean,,,,
+eae97bf2fe895835,full,clean,,,,
+a3f9e2c783916fc7,full,clean,,,,
+b6647dd6cc27b804,full,fix,A6,A6: 'Iರಲ್ಲಿ' at offset 4149,A6: offset 4149: U+0049 U+0CB0 U+0CB2 U+0CCD U+0CB2 U+0CBF,Words that mix Kannada with Latin or another script.
+96d43ee81a0e801c,full,clean,,,,
+329a3b072ea3c708,full,fix,D3,D3: '* 1839 ಆಂಟ್ ವೆರ್ಪೆನ್; ≤1111' at offset 491-518,,special characters with no meaningful context
+9c8c88baf0ae132b,full,clean,,,,
+f9c3de75682cf940,full,clean,,,,
+4014a84b9c3e0022,full,fix,C1,C1: 'ು ಮಾಡಲಾಯಿತು.\nಉಲ್ಲೇಖಗಳು.\nಮೂಲಗಳು' at offset 1299,,Boilerplate links at the end
+9a045f644afe9919,full,clean,,,,
+3c59d145c3f5da15,full,clean,,,,
+2b65959fd113626f,full,fix,B3,B3: '?' at offset 59,,
+54f770edbfb0f27e,full,fix,A6,"A6: '(i.ಇ.ಪಳೆಯುಳಿಕೆ)' at offset 490-505 | A6: '(i.ಇ.,' at offset 523-529",A6: offset 490: U+0028 U+0069 U+002E U+0C87 U+002E U+0CAA U+0CB3 U+0CC6,Words that mix Kannada with Latin or another script (2 times).
+6a9e9f12190ec61a,full,clean,,,,clean text
+f23b0cf45b154aa0,full,clean,,,,
+9dd903a2f00f8af7,full,clean,,,,
+4762916b43d88f4d,full,clean,,,,All sentences looks good
+c6e1a1f334408b2e,full,clean,,,,
+57728833f732b728,full,clean,,,,
+ebfe9c51c247aebf,full,clean,,,,
+825761868c5dd386,full,clean,,,,
+0a39f3be0ebbc682,full,clean,,,,
+652430783641cf74,full,fix,B2;B3,B2: '<ಐ. ಡಿ. 2>' at offset 163-173 | B2: '<ಐ. ಡಿ. 1>' at offset 208-218 | B3: '? =' at offset 685-688,,HTML tags machine-translated into Kannada like <ಐ. ಡಿ. 2> (2 times).
+7d6d5d872a6d76c3,full,clean,,,,
+ed5eb0017fc48535,full,clean,,,,
+8fe0ae334869e85c,full,fix,G1,G1: 'ಂ' at offset 1474,G1: offset 1474: U+0C82,Vowel signs or viramas with no base letter.
+ff6d56a4f0b67604,full,fix,B2,B2: '<ಐ. ಡಿ. 1>' at offset 626-636,,HTML tags machine-translated into Kannada like <ಐ. ಡಿ. 1>.
+5d6e96927e1068d4,full,clean,,,,
+3058280739878239,full,clean,,,,
+2623dc4f59c83974,full,clean,,,,
+085c5aae714ca4be,full,clean,,,,
+58b5db409623aef0,full,clean,,,,
+e67401e5e95a2cee,full,clean,,,,
+1d09e7232d5a9e58,full,clean,,,,
+aaa2b8ca07b80c9d,full,clean,,,,
+b78645d9990988c3,partial,fix,B2,"B2: '<ಐ. ಡಿ. 1>' at offset 4405-4415, 4573-4583, 5433-5443, 6007-6017 | B2: '<ಐ. ಡಿ. 2>' at offset 5352-5362",,HTML tags machine-translated into Kannada like <ಐ. ಡಿ. 1> (5 times).
+75786f45a7e7de3b,full,clean,,,,
+573d895181f0adb1,full,clean,,,,
+3033449d8c8aa6d6,full,clean,,,,
+1082a212f7a0f4aa,full,clean,,,,
+cd729466137551e1,full,clean,,,,
+926f75da1aab013c,full,clean,,,,
+109f3dbada308cb5,full,clean,,,,
+145f7cfbe62c98c6,full,fix,B3,"B3: '!' at offset 49, 369",,
+a14d48106d26e1f8,full,clean,,,,
+b23d237a28440beb,full,clean,,,,
+ef2b26a9c13e7960,full,clean,,,,
+50ac36a1f48aa662,full,clean,,,,
+40ac511aa40a5acc,full,clean,,,,
+b09132dc931f8d94,full,fix,C1,C1: 'ರ ಭಾರತೀಯ ಲಯಬದ್ಧ ತಂತ್ರಗಳು.\nತಿಹೈ' at offset 2219-2249,,Boilerplate links at the end
+561569fb2ee6a793,full,clean,,,,
+069620ad2c98d2c6,full,clean,,,,
+9e7a1bc7d5c1f55c,full,clean,,,,
+ba1a4ce3083275a8,full,clean,,,,
+1408c9f21df03e87,full,clean,,,,
+4a61a2840739d273,full,clean,,,,
+ef3c0e5e54346749,full,clean,,,,
+7321eaa4be29770f,full,clean,,,,
+4d0368fbdb0b30a6,full,clean,,,,
+242bcc1d99da34e1,full,fix,C3,C3: 'ದಾರೆ. ಇವುಗಳಲ್ಲಿ ಪಠ್ಯಗಳು ಸೇರಿವೆ' at offset 1675,,Text cut off mid-sentence at the end.
+c69910acd524019f,full,clean,,,,
+68bbfa4b212b745d,full,clean,,,,
+8643e1935cd37e22,full,fix,C3,C3: 'ಿ.\nಬಹುಮಾನಗಳ ಅಪೂರ್ಣ ಪಟ್ಟಿ.\nಮೂಲಃ' at offset 11810,,
+9f39162b9b31d51a,full,clean,,,,
+11cd5e054d7766f0,full,clean,,,,
+629a3a0788816ad9,full,fix,B2;D4,B2: '<ಐ. ಡಿ. 1>' at offset 4364-4374 | B2: '<ಐ. ಡಿ. 2>' at offset 5560-5570 | D4: '<ಐ. ಡಿ. 1>' at offset 4364-4374,,Bad machine translation which spoils the meaning of sentence. HTML tags machine-translated into Kannada like <ಐ. ಡಿ. 1> (2 times).
+7d9b03e1a823b03a,full,clean,,,,
+605c195dc5422a06,partial,fix,A6,"A6: '(i.ಇ.' at offset 18212-18217, 70564-70569 | A6: 'Iರ' at offset 29667-29669 | A6: 'IIIನ' at offset 45055-45059 | A6: 'VIIIಯ' at offset 58676-58681 | A6: 'IIರಿಂದ' at offset 66460-66466",A6: offset 18212: U+0028 U+0069 U+002E U+0C87 U+002E,Words that mix Kannada with Latin or another script (6 times).
+c718d94866e46f67,full,clean,,,,
+eedd850c9367f2e9,full,clean,,,,
+0bf5c7545be53534,full,clean,,,,
+4e83c083a748df77,full,clean,,,,
+fd842936cba5d6b7,full,fix,A6;B2,"A6: 'IIರ' at offset 968-971, 1039-1042 | B2: '<ಐ. ಡಿ. 1>' at offset 435-445 | B2: 'ಐ. ಡಿ. 2' at offset 1125-1133",A6: offset 968: U+0049 U+0049 U+0CB0,Words that mix Kannada with Latin or another script (2 times); HTML tags machine-translated into Kannada like <ಐ. ಡಿ. 1>; <ID n> placeholders translated into Kannada with the brackets lost like ಐ. ಡಿ. 2.
+343cae97aa8c6753,full,clean,,,,
+6fd0fbd24176698c,full,fix,C3,C3: 'ಗ್ ಪಂದ್ಯಗಳು/ಲೀಗ್ ಗೋಲುಗಳು)\nಮೂಲಃ' at offset 1030,,Text cut off mid-sentence at the end.
+b607c6ffc2ce50dc,full,clean,,,,
+b8a98f0697629345,full,clean,,,,clean text
+e72ae1889412923f,full,clean,,,,
+40da27327d56a254,full,clean,,,,
+9a69d33ddbdf232f,full,clean,,,,
+981ba191a09afe25,full,clean,,,,
+76dbed4908cb2811,full,clean,,,,
+c0e61ebc71397fa2,full,clean,,,,
+8aa073a60873ae72,full,clean,,,,
+79bea222e4ed1e68,full,clean,,,,
+de997c2e752683e0,full,fix,B2;D4,"B2: '<ರಿಫರ್ ಹೆಸರು = ""ಪ್ರೊಫೆಸರ್ ಲ್ಯಾಟಿನ್ಕ್ಸ್/ಜ' at offset 643-688 | B2: '</ರಿಫರ್>' at offset 689-697 | D4: '</ರಿಫರ್>' at offset 689-697",,"Bad machine translation which spoils the meaning of sentence. HTML tags machine-translated into Kannada like <ರಿಫರ್ ಹೆಸರು = ""ಪ್ರೊಫೆಸರ್ ಲ್ಯಾಟಿನ್ಕ್ಸ್/ಜೇನ್""> (2 times)."
+8e35019d538466fc,full,clean,,,,
+6376e4f80c1c3ef3,full,fix,C1,C1: 'ಕೆ ಈ ಕೆಳಗಿನವರು ತರಬೇತಿ ನೀಡಿದರುಃ' at offset 1522,,Footer boilerplates
+b328cee1c4a7e2f2,full,clean,,,,
+4863221fcfa1d1ba,full,fix,D3,D3: 'edw' at offset 774-777,,untranslated english
+2b26c75733e42fc7,full,clean,,,,
+7c72b29fe1159297,full,clean,,,,
+0f59f2fe7c14da7b,full,clean,,,,
+f9bc9ead3b1d2c39,full,fix,C3,C3: 'ಗಳನ್ನು ಎಂದಿಗೂ ಪ್ರಕಟಿಸಲಾಗಲಿಲ್ಲಃ' at offset 5017,,Text cut off mid-sentence at the end.
+15b0b42fef38fd7d,full,clean,,,,
+7d050d2bad4dec73,full,clean,,,,
+254e679190693cf9,full,clean,,,,
+21f3f80ab22e0719,partial,fix,G1,G1: 'ಿ' at offset 13059,G1: offset 13059: U+0CBF,Vowel signs or viramas with no base letter.
+c790d1989ff66080,full,clean,,,,
+74b03fc0bc7ff266,full,clean,,,,
+2603c6bf3a67c3c8,full,clean,,,,
+a23b0df78090731b,full,fix,C3,C3: 'ನಿಕ ಸೇವೆಗಾಗಿ ಗ್ರೂನರ್ ಬಹುಮಾನಗಳು' at offset 2415,,Sentence ended abruptly
+8a8dc27b4a86d5b9,full,clean,,,,
+68c8d30f2544d132,full,clean,,,,
+4c6c7ddb7fca4227,partial,fix,A6;B2,A6: '(a.ಕೆ.ಎ.' at offset 9235 | B2: '<ಬಿಆರ್>' at offset 1551-1558,A6: offset 9235: U+0028 U+0061 U+002E U+0C95 U+0CC6 U+002E U+0C8E U+002E,Words that mix Kannada with Latin or another script; HTML tags machine-translated into Kannada like <ಬಿಆರ್>.
+8f808a85f9708958,full,fix,B2;C3,"B2: '<ಐ. ಡಿ. 1>' at offset 305-315, 831-841 | C3: 'ಥಿಗಳ ಜನಸಂಖ್ಯಾ ವಿಭಜನೆ ಹೀಗಿತ್ತುಃ' at offset 867",,HTML tags machine-translated into Kannada like <ಐ. ಡಿ. 1> (2 times); text cut off mid-sentence at the end.
+0e72261397f357cd,partial,fix,A6,A6: 'xiiಗೆ' at offset 115-120 | A6: 'xiiiಗೆ' at offset 1343-1349 | A6: 'xiiಅನ್ನು' at offset 6074-6082,A6: offset 115: U+0078 U+0069 U+0069 U+0C97 U+0CC6,Words that mix Kannada with Latin or another script (3 times).
+f2de583d5fce4424,full,fix,C3,C3: '\n2003\n2001\n1998-2001\n1997\n1990' at offset 3016,,Text cut off mid-sentence at the end.
+e36f516e1c74be49,full,clean,,,,
+0d90ae703eaab6bd,full,clean,,,,
+d76a012e527821f8,full,clean,,,,
+007714992146252d,full,clean,,,,
+c107329e989139bb,full,clean,,,,
+15c6f60bff465301,full,clean,,,,
+a31508215ac74ccd,full,clean,,,,
+cff540231e8e8ed1,full,fix,D3,D3: 'орлиное гнеzdо' at offset 51-65,,includes russian language
+ee9d061ab987111b,full,clean,,,,
+3da04151703f4541,full,clean,,,,
+e4679877625b3a39,full,clean,,,,
+e486417d692fa307,full,clean,,,,
+16c9301da9d7122d,full,clean,,,,
+14712a1654f09227,full,clean,,,,
+66831d158956e81d,full,clean,,,,clean text
+877be2d2aece080b,full,clean,,,,
+9c099e531f750b91,full,clean,,,,
+0b5442a26e4432a7,full,clean,,,,
+4dcf7556d9d05cd4,full,clean,,,,
+60bbcaa85c2d6028,full,fix,B2;C3,B2: '<ಐ. ಡಿ. 1>' at offset 598-608 | C3: 'ಚಯದ ಟ್ಯಾಬ್ ಆಗಿದೆ.ಟ್ಯಾಬ್ ಸ್ವತಃಃ' at offset 774,,HTML tags machine-translated into Kannada like <ಐ. ಡಿ. 1>; text cut off mid-sentence at the end.
+e6cb613d95251fbd,full,clean,,,,
+5d12706c9ee6bf0b,full,clean,,,,clean text
+57a5981312ce7fd1,full,clean,,,,
+364283da817f6d42,full,clean,,,,
+ef8b3f6622d5c7ab,full,clean,,,,
+1a5753708a33183b,full,clean,,,,
+d64e036de78e3f6d,full,clean,,,,
+ada8cb19f954a1a9,full,clean,,,,
+a58c9a8aebca7532,full,clean,,,,
+a83c27dea2700652,full,clean,,,,
+71460e1dcea47cb7,full,clean,,,,
+62a2de653b18fba0,full,clean,,,,
+bddb7db5986a353f,full,fix,A6;B2,A6: 'dbus-ಜಾವಾ' at offset 708-717 | A6: 'sd-ಬಸ್' at offset 724-730 | A6: '(i.ಇ.' at offset 14034-14039 | B2: '<ಐ. ಡಿ. 1>' at offset 18458-18468,A6: offset 708: U+0064 U+0062 U+0075 U+0073 U+002D U+0C9C U+0CBE U+0CB5,Words that mix Kannada with Latin or another script (3 times); HTML tags machine-translated into Kannada like <ಐ. ಡಿ. 1>.
+33435c6f9965fb8d,full,fix,A6,A6: '(i.ಇ.' at offset 272,A6: offset 272: U+0028 U+0069 U+002E U+0C87 U+002E,Words that mix Kannada with Latin or another script.
+7f3e663054c591ed,full,clean,,,,
+67ae6a477f856646,full,clean,,,,
+4cad536938d423fc,full,clean,,,,
+566cbc92712fb526,full,fix,B2,B2: '<ಬಿ. ಆರ್.>' at offset 327-337,,html tags at the end
+e42727be698b2254,full,clean,,,,
+208650d5426ba870,full,clean,,,,
+ca3693a89aba4413,full,clean,,,,
+a0899c3cc6998bd6,full,clean,,,,clean text
+51aca881c982b6c4,partial,fix,A6;B2,"A6: 'ಮಿಷನ್-IIIಯ' at offset 3068 | B2: '<ಐ. ಡಿ. 1>' at offset 3457-3467, 3787-3797",A6: offset 3068: U+0CAE U+0CBF U+0CB7 U+0CA8 U+0CCD U+002D U+0049 U+0049,Words that mix Kannada with Latin or another script; HTML tags machine-translated into Kannada like <ಐ. ಡಿ. 1> (2 times).
+13fb222701aa737c,full,clean,,,,
+5536f96e1ede85b8,full,fix,C3,C3: 'ಯನದ ಫಲಿತಾಂಶಗಳನ್ನು ತೋರಿಸುತ್ತದೆಃ' at offset 1456,,Text cut off mid-sentence at the end.
+81ed1befb7cfeb55,partial,fix,C1,C1: 'ಿಯಲ್ಸ್ಃ\nಪಾಂಡಿತ್ಯಪೂರ್ಣ ಬರವಣಿಗೆಃ' at offset 6012,,Boilerplate links at the end
+b2cec9c6fa7e2c9c,full,clean,,,,
+44a5a846da3d2688,full,clean,,,,
+78d4cc1c6596f536,full,clean,,,,
+2ce26f5edd1d5698,full,clean,,,,
+76ff156acd160ee4,full,fix,B3,"B3: '<unk>' at offset 217-222, 1074-1079",,Model special tokens like <unk> (2 times).
+fc5c745c16db89db,full,clean,,,,
+a48c306ed85a970d,full,fix,B2;D4,B2: '<ಐ. ಡಿ. 1>' at offset 1018-1028 | D4: <ಐ. ಡಿ. 1> at offset 1018-1028,,Bad machine translation which spoils the meaning of sentence. HTML tags machine-translated into Kannada like <ಐ. ಡಿ. 1>.
+df622275c4810246,full,clean,,,,
+572e66f3cdcbcedf,full,fix,A6,"A6: 'GMTಯಲ್ಲಿ,' at offset 501",A6: offset 501: U+0047 U+004D U+0054 U+0CAF U+0CB2 U+0CCD U+0CB2 U+0CBF,Words that mix Kannada with Latin or another script.
+22baf16e28d41847,full,clean,,,,
+b9e191be2c5ae3f8,full,fix,A6,"A6: 'gtpase-ಸಕ್ರಿಯಗೊಳಿಸುವ' at offset 6912, tbc1d4 at offset 6892-6898 | A6: 'gtpase-ಸಕ್ರಿಯಗೊಳಿಸುವ' at offset 6912-6932",A6: offset 6912: U+0067 U+0074 U+0070 U+0061 U+0073 U+0065 U+002D U+0CB8,Mixed scripts
+c9d63206d812b84d,full,clean,,,,
+7696c91439e39dd0,full,clean,,,,
+6148235f097dfc07,full,clean,,,,
+53d7e796e27bef12,partial,fix,C3,C3: 'ಡಾದ ಜನಗಣತಿಃ\nಓಟದ ಸ್ಪರ್ಧೆ ಮುರಿದು' at offset 2021,,Text cut off mid-sentence at the end.
+a06d1a685aa9f218,full,fix,B2,B2: <ಬಿ. ಆರ್.> at offset 316-326,,"Translated HTML tag,"
+22d1f95bcd1ae24a,full,clean,,,,
+c919b39d6b0d88a6,full,clean,,,,
+9632f5c75380baf6,full,fix,C1,C1: 'ೀನು\nಕೀಟಗಳು\nಸಸ್ತನಿಗಳು\nಸರೀಸೃಪಗಳು' at offset 7696,,Footer boilerplates
+62683b00dd838597,partial,fix,C3,"C3: ' ಇನ್ಸ್ಟಿಟ್ಯೂಟ್, 2003, pp. 1-15' at offset 6477",,Text cut off mid-sentence at the end.
+a0ee8f67d70aa82b,full,fix,D3,"D3: 'ōzeki' at offset 975-980, 1551-1556",,Mixed language/scripts
+82c19ae761173b89,full,clean,,,,
+c9c71a193c8817c4,full,clean,,,,
+7316a3d779366b1a,full,clean,,,,
+ff622491b87b13a3,full,clean,,,,
+f26109a0d85e3b92,full,clean,,,,
+dc1422ac7c2cbbf3,full,clean,,,,
+fa46b9126edfe042,full,clean,,,,
+5c892dd92849fb65,full,clean,,,,
+ba050e3137a02628,full,clean,,,,
+19acd1ebb72c05c0,full,clean,,,,
+920bf28a4e6e4cc8,full,fix,C3,C3: 'ರಿಸಲಾಗುತ್ತದೆ. ಮಾದರಿಗಳು ಸೇರಿವೆಃ' at offset 903,,Text cut off mid-sentence at the end.
+3e14a87af23861e6,full,clean,,,,
+0cec39d344cdec8c,full,clean,,,,
+b0f48d0ef27a44f7,full,clean,,,,
+9bef527665efefa3,full,fix,C3,C3: '್ಟಿನ ವೈಶಿಷ್ಟ್ಯಗಳನ್ನು ಬಳಸಬಹುದುಃ' at offset 1243,,Text cut off mid-sentence at the end.
+a52ea0051fc90997,full,clean,,,,
+f4b5cba3fa45af39,full,clean,,,,
+447e9d948ab25456,full,clean,,,,
+637a85b1c3251107,full,fix,B2,B2: <ಐ. ಡಿ. 1> at offset 8909-8919,,html tag translated into Kannada
+d607cd0063f6e616,full,clean,,,,
+df48e402727950f0,full,clean,,,,
+a890d747ed4473a4,full,clean,,,,
+dd25dbb314d9d416,full,fix,B2,B2: '<ಐ. ಡಿ. 1>' at offset 878-888,,html tag translated into Kannada
+378c502cc7ad043b,full,fix,C3,C3: 'ಳು ಈ ಕೆಳಗಿನವುಗಳನ್ನು ಒಳಗೊಂಡಿವೆಃ' at offset 406,,Text cut off mid-sentence at the end.
+cea1fedab01a7b28,full,clean,,,,
+0295264fc59e194f,full,fix,B2,B2: '<ಬಿ. ಆರ್.>' at offset 350-360,,html tag translated into Kannada
+4f3ee6cfb6cb2c4a,full,clean,,,,
+7612635ffaaef59d,full,clean,,,,
+d89787ebd29373f4,full,fix,C1,C1: 'ೆ.\nಫಲಿತಾಂಶ.\nಪಕ್ಷದ ಬುದ್ಧಿವಂತಿಕೆ' at offset 446,,Footer boilerplates
+6d5d02fd8f93cd21,full,clean,,,,
+2d79258d9a1d3ab0,full,clean,,,,
+15871320cdf79aa0,full,fix,A6,A6: 'W.ವಿಹಂಗಮ.ಕಾಮ್/ಫೋಟೋ/79721566' at offset 1882-1909 | A6: 'W.ವಿಹಂಗಮ.ಕಾಮ್/ಫೋಟೋ/79721489' at offset 1918-1945 | A6: 'W.ವಿಹಂಗಮ.ಕಾಮ್/ಫೋಟೋ/79721404' at offset 1954-1981,A6: offset 1882: U+0057 U+002E U+0CB5 U+0CBF U+0CB9 U+0C82 U+0C97 U+0CAE,Words that mix Kannada with Latin or another script (3 times).
+523fee1068dc3fa9,full,clean,,,,
+e96a48117f25f717,full,clean,,,,
+0d370171de780581,full,clean,,,,
+01fd88355413ed24,full,clean,,,,
+eeef421b307b90ec,full,clean,,,,clean text
+d9509af15c61abdc,partial,fix,A6,A6: '49ersನಲ್ಲಿ' at offset 5183,A6: offset 5183: U+0034 U+0039 U+0065 U+0072 U+0073 U+0CA8 U+0CB2 U+0CCD,Words that mix Kannada with Latin or another script.
+ea7e1afd07060b11,full,clean,,,,
+d02b048c55ea97f2,full,clean,,,,
+218f49fa2eda6716,full,clean,,,,
+22cd5d17094fbb49,full,clean,,,,
+c019c765a0ef6335,full,clean,,,,
+bf2e5e5773d04116,full,fix,B2,B2: <ಬಿ. ಆರ್.> at offset 305-315,,html tag translated into Kannada
+8a6dcff426ec3873,full,clean,,,,
+1d0b32cd6a5a14e1,full,clean,,,,
+ec11ca4b26d9664c,full,fix,D4,D4: czech at offset 964-969,,incomplete translation
+7212610f297cbe1b,full,fix,B2,"B2: '<ಐ. ಡಿ. 1>' at offset 630, 1052, 1604, 1785, 1867, 2288 | B2: '<ಐ. ಡಿ. 3>' at offset 1956, 2381 | B2: '<ಐ. ಡಿ. 2>' at offset 2001, 2350 | B2: 'ಐ. ಡಿ. 3' at offset 1232 | B2: 'ಐ. ಡಿ. 1' at offset 1297, 2590 | B2: 'ಐ. ಡಿ. 2' at offset 1367, 2517",,HTML tags machine-translated into Kannada like <ಐ. ಡಿ. 1> (10 times); <ID n> placeholders translated into Kannada with the brackets lost like ಐ. ಡಿ. 3 (5 times).
+1fee81170e7900aa,full,fix,C1,C1: '್ಯಾಲರಿ.\nಕ್ರೋಕೋಯಿಟ್ನ ಉದಾಹರಣೆಗಳು' at offset 3090,,Footer boilerplates
+aa287b48cc661b08,full,clean,,,,
+57209a614969b1ba,full,fix,A6;C3,"A6: 'f' at offset 214 | A6: 'x' at offset 262, 745 | A6: 'y' at offset 272, 335, 753 | C3: 'ುದರಿಂದ ಫಲಿತಾಂಶವನ್ನು ನೀಡುತ್ತದೆಃ' at offset 1252",,Text cut off mid-sentence at the end.
+7e9615f6d5e387ba,full,clean,,,,
+50a52c16052618d7,full,fix,C1,C1: '್ತಿಗಳು.\nಗೆದ್ದವರುಃ\nನಾಮನಿರ್ದೇಶನಃ' at offset 2437,,Footer boilerplates
+aca84ff22562df66,full,clean,,,,
+25874ea69e8cd152,full,clean,,,,
+412e2f7742fc25e2,full,clean,,,,
+1684cdb71a24c23c,full,fix,C1,C1: 'ಂಪರ್ಕಗಳು.\nವರ್ಗಃ ಎ & ಬಿ ಮನರಂಜನೆ' at offset 2804,,Footer boilerplates
+cf3773d99b2a38a2,full,clean,,,,
+45dba3829e9ded17,full,clean,,,,
+1b2783df7756eb8a,full,fix,B2,B2: '<ಐ. ಡಿ. 1>' at offset 1431-1441 | B2: 'ಐ. ಡಿ. 2' at offset 848-856,,<ID n> placeholders translated into Kannada with the brackets lost like ಐ. ಡಿ. 2; HTML tags machine-translated into Kannada like <ಐ. ಡಿ. 1>.
+17ce5bb2e5342f50,full,clean,,,,
+65917f0038954f16,full,clean,,,,
+fd30e2d061a724c6,full,clean,,,,
+48b6ac54d21c01c8,full,fix,B2,B2: '<ಐ. ಡಿ. 1>' at offset 12633-12643 | B2: '<ಐ. ಡಿ. 2>' at offset 12678-12688,,HTML tags machine-translated into Kannada like <ಐ. ಡಿ. 1> (2 times).
+71e28b0aee023048,full,fix,D3,D3: 'ber die zerlegung derendlichen gruppen i' at offset 624,,English phrases inside Kannada lines.
+73a266977409ce7c,full,fix,B2,B2: '<ಐ. ಡಿ. 1>' at offset 804-814,,HTML tags machine-translated into Kannada like <ಐ. ಡಿ. 1>.
+4fde496efbb5da8b,full,fix,A6,"A6: '(i.ಇ.,' at offset 316",A6: offset 316: U+0028 U+0069 U+002E U+0C87 U+002E U+002C,Words that mix Kannada with Latin or another script.
+e079f9d675b6ac9a,full,clean,,,,
+ed7cfe412cf5a9bb,full,clean,,,,
+ea50fea4684a89e1,full,clean,,,,
+185f1e175b3b9420,full,clean,,,,
+b497ade9ed6f64c3,full,fix,A6,A6: 'f.ಸಿ.' at offset 28,A6: offset 28: U+0066 U+002E U+0CB8 U+0CBF U+002E,Words that mix Kannada with Latin or another script.
+c8a3db09f9e9db74,full,clean,,,,
+77e171d6cd5b0de9,full,fix,C1,C1: 'ಳು.\nಇದು ಸ್ಥಳೀಯ ಸಮುದಾಯಗಳ ಪಟ್ಟಿಃ' at offset 311,,Footer boilerplates
+5c5b5f01d25d6fc3,full,clean,,,,
+063880965cac6238,full,clean,,,,
+2ef59b2f81cff939,full,clean,,,,
+894c9527e71e0955,full,clean,,,,
+0486f6af3103d580,full,clean,,,,
+7413f9ef1f35a6a9,full,clean,,,,
+c0a310952bc095f8,partial,fix,A6,A6: 'xxiiಯ' at offset 249,A6: offset 249: U+0078 U+0078 U+0069 U+0069 U+0CAF,Words that mix Kannada with Latin or another script.
+4fa8ae57a4bbda6e,full,clean,,,,
+f8db4ffd76531866,full,clean,,,,
+2db4b3fe4ae885e6,full,fix,B2;C1,B2: 'ಐ. ಡಿ. 1' at offset 2545-2553 | C1: 'ಾಳ\nಟೈಗರ್ ಕ್ವಾನ್\nಮೆಕ್ಸಿಕೋ ಯು-17' at offset 4145,,Footer boilerplates. <ID n> placeholders translated into Kannada with the brackets lost like ಐ. ಡಿ. 1.
+33a6aac5acc55c00,full,clean,,,,
+931fdf9d3d74420f,full,clean,,,,
+46b8402057a9712f,full,fix,A6;G1,A6: 'HATEGuluiಯಲ್ಲಿನ' at offset 2417 | G1: 'ೊ' at offset 6089,A6: offset 2417: U+0048 U+0041 U+0054 U+0045 U+0047 U+0075 U+006C U+0075 | G1: offset 6089: U+0CCA,
+d01a0f66934a10a5,full,fix,B2,B2: '<ಐ. ಡಿ. 1>' at offset 310-320,,HTML tags machine-translated into Kannada like <ಐ. ಡಿ. 1>.
+a77c7f5851398a77,full,clean,,,,
+f14b821dd9e1dbe7,full,clean,,,,
+8e132204d3b74619,full,clean,,,,
+d07fe1e623649eec,full,clean,,,,
+da6b0e12e1d62e13,full,fix,C2,C2: ಮುಂಭಾಗಕ್ಕೆ at offset 1737-2660,,Repeated word of ಮುಂಭಾಗಕ್ಕೆ multiple times
+c876d1b66e4ac362,full,clean,,,,
+e1ddec6478e84e9b,full,clean,,,,
+6a8a83b833862e25,full,fix,C3,C3: 'ಜಾನ್ನ ಗುಂಪು ಮತ್ತಷ್ಟು ಪೂರ್ವಕ್ಕೆ' at offset 357,,Text cut off mid-sentence at the end.
+dced1f90b5d0d679,full,clean,,,,
+e20ab349608a1dab,full,clean,,,,
+b6fa26245e5bbee0,partial,fix,A6;B4;D3,A6: 'k-ಉದ್ದ' at offset 7673-7679 | A6: '(i.ಇ.' at offset 9093-9098 | B4: 'null' at offset 4319 | D3: 's incul null' at offset 4311,A6: offset 7673: U+006B U+002D U+0C89 U+0CA6 U+0CCD U+0CA6,"Words that mix Kannada with Latin or another script (2 times); template junk (null, NaN, {{...}}) like null; English phrases inside Kannada lines."
+d5133441c9d74b4f,partial,fix,B3,"B3: '<unk>' at offset 37-42, 58-63",,Model special tokens like <unk> (2 times).
+9211a256ff001713,full,clean,,,,
+5a73bd08701ed05d,full,clean,,,,
+7d22f2b78bca124e,full,clean,,,,
+40277a89688e3c57,full,clean,,,,
+b7d6d4ff290d7536,full,clean,,,,
+93d5129071b4a11f,full,clean,,,,
+4538a0eab672d96f,full,clean,,,,
+a5627071a9a01c09,full,clean,,,,
+d3099c2a0f58fa1e,full,fix,B2,B2: 'ಐ. ಡಿ. 1' at offset 213-221 | B2: '<ಐ. ಡಿ. 1>' at offset 512-522,,<ID n> placeholders translated into Kannada with the brackets lost like ಐ. ಡಿ. 1; HTML tags machine-translated into Kannada like <ಐ. ಡಿ. 1>.
+bea967a8e294d507,full,clean,,,,
+5563d5f891165596,full,clean,,,,
+96b9d10f2df10d2d,full,clean,,,,
+2f1d49d23c215aa6,full,clean,,,,
+309c6300b2a22783,full,fix,D3,D3: 'αλεσιρεσι αρεσιρεσι' at offset 4207-4226,,Mixed language/scripts
+da241253302d52d5,full,clean,,,,
+f775c1cadd28186e,full,fix,A6,A6: 'XIVನ' at offset 567,A6: offset 567: U+0058 U+0049 U+0056 U+0CA8,Words that mix Kannada with Latin or another script.
+4af3b19d647d84f6,full,clean,,,,
+61ac039ff7e47d50,full,fix,B2,"B2: '<ಐ. ಡಿ. 1>' at offset 836-846, 1835-1845, 2331-2341 | B2: 'ಐ. ಡಿ. 1' at offset 1310-1318, 1586-1594 | B2: 'ಐ. ಡಿ. 3' at offset 1368-1376 | B2: 'ಐ. ಡಿ. 2' at offset 1489-1497 | B2: '<ಐ. ಡಿ. 3>' at offset 1797-1807, 2279-2289 | B2: '<ಐ. ಡಿ. 2>' at offset 1894-1904, 2218-2228",,HTML tags machine-translated into Kannada like <ಐ. ಡಿ. 1> (7 times); <ID n> placeholders translated into Kannada with the brackets lost like ಐ. ಡಿ. 1 (4 times).
+3f735eeec6402f87,full,fix,C1,C1: 'ನೇಮಿಸಲಾಯಿತು.\nಗೌರವಗಳು.\nಫುಲ್ಹಾಮ್' at offset 2981,,Footer boilerplates
+3959b7a83d80edb9,full,clean,,,,
+2ffa1db3ff911b53,full,fix,C3,C3: 'ದಾಣದಲ್ಲಿ ರೈಲುಗಳು ಕರೆ ಮಾಡುತ್ತವೆ' at offset 955,,Text cut off mid-sentence at the end.
+a9f3b94d174a8e7e,full,clean,,,,
+a567d25bdf9307a8,full,fix,A6;C1,A6: 'i486dxಗೆ' at offset 209 | C1: 'ರ್ಕಗಳು.\nಇಂಟೆಲ್ ದತ್ತಾಂಶ ಹಾಳೆಗಳು' at offset 1860,A6: offset 209: U+0069 U+0034 U+0038 U+0036 U+0064 U+0078 U+0C97 U+0CC6,Words that mix Kannada with Latin or another script.
+ef333648089a5724,full,clean,,,,
+da40f1275840904f,full,clean,,,,
+c1d547d5d4a21fd2,full,fix,C3,C3: '್-ಮುಹಫಾಜಾ 1 ಮತ್ತು ಅಲ್-ಶೋರ್ಟಾ 1' at offset 989,,Text cut off mid-sentence at the end.
+80ec26e5644e6569,full,clean,,,,
+d3458633d94d5283,full,clean,,,,
+7d16a5a0b7abb1f9,full,clean,,,,
+0d7f88244748a4e1,full,fix,B2,"B2: '<ಐ. ಡಿ. 1>' at offset 3142-3152, 4345-4355 | B2: '<ಐ. ಡಿ. 2>' at offset 3174-3184 | B2: 'ಐ. ಡಿ. 1' at offset 7311-7319",,HTML tags machine-translated into Kannada like <ಐ. ಡಿ. 1> (3 times); <ID n> placeholders translated into Kannada with the brackets lost like ಐ. ಡಿ. 1.
+ee228bb2adf8271f,full,clean,,,,
+5a407e18861633b8,full,clean,,,,
+345a65366c651ce7,full,clean,,,,
+211f6d51a6861cbf,full,clean,,,,
+502641c94d2458d2,full,fix,B2,B2: '<ಐ. ಡಿ. 1>' at offset 777-787,,HTML tags machine-translated into Kannada like <ಐ. ಡಿ. 1>.
+79519b0dcca1226c,full,clean,,,,
+7fd9125541575408,full,clean,,,,
+f619ab7d5ee8a52d,full,clean,,,,
+1b87ab131a2d2451,full,clean,,,,
+32e63d082af06f2a,full,clean,,,,
+13904155c7627a2e,full,clean,,,,
+4bb0207874ea24df,full,clean,,,,
+7e10910dd5f9844b,full,clean,,,,
+a84cbd8f664d1816,full,fix,B3,"B3: '<unk>' at offset 753-758, 817-822, 1781-1786, 1829-1834, 1859-1864, 1865-1870, 1871-1876, 1877-1882, 1883-1888, 1889-1894, 2623-2628",,Model special tokens like <unk> (11 times).
+a71c9d43e85931a9,partial,fix,C3,C3: 'ಇದನ್ನು ಹೆಚ್ಚಾಗಿ ಕತ್ತರಿಸಲಾಗಿದೆಃ' at offset 1135,,Text cut off mid-sentence at the end.
+5cbd81f81e887b0b,full,clean,,,,
+bd4b6889f255e3d8,full,clean,,,,
+57a3df15e0db2e9e,full,clean,,,,
+35ce5bb8ecf34db6,full,fix,C3,C3: 'ಾಮ್ಯತೆಗಳಿವೆ ಎಂದು ಸೂಚಿಸಿದ್ದಾರೆಃ' at offset 736,,Text cut off mid-sentence at the end.
+714258ffd059057e,full,fix,B2,B2: '<ಬಿ. ಆರ್.>' at offset 360-370,,HTML tags machine-translated into Kannada like <ಬಿ. ಆರ್.>.
+248d753341105364,full,fix,C1,C1: 'ು.\nಉಲ್ಲೇಖಗಳು.\nಉಲ್ಲೇಖಗಳು\nಮೂಲಗಳು' at offset 565,,Footer boilerplates
+45bb65a09de8a8bf,full,clean,,,,
+0619a11e9eff56f4,full,clean,,,,
+c65b2eb0c2754e06,full,clean,,,,
+a27bee882485a9b0,full,clean,,,,
+5182f57e468c0d70,full,clean,,,,clean text
+be733daaf8b845c5,full,fix,B2,B2: '<ಐ. ಡಿ. 1>' at offset 937-947,,HTML tags machine-translated into Kannada like <ಐ. ಡಿ. 1>.
+0b958053024326fd,full,clean,,,,
+23f4f87c70219557,full,clean,,,,
+ab34094ea9881e73,full,clean,,,,
+1a1b5cac0f8d4013,full,clean,,,,
+5f6f044745aeb4f4,full,fix,B2,"B2: '<>' at offset 219-221, 292-294, 316-318, 340-342, 363-365, 389-391, 413-415 | B2: '</Â>' at offset 222-226, 295-299, 319-323, 343-347, 366-370, 392-396, 416-420",,Empty or mangled tags like <> (14 times).
+fce89a2bb58b0e1f,full,clean,,,,
+1e1de41eb43d681d,full,fix,A3,A3: Â at offset 640-641,,Mojibake
+fca8385f26589168,full,clean,,,,
+c3bfcfad7e67e3d2,full,clean,,,,
+2237fbd5cc07cfb8,full,fix,C1,C1: 'ಉಲ್ಲೇಖಗಳು.\nಉಲ್ಲೇಖಗಳು\nಗ್ರಂಥಸೂಚಿ' at offset 6479,,Footer boilerplates
+0a7a2b891fd6e0a5,full,clean,,,,
+898bd798da15101a,full,clean,,,,
+6abf7b27cc3686b9,full,clean,,,,
+c3317a7c07187f5c,full,fix,D3,D3: сочея алечеееена олгорусооvā; at offset 73-102,,untranslated Russian
+ccd62d26005717b0,partial,fix,A6,"A6: 'Ixನ' at offset 204-207, 2892-2895",A6: offset 204: U+0049 U+0078 U+0CA8,Words that mix Kannada with Latin or another script (2 times).
+7b2f88203c20c1af,full,clean,,,,
+7ffa9de48c47146b,full,clean,,,,
+c4aee8b197b10735,full,clean,,,,
+cfabd940a275998b,full,fix,A6,"A6: 'n""-ಆಯಾಮದ' at offset 553",A6: offset 553: U+006E U+0022 U+002D U+0C86 U+0CAF U+0CBE U+0CAE U+0CA6,Words that mix Kannada with Latin or another script.
+53684ea5b19f3c1f,full,clean,,,,
+a46f72598331d845,full,fix,C3,C3: ' ಅಗ್ರಸ್ಥಾನದಲ್ಲಿ ಭಾಗವಹಿಸುತ್ತವೆಃ' at offset 1099,,Text cut off mid-sentence at the end.
+a7b8660e7e01003b,full,clean,,,,
+ff8d2d69591b522e,full,clean,,,,
+5d9d8668463fc360,full,clean,,,,clean text
+e70b7b40d6d9332d,full,clean,,,,
+449224733e6ac5b2,full,fix,C1,C1: 'ಗುತ್ತದೆ.\nಉಲ್ಲೇಖಗಳು.\nಟಿಪ್ಪಣಿಗಳು' at offset 3091,,Footer boilerplates
+1b0eab31c6e19e40,full,clean,,,,
+5fff9a57f9ca16c5,partial,fix,A6;C3,"A6: 'f.ಸಿ.' at offset 32 | C3: 'ಒಟ್ಟು ಒಳಬರುವಿಕೆಃ ~ £ 1,650,000' at offset 8925",A6: offset 32: U+0066 U+002E U+0CB8 U+0CBF U+002E,
+e5ecea9af17c26b8,full,clean,,,,clean text
+597ceb17c4e03f2d,full,clean,,,,
+74d1abb21399e961,full,clean,,,,
+bcc8ce0cce448906,full,clean,,,,
+40c59b85328dd423,full,clean,,,,
+61aca5de1b8b7c75,full,fix,C1,"C1: '""\nಸಿಬ್ಬಂದಿ.\nಹೆಚ್ಚುವರಿ ಸಿಬ್ಬಂದಿ' at offset 1172 | C1: 'ಜಾಹೀರಾತು' at offset 447-455",,Footer boilerplates
+2128a09bc9a75d1a,full,clean,,,,
+d81ac25f13bd9ad8,full,clean,,,,
+717a2db4c1621ad7,full,fix,C2,"C2: 'ಎರಡನೇ ಕಾಲು.' at offset 623-634, 852-863, 1055-1066, 1270-1281",,The same line repeats (5+ copies).
+5991b46f56267db7,full,clean,,,,
+e7b59fdbff9ec346,full,clean,,,,
+415af4cce5b11700,full,clean,,,,
+c234562f9dacc6c8,full,clean,,,,
+56c8c5bf58ae2f77,full,clean,,,,
+f7d4c009c51aaa6e,full,clean,,,,
+090c2eceee50d9e9,partial,fix,C1,C1: 'ಿ ಕಾಣಿಸಿಕೊಂಡರು.\nಗೌರವಗಳು.\nಅರೆಮಾ' at offset 2242,,Footer boilerplates
+392d286308016fe2,full,clean,,,,
+a09e21460d085a88,full,clean,,,,
+499b82b627b065a1,full,clean,,,,
+6fe7955f9dcca08d,full,clean,,,,
+85dc5fdc78ada939,full,clean,,,,
+e7f39b02cc27abff,full,clean,,,,
+795cf2909be9d1f6,full,fix,C1,"C1: 'ಜಾಹೀರಾತು' at offset 4668-4676, 4708-4716, 4749-4757",,Web boilerplate (share/subscribe/read-more lines) (3 times).
+425dc77c9c6262a4,full,clean,,,,
+69736fc6a4b44210,full,clean,,,,
+cda5cdfae781a868,full,clean,,,,
+7aaabeb4ed927188,full,fix,D3,D3: ym at offset 162-164,,untranslated english
+d84185e012943e58,full,clean,,,,
+df939b576048ab70,full,clean,,,,
+e892460fea9e9d69,full,clean,,,,
+d26800ae2e940502,full,fix,A6;B2,"A6: 'ಆಗಿದ್ದವು.""<br>""' at offset 1479 | B2: '<br>' at offset 1489-1493 | B2: '<ಐ. ಡಿ. 1>' at offset 622-632 | B2: '<ಐ. ಡಿ. 2>' at offset 634-644",A6: offset 1479: U+0C86 U+0C97 U+0CBF U+0CA6 U+0CCD U+0CA6 U+0CB5 U+0CC1,Words that mix Kannada with Latin or another script; HTML tags machine-translated into Kannada like <ಐ. ಡಿ. 1> (2 times); leftover HTML tags like <br>.
+0c7c782ffdaccd82,full,clean,,,,
+b93c2a1c84dcd991,partial,fix,A6,"A6: 'mಯ' at offset 3094-3096 | A6: 'i.ಇ.,' at offset 7614-7619",A6: offset 3094: U+006D U+0CAF,Words that mix Kannada with Latin or another script (2 times).
+5477f4457221c30c,full,fix,B2,"B2: '<ಐ. ಡಿ. 1>' at offset 1368, 1877 | B2: 'ಐ. ಡಿ. 1' at offset 1424, 1689 | B2: 'ಐ. ಡಿ. 2' at offset 1482 | B2: 'ಐ. ಡಿ. 3' at offset 1534 | B2: 'ಐ. ಡಿ. 4' at offset 1592 | B2: '<ಐ. ಡಿ. 3>' at offset 1931 | B2: '<ಐ. ಡಿ. 4>' at offset 1961 | B2: '<ಐ. ಡಿ. 2>' at offset 2019",,HTML tags machine-translated into Kannada like <ಐ. ಡಿ. 1> (5 times); <ID n> placeholders translated into Kannada with the brackets lost like ಐ. ಡಿ. 1 (5 times).
+c1e6470f463ee8c7,partial,fix,A6;C1,"A6: 'ಮೌಲ್ಯ-i.ಇ.' at offset 53072 | C1: 'ಜಾಹೀರಾತು' at offset 50676-50684, 56078-56086",A6: offset 53072: U+0CAE U+0CCC U+0CB2 U+0CCD U+0CAF U+002D U+0069 U+002E,
+63b26cd52fab9a9e,full,clean,,,,
+7c5aefaebaeaf159,full,clean,,,,
+e288409d61b677ba,full,clean,,,,
+502f0850289dfdba,full,fix,B2,B2: '<ಐ. ಡಿ. 1>' at offset 549-559 | B2: '<ಐ. ಡಿ. 2>' at offset 588-598,,HTML tags machine-translated into Kannada like <ಐ. ಡಿ. 1> (2 times).
+221cb9fa2c20f86a,full,clean,,,,
+73ac94c277da076e,full,clean,,,,
+667754cb6377d82f,full,clean,,,,
+2ceba289898aba63,full,fix,B2;C3,"B2: '<ಐ. ಡಿ. 1>' at offset 283-293, 1250-1260, 1370-1380 | C3: 'ೊದಲ ಸುತ್ತಿನಲ್ಲಿ ನಾಕ್ ಔಟ್ ಆದವುಃ' at offset 1428",,HTML tags machine-translated into Kannada like <ಐ. ಡಿ. 1> (3 times); text cut off mid-sentence at the end.
+4a6a206b47cad2ea,full,clean,,,,
+765380eb95764cee,full,clean,,,,
+db80897e2760a8ad,full,clean,,,,short document
+8772f7c961f3c48f,full,clean,,,,
+56f6122a500b7d0e,full,clean,,,,
+87837e2933dbaa8b,full,fix,B2,B2: 'ಐ. ಡಿ. 2' at offset 1984-1992 | B2: '<ಐ. ಡಿ. 1>' at offset 2059-2069,,<ID n> placeholders translated into Kannada with the brackets lost like ಐ. ಡಿ. 2; HTML tags machine-translated into Kannada like <ಐ. ಡಿ. 1>.
+caa83427bb3336d6,full,clean,,,,
+4958853240c11144,full,clean,,,,
+7a72efac7b2f5b64,full,clean,,,,
+614583acd0023b6a,full,clean,,,,
+9ffcbc94aa8d6004,full,fix,B2,B2: '<ಬಿ. ಆರ್>' at offset 1522-1531,,HTML tags machine-translated into Kannada like <ಬಿ. ಆರ್>.
+079045bcb1be778d,full,clean,,,,
+ffff3cd82c21275c,full,fix,C1,C1: 'ಮಾಜಿ ಸದಸ್ಯರುಃ\nಪ್ರವಾಸದ ಸದಸ್ಯರುಃ' at offset 4752,,Footer boilerplates
+2d9a373d2ef00c46,partial,fix,B2,"B2: 'ಐ. ಡಿ. 1' at offset 5796-5804, 6093-6101",,<ID n> placeholders translated into Kannada with the brackets lost like ಐ. ಡಿ. 1 (2 times).
+98cfc55309022d84,full,clean,,,,
+ddfc021a1f8bdc71,full,clean,,,,
+0e1cf8371bf49512,full,clean,,,,
+7213ef84e617ab3c,full,fix,A6,"A6: 'ಸ್ವರಗಳನ್ನು/l/,/h/ನಂತರ' at offset 822-843 | A6: 'ಕೆಲವೊಮ್ಮೆ/n/ಅನ್ನು' at offset 850-867 | A6: '(e.ಜಿ.' at offset 876-882",A6: offset 822: U+0CB8 U+0CCD U+0CB5 U+0CB0 U+0C97 U+0CB3 U+0CA8 U+0CCD,Words that mix Kannada with Latin or another script (3 times).
+6820f120cb768faa,full,fix,D3,"D3: (γενικειθyνσις εθνικις ασφαλείας, γδεα at offset 96-134",,untranslated language
+e28cda1384b964f0,full,clean,,,,
+f4d72e84666fe864,full,clean,,,,
+80f95c37469a5a6a,full,clean,,,,
+bb3aca78f08de331,full,clean,,,,
+329bd9e6f347c937,full,clean,,,,
+d44b1bccd5c37baf,full,clean,,,,
+efbd26b9fa1ce0d9,full,clean,,,,
+1d9e14f32d57a6a0,full,clean,,,,
+c62019235443c084,full,clean,,,,
+0f2e85edb16c4b68,full,clean,,,,
+92fed1936645310f,full,clean,,,,
+fe7cdef72f7948b2,full,fix,C1,"C1: ಟ್ರ್ಯಾಕ್ ಪಟ್ಟಿಗಳು.
+ಇಟಾಲಿಯನ್ 12 ಇಂಚಿನ ಸಿಂಗಲ್ (2006)
+ಇಟಾಲಿಯನ್ 12 ಇಂಚಿನ ಸಿಂಗಲ್ (2007)
+ಯುಕೆ ಸಿಡಿ ಸಿಂಗಲ್
+ಡಚ್ ಸಿಡಿ ಸಿಂಗಲ್
+ಆಸ್ಟ್ರೇಲಿಯನ್ ಮ್ಯಾಕ್ಸಿ-ಸಿಡಿ ಸಿಂಗಲ್
+ಆಸ್ಟ್ರೇಲಿಯನ್ ಡಿಜಿಟಲ್ ಡೌನ್ಲೋಡ್
+ನ್ಯೂಜಿ at offset 1568-1754",,Boilerplate links at the end
+9b922fd2d3a2e059,full,clean,,,,
+2cc1efc07b68f0ce,full,clean,,,,
+c74202276a7c6d7e,full,clean,,,,
+f62ae381f26f00dd,full,fix,A6,A6: 'l1aಯಲ್ಲಿ' at offset 2357,A6: offset 2357: U+006C U+0031 U+0061 U+0CAF U+0CB2 U+0CCD U+0CB2 U+0CBF,Words that mix Kannada with Latin or another script.
+d7bebd5a829f5b54,full,fix,C3,C3: 'ಲ್ಲಿ ಕಾಣಿಸಿಕೊಳ್ಳುವುದು.\nಹವ್ಯಾಸಿ' at offset 1308,,Text cut off mid-sentence at the end.
+6c7a7189b34d91b0,partial,fix,B2;G1,B2: '<ಐ. ಡಿ. 1>' at offset 1055-1065 | G1: 'ಂ' at offset 1748,G1: offset 1748: U+0C82,HTML tags machine-translated into Kannada like <ಐ. ಡಿ. 1>; vowel signs or viramas with no base letter.
+ee72705a400103f5,full,clean,,,,
+ee2758858961a338,partial,fix,C3,C3: 'ೆಳಗಿನ ಜನರು ಅದರ ಮೇಯರ್ ಆಗಿದ್ದರುಃ' at offset 9312,,Text cut off mid-sentence at the end.
+614cba06c9799a3b,full,clean,,,,
+b6d07f044613e6f3,full,clean,,,,
+002f62330070989b,full,clean,,,,
+ecaf7cc3e88669ef,full,clean,,,,
+585e442da2b22259,full,clean,,,,
+f392b470084c3eb1,full,clean,,,,
+88459b7219f57ab8,full,clean,,,,
+96ecccbf319e8469,full,fix,C1,C1: 'ಪ್ಪಣಿಗಳು\nಉಲ್ಲೇಖಗಳು.\nಟಿಪ್ಪಣಿಗಳು' at offset 3065,,Footer boilerplates
+d4b0b0457bf1369e,full,clean,,,,
+b294ed2536f25ae3,full,clean,,,,
+7b0b11fa22a1ffe3,full,clean,,,,
+b13c64b7055e5f20,full,clean,,,,
+94552b481a3cf4fd,full,clean,,,,
+cc4d1418e2c11546,full,fix,D3,D3: ειρινη at offset 813-819,,Mixed language/scripts
+af5b7a9e320130e1,full,clean,,,,
+e63692773f8c05cc,full,clean,,,,
+99af5d9592fc43cd,full,fix,C3,C3: 'ಲಾದ 56 ಪ್ರಭೇದಗಳನ್ನು ಒಳಗೊಂಡಿದೆಃ' at offset 3540,,Text cut off mid-sentence at the end.
+d67be9974e2512bf,full,fix,B2,B2: '<ಬಿ. ಆರ್.>' at offset 319-329,,HTML tags machine-translated into Kannada like <ಬಿ. ಆರ್.>.
+9252c855784bb423,full,clean,,,,
+1428f9e8314543c8,full,fix,C3,C3: '್ತಕಗಳು ಮತ್ತು ಪ್ರಬಂಧಗಳು ಹೀಗಿವೆಃ' at offset 560,,Text cut off mid-sentence at the end.
+fca35b24c26623ae,full,fix,D3,D3: Elusivo at offset 1119-1126,,Mixed language/scripts
+1012c2ab07179f95,full,clean,,,,

@@ -1,0 +1,501 @@
+doc_id,read,verdict,diseases,evidence,hex,note
+83dc5d60eaef6288,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 35,,"Chromium Windows sandbox BrokerServicesBase implementation (job tracking, SpawnTarget)"
+3a7b03b626595019,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 35,,LeetCode power-of-two solution with a small main()
+9f6e4e65e41f69c4,full,fix,B4;E4,"PII-redaction placeholder <NAME> x3, first at offset 39 | MIT licence header, 22 lines at the top; same header text in 2 files of this pack",,"PII placeholder; BThreadPack thread pool private implementation (task queues, priority scheduling)"
+ab726af7ee73aa3b,full,fix,B4,"PII-redaction placeholder <NAME> x1, first at offset 25",,PII placeholder; Redcrane engine small FLAC playback test program using PortAudio
+6e1056d5d935abb7,full,clean,,,,CSymPy RCP helper wrapping Teuchos print_stack_on_segfault
+a800be93ce443cb5,full,fix,B3;B4,"StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 11 | PII-redaction placeholder <NAME> x1, first at offset 29",,PII placeholder; Qt MainWindow constructor/destructor stub
+7095a5693a20f256,full,clean,,,,RISC-V hart model DirectTransactor template header
+b6bbf20d0ad56939,full,fix,B3,"StarCoder metadata token(s) <filename>, <reponame> at offset 0; header ends at offset 83",,Jack language analyzer XML output formatting functions (parser-generator example)
+9e059cbb0743aafd,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 26,,Minecraft server ping/status command-line tool
+9195ba155f4ee31e,full,fix,E4,"Apache-2.0 licence header, 15 lines at the top; same header text in 21 files of this pack",,Autoware ROS fake camera node publishing a static image
+7f334c23164cab22,full,clean,,,,LeetCode 404 Sum of Left Leaves solution
+0797d20110e8ab9b,full,fix,B3;B4;E4,"StarCoder metadata token(s) <filename>, <gh_stars> at offset 0; header ends at offset 68 | PII-redaction placeholder <EMAIL> x3, first at offset 13499 | Chromium-BSD licence header, 8 lines at the top",,PII placeholder; Chromium CEEE IE broker window API gmock unit tests
+09b5f5db05cc311d,full,fix,A2;B3,"CR (CRLF line endings) x29, first at offset 61 | StarCoder metadata token(s) <gh_stars>, <reponame> at offset 0; header ends at offset 41",61 U+000D CARRIAGE RETURN (29x),VFSForGit native test helper checking placeholder version info
+47cf08b1366662cd,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 37,,Win32 RAII wrappers and AppContainer process creation header
+4ac6624748e7453d,full,fix,B3;E4,"StarCoder metadata token(s) <filename> at offset 0; header ends at offset 45 | proprietary licence header, 12 lines at the top",,"Panda3D COLLADA loader (nodes, geometry, lights)"
+c53cd9bbd7f21d64,full,clean,,,,GAPS R3MeshSearchTree kd-tree for closest-point and ray queries on meshes
+65ab6b9b948ddac5,full,clean,,,,Toy stock buy/sell signal algorithm over a vector of quotes
+197d1c752010dd95,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 31,,Wavelet tree memory-usage benchmark driver (Linux /proc and Windows)
+c4fdd2a6e18d381d,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 53,,COVID agent-based model: state transitions for hospital-patient agents
+1a8174fb912f99bd,full,clean,,,,cpp-validator example: validating a tree of nodes with a reporting adapter
+d5e1b337f212f4e2,full,fix,A2;B3;B4;E4,"CR (CRLF line endings) x386, first at offset 105 | StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 28 | PII-redaction placeholder <NAME> x2, first at offset 388 | BSD licence header, 38 lines at the top",105 U+000D CARRIAGE RETURN (386x),PII placeholder; STLSoft/WinSTL basic_commandline_parser header (vendored third-party)
+2bfaa545814cf99f,full,fix,B3,StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 14,,Natalie Ruby parser AST node class OpAssignAndNode
+4b56881433ffb999,full,clean,,,,"Student header for a 3D solid scene-object class, Polish Doxygen comments"
+11edb16ce89987d8,full,fix,A2,"CR (CRLF line endings) x111, first at offset 32",32 U+000D CARRIAGE RETURN (111x),Packet-classifier red-black/MI tree self-test
+bef3145afd58e431,full,fix,E4,"proprietary licence header, 11 lines at the top",,F Prime LinuxTimer component task-delay implementation
+313a3773268cfc1e,full,fix,E4,"Chromium-BSD licence header, 5 lines at the top",,PDFium GIF codec module wrapper (fx_codec_gif.cpp)
+1a0cf949fc53a4a3,full,clean,,,,xxhr HTTP Basic auth helper class header
+dc6a77d5a4a10f51,full,drop,C2;C4,"'decoded += MORSE_CODE[ letter ];' at offset 977; Statement duplicated from line 33 (paste debris); line 35 also has unbalanced parentheses, so the first half does not compile. | '#include <regex>' at offset 1439; A second, separate decodeMorse solution is glued on after the test harness with no boundary, so the function is defined twice.",,"Codewars Morse decoder kata: a broken attempt, the kata test block, then a second solution"
+dc95b2b83b6a0252,full,fix,A2,"CR (CRLF line endings) x92, first at offset 50",50 U+000D CARRIAGE RETURN (92x),CUTE unit-test suite for a BoundedBuffer's default behaviour
+54bcee5f19fa5757,full,fix,B3;B4;E4,"StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 14 | PII-redaction placeholder <NAME> x2, first at offset 1736 | proprietary licence header, 31 lines at the top",,PII placeholder; GCAM emissions model: marginal-abatement-cost (MAC) control class
+8835e7c1785d8efd,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 75,,MPI ring token-passing practice program
+0d97bb3b39c1bc35,full,clean,,,,Student merge sort exercise (Vietnamese output strings)
+7e5b148d47567cb4,full,clean,,,,Templated 2D vector struct with macro-generated operators (MD local stress)
+4a03c8fb08a30888,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 39,,WindowsException class implementation with a wide-string message
+467a6d2f40193dbe,full,clean,,,,"Robot leg inverse kinematics (vectors, frames, IK solver, test suite); French comments"
+90f151f00f35f3c6,full,fix,B3;B4;E4,"StarCoder metadata token(s) <gh_stars>, <reponame> at offset 0; header ends at offset 48 | PII-redaction placeholder <NAME> x1, first at offset 547 | MIT licence header, 34 lines at the top",,PII placeholder; ARM simulator teaching test case for ldrsw/str instructions
+5500ec7bf87b39ef,full,fix,B4;E4,"PII-redaction placeholder <EMAIL> x1, <NAME> x1, first at offset 146 | copyright notice licence header, 5 lines at the top",,PII placeholder; doctest unit test for the arduino_pong Paddle class
+9efbbf17b146288f,full,drop,E1,"'static const uint16_t x1PropertyKey = 63;' at offset 638; Generator output (path include/generated/): mechanically repeated property keys, getters/setters and deserialize cases.",,Rive runtime CubicInterpolatorBase class from include/generated/
+4b2fb55b5e1ab994,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 27,,Blog benchmark of ffsll/__builtin_ffsll bit-scan throughput
+52c5a9ce48bee35f,full,clean,,,,Competitive-programming reverse-prime exercise (Vietnamese comments)
+85a24f18489b0c88,full,fix,B3;E4,"StarCoder metadata token(s) <filename> at offset 0; header ends at offset 36 | Apache-2.0 licence header, 18 lines at the top",,Apache Pegasus utils: addr2host and C string escape/unescape
+6301096d4cfe493b,full,fix,B4,"PII-redaction placeholder <NAME> x2, first at offset 109",,PII placeholder; Click modular router FromDump element (reads tcpdump/pcap files)
+aa2cbc848659e139,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 42,,AFF3CT-style Filter module template implementation
+a315f10fa8bef198,full,clean,,,,Example main that wires routes for a small HTTP server
+b9eae27eae68df75,full,fix,B4,"PII-redaction placeholder <NAME> x1, first at offset 41",,"PII placeholder; MAME device: Apricot keyboard HLE (input port matrix, RTC commands)"
+fbcdb3c190bce1bd,full,fix,A2,"CR (CRLF line endings) x32, first at offset 34",34 U+000D CARRIAGE RETURN (32x),task_scheduler example with recursive bind/lambda tasks
+a2b016c8a5047a65,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 22,,Duktape native-module DLL entry example
+0e7684ba8014e8cb,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 49,,Unreal Engine UNodeMappingContainer implementation
+2080912818f30638,full,fix,B3,StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 15,,robin_hood hashmap nanobench copy benchmark test
+ad620827909ed4c0,full,clean,,,,Calculator program main with exception handling
+fedb077387bf867f,full,clean,,,,Qt network integration tests for a REST 'programs' service (CRUD against localhost)
+5c49153a96697f7f,full,fix,B3;B4;E4,"StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 11 | PII-redaction placeholder <NAME> x1, first at offset 30 | proprietary licence header, 5 lines at the top",,PII placeholder; Readium LCP content filter (ePub decryption filter) implementation
+9ccd3964d55706ee,full,fix,B3;E4,"StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 14 | proprietary licence header, 8 lines at the top",,"MRPT matrix sample program (Cholesky, eigenvectors, covariance tests)"
+ec7001a1bc51ba1f,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 44,,Fuchsia brcmfmac WLAN driver flow ring handler unit tests
+f0fc1aaca2693ed3,full,fix,B3;B4;E4,"StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 11 | PII-redaction placeholder <NAME> x2, first at offset 64 | proprietary licence header, 7 lines at the top",,PII placeholder; Trivial Xcode sample main.cpp with print-only functions
+f3cee8feefb43b04,full,fix,B3;B4;E4,"StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 14 | PII-redaction placeholder <EMAIL> x2, <NAME> x2, first at offset 1935 | BSD licence header, 49 lines at the top",,PII placeholder; Trilinos Panzer tutorial Dirichlet boundary-condition strategy template impl
+e7ff9993a4964566,full,clean,,,,Unreal Engine editor plugin template module (PLUGIN_NAME placeholders by design)
+6c556a191861bb55,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 35,,Course exercise Queue class stub implementation
+d04dc449fd0c763d,full,fix,B3;E4,"StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 14 | MIT licence header, 34 lines at the top",,OpenPegasus NIS provider test client property check stubs
+782bc9665f0acdf7,full,fix,A1;B4;F1,"BOM x1, first at offset 0 | PII-redaction placeholder <NAME> x1, first at offset 4 | student ID number (6 digits) in header comment at offset 21",0 U+FEFF ZERO WIDTH NO-BREAK SPACE,PII placeholder; Bulgarian university homework: compare average digit value of two integers
+8cb5695f092961e5,full,fix,E4,"Apache-2.0 licence header, 16 lines at the top",,RocketMQ C++ client RateLimiter gtest
+83b177cffc2fc5d5,full,fix,B3;B4;E4,"StarCoder metadata token(s) <filename> at offset 0; header ends at offset 59 | PII-redaction placeholder <NAME> x2, first at offset 199 | BSD licence header, 33 lines at the top",,PII placeholder; ROS actionlib SimpleActionClient gtest
+cba2e6821a431912,full,clean,,,,Shed Skin os module C++ header (Python os API declarations)
+9f9b7e3a0e0143b4,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 39,,doctest geometry/collision unit tests for a 2D game
+74c99266ca895792,full,fix,B3;B4,"StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 25 | PII-redaction placeholder <EMAIL> x1, <NAME> x1, first at offset 199",,PII placeholder; Beast/JUCE LocalisedStrings translation-file loader
+55aa88a58081bce0,full,fix,B3,StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 11,,msgpack-arduino serialize.hpp declarations and inline overloads
+c3727c2b04dba073,full,fix,B4,"PII-redaction placeholder <NAME> x1, first at offset 12",,PII placeholder; Ouzel engine Wavefront OBJ mesh loader
+de12a2fd152768d6,full,fix,A1,"BOM x1, first at offset 0",0 U+FEFF ZERO WIDTH NO-BREAK SPACE,TinyIM WTL login settings dialog (Chinese UI strings)
+bfa40f662fe0475d,full,clean,,,,AVR microcontroller IO init and flag helpers
+51aa9142970a7f00,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 24,,Simple chrono-based execution timer class header
+e64d073068d23612,full,fix,B3,StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 11,,lib-bio MatchSimilarity dynamic-programming class with empty method stubs
+46b1baa8b816d668,full,fix,B4;E4,"PII-redaction placeholder <NAME> x1, first at offset 155 | Apache-2.0 licence header, 16 lines at the top",,PII placeholder; IncludeOS network Packet class header
+1509ce37d4753335,full,clean,,,,"Study-notes circular linked-list queue push/pop (pseudocode-like, Chinese comments)"
+fca8a524984334d0,full,clean,,,,Everscale unit-test framework Date arithmetic and system time
+e52b2ae1f1f5874b,full,clean,,,,Solder reflow plate temperature profile definitions and lookup
+6c848e4e4e8a988b,full,fix,B3,StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 18,,EFANNA kNN result accuracy evaluation tool
+331922297ce49863,full,clean,,,,HackerRank connected-cell-in-grid BFS solution snippet
+71240f45c4870240,full,fix,B3,StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 11,,Competitive programming solution: max-divisor number via prime DFS
+d778054df4a349e7,full,fix,A2;B3;B4;E4,"CR (CRLF line endings) x104, first at offset 91 | StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 11 | PII-redaction placeholder <NAME> x1, first at offset 119 | BSL-1.0 licence header, 7 lines at the top",91 U+000D CARRIAGE RETURN (104x),PII placeholder; Sprout constexpr stateful typed_id counter header
+6bede838b3a52f1c,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 32,,JetBeep USB AutoDevice pimpl forwarding wrapper
+36150cd9bd35bdec,full,fix,B3,StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 11,,pthread thread pool with test main
+111a70b8b7230530,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 58,,Chroma engine GLFW Windows window implementation with event callbacks
+e20006f60b05fd63,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 40,,CodeChef MULTHREE practice solution
+ae16a3d6219862f9,full,clean,,,,Codeforces 61A Ultra-Fast Mathematician solution
+3c6234d62bc02c3d,full,fix,E4,"Apache-2.0 licence header, 16 lines at the top",,HPCC Platform ESP LogicFileWrapper (DFS file delete/compress helpers)
+664c7c6d6c938cff,full,fix,A2;B3,"CR (CRLF line endings) x36, first at offset 31 | StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 11",31 U+000D CARRIAGE RETURN (36x),Numerical Recipes driver for tutest (Student t-test)
+c35b0e60b77787b6,full,fix,B4;E4,"PII-redaction placeholder <PASSWORD> x2, first at offset 7732 | Apache-2.0 licence header, 15 lines at the top",,"PII placeholder; ACD call-center config loader (ini + MySQL), passwords already redacted"
+f0de7546032334e6,full,fix,B3;E4,"StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 25 | BSD licence header, 28 lines at the top",,Caffe (Cambricon fork) SoftmaxWithLoss layer tests
+c61fa4827af443d6,full,fix,B3,StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 16,,STNG stencil translator ROSE AST structure analyzer visitors
+4fb8f1ec8cd8973d,full,fix,B3,StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 16,,HavoqGT/PruneJuice label-propagation local constraint checking header (MPI graph pattern matching)
+6f186d796348dc32,full,fix,A2;B3,"CR (CRLF line endings) x84, first at offset 62 | StarCoder metadata token(s) <filename> at offset 0; header ends at offset 36",62 U+000D CARRIAGE RETURN (84x),Student OOP project: Dezinfectant class implementation (Romanian identifiers)
+6d8df76acff62093,full,clean,,,,"HAL netlist SMT types: Boost.Spirit X3 model parser, QueryConfig/Result classes"
+a283a8943ca1d402,full,fix,B3;B4;E4,"StarCoder metadata token(s) <gh_stars>, <reponame> at offset 0; header ends at offset 32 | PII-redaction placeholder <NAME> x3, first at offset 208 | proprietary licence header, 14 lines at the top",,"PII placeholder; VTK vtkProjectedTetrahedraMapper implementation (point transform, scalar-to-color mapping)"
+d6fd72e115e08847,full,clean,,,,libhtml5 emscripten DOM Node wrapper implementation
+f63ec57866305825,full,drop,A1;E1;E4,"BOM x1, first at offset 0 | 'HumanTaskConfig::HumanTaskConfig() : ' at offset 812; aws-sdk-cpp model class is code-generator output: mechanically repeated per-field set/serialize blocks | Apache-2.0 licence header, 14 lines at the top",0 U+FEFF ZERO WIDTH NO-BREAK SPACE,aws-sdk-cpp SageMaker HumanTaskConfig model JSON (de)serializer
+30bacfbae607bf17,full,fix,E4,"copyright notice licence header, 8 lines at the top",,WDK 8 Basic Display Driver DDI entry points (KMDOD sample)
+8f54dfb4b9d18373,full,fix,B3;B4;E4,"StarCoder metadata token(s) <filename> at offset 0; header ends at offset 39 | PII-redaction placeholder <NAME> x1, first at offset 183 | proprietary licence header, 6 lines at the top",,PII placeholder; Lean util script_exception: parse Lua error messages
+de679cf725b4e409,full,clean,,,,stdtensor type_encoder: constexpr scalar type size/prefix tables
+21980c56f7c7f638,full,clean,,,,Poppler Qt5 unit test for PDF optional content (OCG) visibility
+a67189e6272a2a92,full,fix,B4;E4,"PII-redaction placeholder <NAME> x1, first at offset 2790 | proprietary licence header, 6 lines at the top",,PII placeholder; TF2 client HUD flame-rocket charge meter element
+676d679afd2bf043,full,fix,A2;B4,"CR (CRLF line endings) x418, first at offset 76 | PII-redaction placeholder <NAME> x1, first at offset 196",76 U+000D CARRIAGE RETURN (418x),PII placeholder; X-Ray engine CScriptGameObject smart-cover script bindings
+e3720007416cf1b9,full,drop,E1,"'// Mono Native Fixture' at offset 0; generator output from assembly metadata; every TEST body is empty, no logic to learn",,MonoNative mscorlib SafeBuffer gtest fixture: auto-generated empty test stubs
+a848c92f38ec0dde,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 23,,OpenGM command-line VectorArgument template class
+a3256b38a3e5a8d1,full,fix,A2,"CR (CRLF line endings) x117, first at offset 24",24 U+000D CARRIAGE RETURN (117x),Eva-CAM CAM_RowNand row decoder (NVSim-style circuit model)
+7a113f1b110118ca,full,fix,B3;B4;E4,"StarCoder metadata token(s) <filename> at offset 0; header ends at offset 88 | PII-redaction placeholder <NAME> x1, first at offset 220 | BSD licence header, 39 lines at the top",,PII placeholder; PCL OUR-CVFH feature estimation implementation (vendored in an iOS app)
+ce95799610d7c780,full,fix,B4;E4,"PII-redaction placeholder <NAME> x1, first at offset 28 | BSD licence header, 32 lines at the top",,"PII placeholder; libletlib header defining a 'field' helper class for key-value list construction, BSD licence and ASCII-art banner"
+160d51e1e088671c,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 27,,OpenVINO ONNX frontend plugin entry points (load/convert/decode)
+08ffd8638e9d3541,full,fix,B4,"PII-redaction placeholder <NAME> x1, first at offset 201",,PII placeholder; MPI MapReduce program computing k-mer distribution of a FASTA reference genome
+63376972d1ae1c2d,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 53,,"AMGString string utility class implementation (case, pad, split, replace)"
+a1cd1ffdc253ec4d,full,fix,E4,"Apache-2.0 licence header, 20 lines at the top",,Gazebo/ROS2 plugin for a custom battery consumer in a UUV simulator
+3225c240d94860b9,full,fix,A2;E4,"CR (CRLF line endings) x113, first at offset 69 | proprietary licence header, 15 lines at the top",69 U+000D CARRIAGE RETURN (113x),MITK CppUnit test suite for UnstructuredGridToUnstructuredGridFilter
+d5561fdb1dbe8bb7,full,fix,B3;E4,"StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 55 | BSD licence header, 28 lines at the top",,Qualcomm SDM HWC2 built-in display implementation (Android display HAL)
+35abb2ee3488366f,full,fix,B4,"PII-redaction placeholder <NAME> x1, first at offset 18",,PII placeholder; GoogleTest + MPI tests for a parallel global optimisation student task
+0b429cc6ec95c20e,full,fix,B4,"PII-redaction placeholder <NAME> x1, first at offset 163",,PII placeholder; Boost.SIMD forwarding header for the rem function (include guard plus three includes)
+080b20fc13d32e69,full,clean,,,,LeetCode 1263 solution (minimum box pushes) using nested BFS
+8f690c380ebc29f0,full,clean,,,,Small main() for a job-shop scheduling solver that redirects cout to a file and runs an experiment
+1ba987e9454983c5,full,fix,B3,"StarCoder metadata token(s) <filename>, <reponame> at offset 0; header ends at offset 100",,Chromium Blink LayoutNG caret position computation
+c985a73238d11350,full,clean,,,,"ESP32 hardware abstraction layer for a lab board (sensors, PWM, I2S FFT, LEDs, buzzer)"
+323a66f9bd29c4c6,full,fix,A2,"CR (CRLF line endings) x73, first at offset 25",25 U+000D CARRIAGE RETURN (73x),Header implementing a compile-time static_if/else template helper
+6cd059a46f2c882b,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 29,,KrisLibrary Gram-Schmidt orthonormal/orthogonal basis templates with explicit instantiations
+e3961b6927e8feb5,full,fix,A2;B3,"CR (CRLF line endings) x45, first at offset 82 | StarCoder metadata token(s) <filename>, <gh_stars> at offset 0; header ends at offset 51",82 U+000D CARRIAGE RETURN (45x),Play! Framework CFlatLayout implementation (UI layout container)
+fc6d66d5975e1a2a,full,clean,,,,"SystemC Hamming-code syndrome correction module (switch over 16 syndromes, French comments)"
+d5f14e8f4e7792ab,full,fix,B3;B4;E4,"StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 31 | PII-redaction placeholder <NAME> x1, first at offset 60 | BSD licence header, 26 lines at the top",,PII placeholder; RTAB-Map MSCKF visual-inertial odometry wrapper (non-ROS image processor and filter)
+15d5d8f9e02835f9,full,fix,B3;B4;E4,"StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 16 | PII-redaction placeholder <EMAIL> x1, <NAME> x1, first at offset 117 | copyright notice licence header, 6 lines at the top",,PII placeholder; Enzo-E/Cello umbrella include header for the Io component
+282fadc4865524af,full,fix,A2,"CR (CRLF line endings) x36, first at offset 19",19 U+000D CARRIAGE RETURN (36x),Beginner C++ program printing an alphabetic triangle pattern
+eceba95fe2984f57,full,clean,,,,EVE SIMD library may_alias type-alias helper header
+59ad08116bcd5982,full,fix,B3;B4,"StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 16 | PII-redaction placeholder <EMAIL> x1, <NAME> x1, first at offset 207",,PII placeholder; Odroid-Go app 'About' screen drawing author credits
+3fab1abddc444f6b,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 20,,"Header-only Rust-style Result<T,E> type for C++17"
+34e9594c39fab26b,full,fix,E4,"BSD licence header, 30 lines at the top",,Program enumerating Ish types of Shi arrangements with prime factorisation
+df75c11ae4e76c49,full,fix,E4,"GPL licence header, 23 lines at the top",,OpenJDK HotSpot UNSIGNED5 compressed stream header
+f7225bffdf7b7c7c,full,fix,B3;E4,"StarCoder metadata token(s) <filename>, <reponame> at offset 0; header ends at offset 96 | Chromium-BSD licence header, 9 lines at the top",,"WebRTC network unit types (TimeDelta, DataRate, DataSize) implementation"
+a3febf57b2b94bbd,full,clean,,,,Btrc renderer Shader::discard_pdf_rev small implementation
+6b489d51cb39b92f,full,clean,,,,RocksDB/VidarDB key-value C wrapper for a Postgres FDW
+9cc0ebdd60b83cd3,full,fix,B3;E4,"StarCoder metadata token(s) <filename> at offset 0; header ends at offset 72 | Apache-2.0 licence header, 15 lines at the top; same header text in 21 files of this pack",,Apollo perception visualizer OpenGL Camera class implementation
+17cd27765fca40ab,full,clean,,,,LeetCode 349 intersection-of-two-arrays solution with test main
+d96db2546a71ce92,full,fix,B3,"StarCoder metadata token(s) <filename>, <gh_stars>, <reponame> at offset 0; header ends at offset 71",,Protean object_proxy serialisation class implementation
+b80b05637c2bddf0,full,fix,B3;B4,"StarCoder metadata token(s) <filename> at offset 0; header ends at offset 32 | PII-redaction placeholder <NAME> x1, first at offset 93",,"PII placeholder; dvm-dos-tem MPI debug helpers (error printer, gdb attach pause)"
+f1a5a4984029e06c,full,clean,,,,Qt sort/filter proxy model for a bike-sharing cities list
+6d7ba6d475e792a2,full,fix,E4,"Apache-2.0 licence header, 17 lines at the top; same header text in 21 files of this pack",,Realm core ArrayBinary class header
+3f18d35bdced665e,full,clean,,,,Algorithmic toolbox 3-partition DP solution
+2a21578c998092bc,full,fix,B3;B4,"StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 18 | PII-redaction placeholder <NAME> x1, first at offset 36",,PII placeholder; NasNas engine Arial font class declaration (data defined elsewhere)
+b9a553d5339506e4,full,fix,B3;B4,"StarCoder metadata token(s) <filename> at offset 0; header ends at offset 22 | PII-redaction placeholder <EMAIL> x1, <NAME> x1, first at offset 170",,PII placeholder; Student BigNumber factorial driver with Turkish comments
+e867651d550ea150,full,fix,B4,"PII-redaction placeholder <EMAIL> x1, first at offset 460",,PII placeholder; Terminal maze game main() with ASCII-art banner
+2dcc6abfa9896e81,full,fix,B3;B4;E4,"StarCoder metadata token(s) <filename>, <gh_stars> at offset 0; header ends at offset 46 | PII-redaction placeholder <EMAIL> x2, <NAME> x2, first at offset 72 | BSD licence header, 26 lines at the top",,PII placeholder; Cerberus network Packet serialize/deserialize implementation
+6cdc9866d4264258,full,fix,A1,"BOM x1, first at offset 0",0 U+FEFF ZERO WIDTH NO-BREAK SPACE,ADOP LibTorch pose and camera-intrinsics parameter modules
+dd69a2fb87b40a39,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 28,,Tile-map Level and LevelTileSet implementation for a 2D engine
+3ec4463d6223f126,full,clean,,,,BDE bdlat_arrayfunctions component test driver
+a642d055aabf83be,full,drop,A1;E1,"BOM x1, first at offset 0 | SDK model class written by the SDK code generator (by path; no marker in the file)",0 U+FEFF ZERO WIDTH NO-BREAK SPACE,AWS SDK C++ APIGateway GetAccountResult JSON model (SDK-generator style)
+634bd60b1280b551,full,fix,B4,"PII-redaction placeholder <EMAIL> x1, <NAME> x1, first at offset 132",,PII placeholder; OpenGL 4.2 layered-rendering sample (g-truc ogl-samples)
+6985302658a4757d,full,fix,B3;B4;E4,"StarCoder metadata token(s) <filename> at offset 0; header ends at offset 50 | PII-redaction placeholder <EMAIL> x1, <NAME> x1, first at offset 76 | Apache-2.0 licence header, 15 lines at the top; same header text in 21 files of this pack",,PII placeholder; DanmakuFlameMaster Skia renderer class header for Android API 18
+3a2ef17118f4a9d8,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 48,,Competitive-programming solution (mBIT 2019 'Secret Base'): number-theory template plus tree DFS and tunnel selection
+57eba2e83e6867d0,full,clean,,,,Event Vision Library example: OpenCV rod-tip tracking loop fed by a DAVIS event buffer thread
+a1a5b3892ae8e509,full,fix,A2;B3,"CR (CRLF line endings) x373, first at offset 61 | StarCoder metadata token(s) <filename> at offset 0; header ends at offset 58",61 U+000D CARRIAGE RETURN (373x),"funner xtl shared_ptr inline implementation (ctors, assignment, casts, enable_shared_from_this); Russian section comments"
+2efdd95fbce86f7d,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 30,,Lanqiao contest solution printing a nested-cross ASCII pattern
+a1441aad2044268e,full,fix,B4,"PII-redaction placeholder <NAME> x2, first at offset 390",,PII placeholder; COIN-OR Cbc header declaring CbcTreeLocal and CbcTreeVariable local-branching search trees
+f3aad7456befc940,full,fix,B4,"PII-redaction placeholder <NAME> x1, first at offset 18",,"PII placeholder; No-MASS FMU Building class header (zones, occupants, appliance negotiation)"
+6805dda052f46659,full,clean,,,,OpenVINO reference test for the Multiply op with parametrized hard-coded input/output tensors
+f8bf040e24cbf360,full,fix,A2;B3,"CR (CRLF line endings) x96, first at offset 48 | StarCoder metadata token(s) <filename> at offset 0; header ends at offset 35",48 U+000D CARRIAGE RETURN (96x),Game-hack SDK umbrella header: ~75 includes plus a tiny c_sdk inject/unhook class
+4bdaabb4bb231251,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 47,,Caffe QuantizeActivationLayer class header
+5dca3d8a69917096,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 55,,Shadow of the Wyrm NullKeyboardController header
+9719d6c25f9b6a1d,full,fix,B4;E4;F1,"PII-redaction placeholder <NAME> x1, first at offset 240 | MIT licence header, 28 lines at the top | Author email written in obfuscated 'at'/'dot' form in the copyright line; the email regex misses it, the name redaction did not cover it at offset 213",,"PII placeholder; continuable library transforms header (futurize, flatten) with MIT licence banner"
+99c9da1713aebe42,full,fix,E4,"Apache-2.0 licence header, 16 lines at the top",,OpenCOR EditorList plugin info function (Qt plugin registration)
+8cd9621c4a66d2d4,full,clean,,,,eeGeo Android JNI proxy functions for a HUD cross-thread theme example
+743b7b801ed0749f,full,clean,,,,USACO 2018 Dec Bronze 'blist' solution
+0dd3b0290b54e582,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 36,,"GoogleTest file for ScanFileHandler, entirely commented out"
+059a887f62eb8ded,full,fix,B3;B4,"StarCoder metadata token(s) <filename>, <reponame> at offset 0; header ends at offset 101 | PII-redaction placeholder <NAME> x1, first at offset 158",,"PII placeholder; OpenHumanoidController actuator device config loader (JSON servo config, validation, logging)"
+9e9ff1b421c98b7a,full,clean,,,,Insanity3D editor plugin that saves a back-buffer screenshot to a uniquely named file
+c3e89401b1d9c4de,full,fix,B4;E4,"PII-redaction placeholder <NAME> x1, first at offset 322 | proprietary licence header, 9 lines at the top",,PII placeholder; OMPL.app SE3RigidBodyPlanning default start state
+ea5991abc7704e1f,full,fix,B3;B4;E4,"StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 14 | PII-redaction placeholder <EMAIL> x10, <NAME> x10, first at offset 150 | GPL licence header, 27 lines at the top",,"PII placeholder; poppler Qt4 Document implementation (load, unlock, metadata, permissions, fonts, TOC, render hints)"
+3cfbd4e04e84951b,full,fix,B3,StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 16,,Chromium QUIC P2P crypto stream Connect implementation
+f5ddae7ced5b0f2e,full,fix,B3;E4,"StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 14 | MIT licence header, 21 lines at the top; same header text in 4 files of this pack",,"OTClient OpenAL SoundManager implementation (init, poll, play, streaming sources)"
+deccbc12f9921ae8,full,drop,B3;B4;E1;E4,"StarCoder metadata token(s) <filename> at offset 0; header ends at offset 77 | PII-redaction placeholder <NAME> x1, first at offset 372 | '//  Automatically generated file, DO NOT modify manually.' at offset 158; Body is make_enum.py output: a mechanical enum plus two stub declarations, no hand-written logic. | BSL-1.0 licence header, 12 lines at the top",,PII placeholder; oglplus quickref doc snippet: generated TessGenPrimitiveSpacing enum declaration
+97bea4cf10b30f47,full,clean,,,,LeetCode 39 Combination Sum solution with a fast-read helper and empty driver
+e01ed15e717cfd87,full,clean,,,,CLR Instrumentation Engine method-instrumentation info collection (locked map Get/Add)
+c51ceb1ecb21fd2c,full,clean,,,,AtCoder DP contest E (Knapsack 2) solution with explanatory comments
+829740c04bd15506,full,fix,B4;E4;E5,"PII-redaction placeholder <EMAIL> x1, first at offset 1927 | proprietary licence header, 37 lines at the top | 'Copyright ?and trademark ?2012-14 University of North Carolina at Chapel Hill.' at offset 19; The copyright and trademark symbols were lost to '?' by a lossy encoding conversion.",,PII placeholder; Menge crowd-sim AgentPropertyManipulator (set/offset/scale agent properties and restore)
+3e63d8292f7530ca,full,fix,B3;B4;E4,"StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 41 | PII-redaction placeholder <NAME> x1, first at offset 337 | copyright notice licence header, 7 lines at the top",,"PII placeholder; Boost sandbox statistics survival-analysis dataset example (records, events, mean events)"
+695036c91b2a809c,full,clean,,,,TRANSIMS ArcPlan Sum_Riders: accumulate transit riders along route links between stops
+1d8393ddf58ff2c9,full,fix,E4,"BSD licence header, 40 lines at the top",,"OpenCV 2.1 cvaux.hpp: CvImage/CvMatrix wrappers, trackers, HOG, Ferns, LevMarqSparse, OneWayDescriptor declarations"
+32e0c355d9fd4854,full,fix,B3;E4,"StarCoder metadata token(s) <filename>, <reponame> at offset 0; header ends at offset 96 | Apache-2.0 licence header, 14 lines at the top; same header text in 21 files of this pack",,Legion/Regent test: custom TracingMapper that caches physical instances per task
+2389566915b62780,full,clean,,,,AtCoder Educational DP 'Frog 2' solution
+748edb99fc8cced5,full,fix,B3;B4;E4,"StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 33 | PII-redaction placeholder <NAME> x1, first at offset 1117 | copyright notice licence header, 27 lines at the top",,PII placeholder; ClanLib test app toggling DisplayWindowDescription flags
+a8302c40dd210139,full,fix,A2;E4,"CR (CRLF line endings) x84, first at offset 43 | copyright notice licence header, 5 lines at the top",43 U+000D CARRIAGE RETURN (84x),Windows Server 2003 local-security snap-in UserProfilePage class header
+7df5fec1c771f58c,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 27,,soma-io MultiSliceDicomImage constructor
+ad188aa0bce853d2,full,fix,A2;B3;B4;E4,"CR (CRLF line endings) x648, first at offset 22 | StarCoder metadata token(s) <filename> at offset 0; header ends at offset 18 | PII-redaction placeholder <EMAIL> x1, <NAME> x1, first at offset 120 | GPL licence header, 18 lines at the top",22 U+000D CARRIAGE RETURN (648x),PII placeholder; The Forgotten Server (MMORPG emulator) chat channel implementation
+0b57e17f580736ef,full,fix,B1,"'&gt;' x2, first at offset 9921",,Stan Math reverse-mode autodiff var class header
+ffccd19508758d44,full,fix,E4,"Apache-2.0 licence header, 13 lines at the top; same header text in 21 files of this pack",,Syzygy common section-name constants
+4a75560e5946f4d1,full,fix,B3;B4;E4,"StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 14 | PII-redaction placeholder <NAME> x1, first at offset 1120 | Apache-2.0 licence header, 26 lines at the top",,PII placeholder; GMAT InterfaceFactory class header
+91ae476a1c0502bc,full,clean,,,,EnTT-based edyn merge_component template header
+6ac2164aa511de0d,full,fix,B3,"StarCoder metadata token(s) <filename>, <reponame> at offset 0; header ends at offset 127",,gainput InputDeviceMouse platform-dispatch implementation
+2a9219c62f918e29,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 34,,Boost-based bounded thread-safe TQueue template
+06b97af9cb59101a,full,clean,,,,SettingsManager service main with argument parsing
+2c7908c77c3ff922,full,clean,,,,gtest Camellia-128/192/256 test-vector checks
+87e7690c63198b5c,full,fix,B3,"StarCoder metadata token(s) <filename>, <gh_stars> at offset 0; header ends at offset 78",,HDT Skyrim SE physics StiffSpringConstraint implementation
+b5da9ac1658db525,full,drop,B3;E1,"StarCoder metadata token(s) <gh_stars>, <reponame> at offset 0; header ends at offset 48 | 'generated by the FlatBuffers compiler, do ' at offset 66",,FlatBuffers-compiler output for StardustXR Pointer table
+42396b4cf09e0c5c,full,fix,B3;B4;E4,"StarCoder metadata token(s) <filename> at offset 0; header ends at offset 44 | PII-redaction placeholder <EMAIL> x5, <NAME> x10, first at offset 615 | proprietary licence header, 27 lines at the top",,PII placeholder; CARAT LLVM pass EscapesHandler class header
+b531816394b4a813,full,drop,A2;B3;E1;E4,"CR (CRLF line endings) x35, first at offset 936 | StarCoder metadata token(s) <filename> at offset 0; header ends at offset 54 | 'long FindBrokerSLOHisListRequest::getCsbId()const⟦U+000D⟧' at offset 1044; aliyun-openapi-cpp-sdk model request emitted by the SDK code generator: only mechanical getter/setter pairs, same pattern as aws-sdk-cpp /model/ | Apache-2.0 licence header, 15 lines at the top; same header text in 21 files of this pack",936 U+000D CARRIAGE RETURN (35x),Alibaba Cloud CSB SDK FindBrokerSLOHisListRequest model class
+a83ebe0b12784f0f,full,clean,,,,"Organic Maps indexer feature_data header (TypesHolder, FeatureParams)"
+b8be5e7f8cbe5813,full,clean,,,,Student linked-list playlist test main
+14668e6a71171ef5,full,fix,A2;B3,"CR (CRLF line endings) x68, first at offset 102 | StarCoder metadata token(s) <filename> at offset 0; header ends at offset 101",102 U+000D CARRIAGE RETURN (68x),MS docs C++/CLI sample for PortTypeCollection methods
+153b3666d042e6ea,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 35,,tprPixelGames scriptMain entry registering engine callbacks
+58d37cd87f5e314a,full,clean,,,,PoseidonOS IORecover gtest unit tests
+f78dbe0768eb6699,full,fix,B3;B4,"StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 34 | PII-redaction placeholder <EMAIL> x1, <NAME> x1, first at offset 62",,PII placeholder; Haiku ThemeManager class implementation
+679a9990f72a89cc,full,fix,B3,StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 14,,U.N. Squadron clone Path step animation class
+7be69bd5d004408f,full,clean,,,,ChernobylEngine Candle data model
+152889ce5fd878b9,full,drop,B4;D1,"PII-redaction placeholder <EMAIL> x1, first at offset 50 | 'disableChannels[] = {0}; // http://goo.gl/Xd3vW#disableChannels' at offset 111; labelled C++, but this is Arma 3 config-class syntax (description.ext style), not C++",,PII placeholder; Arma 3 mission config (CfgRadio) in .hpp
+e18b1223d66940ce,full,clean,,,,Codeforces 1496A solution
+775ccfbf52e22026,full,fix,B4;E4,"PII-redaction placeholder <NAME> x1, first at offset 50 | copyright notice licence header, 5 lines at the top",,PII placeholder; Cafu map editor MapEntRepresT entity representation
+8cfc74f7b5532034,full,drop,A1;E1,"BOM x1, first at offset 0 | 'ExecutionDetails::ExecutionDetails() : ' at offset 365; aws-sdk-cpp model class written by the SDK code generator: mechanical JSON (de)serialisation",0 U+FEFF ZERO WIDTH NO-BREAK SPACE,aws-sdk-cpp CodePipeline ExecutionDetails JSON model class
+4ada131976eaebea,full,fix,E4,"Apache-2.0 licence header, 13 lines at the top; same header text in 21 files of this pack",,agent-based-epidemic-sim GraphLocation gtest
+48f23de7d6d4fd41,full,clean,,,,Chromium PPAPI WebSocket test suite
+7503e40a0277e7df,full,fix,B3,StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 11,,AMReX GPU heat-equation tutorial main driver
+7878b4fa5e2f0811,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 53,,VISR network audio streamer command-line options registration
+13060c08760adb5a,full,fix,C1,"'Medium Accuracy: 50.0% Submissions: 71576 Points: 4' at offset 86; scraped website stats line (accuracy, submissions, points) inside the problem comment",,GeeksforGeeks Minimum Swaps to Sort solution with scraped problem statement
+da4592dd28fe7f8d,full,fix,A2,"CR (CRLF line endings) x191, first at offset 12",12 U+000D CARRIAGE RETURN (191x),WinRT Bluetooth LE class header for the Owon B41T multimeter
+30226f42da211d8e,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 43,,"FinalBurn arcade driver for Dr. Tomy (inputs, DIPs, memory map, draw)"
+cfa11c48509b2d26,full,fix,A2,"CR (CRLF line endings) x147, first at offset 21",21 U+000D CARRIAGE RETURN (147x),OpenCL kernel wrapper class plus embedded particle-solver kernel source
+36a54b4cefa11abc,full,fix,B3,"StarCoder metadata token(s) <gh_stars>, <reponame> at offset 0; header ends at offset 58",,SFML game boilerplate credits screen
+cd194ab77392daec,full,fix,B3;E4,"StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 30 | Apache-2.0 licence header, 15 lines at the top; same header text in 21 files of this pack",,nGraph CPU backend CPUAssignment pass header
+1f8f8f20b28f1c2e,full,clean,,,,UVA 11695 competitive-programming solution (tree diameter re-linking)
+5068a5b8164050b2,full,clean,,,,Chromium PrefObserverStore unit tests with mock preference manager
+ac3ae72be05273c6,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 26,,kotekan OpenCL command that writes a zero output buffer to the GPU
+d8aada17fc38e204,full,clean,,,,Arduino pin and keypad constant definitions header
+c612be8083540113,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 69,,puppetcpp logical_and binary operator descriptor
+e8f8d0c01a035a3c,full,fix,B4;E4,"PII-redaction placeholder <NAME> x1, first at offset 45 | copyright notice licence header, 15 lines at the top",,PII placeholder; Qt unit test for range-id-convertor utils
+7bb551b6b8bb297c,full,fix,B3;E4,"StarCoder metadata token(s) <filename> at offset 0; header ends at offset 102 | Apache-2.0 licence header, 15 lines at the top; same header text in 21 files of this pack",,IBM Streams SPL file-system (RocksDB) checkpoint data store adapter
+6fc1f49ed70ab488,full,clean,,,,OpenADFortTk OpenAnalysis map construction and CFG massaging for XAIF
+737965d79cc94955,full,drop,A2;E1,"CR (CRLF line endings) x162, first at offset 38 | 'Autogenerated from CppHeaderCreator' at offset 3",38 U+000D CARRIAGE RETURN (162x),Beat Saber il2cpp header for OVR.OpenVR.OpenVRInterop emitted by CppHeaderCreator
+45f63edd1150add4,full,fix,B4;E4,"PII-redaction placeholder <NAME> x1, first at offset 24 | copyright notice licence header, 11 lines at the top",,PII placeholder; OpenGeoSys MaterialPropertyLib property factory
+bb410d12aac3d634,full,fix,A1;B3;E4,"BOM x1, first at offset 37 | StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 36 | GPL licence header, 22 lines at the top",37 U+FEFF ZERO WIDTH NO-BREAK SPACE,Xi blockchain proof-of-work algorithm factory
+0cce4dfec42e1bb4,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 27,,Qt SuperEdit line-edit widget with umlaut buttons and item delegates
+d14d9a8b915d3d5b,full,fix,B3;B4,"StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 26 | PII-redaction placeholder <NAME> x1, first at offset 50",,PII placeholder; ezdxf C++ DXF tag class hierarchy header
+ab541db3795feecc,full,fix,A2;B3,"CR (CRLF line endings) x45, first at offset 33 | StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 11",33 U+000D CARRIAGE RETURN (45x),Header declaring a GameShader class for an OpenGL game engine
+eb868a180c28b16b,full,clean,,,,Qt soundboard app main() with a native hotkey event filter
+aef9d6f8e69e7bad,full,clean,,,,Tiny poker hand-equity test driver
+e5324219e318f9b8,full,fix,B3;B4,"StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 14 | PII-redaction placeholder <NAME> x1, first at offset 43",,PII placeholder; Unreal Engine UMG controls-options widget (mouse and gamepad settings)
+fcea0941c3f9b761,full,fix,A2;B3,"CR (CRLF line endings) x12, first at offset 36 | StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 11",36 U+000D CARRIAGE RETURN (12x),DMOJ competitive-programming solution (dmopc15c3p1)
+96218e1c6242a81c,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 40,,Windows module utility declarations for an RE2 mod framework
+c990295fa1578b72,full,fix,B3;E4,"StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 16 | MIT licence header, 34 lines at the top",,POCO Data library StatementImpl implementation
+4895218bf59f66c3,full,fix,B3;E4,"StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 14 | Apache-2.0 licence header, 14 lines at the top; same header text in 21 files of this pack",,nncase quantized matmul graph transform
+b8106b73829cd69b,full,clean,,,,BlackBerry Cascades NumberPicker widget implementation
+b0748902190ccb04,full,fix,A2;B3,"CR (CRLF line endings) x274, first at offset 39 | StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 36",39 U+000D CARRIAGE RETURN (274x),CitizenFX CEF input hook: keyboard/mouse forwarding to the browser
+4b53d240dabec20a,full,drop,B3;E1;E4,"StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 14 | 'generated by CodeSynthesis XSD, an XML Sch' at offset 89 | GPL licence header, 32 lines at the top",,CodeSynthesis XSD generated C++ binding header for a SimModel schema class
+ebb5064d19cc8ea6,full,clean,,,,Barcode processing handler header for a combinatorial indexing pipeline
+a6bbe55dc88d1ee2,full,fix,A2,"CR (CRLF line endings) x101, first at offset 17",17 U+000D CARRIAGE RETURN (101x),UOJ 1588 judge solution: football league standings
+78dddf3e1600a03c,full,drop,B3;E1;E4,"StarCoder metadata token(s) <filename> at offset 0; header ends at offset 51 | '	if(!applicationInfoNode[""AppName""].isNull())' at offset 1332; aliyun-openapi-cpp-sdk /model/ result class from the SDK code generator: mechanical per-field isNull/asString parsing, same case as the aws-sdk-cpp model rule. | Apache-2.0 licence header, 15 lines at the top; same header text in 21 files of this pack",,Alibaba Cloud EDAS SDK InsertApplicationResult JSON parser
+f332cc350f4732bc,full,clean,,,,Qt database-opener widget for a password manager
+46df75fa2902ef41,full,fix,B3;B4;E4,"StarCoder metadata token(s) <filename> at offset 0; header ends at offset 61 | PII-redaction placeholder <NAME> x2, first at offset 2087 | copyright notice licence header, 33 lines at the top",,PII placeholder; OpenMS Peak1D class unit test
+08c29afd8ef74e28,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 23,,Multiboot v1 header structures and flag macros for a hobby kernel
+42e2e39751f9db99,full,fix,B3,StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 18,,Box Backup store-file encode/decode/verify implementation
+47c17eb1aa937e13,full,fix,B4;E4,"PII-redaction placeholder <NAME> x1, first at offset 96 | MIT licence header, 23 lines at the top",,PII placeholder; MDPC triangle/polygon mesh loader with normal computation
+041f5e516d617ffa,full,clean,,,,uTensor Context: tensor reference tracking and operator evaluation
+5e5048f097a548ad,full,fix,B4;E4,"PII-redaction placeholder <EMAIL> x1, first at offset 83 | GPL licence header, 20 lines at the top",,PII placeholder; UGENE U2Script C API error-string lookup (globals.cpp)
+fb3dec3c8d3686cd,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 28,,OGSR/X-Ray engine CObject implementation (xr_object.cpp)
+5fadf1ed321b49b7,full,fix,B3,"StarCoder metadata token(s) <filename>, <gh_stars> at offset 0; header ends at offset 34",,SQLSchema class reading schema and user_version pragma via boost::regex
+202b00b4c9cd4ce6,full,fix,A2;B3,"CR (CRLF line endings) x225, first at offset 37 | StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 11",37 U+000D CARRIAGE RETURN (225x),Wecle script interpreter command/operator functions
+5883d3b44326b1a0,full,clean,,,,DeepLearningCPP Conv2D layer and gradient layer (host/CUDA dispatch)
+23825ace0f18828e,full,fix,E4,"Apache-2.0 licence header, 16 lines at the top",,mbed-os CellularContext default-instance factories
+b10afce73ef61a1e,full,drop,A2;E1;E4,"CR (CRLF line endings) x68, first at offset 880 | 'DescribeComplianceRequest::DescribeComplianceRequest() :' at offset 757; Alibaba Cloud OpenAPI SDK request model: generator template of getter/setter+setParameter pairs, analog of aws-sdk-cpp /model/ | Apache-2.0 licence header, 15 lines at the top; same header text in 21 files of this pack",880 U+000D CARRIAGE RETURN (68x),Alibaba Cloud SDK DescribeComplianceRequest model (getter/setter per API parameter)
+3f14523606cd49cb,full,clean,,,,Huffman compressor driver main() with commented-out test code
+f6427e5a32b4e083,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 28,,onnx-mlir lowering of BatchNorm/InstanceNorm ONNX ops to Krnl dialect
+b94e727329ee42f5,full,fix,A2;B3;B4;E4,"CR (CRLF line endings) x658, first at offset 90 | StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 11 | PII-redaction placeholder <NAME> x11, first at offset 1194 | copyright notice licence header, 30 lines at the top",90 U+000D CARRIAGE RETURN (658x),PII placeholder; POV-Ray 3.6 bounding sphere hierarchy (bsphere.cpp)
+fa672dc1e583a266,full,fix,E4,"proprietary licence header, 9 lines at the top",,VTK-m CellLocatorRectilinearGrid Build/PrepareForExecution
+dd394715933bcf40,full,fix,B3;B4;E4,"StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 14 | PII-redaction placeholder <NAME> x1, first at offset 182 | copyright notice licence header, 15 lines at the top",,PII placeholder; PyMOL ribbon representation renderer (RepRibbon.cpp)
+2735477e2709ae46,full,fix,B3,StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 14,,brightray/Electron libnotify Linux notification implementation
+03ac18611038e22e,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 37,,QtDataSync global metatype registration startup function
+6d6bdc9bad267ff0,full,fix,B3;B4,"StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 18 | PII-redaction placeholder <EMAIL> x2, <NAME> x2, first at offset 103",,PII placeholder; ARGoS3 simple radio medium plugin
+58e6ab70b5ba8232,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 23,,FRC robot TimedRobot class header
+589dbb432e51f974,full,fix,B3;E4,"StarCoder metadata token(s) <filename> at offset 0; header ends at offset 77 | Apache-2.0 licence header, 17 lines at the top; same header text in 21 files of this pack",,gRPC server load reporting filter (promise-based)
+38078bcf961b121f,full,clean,,,,Codeforces 'Young Physicist' solution
+151ffe1d22cfa618,full,clean,,,,GBA Crossy Road game main() entry point
+8802cc37af399500,full,fix,B3,StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 14,,Iroha hand-written proto PendingTransactionsPageResponse wrapper header
+4991b5389c214ce1,full,fix,B3;E4,"StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 34 | MIT licence header, 21 lines at the top",,Intel compute-runtime SpinLock gtest unit test
+214b771de8915768,full,fix,B3;B4;E4,"StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 14 | PII-redaction placeholder <NAME> x1, first at offset 109 | MIT licence header, 19 lines at the top",,PII placeholder; REST library static_files middleware header
+df8744e7db06ac85,full,fix,B3,StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 11,,ViFi FileOpRunner class header with Doxygen docs
+3a5913c83791adc0,full,fix,B3;B4;E4,"StarCoder metadata token(s) <filename> at offset 0; header ends at offset 66 | PII-redaction placeholder <NAME> x1, first at offset 95 | Apache-2.0 licence header, 21 lines at the top",,PII placeholder; GraphLab distributed locking engine template header
+b3ee219330f6a630,full,fix,B4,"PII-redaction placeholder <NAME> x1, first at offset 14",,"PII placeholder; Choreonoid Boost.Python Util module bindings (Deque2D rows, FloatingNumberString)"
+37fe0170f01eb265,full,fix,A2;B3,"CR (CRLF line endings) x182, first at offset 111 | StarCoder metadata token(s) <gh_stars>, <reponame> at offset 0; header ends at offset 41",111 U+000D CARRIAGE RETURN (182x),Krento commander Win32 launcher that broadcasts registered window messages
+71ef84d00c7e77ec,full,clean,,,,Particle firmware sketch: MQTT client triggers a light show on a cloud event
+178a68faeabdd1f6,full,fix,A2;B3,"CR (CRLF line endings) x84, first at offset 68 | StarCoder metadata token(s) <filename>, <reponame> at offset 0; header ends at offset 55",68 U+000D CARRIAGE RETURN (84x),"SPI flash access API header for CAEN digitizer boards (error enum, prototypes)"
+9c1d218d257a6176,full,drop,E1,'generated by Py++.' at offset 22,,Py++ generated Boost.Python wrapper for osgWidget::StyleManager
+18636adcefad793c,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 78,,OpenDXL broker handler for tenant-exceeds-limit events
+2809f15e2b4ce238,full,fix,E4,"Apache-2.0 licence header, 13 lines at the top",,Chromium private_membership AES-CTR-256 with fixed IV encrypt/decrypt
+82555e94cbabe296,full,clean,,,,pficommon concurrent include test: a list of #include lines only
+af13fcb58052f59c,full,clean,,,,LeetCode 704 binary search solution
+47e36c7820019705,full,fix,E4,"proprietary licence header, 29 lines at the top",,"Spine runtime MathUtil helpers (trig wrappers, clamp, random triangular)"
+5d5a05dbbfe98c1b,full,fix,B3;E4,"StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 27 | Apache-2.0 licence header, 17 lines at the top",,Pixie Stirling gRPC protobuf parsing unit tests
+4f0245a444d3f983,full,fix,E4,"MIT licence header, 21 lines at the top; same header text in 4 files of this pack",,jetson-inference flowNet optical-flow TensorRT network wrapper
+bca16f9582d8033f,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 46,,srook config header detecting the System/390 architecture
+588170fad9bed546,full,fix,B4,"PII-redaction placeholder <NAME> x1, first at offset 23",,PII placeholder; Phylanx tiling annotation span/information structs header
+5709b7298e685b28,full,fix,B3;B4;E4,"StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 35 | PII-redaction placeholder <EMAIL> x1, <NAME> x1, first at offset 137 | copyright notice licence header, 23 lines at the top; same header text in 2 files of this pack",,PII placeholder; Bit-Engine Win32 UDP socket implementation
+e8b6c371824ca31a,full,fix,B4,"PII-redaction placeholder <NAME> x1, first at offset 118",,PII placeholder; KVS utility computing value ranges over typed value arrays
+ffbb83c50777e42a,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 59,,C++ learning exercise mixing class and function templates with specialisation
+b6577a773d38001f,full,fix,B4;E4,"PII-redaction placeholder <NAME> x1, first at offset 30 | MIT licence header, 21 lines at the top; same header text in 4 files of this pack",,PII placeholder; Serial Studio QML terminal widget wrapping QPlainTextEdit with ANSI/VT-100 handling
+c7ff463a27ccfca7,full,fix,E4,"copyright notice licence header, 12 lines at the top",,libserial POSIX signal dispatcher singleton (sigaction handler registry)
+eddcb0b46c33fe4f,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 39,,"Catch2 tests for SMT term-rewriting theories (datatype creation, parse)"
+6dd85bcc4d316d0e,full,fix,E4,"BSD licence header, 33 lines at the top",,VSTGUI CVuMeter control implementation
+20f9fe48b606c301,full,clean,,,,Julia LLVM final GC lowering pass
+3c67c435782c8a77,full,drop,B4;E1;E4,"PII-redaction placeholder <NAME> x1, first at offset 151 | 'Warning   : this file is machine generated - do not modify.' at offset 276; qtHaskell binding generator output; the QTCEXPORT wrapper bodies below are mechanical, not hand-written | copyright notice licence header, 11 lines at the top",,PII placeholder; qtHaskell machine-generated extern C wrapper for QStatusTipEvent
+edf599d22919e383,full,fix,E4,"Apache-2.0 licence header, 10 lines at the top; same header text in 21 files of this pack",,"Milvus storage permission checker for log, DB and WAL paths"
+109d48f57ba9b72f,full,fix,A2;B3,"CR (CRLF line endings) x24, first at offset 115 | StarCoder metadata token(s) <filename>, <reponame> at offset 0; header ends at offset 95",115 U+000D CARRIAGE RETURN (24x),URI Online Judge 1071 solution: sum of odd numbers between two integers
+15ced4eb459a43ec,full,fix,E4,"MIT licence header, 14 lines at the top",,Azure IoT DM SystemConfigurator RPC proxy client (C++/CX)
+1dfc148985b7a5e3,full,clean,,,,circles MachineGraph init/render and command dispatch registration
+0b6a2820ec328a6b,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 30,,Student program summing the harmonic series to n terms
+ff1a95adc6847f17,full,fix,B3;B4;E4,"StarCoder metadata token(s) <filename>, <gh_stars> at offset 0; header ends at offset 71 | PII-redaction placeholder <NAME> x1, first at offset 114 | Apache-2.0 licence header, 9 lines at the top",,"PII placeholder; High Fidelity render-utils fade effect jobs (config, JSON load/save, transitions)"
+30d7e10dfee4808f,full,clean,,,,"CosmoSIS DataBlock unit tests: put/get/replace values, sections, types, copy/delete"
+b19808741094a63e,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 30,,"SFML game main-menu class: entry layout, drawing and selection movement"
+b085d29fa49f547d,full,fix,B3,StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 18,,libcvd FAST-9 corner detector wrapper forwarding to the plain implementation
+3b878e5e8ae018b6,full,fix,B3,"StarCoder metadata token(s) <filename>, <gh_stars> at offset 0; header ends at offset 57",,"ARK2D game engine MathUtil: distances, angles, rotation toward target, power-of-two"
+a250f0f8a35eddc5,full,clean,,,,funner xtl STL test for lower_bound with a custom comparator (Russian comment)
+ae31c83f7e1e3646,full,fix,B4,"PII-redaction placeholder <EMAIL> x1, <NAME> x1, first at offset 762",,PII placeholder; ns-3 IdealWifiManager rate control: SNR thresholds and best-rate TxVector selection
+2ab6a8e6f8df8803,full,fix,B3;B4,"StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 11 | PII-redaction placeholder <NAME> x1, first at offset 92",,"PII placeholder; futils header: insertion sort, Shell sort with Knuth sequence, bottom-up merge sort"
+6a00933f05512d6d,full,fix,B3;E4,"StarCoder metadata token(s) <filename> at offset 0; header ends at offset 74 | Apache-2.0 licence header, 15 lines at the top; same header text in 21 files of this pack",,OpenVINO ngraph ProposalIE op: shape validation and copy_with_new_args
+bbb6135d5740caa5,full,clean,,,,Chromium cross-platform sync integration test (disabled AddBookmark test)
+d26353232e8ff92e,full,clean,,,,AllJoyn sample service registering a 'cat' string-concatenation method
+3cb690ce67959502,full,fix,B3;B4;E4,"StarCoder metadata token(s) <filename>, <reponame> at offset 0; header ends at offset 92 | PII-redaction placeholder <EMAIL> x1, first at offset 176 | GPL licence header, 20 lines at the top",,PII placeholder; UGENE task importing Phred quality scores from a file into sequence objects
+dbc1b525c4e23dd9,full,fix,B4;E4,"PII-redaction placeholder <NAME> x1, first at offset 31 | copyright notice licence header, 8 lines at the top",,"PII placeholder; OpenFSL FAT32 operator.cpp: only a licence comment and a single #include, no code"
+87c6725fa62e3c8a,full,fix,A2;E4,"CR (CRLF line endings) x164, first at offset 36 | MIT licence header, 19 lines at the top; same header text in 4 files of this pack",36 U+000D CARRIAGE RETURN (164x),libmv tests for the eight-point essential-matrix solver and kernel
+9d151f8ab96bc763,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 18,,TC++PL exercise: write a few hundred integers to a file with ofstream
+83b3083721ee5df9,full,drop,A2;E1,"CR (CRLF line endings) x158, first at offset 38 | 'Autogenerated from CppHeaderCreator' at offset 3",38 U+000D CARRIAGE RETURN (158x),"BeatSaber il2cpp codegen header for Tweening.Tween`1 (field getters, method thunks)"
+5ed0b23aa986763b,full,fix,A1;B3,"BOM x1, first at offset 92 | StarCoder metadata token(s) <filename>, <gh_stars>, <reponame> at offset 0; header ends at offset 91",92 U+FEFF ZERO WIDTH NO-BREAK SPACE,Game-jam template: map engine KeyCode enum to SDL scancodes and query key state
+6c17b7cfda116cda,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 38,,Head First Design Patterns Facade example: TheaterLights on/off/dim
+52e097a01be4191c,full,clean,,,,Vulkan sample: create logical device and command pools via vulkan.hpp (Japanese messages)
+e6d441a6f7b958d1,full,fix,B4;E4,"PII-redaction placeholder <NAME> x2, first at offset 85 | BSD licence header, 33 lines at the top",,PII placeholder; IBAMR collocated convective operator manager: factory registry singleton
+6ceda3f58ae6dc09,full,drop,B3;E1,"StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 14 | '#define UTF16_NULL                                L""\u0000""' at offset 141; Lines 7-347 are a mechanically generated table of one-#define-per-codepoint, no logic.",,"JEBString header: ~340 #define macros mapping Unicode character names to L""\uXXXX"" literals"
+3a7b6010b202f94d,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 55,,"COM PlotTypes implementation: item properties, persistence via IStream, execute"
+555fec09bde9d0f5,full,clean,,,,SWUST OJ solution: read n chars and print them reversed (Chinese filename)
+3cf0ed3d99de77ff,full,fix,B3,"StarCoder metadata token(s) <filename>, <gh_stars> at offset 0; header ends at offset 70",,"SubjuGator point-cloud classification: outlier filter, ray casting, ogrid zonify"
+06d6826f2cc07fac,full,clean,,,,"Qt shape editor Rectangle class: draw, boundary, hit test, width/height accessors"
+e823152e6e26777e,full,fix,B3;B4;E4,"StarCoder metadata token(s) <filename> at offset 0; header ends at offset 49 | PII-redaction placeholder <EMAIL> x1, <NAME> x1, first at offset 179 | Apache-2.0 licence header, 19 lines at the top",,PII placeholder; OCILIB C++ wrapper: inline Connection methods forwarding to OCI_* C API
+f9f38e8e4ca8832c,full,fix,B4;E4,"PII-redaction placeholder <EMAIL> x1, <NAME> x2, first at offset 95 | copyright notice licence header, 12 lines at the top",,PII placeholder; OWL CoolEdit SGML syntax-highlighting parser with keyword and entity tables
+d4e0ba09a19e765f,full,fix,E4,"BSD licence header, 41 lines at the top",,"OpenH264 decoder extension (CWelsDecoder) implementation, Cisco BSD licence"
+f1422a9cb75a9367,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 103,,Boolean network factory function building a BGL graph from topology and truth tables
+ba4f725f6131d29d,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 33,,Recursive string-to-integer exercise
+03c0c534163b856b,full,clean,,,,"Competitive-programming solution counting numbers without a digit (uses <cstdio>, C++ header)"
+644b1b19f2dc8a4b,full,drop,E1,"'// QJniObject forward' at offset 187; mechanically generated JNI binding (empty Fields section, arg0/arg1 params, JNI signature strings), one of thousands of identical-shape files",,QtAndroidAPI JNI wrapper for android.app.VoiceInteractor.PickOptionRequest
+dc150a257164d305,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 23,,"xemmai scripting language os module (system, sleep, pipe bindings)"
+7163d7bbdc5668d5,full,clean,,,,Blink LayoutNG NGConstraintSpaceBuilder unit tests
+17864ea68c9eb7f3,full,clean,,,,ark engine text model loader building a glyph atlas texture
+51b0942329e57c9b,full,fix,B3,"StarCoder metadata token(s) <filename>, <reponame> at offset 0; header ends at offset 54",,WLED usermod registration list with #ifdef-guarded registrations
+93961c810965ab2e,full,fix,A1;B4,"BOM x1, first at offset 0 | PII-redaction placeholder <NAME> x1, first at offset 27",0 U+FEFF ZERO WIDTH NO-BREAK SPACE,PII placeholder; Hidemaru editor Python3 DLL exported interface functions (Japanese comments)
+c993417c7274c5d5,full,fix,B3;B4,"StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 22 | PII-redaction placeholder <NAME> x4, first at offset 59",,PII placeholder; BARK autonomous-driving ObservedWorld gtest unit tests
+d8ed14691f7c3eef,full,fix,E4,"MIT licence header, 20 lines at the top",,Connectal network-on-chip hardware test driver
+f08b90e4f8fac01d,full,fix,A2;B3,"CR (CRLF line endings) x203, first at offset 59 | StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 39",59 U+000D CARRIAGE RETURN (203x),BlackVision engine AssetManager (loader registry and asset cache)
+c7dde9803a7880fd,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 56,,Qt test class header for divisive-clustering distance policies
+6f6b9f632912746b,full,clean,,,,CPF plugin host registry factory declaration header
+4476c76c84289552,full,clean,,,,Sysmel compiler LLVM literal value visitor class declaration
+a6fe6dc6d93d5caf,full,clean,,,,"Nook display weather utilities (IP addresses, battery, UTF-8 to wide, month names)"
+1afb699d99a568ae,full,clean,,,,"zcelib Lua/C++ binding layer (stack push/read, int64/uint64/std::string metatables, Lua state wrapper), Chinese comments"
+a90b9fb3e5d4ad54,full,fix,B3,"StarCoder metadata token(s) <filename>, <reponame> at offset 0; header ends at offset 77",,SNAX blockchain airdrop smart-contract header
+52670605d3c00558,full,fix,B3;D1,"StarCoder metadata token(s) <filename> at offset 0; header ends at offset 26 | 'void main( )' at offset 45; labelled C++ but is plain C: stdio.h, void main, scanf/printf, no classes, namespaces or C++ headers",,UVa 10499 online-judge solution
+be30636c79d2f99b,full,clean,,,,gtest tests for a util::range helper
+9f7a5e624fb5e85e,full,clean,,,,flexcore test helper owning_node header
+8ebde11c45ef69ad,full,fix,B3;B4;E4,"StarCoder metadata token(s) <filename>, <gh_stars> at offset 0; header ends at offset 110 | PII-redaction placeholder <NAME> x5, first at offset 193 | BSL-1.0 licence header, 18 lines at the top",,PII placeholder; Vendored Boost.Geometry point-to-geometry distance algorithms header
+48ccd951560a1384,full,fix,B3,"StarCoder metadata token(s) <gh_stars>, <reponame> at offset 0; header ends at offset 37",,Chromium ChromeOS Borealis features unit tests
+1a4254d814fbcaf8,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 94,,huji-rich Profile1D adapter implementation
+4c345dab225a593e,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 75,,"HOOMD-blue plugin RESPA position half-step (braces balanced, ends at closing brace)"
+38b1481caa1e8328,full,fix,B4,"PII-redaction placeholder <NAME> x1, first at offset 36",,PII placeholder; Palestar Medusa quaternion math (matrix/euler/slerp) implementation
+63d4a801d5382389,full,clean,,,,pthread thread pool implementation with Chinese comments
+5fb8c4ae6465d7d2,full,fix,B3;B4,"StarCoder metadata token(s) <filename> at offset 0; header ends at offset 40 | PII-redaction placeholder <NAME> x1, first at offset 73",,"PII placeholder; DarkSpace NounContextPort resource port class (property lists, scene hull)"
+68d0baa5a64ac994,full,fix,B3;B4;D1,"StarCoder metadata token(s) <filename> at offset 0; header ends at offset 66 | PII-redaction placeholder <NAME> x1, first at offset 252 | 'ref class property_converter_color : public System::ComponentModel' at offset 485; Label C++, but the file is C++/CLI (ref class, ^ handles, System:: types), a Microsoft .NET dialect.",,PII placeholder; xray-16 weather editor C++/CLI TypeConverter class declaration
+a6cf8c7170ad0723,full,fix,B4;E4,"PII-redaction placeholder <NAME> x1, first at offset 33 | copyright notice licence header, 9 lines at the top",,PII placeholder; CoEc World class: agent map and UID counter
+49dba88b65cdd346,full,fix,A2;B3;B4;E4,"CR (CRLF line endings) x253, first at offset 26 | StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 23 | PII-redaction placeholder <NAME> x1, first at offset 54 | copyright notice licence header, 17 lines at the top; same header text in 2 files of this pack",26 U+000D CARRIAGE RETURN (253x),PII placeholder; Box2D testbed CharacterCollision test scene header
+b0f3d6add6e772d4,full,clean,,,,numerics QuadraticFunction1d header
+4ecb8544f4d74d13,full,fix,B4,"PII-redaction placeholder <NAME> x2, first at offset 22",,PII placeholder; FeetWetCoding beginner exercise demonstrating const
+8b3f0e3d61114c7a,full,fix,B4,"PII-redaction placeholder <NAME> x1, first at offset 62",,PII placeholder; OpalProspect NormalFace getters/setters
+e26d5186f3ced36e,full,fix,B4,"PII-redaction placeholder <NAME> x1, first at offset 163",,PII placeholder; boost.simd groups function object header (doxygen docs)
+15407938c20faa3d,full,clean,,,,Lua bindings for exprtk via sol2
+fe1d528d268725ef,full,clean,,,,Xbox Live API matchmaking C++ wrapper implementation
+e55ddd126191e9b7,full,fix,B3,StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 11,,dmatter JSON config library header
+1deccc3b037ecda8,full,fix,B3;E4,"StarCoder metadata token(s) <filename> at offset 0; header ends at offset 47 | copyright notice licence header, 6 lines at the top",,bayes-filters PFPrediction implementation
+060db80c38cf1686,full,clean,,,,GameLib random number helper class
+92e2288f511a3df2,full,clean,,,,Baekjoon 1592 simulation solution with Korean comments
+e722028b8e79de04,full,fix,B3;B4;E4,"StarCoder metadata token(s) <filename> at offset 0; header ends at offset 35 | PII-redaction placeholder <NAME> x1, first at offset 102 | copyright notice licence header, 5 lines at the top",,PII placeholder; git usage/error reporting routines ported into bubblefs namespace
+6327973b195b0c36,full,clean,,,,UVa 1146 2-SAT with Tarjan SCC and binary search
+9bd9034f3cf002c7,full,fix,A2;B3,"CR (CRLF line endings) x22, first at offset 64 | StarCoder metadata token(s) <gh_stars>, <reponame> at offset 0; header ends at offset 45",64 U+000D CARRIAGE RETURN (22x),Competitive programming age-sort solution
+d5e4edc6e5fe8ee3,full,fix,B3;E4,"StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 26 | Apache-2.0 licence header, 15 lines at the top; same header text in 21 files of this pack",,IntroVirt PE FILE_INFO_IMPL template header
+b9b336f180070778,full,clean,,,,libbutl bufstreambuf streambuf interface header
+05bf0d646d4e6dcc,full,fix,E4,"Apache-2.0 licence header, 13 lines at the top; same header text in 21 files of this pack",,google-cloud-cpp gRPC impersonate-service-account integration test
+706b835c6631760c,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 28,,Beginner matrix subtraction program
+6cc419b3bdd7ed68,full,fix,B4,"PII-redaction placeholder <NAME> x1, first at offset 6",,PII placeholder; ROS Baxter robot arm state-machine main with French comments
+6448e4b799a545aa,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 49,,TLParser SourceBuilder string append methods
+fc79ed0be2d761ae,full,fix,B4;E4,"PII-redaction placeholder <NAME> x1, first at offset 22 | BSD licence header, 27 lines at the top",,PII placeholder; VTIL symex translation header
+8aef2715ca72ab75,full,fix,A2;B3,"CR (CRLF line endings) x324, first at offset 62 | StarCoder metadata token(s) <filename> at offset 0; header ends at offset 41",62 U+000D CARRIAGE RETURN (324x),Space-Invadus image manager singleton (SDL textures)
+60e6268af35d5c20,full,fix,A2,"CR (CRLF line endings) x28, first at offset 19",19 U+000D CARRIAGE RETURN (28x),Estado class getters/setters
+96ebc0289d2fe701,full,clean,,,,asio http server header struct
+9648f539546fd1c0,full,clean,,,,SFML-utils map Tile template class header
+1944d1dea5327087,full,fix,B3;B4,"StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 30 | PII-redaction placeholder <NAME> x1, first at offset 172",,PII placeholder; OSSIM Kakadu plugin registration/init
+af54ccc7eff4f3c4,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 30,,EOSERV dialog forward declarations and enums
+7449ca9e059b755b,full,fix,B3;B4;E4,"StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 30 | PII-redaction placeholder <NAME> x1, first at offset 134 | BSL-1.0 licence header, 7 lines at the top",,PII placeholder; Boost.Spirit classic grammar_def forward declaration
+7b5f398d32d93b19,full,fix,A2;B3;B4,"CR (CRLF line endings) x313, first at offset 61 | StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 14 | PII-redaction placeholder <NAME> x1, first at offset 33",61 U+000D CARRIAGE RETURN (313x),PII placeholder; Ipponboard FightCategoryMgr implementation with default judo categories
+bff33641799f20aa,full,clean,,,,"OpenGL shader controller: compile, link, cache programs"
+66a33cebee0275d8,full,clean,,,,LeetCode 1641 count sorted vowel strings solution with problem statement
+b7c27997a968bc34,full,fix,A2;B3;B4;E4,"CR (CRLF line endings) x21, first at offset 50 | StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 18 | PII-redaction placeholder <NAME> x1, first at offset 37 | BSL-1.0 licence header, 6 lines at the top",50 U+000D CARRIAGE RETURN (21x),PII placeholder; Boost config test helper header
+58d98058a940ee08,full,fix,B3;E4,"StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 14 | proprietary licence header, 17 lines at the top",,ORE cap/floor volatility curve config XML parsing
+b9f37bf79ba33e3f,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 31,,BillyEngine Text component implementation
+ad9bad8cf972a5ea,full,fix,B3;B4;E4,"StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 16 | PII-redaction placeholder <NAME> x1, first at offset 108 | Apache-2.0 licence header, 18 lines at the top",,PII placeholder; libkafe Archive class header
+7cdb6be4cebf4c13,full,clean,,,,ezEngine math expression parser and evaluator
+72f596e66d36cfc4,full,fix,B3;B4,"StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 23 | PII-redaction placeholder <NAME> x1, first at offset 41",,"PII placeholder; zcef Windows helper functions (app path, CEF string conversion)"
+a0dfbded3b1f16bb,full,fix,B3,StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 14,,LightOJ 1078 solution
+48bc27c30498daf9,full,clean,,,,LibreOJ 2471 game DP solution
+8b23faa736d88ac9,full,fix,B4,"PII-redaction placeholder <NAME> x2, first at offset 633",,PII placeholder; Adafruit PCD8544 Nokia 5110 LCD driver with splash bitmap
+764af3dc577c2ff2,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 32,,OpenStreetMap APIController REST getter
+e2ff494f49d17f4c,full,clean,,,,OpenEarth RasterLayer empty class header
+cbac9cb9fb6765bb,full,fix,B3;D1,"StarCoder metadata token(s) <filename> at offset 0; header ends at offset 89 | '@interface AppDelegate : NSObject <UIApplicationDelegate>' at offset 2228; Label C++, but lines 82-200 (over half the file) are Objective-C++ (@interface, [msg sends], @synthesize).",,Ogre Xcode template main with Objective-C++ iPhone AppDelegate
+40fa7b39a10d6b56,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 24,,CMSSW ECAL cluster energy uncertainty plugin
+e865094a2991bb38,full,fix,B3,StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 14,,LeetCode letter combinations of phone number solution
+119d5d5b7611154b,full,fix,B4,"PII-redaction placeholder <NAME> x2, first at offset 45",,PII placeholder; MAME Uzebox driver
+a26e8b35d7ce22cc,full,fix,E4,"Apache-2.0 licence header, 18 lines at the top",,"NASA ISAAC dense_map texture atlas building, mesh texturing and OBJ export (texture_processing.cc)"
+d13c02419ff98cfa,full,drop,D1;E1,"'	ULONG srcreg = (opcode & 7);' at offset 127; labelled C++ but is plain C: free void(void) functions on globals and macros, with no classes, namespaces or C++ features | 'void op_8000(void) /* OR */' at offset 97; whole file is machine-generated opcode handlers: same template per addressing mode, with the generator's {{ ... }}}} brace pattern",,UAE-gencpu-style 68000 emulator opcode handlers op_8000..op_81fc (OR/DIVU/DIVS/SBCD) for PSP MAME4ALL
+80ed6ca4435c91ac,full,fix,A2;B3;B4;E4,"CR (CRLF line endings) x28, first at offset 107 | StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 30 | PII-redaction placeholder <NAME> x1, first at offset 148 | copyright notice licence header, 5 lines at the top",107 U+000D CARRIAGE RETURN (28x),PII placeholder; X-Ray engine (Stalker 2 PS3) static library linkage includes and pragma
+9bff1138b8100612,full,fix,B3,"StarCoder metadata token(s) <filename>, <gh_stars> at offset 0; header ends at offset 47",,Coriander cuDNN-on-OpenCL GEMM/im2col convolution forward/backward with embedded OpenCL kernel sources
+a33d5495094faa78,full,fix,B3;E4,"StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 15 | Apache-2.0 licence header, 12 lines at the top",,Clang Static Analyzer SmartPtrChecker (null smart pointer dereference checker)
+3b319251f9006b70,full,fix,B4,"PII-redaction placeholder <NAME> x14, first at offset 1073",,"PII placeholder; Commander Genius (Keen Vorticon) scrolling credits scene: init, ponder, render, teardown"
+3f5d5c72f1e79b1e,full,clean,,,,Tray ray tracer microfacet geometric attenuation function
+88fc2b9ef398a6d1,full,clean,,,,Empool BlockingTaskQueue gtest helpers with the TEST bodies commented out
+e1f20536bbeb85c5,full,clean,,,,CodeChef XYSTR solution counting adjacent xy/yx pairs
+0240c148aeaa1412,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 34,,LeetCode maximum subarray (prefix-sum) solution
+23e3dd46e104c637,full,fix,B3;E4,"StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 16 | copyright notice licence header, 7 lines at the top",,Celeritas Quantity unit-type gtest suite
+d839894017461dda,full,clean,,,,"HEBI robotics arm teach-and-repeat example (waypoints, trajectory playback, command thread)"
+d3eefc4d9e8bb7e4,full,fix,B3,StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 14,,LeetCode 40 Combination Sum II backtracking solution with the problem statement in a header comment
+351e71825b68b5e5,full,drop,A1;B3;E1,"BOM x1, first at offset 15 | StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 14 | 'UpdateChannelFlowRequest::UpdateChannelFlowRequest() : ' at offset 382; aws-sdk-cpp /model/ class: code-generator output (HasBeenSet flags, mechanical SerializePayload)",15 U+FEFF ZERO WIDTH NO-BREAK SPACE,aws-sdk-cpp Chime SDK Messaging UpdateChannelFlowRequest model (JSON serializer)
+9fe5d2d7899f216d,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 35,,Chromium net TCPClientSocketPool unit tests with mock sockets
+273e2f4e3f8657ea,full,fix,B3,StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 16,,TF2 demo library: switch mapping TFCond enum values to strings via ENUM2STR macro
+3aa039955ff68520,full,fix,B3;B4,"StarCoder metadata token(s) <filename> at offset 0; header ends at offset 36 | PII-redaction placeholder <NAME> x2, first at offset 86",,PII placeholder; GMiner graph partitioner BPartitioner class template header
+4a2a4b61b11588cb,full,drop,B3;E1;E4,"StarCoder metadata token(s) <filename> at offset 0; header ends at offset 51 | '    if (value.HasMember(""JobId"") && !value[""JobId""].IsNull())' at offset 1598; tencentcloud-sdk-cpp model class is generator output: identical Deserialize/ToJsonObject/getter/setter blocks per field | Apache-2.0 licence header, 15 lines at the top; same header text in 21 files of this pack",,Tencent Cloud SDK Oceanus JobConfig model: JSON deserialize/serialize and getters/setters
+6d365810e7af6785,full,clean,,,,PAT B1036 exercise: print a hollow square of a character
+8b7516cdbce3b377,full,fix,B3,StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 11,,"gtkmm Oggex application class (window creation, menubar, navigation)"
+8cf8ed7f7acc8052,full,fix,E4,"Apache-2.0 licence header, 16 lines at the top; same header text in 21 files of this pack",,DALi adaptor SingletonService implementation (Tizen)
+a25ce84ca22bdda4,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 22,,Moses MERT BleuScorer: n-gram counting and BLEU computation
+3df44db5787be47c,full,fix,B3,StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 11,,"NES emulator PPU: palette table, scanline/dot rendering, VRAM access"
+e5eb53da840f9b79,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 31,,Win32 WinMain entry point for a USDP test app
+8332962cf04b5a59,full,fix,B4;E4,"PII-redaction placeholder <NAME> x1, first at offset 1320 | MIT licence header, 25 lines at the top",,PII placeholder; rDSN perf counter unit tests (gtest)
+e1a1b8fd16add524,full,fix,B3,"StarCoder metadata token(s) <gh_stars>, <reponame> at offset 0; header ends at offset 43",,Qt dialog DlgOption constructor/destructor
+32d0d4ec980c8dfd,full,clean,,,,AutoMarker KeyFnCostModel: AST edit cost model using key-function costs
+e72245afc4e9921f,full,clean,,,,"pybind11 bindings for a NEAT neuroevolution library (Node, Edge, Network, Genome)"
+512feac4bee5a2de,full,fix,A2;B3,"CR (CRLF line endings) x202, first at offset 116 | StarCoder metadata token(s) <filename>, <reponame> at offset 0; header ends at offset 98",116 U+000D CARRIAGE RETURN (202x),dog_engine_unit scene-graph node class implementation
+6d56424eb1f2b44c,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 54,,Sliding-window maximum fixed-length subarray sum exercise
+1432746bf9765f7a,full,clean,,,,"DistDL constant (nearest-left) interpolation CPU kernels, forward and adjoint, for PyTorch"
+12a00e1dd01fe175,full,clean,,,,Helpers checking file extensions (mp3/png/jpeg) with std::filesystem
+8715957120906952,full,clean,,,,Competitive programming UVa 1238 Free Parentheses DP solution
+ad8f39d5bab3f52a,full,fix,B4;E4,"PII-redaction placeholder <NAME> x2, first at offset 26 | proprietary licence header, 6 lines at the top",,PII placeholder; jml boosting test: parse a dataset file containing NaN values
+30723a13660905c2,full,clean,,,,Small tool that prepends the current time as a label line to a text file
+e206865052de8729,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 40,,openFrameworks basic audio recorder app with play/record pad buttons
+baf14d53be4f09d8,full,fix,B4,"PII-redaction placeholder <NAME> x3, first at offset 39",,PII placeholder; STAR MuDst tutorial analysis maker: event/track histograms in ROOT
+587891f944dfcedc,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 62,,CtCI triple-step dynamic programming exercise
+27b35edb6de466b0,full,clean,,,,Chromium AndroidIncognitoSessionDurationsServiceFactory implementation
+8445db5cb40f282d,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 33,,Competitive programming solution counting valid numbers in a range
+c2cc6828aa401e7d,full,clean,,,,"LeetCode 236 lowest common ancestor of a binary tree, two solutions"
+31fc2f3a6e86b753,full,fix,A1;B3,"BOM x1, first at offset 42 | StarCoder metadata token(s) <filename> at offset 0; header ends at offset 41",42 U+FEFF ZERO WIDTH NO-BREAK SPACE,EU4dll plugin: byte-pattern injectors for tooltip and button text processing
+4707ff8ae2e79609,full,fix,B4;E4,"PII-redaction placeholder <NAME> x1, first at offset 416 | copyright notice licence header, 9 lines at the top",,PII placeholder; DUDS menu library exception types header
+8dbca2d2a4b986b6,full,fix,B4;E4,"PII-redaction placeholder <NAME> x1, first at offset 35 | MIT licence header, 23 lines at the top; same header text in 2 files of this pack",,PII placeholder; fplll extenum library C interface header
+5ac8bccb596b3c88,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 25,,Ingenuity OBJ mesh file parser building vertex/index buffers
+5219d8ea8a9f8ab1,full,clean,,,,Fuchsia Scenic VsyncTiming constructor
+e784b631b0cff967,full,clean,,,,DAVA RemoteTool Qt table model for memory block groups
+c7d5eb2d12e9442d,full,clean,,,,Quaternion math class implementation for a GPU particle system
+06156afba739c032,full,fix,B3;B4,"StarCoder metadata token(s) <filename>, <reponame> at offset 0; header ends at offset 70 | PII-redaction placeholder <NAME> x3, first at offset 203",,PII placeholder; OpenLieroX skinned GUI minimap widget
+736ffee07a317d21,full,fix,B4,"PII-redaction placeholder <NAME> x1, first at offset 3",,PII placeholder; Codeforces 550B combination-count solution
+2104535260057121,full,clean,,,,Windows display miniport (DXGK DDI) callback declaration header
+752b8f7e3bbb441c,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 37,,Kattis 'Anthony and Diablo' solution
+867aec1994fd3a1b,full,fix,B3,"StarCoder metadata token(s) <filename>, <gh_stars> at offset 0; header ends at offset 63",,"Warcraft II clone critter boar entity (movement, animation, footprints)"
+a17f77ac513d54c6,full,clean,,,,Pythran pythonic operator.__add__ functor alias header
+308d8f39cb6970b6,full,fix,B3;B4;E4,"StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 31 | PII-redaction placeholder <NAME> x1, first at offset 143 | GPL licence header, 19 lines at the top",,PII placeholder; BlackSun editor Qt colour-chooser button
+dcf2ec1b1beb6274,full,fix,B3;E4,"StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 14 | Apache-2.0 licence header, 15 lines at the top; same header text in 21 files of this pack",,M5StickC IR remote power-control class
+4a6d28bad9c9f173,full,fix,B3,"StarCoder metadata token(s) <filename>, <gh_stars> at offset 0; header ends at offset 48",,YALR parser-generator LR table generation header
+e03eea671a3a6bfb,full,fix,B4;E4,"PII-redaction placeholder <EMAIL> x1, <NAME> x1, first at offset 64 | GPL licence header, 16 lines at the top",,PII placeholder; antimicro gamepad mapper Qt mouse-settings dialog
+20cd6ff5e8193024,full,fix,A2;B4;E4,"CR (CRLF line endings) x296, first at offset 4 | PII-redaction placeholder <NAME> x2, first at offset 231 | copyright notice licence header, 22 lines at the top",4 U+000D CARRIAGE RETURN (296x),PII placeholder; Windows Server 2003 print UI physical-location class header
+1826f28bd6b086bf,full,fix,B3;B4;E4,"StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 14 | PII-redaction placeholder <NAME> x3, first at offset 69 | copyright notice licence header, 14 lines at the top",,PII placeholder; OpenSceneGraph static GLES2 proc-address table
+310928050333ca46,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 59,,Silicon Software frame-grabber C++ wrapper
+97be482437f4094d,full,clean,,,,2D engine OpenGL sprite batch class header
+9989c2be8ee75846,full,fix,E4,"BSD licence header, 26 lines at the top",,NVIDIA framework union-find implementation
+1768b5f91561649b,full,fix,B3;D1,"StarCoder metadata token(s) <filename>, <reponame> at offset 0; header ends at offset 68 | 'machine.c' at offset 149; Labelled C++ but is plain C MAME code (header names machine.c; no classes, namespaces or C++ features)",,"MAME Williams arcade machine emulation (PIA interfaces, bank switching)"
+24e3b5b06b730a3d,full,clean,,,,Qt-based uPD765 floppy disk controller emulation
+84660c6345b7109f,full,clean,,,,SPARTA simulator TranslationIF tree-node class header
+8d1a6d210983607d,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 81,,SPOJ CEQU linear Diophantine solvability check
+f811cd13e4c952c0,full,fix,B4;E4,"PII-redaction placeholder <NAME> x1, first at offset 77 | Apache-2.0 licence header, 6 lines at the top",,PII placeholder; Yato actor system root actor (guardian management)
+c119e70cacbcca64,full,fix,B3,"StarCoder metadata token(s) <filename>, <gh_stars>, <reponame> at offset 0; header ends at offset 69",,FBX animation layer wrapper constructor
+928a5db2b2d1f120,full,fix,B3;D1,"StarCoder metadata token(s) <filename> at offset 0; header ends at offset 57 | '#include <stdio.h>' at offset 104; Labelled C++ but is plain C: stdio FILE/fscanf/atoi, no classes or namespaces",,HSP3 embed misc helpers (sgn plus commented-out file scanners)
+071a015c7e861774,full,fix,B4,"PII-redaction placeholder <PASSWORD> x1, first at offset 96",,PII placeholder; PAT 1035 password character-substitution solution
+a82f47c4d5d2b92e,full,fix,E4,"Apache-2.0 licence header, 6 lines at the top",,pcapML pcap utility function declarations header
+ef07fee25e7b697f,full,clean,,,,Chromium GPU IPC host command-line switch constants
+f5c3ae335b1e124e,full,fix,B3,StarCoder metadata token(s) <gh_stars> at offset 0; header ends at offset 14,,Generic sqrt-decomposition data structure template
+5fa2093b1dec2c93,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 33,,mtensor gather view unit tests
+c68d63f5d85c4101,full,fix,B4,"PII-redaction placeholder <NAME> x1, first at offset 27",,PII placeholder; SSVUtils POD union variant template
+e958a639c40e76ee,full,fix,B3,"StarCoder metadata token(s) <filename>, <gh_stars> at offset 0; header ends at offset 47",,"LeetCode 49 Group Anagrams, two alternative solutions"
+47a1c4e054035846,full,fix,A1;A2;E4,"BOM x1, first at offset 0 | CR (CRLF line endings) x229, first at offset 20 | BSD licence header, 30 lines at the top",0 U+FEFF ZERO WIDTH NO-BREAK SPACE | 20 U+000D CARRIAGE RETURN (229x),OpenXOPS mission event-control class (Japanese comments)
+66a37626fdec8c95,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 39,,aslan event-type assertion test
+5f11fd84070f1c29,full,clean,,,,DevSkill DCP-027 prime check solution
+6b079d215d29f501,full,clean,,,,dumpster prime-below-next-power-of-2 unit test
+65d6c0c599b30c97,full,clean,,,,InterviewBit binary tree from inorder and postorder solution
+06343db2db811681,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 55,,Caffe HDF5 3D-sketch data layer (French comments)
+b54307ade4032941,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 36,,Neural-network trainer main driver
+d101648f82622cf0,full,fix,C1,"'// Add to List' at offset 52; LeetCode web-page UI text (difficulty, like count, Add to List, Share) pasted into comments",,LeetCode 605 Can Place Flowers solution with pasted problem page
+b46e41decf3e37b0,full,fix,A2;B3,"CR (CRLF line endings) x97, first at offset 30 | StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 27",30 U+000D CARRIAGE RETURN (97x),JUCE audio delay line DSP class
+ddaa67c909835030,full,clean,,,,Unreal Engine AVEncoder D3D11 debug object naming helper
+dd450abd373003a3,full,fix,B3,StarCoder metadata token(s) <filename> at offset 0; header ends at offset 39,,Google Test case for SFML vector intersection
+098e6a553dfe698b,full,clean,,,,Student OOP C-string utility class implementation
+5cb7aa4d520895d9,full,fix,B4,"PII-redaction placeholder <NAME> x1, first at offset 17",,PII placeholder; Basic iostream I/O teaching example (Spanish comments)
+754a2b4952708a8e,full,fix,B3;E4,"StarCoder metadata token(s) <filename> at offset 0; header ends at offset 44 | Apache-2.0 licence header, 23 lines at the top",,Pixar USD Pcp LayerStack boost.python wrapper
+ee89ae6dca086b7e,full,fix,B3,StarCoder metadata token(s) <reponame> at offset 0; header ends at offset 42,,CCC '03 S5 Trucking Troubles max-bottleneck BFS solution

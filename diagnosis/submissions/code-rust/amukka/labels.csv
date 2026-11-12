@@ -1,0 +1,501 @@
+doc_id,read,verdict,diseases,evidence,hex,note
+a34b8909788c0ebf,full,clean,,,,idiomatic Rust; no issues found
+9e78f4cb637c6bb7,full,clean,,,,hand-written Rust CLI main.rs; no issues found
+59ebe4dd2822d682,full,clean,,,,documented macro_rules; no issues found
+e016447055203614,full,fix,B3,<gh_stars>1-10 at offset 0,,StarCoder metadata token on first line; strip line
+e2d6c18c099d7740,full,clean,,,,hand-written lib.rs with docs; no issues found
+d1e5237063713aba,full,fix,B3,<filename> token at offset 0,,StarCoder metadata line on first line; strip line
+a500c6c5ef2132b5,full,fix,B3,<filename> token at offset 0,,StarCoder metadata line on first line; strip line
+5616e9e6d9e5bd67,full,clean,,,,hand-written nom parser; no issues found
+1b399017559a1439,full,fix,B3,<gh_stars> token at offset 0,,StarCoder metadata line on first line; strip line
+bad725fa27173486,full,clean,,,,hand-written scraper structs; Chinese strings display fine
+3bfd18d639c65884,full,clean,,,,hand-written kernel bitflags crate; no issues found
+a7accf0609eba940,full,fix,B3,<gh_stars> token at offset 0,,StarCoder metadata line on first line; strip line
+93ea82cc409002af,full,clean,,,,hand-written AoC solution; no issues found
+bc753167860ea77d,full,fix,B3,<reponame> token at offset 0,,StarCoder metadata line on first line; strip line
+95450311f22f70c4,full,fix,B3,<gh_stars> token at offset 0,,StarCoder metadata line on first line; strip line
+56f2ed109929d454,full,clean,,,,hand-written AoC solution; no issues found
+7dcf53c66a82f309,full,fix,B4,<NAME> at offset 22,,tab-indented sort crate; PII placeholder
+82fae8d2280ee32c,full,fix,B3,<reponame> token at offset 0,,StarCoder metadata line on first line; strip line
+5edcef0e8667d1f9,full,fix,B3,<filename> token at offset 0,,StarCoder metadata line on first line; strip line
+2e22404ca04aa8f7,full,clean,,,,hand-written compiler module; no issues found
+2440dab03d7eaa2a,full,clean,,,,hand-written lib.rs; no issues found
+b0a1eeeb782fea8c,full,fix,B3;E4,<filename> and <gh_stars> tokens at offset 0; MIT licence header lines 2-19,,metadata tokens on first line; strip; also 17-line MIT licence header (E4)
+7504080f87dabc27,full,fix,B3,<filename> and <gh_stars> tokens at offset 0,,StarCoder metadata token(s) on first line; strip line
+ecfd82e5e15df613,full,clean,,,,long numeric/scientific lib with doc-comment maths; complete; no issues found
+c6359d0bcc632e6f,full,clean,,,,test file; repeated test_case lines are intentional
+cd7a2858ac5d8e4d,full,fix,B3,<reponame> token at offset 0,,StarCoder metadata token(s) on first line; strip line
+f9a1d49b5048740c,full,clean,,,,"doc examples include non-ASCII ""não"" (valid UTF-8); no issues found"
+df8dd13bf892e6b5,full,clean,,,,hand-written game code; no issues found
+5d6a9ff4b4d7c9f0,full,clean,,,,short but complete trait file; no issues found
+12b0701d74699139,full,fix,B3,<reponame> token at offset 0,,StarCoder metadata token(s) on first line; strip line
+02472667640be24b,full,clean,,,,criterion benchmarks; no issues found
+be28b38708e3739d,full,clean,,,,hand-written AoC solution; no issues found
+6829882349465edb,full,clean,,,,small no_std kernel; no issues found
+91d1b278129a6cb8,full,fix,B3,<reponame> token at offset 0,,StarCoder metadata token(s) on first line; strip line
+24e6aebc219f065a,full,fix,B3,<reponame> and <gh_stars> tokens at offset 0,,StarCoder metadata token(s) on first line; strip line
+8e7aa276c383727b,full,clean,,,,long generated-string interface but hand-written; complete; no issues found
+d0c776324677d016,full,clean,,,,hand-written CLI; no issues found
+2309a9a7478a52e5,full,clean,,,,one-line SPDX header only; not E4; no issues found
+5dc99bbc98f31f6f,full,clean,,,,{{ name }} appears only in a doc example string; not B4
+ea9972d05bb82079,full,clean,,,,"SHA constant tables (legit crypto constants, long hex lines); borderline E2, judged clean"
+2e2a4370221fdf2d,full,fix,B3,<reponame> and <filename> tokens at offset 0,,StarCoder metadata token(s) on first line; strip line
+80205165f06b8d5b,full,fix,B3;B4,<filename> token at offset 0; <NAME> at offset 333,,StarCoder metadata token(s) on first line; strip line; PII placeholder
+d9e3301bb32876a1,full,fix,B3,<filename> and <gh_stars> tokens at offset 0,,StarCoder metadata token(s) on first line; strip line
+11ef3d0d8fa13a17,full,fix,B3,<gh_stars> token at offset 0,,StarCoder metadata token(s) on first line; strip line
+aa0de1295bd913e0,full,clean,,,,short AoC solution; no issues found
+ad674cb959088940,full,clean,,,,criterion benchmarks; no issues found
+2c1f17ac71dbd4e9,full,clean,,,,"only token header names, no secret values; no issues found"
+3b93657d9ecde08f,full,clean,,,,long matrix file; repetitive field lines are legit code; no issues found
+87e0f4d71ce0d144,full,clean,,,,short but complete; no issues found
+75b91c4afb9684ac,full,fix,B3,<gh_stars> token at offset 0,,StarCoder metadata token(s) on first line; strip line
+8bb4b4ed26269bc0,full,clean,,,,hand-written code; no issues found
+42116c1bed629d85,full,clean,,,,hand-written code; no issues found
+2a8c96da22b3afcc,full,fix,B3,<reponame> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+9ed054a3678c8c9f,full,fix,B3,"<reponame>, <filename>, <gh_stars> token(s) at offset 0",,StarCoder metadata token(s) on first line; strip line
+596491cb2a4d7084,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+47d0dc20e0460f4b,full,fix,B3,"<reponame>, <filename> token(s) at offset 0",,StarCoder metadata token(s) on first line; strip line
+920d344679eb3387,full,drop,B4;E1,Generated by: openapi-generator.tech in header; <EMAIL> at offset 182,,OpenAPI-generated model; header has <EMAIL> placeholder; PII placeholder
+f54f914fa8c6a42a,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+17e695a1c0fee084,full,fix,B3;E4,<reponame> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line; plus 13-line Apache-2.0 header (E4); large commented-out Go block
+132f133c3df2dd7d,full,fix,E4,~42-line licence header (Apache-2.0 + MIT) at offset 0,,long dual-licence header before md5 code; no metadata token
+9773497d0c18080b,partial,drop,B3;E1,"<filename> token at offset 0; ""Code generated ... DO NOT EDIT"" at line 2",,"generated AWS SDK serializer (""Code generated ... DO NOT EDIT""); read first ~250 lines, rest scanned by script"
+f7a86edc36e980db,full,clean,,,,hand-written code; no issues found
+8e31dd6b7d4cb8aa,full,clean,, token(s) at offset 0,,&lt; &gt; entities appear only in rustdoc comments (intentional escaping)
+fb25136dc3fdb0f5,full,fix,E4,8-line Rust-project Apache/MIT header at offset 0,,standard Rust licence header; also pre-1.0 syntax (not a listed disease)
+9123e6091de84624,full,clean,,,,hand-written code; no issues found
+41ef9c7f2b6b5f72,full,clean,,,,hand-written code; no issues found
+30c6682c46b64c75,full,clean,,,,hand-written code; no issues found
+e7a8e154f699cce8,full,clean,,,,hand-written code; no issues found
+8d72bf7b461adacd,full,clean,,,,hand-written code; no issues found
+4b38b81f24854bca,full,clean,,,,hand-written code; no issues found
+a9b7f612646a9e13,full,clean,,,,hand-written code; no issues found
+e8e45c16ecc753f4,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+2819e79e60777003,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+e6bc93eede15c77d,full,clean,,,,hand-written code; no issues found
+17aeb942d1be4ad8,full,clean,,,,hand-written code; no issues found
+526a102be8934e8f,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+1d75c5dc3627c79c,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+caebd3a59a19d93e,full,clean,,,,hand-written code; no issues found
+061a74af82b2484c,full,clean,,,,hand-written code; no issues found
+9c345c5606b0d951,full,fix,B3;B4;E4,<reponame> token(s) at offset 0; <NAME> at offset 45,,StarCoder metadata token(s) on first line; strip line; plus 8-line Apache/MIT header with <NAME> placeholder (E4); PII placeholder
+efaa9e4520e35483,full,fix,B3,"<filename>, <gh_stars> token(s) at offset 0",,StarCoder metadata token(s) on first line; strip line
+e748066dd0d697f8,full,fix,B3,"<reponame>, <filename> token(s) at offset 0",,StarCoder metadata token(s) on first line; strip line
+e7de2b8383f46597,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+7ed57268190f1e08,full,clean,,,,hand-written code; no issues found
+034d5b1b78fe15bb,full,clean,,,,hand-written code; no issues found
+e31db42a0dd8efd8,full,clean,,,,hand-written code; no issues found
+727b50073ceda800,full,clean,,,,hand-written code; no issues found
+89a584c2eef8bf3f,full,clean,,,,hand-written code; no issues found
+c78bfe041f15f7b1,full,clean,,,,hand-written code; no issues found
+d7d94f0655352c49,full,clean,,,,hand-written code; no issues found
+89630dc28bd0017f,full,clean,,,,hand-written code; no issues found
+5f4af36f125229ea,full,clean,,,,hand-written code; no issues found
+296bbf4d25d66571,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+4d3d6904e0a047d2,full,clean,,,,hand-written code; no issues found
+634fa1e64376a093,full,clean,,,,hand-written code; no issues found
+a8132e78e56f0f75,full,clean,, token(s) at offset 0,,near-empty stub; Korean comment is valid UTF-8
+38cb8197c9ac2360,full,clean,,,,hand-written code; no issues found
+3d6288b596eec56c,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+4ff14db719f43151,full,clean,,,,hand-written code; no issues found
+0a9b1f5feed84bcb,full,clean,,,,hand-written code; no issues found
+fd70f3cff8574088,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+f0093fe3cd4a0833,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+082be4c4a567a12d,full,fix,B3;B4,"<reponame> token(s) at offset 0; <EMAIL>, <NAME> at offset 2608",,StarCoder metadata token(s) on first line; strip line; PII placeholder
+462324dfcdae2d44,full,drop,E1,Generated by: openapi-generator.tech in header,,OpenAPI-generated empty model stub
+2186ba50f4996850,full,clean,,,,hand-written code; no issues found
+30ee729439c81288,full,fix,B3,"<reponame>, <gh_stars> token(s) at offset 0",,StarCoder metadata token(s) on first line; strip line
+e87f0a6103e8ef12,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+038a5656ba70d5a0,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+6bba0a1b76c03453,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+0782fb2323f887e2,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+a2f8637ff237f236,full,clean,,,,hand-written code; no issues found
+3caeb5dee7151a1c,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+bd69dbf29b4d0341,full,fix,B3;B4,<filename> token(s) at offset 0; <NAME> at offset 35,,StarCoder metadata token(s) on first line; strip line; /// <NAME> placeholder in header; PII placeholder
+cd5d9b07bbe16924,full,clean,,,,hand-written code; no issues found
+0559a1f4e20f9176,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+3cad72de6a4acceb,full,clean,,,,hand-written code; no issues found
+7bc9a465cce841f7,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+db4f0ca5b5f16550,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+d53f010f89478615,full,fix,B3,"<reponame>, <filename>, <gh_stars> token(s) at offset 0",,StarCoder metadata token(s) on first line; strip line
+ae5452d656145479,full,clean,,,,hand-written code; no issues found
+41374ec51f85ab4c,full,clean,,,,hand-written code; no issues found
+360bb39e34559e0c,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+48f6c1188ba5b7d4,full,clean,,,,hand-written code; no issues found
+727f2da6df759385,full,drop,E1,Generated by: openapi-generator.tech in header,,OpenAPI-generated model
+1f5f780b37100bbe,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+e80eb75dd685989d,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+83000c5c62801d71,full,clean,,,,hand-written code; no issues found
+2a35040274c2594d,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+b296cbb768b0db17,full,clean,,,,hand-written code; no issues found
+90e564fa0a94a667,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+37fedecf14818660,full,clean,,,,hand-written code; no issues found
+a29d30783f15a06b,full,fix,B2,"<img ...> tags inside problem-statement comment, on lines 8, 12 and 15",,LeetCode statement pasted into doc comment has HTML <img> tags
+eb88b0d06290f955,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+fc1bc66a4d3be39e,full,clean,,,,hand-written code; no issues found
+1fffa6ec3a9095a6,full,clean,,,,hand-written code; no issues found
+312ffd3af264e1a1,full,clean,,,,hand-written code; no issues found
+f036df76e1f38055,full,fix,B3;E4,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line; plus 8-line Materialize BSL header (E4)
+6cca9872089bbf62,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+7ef567a0179585ce,full,clean,,,,hand-written code; no issues found
+063772cd4012e932,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+7910411032378ac8,full,clean,,,,hand-written code; no issues found
+cac9fdb818f9915f,full,fix,B3,<reponame> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+e85e975431fe1adb,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+8d7d927bf64b08e2,full,clean,,,,hand-written code; no issues found
+fd2891a64702ac9f,full,clean,,,,hand-written code; no issues found
+0806b817251a3725,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+14875d774c376695,full,clean,,,,hand-written code; no issues found
+b301585ac75d19b6,full,clean,,,,hand-written code; no issues found
+813edd1a2dab85d0,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+d1faf7a8efca2621,full,fix,B3,<reponame> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+2a53dc5ec14a55e8,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+53ef45b160d0d87b,full,clean,,,,hand-written code; no issues found
+0316bfaac536f88b,partial,drop,B3;E1,<reponame> token(s) at offset 0,,"generated by rust-protobuf (""Do not edit"", @generated); head/tail + script only"
+d7534fca1feb2bfe,full,clean,,,,hand-written code; no issues found
+c77eea137212f645,full,fix,B4,<NAME> at offset 24,,hand-written code; no issues found; PII placeholder
+03d85301a62aa2e5,full,clean,,,,hand-written code; no issues found
+8b0d0695fcdd184a,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+4fc0d85779b9dea6,full,clean,,,,hand-written code; no issues found
+2ac7259e724b772e,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+54fcd12c4f7d9188,full,fix,B3,"<filename>, <gh_stars> token(s) at offset 0",,StarCoder metadata token(s) on first line; strip line
+d08f2abd60a32ceb,full,clean,,,,hand-written code; no issues found
+8be108b392261f95,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+aea5db8565cb9944,full,fix,B3,"<reponame>, <gh_stars> token(s) at offset 0",,StarCoder metadata token(s) on first line; strip line
+44cca17fc6fa89bd,full,fix,B3,<reponame> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+fde5bf1a74d30754,full,fix,B3,"<reponame>, <filename> token(s) at offset 0",,StarCoder metadata token(s) on first line; strip line
+f86e2e854b4328d0,partial,drop,E1,Code generated ... DO NOT EDIT at line 1,,generated AWS SDK serializer (95 KB); head/tail + script only
+107128552170687c,full,clean,,,,hand-written code; no issues found
+e726d21b90dfa54b,full,clean,,,,hand-written code; no issues found
+aa0fb791385c6569,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+6b34b3a2feac1513,full,clean,,,,hand-written code; no issues found
+e1c51fbb19f1c62d,partial,drop,E1,"""automatically generated by rust-bindgen"" at line 1",,"rust-bindgen output, mostly errno consts; head/tail + script only"
+3d253bc78ad7014f,full,clean,,,,hand-written code; no issues found
+0d7b20bbfd30a1fb,full,drop,B3;E1,<gh_stars> token(s) at offset 0,,"tests auto-converted from sass-spec (script-generated, repetitive)"
+c0c8e00c39e6186b,full,clean,,,,hand-written code; no issues found
+a64a9845a006c315,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+856747c12b100481,full,drop,B3;E1,<filename> token(s) at offset 0,,"svd2rust-style register block (no explicit marker, but #[doc = ""0x.. - ..""] pattern)"
+6146fd8fa6290d91,full,clean,,,,hand-written code; no issues found
+88caf4b1d3a9430e,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+2f34546793ed7faf,full,fix,A2,"CRLF line endings: 227 CR (U+000D), first at offset 36",U+000D,Windows CRLF line endings; strip CR
+4bbf0afdf3bac104,full,clean,,,,hand-written code; no issues found
+a59338657d48f856,full,clean,,,,hand-written code; no issues found
+3015078f8905b0cd,full,fix,B3;B4;E4,<gh_stars> token(s) at offset 0; <NAME> at offset 33,,metadata token + 11-line Apache-2.0 header with <NAME> placeholder; PII placeholder
+723370e9ce5039ab,full,clean,,,,hand-written code; no issues found
+5f8cb56c795e68b6,full,fix,B3,<reponame> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+e1608ccb8243c14b,full,drop,B3;E1,<gh_stars> token(s) at offset 0,,machine-generated instruction test vectors; very long lines (387 chars)
+1300c1bd7114e417,full,clean,,,,hand-written code; no issues found
+74d1fda8ac52f485,full,clean,,,,hand-written code; no issues found
+acb388b923afabed,full,fix,B3,<reponame> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+5d340e5ed0a9a044,full,drop,B3;E1,<filename> token(s) at offset 0,,"""This file is automatically generated! Do not directly edit!"" banner"
+ea91bba5f82597d1,full,clean,,,,hand-written code; no issues found
+c2188d51487325ee,full,clean,,,,hand-written code; no issues found
+565e93a3a7aeea32,full,fix,B3,"<filename>, <gh_stars> token(s) at offset 0",,StarCoder metadata token(s) on first line; strip line
+e433943e4bcb47e8,full,fix,B3,"<filename>, <gh_stars> token(s) at offset 0",,StarCoder metadata token(s) on first line; strip line
+e9bf00c5aabbfbe5,full,fix,E4,8-line Apache/MIT header (lines 4-9) after a path comment,,standard Pathfinder licence header; no metadata token
+de7885d0c7e8fa6e,full,clean,,,,hand-written code; no issues found
+fe878b156e909636,full,fix,B3,<reponame> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+04ab4d31bf893ccf,full,clean,,,,hand-written code; no issues found
+5b1a315ac3901be2,full,clean,,,,hand-written code; no issues found
+fa6b8a4f3b346cee,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+1bc25d741a5f51ac,full,clean,,,,hand-written code; no issues found
+2455aec85b7cee08,full,fix,B3,<reponame> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+2d9eb69328991863,full,clean,,,,hand-written code; no issues found
+4612b1a16a2f40b4,full,clean,,,,hand-written code; no issues found
+809dada3670a7665,full,clean,,,,hand-written code; no issues found
+71ff49d00054446c,full,fix,B3,"<reponame>, <gh_stars> token(s) at offset 0",,StarCoder metadata token(s) on first line; strip line
+caa8aa02c6d3e39f,full,clean,,,,hand-written code; no issues found
+f70268dcd7cf1e80,full,clean,,,,hand-written code; no issues found
+60ea3864b09cfeee,full,clean,,,,hand-written code; no issues found
+9346c526ad184ac1,full,clean,,,,hand-written code; no issues found
+b2090fbd800c777e,full,clean,,,,hand-written code; no issues found
+179667780fd81220,full,clean,,,,hand-written code; no issues found
+9b81360a5175868a,full,fix,B3,"<reponame>, <filename> token(s) at offset 0",,StarCoder metadata token(s) on first line; strip line
+b7ab5ad474ddbcd7,full,clean,,,,hand-written code; no issues found
+168a0fb11847d568,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+3195d9ea8c0e13f3,full,fix,B3,"<filename>, <gh_stars> token(s) at offset 0",,StarCoder metadata token(s) on first line; strip line
+9ebd84a24f1786b4,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+89e3fae6360038e6,full,clean,,,,hand-written code; no issues found
+571c31d55fd60379,full,clean,,,,hand-written code; no issues found
+ff43917c55d42d09,full,clean,,,,hand-written code; no issues found
+b071ff4a759c9928,full,clean,,,,hand-written code; no issues found
+ecaddfbf45cba36e,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+ed8e7d42a2c3870d,full,clean,,,,hand-written code; no issues found
+e2428a300921df6c,full,fix,B4,<NAME> at offset 32,,hand-written code; no issues found; PII placeholder
+56f177b27ed534fb,full,fix,B3;A2,"<reponame>, <filename>, <gh_stars> token(s) at offset 0; CRLF line endings: 29 CR (U+000D), first at offset 78",U+000D,StarCoder metadata token(s) on first line; strip line; plus CRLF line endings
+291bbdab6d373417,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+479bd9665f3dc950,full,fix,B3,"<reponame>, <filename> token(s) at offset 0",,StarCoder metadata token(s) on first line; strip line
+533ec56a0459afb8,full,clean,,,,hand-written code; no issues found
+1317cce9948785ca,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+1a9f57255400a662,full,fix,B4,<EMAIL> at offset 280,,hand-written code; no issues found; PII placeholder
+e40cda699b7983a4,full,fix,B3,<reponame> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+262c86405ad44716,full,fix,E4,8-line Materialize BSL header at offset 0,,standard company licence header; no metadata token
+4967813b16a235ba,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+83d987c0a9e44c5c,partial,drop,E1,"""auto-generated by rute_gen. DO NOT EDIT"" at line 1",,generated Qt bindings (20 KB); head/tail + script only
+60a1f54b99219159,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+2d73eb8a5285ab10,full,clean,,,,hand-written code; no issues found
+5df4e21a17599363,full,clean,,,,hand-written code; no issues found
+2b4bda8f950bb3ac,full,clean,,,,hand-written code; no issues found
+ac1121b5987bf37c,full,clean,,,,hand-written code; no issues found
+21133bbf3b90c742,full,clean,,,,hand-written code; no issues found
+28627bc145055f71,full,clean,,,,hand-written code; no issues found
+2f7f79eb89422fe3,full,clean,,,,hand-written code; no issues found
+d099b058b6b371e7,full,clean,,,,hand-written code; no issues found
+8905da774cbaae13,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+79757ca7eb9af39a,full,clean,,,,hand-written code; no issues found
+6f0c807d67896e67,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+6570d1d5fdd4924a,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+b5ad12922980ae9a,full,clean,,,,hand-written code; no issues found
+0a0a6aa9e765888a,full,clean,,,,hand-written code; no issues found
+df5bceaaf2d199db,full,fix,B3,<reponame> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+78d2994b461834ca,full,fix,B3,"<filename>, <gh_stars> token(s) at offset 0",,StarCoder metadata token(s) on first line; strip line
+4b110ad0326d4a9c,full,fix,B3,"<reponame>, <filename> token(s) at offset 0",,StarCoder metadata token(s) on first line; strip line
+9fa2bc5c3de36de4,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+24ae2a6f3d1c4669,full,clean,,,,hand-written code; no issues found
+d4be4a4cece26685,full,fix,B3,<reponame> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+0647bb2e4c1e0313,full,clean,,,,hand-written code; no issues found
+58b76b07222bf499,full,clean,,,,hand-written code; no issues found
+1b5bced097613565,full,fix,B4,"<EMAIL>, <NAME> at offset 223",,hand-written code; no issues found; PII placeholder
+11fffe33baa7bd5e,full,fix,E4,21-line ASCII-art banner + AGPL-3.0 header at offset 0,,standard licence header with logo; no metadata token
+087ae654f4200acc,full,clean,,,,hand-written code; no issues found
+fc8785fa24d0760b,full,clean,,,,hand-written code; no issues found
+e9feb3997fd4cb0b,full,clean,,,,hand-written code; no issues found
+072cef37b29c9496,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+6e05c5b6c7fd6c34,full,clean,,,,hand-written code; no issues found
+c97673ca473b496a,full,clean,,,,hand-written code; no issues found
+e47eec43105a758f,full,clean,,,,hand-written code; no issues found
+73022dd9508f56d0,full,clean,,,,hand-written code; no issues found
+c69b4b9512a524fc,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+a837c3039cb61b94,full,clean,,,,hand-written code; no issues found
+500d7c1d8a2e221f,full,clean,,,,hand-written code; no issues found
+46f86e1f6378396f,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+007ce2789a9507fa,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+e195fa51cf625100,full,fix,B3,<reponame> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+a6be8b135c6c8203,full,clean,,,,hand-written code; no issues found
+00a6ea4358544d22,full,drop,E1,svd2rust register module (doc strings link to svd2rust API; #[doc = ...] on every item),,machine-generated peripheral register accessors
+f7d1e7c4603ac161,full,fix,B3,"<reponame>, <gh_stars> token(s) at offset 0",,StarCoder metadata token(s) on first line; strip line
+6be5d4077b1b78be,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+e87744e3ed18247a,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+ff345575d8de9cbb,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+14597235b4638a16,full,clean,,,,"hand-written experiment driver (37 KB); read in full, no issues found"
+24fc226817fd110c,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+60a81cfce27f062f,full,clean,,,,hand-written code; no issues found
+d185a07e3d515a8e,full,fix,B3;A2,"<filename> token(s) at offset 0; CRLF line endings: 29 CR (U+000D), first at offset 94",U+000D,StarCoder metadata token(s) on first line; strip line; plus CRLF line endings
+b4468f96ed45f5bc,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+e44fdeca85b2f1ba,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+6b3a385bee35f514,full,fix,B3,"<reponame>, <filename>, <gh_stars> token(s) at offset 0",,StarCoder metadata token(s) on first line; strip line
+b31fa5dccafcb409,full,drop,E2,~85 lines of 0b-bitmap byte arrays (sprite data) dominate the file (lines 5-95),,embedded bitmap data blobs; little real code
+55eb5906d5ad28c3,full,clean,,,,hand-written code; no issues found
+fd67fc249fd5786e,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+7b2b426badc73adf,full,clean,,,,hand-written code; no issues found
+632fa0e507382e57,full,clean,,,,hand-written code; no issues found
+7dbffb54eab96972,full,fix,B3,<filename> token(s) at offset 0,,metadata token on first line; strip line (43 KB)
+ec97a7260c296632,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+c10f5d848f135993,full,clean,,,,hand-written code; no issues found
+cea458c07b15577c,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+baaefdf2ba532a1b,full,clean,,,,hand-written code; no issues found
+7cdc556dd197e582,full,drop,B3;E1,<gh_stars> token(s) at offset 0,,machine-generated instruction test vectors; very long lines (414 chars)
+f5b1ead1f05e786e,full,clean,,,,hand-written code; no issues found
+ffe78ddc85f18ca6,full,clean,,,,hand-written code; no issues found
+f4beb9cf72f11461,full,drop,B3;E1;E4,<filename> token(s) at offset 0,,"""This file is generated. Do not edit"" / @generated protobuf mod, plus 12-line Apache header"
+be2a3d3d26adb50c,full,clean,,,,hand-written code; no issues found
+971f2510ebdc3504,full,clean,,,,hand-written code; no issues found
+bc7ff097c421f3e9,full,clean,,,,hand-written code; no issues found
+f6c42e14b10a3746,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+18613fe624a69a11,full,fix,B3,<filename> token(s) at offset 0,,metadata token on first line; strip line (24 KB)
+f89cfd7036a5e9b4,full,clean,,,,hand-written code; no issues found
+e0804d880b731ed9,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+c70227ac90505bce,full,clean,,,,hand-written code; no issues found
+06d51791ba1dd95a,full,fix,B3;B4;E4,"<reponame> token(s) at offset 0; <EMAIL>, <NAME> at offset 57",,metadata token + 17-line MIT header with <NAME>/<EMAIL> placeholders; PII placeholder
+66060a4571f5be65,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+a1212997c63539ba,full,clean,,,,hand-written code; no issues found
+df290f4014eeef57,full,fix,B3,<reponame> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+c5e98659490161e2,full,fix,E4,14-line Substrate GPL-3.0 header at offset 0,,standard company licence header; no metadata token
+cf39aee8eb382b31,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+e046eea8edb62984,full,clean,,,,hand-written code; no issues found
+cc16df4021d9b4ed,full,clean,,,,hand-written code; no issues found
+7e5ad38d05b5249d,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+e690254918c54c6f,full,fix,B3,<reponame> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+2e983fab0a3dff07,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+7a18fd549095108c,full,clean,,,,hand-written code; no issues found
+a39a221d13b01aab,full,fix,B3,<reponame> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+5cbff90f41d11488,full,clean,,,,hand-written code; no issues found
+a9100710e5cbeabb,full,clean,,,,hand-written code; no issues found
+59b826282deb9372,full,clean,,,,hand-written code; no issues found
+67505afb045798d9,full,fix,B4;E4,"10-line public-domain/MIT notice with <NAME>/<EMAIL> at offset 0; <EMAIL>, <NAME> at offset 102",,standard project licence header; no metadata token; PII placeholder
+089aa93744c622bd,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+03b7d39534636329,full,clean,,,,hand-written code; no issues found
+e7dd2874e15db952,full,clean,,,,hand-written code; no issues found
+49f8ec415fd4cc1a,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+239d8896cf111dd0,full,fix,B3;E4,"<filename>, <gh_stars> token(s) at offset 0",,metadata token + 13-line Apache-2.0 header (evan GmbH)
+bad633ac096c3089,full,clean,,,,hand-written code; no issues found
+b1eeffca51e950e3,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+8423da67e05f6051,full,fix,B3,"<reponame>, <gh_stars> token(s) at offset 0",,StarCoder metadata token(s) on first line; strip line
+94c2348f0f21745e,full,fix,B3,<reponame> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+1fdd7e25bb7a4bb1,full,fix,B3;E4,<reponame> token(s) at offset 0,,metadata token + 16-line Apache Software Foundation header
+9bdcac0855fa9b12,full,clean,,,,hand-written code; no issues found
+f8b7495c77e1b336,full,clean,,,,hand-written code; no issues found
+d5a3cd37bbe676cf,full,clean,,,,hand-written code; no issues found
+a84823bc405a100a,full,clean,,,,hand-written code; no issues found
+96b7936ae0f89908,full,fix,B3,"<reponame>, <gh_stars> token(s) at offset 0",,StarCoder metadata token(s) on first line; strip line
+ffbe67b8e7db9078,full,fix,B4,<KEY> at offset 2381,,hand-written code; no issues found; PII placeholder
+db1bf44ff930ec63,full,clean,,,,hand-written code; no issues found
+1b93b46840d0d441,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+addf2e2785cb1be7,full,fix,B3,"<reponame>, <filename>, <gh_stars> token(s) at offset 0",,StarCoder metadata token(s) on first line; strip line
+f7a5d6b468e9a5db,full,clean,,,,hand-written code; no issues found
+db18ede7aa95d53d,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+71d077a51cb50145,full,clean,,,,hand-written code; no issues found
+550c7f01543af75d,full,drop,E1,Generated by: openapi-generator.tech in header,,OpenAPI-generated model
+cf8d2c02da858936,full,fix,B3,"<reponame>, <gh_stars> token(s) at offset 0",,StarCoder metadata token(s) on first line; strip line
+1a686be7056592c7,full,fix,B4,"<EMAIL>, <NAME> at offset 345",,hand-written code; no issues found; PII placeholder
+cc067a09cfd5da85,full,drop,E1,one 933-char inline SVG path line in an icon component,,machine-generated Material icon component (one file per icon)
+37e666d2749d8b88,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+2faccaa1d7a77d70,full,fix,B3;A1,<gh_stars> token(s) at offset 0; U+FEFF at offset 12,U+FEFF,StarCoder metadata token(s) on first line; strip line; plus invisible character
+de24df49855d978a,full,fix,B3,"<reponame>, <gh_stars> token(s) at offset 0",,StarCoder metadata token(s) on first line; strip line
+a8a6eb7b9d214188,full,fix,B3,"<filename>, <gh_stars> token(s) at offset 0",,StarCoder metadata token(s) on first line; strip line
+b6950cef05a649af,full,clean,,,,hand-written code; no issues found
+f7576e546886c834,full,clean,,,,hand-written code; no issues found
+4f605aa070737cc5,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+dba49c99a6d6f653,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+6b6f7480697ece2b,full,fix,B3,<reponame> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+1f2c94410590a10a,full,fix,B3,<reponame> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+6ea17a11b75881c9,full,fix,B3,<reponame> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+f23b184dfca4bdc9,full,clean,,,,"hand-written client module (23 KB); read in full, no issues found"
+3f771d973b561ec4,full,fix,B3,"<reponame>, <gh_stars> token(s) at offset 0",,StarCoder metadata token(s) on first line; strip line
+f66fca493830f347,full,fix,B3,"<reponame>, <gh_stars> token(s) at offset 0",,metadata token on first line; strip line (39 KB)
+cd61e0776b43d334,full,clean,,,,hand-written code; no issues found
+f6111225ed4b3e7f,full,fix,B3,<reponame> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+4ca3e75882dec619,full,clean,,,,hand-written code; no issues found
+470589d70b40fd7b,full,clean,,,,hand-written code; no issues found
+cbf291aa3869e4ea,full,fix,B3,"<filename>, <gh_stars> token(s) at offset 0",,StarCoder metadata token(s) on first line; strip line
+204f62c077bcb9a6,full,fix,B3,<reponame> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+a7c4716782163699,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+eca515e9eadcda28,full,clean,,,,hand-written code; no issues found
+52b139b8c6e0edff,full,clean,,,,hand-written code; no issues found
+b59423399af5cda7,full,drop,B3;E1,"<reponame>, <filename> token(s) at offset 0",,pattern-generated FHIR accessor/builder boilerplate (no explicit marker; spec text copied into docs)
+85fa4d03a2a63982,full,drop,B3;E3,WeChat app secret constant SECRET at offset 150 (32-char literal); APPID at offset 100; value not copied,,hard-coded credential in test file
+db31fd7a39ffca6e,full,clean,,,,hand-written code; no issues found
+0704674c48ca2f21,full,fix,B3,<reponame> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+16c6fa39ebd4a50f,full,clean,,,,hand-written code; no issues found
+fe4b1b1b3479a6ae,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+f7c50d7cc45a9062,full,clean,,,,hand-written code; no issues found
+37a62d68630db8f8,full,fix,B3,"<reponame>, <gh_stars> token(s) at offset 0",,StarCoder metadata token(s) on first line; strip line
+ca72dcf7e4996579,full,clean,,,,hand-written code; no issues found
+6f0fa1e01840aca5,full,clean,,,,hand-written code; no issues found
+abafe5fe68821964,full,drop,B3;E1,<filename> token(s) at offset 0,,"""WARNING: This file was autogenerated by jni-bindgen"" at line 2; very long lines (246 chars)"
+0f4588bbe0f142b7,full,clean,,,,hand-written code; no issues found
+722554548c1e890d,full,fix,B3,<reponame> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+4057218991dc667d,full,clean,,,,hand-written code; no issues found
+5625b01e7be52c38,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+b1a7ee2ff663df4b,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+5c1c1211ef07e0cf,full,clean,,,,hand-written code; no issues found
+8de8aa271e9280dd,full,clean,,,,hand-written code; no issues found
+5ce1578f6cc50d11,full,clean,,,,hand-written code; no issues found
+a268e889d8454875,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+f082f2a0ddf32b99,full,fix,B3;A2,"<gh_stars> token(s) at offset 0; CRLF line endings: 277 CR (U+000D), first at offset 31",U+000D,StarCoder metadata token(s) on first line; strip line; plus CRLF line endings
+8399271bbc745060,full,clean,,,,hand-written code; no issues found
+a54a38190f2d0f05,full,clean,,,,hand-written code; no issues found
+58244c8c4acc67fe,full,clean,,,,hand-written code; no issues found
+f0da97cf6c653132,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+977763242f07df23,full,clean,,,,hand-written code; no issues found
+a3a7f10369147634,full,fix,B3,<reponame> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+9d4ee0079ed2bc00,partial,drop,E1,"""WARNING: This file was autogenerated by jni-bindgen"" at line 1",,jni-bindgen output (generated/ directory); head/tail + script only
+492c7a08bbf09627,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+0ebcd635187a61a3,full,clean,,,,hand-written code; no issues found
+fd3e2e9d2ccdbe7a,full,clean,,,,hand-written code; no issues found
+0be7441a1acf9827,full,clean,,,,"hand-written contract (28 KB); read in full, no issues found"
+ef54e2a2e819af19,full,clean,,,,hand-written code; no issues found
+d3b5a265243cd291,full,clean,,,,hand-written code; no issues found
+a2cd0019ab2f998f,full,clean,,,,hand-written code; no issues found
+83ab604b5635df97,full,fix,B3,<reponame> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+e76465d44d1dcfb6,full,fix,B3,"<filename>, <gh_stars> token(s) at offset 0",,StarCoder metadata token(s) on first line; strip line
+aeb666d6c533e456,full,clean,,,,hand-written code; no issues found
+5a8c2c687cb672c0,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+9d6add57c7ab8283,full,clean,,,,hand-written code; no issues found
+1aa2bcd706be1e4b,partial,drop,B3;E1,<gh_stars> token(s) at offset 0,,"""Code generated by ... smithy-rs. DO NOT EDIT."" at line 1; AWS SDK operation boilerplate; head/tail + script only"
+3a58ba262c0b85a6,full,fix,B3;E4,<filename> token(s) at offset 0,,metadata token + 7-line Apache/MIT copyright header
+bb46bf427ee10878,full,fix,B3,"<reponame>, <filename> token(s) at offset 0",,StarCoder metadata token(s) on first line; strip line
+e96a04c7099fb64f,full,fix,E4,15-line Apache-2.0 header at offset 0,,standard licence header; no metadata token (31 KB)
+beb6cdf1629d513c,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+7442d2a671650047,full,fix,B3;A2,"<gh_stars> token(s) at offset 0; CRLF line endings: 66 CR (U+000D), first at offset 27",U+000D,StarCoder metadata token(s) on first line; strip line; plus CRLF line endings
+40657dbbd05b6a1f,full,fix,B3;E4,<filename> token(s) at offset 0,,metadata token + 13-line Apache-2.0 header
+d9379c2d9a8ea28b,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+24135f5e5578c56a,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+420aa05329309030,full,fix,B3,"<reponame>, <gh_stars> token(s) at offset 0",,StarCoder metadata token(s) on first line; strip line
+97faf3ed2db86043,full,clean,,,,hand-written code; no issues found
+e4b48dc27bfdc6e3,full,clean,,,,hand-written code; no issues found
+c4e8161be60a9954,full,clean,,,,hand-written code; no issues found
+016bc22f87c65d9a,full,clean,,,,hand-written code; no issues found
+2eeba93eb4ef97d0,full,clean,,,,hand-written code; no issues found
+447457fa2c700e6c,full,fix,B3,"<filename>, <gh_stars> token(s) at offset 0",,StarCoder metadata token(s) on first line; strip line
+cb0811e921f6126c,full,clean,,,,hand-written code; no issues found
+636b1c51fbefa1ed,full,clean,,,,hand-written code; no issues found
+5873b94282c9c7d0,partial,drop,B3;E1,<reponame> token(s) at offset 0,,"""// Generated by idl2rs."" at line 1; repetitive COM wrapper boilerplate; head/tail + script only"
+b97182fd8a2902bd,full,fix,E4,16-line Apache Software Foundation header at offset 0,,standard licence header; no metadata token
+528fef5d7b9c7166,full,clean,,,,hand-written code; no issues found
+37329041071044c9,full,fix,B3,<reponame> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+ca4988e75ab586e2,full,clean,,,,hand-written code; no issues found
+182c2cf59a3fa4f1,full,fix,A2,"CRLF line endings: 38 CR (U+000D), first at offset 12",U+000D,Windows CRLF line endings; strip CR
+563fdb7657d579b0,full,clean,,,,hand-written code; no issues found
+f540c712f4a060d6,full,fix,E4,29-line MIT licence header at offset 0 (lines 1-29),,standard licence header; no metadata token
+285e661c9fbec5a1,full,fix,B3,"<reponame>, <filename> token(s) at offset 0",,StarCoder metadata token(s) on first line; strip line
+1123b522d6caf387,full,clean,,,,hand-written code; no issues found
+152d2f4cb7dc22f6,full,clean,,,,hand-written code; no issues found
+b2dbd206758d3a31,full,clean,,,,hand-written code; no issues found
+f8ffecd1293fcef9,full,fix,B3,"<filename>, <gh_stars> token(s) at offset 0",,metadata token on first line; strip line (26 KB)
+836c9bf0b8f71bc3,full,clean,,,,hand-written code; no issues found
+3e53d48bbf65b279,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+b6b7672dc26f6fed,full,clean,,,,hand-written code; no issues found
+cb7dd08b20a950c1,full,clean,,,,"hand-written D3D9 wrapper with long doc-table lines (21 KB); read in full, no issues found"
+3c250c067f3fb88b,full,fix,B3,"<reponame>, <gh_stars> token(s) at offset 0",,StarCoder metadata token(s) on first line; strip line
+d9fdbdd3c811eab0,full,clean,,,,hand-written code; no issues found
+a097e67a8133f03c,full,clean,,,,hand-written code; no issues found
+be5edcb7e0f31531,full,drop,B3;E1,<filename> token(s) at offset 0,,"svd2rust-style register module (#[doc = ""Reader of register ...""] on every item)"
+a0614576171a010f,full,fix,B3,"<reponame>, <filename> token(s) at offset 0",,StarCoder metadata token(s) on first line; strip line
+46b2889660a584b9,full,clean,,,,hand-written code; no issues found
+29aaa799de333063,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+b13f00b5ba360cba,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+991b8d22e00a4306,full,clean,,,,hand-written code; no issues found
+1c03bdf44fca7169,full,fix,B3,<reponame> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+b3ecadb7a2290c5f,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+9dcde1bdef277e3e,full,clean,,,,hand-written code; no issues found
+bdbb96ab384d09e0,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+0612e7d97281b64c,full,clean,,,,hand-written code; no issues found
+44bc8969574eb21d,full,fix,B3;B4,"<reponame> token(s) at offset 0; <EMAIL>, <NAME> at offset 55",,StarCoder metadata token(s) on first line; strip line; PII placeholder
+b8930c7aef66a219,full,clean,,,,hand-written code; no issues found
+b9ea3c3f44c49547,full,clean,,,,hand-written code; no issues found
+e2c0ae91aa3819f7,full,clean,,,,hand-written code; no issues found
+c32592dec3287c45,full,clean,,,,hand-written code; no issues found
+ac6ca438694f5ffc,full,clean,,,,hand-written code; no issues found
+f080ff181082ea8f,full,fix,B3,<reponame> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+c71e33bf2bd5b26c,full,clean,,,,hand-written code; no issues found
+9f7f33934dbc7070,full,clean,,,,hand-written code; no issues found
+874d33cfab182d2e,full,fix,B4,<PASSWORD> at offset 11779,,hand-written; credentials read from env (get_env::var); redaction placeholder <PASSWORD> at line 357 replaces an expression but no secret value present; PII placeholder
+131d83c797e0231b,full,clean,,,,hand-written code; no issues found
+9270e9c97d301601,full,clean,,,,hand-written code; no issues found
+5cead82bcf25af78,full,clean,,,,hand-written code; no issues found
+b6faacce3d67c988,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+9e645875b4d6a1e0,full,clean,,,,hand-written code; no issues found
+4b2e92e4ae08682a,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+7a76d1654fb20a1b,full,drop,E2,"REPORT constant is a 1000-line raw puzzle-input blob (12-char binary strings, lines 1-1001)",,embedded data file; no code
+aaa97b491ae44678,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+02f6fb0679dbd394,full,fix,B3,<reponame> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+5f0a40ed51d5056c,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+286b93fcc7db82ea,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+e7ef5f77600f1069,full,fix,B3,<filename> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+8a407ed966fc0f7a,full,fix,B4,<EMAIL> at offset 102,,hand-written code; no issues found; PII placeholder
+104b46fca19ad351,full,fix,B3,"<reponame>, <filename>, <gh_stars> token(s) at offset 0",,metadata token on first line; strip line (45 KB)
+0dc8395af222dd2d,full,fix,B3,<reponame> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+ef7cf5ebd13adcb2,full,clean,,,,small hand-maintained icon wrapper with inline SVG path; no generator marker
+7445c4b8b8ce3ab6,full,fix,B3;E4,<gh_stars> token(s) at offset 0,,metadata token + 5-line dual-licence (Apache/MIT) header
+9e60e38c6aa0ccb8,full,clean,,,,hand-written code; no issues found
+95214e7219866192,full,clean,,,,hand-written code; no issues found
+6fd34115c1457cb8,full,clean,,,,hand-written code; no issues found
+fe1a297a3879a397,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+6e0b22000db396b7,full,clean,,,,hand-written code; no issues found
+695e4c89e568ef6f,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+1b25586964bcb845,full,fix,B3,<reponame> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+63624b1a81e38f5b,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+b40401c64e449b50,full,fix,B3,<gh_stars> token(s) at offset 0,,StarCoder metadata token(s) on first line; strip line
+f3911946eb90380c,full,clean,,,,hand-written code; no issues found
+f84d4ed084e9f065,full,clean,,,,"hand-written SDL2 view (24 KB); read in full, no issues found"

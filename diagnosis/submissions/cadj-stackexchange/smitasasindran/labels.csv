@@ -1,0 +1,502 @@
+doc_id,read,verdict,diseases,evidence,hex,note
+87116d4f6facd13b,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 302,,Is [selected_answer] a ghost token? Probably not..
+c9e11c8baa07c6e0,full,fix,B3;C2,<issue_start> at offset 0 + <issue_comment> x3 at offset 944,,horizontal line markers are needed for table | urls
+d78b5eeab23e7a55,full,fix,B3;B5,"<issue_start> at offset 0 + <issue_comment> x2 at offset 302 | ""?>"" at offset 1101",,<select..> html inside code - Not B2. Disconnected '?>' inside php code fence
+1700b09990f0ec0f,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 984,,"⟦U+FFFD⟧ referenced inside code and as text, like 'resultString = ""string with encoding problem: ⟦U+FFFD⟧""'  , Not A1. urls, url within <>"
+71acfee0eb411a72,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x7 at offset 363,,repeating code snippets – not a problem
+578eb1503702a79d,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x5 at offset 378,,
+b33feafa5645bc5a,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x5 at offset 515 | line ""username_1: You can either create the locale,"" at offset 530 is duplicated from previous doc 578eb1503702a79d",,
+3e38237c513072d4,full,fix,B3;C5,<issue_start> at offset 0 + <issue_comment> x2 at offset 564 | **Markethttps://market.android.com/details?id,,Long urls
+d07c2ecd24fdef8a,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 435,,urls
+36c648820e2787fe,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 848,,urls
+796f4f8329c2ee55,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x5 at offset 500,,
+9a421950f1fe4228,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x5 at offset 478 | line ""username_1: As others have said, my first suggestion would b"" at offset 493 is duplicated from previous doc 796f4f8329c2ee55",,
+1b54ff7534a0fcef,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 641,,url inside <>
+d55a3d15fa97fb05,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 332 | line ""username_1: You are using relative path right now."" at offset 347 is duplicated from previous doc 1b54ff7534a0fcef",,urls
+10232664ba5648d0,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x5 at offset 649,,hex strings. Contains a live injection payload with an external URL. Keep or reject?
+d1f1e0a27b116e2c,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x4 at offset 479,,long url but not spam
+e41552c03df638c4,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x4 at offset 5306,,"""include"" got cleaned up. Keep anyway, code snippet still valid. url inside <http>"
+ddbdd572cf304828,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x4 at offset 638 | line "".<issue_comment>username_1: You have a null-pointer access s"" at offset 637 is duplicated from previous doc e41552c03df638c4",,"url  inside <>, some long urls"
+32407cff5d9572ab,full,fix,B3;B4,<issue_start> at offset 0 + <issue_comment> x3 at offset 1244 | <PASSWORD> at offset 410,,urls
+7ef89b9a54844e42,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 731,,
+1a27f25c1da5f427,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x4 at offset 2416,,urls
+9bcd93fe008715e7,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x4 at offset 1639 | line "".<issue_comment>username_1: > "" at offset 1638 is duplicated from previous doc 1a27f25c1da5f427",,urls
+65352cd6815eaba1,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 2868,,url inside <>
+9211637c2d9105fd,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 351,,urls
+8024ee744d14aec1,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 803,,
+a06ac825948fcdf1,full,fix,B3;B4,"<issue_start> at offset 0 + <issue_comment> x4 at offset 431 | line ""@<NAME>, i've reformed my answer"" at offset 1239",,PII placeholder. <NAME> is in text. urls
+b22bb720406e96c8,full,fix,B3;B4,"<issue_start> at offset 0 + <issue_comment> x2 at offset 613 | <NAME> ×3 at 477, 817, 1119",,PII placeholder. <NAME> is inside query code
+b79c9269b393f7ee,full,fix,B3;B4,<issue_start> at offset 0 + <issue_comment> x4 at offset 509 | <EMAIL> at offset 119,,PII placeholder. <EMAIL> is inside query code
+1b540ea7a62c8cc4,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 336,,valid url
+69d61c4d3679875c,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 2527,,
+4b7f07b6682a59b7,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x3 at offset 619 | line ""username_1: If you want to set `ddlBookCategory.AutoPostBack"" at offset 614 is duplicated from previous doc 69d61c4d3679875c",,
+074821bc00df9f89,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x3 at offset 674 | line ""username_1: If you want to set `ddlBookCategory.AutoPostBack"" at offset 689 is duplicated from previous doc 4b7f07b6682a59b7",,
+dcfc64c863a77aeb,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 467,,
+8f5daf4e17709d51,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 687 | line ""username_1: Set the id's and use them to identify the views,"" at offset 702 is duplicated from previous doc dcfc64c863a77aeb",,
+b0566e33f3a5f243,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 815,,url inside <>
+61bda1ffadce2ed0,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1082,,valid urls
+a7d2f0cf970ff996,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 2973,,code suggestions by different users. not repeats
+1a5184f8bf99b9d0,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 10327,,
+a8e18cb284cc75f6,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x3 at offset 835 | line ""username_1: As per my observation you cant get result as per"" at offset 850 is duplicated from previous doc 1a5184f8bf99b9d0",,
+2e6565188263f052,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 603,,valid urls
+5e3bc3089dda6fdf,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x4 at offset 711,,url inside <>. Other valid urls
+9fb87c85679f717b,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x4 at offset 602 | line """" at offset 597 is duplicated from previous doc 5e3bc3089dda6fdf",,valid urls
+305393ad2072fc97,full,fix,B3;B4,"<issue_start> at offset 0 + <issue_comment> x3 at offset 196 | line ""<NAME>"" at 
+1159",,PII placeholder. <NAME> is in text
+21aa9baac5b870a9,full,fix,B3;B4;C4;H2,"<issue_start> at offset 0 + <issue_comment> x3 at offset 217 | line ""<NAME>"" at 1180 | line ""?<issue_comment>username_1: No, because it's already been de"" at offset 216 is duplicated from previous doc 305393ad2072fc97",,PII placeholder. <NAME> is in
+89075b3784784e81,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1022,,
+9dc7c40dedf0381a,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1626,,
+58529fc2c29c890f,full,fix,B3;B4,"<issue_start> at offset 0 + <issue_comment> x3 at offset 1295 | line ""<EMAIL>"" x7 at 309",,PII placeholder. <EMAIL> some inside code
+fd7ca38dd23da802,full,fix,B3;B4;C4;H2,"<issue_start> at offset 0 + <issue_comment> x3 at offset 1284 | line ""<EMAIL>"" x2 at 1980 | line ""username_1: You should give the `profile` and `score` tables"" at offset 1299 is duplicated from previous doc 58529fc2c29c890f",,PII placeholder. <EMAIL> is inside code
+5dc4841cc2434f59,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 587,,
+3272103639b2d1b3,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 473,,url
+03fb4983971b0372,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x4 at offset 10586,,"valid urls, one inside <> | <https://github.com/gruntjs/grunt-contrib-connect#livereload>"
+123bb53ea41cdf82,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 720,,urls
+5d6538f4a5c3009e,full,fix,B3;B4,"<issue_start> at offset 0 + <issue_comment> x2 at offset 2331 | line ""<PASSWORD>"" ×3 at 1242",,PII placeholder. <PASSWORD> is inside code
+5a9016952491a520,full,fix,B3;B4;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 314 | line ""username_1: strcat is for concatenating *strings* not 2 sepa"" at offset 329 is duplicated from previous doc 5d6538f4a5c3009e | <PASSWORD> at offset 1461",,PII placeholder. <PASSWORD> is inside code. Not marking as B2
+18ba740b67dcb026,full,fix,B3;B4;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 1417 | line ""username_1: strcat is for concatenating *strings* not 2 sepa"" at offset 1432 is duplicated from previous doc 5a9016952491a520 | <PASSWORD> ×2 at 2513, 2569",,"PII placeholder. <PASSWORD> is inside code. Not marking as B2. One entry looks wrong: password = <PASSWORD>(word,salt);"
+583cfb8f3af34273,full,fix,B3;B4;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 338 | line ""username_1: strcat is for concatenating *strings* not 2 sepa"" at offset 353 is duplicated from previous doc 18ba740b67dcb026 | <PASSWORD> at offset 1485",,PII placeholder. <PASSWORD> is inside code
+d8172b44fdeb667d,full,fix,B3;B4;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 570 | line ""username_1: strcat is for concatenating *strings* not 2 sepa"" at offset 585 is duplicated from previous doc 583cfb8f3af34273 | <PASSWORD> at offset 1717",,PII placeholder. <PASSWORD> is inside code
+743ec90e7267fa0f,full,fix,B3;B4;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 6011 | line ""username_1: strcat is for concatenating *strings* not 2 sepa"" at offset 6026 is duplicated from previous doc d8172b44fdeb667d | <PASSWORD> ×2 at 7107, 7163",,"PII placeholder. <PASSWORD> is inside code. Not marking as B2. One entry looks wrong: password = <PASSWORD>(word,salt);"
+d968457be7a57bce,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1241,,
+56e6ff75b0d69716,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 730 | line ""username_1: That is because prompt returns a string, you hav"" at offset 745 is duplicated from previous doc d968457be7a57bce",,
+799d208dc362a4b1,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 702 | line ""username_1: That is because prompt returns a string, you hav"" at offset 717 is duplicated from previous doc 56e6ff75b0d69716",,
+dc371b1a09efa5e4,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 239 | line ""username_1: That is because prompt returns a string, you hav"" at offset 254 is duplicated from previous doc 799d208dc362a4b1",,
+7be1bee9e91cd5ef,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x7 at offset 1295,,urls inside <>
+f6a387bff7b6bdaa,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1955,,url inside <>
+8bafb61810a2f7aa,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 767,,valid urls
+f4770f4a912d4995,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 609,,"urls inside <>, 'undefined' is in text"
+91a3b84a87acdae3,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 570 | line ""?<issue_comment>username_1: Only as workaround can be used:"" at offset 569 is duplicated from previous doc f4770f4a912d4995",,urls inside <>
+8fd95208bbe8c256,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 646,,
+1d33be93dd8c584e,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1408,,"urls inside <>, other urls"
+5374937816a96a7b,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 489,,
+6b2d3b352ff16c88,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x3 at offset 665 | line ""username_1: You missed `{ }` of `if` ."" at offset 680 is duplicated from previous doc 5374937816a96a7b",,
+de19ea2524c31878,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x3 at offset 973 | line ""username_1: You missed `{ }` of `if` ."" at offset 988 is duplicated from previous doc 6b2d3b352ff16c88",,
+09b6d741df27f61c,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 714,,url  inside <>
+2d9454632e871e73,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 292,,
+961b5386d9e36050,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 315 | line ""?<issue_comment>username_1: The user you are using does not "" at offset 314 is duplicated from previous doc 2d9454632e871e73",,url
+b18962b2dff0ff30,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 788,,
+5f408919c1ab8623,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 235,,urls
+1dc83d46f461fee6,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1859,,url
+6a292f3cb188d4b4,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 1060,,
+34cc615967c0fa4e,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x3 at offset 798 | line ""username_1: What you are experiencing is by default a browse"" at offset 813 is duplicated from previous doc 6a292f3cb188d4b4",,url in <>
+388df0ef5c935994,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 286,,
+94bd0d44076ef4ad,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 348,,
+995b1ea75a1106e9,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 214,,"url in <>, urls"
+06de238767a193a6,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 2206,,urls
+206f345d07d9cd15,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 285,,url
+70f67316cd64ceff,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 761,,url
+b62d5e8b40f3729f,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 319,,url
+cbba5b1642536d69,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x4 at offset 536,,urls
+ccb1e471c5072235,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 119,,url
+1981dba468f886f9,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 2447,,
+bd72d6a12e7936b5,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x3 at offset 613 | line ""username_1: Try to use this when you set the viewData object"" at offset 628 is duplicated from previous doc 1981dba468f886f9",,
+f2fabeb001386f58,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x6 at offset 251,,
+054edebe060d8fb9,full,fix,B3;B4,<issue_start> at offset 0 + <issue_comment> x2 at offset 4807 | <NAME> at offset 5438,,url
+8deb40c5a0a4c245,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1237,,
+3d4b6eafad477d19,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 318,,url
+8bdc0d08408cbe8f,full,fix,B3;C2,<issue_start> at offset 0 + <issue_comment> x3 at offset 539 | line “![](testimg.jpg)” x5 at 334,,repeating line is small
+1ae1db091f064efd,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 4666,,url
+8beb5275ffa84860,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 2180,,
+f9134742398e0f55,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 4076 | line ""username_1: The only way I can think of is to define a helpe"" at offset 4091 is duplicated from previous doc 8beb5275ffa84860",,
+27c01c0e01e2753d,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 2106,,
+9d09e0219dd7223d,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x3 at offset 732 | line ""username_1: This is probably a good example for the [iterati"" at offset 747 is duplicated from previous doc 27c01c0e01e2753d",,url
+c67f9f1a8994fbbc,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 894,,
+1ee11cceece270b9,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x24 at offset 388,,
+1ea4535b6a2e5a35,full,fix,B3;B4,"<issue_start> at offset 0 + <issue_comment> x2 at offset 615 | line “intent.putExtra(Intent.EXTRA_EMAIL, ""<EMAIL>"");” x2 at 178",,PII placeholder. <EMAIL> is inside code
+c3c21126741ed209,full,fix,B3;B4;B5,"<issue_start> at offset 0 + <issue_comment> x12 at offset 776 | line “<NAME>"" x1 at 2817 | line ""</code"" x1 at 14742",,"PII placeholder. Templates are inside code snippets, not B4 | has a long sql stacktrace in one line. E1?"
+daaef3d9f8db5299,full,fix,B3;B4,<issue_start> at offset 0 + <issue_comment> x3 at offset 813 | line “<NAME>” at 3225,,PII placeholder. 
+6449d820bcee90d0,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 2032,,url
+0ed98310462c6991,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x4 at offset 587,,url
+3677c82bf2ae08b6,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x4 at offset 828 | line ""username_1: Using Awk:"" at offset 843 is duplicated from previous doc 0ed98310462c6991",,url
+aa138d4b852354bc,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 762,,<section > tags inside code
+80ba1f4581b163dc,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x3 at offset 277 | line "")<issue_comment>username_1: Three things are wrong here: "" at offset 276 is duplicated from previous doc aa138d4b852354bc",,<section > tag inside code | url
+42a9e8313b9c1972,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 397,,url
+65b3c17ddd457298,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 889,,
+a63870ba34512268,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1240,,
+acf5e8137571c1ab,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 618,,
+802ef5ec43caf2d5,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 759,,
+b9a335b6b98d2687,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x3 at offset 600 | line "".<issue_comment>username_1: It will work fine with an ASP.NE"" at offset 599 is duplicated from previous doc 802ef5ec43caf2d5",,urls inside <>
+3f4fe3fc420d79d8,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 444,,"url inside <>, other urls"
+87011839fde4161a,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 2073,,
+0ad9da881b3da718,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 611,,urls
+44720ca9294c007c,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 580,,
+7f60491b8d6136ac,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 297,,
+6cf47995eddffb87,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 730,,url in <>
+bc038a7d28db118f,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 421,,urls
+b8872768d587cc2a,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 1976 | line ""username_1: You need to use [**Lookaround**](http://www.regu"" at offset 1991 is duplicated from previous doc bc038a7d28db118f",,urls
+f5944ea607f33160,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 126,,urls
+1ef929765f349350,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1086,,urls in <>
+b7cb3f1f69f538f8,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1349,,
+4b7d825402cb5eb5,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 824,,urls
+d2df633b73c62690,full,drop,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 361,,not  useful
+d09d388ab10c7cbb,full,drop,B3,<issue_start> at offset 0 + <issue_comment> x4 at offset 979,,"long stock urls, some useful info. Keep or drop?"
+5bfa1392c84be7e7,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1000,,
+1c6226c4436f5d11,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 360 | line ""username_1: Best to maintain 2 DB's, a test and a production"" at offset 375 is duplicated from previous doc 5bfa1392c84be7e7",,urls
+11a684849fb39a2e,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 272,,
+360b2e3e6fee39e6,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 312 | line ""username_1: The correct syntax is"" at offset 327 is duplicated from previous doc 11a684849fb39a2e",,url
+b31618bfb3f5ebba,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1062,,url
+001d160600853700,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 6622,,urls
+83df008d2b7e9f4d,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 688,,urls | html tags and template inside code
+cbfb38bd9558a58c,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 585,,
+f1626b9f823b6cf0,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 370,,url
+59becc4ad849fb81,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 1114,,url
+a7ba211742326773,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 927,,"HTML tags <image> <br> inside code, not B2 | urls"
+b77958d746cfd4ef,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x3 at offset 1857 | line ""username_1: I think by creating jQuery selector you can do t"" at offset 1872 is duplicated from previous doc a7ba211742326773",,"HTML tags <image> <br> inside code, not B2 | urls | urls inside <>"
+90015e03672815aa,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x3 at offset 542 | line ""username_1: I think by creating jQuery selector you can do t"" at offset 557 is duplicated from previous doc b77958d746cfd4ef",,"HTML tags <image> <br> inside code, not B2 | urls | urls inside <>"
+b253be7e6370aa58,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 1067,,
+31c9f726740a9c69,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 3092,,urls inside <>
+5ff91eb8f65e9eff,full,fix,B3;B4,"<issue_start> at offset 0 + <issue_comment> x2 at offset 471 |  line ""Email : <EMAIL>')"" at offset 264",,PII placeholder. <EMAIL> is inside code
+08f8e719ac33bb77,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 449,,
+a7001795247c1a8c,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x3 at offset 817 | line ""username_1: You need DateTime.Parse and not Timespan.parse ,"" at offset 832 is duplicated from previous doc 08f8e719ac33bb77",,
+c84b6da3144fd746,full,fix,A1;B3,NBSP ×4  at offset 13086 | <issue_start> at offset 0 + <issue_comment> x3 at offset 1125,13086 U+00A0 NO-BREAK SPACE (4x),
+ca6dd037ea389cee,full,fix,A1;B3;C4;H2,"NBSP ×4 at offset 12678 | <issue_start> at offset 0 + <issue_comment> x3 at offset 717 | line ""username_1: I think this is a subtle implementation of a Mon"" at offset 732 is duplicated from previous doc c84b6da3144fd746",12678 U+00A0 NO-BREAK SPACE (4x),
+7294c965a5e389a9,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 539,,
+e58e59a428e066d0,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1099,,
+f97ffb9c23169b6f,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 545,,"Dummy email id, not F1"
+95340769b1667d16,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1202,,
+fe354c91a2677863,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x6 at offset 517,,
+7cbef0e1d9982ed4,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x4 at offset 216,,
+d8109e6632b3496e,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 563,,Dummy names in code
+64b04097c7badaeb,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 16882 | line ""username_1: You can use a [Tooltip]"" at offset 16897 is duplicated from previous document d8109e6632b3496e",,Duplicate section from previous document is unrelated to current document
+81ba62500558df90,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 944,,
+2e33a1392c7e474a,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 822,,"{{petName}} template inside code fence, not B4"
+405d74af43d5c2d0,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 1912,,
+b2cd4b5a1c855b1d,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 3324,,
+52064b62238a6472,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 382 | line ""username_1: This works (you need to save TaskRelated entities)""  at offset 382 is duplicated from previous doc b2cd4b5a1c855b1d",,Duplicate section from previous document b2cd4b5a1c855b1d is unrelated to current doc
+289bd7bc5c2a0eb2,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 920,,
+835fdcf34b07cdc5,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1223,,
+1df0b29bb113dbe6,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 598,,
+b5d781924af27b59,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 577,,
+a9708f7ea5e28ddc,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 437,,
+256e919621778b6c,full,drop,B2;B3;B4;C4;H2,"<NAME> at offset 5386 | <issue_start> at offset 0 + <issue_comment> x3 at offset 8799 | template/code junk in prose at offset 4612 | line ""username_1: You can try library like [expect4j](https://code"" at offset 8814 is duplicated from previous doc a9708f7ea5e28ddc",,"junk is more than actual content, better to drop"
+08f08556cb09aa47,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1186,,
+e03693906cda5d79,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 379,,
+65eeefb09d797076,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 688,,
+eac3888515d9f44c,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 596,,
+89cbb4a40b49a0fa,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 697,,
+c553a17df597cd4f,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x5 at offset 490,,
+18ccebc82aac0de6,full,fix,B3;B4;C4;H2,"<issue_start> at offset 0 + <issue_comment> x5 at offset 1670 | line "" });"" at offset 1266 | line ""username_1: By process (in the JSF specification""  at offset 1685 is duplicated from previous document c553a17df597cd4f",,"""});"" is outside the code fence. Duplicate section from previous document is unrelated to current document"
+f8c2cba47b3d03f1,full,fix,B2;B3;B4,<issue_start> at offset 0 + <issue_comment> x2 at offset 4759 | <PASSWORD> ×1 at offset 4113 + <NAME> ×2 at offset 4711,,<PASSWORD> is inside code. <NAME> is in text.
+362f0f37f4ea8e9d,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x6 at offset 515,,
+6276e9a06f67145a,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 502,,
+1aa8f21312ae7d00,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 571,,
+5d855d382e5aa64b,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 582,,long link at offset 1527
+3971996b6809ada2,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 922,,
+a8cb5c447570748d,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 486,,
+8016caa2c1c73e35,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 313,,
+ea371a2bd8c0022e,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 278,,long urls
+956f0352df384ac3,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 519,,
+b2731b873277334b,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 581,,
+751cda74eb0ca3e8,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x3 at offset 983 | line ""username_1: It happens some times when we frequently use the"" at offset 998 is duplicated from previous doc b2731b873277334b",,
+c3e9f65c003c6060,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 2250,,
+b1d18f2b4e13cafd,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 152,,
+9ce5ad637ad875de,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 402 | line ""username_1: Have a look under"" at offset 417 is duplicated from previous doc b1d18f2b4e13cafd",,Duplicate section from previous document is unrelated to current document
+3900ee4e4b861aff,full,drop,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 532 | line ""username_1: Have a look under the section **broker status** "" at offset 547 is duplicated from the previous document 9ce5ad637ad875de and b1d18f2b4e13cafd | line ""username_1: Have a look under the section **broker status** "" at offset 547 is duplicated from previous doc 9ce5ad637ad875de",,Duplicate section from previous document is unrelated to current document
+a712dd07ac1627af,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 1037,,
+38318eaf0d137930,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x4 at offset 975,,
+a9365535726ef265,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 655,,
+b263fa345a1ca6ce,full,fix,B3;B4,<issue_start> at offset 0 + <issue_comment> x3 at offset 438 | <NAME> x3 at offset 58,,"<NAME> inside code, not PII placeholder"
+872ea781f3503a1e,full,fix,B3;B4;C4;H2,"<issue_start> at offset 0 + <issue_comment> x3 at offset 541 | <NAME>x1 at offset 1218 | line ""username_1: This regex will do for each line"" at offset 556 is duplicated from previous doc b263fa345a1ca6ce",,<NAME> is inside code. Duplicate section from previous document is unrelated to current document
+cdb80e5aa13a100b,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 843,,
+4200a562fdea0dd7,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 827,,
+8adb7ee924d9c299,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 670,,
+92172ee7c68d51f9,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 528 | line ""username_1: `movementDistance` is an `Int`"" at offset 543 is duplicated from previous doc 8adb7ee924d9c299",,Duplicate section from previous document is unrelated to current document
+a2e83ef3c79ca9f3,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 597,,
+1c7655b21b448d10,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 856,,
+ca35043b4da37535,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 493,,
+8514c04e042e865d,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 675,,
+8ba366ad7d0fe5fb,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 755,,
+dd38051e267b7d65,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1077,,
+69d0478dd43e7a07,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 706 | line ""username_1: I think you have two options here"" at offset 721 is duplicated from previous doc dd38051e267b7d65",,Duplicate section from offset 721 is unrelated to current document
+3f4b55008e8492e2,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1004,,
+ac99e62fadfa2546,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 392,,
+18c2824e19e9e865,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 423,,
+82c781fc6c4a09a3,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 807,,
+6e93c2786c2a9e32,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 733,,
+922a98a34781e397,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 677,,Templated code is inside code fence
+428f5d0916b97b2d,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 512,,
+84e57e20c5440ca6,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 432,,NaN is in text for explanation
+557b9d4213852a24,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 7512,,
+b0d79a706080e22f,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 694,,
+4ab5c9301fe9340b,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x5 at offset 1134,,
+47e2e37894735e0b,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 457,,
+092d023e1b6ae2e2,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 1033,,
+8cd26afb11587313,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 305,,
+b1ef0ef2ac6271e3,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x4 at offset 216,,
+687b1f60492cae5c,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1497,,
+61ce5b66529f5222,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 389,,
+0a28a946b86ef9c0,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 471,,
+5ee65c2e505f8267,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1175,,
+128925312e14bd13,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 940,,
+afbaa1d2ff322519,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x4 at offset 346,,'undefined' is inside code fence
+98b93bc5b083690e,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x4 at offset 624 | line ""username_1: Are you looking for `system()`?"" at offset 639 is duplicated from previous doc afbaa1d2ff322519",,
+7f3a4283f624d053,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 289,,
+c7c4f155d72137fa,full,fix,B3;C2,"<issue_start> at offset 0 + <issue_comment> x5 at offset 2349 | line ""Lorem ipsum dolor""  at offset 7254 has repeating section",,
+d2b6d9857a226f57,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x5 at offset 554 | line ""username_1: Try this:"" at offset 569 is duplicated from previous doc c7c4f155d72137fa",,Previous doc repeats
+4e2354387bea8413,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1411,,
+79535249763f7f41,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 343,,
+1660dde8a67d2279,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 241,,
+d14f537ad89c956a,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x5 at offset 686,,
+3b04444494acfbb2,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x5 at offset 1634 | line ""?<issue_comment>username_1: This is what's happening:"" at offset 1633 is duplicated from previous doc d14f537ad89c956a",,
+fab94f60cbc8e4ab,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 424,,
+497228e10e525ecd,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 556 | line ""username_1: Code to read image from disk and save in Buffere"" at offset 571 is duplicated from previous doc fab94f60cbc8e4ab",,
+259a1f964b5b0435,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 367,,
+ac07d957a1f9ad60,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x4 at offset 772,,
+66837631f182b873,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x4 at offset 635 | line ""username_1: Why CSS tables won't help in this case"" at offset 650 is duplicated from previous doc ac07d957a1f9ad60",,
+2adbc93545d8af0c,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x4 at offset 862 | line ""username_1: Why CSS tables won't help in this case"" at offset 877 is duplicated from previous doc 66837631f182b873",,
+a2e0f3f9dc16aca2,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x4 at offset 825 | line ""username_1: Why CSS tables won't help in this case"" at offset 840 is duplicated from previous doc 2adbc93545d8af0c",,
+6e45d96bbf7398cc,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 969,,
+6334c16608199b3b,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 262,,Template inside code fence
+27cf85c798df0a09,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x3 at offset 372 | line ""username_1: You can't : you'll have to use a loop."" at offset 387 is duplicated from previous doc 6334c16608199b3b",,
+da57a05ac8ff84b2,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x3 at offset 563 | line ""username_1: You can't : you'll have to use a loop."" at offset 578 is duplicated from previous doc 27cf85c798df0a09",,
+597f5db65e5a90f1,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 260,,
+8757fca4a5a01f5d,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 10049,,
+980d01ae250bdea8,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x8 at offset 303,,
+9a0e1a5f7d25abcf,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x8 at offset 532,,
+4b50bab803ae8cfc,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 756,,
+e3a04aa47f713b4c,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1064,,
+44b81cd6b7b72695,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 299,,
+82035ad73e6cb102,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 275 | line """" at offset 270 is duplicated from previous doc 44b81cd6b7b72695",,
+91290df0233a31bf,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1300,,
+f5f801e01df30649,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 2138,,
+0a5f250c9dbf1d80,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 605,,
+0cd8eefde1f0f85e,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x3 at offset 1221 | line ""username_1: You should seldom be using  in a C++ program."" at offset 1236 is duplicated from previous doc 0a5f250c9dbf1d80",,
+f0b9d1f87f25491b,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 337,,
+c176a2ae96a8c51c,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x4 at offset 810,,
+6ba08c31897ef5f5,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 126,,
+59e63089a007939d,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 1275,,
+6c167e68c0e62b33,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 2395,,
+8629149c6e331a98,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 597,,
+43e5d1c0578f8390,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 212,,
+71d3e7cd42bdf733,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 1143,,
+a7cddb77d4edc304,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 359,,
+4d7ac01edd839b87,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 902,,
+5f46e5cb0f2a603b,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 622,,
+068ca3a421d10e77,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 553,,
+c511866441b72317,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 457,,
+653758f77ab8a0d7,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x4 at offset 682,,
+5b4e028de3b881e8,full,fix,B3;B4,<issue_start> at offset 0 + <issue_comment> x10 at offset 25712 | <NAME> at offset 26155,,<NAME> in text
+a3947a60677c6e22,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1746,,
+3ff921cd9bf3bdaf,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1001,,
+c690c0c539e5374d,full,fix,A2;B3,U+000D x69 at offset 573 | <issue_start> at offset 0 + <issue_comment> x3 at offset 3228,573 U+000D CARRIAGE RETURN (69x),
+0a792d910e5370e7,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x4 at offset 583,,
+d5f202d22c6432f9,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x4 at offset 1764,,
+a881f37e43cf6ecc,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x4 at offset 350 | line ""username_1: You don't, really. Recall that `T`, `&T` and `&m"" at offset 365 is duplicated from previous doc d5f202d22c6432f9",,
+b9203642a7704098,full,fix,A2;B3,U+000D x28 at offset 527 | <issue_start> at offset 0 + <issue_comment> x3 at offset 282,527 U+000D CARRIAGE RETURN (69x),undefined inside code fence
+b713e3bc410013b0,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 644,,
+b7bf70814c577c5b,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1416,,
+7fb08b0d1823cbf5,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 264,,
+b4862552a9ba0a71,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 560 | line ""username_1: As you have referred the answer [here](https://s"" at offset 575 is duplicated from previous doc 7fb08b0d1823cbf5",,
+cd4dac47c72c0da0,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 382,,
+ba2983860106027a,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 552,,
+906b330a6bde1f0b,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 995,,
+574ec575a861e563,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 761,,
+6cb6d4269338ed14,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 348,,
+8aca76ed2c6ae5fb,full,fix,A1;B3,NBSP x1 at offset 3051 | <issue_start> at offset 0 + <issue_comment> x3 at offset 2132,3051 U+00A0 NO-BREAK SPACE,
+2bffb792c193853a,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 3295,,
+b357c93f7984d21a,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 1436 | line ""username_1: See [Netbeans File sTatus Information](https://n"" at offset 1451 is duplicated from previous doc 2bffb792c193853a",,
+7033eb96868f805c,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 2533 | line """" at offset 2528 is duplicated from previous doc b357c93f7984d21a",,
+ab667557991d5fe9,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 2277,,
+7b6e0a2c23d68731,full,fix,B3;B4;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 787 | <NAME x3 at offset 576 | line ""username_1: Binding to the router this ways seems quite inef"" at offset 802 is duplicated from previous doc ab667557991d5fe9",,<NAME> inside code
+caab0dbaa0d7211e,full,fix,A2;B3,U+000D x126 at offset 590 | <issue_start> at offset 0 + <issue_comment> x3 at offset 267,590 U+000D CARRIAGE RETURN (126x),
+5547c0d869baeb79,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1650,,
+b0e8032bfdbd0488,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 1020,,
+d863f5e408e8921f,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x4 at offset 1199,,
+744ade51d6f211c2,full,fix,A2;B3,U+000D x8 at offset 1013 | <issue_start> at offset 0 + <issue_comment> x5 at offset 657,1013 U+000D CARRIAGE RETURN (8x),
+37ff77e98bf2664e,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x8 at offset 746,,
+061bc024ab884691,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x8 at offset 381 | line ""username_1: A cheeky workaround to get width for a particula"" at offset 396 is duplicated from previous doc 37ff77e98bf2664e",,
+252aa1d4ceb483e2,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 194,,
+27c67715b13e102e,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 218,,
+e92ebe348f700947,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 3183,,
+bf58b87db1a4f7d8,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 972,,
+2905f80c403c4ac6,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 726,,
+ac7868d17d212622,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1536,,
+1882d04bec9cd163,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x5 at offset 601,,
+6c24860fe26e2832,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 929,,
+14d0cd33e7b6f816,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 876 | line ""username_1: Did you install `geckodriver`?"" at offset 891 is duplicated from previous doc 6c24860fe26e2832",,
+bcb23ec5d04976d3,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1295,,
+b5ae3957547d5625,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1207,,
+ba40663795cd9098,full,fix,A2;B3;B4,U+000D x8 at offset 429 | <issue_start> at offset 0 + <issue_comment> x4 at offset 318 | <NAME> x56 at offset 1733,429 U+000D CARRIAGE RETURN (8x),<NAME> inside code
+7a726415579066fc,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 728,,
+78d9ca2fea61bc6a,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 2944 | line ""username_1: **Try this:**"" at offset 2959 is duplicated from previous doc 7a726415579066fc",,
+9c259e1d1d85a0a9,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x4 at offset 781,,
+31bef893714d3555,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 1193,,
+e805504d95d614a1,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x6 at offset 180,,
+f45a6e7801e8b900,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 861,,
+8e58c169bbd9bc20,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 648,,
+934b943878b5fee2,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 771,,
+0b1328449048c3bd,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1175,,
+329a4109834fab25,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 2419,,
+9b8e44d739047bd6,full,fix,A2;B3,U+000D x7 at offset 1448 | <issue_start> at offset 0 + <issue_comment> x3 at offset 1259,1448 U+000D CARRIAGE RETURN (7x),
+04720575a7202be1,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1126,,
+4e0f04d31ba64e48,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 783,,
+8d40a21266f2ba87,full,fix,A2;B3,U+000D x11 at offset 522 | <issue_start> at offset 0 + <issue_comment> x5 at offset 587,522 U+000D CARRIAGE RETURN (11x),
+7af30bb6b1953892,full,fix,B3;B4,<issue_start> at offset 0 + <issue_comment> x4 at offset 6960 | <PASSWORD> x2 at offset 3539,,<PASSWORD> inside code
+cbd87768479dc701,full,fix,A2;B3,U+000D x8 at offset 1567 | <issue_start> at offset 0 + <issue_comment> x3 at offset 536,1567 U+000D CARRIAGE RETURN (8x),
+d521c098fcdf4fe6,full,fix,A2;B3,U+000D x6 at offset 2893 | <issue_start> at offset 0 + <issue_comment> x5 at offset 1845,2893 U+000D CARRIAGE RETURN (6x),
+576ac0563b3a3f5c,full,fix,A2;B3;C4;H2,"U+000D x6 at offset 3594 | <issue_start> at offset 0 + <issue_comment> x5 at offset 2546 | line ""username_1: As you are getting json object, which is having "" at offset 2561 is duplicated from previous doc d521c098fcdf4fe6",3594 U+000D CARRIAGE RETURN (6x),
+56242bd9c9069329,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 628,,
+3c3fb24d42cd0c58,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 198,,
+d8c68901f78d357f,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 352 | line ""username_1: Remove the `?` from `[6-9]` in the first group. "" at offset 367 is duplicated from previous doc 3c3fb24d42cd0c58",,
+724e7dd09b7b0e11,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 642,,
+920f41281309d4da,full,fix,A2;B3,U+000D x77 at offset 514 | <issue_start> at offset 0 + <issue_comment> x8 at offset 451,514 U+000D CARRIAGE RETURN (77x),
+d19e7aa719ee38eb,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 986,,
+04c2749b32e8ca12,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1295,,
+00c7482543a71df1,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x6 at offset 1759,,
+9e02aca11343f49f,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x5 at offset 1122,,
+0c2404a6f25de8e5,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1733,,
+d8bf3cdfb381a776,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 353,,
+91db90bc7e477f49,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 645 | line "".<issue_comment>username_1: This code will delete the first "" at offset 644 is duplicated from previous doc d8bf3cdfb381a776",,
+c634f36072603c63,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x5 at offset 251,,
+102c049206026019,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x5 at offset 531 | line ""username_1: Try this code "" at offset 546 is duplicated from previous doc c634f36072603c63",,
+04ae6a66092b8bb6,full,fix,B3;B4,<issue_start> at offset 0 + <issue_comment> x2 at offset 470 | <NAME> at offset 1755,,<NAME> in text
+169c69bbc88ab7d2,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 5080,,stacktrace
+26890486f20cfbb5,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 2658,,
+e5b187cb5ae1a750,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 346,,
+548bc9213b19ad24,full,fix,A2;B3,U+000D x15 at offset 1212 | <issue_start> at offset 0 + <issue_comment> x4 at offset 819,1212 U+000D CARRIAGE RETURN (15x),
+75df43ad79fc1671,full,fix,A2;B3;C4;H2,"U+000D x15 at offset 750 | <issue_start> at offset 0 + <issue_comment> x4 at offset 357 | line ""?<issue_comment>username_1: The correct way is that you have"" at offset 356 is duplicated from previous doc 548bc9213b19ad24",750 U+000D CARRIAGE RETURN (15x),
+87a224bf3931c9fe,full,fix,A2;B3;C4;H2,"U+000D x15 at offset 1096 | <issue_start> at offset 0 + <issue_comment> x4 at offset 703 | line ""username_1: The correct way is that you have to call the met"" at offset 718 is duplicated from previous doc 75df43ad79fc1671",1096 U+000D CARRIAGE RETURN (15x),
+430dd4f2e84be5cf,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x4 at offset 763,,
+f1afaf18445f476d,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x4 at offset 1622,,
+a11ee394f874113a,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 302,,
+07ded035265c5caa,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 337 | line ""username_1: Changing the format does not change the way the "" at offset 352 is duplicated from previous doc a11ee394f874113a",,
+d097fd227e578ddc,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 402 | line ""username_1: Changing the format does not change the way the "" at offset 417 is duplicated from previous doc 07ded035265c5caa",,
+efc7e571a2b2304f,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 3062,,
+16268e25cff8a8d2,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x3 at offset 413 | line ""username_1: I can suggest you an approach..."" at offset 428 is duplicated from previous doc efc7e571a2b2304f",,
+7ed58af4e3a1a10d,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 491,,
+80b5a0faa4c56be9,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 380 | line ""username_1: add this to you apache config."" at offset 395 is duplicated from previous doc 7ed58af4e3a1a10d",,
+b208614321a5cada,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 1196 | line ""username_1: add this to you apache config."" at offset 1211 is duplicated from previous doc 80b5a0faa4c56be9",,
+329230697872e1ba,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 541,,
+85dfe8a5210c9450,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 389,,
+53f857054adc349a,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 457,,
+48c2d7e2034553a4,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 773,,
+0fd6b52f477dd9d7,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 3500,,
+b03a18840fe3d497,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 831,,
+d2ccb4f1833eae34,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 2468,,
+aae6d246d47c442b,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x4 at offset 587,,
+d602399260839945,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 240,,
+a77fedd1b88cd964,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 1096,,
+8444b4c4d32359e7,full,fix,B3;B4,<issue_start> at offset 0 + <issue_comment> x4 at offset 162 | <PASSWORD> at offset 554,,<PASSWORD> in code
+0426cfef686de484,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x4 at offset 3247,,
+168db440ed36cd1f,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x4 at offset 1028 | line """" at offset 1023 is duplicated from previous doc 0426cfef686de484",,
+49c292cfd9167a42,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 642,,
+5152ffb2da4fafac,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 615,,
+28cc4498b1281713,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1259,,
+968c4dd4078ebe46,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 317,,
+cdd16901e095cd66,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 784 | line ""username_1: When you do sqlContext.read.json this is transla"" at offset 799 is duplicated from previous doc 968c4dd4078ebe46",,
+7c6dc3b33bf4fefd,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 523 | line ""username_1: When you do sqlContext.read.json this is transla"" at offset 538 is duplicated from previous doc cdd16901e095cd66",,
+9527940d27956ef0,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 227,,
+97b67f5188cf9f1f,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 536,,
+9fce1f531b4c3ddb,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 301,,
+5f6f678e9228ee5c,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x3 at offset 1419 | line ""username_1: Per the [SVG specification](https://www.w3.org/T"" at offset 1434 is duplicated from previous doc 9fce1f531b4c3ddb",,
+b5c5af5c137c3aae,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 453,,
+9e01b92662734af8,full,fix,B3;B4,<issue_start> at offset 0 + <issue_comment> x3 at offset 1729 | <EMAIL> x2 at offset 506,,<EMAIL> inside code
+c1b639634a503f38,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 575,,
+6f957d73f0820879,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 650,,
+941045ddcabbaa8a,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 1054 | line "".<issue_comment>username_1: As stated in the comments, the c"" at offset 1053 is duplicated from previous doc 6f957d73f0820879",,
+2ee2ed6fcf486383,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x4 at offset 562,,
+116fae6f6841e536,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 1575,,
+f76083bc42994160,full,fix,A2;B3,U+000D x24 at offset 595 | <issue_start> at offset 0 + <issue_comment> x5 at offset 319,595 U+000D CARRIAGE RETURN (24x),
+48e4eeb14ed5e495,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 906,,
+113d41ee30bf97b6,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 1489 | line ""username_1: Instead of using it, you can try:"" at offset 1504 is duplicated from previous doc 48e4eeb14ed5e495",,
+28ed1f8ee8eb17eb,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x5 at offset 679,,
+f7a9df587704dda5,full,fix,B3;B4,<issue_start> at offset 0 + <issue_comment> x3 at offset 1938 | <PASSWORD> x3 at offset 1079 +  | <EMAIL> x2 at offset 1123,,<PASSWORD> and <EMAIL> inside code block
+9ac9e478b99801fc,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 427,,
+2199bfe395b3944a,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 759,,
+554795429f374d18,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1377,,
+bcb99e54161e9831,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 145 | line ""username_1: You've set the cookie on ""www.example.com/"", but"" at offset 160 is duplicated from previous doc 554795429f374d18",,
+0c28b8f7f020ab07,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x4 at offset 634,,
+023cb5806152b961,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 568,,
+75581e3df0be051c,full,fix,B3;B4;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 3941 | <PASSWORD> x2 at offset 887 | line ""username_1: Try this after defining the table structure:"" at offset 3956 is duplicated from previous doc 023cb5806152b961",,<PASSWORD> inside code
+e02c60426c593d78,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 705,,
+4cc383972b620c1f,full,fix,A2;B3,U+000D x42 at offset 1112 | <issue_start> at offset 0 + <issue_comment> x3 at offset 695,1112 U+000D CARRIAGE RETURN (42x),
+522c97851b4cd6ee,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 345,,
+c98131a17713f49c,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 774 | line ""username_1: Need to add drawable in button right.I think the"" at offset 789 is duplicated from previous doc 522c97851b4cd6ee",,
+64d0519cabe81f27,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 2216,,template  inside code fence
+1e5157fe88d31567,full,fix,A2;B3,U+000D x37 at offset 349 | <issue_start> at offset 0 + <issue_comment> x3 at offset 890,349 U+000D CARRIAGE RETURN (37x),
+6144a55740e4a12e,full,fix,A2;B3;B4;C4;H2,"U+000D x17 at offset 2369 | <issue_start> at offset 0 + <issue_comment> x3 at offset 1944 | line ""username_1: try this "" at offset 1959 is duplicated from previous doc 1e5157fe88d31567 | <EMAIL> at offset 1215",2369 U+000D CARRIAGE RETURN (17x),
+5dca1a60f6235938,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 591,,
+aa54920465063976,full,fix,A2;B3;B4,"U+000D x50 at offset 1502 | <issue_start> at offset 0 + <issue_comment> x7 at offset 2861 | <EMAIL> ×10 at 1506, 1542, 1612, 1899, 1917, 2014, 5407, 5441, 5507, 5515",1502 U+000D CARRIAGE RETURN (50x),
+57c68ede326dc873,full,fix,B3;B4;C4;H2,"<issue_start> at offset 0 + <issue_comment> x7 at offset 391 | <EMAIL> x3 at offset 2937 | line ""username_1: I don't know the sabre api, but it Looks like yo"" at offset 406 is duplicated from previous doc aa54920465063976",,<EMAIL> inside code fence
+fe6a7ab1cbbf7e2b,full,fix,B3;B4;C4;H2,"<issue_start> at offset 0 + <issue_comment> x7 at offset 373 | <EMAIL> x3 at offset 2919 | line ""username_1: I don't know the sabre api, but it Looks like yo"" at offset 388 is duplicated from previous doc 57c68ede326dc873",,
+972def12422daf14,full,fix,B3;B4;C4;H2,"<issue_start> at offset 0 + <issue_comment> x7 at offset 3494 | <EMAIL> x4 at offset 6040 | line ""username_1: I don't know the sabre api, but it Looks like yo"" at offset 3509 is duplicated from previous doc fe6a7ab1cbbf7e2b",,<EMAIL>
+ff570f6a484c8a8d,full,fix,A2;B3,U+000D x53 at offset 2083 | <issue_start> at offset 0 + <issue_comment> x4 at offset 944,2083 U+000D CARRIAGE RETURN (53x),
+42436160cb70c5c2,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 855,,
+ba1448546ab48d6c,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 2025,,
+24d0035a05eef60f,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 829,,
+7622c2898e5a7bad,full,fix,B3;B4,<issue_start> at offset 0 + <issue_comment> x2 at offset 804 | <NAME> at offset 2412,,<NAME> in text
+5cb71e0a90173108,full,fix,A2;B3,U+000D x71 at offset 3660 | <issue_start> at offset 0 + <issue_comment> x2 at offset 2266,3660 U+000D CARRIAGE RETURN (71x),
+16ddf8dca462ca7e,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x4 at offset 1162,,
+06288f8840780e64,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x4 at offset 1072 | line ""username_1: The line gives a `E_NOTICE` (""Notice: Undefined "" at offset 1087 is duplicated from previous doc 16ddf8dca462ca7e",,
+77a47aeee4d1d587,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 244,,
+dcc46ca19aeb0756,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x4 at offset 471,,
+95aa31c2af6c8f98,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 374,,
+234397184354ca14,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 991,,
+05a0a1d6fcbb92df,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 3682,,
+0bd5b65872ad81f8,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 411,,
+8577b46d22babd4e,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 447,,
+4147c1e1323f78a5,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 751,,
+63af08218f262463,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 509 | line "".<issue_comment>username_1: You could try to use a Try & Cat"" at offset 508 is duplicated from previous doc 4147c1e1323f78a5",,
+9bb67683e8a75c4c,full,fix,B3;B4,<issue_start> at offset 0 + <issue_comment> x5 at offset 298 | <NAME> at offset 1156,,
+967bdc76ef38365e,full,fix,B3;B4;C4;H2,"<issue_start> at offset 0 + <issue_comment> x5 at offset 367 | <NAME> at offset 1225 | line ""?<issue_comment>username_1: `.dat` is a more frequently used"" at offset 366 is duplicated from previous doc 9bb67683e8a75c4c",,
+555f2c77a2605169,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x4 at offset 503,,
+cd6b57a4befa8da0,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x4 at offset 256,,
+d298430b2d1d2a56,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 4442,,
+9be6c54cb9976e69,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 4441,,
+c1f14583550e6e7b,full,fix,A2;B3,U+000D x45 at offset 805 | <issue_start> at offset 0 + <issue_comment> x3 at offset 372,805 U+000D CARRIAGE RETURN (45x),
+1eaad4206ac0ed55,full,fix,A2;B3;C4;H2,"U+000D x45 at offset 1403 | <issue_start> at offset 0 + <issue_comment> x3 at offset 970 | line ""username_1: Use [`Array#filter`](https://developer.mozilla.o"" at offset 985 is duplicated from previous doc c1f14583550e6e7b",1403 U+000D CARRIAGE RETURN (45x),
+000da052a88a1b6b,full,fix,A2;B3;C4;H2,"U+000D x45 at offset 991 | <issue_start> at offset 0 + <issue_comment> x3 at offset 558 | line ""username_1: Use [`Array#filter`](https://developer.mozilla.o"" at offset 573 is duplicated from previous doc 1eaad4206ac0ed55",991 U+000D CARRIAGE RETURN (45x),
+7a6f3161490fc245,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x4 at offset 2331,,
+0cb2ac894923155a,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x4 at offset 229 | line ""username_1: Add tap gesture action to the image and you can "" at offset 244 is duplicated from previous doc 7a6f3161490fc245",,
+ded67c167aa58966,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 2547,,
+8e93d112cfabe972,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 1597 | line "".<issue_comment>username_1: **Retrofit 1:**"" at offset 1596 is duplicated from previous doc ded67c167aa58966",,
+cb403fc068986f86,full,fix,B3;B4,<issue_start> at offset 0 + <issue_comment> x2 at offset 1232 | <PASSWORD> x2 at offset 361,,<PASSWORD> in code
+a977ecc31c8177b1,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 596,,
+b2355e5093944cf5,full,fix,A2;B3;B4,U+000D x8 at offset 1017 | <issue_start> at offset 0 + <issue_comment> x2 at offset 709 | <EMAIL> at offset 1386,1017 U+000D CARRIAGE RETURN (8x),
+c78885c862cdda6c,full,fix,B3;B4,<issue_start> at offset 0 + <issue_comment> x2 at offset 611 | <NAME> at offset 128,,<NAME> inside code fence
+2688e97d7afc60a5,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 1290,,
+33f21eefd69e2944,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 730,,
+88db1faacdad74f6,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 173,,
+1501374c3eee7fef,full,fix,B3;B4,<issue_start> at offset 0 + <issue_comment> x3 at offset 737 | <NAME> at offset 2217,,
+aa0a9b834dcfe0d2,full,fix,B3;B4;C4;H2,"<issue_start> at offset 0 + <issue_comment> x3 at offset 979 | <NAME> at offset 2459 | line ""username_1: > "" at offset 994 is duplicated from previous doc 1501374c3eee7fef",,
+0e744dca322647b4,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x3 at offset 905 | line ""username_1: > "" at offset 920 is duplicated from previous doc aa0a9b834dcfe0d2",,
+a1f08c6653a4be7e,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 3087,,
+5a11f639ea728229,full,fix,A2;B3,U+000D x83 at offset 178 | <issue_start> at offset 0 + <issue_comment> x7 at offset 737,178 U+000D CARRIAGE RETURN (83x),
+0d664c08c2f6863c,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x4 at offset 3565,,
+dee5336ef39672eb,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x4 at offset 993,,
+23c492e383108216,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x5 at offset 620,,
+00a01b45b3aedfd1,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 3263,,
+02f4fed44c43c027,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 282,,
+71b83411f8b3844c,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 1184,,
+bb1b5ae5ef6e505d,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 195,,
+866432ae57420c83,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 1307 | line ""username_1: STDIN/STDOUT are nothing but the file descriptor"" at offset 1322 is duplicated from previous doc bb1b5ae5ef6e505d",,
+86a0f608da2e0805,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 204,,
+9e2ee527455e3638,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 815 | line ""username_1: You don't need any request to any license centre"" at offset 830 is duplicated from previous doc 86a0f608da2e0805",,
+bd6fd853c1eeeae9,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 324,,template inside code
+14db8b56d38bfc27,full,fix,B3;B4,<issue_start> at offset 0 + <issue_comment> x2 at offset 332 | <PASSWORD> at offset 1840,,<PASSWORD> inside code
+da453651ddadbfa0,full,fix,A1;B3;B4,VS16 x1 at offset 19253 | <issue_start> at offset 0 + <issue_comment> x12 at offset 7975 | <NAME> x3 at offset 151,19253 U+FE0F VARIATION SELECTOR-16,template  inside code fence
+0d446dabd4979dc9,full,fix,B3;B4,<issue_start> at offset 0 + <issue_comment> x3 at offset 386 | <KEY> at offset 3191,,<KEY> inside code
+0114c483c38ed72d,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 2016,,
+afaacc570f12995a,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 4966,,
+acfe88076a07d946,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 385,,
+079a1c491ec571c2,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 1462,,<script..> and <p> inside code block
+b1c5c6fc350d4eba,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 975,,
+032b783440da7ccf,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1246,,
+8da48a3641fbfc72,full,fix,B3;B4,<issue_start> at offset 0 + <issue_comment> x2 at offset 974 | <NAME> at offset 1526,,<NAME> inside code
+21c5c8e73e238b30,full,fix,A2;B3,U+000D x16 at offset 1791 | <issue_start> at offset 0 + <issue_comment> x4 at offset 1636,1791 U+000D CARRIAGE RETURN (16x),
+84328b4616ce6c25,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 627,,
+791dee0f1ae3e6f3,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1020,,
+6b1c9a340b079b4e,full,fix,A2;B3,U+000D x31 at offset 1080 | <issue_start> at offset 0 + <issue_comment> x3 at offset 968,1080 U+000D CARRIAGE RETURN (31x),
+2dc1d70137272886,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 554,,
+7e370b484b954750,full,fix,B3;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 369 | line ""username_1: The [JLS - Chapter 14. Blocks and Statements](ht"" at offset 384 is duplicated from previous doc 2dc1d70137272886",,
+3322a9960a93d294,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 1450,,
+f10eed25078fed92,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 438,,
+45c3c889c10e7036,full,fix,B3;B4,<issue_start> at offset 0 + <issue_comment> x3 at offset 5199 | <PASSWORD> at offset 2993,,<PASSWORD> inside code
+802e3c764c1b2dbd,full,fix,B3;B4,<issue_start> at offset 0 + <issue_comment> x4 at offset 479 | <NAME> at offset 1440,,
+c40b6351a79ca3ad,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 1199,,
+b4febc233d484105,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x3 at offset 1024,,
+9580202f0a36d423,full,fix,A2;B3,U+000D x75 at offset 2310 | <issue_start> at offset 0 + <issue_comment> x2 at offset 1407,2310 U+000D CARRIAGE RETURN (75x),
+ebe2c45661740707,full,fix,B3;B4,<issue_start> at offset 0 + <issue_comment> x2 at offset 1918 | <PASSWORD> at offset 2817,,
+9e9a92ea281fbf91,full,fix,B3;B4;C4;H2,"<issue_start> at offset 0 + <issue_comment> x2 at offset 1002 | <PASSWORD> at offset 1901 | line ""username_1: Add"" at offset 1017 is duplicated from previous doc ebe2c45661740707",,
+2351b93ec2f03a73,full,fix,B3,<issue_start> at offset 0 + <issue_comment> x2 at offset 440,,

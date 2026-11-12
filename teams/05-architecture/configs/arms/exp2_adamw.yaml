@@ -1,4 +1,4 @@
-# EXP-2 AdamW arm. 0.001 stands in until EXP-1 names a winner. This comparison is not final.
+# EXP-2 AdamW arm. 0.001 is EXP-1's current best candidate (PR #310, mean val/bpb 1.9686), not yet called final.
 inherit: t2.yaml
 intended:
   arm: exp2-adamw

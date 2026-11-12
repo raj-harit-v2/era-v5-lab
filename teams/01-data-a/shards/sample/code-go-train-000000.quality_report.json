@@ -1,0 +1,50 @@
+{
+  "shard_id": "code-go-train-000000",
+  "rows_read": 271,
+  "docs_in_shard": 271,
+  "left_out": {
+    "secret": 0,
+    "empty": 0,
+    "special": 0,
+    "roundtrip": 0
+  },
+  "left_out_docs": {
+    "secret": [],
+    "empty": [],
+    "special": [],
+    "roundtrip": []
+  },
+  "tokens_per_char": {
+    "min": 0.204,
+    "median": 0.286,
+    "p99": 0.426,
+    "max": 0.589
+  },
+  "most_tokens_per_char": [
+    {
+      "doc_id": "84a636952ba12fb6",
+      "n_tokens": 2259,
+      "n_chars": 3833
+    },
+    {
+      "doc_id": "385eb4c4c6daf8e4",
+      "n_tokens": 81,
+      "n_chars": 166
+    },
+    {
+      "doc_id": "850f94d4fb036764",
+      "n_tokens": 2759,
+      "n_chars": 6275
+    },
+    {
+      "doc_id": "f472c5559ae5aba6",
+      "n_tokens": 161,
+      "n_chars": 383
+    },
+    {
+      "doc_id": "995a894505ab60e8",
+      "n_tokens": 1057,
+      "n_chars": 2576
+    }
+  ]
+}

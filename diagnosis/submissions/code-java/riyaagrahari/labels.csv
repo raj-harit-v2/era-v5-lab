@@ -1,0 +1,501 @@
+doc_id,read,verdict,diseases,evidence,hex,note
+13a397d8bedc6210,full,fix,B4,"2 redaction placeholders, first <NAME> at offset 159, <EMAIL> at offset 167",,PII-redaction placeholders left in text
+d0947d80d45f7ce3,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+e0ebe203093970dc,full,fix,A2,"38 CR U+000D chars (CRLF line endings), first at offset 17, last at offset 1203","0d x38, first at 17",CRLF line endings
+c9eb2d8e4f9cacde,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+5655154f71365c63,full,fix,E4,"Apache-2.0 licence header, 18 lines, at offset 0",,boilerplate licence header
+8c9a9aa845f91a2c,full,fix,B4,"2 redaction placeholders, first <EMAIL> at offset 284, <PASSWORD> at offset 321",,PII-redaction placeholders left in text
+a8a876672781cd58,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+4b761af28be90423,full,fix,B3;B4,"<filename> at offset 0, <gh_stars> at offset 35 | 2 redaction placeholders, first <NAME> at offset 218, <NAME> at offset 226",,StarCoder special tokens as plain text; PII-redaction placeholders left in text
+50e06974390e57ea,full,clean,,,,"whole file scanned, no disease found"
+646355dabf881472,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+7251a2b72d1d2a08,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+d160cf36623c2ad3,full,clean,,,,"whole file scanned, no disease found"
+17067540a78a2a8e,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+7fc99d2b6e1e3d08,full,fix,A2,"330 CR U+000D chars (CRLF line endings), first at offset 2, last at offset 10183","0d x330, first at 2",CRLF line endings
+fad70faf21e9e64b,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+7590b32d671f36c9,full,fix,B3,"<reponame> at offset 0, <gh_stars> at offset 27",,StarCoder special tokens as plain text
+beae2c42d8a34ccc,full,fix,A1;B3,U+FEFF at offset 63 (BOM before the package line) | <reponame> at offset 0,efbbbf at 63,BOM; StarCoder special tokens as plain text
+1f8ae8e1da9fd607,full,clean,,,,"whole file scanned, no disease found"
+86534a30f79557fb,full,fix,E4,"Apache-2.0 licence header, 13 lines, at offset 0",,boilerplate licence header
+c70422358a640e42,full,fix,B3;E4,"<gh_stars> at offset 0 | Apache-2.0 licence header, 18 lines, at offset 12",,StarCoder special tokens as plain text; boilerplate licence header
+717476d926186499,full,fix,B3,"<reponame> at offset 0, <gh_stars> at offset 29",,StarCoder special tokens as plain text
+13a24fb2876ffe28,full,clean,,,,"whole file scanned, no disease found"
+b2edd40a17c432a5,full,fix,E4,"Apache-2.0 licence header, 15 lines, at offset 0",,boilerplate licence header
+1a1a1d7ab0bf9188,full,fix,A2;B4;E4;F1,"177 CR U+000D chars (CRLF line endings), first at offset 2, last at offset 6207 | 4 redaction placeholders, first <EMAIL> at offset 31, <EMAIL> at offset 1490, <EMAIL> at offset 1527 | Apache-2.0 licence header, 16 lines, at offset 0 | phone number at offset 40 and offset 1499","0d x177, first at 2",CRLF line endings; PII-redaction placeholders left in text; boilerplate licence header; personal data
+48064f881943d3b2,full,fix,E4,"Apache-2.0 licence header, 15 lines, at offset 0",,boilerplate licence header
+38116be224caf0f9,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+4a330e693a161f3d,full,clean,,,,"whole file scanned, no disease found"
+073b348caf645018,full,fix,B3;B4,"<reponame> at offset 0, <filename> at offset 28, <gh_stars> at offset 113 | 1 redaction placeholders, first <NAME> at offset 629",,StarCoder special tokens as plain text; PII-redaction placeholders left in text
+b584f0fe9264ce70,full,fix,A2,"24 CR U+000D chars (CRLF line endings), first at offset 47, last at offset 683","0d x24, first at 47",CRLF line endings
+7c285e48c2dbd37d,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+83b35522c4175c9b,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+4972809e33c54c11,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+87ce7a36ea282952,full,fix,B3;E4,"<gh_stars> at offset 0 | Apache-2.0 licence header, 18 lines, at offset 12",,StarCoder special tokens as plain text; boilerplate licence header
+1fc7a1c46c5707a1,full,fix,E4,"Apache-2.0 licence header, 15 lines, at offset 0",,boilerplate licence header
+b1286b4e61218ec3,full,fix,B3;E4,"<reponame> at offset 0, <filename> at offset 31 | Apache-2.0 licence header, 15 lines, at offset 110",,StarCoder special tokens as plain text; boilerplate licence header
+805cbae389d20cce,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+0b893004aea9459b,full,clean,,,,"whole file scanned, no disease found"
+277797b23fa59913,full,clean,,,,"whole file scanned, no disease found"
+0837027e3438f8a5,full,clean,,,,"whole file scanned, no disease found"
+161718013f935d28,full,fix,A2,"64 CR U+000D chars (CRLF line endings), first at offset 20, last at offset 1903","0d x64, first at 20",CRLF line endings
+72c416d0d767ef34,full,clean,,,,"whole file scanned, no disease found"
+98ce12bcb94b8388,full,fix,A2;B4,"31 CR U+000D chars (CRLF line endings), first at offset 41, last at offset 588 | 1 redaction placeholders, first <EMAIL> at offset 213","0d x31, first at 41",CRLF line endings; PII-redaction placeholders left in text
+2fced3c822d9d43c,full,fix,A2;B3,"23 CR U+000D chars (CRLF line endings), first at offset 67, last at offset 576 | <filename> at offset 0","0d x23, first at 67",CRLF line endings; StarCoder special tokens as plain text
+4fce1af748c757ed,full,fix,B4;E4,"22 redaction placeholders, first <NAME> at offset 109, <EMAIL> at offset 117, <NAME> at offset 1539 | MIT licence header, 23 lines, at offset 0",,PII-redaction placeholders left in text; boilerplate licence header
+db15722ab01fb0c4,full,clean,,,,"whole file scanned, no disease found"
+8c19afa129995a6b,full,fix,B3,"<reponame> at offset 0, <gh_stars> at offset 26",,StarCoder special tokens as plain text
+52b64b7dfd0415f4,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+63309a172990ce7e,full,fix,B3;E4,"<gh_stars> at offset 0 | Apache-2.0 licence header, 15 lines, at offset 12",,StarCoder special tokens as plain text; boilerplate licence header
+229c60f201ec17b0,full,clean,,,,"whole file scanned, no disease found"
+a33c9da73dbed786,full,fix,B3;B4,"<gh_stars> at offset 0 | 1 redaction placeholders, first <NAME> at offset 83",,StarCoder special tokens as plain text; PII-redaction placeholders left in text
+159906b373045e7b,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+db3caeb9bfa43af7,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+ecfdcd6cc96eb2ce,full,clean,,,,"whole file scanned, no disease found"
+8e1a4d379dd64269,full,drop,B4;F1,"2 redaction placeholders, first <EMAIL> at offset 2146, <EMAIL> at offset 2200 | customer record test data: 4 phone/fax numbers, first at offset 1842, last at offset 2052",,PII-redaction placeholders left in text; personal data
+b13f3c266c8a7bb7,full,fix,B3,"<filename> at offset 0, <gh_stars> at offset 98",,StarCoder special tokens as plain text
+9973ffd74725960c,full,clean,,,,"whole file scanned, no disease found"
+bf1ff228a983d73a,full,clean,,,,"whole file scanned, no disease found"
+d89af7bffc526c80,full,fix,A2;B3,"858 CR U+000D chars (CRLF line endings), first at offset 77, last at offset 30735 | <reponame> at offset 0","0d x858, first at 77",CRLF line endings; StarCoder special tokens as plain text
+32ec86af13bfee91,full,clean,,,,"whole file scanned, no disease found"
+b17f299ebccedf6f,full,clean,,,,"whole file scanned, no disease found"
+9d97adaabfad376a,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+dea3b6499e83411d,full,clean,,,,"whole file scanned, no disease found"
+86ff7b00e27f5fed,full,clean,,,,"whole file scanned, no disease found"
+a628ac2273413c2d,full,fix,B3;B4,"<filename> at offset 0 | 1 redaction placeholders, first <NAME> at offset 1108",,StarCoder special tokens as plain text; PII-redaction placeholders left in text
+8f800fd3aa5c2b3c,full,clean,,,,"whole file scanned, no disease found"
+d94ca01683f0490e,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+a65c82454b3b59ab,full,clean,,,,"whole file scanned, no disease found"
+1dcb6c56589d62f3,full,clean,,,,"whole file scanned, no disease found"
+cbf1f8d4eb23b282,full,clean,,,,"whole file scanned, no disease found"
+c77d8910b7bdf25e,full,clean,,,,"whole file scanned, no disease found"
+2b64b0726c469c39,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+1657d96f48787824,full,fix,A2,"87 CR U+000D chars (CRLF line endings), first at offset 22, last at offset 2912","0d x87, first at 22",CRLF line endings
+b06c2cc0743de5c7,full,fix,A2;B3,"37 CR U+000D chars (CRLF line endings), first at offset 330, last at offset 1934 | <reponame> at offset 0, <filename> at offset 58","0d x37, first at 330",CRLF line endings; StarCoder special tokens as plain text
+4eac585496f1188f,full,clean,,,,"whole file scanned, no disease found"
+70394a01a3d1a760,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+61ca0719bf3fa099,full,fix,B3;B4,"<reponame> at offset 0 | 2 redaction placeholders, first <NAME> at offset 65, <NAME> at offset 132",,StarCoder special tokens as plain text; PII-redaction placeholders left in text
+f8d11746cccf1c17,full,fix,B3;E4,"<gh_stars> at offset 0 | Apache-2.0 licence header, 14 lines, at offset 12",,StarCoder special tokens as plain text; boilerplate licence header
+c6016e9ce2c607c5,full,drop,B3;B4;E1;E4,"<gh_stars> at offset 0 | 1 redaction placeholders, first <NAME> at offset 43 | generated code: ""This class was generated by CStructToJavaClass"" at offset 1095 | GPL/LGPL licence header, 16 lines, at offset 17",,StarCoder special tokens as plain text; PII-redaction placeholders left in text; generated or decompiled file; boilerplate licence header
+a7e8be93b1bf324b,full,fix,B3;B4,"<reponame> at offset 0, <filename> at offset 35 | 3 redaction placeholders, first <NAME> at offset 126, <NAME> at offset 170, <NAME> at offset 211",,StarCoder special tokens as plain text; PII-redaction placeholders left in text
+3d020be7819d94ef,full,clean,,,,"whole file scanned, no disease found"
+bec133eb9644a60a,full,fix,B3;E4,"<gh_stars> at offset 0 | Apache-2.0 licence header, 15 lines, at offset 19",,StarCoder special tokens as plain text; boilerplate licence header
+ab124d5d37777215,full,clean,,,,"whole file scanned, no disease found"
+87d84e7ecbb4ff86,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+73e175e90e6e37da,full,drop,E1,"generated code: ""Code generated by Microsoft (R) AutoRest Code Generator."" at offset 99",,generated or decompiled file
+0234ea16255196db,full,fix,B3;B4,"<reponame> at offset 0 | 1 redaction placeholders, first <NAME> at offset 94",,StarCoder special tokens as plain text; PII-redaction placeholders left in text
+dde803931d76f398,full,fix,B3,"<reponame> at offset 0, <filename> at offset 23",,StarCoder special tokens as plain text
+569083bd0296b9fe,full,fix,B3,"<reponame> at offset 0, <filename> at offset 23",,StarCoder special tokens as plain text
+8c2320b6efabb1af,full,fix,B4,"34 redaction placeholders, first <PASSWORD> at offset 2035, <EMAIL> at offset 2055, <PASSWORD> at offset 2230",,PII-redaction placeholders left in text
+b4a6e908c9699dc1,full,fix,B4,"1 redaction placeholders, first <NAME> at offset 508",,PII-redaction placeholders left in text
+3287a3da1ec21230,full,fix,A2;B3,"54 CR U+000D chars (CRLF line endings), first at offset 76, last at offset 1288 | <filename> at offset 0","0d x54, first at 76",CRLF line endings; StarCoder special tokens as plain text
+09abfd4444d48342,full,clean,,,,"whole file scanned, no disease found"
+d173550cb52daf54,full,fix,B4,"1 redaction placeholders, first <NAME> at offset 260",,PII-redaction placeholders left in text
+405268a6c8a9413f,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+1301e8ee17809be2,full,clean,,,,"whole file scanned, no disease found"
+3eb10b30d0707182,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+e72ee5bb4a922a05,full,fix,B3;B4;E4,"<reponame> at offset 0 | 1 redaction placeholders, first <NAME> at offset 676 | Apache-2.0 licence header, 18 lines, at offset 27",,StarCoder special tokens as plain text; PII-redaction placeholders left in text; boilerplate licence header
+8091aec217334157,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+b7741e4914caefba,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+be5d020b72a90599,full,fix,A2;B3;B4,"28 CR U+000D chars (CRLF line endings), first at offset 81, last at offset 784 | <filename> at offset 0 | 1 redaction placeholders, first <NAME> at offset 283","0d x28, first at 81",CRLF line endings; StarCoder special tokens as plain text; PII-redaction placeholders left in text
+d9bebcb6990278c6,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+de3a2d6b32cfe1ae,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+6905c521eada8b34,full,clean,,,,"whole file scanned, no disease found"
+05cafaa5a1159d7f,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+a1dbfa0e9b580300,full,fix,B3,"<reponame> at offset 0, <gh_stars> at offset 28",,StarCoder special tokens as plain text
+e93965eda69b58e9,full,fix,A2,"343 CR U+000D chars (CRLF line endings), first at offset 43, last at offset 9162","0d x343, first at 43",CRLF line endings
+be873285676264e5,full,clean,,,,"whole file scanned, no disease found"
+ae16ec969a1bfe3c,full,clean,,,,"whole file scanned, no disease found"
+fea61dd1f1c92f61,full,fix,A2;B3;B4,"175 CR U+000D chars (CRLF line endings), first at offset 81, last at offset 6347 | <filename> at offset 0, <gh_stars> at offset 63 | 2 redaction placeholders, first <NAME> at offset 2317, <EMAIL> at offset 2325","0d x175, first at 81",CRLF line endings; StarCoder special tokens as plain text; PII-redaction placeholders left in text
+41bdf1758bf393cb,full,clean,,,,"whole file scanned, no disease found"
+2b76fa2256534928,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+baec0e5a1f16b05d,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+e2881ca1f415e5e4,full,fix,A2,"191 CR U+000D chars (CRLF line endings), first at offset 0, last at offset 7353","0d x191, first at 0",CRLF line endings
+a036cb19c22c9a85,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+dfcdbce0c5ff4832,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+9e6c9f574560232a,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+6e3090899a74fa03,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+b239934f75a1aeba,full,fix,E4,"Apache-2.0 licence header, 15 lines, at offset 0",,boilerplate licence header
+3cf9436baba984da,full,drop,E1,"obfuscated decompiled class: renamed-from comments, single-letter names",,generated or decompiled file
+a7360dc988d5b500,full,clean,,,,"whole file scanned, no disease found"
+c9a77d5bb144ce81,full,clean,,,,"whole file scanned, no disease found"
+2e3b678b8629a536,full,clean,,,,"whole file scanned, no disease found"
+8a777b5b6aeaf928,full,fix,B3;B4,"<reponame> at offset 0, <filename> at offset 45 | 1 redaction placeholders, first <NAME> at offset 590",,StarCoder special tokens as plain text; PII-redaction placeholders left in text
+0b38068cc1e1d9ac,full,fix,B4,"2 redaction placeholders, first <NAME> at offset 419, <NAME> at offset 466",,PII-redaction placeholders left in text
+3597267372f85b2b,full,fix,B3;E4,"<reponame> at offset 0 | Apache-2.0 licence header, 15 lines, at offset 28",,StarCoder special tokens as plain text; boilerplate licence header
+af7f0f2f0579d071,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+35868728cd068d57,full,clean,,,,"whole file scanned, no disease found"
+fded8944a2b6ee93,full,fix,A2,"30 CR U+000D chars (CRLF line endings), first at offset 41, last at offset 671","0d x30, first at 41",CRLF line endings
+a175a9857472971d,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+896c9a4f9693205f,full,drop,E1,"generated code: ""Automatically generated - do not modify"" at offset 200",,generated or decompiled file
+f8979c1553273be0,full,fix,A2,"36 CR U+000D chars (CRLF line endings), first at offset 34, last at offset 773","0d x36, first at 34",CRLF line endings
+0cfdbc18fd6ebd16,full,clean,,,,"whole file scanned, no disease found"
+5af8c5ead5d68b84,full,fix,A2;B3;B4,"41 CR U+000D chars (CRLF line endings), first at offset 112, last at offset 1223 | <reponame> at offset 0, <filename> at offset 32, <gh_stars> at offset 74 | 1 redaction placeholders, first <NAME> at offset 213","0d x41, first at 112",CRLF line endings; StarCoder special tokens as plain text; PII-redaction placeholders left in text
+eac4b77560d360da,full,clean,,,,"whole file scanned, no disease found"
+88643a855c718d60,full,fix,B3,"<reponame> at offset 0, <filename> at offset 25",,StarCoder special tokens as plain text
+46fcad3e4b37a8e7,full,clean,,,,"whole file scanned, no disease found"
+d1e50dcbfa47a388,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+a5259f4a3c4ab7ee,full,clean,,,,"whole file scanned, no disease found"
+9c13f836b7a69293,full,clean,,,,"whole file scanned, no disease found"
+2ad7c4b36bf814c6,full,fix,A2;B3,"257 CR U+000D chars (CRLF line endings), first at offset 131, last at offset 7640 | <filename> at offset 0, <gh_stars> at offset 87","0d x257, first at 131",CRLF line endings; StarCoder special tokens as plain text
+e080237bc7c59751,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+3354db2da98124cc,full,clean,,,,"whole file scanned, no disease found"
+286cffc850821ebf,full,clean,,,,"whole file scanned, no disease found"
+75191d846eb332de,full,clean,,,,"whole file scanned, no disease found"
+609ed5ea714d24a2,full,clean,,,,"whole file scanned, no disease found"
+8017d2391620ec3e,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+03954e054cd75a8f,full,fix,A2,"32 CR U+000D chars (CRLF line endings), first at offset 43, last at offset 925","0d x32, first at 43",CRLF line endings
+06d085e55bf0890d,full,clean,,,,"whole file scanned, no disease found"
+40d160a0cc531eba,full,fix,A2,"78 CR U+000D chars (CRLF line endings), first at offset 42, last at offset 1703","0d x78, first at 42",CRLF line endings
+2113115285196028,full,fix,B3,"<reponame> at offset 0, <gh_stars> at offset 62",,StarCoder special tokens as plain text
+897d2de3efb0cfa9,full,clean,,,,"whole file scanned, no disease found"
+ed465c317df030e5,full,clean,,,,"whole file scanned, no disease found"
+f83eff5e9d681765,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+6c961b682bc4354c,full,fix,A2;B3,"346 CR U+000D chars (CRLF line endings), first at offset 72, last at offset 10969 | <reponame> at offset 0","0d x346, first at 72",CRLF line endings; StarCoder special tokens as plain text
+08763047f5ad9ef4,full,fix,B4,"6 redaction placeholders, first <EMAIL> at offset 68, <EMAIL> at offset 79, <EMAIL> at offset 90",,PII-redaction placeholders left in text
+c095b083b6ae8efe,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+a44dc94e50809fb1,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+9d3cc94eeda1ce68,full,clean,,,,"whole file scanned, no disease found"
+9d17df61d9b41700,full,clean,,,,"whole file scanned, no disease found"
+26f6ea27d12bd003,full,clean,,,,"whole file scanned, no disease found"
+0578cc3d5e48cbde,full,clean,,,,"whole file scanned, no disease found"
+a9d8e9ea9c66ecd1,full,fix,B3;B4,"<filename> at offset 0 | 1 redaction placeholders, first <EMAIL> at offset 1127",,StarCoder special tokens as plain text; PII-redaction placeholders left in text
+e1e0c3817504c441,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+322a6ba86b31e90b,full,fix,A2;B3;B4;E4,"111 CR U+000D chars (CRLF line endings), first at offset 155, last at offset 3666 | <filename> at offset 0 | 1 redaction placeholders, first <NAME> at offset 126 | Apache-2.0 licence header, 10 lines, at offset 103","0d x111, first at 155",CRLF line endings; StarCoder special tokens as plain text; PII-redaction placeholders left in text; boilerplate licence header
+755333dae06cdfae,full,fix,B4;E4,"2 redaction placeholders, first <NAME> at offset 925, <NAME> at offset 943 | Apache-2.0 licence header, 15 lines, at offset 0",,PII-redaction placeholders left in text; boilerplate licence header
+d7b98e945297d0b6,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+aa6696801be6bf6e,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+81d696c966045ae8,full,fix,A2;E4,"84 CR U+000D chars (CRLF line endings), first at offset 2, last at offset 3118 | MIT licence header, 25 lines, at offset 0","0d x84, first at 2",CRLF line endings; boilerplate licence header
+e726a096ed096c24,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+aec5cd01bad3dda9,full,fix,B4,"2 redaction placeholders, first <EMAIL> at offset 392, <EMAIL> at offset 401",,PII-redaction placeholders left in text
+e66b08d295a7ac80,full,clean,,,,"whole file scanned, no disease found"
+c10641cedf1fa96f,full,fix,B4,"1 redaction placeholders, first <NAME> at offset 112",,PII-redaction placeholders left in text
+16ff45fcafc35af3,full,fix,B3,"<filename> at offset 0, <gh_stars> at offset 76",,StarCoder special tokens as plain text
+b4a5c7e5250d5c3e,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+5758f83a1e77bd76,full,clean,,,,"whole file scanned, no disease found"
+043eb01835398c1f,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+51196879da508dbc,full,clean,,,,"whole file scanned, no disease found"
+458ea14555a59f6c,full,fix,B3;B4;E4,"<gh_stars> at offset 0 | 2 redaction placeholders, first <NAME> at offset 121, <NAME> at offset 144 | Apache-2.0 licence header, 19 lines, at offset 15",,StarCoder special tokens as plain text; PII-redaction placeholders left in text; boilerplate licence header
+41aef07c9282f214,full,fix,B3;B4;E4,"<gh_stars> at offset 0 | 1 redaction placeholders, first <NAME> at offset 42 | Apache-2.0 licence header, 15 lines, at offset 15",,StarCoder special tokens as plain text; PII-redaction placeholders left in text; boilerplate licence header
+9abd17d5d240d97d,full,fix,A2;B3,"71 CR U+000D chars (CRLF line endings), first at offset 54, last at offset 2725 | <reponame> at offset 0","0d x71, first at 54",CRLF line endings; StarCoder special tokens as plain text
+51fc43267888b29c,full,fix,B3,"<reponame> at offset 0, <gh_stars> at offset 31",,StarCoder special tokens as plain text
+3c1f792ce058cdba,full,clean,,,,"whole file scanned, no disease found"
+9fb5d47488af3c6e,full,clean,,,,"whole file scanned, no disease found"
+4e17f8a27c6b7112,full,clean,,,,"whole file scanned, no disease found"
+6046adc18aec98ab,full,clean,,,,"whole file scanned, no disease found"
+23d191c0acff3b29,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+1ec478559ed8758f,full,fix,B3;E4,"<reponame> at offset 0 | Apache-2.0 licence header, 15 lines, at offset 27",,StarCoder special tokens as plain text; boilerplate licence header
+63a89796552d8428,full,clean,,,,"whole file scanned, no disease found"
+ce1625a6d3ed52f7,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+acd6328a3eede575,full,clean,,,,"whole file scanned, no disease found"
+e4d71f7f48b939c7,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+27c05321c7a23e73,full,fix,E4,"Apache-2.0 licence header, 17 lines, at offset 0",,boilerplate licence header
+712687e885e18382,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+67485ccad1f47598,full,clean,,,,"whole file scanned, no disease found"
+9f30c86791e5997d,full,fix,A2,"37 CR U+000D chars (CRLF line endings), first at offset 50, last at offset 872","0d x37, first at 50",CRLF line endings
+8e0b81548ef9159c,full,clean,,,,"whole file scanned, no disease found"
+d7a18d56a75d45f2,full,clean,,,,"whole file scanned, no disease found"
+90c59ea8a19a9840,full,fix,A2;B3;B4,"84 CR U+000D chars (CRLF line endings), first at offset 82, last at offset 2827 | <reponame> at offset 0 | 1 redaction placeholders, first <NAME> at offset 333","0d x84, first at 82",CRLF line endings; StarCoder special tokens as plain text; PII-redaction placeholders left in text
+077f2bc49b1bb6db,full,clean,,,,"whole file scanned, no disease found"
+912c53fa71c7d9ad,full,fix,A4,"6 U+FFFD at offsets 2841,2846,2854,2856,2922,2924","efbfbd x6 at 2841,2846,2854,2856",lost bytes in comment
+ff4a0e050c9e1888,full,fix,B3;E4,"<reponame> at offset 0 | Apache-2.0 licence header, 17 lines, at offset 41",,StarCoder special tokens as plain text; boilerplate licence header
+5a7aa752deca9e04,full,fix,A2;B3,"21 CR U+000D chars (CRLF line endings), first at offset 41, last at offset 414 | <gh_stars> at offset 0","0d x21, first at 41",CRLF line endings; StarCoder special tokens as plain text
+ff737438874238eb,full,clean,,,,"whole file scanned, no disease found"
+f3d9dd8d34c5bc41,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+ccf680fe54322036,full,fix,E4,"Apache-2.0 licence header, 16 lines, at offset 0",,boilerplate licence header
+beb1cf6cc5b0671e,full,clean,,,,"whole file scanned, no disease found"
+bdfe25a0c25328d3,full,fix,B3;B4,"<reponame> at offset 0 | 1 redaction placeholders, first <NAME> at offset 2590",,StarCoder special tokens as plain text; PII-redaction placeholders left in text
+c8aae5c69f6696cd,full,fix,B3,"<filename> at offset 0, <gh_stars> at offset 69",,StarCoder special tokens as plain text
+c34b6a6a80fee689,full,clean,,,,"whole file scanned, no disease found"
+3cba9087383097dd,full,drop,B3;E1,"<gh_stars> at offset 0 | generated code: ""auto generated by the swagger code generator"" at offset 934",,StarCoder special tokens as plain text; generated or decompiled file
+4e2115a4b1e3918f,full,fix,B3;B4,"<reponame> at offset 0 | 1 redaction placeholders, first <NAME> at offset 700",,StarCoder special tokens as plain text; PII-redaction placeholders left in text
+cfe9b888f2ae77be,full,clean,,,,"whole file scanned, no disease found"
+557f6421cc8199cf,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+e3d884ebf5d15146,full,clean,,,,"whole file scanned, no disease found"
+d9bca72f1f4841f5,full,fix,B4,"2 redaction placeholders, first <NAME> at offset 208, <NAME> at offset 956",,PII-redaction placeholders left in text
+2c1229c1c7b75600,full,fix,B4,"1 redaction placeholders, first <NAME> at offset 137",,PII-redaction placeholders left in text
+15fa0209367f64b0,full,clean,,,,"whole file scanned, no disease found"
+750a1f9e926ed904,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+4e20229540381ad2,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+f1b2a3083b5c91bb,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+51378438b7f1a89a,full,clean,,,,"whole file scanned, no disease found"
+db0fee0394dbc5c0,full,clean,,,,"whole file scanned, no disease found"
+d7c4510b67483984,full,clean,,,,"whole file scanned, no disease found"
+0c2f007c51b86c1a,full,drop,E1,"Scala-to-Java stub, body is throw new RuntimeException",,generated or decompiled file
+9c083f58c207903e,full,drop,B3;E1,"<reponame> at offset 0 | generated code: ""This is a generated file. Not intended for manual editing"" at offset 30",,StarCoder special tokens as plain text; generated or decompiled file
+7be804a88a4519b8,full,clean,,,,"whole file scanned, no disease found"
+0c7445e5c5957d34,full,clean,,,,"whole file scanned, no disease found"
+cb8165b52c365165,full,clean,,,,"whole file scanned, no disease found"
+db38e3dc78d5724e,full,clean,,,,"whole file scanned, no disease found"
+752d47be55e8ac3a,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+d75afb1e5594bc07,full,clean,,,,"whole file scanned, no disease found"
+5def2c72658cf3c6,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+db235ca9581f52c7,full,fix,B3;E4,"<filename> at offset 0 | Apache-2.0 licence header, 15 lines, at offset 96",,StarCoder special tokens as plain text; boilerplate licence header
+751ca162539eead9,full,clean,,,,"whole file scanned, no disease found"
+1e0948477282da2e,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+6a6a57dbf5700995,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+6705f04851b0cda1,full,fix,B3,"<reponame> at offset 0, <filename> at offset 31",,StarCoder special tokens as plain text
+1525dc3f6892953c,full,clean,,,,"whole file scanned, no disease found"
+396562d983ed8c81,full,fix,B3;B4,"<filename> at offset 0 | 1 redaction placeholders, first <NAME> at offset 232",,StarCoder special tokens as plain text; PII-redaction placeholders left in text
+32c5009a60bdb612,full,fix,B3,"<reponame> at offset 0, <filename> at offset 32",,StarCoder special tokens as plain text
+7cbe4b69eebba4fb,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+04d763aa0e1a6f3d,full,fix,B3,"<reponame> at offset 0, <filename> at offset 32",,StarCoder special tokens as plain text
+53b82bc384ca7732,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+8906e0869cd3f67a,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+a3a68db151695ff4,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+c703d9d656f211f3,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+20ca1c5df674fba9,full,fix,E4,"Apache-2.0 licence header, 17 lines, at offset 0",,boilerplate licence header
+f15940c465a4696a,full,fix,B3;B4,"<reponame> at offset 0, <gh_stars> at offset 35 | 1 redaction placeholders, first <NAME> at offset 671",,StarCoder special tokens as plain text; PII-redaction placeholders left in text
+a025d84f588587d5,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+433ded278009bbce,full,clean,,,,"whole file scanned, no disease found"
+e370cbdb73686415,full,fix,B3,"<reponame> at offset 0, <filename> at offset 27",,StarCoder special tokens as plain text
+09c352e32fba83b7,full,clean,,,,"whole file scanned, no disease found"
+51442f3fe625f21d,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+e7901f90e43d1709,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+3395683f5b9a566e,full,fix,B3,"<reponame> at offset 0, <filename> at offset 37, <gh_stars> at offset 84",,StarCoder special tokens as plain text
+7e034e0aee014739,full,fix,A2;B4,"74 CR U+000D chars (CRLF line endings), first at offset 2, last at offset 1571 | 2 redaction placeholders, first <NAME> at offset 15, <NAME> at offset 93","0d x74, first at 2",CRLF line endings; PII-redaction placeholders left in text
+f1d9629f5cfde869,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+cbb813f4d26ac8f5,full,fix,B4,"2 redaction placeholders, first <NAME> at offset 2818, <NAME> at offset 5834",,PII-redaction placeholders left in text
+c14f8019efa3ebb3,full,fix,A2;B4,"358 CR U+000D chars (CRLF line endings), first at offset 30, last at offset 14525 | 1 redaction placeholders, first <EMAIL> at offset 4859","0d x358, first at 30",CRLF line endings; PII-redaction placeholders left in text
+d05b0a62a81ac483,full,fix,B3;B4,"<reponame> at offset 0 | 1 redaction placeholders, first <NAME> at offset 83",,StarCoder special tokens as plain text; PII-redaction placeholders left in text
+c85d7679269c9bb4,full,clean,,,,"whole file scanned, no disease found"
+1d31a725f0e786c3,full,clean,,,,"whole file scanned, no disease found"
+fdef7d111862a5cd,full,fix,B3;B4;E4,"<gh_stars> at offset 0 | 1 redaction placeholders, first <PASSWORD> at offset 1600 | GPL/LGPL licence header, 21 lines, at offset 12",,StarCoder special tokens as plain text; PII-redaction placeholders left in text; boilerplate licence header
+7ff949c28bcb2f07,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+f77bdfd13816b38c,full,fix,E4,"MIT licence header, 23 lines, at offset 0",,boilerplate licence header
+2d621c732e0f5ff5,full,clean,,,,"whole file scanned, no disease found"
+63d63ab4e0885465,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+b001cbedc629b6bd,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+0ccd4dda855920b9,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+844e223a014d6e6c,full,clean,,,,"whole file scanned, no disease found"
+dbeef1d7c27a021e,full,fix,B3;B4,"<filename> at offset 0 | 1 redaction placeholders, first <NAME> at offset 256",,StarCoder special tokens as plain text; PII-redaction placeholders left in text
+51772522b4e92d02,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+37f339fd9732fede,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+97629223a684705f,full,clean,,,,"whole file scanned, no disease found"
+7623ed8a49ed8aaf,full,fix,A2,"18 CR U+000D chars (CRLF line endings), first at offset 48, last at offset 320","0d x18, first at 48",CRLF line endings
+2e077172c83bea2b,full,clean,,,,"whole file scanned, no disease found"
+7ec8ef81e10d3b07,full,fix,B3,"<reponame> at offset 0, <gh_stars> at offset 44",,StarCoder special tokens as plain text
+70b2233f8e2c5a48,full,clean,,,,"whole file scanned, no disease found"
+97d9d0303c8d4999,full,fix,A2;B3,"46 CR U+000D chars (CRLF line endings), first at offset 50, last at offset 1758 | <gh_stars> at offset 0","0d x46, first at 50",CRLF line endings; StarCoder special tokens as plain text
+8e68d9e2111acf63,full,fix,B3;E4,"<gh_stars> at offset 0 | Apache-2.0 licence header, 18 lines, at offset 12",,StarCoder special tokens as plain text; boilerplate licence header
+09c11a6b2dfc2b42,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+49a9c0f71f1e7e5e,full,clean,,,,"whole file scanned, no disease found"
+8eacc67857dc4928,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+029221980a135158,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+4c45d8c272bb3ddd,full,fix,B3,"<filename> at offset 0, <gh_stars> at offset 88",,StarCoder special tokens as plain text
+ec5a40f4f3d9ef6a,full,clean,,,,"whole file scanned, no disease found"
+4ca641f405e268e4,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+c1790c86419006fc,full,clean,,,,"whole file scanned, no disease found"
+c47196d92e7d54ff,full,clean,,,,"whole file scanned, no disease found"
+68cfb3ef1901fefc,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+a3239b209d6b0822,full,fix,A2;B3,"255 CR U+000D chars (CRLF line endings), first at offset 83, last at offset 10550 | <reponame> at offset 0","0d x255, first at 83",CRLF line endings; StarCoder special tokens as plain text
+161afff11649244e,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+91bc5199314fcb70,full,fix,B3,"<reponame> at offset 0, <filename> at offset 31",,StarCoder special tokens as plain text
+3288eb216c3ddcc0,full,clean,,,,"whole file scanned, no disease found"
+c6c1a1f6cad5b6c7,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+138cac43be0730ea,full,drop,B4;E1,"1 redaction placeholders, first <NAME> at offset 45 | decompiler output: ""Decompiled by Jad"" at offset 3",,PII-redaction placeholders left in text; generated or decompiled file
+314f9c3b61606e05,full,fix,E4,"Apache-2.0 licence header, 15 lines, at offset 0",,boilerplate licence header
+a1d26ac1eadfce15,full,fix,B3;E4,"<reponame> at offset 0 | Apache-2.0 licence header, 15 lines, at offset 39",,StarCoder special tokens as plain text; boilerplate licence header
+575c21c0b1373685,full,clean,,,,"whole file scanned, no disease found"
+42136327639e76b1,full,fix,A2;B3;E4,"544 CR U+000D chars (CRLF line endings), first at offset 779, last at offset 21558 | <reponame> at offset 0 | Apache-2.0 licence header, 18 lines, at offset 30","0d x544, first at 779",CRLF line endings; StarCoder special tokens as plain text; boilerplate licence header
+f59696aeeb7af057,full,fix,B4;E4,"1 redaction placeholders, first <EMAIL> at offset 808 | Apache-2.0 licence header, 22 lines, at offset 0",,PII-redaction placeholders left in text; boilerplate licence header
+66388079cebe96bc,full,clean,,,,"whole file scanned, no disease found"
+be5f64a668946fd7,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+cd723f5a9439ff79,full,fix,B3,"<reponame> at offset 0, <filename> at offset 32, <gh_stars> at offset 85",,StarCoder special tokens as plain text
+c65e7269447a5587,full,fix,B3;E4,"<reponame> at offset 0, <filename> at offset 35 | Apache-2.0 licence header, 15 lines, at offset 129",,StarCoder special tokens as plain text; boilerplate licence header
+b99594bd6f819df2,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+330bc7a4295c3383,full,drop,E1,decompiled class: Observable$OnSubscribe import and class C09122,,generated or decompiled file
+8d419e053a4eb7f9,full,fix,A2,"10 CR U+000D chars (CRLF line endings), first at offset 25, last at offset 359","0d x10, first at 25",CRLF line endings
+326296cabf1559b9,full,clean,,,,"whole file scanned, no disease found"
+c0d86d06f46addda,full,clean,,,,"whole file scanned, no disease found"
+a6761260d853b704,full,clean,,,,"whole file scanned, no disease found"
+ce3b8ebbe748a2fa,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+f18e389c5cffff0d,full,clean,,,,"whole file scanned, no disease found"
+6c169312d058ebfb,full,clean,,,,"whole file scanned, no disease found"
+550326f0d4109e16,full,clean,,,,"whole file scanned, no disease found"
+0c3eed8700643b34,full,fix,B3;B4,"<reponame> at offset 0 | 1 redaction placeholders, first <NAME> at offset 789",,StarCoder special tokens as plain text; PII-redaction placeholders left in text
+194a21f88fd09a2b,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+54fe428183ae36e2,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+a1c07175ab406fd0,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+9ba576074eec9107,full,clean,,,,"whole file scanned, no disease found"
+6fb69a80a044cfe6,full,fix,B4;E4,"3 redaction placeholders, first <NAME> at offset 2000, <NAME> at offset 2018, <NAME> at offset 2036 | Apache-2.0 licence header, 15 lines, at offset 0",,PII-redaction placeholders left in text; boilerplate licence header
+1da545499964f6b1,full,clean,,,,"whole file scanned, no disease found"
+a91a640e6ece8653,full,clean,,,,"whole file scanned, no disease found"
+79e71928d350f799,full,clean,,,,"whole file scanned, no disease found"
+8c877b2fec0b2326,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+e677d5863bf77230,full,clean,,,,"whole file scanned, no disease found"
+913428c16fe5481b,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+24032f8ed8beca92,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+1397a887d14c0fae,full,fix,B4,"1 redaction placeholders, first <EMAIL> at offset 100",,PII-redaction placeholders left in text
+8f54f3d9af7b1e9d,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+dcd46df24a0a58c7,full,fix,B3,"<reponame> at offset 0, <filename> at offset 30, <gh_stars> at offset 137",,StarCoder special tokens as plain text
+9b91dd38439b5796,full,clean,,,,"whole file scanned, no disease found"
+ac287bf842fdd6d7,full,fix,E4,"Apache-2.0 licence header, 15 lines, at offset 0",,boilerplate licence header
+26963137dce63564,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+8f56dae5635dbfc0,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+f2f9647d9adcd8fb,full,fix,B3,"<reponame> at offset 0, <filename> at offset 35",,StarCoder special tokens as plain text
+b6234966c06c903a,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+692fbf777a1e2021,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+c454d294fe57c5c8,full,fix,B3;E4,"<filename> at offset 0 | GPL/LGPL licence header, 18 lines, at offset 86",,StarCoder special tokens as plain text; boilerplate licence header
+ffdab97a839bb21f,full,fix,B3,"<filename> at offset 0, <gh_stars> at offset 121",,StarCoder special tokens as plain text
+d4aaa5a4e2f1266d,full,fix,B4;E4,"1 redaction placeholders, first <NAME> at offset 106 | MIT licence header, 23 lines, at offset 0",,PII-redaction placeholders left in text; boilerplate licence header
+4e872b8ec2f36aad,full,fix,B3;E4,"<gh_stars> at offset 0 | Apache-2.0 licence header, 16 lines, at offset 15",,StarCoder special tokens as plain text; boilerplate licence header
+5a535310a87ae7ff,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+2e214416aa3dcf83,full,fix,B4;E4,"1 redaction placeholders, first <NAME> at offset 27 | Apache-2.0 licence header, 11 lines, at offset 0",,PII-redaction placeholders left in text; boilerplate licence header
+601bc869a09a62a9,full,clean,,,,"whole file scanned, no disease found"
+8c382de8a3e9f769,full,fix,B3,"<reponame> at offset 0, <gh_stars> at offset 23",,StarCoder special tokens as plain text
+6c96835a0b3342e1,full,clean,,,,"whole file scanned, no disease found"
+d8ad7cd5cd0c6a68,full,fix,B3;B4;E4,"<gh_stars> at offset 0 | 2 redaction placeholders, first <NAME> at offset 35, <NAME> at offset 1137 | Apache-2.0 licence header, 15 lines, at offset 12",,StarCoder special tokens as plain text; PII-redaction placeholders left in text; boilerplate licence header
+a7b0999f6636e4d0,full,fix,A2;B4,"28 CR U+000D chars (CRLF line endings), first at offset 27, last at offset 778 | 1 redaction placeholders, first <NAME> at offset 328","0d x28, first at 27",CRLF line endings; PII-redaction placeholders left in text
+2859e0cf8779fb72,full,clean,,,,"whole file scanned, no disease found"
+b73bdae760eda66b,full,fix,B4,"4 redaction placeholders, first <NAME> at offset 527, <PASSWORD> at offset 1352, <PASSWORD> at offset 2994",,PII-redaction placeholders left in text
+dbd78a9765287d4e,full,fix,A2;B4,"303 CR U+000D chars (CRLF line endings), first at offset 72, last at offset 12487 | 1 redaction placeholders, first <NAME> at offset 2813","0d x303, first at 72",CRLF line endings; PII-redaction placeholders left in text
+0796334a27ed6607,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+76f01e2eb8018be6,full,drop,E3,"API key at offset 1011, API token at offset 1223 (32 hex chars each)",,hard-coded credentials
+ae81fdd615ddc9ea,full,fix,B3;B4,"<gh_stars> at offset 0 | 1 redaction placeholders, first <NAME> at offset 429",,StarCoder special tokens as plain text; PII-redaction placeholders left in text
+ae42af799496aedb,full,clean,,,,"whole file scanned, no disease found"
+c277ce5799753761,full,clean,,,,"whole file scanned, no disease found"
+1d8e6800c299d06e,full,clean,,,,"whole file scanned, no disease found"
+52ca1be6d1656fdc,full,fix,E4,"MIT licence header, 26 lines, at offset 0",,boilerplate licence header
+a4c1da15769efd68,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+f2087bb9fb6128bc,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+22300337adf2afc8,full,fix,E4,"Apache-2.0 licence header, 18 lines, at offset 0",,boilerplate licence header
+9fb4579c60e3d0d3,full,clean,,,,"whole file scanned, no disease found"
+131a3557a5ac518b,full,clean,,,,"whole file scanned, no disease found"
+dc290bee53a01177,full,fix,B4,"2 redaction placeholders, first <NAME> at offset 222, <EMAIL> at offset 230",,PII-redaction placeholders left in text
+7e1a6a25a14fcaa9,full,fix,B3;B4,"<gh_stars> at offset 0 | 1 redaction placeholders, first <KEY> at offset 306",,StarCoder special tokens as plain text; PII-redaction placeholders left in text
+e46778d7585230ac,full,clean,,,,"whole file scanned, no disease found"
+4818cd9b57b505d2,full,fix,B3;E4,"<reponame> at offset 0 | Apache-2.0 licence header, 15 lines, at offset 50",,StarCoder special tokens as plain text; boilerplate licence header
+c84b4e2ba9b44cf7,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+90158ebe66ff8b25,full,clean,,,,"whole file scanned, no disease found"
+3e48d77b54bf6409,full,fix,B3;B4,"<reponame> at offset 0 | 1 redaction placeholders, first <PASSWORD> at offset 407",,StarCoder special tokens as plain text; PII-redaction placeholders left in text
+6ddba8983a965a6a,full,fix,B4,"2 redaction placeholders, first <NAME> at offset 430, <EMAIL> at offset 438",,PII-redaction placeholders left in text
+46b7ce7d00a0be76,full,fix,B4,"1 redaction placeholders, first <NAME> at offset 68",,PII-redaction placeholders left in text
+5c4ce2768581f7c5,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+ad72b32e5697f8ec,full,fix,B3;E4,"<filename> at offset 0 | Apache-2.0 licence header, 16 lines, at offset 99",,StarCoder special tokens as plain text; boilerplate licence header
+934126bb0fa02671,full,fix,B3;B4;E4,"<reponame> at offset 0, <gh_stars> at offset 27 | 1 redaction placeholders, first <NAME> at offset 1386 | Apache-2.0 licence header, 15 lines, at offset 44",,StarCoder special tokens as plain text; PII-redaction placeholders left in text; boilerplate licence header
+c9c595dc7290e567,full,clean,,,,"whole file scanned, no disease found"
+382a20937d03d9d8,full,clean,,,,"whole file scanned, no disease found"
+eed95bb408857ec0,full,fix,B3;B4;E4,"<filename> at offset 0, <gh_stars> at offset 93 | 2 redaction placeholders, first <NAME> at offset 136, <NAME> at offset 2879 | Apache-2.0 licence header, 17 lines, at offset 105",,StarCoder special tokens as plain text; PII-redaction placeholders left in text; boilerplate licence header
+ed22fdbe01df2d47,full,fix,B3;B4,"<reponame> at offset 0 | 15 redaction placeholders, first <NAME> at offset 839, <NAME> at offset 1224, <NAME> at offset 1379",,StarCoder special tokens as plain text; PII-redaction placeholders left in text
+b29608ca4fb5775d,full,fix,B3;E4,"<reponame> at offset 0, <gh_stars> at offset 37 | Apache-2.0 licence header, 15 lines, at offset 54",,StarCoder special tokens as plain text; boilerplate licence header
+86d572901690e5bb,full,drop,E1,"generated code: ""This class was automatically generated by the data modeler tool."" at offset 40",,generated or decompiled file
+470cf45dd1b9b969,full,fix,B3;E4,"<reponame> at offset 0 | Apache-2.0 licence header, 17 lines, at offset 39",,StarCoder special tokens as plain text; boilerplate licence header
+c5d51517c9afc999,full,fix,A2;B3,"13 CR U+000D chars (CRLF line endings), first at offset 91, last at offset 334 | <reponame> at offset 0","0d x13, first at 91",CRLF line endings; StarCoder special tokens as plain text
+0dd7bdea9580fa25,full,fix,E4,"Apache-2.0 licence header, 15 lines, at offset 0",,boilerplate licence header
+7b8c70b31532f9c5,full,fix,E4,"Apache-2.0 licence header, 15 lines, at offset 0",,boilerplate licence header
+bf21f28edaead7ca,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+b09f3103290221a0,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+33c8ee7a7ddb6431,full,clean,,,,"whole file scanned, no disease found"
+199ef611c576bdb6,full,clean,,,,"whole file scanned, no disease found"
+c28b7bc75d5d9863,full,clean,,,,"whole file scanned, no disease found"
+ec0681516be2ab7b,full,fix,B3;B4,"<gh_stars> at offset 0 | 1 redaction placeholders, first <NAME> at offset 171",,StarCoder special tokens as plain text; PII-redaction placeholders left in text
+47dc295868170db5,full,fix,B3,"<reponame> at offset 0, <gh_stars> at offset 41",,StarCoder special tokens as plain text
+811cdb9ed1846007,full,clean,,,,"whole file scanned, no disease found"
+c889ad96312745d8,full,fix,B4,"1 redaction placeholders, first <NAME> at offset 78",,PII-redaction placeholders left in text
+288b8d70ee9c0602,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+dc3d1c9983b40838,full,clean,,,,"whole file scanned, no disease found"
+a3db3465f1a31ade,full,fix,B3,"<reponame> at offset 0, <filename> at offset 24, <gh_stars> at offset 109",,StarCoder special tokens as plain text
+6bb451ed1531b6ec,full,fix,B3,"<reponame> at offset 0, <gh_stars> at offset 30",,StarCoder special tokens as plain text
+5806bb18a8f2861a,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+5f209809f8af0842,full,clean,,,,"whole file scanned, no disease found"
+367f271b6de55dd4,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+24c7fef47c9ec638,full,fix,E4,"Apache-2.0 licence header, 16 lines, at offset 0",,boilerplate licence header
+cf56afeddac4de9e,full,fix,B3;B4,"<reponame> at offset 0 | 1 redaction placeholders, first <NAME> at offset 948",,StarCoder special tokens as plain text; PII-redaction placeholders left in text
+543ef411a8961344,full,clean,,,,"whole file scanned, no disease found"
+c71624705eebae91,full,fix,B3;E4,"<filename> at offset 0 | Apache-2.0 licence header, 15 lines, at offset 123",,StarCoder special tokens as plain text; boilerplate licence header
+e2c443d65f0d2795,full,clean,,,,"whole file scanned, no disease found"
+df56104e5d1cd403,full,fix,B3;E4,"<reponame> at offset 0, <gh_stars> at offset 51 | Apache-2.0 licence header, 15 lines, at offset 63",,StarCoder special tokens as plain text; boilerplate licence header
+e8bb1ab033e7a6b3,full,clean,,,,"whole file scanned, no disease found"
+f58d49dc4c4297d0,full,clean,,,,"whole file scanned, no disease found"
+1db8dbb6d28906f7,full,fix,B3;B4,"<reponame> at offset 0 | 1 redaction placeholders, first <NAME> at offset 79",,StarCoder special tokens as plain text; PII-redaction placeholders left in text
+f836066b0d34a667,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+c0919e2521d59fff,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+ec6bc200d83dd6df,full,fix,B3;E4,"<reponame> at offset 0 | Apache-2.0 licence header, 15 lines, at offset 27",,StarCoder special tokens as plain text; boilerplate licence header
+fb42bf345714c6d8,full,clean,,,,"whole file scanned, no disease found"
+18adad63802948c4,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+81b7e95686c1aa5e,full,fix,B3,"<reponame> at offset 0, <filename> at offset 39, <gh_stars> at offset 121",,StarCoder special tokens as plain text
+9bd3ff1f2f677d44,full,clean,,,,"whole file scanned, no disease found"
+37122b36c50ad4aa,full,clean,,,,"whole file scanned, no disease found"
+ee7ecf830b81c8fb,full,fix,B3,"<filename> at offset 0, <gh_stars> at offset 71",,StarCoder special tokens as plain text
+5c646d20e5ac9b54,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+7a1a182c16c64fae,full,fix,B4;E4,"2 redaction placeholders, first <NAME> at offset 26, <NAME> at offset 1162 | Apache-2.0 licence header, 15 lines, at offset 0",,PII-redaction placeholders left in text; boilerplate licence header
+d76ff456bf4497aa,full,fix,B3,"<reponame> at offset 0, <filename> at offset 42, <gh_stars> at offset 124",,StarCoder special tokens as plain text
+8f5c9f9695334617,full,fix,B3;B4;E4,"<reponame> at offset 0 | 1 redaction placeholders, first <NAME> at offset 56 | Apache-2.0 licence header, 15 lines, at offset 31",,StarCoder special tokens as plain text; PII-redaction placeholders left in text; boilerplate licence header
+1227540794647c4d,full,fix,B3;C1,"<reponame> at offset 0 | scraped LeetCode page text ""sample 1 ms submission"" at offset 125, rule lines of underscores at offset 26 and at the end",,StarCoder special tokens as plain text; scraped page artefacts
+b77cb3b9cde9d7bf,full,fix,A2,"16 CR U+000D chars (CRLF line endings), first at offset 23, last at offset 578","0d x16, first at 23",CRLF line endings
+bbfb7a84226b7199,full,clean,,,,"whole file scanned, no disease found"
+9b95cf192922d106,full,fix,A4;B3,"10 U+FFFD at offsets 144,145,147,148,151,152 ... | <reponame> at offset 0","efbfbd x10 at 144,145,147,148",lost bytes in comment; StarCoder special tokens as plain text
+7794c4407bfc7555,full,clean,,,,"whole file scanned, no disease found"
+c3d55a51777f7c10,full,clean,,,,"whole file scanned, no disease found"
+fa49f288212f131d,full,clean,,,,"whole file scanned, no disease found"
+8d1ae10eeaf2160b,full,clean,,,,"whole file scanned, no disease found"
+330aebe2f86eb70f,full,fix,B4,"1 redaction placeholders, first <EMAIL> at offset 1580",,PII-redaction placeholders left in text
+a9102d2d698b420d,full,clean,,,,"whole file scanned, no disease found"
+7c17ca9487975b3b,full,fix,E4,"Apache-2.0 licence header, 15 lines, at offset 0",,boilerplate licence header
+6d704517983e12a0,full,clean,,,,"whole file scanned, no disease found"
+8974aa39ea08ea75,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+905fe4685c78e088,full,drop,B3;E1,"<reponame> at offset 0 | generated R.java: ""AUTO-GENERATED FILE. DO NOT MODIFY."" at offset 33",,StarCoder special tokens as plain text; generated or decompiled file
+f6a27453da33dcb1,full,clean,,,,"whole file scanned, no disease found"
+dc7ff7a157ac3f1d,full,clean,,,,"whole file scanned, no disease found"
+cc73b02ebe38048d,full,fix,E4,"Apache-2.0 licence header, 18 lines, at offset 0",,boilerplate licence header
+d048fa960d158df7,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+1d2d45920ef8ede1,full,clean,,,,"whole file scanned, no disease found"
+43162d5f9a8b18de,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+a7d5e4709a2cf92f,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+91c428d730a53eb7,full,fix,B3,<reponame> at offset 0,,StarCoder special tokens as plain text
+392103bdbf3c5823,full,fix,B3;B4;E4,"<reponame> at offset 0 | 2 redaction placeholders, first <NAME> at offset 2426, <NAME> at offset 4271 | Apache-2.0 licence header, 18 lines, at offset 26",,StarCoder special tokens as plain text; PII-redaction placeholders left in text; boilerplate licence header
+64ccf3c754889dce,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+a7c46686fe59cb25,full,clean,,,,"whole file scanned, no disease found"
+1e996c48e91d7f90,full,clean,,,,"whole file scanned, no disease found"
+c61ed9240a93265a,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+6f89e91785c6f814,full,clean,,,,"whole file scanned, no disease found"
+8dd65bc652d9e820,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+a46684123325b4ef,full,clean,,,,"whole file scanned, no disease found"
+0f057306605d3753,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+82a34e6ccc54a42f,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+e9f936015da1ea86,full,clean,,,,"whole file scanned, no disease found"
+daeb68c90b4e04a2,full,clean,,,,"whole file scanned, no disease found"
+d1367c49c0389797,full,clean,,,,"whole file scanned, no disease found"
+f468ee3599926911,full,fix,A2;B4,"69 CR U+000D chars (CRLF line endings), first at offset 34, last at offset 2129 | 1 redaction placeholders, first <NAME> at offset 216","0d x69, first at 34",CRLF line endings; PII-redaction placeholders left in text
+2c3624f8bdc8c61e,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+cbae59a0718c2452,full,fix,B3;B4;E4,"<gh_stars> at offset 0 | 6 redaction placeholders, first <NAME> at offset 36, <NAME> at offset 45, <NAME> at offset 616 | Apache-2.0 licence header, 21 lines, at offset 12",,StarCoder special tokens as plain text; PII-redaction placeholders left in text; boilerplate licence header
+6792050e85b52c2e,full,fix,B3,"<filename> at offset 0, <gh_stars> at offset 84",,StarCoder special tokens as plain text
+7dc6e97646e1f5ae,full,fix,E4,"MIT licence header, 16 lines, at offset 0",,boilerplate licence header
+9cc6d2325946a347,full,clean,,,,"whole file scanned, no disease found"
+fc6b0564755d6d4f,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+0c552b42ee9360d4,full,clean,,,,"whole file scanned, no disease found"
+33c267a5b879e57f,full,fix,B3;E4,"<gh_stars> at offset 0 | Apache-2.0 licence header, 16 lines, at offset 15",,StarCoder special tokens as plain text; boilerplate licence header
+865d813577b270f2,full,fix,A2;B3;E4,"84 CR U+000D chars (CRLF line endings), first at offset 87, last at offset 2852 | <filename> at offset 0 | Apache-2.0 licence header, 15 lines, at offset 85","0d x84, first at 87",CRLF line endings; StarCoder special tokens as plain text; boilerplate licence header
+86e35b9fef7b1d3a,full,drop,B3;E1,"<gh_stars> at offset 0 | Scala-to-Java stub, every body is throw new RuntimeException",,StarCoder special tokens as plain text; generated or decompiled file
+3ce9aa0200618370,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+2f55f63871b865b4,full,fix,A2;B3,"22 CR U+000D chars (CRLF line endings), first at offset 53, last at offset 599 | <gh_stars> at offset 0","0d x22, first at 53",CRLF line endings; StarCoder special tokens as plain text
+bec89c6ba45d0936,full,clean,,,,"whole file scanned, no disease found"
+66546c9740d46845,full,fix,B3;E4,"<filename> at offset 0 | Apache-2.0 licence header, 15 lines, at offset 123",,StarCoder special tokens as plain text; boilerplate licence header
+ab2a57e226d923b3,full,fix,E4,"Apache-2.0 licence header, 15 lines, at offset 0",,boilerplate licence header
+2d9a0d4c8e723b3b,full,fix,B4,"1 redaction placeholders, first <NAME> at offset 335",,PII-redaction placeholders left in text
+4eeb606838f1f9df,full,fix,A2;B3,"30 CR U+000D chars (CRLF line endings), first at offset 74, last at offset 1002 | <reponame> at offset 0, <gh_stars> at offset 48","0d x30, first at 74",CRLF line endings; StarCoder special tokens as plain text
+9cbc723f9cfc6c7c,full,fix,B4;E4,"1 redaction placeholders, first <NAME> at offset 45 | MIT licence header, 24 lines, at offset 0",,PII-redaction placeholders left in text; boilerplate licence header
+787f138a8ce44cd6,full,fix,B4,"3 redaction placeholders, first <NAME> at offset 110, <NAME> at offset 128, <NAME> at offset 146",,PII-redaction placeholders left in text
+35dafa07e79561b6,full,clean,,,,"whole file scanned, no disease found"
+f282563684ce7e5d,full,fix,B3,"<reponame> at offset 0, <filename> at offset 32, <gh_stars> at offset 111",,StarCoder special tokens as plain text
+9c3517499fd5efb5,full,fix,B3;B4;E4,"<reponame> at offset 0 | 1 redaction placeholders, first <NAME> at offset 3191 | Apache-2.0 licence header, 15 lines, at offset 37",,StarCoder special tokens as plain text; PII-redaction placeholders left in text; boilerplate licence header
+92c70485e8a04e82,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+82f5fa0846e84cab,full,clean,,,,"whole file scanned, no disease found"
+a5817effe9593e26,full,fix,B3;B4;E4,"<gh_stars> at offset 0 | 4 redaction placeholders, first <NAME> at offset 976, <NAME> at offset 1004, <NAME> at offset 2141 | GPL/LGPL licence header, 32 lines, at offset 15",,StarCoder special tokens as plain text; PII-redaction placeholders left in text; boilerplate licence header
+6664aaae28c688c0,full,fix,B4,"1 redaction placeholders, first <NAME> at offset 39",,PII-redaction placeholders left in text
+a9752682cc1a8193,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+f07677160067d6fa,full,fix,B4;E4,"1 redaction placeholders, first <NAME> at offset 21 | Apache-2.0 licence header, 15 lines, at offset 0",,PII-redaction placeholders left in text; boilerplate licence header
+699a3adbcad3ca4c,full,fix,A2,"95 CR U+000D chars (CRLF line endings), first at offset 32, last at offset 3329","0d x95, first at 32",CRLF line endings
+d62d5d5a198b90bd,full,clean,,,,"whole file scanned, no disease found"
+b974312ea275dc6b,full,clean,,,,"whole file scanned, no disease found"
+180880a93d9caf64,full,clean,,,,"whole file scanned, no disease found"
+649e47dfd4be671b,full,clean,,,,"whole file scanned, no disease found"
+2111dfa57dfd75e8,full,drop,E1,"generated code: ""generated by a tool and any changes will be overwritten"" at offset 1637",,generated or decompiled file
+ae36c21dcad92f1a,full,drop,B3;E1,"<filename> at offset 0, <gh_stars> at offset 90 | decompiler output: ""Decompiled by Procyon"" at offset 109",,StarCoder special tokens as plain text; generated or decompiled file
+54d4223871621170,full,clean,,,,"whole file scanned, no disease found"
+64ef24c27df05789,full,fix,B3,<filename> at offset 0,,StarCoder special tokens as plain text
+1a9fd1a1264d8acf,full,clean,,,,"whole file scanned, no disease found"
+b1db898fa22aa4f3,full,fix,B3;B4;E4,"<reponame> at offset 0 | 1 redaction placeholders, first <NAME> at offset 1584 | Apache-2.0 licence header, 15 lines, at offset 45",,StarCoder special tokens as plain text; PII-redaction placeholders left in text; boilerplate licence header
+1059808ab9623b19,full,fix,B3,<gh_stars> at offset 0,,StarCoder special tokens as plain text
+22cc54a713911a8c,full,clean,,,,"whole file scanned, no disease found"

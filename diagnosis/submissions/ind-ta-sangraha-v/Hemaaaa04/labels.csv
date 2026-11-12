@@ -1,0 +1,501 @@
+doc_id,read,verdict,diseases,evidence,hex,note
+ba0521a76a80c6ba,full,clean,,,,Tamil political news; no listed disease found.
+803e203a2c7d60da,full,clean,,,,Complete Tamil recipe; Tamil-script loanwords alone are not a wrong-language label.
+b696ac9e380537d5,full,fix,C1;D3,"C1 at offset 1239: ""வீரன் அழகுமுத்துகோன் பிறந்தநாள்"" | C1 at offset 2053: ""உலகம் முதல் உள்ளூர் வரை"" | D3 at offset 2103: ""Top Tamil News, Breaking News""",,Related-story list and promotional footer follow the article; Tamil-English mixing is in the footer.
+cfc9ea4c1e72985a,full,clean,,,,Coherent crime news; names and broad localities alone are not treated as private contact details.
+07595651f9328e9f,full,drop,D4,"D4 at offset 1153: ""உங்கள் முதல் முறையாக 06.35ல் தொடங்கும் ரயில்"" | D4 at offset 2844: ""20-13 இன் குடிமக்கள்""",,Provisional D4: malformed Tamil and scrambled eligibility numbers; verify with a fluent reader before dropping. Translation provenance is unknown.
+70717a9a2d8c2b37,full,fix,A6,"A6 at offset 646: ""ஆகஸ்D""",646: U+0B86 UTF8=e0 ae 86; 647: U+0B95 UTF8=e0 ae 95; 648: U+0BB8 UTF8=e0 ae b8; 649: U+0BCD UTF8=e0 af 8d; 650: U+0044 UTF8=44,Latin D intrudes into a Tamil month word; verify the intended spelling instead of deleting all Latin letters.
+04920dfebbb8d2e4,full,clean,,,,News summary bullets and body concern the same event; no excessive repetition.
+28e55a22748757af,full,fix,C1,"C1 at offset 2794: ""Sign up to receive our newsletter in your inbox every day!""",,Remove the terminal newsletter invitation; preserve SPCA as an organization acronym.
+b314ba477f78d672,full,clean,,,,"Related reports on one school programme, with explicit bullet boundaries."
+7cce84d0d76b0c30,full,fix,B4;C1;D3,"B4 at offset 180: ""\\n"" | C1 at offset 2411: ""கங்குலி பிசிசிஐ தலைவராவார்"" | D3 at offset 77: ""India vs Australia: Matthew Hayden""",,Literal newline escapes are provisionally B4 serialization junk; unrelated ending teasers; bilingual title. Confirm B4 mapping with reviewer.
+0c9fc3df8126de9e,full,clean,,,,Coherent Sri Lankan Tamil political report; regional wording is valid.
+2bd051878060e7e3,full,fix,C1,"C1 at offset 1813: ""Sign up to receive our newsletter in your inbox every day!""",,Terminal newsletter footer; institutional URL is not private personal data.
+73b0ad27a538f16e,full,fix,C1,"C1 at offset 2563: ""Sign up to receive our newsletter in your inbox every day!""",,Terminal newsletter footer after a complete news report.
+d883b4426f420c7c,full,fix,C1,"C1 at offset 1: ""தற்கொலை செய்துக் கொள்ளாமல் காப்பாற்றியது வடிவேலு தான்""",,Unrelated cinema teaser precedes cricket news; two title copies alone are not labelled excessive repeated lines.
+24d57d294128d901,full,clean,,,,Complete municipal-petition report; public street context is not a private person's full address.
+f642118c72feadba,full,fix,C1,"C1 at offset 834: ""நம்ம வீட்டு பிள்ளை படத்தின் எங்க அண்ணன் பாடல் வெளியீடு!""",,Unrelated film-song teaser appended after the article.
+518de71ce8f6c595,full,clean,,,,Coherent political commentary; reporting allegations is not automatically F3.
+8a913e9545fa0e4a,full,fix,D3,"D3 at offset 4278: ""யூ ஹேவ் பிராட் அவுட் எ ப்ளாக் ஹோம் டு லைம் லைட்!""",,"Natural English dialogue transliterated in Tamil within Tamil fiction; annotation-only fix, retain the wording."
+9872bc3de5476a56,full,clean,,,,Coherent diplomatic news report.
+f36561b899eeedf9,full,fix,C1,"C1 at offset 2: ""#Chennaiதிடீரென சென்னையில்"" | C1 at offset 608: ""டிசம்பர் 24ஆம் தேதி எம். ஜி. ஆர். நினைவுநாள்""",,Weather teaser at start and a related-story headline interrupt political commentary.
+a416ba8690b4a89b,full,clean,,,,Complete recipe with spelling/editing blemishes; these alone do not establish machine translation or cleaning damage.
+c7e4a7ea75c2044e,full,fix,C1,"C1 at offset 1929: ""Sign up to receive our newsletter in your inbox every day!""",,Terminal newsletter footer; diagnosis is not medical fact-checking.
+c50a5bdd4a046f6d,full,clean,,,,Tamil report containing the platform name youtube; brand names alone are not substantive language mixing.
+34e3b93f0cec8833,full,fix,A6;G1;D3,"A6 at offset 904: ""உO"" | G1 at offset 406: "" ாள்"" | D3 at offset 413: ""वृक्षांतरात्सजातीयो""",904: U+0B89 UTF8=e0 ae 89; 905: U+004F UTF8=4f; 406: U+0020 UTF8=20; 407: U+0BBE UTF8=e0 ae be; 408: U+0BB3 UTF8=e0 ae b3; 409: U+0BCD UTF8=e0 af 8d,OCR-like mixed-script reference and orphan vowel sign; Sanskrit quotations are intentional. Earlier-cleaning cause of G1 is unproven; inspect scan.
+d6012ebc4486f4cd,full,clean,,,,Complete political news; possible factual or spelling issues are not evidence of a specific listed disease.
+facaa5118b633598,full,clean,,,,Complete quotation-style news excerpt; missing speaker context alone does not prove a cut-off sentence.
+4608c609b5c84b77,full,clean,,,,Complete parable with a coherent ending.
+3ec2b85b9976a2dd,full,drop,C1;C5;D3,"C1 at offset 0: ""புதிதாக கட்டப்படும் நடிகர் சங்க கட்டிடத்திற்கு"" | C5 at offset 89: ""கமலுடன் கைகோர்க்கும் சிம்பு?"" | D3 at offset 372: ""Twins குழந்தைகளுடன்""",,"Entire document is six unrelated entertainment teasers with no article body; drop for C1/C5, not for D3."
+70f969af2a8a68ae,full,clean,,,,Non-graphic celebrity news; sexual subject matter alone does not establish F3 under the supplied rubric.
+b218f2cc1dcd0c99,full,clean,,,,Complete lockdown news; broad neighbourhood reference is not a private street address.
+a68cdd4842cf41fb,full,clean,,,,Complete Singapore Tamil labour-market report; preserve regional terminology.
+4f8473dc622b4b45,full,clean,,,,Complete cricket report; isolated awkward expressions do not establish bad machine translation.
+bf100246b5e0f086,full,clean,,,,Complete temple-festival report.
+7dc9182ca432859e,full,drop,C1;C5,"C1 at offset 0: ""டிராக்டரில் இருந்து தவறி விழுந்து இளைஞர் பலி"" | C5 at offset 241: ""சென்னை : போதைப்பொருள் குறித்து""",,"Entire document is unrelated headline/snippet listings; ellipses are teaser formatting, not sufficient evidence for C3."
+65126393f0ef52c9,full,fix,C3,"C3 at offset 3850: ""திருமணம் கைகூடும் பிரார்த்தனை தலமாகவும்""",,Ends in an unfinished clause; recover source text or trim only incomplete boundary sentences; never invent the missing continuation.
+9313c79e806f0074,full,fix,A6;C1,"A6 at offset 1530: ""நே O ர்மையுடன்"" | C1 at offset 1564: ""Digitized By Roja Muthiah Research Library""",1530: U+0BA8 UTF8=e0 ae a8; 1531: U+0BC7 UTF8=e0 af 87; 1532: U+0020 UTF8=20; 1533: U+004F UTF8=4f; 1534: U+0020 UTF8=20; 1535: U+0BB0 UTF8=e0 ae b0; 1536: U+0BCD UTF8=e0 af 8d; 1537: U+0BAE UTF8=e0 ae ae; 1538: U+0BC8 UTF8=e0 af 88; 1539: U+0BAF UTF8=e0 ae af; 1540: U+0BC1 UTF8=e0 af 81; 1541: U+0B9F UTF8=e0 ae 9f; 1542: U+0BA9 UTF8=e0 ae a9; 1543: U+0BCD UTF8=e0 af 8d,Stray Latin O in Tamil verse and digitization footer; retain provenance separately; archaic Tamil is not D4/D5.
+81e45dba89f683a1,full,fix,C4,"C4 at offset 1070: ""மடிப்பாக்கம் : மடிப்பாக்கம் பகுதியில்""",,"At offset 1070, religious teaching abruptly becomes municipal waste-collection news; split into two documents at that boundary."
+24c7d9dfe07a52f9,full,clean,,,,Complete film-payment court report.
+9277c615355d0c15,full,fix,C1,"C1 at offset 2285: ""Sign up to receive our newsletter in your inbox every day!""",,Terminal newsletter footer; medical assertions have not been clinically validated.
+78a1b0459d5efe00,full,clean,,,,Complete entertainment dispute report.
+00b0ea09f19c54e1,full,fix,B4,"B4 at offset 65: ""\\n""",,"Seven literal backslash-n sequences in prose; provisional B4 mapping, confirm with reviewer before targeted decoding."
+92ab99210be56e29,full,fix,C1;D3,"C1 at offset 1714: ""Also Read:"" | D3 at offset 988: ""புதிய ATM Card பெறலாம்.""",,Remove ending related-story teaser; preserve natural banking terminology. Stated institutional helplines are not private-person F1.
+3de06932cb581417,full,clean,,,,Complete public-health notice; public bus identifiers and a stated institutional helpline are not private-person F1.
+caf1190306aaaad1,full,fix,B4,"B4 at offset 58: ""\\n""",,Twenty-three literal backslash-n sequences; provisional B4 mapping. Political opinion alone is not a reason to drop.
+167e43f7db35eb21,full,fix,D3,"D3 at offset 769: ""டேட்டா ஸ்ட்ரக்ச்சர் (data structure)"" | D3 at offset 886: ""Database Management System""",,"Natural bilingual teaching terminology; annotation-only fix, retain text. Mentions contact details but contains no contact values."
+736e4675432e6fd3,full,fix,C1,"C1 at offset 616: ""You can leave a response, or trackback from your own site.""",,Blog comment/trackback footer follows a complete news report.
+b099a8117b209486,full,clean,,,,"Complete political-health news; opening double backticks act as quotation punctuation, not demonstrably broken Markdown."
+ad52606f936aa623,full,fix,C1;D3,"C1 at offset 804: ""இதையும் பாருங்க"" | D3 at offset 893: ""Throwback புகைப்படம்.""",,Embedded unrelated cinema teaser contains English-Tamil mixing; preserve platform names in the article.
+7a1cf873a766a753,full,clean,,,,Coherent Malaysian Tamil political report; regional administrative terms are not labelled D5.
+6419ae1b3e4a2f43,full,clean,,,,Complete news report about harassment allegations; campaign hashtag alone is not substantive D3 or F3.
+97f85878476cd809,full,clean,,,,"Complete Tamil health explainer with headings and lists; terminology and medical claims need domain review, not an inferred machine-translation diagnosis."
+d41e60b4fa36254c,full,clean,,,,Coherent Tamil police-news excerpt; spelling blemishes and reported quantities alone do not establish a listed disease.
+10359d774ad3b025,full,clean,,,,Complete business-event article with an attributed speech; publicity within the article is not a navigation footer.
+ff528c9a3bb54906,full,fix,C1,"C1 at offset 906: ""உலோதாதித்தன் கதையுரைத்த அத்தியாயம் 229""",,Page running head and number interrupt a classical verse; remove only verified running heads and preserve genuine chapter boundaries and poetic language.
+9a112ddbdcf4b4d2,full,fix,C1;C3,"C1 at offset 2230: ""திருவரங்கத்தந்தாதி - எவு,எண்"" | C3 at offset 4540: ""திருமகள் திருவவதரி பர் ராகவமயிலும் இரண்டாமடியிலும்""",,"Scanned commentary has an intrusive running head and ends in an unfinished explanation; consult the source for recovery, preserving classical forms."
+73f8a498cedb198b,full,clean,,,,Complete crime report with source attribution; violence reporting and broad localities alone are not automatically F3 or F1.
+5ac08ceb0db9c1ca,full,clean,,,,Coherent Tamil book review; quoted passages and foreign author names are intentional.
+883943b037e88c51,full,clean,,,,Coherent Sri Lankan Tamil cultural-event report; preserve regional vocabulary and names.
+4378ea572522af80,full,fix,D3,"D3 at offset 1370: ""சிங்கள் ரூம் சிங்கிளுக்கே""",,"Natural English phrase transliterated into Tamil within the report; annotation-only D3, retain the phrase and article."
+1cce2a46807b7b14,full,fix,G1,"G1 at offset 1370: ""அவ்வா ே ற""",1370: U+0B85 UTF8=e0 ae 85; 1371: U+0BB5 UTF8=e0 ae b5; 1372: U+0BCD UTF8=e0 af 8d; 1373: U+0BB5 UTF8=e0 ae b5; 1374: U+0BBE UTF8=e0 ae be; 1375: U+0020 UTF8=20; 1376: U+0BC7 UTF8=e0 af 87; 1377: U+0020 UTF8=20; 1378: U+0BB1 UTF8=e0 ae b1,Detached Tamil vowel sign U+0BC7 occurs between spaces; verify intended word from source before repair; old-style spelling alone is not a disease.
+f5f3259826c724cb,full,clean,,,,Complete fraud report; names and general neighbourhood references do not expose a private contact or full home address.
+4452face9f25301c,full,clean,,,,Complete political news report; party acronyms and ordinary loanwords alone do not establish mixed-language damage.
+60d23b63db1f5dfe,full,drop,C1;C5,"C1 at offset 0: ""அந்த ஜோடிகளிடம் `அது' அதிகம்!"" | C5 at offset 30: ""பெண்கள் உச்சகட்ட இன்பம் எட்ட 7 வழிகள் இருக்கிறதாம் அது எவையென தெரியுமா?""",,"Entire document is a list of four click-through teasers with no article body; proposed drop is for structure, not sexual subject matter alone."
+492ec7b8ce35e05d,full,clean,,,,Short coherent celebrity-news excerpt with complete ending; discussion of recovering from suicidal thoughts is not automatically F3.
+9a017d6ab6910ee5,full,fix,C1;D3,"C1 at offset 890: ""சீனாவின் திட்டங்களை தகர்க்க இந்தியா போட்ட அதிரடி பிளான்!"" | C1 at offset 588: ""சபரிமலை பக்தர்களுக்கு ஹேப்பி நியூஸ்ஃ இனி தபாலில் பிரசாதம் வரும்!"" | D3 at offset 610: ""ஹேப்பி நியூஸ்ஃ""",,"Two unrelated recommendation headlines interrupt Tirupati ticket news; D3 is natural transliterated English within a teaser, not grounds to reject Tamil prose."
+4c521554434e6a93,full,clean,,,,Complete attributed budget-news report; factual verification is separate from text diagnosis.
+89879512ea611689,full,clean,,,,Coherent film box-office report; punctuation in the movie title and Tamil-script loanwords do not establish a listed disease.
+3ace6b49f29d4b1c,full,fix,C1,"C1 at offset 1103: ""மௌவலின் தினசரி செய்திகளை உடனுக்குடன் பெற, Facebook, Twitter மற்றும் Google Plus போன்ற சமூக வலைதள பக்கங்களில் பின்தொடருங்கள்.""",,"Terminal social-follow invitation is boilerplate; institutional account title and platform names are intentional, not private account details."
+8554d04583aaec64,full,clean,,,,Complete short Sri Lankan political-news item; minor repeated wording does not meet repeated-line disease.
+eaa63ec6f1fb9da7,full,clean,,,,Non-graphic news about Instagram moderation and Madonna; a mention of nudity alone is not sufficient for F3.
+e4ed68551562d60d,full,drop,C1;C5,"C1 at offset 0: ""குமரப்பா புலேந்திரன் உட்பட பன்னிரு வேங்கைகள் சதுக்கத்தில் மாவீரர் நாள் நினைவேந்தல்!"" | C5 at offset 532: ""வடமராட்சியில் தமிழீழ விடுதலைப்புலிகளின் சின்னம் தாங்கிய சுவரொட்டிகள்!""",,"Entire document is several event headlines and short teasers without a sustained article; proposed drop is structural, not based on political viewpoint."
+b071a9823a07602f,full,clean,,,,Complete Tamil entertainment report with an attributed quotation.
+8fd2711299925f32,full,drop,D4,"D4 at offset 1343: ""ரயிலின் உள்ளே எண்ணை காலி செய்வது அவசியம்."" | D4 at offset 2360: ""இடிந்து விழும் அபாயங்கள் அதிகம். குறைந்த.""",,Provisional D4: repeated nonsensical wording and contradictory clause fragments in the earthquake explainer; fluent reader/source verification required before accepting the proposed drop.
+78a681d105a4a147,full,fix,D3,"D3 at offset 412: ""பேரலல் ட்வின் லிக்யூடு கூல்டு எஞ்சின்"" | D3 at offset 579: ""ரைடு பை ஒயர் தொழில்நுட்பமும்""",,"Natural English technical phrases transliterated within Tamil bike specifications; annotation-only D3, preserve useful terminology."
+a48cbb35f5ab2603,full,fix,C1,"C1 at offset 4366: ""பிற செய்திகள்ஃ\nசமூக ஊடகங்களில் பிபிசி தமிழ் :""",,"Empty other-news/social-media footer follows the voter-registration guide; website title is intentional, and source checking is needed for the incomplete three-item list."
+086f4273ad802fea,full,fix,C1;D3,"C1 at offset 237: ""Don't Miss!"" | C1 at offset 3560: ""Note: Images used are for representational purpose only."" | D3 at offset 468: ""Technology Mobile வழியாக லோன் எடுக்காதீர்கள்!""",,Leading recommendations and terminal image disclaimer/teaser surround a complete scrappage-policy article; preserve the body and its policy name.
+d67c61e798d5f64e,full,clean,,,,Complete film-song release report; the relevant video reference is part of the article and initials are not mixed-language corruption.
+7582703c5da3e94d,full,fix,C1;D3,"C1 at offset 0: ""- 3 hrs ago 144MP கேமரா."" | D3 at offset 343: ""ஸ்டைலான லுக்கில் Smartwatch வேண்டுமா?""",,Nine recommendation snippets precede the anti-skimming guide; D3 describes natural code switching in a teaser; retain the defensive advice and source credit.
+6a1332ae26a041ff,full,fix,D3,"D3 at offset 0: ""Messi with family in The Best Player Award ( AP )""",,"English photo caption accompanies a Tamil article; provisional D3 at document level, annotation only; caption and Tamil text should be retained."
+c7aaa41c204da816,full,clean,,,,Complete Tamil report on fishermen released by a court; no listed issue found.
+000df59cddcda6ea,full,fix,C1,"C1 at offset 5729: ""எமது செய்திகளை உடனுக்குடன் என்றடுவிட்டர் பக்கத்திலும்""",,"Terminal social/channel promotion is boilerplate; bulletin stories have intentional boundaries; scrambled word order in several lines needs source recovery, not an assumed MT cause."
+caec687442776b1a,full,fix,C1;D3,"C1 at offset 1583: ""உலகம் முதல் உள்ளூர் வரை இன்றைய முக்கிய செய்திகள்"" | C1 at offset 1786: ""நியூஸ்18 தமிழ்நாடு தொலைக்காட்சியை, ARASU CABLE - 46"" | D3 at offset 1607: ""இன்றைய முக்கிய செய்திகள் (Top Tamil News, Breaking News)""",,News18 promotional paragraph and channel list follow weather news; English descriptive phrases occur within the promotional sentence.
+2ef5e48d8a4e444c,full,fix,A4,"A4 at offset 1853: ""�""",1853: U+FFFD UTF8=ef bf bd,One U+FFFD at offset 1853 after a complete final sentence; verify the source rather than guessing lost bytes or deleting valid Tamil.
+6810c612520fe2b8,full,fix,C1;D3,"C1 at offset 1060: ""Also see:"" | C1 at offset 1070: ""உலகம் முதல் உள்ளூர் வரை இன்றைய முக்கிய செய்திகள்"" | D3 at offset 1094: ""இன்றைய முக்கிய செய்திகள் (Top Tamil News, Breaking News)""",,"Recommendation marker and News18 promotional/channel footer follow the article; overlap with row 202 is shared footer only, not an H2 duplicate."
+264bbd674ef489c4,full,clean,,,,Complete temple-event notice and schedule; public temple location and event times are not private personal data.
+42686daa22d0e057,full,fix,C3,"C3 at offset 4867: ""கரி-யானை""",,Final word-by-word gloss stops partway through the quoted verse; recover the continuation from source; no invented completion.
+bb1f46dbc57d0c5f,full,clean,,,,"Coherent school-achievement report; grade 9A and LLB are normal qualifications, not mixed-language disease."
+d2fdc6d7326f4472,full,clean,,,,"Tamil devotional verse; recurring refrains and older literary spelling are intentional, not repeated-line junk."
+368e7b6a663593c7,full,fix,C1;C3;D3,"C1 at offset 1777: ""அடிப்படை இயந்திரவியல்"" | C3 at offset 3595: ""என்னும் முடுக்கத்தைக் கொடுப்பதாகவும்,"" | D3 at offset 564: ""Rate of change of momentum""",,Running book header interrupts a sentence; final physics clause is incomplete. Preserve bilingual technical glosses; source-check damaged formula.
+e5bdb400d14b4bde,full,clean,,,,Complete Tamil football match report; team names and sporting loanwords are appropriate.
+8b6b217ae67c4717,full,clean,,,,"Coherent heritage report; village locations describe a public monument, not a private person's address."
+5ec82c27d7df0286,full,drop,D4;D3,"D4 at offset 8130: ""சால்மன் பல்லில் படர்ந்திருக்கும் சீமை சுண்ணாம்பு"" | D3 at offset 1058: ""waiters வாடிக்கையாளர்""",,Provisional D4: pervasive broken syntax and a food term rendered as tooth tartar; fluent/source review required before dropping. Restaurant contacts are public business details.
+fc2c4c04065b0486,full,clean,,,,Coherent report on a transplant experiment with a complete ending; no listed disease found.
+ec6cce1518170a6b,full,fix,C1,"C1 at offset 987: ""மௌவலின் தினசரி செய்திகளை உடனுக்குடன் பெற""",,Remove the terminal social-follow promotion; opening summary fragments repeat the article but two copies do not establish repeated-line disease.
+fa6df887b3a3ed81,full,fix,B4;C1;D2;D3,"B4 at offset 198: ""\\n"" | C1 at offset 4465: ""தயவு செய்து சர்வேயில் ஈடுபட்டு பிறருக்கு உதவுங்கள்"" | D2 at offset 108: ""payanpaadugal, marundhalavu, pakka vilaivugal"" | D3 at offset 329: ""Clopam Benefits & Uses in Tamil""",,"Literal newline escapes provisionally map to B4; menu/survey boilerplate and bilingual/romanised headings. Some list details are absent; source recovery needed, no medical rewriting."
+dee696c1d3059391,full,clean,,,,Complete college salary-arrears report; institutional abbreviations and loanwords are normal.
+3c3a2a0df8ad93a1,full,clean,,,,Complete motorcycle specification report; PS/Nm units and established technical loanwords alone do not establish D3.
+b2f3b49721ef4f89,full,fix,D3,"D3 at offset 0: ""க்ருத்'த்'யத்'கௌ'ரீப்ரஸாதா""",,"Annotation only: Sanskrit verses transcribed in Tamil accompany Tamil explanations; preserve the verses and transcription marks, do not translate or delete automatically."
+80b652391f329f75,full,clean,,,,Complete political biography/election report; reported public office dates and public-figure birth date are not private-contact evidence.
+5f9924a721d815ea,full,fix,C1,"C1 at offset 1034: ""Sign up to receive our newsletter in your inbox every day!""",,Remove terminal newsletter invitation; retain the complete candidate-change report.
+939cefd2cf7ac11d,full,fix,C1;C4,"C1 at offset 0: ""நீங்கள் தேடியது \""திருப்பூர்\"""" | C4 at offset 1724: ""டையிங் மற்றும் பிரிண்டிங் சேவைகளுக்கான வரி விகிதம் எவ்வளவு""",,"Search-page heading followed by multiple unrelated full local-news reports; separate article units after manual boundary review, not a keyword-list drop."
+bbc0131080e6d45e,full,clean,,,,Coherent non-graphic crime report; names and broad neighbourhoods alone are not private contact/address evidence.
+47490b30cdfed903,full,fix,A6,"A6 at offset 356: ""கல்லூ>யில்தான்"" | A6 at offset 994: ""ஹ>சரண்""",356: U+0B95 UTF8=e0 ae 95; 357: U+0BB2 UTF8=e0 ae b2; 358: U+0BCD UTF8=e0 af 8d; 359: U+0BB2 UTF8=e0 ae b2; 360: U+0BC2 UTF8=e0 af 82; 361: U+003E UTF8=3e; 362: U+0BAF UTF8=e0 ae af; 363: U+0BBF UTF8=e0 ae bf; 364: U+0BB2 UTF8=e0 ae b2; 365: U+0BCD UTF8=e0 af 8d; 366: U+0BA4 UTF8=e0 ae a4; 367: U+0BBE UTF8=e0 ae be; 368: U+0BA9 UTF8=e0 ae a9; 369: U+0BCD UTF8=e0 af 8d; 994: U+0BB9 UTF8=e0 ae b9; 995: U+003E UTF8=3e; 996: U+0B9A UTF8=e0 ae 9a; 997: U+0BB0 UTF8=e0 ae b0; 998: U+0BA3 UTF8=e0 ae a3; 999: U+0BCD UTF8=e0 af 8d,"Provisional A6: intraword > corruption; punctuation does not perfectly fit wrong-script code, so confirm with source/instructor before repair."
+7ceccad5782fc405,full,clean,,,,Coherent film press-meet excerpt ending in a complete statement; an unclosed quote alone does not establish sentence truncation.
+2f1605fd86c3cdf6,full,clean,,,,Coherent industrial-visit report; foreign organisation/person names alone are not D3. Awkward wording needs human review but does not establish D4/D5.
+615f069b83832afe,full,clean,,,,Complete Tamil crop-insurance report; editorial typos alone do not establish bad translation or prior-cleaning damage.
+b9e643d1322844b7,full,clean,,,,Non-graphic news about trafficking allegations and a minister's response; reporting abuse is not automatically F3.
+5a90191547d16576,full,fix,B4,"B4 at offset 52: ""\\n""",,Literal backslash-n separators provisionally map to B4. Caste-focused political polemic needs course-policy review; F3 is not inferred solely from a controversial topic.
+24ec1b20186fa9ea,full,fix,C2,"C2 at offset 0: ""காலாண்டு முடிவுகள்!"" | C2 at offset 48: ""காலாண்டு முடிவுகள்!"" | C2 at offset 327: ""காலாண்டு முடிவுகள்!""",,The identical headline occurs three times in a short teaser; retain one title. No mid-sentence cutoff is established.
+1e486125322b4217,full,clean,,,,Complete local report of a transformer opening with a coherent ending.
+392b30c8f372490c,full,fix,C1;D3,"C1 at offset 0: ""Don't Miss!"" | D3 at offset 658: ""Education India Security Press Nashik Recruitment""",,Remove unrelated recommendation menu before the TV-programme article; English recruitment heading is mixed-language menu text; manually inspect final fragment residue.
+60c6714c9fff6fc3,full,clean,,,,Coherent cricket disciplinary-proceedings report; legal reporting is not itself a dataset disease.
+21f0e929d3beefe8,full,fix,C1,"C1 at offset 0: ""நீங்கள் தேடியது \""கவாத்து பணி தீவிரம்\""""",,Remove the search-result heading; preserve the coherent tea-cultivation article and its summary bullets.
+b017d37fe1c16858,full,fix,D3,"D3 at offset 357: ""Full cream பால்""",,Annotation only: natural English product-category phrase inside Tamil sentences; preserve it.
+0144a10753d9b239,full,fix,C4,"C4 at offset 892: ""அமைதியை ஆயுதமாக கொண்டு அன்பு என்னும் வீரர்களுடன்""",,Unrelated spiritual quotation follows the Canadian campaign-volunteer report without an explicit article boundary; separate or remove only after review.
+e990610abcbd181a,full,clean,,,,Non-graphic report of a school official's arrest; no private student identifiers or listed formatting disease found.
+86819c4e5483d8a6,full,clean,,,,Short coherent breakfast-health passage with a complete ending; spacing typo before a consonant cluster is not an orphan vowel sign.
+bce0fb0bbf15109d,full,clean,,,,Complete Tamil report about a temple committee's investigation; religious claims are not themselves a listed disease.
+053c91629d3c6981,full,clean,,,,Complete non-graphic report of a gas-cylinder accident; no listed disease found.
+a433e6b081fd240c,full,fix,G1;C4,"G1 at offset 1674: ""ேபாலீசார்"" | G1 at offset 13256: ""ெரயில்"" | G1 at offset 15264: ""ெகாள்முதல்"" | C4 at offset 12834: ""சிவகங்கை மாவட்டம் மானாமதுரை பகுதி முருகன் கோவில்களில்""",1674: U+0BC7 UTF8=e0 af 87; 1675: U+0BAA UTF8=e0 ae aa; 1676: U+0BBE UTF8=e0 ae be; 1677: U+0BB2 UTF8=e0 ae b2; 1678: U+0BC0 UTF8=e0 af 80; 1679: U+0B9A UTF8=e0 ae 9a; 1680: U+0BBE UTF8=e0 ae be; 1681: U+0BB0 UTF8=e0 ae b0; 1682: U+0BCD UTF8=e0 af 8d; 13256: U+0BC6 UTF8=e0 af 86; 13257: U+0BB0 UTF8=e0 ae b0; 13258: U+0BAF UTF8=e0 ae af; 13259: U+0BBF UTF8=e0 ae bf; 13260: U+0BB2 UTF8=e0 ae b2; 13261: U+0BCD UTF8=e0 af 8d; 15264: U+0BC6 UTF8=e0 af 86; 15265: U+0B95 UTF8=e0 ae 95; 15266: U+0BBE UTF8=e0 ae be; 15267: U+0BB3 UTF8=e0 ae b3; 15268: U+0BCD UTF8=e0 af 8d; 15269: U+0BAE UTF8=e0 ae ae; 15270: U+0BC1 UTF8=e0 af 81; 15271: U+0BA4 UTF8=e0 ae a4; 15272: U+0BB2 UTF8=e0 ae b2; 15273: U+0BCD UTF8=e0 af 8d,Orphan vowel signs precede consonants in three words; recover intended order from source. Multiple local reports include an unmarked book-news to temple-news join.
+eef18ee7c0725ec7,full,fix,C1;D3,"C1 at offset 202: ""விஜய்க்கு மட்டும்தான் பொறுப்பு இருக்கா என்ன?"" | D3 at offset 0: ""Sivakarthikeyan Reply to Tirupur Collector""",,Unrelated film-story teasers interrupt the article; retain the natural English title as annotated language mixing.
+3d47555ac0e81130,full,fix,C1,"C1 at offset 1526: ""அதிகரிக்கும் கொரோனாஃ ஒரேநாளில் 10,542 பேர் பாதிப்பு!""",,Two unrelated coronavirus/gold-price teaser headlines follow the completed election article.
+b2c838dc3fb7809a,full,drop,C5,"C5 at offset 10: ""பொருளாதார மந்த நிலை சிக்கலில் இருந்து விடுபடுமா சிங்கப்பூர்?""",,"Entire document is a source heading plus unrelated news-link headlines, with no article body; inspect the whole list."
+85ded505f55ead28,full,clean,,,,Complete child-rescue report; public incident locations and staff names are not a private residential address.
+1276f2b793e6e6e7,full,clean,,,,"Complete Malaysian vehicle-sales report; SUV and Proton X70 are an acronym and a model name, not sufficient for D3."
+5fb762c034ff5d74,full,fix,C1,"C1 at offset 308: ""Sign up to receive our newsletter in your inbox every day!""",,Terminal newsletter invitation follows a complete Tamil commentary excerpt.
+00b92e3d43fdfccb,full,clean,,,,Complete parliamentary-proceedings report with no listed disease found.
+9190ec930248487d,full,clean,,,,Multi-item news digest has explicit bullet/locality boundaries; repeated leads alone are not C2. Confirm aggregation is acceptable before approving.
+254518b8ea87dea9,full,clean,,,,Complete non-graphic crime report; reporting violence and names alone do not establish F3 or a private contact field.
+3a38464e770885cf,full,clean,,,,Short devotional introduction ends in a complete sentence; missing additional verses alone does not prove C3.
+735031a4dcc7fc5d,full,clean,,,,Complete news report; visible spelling/OCR-like blemishes do not by themselves establish the listed A/G causes. Review Tamil typography.
+f7394a98834d9c2e,full,clean,,,,Complete celebrity-news report; ordinary Tamil-script loanwords and programme names are preserved.
+9b5bc6e506f9a66d,full,clean,,,,Complete Sri Lankan parliamentary-meeting report; regional wording and time formatting remain intact.
+37c9a1205b3bb933,full,drop,D4,"D4 at offset 796: ""அவுட் பிளஸ் 1 சதவீத இடையக அளவிற்கு""",,Provisional D4: producer/consumer lecture garbles in/out logic and renders modulo-style arithmetic as percentage; verify against source with a fluent technical reader before dropping.
+63f9cef899d5865e,full,fix,C4;F1,"C4 at offset 2098: ""மாணவனை பலரும் பாராட்டினர்.\n பாபநாசம் போலீஸ்"" | street address of a private person at offset 6123",,Unrelated donation and police reports join without a heading at the cited transition; split at verified article boundaries and redact private street-address details.
+90ef09d808f9b330,full,fix,C1,"C1 at offset 0: ""Last Modified""",,Website timestamp metadata prefixes the article; reported allegations are not automatically F3.
+f1458fcf9a5e80f6,full,fix,C3;F1,"C3 at offset 2347: ""அதற்கு எடுத்துக்\nஇந்நூல்"" | full postal address of a private person at offset 3345",,"A sentence is cut internally before the next paragraph, suggesting omitted continuation; verify source and redact the private postal-address line."
+14359b6d0f5fdff2,full,fix,B4;C1,"B4 at offset 127: ""\\n"" | C1 at offset 154: ""LeaveaComment on""",,Literal backslash-n is provisionally B4 serialization junk; remove comment/site metadata. Review odd word spacing manually without guessing previous-cleaning damage.
+6efd888b48bdd9c7,full,clean,,,,Complete cricket-tour report with no listed disease found.
+586aae83a886a50c,full,fix,C3,"C3 at offset 1465: ""கொண்டேன்.\n அன்புள்ள ஜெ,""",,Text ends after a fresh letter salutation with no body; recover the missing continuation or remove only the dangling salutation after source review.
+c8a35fd923dc95e1,full,fix,B4;C1,"B4 at offset 178: ""\\n"" | C1 at offset 311: ""2 min ago"" | C1 at offset 3034: ""Read more about:""",,Provisional B4 for literal newline escapes; page header/sidebar teasers and trailing topic/English summary metadata surround the Tamil article.
+7934f3033d478011,full,clean,,,,Complete Malaysian political report; regional Tamil usage is valid.
+a75c49e642feb642,full,fix,C1,"C1 at offset 237: ""Don't Miss!""",,Leading cross-section links and unrelated inline/trailing motorcycle teasers contaminate the car article; awkward wording alone does not establish D4/D5.
+ba5fe2157dc33f46,full,clean,,,,Complete counterfeit-currency news report; possible editorial mistakes are not evidence of a specific listed disease.
+dac79b5896cd1e12,full,clean,,,,Complete non-graphic report about a family complaint and court proceedings; no contact or residential street-address field found.
+67ef3df1ebe69226,full,clean,,,,"Complete local missing-person/family news item; names, ages and broad localities alone are not treated as private contact fields."
+15ad44e8bd0e7b68,full,clean,,,,Complete festival report with a clearly marked related locality subsection.
+77b07882834533e5,full,clean,,,,Complete Sri Lankan political report; public official-location reporting is not a private address.
+1f750756a09593b2,full,fix,C1,"C1 at offset 0: ""- 8 hrs ago""",,Unrelated news/sidebar headlines precede the hair-care article; preserve pH notation. Diagnosis does not validate the health claims.
+be78e299cf6a26d8,full,drop,B4;C1;C4;D3;F3,"B4 at offset 2959: ""\\n"" | C1 at offset 5050: ""Posted by"" | C4 at offset 2942: ""உயிர்மை பதிப்பகம்\\nஎந்திரன் படம்"" | D3 at offset 19917: ""balakumaran is notawriter.. he is the writer"" | F3 at offset 39875: ""ஒரு சிறுவன் மீது ஒரு கற்பழிப்பு கேஸ் நடந்தது.""",,"Concatenated blog posts contain sexualized content involving a boy; drop this document pending safety review. Also literal newline escapes, post footers and natural English quotation mixing; no explicit sexual excerpt reproduced."
+027b720b8911f8f2,full,clean,,,,Complete document; no listed disease found during review.
+9a64628a6d4aadee,full,clean,,,,Complete document; no listed disease found during review.
+5749658346448bd9,full,clean,,,,Complete document; no listed disease found during review.
+88f21b27659396af,full,clean,,,,Complete document; no listed disease found during review.
+26559494b14c516f,full,clean,,,,Complete document; no listed disease found during review.
+900d9e475bf32332,full,clean,,,,Complete document; no listed disease found during review.
+f1ea35fb69e97b12,full,fix,D3,"D3 at offset 0: ""Xiaomi 13 Ultra என்பது""",,English product name appears inside Tamil prose; retain the name and annotate the natural language mixing.
+e21fc27b0ec5c495,full,fix,C1;D3,"C1 at offset 77: ""Home Trend News Latest Tamil News"" | D3 at offset 77: ""Home Trend News Latest Tamil News""",,English navigation and a trailing previous-article teaser surround the news report; remove only the boilerplate.
+9d27630e46c1654e,full,clean,,,,Complete document; no listed disease found during review.
+904e805ed71fb02b,full,clean,,,,Complete document; no listed disease found during review.
+671ec473fbd88ca4,full,clean,,,,Complete document; no listed disease found during review.
+b16791a5741328a2,full,drop,B4;D4,"B4 at offset 3749: ""XNUMX"" | D4 at offset 3101: ""3 ஆம் ஆண்டு பிரிட்ஜ் கிரேன் ஆபரேட்டர் லெவல்-1.518"" | D4 at offset 6988: ""450 ஆயிரம் டன் மாலைகளை""",,"Full reread: an unresolved numeric placeholder and scrambled year, qualification-level and steel-production wording make the translation unreliable; recover and retranslate from the source."
+b12ed9fdcf6ac5ea,full,fix,C1;D3,"C1 at offset 909: ""Follow @ Google News:"" | D3 at offset 909: ""Follow @ Google News:""",,Terminal Google News follow invitation is bilingual site boilerplate after a complete article.
+504b1a8292fbe9d2,full,drop,A6;G1;C3,"A6 at offset 218: ""தஸோரிa"" | G1 at offset 852: ""ெெஸநாறி"" | G1 at offset 1056: ""ெெவவிதலம்"" | C3 at offset 1282: ""சுழன்று திரியாநிற்பதும், தன்னை""",223: U+0061 UTF8=61; 852: U+0BC6 UTF8=e0 af 86; 853: U+0BC6 UTF8=e0 af 86; 1056: U+0BC6 UTF8=e0 af 86; 1057: U+0BC6 UTF8=e0 af 86,"Full reread: pervasive OCR damage includes a Latin intrusion, detached Tamil vowel signs and an unfinished ending; recover from the source while preserving legitimate classical and Grantha forms."
+e80a9f732508728d,full,drop,C1;C5;D3,"C1 at offset 0: ""Sort By :"" | C5 at offset 10: ""வாக்காளர்களுக்கு ரூ 2 ஆயிரம் பணம் கொடுக்கும் மோடி?"" | D3 at offset 0: ""Sort By :""",,The document is a sort control followed by unrelated link headlines with no article body.
+e39821d7953fdd92,full,clean,,,,Complete document; no listed disease found during review.
+e3da5185d2b5b1c9,full,clean,,,,Complete document; no listed disease found during review.
+f2cd43ce576f5a6a,full,fix,C3,"C3 at offset 2221: ""கூறுகிறார்கள்,""",,The article stops after an attribution ending in a comma; recover the missing quotation from the source.
+b5aeeb823c83e186,full,fix,C1;D3,"C1 at offset 925: ""தமிழ் படிக்க ஆசிரியர் இல்லையே என்ற கவலை இனியும் வேண்டாம்."" | D3 at offset 983: ""uchchi. com இன் இணையவழிக் கற்கை நெறிகளில்""",,Unrelated course advertisement follows the royal-family report and includes an English domain in Tamil prose.
+3e9a2568d776f212,full,fix,C1;D3,"C1 at offset 2894: ""Sign up to receive our newsletter in your inbox every day!"" | D3 at offset 2894: ""Sign up to receive our newsletter in your inbox every day!""",,Remove the terminal English newsletter invitation after the complete election report.
+8f963103c58ca614,full,clean,,,,Complete document; no listed disease found during review.
+e6a64d2209a176ac,full,drop,D4,"D4 at offset 625: ""பிப்ரவரி 130, 25 அன்று 2014வது விசாரணையில்"" | D4 at offset 983: ""வழக்கின் அடுத்த விசாரணை மற்றும் திரையரங்குகளில் திரையிடப்படும்""",,Full reread: dates and hearing numbers are scrambled and a court hearing is rendered as a cinema screening; recover and retranslate from the source.
+7a5b67e5ffa0823b,full,clean,,,,Complete document; no listed disease found during review.
+6a06aa6c25ec4fcc,full,clean,,,,Complete document; no listed disease found during review.
+d3c14bec19413ec8,full,clean,,,,Complete document; no listed disease found during review.
+bb508fee46f757c6,full,fix,C1;D3,"C1 at offset 0: ""Don't Miss!"" | D3 at offset 319: ""- Technology OnePlus 12R:""",,A bilingual recommendation menu precedes the unrelated film article; remove only the menu block.
+6442985c62cef3c3,full,clean,,,,Complete document; no listed disease found during review.
+94f80a2793c41b1a,full,fix,C1;D3,"C1 at offset 2527: ""உலகம் முதல் உள்ளூர் வரை இன்றைய முக்கிய செய்திகள்"" | D3 at offset 2577: ""Top Tamil News, Breaking News""",,News18 promotional and channel-list footer follows the conference report; the footer includes English phrases.
+3d855f7972cf2919,full,clean,,,,Complete document; no listed disease found during review.
+b726c7682a75ed9f,full,clean,,,,Complete document; no listed disease found during review.
+daa0c279a0d4d353,full,clean,,,,Complete document; no listed disease found during review.
+a8e2796d71938a0a,full,clean,,,,Complete document; no listed disease found during review.
+e53bda7c7907eef0,full,clean,,,,Complete document; no listed disease found during review.
+0ea22f1d5549e92c,full,clean,,,,Complete document; no listed disease found during review.
+038b72086dad07d0,full,clean,,,,Complete document; no listed disease found during review.
+07c1dff9e4dd265c,full,fix,C1;D3,"C1 at offset 0: ""Don't Miss!"" | D3 at offset 444: ""SIM CARD முதல் INCOME TAX ரிட்டர்ன் வரை""",,Unrelated bilingual recommendation links precede the Bigg Boss article; remove the menu and retain the article.
+86abb7b0112ec412,full,clean,,,,Complete document; no listed disease found during review.
+74ca49aa67cbb7c6,full,fix,C3,"C3 at offset 2922: ""அவள் எவ்வளவு கண்ணீர் சொரிந்தும் புத்லாபாய் அவளுக்கு உதவ\nஊருக்குப் போயிருந்த""",,The narrative is cut inside a sentence before a non-continuing paragraph; recover the missing text from the source.
+13de1d751434be22,full,fix,B4;C1;C2;D3,"B4 at offset 105: ""\\n"" | C1 at offset 107: ""Home செய்திகள்"" | C2 at offset 0: ""யோவ் பெரிய மனுஷா..? உன்கிட்ட போய் கேட்டேன் பாரு.! வெங்கட் பிரபுவை மிரட்டிய ரசிகை.!"" | C2 at offset 122: ""யோவ் பெரிய மனுஷா..? உன்கிட்ட போய் கேட்டேன் பாரு.! வெங்கட் பிரபுவை மிரட்டிய ரசிகை.!"" | C2 at offset 206: ""யோவ் பெரிய மனுஷா..? உன்கிட்ட போய் கேட்டேன் பாரு.! வெங்கட் பிரபுவை மிரட்டிய ரசிகை.!"" | D3 at offset 562: ""@vp_offl sir today is my bday plz wish me sir i m ur big fan sir""",,"Literal newline escapes, page navigation, three copies of the title and English social posts contaminate the article."
+1a9ed0fec40cf637,full,clean,,,,Complete document; no listed disease found during review.
+5bd30425ae32d874,full,fix,C1,"C1 at offset 874: ""இதையும் படியுங்கள்ஃ ஆதி கைலாஷ் யாத்திரைக்கு சென்ற பெண் யாத்ரீகர் மரணம்""",,An unrelated read-more headline interrupts the political report; remove only the teaser.
+fe039af83ca01017,full,clean,,,,Complete document; no listed disease found during review.
+bed759f90af1f4b5,full,clean,,,,Complete document; no listed disease found during review.
+137469603781fe0f,full,clean,,,,Complete document; no listed disease found during review.
+e604d1e54b857c29,full,fix,B4;C1;C2;D3,"B4 at offset 112: ""\\n"" | C1 at offset 114: ""Home » »Unlabelled »"" | C2 at offset 0: ""இப்ப அடி பார்ப்போம்.. ஐஐடி முன் மாட்டுக்கறி சாப்பிட்டு தந்தை பெரியார் தி.க. அதிரடி!"" | C2 at offset 135: ""இப்ப அடி பார்ப்போம்.. ஐஐடி முன் மாட்டுக்கறி சாப்பிட்டு தந்தை பெரியார் தி.க. அதிரடி!"" | C2 at offset 220: ""இப்ப அடி பார்ப்போம்.. ஐஐடி முன் மாட்டுக்கறி சாப்பிட்டு தந்தை பெரியார் தி.க. அதிரடி!"" | D3 at offset 86: ""Muckanamalaipatti - Events""",,"Literal newline escapes, navigation metadata and three title copies precede the article."
+5de8da7ffa630cd8,full,fix,D3,"D3 at offset 1780: ""parallel universe teleportation""",,English technical and dialogue phrases appear naturally within Tamil speculative fiction; annotation only.
+00035542745535c7,full,fix,C3,"C3 at offset 1369: ""பயந்துபோய் தீர்வை முழுவதையும் தள்ளு\n""",,The literary excerpt ends halfway through a word; recover the continuation from the source.
+4f96e4da18fe5044,full,fix,C1;C3;D3,"C1 at offset 500: ""Refer Slide Time: 02:32)"" | C3 at offset 1288: ""பிரான்சில் இருந்தபோது அவர் இந்த குறிப்பிட்ட\n"" | D3 at offset 525: ""Runs from Fascism (1932-1940)""",,"Lecture slide metadata remains in the prose, and the transcript ends mid-sentence; retain the bilingual slide title after review."
+0919bcad4eecf54f,full,drop,C1;C5;D3,"C1 at offset 0: ""Welcome!"" | C5 at offset 131: ""முதல் படம் வெளியாகும் முன்பே SK மற்றும் சிம்புவுடன் படம்"" | D3 at offset 10: ""Forgot your password?""",,Login text and unrelated entertainment link headlines fill the document; there is no article body.
+5f21fa5756c8bb25,full,fix,B4;C1;D3,"B4 at offset 91: ""\\n"" | C1 at offset 6384: ""Posted in HOME SLIDER"" | D3 at offset 6384: ""Posted in HOME SLIDER, NEWS, politics""",,Literal newline escapes and bilingual CMS category/tag/previous-next metadata surround a complete election report.
+9b445bb288698dd7,full,fix,C4,"C4 at offset 111: ""ஏலம் விடப்பட்டது.\n தருமபுரி தூய இருதய ஆண்டவா் பேராலயத்தில்""",,Unrelated one-line local reports are concatenated without article headings; split them at verified line boundaries.
+4c3114a092ee7902,full,fix,C1;D3,"C1 at offset 716: ""உலகம் முதல் உள்ளூர் வரை இன்றைய முக்கிய செய்திகள்"" | D3 at offset 766: ""Top Tamil News, Breaking News""",,News18 promotional and channel-list footer follows the job notice and contains English phrases.
+2e7f380676487979,full,clean,,,,Complete document; no listed disease found during review.
+d239ce20094990e2,full,drop,C1;C3,"C1 at offset 0: ""எமது தனியுரிமை மற்றும் குக்கி கொள்கைகளை நாங்கள் மேம்படுத்தியுள்ளோம்."" | C3 at offset 535: ""சமூக ஊடகங்களில் பிபிசி தமிழ் :""",,Cookie-policy boilerplate and an incomplete short disaster snippet end at an empty social-media heading.
+90778075c5a367b9,full,fix,C1;D3,"C1 at offset 0: ""- 3 hrs ago 144MP கேமரா"" | D3 at offset 948: ""Education India Security Press Nashik Recruitment 2023""",,A bilingual recommendation list precedes the mosquito-control article; remove only the teaser block.
+81628494843f83a3,full,clean,,,,Complete document; no listed disease found during review.
+e3dd3ddb029429dc,full,drop,C5,"C5 at offset 0: ""திமுக தலைவர் கருணாநிதிக்கு அமெரிக்க நிறுவனம்""",,The document is a list of unrelated news snippets with no sustained article body.
+599fb26b99598274,full,clean,,,,Complete document; no listed disease found during review.
+ffa6dbbfc4a0b6aa,full,clean,,,,Complete document; no listed disease found during review.
+e0fae85a5d9aa22e,full,fix,C1,"C1 at offset 0: ""நீங்கள் தேடியது \""IT Raid\""""",,Remove the search-page heading; the remaining long report concerns the same tax-search topic.
+11ccce9637e44fc2,full,clean,,,,Complete document; no listed disease found during review.
+2b001ea51163c37c,full,fix,C4,"C4 at offset 249: ""நடவடிக்கை எடுக்கப்பட்டுள்ளது.\n சென்னையில் மானியமில்லா கேஸ் சிலிண்டர் விலை""",,A school-reopening item is directly joined to an unrelated cooking-gas price item; split at the newline.
+c52e4d8f75876863,full,fix,C1,"C1 at offset 1298: ""இதையும் படிங்க. . AIADMK""",,An unrelated read-more political teaser follows the elephant video article.
+9c3ef21f717ca002,full,clean,,,,Complete document; no listed disease found during review.
+2da9614da2f92e1d,full,fix,C3,"C3 at offset 4838: ""இப்போதும் அதையெல்லாம் சொல்லி அவனைப் பகிடி பண்ணிக் கொண்டிருந்தோம். அவன்\n""",,"The memoir excerpt ends immediately after a new subject, leaving the sentence unfinished."
+41a31a33b942c4d5,full,fix,B4;C2;D3,"B4 at offset 145: ""+ \""||\"" +"" | C2 at offset 44: ""'ஓய்வு காலத்தை நெருங்கி விட்டேன்' - பெடரர் பேட்டி"" | C2 at offset 95: ""'ஓய்வு காலத்தை நெருங்கி விட்டேன்' - பெடரர் பேட்டி"" | C2 at offset 196: ""'ஓய்வு காலத்தை நெருங்கி விட்டேன்' - பெடரர் பேட்டி"" | D3 at offset 0: ""'Retirement is near' - Federer interview""",,"A leaked string-concatenation fragment, literal newline escapes and repeated bilingual titles precede the short article."
+ff85c2765c104bc3,full,clean,,,,Complete document; no listed disease found during review.
+7007c4b46133be84,full,fix,C1;D3,"C1 at offset 1061: ""Sign up to receive our newsletter in your inbox every day!"" | D3 at offset 1061: ""Sign up to receive our newsletter in your inbox every day!""",,Remove the terminal English newsletter invitation after the obituary.
+7cf1e2870271ffef,full,fix,D3,"D3 at offset 19: ""மிளகு! (PEPPER)""",,"English commodity names appear in Tamil section headings; annotation only, retain the bilingual market report."
+78900d8c1fda8d84,full,drop,D4,"D4 at offset 577: ""சுரங்கப்பாதை 100க்கு கீழ் செல்லும். Yıl தெரு"" | D4 at offset 802: ""பாதாளச் சாக்கடை பணிப் பகுதியில்""",,"Full reread: a street name is split into a numeric statement and underpass works become sewer works; the foreign proper name alone is not D3, but the report needs source-based retranslation."
+e810c06edcf6ea25,full,clean,,,,Complete document; no listed disease found during review.
+c42ea882436061c2,full,fix,C1,"C1 at offset 0: ""- 1 hr ago Mobile வழியாக லோன் எடுக்காதீர்கள்!"" | C1 at offset 2043: ""கட்டணம். . IPL 2023 போட்டிகளை பார்க்க உதவும் JioCinema ஆப்பிற்கு கட்டணம்"" | C1 at offset 2748: ""Jio + Airtel என. . 2 சிம் கார்டு யூஸ் பண்றீங்களா?""",,Unrelated site teasers interrupt the WhatsApp security article; remove the teaser blocks.
+05caafe65aea4496,full,clean,,,,Complete document; no listed disease found during review.
+9b1391376c435db2,full,clean,,,,Complete document; no listed disease found during review.
+90851a19c7500722,full,clean,,,,Complete document; no listed disease found during review.
+be9a090daf35825d,full,clean,,,,Complete document; no listed disease found during review.
+704da7b4b8285f8e,full,fix,C1;D3,"C1 at offset 0: ""Thank you for reading this Dhinasari News Article."" | D3 at offset 0: ""Thank you for reading this Dhinasari News Article.""",,Remove the leading English subscription boilerplate before the Tamil article.
+fbbeb217a2e58564,full,drop,C4,"C4 at offset 110: ""ஷிகர் தவானின் பெயருக்கு பாதிப்பு ஏற்படும் வகையில்"" | C4 at offset 979: ""கொரோனா வைரஸ் பாதிப்பு நாடு முழுவதும் சற்று அதிகரித்து வரும் நிலையில்""",,Several unrelated news reports are joined without reliable document boundaries.
+14f1c117f70cfdb5,full,clean,,,,Complete document; no listed disease found during review.
+598aaf25f243ef71,full,fix,A4,"A4 at offset 2842: ""�""",2842: U+FFFD UTF8=ef bf bd,A replacement character at the document tail records lost source bytes.
+33d14098ab6fd5fd,full,clean,,,,Complete document; no listed disease found during review.
+7ce6747bf41c0f45,full,clean,,,,Complete document; no listed disease found during review.
+61957b6260e7f6a8,full,fix,B4;C1,"B4 at offset 123: ""Dinakaran\\n"" | C1 at offset 0: ""2,000 தொழிலாளர்கள் இன்று குடும்பத்துடன் போராட முடிவு""",,Remove the unrelated leading headline and decode the literal newline escape before the article.
+ffea78726d9ffca6,full,clean,,,,Complete document; no listed disease found during review.
+332d6053bf148a0f,full,clean,,,,Complete document; no listed disease found during review.
+226045fc5dc87f24,full,drop,C1;C4;D3,"C1 at offset 892: ""மேலும் படிக்க : WhatsApp features 2020"" | C4 at offset 1151: ""கிழக்கு மாகாணத்தில் கொரோனா தொற்றாளர்களின் எண்ணிக்கை 100 ஆக அதிகரித்துள்ளதாக"" | D3 at offset 1001: ""Previous Post""",,Navigation and an unrelated COVID report are appended to the FASTag article; the tail cannot be repaired as one document.
+a626483a05fce5b6,full,fix,C1,"C1 at offset 0: ""- #Chennaiதோனிக்கு ஆடம்பரமே பிடிக்காது!""",,Remove the leading unrelated news-teaser list before the political report.
+5e4004fc649dbacd,full,clean,,,,Complete document; no listed disease found during review.
+5bf861c5fdd4fbbf,full,fix,C1;D3,"C1 at offset 1225: ""Sign up to receive our newsletter in your inbox every day"" | D3 at offset 1225: ""Sign up to receive our newsletter in your inbox every day""",,Remove the terminal English newsletter invitation.
+4f5927a2560525f8,full,clean,,,,Complete document; no listed disease found during review.
+76e785aec6767985,full,clean,,,,Complete document; no listed disease found during review.
+ed70dc771c386f78,full,clean,,,,Complete document; no listed disease found during review.
+c8be4e5e7b19aebf,full,clean,,,,Complete document; no listed disease found during review.
+e3dbf5b63c82e8d9,full,fix,C1,"C1 at offset 0: ""தேர்வு அறையில் இடமில்லாததால் தரையில் அமர்ந்து தேர்வு எழுதிய மாணவர்கள்""",,An unrelated education headline precedes the Sushant Singh report; remove the teaser.
+9c8df7a489dae1e5,full,fix,C1;D3,"C1 at offset 1518: ""Sign up to receive our newsletter in your inbox every day!"" | D3 at offset 1518: ""Sign up to receive our newsletter in your inbox every day!""",,Remove the terminal English newsletter invitation.
+dcd78034aa79ae2a,full,clean,,,,Complete document; no listed disease found during review.
+db60e8852386ca6c,full,clean,,,,Complete document; no listed disease found during review.
+90bddd0458dc149e,full,drop,D4,"D4 at offset 0: ""ஆஸ்திரியாவின் ஐரோப்பிய மற்றும் சர்வதேச விவகாரங்களுக்கான மத்திய அமைச்சகம் பிரிவு."" | D4 at offset 280: ""இருதரப்பு ஒத்துழைப்பு இருதரப்பும் தங்கள் பலம்""",,Full reread: malformed official-title and meeting clauses plus subject/agreement errors disrupt the short diplomatic report; recover and retranslate from the source.
+2fab1dfe27978019,full,fix,C4,"C4 at offset 1634: ""இந்தப் பங்கை இப்போது வாங்கினால் இவ்வளவு லாபம் கிடைக்குமென""",,Unrelated stock-market advice is appended directly after the cricket report.
+eb44bef8e1f01708,full,clean,,,,Complete document; no listed disease found during review.
+626c94699b7110d0,full,clean,,,,Complete document; no listed disease found during review.
+daa115b22d6038a9,full,clean,,,,Complete document; no listed disease found during review.
+5d170761d80b3fe2,full,fix,C2,"C2 at offset 0: ""மேக் இன் இந்தியா திட்டத்தின்கீழ் ரூ.500 கோடி முதலீட்டில்"" | C2 at offset 144: ""மேக் இன் இந்தியா திட்டத்தின்கீழ் ரூ.500 கோடி முதலீட்டில்""",,The opening sentence is duplicated consecutively; keep one copy.
+954d622d73de11f3,full,clean,,,,Complete document; no listed disease found during review.
+f6246724d09b7381,full,fix,G1,"G1 at offset 895: ""ெவளியே""",895: U+0BC6 UTF8=e0 af 86,A Tamil vowel sign is stranded before its base consonant in the second report.
+73b608edff80349d,full,clean,,,,Complete document; no listed disease found during review.
+84295d44f8fbd487,full,clean,,,,Complete document; no listed disease found during review.
+15d47286a3f3eaaa,full,fix,C1;D3,"C1 at offset 1477: ""உலகம் முதல் உள்ளூர் வரை இன்றைய முக்கிய செய்திகள்"" | D3 at offset 1715: ""ARASU CABLE - 46""",,Remove the News18 promotional and channel-list footer after the food-safety report.
+ea6183646ca5ad77,full,clean,,,,Complete document; no listed disease found during review.
+238ec902e1b9f70c,full,clean,,,,Complete document; no listed disease found during review.
+0f823692e31222e1,full,fix,C1,"C1 at offset 0: ""- 2 hrs ago உங்க கடந்த காலத்துல நடத்த மோசமான விஷயங்கள மறக்க முடியாம""",,Remove the leading unrelated site-teaser list before the education report.
+6b53f1d305f0f588,full,clean,,,,Complete document; no listed disease found during review.
+40e7e2ed8676c63a,full,clean,,,,Complete document; no listed disease found during review.
+b6c58f006021825d,full,fix,C4,"C4 at offset 4264: ""சிறுநீர் பெருக்கியாகவும், உடல் பலம் பெருக்கியாகவும் செயல்படுகிறது.""",,An unrelated health-remedy sentence is appended after the Modi interview.
+d54a206a217eaefe,full,fix,C1;D3,"C1 at offset 9582: ""Sign up to receive our newsletter in your inbox every day!"" | D3 at offset 9582: ""Sign up to receive our newsletter in your inbox every day!""",,Remove the terminal English newsletter invitation.
+a8c212b32a048791,full,fix,C2;C3,"C2 at offset 0: ""காரைக்கால் : அரசு நிறுவனமான பாப்ஸ்கோ மூலம் ஏற்பாடு செய்யப்பட்ட விழாவில்"" | C2 at offset 1431: ""காரைக்கால் : அரசு நிறுவனமான பாப்ஸ்கோ மூலம் ஏற்பாடு செய்யப்பட்ட விழாவில்"" | C3 at offset 114: ""இலவச காஸ் அடுப்புகளை எதிர்க்கட்சித் தலைவர் நாஜிம் வழங்கியதால்""",,The opening is repeated at the tail and the repeated copy stops mid-sentence; remove the tail copy.
+69ff490df71aea04,full,clean,,,,Complete document; no listed disease found during review.
+2462d1f3d47e664d,full,fix,B4;C1;D3,"B4 at offset 127: ""tamil360newz\\nHome"" | C1 at offset 1508: ""Previous article"" | D3 at offset 1508: ""Previous article""",,Decode literal newline escapes and remove Home/previous/next navigation plus unrelated teaser headlines.
+5b3b26fc10c444b5,full,clean,,,,Complete document; no listed disease found during review.
+1c32f4ea7001c215,full,clean,,,,Complete document; no listed disease found during review.
+edf1604bab0805b8,full,drop,F3;D3,"F3 at offset 399: ""செக்ஸ் விசயத்தில் கேட்கவே வேண்டாம்"" | D3 at offset 0: ""Koothi Nakkum Tamil Dirty Stories""",,Drop: the entire document is an explicit pornographic story excerpt.
+af0dc5593985a89b,full,fix,C1,"C1 at offset 0: ""9 hrs ago Airtel ஸ்பெஷல்""",,Remove the unrelated Airtel teaser before the mobile-security article.
+d9c0de7fabb13ac8,full,clean,,,,Complete document; no listed disease found during review.
+234e34f072b83ddc,full,fix,C4,"C4 at offset 355: ""அனுஷ நட்சத்திரத்தில் இருந்த கிரகங்களை இதர கிரகங்கள் பார்த்த பலன்""",,An astrology-results text is directly joined to an unrelated menstrual-health passage.
+063db8f137a7aab4,full,clean,,,,Complete document; no listed disease found during review.
+3911b332d27d6b7e,full,clean,,,,Complete document; no listed disease found during review.
+16cb493140c9b304,full,drop,D3;D4,"D3 at offset 1873: ""molting"" | D4 at offset 984: ""கருத்தடை விளக்குகள்"" | D4 at offset 1479: ""UVC இசைக்குழுவில்"" | D4 at offset 2559: ""பெரிய தற்போதைய ஓட்டுநர் சாதனங்கள்""",,"Full reread: untranslated English and pervasive technical mistranslation turn sterilisation into contraception, UV band into music band and electrical current into present-time wording."
+643b13e27447b579,full,fix,G1,"G1 at offset 930: ""ெசண்டை""",930: U+0BC6 UTF8=e0 af 86,A Tamil vowel sign is stranded before its base consonant in the festival report.
+a8acec3ee04d4b4f,full,clean,,,,Complete document; no listed disease found during review.
+807dd3de8128b3f2,full,clean,,,,Complete document; no listed disease found during review.
+e21bc8536a1cf0f0,full,clean,,,,Complete document; no listed disease found during review.
+b9c77a4aef5ad50b,full,clean,,,,Complete document; no listed disease found during review.
+b99e3edeb497d1e8,full,clean,,,,Complete document; no listed disease found during review.
+09dc682b4b1a6f7b,full,clean,,,,Complete document; no listed disease found during review.
+f93829e941eaf467,full,clean,,,,Complete document; no listed disease found during review.
+dea514d0f52c6454,full,clean,,,,Complete document; no listed disease found during review.
+b54a137e794fc027,full,fix,C1;C5;D3,"C1 at offset 12260: ""Subscribe to: Post Comments (Atom)"" | C5 at offset 12387: ""► September (6)"" | D3 at offset 12295: ""Enter your email address:""",,"Keep the relief report and comments, but remove the subscription widget, archive navigation, tag cloud and related-post lists."
+cf439e3ef083eb9a,full,clean,,,,Complete document; no listed disease found during review.
+e2169e975e72a6fa,full,drop,C5,"C5 at offset 0: ""லிங்கா படம் தொடர்பாக கே. எஸ் ரவிக்குமார் அளித்த பேட்டி""",,The document contains only unrelated entertainment teaser snippets without an article body.
+4ee0d2e44407f217,full,clean,,,,Complete document; no listed disease found during review.
+eca1d18503cb7f39,full,clean,,,,Complete document; no listed disease found during review.
+215fdcce3de8120e,full,drop,C5,"C5 at offset 0: ""உடுப்பி மாவட்டத்தில் உள்ள ஒரு தனியார் பியூசி கல்லூரியில்""",,The document is a list of separate hijab-related news snippets rather than one coherent article.
+4e65df0183ece03b,full,fix,C3,"C3 at offset 1716: ""அவர்களுடைய தலைவர்களில் சிலருக்குச்""",,The historical essay stops in the middle of its concluding sentence.
+2b6a7e9a9f4d374a,full,fix,C4;D3,"C4 at offset 47382: ""Jagdkommando Tri- Dagger : Built for the kill"" | D3 at offset 47382: ""Jagdkommando Tri- Dagger : Built for the kill""",,An unrelated English weapon-description fragment is appended after a long Tamil narrative.
+553c6a7088ec82a7,full,fix,C3,"C3 at offset 449: ""அதுவும் நல்ல யோசனைதா""",,The comic dialogue ends mid-word and mid-conversation.
+202be221169e9836,full,clean,,,,Complete document; no listed disease found during review.
+5bee0c975618685f,full,fix,A4,"A4 at offset 782: ""�""",782: U+FFFD UTF8=ef bf bd,A replacement character at the document tail records lost source bytes.
+afdfc828915877c3,full,clean,,,,Complete document; no listed disease found during review.
+2db3d228d31ac88b,full,fix,C1;D3,"C1 at offset 1764: ""Sign up to receive our newsletter in your inbox every day!"" | D3 at offset 1764: ""Sign up to receive our newsletter in your inbox every day!""",,Remove the terminal English newsletter invitation.
+a8c71b36c8643c9a,full,fix,C1;C3,"C1 at offset 404: ""பிற செய்திகள்"" | C3 at offset 419: ""சமூக ஊடகங்களில் பிபிசி தமி""",,"Remove the terminal related-news footer, which itself stops mid-word."
+5103461dc46814a7,full,drop,C5;D3,"C5 at offset 259: ""விஷ்ணு விஷாலின் பதிவு"" | D3 at offset 0: ""Watch actress Amala's comments about her latest film Life is Beautiful""",,The document contains an English promotional snippet followed only by unrelated Tamil entertainment teasers.
+431232ee5ce74957,full,clean,,,,Complete document; no listed disease found during review.
+b67249767c8648d2,full,fix,B4;C5,"B4 at offset 31: ""Uthayan Daily News\\n"" | C5 at offset 831: ""வடக்கு மருத்துவமனைகளின் தரமுயர்த்தல் பற்றி ஆராய்ப்பு""",,Decode literal newline escapes and remove the unrelated headline list after the cricket report.
+a7bf101ae44cbbf5,full,fix,D3,"D3 at offset 0: ""Independence Day:""",,English is mixed into the Tamil headline; annotation only.
+f3f677120f969d4e,full,clean,,,,Complete document; no listed disease found during review.
+10d81ba47121fa2c,full,fix,C1;D3,"C1 at offset 1226: ""This entry was posted on"" | D3 at offset 1226: ""This entry was posted on""",,Remove the terminal English WordPress metadata and response/trackback boilerplate.
+a0d39d4cde1f99d4,full,clean,,,,Complete document; no listed disease found during review.
+fb7395d947b5dd31,full,clean,,,,Complete document; no listed disease found during review.
+112b78341bf06a0f,full,clean,,,,Complete document; no listed disease found during review.
+409f0fd2354ea3c5,full,drop,F3,"F3 at offset 0: ""பாலியல் பலாத்காரத்திற்கு ஆளான சிறுமி""",,Drop pending safety review: the report concerns sexual violence against a child followed by suicide.
+81b12dbabd0d25f0,full,fix,C1;C5;D3,"C1 at offset 1742: ""பல தடைகளை தாண்டிய பிந்து"" | C5 at offset 1873: ""Related Tags :"" | D3 at offset 1873: ""Related Tags :""",,Remove unrelated teaser headlines and the bilingual related-tags footer.
+69708e0a0ed25f6e,full,clean,,,,Complete document; no listed disease found during review.
+759c7f5eaeff2f20,full,clean,,,,Complete document; no listed disease found during review.
+9ccbd4e58b28dc12,full,clean,,,,Complete document; no listed disease found during review.
+5f70e425033aa85d,full,fix,C1;D3,"C1 at offset 942: ""Related posts:"" | D3 at offset 942: ""Related posts:""",,Remove the terminal English related-posts label.
+8e85413a6820489f,full,clean,,,,Complete document; no listed disease found during review.
+75e0b51792c163ca,full,clean,,,,Complete document; no listed disease found during review.
+362e7deef4d21716,full,clean,,,,Complete document; no listed disease found during review.
+d02c2292738b7c93,full,fix,C1;D3,"C1 at offset 780: ""Digitized By Roja Muthiah Research Library"" | D3 at offset 780: ""Digitized By Roja Muthiah Research Library""",,Remove the terminal English digitization footer from the classical Tamil text.
+f224198d9903a645,full,clean,,,,Complete document; no listed disease found during review.
+fc3c64022b4c17c7,full,fix,F1,street address of a private person at offset 413,,Redact the precise street-level address of a private individual; the evidence intentionally omits the value.
+213d21ab3087ece1,full,drop,F3,"F3 at offset 1418: ""மதவெறி பிடித்த முஸ்லிம் வியாபாரிகள்""",,Drop pending safety review: the document promotes hostility and collective punishment toward a religious group.
+ed6128692cd922cc,full,clean,,,,Complete document; no listed disease found during review.
+d1935222f136aaec,full,drop,C5,"C5 at offset 0: ""Manapparai.co.in இலவச விளம்பரம்""",,The entire document is a promotional directory keyword list with no article body.
+151cd9aaf5fb1ef9,full,clean,,,,Complete document; no listed disease found during review.
+0177fe3bb2958282,full,clean,,,,Complete document; no listed disease found during review.
+bbc152125e8e3f6c,full,clean,,,,Complete document; no listed disease found during review.
+f3daab42470fb231,full,clean,,,,Complete document; no listed disease found during review.
+1daed2c31611a44b,full,clean,,,,Complete document; no listed disease found during review.
+74b96e50a582118f,full,drop,F3,"F3 at offset 73: ""11 வயது மாணவி இரு, 'சீனியர்' மாணவர்களால் பள்ளி வளாகத்தில் பாலியல் பலாத்காரத்துக்கு""",,Drop pending safety review: the report concerns sexual violence against a child.
+a762c09cba29e4a2,full,clean,,,,Complete document; no listed disease found during review.
+2cfb1e41d8020229,full,clean,,,,Complete document; no listed disease found during review.
+79d2cd33b07602ae,full,clean,,,,Complete document; no listed disease found during review.
+ea9b6cba58e01528,full,clean,,,,Complete document; no listed disease found during review.
+e341729bb2f09cd8,full,clean,,,,Complete document; no listed disease found during review.
+7f25dbd61174b722,full,clean,,,,Complete document; no listed disease found during review.
+5ce4e2e89f1e5d31,full,clean,,,,Complete document; no listed disease found during review.
+3677fa4a3f54b537,full,clean,,,,Complete document; no listed disease found during review.
+1639e8d809d34be7,full,clean,,,,Complete document; no listed disease found during review.
+abd0b6dd92290a8e,full,drop,C4,"C4 at offset 221: ""சிறிலங்காவின் முன்னாள் இராணுவத் தளபதி ஜெனரல் சரத் பொன்சேகா"" | C4 at offset 663: ""சிறிலங்கா அரசாங்கத்தின் அழைப்பையேற்று, ஐ. நா மனித உரிமைகள் ஆணையாளர்""",,Four unrelated Sri Lankan news reports are joined without document boundaries.
+2c707bb8b0bf77ff,full,clean,,,,Complete document; no listed disease found during review.
+1a4f62565dd11e4a,full,clean,,,,Complete document; no listed disease found during review.
+c7adce749989a558,full,fix,B4,"B4 at offset 36: ""மாற்று\\n""",,Literal backslash-n sequences appear throughout the otherwise coherent Bhagat Singh essay; decode them as line breaks.
+2d0a42d9a17f72e3,full,fix,C1;D3,"C1 at offset 3693: ""Sign up to receive our newsletter in your inbox every day!"" | D3 at offset 3693: ""Sign up to receive our newsletter in your inbox every day!""",,Remove the terminal English newsletter invitation.
+b69cb7b45edb1712,full,drop,D4,"D4 at offset 132: ""பூஜ்ஜியங்களும் ஒருவர்"" | D4 at offset 1038: ""சட்டசபை மொழி"" | D4 at offset 2145: ""கார் நோக்கமாகக் கொண்டது""",,Full reread: programming terms are translated into unrelated senses and grammar is broadly broken; assembly becomes legislature and machine-oriented becomes car-oriented.
+e661201540ed1e72,full,clean,,,,Complete document; no listed disease found during review.
+4693c8ea8158a9f6,full,clean,,,,Complete document; no listed disease found during review.
+9210fbc5b0005b29,full,fix,C1,"C1 at offset 0: ""- #Sun Tvஎதிர்நீச்சல் சீரியல் குறித்து"" | C1 at offset 2628: ""உண்மையை உளறிய விசாலாட்சி""",,Remove the leading and terminal unrelated television teaser blocks around the article.
+aa62bfe3f9cf29b4,full,fix,B4;C1;D3,"B4 at offset 92: ""Tamil Filmibeat\\n"" | C1 at offset 1409: ""Read more about:"" | D3 at offset 1482: ""Actor cum politician Balakrishna's wife Vasundhara Devi""",,Decode literal newline escapes and remove the read-more/tag metadata and duplicated English summary.
+dbfa5aa64ec98382,full,clean,,,,Complete document; no listed disease found during review.
+541e89ab67caa447,full,clean,,,,Complete document; no listed disease found during review.
+f30ee3325ba1d996,full,fix,C1;C5,"C1 at offset 1106: ""படித்தது பிடித்ததா? இன்றே பதிவு செய்து"" | C5 at offset 1042: ""மோசடியில் ஈடுபட்ட சந்தேகத்தின் பேரில் 312 பேர் மீது விசாரணை""",,Remove unrelated headline and subscription/read-more boilerplate after the cricket report.
+818783ddef91eebb,full,clean,,,,Complete document; no listed disease found during review.
+1e7fd69922b35f7d,full,drop,F3,"F3 at offset 37: ""பலரால் ஒரே நேரத்தில் பாலியல் வல்லுறவுக்கு உட்படுத்தப்பட்டு கொலை""",,Drop pending safety review: the report concerns gang sexual violence and murder.
+73887f1880e1e4b2,full,clean,,,,Complete document; no listed disease found during review.
+5eff05f90deef5c7,full,fix,C1,"C1 at offset 4014: ""இது டைம்ஸ் இன்டர்நெட்டின் ஸ்பாட்லைட் குழுவினரால்""",,Remove the terminal sponsored-brand disclaimer boilerplate.
+3e4a06d3cbe92599,full,fix,C1,"C1 at offset 2064: ""எகிறியது தங்கம் விலை""",,Remove the two unrelated teaser headlines appended after the mask guidance.
+ea43ecbea2c199a8,full,fix,C1,"C1 at offset 0: ""- 4 hrs ago நம்பி வந்த வாடிக்கையாளரை ஏமாற்றிய பிரபல கார் நிறுவனம்"" | C1 at offset 4472: ""டெஸ்லா தமிழகத்திற்கு தான் வரவேண்டும் என ஓயாமல் உழைக்கும் அமைச்சர்""",,Remove the large leading site-teaser menu and the terminal unrelated teaser around the electric-cycle article.
+7236d4e017556a62,full,clean,,,,Complete document; no listed disease found during review.
+2953e8c488f0a434,full,clean,,,,Complete document; no listed disease found during review.
+7dd04a63e5dc9c12,full,fix,C1;D3,"C1 at offset 2545: ""ஒலிம்பிக் 2020 குத்துசண்டை"" | D3 at offset 2645: ""Rohan Bopanna - Sania blasts AITA over Tokyo Games qualification""",,Remove unrelated sports teasers and the duplicated English summary after the main report.
+92e44ae6c0d41e91,full,fix,C1,"C1 at offset 3265: ""பேரழகை பெற முகத்தில் பாம்பு மசாஜ்""",,Remove the terminal unrelated read-more teaser.
+6830f641d146356d,full,clean,,,,Complete document; no listed disease found during review.
+4e6ed2e1a2eaea9f,full,clean,,,,Complete document; no listed disease found during review.
+746c972295747ed2,full,drop,B4;D3;F3,"B4 at offset 50: ""கடிதம்!\\n"" | D3 at offset 140: ""By Mathiprakash R Mon"" | F3 at offset 198: ""ஆசிரியரின் பாலியல் தொல்லை தாங்க முடியாமல் மாணவி ஒருவர்""",,Drop pending safety review: the report concerns a school student's sexual harassment and suicide; literal escape and byline metadata are also embedded.
+e3a340e8f821ba75,full,fix,C1;D3,"C1 at offset 0: ""Explore by:"" | D3 at offset 0: ""Explore by:""",,Remove the leading English browse/sort interface boilerplate.
+ff6997a91f83b747,full,clean,,,,Complete document; no listed disease found during review.
+ee4075dff437b611,full,drop,D3;D4,"D3 at offset 3274: ""million 100 மில்லியன்"" | D4 at offset 626: ""ஒரு திருமணமானவர் பெண்"" | D4 at offset 2918: ""மார்ஜோரி ஹார்வியின் மறைவை"" | D4 at offset 3619: ""அவர் கிளப்பை விற்க டோட் உடன் தேதியிட்டார்""",,"Full reread: literal translations, malformed grammar and a duplicated English/Tamil monetary unit make the biography unreliable; the reported height also needs separate factual verification."
+449b600d82e101cb,full,drop,B4;C1;C5;D3,"B4 at offset 0: ""nameplate outside their home.\\n"" | C1 at offset 3137: ""Post navigation"" | C5 at offset 1811: ""Categories vasthu Tags Basic Vaastu"" | D3 at offset 0: ""nameplate outside their home.""",,"The page is dominated by literal escapes, English metadata, a tag cloud and navigation rather than one clean article."
+c43ff8bfe0b5ea18,full,clean,,,,Complete document; no listed disease found during review.
+f40e265059bd9c69,full,drop,C5;D3,"C5 at offset 16: ""1500 கிலோ ரசாயன அப்பளங்கள் பறிமுதல்"" | D3 at offset 0: ""Results For""",,The document is only a search-results heading plus three unrelated headlines.
+bca37abb5794e94b,full,drop,F3,"F3 at offset 0: ""11 வயது மகளை 70 வயது கிழவருக்கு""",,Drop pending safety review: the report concerns prolonged sexual exploitation of a child.
+234a3c35ad8437ee,full,fix,C1,"C1 at offset 2190: ""மேலதிக செய்திகள்""",,Remove the terminal related-news teaser list after the Nokia report.
+5efe0964359bb62e,full,fix,C1;D3,"C1 at offset 2463: ""Sign up to receive our newsletter in your inbox every day"" | D3 at offset 2463: ""Sign up to receive our newsletter in your inbox every day""",,Remove the terminal English newsletter invitation.
+47ad79159d2c19dc,full,clean,,,,Complete document; no listed disease found during review.
+264d0086a5e6288c,full,drop,C2;C5,"C2 at offset 0: ""பிரதமர் மோடியின் ரஷ்ய பயணத்தின் பொது கூடங்குளம் அணுமின் நிலையத்தில்"" | C2 at offset 118: ""பிரதமர் மோடியின் ரஷ்ய பயணத்தின் பொது கூடங்குளம் அணுமின் நிலையத்தில்"" | C5 at offset 236: ""ஸ்வச் பாரத் அபியான் திட்டத்தை""",,The first headline is duplicated and the remainder is a list of unrelated Modi news snippets without an article body.
+16c9bb939966677b,full,clean,,,,Complete document; no listed disease found during review.
+590d2c767dd85393,full,clean,,,,Complete document; no listed disease found during review.
+40febaaff7304655,full,clean,,,,Complete document; no listed disease found during review.
+9cdaba05f0178858,full,clean,,,,Complete document; no listed disease found during review.
+2a23dd84f9242e4b,full,fix,B4;C1;D3,"B4 at offset 63: ""ATHIRVU.COM\\n"" | C1 at offset 138: ""By Tamil Eelam 8th March 2021"" | D3 at offset 138: ""By Tamil Eelam 8th March 2021""",,Decode literal newline escapes and remove English site/byline/view-count metadata.
+c5a808df74ae2a97,full,clean,,,,Complete document; no listed disease found during review.
+62e816d00f772c37,full,fix,C1;D3,"C1 at offset 1031: ""தமிழ் படிக்க ஆசிரியர் இல்லையே என்ற கவலை இனியும் வேண்டாம்"" | D3 at offset 1089: ""uchchi. com""",,Remove the terminal language-course advertisement after the migration statistics report.
+0d344e18220ee92e,full,clean,,,,Complete document; no listed disease found during review.
+9fa99180ef1a228f,full,clean,,,,Complete document; no listed disease found during review.
+e025a2470124ff79,full,clean,,,,Complete document; no listed disease found during review.
+98af3c96e449d809,full,clean,,,,Complete document; no listed disease found during review.
+f66cefd0f87a1bff,full,clean,,,,Complete document; no listed disease found during review.
+300ef674d5adb6e1,full,clean,,,,Complete document; no listed disease found during review.
+d2a1808ebb4055d7,full,clean,,,,Complete document; no listed disease found during review.
+780ff8efe905adf6,full,drop,F3,"F3 at offset 626: ""15 வயது சிறுமியை கடத்தி பாலியல் வன்கொடுமை""",,Drop pending safety review: the report concerns abduction and sexual violence against a child.
+dc3d52588e356a13,full,clean,,,,Complete document; no listed disease found during review.
+827e8cfa875d009a,full,clean,,,,Complete document; no listed disease found during review.
+4ffde22ed398c158,full,clean,,,,Complete document; no listed disease found during review.
+4cb4e6c0277bbb52,full,clean,,,,Complete document; no listed disease found during review.
+4ffe95afde1d7976,full,fix,C3,"C3 at offset 499: ""எள்ளு வெல்ல லட்டுவை எப்படி செய்வதென்று பார்ப்போமா""",,The recipe introduction promises the method but the document ends before any ingredients or steps appear.
+655f9fb467f8baeb,full,clean,,,,Complete document; no listed disease found during review.
+ee08a91ee5fac2ad,full,clean,,,,Complete document; no listed disease found during review.
+0a1adc2f83e36303,full,fix,C1;D3,"C1 at offset 2157: ""உலகம் முதல் உள்ளூர் வரை இன்றைய முக்கிய செய்திகள்"" | D3 at offset 2395: ""ARASU CABLE - 46""",,Remove the News18 promotional and channel-list footer.
+54ecf9fed53f096f,full,fix,C1;D3,"C1 at offset 2711: ""Sign up to receive our newsletter in your inbox every day"" | D3 at offset 2711: ""Sign up to receive our newsletter in your inbox every day""",,Remove the terminal English newsletter invitation.
+60785e5cb5efcd60,full,clean,,,,Complete document; no listed disease found during review.
+5c7d1e1caf48effe,full,clean,,,,Complete document; no listed disease found during review.
+219cdfc7e77bef26,full,fix,F1;C1,"named patient's precise ward and bed location at offset 688 | C1 at offset 784: ""இந்த சாக்கடை குப்பைகளால தான் கர்ப்பம் பற்றி நான் பேசல""",,Redact the named patient's precise hospital location and remove the unrelated teaser; privacy evidence intentionally omits the value.
+3c21acd5564bd456,full,clean,,,,Complete document; no listed disease found during review.
+d7bfa9ea9330bb1d,full,drop,D3;D4,"D3 at offset 6090: ""sohbetபயணிகள்"" | D4 at offset 4140: ""அந்தக் கர்ப்பிணிப் பெண் இன்று உயிர் பிழைத்திருப்பதும்""",,Full reread: untranslated Turkish is joined to Tamil and repeated semantic and grammatical distortions make the translated essay unreliable; recover and retranslate from the source.
+2b6f3c0d2d6b7bf1,full,clean,,,,Complete document; no listed disease found during review.
+d3263999758fe490,full,clean,,,,Complete document; no listed disease found during review.
+23f176e60806bca2,full,clean,,,,Complete document; no listed disease found during review.
+b23efb48ddcdde65,full,fix,C1,"C1 at offset 0: ""- 1 min ago காவி நிறத்தில் வந்தே பாரத் ரயில் தயாரிக்கப்படுவது ஏன்"" | C1 at offset 4303: ""5 லட்சம் யூனிட்னா சும்மா கிடையாது""",,Remove the large leading site-teaser menu and terminal unrelated teasers around the automobile report.
+ba252eb037c861aa,full,clean,,,,Complete document; no listed disease found during review.
+8c1ba0bd4ff745b9,full,fix,B4;C1;D3,"B4 at offset 117: ""Tamil Oneindia\\n"" | C1 at offset 135: ""Updated: Thursday"" | D3 at offset 1919: ""North India is scared of water now""",,Decode literal newline escapes and remove English update/tag metadata and duplicated English summary.
+92779652f6a0366c,full,clean,,,,Complete document; no listed disease found during review.
+3b83a05b9be8c981,full,clean,,,,Complete document; no listed disease found during review.
+02cb078e9a262bb5,full,fix,C1,"C1 at offset 0: ""நீங்கள் தேடியது \""மீன் வியாபாரி சாவு\""""",,Remove the search-results heading before the otherwise coherent drowning report.
+d9261e753ee2db20,full,clean,,,,Complete document; no listed disease found during review.
+95434ffdef3926d3,full,clean,,,,Complete document; no listed disease found during review.
+d4c9633036c996b7,full,clean,,,,Complete document; no listed disease found during review.
+29cb665ac4054100,full,clean,,,,Complete document; no listed disease found during review.
+6e2d7f2b4137f7ad,full,clean,,,,Complete document; no listed disease found during review.
+cbb8b1b41428ee60,full,clean,,,,Complete document; no listed disease found during review.
+9b9bc0b19525f801,full,fix,C1;D3,"C1 at offset 1398: ""Sign up to receive our newsletter in your inbox every day"" | D3 at offset 1398: ""Sign up to receive our newsletter in your inbox every day""",,Remove the terminal English newsletter invitation.
+d8ab2f7008a887ef,full,fix,C1,"C1 at offset 449: ""இதை மட்டும் செஞ்சிடாதிங்க""",,Remove the unrelated income-tax teaser appended to the bank-holiday introduction.
+37540bceaba4da82,full,clean,,,,Complete document; no listed disease found during review.
+3f6f299b6d5a07fc,full,clean,,,,Complete document; no listed disease found during review.
+7d98f16ae3375c14,full,clean,,,,Complete document; no listed disease found during review.
+61aa1813e78bbfe2,full,clean,,,,Complete document; no listed disease found during review.
+fc4d6d249bb8f249,full,clean,,,,Complete document; no listed disease found during review.
+5e347c9ff86f5317,full,clean,,,,Complete document; no listed disease found during review.
+2d5875160140fc33,full,clean,,,,Complete document; no listed disease found during review.
+9c360e8b7a812610,full,fix,G1,"G1 at offset 3093: ""ே மீன்""",3093: U+0BC7 UTF8=e0 af 87,A Tamil vowel sign is stranded after a space in the classical verse.
+e4c5ec41e83672de,full,clean,,,,Complete document; no listed disease found during review.
+5dd0a91898a1230f,full,fix,C1;D3,"C1 at offset 1997: ""Samantha Applying Lipstick With Seducing Eyes."" | D3 at offset 1768: ""God Bless your Soul""",,Remove the terminal English promotional caption; retain but annotate the natural English quotation in the article.
+81b039abd45575eb,full,clean,,,,Complete document; no listed disease found during review.
+7d589928990e19ab,full,drop,C4,"C4 at offset 103: ""அவ்வாறு நான் சாப்பிடும் போது தம்பியின் மனைவி"" | C4 at offset 450: ""உண்மையில் குரல் வளம் மற்றும் இசைத்திறமை சார்ந்து""",,The document is a sequence of unrelated first-person and political fragments without recoverable boundaries.
+2134d8e197faedf0,full,clean,,,,Complete document; no listed disease found during review.
+5efd0c537007ad49,full,clean,,,,Complete document; no listed disease found during review.
+8fbbd247752403d6,full,clean,,,,Complete document; no listed disease found during review.
+b26049ad1fdcc8ca,full,clean,,,,Complete document; no listed disease found during review.
+39387398ec39d34c,full,fix,C1;D3,"C1 at offset 2056: ""உலகம் முதல் உள்ளூர் வரை இன்றைய முக்கிய செய்திகள்"" | D3 at offset 2294: ""ARASU CABLE - 46""",,Remove the News18 promotional and channel-list footer.
+d777a691df4e1b15,full,fix,B4,"B4 at offset 57: ""புத்தகத்திலிருந்து.........\\n""",,Literal backslash-n sequences appear throughout the otherwise coherent religious text; decode them as line breaks.
+bfa84dd7802de02c,full,clean,,,,Complete document; no listed disease found during review.
+a1bb891fcd48ec19,full,fix,C1,"C1 at offset 0: ""- #Thiruvallur‛‛நண்பர் தான்""",,Remove the two leading unrelated news teasers before the court report.
+9c81e3c2a5da92a7,full,fix,C3,"C3 at offset 1776: ""ணியம் மோ 4. ர் தண்ண""",,The inscription transcription stops in the middle of its final word.
+5615bc2a089c834d,full,clean,,,,Complete document; no listed disease found during review.
+aebdd6986d620684,full,fix,C4,"C4 at offset 561: ""மார்க்சிஸ்ட் கம்யூனிஸ்ட் கட்சியின் சிதம்பரம் நகரக்குழு உறுப்பினர் கோபால்""",,A separate Chidambaram nomination report is joined after the Polur nomination report; split the two items.
+2172fbfc8ec32092,full,clean,,,,Complete document; no listed disease found during review.
+aef97de3db86446b,full,fix,C1;D3,"C1 at offset 1615: ""உலகம் முதல் உள்ளூர் வரை இன்றைய முக்கிய செய்திகள்"" | D3 at offset 1853: ""ARASU CABLE - 46""",,Remove the News18 promotional and channel-list footer.
+e3877c4d4642951b,full,clean,,,,Complete document; no listed disease found during review.
+5c67747030d0cad8,full,drop,C5,"C5 at offset 0: ""வீடியோக்கள், சேனல்கள் மட்டுமல்ல""",,The document contains only three unrelated one-sentence snippets with no article body.
+90556e3f5e60cf52,full,clean,,,,Complete document; no listed disease found during review.
+581feefe2ea19ac5,full,drop,C5,"C5 at offset 0: ""முதல்வரின் பாராட்டைப் பெற்ற சென்னை ஐ. டி இளைஞர்""",,The document is only a list of unrelated local-news headlines.
+6c56c21aa57d5b3d,full,clean,,,,Complete document; no listed disease found during review.
+a2f2d917b1a1a5e0,full,clean,,,,Complete document; no listed disease found during review.
+d2ff5ca48091f818,full,clean,,,,Complete document; no listed disease found during review.
+fcb021e8a983c3f2,full,clean,,,,Complete document; no listed disease found during review.
+160786b070337d28,full,fix,C1;D3,"C1 at offset 0: ""Home / கட்டுரை /"" | D3 at offset 0: ""Home /""",,Remove the leading mixed-language breadcrumb/navigation path.
+d20bbbfbdbbf9ecf,full,clean,,,,Complete document; no listed disease found during review.
+3e6a97bf515c0cec,full,drop,C4,"C4 at offset 1710: ""சோபகிருது ஆண்டு, ஆனி-15"" | C4 at offset 1750: ""முதன்முதலாக செந்தில் பாலாஜி மீது"" | C4 at offset 3674: ""நத்திங் நிறுவனத்தின் முற்றிலும் புதிய போன் 2"" | C4 at offset 5760: ""சர்வதேச கால்பந்து சங்கம் அணிகளின் புதிய தரவரிசை"" | C4 at offset 7084: ""அமெரிக்காவின் முன்னாள் துணை அதிபரான மைக் பென்ஸ்""",,"Horoscope, temple calendar, politics, smartphone, football and Ukraine reports are concatenated without recoverable document boundaries."
+c9afe755b40e2e69,full,clean,,,,Complete document; no listed disease found during review.
+ced0fe7db14e962c,full,clean,,,,Complete document; no listed disease found during review.
+e50dbb6b99a1fd80,full,clean,,,,Complete document; no listed disease found during review.
+78a416ddb22e0850,full,fix,C1;D3,"C1 at offset 2742: ""Sign up to receive our newsletter in your inbox every da"" | D3 at offset 2742: ""Sign up to receive our newsletter in your inbox every da""",,"Remove the terminal English newsletter invitation, which is itself truncated."
+9d73140eda4a4bdc,full,clean,,,,Complete document; no listed disease found during review.
+88f57dbd458580ef,full,fix,C1;D3,"C1 at offset 3002: ""Sign up to receive our newsletter in your inbox every day!"" | D3 at offset 3002: ""Sign up to receive our newsletter in your inbox every day!""",,Remove the terminal English newsletter invitation.
+5444c67c8120cbbb,full,fix,C1;D3,"C1 at offset 5190: ""RESEARCH INSTITUTE, -MAPRAS-4 21"" | D3 at offset 5190: ""RESEARCH INSTITUTE, -MAPRAS-4 21""",,Remove the English library stamp/page-header artifact embedded in the historical text.
+12a89296301c0329,full,clean,,,,Complete document; no listed disease found during review.
+eb1507f6f60feb20,full,clean,,,,Complete document; no listed disease found during review.
+df3469a4b4508f34,full,fix,C3,"C3 at offset 5936: ""இந்தப் பகுதியின் அப்போஸ்தலனாகிய பவுலின் இருதயத்தின""",,The theological chapter stops in the middle of its final sentence.
+6f66b5dabf8e1d00,full,clean,,,,Complete document; no listed disease found during review.
+15fac650ad67e634,full,clean,,,,Complete document; no listed disease found during review.
+690dd575bb89459d,full,clean,,,,Complete document; no listed disease found during review.
+a12f96cc9031f671,full,clean,,,,Complete document; no listed disease found during review.
+795daa0aeef87e3c,full,drop,D4,"D4 at offset 361: ""விரிவான தகவல்கள் வழங்கப்பட்டன. அவர்களுக்கு."" | D4 at offset 3001: ""பலன்கள் எதுவும் இல்லை.""",,"Full reread: a stranded pronoun, blended sentence structure and contradictory benefit statements show bad translation; the crime-scene sentence remains within the labor-law discussion, so C4 does not apply."
+b08862011d333546,full,clean,,,,Complete document; no listed disease found during review.
+148c82e4040dd26c,full,clean,,,,Complete document; no listed disease found during review.
+eef56f2be914c26a,full,fix,C1;D3,"C1 at offset 4067: ""Like to read stories?"" | D3 at offset 4067: ""Like to read stories?""",,Remove the terminal English novel-platform promotion and copyright footer.
+f24194e6f2459cf1,full,drop,G1;C3,"G1 at offset 1327: ""கூ,ூங்க"" | C3 at offset 1447: ""உன்னை - நிரகியைநானானவுன்னை, இரீஇலை""",1330: U+0BC2 UTF8=e0 af 82,"Full reread: the verse/commentary is severely OCR-corrupted, contains a detached Tamil vowel sign and ends mid-gloss; recover it from a source scan while preserving legitimate Sanskrit and Grantha forms."
+0d9df0eb390bfd71,full,fix,C3,"C3 at offset 305: ""காய்கறிகளின் விலைப் பட்டியல்""",,The document announces a vegetable-price list but ends before the list begins.
+f1292511b6fa650b,full,clean,,,,Complete document; no listed disease found during review.
+5cd458c4948a9f41,full,fix,C1,"C1 at offset 0: ""- 5 hrs ago உங்க கடந்த காலத்துல நடத்த மோசமான விஷயங்கள மறக்க முடியாம""",,Remove the large leading unrelated site-teaser menu before the skin-care article.
+945d96b13542b888,full,clean,,,,Complete document; no listed disease found during review.
+df638bfc7149b36e,full,fix,C1;D3,"C1 at offset 0: ""Don't Miss!"" | D3 at offset 0: ""Don't Miss!""",,Remove the large leading English-category site-teaser menu before the celebrity news report.
+79c04d87809c891d,full,fix,C1;D3,"C1 at offset 716: ""Also Read:"" | C1 at offset 1949: ""உலகம் முதல் உள்ளூர் வரை இன்றைய முக்கிய செய்திகள்"" | D3 at offset 1548: ""Follow @ Google News:""",,"Remove read-more prompts, Google News promotion and the News18 channel-list footer."
+07babfd85a3cf1a9,full,fix,A4,"A4 at offset 1096: ""�""",1096: U+FFFD UTF8=ef bf bd,A replacement character at the document tail records lost source bytes.
+f2f5aca9f326c1a9,full,fix,C1;D3,"C1 at offset 3576: ""Share this:"" | D3 at offset 3576: ""Share this:""",,Remove the terminal English sharing-widget labels.
+e40e88dee88b1e7b,full,clean,,,,Complete document; no listed disease found during review.
+0207fd177841f24e,full,clean,,,,Complete document; no listed disease found during review.
+5dc80d9d825fa6cc,full,fix,C2;G1,"C2 at offset 146: ""இது சிறு மளிகை மற்றும் பெட்டிக்கடை வியாபாரிகளை பெரிதும் பாதிக்கும்"" | C2 at offset 1716: ""இது சிறு மளிகை மற்றும் பெட்டிக்கடை வியாபாரிகளை பெரிதும் பாதிக்கும்"" | G1 at offset 45: ""ிஜய் சேதுபதி"" | G1 at offset 76: ""ிஜய் சேதுபதி""",45: U+0BBF UTF8=e0 ae bf; 76: U+0BBF UTF8=e0 ae bf,"A long protest paragraph is duplicated, and each copy contains a Tamil vowel sign stranded before the base consonant."
+37fc81e42cbff7c9,full,clean,,,,Complete document; no listed disease found during review.
+1b2275c971396534,full,fix,C1;D3,"C1 at offset 755: ""read more. ."" | D3 at offset 1546: ""Social Media is a breeding ground for bigoted assholes.""",,Remove the read-more boilerplate; retain but annotate the intentional English social-media quotations.
+e4e05d22aa4a13c8,full,clean,,,,Complete document; no listed disease found during review.
+be834cefcc145f72,full,clean,,,,Complete document; no listed disease found during review.
+14031c4af0f72a4a,full,fix,C1;D3,"C1 at offset 0: ""Don't Miss!"" | D3 at offset 0: ""Don't Miss!""",,Remove the large leading English-category site-teaser menu before the entertainment report.
+73cbcbfc22e0ba2d,full,clean,,,,Complete document; no listed disease found during review.
+bbbf6b441072c407,full,clean,,,,Complete document; no listed disease found during review.
+debee9deb984e264,full,clean,,,,Complete document; no listed disease found during review.
+86410fc85b0c07cb,full,fix,C1;D3,"C1 at offset 3523: ""Sign up to receive our newsletter in your inbox every day!"" | D3 at offset 3523: ""Sign up to receive our newsletter in your inbox every day!""",,Remove the terminal English newsletter invitation.
+6d22e9a93f20e36c,full,clean,,,,Complete document; no listed disease found during review.
+8fb37ca66fe1e1f7,full,clean,,,,Complete document; no listed disease found during review.
+7630e557dfb0f6ae,full,clean,,,,Complete document; no listed disease found during review.

@@ -1,0 +1,501 @@
+doc_id,read,verdict,diseases,evidence,hex,note
+47f4f5107ac9aece,full,fix,B4,"B4: ""The provided text also discusses"" at offset 860",,Last sentence is an LLM meta-reference to 'the provided text'; not a disease code.; B4 by pack rule: rewriter meta-comment x1
+895afca58ce2cefe,full,clean,,,,"Promotional homepage summary; names are the project founder and a public academic, not F1."
+562f021c93e0afff,full,clean,,,,
+172f18eaff040ba8,full,clean,,,,
+536547e07d7d65ca,full,fix,B4,"B4: ""'resources(-Count)' "" at offset 294",,Missing space in The'resources(-Count)' is a generation artefact with no disease code.; B4 by pack rule: detok glitch: no space before quote x1
+b61af635990f9049,full,clean,,,,
+d1d5d2985cc180f1,full,clean,,,,Political opinion piece; not F3.
+4ea53398efe98f77,full,clean,,,,"Summary of a blog index page (page=2) stitching two posts with a weak bridge; treated as page structure, not C4."
+9080e92129e39a4b,full,clean,,,,
+15a4fb4cff0c6d9f,full,clean,,,,
+e44e36f097d418e2,full,clean,,,,
+6c12633fa1c87476,full,clean,,,,Discusses sexual orientation in non-explicit terms; not F3.
+8c61d888ae3ecc82,full,clean,,,,Content-farm URL but coherent educational prose.
+aa19436af952027d,full,fix,C3,"C3: ""This brain lining infection can cause hearing loss as a complication."" at offset 639",,"'serious causes' list stops after one item; 'Published: May, 2015' dateline is page metadata"
+a9c8f8d69278c340,full,clean,,,,"Literal <listbox> is a deliberate mention of a XUL tag in prose, not markup; a tag-stripping rule must exempt it"
+a14eaa5e58baf3c3,full,drop,C4,"C4: ""and further education. Australia's English has distinct accents"" at offset 165 | C4: ""England and Wales, a unified legal jurisdiction, follows English law."" at offset 338",,SEO Q&A aggregator: paragraph 1 stitches unrelated snippets; some garbled claims. fix vs drop borderline.
+fa6afecb771ef379,full,fix,C1,"C1: ""How We Can Help"" at offset 1765 | C1: ""We offer services for various immigration cases"" at offset 1781",,Strip the trailing 'How We Can Help' section and the guide is fine.
+d0ac3840067065e2,full,clean,,,,
+b7af5a6d5f9ca215,full,clean,,,,Some factual slips (e.g. 'resigned in 1850') but no disease code.
+56fc241d50f076d1,full,clean,,,,"Institution homepage summary; named staff and fellows appear in professional capacity, not F1."
+cc22d0d6c3980f02,full,clean,,,,
+67cd7f8dca56480d,full,clean,,,,Revolver maintenance and safety advice from a forum; not F3.
+7e2cbd39bf39635f,full,fix,B4,"B4: ""'silth/seeth'."" at offset 1084",,Missing space in called'silth/seeth' is a generation artefact with no disease code.; B4 by pack rule: detok glitch: no space before quote x1
+cf595aa5834926c1,full,clean,,,,
+46f63da3bcdf5bfd,full,clean,,,,
+2fd52e500f3906a8,full,fix,C1,"C1: ""Contact:"" at offset 0",,"Strip the leading Contact line; rest is a clean tips list. Official (county dept) contact, so no F1."
+1a8278f7e2f38b30,full,clean,,,,"Product description prose; coherent, no boilerplate."
+b2d5e05866717162,full,clean,,,,
+7d8aeed60857a08f,full,clean,,,,
+b59b082d3aeee55b,full,clean,,,,
+bccde4cc75b5d4bf,full,clean,,,,"Source URL is an SEO town-name page, but the rewritten text is coherent prose."
+1bff2dac9a68d6d6,full,clean,,,,
+d25261e9b946c8e2,full,clean,,,,Summary of forum replies; starts with 'I've observed' but it is a complete thought.
+5958fb6996158153,full,clean,,,,"Member blog-roll page: paragraphs jump topics (3D printing, 5G, Microsoft, AI). Page structure, not C4."
+103c5e0f8dcf2438,full,clean,,,,
+a39b27db288c9678,full,clean,,,,Naturopathy health claims; not F3.
+bfdc0365ce5dd658,full,clean,,,,
+23aad30125942d34,full,clean,,,,"Course-grid page: four unrelated course blurbs in marketing tone. Page structure, not C4; not labelled C1."
+0e9effc1e24eb8a3,full,clean,,,,Internally contradictory (event revised vs cancelled) because the page spans years; no disease code.
+3321b9d7c2a222fa,full,clean,,,,
+ad299e8f84817c25,full,clean,,,,"Political conspiracy opinion (bankers, New World Order); not explicit hate speech, so no F3."
+53508187f63c2245,full,clean,,,,Product page prose; marketing tone is the page content.
+95e868bc084be9aa,full,clean,,,,docs_from_same_url=2 (pairs with 6df2adf3adc73b95); different sections of the article.; shared page x2
+6df2adf3adc73b95,full,clean,,,,"docs_from_same_url=2 (pairs with 95e868bc084be9aa); not a duplicate, covers the article's second half.; shared page x2"
+41b7fef27ec5d75e,full,clean,,,,
+6a85f5a63d4638f5,full,fix,B4;C1,"B4: ""'sinus cavities' "" at offset 277 | C1: ""Contact Dr."" at offset 1496",,"Trim the final contact sentence. Also a glitch: 'The'sinus cavities'' missing space, not a disease code.; B4 by pack rule: detok glitch: no space before quote x1"
+ce588dd22c695f2e,full,clean,,,,Natural-remedy health claims; not F3.
+10815a366aa46e37,full,clean,,,,
+63a68777f694ad3f,full,fix,C1,"C1: ""contact Dr."" at offset 572",,Trim the final contact sentence; rest is coherent.
+4ca107862df597a4,full,clean,,,,
+79e696845c77d289,full,clean,,,,"Intro says eight myths but only seven are listed; summary omission by the LLM, not a disease. Ends with a conclusion."
+79b5260a7d74cd8e,full,clean,,,,
+3fd855d8c8a13d54,full,clean,,,,Anonymous first-person employee review; no names or contact data.
+60819f2d8e834926,full,clean,,,,
+9d8ccfdcb4c37dec,full,clean,,,,"Refers to 'all ingredients' that are never listed; distill summary artefact, text itself is complete."
+8f566b048a22eb74,full,clean,,,,Named business owners profiled in a magazine feature; not F1.
+c73473a6a7502da6,full,clean,,,,"Directory listing summary; one mildly promotional sentence about bookings is page content, not boilerplate."
+157d5da1961914c1,full,clean,,,,
+38e9b59a8fd4b482,full,clean,,,,
+3e3c925d4a8f6675,full,clean,,,,docs_from_same_url=2; summary of the article body.; shared page x2
+3ee5b2ff58144bc0,full,clean,,,,"docs_from_same_url=2; summary of the comment thread of the same page, distinct content from its sibling."
+6dcd86a23bac8daf,full,fix,C1,"C1: ""For more information or to book, contact"" at offset 945",,"booking contact line with named staff and phone numbers; institutional, not F1"
+67397e0b95bfaf2c,full,clean,,,,"docs_from_same_url=2; typo 'a ordered' is LLM output, not a disease.; shared page x2"
+96054cc3c489180e,full,clean,,,,"docs_from_same_url=2; factual anachronism (Pythagoras resisting Aristarchus) is content quality, not a disease.; shared page x2"
+6a1669b711d6eee2,full,clean,,,,
+6d8dc4a55d6381b1,full,clean,,,,
+0c0f434e92dcc193,full,clean,,,,
+b3f5a2eef773ccce,full,clean,,,,Named school-district official; not F1.
+fc5520f8d6df85e2,full,clean,,,,"docs_from_same_url=6; one of six distills of a nursing thesis chapter, each covering a different section.; shared page x6"
+d4e55ea24609e95c,full,clean,,,,docs_from_same_url=6.; shared page x6
+4c76ca8ecb430bd1,full,clean,,,,docs_from_same_url=6.; shared page x6
+64064e69d76186e5,full,clean,,,,docs_from_same_url=6.; shared page x6
+69977c18d99f8030,full,clean,,,,"docs_from_same_url=6; ends on a complete bullet with no closing paragraph, not judged truncated.; shared page x6"
+973305d6a92f08aa,full,clean,,,,docs_from_same_url=6.; shared page x6
+60f1a32f80f6a3cf,full,fix,C3,"C3: ""a heartwarming and humorous exploration of love and family."" at offset 2783",,docs_from_same_url=2; the sibling doc may hold items 12-15. Content present is coherent and usable.; shared page x2
+ab4f03c12b813b47,full,clean,,,,five complete film summaries; docs_from_same_url=2; shared page x2
+ededb27532326908,full,fix,B4,"B4: ""'struct X { int32_t a; };'."" at offset 1143",,"numbered list of MISRA questions, complete; space dropped before quote in of'struct (detokeniser glitch, no code); B4 by pack rule: detok glitch: no space before quote x1"
+47914b68d81e0b64,full,clean,,,,"forum thread summary with poster handles; page structure, not C4"
+0c94135752170184,full,clean,,,,"says five strategies but lists four; LLM omission, not truncation (ends with a complete paragraph)"
+7054eafdfc65e2e5,full,clean,,,,summary of a comic comments feed; low value but no disease
+d2fb665c40af5edb,full,fix,B4,"B4: ""Total Due After -DATE-:"" at offset 310",,borderline: -DATE- mirrors a bill label; otherwise clean glossary of bill terms
+f15a220dd8190f9a,full,clean,,,,
+e97041e2ae2cef23,full,clean,,,,"named paediatrician is a professional source, not F1"
+3a1b7bc567894c25,full,clean,,,,
+2293b405885fb579,full,clean,,,,
+cb8efd01fd8ed20f,full,fix,C1,"C1: ""About Keeler Ophthalmic Instruments"" at offset 1744",,trim the final About section; rest is useful guidance
+6982fc5710d9b0dc,full,clean,,,,"opens with 'the storm' unnamed, but sentences are complete; summary style"
+60bc50a100834050,full,fix,B4,"B4: ""'starvation mode,' "" at offset 735",,space dropped before quote in prevent'starvation (same detokeniser glitch as ededb27532326908); no code; B4 by pack rule: detok glitch: no space before quote x1
+002367aef34fac29,full,clean,,,,
+7ef718fad2d3d647,full,clean,,,,"three book descriptions from one shop page (product + related items); transitions present, not C4"
+0e569dab6c127f5d,full,clean,,,,"fundraiser page summary; Call to Action is content, not boilerplate"
+b910a3c574ca29e5,full,drop,C4,"C4: ""- Italicize only the title of a website, like 'GuildWars'."" at offset 43 | C4: ""In 55-word fiction, create a complete short story"" at offset 1317",,"SEO content farm (random subdomain); stitched unrelated snippets, contradictory rules, factual errors"
+43dcf8695a10c68e,full,fix,C1,"C1: ""Career videos, numbering over 500, provide insights into specific job roles."" at offset 540",,"category-page mashup (instructors, bookmakers, umpires); one site-copy line to trim"
+f212faef354ad721,full,clean,,,,"two pedal descriptions from a label page; marketing tone is the page content, not leftover ad copy"
+b63a5e89acfb14e3,full,fix,B5,"B5: ""$\sigmax\sigmap \geq \frac{h}{4\pi}$"" at offset 68",,markdown-italic stripping broke subscripts; sigma_v and x_0 survive once each; prose stays useful
+17348648accb2ce6,full,clean,,,,"several forum posters merged into one first-person voice; page structure, not C4"
+d096a0402bb49b08,full,clean,,,,"Literal <ul> is a deliberate mention in a UI bug report, not markup; a tag-stripping rule must exempt it"
+5bd95ff4b60d75a3,full,clean,,,,
+5d4984c5c55a8dd5,full,clean,,,,"named lead investigator is a public professional source, not F1"
+2a0b3e090dbd0e7b,full,clean,,,,"first two paragraphs are the site's generic diploma/Arts template text rewritten as prose; coherent, left clean"
+a7e77ee57791124b,full,fix,C3,"C3: ""4. Learn to land a blow, and hit where it counts!"" at offset 2723",,"chunk 1 of 2; list numbering starts at 3, items 1-2 not in pack; trim dangling heading; shared page x2"
+ef65e5b6d0cda5a5,full,clean,,,,"F3? self-defence essay urges a groin strike 'even if it kills them'; judged opinion, not attack instructions; shared page x2"
+858007598af05807,full,fix,B4,"B4: ""'sore losers' "" at offset 998",,QA has detokenisation artefact: missing space in the'sore losers'; B4 by pack rule: detok glitch: no space before quote x1
+234b50b1bc3b66bf,full,clean,,,,event notice in heading/colon style; GUIDELINES section short but ends on a complete sentence
+60c209725fbd9ebc,full,clean,,,,"source typos (Curently, chldren) are the author's"
+4e2f19fcec08d62f,full,clean,,,,
+a98762cf726cc838,full,clean,,,,source grammar slip 'which is remains' is the author's
+91f6fa0c1ff437f8,full,fix,C1,"C1: ""First Published Dec 9, 2020, 3:26 PM IST"" at offset 90",,one metadata line; rest is article prose
+d896f8ca6a2beae1,full,fix,B4;C3,"B4: ""The text does not provide"" at offset 3302 | C3: ""Leading e-commerce platforms in 2020"" at offset 3194",,chunk 1 of 2; first QA answer admits the passage lacks the platform names; trim heading and that QA; B4 by pack rule: rewriter meta-comment x1; shared page x2
+fdd2b470571c5e4d,full,fix,C3,"C3: ""with all leading business systems such as:"" at offset 1494",,chunk 2 of 2; QA answer invents 'ERP systems' for the missing list; shared page x2
+3cd12d535137ab2f,full,fix,C1,"C1: ""As an Amazon Associate I earn from qualifying purchases. Learn more."" at offset 111",,whole first line is site affiliate boilerplate; remaining post is short but coherent
+701cacaccdb06931,full,drop,C1;F2,"C1: ""Disclaimer: These citations have been automatically generated"" at offset 54 | F2: ""All of the following are methods to confirm the clinical suspicion except"" at offset 1263",,"Three USMLE-style multiple-choice stems with options and key stripped (MedQA-type benchmark items); the cut stems are the F2 item, not truncation; QA answer not in passage"
+f27860217811cf33,full,drop,C4;C5,"C4: ""6th Grade Vocabulary Words Sixth Grade Reading Practice"" at offset 2412 | C5: ""100 Problem Solution Essay Topics with Sample Essays Owlcation"" at offset 1204",,"SEO aggregator page; snippets end in ...; apostrophes stripped (youll, persons)"
+18e539a751c5a4b3,full,fix,C1,"C1: ""Content of the article: ""Why an AC1 Remake"" at offset 119",,chunk 1 of 2; Reddit repost site; body prose is coherent; shared page x2
+593cf027a182e228,full,fix,C1;C3;C4,"C1: ""Learn moreJust finished all the city assassination quests"" at offset 1770 | C3: ""In Jorvik, the chapter title is CityWhy an AC1 Remake"" at offset 2292 | C3: ""Other useful information about this game:"" at offset 2492 | C4: ""Just finished all the city assassination quests in Valhalla"" at offset 1780",,"chunk 2 of 2; first three paragraphs are sound, the joined game-forum snippet and the two QA pairs built on it can be cut; shared page x2; shared page x2"
+affc40538cb81c3e,full,drop,C1;C5,"C1: ""Question 6 - What Are Humans Beings Made Up Of?Question 7"" at offset 745 | C5: ""Question 1 - What Are The Various Views As To The Origin Of Human Beings"" at offset 428",,Series table of contents (about 30 question titles) with one paragraph of prose; first QA answer not supported by the passage; shared page x2
+f7cc74aa2a292910,full,drop,C3;C5,"C3: ""Question 10 If God Wants Everyone To Be Saved Then Why Are Some People Lost?"" at offset 0 | C5: ""Question 11 Does God's Plan Remove Human Freedom And Responsibility? (Fatalism)"" at offset 92",,"chunk 2 of 2 of a series table of contents (items 10-23), no prose; QA answer not in passage; shared page x2"
+e0cd184d7215f188,full,fix,C4,"C4: ""Should have privatized it long ago."" at offset 409",,QA attributes the commenter's view to the author; crude partisan insult judged not F3
+0ca7bce7da41acbb,full,clean,,,,chunk 1 of 2; shared page x2
+76b4036d49000599,full,fix,C1,"C1: ""Follow Living Hope via Email"" at offset 2182",,"chunk 2 of 2; hymn and '~+~' separator are page content; pastor named is a public role, not F1; shared page x2"
+930ac17ff7477fe3,full,fix,B4;C1;C3,"B4: ""'salaam' "" at offset 2650 | C1: ""Steps to Becoming a Muslim (See Pages for Full info)"" at offset 679 | C1: ""Witnesses are not strictl..."" at offset 1357 | C3: ""4. Fasting during Ramadan—Saum"" at offset 2522",,chunk 1 of 3; one-word Arabic gloss not labelled D3; QA has missing space in word'salaam'; B4 by pack rule: detok glitch: no space before quote x1; shared page x3
+006973886899c770,full,fix,C1,"C1: ""Videos to watch & Learn from"" at offset 564",,chunk 2 of 3; prose on both sides is coherent; shared page x3
+ff83c5492bf664a8,full,clean,,,,chunk 3 of 3; opens with 'A third reason' continuing the previous chunk but is a complete sentence; shared page x3
+ce52c449f250761e,full,drop,C1;C5,"C1: ""Source: i.redd.it"" at offset 1065 | C5: ""44+ Classic Car Insurance Reddit Gif"" at offset 0",,incoherent scraped snippets; one sentence repeated twice; stray Reddit rule line
+6cd78f812660687b,full,fix,C4,"C4: ""i have a 2003 chev s-10 pickup with automatic/ 4 cyl"" at offset 1650",,forum page: two answers glued mid-sentence ('bad seals shift handle') and a different S-10 question appended
+d7b99c1b508bc9a9,full,clean,,,,"OCR noise only ('and in I in thy hand', missing opening quote); hard line-wraps mid-sentence; 61 chunks same url; shared page x61"
+72221c8db470aabe,full,clean,,,,complete chunk of Upton's Nibelungs; hard line-wraps mid-sentence from OCR; shared page x61
+2238fde9ba724afc,full,clean,,,,OCR noise only ('But to!' for 'But lo!'); passage and QA complete; shared page x61
+8dbfc3a780549e3e,full,clean,,,,"OCR noise ('lime test', 'heir weight', 'it mu that time'); speech after 'laughed a scornful laugh and said:' missing; shared page x61"
+b876745af3ee971b,full,fix,B4,"B4: ""not named in the text"" at offset 2590",,"two QA answers are 'not named in the text' (low-value QA, not a disease); B4 by pack rule: rewriter meta-comment x2; shared page x61"
+88918599865e0040,full,clean,,,,last QA answer is factually wrong (Ecke's motive); not a disease code; shared page x61
+fa5cb262ff657b64,full,fix,C3,"C3: ""swore the devil must be helping him; but Dietrich shouted:"" at offset 2346",,chunk boundary cut; the shouted words appear in the next chunk from the same url; shared page x61
+03bd5799abaf729b,full,fix,C3,"C3: """"God alone is my aid!"" and again hurled Ecke to the ground."" at offset 0",,"OCR noise 'Any tales' for 'Many tales'; rest complete, ends on finished verse; shared page x61"
+11447dec091c0569,full,clean,,,,complete chunk; ends on finished bird-song verse; shared page x61
+6a67d2deb1ffa13d,full,clean,,,,first QA answer wrong (King Etzel was not fought); not a disease code; shared page x61
+c496ad97535a3a10,full,fix,C3,"C3: ""with his hands, succeeded at last, in spite"" at offset 2735",,chunk boundary cut; sentence continues in next chunk from same url; shared page x61
+49f5a46f940eb5cb,full,fix,C3,"C3: ""of his struggles, in snatching the magic cap from him."" at offset 0",,trim first fragment; remainder complete; shared page x61
+6a9df91ed20c63ed,full,clean,,,,OCR noise 'hound' for 'bound'; verse blocks are the book's own format; shared page x61
+7c1029be9e3e7d39,full,clean,,,,"opens with 'did not gainsay this' referring to prior chunk, but sentence is complete; shared page x61"
+8aa48962986d862a,full,fix,C3,"C3: ""The Festival"" at offset 2740",,trim the orphan heading; passage before it is complete; shared page x61
+ccc103cc511966af,full,clean,,,,Kriemhild's speech left unclosed (continues in next chunk) but ends on a complete verse sentence; shared page x61
+a147d6925833c136,full,fix,C3,"C3: ""When King Gunther heard all this, great was his"" at offset 2298 | C3: ""Our tottering throne hast thou upheld"" at offset 0",,cut at both chunk boundaries; trim last fragment; shared page x61
+fe0100ca641983cc,full,fix,C3,"C3: ""desire to win the beautiful warrior-maiden for his wife,"" at offset 0",,trim first fragment; remainder complete; shared page x61
+af171f278bdb100a,full,clean,,,,OCR noise 'bath' for 'hath'; passage and QA complete; shared page x61
+c3a94ba4bda8914c,full,clean,,,,opens 'And to Dankwart he said' continuing prior chunk (he=Hagen) but sentence complete; QA says 'overlooks'; shared page x61
+dac8666f4d09503c,full,fix,C3,"C3: ""Then Alberich besought him to spare his life, saying:"" at offset 2681",,OCR noise 'bath' for 'hath'; trim last fragment; shared page x61
+046472ddb5a971ed,full,fix,C1,"C1: ""SIEGFRIEDVANQUISHES ALBERICH."" at offset 1179",,opens with bare speech continuing prior chunk's 'saying:'; delete the caption line; shared page x61
+ea0ecda1c2f25dd1,full,fix,B4,"B4: ""aid thee in e~ \ thy wooing"" at offset 2345",,"junk is OCR, not template; also missing opening quote before 'Nor will I break my oath'; shared page x61"
+1eb02fd733f174a3,full,clean,,,,complete chunk; passage and QA fine; shared page x61
+ee6655c72b3799da,full,fix,C3,"C3: """"Thus to behold the day"" at offset 2899",,trim the two dangling verse lines; shared page x61
+89a8e620955b1040,full,fix,C3,"C3: ""Which sees the beauteous Kriemhild"" at offset 0",,Opens mid-stanza; one of 61 consecutive chunks of the same book; page-break line wraps mid-sentence; shared page x61
+adc3f46213437a54,full,fix,C3,"C3: ""some dire evil will surely chance, an thou dost hunt this"" at offset 2290",,"Sentence cut mid-doc at a page turn, text resumes with next paragraph; missing opening quote marks (OCR); shared page x61"
+1ed7528b1420c3d1,full,clean,,,,Consecutive chunk of the same book; page-break line wrap mid-sentence only; shared page x61
+84649d75dd11ae14,full,fix,C3,"C3: ""forth they bounded like two panthers over the grassy"" at offset 1914 | C3: ""Whereupon Hagen, assuming an air of indifference, replied:"" at offset 1463",,Ends mid-sentence; Hagen's speech after 'replied:' is missing (page-turn drop); shared page x61
+bca8eefdcfb28646,full,fix,C1;C3,"C1: ""THEDEATHOF SIEGFRIED."" at offset 2664 | C3: ""plain, all the huntsmen following."" at offset 0",,Opens mid-sentence; all-caps illustration caption left in; OCR stray period 'upon. the'; shared page x61
+3ec2166b803a7ed8,full,fix,C3,"C3: ""but Kriemhild, wringing her hands, cried out:"" at offset 2560",,Ends on 'cried out:' with the speech missing; OCR missing quote marks; shared page x61
+7dd2b369f4ee29a4,full,fix,C3,"C3: ""Swooning she was borne away;"" at offset 2679",,Ends mid-sentence at semicolon; OCR 'to!' for 'lo!'; QA answer wrong: Siegmund is Siegfried's father; shared page x61
+2fc62e1bd955eae6,full,fix,C3,"C3: ""and thereupon, amid tolling of bells and the sobs of the multitude"" at offset 0",,Opens mid-sentence (lowercase 'and'); rest complete; shared page x61
+2b7f73787da3e588,full,clean,,,,"Consecutive chunk of one book; page-break line wraps; QA answer slightly inaccurate (feared wrath, not keys); shared page x61"
+b2a595175aa47ff4,full,fix,C3,"C3: ""and Giselher rebuked Hagen, saying:"" at offset 366 | C3: ""as Queen of all the Huns, added significantly:"" at offset 1383",,Two speeches missing after colons at page turns; labelled C3 for the dangling 'saying:'; shared page x61
+06a617ce8f69b17c,full,clean,,,,Complete chunk; missing opening quote mark before 'Thou art the guilty one' (OCR); shared page x61
+6e37ba20647c0a25,full,fix,C3,"C3: ""asked if there was no ferryman at hand. She told him the"" at offset 2142",,Ends mid-sentence; verse stanzas are the source's format; OCR 'bath' for 'hath'; shared page x61
+bf9ebeae946c4859,full,fix,C3,"C3: ""ferryman's house was on the other bank of the Danube"" at offset 0",,Opens mid-sentence (continues previous chunk); OCR 'halt' for 'hast'; shared page x61
+5f01dd1e1e757f40,full,fix,C3,"C3: ""The Comrades"" at offset 2434",,Ends on dangling section heading 'The Comrades' with no body; trim it; shared page x61
+f0d2f0cf3e08335b,full,clean,,,,"Complete chunk; OCR 'cloth' for 'doth' twice; stray comma 'my, foe'; shared page x61"
+3e3f61cd431b6790,full,clean,,,,Complete chunk; OCR 'cloth'/'loth' for 'doth'; stray period 'beloved. spouse'; shared page x61
+3ef34026380566db,full,clean,,,,Complete chunk; missing opening quote before 'Give place!' (OCR); shared page x61
+0074a878bb00d533,full,fix,C1,"C1: ""THE MINSTRELAND HAGEN."" at offset 206",,All-caps illustration caption (missing space) left in prose; otherwise complete; missing opening quote (OCR); shared page x61
+df1822e736052c65,full,fix,C3,"C3: ""lest Hagen should betray her to the King; but far too"" at offset 2464",,Ends mid-sentence 'but far too'; QA question misattributes Volker's challenge to Kriemhild; shared page x61
+3e6bb6fb3b9b57a6,full,fix,C3,"C3: ""proud was the hero to seek help from Etzel"" at offset 0",,Opens mid-sentence (continues 'but far too'); rest complete; shared page x61
+b24bfebb52c88259,full,clean,,,,Blodelin's reply missing between two Dankwart speeches (page-turn drop); OCR 'Booth' for 'sooth'; shared page x61
+49d11c77033a2d36,full,fix,C3,"C3: ""To thee and to our God above,"" at offset 2750",,"Ends mid-stanza of verse; OCR 'he' for 'be', 'Rang' capitalised; shared page x61"
+928d4bf58d34db84,full,fix,C3,"C3: ""I tell my tale of pain:"" at offset 0",,"Opens mid-stanza; medieval epic violence (child beheaded) is literature, not F3; OCR 'al' for 'all'; shared page x61"
+523be51ff2033a1a,full,clean,,,,Complete chunk; verse stanza is the source's format; shared page x61
+eafaaca57dc561cd,full,clean,,,,"Complete chunk; OCR 'hire' for 'him', 'cloth' for 'doth'; missing closing quote; shared page x61"
+c302e630a9f0b2e0,full,clean,,,,"Nibelungs book chunk (61 docs same URL); hard line wraps mid-sentence from source, no disease; shared page x61"
+976023f4a0f3f62b,full,fix,C3,"C3: ""it had ever occurred. save"" at offset 816",,"Internal cut, not at doc edge; trimming the stray 'save' fixes it. Otherwise coherent.; shared page x61"
+3212b90956b7cb74,full,clean,,,,Opens with a reply continuing prior chunk but the sentence is complete; a missing closing quote mark only; shared page x61
+2f4410b98b7ef464,full,clean,,,,OCR typo 'bath been' for 'hath been'; no disease code applies; shared page x61
+a4ac4737059e936a,full,fix,C3,"C3: ""Dietrich cried: ""God forbid that such report should"" at offset 2609",,Continues in the next doc of the same URL; trim the last fragment; shared page x61
+1ff0d9db2ef30443,full,fix,B5;C3,"B5: ""But the\ knights"" at offset 770 | C3: ""be true! Sir Rudiger always held yon heroes dear"" at offset 0 | C3: ""That lion of rash mood,"" at offset 2621",,chunk truncated at both ends; stray backslash escape 'the\ knights' is broken markup; shared page x61; shared page x61
+f8b53427fe40a49e,full,fix,C3,"C3: ""That he may come within my reach!"""" at offset 0",,"First Q&A answer is wrong (minstrel is Volker, not 'Dietrich's men'); no code for QA quality; shared page x61"
+dc2b689db17c58fe,full,clean,,,,"Chapter heading mid-doc is book structure, not C4; first Q&A answer is factually wrong; shared page x61"
+cf90f9bc9cbe33c8,full,clean,,,,page shared by 61 pack docs
+59d846af6f37b0a8,full,fix,C3,"C3: ""She swung it with both hands, and smote"" at offset 2547",,A Q&A item even asks about 'the last action before the text ends'; trim the fragment; shared page x61
+271e09d4d18ea32c,full,fix,C3,"C3: ""His head from off its trunk."" at offset 0",,Short chunk (837 chars); rest is coherent; shared page x61
+d1ea2b7213b6f516,full,clean,,,,"University news article; named liaison is an institutional employee quoted in a press story, not F1"
+35ebd1eaea214130,full,fix,C1,"C1: ""Lesson period:"" at offset 850 | C1: ""(In case of multiple editions, please check the period, as it may vary)"" at offset 865",,Two trailing template lines from the course page; drop them
+dc29e8d2291caee1,full,fix,C1,"C1: ""THE BASICS OF THE GAME"" at offset 487 | C1: ""POSITIONS"" at offset 510",,Two empty page-section headings left in; content under them was lost. Rest is fine.
+1669b86835f433ae,full,fix,C1;F1,"C1: ""Pages"" at offset 0 | C1: ""No comments:"" at offset 1369 | C1: ""Post a Comment"" at offset 1382 | C1: ""Thanks for stopping by!"" at offset 1702 | F1: email at offset 1118 | F1: email at offset 1678",,Blog sidebar+comment boilerplate; blog contact email appears twice; F1 borderline (sole blogger's brand address); script-found F1
+b61d4ab44f34bce1,full,fix,C1;C5,"C1: ""Porthole Cruise Magazine|November/December 2020"" at offset 16 | C1: ""RELATED STORIES"" at offset 2008 | C1: ""4 mins read"" at offset 1948 | C5: ""Locales For Locating Fall 'Lunge"" at offset 2083",,article body clean; tail is a list of related-story teaser titles; passage-based MCQ is not F2; shared page x2
+beb73cd7cb9e50fd,full,drop,C1;C5,"C1: ""5 mins read"" at offset 70 | C5: ""Driving the 2020 Alcan 5000 Winter Rally in a '20 GMC Sierra 1500 AT4"" at offset 0",,Entire doc is the continuation of a related-stories list from the previous doc; nothing to keep; shared page x2
+b2834bc3a7b19cb8,full,fix,C1,"C1: ""Advertisement"" at offset 0",,"Academic abstract; author byline not F1; 'Keywords:' line is part of the abstract, not labelled C5"
+bf272a66665aaa47,full,fix,C3,"C3: ""Body Shape Concerns the community. There is no one"" at offset 50 | C3: ""Can a gymnast be too tall?"" at offset 2869",,"Last Q&A answer is hallucinated; author is the public blog owner, not F1; shared page x4"
+1c0ef86a3a813b83,full,fix,C1,"C1: ""calculator form online,linked here."" at offset 171",,"MCQ in Q&A is passage-based (and wrong), not F2; otherwise good prose; shared page x4"
+4758c1fd5a32b00e,full,clean,,,,"Eating-disorder discussion is health information, not F3; author's own story, not F1; shared page x4"
+94d9f521ed7f6d0d,full,fix,C3,"C3: ""without guilt, shame, or food fights"" at offset 2158",,Borderline: final clause is grammatical but unpunctuated and the section is clearly unfinished; shared page x4
+ccb7bf4961dd69d5,full,fix,C1,"C1: ""Same Day Shipping"" at offset 2989",,Starts mid-article (MAP intro missing) but at a sentence boundary; 'we cover this topic here' is a dead link
+7ee6cdea68d597b0,full,fix,B5;C1,"B5: ""and then invoking that method:"" at offset 2677 | C1: ""Posted by"" at offset 112 | C1: ""22 Jul 2014 Swift from an Objective-C developer's perspective"" at offset 50",,code examples announced ('and then invoking that method:') were stripped; 'Posted by' header left in; shared page x2
+52731a50fbea41cb,full,fix,B5,"B5: ""mark at the end of the original type:"" at offset 953",,several code snippets announced mid-document ('add a ? mark …:') were stripped; shared page x2
+be0bcfdf53df2046,full,clean,,,,"Business blog rewrite; named COO is a company officer, not F1"
+e0a6635b9fde49ee,full,clean,,,,Single complete paragraph summarising a novel
+c1a354c76d5c4586,full,fix,B4,"B4: ""'remember' "" at offset 199",,"Missing space before quotes e.g. for'remember' (6x), no code fits; mentions rapist in ethics context, not F3; B4 by pack rule: detok glitch: no space before quote x5; shared page x5"
+0da79ff323dbfa62,full,clean,,,,Same URL as idx 203-207 (docs_from_same_url=5); complete prose; shared page x5
+8a14393bcbdc753b,full,clean,,,,Mentions rape of a girl by babysitter in an ethical/religious discussion; not F3 per rubric; shared page x5
+d122036623b5792f,full,fix,B4,"B4: ""'shâ·mâr',"" at offset 404",,"Glitch is'shâ·mâr' (missing space, 1x); LDS section has its own heading, not C4; B4 by pack rule: detok glitch: no space before quote x1; shared page x5"
+61d243593481fb6c,full,clean,,,,Complete theological prose; scripture citation errors are not a coded disease; shared page x5
+ac2d7bac43b4a937,full,fix,B5,"B5: ""setllCUSTNO ORDHDRL1;"" at offset 1245",,"RPG code lost the space between opcode and operand in several lines; the repeated reade line is legitimate loop code, not C2; shared page x2"
+f5d81aaad46e50f8,full,fix,B5,"B5: ""The provided code snippet demonstrates a robust pattern for looping"" at offset 135",,prose refers to 'the provided code snippet' but the snippet was stripped; shared page x2
+fdc6fe9819a6c4d9,full,clean,,,,Medical information on breastfeeding; not F3
+b86bb87dfb4fb8ec,full,clean,,,,"Class blog archive page: several posts each under its own heading, not C4; Billy Barr is a public figure; shared page x2"
+a5dca73981d00e2b,full,clean,,,,"Child's first-person essay from class blog; no name given, not F1; shared page x2"
+29a6e7e2ece2e52c,full,clean,,,,"Research abstract rewrite, complete"
+c107619dd3ec5dab,full,clean,,,,"Trademark symbol in FixDroid is source text, not junk"
+4e2bdd67c243a86b,full,clean,,,,Bullet list of facility functions is normal structure; ends on a complete item
+fb214b43d2bd9ec3,full,clean,,,,"Outcome list has duplicate (2 vs 5) and contradictory (3 vs 6) items: LLM error, no coded disease; gambling not F3; shared page x3"
+945bde89b4c5ff1f,full,clean,,,,"Same URL as idx 216/218; product names appear inside prose, not C5; shared page x3"
+7f7986b7eb93f7b3,full,clean,,,,Same URL as idx 216/217; complete; self-contradictory card-counting advice is not a coded disease; shared page x3
+7e33ae5e96e36516,full,fix,C1,"C1: ""Word Count: 2498"" at offset 3928",,"Essay-mill page; trailing Word Count line is leftover template metadata, trim it; rest is coherent prose"
+c783bc1df0303563,full,clean,,,,Public figures only; complete
+7530341fa4c553f3,full,clean,,,,"Tutor marketplace profiles, first names only, no contact details; judged not F1; two profiles each with heading"
+5d10fd1c35e7980c,full,clean,,,,Historical prose about Shimla; photo descriptions are the page's content
+acdee45b2b213fc4,full,clean,,,,Seminar abstract; wrong definitions of Reuleaux triangle and Cartesian oval are not a coded disease
+5e85be4197a6e997,full,clean,,,,"Hospital service description; final bullet is a complete item, not C3"
+a80439d90b183141,full,clean,,,,"Ends by pointing to Part 2; that is the page's own ending, not C3; no actual email in text"
+0871d7a441572fa4,full,clean,,,,
+6107d5c027a2661c,full,clean,,,,"essay-mill source (essaymine); content is coherent history prose, no disease"
+8ce06d135e1984ba,full,clean,,,,
+77a878003b25d71b,full,clean,,,,"first-name-only student mention on a university page is institutional, not F1"
+092855d65204be46,full,clean,,,,
+0a0e11b338fa5546,full,clean,,,,
+aeec9af96e03401d,full,clean,,,,"Published kids'-magazine profile of a child record holder; school and coach named, no contact data; not F1 but flagged for the second reader"
+b65d31a85abe9d74,full,clean,,,,
+68477122d9cbf6ca,full,clean,,,,
+1b8fba9b89baf612,full,clean,,,,"homework-mill essay; chars=4000 but reference list is complete; angle-bracket URL in refs is Markdown autolink, not B2"
+86f8b6294afb3c76,full,clean,,,,"joke compilation incl. an amphetamine pun; humour, not F3"
+2f44962a8ebe681a,full,clean,,,,
+9928e7e0ef8639ed,full,fix,C1,"C1: ""you can take a virtual tour of BWL's water treatment facility"" at offset 2295",,borderline C1: only the final sentence is a CTA; rest is solid press-release prose
+5037bb55e5ff848b,full,clean,,,,blog listing page (?page=4): two sections with headings; 'view on the Academy's blog' pointer kept as content
+922e32f45f63d013,full,fix,C1,"C1: ""consider contacting Gamma on"" at offset 2117",,final sentence carries a business phone (not F1 per rubric); 'Why Choose Gamma SoGEA?' section is vendor copy
+86d81c2c18b6ce22,full,clean,,,,tag-page URL but a coherent first-person essay
+ae843c0b4eb5739d,full,clean,,,,"no title, leading blank line; thin context-free summary of one forum comment, but complete sentences"
+534c046610878d2e,full,clean,,,,"homepage: three unrelated news blurbs each under its own heading; not C4 per rubric, but thin"
+56f7b0fec5a5a5f7,full,fix,C1,"C1: ""JackpotCity Online Casino offers a diverse range of gaming experiences"" at offset 49",,casino affiliate advertorial on a hijacked domain (towandahistory.org); candidate for drop by source rule
+2ce289d44022c56c,full,clean,,,,
+bd969e5d55d18f52,full,clean,,,,"'Terminology to Avoid' section has one complete bullet; possible C3 but sentence ends with full stop, not labelled"
+4853919e6ab2f0fb,full,clean,,,,
+dea9d17e5299b611,full,clean,,,,"health advice incl. breast-reduction mention; medical information, not F3"
+192f5cdd346caae1,full,clean,,,,
+08b696f23e121a8b,full,clean,,,,minor LLM grammar slip ('inscriptions that still legible'); not a disease
+2a78f43220caf1ae,full,clean,,,,
+23e46f27cccca21e,full,clean,,,,Named councilmember is a public official; not F1.
+419dfe828cfdc921,full,clean,,,,"Forum usernames only, no contact details."
+912f88dde57e1e99,full,clean,,,,
+a9b2ecca27d064b5,full,clean,,,,Same URL x3 (BGU psyspo); non-overlapping sections across the three docs.; shared page x3
+7276bebe0e3db13a,full,clean,,,,"Same URL x3 (BGU psyspo); starts at a module heading, not mid-sentence.; shared page x3"
+4670bc98d926df7e,full,clean,,,,Same URL x3 (BGU psyspo); non-overlapping sections.; shared page x3
+76635d557c2e4266,full,clean,,,,
+55c6361188a8cd06,full,clean,,,,Facts garbled: Sputnik 1 cast as telecom relay with odd dates; unrelated fan-site URL. No listed code fits.
+04a38c0d50cff066,full,clean,,,,Ends on a complete bullet phrase; not truncation.
+05718e2172cfd068,full,clean,,,,SEO-aggregator source URL; prose itself is fine. Stray spaces around registered-mark symbols.
+5c4ad19d0511f798,full,clean,,,,
+e95af414b0f296e2,full,clean,,,,
+f3f8643e47e7922c,full,clean,,,,"C4? heading-bounded switch from the picture book to real bear diet; FAQ-aggregator page, not labelled."
+2bb354e2f1b6cfa1,full,clean,,,,"Last line about Facebook updates is news content, not boilerplate."
+94e65065d76f1b44,full,clean,,,,
+f160996522775c21,full,fix,B4;B5,"B4: ""'mediumlarge' "" at offset 1937 | B5: ""updateoption('mediumlargesizew', 768 );"" at offset 1997",,"Code lost underscores (updateoption, mediumlargesizew); detokenisation glitch the'mediumlarge'. Same URL x5.; B4 by pack rule: detok glitch: no space before quote x1; shared page x5"
+10ad4d83d447f5ec,full,clean,,,,Same URL x5; markdown table well formed.; shared page x5
+6011e88c8cc9c77d,full,fix,B4,"B4: ""in.jpg"" at offset 1353",,"Detokenisation glitch: in.jpg,.png, or.gif (missing spaces). Same URL x5.; B4 by pack rule: detok glitch: no space before dot-extension x2; shared page x5"
+42d8419d13115795,full,fix,B5,"B5: ""addfilter('intermediateimagesizesadvanced','myintermediateimage_sizes');"" at offset 2060",,"Code lost underscores (addfilter, intermediateimagesizesadvanced); fence closed. Same URL x5.; shared page x5"
+5c27d8262afe0d6d,full,clean,,,,Same URL x5; distinct text.; shared page x5
+12693fe362d15d0d,full,fix,B4;C1,"B4: ""[email protected]"" at offset 1148 | C1: ""please register in advance by contacting"" at offset 1046",,"Placeholder junk at the end; phone with extension is the institution's line (Shrine), not F1 per rubric."
+55df24973aea7de6,full,fix,B4,"B4: ""'study-with-me' "" at offset 2205",,Detokenisation glitch: or'study-with-me' (missing space).; B4 by pack rule: detok glitch: no space before quote x1
+343383323ee7533b,full,clean,,,,Promotional course page rewritten as prose; no boilerplate lines left.
+8d108ac128e2941d,full,clean,,,,
+0844c74e3bab12fc,full,clean,,,,3 docs from same URL in pack (seven-day week series); shared page x3
+be8e89471a939e9c,full,clean,,,,3 docs from same URL; some facts contradict sibling doc (Babylonian eight-day week) but no disease; shared page x3
+87f15ef68ab716f6,full,clean,,,,"3 docs from same URL; Old Norse day names with Þ/Ó/ð are named terms, not D3; shared page x3"
+ff3d7d0aed0b3f38,full,clean,,,,2 docs from same URL; shared page x2
+40ba838c6dd54c09,full,clean,,,,2 docs from same URL; short but complete; shared page x2
+ae3d3636b3deb187,full,clean,,,,"Snapchat age-limit section is the source Q&A page's structure, not C4"
+dbcd9152793c5727,full,clean,,,,"WWII forced-labour history; violence is historical, not F3; named POWs are historical record, not F1"
+84fccdb62ef50bb3,full,clean,,,,public figures only
+df85305d590a5f2b,full,fix,C1,"C1: ""bookmark our overall cooking recipe converter"" at offset 1195",,trim the last two sentences (links to 'our baking conversions page' and converter); rest is good
+bb69c46d1b1f15c5,full,clean,,,,"multi-topic Q&A page structure (cancer, salary, 9/11, lungs) not C4; bandana claim is odd but not a disease"
+a130dfee7815ad35,full,clean,,,,"single short paragraph, complete"
+dd66702c1d2b71b1,full,clean,,,,"aquarium-heater thread rewritten as room heaters; fidelity issue, not a disease"
+be3d178d1dc3e00d,full,clean,,,,
+221ac460c036788a,full,clean,,,,"last sentence alludes to reader comments but is prose, not boilerplate"
+6f1ae1cd04963fe8,full,clean,,,,2 docs from same URL; shared page x2
+5453a6810e86c467,full,clean,,,,"2 docs from same URL; 'as shared by a user' summarises blog comments, not C4; shared page x2"
+a99df847e362d6be,full,clean,,,,
+8ede739fd49c39dd,full,clean,,,,
+fe66f059184ad7bb,full,clean,,,,"therapy product page; mentions self-harm as a warning sign (clinical info, not F3)"
+1590536a76ea433c,full,clean,,,,
+3c68bf650835bd5a,full,fix,D4,"D4: ""Avoid overwatering to prevent root and root rot"" at offset 2277",,"machine-translated Russian gardening site: 'window slopes', 'root and root rot' are mistranslations; shared page x2; shared page x2"
+3d938ecc8bc299c4,full,fix,B4;D4,"B4: ""'stress' "" at offset 2363 | D4: ""To prevent kale attacks, ensure the soil is not acidic."" at offset 681 | D4: ""6-12 hours after picking"" at offset 1537",,"2 docs from same URL; also missing space in This'stress'; topics switch under headings, not C4; B4 by pack rule: detok glitch: no space before quote x1; shared page x2"
+31653b7e6d9a2f4d,full,clean,,,,
+41edaf529c7ea5de,full,clean,,,,"vendor-flavoured (FEVE/Lumiflon) but prose, not boilerplate"
+1033646319dd266f,full,clean,,,,
+32565fe6325d9bbd,full,clean,,,,"opinion piece on abstinence education; not explicit, not F3"
+1783d679ed057b53,full,clean,,,,
+c9f74b49a0d76112,full,clean,,,,"Semeru 2021 eruption cited in a 2019 page; factual oddity only, not a disease"
+cd7dcea5823d3544,full,fix,B4,"B4: ""'multibagger')"" at offset 949",,a'multibagger' missing a space; typo only; B4 by pack rule: detok glitch: no space before quote x1
+a4732de1e364228c,full,clean,,,,"co-op website address is a business contact, not F1"
+415f356ba9691cb9,full,clean,,,,"news about a coup anniversary; violent quote is reported speech, not F3"
+373e0f0dd5699ac0,full,drop,B4,"B4: ""Platform: LearnWorlds (recommended by a senior product manager, Walter White)"" at offset 789 | B4: ""Understanding how classical artists use space in their work"" at offset 182",,"LearnWorlds demo/template content (art outcomes, placeholder instructor, testimonial) under a film-course title"
+6a2017ab99292d5b,full,fix,B4,"B4: ""- Not specified in the given text."" at offset 256",,LLM meta-comment reveals truncated source; the 8 types are missing; trim the last two lines
+c51e999a94bbd3d0,full,clean,,,,"junk CMS parameters are in the header url only, not in the text; instructor is a public course provider"
+f57e3be39b6f12f7,full,clean,,,,"contractor self-promotion lines are the page's content, not boilerplate"
+48c7db777194752d,full,clean,,,,
+4571e1192051211e,full,clean,,,,"institution hours and public educators/curators, not F1; diacritics intact"
+572805b8a9e4839b,full,clean,,,,
+06cfe5719541e863,full,drop,F3,"F3: ""Punishment: Sexually assaulted with a machine and her hand."" at offset 906 | F3: ""Punishment: Nuts and nipples crushed with pliers."" at offset 1044",,femdom fetish site index; sexual assault and genital torture descriptions throughout
+57922931d471745c,full,fix,B4,"B4: ""Date: Saturday, January 17, 1970"" at offset 17 | B4: ""Time: 12:00 AM CET"" at offset 52",,epoch-bug date and midnight time copied from the CMS; trim the Date and Time lines
+ac42e3ccd8fb70ea,full,clean,,,,"Q&A aggregator content on wages; generic, not a benchmark item; shared page x2"
+acaa21c09564a4bf,full,clean,,,,"Q&A aggregator page; last two items (JAM full form, central tendency) unrelated to wages; borderline C4; shared page x2"
+bcd63a567d168dd2,full,clean,,,,"war news, not F3"
+24b789949cbe0ad6,full,clean,,,,
+0cf707e49b1fddfd,full,clean,,,,"opinion piece with public figures; suicide mention is reported claim, not F3"
+6b1a63fd8f214a67,full,clean,,,,page shared by 2 pack docs
+4fc487e14eab5961,full,drop,B4;C3,"B4: ""is not explicitly stated in the provided text."" at offset 137 | C3: ""is mentioned as a historical event."" at offset 53",,LLM meta-comments on a context-free fragment; country and coup never named; little coherent content; shared page x2
+e815ffb2fc1f657a,full,clean,,,,brand product copy is the page's content
+3ce6ec75e9ceda0d,full,clean,,,,
+cb14ea1412484dc7,full,clean,,,,"volunteer event about named dogs; no owner name or address given, not F1"
+73b986b7d5bc7ec7,full,clean,,,,
+f7b5b6f5388dd6bf,full,clean,,,,URL in header has encoded U+FFFD; body clean; 'No. 4 (or ... No. 4)' redundancy is a rewrite artefact
+d6b6303c1bbd51bd,full,clean,,,,"sensitive: forum talk on child molestation and revenge killing, non-explicit, no instructions; judged not F3"
+97a34f6dd9cb8d99,full,clean,,,,nested bullets flattened; 1 of 2 docs from same URL; shared page x2
+65118e5a073a3166,full,clean,,,,2 of 2 docs from same URL; shared page x2
+0c03a4c096276336,full,fix,B4,"B4: ""The AI advises the user"" at offset 327",,Rewriter recast forum repliers as 'The AI' and the poster as 'the user': chat-role framing leaked into pre-training text; closest code B4
+3d72633e812a619e,full,clean,,,,
+4b7a08cb5e8c4ce2,full,clean,,,,
+6cd1d63b503f318e,full,clean,,,,furniture maker's project reference page; Picnik/Hopper are product names; coherent prose
+a6b530dc5fd8b2d5,full,clean,,,,"thin: summarises only the article intro with 'The text suggests' framing; complete, not C3"
+f8138f8110f21cc1,full,clean,,,,
+f6a9f0a37ea60b58,full,clean,,,,description of a song lyric; only short fragments quoted
+47b782c9ac128aff,full,clean,,,,1 of 2 docs from same URL; shared page x2
+0797c93bf413915b,full,clean,,,,factual nonsense (light off 'reduces gravitational force'); no code covers misinformation; 2 of 2 same URL; shared page x2
+bb556c926bbac777,full,clean,,,,"SEO site rehosting quizlet flashcards; errors (Maluks, Great Wall); F2? judged no: no test format"
+cbfd41d519db7b0c,full,clean,,,,"named teacher is a public news subject with awards, not F1; 1 of 3 same URL; shared page x3"
+cb62dd92c74e2a8e,full,clean,,,,"2 of 3 same URL; named district official, not F1; shared page x3"
+39f023b9738523e9,full,clean,,,,"3 of 3 same URL; 'Program' unnamed, refs Miralles/Coulson from earlier chunks; not mid-sentence; shared page x3"
+de7cd24288cb96b5,full,clean,,,,
+d670e2c9a4487338,full,clean,,,,1 of 2 same URL; shared page x2
+adf6bfbff3fb41c6,full,fix,C1,"C1: ""Jody Cramsie's Background:"" at offset 818",,"trim last 4-line author-bio section; 2 of 2 same URL; borderline, a second reader may call it clean; shared page x2"
+c3972e25e2bd6dc8,full,clean,,,,"law-firm explainer; legal info, not F3"
+83079ceb151c7b9f,full,fix,B4,"B4: ""Not explicitly mentioned in the text"" at offset 1280",,"tag-archive page: unrelated posts under headings, not C4 per rubric; 'Not explicitly mentioned in the text' meta; B4 by pack rule: rewriter meta-comment x1; shared page x2"
+38d977e9bc6a89a1,full,clean,,,,tag-archive page part 2: unrelated architect posts under headings; not C4 per rubric; 2 of 2 same URL; shared page x2
+1d64bfe14631f221,full,clean,,,,"1 of 3 same URL; medical info, not F3; shared page x3"
+96785e5657cfa43e,full,clean,,,,coherent knowledge list on infant neck turn/tilt; one of 3 docs from same url; shared page x3
+b268a3bd0ac54923,full,clean,,,,head flatness list; one of 3 docs from same url; shared page x3
+6a10cd88a8e03f01,full,clean,,,,"SEO basics; one of 4 docs from same url, content overlaps with siblings; shared page x4"
+52e959deb6f93f5b,full,clean,,,,"SEO list; on-page/off-page bullets restated twice with different wording, not identical lines; shared page x4"
+27a1cdb2a1aa69fc,full,clean,,,,SEO/PPC list; one of 4 docs from same url; shared page x4
+778fb733a0a9ce9a,full,clean,,,,SEO types list; nested bullets flattened but readable; shared page x4
+9e9a5c1154e3afa7,full,clean,,,,food waste resource list
+8a28c9608e2c4628,full,clean,,,,"press-release style bio of a named professional; public business profile, not F1"
+cbdaf922f7711506,full,clean,,,,"community fridge news summary; mental-health mention is informational, not F3; shared page x2"
+a34291af2a578913,full,fix,C1,"C1: ""or donate an extra fridge by reaching out to Burnaby PCN."" at offset 712",,"closing donation call to action; fridge street location is institutional, not F1; shared page x2"
+cdbdeae840411721,full,fix,B4,"B4: ""Not explicitly stated in the provided text."" at offset 712",,"rest of the list is fine; the meta line refers to the rewrite prompt, not page content"
+16bebda4445a97ef,full,clean,,,,"stomach anatomy/health list; medical info, not F3; shared page x2"
+7437773cc59115f8,full,clean,,,,short abdominal pain list; one of 2 docs from same url; shared page x2
+e52b546b23a714ef,full,clean,,,,psoriasis facts list
+6392c94fc52d201e,full,clean,,,,"public-figure bio (comedian); spouse/child names are public; several implausible facts (height, weight) but no code"
+4454ce48da5fd547,full,clean,,,,event description list
+41610d579b2603f0,full,clean,,,,short public-figure facts from a quotes page
+aea90e71d9bf7550,full,clean,,,,institutional campaign summary
+f3011171442ed668,full,clean,,,,biblical/historical list on Tyre
+0d500c26f5a85ad0,full,clean,,,,"short SCSS practices list; 'Additional resources' line is course content, not boilerplate"
+d75b731d61eb6433,full,clean,,,,"product listing summary; named testimonial is a public review, not F1"
+e8ee3f749c1643f4,full,clean,,,,produce transition facts; one of 3 docs from same url; shared page x3
+722d685d277ea67e,full,clean,,,,produce transition facts; one of 3 docs from same url; shared page x3
+6700f6a8840e9c51,full,fix,C1;F1,"C1: ""Provides market reports via email upon subscription."" at offset 1306 | F1: email at offset 1215",,"Contact line holds a named employee's company work email; business contact, not F1 per rubric, but worth masking; script-found F1; shared page x3"
+778979be5b554b91,full,clean,,,,political news summary about public figures
+3785c00316f84fb2,full,clean,,,,"electronics fact list; complete, no markup or boilerplate"
+1aa44f38aab9f966,full,clean,,,,SER summary; source URL looks like a spun site but the rewrite is coherent
+be71aae2f5844693,full,clean,,,,nested bullets flattened to one level; content complete
+363dcd4d4510eac5,full,clean,,,,shofar halakhah; 1 of 3 docs from same URL; shared page x3
+b471eed3ec6f9b2c,full,clean,,,,shofar history; 2 of 3 docs from same URL; named rabbis are historical figures; shared page x3
+b9553dace11f7ccd,full,clean,,,,shofar halakhah; 3 of 3 docs from same URL; shared page x3
+4cca1f02b4e29153,full,clean,,,,Copenhagen Consensus climate targets; 1 of 2 docs from same URL; shared page x2
+281de2e3af773d76,full,fix,B4,"B4: ""not provided in the given text"" at offset 740",,"rewriter meta-comment 'not provided in the given text' left in; no code fits, flag for review; B4 by pack rule: rewriter meta-comment x1; shared page x2"
+d828c8d4ffabf49c,full,clean,,,,melatonin facts; 1 of 2 docs from same URL; shared page x2
+555d2d15fcb87926,full,clean,,,,"melatonin facts; health claims are page content, not F3; 2 of 2 from same URL; shared page x2"
+d501a8a7c9c57061,full,clean,,,,ARC2009 module page; syllabus list stops at lecture 7 but last sentence is complete; 1 of 3; shared page x3
+29f82ccee275b72f,full,clean,,,,ARC2009 module page; 2 of 3 docs from same URL; shared page x3
+cb4930e9378f7560,full,clean,,,,ARC2009 module page; 3 of 3 docs from same URL; shared page x3
+544fbb011fda1027,full,clean,,,,"React forum summary; '[handle]' is a public forum handle, not F1; inline backticks are intact"
+057134082816d6b6,full,clean,,,,Indian land records explainer; complete
+6a473fe19500e060,full,clean,,,,"pneumonia medical info, not F3; 1 of 2 docs from same URL; shared page x2"
+47457fba904dcf32,full,clean,,,,pneumonia classification; 2 of 2 docs from same URL; shared page x2
+532d7f663cb0d73a,full,clean,,,,Perl arrays vs hashes; 1 of 2 docs from same URL; shared page x2
+5fc74912249d091b,full,clean,,,,Perl pseudohash discussion; 2 of 2 docs from same URL; shared page x2
+026f11ff38c8d653,full,clean,,,,vendor page; last line describes the SPIDERCOOL product (borderline ad copy but substantive)
+419bc9320487517c,full,clean,,,,"school data-talk blog summary; names an institution only, no private persons"
+bf21b1b59b718044,full,clean,,,,tech-support thread summary; short but complete
+1e038cf11aed45e1,full,clean,,,,debate 'point of clash' guide; complete
+e19e5e9d5d189164,full,clean,,,,"pool salt; '0.5 to 2 pounds per gallon' is a factual error from source, not a disease; 1 of 2; shared page x2"
+3f3bcdf71612c00d,full,clean,,,,saltwater vs chlorine pool comparison; 2 of 2 docs from same URL; complete; shared page x2
+fde90bfa51f17e02,full,fix,C1,"C1: ""Explore AvionMart's inventory today to discover their selection"" at offset 6280",,retailer promo closer
+668d5072d7616454,full,fix,C1,"C1: ""(Affiliate link)"" at offset 8431",,long; FAQ headings misformatted as bullets; otherwise coherent and ends complete
+d4f559ee86104b5b,full,fix,B4,"B4: ""the.NET"" at offset 513",,Spacing glitch 'the.NET' / 'supported.NET' (same family as the dot-extension glitch); second numbered list lacks a heading
+7c17fdf547558759,full,fix,C1,"C1: ""Question: ""Glass memory?"" - steven--- via cctech"" at offset 0",,"forum post rewrite; header byline is a handle, not F1; body ends complete"
+d5dfe1bb0ed5c019,full,clean,,,,"short thesis abstract, complete"
+d4700fb9b804516b,full,fix,C1,"C1: ""initiate a direct download using the provided button"" at offset 244",,PDF-download SEO site; charts referenced but absent; FAQ ends complete
+36109ec5880f6cf2,full,clean,,,,"F1? gossip bio of a cricketer's sister (age, parents, height, university); semi-public figure, no contact data"
+467af7919431e4d7,full,clean,,,,author bio rewritten into last sentence; byline not F1
+1033b4424cfacc83,full,fix,C1,"C1: ""Explore our extensive range of opportunities in the realm of diversity"" at offset 2142",,"same advice restated three times (LLM repetition, not C2); journalist bio not F1"
+bddacd8f213f2e4a,full,fix,C1,"C1: ""The Better Stack Team has updated this information on November 9, 2023."" at offset 120",,page-update metadata sentence woven into prose
+a7c7926fedb71c4f,full,clean,,,,typo 'a impressive'; otherwise clean
+6984ab0505d5cd8c,full,clean,,,,"arXiv abstract rewrite, complete"
+8e3becefe8f9c67a,full,clean,,,,"part 1 of a blog series; ends with a forward reference, complete"
+6fdcdd6602436d4b,full,clean,,,,"F1? organisation-published staff spotlight of a named employee (job, hobbies); no contact data"
+650be7c8d64f5efd,full,drop,C3;C4,"C3: ""Essay Outline (5%)"" at offset 3608 | C4: ""The struggle between one's inner self and societal expectations"" at offset 411 | C4: ""Sandra Cisneros's ""Eleven"" employs literary techniques to characterize Rachel"" at offset 879",,essay-aggregator page: patchwork of unrelated essay snippets plus a dangling graded outline
+86b4424c85e8437d,full,drop,C1,"C1: ""Experience the captivating allure of our resplendent and celestial earrings"" at offset 0",,"563 chars of pure product-category marketing blurb, no information; unsure drop vs clean"
+9e9061ff3cad86b5,full,clean,,,,"legal information, complete"
+fd10b1c2493ae84b,full,clean,,,,"structured guide; bullet list is the format, ends complete"
+e0e8d8a6df7b41e8,full,clean,,,,"product page rewrite, informational, complete"
+fdb29dedf485e9f2,full,clean,,,,"church lesson guide, complete"
+c1946310aa3da1e5,full,fix,C1,"C1: ""For further information, one may refer to."" at offset 3820",,dangling link sentence whose target was stripped
+441df9daa61ec77f,full,fix,C1,"C1: ""Source: Kexing Biopharm, Oct 11, 2023. Views: 181."" at offset 138",,"long; a section seems skipped after the intro (jumps to 'Additionally'); heavy LLM repetition, not C2"
+4c0b868b7a914e56,full,fix,C1,"C1: ""Contact them today by calling"" at offset 3598",,"provider's toll-free business number in closing CTA (business contact, not F1); flattened footnote marks .1 .2"
+ca8e73baf22fdf89,full,fix,C1,"C1: ""one may refer to our article on the classification of joints"" at offset 7063",,internal cross-link sentence ('refer to our article')
+f7e807a444827345,full,clean,,,,feature list is the format; ends on a complete bullet
+b1abf91afc85f39f,full,clean,,,,"Einstein quote looks fabricated and 'Guitarra Sangraha' is garbled; factual issues, no disease code"
+83701d0766dc413d,full,fix,C3,"C3: ""Commence data collection"" at offset 3971",,"Intro promises a set of strategies; the list stops after two, mid-list, although the last sentence is complete"
+0b500dc5f31c1afc,full,fix,B4;C1,"B4: ""'stink pipes',"" at offset 1783 | C1: ""IMAGES: Familiar Sights, Unfamiliar Histories"" at offset 0",,headline kicker 'IMAGES:' left in; B4 by pack rule: detok glitch: no space before quote x1
+6a49499ee3593eda,full,fix,C1,"C1: ""consider enrolling in our Safety Training Course in London"" at offset 2217",,course promotion closer
+d072709ba38ca850,full,clean,,,,"single-paragraph thesis abstract, complete"
+db62f193e89aa2e0,full,clean,,,,
+fb044456b58f2f7d,full,clean,,,,"FAQ-style content-farm page about Greek myth; violence is mythology, not F3"
+23edda057f4a548d,full,clean,,,,
+e34f9d45eeb39a5a,full,drop,C1;C5,"C1: ""Situs Slot Gacor, an online slot gaming hub, has captivated enthusiasts"" at offset 58 | C5: ""Situs Slot Gacor"" at offset 30",,Keyword-stuffed online-gambling SEO advertorial on a hijacked domain ('Situs Slot Gacor' 18 times); whole document is promotion
+3a2408f671c4329f,full,clean,,,,"historian's name garbled (should be Bill O'Neal); factual slip, not a disease"
+2f0733a0e9898e6f,full,fix,C1,"C1: ""The RF Safe pocket or purse shield is an effective solution."" at offset 234",,product ad copy; 'as illustrated' refers to a missing image
+126eb7de42429347,full,fix,C3,"C3: ""Subsequently, students are led through the process"" at offset 0",,402-char fragment of a worksheet description; start is a full sentence but the beginning is missing
+2731f65d8a0ee9a4,full,clean,,,,SEO backlink article stuffing 'intercom systems in Malta'; prose intact
+e0ea2e462081eaf0,full,clean,,,,"health advice, not F3"
+68924f97019edabb,full,fix,B4;C1,"B4: ""external resource: https://www.example.com/spy-call-recorder"" at offset 3446 | C1: ""explore the related posts we've curated for you"" at offset 3724",,spam-site article; remove the placeholder link sentence and the related-posts closer
+7118619fd33c65b5,full,fix,C1,"C1: ""has been downloaded over 2460 times on Android 4.1.x"" at offset 372",,app-store download metadata and developer pitch; reviewer display names are not F1
+7b8ffe6ce68a4411,full,drop,C3;C4,"C3: ""It encompasses, without restriction,"" at offset 5779 | C4: ""Q: Which legislative act proscribes kickbacks?"" at offset 2458",,SEO PAA mashup: Chicago market vs RESPA kickbacks interleaved; FAQ heading twice; unanswered questions
+1276149750ed987e,full,clean,,,,
+1f21b7ad88d0ec88,full,fix,B4;C1;C3,"B4: ""'safety bingo'?"" at offset 8819 | C1: ""Announcer: Thank you for tuning in."" at offset 14102 | C1: ""thrilled to unveil the audiobook version of my latest work"" at offset 14278 | C3: ""In my conversation with him, I was delighted to delve"" at offset 0",,trim outro and audiobook ad; intro paragraph missing; or'safety bingo' spacing artefact; B4 by pack rule: detok glitch: no space before quote x1
+ad82bac2462a8a5e,full,clean,,,,
+951c055b9ffea837,full,fix,C1,"C1: ""Estimated reading time: 2 minutes"" at offset 99",,"byline and volunteer names are public attribution, not F1"
+2959b742c093b945,full,clean,,,,chunk-boundary oddities ('as demonstrated by SAP') but no disease
+7c34b8308931cad2,full,fix,C1,"C1: ""Core Navigation"" at offset 0",,rest is a complete module description
+e61c754c9378674a,full,clean,,,,named people are public figures or quoted speakers at a public event
+318406704a6bf666,full,clean,,,,chunked rewrite repeats its intro several times; not identical lines so not C2
+2819f558ee6c1e7e,full,fix,C1,"C1: ""Reach out to Skyward Center to explore how we can assist you"" at offset 2652",,"rehab-centre marketing prose; medical information on fentanyl misuse, not F3"
+76a30439630903e3,full,clean,,,,
+713e88c96cefef1a,full,fix,B5,"B5: ""the invocation of the `containerinit` function"" at offset 1015 | B5: ""CLONENEWNS, CLONENEWCGROUP, CLONENEWPID, CLONENEWIPC"" at offset 1279",,underscores eaten from identifiers throughout (markdown italics); 'This directive' refers to removed code
+adc1ec98b57dce5e,full,clean,,,,weatherproofing paragraph appears twice in different words; doubled heading before 'Environmental Impact'
+e26738b89c4bf9be,full,fix,C1,"C1: ""we invite you to sign up for our email newsletter"" at offset 2588",,newsletter sign-up CTA rewritten into the last sentence
+6df80446baf7b672,full,fix,B5,"B5: ""we create a slice object `sliceobj` that defines"" at offset 1352",,code examples stripped ('Let's examine some examples:' then prose only); sliceobj/slicedtuple lost underscores
+a2d34563e4d3cadd,full,clean,,,,
+87fb632b688276b4,full,clean,,,,
+24e6f04ce62c9f74,full,clean,,,,homework essay assignment prompt from an essay-mill site; not a benchmark item
+e2f3fd70db887a68,full,clean,,,,
+2441dea6c4ce4ecf,full,clean,,,,vendor marketing prose (Improvado)
+f9fbb6f28ceb7aeb,full,fix,C1,"C1: ""Your presence is appreciated."" at offset 0",,forum welcome boilerplate rewritten as prose
+6c9e38f009ea3806,full,fix,B5,"B5: ""KeyedVectors.loadword2vecformat"" at offset 8151 | B5: ""use its'stem' method"" at offset 4376",,underscores lost inside code block (load_word2vec_format); stemmer example code missing; its'stem' spacing
+10358d058d8127a0,full,clean,,,,video-series catalogue rewritten as prose
+310fd9edd1ea683c,full,clean,,,,
+7ad7242eeb173509,full,clean,,,,
+fd0a72cd825a5925,full,fix,C1;C4;D3,"C1: ""Choosing the Right Moving Company"" at offset 4559 | C1: ""There are several aspects to consider..."" at offset 4839 | C4: ""Choosing the Right Moving Company"" at offset 4559 | D3: ""the topic of 'Schrägdach dachfenster'"" at offset 4417",,natural-lighting article followed by a German SEO backlink and three unrelated related-post teasers; trim after the main article
+d7ece2193f620b9b,full,fix,C1;C2,"C1: ""[Share on other sites]"" at offset 142 | C1: ""Recommended Posts"" at offset 0 | C2: ""[Link to comment]"" at offset 124",,"forum chrome: 'Recommended Posts', [Link to comment] x3, [Share on other sites] x3; content itself is short Q&A"
+ce23b55514a2e1f4,full,clean,,,,press release; stray opening quotation marks at paragraph starts
+e472a2fcc0df3984,full,drop,B4,"B4: ""To prevent monotony, vary your verbs, employing synonyms like"" at offset 862 | B4: ""Be mindful not to excessively mention the breed's name."" at offset 2647 | B4: ""To maintain a smooth flow, avoid overusing the same verb."" at offset 13647",,"SEO-generation prompt instructions leaked into prose in ~10 paragraphs (vary your verbs, avoid breed name)"
+644132846c1c20cb,full,fix,C1,"C1: ""Well-Known Member"" at offset 293",,forum rank label kept as speaker heading
+a7223f8b96ac1059,full,fix,C1,"C1: ""We offer a range of bromine monitors, including portable, fixed"" at offset 1461",,vendor pitch closer; chemistry claim in first sentence is wrong
+1a977e0de4420d5d,full,fix,C1,"C1: ""the Boydston Pickleball Academy stands as a distinguished hub"" at offset 6498",,unrelated local-business promo paragraph appended after the conclusion; has a business address (not F1)
+b4626033443a79bd,full,fix,C1,"C1: ""(14th Dec 2019, 4:08 AM):"" at offset 364",,forum post header with username and timestamp
+2230c13db77dec00,full,clean,,,,from a tag page but a single coherent article
+98c03821a96b9087,full,clean,,,,"summary of several video/product blurbs on one LEGO page; topic hops but same page, not C4"
+0599f8f8360147ff,full,clean,,,,"long testimony, complete to conclusion; two near-redundant CPI-E paragraphs"
+9b648da97f72ac71,full,clean,,,,news summary; not F3
+4907a2374bbbb744,full,fix,B4,"B4: ""'makers' "" at offset 10245",,"missing space before quote: the'makers' space', as'strong'; intro passage paraphrased twice; B4 by pack rule: detok glitch: no space before quote x2"
+16cc68bd12cc9667,full,fix,C1,"C1: ""consider our literacy courses."" at offset 1473",,course call to action closer
+8ff57bb2693382e1,full,clean,,,,
+756f5e53d5f27d9a,full,fix,C1,"C1: ""[To explore the map in detail, simply hover your cursor over it to zoom in.]"" at offset 1543",,whole text wrapped in stray double quotes; final bracketed line is page UI instruction
+84c65a0c8470291a,full,clean,,,,cannabis glassware description; not F3
+79a10cceddd6abca,full,clean,,,,first line is the blog title heading; content complete
+27eccbe4e63bfdfe,full,clean,,,,
+a3220ba909cf59fc,full,fix,C3,"C3: ""An unyielding optimist is one who maintains an unwavering belief"" at offset 1 | C3: ""he elucidated. Bryan Adams"" at offset 281",,"opens with quote attributed to undefined 'he'; release-date lede absent, start likely cut; C3 borderline"
+9b6b9e3f4fb06254,full,fix,C1,"C1: ""Secure your stay on Travala.com today and let your journey commence!"" at offset 1571 | C1: ""Booking your dream vacation is hassle-free with our user-friendly payment"" at offset 1226",,last three paragraphs are booking-site ad copy; destination prose remains useful
+00edfbea6fdfa7ee,full,fix,C1,"C1: ""To fully enjoy your time and money at a casino"" at offset 309",,Casino SEO filler article on an awards-site domain with a garbled 'Security Measures' list; same family as 56f7b0fec5a5a5f7
+03ad0f392751ba37,full,fix,B4;B5,"B4: ""(e.g.,.tar) to individual files like.yaml or.txt"" at offset 1146 | B5: ""we'll demonstrate pushing a collection of files:"" at offset 1355",,Spacing glitch variant (missing space before .tar/.yaml/.txt); the example commands announced by the sentence were dropped
+4baa30b2cbc0c7c0,full,clean,,,,"announces four tips, numbers only three; fourth present unnumbered"
+1e09699b9314e8d4,full,fix,C1,"C1: ""shipments from the US may incur customs charges and/or import taxes"" at offset 498",,customs/import-tax disclaimer appended to product description
+42fc1a4b1ece784e,full,clean,,,,single-paragraph excerpt from a tag page; complete sentences
+052cfd9f93e50746,full,fix,C1,"C1: ""No Comments"" at offset 85 | C1: ""Dfavo, headquartered in Norway, is an innovative EdTech platform"" at offset 2059",,category tag and comment count under title; company blurb footer at end
+580c0451de4745f0,full,clean,,,,SEO FAQ on unrelated domain (Broadway show site); no listed disease
+69fa51da8d01cd55,full,clean,,,,
+ac045d801913d4de,full,fix,B4;C1,"B4: ""'sunshine of Love',"" at offset 923 | C1: ""Confirm your action?"" at offset 1 | C1: ""This bookmark will be eliminated from all folders"" at offset 22",,bookmark-deletion dialog text at top; unbalanced opening quote; the'sunshine missing space; B4 by pack rule: detok glitch: no space before quote x1
+12b19f028897fad3,full,clean,,,,
+59baf764d3991493,full,clean,,,,
+baca7ca050c611e9,full,fix,C1,"C1: ""Initiate the process with a complimentary digital marketing assessment"" at offset 2584",,closing agency CTA; list broken into heading mid-way; refers to a missing figure
+fb3fd41f345dc622,full,fix,C1,"C1: ""We invite you to consult with our esteemed dental professionals"" at offset 565",,dental practice call to action

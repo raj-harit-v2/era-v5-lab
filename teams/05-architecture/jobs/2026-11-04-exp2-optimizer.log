@@ -1,0 +1,44 @@
+EXP-2 smoke log (CPU, own machine). NOT a bits-per-byte result.
+Harness:   teams/05-architecture/harness/train_week2.py at PR #190 head 656696c (since merged to main)
+Arm:       configs/arms/exp2_adamw.yaml (T2: d512, 8 layers, 16 routed + 1 shared, expert FFN 768), AdamW lr 0.001 placeholder
+Artifacts: tokenizer v0 sha256 2de039f20d17afd17615095c406c43087359673b767ed0fe2c480b995f2af8e5 (build_v0.py on BrahmicTokenizer-131K 7dfcf39)
+           G4 raw table P32 content sha256 47d411a9c6ca… (build_tables.py --tokenizer v0)
+Data:      12 tiny train docs (mr/en/code), 2 held-out docs. Smoke only. Not the official held-out set.
+Command:   python train_week2.py --config configs/arms/exp2_adamw.yaml --resolution configs/small/smoke_resolution.yaml --tokenizer tokenizer.json --byte-table raw_table_P32.npz --train-data train.jsonl --heldout-data heldout.jsonl --device cpu --seed 1234 --smoke --smoke-steps 3 --smoke-seq-len 8 --smoke-batch-size 1 --no-checkpoint --out out
+Env:       python 3.12.3, torch 2.5.1+cpu, 2 vCPU, torch/tokenizers/numpy/PyYAML/pytest as pinned in harness/requirements-week2.txt
+
+Run a and run b, seed 1234 (identical in all fields below):
+  step  loss (CE nats)     gradient_norm
+  1     11.78656005859375  22.305360794067383
+  2     11.951231002807617 16.61052131652832
+  3     8.459056854248047  13.513187408447266
+  val/bpb after steps (smoke): 2.295377112664829, 2.2734582171945332
+  losses.txt: byte-identical between a and b (sha256 1dd98ec2b41c7c32f005fed467c465f6b1e4ed4c6788fa9aa235687c262a45ee)
+  final_model_sha256: fbea5817f64799ddd2b0e8157154660b4c1e77bc0f304de0687ff2e1bac950aa (both runs)
+  initial CE 11.787 vs ln(131072) = 11.783: dense untied head starts near uniform. No NaN.
+  wall: 27 to 33 s per run for 3 steps at seq_len 8 (CPU, so no step-time estimate for GPU)
+
+Harness test suite at 656696c: 61 passed (pytest teams/05-architecture/tests/test_week2_*.py)
+check_week2.py exp2_adamw.yaml: 0 errors.
+check_week2.py exp2_muon.yaml: 2 errors: "Muon backend is an EXP-2 integration dependency" and "Explicit finite positive arm LR required". The Muon arm cannot run until a Muon backend is added to train_week2.py and muon_lr is set from the T1 screen.
+
+=== Addendum: GPU run, both arms, with MY OWN Muon backend (local branch exp2-muon-backend, commit 1ce3193, NOT pushed, superseded by Deepjyoti Saha's PR #241; timings below are not from #241) ===
+Hardware:  GCE g2-standard-4, 1x NVIDIA L4 (24 GB, compute 8.9, native bf16), driver 580.178.04, torch 2.5.1+cu124
+Shape:     T2 (d512, 8 layers, 16 routed + 1 shared experts, expert FFN 768), batch 8, micro-batch 1, context 2048, bf16, seed 1234, 20 steps, --smoke
+Data:      the same tiny synthetic train/held-out text as above (padded to 2048). Smoke only. Not a bits-per-byte result.
+Tests:     73 passed on the VM (61 from #190 plus 12 new Muon tests).
+
+  arm    optimizer settings               median step   first step   peak GPU mem   CE step 1 -> 20   wall (20 steps + 2 evals)
+  adamw  lr 0.001                         3.90 s        4.14 s       4.19 GB        12.058 -> 0.032   85 s
+  muon   muon_lr 0.02, AdamW lr 0.001     4.70 s        5.18 s       3.55 GB        12.058 -> 0.026   101 s
+  No NaN or inf in either run. Low final CE is memorisation of tiny text, not quality.
+
+Projection to the plan budget (1,221 steps), before held-out evaluation every 50 steps (24 evals):
+  adamw  3.90 s x 1221 = about 79 min   (inside the 90 min cap)
+  muon   4.70 s x 1221 = about 96 min   (OVER the 90 min cap by about 6 min, before evaluation time)
+Caveats: L4 is not TSAI's lab GPU. Micro-batch 1 is the harness default. Padded tiny data. Real step time may differ.
+
+CPU Muon run (2 vCPU, fp32, seq 8, batch 1, 3 steps, run a): CE 11.787 -> 9.853, final_model_sha256 02403764…, wall 2,060 s. CPU is not practical for the Muon arm at T2.
+CPU repeat of the Muon run (run b): losses and final_model_sha256 identical to run a (02403764…). Repeatable.
+AdamW arm re-run on CPU after the Muon change: final_model_sha256 fbea5817… and losses identical to the run before the change.
+Muon partition: 448 Muon tensors (165,740,544 params), 19 AdamW tensors (71,311,872 params).

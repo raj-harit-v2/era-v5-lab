@@ -42,7 +42,7 @@ the date here.
 | `saitej123` | Team 10 lead | MMLU-Pro (Qwen2.5-1.5B) | Row open, #271 | |
 | `arunnayan` | to confirm | to confirm | to confirm | |
 | `tejaswivinnakota` (to confirm) | to confirm | to confirm | to confirm | |
-| `vedang-patel-10` | to confirm | to confirm | to confirm | |
+| `vedang-patel-10` | Team 5 | MuSR (llama-3.2-3b) | Claimed | |
 
 ## 3. Week-3 rotators: no access needed
 
@@ -54,6 +54,7 @@ files, so these rotators do not download any benchmark for this task.
 | `avnishbm` (to confirm) |
 | `rajiviyer` |
 | `ranjani-cse` (to confirm) |
+| `sourav-dhar` |
 | `truesrini` |
 | `tanmays369` |
 | `TEJASKUMAR-REDDY-J` |

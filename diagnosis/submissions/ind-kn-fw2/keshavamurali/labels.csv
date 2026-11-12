@@ -1,0 +1,501 @@
+doc_id,read,verdict,diseases,evidence,hex,note
+942c1fdddfb8931c,full,clean,,,,
+7af3666c01d0e13c,full,drop,C1;C3,"Post author:admin Post published:September 16, 2020 Post category:BSY's Photos Post comments:0 Comments You Might Also Like at offset 153 | October 16, 2020 Campaigning at Chitradurga and Tumkuru December 21, 2015 Press conference at Udupi May 20, 2015 Leave a Reply Cancel replyComme… at offset 437",,Mixed English comments in Indic text
+9a055722975852fb,full,fix,C2;C4;D5,ಮೋಟಿವೇಷನಲ್ ಸ್ಪೀಕರ್ ಆಗಿದ್ದ ವಿಸ್ಮ at offset 408 | There are only few female directors in Chandanawana at offset 1435 | ಕ್ಯೂಟ್ ರೊಮ್ಯಾಂಟಿ at offset 644,,
+49d4a1847da4514b,full,clean,,,,Looks clean
+fb49b8c109fa0344,full,fix,C1,ಪ್ರವ at offset 15338,,
+7fd06bf25bcaa6d1,full,fix,G1,11ಅಂಗಡಿ ಕೋಣೆ ಗಳ at offset 129,141 U+0020 SPACE,Space split between syllables; Need Space after numbers.
+3ed53ea9d8c600a0,full,fix,D3,BIGGNEWS: at offset 0,,
+5eaafa2efe204fb3,full,drop,C4;C5,Tag results for Subr at offset 2 | ಭಾರತ ತಂಡಕ್ಕೆ ಎರಡು ವಿಶ್ವಕಪ್ ಗೆದ್ದುಕೊಟ್ಟ at offset 960,,
+54be2713642d1bc6,full,clean,,,,
+67249541e320149c,full,clean,,,,
+8ed9aecf6c9c0b52,full,clean,,,,Looks clean
+a7746a3981e58f31,full,fix,C1,"Last Updated Mar 27, 2019, 3:47 PM IST at offset 1257",,
+12d7d5e672b21506,full,fix,C1;D3,ನ್ಯೂಸ್ 13 ಸಮಾಜದ at offset 833 | News13 strives at offset 1052,,News article with Kannada+English site appeal footer
+bfe4d0c9f43dc03b,full,fix,G2;C1,ಸಯೀದ್ರಿಗೆ at offset 202 | ‘ವಾರ್ತಾ ಭಾರತಿ’ ನಿಮಗೆ at offset 1947,206 U+0CCD KANNADA SIGN VIRAMA | 207 U+0CB0 KANNADA LETTER RA,lost ZWNJ.  site support-us footer
+f8ebdf3dd24db84a,full,fix,G2;C1,ಕಾಂಗ್ರೆಸ್ನ at offset 279 | ಬೆಂಬಲಿಸಲು ಇಲ್ಲಿ at offset 4634,287 U+0CCD KANNADA SIGN VIRAMA | 288 U+0CA8 KANNADA LETTER NA,ZWNJ lost in English-suffix words; support-us footer
+bfffaddc459978e6,full,fix,G1,ಕಾರಂ ತ at offset 29,33 U+0020 SPACE,Space split between syllables; Additional space in a word.
+adb72bac01d7c42b,full,fix,C1;D3,"August 3, 2020, 5:19 AM at offset 77 | reporterkarnataka news at offset 109",,dateline chrome at top
+208f97d5dd50472a,full,fix,G2,ಲಾಕ್ಡೌನ್ at offset 100,103 U+0CCD KANNADA SIGN VIRAMA | 104 U+0CA1 KANNADA LETTER DDA,English loanword written without ZWNJ (ಲಾಕ್ಡೌನ್) forms wrong conjunct
+95fcd3a60a26a368,full,drop,C1;C5,Just In at offset 0 | - News ಕರ್ನಾಟಕದಲ್ಲಿ at offset 20,,Poor quality document with a lot of junk
+10c1bbd17380fb15,full,drop,C1;C5;C4,Just In at offset 0 | - News at offset 20 | ತೆಲುಗು ಸಿನಿಮಾರಂಗದ ಖ್ಯಾತ ಕಲಾವಿದ at offset 481,,Poor quality document with unrelated headings
+352f61da6247acd6,full,drop,C1;C5,Just In at offset 0 | - News at offset 20,,Site menu and list of unrelated headlines before article
+10e60ad0965db2c1,full,drop,D3;C1;A6;C5,GST at offset 38 | Team Udayavani at offset 76 | ಉಲ್ಲಂ ಸಿದ at offset 559 | ಟಾಪ್ ನ್ಯೂಸ್ at offset 1025,564 U+0020 SPACE,News article followed by astrologer ad and related-headline list; dropped glyph in one word
+ce3ee03d7473826a,full,clean,,,,local news item
+5dafb10b4e0e7503,full,drop,D4;A6,ಸೇವಾ ಜೀವನವು at offset 170 | ಸ್ವಚ್ cleaning at offset 580,586 U+0063 LATIN SMALL LETTER C,Machine translated
+9e6f962f2be34876,full,fix,C1;C5;G2;D3,Just In at offset 0 | - News ಗಡಿಯಲ್ಲಿ at offset 20 | ಕಾನ್ಸ್ಟೆಬಲ್ಗಳು at offset 150 | BMRCL Recruitment at offset 438,160 U+0CCD KANNADA SIGN VIRAMA | 161 U+0C97 KANNADA LETTER GA,"Film news preceded by nav menu and list of unrelated headlines. Can be fixed by adding a script to remove ""-"" followed by English"
+2468cd4bd272e3ed,full,clean,,,,clean news report
+9113b7d79e9b40ee,full,fix,G2;G1,ಹೈದರಾಬಾದ್ನಲ್ಲಿ at offset 194 | ಸ್ಪ್ಟಪಡಿಸಿದೆ at offset 324,205 U+0CCD KANNADA SIGN VIRAMA | 206 U+0CB2 KANNADA LETTER LA | 327 U+0CCD KANNADA SIGN VIRAMA, Lost ZWNJ before case suffixes. A wrong word
+96c2582ac07d1e04,full,clean,,,,Short news report
+2c5d96312da9c426,full,clean,,,,Poor quality entertainment news; NFKC change is only ellipsis char
+db82df7f70efba79,full,fix,G2,ವಿಶ್ವಬ್ಯಾಂಕ್ನ at offset 56,67 U+0CCD KANNADA SIGN VIRAMA | 68 U+0CA8 KANNADA LETTER NA,lost ZWNJ before suffixes
+634f9d4743893171,full,fix,G1;A6;C4;G2;D3;C2;C5;C1,ವಣ ್ಸು at offset 13962 | ಸಾಂಸ್ಕøತಿಕ at offset 17662 | ರೈತ ಹೋರಾಟಗಾರ at offset 18733 | ಟೆನೆಂಟ್ಗಳನ್ನು at offset 20168 | Mass Media at offset 20357 | ಸುದ್ದಿದಿನ.ಕಾಂ|ವಾಟ್ಸಾಪ್ at offset 20380 | Title at offset 29540 | Trending at offset 31906,13965 U+0CCD KANNADA SIGN VIRAMA | 17668 U+00F8 LATIN SMALL LETTER O WITH STROKE | 20178 U+0CCD KANNADA SIGN VIRAMA | 20179 U+0CA8 KANNADA LETTER NA,"Several site articles concatenated, legacy-font damage, site WhatsApp line repeated, headline/trending list at end"
+bade3820b74478ba,full,drop,F3;D4;C1,HGH ಯ ಅಂತರರಾಷ್ಟ್ರೀಯ at offset 0 | ಗಮ್ಯಸ್ಥಾನ ದೇಶಕ್ಕೆ at offset 82 | ಇನ್ನಷ್ಟು ದಯವಿಟ್ಟು ಇಲ್ಲಿ ಓದಿ at offset 1097,,machine-translated online HGH drug shipping page
+c472a3db00395ba6,full,fix,G2;C1;C4;C2;A6;C5,ಲುಕ್ನಲ್ಲೇ at offset 68 | ಸುದ್ದಿದಿನ.ಕಾಂ|ವಾಟ್ಸಾಪ್| at offset 3058 | ನರದೌರ್ಬಲ್ಯ ನಿವಾರಣೆಗೆ at offset 3092 | ಸುದ್ದಿದಿನ.ಕಾಂ|ವಾಟ್ಸಾಪ್|9980 at offset 4138 | ವೃತ್ತಾಂತದಿ೦ದ at offset 12490 | Trending at offset 16800,74 U+0CCD KANNADA SIGN VIRAMA | 75 U+0CB2 KANNADA LETTER LA | 12500 U+0CE6 KANNADA DIGIT ZERO,several unrelated site articles joined plus related/trending headline lists; site WhatsApp lines repeated; lost ZWNJ; digit zero used as anusvara
+ecefe60eae2c0f7c,full,fix,G2,ರಾಹುಲ್ನನ್ನು at offset 140,148 U+0CCD KANNADA SIGN VIRAMA | 149 U+0CA8 KANNADA LETTER NA,Missing ZWNJ.
+f0b634572a92b22e,full,fix,G2,ಕೇಮದ್ರ at offset 946,950 U+0CCD KANNADA SIGN VIRAMA | 951 U+0CB0 KANNADA LETTER RA,Missing ZWNJ. Got changed to full letter.
+0a77c8c1b79335da,full,clean,,,,Short complete political news report
+dbbd14b33cfb0729,full,drop,C5;B5;C1;C3;D3,Display85 at offset 0 | |Display technology|| at offset 48 | Deal of the day at offset 131 | ತರಲು ತಯಾ at offset 537 | Xiaomi Mi 10i at offset 1062,,"spec widget, English promo/footer, truncated teaser snippets of unrelated articles"
+7d63a9742f9a7089,full,fix,C1;C5,Team Udayavani at offset 39 | ಟಾಪ್ ನ್ಯೂಸ್ at offset 1017,,Byline chrome and trailing top-news/related headline list
+1ab8688ecd7fb112,full,clean,,,,short news item with site byline only
+2c8cbb93230afa7d,full,fix,C1,Last Modified at offset 21,,Short film news with byline/timestamp
+8e37eef2ed5281b6,full,drop,C1;H3;G2;D4;D3,"ಅವಶ್ಯಕತೆಗಳು, ಶಿಕ್ಷಣ at offset 0 | . . ರಾಷ್ಟ್ರೀಯ at offset 70 | ಗನ್ಗಳ at offset 245 | ಬಶಿಂಗ್ ತಲೆಗಳಲ್ಲ at offset 263 | MCESG at offset 2383",247 U+0CCD KANNADA SIGN VIRAMA | 248 U+0C97 KANNADA LETTER GA,"Machine-translated English careers article; garbled meaning, Latin acronyms, lost ZWNJ"
+cc170cf886ead148,full,fix,C1;G2,ಮುಖಪುಟ at offset 0 | ಸೆಕ್ರೇಟರಿಯೇಟ್ಗೆ at offset 892,904 U+0CCD KANNADA SIGN VIRAMA | 905 U+0C97 KANNADA LETTER GA,nav word 'Home' at start; lost ZWNJ
+4d5a421569403d41,full,fix,G2,ಎಸ್ಡಿಪಿಐ at offset 8,10 U+0CCD KANNADA SIGN VIRAMA | 11 U+0CA1 KANNADA LETTER DDA,ZWNJ lost in acronyms like PFI/SDPI
+945ed506b47bbafc,full,fix,C1;D5;G2,First Published at offset 57 | ಸಂಪೂರ್ಣ ಹೊಸ ಸುಕ್ಕುಗಳನ್ನು at offset 575 | ಎಸ್ಪಿಎಫ್ at offset 1201,1203 U+0CCD KANNADA SIGN VIRAMA | 1204 U+0CAA KANNADA LETTER PA,translated-from-English lifestyle article
+1db7c578463eb78c,full,clean,,,,gold price news
+537c659abc80e1a6,full,fix,C1,Krishnaveni K| at offset 10,,Byline/Last Modified header chrome before article
+a4153fd935d239d9,full,fix,C1,Last Modified at offset 19,,Byline/Last Modified header chrome before article
+e427affbdf302a39,full,fix,G1,ಕರ್ನಾ ಟಕದ at offset 1445,1450 U+0020 SPACE,Space split between syllables; Words split by spaces / letters lost from print layout
+cd952fa6c7f1582f,full,fix,G2,ರೆಸಾರ್ಟ್ಗೆ at offset 722,729 U+0CCD KANNADA SIGN VIRAMA | 730 U+0C97 KANNADA LETTER GA,news item. Missing ZWJ
+9fa0ba393422e3bb,full,fix,C1;G2;C4,Team Udayavani at offset 33 | ಹುಮಾಯಿನ್ಪಾಷ at offset 965 | ಇದನ್ನೂ at offset 508,972 U+0CCD KANNADA SIGN VIRAMA | 973 U+0CAA KANNADA LETTER PA,English byline/date line and read-also link; print-layout word splits (e.g. split mid-word with spaces); lost ZWNJ. Unrelated link in the middle.
+76fdbcb28c49fc27,full,fix,C2;C4;G4;C1;C5,ಸುದ್ದಿದಿನ.ಕಾಂ|ವಾಟ್ಸಾಪ್ at offset 4830 | ಕೊರೋನ ಲಸಿಕೆ ಪಡೆದ ಸಂಸದ at offset 4864 | ೨೦೦೯ 2009 at offset 8188 | Trending at offset 9013 | ರಾಜಕೀಯ7 days ago at offset 9024,8188 U+0CE8 KANNADA DIGIT TWO,Several articles joined with site WhatsApp line and trending list
+30992a38a9e5f12f,full,clean,,,,"Short local news paragraph, no issues"
+6b7feb7d40104a01,full,fix,G2,ಕಾಂಗ್ರೆಸ್ನಲ್ಲಿ at offset 366,377 U+0CCD KANNADA SIGN VIRAMA | 378 U+0CB2 KANNADA LETTER LA,Political news; ZWNJ lost before case suffixes
+b6c1c411be0519af,full,fix,C1;G2,ನಮ್ಮ ವೆಬ್ಸೈಟ್ ಬರವಣಿಗೆಗೆ at offset 2902 | ವೆಬ್ಸೈಟ್ at offset 2907,2910 U+0CCD KANNADA SIGN VIRAMA | 2911 U+0CB8 KANNADA LETTER SA,Copyright and share footer; ZWNJ lost
+f86bebb970ddf50e,full,fix,G1,ಭಯಂಕರತೆಯ್ನನೂ at offset 714,722 U+0CCD KANNADA SIGN VIRAMA,"Chapter from a Novel.a few reordered/broken conjuncts (ಮೈಗಳ್ಲಲಿ, ಪಕ್ಕದ್ಲಲಿ) from font conversion"
+450d74fdc31034db,full,fix,C1,‘ವಾರ್ತಾ ಭಾರತಿ’ ನಿಮಗೆ at offset 2602,,News article with site support-appeal footer
+296088b418958306,full,fix,G2,ಪಂಪ್ವೆಲ್ at offset 316,319 U+0CCD KANNADA SIGN VIRAMA | 320 U+0CB5 KANNADA LETTER VA,lost ZWNJ in loanword/name conjuncts
+bf21eb9f2a9511b6,full,fix,C1;F1;C4;G2;D3;C2;A6;C5,[email protected] at offset 7229 | phone at offset 7251 | ರೈತ ಹೋರಾಟಗಾರ `ಸಹಜಾನಂದ at offset 7276 | ಟೆನೆಂಟ್ಗಳನ್ನು at offset 8711 | Mass Media Foundation at offset 8900 | ಸುದ್ದಿದಿನ.ಕಾಂ|ವಾಟ್ಸಾಪ್ at offset 8923 | ಪಾವಿತ್ರö್ಯತೆಯನ್ನು at offset 15498 | Title⟦U+000A⟧ಚಿತ್ರದುರ್ಗ at offset 18083,,"Several suddidina articles concatenated with author contact, site WhatsApp lines, headline/trending lists; legacy-font Latin letters in words"
+ea791e834980a7e0,full,fix,G2;A6,ಟ್ರಾನ್ಸ್ಮೀಟರ್ನ at offset 692 | ಊ.ಒ.ಗಿ. at offset 1958,704 U+0CCD KANNADA SIGN VIRAMA | 705 U+0CA8 KANNADA LETTER NA | 1958 U+0C8A KANNADA LETTER UU,Legacy-font residue (HMV as Latin-mapped Kannada letters); ZWNJ lost in compounds
+c28f76ca5cc38e3d,full,fix,C1,"ಇಲ್ಲಿದೆ ನೋಡಿ, at offset 719",,Ends with pointer to removed embedded video
+8ae75d1d00922fb0,full,fix,G2;D3,ಬನಾರಸ್ಗೆ at offset 268 | I declare at offset 4978,273 U+0CCD KANNADA SIGN VIRAMA | 274 U+0C97 KANNADA LETTER GA,"Long literary memoir; lost ZWNJ in loanword+suffix, quoted English phrase, print hyphenation breaks (ಉಳಿದು- ಕೊಂಡ)"
+7ac7b308228f3ad7,full,fix,G2;C1,ಮ್ಯಾಕ್ಸ್ವೆಲ್ರನ್ನು at offset 76 | ವರ್ಚುಯಲ್ ಬೋಟ್ at offset 1636,90 U+0CCD KANNADA SIGN VIRAMA | 91 U+0CA8 KANNADA LETTER NA,Sports news; lost ZWNJ; trailing game ad and Last Updated footer shared with other docs
+91eea0530670d2f8,full,fix,G2;A6;C1,ಟರ್ಮಿನಲ್ನ at offset 88 | ನೈಋುತ್ಯ at offset 181 | ವರ್ಚುಯಲ್ ಬೋಟ್ at offset 1768,95 U+0CCD KANNADA SIGN VIRAMA | 96 U+0CA8 KANNADA LETTER NA | 183 U+0C8B KANNADA LETTER VOCALIC R,"News article; legacy-font damage, lost ZWNJ, game ad and Last Updated footer"
+85ead6c636874163,full,drop,G2;D4,ಬೈಬಲ್ನ at offset 28 | ಬೆಂಕಿಯು ಬೆಂಕಿಯನ್ನು at offset 491,32 U+0CCD KANNADA SIGN VIRAMA | 33 U+0CA8 KANNADA LETTER NA,Machine-translated foreign news (teles-relay); garbled sentences
+64a5eb099d02bc3d,full,fix,G2,ಟ್ವಿಟ್ಟರ್ನಲ್ಲಿ at offset 674,685 U+0CCD KANNADA SIGN VIRAMA | 686 U+0CB2 KANNADA LETTER LA,Complete news article; ZWNJ lost in loanword+suffix joins
+6652e0ea74804194,full,fix,C1;A6;C5;C2,Team Udayavani at offset 39 | ಕಲೂcರಿ at offset 794 | ಟಾಪ್ ನ್ಯೂಸ್ at offset 2270 | ಟೆಸ್ಲಾ ಕಂಪೆನಿಗೆ at offset 2282,797 U+0063 LATIN SMALL LETTER C,legacy-font Latin junk in words; headline lists repeated at end
+1548138be5151389,full,fix,G2;C1;D3,ಲುಕ್ನೊಂದಿಗೆ at offset 352 | ವರ್ಚುಯಲ್ ಬೋಟ್ at offset 1871 | Last Updated at offset 1957,355 U+0CCD KANNADA SIGN VIRAMA | 356 U+0CA8 KANNADA LETTER NA,Ad line and English timestamp footer; ZWNJ lost
+3f2bb8ae6f78b502,full,fix,C1,ವರ್ಚುಯಲ್ ಬೋಟ್ at offset 1063,,"News; trailing game ad and Last Updated footer shared with other docs. Also, errors in the content."
+470753e8398c7239,full,fix,C1;G1,Team Udayavani at offset 33 | ಸ ರ್ಧೆ at offset 1112,1113 U+0020 SPACE,Space split between syllables; byline chrome; broken conjunct in spardhe
+63893896fc91d708,full,clean,,,,parliament Q&A news. Looks clean
+acde7942bff27996,full,fix,G2;D3,ಅಕ್ಟೋಬರ್ನಲ್ಲಿ at offset 2650 | OFS ನಲ್ಲಿ at offset 425,2660 U+0CCD KANNADA SIGN VIRAMA | 2661 U+0CB2 KANNADA LETTER LA,Business news on IRCTC OFS; ZWNJ lost in acronyms/suffixes
+aab8b846e0517cbc,full,fix,C1,ಕೃಪೆ : ವಾಲ್ಮೀಕಿ ಸಂಪದ at offset 8595,,"kanaja article, Kannada digits consistent"
+92305d5a724c194a,full,clean,,,,"The ""S"" sign is valid in Kannada for expressing intonation."
+19cd9c71be209a65,full,fix,C1;G2,Team Udayavani at offset 106 | ಗಾರ್ಡ್ಸ್ಗಳಿಗೆ at offset 1272,1279 U+0CCD KANNADA SIGN VIRAMA | 1280 U+0C97 KANNADA LETTER GA,Byline chrome; lost ZWNJ; one mid-sentence line break
+1505ef995f3305a3,full,drop,G2;D4;A6;G1;D3;B1,"ಕಾಮರ್ಸ್ನ at offset 62 | ಭೇಟಿ ನೀಡಿತು.ಲಿಮಿಟೆಡ್ at offset 158 | ಶೆನ್ hen ೆನ್ at offset 1141 | ೆನ್ at offset 1150 | ISO9001, CCC at offset 3402 | & ರೆಗ್; at offset 3535",68 U+0CCD KANNADA SIGN VIRAMA | 69 U+0CA8 KANNADA LETTER NA | 1146 U+0068 LATIN SMALL LETTER H | 1150 U+0CC6 KANNADA VOWEL SIGN E,"Machine-translated Chinese company PR, broken lines, Latin fragments in words, mangled &reg; entity"
+00936588665bcf9e,full,fix,D4,ಪ್ರಕರಣಗಳನ್ನು ವರದಿಯಾಗಿದೆ at offset 292,,translated press-release style with broken case agreement
+562f3ec832cdbd3f,full,fix,C1;D3,ಇತ್ತೀಚಿನ ಸುದ್ದಿ at offset 0 | Reporter Karnataka at offset 114,,Obituary news with site section header and English dateline/byline
+886e4c0257e9a2a7,full,fix,G2,ಹೈಕಮಾಂಡ್ನಿಂದ at offset 819,826 U+0CCD KANNADA SIGN VIRAMA | 827 U+0CA8 KANNADA LETTER NA,Political news; lost ZWNJ before suffixes
+8af6f5815204fb61,full,clean,,,,"ethnographic article on folk practice, no issues"
+3275401e8709ae7f,full,fix,C1,Share at offset 0,,Children's blog essay with Share/byline header
+28eaa194193832fd,full,fix,D3;C1,Principal Investigator at offset 982 | ಇಲ್ಲಿ ಕ್ಲಿಕ್ ಮಾಡಿ at offset 1100,,English institutional postal address inline; trailing click-here line
+e429846aafe7b46e,full,clean,,,,Short news report on PM's demonetisation speech
+0a31ddb9305d7f72,full,fix,G2,ಗ್ರೂಪ್ನ at offset 233,238 U+0CCD KANNADA SIGN VIRAMA | 239 U+0CA8 KANNADA LETTER NA,lost ZWNJ
+4fb058fb5d1a0ceb,full,fix,G2,ಸಲ್ಮಾನ್ಖಾನ್ at offset 122,128 U+0CCD KANNADA SIGN VIRAMA | 129 U+0C96 KANNADA LETTER KHA,lost ZWNJ; rupee symbol dropped before amounts
+eae17ba8906dc924,full,fix,G2,ಎನ್ಡಿಟಿವಿ at offset 130,132 U+0CCD KANNADA SIGN VIRAMA | 133 U+0CA1 KANNADA LETTER DDA,Short complete news report (only final period missing)
+8b34229f3356bb21,full,clean,,,,Mostly clean. Typo at ಸತಿವರ
+9fe548ccc0b8dff0,full,fix,G2,ಫಾಲ್ಸ್ನಲ್ಲಿ at offset 94,102 U+0CCD KANNADA SIGN VIRAMA | 103 U+0CB2 KANNADA LETTER LA,Local news; ZWNJ lost before suffix
+1f894bc338825731,full,clean,,,,health news
+88943bd530ff66f7,full,fix,G2,ಕೇಕ್ನ at offset 148,151 U+0CCD KANNADA SIGN VIRAMA | 152 U+0CA8 KANNADA LETTER NA,recipe; lost ZWNJ in loanword suffixes; a few typos
+feb54bf1fc697c7e,full,fix,G2;C1;D3,ರೇಸ್ನಲ್ಲಿ at offset 480 | ವರ್ಚುಯಲ್ ಬೋಟ್ at offset 1104 | Last Updated at offset 1190,486 U+0CCD KANNADA SIGN VIRAMA | 487 U+0CB2 KANNADA LETTER LA,Ad line and English timestamp footer; ZWNJ lost
+865835c1a8307ca3,full,clean,,,,"short crime news, no issues"
+8d746d05859cb477,full,drop,C1;G2;D4;D3,ಉತ್ಪನ್ನ ವಿವರ at offset 17 | ರಿಬ್ಬನ್ಗಳು at offset 91 | 1 1/4 diameter ವ್ಯಾಸದಿಂದ at offset 296 | MEDALS ನಲ್ಲಿ at offset 1011,97 U+0CCD KANNADA SIGN VIRAMA | 98 U+0C97 KANNADA LETTER GA,"machine-translated product page with untranslated English tokens left in, repeated paragraphs"
+f92084137e300d65,full,fix,D3,M.P.ರೇಣುಕಾಚಾರ್ಯ at offset 160,,Latin initials/BSY inside Kannada news
+7ffba04714028f5c,full,fix,G2,ಕೋವಿಶೀಲ್ಡ್ವನ್ನು at offset 13,25 U+0CCD KANNADA SIGN VIRAMA | 26 U+0CA8 KANNADA LETTER NA,Short vaccine news; ZWNJ lost before suffix
+9a3f0e4418e121b4,full,fix,G2,ನೈಟ್ಸ್ನ at offset 194,199 U+0CCD KANNADA SIGN VIRAMA | 200 U+0CA8 KANNADA LETTER NA,Play synopsis and cast list; ZWNJ lost in compounds
+c3346285a8b42a19,full,fix,G2,ಟಿಪ್ಪರ್ನ at offset 347,353 U+0CCD KANNADA SIGN VIRAMA | 354 U+0CA8 KANNADA LETTER NA,Accident news; ZWNJ lost in compound
+315cf69ffc1ff1e3,full,clean,,,,temple article; only loose spacing around punctuation
+603543b36ae3c16d,full,clean,,,,Short accident news (one garbled place-name typo)
+fb990b1643429b1b,full,fix,C1,ನ್ಯೂಸ್ 13 ಸಮಾಜದ at offset 1705,,Kannada+English site appeal footer
+436fd1e4f828cb2a,full,fix,H2,ರಾಯಚೂರು.ಏ.೦೨- at offset 1557,,News report; opening sentence repeated at the end
+2d238fb14677027c,full,fix,G2,ವಾರ್ಡ್ಗಳಲ್ಲಿ at offset 1284,1293 U+0CCD KANNADA SIGN VIRAMA | 1294 U+0CB2 KANNADA LETTER LA,"Local water-supply news, Kannada digits consistent; ZWNJ lost"
+23f08557f3f4e259,full,clean,,,,political news
+e174842d0c52e424,full,drop,G2;F3,ಸರ್ಕಸ್ಗಳೇ at offset 243 | ವೈಜ್ಞಾನಿಕವಾಗಿಯೂ ಸಾಬೀತಾಗಿದೆ at offset 365,248 U+0CCD KANNADA SIGN VIRAMA | 249 U+0C97 KANNADA LETTER GA,Tabloid health misinformation (urine drinking claimed to cure/prevent cancer)
+bd46d5c5dc5793f8,full,fix,G2,ಸೆಂಟರ್ಗಳ at offset 622,627 U+0CCD KANNADA SIGN VIRAMA | 628 U+0C97 KANNADA LETTER GA,lost ZWNJ
+7fce78d260148ed4,full,fix,C1;D3,ನ್ಯೂಸ್ 13 ಸಮಾಜದ at offset 897 | News13 strives at offset 1116,,Site promo paragraph in Kannada and English after article
+5d38d99145f312bd,full,fix,D3;G2;C1,Team Udayavani at offset 59 | ಹೈದರಬಾದ್ನಲ್ಲಿ at offset 340 | ಇದನ್ನೂ ಓದಿ: at offset 1114,350 U+0CCD KANNADA SIGN VIRAMA | 351 U+0CB2 KANNADA LETTER LA,"English byline/timestamp, read-also link; ZWNJ lost"
+abdbe4e0077a2087,full,clean,,,,"crime news, no personal data"
+07b94b086abbb4f3,full,fix,D3;A6;C5,sachin tendulkar Diamond at offset 68 | ವಲ್ರ್ಡ್ at offset 286 | #sachin tendulkar at offset 1383,289 U+0CB0 KANNADA LETTER RA,English title line and hashtag list; legacy-font reordering in a word
+1a8dced4fea77b22,full,clean,,,,Labour news on BEML privatisation protest
+bf349476acc512c9,full,clean,,,,"short news item, no issues"
+17e5d6b10dc06231,full,fix,C2;G2;A6,"ಕಲಬುರಗಿ,ಏ.5: at offset 0 | ಹೆಲಿಕಾಪ್ಟರ್ಗಳು at offset 467 | ಯಿದೆÉ at offset 2087",477 U+0CCD KANNADA SIGN VIRAMA | 478 U+0C97 KANNADA LETTER GA | 2091 U+00C9 LATIN CAPITAL LETTER E WITH ACUTE,Lead paragraph repeated at end; legacy-font Latin chars inside Kannada words; lost ZWNJ
+c38abea7a3377c5b,full,fix,G2;C2,"ಹೆಲಿಪೋರ್ಟ್ಗೆ at offset 547 | ಕಲಬುರಗಿ,ಏ.6:ಹೆಲಿಟೂರಿಸ್ಮ್ at offset 3980",556 U+0CCD KANNADA SIGN VIRAMA | 557 U+0C97 KANNADA LETTER GA,lead paragraph repeated at end; lost ZWNJ
+63cd06843d6f135a,full,fix,G2,ಟ್ವಿಟರ್ನಲ್ಲಿ at offset 29,38 U+0CCD KANNADA SIGN VIRAMA | 39 U+0CB2 KANNADA LETTER LA,News report; ZWNJ lost before suffixes
+7305e6f80fd21c32,full,drop,D4;C1,ಅವಕಾಶಗಳನ್ನು ಕಸಿದುಕೊಳ್ಳಲು at offset 1221 | ಪೋಸ್ಟ್ ಸಮಯ at offset 1631,,machine-translated corporate news with post-time footer
+3eefc99bdc576a0a,full,drop,F2;A6;D4;G2;G1,1. 2019 ರ ಅಬುಧಾಬಿ at offset 0 | season ತುವಿನಲ್ಲಿ at offset 142 | ಯಾಸ್ ಮರೀನಾದಲ್ಲಿ% ಗೆಲುವಿನ at offset 336 | ಎಲ್ಆರ್ಒ at offset 605 | uz ೋನ್ at offset 5050,142 U+0073 LATIN SMALL LETTER S | 607 U+0CCD KANNADA SIGN VIRAMA | 608 U+0C86 KANNADA LETTER AA | 5053 U+0CCB KANNADA VOWEL SIGN OO,Bad translation of current affairs quiz.
+4b1c1aba2c430bbf,full,fix,G2,ಮಾರ್ಚ್ನಲ್ಲಿ at offset 687,695 U+0CCD KANNADA SIGN VIRAMA | 696 U+0CB2 KANNADA LETTER LA,Transport strike news; ZWNJ lost before suffixes
+cfc9f77e953b4aad,full,fix,G2,ರೋಮನ್ರಲ್ಲಿ at offset 546,553 U+0CCD KANNADA SIGN VIRAMA | 554 U+0CB2 KANNADA LETTER LA,"Almost clean, except for one loanword suffix issue."
+854bdbbaea2f0a7e,full,fix,G2;A6,ಕ್ಯಾಟರ್ಸ್ಗಳಿಗೆ at offset 940 | ಹಿಂಸೆಯಿAದ at offset 2240,948 U+0CCD KANNADA SIGN VIRAMA | 949 U+0C97 KANNADA LETTER GA | 2247 U+0041 LATIN CAPITAL LETTER A,legacy-font damage (Latin A for ಂದ in a word); lost ZWNJ
+4a2026dbc4f536de,full,clean,,,,Local agriculture news
+611b4499989be3a0,full,clean,,,,"Short local news, clean"
+6cd1554086a6bb3b,full,clean,,,,Feature on a young farmer's water recharge methods
+dfb1d533d35f20ae,full,clean,,,,Complete astrology/career-remedy article
+69b544408fa44122,full,clean,,,,"Feature news item, informal register"
+bb29b9ff22c66a27,full,fix,G2,ಪಟೇಲ್ರ at offset 297,301 U+0CCD KANNADA SIGN VIRAMA | 302 U+0CB0 KANNADA LETTER RA,Political news; ZWNJ lost before suffix
+2b796e33ffd19d28,full,fix,C1;G2,ಪಬ್ಲಿಕ್ ಟಿವಿಯನ್ನು at offset 1130 | ಆರ್ಎಸ್ಎಸ್ at offset 98,100 U+0CCD KANNADA SIGN VIRAMA | 101 U+0C8E KANNADA LETTER E,News article with Instagram follow footer and URL
+3576168c62157973,full,fix,G2;D3;C1,"ಕೋರ್ಟ್ಯಾರ್ಡ್ನಲ್ಲಿ at offset 323 | Anyways, at offset 996 | Last Updated at offset 1048",337 U+0CCD KANNADA SIGN VIRAMA | 338 U+0CB2 KANNADA LETTER LA,Celebrity wedding news; English 'Last Updated' footer
+58e197b1f0493cfc,full,clean,,,,Short news. Clean
+4577fabe9bb4461c,full,clean,,,,Local news item with minor typos
+7fe221d009366c1e,full,clean,,,,"short film news, no issues"
+45e2a6539ee4f226,full,fix,C1,Last Updated at offset 1274,,English last-updated footer; lost ZWNJ
+5324bc601e15d2a1,full,fix,C1;D3;G2,ಬೆಳಗಾವಿ| at offset 0 | Last Modified at offset 16 | ವೆಬ್ದುನಿಯಾ at offset 1057,1060 U+0CCD KANNADA SIGN VIRAMA | 1061 U+0CA6 KANNADA LETTER DA,Byline/timestamp header and app-promo footer; ZWNJ lost
+536e8f5c7a8fa03e,full,clean,,,,Labour/legal news on Wistron workers
+d4089d499ee76453,full,drop,C1;D4;G2;C3;D3,₹135.00 at offset 0 | ಸಬ್ರಿ ಸೆಳೆಯಲು at offset 16 | ಪೆನ್ಸಿಲ್ಗಳನ್ನು at offset 103 | ಹಾತೊರೆಯುತ್ತಾಳೆ at offset 208 | There are no reviews at offset 223,114 U+0CCD KANNADA SIGN VIRAMA | 115 U+0CA8 KANNADA LETTER NA,Shop product page: one machine-translated blurb plus English review-form boilerplate
+5d54c6ace1fb8688,full,clean,,,,"Health explainer, clean prose (spelling slips only)"
+4db593bb83269e56,full,fix,C5;C4,- Tag results for at offset 0 | ಭಾರೀ ಮಳೆಯಿಂದ at offset 1242,,Tag page: header plus a list of unrelated article lead sentences about Bangladesh
+7573bfff1589bbd6,full,clean,,,,Short local news item
+00e62ad6b97c2685,full,fix,C1,ಜೊತೆಯಲ್ಲಿ ಇದನ್ನು ಒಮ್ಮೆ ಓದಿ at offset 1281,,Home-remedy article with a read-also link and a second remedy article appended
+339ac534d1a9c6e7,full,clean,,,,Complete political news; loanword+suffix joins without ZWNJ
+93a055e6ab9d9c4b,full,clean,,,,Short local news item
+1accc6c7db3d78f4,full,fix,C1;G2,ಹೈಲೈಟ್ಸ್: at offset 0 | ಜೆರುಸೆಲೆಮ್ನಲ್ಲಿ at offset 282,294 U+0CCD KANNADA SIGN VIRAMA | 295 U+0CB2 KANNADA LETTER LA,World news with highlights box; ZWNJ lost before suffixes
+903f40f262239bdd,full,drop,H3;G2;D3;A6;G1;C1;D4,ನಾವು ವೆಕ್ಟರ್ ಮಾಡಿದಾಗ at offset 0 | ಬಿಟ್ಮ್ಯಾಪ್ನಲ್ಲಿರುವ at offset 42 | process at offset 523 | process ಾಯಾ at offset 523 | ಾಯಾಚಿತ್ರದೊಂದಿಗೆ at offset 531 | ಸೂಚ್ಯಂಕ at offset 582 | o ೂಮ್ at offset 1201,54 U+0CCD KANNADA SIGN VIRAMA | 55 U+0CB2 KANNADA LETTER LA | 523 U+0070 LATIN SMALL LETTER P | 531 U+0CBE KANNADA VOWEL SIGN AA,"Machine-translated Illustrator tutorial; Latin fragments replace conjuncts (process ಾಯಾ, o ೂಮ್), Too much of Anglicised words"
+587dc5f42dba5dce,full,clean,,,,news item (lead sentence appears missing)
+57ce1ecc0fbd2893,full,fix,G2,ಅತ್ತಾವರ್ಗೆ at offset 119,126 U+0CCD KANNADA SIGN VIRAMA | 127 U+0C97 KANNADA LETTER GA,Court news; lost ZWNJ before suffixes
+51e9a734efdfb853,full,clean,,,,"Story episode, colloquial dialogue"
+fce2948d87d9d4d2,full,fix,C1;G2,pic.twitter.com at offset 299 | ರಾಕಿಂಗ್ಸ್ಟಾರ್ ಯ at offset 218,226 U+0CCD KANNADA SIGN VIRAMA | 227 U+0C9F KANNADA LETTER TTA,Embedded tweet residue (pic link and handle attribution). ZWJ issue
+d1ef35984ff7cd14,full,clean,,,,"Political news statement, clean"
+c640c89d2ca2413a,full,fix,C1,‘ವಾರ್ತಾ ಭಾರತಿ’ ನಿಮಗೆ at offset 1588,,News; lost ZWNJ in acronym; site support-appeal footer
+cf9a5118a4f85007,full,clean,,,,Short complete news report
+7cb2c02d7011302f,full,clean,,,,Short complete news report
+cbd35793c4f51942,full,clean,,,,Short complete news report
+03c55a28ac95ebbb,full,clean,,,,loanword+suffix conjunct (lost ZWNJ)
+16c7425de17fd18b,full,clean,,,,"short news report, no disease"
+010985901c622a7f,full,fix,C1;G2,Crime News at offset 0 | ಲಾಕರ್ಗಳಲ್ಲಿ at offset 1524,1532 U+0CCD KANNADA SIGN VIRAMA | 1533 U+0CB2 KANNADA LETTER LA,English category header; virama loanword conjunct
+a1e9130010a74267,full,fix,G2,ಸ್ಯಾಂಡಲ್ವುಡ್ನಿಂದ at offset 64,75 U+0CCD KANNADA SIGN VIRAMA | 76 U+0CA8 KANNADA LETTER NA,loanword+suffix conjuncts missing ZWNJ
+73055b8f6994406f,full,clean,,,,Covid news report with highlight sub-lines; no disease found
+716740ee15407b8a,full,fix,G2,ಹಾಲ್ನಲ್ಲಿ at offset 193,199 U+0CCD KANNADA SIGN VIRAMA | 200 U+0CB2 KANNADA LETTER LA,loanword+suffix conjunct (lost ZWNJ)
+fca1484108f92d4d,full,drop,G2,ಡೌನ್ಲೋಡ್ at offset 158,161 U+0CCD KANNADA SIGN VIRAMA | 162 U+0CB2 KANNADA LETTER LA,Poor document. May not add any value.
+0de20b851b0be1b0,full,fix,G2,ಲವ್ಸ್ಟೋರಿ at offset 342,346 U+0CCD KANNADA SIGN VIRAMA | 347 U+0C9F KANNADA LETTER TTA,"Loanword+suffix conjuncts missing ZWNJ (ಲವ್ಸ್ಟೋರಿ, ಫೋಟೋಶೂಟ್ನಲ್ಲಿ)"
+61fdf00125b1280e,full,fix,G2,ಡಿಸ್ಪ್ಲೇ at offset 833,838 U+0CCD KANNADA SIGN VIRAMA | 839 U+0CB2 KANNADA LETTER LA,lost ZWNJ in loanword
+8b019de10c98f2f5,full,fix,C1,Team Udayavani at offset 35,,Shivaratri essay; English byline/date line
+316edbe5fbc2fa0c,full,fix,C1;G2,news18-kannada Updated: at offset 0 | ಇನಿಂಗ್ಸ್ನಲ್ಲಿ at offset 169,179 U+0CCD KANNADA SIGN VIRAMA | 180 U+0CB2 KANNADA LETTER LA,Cricket report; English site header/date; lost ZWNJ in loanword joins
+78e169e4a89f1c94,full,clean,,,,virama loanwords joined to suffixes without ZWNJ. But it is accepted usage.
+740400a2326815d0,full,fix,G2,ಕ್ಲಾಸ್ಮೇಟ್ಸ್ at offset 31,40 U+0CCD KANNADA SIGN VIRAMA | 41 U+0CB8 KANNADA LETTER SA,lost ZWNJ in loanword joins; footnote marker
+3b9dd0b7034a10be,full,fix,D3;G2,Breaking at offset 0 | ಕೇಸ್ನಲ್ಲಿ at offset 706,712 U+0CCD KANNADA SIGN VIRAMA | 713 U+0CB2 KANNADA LETTER LA,English 'Breaking' tag in headline; virama loanword+suffix conjunct
+5dc663e26ff8f0c6,full,fix,C1,Team Udayavani at offset 40,,English byline/dateline line
+fef7c1450fb4b473,full,drop,D4;F3,ಎಂದು ಅನುಭವಿ ಪೋರ್ಚುಗಲ್ at offset 0 | ಸಭೆಯಲ್ಲಿ ವಯಸ್ಕರಿಗೆ at offset 23,,Machine-translated adult dating site spam
+da5e3fd306d82f8a,full,drop,F3;D4;G2,ಡೇಟಿಂಗ್ ಸೈಟ್ at offset 10 | ಏನು ಮಾಡಬಹುದು ಒಂದು at offset 24 | ಸೈಟ್ನಲ್ಲಿ at offset 60,66 U+0CCD KANNADA SIGN VIRAMA | 67 U+0CB2 KANNADA LETTER LA,Machine-translated dating-site spam
+51fa1af6aa0279aa,full,drop,C1;C5;G2,Just In at offset 0 | - News at offset 20 | ಬಿಟ್ಕಾಯಿನ್ at offset 267,270 U+0CCD KANNADA SIGN VIRAMA | 271 U+0C95 KANNADA LETTER KA,Lot of ads and unrelated content
+5e952686662b6ac3,full,fix,C1,"Apr 7, 2021 at offset 52",,Short news video blurb with English timestamp line
+cc93c2dfddb5ec05,full,fix,C1,"ಬುಧವಾರ, 7 ಏಪ್ರಿಲ್ at offset 65",,dateline header line
+88007426f7aea253,full,fix,C1,Please follow at offset 896,,English share footer
+41932ab38a6fafb6,full,clean,,,,ZWNJ-less loanword conjuncts;But usually valid usage.
+df621739cca195ea,full,clean,,,,Health tips article; minor typos (ಸ್ನಾ) only
+c4c12c0187607b65,full,drop,C5;F1;C3,ಈ ಬಾರಿ ಕೊಪ್ಪಳದ at offset 328 | phone at offset 391 | ಹಿಡುವಳಿ ರೈತನಲ್ಲ at offset 460,,Agri magazine issue teasers from unrelated articles joined; private farmer phone number; vowel-sign typos
+e7b8bf9fcc02f67e,full,fix,C1;C5;G2;D3,Just In at offset 0 | - Lifestyle at offset 20 | ಡಿಸೆಂಬರ್ನಲ್ಲಿ at offset 844 | Bank Of Baroda at offset 328,854 U+0CCD KANNADA SIGN VIRAMA | 855 U+0CB2 KANNADA LETTER LA,Just In / Don't Miss headline menu before article; ZWNJ loss
+d88743015224ad8c,full,drop,C3,ಬೆಳಗಾವಿ ): at offset 0,,Local event news; opening dateline cut ('ಬೆಳಗಾವಿ ):'); trailing asterisks
+d78b35287b746574,full,fix,C1;C5,Don't Miss! at offset 0 | - News ಸರ್ಕಾರದಿಂದ at offset 12,,Filmibeat 'Dont Miss' headline list chrome before article; lost ZWNJ
+2749edfd33a4cb37,full,fix,G2;C3;C1,ಲಾಕ್ಡೌನ್ at offset 41 | ವೆಬ್ಸೈಟ್: http:// at offset 490 | Please follow at offset 508,44 U+0CCD KANNADA SIGN VIRAMA | 45 U+0CA1 KANNADA LETTER DDA,"cut at URL, social footer, lost ZWNJ"
+16581c3a13551701,full,drop,G2;A6;D4;D3,ಆನ್ಲೈನ್ at offset 49 | ts ಹಿಸಿದೆ at offset 530 | billion 24 at offset 578 | Home ತುವಿನಲ್ಲಿ at offset 627,51 U+0CCD KANNADA SIGN VIRAMA | 52 U+0CB2 KANNADA LETTER LA | 530 U+0074 LATIN SMALL LETTER T,Raw machine translation from English with Latin fragments inside words
+6de6e36caaf540b9,full,fix,G2;C1,ಅದಾಲತ್ನಲ್ಲಿ at offset 346 | Please follow at offset 859,354 U+0CCD KANNADA SIGN VIRAMA | 355 U+0CB2 KANNADA LETTER LA,Local revenue adalat news; English social-share footer; lost ZWNJ
+2f7b63acbfef5eb2,full,fix,G2,ಲಂಡನ್ಗೆ at offset 348,352 U+0CCD KANNADA SIGN VIRAMA | 353 U+0C97 KANNADA LETTER GA,loanword+suffix conjunct without ZWNJ
+58571499d2fa8bea,full,fix,G2,ಕ್ಲಭ್ನಲ್ಲಿ at offset 287,294 U+0CCD KANNADA SIGN VIRAMA | 295 U+0CB2 KANNADA LETTER LA,virama loanwords joined to suffixes without ZWNJ
+e4d28c991c321711,full,fix,G2,ಟ್ವೀಟ್ನಲ್ಲಿ at offset 363,371 U+0CCD KANNADA SIGN VIRAMA | 372 U+0CB2 KANNADA LETTER LA,loanword+suffix conjunct without ZWNJ
+1792def06370f03e,full,fix,F1,phone at offset 114,,News; anonymous caller's phone number quoted in text
+2d36de3f0b5e9aa5,full,fix,G2,ಮಿನ್ನೆಪೊಲಿಸ್ನಲ್ಲಿ at offset 122,136 U+0CCD KANNADA SIGN VIRAMA | 137 U+0CB2 KANNADA LETTER LA,Loanword+suffix conjuncts missing ZWNJ
+6c0145dfc416e801,full,clean,,,,Clean news article
+a5adff1caa0b6418,full,clean,,,,loanword compound conjunct without ZWNJ. But accepted usage
+732acaa91430885f,full,fix,A6;C3,ಇಷ್ಟs at offset 4673 | ಅತಿಥಿಗಳು ಬಂದಿ at offset 0,4677 U+0073 LATIN SMALL LETTER S,Incomplete lines
+a766b518e5ce731a,full,clean,,,,Clean news article
+b3d6b74fb6f9d899,full,drop,G2;D4,ಹೌಸ್ನ at offset 1149 | ಕುರ್ಚಿಯನ್ನು ತೊಳೆದು at offset 561,1152 U+0CCD KANNADA SIGN VIRAMA | 1153 U+0CA8 KANNADA LETTER NA,machine-translated from Hindi (garbled sentences); ZWNJ loss
+fdf85185b4e7f5db,full,clean,,,,"Long biographical article, clean (minor source typos only)"
+7cb7be9c51596cc7,full,clean,,,,"short local news, no disease"
+32f3489d3bca7c8f,full,clean,,,,"short news article, no issues"
+50a2138f664e0f6f,full,fix,G2,ಸ್ಪೀಕರ್ಗೆ at offset 618,624 U+0CCD KANNADA SIGN VIRAMA | 625 U+0C97 KANNADA LETTER GA,loanword+suffix conjunct without ZWNJ
+c48f64267f363e3a,full,fix,G2,ಬಜೆಟ್ದಿನ at offset 61,65 U+0CCD KANNADA SIGN VIRAMA | 66 U+0CA6 KANNADA LETTER DA,News article; loanword+suffix conjuncts missing ZWNJ
+d0a0a33b2b7ed888,full,fix,C4,ಕರ್ನಾಟಕದ ಬಗ್ಗೆ ಪ್ರಧಾನಿಗೆ at offset 561,,Two separate news items.
+f1691b2e2d6b8c40,full,drop,C1;G2;C5;A6;G1;D4,ಸಹಾಯ ಬೇಕೇ? at offset 7 | ಟೈಮ್ಪೀಸ್ಗಳಿಗಾಗಿ at offset 129 | A B C D at offset 448 | ブ at offset 500 | ದೃ hentic ೀಕರಣ at offset 667 | ಚೆಕ್ out ಟ್ at offset 791,136 U+0CCD KANNADA SIGN VIRAMA | 137 U+0C97 KANNADA LETTER GA | 500 U+30D6 KATAKANA LETTER BU | 677 U+0CC0 KANNADA VOWEL SIGN II,"machine-translated shop UI chrome, alphabet list, broken translation fragments"
+9f9aeafac3256b18,full,clean,,,,clean news article
+8e638d65e799c8d0,full,fix,D3;C1,रामनवमी at offset 674 | — Narendra Modi at offset 767,,quoted Hindi tweet with embed attribution line
+f2bf6f2db1f31c46,full,fix,G2,ಸರ್ಕ್ಯೂಟ್ನಿಂದಾಗಿ at offset 455,463 U+0CCD KANNADA SIGN VIRAMA | 464 U+0CA8 KANNADA LETTER NA,Short local news; lost ZWNJ in loanword join
+488d5debed6ae335,full,clean,,,,"Political news, no disease"
+b1216cd94bf3ff43,full,fix,G2;G4,ಸುರತ್ಕಲ್ನ at offset 314 | 127.೦೦ at offset 1756,321 U+0CCD KANNADA SIGN VIRAMA | 322 U+0CA8 KANNADA LETTER NA | 1760 U+0CE6 KANNADA DIGIT ZERO,Name+suffix conjunct; Kannada and Latin digits mixed in one number (127.೦೦)
+bb02a4e3d05d8e31,full,fix,G2,ಹೈಕೋರ್ಟ್ನ at offset 123,130 U+0CCD KANNADA SIGN VIRAMA | 131 U+0CA8 KANNADA LETTER NA,loanword+suffix conjuncts without ZWNJ
+a94b940f10441a9b,full,fix,C1,Last Updated at offset 1790,,Fraud news; English Last Updated footer; garbled company name and lost rupee sign
+7115c33a94e178cf,full,clean,,,,Clean short news article
+38f2da5edb8c8bc4,full,fix,D3;G2,(Standard) at offset 3925 | ಶೇಕ್ಸ್ಪಿಯರ್ನ at offset 15053,15063 U+0CCD KANNADA SIGN VIRAMA | 15064 U+0CA8 KANNADA LETTER NA,long scholarly essay; parenthetical English terms; name+suffix conjunct without ZWNJ
+bf6296f4d24940b2,full,fix,C1;G2,Team Udayavani at offset 57 | ಕ್ವಾರಂಟೈನ್ಗೆ at offset 897,906 U+0CCD KANNADA SIGN VIRAMA | 907 U+0C97 KANNADA LETTER GA,English byline line and 'read also' link; ZWNJ-less loanword conjuncts
+102787969b150ca3,full,fix,G2,ಚಾನೆಲ್ಗಳು at offset 2569,2574 U+0CCD KANNADA SIGN VIRAMA | 2575 U+0C97 KANNADA LETTER GA,Opinion column; loanword+suffix conjunct missing ZWNJ
+d453d1f8e478af91,full,fix,C1,ಸತ್ಯ ಮತ್ತು ನೈಜ at offset 1813,,site tagline footer
+6f8df6a1e26de654,full,fix,G2;C2,ಬೆಡ್ಗಳ at offset 1371 | ಕಲಬುರಗಿ ಮೇ 4 at offset 1515,1374 U+0CCD KANNADA SIGN VIRAMA | 1375 U+0C97 KANNADA LETTER GA,News; lead paragraph repeated at end; loanword conjunct
+274e94b04db6001b,full,clean,,,,Latin acronym IFFCO only; no disease
+53fbc7105d6cae68,full,fix,G2;C1,ಮ್ಯಾನೇಜರ್ಗೆ at offset 23 | WATCH ON YOUTUBE at offset 1732,31 U+0CCD KANNADA SIGN VIRAMA | 32 U+0C97 KANNADA LETTER GA,Viral video story; YouTube call-to-action footer; lost ZWNJ
+5af6bd124c4d7388,full,fix,C1;G1;A6;C5;C2,Team Udayavani at offset 34 | ಆಗು ತ್ತದೆಯೇ at offset 490 | ಮತಾöರು at offset 2091 | ಟಾಪ್ ನ್ಯೂಸ್ at offset 2318 | ಅಪೂರ್ವ ಅನುಭೂತಿ at offset 2330,493 U+0020 SPACE | 2094 U+00F6 LATIN SMALL LETTER O WITH DIAERESIS,Space split between syllables; byline and related-headline footer (repeated); legacy-font char; stray space in word
+52116eec3fc8ab1f,full,clean,,,,"short news, no disease"
+219d81400877cf45,full,clean,,,,Clean film news article
+9433777029474753,full,clean,,,,Local news; acronym conjunct missing ZWNJ (ಡಿವೈಎಸ್ಪಿ); typos otherwise
+c11838ab3b2b6a00,full,clean,,,,Short local news on temple grants; no disease found
+2da1e41e02764e4a,full,clean,,,,colloquial news prose; no disease
+ecfd794757aefd45,full,fix,D3,Overtime Allowance at offset 308,,English gloss in parentheses; acronym conjunct without ZWNJ
+80883f17169014fa,full,clean,,,,"Covid news, no disease"
+788bf986035f4fed,full,clean,,,,Clean local news report
+2a5b42b2dfd37e9f,full,clean,,,,clean news article
+c69e1a6483bd6ac2,full,fix,C2,ಚಿಕ್ಕಮಗಳೂರು : ಆತ್ಮೋದ್ಧಾರಕ್ಕೆ at offset 3385,,lead sentence repeated as last line
+2edb4c3ba62ee837,full,fix,G2,ಬಸ್ಗಳಿಗೆ at offset 21,23 U+0CCD KANNADA SIGN VIRAMA | 24 U+0C97 KANNADA LETTER GA,loanword+suffix conjuncts without ZWNJ
+acf5bf0b73c31a9f,full,drop,G2;C1;G1;C5;C2,ಲಾಕ್ಡೌನ್ at offset 0 | Team Udayavani at offset 64 | ಅನು ಭ ವಿ ಸಿತ್ತು at offset 1007 | ಟಾಪ್ ನ್ಯೂಸ್ at offset 1643 | ಖಾಸಗಿ ಮೆಡಿಕಲ್ at offset 1734,3 U+0CCD KANNADA SIGN VIRAMA | 4 U+0CA1 KANNADA LETTER DDA | 1010 U+0020 SPACE,Space split between syllables; Poor quality document
+2b009789877f7fa1,full,fix,G2;C1,ರೈಡರ್ಸ್ನ at offset 469 | ‘ವಾರ್ತಾ ಭಾರತಿ’ ನಿಮಗೆ at offset 886,475 U+0CCD KANNADA SIGN VIRAMA | 476 U+0CA8 KANNADA LETTER NA,IPL news; site donation appeal footer; lost ZWNJ
+ca58201723e4254a,full,clean,,,,"short news report, no disease"
+e5e0486d846b09a7,full,fix,G1;C3,ಶೀಘ್ರ ದಲ್ಲೇ at offset 107 | ಉಡಿಯೂರಪ್ಪ at offset 756,112 U+0020 SPACE,Space split between syllables; Ends mid-sentence; stray space in word
+244c2e3dd2f0c566,full,fix,A6;G2,ಬ್ಯಾ0ಕ್ at offset 243 | ಬ್ಯಾಂಕ್ಗೆ at offset 439,247 U+0030 DIGIT ZERO | 445 U+0CCD KANNADA SIGN VIRAMA | 446 U+0C97 KANNADA LETTER GA,Latin digit zero used as anusvara; loanword+suffix conjunct
+ff18fef0d60478cc,full,clean,,,,"Accident news, no disease"
+fb15fe954cc5666f,full,clean,,,,"local news, no disease"
+93abc79959a749d9,full,fix,D5,ಪೂರ್ಣವಾಗುವಂತೆ ಮ್ಯಾನೇಜರ್ ಯೋಜಿಸಿದ್ದಾರೆ. at offset 2005,,Career advice article; one loanword+suffix conjunct missing ZWNJ
+ba883782e1e02105,full,fix,G2,ಬ್ಯಾಗ್ನ್ನು at offset 38,45 U+0CCD KANNADA SIGN VIRAMA | 46 U+0CA8 KANNADA LETTER NA,loanword+suffix conjunct
+a3848550f425e312,full,drop,G2;D3;D4;C5;C1,"ಮೋನೊಮರ್ಗಳನ್ನು at offset 24 | Polyimide at offset 38 | ಬಣ್ಣರಹಿತ polyimide ಚಿತ್ರ at offset 54 | ಅನಿಲೈನ್ ಉತ್ಪನ್ನಗಳು, at offset 222 | ಮತ್ತಷ್ಟು ಓದು at offset 1268",34 U+0CCD KANNADA SIGN VIRAMA | 35 U+0CA8 KANNADA LETTER NA,"Machine-translated chemical company product page, product lists, read-more chrome"
+6dea4f3ecda29c81,full,clean,,,,Clean news article
+909ef185992c6342,full,clean,,,,plain news prose; no disease
+6f26604168cc0573,full,fix,G2,ಹೋಟೆಲ್ನಲ್ಲಿ at offset 1277,1285 U+0CCD KANNADA SIGN VIRAMA | 1286 U+0CB2 KANNADA LETTER LA,News; loanword+suffix conjunct missing ZWNJ
+6b0b838054ce1d13,full,fix,G2,ಟಾಯ್ಲೆಟ್ಗೆ at offset 233,240 U+0CCD KANNADA SIGN VIRAMA | 241 U+0C97 KANNADA LETTER GA,"Crime news on child abuse (reporting, not harmful); lost ZWNJ; one typo"
+e42f3a35a452fcf5,full,fix,G2,ಹೋಟೆಲ್ಗೆ at offset 267,272 U+0CCD KANNADA SIGN VIRAMA | 273 U+0C97 KANNADA LETTER GA,loanword+suffix conjuncts without ZWNJ
+b088ff9df064742a,full,clean,,,,clean news article
+f7d63dbb29f83e9e,full,fix,G2;D3;C1,ಟ್ವಿಟ್ಟರ್ನಲ್ಲಿ at offset 83 | #GoonsOfCongress at offset 1656 | pic.twitter.com at offset 1738,94 U+0CCD KANNADA SIGN VIRAMA | 95 U+0CB2 KANNADA LETTER LA,"News with embedded tweet (hashtags, handles, pic.twitter link)"
+71eaa60a21e631ec,full,drop,C2;F3,Kannada sex stories at offset 0 | ಆದರೆ ಸುಮಾ ತನ್ನ ಬಾಯಿಯನ್ನು ಮುಚಿಕೊಂಡು at offset 40,,Explicit sexual story on spam domain; repeated English title line
+36229dac9968d35c,full,fix,G2,ನೋಟ್ನಲ್ಲೇನಿದೆ at offset 1098,1104 U+0CCD KANNADA SIGN VIRAMA | 1105 U+0CB2 KANNADA LETTER LA,Loanword+suffix conjuncts lack ZWNJ
+198a6cc74b3f9b89,full,fix,G2,ಆಮ್ಲೆಟ್ಗೆ at offset 107,113 U+0CCD KANNADA SIGN VIRAMA | 114 U+0C97 KANNADA LETTER GA,News; loanword+suffix conjunct missing ZWNJ
+8b25a32c5f186deb,full,fix,G2;D3,ಬೋಟ್ಗಳು at offset 2786 | ( Bagalkot People at offset 3024,2789 U+0CCD KANNADA SIGN VIRAMA | 2790 U+0C97 KANNADA LETTER GA,English headline appended at end; lost ZWNJ
+899494cac1cfb9f2,full,drop,G2;D4;A6;D3,ಎಕ್ಸ್ಚೇಂಜ್ ಆಫ್ಲೈನ್ at offset 0 | ನಿಮ್ಮನ್ನಾಗಿಸಲು at offset 198 | ಕಾರಣವಾಗುತ್ತದೆost at offset 1399 | DataNumen Exchange at offset 2178,13 U+0CCD KANNADA SIGN VIRAMA | 14 U+0CB2 KANNADA LETTER LA | 1412 U+006F LATIN SMALL LETTER O,machine-translated vendor product page; garbled MT incl. split English word
+42c5f147bb3f3cc3,full,clean,,,,clean news article
+5aa66ba4ec3ead9a,full,clean,,,,plain news prose; no disease
+ae0658ccc2347a4a,full,fix,G2,ಬೆಡ್ಗಿಂತ at offset 113,116 U+0CCD KANNADA SIGN VIRAMA | 117 U+0C97 KANNADA LETTER GA,loanword+suffix conjuncts
+4f6fb355e6e5e1bd,full,drop,C1;C5;D3;G2,Don't Miss! at offset 0 | - News ನಾಲ್ಕು at offset 12 | SBI Clerk Recruitment at offset 152 | ಪ್ರಿ-ಆರ್ಡರ್ಗೆ at offset 508,518 U+0CCD KANNADA SIGN VIRAMA | 519 U+0C97 KANNADA LETTER GA,English 'Don't Miss' related-headline block at top (shared with other docs).Poor quality.
+4eb6b90fc678aca4,full,fix,G2,ಲೀಸ್ಟ್ನಲ್ಲಿ at offset 154,162 U+0CCD KANNADA SIGN VIRAMA | 163 U+0CB2 KANNADA LETTER LA,loanword+suffix conjuncts without ZWNJ
+76eda4fd0b953dd6,full,drop,C5;C1;D3;C2;G2,ಮುಂದೆ ಓದಿ.. at offset 281 | […]ಮುಂದೆ ಓದಿ.. at offset 698 | BIG BREAKING NEWS at offset 891 | ನವದೆಹಲಿ: ಇಪಿಎಫ್ ಒ at offset 3339 | ಲಾಕ್ಡೌನ್ at offset 11531,11534 U+0CCD KANNADA SIGN VIRAMA | 11535 U+0CA1 KANNADA LETTER DDA,Author archive page: truncated teasers with read-more links and inline related headlines; EPFO teaser repeated; phones are public/advertiser
+2914f93d5aa778b8,full,drop,D4;G1,ವಸಡಿನ at offset 566 | ನ ೊಂದ at offset 570,572 U+0CCA KANNADA VOWEL SIGN O,machine-translated dream-dictionary text (gum rendered as gums of teeth); detached vowel sign
+847da59cce087ea6,full,fix,G2;C1,ರೆಮ್ಡಿಸಿವರ್ at offset 1045 | ರಾಮು⟦U+000A⟧ವಿ ನ್ಯೂಸ್ at offset 1804,1048 U+0CCD KANNADA SIGN VIRAMA | 1049 U+0CA1 KANNADA LETTER DDA,reporter/outlet byline at end; lost ZWNJ
+ee33bf8d0c09c49c,full,clean,,,,"daily horoscope, no disease"
+982688811aad1551,full,fix,G2,ಎಕ್ಸ್ಪ್ರೆಸ್ನಲ್ಲಿ at offset 1285,1298 U+0CCD KANNADA SIGN VIRAMA | 1299 U+0CB2 KANNADA LETTER LA,loanword+suffix conjunct
+59cad2f8367665c2,full,clean,,,,clean news article
+502e2621f024d74d,full,drop,C1;C5;G2,Don't Miss! at offset 0 | - Automobiles at offset 12 | ಬಿಟ್ಕಾಯಿನ್ at offset 320,323 U+0CCD KANNADA SIGN VIRAMA | 324 U+0C95 KANNADA LETTER KA,Multiple documents mixed
+c3321d4543e8e8bc,full,fix,G2;C1;D3,ವೆಂಟಿಲೇಟರ್ಗಳಿದ್ದು at offset 343 | ಇದನ್ನೂ ಓದಿ: at offset 2021 | (Covid ventilators at offset 2033,357 U+0CCD KANNADA SIGN VIRAMA | 358 U+0CA6 KANNADA LETTER DA,Covid ventilator news; lost ZWNJ; empty read-also stub and English title line at end
+e127db840afc5c75,full,fix,G2;D3,ನೊಬೆಲ್ಬಹುಮಾನಕ್ಕಾಗಿ at offset 2318 | Mainichi Daily News at offset 5913,2331 U+0CCD KANNADA SIGN VIRAMA | 2332 U+0C95 KANNADA LETTER KA,virama-final words run into next word (lost ZWNJ/space) throughout
+d42e1f17973df408,full,fix,D3,Buffer State at offset 10808,,"Good document, except for a couple of English words"
+fff7e408bbfa1e3e,full,clean,,,,Clean district news
+8149801407202063,full,fix,C1,|ಟಿ.ಆರ್. at offset 16170,,good vachana essay (starts at part 3); bibliography left as pipe-table residue
+e86caa84ec92a192,full,fix,C1,Last Modified at offset 27,,site header with English byline/timestamp lines
+47424ea4989c5934,full,fix,A6;G1;G2,ಪೆÇಲೀಸರು at offset 79 | ಉಪವಿಭಾ ಗಾಕಾರಿ at offset 192 | ಸುರೇಶ್ನನ್ನು at offset 886,81 U+00C7 LATIN CAPITAL LETTER C WITH CEDILLA | 198 U+0020 SPACE | 894 U+0CCD KANNADA SIGN VIRAMA | 895 U+0CA8 KANNADA LETTER NA,"Space split between syllables; Legacy-font conversion damage: Latin letter in word and dropped dhi glyph (ಅಕಾರಿ, ಬಂಸಿರುವ); stray space in word"
+dba119c04b5bede9,full,drop,D4;D5,ಹಣವನ್ನು ನಿಲ್ಲಿಸಬಹುದು at offset 149 | ವ್ಯರ್ಥವಾದ ಅಡುಗೆಯನ್ನು at offset 510,,"Daily horoscope machine-translated from Hindi (nonsense phrases, literal calques)"
+61fe7a65b23ea35f,full,clean,,,,site-name dateline only; no disease
+1fbb3e67f8a46c68,full,drop,C1;D3;G2;D4;A6,ಶಿಶುಗಳು ಬೆರಳು at offset 0 | Finger Thumb at offset 60 | ಟ್ರೈಫಲ್ಗಳಿಂದ at offset 341 | ಆನೆಯನ್ನು ನೊಣದಿಂದ at offset 3853 | ಸ್ವಚ್ er ಗೊಳಿಸಲು at offset 6891,347 U+0CCD KANNADA SIGN VIRAMA | 348 U+0C97 KANNADA LETTER GA | 6897 U+0065 LATIN SMALL LETTER E,machine-translated (from Russian) self-help article; unrelated related-post title as first line; MT artifact 'er' inside word
+5934cc2b8c746171,full,clean,,,,"news article, loanwords spaced from suffixes, no issues"
+150476b2774ca81f,full,clean,,,,Clean short film bio
+1302db0a615654a8,full,fix,G2,ಸ್ಯಾಂಡಲ್ವುಡ್ಗೆ at offset 272,283 U+0CCD KANNADA SIGN VIRAMA | 284 U+0C97 KANNADA LETTER GA,loanword+suffix conjuncts without ZWNJ
+2bcfd6c70a5d7599,full,drop,C3;G2;C1,ತಪ್ಪಾಗಲಿಕ್ಕಿಲ at offset 238 | ಸ್ಯಾಂಡಲ್ವುಡ್ at offset 326 | ಹೌದು ಈ ಹಾಟ್ ವಿಡಿಯೋವನ್ನ at offset 900,333 U+0CCD KANNADA SIGN VIRAMA | 334 U+0CB5 KANNADA LETTER VA,"clickbait gossip; cut teaser line, loanword conjunct, comment/share CTA"
+da36174afac646e3,full,fix,C1;D3;C5,Team Udayavani at offset 74 | After not seeing at offset 979 | ಟಾಪ್ ನ್ಯೂಸ್ at offset 1391,,"English byline header, embedded English tweet, trailing related-headline list"
+ad31bf1d2b690c09,full,fix,G2;C1;D3,ಕಾಂಗ್ರೆಸ್ನಿಂದ at offset 354 | pic.twitter.com at offset 1495 | BJP Karnataka at offset 1523,362 U+0CCD KANNADA SIGN VIRAMA | 363 U+0CA8 KANNADA LETTER NA,embedded English tweet at end; loanword conjunct
+6a67529174650d54,full,fix,C1;G1,Team Udayavani at offset 26 | ಜಿಲ್ಲಾ ಕಾರಿ at offset 235,241 U+0020 SPACE,Space split between syllables; English byline; font-conversion damage: lost ಧಿ and stray spaces in ಜಿಲ್ಲಾಧಿಕಾರಿ
+a3740f9c62b6d8cd,full,clean,,,,"party statement news, no disease"
+ee6550ab4429a0a0,full,clean,,,,"short news, no disease"
+e3d4b1472c34437a,full,clean,,,,News report; no disease
+d592f1ab5e80d36d,full,fix,G1,ಅವ ಘಡ at offset 279,281 U+0020 SPACE,Space split between syllables; words split by stray spaces
+385e09ff7fde098a,full,fix,C1;C5,- Tag results for at offset 0 | ಬೆಳಗಾವಿ ಲೋಕಸಭೆ ಚುನಾ at offset 22,,Tag-results page: header plus list of unrelated article teasers
+7bf218e757931945,full,drop,C1;C5;C3,Tag results for at offset 2 | ಐಪಿಎಲ್ 2021: ಡಿವಿಲಿಯರ್ಸ್ at offset 202 | ವ್ಯವಸ್ಥೆಯನ್ನು... at offset 2539,,incoherent and unrelated.
+bb78d54f7477c6a2,full,clean,,,,Short festival greeting news item; no disease
+5a451f21454fb27c,full,fix,G2;C1;D3,ಸ್ಟೇಷನ್ನಲ್ಲಿ at offset 1252 | Donate at offset 4008 | Independent journalism at offset 4251,1261 U+0CCD KANNADA SIGN VIRAMA | 1262 U+0CB2 KANNADA LETTER LA,Polemical political opinion piece; donation/subscription footer with English line; lost ZWNJ
+e23190fc219c07da,full,clean,,,,clean news article
+3c969b48f87eff69,full,fix,G2,ಕಿಟ್ಗಳನ್ನು at offset 126,133 U+0CCD KANNADA SIGN VIRAMA | 134 U+0CA8 KANNADA LETTER NA,Short news on medical kits; lost ZWNJ; minor missing spaces
+85720787e1aec04e,full,fix,C1;G2,DaijiworldNews/HR at offset 15 | ಟ್ರೈಲರ್ಗೆ at offset 143,149 U+0CCD KANNADA SIGN VIRAMA | 150 U+0C97 KANNADA LETTER GA,site/agency tag in dateline; loanword+suffix conjunct
+394728b63f7f1bc5,full,fix,C1,DaijiworldNews/HR at offset 16,,English agency tag in dateline;
+fd45cb08779f55ce,full,clean,,,,"news article, no issues"
+8c692ecce3a2f2a1,full,clean,,,,short news; last line lacks full stop but complete
+0abb750c60ee2886,full,fix,C1,Team Udayavani at offset 61,,English byline line; 
+212d99bdbfaf8329,full,clean,,,,"local news article, no issues"
+064940e30a75675f,full,fix,G2,ಪಂಜಾಬ್ನಲ್ಲಿ at offset 12,20 U+0CCD KANNADA SIGN VIRAMA | 21 U+0CB2 KANNADA LETTER LA,loanword/name+suffix conjuncts without ZWNJ
+d7d15a89dc80e618,full,fix,G2;C1,ಆಂಬುಲೆನ್ಸ್ಗೆ at offset 528 | ಇದನ್ನೂ ಓದಿ: at offset 792,537 U+0CCD KANNADA SIGN VIRAMA | 538 U+0C97 KANNADA LETTER GA,News with trailing related-article link
+9dc01e19af71a83a,full,fix,C1;G2;C5;D3,Don't Miss! at offset 0 | ಲಾಕ್ಡೌನ್ at offset 19 | - Lifestyle at offset 83 | National Technology Day 2021: at offset 214,22 U+0CCD KANNADA SIGN VIRAMA | 23 U+0CA1 KANNADA LETTER DDA,Film news with 'Don't Miss' headline-link block at top
+3610cc9747329604,full,fix,G2,ಪಂಚಾಯತ್ನ at offset 442,448 U+0CCD KANNADA SIGN VIRAMA | 449 U+0CA8 KANNADA LETTER NA,"Event news; ZWNJ-less conjuncts (ಪಂಚಾಯತ್ನ, ಟಿಆರ್ಪಿ)"
+51f68b9da172f3ae,full,clean,,,,"Bank loan news; bank helpline number is public, not personal"
+b943b36f14a4c588,full,clean,,,,"short news report, no disease"
+8c9ce90a54c1de92,full,fix,C1;G2,news18-kannada Updated at offset 0 | ಮಾಸ್ಟರ್ಮೈಂಡ್ at offset 102,108 U+0CCD KANNADA SIGN VIRAMA | 109 U+0CAE KANNADA LETTER MA,English dateline header; loanword conjuncts lack ZWNJ
+0d6a2e627477f4b9,full,drop,G2;D4;A6,ಅಪ್ಲಿಕೇಶನ್ನ at offset 9 | ಇಂಟರ್ನೆಟ್ ಅನ್ನು ಮುಟ್ಟಿದೆ at offset 59 | “es ಹಿಸುತ್ತದೆ” at offset 739,18 U+0CCD KANNADA SIGN VIRAMA | 19 U+0CA8 KANNADA LETTER NA | 740 U+0065 LATIN SMALL LETTER E,machine-translated content-farm article; Latin fragment inside word
+f8773dfcfa08d695,full,clean,,,,"news article, no issues"
+1962a58cf69a18d8,full,fix,G2;D5,ಹೈದರಾಬಾದ್ನಲ್ಲಿ at offset 389 | 'ಮೂರು ಇ' ಗಳಾದ at offset 455,400 U+0CCD KANNADA SIGN VIRAMA | 401 U+0CB2 KANNADA LETTER LA,translated PR release; ZWNJ loss in acronyms
+46041fd3e4c244ca,full,fix,C1,Last Updated at offset 2109,,Political news; English Last Updated footer
+bf96c0d9ae768e5d,full,fix,C1;G2;D3,| news18-kannada Updated: at offset 9 | ಬಿಗ್ಬಾಸ್ನಲ್ಲಿ at offset 250 | Bala Trailer: at offset 1291,260 U+0CCD KANNADA SIGN VIRAMA | 261 U+0CB2 KANNADA LETTER LA,"byline/date header, read-also link and trailing related headline; lost ZWNJ"
+cfce19c3cc0a432d,full,fix,G2;A6,ಕ್ಲಬ್ನ at offset 123 | ಅಽಕಾರಿ at offset 668,127 U+0CCD KANNADA SIGN VIRAMA | 128 U+0CA8 KANNADA LETTER NA | 669 U+0CBD KANNADA SIGN AVAGRAHA,Event notice; avagraha in place of dhi (legacy font conversion); lost ZWNJ
+bd00df225e66a17f,full,fix,C1;C5;D3;G2,Don't Miss! at offset 0 | - Education Class at offset 12 | Class 12 Results By July at offset 24 | ರಬ್ಬರ್ನ at offset 411,416 U+0CCD KANNADA SIGN VIRAMA | 417 U+0CA8 KANNADA LETTER NA,'Don't Miss' block of cross-site headlines with English category labels before article
+2f9277ee9e7b20fe,full,fix,C1;C5;G2,- Tag results for at offset 0 | ನಕ್ಸರು ಮತ್ತು at offset 32 | ಎನ್ಕೌಂಟರ್ at offset 70,72 U+0CCD KANNADA SIGN VIRAMA | 73 U+0C95 KANNADA LETTER KA,tag-results page: unrelated article blurbs listed
+e3d2832b1ccbd9ed,full,fix,C1,(ಚಿತ್ರ ಕೃಪೆ: ಟ್ವಿಟರ್) at offset 183,,photo caption credit and site byline at top. Rest all clean
+289aaed1b7c53f25,full,fix,G2,ಪಿರಮಿಡ್ಗಳ at offset 169,175 U+0CCD KANNADA SIGN VIRAMA | 176 U+0C97 KANNADA LETTER GA,loanword+suffix conjuncts
+78e9a57a1eef04bc,full,drop,G2,ಸ್ಟಾಲಿನ್ರನ್ನು at offset 138,148 U+0CCD KANNADA SIGN VIRAMA | 149 U+0CA8 KANNADA LETTER NA,Poor quality document
+3e47bad95e6cfdd4,full,drop,G2;C1,ಕ್ರಿಕೆಟ್ನಲ್ಲಿ at offset 109 | 'ಈತ ಆರ್ಸಿಬಿಗೆ at offset 664,119 U+0CCD KANNADA SIGN VIRAMA | 120 U+0CB2 KANNADA LETTER LA,Poor document
+82f81a8dd7951b29,full,fix,G2,ಕ್ವಾರಂಟೈನ್ನಲ್ಲಿ at offset 583,595 U+0CCD KANNADA SIGN VIRAMA | 596 U+0CB2 KANNADA LETTER LA,ZWNJ loss in loanword+suffix
+a58560963ce11002,full,drop,C1;C5;D3;G2,Search results at offset 15 | EducationJun 17 at offset 37 | CBSE 12th Result at offset 73 | ಕೋವಿಡ್ನಿಂದ at offset 1460,1465 U+0CCD KANNADA SIGN VIRAMA | 1466 U+0CA8 KANNADA LETTER NA,topic page: list of headlines with English category/date stamps
+522aed1319dd8d46,full,drop,C1;G2;C5;C4,"CricketJun 12, 2021, 4:47 PM IST at offset 35 | ಚಾಂಪಿಯನ್ಶಿಪ್ at offset 75 | Rohit Sharma(Search results - 462) at offset 0 | ಟೆಸ್ಟ್ ರ್ಯಾಂಕಿಂಗ್ at offset 432",82 U+0CCD KANNADA SIGN VIRAMA | 83 U+0CB6 KANNADA LETTER SHA,Mixture of newses
+462faac4a50fa434,full,drop,C1;D3;G2;C5,Search results at offset 16 | IndiaMay 16 at offset 38 | ಪೋಸ್ಟರ್ಗಳನ್ನೇ at offset 82 | ಪತಿ ರಾಬರ್ಟ್ ವಾದ್ರಾಗೆ at offset 379,92 U+0CCD KANNADA SIGN VIRAMA | 93 U+0CA8 KANNADA LETTER NA,"topic search-results page: English header/datelines, unrelated teasers joined"
+5944b010a92dab10,full,fix,G2,ಮನೋಹರ್ಗೆ at offset 36,41 U+0CCD KANNADA SIGN VIRAMA | 42 U+0C97 KANNADA LETTER GA,name+suffix conjunct without ZWNJ
+e5f9637f02d38dd1,full,fix,G2;C1,ಕೋರ್ಸ್ಗಳಿಗೆ at offset 51 | ಬೆಂಗಳೂರು ಗಲಭೆ: ಕ್ಲೇಮ್ at offset 757,56 U+0CCD KANNADA SIGN VIRAMA | 57 U+0C97 KANNADA LETTER GA,related-story headline injected mid-article; ZWNJ loss
+b97d07f5fb39741f,full,drop,C1;C5;G2,Don't Miss! at offset 0 | - Sports at offset 12 | ಒನ್ಪ್ಲಸ್ at offset 455,459 U+0CCD KANNADA SIGN VIRAMA | 460 U+0CB2 KANNADA LETTER LA,Poor quality
+8a7bb71a4c532522,full,clean,,,,encyclopedic text with Kannada digits (fine); loanword+suffix conjuncts
+2558704f1bae9585,full,clean,,,,long opinion news report; no disease
+5813c80802467448,full,clean,,,,clean news article
+dd9112736c5e2d9a,full,fix,G2;C1,ಲಾಕ್ಡೌನ್ at offset 0 | First Published at offset 64,3 U+0CCD KANNADA SIGN VIRAMA | 4 U+0CA1 KANNADA LETTER DDA,English publish-date line; lost ZWNJ
+4f5e27bef0a40d11,full,drop,G2;D4;C1,ರೋಬೋಟ್ನ at offset 106 | ಜಂಟಿ ವಿಭಿನ್ನ at offset 282 | ದಯವಿಟ್ಟು ನಮ್ಮನ್ನು at offset 1257,111 U+0CCD KANNADA SIGN VIRAMA | 112 U+0CA8 KANNADA LETTER NA,machine-translated manufacturer product page with sales CTA
+bc2c40a34ef0d872,full,fix,C1;C5;G2,Don't Miss! at offset 0 | - Education at offset 12 | ಒನ್ಪ್ಲಸ್ at offset 428,432 U+0CCD KANNADA SIGN VIRAMA | 433 U+0CB2 KANNADA LETTER LA,"Don't Miss headline block, read-more chrome; ZWNJ conjuncts"
+442de0ddbdf11639,full,fix,A6,ಪೆÇಲೀಸ್ at offset 69,71 U+00C7 LATIN CAPITAL LETTER C WITH CEDILLA,legacy-font damage in police word (6x)
+4e963c8aaa033a06,full,fix,C1;G2,Updated: Thursday at offset 66 | ಸ್ಯಾಂಡಲ್ವುಡ್ನ at offset 203,214 U+0CCD KANNADA SIGN VIRAMA | 215 U+0CA8 KANNADA LETTER NA,"English update-date line, share call-to-action; lost ZWNJ"
+143f8884e471fbbd,full,fix,C1;G2,Team Udayavani at offset 36 | ಮೊಬೈಲ್ನಲ್ಲಿ at offset 193,201 U+0CCD KANNADA SIGN VIRAMA | 202 U+0CB2 KANNADA LETTER LA,English byline; loanword conjuncts lack ZWNJ
+81ab9728476fadf9,full,fix,C1;C5;D3;G2,Don't Miss! at offset 0 | - Lifestyle at offset 12 | Father's Day 2021 Essay at offset 183 | ಬ್ಯಾಂಕ್ನಲ್ಲಿ at offset 293,302 U+0CCD KANNADA SIGN VIRAMA | 303 U+0CB2 KANNADA LETTER LA,Don't Miss headline menu with English section labels
+542d4de5eec80552,full,fix,G2,ಕೋರ್ಟ್ಗೆ at offset 223,228 U+0CCD KANNADA SIGN VIRAMA | 229 U+0C97 KANNADA LETTER GA,ZWNJ loss; stray open paren where a token was dropped
+7499824ba12d1b42,full,fix,C1;C5;G2;D3,Don't Miss! at offset 0 | - News at offset 12 | ನ್ಯೂಜಿಲೆಂಡ್ನ at offset 114 | Summer Solstice 2021 Date at offset 147,124 U+0CCD KANNADA SIGN VIRAMA | 125 U+0CA8 KANNADA LETTER NA,Don't Miss headline menu with English section labels
+12a2d2bb8dcd73f9,full,fix,G2,ಬೆಡ್ಗಳನ್ನು at offset 643,650 U+0CCD KANNADA SIGN VIRAMA | 651 U+0CA8 KANNADA LETTER NA,Loanword+suffix conjuncts lack ZWNJ
+f6424a9b8069d91e,full,drop,D4,ನೀವು ಗೊತ್ತು ಮಾಡಿದ ಈಡನ್ನು ದೇವರ ಸೇವೆಗೆ ನೇಮಕವಾದ ಇಪ್ಪತ್ತು ಗೇರಾ ತೂಕದ at offset 2780,,Poorly translated Bible text
+b2a91bad9f6b6bad,full,clean,,,,Local council news; no disease
+8d0e98612b179f2a,full,fix,G2,ಸೆಂಟರ್ಗೆ at offset 31,36 U+0CCD KANNADA SIGN VIRAMA | 37 U+0C97 KANNADA LETTER GA,"Legacy-font reph misorder (ಸಾಮಥ್ರ್ಯ, ನಿದೇರ್ಶಕ); ZWNJ conjuncts"
+b4d86703c9dc2042,full,fix,G2,ಕೋವಿಡ್ನ್ನು at offset 426,433 U+0CCD KANNADA SIGN VIRAMA | 434 U+0CA8 KANNADA LETTER NA,loanword+suffix conjunct without ZWNJ
+33c11bf1e1f046c5,full,fix,G2,ಟಿಕಾಯತ್ಗೆ at offset 17,23 U+0CCD KANNADA SIGN VIRAMA | 24 U+0C97 KANNADA LETTER GA,lost ZWNJ in name+suffix
+83454d018b62efb7,full,fix,C1;C5;G2;D3,Don't Miss! at offset 0 | - Lifestyle at offset 12 | ಲಾಹಿರ್ಗೆ at offset 169 | School Reopening : at offset 281,174 U+0CCD KANNADA SIGN VIRAMA | 175 U+0C97 KANNADA LETTER GA,Film news with 'Don't Miss' headline-link block at top
+103ab680a7809f88,full,fix,C1;C5;G2;D3,Don't Miss! at offset 0 | - News at offset 12 | ಲಾಹಿರ್ಗೆ at offset 98 | School Reopening at offset 210,103 U+0CCD KANNADA SIGN VIRAMA | 104 U+0C97 KANNADA LETTER GA,Don't Miss headline menu with English section labels
+257300b25a37b8a3,full,fix,G2;C1,ಹೈಕೋರ್ಟ್ಗೂ at offset 799 | ನ್ಯೂಸ್ 13 ಸಮಾಜದ at offset 858,806 U+0CCD KANNADA SIGN VIRAMA | 807 U+0C97 KANNADA LETTER GA,Kannada + English site appeal footer (shared with other docs)
+9bbd16758b6866b9,full,fix,C3,ಇದು ಗೊತ್ತಾದ at offset 0,,text starts mid-story (lead paragraph missing)
+253296bc172a8cdf,full,fix,C1;G1,Team Udayavani at offset 29 | ಜಿಲ್ಲಾಧಿ ಕಾರಿ at offset 435,443 U+0020 SPACE,Space split between syllables; News with English byline; many words glued (lost spaces) and stray spaces inside words; ಮತ್ತೂಂದೆಡೆ font artefact
+ac9e11758c1a22ac,full,fix,C1;A6,Team Udayavani at offset 16 | ಕರುಣಾದ್ರì at offset 375,383 U+00EC LATIN SMALL LETTER I WITH GRAVE,"English byline; legacy-font damage (ಕರುಣಾದ್ರì, ಮತ್ತೂಂದು, mismatched quotes)"
+cd7846dc629d1d77,full,fix,G2;C1,ಲಾಕ್ಡೌನ್ at offset 41 | ಕೋವಿಡ್ ವಿರುದ್ಧದ ಹೋರಾಟಕ್ಕೆ at offset 798,44 U+0CCD KANNADA SIGN VIRAMA | 45 U+0CA1 KANNADA LETTER DDA,Inline related-article headline inserted mid-text; ZWNJ conjuncts
+fad385fd0709d427,full,clean,,,,Official flying-squad appointment notice; no disease found
+4c0627dd25898713,full,fix,C1,error: Content is protected at offset 667,,copy-protection notice at end; lost ZWNJ
+4171f8122769b2ca,full,fix,C1;C5;G2,"- Tag results for at offset 0 | ಆಗಸ್ಟ್ 28, 29ಕ್ಕೆ at offset 24 | ಕೋರ್ಸ್ಗಳಿಗೆ at offset 149",154 U+0CCD KANNADA SIGN VIRAMA | 155 U+0C97 KANNADA LETTER GA,Tag-results page: header plus list of unrelated headline/teaser pairs
+ed50a1d4e8c8d866,full,fix,G2;C1,ಕ್ರೆಸ್ಟ್ಗೇಟ್ at offset 1927 | Last Updated at offset 2965,1934 U+0CCD KANNADA SIGN VIRAMA | 1935 U+0C97 KANNADA LETTER GA,lede repeated as first body line; English timestamp footer; loanword conjunct
+0e6c477542b7b20f,full,clean,,,,News; no disease
+3aef2434dcb83f67,full,fix,G2;C2;C1,ಬಾಲಿವುಡ್ನ at offset 0 | ಬಾಲಿವುಡ್ನ ಯುವ ನಟ at offset 187 | Last Updated at offset 1522,7 U+0CCD KANNADA SIGN VIRAMA | 8 U+0CA8 KANNADA LETTER NA,teaser sentence repeated as article opening; English 'Last Updated' footer
+d4abec56d292b564,full,drop,C1;C5;D3;G2,Don't Miss! at offset 0 | - Sports ಟೋಕಿಯೋ at offset 12 | List Of Important Days at offset 152 | ಟೀಸರ್ಗೆ at offset 790,794 U+0CCD KANNADA SIGN VIRAMA | 795 U+0C97 KANNADA LETTER GA,Poor quality news
+02e678117040ceae,full,fix,D3;G2,(Achievers) at offset 100 | ಪಾಸ್ಪೋರ್ಟ್ at offset 516,523 U+0CCD KANNADA SIGN VIRAMA | 524 U+0C9F KANNADA LETTER TTA,English glosses in parentheses; ZWNJ-less loanword conjuncts
+61d2e6fc6d32cf31,full,fix,G2;C1;D3,ಲಾಕ್ಡೌನ್ at offset 308 | ಸೂಚನೆ: ಕೊರೋನಾ at offset 2562 | #ANCares at offset 2763,311 U+0CCD KANNADA SIGN VIRAMA | 312 U+0CA1 KANNADA LETTER DDA,site corona notice + hashtags + timestamp footer shared with other docs; loanword conjunct
+eaebd26f56ca9189,full,fix,C1;C5;G2,"- Tag results for at offset 0 | ಯುವ ಸಮೂಹಕ್ಕೆ ಉದ್ಯೋಗ, ಹೊಸ at offset 771 | ಬಜೆಟ್ನಲ್ಲಿ at offset 2286",2293 U+0CCD KANNADA SIGN VIRAMA | 2294 U+0CB2 KANNADA LETTER LA,"Tag-results page: concatenated article teasers on one topic, one cut with ellipsis"
+222e4fa388bcc1fc,full,clean,,,,Mostly clean
+dd2729d522a08c58,full,fix,G2;C1,ವೈರಸ್ನ at offset 212 | ಸೂಚನೆ: ಕೊರೋನಾ at offset 2027,216 U+0CCD KANNADA SIGN VIRAMA | 217 U+0CA8 KANNADA LETTER NA,"site COVID notice with hashtags and update line; lost ZWNJ; also font-conversion errors (ಆಸ್ಪ್ರೇಲಿಯಾ, fused words) not covered by a code"
+157858cf4ee0e60b,full,fix,C1;C5;D3;G2,Just In at offset 0 | - Education Class at offset 20 | Class 12 Results By July at offset 32 | ಚಾನೆಲ್ನಲ್ಲಿ at offset 954,962 U+0CCD KANNADA SIGN VIRAMA | 963 U+0CB2 KANNADA LETTER LA,'Just In / Don't Miss' cross-site headline block with English category labels (shared with doc 304 etc.); loanword conjuncts
+4d34a1a3048e4e7d,full,clean,,,,"Capsicum health-tips article; one paragraph repeated three times; overstated health claims, typos"
+4bca14f5b27788ec,full,fix,C1;C5;G2;D3,Don't Miss! at offset 0 | - Finance at offset 12 | ರಬ್ಬರ್ನ at offset 46 | WTC Final at offset 235,51 U+0CCD KANNADA SIGN VIRAMA | 52 U+0CA8 KANNADA LETTER NA,Don't Miss headline block with English section labels before article
+99aef15a39ddc21c,full,clean,,,,Clean news; phone numbers are a hospital helpline (organisation)
+a4736d995702ca5e,full,fix,C1;G2,"February 24, 2021 at offset 0 | ಗುಜರಾತ್ನ at offset 87",93 U+0CCD KANNADA SIGN VIRAMA | 94 U+0CA8 KANNADA LETTER NA,date line at top; lost ZWNJ
+4f9fa594568afaeb,full,fix,C1;G2,ಹೈಲೈಟ್ಸ್: at offset 0 | ಬಾಕ್ಸ್ಗೆ at offset 984,989 U+0CCD KANNADA SIGN VIRAMA | 990 U+0C97 KANNADA LETTER GA,News with highlights box and inline related-article headlines
+c4b885b9f57786aa,full,fix,G2;C1;D3,ಫ್ರಾನ್ಸ್ನ at offset 358 | ಇದನ್ನು ಓದಿ: at offset 1414 | Bousignies-sur-Roc at offset 2013,365 U+0CCD KANNADA SIGN VIRAMA | 366 U+0CA8 KANNADA LETTER NA,Quirky world news; inline read-also link to unrelated story; lost ZWNJ; Latin place name
+4ca6103d6b8e1d9c,full,fix,C1;C5;G2,Don't Miss! at offset 0 | - Sports WTC at offset 12 | ಒನ್ಪ್ಲಸ್ at offset 479,483 U+0CCD KANNADA SIGN VIRAMA | 484 U+0CB2 KANNADA LETTER LA,English-labelled headline menu before article; lost ZWNJ
+01889f08ad435afa,full,drop,C1;D4;F3,Updated: Thursday at offset 91 | ಧೈಯಾ ಅವರಿಂದ at offset 512 | ಶತ್ರುನಾಶ at offset 4034,,update-date line; embedded tantrik/black-magic ad blocks with advertiser phone (not personal); Hindi-translated astrology with MT slips
+68a58a3516ddc311,full,fix,G2;A6,ಲಾಕ್ಡೌನ್ನಿಂದ at offset 16 | Sಖಿಇಒ at offset 902,23 U+0CCD KANNADA SIGN VIRAMA | 24 U+0CA8 KANNADA LETTER NA | 902 U+0053 LATIN CAPITAL LETTER S,legacy-font garbled acronym; loanword+suffix conjuncts
+aa2a3e5196ee932e,full,drop,G2;D4;C1,ಲ್ಯಾಥ್ಗೆ at offset 825 | ನೀರಸವನ್ನು ತಿರುಗಿಸಲು at offset 3133 | ಯಾವುದೇ ಪ್ರಶ್ನೆಗಳು at offset 11833,830 U+0CCD KANNADA SIGN VIRAMA | 831 U+0C97 KANNADA LETTER GA,"machine-translated vendor page (lathe='car', boring='dull'); link anchors glued to words; contact-us closer"
+be63218c2e86f102,full,fix,G2;C1;C5;C2,ಕ್ಲಿನಿಕ್ನಲ್ಲಿ at offset 1803 | Team Udayavani at offset 68 | ಟಾಪ್ ನ್ಯೂಸ್ at offset 1688 | ಸರಕಾರಿ ಕೆಲಸಕ್ಕೆ ಗೈರಾಗಿ at offset 1948,1813 U+0CCD KANNADA SIGN VIRAMA | 1814 U+0CB2 KANNADA LETTER LA,News followed by Top News / more-from-section headline lists with repeats
+6e1a88a59564310c,full,fix,C1;G1;C3,ಇದನ್ನೂ ಓದಿ: at offset 490 | ಸಮೀಕ್ಷೆ ಗಳು at offset 2119 | ಉತ್ತರ ಇಲ್ಲಿದ at offset 2638,2126 U+0020 SPACE,"Space split between syllables; inline read-also links, last one cut mid-word; lost ZWNJ; stray space in one word"
+747ec153383df499,full,clean,,,,clean news article
+0bc105464a1dbdf3,full,drop,C1;C2;G2;D4;A6,#ಕನ್ನಡ_ನ್ಯೂಸ್ at offset 45 | ಫೋಟೋ: ಪೋಲಿನಾ at offset 486 | ಕಿಲೋಮೀಟರ್ಗಿಂತ at offset 615 | ಒಣಹುಲ್ಲಿನನ್ನು at offset 2041 | ಶೀತ in ತುವಿನಲ್ಲಿ at offset 3142,623 U+0CCD KANNADA SIGN VIRAMA | 624 U+0C97 KANNADA LETTER GA | 3146 U+0069 LATIN SMALL LETTER I,machine-translated (from Russian) shopping listicle; Latin fragments inside words; repeated photo credits/buy lines; stray video title
+c8a7ca6a53ccff5d,full,clean,,,,"opinion/news piece, no disease"
+df48794014efda77,full,fix,A6;C1;C2;D3;C5;G2,ಸ0ಶೋಧನೆ at offset 4648 | ಟಾಪ್ ನ್ಯೂಸ್ at offset 4917 | ಯುವಕನ ಕೊಲೆ ಮಾಡಿ at offset 4929 | MUST WATCH at offset 5543 | ಹೊಸ ಸೇರ್ಪಡೆ at offset 5554 | ಆನ್ಲೈನ್ at offset 5687,4649 U+0030 DIGIT ZERO | 5689 U+0CCD KANNADA SIGN VIRAMA | 5690 U+0CB2 KANNADA LETTER LA,related-news link lists with repeats after article; digit zero used as anusvara
+4b96d25d4ed91f35,full,fix,C2;G2,ಮಚ್ಚಿ ಬಜಾರ್ ಅಗಲೀಕರಣ : at offset 0 | ಖಂದೀಲ್ನಿಂದ at offset 315,320 U+0CCD KANNADA SIGN VIRAMA | 321 U+0CA8 KANNADA LETTER NA,Headline repeated at end; ZWNJ conjunct
+2a971489e8068e9c,full,clean,,,,"Folk tale in dialect from govt archive, narrator credit at end; no disease found"
+623eb2c9337edaa4,full,clean,,,,Political protest news (reported speech); no disease found
+3ece71cef29bb443,full,drop,C1;F3;D4,"ಸೈನ್ ಅಪ್ at offset 0 | ಜನನಾಂಗಗಳ at offset 112 | ಉಳಿದ ನಗರದ, ಅಥವಾ at offset 318",,"machine-generated adult dating spam, word salad"
+01d6ffed9cb6be54,full,fix,G2;C1,ಡಯಾಲಿಸಿಸ್ಗೆ at offset 221 | Advertisement at offset 477,229 U+0CCD KANNADA SIGN VIRAMA | 230 U+0C97 KANNADA LETTER GA,Advertisement line mid-article; ZWNJ loss
+a942f2e7c4f748cc,full,fix,C1;C5;G2,Don't Miss! at offset 0 | - News ಭಾರತೀಯ at offset 12 | ಬ್ಯಾಂಕ್ನಲ್ಲಿ at offset 189,198 U+0CCD KANNADA SIGN VIRAMA | 199 U+0CB2 KANNADA LETTER LA,English-labelled headline menu before article; lost ZWNJ
+50e735d7660bf094,full,fix,G2,ಲಾಕ್ಡೌನ್ at offset 42,45 U+0CCD KANNADA SIGN VIRAMA | 46 U+0CA1 KANNADA LETTER DDA,"News; ZWNJ-less loanword conjuncts (ಲಾಕ್ಡೌನ್, ಶಾಪ್ನಲ್ಲಿ)"
+8e09de3a64fd97da,full,fix,G2;D3,ಡಿಸೆಂಬರ್ನಲ್ಲೇ at offset 168 | (Siddaramaiah Takes at offset 299,178 U+0CCD KANNADA SIGN VIRAMA | 179 U+0CB2 KANNADA LETTER LA,English title line in parentheses after Kannada text; ZWNJ conjunct
+32d502f71c82e723,full,fix,G1;C1,ಹೇಳಿ ದರು at offset 426 | ಬ್ಯೂರೋ ನ್ಯೂಸ್. at offset 663,430 U+0020 SPACE,Space split between syllables; reporter/bureau sign-off lines; stray space in word
+c9affeb711a678f0,full,fix,C1;C5;G2,Just In at offset 0 | - Movies at offset 20 | ಮೋಟಾರ್ಸೈಕಲ್ at offset 585,590 U+0CCD KANNADA SIGN VIRAMA | 591 U+0CB8 KANNADA LETTER SA,English 'Just In/Don't Miss' header with headline-link list (shared with other docs) before article; ZWNJ-less conjuncts
+e4e9b0d90c270455,full,fix,G2,ಸಂತೋಷ್ನ at offset 720,725 U+0CCD KANNADA SIGN VIRAMA | 726 U+0CA8 KANNADA LETTER NA,ZWNJ loss in name+suffix
+c0e007b83d802bb8,full,fix,G1;C1,ಇರುವುದ ರಿಂದ at offset 269 | SUDDINOW APP at offset 1080,275 U+0020 SPACE,Space split between syllables; Minister news; app-download footer with URL; stray space splitting a word
+23aeaad8ca5c718e,full,fix,G2;C1;D3,ಆನಂದ್ಗೆ at offset 513 | ಸೂಚನೆ: ಕೊರೋನಾ at offset 1969 | #ANCares at offset 2170,517 U+0CCD KANNADA SIGN VIRAMA | 518 U+0C97 KANNADA LETTER GA,Covid hospital tragedy news; site advisory with hashtags and English Last Updated footer; lost ZWNJ
+04753e3d473ad91a,full,fix,G1,ಇನ್ಸ್ ಟಿಟ್ಯೂಟ್ at offset 167,172 U+0020 SPACE,Space split between syllables; loanword split by stray space after virama
+0537483bd1f755e0,full,clean,,,,"short local news, no disease"
+5ed388ce5245021e,full,fix,G2,ಪಂಚಾಯತ್ನ at offset 110,116 U+0CCD KANNADA SIGN VIRAMA | 117 U+0CA8 KANNADA LETTER NA,loanword+suffix conjuncts
+dffe49981dfa3613,full,drop,C1;C5;G2,Don't Miss! at offset 0 | - News at offset 12 | ಒನ್ಪ್ಲಸ್ at offset 487,491 U+0CCD KANNADA SIGN VIRAMA | 492 U+0CB2 KANNADA LETTER LA,Poor quality document
+dbcaf8dd9e7cf06a,full,fix,G2,ಸೆಂಟರ್ಗಳು at offset 255,260 U+0CCD KANNADA SIGN VIRAMA | 261 U+0C97 KANNADA LETTER GA,"News; ZWNJ-less loanword conjuncts (ಸೆಂಟರ್ಗಳು, ಲ್ಯಾಬ್ಗಳು)"
+ac5101104f542d60,full,fix,C1,(AZM) at offset 9,,Latin agency tag in dateline
+fefc5edcf4c39862,full,fix,G2;C1,ಕೋರ್ಟ್ಗೆ at offset 475 | ನ್ಯೂಸ್ 13 ಸಮಾಜದ at offset 1682,480 U+0CCD KANNADA SIGN VIRAMA | 481 U+0C97 KANNADA LETTER GA,Site promo footer in Kannada and English after article; ZWNJ-less conjuncts
+347ea0f2d927c580,full,fix,D3;G2,Koppal: at offset 0 | ಮೇಜರ್ನ್ನಾಗಿ at offset 174,180 U+0CCD KANNADA SIGN VIRAMA | 181 U+0CA8 KANNADA LETTER NA,Latin-script dateline; loanword+suffix conjuncts missing ZWNJ
+de763b69460fcb56,full,drop,D5;G2;D4,ನನ್ನನ್ನು ಕಂಪ್ಯೂಟರ್ ಮುಂದೆ at offset 76 | ಸಿಂಡ್ರೋಮ್ಗೆ at offset 328 | ಇಲಿಯನ್ನು at offset 513,336 U+0CCD KANNADA SIGN VIRAMA | 337 U+0C97 KANNADA LETTER GA,"Machine-translated marketing blog (mouse rendered as rat, literal phrasing); ZWNJ conjuncts"
+24fddf2ce16a4b54,full,drop,C1;C5;C2;G2,Team Udayavani at offset 171 | ಟಾಪ್ ನ್ಯೂಸ್ at offset 1107 | ಮೂಗಿನಲ್ಲೇ ಟೈಪ್ at offset 1119 | ಡ್ರೋಣ್ನಲ್ಲಿ at offset 1284,1292 U+0CCD KANNADA SIGN VIRAMA | 1293 U+0CB2 KANNADA LETTER LA,Poor quality
+e3fa72efee1bf62b,full,clean,,,,clean news article
+a701f2b6d7e7c7bd,full,fix,G2;C4,ಅಫಿಡವಿಟ್ನಲ್ಲಿ at offset 209 | ದುರುದ್ದೇಶದಿಂದ ಭಾರತೀಯ at offset 1163,219 U+0CCD KANNADA SIGN VIRAMA | 220 U+0CB2 KANNADA LETTER LA,legal news roundup: separate stories run together with headings stripped; loanword+suffix conjuncts
+0284835ce3b73c2b,full,fix,C1;C5;D3;G2,Don't Miss! at offset 0 | - News at offset 12 | Famous Yoga Gurus at offset 88 | ಆರ್ಡರ್ಗೆ at offset 518,523 U+0CCD KANNADA SIGN VIRAMA | 524 U+0C97 KANNADA LETTER GA,"'Don't Miss' cross-site headline block with English labels; FMನ is a natural abbreviation+suffix, not font damage"
+87f73bb696b0bb4f,full,drop,C1;C5;D3;G2,Don't Miss! at offset 0 | - News at offset 12 | Famous Yoga Gurus at offset 88 | ಒನ್ಪ್ಲಸ್ at offset 467,471 U+0CCD KANNADA SIGN VIRAMA | 472 U+0CB2 KANNADA LETTER LA,Poor quality doc
+581a9bb7ad6f9611,full,fix,C1;C5;G2,Don't Miss! at offset 0 | - Automobiles at offset 12 | ಫೈನಲ್ಗೆ at offset 86,90 U+0CCD KANNADA SIGN VIRAMA | 91 U+0C97 KANNADA LETTER GA,English-labelled headline menu before article; lost ZWNJ
+7ef3c10dbc26ebbe,full,fix,G2,ಐಷೋಲೇಶನ್ಲ್ಲಿ at offset 426,435 U+0CCD KANNADA SIGN VIRAMA | 436 U+0CB2 KANNADA LETTER LA,Loanword+suffix conjunct lacks ZWNJ
+f82c8b32441571c8,full,fix,C1,Last Updated at offset 1797,,English timestamp footer
+360c5ee2ea4493b9,full,fix,C1;G2;G1,Team Udayavani at offset 40 | ಬಂಕ್ನಿಂದ at offset 493 | ಪೆಟ್ರೋಲಿ ಯಂ at offset 502,496 U+0CCD KANNADA SIGN VIRAMA | 497 U+0CA8 KANNADA LETTER NA | 510 U+0020 SPACE,Space split between syllables; English byline; stray spaces inside words; ZWNJ conjuncts
+2ec213c19c5a1455,full,fix,G2;D3;C1,ವ್ಯಾಕ್ಸಿನ್ಗಾಗಿ at offset 81 | appeared first on at offset 1573 | Source: publictv.in at offset 1602,90 U+0CCD KANNADA SIGN VIRAMA | 91 U+0C97 KANNADA LETTER GA,aggregator footer 'The post ... appeared first on' + source lines
+2ab359864e25e4ea,full,fix,G2;C1;D3,ಎಪಿಸೋಡ್ಗಳನ್ನ at offset 41 | ಇದನ್ನೂ ಓದಿ: at offset 546 | appeared first on at offset 2213,51 U+0CCD KANNADA SIGN VIRAMA | 52 U+0CA8 KANNADA LETTER NA,read-also links and aggregator English footer
+e4ec94fc553373c0,full,fix,C1,The post at offset 2430,,Syndicated news with English 'The post appeared first on' / source footer
+60cc5fdd6d75454a,full,fix,G2;C1,ಕಾಂಗ್ರೆಸ್ನ at offset 176 | The post 5 Star at offset 1470,184 U+0CCD KANNADA SIGN VIRAMA | 185 U+0CA8 KANNADA LETTER NA,Reposted article with English 'The post ... appeared first' / Source link footer; ZWNJ conjuncts
+cf3fa1165e040a29,full,fix,G2,ಟ್ರಸ್ಟ್ನಿಂದ at offset 13,19 U+0CCD KANNADA SIGN VIRAMA | 20 U+0CA8 KANNADA LETTER NA,loanword+suffix conjuncts without ZWNJ
+b36cc8f8251e96c8,full,clean,,,,Clean crime news report
+60dc775fd418bc15,full,fix,G1,ವಿಜ್ಞಾ ನವು at offset 1408,1414 U+0020 SPACE,Space split between syllables; stray space inside a word
+07aa676d37748d29,full,fix,G2;D3,ಪ್ಲಸ್ನೊಂದಿಗೆ at offset 442 | IOMಗಳಲ್ಲಿ at offset 674,446 U+0CCD KANNADA SIGN VIRAMA | 447 U+0CA8 KANNADA LETTER NA,"EV scooter launch PR; Latin acronyms/units in Kannada sentences (acronym+suffix, not font damage); lost ZWNJ"
+fa951c200eac04e4,full,fix,C1;C5;G2,Don't Miss! at offset 0 | - Automobiles at offset 12 | ವ್ಹೀಲ್ಗಳ at offset 47,52 U+0CCD KANNADA SIGN VIRAMA | 53 U+0C97 KANNADA LETTER GA,Don't Miss headline block; ZWNJ conjuncts
+a2de22174cc7fd60,full,fix,C1;C5;G2,Just In at offset 0 | - News at offset 20 | ಫೋಕ್ಸ್ವ್ಯಾಗನ್ at offset 651,658 U+0CCD KANNADA SIGN VIRAMA | 659 U+0CAF KANNADA LETTER YA,Just In / Don't Miss headline block; ZWNJ conjuncts
+037dd826b84f6f32,full,fix,C1;C5;G2,Don't Miss! at offset 0 | - Finance at offset 12 | ಫುಟ್ಪಾತ್ at offset 338,341 U+0CCD KANNADA SIGN VIRAMA | 342 U+0CAA KANNADA LETTER PA,"Don't Miss headline block; ZWNJ conjuncts; assault reported as news, not F3"
+0f52e8c63e977510,full,fix,C2;G2;G1;C1,ಎಲ್ಲ ಶೋಷಣೆಗಳೂ ಸುಳ್ಳುಗಳೂ at offset 23 | ಲಾಕ್ಡೌನ್ at offset 950 | ಪ್ರಕಟನೆೆ at offset 1339 | ‘ವಾರ್ತಾ ಭಾರತಿ’ ನಿಮಗೆ at offset 8467,953 U+0CCD KANNADA SIGN VIRAMA | 954 U+0CA1 KANNADA LETTER DDA | 1346 U+0CC6 KANNADA VOWEL SIGN E,pull-quote paragraph repeated in body; donation appeal footer; lost ZWNJ; one doubled vowel sign
+cf857d7589a9d5c1,full,fix,C1,ವರದಿ: at offset 1626,,reporter byline at end
+bafe29d8add27a01,full,fix,C1;C4,ಜಾಹಿರಾತು : at offset 1177 | ವಶೀಕರಣ ಮಹಾ ಮಾಂತ್ರಿಕರು at offset 1304,,news piece followed by black-magic/vashikarana advert with advertiser phone (not personal)
+ea24c30c80be30df,full,fix,C1,ಜಾಹಿರಾತು: at offset 1109,,"URLs appended after news (advertiser numbers, not F1); "
+7bc32a1556889e0d,full,fix,C1,"Miss U, Hug U at offset 326",,"literary essay; natural English phrases in Latin; 'ಮತ್ತೇsss' is deliberate elongation, not font damage"
+8c9f555fa0e46669,full,fix,C1,"(ಏಜೆನ್ಸೀಸ್, at offset 812",,lost ZWNJ in place name
+81806c4cf9c6b80c,full,fix,G2;D5,ಜೀನ್ಸ್ಕಾರಣವಾಗಿದೆ at offset 806 | ಪುನರಾವರ್ತನೆಯಾದಾಗ ಮತ್ತು ಮುಚ್ಚಿದಾಗ at offset 901,811 U+0CCD KANNADA SIGN VIRAMA | 812 U+0C95 KANNADA LETTER KA,headline calls a genetic syndrome an infection (misleading health claim); translationese; virama run-on
+41e3f29081e4f589,full,fix,G2;D5;C1,ಕೋವಿಡ್ಗೆ at offset 23 | ನಮಗೆ ಸಮಯದ ಅವಶ್ಯಕತೆ at offset 919 | (ಒನ್ಇಂಡಿಯಾ ಸುದ್ದಿ) at offset 2117,28 U+0CCD KANNADA SIGN VIRAMA | 29 U+0C97 KANNADA LETTER GA,translated science news with literal phrasing; source credit line at end; loanword conjuncts
+39d902703f233992,full,fix,C2;G2,ಬೆಂಗಳೂರು: ಬೋಯಿಂಗ್ at offset 0 | ಫೌಡೇಶನ್ಗೆ at offset 617,623 U+0CCD KANNADA SIGN VIRAMA | 624 U+0C97 KANNADA LETTER GA,Lead sentence repeated at end; ZWNJ conjuncts
+677fc8198e4bdac7,full,fix,C1;G2,ER NEWS at offset 0 | ವಡ್ನಗರ್ನ at offset 51,57 U+0CCD KANNADA SIGN VIRAMA | 58 U+0CA8 KANNADA LETTER NA,site label line at top; ZWNJ loss
+9186281d6d5c51b2,full,fix,C1,ಇದನ್ನೂ ಓದಿ: at offset 312,,Drowning news with inline read-also links to unrelated stories
+642195b586e65b19,full,fix,G2;C4,ಹಾಂಕಾಂಗ್ಗೆ at offset 147 | ಡ್ರ್ಯಾಗನ್ ಮುಸುಡಿಗೆ at offset 249,154 U+0CCD KANNADA SIGN VIRAMA | 155 U+0C97 KANNADA LETTER GA,World news with inserted related-article headlines; lost ZWNJ
+b2c2228fed0d673d,full,fix,G2,ಡಾಲರ್ಗೂ at offset 875,879 U+0CCD KANNADA SIGN VIRAMA | 880 U+0C97 KANNADA LETTER GA,lost ZWNJ in loanword+suffix
+7c1f12f761dd4395,full,fix,C1;C5;G2;D3,Just In at offset 0 | - News at offset 20 | ಐಸೋಲೇಶನ್ನಲ್ಲಿದ್ದ at offset 112 | World Nature Conservation at offset 172,126 U+0CCD KANNADA SIGN VIRAMA | 127 U+0CA6 KANNADA LETTER DA,Just In / Don't Miss headline menu
+4a2b2bc6ca58335a,full,fix,C1;C5;D3;G2,Don't Miss! at offset 0 | - News at offset 12 | World Nature Conservation at offset 188 | ಸಿಲಿಂಡರ್ಗಳು at offset 707,714 U+0CCD KANNADA SIGN VIRAMA | 715 U+0C97 KANNADA LETTER GA,'Don't Miss' cross-site headline block with English labels; loanword conjuncts
+c8767cdb729a6cc2,full,fix,G2,ಇನ್ಸ್ಟಾಗ್ರಾಮ್ನಲ್ಲಿ at offset 110,125 U+0CCD KANNADA SIGN VIRAMA | 126 U+0CB2 KANNADA LETTER LA,Loanword+suffix conjuncts lack ZWNJ
+5a22566fc782e7fe,full,drop,C1;C5;G2,Don't Miss! at offset 0 | - Sports ಈಜಿನಲ್ಲಿ at offset 12 | ಒನ್ಪ್ಲಸ್ at offset 521,525 U+0CCD KANNADA SIGN VIRAMA | 526 U+0CB2 KANNADA LETTER LA,Poor quality document
+fb87bb28b77e715a,full,fix,G2;C1;D3,ವೆಬ್ಸೈಟ್ at offset 290 | ನ್ಯೂಸ್ 13 ಸಮಾಜದ at offset 1005 | News13 strives at offset 1224,293 U+0CCD KANNADA SIGN VIRAMA | 294 U+0CB8 KANNADA LETTER SA,Site mission footer in Kannada and English; ZWNJ conjuncts
+1ac89ecc2c2b0107,full,drop,D4;D3;C5;G2,ನೀವು ಉತ್ತಮವಾಗಿ ಹುಡುಕುತ್ತಿದ್ದೀರಾ at offset 35 | Neo Blythe doll tools at offset 146 | ಗ್ರಾಹಕೀಕರಣಗಳು ಬ್ಲೈಥ್ ಉಪಕರಣಗಳು at offset 563 | ಪ್ಲ್ಯಾಟ್ಫಾರ್ಮ್ನಲ್ಲಿ at offset 2239,2255 U+0CCD KANNADA SIGN VIRAMA | 2256 U+0CB2 KANNADA LETTER LA,"half-machine-translated SEO shop page, English sentences left untranslated, keyword stuffing"
+7ae96e0c9d17cf41,full,drop,C2;C4;G2;A6;C5;C1,ಸುದ್ದಿದಿನ.ಕಾಂ at offset 7583 | ಗ್ರಾಮ ಪಂಚಾಯತಿಗಳಲ್ಲಿ ಪಕ್ಷ at offset 7617 | ಪಂಚಾಯತ್ರಾಜ್ at offset 7914 | ಸಾಮಥ್ರ್ಯ at offset 13496 | Trending at offset 17720 | 7 days ago at offset 17743,7920 U+0CCD KANNADA SIGN VIRAMA | 7921 U+0CB0 KANNADA LETTER RA | 13501 U+0CB0 KANNADA LETTER RA,"Too many items in same doc. Op-ed plus 3 unrelated news items joined by repeated site WhatsApp line (news-site number, not F1); Trending link list with 'days ago' chrome at end; legacy reph order ಸಾಮಥ್ರ್ಯ"
+6fcd915dfa4cada4,full,drop,G2;D4,ಆಪಲ್ಕೇರ್ at offset 240 | ಎರಡು ವರ್ಷ ವಯಸ್ಸಿನವನಾಗಿದ್ದಾಗ at offset 1354,243 U+0CCD KANNADA SIGN VIRAMA | 244 U+0C95 KANNADA LETTER KA,"Machine-translated (from Spanish) tech blog, wrong meanings e.g. 'hired him' for subscribed; ZWNJ-less conjuncts"
+6c50135a902d681d,full,fix,D3;G2;C1,R. ಅಶೋಕ್ at offset 142 | ಬೆಡ್ಗಳ at offset 383 | The post at offset 759,386 U+0CCD KANNADA SIGN VIRAMA | 387 U+0C97 KANNADA LETTER GA,"aggregator repost footer 'The post ... appeared first on', Source link; Latin abbreviations in prose"
+45a5878dac6d5576,full,fix,C1;G2,ಹೈಲೈಟ್ಸ್: at offset 0 | ವಾರ್ಡ್ನಲ್ಲಿ at offset 1157,1165 U+0CCD KANNADA SIGN VIRAMA | 1166 U+0CB2 KANNADA LETTER LA,News with highlights box at top
+80b534facd7e9e1c,full,clean,,,,Dasara inauguration press note; no disease found
+8a1a8f88760eaeb0,full,fix,C2,ಕನ್ನಡಿಗರು ನನ್ನ ಯಾಕೆ at offset 69,,"SPB tribute; pull-quote line repeated; legacy-font conversion damage (ಋು, reordered reph, lost space after ಟು)"
+9306f4087056cfc9,full,fix,G2,ವಾರ್ಡ್ನಲ್ಲಿ at offset 230,238 U+0CCD KANNADA SIGN VIRAMA | 239 U+0CB2 KANNADA LETTER LA,Loanword+suffix conjunct lacks ZWNJ
+261befd8c8ad8555,full,fix,G2;D3,ಸಿಂಗ್ರವರಿಂದ at offset 283 | (nephew) at offset 3325,287 U+0CCD KANNADA SIGN VIRAMA | 288 U+0CB0 KANNADA LETTER RA,biography; name+suffix conjuncts without ZWNJ; parenthetical English glosses
+78970b015609126d,full,fix,G2,ಅಕ್ಬರ್ಪುರ at offset 410,415 U+0CCD KANNADA SIGN VIRAMA | 416 U+0CAA KANNADA LETTER PA,"Farm article; loanword conjuncts; misordered/doubled vowel signs (ಆಗ್ದಿದರೆ, ಓದ್ದಿದು, ದ್ದೇನೆೆ)"
+a89fed30149958b2,full,clean,,,,clean news article (a few missing spaces only)
+605d66bd451a0aee,full,fix,G1;C1,ಕೋಷ್ಟಕ ದಲ್ಲಿ at offset 1811 | ‘ವಾರ್ತಾ ಭಾರತಿ’ ನಿಮಗೆ at offset 7025,1817 U+0020 SPACE,Space split between syllables; donation appeal footer; lost ZWNJ; stray spaces inside words (referenced tables missing)
+31dc3fe7dd4c2e1a,full,fix,G2,ಬಂದ್ಗೆ at offset 39,42 U+0CCD KANNADA SIGN VIRAMA | 43 U+0C97 KANNADA LETTER GA,loanword+suffix conjuncts without ZWNJ
+0133d46ad029bd26,full,drop,C5;G2;C3;D3,ಸರಿತಪ್ಪುಗಳನ್ನು at offset 0 | ಅನ್ಲಿಮಿಟೆಡ್ at offset 215 | ಕೆಲಸ […] at offset 384 | On the 2nd day at offset 796,217 U+0CCD KANNADA SIGN VIRAMA | 218 U+0CB2 KANNADA LETTER LA,"Category page: unrelated truncated excerpts, about half English; Om symbol is quoted, not A6"
+39b6ef0491a13e67,full,clean,,,,Clean news report
+c36d772e8d87a065,full,fix,G2,ಕಂಟೇನರ್ಗಳು at offset 479,485 U+0CCD KANNADA SIGN VIRAMA | 486 U+0C97 KANNADA LETTER GA,loanword+suffix conjuncts without ZWNJ
+940a1e1cfc3ce886,full,drop,F3,ಕ್ಯಾನ್ಸರ್ ಮತ್ತು ಹೃದಯಾಘಾತವನ್ನು ತಡೆಗಟ್ಟುವ at offset 1133,,health article stating peanut skin prevents cancer/heart attack as fact (mild health misinformation)
+06f5bc84c497ab74,full,drop,C1;C5;D3;G2;D4,Just In at offset 0 | - Education Friendship at offset 20 | Friendship Day Wishes at offset 32 | ಗ್ರ್ಯಾನ್ಟುರಿಸ್ಮೊವನ್ನು at offset 637 | ವ್ಹೀಲ್ ಅರ್ಚಾರ್ at offset 1582,655 U+0CCD KANNADA SIGN VIRAMA | 656 U+0CA8 KANNADA LETTER NA,'Just In/Don't Miss' cross-site headline block; sloppy translation from English car review
+a7e065f828c330a9,full,drop,C1;D3;C5;A6,Post author:admin at offset 44 | A very Happy Birthday at offset 146 | You Might Also Like at offset 271 | ಮ೦ಗಳೂರಿನ at offset 325,326 U+0CE6 KANNADA DIGIT ZERO,"Mostly English blog chrome (post meta, related list, comment form) around one-line wish; Kannada digit zero used as anusvara"
+848aef9c84b1f845,full,drop,C1;C5;D3;G2,Don't Miss! at offset 0 | - News ಭಾರತದಲ್ಲಿ at offset 12 | Today Rashi Bhavishya at offset 227 | ರಬ್ಬರ್ನ at offset 434,439 U+0CCD KANNADA SIGN VIRAMA | 440 U+0CA8 KANNADA LETTER NA,Poor.English 'Don't Miss' related-headline block at top (shared with other docs)
+985145676658d44e,full,fix,C1,ಇದನ್ನೂ ಓದಿ: at offset 476,,Syndicated news with inline read-also link and English source footer
+73b9210f6a2d6d26,full,fix,C1;G2;D3,ಇದನ್ನೂ ಓದಿ: at offset 785 | ಬ್ಲಾಕ್ಮೇಲ್ at offset 1618 | appeared first on at offset 2047,1623 U+0CCD KANNADA SIGN VIRAMA | 1624 U+0CAE KANNADA LETTER MA,"scraped republish of Public TV: inline read-also links, English RSS footer"
+779adb38b69825a1,full,fix,G2,ಭೂಪಾಲ್ನ at offset 867,872 U+0CCD KANNADA SIGN VIRAMA | 873 U+0CA8 KANNADA LETTER NA,Event news; loanword+suffix conjunct missing ZWNJ
+c62f2d2febfc1e6a,full,clean,,,,plain news prose; no disease
+411dc66b89eda4a4,full,drop,D3;C1;G2,This mentality ill at offset 506 | — TheGulbargaMirror at offset 768 | ಕುವೈತ್ನ at offset 1238,1243 U+0CCD KANNADA SIGN VIRAMA | 1244 U+0CA8 KANNADA LETTER NA,embedded English and Arabic tweets with attribution lines; donation footer partly English; lost ZWNJ
+24ad0d4b60c22107,full,fix,C1;C5,Posted date at offset 33 | Kannada Cinema's Latest Wallpapers⟦U+000A⟧Kannada Cinema's Latest Videos at offset 1455,,English post-date line and site footer/copyright
+7ef234274ece52a3,full,fix,C2;G2,ಕೆಪಿಸಿಸಿ ವಕ್ತಾರೆ at offset 0 | ಬ್ರ್ಯಾಂಚ್ಗೆ at offset 1012,1020 U+0CCD KANNADA SIGN VIRAMA | 1021 U+0C97 KANNADA LETTER GA,title repeated as first summary bullet; lost ZWNJ
+ba154723d1b23115,full,fix,G2,ಸ್ಯಾಂಡಲ್ವುಡ್ at offset 0,7 U+0CCD KANNADA SIGN VIRAMA | 8 U+0CB5 KANNADA LETTER VA,Film news; loanword+suffix conjuncts missing ZWNJ
+d6ee45607d0f322e,full,fix,A6,ಊome Isoಟಚಿಣioಟಿ at offset 359,360 U+006F LATIN SMALL LETTER O,Govt notice; legacy-font conversion damage (Latin/Kannada mixed in words)
+f073c922408b9aa3,full,fix,G2,ಏರ್ವೇಸ್ at offset 506,508 U+0CCD KANNADA SIGN VIRAMA | 509 U+0CB5 KANNADA LETTER VA,ZWNJ loss in loanword
+780c2ea64fce09d2,full,clean,,,,Preface of folklore encyclopedia (govt archive); minor typos only
+41d108899895dff6,full,fix,G2;C1,ದರ್ಶನ್ಗೆ at offset 455 | The post at offset 674,460 U+0CCD KANNADA SIGN VIRAMA | 461 U+0C97 KANNADA LETTER GA,Republished film/politics news; English 'The post ... appeared first on' and source-link footer; lost ZWNJ
+949f9bf8f6ae18c9,full,fix,G2;C1,ಲಾಕ್ಡೌನ್ನಿಂದ at offset 0 | ‘ವಾರ್ತಾ ಭಾರತಿ’ ನಿಮಗೆ at offset 861,7 U+0CCD KANNADA SIGN VIRAMA | 8 U+0CA8 KANNADA LETTER NA,News; site donation appeal footer (shared across docs); ZWNJ-less conjuncts
+dcbb04e7dad96e11,full,fix,C1,Team Udayavani at offset 80,,English byline line
+30363a356b7d19f9,full,fix,G2,ಬ್ಯಾಂಕ್ನ at offset 665,671 U+0CCD KANNADA SIGN VIRAMA | 672 U+0CA8 KANNADA LETTER NA,Business news; loanword+suffix conjuncts missing ZWNJ
+ebf98868048669e6,full,clean,,,,political news; abbreviation/loanword conjuncts without ZWNJ
+7aae9a8379cb7270,full,fix,G2,ಡೆನ್ಮಾರ್ಕ್ನಲ್ಲಿ at offset 1047,1059 U+0CCD KANNADA SIGN VIRAMA | 1060 U+0CB2 KANNADA LETTER LA,loanword+suffix conjuncts
+c7de66b0399c20d3,full,fix,G2;C3,ಕಾರ್ಡ್ದಾರರು at offset 213 | - ಒಪ್ಪಿದ ಶುಲ್ಕವನ್ನು ಪಾವ at offset 40,218 U+0CCD KANNADA SIGN VIRAMA | 219 U+0CA6 KANNADA LETTER DA,news report; loanword+suffix conjuncts without ZWNJ
+f9911cdb2b86200c,full,drop,G2;D4;D3,ರೆಕಾಮ್ನಿಂದ at offset 10 | ಬಾಹ್ಯಾಕಾಶ-ಉಳಿತಾಯ at offset 21 | DOSA at offset 261,15 U+0CCD KANNADA SIGN VIRAMA | 16 U+0CA8 KANNADA LETTER NA,"machine-translated English electronics press release (space-saving rendered as outer-space, ground plane as airplane; misplaced superscript 3)"
+03822d4eaebbc722,full,clean,,,,Clean Ramayana prose retelling
+1478243b56864e4f,full,drop,C1;C5;G2;D3,Don't Miss! at offset 0 | - Automobiles at offset 12 | ಮೋಟಾರ್ಸೈಕಲ್ at offset 48 | KSP Recruitment at offset 240,53 U+0CCD KANNADA SIGN VIRAMA | 54 U+0CB8 KANNADA LETTER SA,Poor quality document. 'Don't Miss' cross-site headline block with English labels; loanword conjuncts
+9b795aed33bac1da,full,fix,G2,ಲಾಕ್ಡೌನ್ನಲ್ಲೂ at offset 0,10 U+0CCD KANNADA SIGN VIRAMA | 11 U+0CB2 KANNADA LETTER LA,loanword+suffix conjuncts without ZWNJ
+0e4c74235ff06c8b,full,fix,C1;C5;G2;D3,Just In at offset 0 | - 5 min ago at offset 8 | ಫೇಸ್ಲಿಫ್ಟ್ at offset 32 | NIOS Class 10 And 12 Result at offset 666,39 U+0CCD KANNADA SIGN VIRAMA | 40 U+0C9F KANNADA LETTER TTA,'Just In'/'Don't Miss' headline blocks with English time/category labels before article; loanword conjuncts
+c88b2f773c03abf4,full,clean,,,,"Crime news (arrest report, not harmful content); no disease"
+4430d74c42411cca,full,fix,C2;C1,ಚಿತ್ರಕೃಪೆ: rajkumar1220 at offset 280 | ನಿಮಗಿಷ್ಟವಾಗಬಹುದಾದ at offset 2196,,photo-credit lines repeated between paragraphs; related-articles footer
+edbfc11291eab3fc,full,drop,G2;C1;D3;C5;C2,ಟ್ರಂಪ್ಗೆ at offset 9 | Team Udayavani at offset 46 | Representative Image Used at offset 121 | ಟಾಪ್ ನ್ಯೂಸ್ at offset 1454 | ಭಾರತ:ಕಳೆದ 24ಗಂಟೆಗಳಲ್ಲಿ at offset 1466,14 U+0CCD KANNADA SIGN VIRAMA | 15 U+0C97 KANNADA LETTER GA,"byline, bilingual image caption, related-headline footer with repeated headlines"
+d2944caefce91140,full,fix,C1;C5;G2;D3,Don't Miss! at offset 0 | - News at offset 12 | ಕಮಲ್ಪ್ರೀತ್ at offset 151 | Independence Day 2021 Wishes at offset 394,156 U+0CCD KANNADA SIGN VIRAMA | 157 U+0CB0 KANNADA LETTER RA,Film news with 'Don't Miss' headline-link block at top
+c72eb39a843e25c7,full,drop,C1;C5,Don't Miss! at offset 0 | - Sports Tokyo at offset 12,,English 'Don't Miss' header + headline-link list (shared with other docs); one sentence split one word per line
+228a30c575688efb,full,fix,G1;G2;D3,ಹಿತವಿರು ತ್ತಿತ್ತು at offset 2156 | ಕಾರ್ಲ್ಮಾರ್ಕ್ಸ್ರವರು at offset 2584 | Haves and Have not at offset 2654,2163 U+0020 SPACE | 2597 U+0CCD KANNADA SIGN VIRAMA | 2598 U+0CB0 KANNADA LETTER RA,"Space split between syllables; Essay with stray spaces inside words (line-break residue), a lost letter (ರ್ಗ), English phrase, ZWNJ conjuncts"
+c35620634e25e48b,full,fix,G2;C1;C2;G4,"ಬಂದ್ಗೆ at offset 149 | ಮುಂದೆ ಓದಿ... at offset 271 | Puttapa Koli Koli, [ at offset 284 | ೧೦ ಗಂಟೆ at offset 3843",152 U+0CCD KANNADA SIGN VIRAMA | 153 U+0C97 KANNADA LETTER GA | 3843 U+0CE7 KANNADA DIGIT ONE,Telegram-forward sender/timestamp lines and 'read more' chrome inside live-report; ZWNJ-less conjuncts; lone Kannada digits ೧೦ among Latin digits
+1b00f8ad4414af11,full,fix,G2,ಆಫೀಸರ್ಸ್ಗೆ at offset 1030,1037 U+0CCD KANNADA SIGN VIRAMA | 1038 U+0C97 KANNADA LETTER GA,loanword+suffix conjuncts without ZWNJ
+52d0bed25f2a5e4e,full,fix,C1;G2;D3,masthmagaa.com: at offset 0 | ಇಸ್ರೇಲ್ನಲ್ಲಿ at offset 16 | Contact Us for Advertisement at offset 1841,25 U+0CCD KANNADA SIGN VIRAMA | 26 U+0CB2 KANNADA LETTER LA,News with site-name header and English advertising footer
+22903d8f3c7d6e6a,full,drop,C1;C5;G2,Staff(Search results at offset 0 | IndiaJul 27 at offset 28 | ಹೈಸ್ಕೂಲ್ಗೆ at offset 319,326 U+0CCD KANNADA SIGN VIRAMA | 327 U+0C97 KANNADA LETTER GA,"Search-results page: list of headline teasers with English category/timestamp chrome, no single article"
+96420294a24f6300,full,fix,D3;G2,#FactCheck at offset 0 | ಸ್ಕೂಟರ್ಗಳನ್ನು at offset 530,540 U+0CCD KANNADA SIGN VIRAMA | 541 U+0CA8 KANNADA LETTER NA,Fact-check article; Latin hashtag in title/body; lost ZWNJ
+c79bc8251e81dce9,full,fix,C1;G2;C5,Team Udayavani at offset 73 | ಹೈದರಾಬಾದ್ಗೆ at offset 1316 | ಟಾಪ್ ನ್ಯೂಸ್ at offset 1979,1324 U+0CCD KANNADA SIGN VIRAMA | 1325 U+0C97 KANNADA LETTER GA,English byline; 'Top news' and 'more from section' headline lists after article; ZWNJ-less conjuncts
+6c797688c83b2bf8,full,clean,,,,"clean news article (subheadings echoed by next sentence, normal)"
+4b6b115448ca1b9b,full,fix,C1;C5;G2;D3,Don't Miss! at offset 0 | - News at offset 12 | ಐಸೋಲೇಶನ್ನಲ್ಲಿದ್ದ at offset 104 | World Nature Conservation at offset 164,118 U+0CCD KANNADA SIGN VIRAMA | 119 U+0CA6 KANNADA LETTER DA,'Don't Miss' cross-site headline block with English labels; loanword conjuncts
+4478e1a93f52a750,full,clean,,,,Short news item; no disease
+205edeba4371d2c0,full,fix,G2;D3;C1,ಇಂಟರ್ನೆಟ್ನಲ್ಲಿ at offset 146 | Ophiophagus hannah. A king at offset 933 | pic.twitter.com at offset 1022,157 U+0CCD KANNADA SIGN VIRAMA | 158 U+0CB2 KANNADA LETTER LA,embedded English tweets with links and handles; loanword conjunct
+1389172166c34801,full,drop,F3,ಕಾ *ಮ ತೀರಿಸಿ at offset 839,,"Sexual clickbait teaser pointing to a video, obfuscated keyword"
+5d002b5f18623fbd,full,fix,G2,ಕ್ಯೂಬ್ನೊಂದಿಗೆ at offset 1621,1626 U+0CCD KANNADA SIGN VIRAMA | 1627 U+0CA8 KANNADA LETTER NA,loanword+suffix conjunct
+436b1e57a60f5d8c,full,fix,G2,ಹೈದರಾಬಾದ್ನ at offset 318,326 U+0CCD KANNADA SIGN VIRAMA | 327 U+0CA8 KANNADA LETTER NA,Short news; loanword+suffix conjuncts missing ZWNJ
+7b55729f6f2957e5,full,fix,C1,edits at offset 6,,"Wikipedia diff page: edit-count/summary header, raw wikilink markup, legacy-font reph misorder"
+ecb98054c70a955b,full,fix,G2,ದಿಲ್ವಾಲ at offset 596,599 U+0CCD KANNADA SIGN VIRAMA | 600 U+0CB5 KANNADA LETTER VA,"Film gossip article, loosely written; lost ZWNJ in loanword joins"
+69f906e034c291bd,full,fix,G2;C1;D3,ರಿವಾಲ್ಪರ್ನಿಂದ at offset 1438 | ವರದಿ: ಬ at offset 2867 | (Police Dog Tunga at offset 2889,1446 U+0CCD KANNADA SIGN VIRAMA | 1447 U+0CA8 KANNADA LETTER NA,reporter byline and English URL-slug title at end
+2e6f4bf8087d77f2,full,fix,C1;C5;D3;G2,Don't Miss! at offset 0 | - News at offset 12 | APJ Abdul Kalam Facts at offset 292 | ಬಿಟ್ಕಾಯಿನ್ at offset 383,386 U+0CCD KANNADA SIGN VIRAMA | 387 U+0C95 KANNADA LETTER KA,Don't Miss headline menu with English section labels
+3ea9ee833d771b30,full,fix,C1,ವರದಿ: at offset 0,,reporter byline line at top
+609b4224fb7989ad,full,drop,C1;C5;G2,Bridegroom(Search results at offset 0 | ಬೆಂಝ್ ಬದಲು at offset 363 | ರಿಸೆಪ್ಷನ್ನಲ್ಲೂ at offset 1613,1624 U+0CCD KANNADA SIGN VIRAMA | 1625 U+0CB2 KANNADA LETTER LA,Too many short docs. topic listing page: unrelated teasers joined with English search header and category/timestamp lines
+8bedc4b872fdc369,full,drop,C1;C5;G2,Madya Pradesh(Search results at offset 0 | IndiaDec 18 at offset 456 | ಲಾಕ್ಡೌನ್ at offset 900,903 U+0CCD KANNADA SIGN VIRAMA | 904 U+0CA1 KANNADA LETTER DDA,Too many short docs.Topic search-results page: unrelated teasers with English category/timestamp lines

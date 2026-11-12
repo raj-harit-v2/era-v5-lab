@@ -1,10 +1,10 @@
-# EXP-2 Muon arm. muon_lr stays empty until the T1 screen names a winner.
-# 0.02 from base.yaml is not that screen.
+# EXP-2 Muon arm. muon_lr=0.01 is provisional (T1 screen, one seed, PR #241); not a named winner.
 inherit: t2.yaml
 intended:
   arm: exp2-muon
   official_step_time: false
+  comparison_final: false
 optim:
   name: muon
-  lr: null
-  muon_lr: null
+  lr: 0.001
+  muon_lr: 0.01

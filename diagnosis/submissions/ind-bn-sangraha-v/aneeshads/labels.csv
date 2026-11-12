@@ -1,0 +1,501 @@
+doc_id,read,verdict,diseases,evidence,hex,note
+0ca18aa03db2ef77,full,drop,A6;C4;D3;F3,"Line 7: ৭ঃ৪ঃ১১, ১ঃ১৬ঃ৪, ১৬ঃ ৪. Visarga ঃ is used as a look-alike for the colon : | at offsets 1185, 1187, 1194, 1197 and 1296. + Lines 1–7: seven unrelated comments from different people (line 2 is the site's reply) joined only by newlines, with no boundary. | Line 2, offset 278: quranerkotha.com/feed, a Latin-script URL in a Bengali sentence. The domain itself is romanised Bengali. | Line 7, offset 1353: …তাদের প্রত্যেককে হত্যা করো. A violent religious verse, quoted to dispute a reference. It's borderline and needs a human decision.","(U+0983), used where 3A (U+003A) belongs",Should be dropped due to mention of violence
+54442e06493e7751,full,fix,G4,"L14 @2472: 16 numbers in Bengali digits and 1 in Latin digits (not next to an English word) in Bengali prose; first Latin-digit number shown, first Bengali-digit number at offset 717; digits may have been partly converted","G4 L14 @2472: U+09EB, U+09E6, U+09E6; U+0031,U+0036,U+0034,U+0030,U+0039",Acceptable with fix
+3e10c78a0540341b,full,clean,,,,Accepted
+7035900113f62f27,full,fix,C1;C4;D3,"Offsets 0–93:An unrelated related-article headline and hashtag sits above a helicopter-crash story.|Offset 2:English phrase inside Bengali text.|Offset 228 and offset 958:English written in Bengali script; natural for news, so labelled but not judged.",,Acceptable with fix
+87c77e18093a596b,full,fix,A6,"A6 L5 @1933: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0",A6 L5 @1933: U+09F0,Acceptable with fix
+e6a0214b29a10257,full,drop,A3;A6;D3;F3,155| 1370|1515|825:the vowel sign ু is doubled|1119|3296|291|433|3255: a claim targeting a group,U+00E6;U+00E6;U+09C1;U+09CD;U+09B0;U+0027;U+0983,Should be dropped as passage describes offensive targeting of a group
+bf521322a90491aa,full,fix,A3;G1,L1 @155: Latin Small Letter Ae (U+00E6) inside a Bengali word; likely legacy Bijoy-font conversion damage | L5 @825: Bengali Vowel Sign U (U+09C1) is doubled,A3 L1 @155: U+00E6 | A3 L10 @1370: U+00E6 | A3 L12 @1515: U+00E6 | G1 L5 @825: U+09C1 U+09C1,Acceptable with fix
+017b4f09daad47e4,full,clean,D3,"আরও পড়ুনঃ Oracle Speaks: ওরাকল স্পিকস ২৮ মার্চ; দেখে নিন ভাগ্যফল, জেনে নিন কোন চিহ্ন বয়ে আনছে সৌভাগ্য! কন্যা (Virgo):অগাস্ট ২৩ থেকে সেপ্টেম্বর ২২।",,Accepted
+f0e9d668c4268ff2,full,fix,C2,L5 @519: line repeated 2 times (lines 1 and 5); offset is the first repeat,,Acceptable with fix
+5ed37ddc0d848f84,full,fix,C2,L3 @327: sentence repeated 2 times (lines 1 and 3); offset is the first repeat,,Acceptable with fix
+03cbfc695d9a089b,full,clean,,,,Accepted
+16838a9d467d9521,full,clean,D3,করোনা ( Corona) মুক্ত ভারত ( India) অধিনায়ক রোহিত শর্মা (Rohit Sharma)। এমনটাই জানালেন বিসিসিআইয়ের (Bcci) এক কর্তা।,,Accepted
+b0c095487dd72b87,full,clean,D3,সরাইল ৩দিনব্যাপী উন্নয়ন মেলার ২য়দিন - মফস্বল - Premier News Syndicate Limited (PNS),,Accepted
+5c35ce7401e2ddd5,full,fix,C1,©somewhere in net ltd.,,Acceptable with fix
+44f51067574b2556,full,clean,,,,Accepted
+25ee8205a72bfd00,full,clean,D3,"Bangla News Dunia , অজয় দাস :- এক সমীক্ষা বলছে, বয়স্ক পুরুষেরা অল্পবয়সী মেয়েদের সঙ্গে ঘনিষ্ঠ সম্পর্ক তৈরি করতে চান।",,Accepted
+1ef44a484ad8197f,full,fix,D4,"এবিষয়ে বিজিএমইএর সহ-সভাপতি শহিদুল্লাহ আজিম গণমাধ্যমকে বলেন, সংগঠনের সব সদস্যের হালনাগাদ তথ্যসহ প্রয়োজনীয় কাগজ মন্ত্রণালয়ে জমা দিতে বর্তমান পর্ষদকে তিন মাস সময় দেওয়া হয়েছে। (wrong word usage)",,Acceptable with fix
+7160f28b914f8629,partial,drop,A6;C3;D1,"L1 @2: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 | সিংহ শিকার জন্য রজত-খণ্ড আমাদিগকেই যোগাইতে",A6 L1 @2: U+09F0 | A6 L16 @940: U+09F0,Language does not seem to be Bengali
+43c51cdac699187d,full,fix,C1;D3,আরও পড়ুন - Priyanka Chopra: নাক-মুখ কেটে রক্ত পড়ছে! এ কী অবস্থা প্রিয়ঙ্কা চোপড়ার? | মুম্বইঃ বি টাউনে কি ফের বিয়ের সানাই বাজতে চলেছে? রণবীর কপূর (Ranbir Kapoor) ও আলিয়া ভট্টের (Alia Bhatt) বিয়ের পর এবার কি শুভপরিণত সম্পন্ন হবে অর্জুন কপূর (Arjun Kapoor) ও মালাইকা অরোরার (Malaika Arora)?,,Acceptable with fix
+1216e4c96318e88b,full,clean,,,,Accepted
+1b41ab43f125be81,full,clean,,,,Accepted
+48188bf35f7c93bd,full,clean,,,,Accepted
+f4b1f41a0f6d3a9e,full,drop,A6;C3,"L11 @3232: word contains Bengali Letter Ra With Middle Diagonal (U+09F0) + the Assamese ra; Bengali writes Ra U+09B0 | ইঁহাদের কথা ব্যক্তিগত বলিরা ছাড়িয়া দিলেও বাঙ্গালার প্রায় প্রত্যেক জমাদার ও সম্পন্ন ব্যক্তির গৃহে যে সকল লাঠিয়াল ও পালোয়ান নিযুক্ত",A6 L11 @3232: U+09F0 | A6 L16 @5315: U+09F0,Should be dropped due to inconsistency in formatting and then text being truncated
+04bb5aa24552befa,full,clean,,,,Accepted
+348c14b3ba5624fb,full,fix,D4,গণমাণ্যমে প্রকাশের পর থেকেই প্রশ্ন দেখা দিয়েছে কে এই অস্ত্রধারী?,,Acceptable with fix
+0f79a07b7f39f669,full,fix,C1,"(দ্য রিপোর্ট/এসকে/নূরু/এপি/এনডিএস/ডিসেম্বর ১৩, ২০১৩)",,Acceptable with fix
+14c39215a007bbe9,full,fix,C1,"১৪৭/ডি, গ্রীন রোড, ঢাকা-১২১৫। এই ওয়েবসাইটের কোনো লেখা, ছবি, অডিও,ভিডিও অনুমতি ছাড়া ব্যবহার বেআইনি।",,Acceptable with fix
+274b47280b2d3d33,full,clean,,,,Accepted
+0ac8fea71a84db74,full,clean,,,,Accepted
+c4e44ec22875723f,full,drop,C4;D3,"ক্ষুব্ধ মালা রায় কাউন্সিলরকে জিজ্ঞেস করেন,""এত কিছু বলার পরেও এদিন অনেক কাউন্সিলরকেই টেবিলের নিচে লুকিয়ে মোবাইল ঘাটতে দেখা যায়। কেউ আবার ঘুমিয়ে পড়েন চেয়ারে বসেই। | নিউজ১৮ বাংলায় সবার আগে পড়ুন ব্রেকিং নিউজ। থাকছে দৈনিক টাটকা খবর"","" খবরের লাইভ আপডেট। সবচেয়ে ভরসাযোগ্য বাংলা খবর পড়ুন নিউজ১৮ বাংলার ওয়েবসাইটে।",,Should be dropped as passage contains incomplete data
+1de2eef28d599734,full,drop,C3,"Panchayat Election: রাজ্যে এবার বিশ্ববিদ্যালয়ের পড়ুয়াই অন্তর্বর্তী উপাচার্য! Panchayat Election Opinion Poll : শুভেন্দু-গড়ে হাড্ডাহাড্ডি লড়াইয়ের ইঙ্গিত পঞ্চায়েত নির্বাচনে কোন দিকে ঝুঁকে পূর্ব মেদিনীপুর ?|""",,Should be dropped as the passage contains unrelated boilerplate data
+b0d8affd2329469d,full,drop,C2;C3,L2 @219: line repeated 2 times (lines 1 and 2); offset is the first | তারা প্রতিমাসে শতশত কোটি টাকা রেমিট্যান্স দেশে পাঠিয়ে দেশের অর্থনীতিকে সচল রাখছে আর এ প্রবাসীরা যখন তাদের পাসপোর্ট নতুন অথবা রেনু করতে পারছে।,,Should be dropped as the passage is incomplete
+b84a20ce31fdb1ae,full,clean,,,,Accepted
+5bd5a3ee0ab87684,full,clean,,,,Accepted
+54018bfb6cc48bf8,full,clean,,,,Accepted
+96bb0ba9ffe57d17,full,clean,,,,Accepted
+322f2a610ac42db1,full,clean,,,,Accepted
+1da19ac48860fb47,full,fix,C2,L2 @138: line repeated 2 times (lines 1 and 2); offset is the first repeat,,Acceptable with fix
+33a589a8286a0bb7,full,drop,C1,"অনলাইন ডেস্ক, ৩ ফেব্রুয়ারী। repeated 3 times",,Should be dropped as passage contains no substantial data
+64552a343fc0acba,full,clean,,,,Accepted
+2897b4b78f5b169a,full,clean,,,,Accepted
+c5f03ac60c8a8c91,full,clean,,,,Accepted
+be22bb3fef17f01e,full,clean,,,,Accepted
+a25ed87c39523c02,full,clean,,,,Accepted
+a4a9c6d955c31149,full,clean,,,,Accepted
+60905fc5bb71da52,full,clean,,,,Accepted
+b3f021daf03eebe5,full,drop,A6,"L1 @21: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 + L2 @43: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 + A6 L3 @210: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0",A6 L1 @21: U+09F0 | A6 L2 @43: U+09F0 | A6 L3 @210: U+09F0 | A6 L5 @483: U+09F0 | A6 L6 @605: U+09F0 | A6 L6 @849: U+09F0 | A6 L6 @984: U+09F0 | A6 L6 @1000: U+09F0 | A6 L6 @1148: U+09F0 | A6 L7 @1255: U+09F0 | A6 L8 @1451: U+09F0 | A6 L8 @1463: U+09F0 | A6 L8 @1543: U+09F0 | A6 L8 @1553: U+09F0 | A6 L8 @1648: U+09F0 | A6 L8 @1724: U+09F0 | A6 L8 @1769: U+09F0 | A6 L8 @1815: U+09F0 | A6 L9 @2095: U+09F0 | A6 L10 @2404: U+09F0 | A6 L10 @2417: U+09F0 | A6 L10 @2586: U+09F0 | A6 L10 @2718: U+09F0 | A6 L10 @2751: U+09F0,Should be dropped as it does not appear to be Bengali and text passage is also truncated
+2d21cfd2fc5a133f,full,clean,,,,Accepted
+f64f98a4d3851ede,full,clean,,,,Accepted
+93a14309bf646e28,full,clean,,,,Accepted
+eb3dc547426a3951,full,clean,D3,কারাশেক আবার বলতে লাগলো - - This is the wound of love.,,Accepted
+c58b4c303915440d,full,clean,,,,Accepted
+03ab0cd512bfcf2d,full,clean,,,,Accepted
+37ae9643def1dee9,full,clean,,,,Accepted
+c575bbf700b4a5ed,full,clean,,,,Accepted
+0c62abe90f1c50aa,full,drop,A6;G4;E2,"L9 @1677: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 + L23 @3181: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 + L27 @3878: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 | L23 @3295: 1 number in Bengali digits and 1 in Latin digits (not next to an English word) in Bengali prose; first Latin-digit number shown, first Bengali-digit number at offset 146; digits may have been partly converted | আপনি যাই বলুন, আমাদের নবাব98",A6 L9 @1677: U+09F0 | A6 L23 @3181: U+09F0 | A6 L27 @3878: U+09F0 | G4 L23 @3295: U+09ED U+09ED; U+0039 U+0038,Should drop as the language is not bengali and has text artefacts in them
+7ee2c0a3a3cc4368,full,clean,,,,Accepted
+aecb9893b814c81f,full,clean,D3,"'কাকাবাবুর প্রত্যাবর্তন (Kakababur Protyaborton)' থেকে শুরু করে ব্যক্তিগত মতামত, অভিজ্ঞতা, এবিপি লাইভে অকপট সৃজিত মুখোপাধ্যায় (Srijit Mukherjee)।",,Accepted
+a3a0a3d543d77afe,full,clean,D3,পৃথিবীর ভিতরের তাপকে কাজে লাগানোর সম্ভাব্যতার বিষয়টি পরীক্ষা করে দেখার জন্য Iceland Deep Drilling Project (IDDP) নামে ২০১৬ সনের ১২ আগস্ট তারা এই তপ্ত ড্রিলীং প্রকল্পটির কাজ শুরু করেন ।,,Accepted
+7378fae019d08f76,full,fix,B4,"L1 @200: literal escape sequence ""\n"": an escaped line break or tab left by an export + L1 @309: literal escape sequence ""\t"": an escaped line break or tab left by an export + L1 @352: literal escape sequence ""\n"": an escaped line break or tab left by an export ",,Acceptable with fix
+faa0eb5f1322668d,full,clean,,,,Accepted
+210187a670ec22e2,full,clean,D3,"দ্য ওয়াল ব্যুরোঃ আজ, ২৪ ফেব্রুয়ারি বাংলাদেশে মুক্তি পাওয়ার কথা ছিল 'পাঠান' (Pathaan)। কিন্তু শেষ অবধি তা বাতিল হয়ে গেল। চূড়ান্ত সিদ্ধান্ত হয়ে থাকলেও শেষ মুহূর্তে আটকে গেল ছবির মুক্তি (release)। ইতিমধ্যে সে দেশে হিন্দি ছবির মুক্তির ঘোষণা ঘিরে প্রতিবাদ শুরু হয়েছিল। তবে সূত্র মারফত জানা গেছে, সেই প্রতিবাদের জেরে নয়, অন্য কারণেই বাংলাদেশে (Bangladesh) পিছিয়ে গেল 'পাঠান' মুক্তি।",,Accepted
+ce16dbc3bc8f0ccc,full,clean,,,,Accepted
+c620feba93dd0986,full,clean,G1,"L17 @1733: Bengali Vowel Sign Vocalic R (U+09C3) follows Bengali Vowel Sign I (U+09BF), which cannot carry it",G1 L17 @1733: U+09BF U+09C3,Accepted with a note
+2daa1406ec043cff,full,clean,,,,Accepted
+80199b73dc4150b0,full,clean,D3,"রাধারাণী কী জয় মহারাণী কী জয়। বোলো বরষাণে বালী কী জয় জয় জয়।।ঠাকুরাণী কী জয় হরি-পিয়ারী কী জয়। বৃষভানু-দুলালী কী জয় জয় জয়।। গৌরাঙ্গী কী জয় হেমাঙ্গী কী জয়। ব্রজরাজকুমারী কী জয় ব্রজদেবী কী জয়।। ব্রজরাণী কী জয় ব্রজদেবী কী জয়। (গহ্বর) বরবারী কী জয় জয় জয়।।""",,Accepted
+a435da6ccf15004d,full,clean,D3,"এছাড়াও, গ্যাস্ট্রোইনটেস্টাইনাল ও লিভারের সমস্যা সমাধানে এটি ভূমিকা রাখে।পটলের বীজ কোষ্ঠকাঠিন্য সারাতে সহায়তা করে।",,Accepted
+0d4e66bf8ee053b2,full,clean,,,,Accepted
+d06329e99cbd05fd,full,clean,D3,তৃণমূল মুখপত্র কুণাল ঘোষের (Kunal Ghosh) কটাক্ষের মুখে বিজেপি সাংসদ সৌমিত্র খাঁ (Soumitra Khan) এবং বিধানসভার বিরোধী দলনেতা শুভেন্দু অধিকারী (Suvendu Adhikari)।সাম্প্রতিক অতীতে কুকথা বলার নিরিখে বারবার কাঠগড়ায় দাঁড়াতে হয়েছে একাধিক বিজেপি (BJP) নেতাকে।,,Accepted
+ac268c1b61502e07,full,clean,,,,Accepted
+6fb6f2b0a3cec116,full,clean,,,,Accepted
+158604c0690cfb01,full,clean,,,,Accepted
+bb139803564a2da9,full,fix,G4,"L14 @2034: 1 number in Bengali digits and 14 in Latin digits (not next to an English word) in Bengali prose; first Latin-digit number shown, first Bengali-digit number at offset 2324; digits may have been partly converted",G4 L14 @2034: U+09E8; U+0032 U+0030 U+0030 U+0037,Acceptable with fix
+c1c79d7c1dbea429,full,fix,C2,L2 @497: sentence repeated 2 times (lines 1 and 2); offset is the first repeat + L2 @534: sentence repeated 2 times (lines 1 and 2); offset is the first repeat,,Acceptable with fix
+5a52fe495e5b31b8,full,clean,,,,Accepted
+d2e554e1b11c00fd,full,clean,,,,Accepted
+adf78a05cf74a41a,full,clean,,,,Accepted
+57a2f4b311d44fc4,full,clean,D3,"উল্লেখ্য, বীরভূম তৃণমূল জেলা সভাপতি অনুব্রত মণ্ডলের (Anubrata Mondal) উদ্দেশে কবিতা লিখেছিলেন অভিনেতা রুদ্রনীল ঘোষ (Rudranil Ghosh)। বুধবার শারীরিক অসুস্থতা নিয়ে এসএসকেএম (SSKM Hospital) হাসপাতালে চিকিৎসাধীন হন এই তৃণমূল নেতা। ঘটনাচক্রে সেদিনই সিবিআইয়ের (CBI) নিজাম প্যালেসের অফিসে হাজিরার কথা ছিল বঙ্গ রাজনীতির কেষ্ট মণ্ডলের।",,Accepted
+95e8cf26b9b8e1d6,full,clean,,,,Accepted
+55b76cddd571c47c,full,clean,D3,,,Accepted
+e37b18c5e9a2747e,full,clean,,,,Accepted
+30bca5e624fe83fc,full,fix,C1,"নিউজ১৮ বাংলায় সবার আগে পড়ুন ব্রেকিং নিউজ। থাকছে দৈনিক টাটকা খবর, খবরের লাইভ আপডেট। সবচেয়ে ভরসাযোগ্য বাংলা খবর পড়ুন নিউজ১৮ বাংলার ওয়েবসাইটে।",,Accepted
+23fa7bae93dfa426,full,clean,,,,Accepted
+1c9f4618bc4f006b,full,clean,,,,Accepted
+c5f15f32bee8a1be,full,fix,C1,"১৪৭/ডি, গ্রীন রোড, ঢাকা-১২১৫। এই ওয়েবসাইটের কোনো লেখা,ছবি,অডিও, ভিডিও অনুমতি ছাড়া ব্যবহার বেআইনি।""",,Acceptable with fix
+1b27610abeb9d5c0,full,clean,,,,Accepted
+7891ebc9ab87ad20,full,fix,C1,www.BDeBooks. Com,,Acceptable with fix
+3c27ed32f8d86150,full,clean,D3,পরে হুইপ আতিউর রহমান আমন্ত্রিত অতিথিদের নিয়ে কেক কাটেন।,,Accepted
+5e75446dc76afc26,full,clean,,,,Accepted
+18d00f3b6f9aca24,full,clean,,,,Accepted
+111bbdcf44fe045b,full,clean,D3,"রিটে আবেদনে বাংলা একাডেমির মহাপরিচালক, বেভারেজ কোম্পানি কোকাকোলা এবং আইন, তথ্য, সংস্কৃতি ও শিক্ষা মন্ত্রণালয়ের সচিবদের বিবাদী করা হয়েছে।",,Accepted
+8671591b424b4325,full,fix,C2,L7 @1351: sentence repeated 2 times (lines 2 and 7); offset is the first repeat + L7 @1421: sentence repeated 2 times (lines 2 and 7); offset is the first repeat + L7 @1449: sentence repeated 2 times (lines 2 and 7); offset is the first repeat,,Acceptable with fix
+e6850f157fe12536,full,clean,D3,"বিশ্ব টেস্ট চ্যাম্পিয়নশিপ( World test championsh) খেলার আগে ১৮ দিনের কোয়ারেন্টাইনে থাকতে হবে ভারতীয় দলকে( india team)। এদিন এমনটাই জানালেন বিসিসিআইয়ের (bcci)এক কর্তা। ইংল্যান্ডে উড়ে যাওয়ার আগে দেশে ৮ দিন, এবং ইংল্যান্ডে পৌঁছে ১০ দিন কোয়ারেন্টাইনে থাকবেন বিরাট কোহলি( virat kohli), রোহিত শর্মা( rohit sharma) , অজিঙ্কে রাহানেরা( ajinkya rahane)।",,Accepted
+b9bcbc3cd3f86970,full,clean,,,,Accepted
+e01fd4b9451ba753,full,clean,,,,Accepted
+cbe94742890797f9,full,clean,,,,Accepted
+c6c00b07b81d7c47,full,fix,C1,"বাগেরহাট ইনফো ডটকম।।বাগেরহাট ইনফো ডটকম।।""",,Acceptable with fix
+42f394b1b2292a07,full,fix,A6;G1;G4;D3,"L13 @3796: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 | L8 @2809: Bengali Vowel Sign E (U+09C7) follows Bengali Vowel Sign U (U+09C1), which cannot carry it | L4 @1377: 13 numbers in Bengali digits and 1 in Latin digits (not next to an English word) in Bengali prose; first Latin-digit number shown, first Bengali-digit number at offset 20; digits may have been partly converted ফলে একটি বা দুইটি বিশেষ ব্যাপারে একজন যদি দক্ষতা দেখায়, তাহা হইলে অন্য বিষয়গুলিতেও যে সেই লোকটি দক্ষতা দেখাইতে পারিবে এমনও নিশ্চয়ত। নাই। উদাহরণ স্বরূপ বলা যাইতে পারে, একজন ব্যক্তিৰ কেন্দ্রীয় শক্তিটি ( 'g' factor ) দুর্বল, ইহার ফলে সে জীবনের অধিকাংশ ক্ষেত্রেই অকৃতকার্য হইবে। সামস্ততন্ত্রবাদ (oligarohic doctrine ); (৩) অরাজকভাবাদ ( anarchic doctrine )|রাজতন্ত্রবাদ : এই মতে বুদ্ধি হইতেছে একটি অধিরাজ কেন্দ্রীয় শক্তির লীলা।""",A6 L13 @3796: U+09F0 | G1 L8 @2809: U+09C1 U+09C7 | G4 L4 @1377: U+09E8; U+0031,Acceptable with fix
+b3581ca61ccbffca,full,clean,,,,Accepted
+8fb3b38e0f4f921c,full,clean,D3,হাওড়ার ডুমুরজলায় বিজেপিতে (BJP) মেগা যোগদান শেষে জাতীয় সঙ্গীত ঘিরে নতুন বিতর্ক। জাতীয় সঙ্গীতের অবমাননার অভিযোগে সরব হলেন অভিষেক বন্দ্যোপাধ্যায় (Abhishek Banerjee)। রবিবার নিজের ট্যুইটার অ্যাকাউন্টে ডুমুরজলায় বিজেপির সভা শেষে গাওয়া জাতীয় সঙ্গীতের ভিডিও আপলোড করেন ডায়মন্ড হারবারের তৃণমূল (TMC) সাংসদ।,,Accepted
+68ce2b4c3cf45a2f,full,clean,,,,Accepted
+24ff072c16d18ef8,full,fix,C4,ফ্রান্সে করোনা পরিস্থিতি 'নিয়ন্ত্রণের বাইরে',,Acceptable with fix
+9367fe3e5093aa70,full,clean,D3,সোমবার ই-রুপি (e-Rupi) ক্যাশলেশ পেমেন্ট ব্যবস্থার উদ্বোধন করলেন প্রধানমন্ত্রী নরেন্দ্র মোদি। এই পরিষেবার মাধ্যমে ক্যাশলেস এবং কন্টাক্টলেস পেমেন্ট করা যাবে। কিউআর কোড (QR code) এবং এসএমএস (SMS) দিয়ে আর্থিক লেনদেন করা যাবে।,,Accepted
+0de9bd12e738c235,full,clean,,,,Accepted
+b5d3379fa1dd2757,full,fix,A3;G1,L1 @221: Latin Capital Letter N With Tilde (U+00D1) inside a Bengali word; likely legacy Bijoy-font conversion damage + L2 @979: Bengali Vowel Sign I (U+09BF) follows the non-Bengali character Single Right-Pointing Angle Quotation Mark (U+203A); likely legacy Bijoy-font conversion damage | L3 @1918: Bengali Vowel Sign U (U+09C1) is doubled,A3 L1 @221: U+00D1 | A3 L2 @979: U+203A U+09BF | G1 L3 @1918: U+09C1 U+09C1,Acceptable with fix
+761d21cf48ccb2a1,full,clean,D3,"মমতা বন্দ্যোপাধ্যায়( Mamata Bandopadhyay)স্বয়ং ছবিটি বাস্তবায়িত করে নতুন করে প্রেরণা জাগিয়ে তুলেছেন। বঙ্গবিভূষণ সম্মান দিতে গিয়ে তাঁর বক্তব্য, ""তিনি নিজে কোন পারিশ্রম নেয় না।",,Acceptable with fix
+37414842344ea1dd,full,fix,C1,"(দ্য রিপোর্ট/জিএমএমও/এমএইচও/এমএআর/রাসেল/ডিসেম্বর ২৬, ২০১৩)",,Acceptable with fix
+0ae547368ab5e034,full,clean,,,,Accepted
+e4e559c63731c7fd,full,fix,A3;G1,"L26 @10147: Bengali Vowel Sign Aa (U+09BE) follows the non-Bengali character Hyphen-Minus (U+002D); likely legacy Bijoy-font conversion damage + L26 @10657: Bengali Vowel Sign E (U+09C7) follows the non-Bengali character Hyphen-Minus (U+002D); likely legacy Bijoy-font conversion damage + L26 @10767: Bengali Vowel Sign Aa (U+09BE) follows the non-Bengali character Hyphen-Minus (U+002D); likely legacy Bijoy-font conversion damage | G1 L26 @11701: Bengali Sign Virama (U+09CD) is separated from its letter by a space | L33 @15716: Bengali Sign Virama (U+09CD) is separated from its letter by a space + L66 @22970: Bengali Vowel Sign Ii (U+09C0) follows Bengali Vowel Sign E (U+09C7), which cannot carry it + L68 @23760: Bengali Vowel Sign Ii (U+09C0) follows Bengali Vowel Sign E (U+09C7), which cannot carry it | L95 @31615: Bengali Vowel Sign U (U+09C1) follows Bengali Letter I (U+0987), which cannot carry it + L111 @35478: Bengali Vowel Sign E (U+09C7) is doubled | L4 @941: Bengali Letter Ra (U+09B0), Virama (U+09CD) and Ya (U+09AF) at the start of a word: a word cannot start with a reph, so a ZWJ (U+200D) after Ra was probably lost + L29 @13740: Bengali Letter Ra (U+09B0), Virama (U+09CD) and Ya (U+09AF) at the start of a word: a word cannot start with a reph, so a ZWJ (U+200D) after Ra was probably lost + L313 @73160: Bengali Letter Ra (U+09B0), Virama (U+09CD) and Ya (U+09AF) at the start of a word: a word cannot start with a reph, so a ZWJ (U+200D) after Ra was probably lost",A3 L26 @10147: U+002D U+09BE | A3 L26 @10657: U+002D U+09C7 | A3 L26 @10767: U+002D U+09BE | A3 L26 @11704: U+0304 | A3 L26 @12420: U+002D U+09BE | A3 L27 @13293: U+002D U+09C1 | A3 L33 @15720: U+0304 | A3 L40 @17750: U+002D U+09BE | A3 L61 @21483: U+002D U+09BE | A3 L68 @23974: U+002D U+09C1 | A3 L86 @28782: U+002D U+09BF | A3 L94 @31454: U+002D U+09C1 | A3 L98 @32427: U+002D U+09BE | A3 L103 @33877: U+002D U+09C1 | A3 L120 @37956: U+002D U+09BE | A3 L123 @40267: U+002D U+09BE | A3 L123 @40287: U+002D U+09BE | A3 L124 @40694: U+002D U+09BE | A3 L182 @49962: U+002D U+09BE | A3 L190 @51532: U+0304 | A3 L192 @52791: U+002D U+09BF | A3 L230 @57038: U+002D U+09BE | A3 L261 @59378: U+002D U+09BE | A3 L284 @62609: U+002D U+09BE | A3 L284 @62803: U+002D U+09BE | A3 L301 @68102: U+0304 U+0153 | A3 L310 @71655: U+002D U+09C1 | A3 L342 @78111: U+002D U+09BE | A3 L351 @80273: U+002D U+09BE | A3 L354 @81376: U+0304 | A3 L367 @83225: U+0304 U+0153 | A3 L383 @86209: U+0304 U+09C7 | A3 L387 @86689: U+0304 | A3 L409 @92513: U+002D U+09BE | A3 L421 @94960: U+0304 U+0153 | A3 L485 @109252: U+0304 U+0153 | A3 L524 @120371: U+002D U+09BE | A3 L547 @129612: U+0153 | A3 L554 @131459: U+002D U+09BE | A3 L556 @131773: U+002D U+09BE | A3 L577 @141268: U+0304 U+09C7 | A3 L582 @144248: U+0304 U+09C7 | A3 L582 @144250: U+0153 | A3 L582 @144264: U+00A6 | A3 L583 @144358: U+00A6 | A3 L589 @145795: U+0304 U+0153 | A3 L652 @155492: U+0304 U+0153 | A3 L671 @157345: U+002D U+09BE | A3 L676 @157831: U+0304 U+0153 | G1 L26 @11701: U+099C U+0020 U+09CD | G1 L33 @15716: U+002C U+0020 U+0020 U+09CD | G1 L66 @22970: U+09C7 U+09C0 | G1 L68 @23760: U+09C7 U+09C0 | G1 L95 @31615: U+0987 U+09C1 | G1 L111 @35478: U+09C7 U+09C7 | G1 L123 @40339: U+0989 U+09BE | G1 L190 @51529: U+099C U+0020 U+09CD | G1 L310 @71370: U+0989 U+09CD | G1 L354 @81373: U+099C U+0020 U+09CD | G1 L387 @86686: U+09B0 U+0020 U+09CD | G1 L387 @86691: U+09BE U+09C7 | G1 L408 @91443: U+09BE U+09BE | G1 L422 @96036: U+0987 U+09CD | G2 L4 @941: U+09B0 U+09CD U+09AF | G2 L29 @13740: U+09B0 U+09CD U+09AF | G2 L313 @73160: U+09B0 U+09CD U+09AF,Acceptable with fix
+acade1d2ffbce0d9,full,clean,D3,বাংলা হান্ট ডেস্কঃ এই মুহূর্তে সিডনি স্টেডিয়ামে চলছে ভারত বনাম অস্ট্রেলিয়ার তৃতীয় টেস্ট ম্যাচ (India vs australia 3rd test)।,,Accepted
+bcb1cdab48f8eeca,full,clean,,,,Accepted
+397bbb35dbb40068,full,clean,,,,Accepted
+248e684b505bba63,full,fix,B3,"v যারা দিনের পর দিন গোসল না করেও কেটে দিচ্ছেন।v লোকাল বাসে চড়লে বোঝা যায় মানুষের শরীরের বিদঘুটে গন্ধ কেমন।v গরমে সবাই ঢিলেঢালা পোশাক পরে।v গরমে সবচেয়ে অসুবিধা হয়েছে প্রেমিক-প্রেমিকা জুটির।v বাসায় গিন্নি সবসময়ই গরম হয়ে থাকে।v কথিত আছে, ব্যাচেলরদের জামাকাপড়, বেডকভার ইত্যাদি মাসের পর মাস না ধুলেও কোনো সমস্যা হয় না।",,Acceptable with fix
+f347205974597aba,full,clean,,,,Accepted
+f9960fb85e974c25,full,clean,,,,Accepted
+4620e19b5836f03f,full,fix,A6;G2,"L4 @403: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 + L21 @5694: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 | L26 @7512: Bengali Letter Ta (U+09A4) + Virama (U+09CD) at the end of a word: probably a khanda-ta that lost its ZWJ (U+200D); the modern form is Khanda Ta (U+09CE) + L27 @7757: Bengali Letter Ta (U+09A4) + Virama (U+09CD) at the end of a word: probably a khanda-ta that lost its ZWJ (U+200D); the modern form is Khanda Ta (U+09CE)",A6 L4 @403: U+09F0 | A6 L21 @5694: U+09F0 | G2 L26 @7512: U+09A4 U+09CD | G2 L27 @7757: U+09A4 U+09CD,Acceptable with fix
+e5ce562847c8e6d6,full,clean,,,,Accepted
+fd260c8a0ca5c1ed,full,clean,,,,Accepted
+0f00fe6307c90685,full,clean,,,,Accepted
+87590e5df7527a67,full,fix,A3,L10 @2000: Broken Bar (U+00A6) in a word with Bengali letters; likely legacy Bijoy-font conversion damage কমিশনারদের মধ্যে সর্বশেষ যে দ্বন্দ¦টা হয় তা হলো 'বিতর্কিত' সিটি নির্বাচনের গেজেট প্রকাশ নিয়ে।,A3 L10 @2000: U+00A6,Acceptable with fix
+f29f133d83489482,full,clean,,,,Accepted
+58827dcddbbf097e,full,fix,C4,"আরও পড়ুন- রাত পেরোলেই ভারতে আসছে ওপ্পো রেনো ৮ সিরিজ, কোন কোন ফোন লঞ্চ হবে, দাম কত হতে পারে?",,Accepted
+22a785c77561bc0e,full,clean,,,,Accepted
+580257f4e9534f48,full,clean,,,,Accepted
+9edb9f45b9686a66,full,fix,G1,"জয়নিউজের জন্মদিনে এসব কথা বলেন জয়নিউজ চেয়ারম্যান, চট্টগ্রাম মহানগর আওয়ামী লীগের সাধারণ সম্পাদক, সাবেক মেয়র আ জ ম নাছির উদ্দীন।",,Acceptable with fix
+7bd37b13e5ceedf7,full,fix,A6,"L1 @37: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 + L11 @3219: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 + L12 @3328: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0  ",A6 L1 @37: U+09F0 | A6 L11 @3219: U+09F0 | A6 L12 @3328: U+09F0 | A6 L15 @4619: U+09F0 | A6 L15 @4814: U+09F0 | A6 L16 @5613: U+09F0 | A6 L16 @6106: U+09F0 | A6 L17 @6404: U+09F0 | A6 L17 @6419: U+09F0 | A6 L17 @7131: U+09F0 | A6 L19 @8174: U+09F0 | A6 L21 @10137: U+09F0 | A6 L24 @11429: U+09F0 | A6 L24 @11498: U+09F0 | A6 L27 @12900: U+09F0 | A6 L29 @13142: U+09F0 | A6 L38 @13506: U+09F0,Acceptable with fix
+6075e0253e541ac1,full,clean,D3,,,Accepted
+0f3d3cf9457cba94,full,clean,,,,Accepted
+27b738fc4926438e,full,clean,,,,Accepted
+5a4cd2d4a809181d,full,clean,D3,বাংলাহান্ট ডেস্কঃ জম্মু ও কাশ্মীরের জেলা উন্নয়ন নিগমে (DDC) বড় জয় পেল বিজেপি (Bharatiya Janata Party)|নির্বাচনে হারের পর গুপকার দলের প্রধান ফারুক আবদুল্লাহর (Farooq Abdullah),,Accepted
+4fd6a400467e4b0b,full,fix,C2;G1,"L24 @965: line repeated 2 times (lines 2 and 24); offset is the first repeat + L25 @1008: line repeated 2 times (lines 3 and 25); offset is the first repeat + L26 @1050: line repeated 2 times (lines 4 and 26); offset is the first repeat | G1 L48 @1986: Bengali Vowel Sign Aa (U+09BE) follows Bengali Letter A (U+0985), which cannot carry it | L48 @2004: Bengali Vowel Sign Aa (U+09BE) follows Bengali Letter A (U+0985), which cannot carry it + L134 @6003: Bengali Sign Virama (U+09CD) follows Bengali Vowel Sign U (U+09C1), which cannot carry it",G1 L48 @1986: U+0985 U+09BE | G1 L48 @2004: U+0985 U+09BE | G1 L134 @6003: U+09C1 U+09CD,Acceptable with fix
+19838d931a8243b2,full,clean,,,,Accepted
+489141c194e52d26,full,fix,G1,"L2 @574: Bengali Vowel Sign Aa (U+09BE) is doubled|শ্রীনগর, ১৩ জুনঃ শনিবার ফের সেনা-জঙ্গী সংঘর্ষে উত্তপ্ত উপত্যকায়। আজ ভোরবেলা জম্মু-কাশ্মীরের (Jammu & Kashmir) কুলগাম এবং অনন্তনাগে দুটি পৃথক সংঘর্ষে সেনার হাতে মৃত্যু হয়েছে অন্তত ৪ সন্ত্রাসবাদীর (Terroists)।শুক্রবার সংঘর্ষবিরতি চুক্তি লঙ্ঘন (Ceasefire Violations) করে কাশ্মীরে (Jammu and Kashmir) নিয়ন্ত্রণ রেখায় গুলি চালিয়ে যাচ্ছে পাকিস্তান (Pakistan)। সীমান্ত লাগোয়া ভারতীয় সেনার চৌকি ও স্থানীয় গ্রামগুলিকে লক্ষ্য করে গুলি চাালাচ্ছে তারা। ভারতীয় সেনাবাহিনীও পাল্টা জবাব দিচ্ছে। শুক্রবার পাকিস্তানের ছোড় গুলিতে উত্তর কাশ্মীরের বারামুল্লা (Baramulla District) জেলার উরি সেক্টরে একজন ৪৫ বছরের মহিলা নিহত হয়েছেন। তাঁর নাম আখতারা বেগম।",G1 L2 @574: U+09BE U+09BE,Acceptable with fix
+4dd3280671440e0b,full,fix,C1,Uttam Kumar Death Anniversary),,Acceptable with fix
+ffff4d719b5cd4a0,full,clean,D3,এসবি-৮ ফরম,,Accepted
+0f2f317cbfb76654,full,clean,D3,আগামী দিনে সমগ্র রাজ্যে চাইল্ডস রাইটস ক্লাব খোলা হবে।,,Accepted
+43cbb49bdfec2afb,full,clean,,,,Accepted
+12f9d49fcda388b9,full,fix,C1,"Get the latest world news from our trusted sources. Our coverage spans across continents and covers politics, business, science, technology, health, and entertainment. Stay informed with breaking news, insightful analysis, and in-depth reporting on the issues that shape our world. 360-degree view of the world's latest news with our comprehensive coverage. From local stories to global events, we bring you the news you need to stay informed and engaged in today's fast-paced world.⏎ Never miss a beat with our up-to-the-minute coverage of the world's latest news. Our team of expert journalists and analysts provides in-depth reporting and insightful commentary on the issues that matter most",,Acceptable with fix
+85a9bc61b8621416,full,clean,D3,"কলকাতার পাশাপাশি জেলা হিসেবে পুরোপুরি লকডাউনে থাকবে, হাওড়া (Howrah), পশ্চিম বর্ধমান, মুর্শিদাবাদ, নদিয়া, উত্তর দিনাজপুর ও মালদা। লকডাউনে থাকবে দক্ষিণ ২৪ পরগনার ডায়মন্ড হারবার (Diamond Harbour), ক্যানিং, সোনারপুর (Sonarpur), বারুইপুর (Baruipur), ভাঙড়, বজবজ ও মহেশতলা।",,Accepted
+3c0325a6ff38d583,full,fix,C1;C2;D3,"2006 Wikileaks leaked cable from US Ambassador Sobel in Brasilia to WHA Assistant Secretary Shannon"".""। ১৮ জুলাই ২০১১ তারিখে মূল থেকে আর্কাইভ করা। সংগ্রহের তারিখ ২৮ জুন ২০১৩।⏎ ""UNCTAD Introduction to Generalized System of Preferences""। ১৮ মার্চ ২০০৯ তারিখে মূল থেকে আর্কাইভ করা। সংগ্রহের তারিখ ২৮ জুন ২০১৩। Information from the UNCTAD about GSP programs in general. ""U.S.""। ১৪ এপ্রিল ২০০৫ তারিখে মূল থেকে আর্কাইভ করা। সংগ্রহের তারিখ ২৮ জুন ২০১৩। Introduction to the U.S. GSP program by the U.S. Trade Representative. ""E.U. Generalised System of Preferences""। Information from the European Commission on the E.U. GSP arrangements. ""Japan Generalized System of Preferences""। Introduction to Japan's GSP program by the Japanese Ministry of Foreign AffairsC2 L4 @1060: sentence repeated 3 times (lines 3, 4 and 5); offset is the first repeat|জেনারেলাইজড সিস্টেম অফ প্রিফারেন্সেস, অথবা জিএসপি (ইংরেজিঃ Generalized System of Preferences, GSP) জেনারেলাইজড সিস্টেম অফ প্রিফারেন্সেস, অথবা জিএসপি (ইংরেজিঃ Generalized System of Preferences, GSP)",,Acceptable with fix
+967b598ec07b3ff6,full,clean,,,,Accepted
+13550be8860382cc,full,clean,,,,Accepted
+291297de775e9661,full,clean,D3,লিবারেল ডেমোক্রেটিক পার্টির,,Accepted
+179bd747b4c185fa,full,fix,G1,"G1 L5 @1472: Bengali Vowel Sign E (U+09C7) is doubled | G1 L5 @1540: Bengali Vowel Sign Uu (U+09C2) follows Bengali Sign Virama (U+09CD), which cannot carry it | G1 L5 @1630: Bengali Vowel Sign E (U+09C7) follows Bengali Vowel Sign Aa (U+09BE), which cannot carry it | G1 L6 @1743: Bengali Vowel Sign E (U+09C7) is separated from its letter by a space",G1 L5 @1472: U+09C7 U+09C7 | G1 L5 @1540: U+09CD U+09C2 | G1 L5 @1630: U+09BE U+09C7 | G1 L6 @1743: U+09C7 U+0020 U+09C7,Acceptable with fix
+2856497430a08269,full,fix,A3;A6;C2,"L1 @1805: Degree Sign (U+00B0) between two Bengali characters; likely legacy Bijoy-font conversion damage | L3 @4547: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 | তার পাশাপাশি দেখা দরকার আমাদের দেশের কেন্দ্রীয় সরকার নরসীমা রাওয়ের যে বাজেট মনমোহনীয় বাজেট, এই বাজেটে শিক্ষাখাতে যে বরাদ্দ সেটা দেখা দরকার । তার পাশাপাশি দেখা দরকার আমাদের দেশের ক্ষেত্রে নরসীমা রাওয়ের যে মনমোহনীয়া যে বাজেট এই বাজেট শিক্ষাখাতে তারা যে বরাদ্দ রেখেছে এটাও দেখা দরকার।",A3 L1 @1805: U+00B0 | A6 L3 @4547: U+09F0,Accepted with fix
+d73bbc2769aaab71,full,clean,,,,Accepted
+f11abbbcd5397d27,full,clean,,,,Accepted
+b2455b1d37ed14f8,full,clean,,,,Accepted
+4b99133af820f195,full,clean,,,,Accepted
+3a60fd8983c8ea22,full,clean,,,,Accepted
+63a1a908974b93be,full,fix,G1,L5 @2608: Bengali Vowel Sign U (U+09C1) is doubled,G1 L5 @2608: U+09C1 U+09C1,Acceptable with fix
+d17afffc430f53d3,full,fix,C2,L4 @1265: sentence repeated 2 times (lines 2 and 4); offset is the first repeat + L4 @1347: sentence repeated 2 times (lines 2 and 4); offset is the first repeat,,Acceptable with fix
+cb146ca4c7c4164a,full,clean,,,,Accepted
+1670dbc449715e08,full,fix,C2;C1,"L3 @136: line repeated 2 times (lines 1 and 3); offset is the first repeat | ""Home/টাইমলাইন/শ্রমিক মায়ের উমা রূপ, বেহালার বড়িশায় দেবী এবার 'পরিযায়ী'"" at offset 61",,Acceptable with fix
+abff62cd526be189,full,clean,D3,"""থ্রি-স্টার"" at offset 35 + ""ক্যারিয়ারের"" at offset 612 + ""ডাউন দ্য ট্র্যাকের"" at offset 696",,Accepted
+e455813094033cf3,full,fix,C2,L3 @438: sentence repeated 2 times (lines 1 and 3); offset is the first repeat + L3 @493: sentence repeated 2 times (lines 1 and 3); offset is the first repeat + L3 @550: sentence repeated 2 times (lines 1 and 3); offset is the first repeat,,Accepted with fix
+fd417a03c4e2eedb,full,clean,D3,"""ফান্ড ক্রাইসিস ম্যানেজমেন্ট"" at offset 3198 + ""মিনিমাম"" at offset 3264 + ""ফান্ড ক্রাইসিস ম্যানেজমেন্ট"" at offset 3348",,Accepted
+1b477d7125381bb5,full,fix,C1,"""শরীরের আর অর্ধেক কোথায়? আপনি জানেন?"" at offset 649",,Acceptable after fix
+96e42bceddce3238,full,clean,,,,Accepted
+ac7d37889cd5b6a7,full,clean,,,,Accepted
+c25dfe0d64e39430,full,clean,,,,Accepted
+c92c5cf70a94c304,full,fix,G1;D3,"L1 @148: Bengali Vowel Sign Ii (U+09C0) follows Bengali Letter E (U+098F), which cannot carry it | ""হেভিওয়েট"" at offset 343 + ""সিনিয়র"" at offset 407 + ""সিনিয়র"" at offset 925",G1 L1 @148: U+098F U+09C0,Acceptable with fix
+846ea3a314fa886d,full,fix,C1,"""কর্ণফুলী মিডিয়া পয়েন্ট, তৃতীয় তলা, ৭০ শহীদ সাংবাদিক সেলিনা পারভীন সড়ক, (নিউ …"" at offset 763",,Acceptable with fix
+c870ec0472382d1a,full,drop,A6;G1;G2;D3;D4,"L4 @702: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 + L5 @1039: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 + L6 @1267: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 | L10 @2538: Bengali Letter Ra (U+09B0), Virama (U+09CD) and Ya (U+09AF) at the start of a word: a word cannot start with a reph, so a ZWJ (U+200D) after Ra was probably lost | ""ओ। उम"" at offset 888 | ""রাক্ত কুমার"" at offset 570",A6 L4 @702: U+09F0 | A6 L5 @1039: U+09F0 | A6 L6 @1267: U+09F0 | A6 L6 @1553: U+09F0 | A6 L6 @1753: U+09F0 | A6 L9 @2176: U+09F0 | A6 L9 @2346: U+09F0 | A6 L12 @2935: U+09F0 | A6 L14 @3637: U+09F0 | A6 L15 @3920: U+09F1 | G1 L6 @1105: U+09C2 U+09C7 | G2 L10 @2538: U+09B0 U+09CD U+09AF | A6: U+09F0 | A6: U+0987 U+09B8 U+09B2 U+09BE U+09F0,Documents contain too many inconsistencies to be considered suitable for training
+29ca709f4c7fa325,full,clean,,,,Accepted
+6f63ea6bccf261f7,full,fix,C1,"""Daily Astrology : আত্মীয়ের থেকে দুঃখের খবর পেতে পারেন এই রাশির জাতকরা ! কেমন যা…"" at offset 164",,Acceptable with fix
+fa5d153e743890ce,full,clean,,,,Accepted
+920dae7f900a1f2e,full,fix,C2;D3;D5,"L26 @11301: sentence repeated 2 times (lines 24 and 26); offset is the first repeat | ""inner drama, which is just the same as anything else that concerns Man, and Suda…"" at offset 0 + ""Parudise Lost and Paradise Regained"" at offset 744 + ""fuct"" at offset 1317 | ""ভরস।"" at offset 7388 + ""মানবকন্য।"" at offset 7759",,Acceptable with fix
+e1fb79e49ccf742f,full,clean,D3,"""World Food Program"" at offset 161 + ""WFP"" at offset 1480 + ""World Food Program"" at offset 1555",,
+152beb1dddf1a418,full,fix,D5;C4,"""উচ্চ-শেষ"" at offset 726 | ""নাম আর্কি হ্যারিসন মাউন্টব্যাটেন-উইন্ডসর এর পিছনে অর্থ কী?"" at offset 1052",,Acceptable with fix
+f9891c02125b57a4,full,clean,,,,Accepted
+b5c0fbd9328a4ac7,full,clean,,,,Accepted
+aaef08f714a954f2,full,fix,A3;A6;G1;G2,"L44 @20630: Bengali Sign Anusvara (U+0982) follows the non-Bengali character Left Parenthesis (U+0028); likely legacy Bijoy-font conversion damage + L66 @36981: Bengali Vowel Sign E (U+09C7) follows the non-Bengali character Devanagari Danda (U+0964); likely legacy Bijoy-font conversion damage | L2 @302: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 + L2 @736: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 + L2 @1234: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 | L2 @919: Bengali Sign Virama (U+09CD) follows Bengali Letter Aa (U+0986), which cannot carry it + L2 @1439: Bengali Sign Virama (U+09CD) follows Bengali Vowel Sign Aa (U+09BE), which cannot carry it + L3 @2071: Bengali Vowel Sign E (U+09C7) follows Bengali Letter U (U+0989), which cannot carry it | L66 @36979: Bengali Letter Ta (U+09A4) + Virama (U+09CD) at the end of a word: probably a khanda-ta that lost its ZWJ (U+200D); the modern form is Khanda Ta (U+09CE)",A3 L44 @20630: U+0028 U+0982 | A3 L66 @36981: U+0964 U+09C7 | A6 L2 @302: U+09F0 | A6 L2 @736: U+09F0 | A6 L2 @1234: U+09F0 | A6 L2 @1297: U+09F0 | A6 L8 @3695: U+09F0 | A6 L9 @4099: U+09F0 | A6 L13 @4999: U+09F0 | A6 L13 @5223: U+09F0 | A6 L13 @5499: U+09F0 | A6 L13 @5578: U+09F0 | A6 L13 @5707: U+09F0 | A6 L18 @7445: U+09F0 | A6 L19 @8105: U+09F0 | A6 L19 @8187: U+09F0 | A6 L24 @9543: U+09F0 | A6 L24 @9592: U+09F0 | A6 L29 @12820: U+09F0 | A6 L29 @13260: U+09F0 | A6 L29 @13283: U+09F0 | A6 L32 @14619: U+09F0 | A6 L34 @16240: U+09F0 | A6 L37 @17431: U+09F0 | A6 L47 @21878: U+09F0 | A6 L51 @24641: U+09F0 | A6 L60 @32793: U+09F0 | A6 L66 @36971: U+09F0 | A6 L69 @38660: U+09F0 | A6 L69 @38686: U+09F0 | A6 L69 @38695: U+09F0 | A6 L69 @38709: U+09F0 | A6 L69 @38735: U+09F0 | A6 L69 @38748: U+09F0 | A6 L69 @39020: U+09F0 | G1 L2 @919: U+0986 U+09CD | G1 L2 @1439: U+09BE U+09CD | G1 L3 @2071: U+0989 U+09C7 | G1 L32 @15047: U+09BE U+09CD | G2 L66 @36979: U+09A4 U+09CD | G1: U+0964 U+09C7 | G1: U+09AC U+09BF U+09B7 U+09A3 U+09CD U+09A8 U+09A4 U+09BE U+09B0,Acceptable with fix
+f928adb3601e633c,full,clean,,,,Accepted
+633216de4c293861,full,fix,C1;D3,"""(ভিডিও)"" at offset 61 | ""ভার্চুয়ালি"" at offset 365",,Acceptable with fix
+003572e06b5fa9ce,full,clean,D3,"""ইনক্লুসিভ ক্যাম্পাস"" at offset 1091",,Accepted
+847e2bf70f4c9930,full,clean,,,,Accepted
+b998ff5bdaeeedb1,full,clean,,,,Accepted
+99930a0fd3606064,full,clean,,,,Accepted
+019bc8ade7858e94,full,clean,,,,Accepted
+ec2b9ef8e04cca8e,full,fix,C2,L16 @1879: sentence repeated 2 times (lines 2 and 16); offset is the first repeat,,Accepted
+58795e3ece83ea7c,full,clean,,,,Accepted
+5584556a2ea2dcfd,full,fix,G1;G2;A3,"L4 @680: Bengali Vowel Sign Aa (U+09BE) follows the non-Bengali character Circumflex Accent (U+005E); likely legacy Bijoy-font conversion damage + L8 @2177: Bengali Vowel Sign I (U+09BF) follows the non-Bengali character Full Stop (U+002E); likely legacy Bijoy-font conversion damage + L8 @2210: Bengali Vowel Sign I (U+09BF) follows the non-Bengali character Full Stop (U+002E); likely legacy Bijoy-font conversion damage | L8 @2173: Bengali Vowel Sign I (U+09BF) is separated from its letter by a space + L8 @2206: Bengali Vowel Sign I (U+09BF) is separated from its letter by a space | L3 @452: Bengali Letter Ra (U+09B0), Virama (U+09CD) and Ya (U+09AF) at the start of a word: a word cannot start with a reph, so a ZWJ (U+200D) after Ra was probably lost + L5 @1079: Bengali Letter Ra (U+09B0), Virama (U+09CD) and Ya (U+09AF) at the start of a word: a word cannot start with a reph, so a ZWJ (U+200D) after Ra was probably lost + L7 @1455: Bengali Letter Ra (U+09B0), Virama (U+09CD) and Ya (U+09AF) at the start of a word: a word cannot start with a reph, so a ZWJ (U+200D) after Ra was probably lostA3: ""শ^ব"" at offset 347|A3: ""ে^র"" at offset 1197|G1: ""ি"" at offset 2175|G1: ""িি"" at offset 2175|G1: ""ি"" at offset 2208|G1: ""িি"" at offset 2208",A3 L4 @680: U+005E U+09BE | A3 L8 @2177: U+002E U+09BF | A3 L8 @2210: U+002E U+09BF | A3 L8 @2227: U+002F U+0982 | G1 L8 @2173: U+099F U+0020 U+09BF | G1 L8 @2206: U+099C U+0020 U+09BF | G2 L3 @452: U+09B0 U+09CD U+09AF | G2 L5 @1079: U+09B0 U+09CD U+09AF | G2 L7 @1455: U+09B0 U+09CD U+09AF | G2 L7 @1486: U+09B0 U+09CD U+09AF | G2 L7 @1692: U+09B0 U+09CD U+09AF | G2 L7 @1723: U+09B0 U+09CD U+09AF | G2 L7 @1790: U+09B0 U+09CD U+09AF | G2 L8 @1888: U+09B0 U+09CD U+09AF | G2 L8 @2060: U+09B0 U+09CD U+09AF | G2 L9 @2322: U+09B0 U+09CD U+09AF | G2 L10 @2625: U+09B0 U+09CD U+09AF | G2 L10 @2795: U+09B0 U+09CD U+09AF | A3: U+09B6 U+005E U+09AC | A3: U+09C7 U+005E U+09B0 | G1: U+09BF | G1: U+09BF U+09BF | G1: U+09BF | G1: U+09BF U+09BF,Acceptable with fix
+3282d5bad325d29e,full,clean,,,,Accepted
+7d872503e9cef4e7,full,clean,,,,Accepted
+245987b2e6c4bad6,full,clean,D3,"""অ্যান্টি-ইনফ্লেমেটরি"" at offset 779 + ""অ্যান্টিঅক্সিডেন্ট"" at offset 804 + ""টক্সিন"" at offset 1257",,Accepted
+3764b1c8077f7bb3,full,clean,,,,Accepted
+3ba1f33fac3e4fc6,full,clean,,,,Accepted
+5c996dfab49e076f,full,drop,A6;G1;A3,"L2 @484: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 + L5 @1296: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 + L5 @1306: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 | L23 @5786: Bengali Vowel Sign Aa (U+09BE) follows Bengali Sign Candrabindu (U+0981), which cannot carry it | ""-^ব"" at offset 426",A6 L2 @484: U+09F0 | A6 L5 @1296: U+09F0 | A6 L5 @1306: U+09F0 | A6 L10 @3181: U+09F0 | A6 L37 @8231: U+09F0 | G1 L23 @5786: U+0981 U+09BE | A3: U+002D U+005E U+09AC,Should be dropped as text does not seem to be in Bengali
+79e0ca4c989640f5,full,fix,C1,"""Please enter your comment! You have entered an incorrect email address! Save my …"" at offset 805",,Acceptable with fix
+f4ed51793bd8b868,full,clean,D3,"""অবসলিট হয়ে"" at offset 1658",,Accepted
+b981c6bc793902df,full,clean,,,,Accepted
+be7c12f7dc0eba30,full,fix,C2;C1,"L15 @1200: sentence repeated 2 times (lines 6 and 15); offset is the first repeat | ""আর্কাইভ / প্রিন্ট সংস্করণ (০১ ফেব্রুয়ারি, ২০১৬)"" at offset 0|C1: ""টি ২০ আন্তর্জাতিক ম্যাচে ব্যক্তিগত সর্বোচ্চ রান (শীর্ষ ১০)"" at offset 49|C1: ""কে কার চেয়ে বড়?"" at offset 108 + ""বন্দিদের বিলাসী জীবন ( ৩১ জানুয়ারি, ২০১৬ )"" at offset 126|C1: ""বিধি প্রণয়নের উদ্যোগ ( ৩০ জানুয়ারি, ২০১৬ )"" at offset 170",,Acceptable with fix
+3094d81e6cc9721c,full,clean,,,,Accepted
+de53cfe7c93b95ef,full,clean,D3,"""DG41RQ"" at offset 2128 + ""DDR3"" at offset 2219 + ""n-vidia 1gb graphics"" at offset 2897",,Accepted
+25ffee0f9716d6e7,full,clean,,,,Accepted
+fc111e5bdcf876ec,full,fix,C1,"""Oneindia এর ব্রেকিং নিউজের জন্য . সারাদিন ব্যাপী চটজলদপান."" at offset 364",,Acceptable with fix
+84232835daf80e9f,full,fix,B4;C1;C2,"L1 @112: literal escape sequence ""\n"": an escaped line break or tab left by an export + L1 @154: literal escape sequence ""\n"": an escaped line break or tab left by an export + L1 @194: literal escape sequence ""\n"": an escaped line break or tab left by an export | ""। blog.bdnews24.com - pioneer blog for citizen journalism in bangladesh\n"" at offset 41 | ""\nবৃহস্পতিবার ২১ জুন ২০১২, ০৪ঃ০০ অপরাহ্ন\n"" at offset 154 | ""কাদের ক্রসফায়ার মানবাধিকার বিরুদ্ধ নয়?"" at offset 0 + ""কাদের ক্রসফায়ার মানবাধিকার বিরুদ্ধ নয়?"" at offset 114",,Acceptable with fix
+21193f61f276a15a,full,fix,C1,"""(দ্য রিপোর্ট/এমএইচএ/ফেব্রুয়ারি ০৪, ২০১৭) পাঠকের মতামতঃ - মুখোমুখি পাকিস্তান এবং…"" at offset 513",,Acceptable with fix
+40bc92a5caa8e45a,full,fix,G2,"L4 @580: Bengali Letter Ra (U+09B0), Virama (U+09CD) and Ya (U+09AF) at the start of a word: a word cannot start with a reph, so a ZWJ (U+200D) after Ra was probably lost",G2 L4 @580: U+09B0 U+09CD U+09AF,Acceptable with fix
+9b27d8e28d3e979d,full,clean,,,,Accepted
+d085df373c288998,full,fix,G1;D3,"L1 @210: Bengali Sign Virama (U+09CD) follows Bengali Vowel Sign Uu (U+09C2), which cannot carry it | ""real feel"" at offset 427|D3: ""UV Index-৭"" at offset 493|D3: ""Weather forecast of Purba Medinipur-Digha"" at offset 779|D3: ""sunset"" at offset 1242|D3: ""sunrise"" at offset 1292|D3: ""real feel-"" at offset 1472",G1 L1 @210: U+09C2 U+09CD,Acceptable with fix
+67f9372993f164d6,partial,fix,A6;G1;C1;D3,"L14 @3671: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 | L14 @3322: Bengali Vowel Sign E (U+09C7) follows Bengali Vowel Sign O (U+09CB), which cannot carry it + L22 @5621: Bengali Vowel Sign E (U+09C7) follows Bengali Letter O (U+0993), which cannot carry it | ""antibody"" at offset 320 + ""Vaccine"" at offset 427 + ""occ 5cc"" at offset 568",A6 L14 @3671: U+09F0 | G1 L14 @3322: U+09CB U+09C7 | G1 L22 @5621: U+0993 U+09C7,Acceptable with fix
+3730fb483260d826,full,clean,,,,Accepted
+a16e7291bad69a10,full,fix,B4;C2;B2,"L1 @152: literal escape sequence ""\n"": an escaped line break or tab left by an export + L1 @359: literal escape sequence ""\n"": an escaped line break or tab left by an export + L1 @413: literal escape sequence ""\n"": an escaped line break or tab left by an export | ""সালমান বিদেশি প্রতিষ্ঠান গ্যারান্টার হলে বন্ড মার্কেট শক্তিশালী হবেঃ সালমান"" at offset 62 | ""\n"" at offset 152|B2: ""\n"" at offset 359 + ""\n"" at offset 413 + ""\n"" at offset 681",,Acceptable with fix
+ce99a8d99b99df5e,full,fix,C2;C1;D3,"L5 @1018: sentence repeated 2 times (lines 2 and 5); offset is the first repeat + L5 @1144: sentence repeated 2 times (lines 2 and 5); offset is the first repeat | ""ওয়েব ডেস্ক, এবিপি আনন্দ Updated at: 01 Jan 1970 05:30 AM (IST)"" at offset 954 | ""news"" at offset 1294",,Acceptable with fix
+67a335cf66e1a9eb,full,clean,,,,Accepted
+975e9170d8259094,full,fix,A3,L1 @155: Bengali Vowel Sign Aa (U+09BE) follows the non-Bengali character Circumflex Accent (U+005E); likely legacy Bijoy-font conversion damage,A3 L1 @155: U+005E U+09BE,
+98bb9578017e6159,full,clean,,,,Accepted
+a29ac4eccbb96bea,full,fix,A6;G1,"L3 @500: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 + L3 @516: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 + L3 @541: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 | L3 @1184: Bengali Vowel Sign Aa (U+09BE) is doubled + L8 @3652: Bengali Vowel Sign Ii (U+09C0) follows Bengali Vowel Sign E (U+09C7), which cannot carry it",A6 L3 @500: U+09F0 | A6 L3 @516: U+09F0 | A6 L3 @541: U+09F0 | A6 L3 @568: U+09F0 | A6 L3 @593: U+09F0 | A6 L3 @646: U+09F0 | A6 L3 @898: U+09F0 | A6 L3 @1005: U+09F0 | A6 L3 @1028: U+09F0 | A6 L3 @1085: U+09F0 | A6 L3 @1158: U+09F0 | A6 L3 @1196: U+09F0 | A6 L3 @1206: U+09F0 | A6 L3 @1236: U+09F0 | A6 L3 @1340: U+09F0 | A6 L3 @1555: U+09F0 | A6 L3 @1562: U+09F0 | A6 L5 @2025: U+0928 | A6 L6 @2491: U+09F0 | A6 L6 @2567: U+09F0 | A6 L6 @2610: U+09F0 | A6 L6 @2618: U+09F0 | A6 L6 @2941: U+09F0 | A6 L6 @2966: U+09F0 | A6 L7 @3289: U+09F0 | A6 L7 @3353: U+09F0 | A6 L7 @3432: U+09F0 | A6 L8 @3553: U+09F0 | A6 L8 @3650: U+09F0 | A6 L8 @3659: U+09F0 | A6 L8 @3712: U+09F0 | G1 L3 @1184: U+09BE U+09BE | G1 L8 @3652: U+09C7 U+09C0,Acceptable with fix
+41279b905463b573,full,clean,,,,Accepted
+3efce0f19f5c8712,full,fix,G2,"L3 @559: Bengali Letter Ra (U+09B0), Virama (U+09CD) and Ya (U+09AF) at the start of a word: a word cannot start with a reph, so a ZWJ (U+200D) after Ra was probably lost + L4 @992: Bengali Letter Ra (U+09B0), Virama (U+09CD) and Ya (U+09AF) at the start of a word: a word cannot start with a reph, so a ZWJ (U+200D) after Ra was probably lost",G2 L3 @559: U+09B0 U+09CD U+09AF | G2 L4 @992: U+09B0 U+09CD U+09AF,Acceptable with fix
+e6af293c2df52ce2,full,clean,,,,Accepted
+3b44404e3ad14d54,full,clean,D3,"""#Trinamool CongressPanchayat Election Results 2023:"" at offset 2",,Accepted
+3fa9e122894f1dea,full,clean,,,,Accepted
+4070fc0f415d97c1,full,clean,,,,Accepted
+709c0b405acceeca,full,fix,C1,"""কর্ণফুলী মিডিয়া পয়েন্ট, তৃতীয় তলা, ৭০ শহীদ সাংবাদিক সেলিনা পারভীন সড়ক, (নিউ …"" at offset 461",,Acceptable with fix
+d04b95aa17e6face,full,clean,,,,Accepted
+09dbe09c3594ca50,full,fix,A6,"L10 @6395: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 + ""action"" at offset 5829",A6 L10 @6395: U+09F0 | A6: U+0061 U+0063 U+0074 U+0069 U+006F U+006E,Acceptable with fix
+7e24bbd21ca4942b,full,fix,C2;A6,"L6 @1136: sentence repeated 2 times (lines 3 and 6); offset is the first repeat + L7 @1251: sentence repeated 2 times (lines 5 and 7); offset is the first repeat | ""ajker rashifal"" at offset 104",A6: U+0061 U+006A U+006B U+0065 U+0072 U+0020 U+0072 U+0061 U+0073 U+0068 U+0069 U+0066 U+0061 U+006C,Acceptable with fix
+a95985f75a9ef4c5,full,fix,A6,"A6: ""اللهم أنت السلام ومنك السلام تباركت ياذا الجلال والإكرام"" at offset 192|A6: ""لا إله إلا الله وحده لاشريك له له الملك وله الحمد وهو على كل شيء قدير، لا مانع ل…"" at offset 567|A6: ""الله لا إله إلا هو الحى القيوم، لا تأخذه سنة ولا نوم، له ما في السموات وما في ال…"" at offset 1234",,Acceptable with fix
+ef4db44f65d753f1,full,clean,,,,Accepted
+b05c708e428ed141,full,clean,,,,Accepted
+5c526626fe12b4aa,full,clean,,,,Accepted
+0fabc33e7581d4e7,full,fix,G1,"L3 @379: Bengali Vowel Sign Aa (U+09BE) follows Bengali Sign Candrabindu (U+0981), which cannot carry it",G1 L3 @379: U+0981 U+09BE,Acceptable with fix
+428a2e7c6a1925cc,full,clean,,,,Accepted
+26352a2e0c428ab9,full,clean,,,,Accepted
+3e80e86dacbc3049,full,clean,,,,Accepted
+7acc8a39bbf7eb53,full,fix,C2,"""ইফতেখার আহমেদ ১৬ (১৩)"" at offset 812",,Acceptable with fix
+d9fb73294bcea228,full,fix,C2;C1,"""গাছের পাতা সবুজ হয় কেন?"" at offset 3016 | ""বাংলানিউজটোয়েন্টিফোর.কম'র প্রকাশিত/প্রচারিত কোনো সংবাদ, তথ্য, ছবি, আলোকচিত্র, র…"" at offset 2824",,Acceptable with fix
+25ec9990fea2aeda,full,clean,,,,Accepted
+59b0a8287c9b876d,full,clean,,,,Acceptable
+251870ed41c8f19c,full,fix,G1;A6;D3,"A6 L4 @841: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0|A6 L9 @3167: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0|A6 L9 @3405: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0|A6 L13 @5225: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0|A6 L13 @5540: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0|A6 L20 @7402: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0|G1 L15 @6106: Bengali Vowel Sign Aa (U+09BE) follows Bengali Letter A (U+0985), which cannot carry it|A6: ""Symptomatic"" at offset 145|D3: ""Symptomatic"" at offset 145|D3: ""Pathology"" at offset 223|D3: ""Pneumonia"" at offset 1042|D3: ""Aspirato"" at offset 1379|D3: ""Pleuritic Pain"" at offset 1106|D3: ""When we have to do with an art whose end is the saving of human life, and negle…"" at offset 6532",A6 L4 @841: U+09F0 | A6 L9 @3167: U+09F0 | A6 L9 @3405: U+09F0 | A6 L13 @5225: U+09F0 | A6 L13 @5540: U+09F0 | A6 L20 @7402: U+09F0 | G1 L15 @6106: U+0985 U+09BE | A6: U+0053 U+0079 U+006D U+0070 U+0074 U+006F U+006D U+0061 U+0074 U+0069 U+0063 U+0020,Acceptable with fix
+93ae15cbd5dcb150,full,fix,A6;G1;D3,"L4 @705: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 + L5 @766: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 + L7 @1264: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 | L5 @917: Bengali Sign Virama (U+09CD) follows Bengali Vowel Sign Aa (U+09BE), which cannot carry it + L9 @1910: Bengali Sign Virama (U+09CD) is separated from its letter by a space + ""্"" at offset 1912 | ""QUESTIONS & ANSWERS"" at offset 2332",A6 L4 @705: U+09F0 | A6 L5 @766: U+09F0 | A6 L7 @1264: U+09F0 | A6 L8 @1554: U+09F0 | A6 L8 @1562: U+09F0 | A6 L9 @1667: U+09F1 | A6 L9 @1862: U+09F1 | A6 L11 @2205: U+09F0 | A6 L14 @2622: U+09F0 | A6 L14 @2775: U+09F0 | A6 L17 @3498: U+09F0 | A6 L17 @3588: U+09F0 | A6 L20 @4332: U+09F0 | A6 L21 @4443: U+09F0 | A6 L27 @5267: U+09F0 | A6 L28 @5426: U+09F0 | G1 L5 @917: U+09BE U+09CD | G1 L9 @1910: U+09A4 U+0020 U+09CD | G1: U+09CD | A6: U+09A6 U+09C7 U+09F0 U+0020 U+09AA U+09C7 U+09B2 U+09C7 U+0020 U+09AA U+09F0 U+09C7 | A6: U+09B8 U+09B8 U+09CD U+09A4 U+09BE U+09F1 U+002C | A6: U+0995 U+09AE U+0021 U+0998 U+09BE U+099F | G1: U+0020 U+09CD | A6: U+09F0 U+09BE | A6: U+0020 U+09F0 U+09BE U+0020 | A6: U+09F0 U+09C7 U+099A | A6: U+09F0 U+09C1 | A6: U+09F0 | A6: U+09F0 | A6: U+09F0 U+09C7 | A6: U+0020 U+09F0 U+09BE U+0020,Acceptable with fix
+0df0638a5681dec5,full,clean,,,,Accepted
+e40684ffb3e7332a,full,clean,,,,Accepted
+141849236159ef56,full,clean,,,,Accepted
+16b9167a8effd7b4,full,clean,,,,Accepted
+957a7ae6250142b3,full,clean,,,,Accepted
+becf95fb9953dba8,full,fix,C1,"""দ্য রিপোর্ট/এসএমআর/এমএইচও/এসবি/জানুয়ারি ৩১, ২০১৪)"" at offset 819",,Acceptable with fix
+8a252dfddf006bf5,full,clean,,,,Accepted
+5d456bc8358db590,full,clean,,,,Accepted
+857b9ec956044f93,full,clean,,,,Accepted
+f83b0bf24e9d2963,full,clean,,,,Accepted
+5c75c7942c7ab662,full,clean,,,,Accepted
+7b430dc3f75c6e2c,full,clean,,,,Accepted
+052cbf6e3357fb50,full,clean,,,,Accepted
+4ab7f86a141495f6,full,clean,D3,"""Windows 7/ 8/ 10"" at offset 241",,Accepted
+323e7cd037bc2dda,full,fix,C1,"""Stay on top of the latest sports news, including cricket and football, from arou…"" at offset 1148",,Acceptable with fix
+2aae40eacd199548,full,clean,,,,Accepted
+4f5ccd98b8ee80fd,full,fix,C1,"""১৪৭/ডি, গ্রীন রোড, ঢাকা-১২১৫। এই ওয়েবসাইটের কোনো লেখা, ছবি, অডিও, ভিডিও অনুমতি…"" at offset 1622",,Acceptable with fix
+fa5b22f894c04c62,full,clean,,,,Accepted
+c654a9fb59d4b1dc,full,clean,,,,Accepted
+ee75f86fa984bc83,full,clean,,,,Accepted
+9702a7673eaa3571,full,clean,,,,Accepted
+a4fc72e7fa6a1b6b,full,clean,,,,Accepted
+1530194906022e0e,full,fix,A3;A5,"L1 @1308: Latin Capital Letter Eth (U+00D0) in a word with Bengali letters; likely legacy Bijoy-font conversion damage + ""মÐল"" at offset 1307 | ""মÐলী"" at offset 1307",L1 @1308: U+00D0 | U+09AE U+00D0 U+09B2 | U+09AE U+00D0 U+09B2 U+09C0,Acceptable with fix
+c8791ab43108541b,full,clean,,,,Accepted
+32029c674c355e1b,full,fix,A3,"""শ^স"" at offset 45 + ""শ^স"" at offset 88 + ""শ^ন"" at offset 258",U+09B6 U+005E U+09B8 | U+09B6 U+005E U+09B8 | U+09B6 U+005E U+09A8,Acceptable with fix
+65670ffb06abfcdc,full,clean,,,,Accepted
+d3ab7bf3efcff498,full,fix,G4,"L8 @855: 11 numbers in Bengali digits and 1 in Latin digits (not next to an English word) in Bengali prose; first Latin-digit number shown, first Bengali-digit number at offset 211; digits may have been partly converted",G4 L8 @855: U+09E8 U+09EE; U+0038,Acceptable with fix
+d31ee497de5880c6,full,clean,,,,Accepted
+b7344cb5bd3ae08c,full,clean,,,,Accepted
+5bc032d07041615b,full,clean,,,,Accepted
+87474cf5305563f8,full,clean,,,,Accepted
+215a82ed419b6090,full,clean,,,,Accepted
+964ddae345e250d1,full,clean,,,,Accepted
+cc8ec99e0a926d27,full,fix,C1,"""পদ্মা লাইফ টাওয়ার (লেভেল -১১) ১১৫, কাজী নজরুল ইসলাম এভিনিউ,"" at offset 2428",,Acceptable with fix
+d9db806d0a1584f7,full,clean,D3,"""campaign"" at offset 845",,Accepted
+f15b0568c6e0bad6,full,clean,,,,Accepted
+53ad1531ea630e8c,full,clean,D3,"""Idleness s the parent of want"" at offset 1692",,Accepted
+a04b82d2393d89d2,full,clean,,,,Accepted
+447089cec4da0ebf,full,fix,C2,L12 @2814: sentence repeated 2 times (lines 3 and 12); offset is the first repeat,,Acceptable with fix
+9f1ee6844c1f2dea,full,fix,G2;D3,"L15 @1992: Bengali Letter Ra (U+09B0), Virama (U+09CD) and Ya (U+09AF) at the start of a word: a word cannot start with a reph, so a ZWJ (U+200D) after Ra was probably lost | ""- #Bbc Bengali"" at offset 0",G2 L15 @1992: U+09B0 U+09CD U+09AF,Acceptable with fix
+02b5f56915dd8c32,full,clean,,,,Accepted
+ab064fe7e282c0d7,full,fix,C1,"""Published at: 27 May 2022 10:11 AM (IST)"" at offset 314",,Acceptable with fix
+9be32b2ec9001bc0,full,clean,D3,"""I. CS"" at offset 3607",,Accpeted
+946b050106df282d,full,fix,A6,"""কবত"" at offset 508|A6: ""সবষের"" at offset 813|A6: ""সবষের"" at offset 813",A6: U+0995 U+09AC U+09A4 | A6: U+09B8 U+09AC U+09B7 U+09C7 U+09B0 U+0020 | A6: U+09B8 U+09AC U+09B7 U+09C7 U+09B0,Acceptable with fix
+09b4d3a4792b8e32,full,fix,D3;C1,"""اخذتم عذاب عظي"" at offset 445 + ""الله غفوررحيم"" at offset 460 + ""ياتها التي قل لمن في ايديكم من الأسرى ان ه في قلو خيرائو تک خیرامتااخذ تعلم الله…"" at offset 476 | ""Babl"" at offset 4291",,Acceptable with fix
+7e68330bda2eab2d,full,clean,,,,Accepted
+6329b3304d0c9dc1,full,fix,A6;C1;D3,"L9 @4300: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 + L9 @4421: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 | ""of the palace of king Ballalsen consists of quadrangular mound of earth, coverin…"" at offset 973 + ""of the palace of king Ballalsen consists of quadrangular mound of earth, coverin…"" at offset 973 | ""God Almighty &c. The prophet, on whom be the blessings of God, says &c. **. The …"" at offset 3889 + ""God Almighty &c. The prophet, on whom be the blessings of God, says &c. **. The …"" at offset 3889 + ""(Copy of the Inscription on the mosque.)"" at offset 4190",A6 L9 @4300: U+09F0 | A6 L9 @4421: U+09F0,Acceptable with fix
+03e4914e3439cf8f,full,clean,,,,Accepted
+3ecb6621119fb507,full,fix,A6;D3,"L5 @916: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 | ""لها فظين كرا ما کا تبين يعلمون ما تفعلون"" at offset 195|D3: ""لها فظين كرا ما کا تبين يعلمون ما تفعلون"" at offset 195|D3: ""Lo"" at offset 791",A6 L5 @916: U+09F0,Acceptable with fix
+96c193554be5b64c,full,fix,A3;G1;F1;A3,"L2 @385: Currency Sign (U+00A4), Latin Small Ligature Oe (U+0153) in a word with Bengali letters; likely legacy Bijoy-font conversion damage|G1 L2 @413: Bengali Vowel Sign E (U+09C7) follows Bengali Sign Candrabindu (U+0981), which cannot carry it|F1: email at offset 0|A3: ""ি¤œম"" at offset 384",A3 L2 @385: U+00A4 U+0153 | G1 L2 @413: U+0981 U+09C7 | A3: U+09BF U+00A4 U+0153 U+09AE,Acceptable with fix
+13a8fb1392beb2ed,full,clean,,,,Accept
+a513d19161d817dd,full,fix,C1,"""বিবিসি, দ্য গার্ডিয়ান।"" at offset 221",,Acceptable with fix
+57bf9c5b6c29f2dd,full,clean,,,,Accepted
+e94defe9bf997550,full,clean,,,,Accepted
+c2ffe0cae4375830,full,clean,D3,"""ব্লেন্ড"" at offset 155",,Accepted
+ae514bf1e320bdad,full,fix,G2;C1,"L18 @4129: Bengali Letter Ra (U+09B0), Virama (U+09CD) and Ya (U+09AF) at the start of a word: a word cannot start with a reph, so a ZWJ (U+200D) after Ra was probably lost | ""#CricketerMS Dhoni-Amitabh Bachchan:"" at offset 1",G2 L18 @4129: U+09B0 U+09CD U+09AF,Acceptable with fix
+d788f5574049285c,full,clean,,,,Accepted
+bc6696b5b2d5f7dd,full,clean,,,,Accepted
+37738476c6ec5cb6,full,clean,,,,Accepted
+87b4711061eccfcb,full,clean,,,,Accepted
+6726c5bbb1d3138f,full,clean,,,,Accepted
+d24929103f07c661,full,clean,,,,Accepted
+77da896277330125,full,clean,,,,Accepted
+1dfe68bbcae5d4bf,full,clean,,,,Accepted
+6415c9a3e35f529c,full,clean,,,,Accepted
+321abafe7d5092ff,full,clean,,,,Accepted
+a6cca64deae23ba9,full,clean,,,,Accepted
+253d0b9765769a96,full,clean,,,,Accepted
+125498c7de322aa6,full,clean,,,,Accepted
+82203acc887fabda,full,fix,A6,"L8 @2015: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0",A6 L8 @2015: U+09F0,Acceptable with fix
+b8ec2be7b83efca5,full,fix,A6;G1;G4,"L7 @2306: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 + L12 @7008: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 + L12 @7152: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 | L9 @2502: Bengali Sign Virama (U+09CD) follows Bengali Sign Visarga (U+0983), which cannot carry it + L15 @9515: Bengali Sign Virama (U+09CD) follows Bengali Letter Khanda Ta (U+09CE), which cannot carry it | L12 @7539: 2 numbers in Bengali digits and 1 in Latin digits (not next to an English word) in Bengali prose; first Latin-digit number shown, first Bengali-digit number at offset 2010; digits may have been partly converted",A6 L7 @2306: U+09F0 | A6 L12 @7008: U+09F0 | A6 L12 @7152: U+09F0 | G1 L9 @2502: U+0983 U+09CD | G1 L15 @9515: U+09CE U+09CD | G4 L12 @7539: U+09E7 U+09E9 U+09E7 U+09E7; U+0031,Acceptable with fix
+2bef9f84ccadc935,full,clean,,,,Accepted
+fc44be28d237bf38,full,fix,A3,"L5 @1323: Latin Capital Letter Eth (U+00D0) in a word with Bengali letters; likely legacy Bijoy-font conversion damage + ""াÐব"" at offset 1322 + ""তাÐবে"" at offset 1321",A3 L5 @1323: U+00D0 | A3: U+09BE U+00D0 U+09AC | A3: U+09A4 U+09BE U+00D0 U+09AC U+09C7 U+0020,Acceptable with fix
+552b4a860fe3d45d,full,fix,C1,"""~ www.amab"" at offset 1614",,Acceptable with fix
+c28196b9fd75bc7c,full,fix,A6,"L1 @12: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 + L1 @460: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 + L1 @564: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0",A6 L1 @12: U+09F0 | A6 L1 @460: U+09F0 | A6 L1 @564: U+09F0 | A6 L1 @574: U+09F0 | A6 L1 @599: U+09F0 | A6 L1 @672: U+09F0 | A6 L1 @693: U+09F0 | A6 L1 @749: U+09F0 | A6 L1 @833: U+09F0 | A6 L1 @930: U+09F0 | A6 L1 @970: U+09F0 | A6 L1 @1641: U+09F0 | A6 L1 @1667: U+09F0 | A6 L1 @1959: U+09F0 | A6 L1 @1993: U+09F0 | A6 L3 @2529: U+09F0 | A6 L3 @2654: U+09F0 | A6 L3 @2670: U+09F0 | A6 L3 @2810: U+09F0 | A6 L3 @2959: U+09F0 | A6 L3 @3067: U+09F0 | A6 L3 @3118: U+09F0 | A6 L4 @3568: U+09F0 | A6 L5 @3880: U+09F0 | A6 L5 @3897: U+09F0 | A6 L5 @3971: U+09F0 | A6 L5 @4303: U+09F0 | A6 L5 @4417: U+09F0 | A6 L9 @4859: U+09F0 | A6 L9 @4910: U+09F0 | A6 L11 @5163: U+09F0 | A6 L11 @5175: U+09F0 | A6 L11 @5199: U+09F0 | A6 L14 @5983: U+09F0 | A6 L14 @6024: U+09F0 | A6 L14 @6051: U+09F0,Acceptable with fix
+c13d8e8540a9d1f5,full,fix,C1;D3,"""↑ ""Careers in Chemistry: Inorganic Chemistry""। American Chemical Society। ২৯ অক্…"" at offset 247 | ""C-H"" at offset 203",,Acceptable with fix
+13246d94767afc0c,full,clean,,,,Accepted
+9b0e768f54da9c03,full,clean,,,,Accepted
+561cc65825319e6e,full,clean,D3,"""OMR Sheet"" at offset 456|D3: ""Partha Chatterjee"" at offset 1292|D3: ""OMR"" at offset 1477",,Accepted
+9e72d01f0183ee38,full,clean,D3,"""Check here to copy link"" at offset 1124",,Acceped
+60c8969d1910969c,full,fix,G1,L17 @4526: Bengali Vowel Sign U (U+09C1) is doubled,G1 L17 @4526: U+09C1 U+09C1,Accept
+852fbbe4d8ccf8dd,full,fix,C1,"""Bangla Book.org"" at offset 4813",,Acceptable with fix
+9433ce52a57fd324,full,fix,C1,"""🕧Published on:"" at offset 0",,Acceptable with fix
+0ae954f7faa76bca,full,clean,,,,Accepted
+a54f7b9f198679f7,full,clean,,,,Accepted
+8e75560ea6d4e0f7,full,fix,G4;F1,"L3 @350: 10 numbers in Bengali digits and 2 in Latin digits (not next to an English word) in Bengali prose + first Latin-digit number shown + first Bengali-digit number at offset 52 + digits may have been partly converted | phone number at offset 350 + phone number at offset 350 + Unknown at offset 366",G4 L3 @350: U+09E7 U+09EF U+09EF U+09EF; U+0039 U+0038 U+0034 U+0033 U+0032 U+0030 U+0035 U+0039 ... (10 code points),Acceptable with fix
+395fa2798f643eb5,full,clean,,,,Accepted
+ee91de69c73aa6bd,full,fix,C2;G1,"L3 @409: sentence repeated 2 times (lines 2 and 3); offset is the first repeat + L24 @7057: sentence repeated 2 times (lines 23 and 24); offset is the first repeat + L24 @7169: sentence repeated 2 times (lines 23 and 24); offset is the first repeat | L13 @3529: Bengali Vowel Sign Aa (U+09BE) follows Bengali Letter Aa (U+0986), which cannot carry it + L17 @4633: Bengali Vowel Sign Aa (U+09BE) follows Bengali Letter Aa (U+0986), which cannot carry it + L17 @4843: Bengali Vowel Sign Aa (U+09BE) follows Bengali Letter Aa (U+0986), which cannot carry it",G1 L13 @3529: U+0986 U+09BE | G1 L17 @4633: U+0986 U+09BE | G1 L17 @4843: U+0986 U+09BE | G1 L21 @6387: U+09C1 U+09C3,Acceptable with fix
+bc1118ee052c68f2,full,clean,,,,Accepted
+86a6bfdd63e6e548,full,fix,A3;A6,"L1 @803: Double Dagger (U+2021) in a word with Bengali letters; likely legacy Bijoy-font conversion damage + ""ি•"" at offset 640 + ""ল•"" at offset 726 | L1 @450: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 + L1 @664: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0A6: ""শ্ৰীযুত দেবপ্রসাদ ঘোষ বজমোহন স্কুল থেকে প্রবেশিকা পবাক্ষায ও কলেজ থেকে হণ্টাবমিড…"" at offset 448",A3 L1 @803: U+2021 | A6 L1 @450: U+09F0 | A6 L1 @664: U+09F0 | A3: U+09BF U+2022 U+0020 | A3: U+09B2 U+2022 U+0020 | A3: U+09C7 U+2022 U+0020 | A3: U+09AF U+2021 U+09AE | A6: U+09B6 U+09CD U+09F0 U+09C0 U+09AF U+09C1 U+09A4 U+0020 U+09A6 U+09C7 U+09AC U+09AA U+09CD U+09B0 U+09B8 U+09BE U+09A6 U+0020 U+0998 U+09CB,Accepted
+8d3b898a86f08629,full,fix,C2;G4;D3;C1,"L10 @1429: sentence repeated 2 times (lines 7 and 10); offset is the first repeat + L11 @1572: sentence repeated 2 times (lines 4 and 11); offset is the first repeat | L3 @311: 28 numbers in Bengali digits and 4 in Latin digits (not next to an English word) in Bengali prose; first Latin-digit number shown, first Bengali-digit number at offset 534; digits may have been partly converted | ""12377/"" at offset 311 + ""22501"" at offset 336 + ""13281"" at offset 396 | ""↑ ""Introducing Burimari""। lonely planet। ২১ ডিসেম্বর ২০১১ তারিখে মূল থেকে আর্কাই…"" at offset 493",G4 L3 @311: U+09E8 U+09E7; U+0031 U+0032 U+0033 U+0037 U+0037,Acceptable with fix
+5af9fc72c37a45b8,full,clean,,,,Accepted
+0970dceaa25e3a6e,full,fix,C1,"""পদ্মা লাইফ টাওয়ার (লেভেল -১১)"" at offset 913|C1: ""১১৫, কাজী নজরুল ইসলাম এভিনিউ,"" at offset 944",,Acceptable with fix
+4f1a9b6cfa9bfd84,full,fix,C1,"""নিউজ১৮ বাংলায় সবার আগে পড়ুন ব্রেকিং নিউজ। থাকছে দৈনিক টাটকা খবর, খবরের লাইভ আপ…"" at offset 2690",,Acceptable with fix
+32672c4e9d40dcb4,full,fix,C1;D3,"""carwale. com"" at offset 653|D3: ""SUV"" at offset 714",,Acceptable with fix
+aff4b1672b5f55db,full,fix,C1;B4;D3,"L1 @46: literal escape sequence ""\n"": an escaped line break or tab left by an export + L1 @124: literal escape sequence ""\n"": an escaped line break or tab left by an export + L1 @1340: literal escape sequence ""\n"": an escaped line break or tab left by an export | ""Bangla Books"" at offset 23 + ""Evolutionist."" at offset 168|B4: ""\n"" at offset 2282",,Acceptable with fix
+7363034b697f2c97,full,clean,,,,Accepted
+40b35212505fc042,full,clean,,,,Accepted
+be75410bfbffced6,full,clean,D3,"""nation"" at offset 1648",,Accepted
+5dace772a903879d,full,fix,A3,L6 @695: Bengali Vowel Sign Aa (U+09BE) follows the non-Bengali character Latin Capital Letter A (U+0041); likely legacy Bijoy-font conversion damage,A3 L6 @695: U+0041 U+09BE,Acceptable with fix
+99ce3f273b237b32,full,clean,D3,"""দোলগোপ্রুদনিনস্কোয়ে অটোম্যাটিক কনস্ট্রাকশন ব্যুরো"""" at offset 2709",,Accepted
+f343bb9f8e2aa074,full,clean,,,,Accepted
+3e97bd455a21b3b1,full,fix,G1,"""ঃ"" at offset 1979",G1: U+0020 U+0983 U+0020,Acceptable with fix
+80ff514fd37a3c36,full,fix,A3;G2,"L8 @1741: Latin Small Ligature Oe (U+0153) in a word with Bengali letters; likely legacy Bijoy-font conversion damage + L8 @1765: Latin Small Ligature Oe (U+0153) in a word with Bengali letters; likely legacy Bijoy-font conversion damage + ""িœত"" at offset 1740 | L9 @1853: Bengali Letter Ra (U+09B0), Virama (U+09CD) and Ya (U+09AF) at the start of a word: a word cannot start with a reph, so a ZWJ (U+200D) after Ra was probably lost ",A3 L8 @1741: U+0153 | A3 L8 @1765: U+0153 | G2 L9 @1853: U+09B0 U+09CD U+09AF | A3: U+09BF U+0153 U+09A4 | A3: U+09BF U+0153 U+09A4,Acceptable with fix
+074317b48b23cc0c,full,clean,,,,Accepted
+9aa7ee6652b511a0,full,fix,A6,L13 @480: word mixes Bengali and Latin letters; the Latin letter is Latin Small Letter S (U+0073) + L13 @490: word mixes Bengali and Latin letters; the Latin letter is Latin Small Letter S (U+0073) + L13 @499: word mixes Bengali and Latin letters; the Latin letter is Latin Small Letter S (U+0073),A6 L13 @480: U+0073 | A6 L13 @490: U+0073 | A6 L13 @499: U+0073 | A6 L13 @550: U+0073 | A6 L14 @570: U+0073 | A6 L14 @616: U+0073 | A6 L14 @634: U+0073 | A6 L15 @652: U+0073 | A6 L15 @658: U+0073 | A6 L15 @682: U+0073 | A6 L15 @711: U+0073 | A6 L15 @729: U+0073 | A6 L16 @742: U+006C | A6 L16 @754: U+0073 | A6 L16 @770: U+0073 | A6 L16 @779: U+0073 | A6 L16 @783: U+0073 | A6 L16 @789: U+0073,Acceptable with fix
+8547101c0c175c10,full,clean,,,,Accepted
+125b5ad550cabcc0,full,fix,C1,"""Home"" at offset 0|C1: ""Next article"" at offset 4031",,Acceptable with fix
+3d9a6fa3ed2fe58c,full,clean,,,,Accepted
+0197adf150b9775f,full,clean,,,,Accepted
+ccc51da5eb6d2694,full,fix,A6;G1;A3,"L2 @139: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 + L3 @256: word contains Bengali Letter Ra With Lower Diagonal (U+09F1), the Assamese wa; Bengali writes Ba or O + L5 @879: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 | L3 @229: Bengali Vowel Sign Aa (U+09BE) follows Bengali Sign Candrabindu (U+0981), which cannot carry it | ""^ম"" at offset 1461",A6 L2 @139: U+09F0 | A6 L3 @256: U+09F1 | A6 L5 @879: U+09F0 | A6 L5 @882: U+09F0 | A6 L5 @885: U+0066 | A6 L6 @1098: U+09F0 | A6 L6 @1144: U+09F0 | A6 L16 @3599: U+09F0 | A6 L17 @3675: U+09F0 | G1 L3 @229: U+0981 U+09BE | A3: U+0020 U+005E U+09AE,Acceptable with fix
+c6a731b53ef4dfcf,full,clean,,,,Accepted
+e72ee6097e58d60f,full,clean,,,,Accepted
+0d5d431fd027a9f4,full,clean,D3,"""This article is in Bangla language. It is about Ashutosh Aman's new record in Ra…"" at offset 6106",,Accepted
+b9d2ee3c74e32af3,full,clean,,,,Accepted
+cc1ae1381e41ef37,full,clean,,,,Accepted
+3aa855ee7df2338d,full,clean,,,,Accepted
+03f849ed6b83064b,full,clean,,,,Accepted
+a6d1614133bffcee,full,clean,,,,Accepted
+5e8c35a717da0b56,full,clean,,,,Accepted
+d2eea3aa9d8e2645,full,clean,D3,"""Dhaka FM"" at offset 772",,Accepted
+24cc3171dbca20d9,full,clean,,,,Accepted
+9922512eef9e489a,full,clean,D3,"""North 24 Parganas Weather Forecast:"" at offset 0 + ""North 24 Parganas Weather Forecast:"" at offset 115 + ""North 24 Parganas Weather Forecast:"" at offset 202",,Accepted
+f8ddb7b0d5e384aa,full,fix,C1,"""(দ্য রিপোর্ট/আরজেড/০১ অক্টোবর, ২০২১)"" at offset 2545",,Acceptable with fix
+cac8f2471efc547a,full,clean,D3,"""القرآن الكريم"" at offset 3671 + ""سجدة"" at offset 3707 + ""atin"" at offset 3726",,Accepted
+e545930c47688f71,full,clean,D3,"""ক্রাইম"" at offset 922",,Accepted
+db85e2781ca5af3a,full,clean,,,,Accepted
+059f699d6394cd77,full,clean,,,,Accepted
+ae228a0cbe2b097e,full,fix,B4,"L1 @580: literal escape sequence ""\n"": an escaped line break or tab left by an export",,Acceptable with fix
+4d179577267e44fe,full,clean,,,,Accepted
+6a78831120df0e69,full,clean,D3,"""unsubstantiated"" at offset 3097",,Acceptable with fix
+8280f2f65d31c666,full,fix,C1,"""আরও পড়ুনঃ"" at offset 1354",,Acceptable with fix
+a62a588827cd34bc,full,clean,,,,Accepted
+5b0ac49909371d49,full,clean,,,,Accepted
+94cd6ea9af554abc,full,clean,,,,Accepted
+57054cac22b4baca,full,clean,,,,Accepted
+1b8988b910eaab39,full,clean,,,,Accepted
+46a811d44c039640,full,fix,D3;C1,"""Suvendu Adhikari"" at offset 212 | ""Published at: 01 Nov 2021 07:13 PM (IST)"" at offset 232",,Acceptable with fix
+5da05410d37bf5b2,full,clean,,,,Accepted
+5315e2b036db214c,full,clean,D3,"""(Aries Love Horoscope)"" at offset 159 | ""Taurus Love Horoscope)"" at offset 493 + ""(Gemini Love Horoscope)"" at offset 907 + ""(Cancer Love Horoscope)"" at offset 1230",,Accepted
+11af22f1a921d7ad,full,clean,,,,Acceptable with fix
+2309cdf53d252bd5,full,clean,,,,Accepted
+e46b4660ad0d14b8,full,clean,,,,Accepted
+f6fbab13b4b3b443,full,fix,C2;D3,"L2 @181: sentence repeated 2 times (lines 1 and 2); offset is the first repeat | ""GI"" at offset 767",,Accepted
+cef55fe3a8415428,full,fix,C2;D3,"L2 @343: sentence repeated 2 times (lines 1 and 2); offset is the first repeat + L2 @370: sentence repeated 2 times (lines 1 and 2); offset is the first repeat + C2 L2 @411: sentence repeated 2 times (lines 1 and 2); offset is the first repeat | ""ITBP"" at offset 193 + ""ITBP"" at offset 445 + ""ITBP"" at offset 509",,Acceptable with fix
+fadb66be94959179,full,fix,A3;G1,"L4 @1612: Combining Macron (U+0304) in a word with Bengali letters; likely legacy Bijoy-font conversion damage + L8 @3506: Combining Macron (U+0304), Latin Small Ligature Oe (U+0153) in a word with Bengali letters; likely legacy Bijoy-font conversion damage + L12 @5981: Bengali Sign Anusvara (U+0982) follows the non-Bengali character Apostrophe (U+0027); likely legacy Bijoy-font conversion damage | L4 @1609: Bengali Sign Virama (U+09CD) is separated from its letter by a space + L7 @2989: Bengali Vowel Sign U (U+09C1) follows Bengali Vowel Sign E (U+09C7), which cannot carry it + L8 @3508: Bengali Vowel Sign Aa (U+09BE) is doubled",A3 L4 @1612: U+0304 | A3 L8 @3506: U+0304 U+0153 | A3 L12 @5981: U+0027 U+0982 | A3 L15 @7375: U+0304 | G1 L4 @1609: U+0985 U+0020 U+09CD | G1 L7 @2989: U+09C7 U+09C1 | G1 L8 @3508: U+09BE U+09BE | G1 L8 @3705: U+09CD U+0982 | G1 L12 @5705: U+0985 U+0020 U+0982 | G1 L12 @5719: U+09CE U+0020 U+0982 | G1 L12 @5753: U+09CE U+0983 | G1 L12 @5761: U+09A7 U+0020 U+0981 | G1 L12 @5768: U+09CE U+0982 | G1 L12 @5771: U+0983 U+09C1 | G1 L12 @5817: U+0982 U+0020 U+0982 | G1 L12 @5832: U+0983 U+0020 U+0983 | G1 L12 @5843: U+0983 U+09C1 | G1 L12 @5905: U+09BC U+0020 U+0982 | G1 L12 @5917: U+0983 U+0020 U+0983 | G1 L12 @5955: U+09AD U+0020 U+0983 | G1 L12 @6024: U+09AD U+0020 U+0983 | G1 L12 @6057: U+09AD U+0020 U+0982 | G1 L12 @6097: U+09CE U+0982 | G1 L12 @6100: U+0983 U+09C1 | G1 L15 @7372: U+09B9 U+0020 U+09CD | G1 L20 @8913: U+09CE U+0020 U+0982 | G1: U+09CD | A3: U+09CD U+0304 U+09B0 | A3: U+0020 U+0304 U+0153 U+09BE | A3: U+0153 U+09BE | G1: U+0982 U+09BF | G1: U+0982 | G1: U+0982 | G1: U+0981 | G1: U+0982 | G1: U+0982 | G1: U+0982 | G1: U+09CD | A3: U+09CD U+0304 U+09B0 | G1: U+0982 | G1: U+09AA U+09C7 U+0987 U+09A8 U+09CD U+099F U+09CD U+0982 U+09BF | G1: U+0985 U+0020 U+0982 U+09AC U+09BF U+09AC U+0983 U+0020 U+09AB U+09CE U+09AC U+09A7 U+09B8 U+09AC U+09CE U+0020 U+0982 U+09B0 U+0983 U+0981 | G1: U+0020 U+0982 U+09B0 U+0983 U+0981 U+09A7 U+0983 U+09AC U+09AB U+0020 U+09A7 U+0983 U+0020 U+09A7 U+0983 U+0020 U+0983 U+09AF U+09AC U+0020 | G1: U+0020 U+0982 U+09B0 U+0983 U+0981 U+09A7 U+0983 U+09AC U+09AB U+0020 U+09A7 U+0983 U+0020 U+0983 | G1: U+0020 U+0983 U+09AF U+09AC U+0020 U+09B9 U+09A7 U+0983 U+09B0 U+09A1 U+09BC U+09B9 U+09A7 U+09B7 U+0020 U+098F U+0981 U+09AC U+0982 U+0983 | G1: U+0020 U+0983 U+09AF U+09AC | G1: U+0020 U+0983 U+09AF U+09AC | G1: U+0020 U+0982 U+09AA U+0981 U+09B7 U+09A2 U+09BC U+0983 U+0981 U+09CE U+09AC | G1: U+099F U+09B9 U+09B0 U+09BE U+09AC U+09CE U+0982 U+09B0 U+0983 U+09C1 | G1: U+0020 U+0982 U+09AA U+0981 U+09B7 U+09A2 U+09BC U+0983 U+0981 U+09CE U+09AC,Acceptable with fix
+09d7fcbaee5c6624,full,clean,,,,Accepted
+d951bceda814ad85,full,clean,,,,Accepted
+ca4327212b07559f,full,fix,C1,"""কর্ণফুলী মিডিয়া পয়েন্ট, তৃতীয় তলা, ৭০ শহীদ সাংবাদিক সেলিনা পারভীন সড়ক, (নিউ …"" at offset 1663",,Acceptable with fix
+7196d31657f5a6f3,full,fix,D3;C1,"""32"" at offset 38 + ""43"" at offset 51 + ""DTX"" at offset 209 | ""Like this:"" at offset 1789 + ""DTX"" at offset 1583",,Acceptable with fix
+706c7edc4a6ffbfe,full,clean,,,,Accepted
+6ad29d53ee6816d0,full,fix,C1,"""First published"" at offset 993 + ""নিউজ১৮ বাংলায় সবার আগে পড়ুন ব্রেকিং নিউজ। থাকছে দৈনিক টাটকা খবর, খবরের লাইভ আপ…"" at offset 1010",,Accepted
+b48dcc6627ca260e,full,fix,C1;D3,"""xy"" at offset 33 | ""the limit and continuity"" at offset 814 + ""sphere"" at offset 382 + ""xo, y"" at offset 987",,Acceptable with fix
+4a97016ce958a8ba,full,clean,D3,"""sushant singh rajput"" at offset 40 + ""karan johar"" at offset 121 + ""Shahrukh khan"" at offset 299",,Accepted
+8a82a545913a2a14,full,fix,B4;C2;D3,"L1 @22: literal escape sequence ""\n"": an escaped line break or tab left by an export + L1 @60: literal escape sequence ""\n"": an escaped line break or tab left by an export + L1 @86: literal escape sequence ""\n"": an escaped line break or tab left by an export | L1 @1055: sentence repeated 2 times (lines 1 and 1); offset is the first repeat | ""Monster"" at offset 1917",,Acceptable with fix
+ea91f0eb267a33e7,full,clean,,,,Accepted
+2938333bd26af8dd,full,fix,C1,"""১৪৭/ডি, গ্রীন রোড, ঢাকা-১২১৫। এই ওয়েবসাইটের কোনো লেখা, ছবি, অডিও, ভিডিও অনুমত…"" at offset 1377",,Acceptable with fix
+6598882a3e8a8658,full,clean,D3,"""Bjp"" at offset 29 + ""Subrata Saha"" at offset 57 + ""Tmc"" at offset 297",,Accept
+82a930210e1c4599,full,clean,,,,Accepted
+f313410531efa4e0,full,clean,,,,Accepted
+156761b1ebd77378,full,clean,,,,Accepted
+968f2a4c6a08b9fc,full,clean,,,,Accepted
+38bca32420dcfac2,full,fix,C2,L2 @179: sentence repeated 2 times (lines 1 and 2); offset is the first repeat + L2 @225: sentence repeated 2 times (lines 1 and 2); offset is the first repeat + L2 @263: sentence repeated 2 times (lines 1 and 2); offset is the first repeat,,Acceptable with fix
+704157870c38f059,full,fix,D3;C1,"""Bangla News Dunia"" at offset 0 + ""Bangla News Dunia"" at offset 0",,Acceptable with fix
+4205024583224acf,full,fix,G1,"L3 @390: Bengali Vowel Sign E (U+09C7) is separated from its letter by a space + ""ে"" at offset 392",G1 L3 @390: U+09BE U+0020 U+09C7 | G1: U+09C7,Acceptable with fix
+c41002cdaedfc259,full,clean,D3,"""DA"" at offset 53 + ""Eden Gardens)"" at offset 244 + ""Kolkata Knight Riders"" at offset 472",,Accepted
+43cc703e66c35717,full,clean,D3,"""UUPTWA"" at offset 94 + ""Pay scale revision"" at offset 1637",,Accepted
+d871dd34e3a5245d,full,clean,,,,Accepted
+7259340463286b83,full,clean,,,,Accepted
+b8db1282a6182d9e,full,clean,,,,Accepted
+6b50425ffc3e8d60,full,fix,C2,"L1 @32: sentence repeated 3 times (lines 1, 1 and 2); offset is the first repeat",,Acceptable with fix
+1518efa8db19e664,full,clean,,,,Accepted
+b2fd0e11f1c39c45,full,fix,C2;D3,"L3 @490: sentence repeated 2 times (lines 1 and 3); offset is the first repeat + L3 @547: sentence repeated 2 times (lines 1 and 3); offset is the first repeat + L3 @621: sentence repeated 2 times (lines 1 and 3); offset is the first repeat | ""RPF"" at offset 744",,Accepted
+5bd0806b99cc1837,full,clean,D3,"""https://prb. wb. gov. in"" at offset 783|D3: ""www. wbpolice. gov. in"" at offset 841",,Accepted
+cc7ec05f01845dc7,full,clean,,,,Accepted
+c03dbc4ed2f2858d,full,fix,G1,L1 @4: Bengali Vowel Sign Aa (U+09BE) is doubled,G1 L1 @4: U+09BE U+09BE,Acceptable with fix
+2e9e5e709a125372,full,clean,,,,Accepted
+014177f87d9c3c86,full,clean,,,,Accepted
+f4424be055b0e9b0,full,clean,D3,"""CERN"" at offset 509",,Accepted
+c78b3b76e23d463e,full,clean,,,,Accepted
+a58c7e63acb9d715,full,clean,,,,Accepted
+4fde42ef89761a0d,full,fix,A6;G1,"L2 @395: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 + L2 @700: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 + L3 @1059: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 | L7 @2839: Bengali Vowel Sign E (U+09C7) follows Bengali Letter I (U+0987), which cannot carry it + L8 @3274: Bengali Vowel Sign Aa (U+09BE) follows Bengali Digit Zero (U+09E6), which cannot carry it",A6 L2 @395: U+09F0 | A6 L2 @700: U+09F0 | A6 L3 @1059: U+09F0 | A6 L7 @2954: U+09F0 | A6 L11 @4199: U+09F0 | A6 L12 @4361: U+09F0 | A6 L15 @4797: U+09F0 | A6 L15 @5084: U+09F0 | A6 L16 @6349: U+09F0 | A6 L16 @6843: U+09F0 | A6 L16 @6883: U+09F0 | G1 L7 @2839: U+0987 U+09C7 | G1 L8 @3274: U+09E6 U+09BE,Acceptable with fix
+e72369dac4c98264,full,clean,D3;D3,"""Panchayat Election 2023 :"" at offset 231 + ""Panchayat Election 2023"" at offset 321",,Accepted
+f707ccc32efc41ca,full,clean,,,,Accepted
+054c9b5864598da0,full,clean,D3,"""গ্র্যান্ড পিক্সঃ বিপিএম(বিট পার মিনিটস"" at offset 641",,Accepted
+afa1e2b9d4088e5a,full,fix,A6,"L2 @27: word mixes Bengali and Devanagari letters; the Devanagari letter is Devanagari Letter Ga (U+0917) + L8 @1543: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 + L8 @2368: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0",A6 L2 @27: U+0917 | A6 L8 @1543: U+09F0 | A6 L8 @2368: U+09F0,Acceptable with fix
+bae9d12a70599593,full,clean,,,,Accepted
+7da92e6838c4167c,full,clean,,,,Accepted
+a9e407919b55e19d,full,clean,,,,Accepted
+c79348ca33c6df7d,full,clean,,,,Accepted
+8de071ab3fb3fd1e,full,clean,,,,Accepted
+a3a57e65293cccae,full,clean,D3,"""nation"" at offset 574",,Accepted
+590ad9b03f3657cd,full,clean,,,,
+d8d2e30e131d6660,full,clean,,,,Accepted
+bf4fd3ccaf9e861d,full,fix,A3;A6;G1;B4,"L2 @1001: Bengali Vowel Sign E (U+09C7) follows the non-Bengali character Bullet (U+2022); likely legacy Bijoy-font conversion damage + L14 @5226: Bengali Vowel Sign E (U+09C7) follows the non-Bengali character Bullet (U+2022); likely legacy Bijoy-font conversion damage + L16 @5608: Bengali Vowel Sign E (U+09C7) follows the non-Bengali character Bullet (U+2022); likely legacy Bijoy-font conversion damage | L2 @1499: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 + L13 @4565: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 + L14 @4741: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 | L2 @1497: Bengali Vowel Sign Ii (U+09C0) follows Bengali Vowel Sign I (U+09BF), which cannot carry it + L16 @5590: Bengali Vowel Sign Aa (U+09BE) follows Bengali Letter Aa (U+0986), which cannot carry it | ""♠"" at offset 3512",A3 L2 @1001: U+2022 U+09C7 | A3 L14 @5226: U+2022 U+09C7 | A3 L16 @5608: U+2022 U+09C7 | A6 L2 @1499: U+09F0 | A6 L13 @4565: U+09F0 | A6 L14 @4741: U+09F0 | A6 L14 @4994: U+09F0 | A6 L14 @5279: U+09F0 | A6 L16 @5458: U+09F0 | A6 L16 @5518: U+09F0 | A6 L16 @5725: U+09F0 | G1 L2 @1497: U+09BF U+09C0 | G1 L16 @5590: U+0986 U+09BE,Acceptable with fix
+f86ef0d0f1d85e79,full,clean,,,,Accepted
+d8540e197dcdeef1,full,clean,,,,Accepted
+b32d7bc9b3c9d3b3,full,fix,C2;D3,"L2 @106: line repeated 2 times (lines 1 and 2); offset is the first repeat | ""www. missuniverse. com. bd"" at offset 430 + ""facebook. com/MUBangladesh"" at offset 624",,Acceptable with fix
+5098f2d236480f43,full,fix,A6;D3,"""यह हाल है हमारे देश का पुल टूट जाए तो गलती इंजीनियर की और सरकार की निकाल देते है…"" at offset 274 + ""यह हाल है हमारे देश का पुल टूट जाए तो गलती इंजीनियर की और सरकार की निकाल देते है…"" at offset 274 | ""post"" at offset 475 + ""news report"" at offset 684 + ""YouTube"" at offset 826",A6: U+092F U+0939 U+0020 U+0939 U+093E U+0932 U+0020 U+0939 U+0948 U+0020 U+0939 U+092E U+093E U+0930 U+0947 U+0020 U+0926 U+0947 U+0936 U+0020,Acceptable with fix
+fb2ba67b88124483,full,clean,D3,"""R. K"" at offset 620",,Accepted
+7f435a70ebd4f206,full,clean,,,,Accepted
+8125a48d7afa482f,full,clean,,,,Accepted
+f7c87219d0824995,full,clean,,,,Accepted
+3140ed5eabe69984,full,clean,,,,Accepted
+0f89d720c1f9db18,full,clean,,,,Accepted
+f2fee05913e6965a,full,clean,,,,Accepted
+9419f580e774eb4d,full,fix,A3,"L2 @304: Bengali Vowel Sign Aa (U+09BE) follows the non-Bengali character Broken Bar (U+00A6); likely legacy Bijoy-font conversion damage|A3 L3 @1062: Bengali Vowel Sign Aa (U+09BE) follows the non-Bengali character Broken Bar (U+00A6); likely legacy Bijoy-font conversion damage|A3 L3 @1193: Bengali Vowel Sign Aa (U+09BE) follows the non-Bengali character Broken Bar (U+00A6); likely legacy Bijoy-font conversion damage|A3 L3 @1471: Latin Small Ligature Oe (U+0153) in a word with Bengali letters; likely legacy Bijoy-font conversion damage|A3: ""িœত"" at offset 1470",A3 L2 @304: U+00A6 U+09BE | A3 L3 @1062: U+00A6 U+09BE | A3 L3 @1193: U+00A6 U+09BE | A3 L3 @1471: U+0153 | A3: U+09BF U+0153 U+09A4,Acceptable with fix
+ae445bed25168aa5,full,clean,,,,Accepted
+528e9a253a64fb0a,full,clean,,,,Accepted
+b861ddb7c894786e,full,clean,,,,Accepted
+c7ddb9d7bb6a8e7c,full,clean,,,,Accepted
+b9a36fe654d63d26,full,fix,C2,L4 @1181: sentence repeated 2 times (lines 2 and 4); offset is the first repeat + L4 @1298: sentence repeated 2 times (lines 2 and 4); offset is the first repeat,,Acceptable with fix
+aba9d20790ce5b8b,full,fix,C1,"""ছবিঃ ফেসবুক"" at offset 65",,Acceptable with fix
+6729c278eea6ece5,full,clean,,,,Accepted
+9e332b609469b248,full,fix,G2;D3,"L1 @248: Bengali Letter Ra (U+09B0), Virama (U+09CD) and Ya (U+09AF) at the start of a word: a word cannot start with a reph, so a ZWJ (U+200D) after Ra was probably lost + L2 @684: Bengali Letter Ra (U+09B0), Virama (U+09CD) and Ya (U+09AF) at the start of a word: a word cannot start with a reph, so a ZWJ (U+200D) after Ra was probably lost | ""Sumgglers"" at offset 34|D3: ""Snske oil"" at offset 61 + ""Siliguri"" at offset 151 + ""Forest Dipertment"" at offset 229",G2 L1 @248: U+09B0 U+09CD U+09AF | G2 L2 @684: U+09B0 U+09CD U+09AF,Acceptable with fix
+6a3345ed5d8e4c08,full,fix,G1,L2 @1375: Bengali Vowel Sign U (U+09C1) is doubled + L4 @2347: Bengali Vowel Sign U (U+09C1) is doubled + L5 @2700: Bengali Vowel Sign U (U+09C1) is doubled,G1 L2 @1375: U+09C1 U+09C1 | G1 L4 @2347: U+09C1 U+09C1 | G1 L5 @2700: U+09C1 U+09C1,Acceptable with fix
+de62f00ee946a416,full,clean,,,,Accepted
+581257cb150a5f79,full,fix,G1,L3 @1333: Bengali Vowel Sign Aa (U+09BE) is doubled,G1 L3 @1333: U+09BE U+09BE,Acceptable with fix
+0dd510b3c781945c,full,clean,,,,Accepted
+1dddbdec96b78a12,full,clean,,,,Accepted
+5e42419b7fb51628,full,fix,A6;G1,"L3 @553: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 + L3 @561: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 + L5 @1318: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 | L3 @888: Bengali Vowel Sign E (U+09C7) follows Bengali Letter I (U+0987), which cannot carry it",A6 L3 @553: U+09F0 | A6 L3 @561: U+09F0 | A6 L5 @1318: U+09F0 | A6 L5 @1782: U+09F0 | G1 L3 @888: U+0987 U+09C7,Acceptable with fix
+e66c04482cce25f3,full,clean,,,,Accepted
+75b8384a196213f0,full,clean,,,,Accepted
+bd30b7ee3360586a,full,clean,,,,Accepted
+b00ce35d528bdbcd,full,clean,D3,"""Swastika Dutta"" at offset 22 + ""Zee Bangla"" at offset 145 + ""ki kore bolbo Tomay"" at offset 198",,Accepted
+6ad2871a67a61206,full,fix,D3;C1,"""Bollywood Update:"" at offset 0 + ""Shahrukh Khan Update:"" at offset 110 | ""Tags:"" at offset 190 + ""Tags:"" at offset 196 + ""Tags:"" at offset 202",,Acceptable with fix
+87ba1f237d8280d9,full,clean,,,,Accepted
+b6da3c9bb39ec761,full,clean,,,,Accepted
+571dacbb018beb18,full,clean,,,,Accepted
+13a8ba3507c262e7,full,clean,,,,Accepted
+05564acfae57cc19,full,clean,,,,Accepted
+2e3cc4e33c475b15,full,fix,C2;D3,"L2 @735: sentence repeated 2 times (lines 1 and 2); offset is the first repeat + L2 @818: sentence repeated 2 times (lines 1 and 2); offset is the first repeat + C2 L2 @886: sentence repeated 2 times (lines 1 and 2); offset is the first repeat | ""Kolkata Municipal Vote"" at offset 263 + ""Trinamool"" at offset 357 + ""Amit Malviya, head of the BJP IT cell"" at offset 621",,Acceptable with fix
+cc3db7a70d3882dd,full,fix,C2,L8 @2648: sentence repeated 2 times (lines 3 and 8); offset is the first repeat,,Acceptable with fix
+c22ffda587cf8d71,full,clean,D3,"""Pakistani political commentator Zaid Hamid"" at offset 382|D3: ""Nadeem Arshad"" at offset 615 + ""Ashish Nehra"" at offset 765 + ""Social Media"" at offset 1037",,Accepted
+275e5e0ffb3a68d1,full,clean,,,,Accepted
+c13029e82479a04b,full,clean,,,,Accepted
+de4a338c20286fa9,full,fix,C1,"""ছবিঃ উইকিমিডিয়া"" at offset 174",,Acceptable with fix
+7c11fa9943983d78,full,clean,,,,Accepted
+14b51bf2092ebadc,full,clean,,,,
+a1525abcdec643ac,full,clean,,,,
+611e3e5fe427f168,full,fix,C1,"""আরও পড়ুন : সুশান্তকে জোর করে অতিরিক্ত মাদকের নেশা করাতেন রিয়ার বন্ধুরা?"" at offset 626",,Acceptable with fix
+a37eee1a21cfa606,full,clean,,,,Accepted
+916b7af32bb57841,full,fix,A6;D3,"L12 @11183: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 + L12 @11253: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 + L12 @11343: word contains Bengali Letter Ra With Middle Diagonal (U+09F0), the Assamese ra; Bengali writes Ra U+09B0 | ""Tenure-Track"" at offset 1596 + ""American Association of Geographers (AAG)"" at offset 2925 + ""University Colleg London (UCL)"" at offset 3067",A6 L12 @11183: U+09F0 | A6 L12 @11253: U+09F0 | A6 L12 @11343: U+09F0,Acceptable with fix
+3ee6ad2383785b18,full,clean,,,,Accepted
+ddd12b8b4efce4e8,full,fix,C2,L2 @283: line repeated 2 times (lines 1 and 2); offset is the first repeat,,Acceptable with fix
+a53c70b3a195ec10,full,clean,,,,Accepted
+e36d42ca8a9c51c8,full,clean,,,,Accepted
+3ba16e66ab321bbe,full,clean,,,,Accepted
+f389597a7e8bfd19,full,clean,,,,Accepted
+487fa5562b83bcca,full,fix,D3;C1,"""Mayor Firhad Hakim"" at offset 182|D3: ""West Bengal BJP President Sukanta Majumder"" at offset 1505 | ""(Zee 24 Ghanta App দেশ, দুনিয়া, রাজ্য, কলকাতা, বিনোদন, খেলা, লাইফস্টাইল স্বাস্থ…"" at offset 1761",,Acceptable with fix
+d165b6304b7040a4,full,fix,B4;C1,"L1 @37: literal escape sequence ""\n"": an escaped line break or tab left by an export + L1 @356: literal escape sequence ""\n"": an escaped line break or tab left by an export + L1 @505: literal escape sequence ""\n"": an escaped line break or tab left by an export",,Acceptable with fix
+b618d92bfd2eb540,full,clean,,,,Accepted
+868a01b1029ffa24,full,clean,D3,"""ODD"" at offset 29",,Accepted
+a1a863a08a5b6711,full,clean,,,,Accepted
+389fa1df3fdffd56,full,clean,,,,Accepted
+67a114e2741f1338,full,clean,,,,Accepted
+6073f8a55a5582ca,full,fix,G2,"L7 @353: Bengali Letter Ra (U+09B0), Virama (U+09CD) and Ya (U+09AF) at the start of a word: a word cannot start with a reph, so a ZWJ (U+200D) after Ra was probably lost + L9 @405: Bengali Letter Ra (U+09B0), Virama (U+09CD) and Ya (U+09AF) at the start of a word: a word cannot start with a reph, so a ZWJ (U+200D) after Ra was probably lost",G2 L7 @353: U+09B0 U+09CD U+09AF | G2 L9 @405: U+09B0 U+09CD U+09AF,Acceptable with fix
+18ae053e7e0b831b,full,clean,D3,"""Lost Brother"" at offset 69 + ""SocialLY"" at offset 620",,Accepted
+66356aa46a0ba8ae,full,fix,C2,L2 @366: sentence repeated 2 times (lines 1 and 2); offset is the first repeat + L2 @454: sentence repeated 2 times (lines 1 and 2); offset is the first repeat,,Acceptable with fix
+21db2aed28c5eb15,full,clean,,,,Accepted
+c72e217deac393e0,full,clean,,,,Accepted
+c0d7d500673699b8,full,fix,C1,"""১৪৭/ডি, গ্রীন রোড, ঢাকা-১২১৫। এই ওয়েবসাইটের কোনো লেখা, ছবি, অডিও, ভিডিও অনুমত…"" at offset 733",,Acceptable with fix
+f7ec5aa2fce40b4a,full,clean,,,,Accepted
+efc1f0342af0b981,full,clean,,,,Accepted
+590a863721a412cf,full,clean,,,,Accepted
+7ab11dfda83a3116,full,clean,,,,Accepted

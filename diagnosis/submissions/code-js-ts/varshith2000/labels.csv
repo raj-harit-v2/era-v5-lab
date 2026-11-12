@@ -1,0 +1,501 @@
+doc_id,read,verdict,diseases,evidence,hex,note
+c38890881e99e48e,full,fix,B2,offset 0 <filename> tag; offset 34 <gh_stars> tag (source metadata leaked into text),,strip source markers
+7edec6fc57a3a792,full,drop,E1;C2;E4;B4,bundled UMD build in node_modules with tsickle boilerplate at offset 2954 | line '* @return {?}' repeated 59 times first at offset 3603 | Microsoft licence block at offset 5704 | email scrubber placeholder <EMAIL> at offset 25,,generated bundle not hand-written code
+109bff17b9e5c3ab,full,clean,,,,"repeated 'at = discardWhitespace(input, at);' lines are idiomatic parser code not spam"
+0f34612ed9c80d78,full,clean,,,,ends with sourceMappingURL comment; not truncated
+16c5fbc22320c5ea,full,clean,,,,JSX inside .js file is valid React
+0d5369c93b12a4a8,full,clean,,,,'performance' key repetition is natural code
+82661aa7e8fdfc1f,full,drop,B2;E1,offset 0 <filename> tag | doxygen-generated search index starting 'var searchData=' at offset 0,,generated docs search JS
+f239e39b3bcf34d6,full,fix,B2,offset 0 <filename> tag,,API key read from env var - good practice
+cc42702a51d8a8ee,full,fix,B4,placeholder <question> at offset 631; token placeholder <KEY> at offset 679,,bot token already scrubbed to placeholder
+ec27a58ce8941db1,full,fix,B4,email scrubber placeholder <EMAIL> at offsets 202 230 328,,placeholders inside test fixtures
+97c52340430c9e1a,full,clean,,,,
+c09dabc135210035,full,fix,B2,offset 0 <reponame> tag,,tab indentation
+9c75572786051609,full,clean,,,,JSX inside .js file is valid Gatsby
+f8798485c75ffc27,full,fix,B2,offset 0 <reponame> tag; offset 27 <filename> tag; offset 75 <gh_stars> tag,,slash divider lines x6 are idiomatic
+89a4b2ff5c7109e7,full,fix,B2,offset 0 <reponame> tag,,'return this.connection.query(' repetition is idiomatic DB wrapper
+13a8a60521ebe5ba,full,clean,,,,
+76882c7f242de544,full,fix,A2;B2;D3,66 U+000D (CR) CRLF endings first at offset 62 | offset 0 <filename> tag | Chinese comments in JS at offset 136,62 U+000D CARRIAGE RETURN (66x),CRLF file
+2070dde03c792d73,full,clean,,,,'.then(function () {' repetition is idiomatic promise chain
+2e145b6b3ff20f25,full,fix,B2,offset 0 <reponame> tag,,
+e6b69bae4ee69241,full,fix,E3;B4,credential in mongodb connection URI at offset 67 (value already replaced) | email scrubber placeholder <EMAIL> at offset 79,,no secret value present
+a42a2dcf2034a5c3,full,fix,B2,offset 0 <reponame> tag,,
+f887c8f2612a43da,full,fix,B2,offset 0 <reponame> tag,,
+44e6ca8672356bfe,full,fix,B2,offset 0 <gh_stars> tag,,
+78ddfe066c3445f9,full,fix,B2,offset 0 <filename> tag; offset 43 <gh_stars> tag,,
+85cae9fdf6e531d7,full,clean,,,,
+8851cca224eea40a,full,clean,,,,
+9fb52172729f68ea,full,fix,B2,offset 0 <gh_stars> tag,,hardcoded GA tracking id is public not secret
+e6736956fd29758b,full,clean,,,,
+27c31b53bd068e1e,full,clean,,,,HTML inside template literal is legitimate code
+0d3bff117f465b99,full,fix,B2;E3;D3,offset 0 <reponame> tag; offset 43 <filename> tag; offset 73 <gh_stars> tag | Pusher client key at offset 8571 | Persian UI strings at offset 2294,,hardcoded pusher key
+83e1b649be63e71c,full,clean,,,,
+80c687f484429dfe,full,clean,,,,3-line copyright notice too short for E4
+3c0187db02155f6d,full,clean,,,,
+8302c459b07901ca,full,drop,A2;B2;E3,19 U+000D (CR) first at offset 53 | offset 0 <filename> tag; offset 37 <gh_stars> tag | Google API key at offset 189,,hardcoded firebase config
+0a2135833aedfc6e,full,clean,,,,
+96cd5811c238eb8d,full,fix,B2,offset 0 <filename> tag,,
+e64f68e5c8e33f66,full,clean,,,,
+bafac242964e990a,full,fix,B2,offset 0 <reponame> tag; offset 33 <filename> tag,,
+e8483df9bbdbd7f3,full,drop,E1,minified dist-esm bundle; 'import*as THREE' at offset 0; whole class on one line,,dist artifact not source
+4adbb56663127cc1,full,drop,E1,doxygen-generated search index 'var searchData=' at offset 0,,generated docs search JS
+4b090a2a0d185f2d,full,fix,B2,offset 0 <reponame> tag; offset 35 <filename> tag,,SVG in template literal is legitimate
+0a2bd3b22f63747a,full,fix,B2,offset 0 <filename> tag,,
+9152e05677822f6c,full,clean,,,,
+49bf310f356efb6a,full,fix,B2,offset 0 <gh_stars> tag,,
+a177272339a0b39b,full,drop,E1,doxygen-generated search index 'var searchData=' at offset 0,,generated docs search JS
+57111751f2e01097,full,clean,,,,
+70d493a5276edd28,full,fix,B2,offset 0 <reponame> tag,,auth token read from env var - good practice
+91ea219cac746215,full,clean,,,,
+516b746fa5724b47,full,fix,A2;B2;D3,67 U+000D (CR) first at offset 59 | offset 0 <gh_stars> tag | Turkish strings at offset 320,59 U+000D CARRIAGE RETURN (67x),CRLF file
+d5c3a1b4e003ed61,full,fix,B2;D3,offset 0 <filename> tag; offset 33 <gh_stars> tag | Spanish UI strings at offset 978,,JSX is valid
+f66bc8e208378e0d,full,clean,,,,
+12cc32da5a12d1b9,full,fix,B2,offset 0 <reponame> tag,,JSX is valid
+aeddcfd96bf1162b,full,fix,B2,offset 0 <gh_stars> tag,,
+c8b04687023c441d,full,fix,B2,offset 0 <reponame> tag; offset 30 <filename> tag,,
+5f8be7dc5482a886,full,fix,B2,offset 0 <gh_stars> tag,,
+a8a43e45c6bc77fe,full,fix,B2,offset 0 <reponame> tag,,
+30f012b4363c6fb1,full,fix,B2,offset 0 <reponame> tag,,
+af8a79fa73da38c7,full,clean,,,,HTML strings generated by table renderer are legitimate code
+7ae3bbd66580bde3,full,fix,A2,61 U+000D (CR) CRLF endings first at offset 51,51 U+000D CARRIAGE RETURN (61x),vendored node_modules copy; CRLF file
+58d25e3331f3a179,full,fix,B2,offset 0 <gh_stars> tag,,
+f8109a1e8447700e,full,clean,,,,4-line copyright notice too short for E4
+fe757b718ca58cfd,full,clean,,,,Flow type annotations <Token> <GlobalState> are generics not tags
+58a686e8bbf1e54d,full,clean,,,,JSX is valid
+e45fa3cac2327240,full,fix,B2,offset 0 <reponame> tag,,
+68b7169de303e2ef,full,fix,B2,offset 0 <filename> tag,,
+6214fdea001c2449,full,clean,,,,JSX is valid
+26f7b7cb46da474e,full,clean,,,,
+eb0314524a6eeb3a,full,clean,,,,
+65c12c311967d908,full,fix,B2,offset 0 <filename> tag,,
+ac23df9698407bac,full,fix,E4;B4,Apache licence header at offset 13 (13 lines) | name scrubber placeholder <NAME> at offset 32,,standard apache header
+7ba0eab91fc50be9,full,clean,,,,
+f72f509d1a5eb319,full,clean,,,,JSX is valid
+6e33df8fcc18654a,full,clean,,,,
+e2deacf4ecd2030b,full,fix,D3,Chinese comments in JS file at offset 7,,D3 informational - record language metadata; keep code unchanged
+1622f39c3e01f3c0,full,fix,B2,offset 0 <filename> tag; offset 27 <gh_stars> tag,,
+ea1902282a721491,full,clean,,,,eslintrc config is valid JS
+c7b50b828c08f542,full,fix,A2;D3,57 U+000D (CR) first at offset 58 | Italian comments at offset 63; &nbsp; entities at offsets 511 518 1089 are inside generated HTML strings - legitimate,58 U+000D CARRIAGE RETURN (57x),CRLF file
+ea9599793c02c847,full,clean,,,,
+f1736111899d833d,full,fix,B2,offset 0 <gh_stars> tag,,
+8b87ce2612c80e73,full,fix,B2,offset 0 <reponame> tag; offset 42 <gh_stars> tag,,JSX is valid
+afb4b753a9506161,full,drop,B2;E2,offset 0 <filename> tag | stock price data array of ~4000 date/price pairs at offset 32 spanning whole 63640-char document,,data blob not code
+6c0248faa57140cf,full,fix,B2,offset 0 <gh_stars> tag,,
+e6732c294f2de477,full,fix,B2;D3,offset 0 <gh_stars> tag | Polish UI strings at offset 1805,,
+f494d5614d48c7b5,full,fix,B4,email scrubber placeholder <EMAIL> at offsets 3299 3359 3648 and 10 more,,placeholders inside test fixtures
+21d4a2a04c2849ba,full,fix,A2,50 U+000D (CR) CRLF endings first at offset 41,41 U+000D CARRIAGE RETURN (50x),CRLF file
+b1fb5cd019a3df77,full,clean,,,,JSX with material-ui is valid
+08bf95191b859c57,full,fix,B2;B4,offset 0 <filename> tag | name scrubber placeholder <NAME> at offsets 472 and 887,,duplicated hero block inside component
+052a5e726f3c7e0e,full,clean,,,,styled-components template literal is valid
+b386c4080220d09a,full,fix,B2,offset 0 <gh_stars> tag,,
+57455c551def986e,full,fix,B2,offset 0 <filename> tag,,
+7afd4ae2ede15798,full,fix,B2,offset 0 <reponame> tag; offset 38 <gh_stars> tag,,
+e71a7f0e165f494c,full,fix,B2,offset 0 <gh_stars> tag,,
+7a325654eb6d5cb8,full,fix,B2,offset 0 <filename> tag,,
+52d23b32acc99eb8,full,clean,,,,JWT secret read from env var - good practice
+82877099be61431d,full,fix,A2;B2,29 U+000D (CR) first at offset 31 | offset 0 <filename> tag,31 U+000D CARRIAGE RETURN (29x),CRLF file
+1efaeea0c87aa443,full,fix,B2;D3,offset 0 <reponame> tag | Chinese UI strings at offset 1204,,
+971348d6df03d1d0,full,fix,B2,offset 0 <reponame> tag,,
+b36d9ba1718714f4,full,fix,B2;D3,offset 0 <reponame> tag; offset 23 <gh_stars> tag | Chinese comments at offset 42,,
+3c31e8cb39b186c3,full,fix,B2;D3,offset 0 <filename> tag | Chinese comments at offset 82,,
+f3e25741b54c9324,full,fix,B2,offset 0 <gh_stars> tag,,
+ed0c8464c413f9f1,full,clean,,,,
+60e2b12c2308a955,full,clean,,,,
+9f217b10f8bcaec9,full,fix,B2,offset 0 <gh_stars> tag,,SVG in JSX is valid
+235feb02b4b3afea,full,clean,,,,JSX is valid
+92c5fa7738e11295,full,fix,B2,offset 0 <filename> tag,,
+7f212cf5e6ef68b6,full,clean,,,,
+88f314eaf5c51af5,full,drop,E1;B2;B4,doxygen-generated index array 'var structplugin__conf =' at offset 20 | offset 0 <gh_stars> tag | placeholder <PASSWORD> at offset 762,,generated docs search JS
+3551851a7ec38922,full,fix,B4;E3,key scrubber placeholders <KEY> at offsets 419 1329 1571 | API keys at offsets 419 1329 1571 (values already replaced),,nutritionix api keys
+981b0586c9ab0fb7,full,drop,E1,compiled TypeScript output; 'Object.defineProperty(exports...' at offset 15 with sourceMappingURL trailer,,build artifact not source
+d5f8c73a78333e22,full,fix,D3,Chinese comments in JS file at offset 7,,D3 informational - record language metadata; keep code unchanged
+f0b7b8c0a612ef30,full,clean,,,,
+584ecafea0542a0c,full,fix,B2;B4;D3,offset 0 <gh_stars> tag | name scrubber placeholder <NAME> at offset 334 | Spanish UI text at offset 426,,JSX is valid
+99a15d5c400dc2da,full,clean,,,,'}).error(function(error) {' repetition is idiomatic express handlers
+b815768517cf6534,full,fix,B2,offset 0 <filename> tag,,
+f41c86a403897ce6,full,fix,B2,offset 0 <filename> tag; offset 47 <gh_stars> tag,,
+241c760880e11383,full,drop,F2,leetcode problem 114 solution; 'Problem: https://leetcode.com/problems/flatten-binary-tree-to-linked-list' at offset 15,,coding-benchmark contamination
+e515826a37ca8364,full,clean,,,,
+0a341a9ef9fa6ae1,full,fix,B2,offset 0 <reponame> tag,,
+19b2f4c61ddfb1a8,full,clean,,,,
+0f98af9c40eddad6,full,clean,,,,React Native JSX in .js is valid
+a5f855513ea64d8d,full,fix,B2,offset 0 <filename> tag,,
+48610cc124a69578,full,fix,B2,offset 0 <reponame> tag,,
+6f0b2c2f85cc1cb0,full,clean,,,,
+556a80621557f3c2,full,fix,D3,Chinese route names and comments in JS file at offset 357,,'hidden: true' x6 is idiomatic config
+c03362d688009674,full,clean,,,,
+278fc9c323426050,full,fix,B2,offset 0 <filename> tag; offset 34 <gh_stars> tag,,
+6d3b68ef0b39f910,full,fix,B2;B4;E3,offset 0 <filename> tag | placeholders <NAME> x7 first at offset 78 and <EMAIL> at offset 1746 | passwords at offsets 1782 2538 3099 3661 (values already replaced),,scrubber removed quotes around 3 passwords leaving invalid syntax
+e0cc537374a87fe2,full,fix,B4;E3,placeholders <EMAIL> at offset 274 and <PASSWORD> at offset 305 | password at offset 305 (value already replaced),,seed fixture
+867cd624f014b2c7,full,fix,B2,offset 0 <reponame> tag,,
+1680be74d0a0817e,full,clean,,,,'type: String' x17 is idiomatic mongoose schema
+aa99e8aa997ff443,full,fix,B2;D3,offset 0 <filename> tag | Spanish identifiers and strings at offset 37,,
+f348c1a155dff382,full,drop,E1,compiled TypeScript output in node_modules dist/dts; 'Object.defineProperty(exports...' at offset 15,,vendored build artifact
+b53310ece5b8bcd5,full,fix,B2,offset 0 <filename> tag,,
+6ed3a2674f4790c5,full,clean,,,,script tags inside document.write strings are legitimate
+df3386e08bcdea60,full,fix,A2;B2,26 U+000D (CR) first at offset 60 | offset 0 <filename> tag,60 U+000D CARRIAGE RETURN (26x),CRLF file
+bec53c5bebdffb26,full,clean,,,,
+97605f54bbfa9467,full,fix,E1,script-generated SVG icon component from src/icons/generated/ at offset 0; wrapper boilerplate around path data,,valid JSX but machine-generated
+972226489c005597,full,fix,B2;C2,"offset 0 <filename> tag | repeated '<div className=""display-item"">' card block at offsets 812 1166 2019",,repeated card template blocks
+717b48da5710453a,full,fix,B2,offset 0 <reponame> tag; offset 30 <gh_stars> tag,,
+75d215b7cd334f66,full,fix,B2,offset 0 <filename> tag; offset 31 <gh_stars> tag,,
+46d96a8ed06c9d37,full,fix,B2,offset 0 <gh_stars> tag,,<UUID> is a flow type import not a tag
+c1ee027815088580,full,fix,B2;C2,offset 0 <gh_stars> tag | identical blog item object repeated 3 times with lorem desc at offsets 535 937 1339,,filler template data
+3edb48a6dc536189,full,fix,B2,offset 0 <gh_stars> tag,,HTML inside commented-out jQuery strings
+5ac0f240e274d7d0,full,fix,A2;D3,23 U+000D (CR) first at offset 47 | Russian strings at offset 1328,47 U+000D CARRIAGE RETURN (23x),CRLF file; discord ids are pseudonymous
+e91eca5bfe735229,full,drop,E1;B2,compiled JSX output using jsx_runtime_1.jsx calls at offset 130 | offset 0 <reponame> tag and offset 41 <filename> tag,,babel-compiled artifact not source
+2303e32eb81115e5,full,fix,B2,offset 0 <gh_stars> tag,,SVG template inside test string is legitimate
+86ca8c0253d5aa93,full,clean,,,,'.catch(next);' x18 is idiomatic express handlers
+a2c50d532fb9d07a,full,fix,B4,scrubber placeholder <PASSWORD> at offset 2073 replaced the UI hint text 'Enter password' inside placeholder attribute,,over-aggressive scrubbing of a hint string
+f1fda4a95aa5bb73,full,fix,B2,offset 0 <reponame> tag,,
+9a7a24ccc53f58be,full,fix,B2,offset 0 <reponame> tag,,
+21e632ad6dc77f1a,full,clean,,,,XML inside DBus interface string constant is legitimate
+74cc0e1b9ca76097,full,clean,,,,
+2bae666c99ad51ed,full,drop,E1;B2,doxygen-generated search index 'var searchData=' at offset 62 | offset 0 <reponame> tag and offset 36 <filename> tag,,generated docs search JS
+3a58cb825b6693ec,full,clean,,,,
+2c7a90a7a52a3ddb,full,fix,B2,offset 0 <reponame> tag,,
+0c10e83429b075c5,full,drop,E1;E4,AutoRest-generated code; 'Code generated by Microsoft (R) AutoRest' at offset 174 | Microsoft copyright header at offset 6,,generated SDK model
+23c2dc96c3d95cc5,full,clean,,,,SVG in JSX is valid
+742ba97adec1fcec,full,fix,B2,offset 0 <reponame> tag; offset 39 <gh_stars> tag,,
+45ef4052b768a914,full,fix,B2,offset 0 <reponame> tag; offset 26 <filename> tag,,
+3b8e76e3bd74213a,full,fix,B2,offset 0 <filename> tag,,list of giphy URLs is a valid config constant
+b59c806b69ad411a,full,clean,,,,Material-UI JSX is valid
+49c70e40d6a2ba21,full,fix,A2,25 U+000D (CR) CRLF endings first at offset 31,31 U+000D CARRIAGE RETURN (25x),CRLF file
+8ff69b8e20e11554,full,clean,,,,
+dbc47b7b945c53f7,full,fix,B2,offset 0 <filename> tag,,
+66f30d8777c3bf28,full,fix,B2,offset 0 <reponame> tag,,
+b58f9b241c071985,full,fix,B2,offset 0 <gh_stars> tag,,token read from env var - good practice
+58af3849411c0f88,full,fix,B4;E3,password placeholders <PASSWORD> at offsets 568 and 770 | test password at offset 770 (value already replaced),,test fixture
+1b8d2f7558b91b67,full,clean,,,,
+a420cbd7c59d8d23,full,fix,B2,offset 0 <reponame> tag,,
+5cb1c24d596057f1,full,fix,B2,offset 0 <filename> tag,,
+3cb972809dce2ab5,full,fix,B2;B4,offset 0 <gh_stars> tag | name scrubber placeholder <NAME> at offset 36,,5-line copyright notice too short for E4
+d116d29f5bfe7a64,full,fix,B2,offset 0 <filename> tag,,
+51ae4cd3079f3b11,full,fix,B2;D3,offset 0 <filename> tag | Chinese error messages at offset 403,,
+1e918efcbd1c6f4b,full,fix,B2;E4,offset 0 <reponame> tag | Apache licence header at offset 72 (13 lines),,lit-html template tags are legitimate
+98877f4561f27895,full,clean,,,,
+46741b2cfe792164,full,fix,B2,offset 0 <reponame> tag; offset 41 <gh_stars> tag,,
+6b0ee0ff1cee4737,full,fix,A2,39 U+000D (CR) CRLF endings first at offset 0,0 U+000D CARRIAGE RETURN (39x),CRLF file
+36f3d47587b2e5e0,full,clean,,,,
+98cf8da72eb277d6,full,fix,B4,name scrubber placeholder <NAME> at offset 245,,user role label replaced
+220ed33c5fdc2521,full,clean,,,,
+d1c2c7915250231b,full,clean,,,,eslintrc config is valid JS
+30f24ac184f8e7ae,full,clean,,,,
+47504d34307c4295,full,fix,D3,Chinese comments in JS file at offset 1038,,JSX is valid
+f02bc9a97762b5d2,full,clean,,,,'return Course' repetition is idiomatic sequelize controller
+fc6da7f927ddb6ba,full,fix,B2,offset 0 <filename> tag; offset 82 <gh_stars> tag,,
+f18d42a148a21cb8,full,clean,,,,styled-components is valid
+31ea40214d38186c,full,fix,B2,offset 0 <reponame> tag,,
+20a5c8fadcca48dd,full,clean,,,,essay written as JSX component is valid code
+ea097d038e0db39c,full,fix,B2,offset 0 <filename> tag,,
+d725aa5fb9de2ff6,full,clean,,,,
+748d8d68086d6405,full,drop,E1,compiled lib in node_modules; _interopRequireDefault helper at offset 100 with sourceMappingURL trailer,,vendored build artifact
+c1845098e7e01ad1,full,clean,,,,credentials passed as attributes without values
+a44b49f3b47e28fa,full,fix,B2,offset 0 <reponame> tag; offset 26 <gh_stars> tag,,'const db = getDb()' x7 is idiomatic
+deca7877e17953ba,full,fix,B2,offset 0 <gh_stars> tag,,divider comment lines are idiomatic
+0a692b9b28893333,full,clean,,,,
+9be62cae6651eef5,full,clean,,,,
+dd2b3fca7b98f693,full,clean,,,,'encoder.finalize()' repetition is idiomatic tape tests
+64aa7a97ea9583b5,full,fix,D3,Chinese comment in JS file at offset 120,,
+b6992d0df60a9462,full,drop,E1,doxygen-generated search index 'var searchData=' at offset 0,,generated docs search JS
+0a7351f6221d3af2,full,fix,B2,offset 0 <filename> tag,,jquery selector strings are legitimate
+f7b1630a77ee0402,full,fix,B2,offset 0 <filename> tag,,
+6ef95d24ddf0d721,full,fix,B4,name scrubber placeholders <NAME> at offsets 54 123 192,,tutorial fixture data
+a35c88a0c8fbb7fc,full,fix,B2,offset 0 <gh_stars> tag,,react-router JSX is valid
+ece9bbef7513816c,full,clean,,,,
+5f4d838bc861b9fd,full,clean,,,,JSX is valid
+9b96fb9366a1efb3,full,clean,,,,
+78bd06609daa8380,full,clean,,,,
+877058bd3cb250e3,full,fix,B2;E4,offset 0 <reponame> tag | AGPL licence header at offset 337 (15 lines),,
+e0b0240ff97906d5,full,clean,,,,
+e0decfb6b790bd0e,full,clean,,,,
+5e36e510c966759b,full,drop,E1,webpack bundle in dist; 'webpackBootstrap' at offset 27 with vendored node_modules modules inside,,build artifact; B1 entities are inside escape-goat library code - legitimate
+37390a3a6ca4502c,full,fix,B2;B4;E3,offset 0 <reponame> tag | password placeholder <PASSWORD> at offset 988 replacing hashedPassword variable | password assignment at offset 988 (value already replaced),,scrubber broke the bcrypt assignment
+dc55e6449c920358,full,fix,B2,offset 0 <reponame> tag; offset 57 <filename> tag,,
+76b63f4c6953507a,full,fix,B2;B4,offset 0 <reponame> tag | placeholder <PASSWORD> replaced the autoComplete hint 'current-password' around offset 460,,over-aggressive scrubbing of a UI hint
+5b75a4b2645bdebb,full,fix,B2;D3,offset 0 <filename> tag | Chinese comments at offset 394,,
+e8489434855194f1,full,clean,,,,
+300b4b22280eba00,full,fix,B2,offset 0 <reponame> tag; offset 49 <filename> tag; offset 81 <gh_stars> tag,,
+1365b28d5535f8e2,full,fix,B2,offset 0 <filename> tag; offset 56 <gh_stars> tag,,
+3868d72296f0c94e,full,clean,,,,
+5dfd446d9a6d886c,full,fix,B2,offset 0 <filename> tag,,
+14ec7a118f1ef420,full,fix,D3,Portuguese UI strings in JS file at offset 257,,React Navigation JSX is valid
+d016dbe60edb5902,full,clean,,,,
+c531744a4a683c03,full,fix,B2,offset 0 <filename> tag,,HTML inside template literal is legitimate
+da3b388be6765a1e,full,clean,,,,flow types and JSX are valid
+5cf8e684b9fab4d2,full,fix,B2,offset 0 <filename> tag,,&nbsp; at offset 1061 is valid JSX entity
+d3a5fdd397f01d0c,full,clean,,,,JSX is valid
+9a835e2bd3213eab,full,clean,,,,
+b0ffe63e57a00ac5,full,clean,,,,
+6ba68d89f59a2e60,full,fix,B2,offset 0 <filename> tag,,
+3171bc6e4639ae3c,full,fix,B2,offset 0 <reponame> tag,,'const options = {' x7 is idiomatic test setup
+87d818c247aeeb7d,full,fix,B2,offset 0 <reponame> tag,,
+ef4786f657de3f73,full,clean,,,,
+bc32af64ac7223ca,full,fix,B2,offset 0 <reponame> tag,,
+972a89c819d47081,full,clean,,,,
+f21501d78936558d,full,fix,B2,offset 0 <filename> tag,,
+59483a77593fb477,full,fix,B2;B4,offset 0 <gh_stars> tag | placeholders <KEY> at offsets 1574 and 1626 and 8 more replaced placekey test literals,,scrubber collateral damage - placekeys are not secrets
+2dd1a0824391e7e7,full,clean,,,,
+beed0d9f43f1397b,full,clean,,,,upstream chromium wpt test
+330508824249daac,full,drop,E1;B2;B4,compiled artifact in dist with sourceMappingURL trailer at offset 4282 | offset 0 <reponame> tag and offset 28 <filename> tag | name placeholder <NAME> at offset 92,,dist artifact
+3516d8526603bea8,full,clean,,,,
+75d7d5ee333e74cc,full,fix,B2;B4,offset 0 <filename> tag; offset 29 <gh_stars> tag | name placeholder <NAME> at offset 1075,,placeholder inside commented-out line
+b89c1ba8fdf6f484,full,fix,B2,offset 0 <reponame> tag; offset 47 <filename> tag; offset 82 <gh_stars> tag,,
+254a4a17758cdbfa,full,fix,B2,offset 0 <gh_stars> tag,,
+7a78b919ce71c1ae,full,fix,B2,offset 0 <filename> tag,,
+be913781977eaa66,full,fix,B2,offset 0 <filename> tag,,
+8357faf76e9945d5,full,clean,,,,
+3b8592acb706fa75,full,drop,E1;E4,compiled vscode out/ artifact with __decorate helpers at offset 356 and sourceMappingURL trailer | Microsoft MIT header at offset 100,,build artifact
+99d1284498f97f5f,full,fix,B4,email placeholder <EMAIL> at offset 1834 in FAQ contact text,,JSX is valid
+e66b2dbeab350279,full,fix,A2;B2;D3,84 U+000D (CR) first at offset 105 | offset 0 <reponame> tag; offset 29 <filename> tag; offset 67 <gh_stars> tag | Chinese strings at offset 1109,105 U+000D CARRIAGE RETURN (84x),CRLF file
+49b0da516433f819,full,fix,B2,offset 0 <reponame> tag,,JSDoc generics <string> <object> are legitimate
+af6b152644b42027,full,clean,,,,
+bb9dc0140cdd6113,full,fix,B2,offset 0 <filename> tag,,TS generics are not tags
+4aa682fef3c7ba0d,full,fix,B2;E4,offset 0 <gh_stars> tag | Apache licence header at offset 98 (13 lines),,
+8cc7a77b5d312742,full,clean,,,,twitter handles are public project info
+faea4aa2d16c8e92,full,clean,,,,credentials read from env vars
+43a97e6a68b3c5cf,full,drop,D1,lang_label says typescript but text is Java; 'public class Result_ChannelFeaturesDecodeErrorZ extends CommonBase' at offset 93,,mislabeled java source in .ts file
+9fa3a90040555d48,full,clean,,,,TSX is valid
+bfc6a1721e840f40,full,fix,B2,offset 0 <reponame> tag,,
+1b5d5f321875c5ba,full,clean,,,,'@Column({ nullable: true })' x7 is idiomatic typeorm entity
+c6e4de3411b82ce2,full,fix,B2,offset 0 <filename> tag,,
+a91aa399c546e535,full,fix,B2,offset 0 <reponame> tag,,
+ceb9279ae9096432,full,fix,B2,offset 0 <reponame> tag; offset 28 <filename> tag,,
+6c21e9ed723e9543,full,fix,B2,offset 0 <filename> tag,,d.ts declaration file
+59ba2490aeed2d0a,full,clean,,,,
+9c2b7c986daa2076,full,fix,E4,Apache licence header at offset 47 (13 lines),,entities at 30652 are inside charEscapeMap - legitimate; TS casts are not tags
+73590188e7440e69,full,clean,,,,TSX is valid
+ef40ec24e753f3cf,full,fix,B2,offset 0 <gh_stars> tag,,<T> generics are not tags
+e6e3d412559d3d91,full,fix,B2,offset 0 <reponame> tag,,generator script is hand-written source; do-not-edit banner is in its output template
+43ac0e8f4c53456a,full,clean,,,,fake account id 123456789 in test
+b98db75c7011b0ee,full,clean,,,,
+20fee3a31cc2c747,full,fix,B2,offset 0 <filename> tag,,
+86bb604d5f5781bb,full,clean,,,,
+bb2bba7bcaa0c23b,full,clean,,,,
+daa3999c8a12baaf,full,clean,,,,TSX is valid
+cc58a06182c6a450,full,fix,B2,offset 0 <reponame> tag,,
+5a2db0f26e2add0d,full,fix,B2,offset 0 <reponame> tag; offset 20 <filename> tag,,
+0a189db5121fd152,full,fix,B2,offset 0 <reponame> tag; offset 27 <gh_stars> tag,,
+84ce2f4b32ea69e9,full,clean,,,,TS generics are not tags
+c5ce4f1a63cee56d,full,clean,,,,
+61086f9fdfee882d,full,fix,B2,offset 0 <gh_stars> tag,,
+a6dd614fdf997046,full,clean,,,,
+273c9171d36b7b00,full,clean,,,,<Response> is a TS type reference not a tag
+5854c3d8b453177b,full,clean,,,,
+f87d713cbc729ab5,full,fix,B2,offset 0 <gh_stars> tag,,fireEvent.click repetition is idiomatic table tests
+141b2098dcc5cd29,full,clean,,,,inline Angular HTML template is legitimate
+16efc80846fb13ab,full,clean,,,,
+45d8455a097036f2,full,fix,B2,offset 0 <reponame> tag; offset 47 <gh_stars> tag,,
+487b09e0bdda9e36,full,clean,,,,hand-written parser source; repetition is idiomatic visitor pattern
+4ede330ddcc7f88c,full,fix,B2,offset 0 <filename> tag,,
+720a9da18bcfce40,full,fix,B2;D3,offset 0 <gh_stars> tag | Spanish identifiers and messages at offset 4020,,
+eb6e6ad06c35ea02,full,fix,B2,offset 0 <gh_stars> tag,,
+b3cb73e594bc6dc6,full,clean,,,,
+d102676be27b4384,full,fix,B2,offset 0 <reponame> tag,,
+2fb53c8ef459d7b4,full,clean,,,,
+d1ef7222ca9bbb52,full,fix,B2,offset 0 <reponame> tag; offset 31 <filename> tag,,
+b819528a4b75a09c,full,clean,,,,TSX is valid
+adc3ef963084c46e,full,clean,,,,
+bb3f4d264ad23c87,full,fix,B2,offset 0 <filename> tag,,
+9176699543a56acb,full,clean,,,,mongo URL read from env var
+2a737b056d7e9ff7,full,clean,,,,
+b3330751de19a19a,full,fix,B2;D3,offset 0 <reponame> tag; offset 28 <filename> tag | French descriptions at offset 743,,
+9819cf21215a5746,full,clean,,,,
+d7841a0278407748,full,fix,B2,offset 0 <filename> tag,,
+e56f03e7aef5f3d2,full,fix,B2,offset 0 <gh_stars> tag,,
+1b4ab7e04872a2c8,full,fix,B2,offset 0 <reponame> tag,,
+fb1dfa31a70877cc,full,fix,B2,offset 0 <reponame> tag,,
+c172f0b630e978c0,full,fix,B2,offset 0 <gh_stars> tag,,Angular material template is legitimate
+f8a27829312fa327,full,fix,A2,83 U+000D (CR) CRLF endings first at offset 56,56 U+000D CARRIAGE RETURN (83x),CRLF file; dist declaration artifact
+395e4251aed42db9,full,clean,,,,3-line copyright notice too short for E4
+48ba8fba0dd26a79,full,clean,,,,
+ec350a4626938084,full,fix,B2,offset 0 <filename> tag,,
+2689be5839133b7f,full,clean,,,,
+36303d023f8e9ec0,full,clean,,,,
+b8cdf568fc0323f2,full,clean,,,,TS types in comments are not tags
+7329ced00c32a9a7,full,clean,,,,TSX is valid
+62abeec097adf9cd,full,fix,B2;D3,offset 0 <reponame> tag | Chinese default string at offset 1533,,
+886479c9fe1cc6b0,full,clean,,,,3-line copyright notice too short for E4; assertCombine repetition is idiomatic
+0f2e3b26e4176d61,full,clean,,,,
+99a84fb864aad874,full,clean,,,,TSX is valid
+2d964fb49b7e3980,full,fix,B4,author placeholders <NAME> at offset 44 and <EMAIL> at offset 57 in JSDoc header,,
+700b8b271ffdd01d,full,fix,B2,offset 0 <reponame> tag,,
+42cfe99db9c771c4,full,fix,B2,offset 0 <reponame> tag; offset 30 <filename> tag,,
+4ce78aaf6c21448e,full,clean,,,,hand-written DefinitelyTyped declarations
+644fc40f49a82a32,full,clean,,,,TSX is valid
+ef768fd4712f3808,full,clean,,,,
+263c976b617925f9,full,clean,,,,HTML template strings are legitimate generator output
+7a05697cdfa1436a,full,fix,B2,offset 0 <filename> tag,,
+675fd5ddbefae7da,full,clean,,,,'children: [' x9 is idiomatic menu config
+d4079cff2b36bc4d,full,fix,B2,offset 0 <filename> tag,,
+fb687bcc67935d65,full,fix,D3,Spanish log messages in TS file at offset 1217,,
+ba40d9f17d1ca99a,full,fix,B2;B4;E3,offset 0 <gh_stars> tag | password placeholder <PASSWORD> at offset 504 partially replacing string literal | test password at offset 504 (value already replaced),,scrubber damaged a legit test string
+b3d978177be3c422,full,clean,,,,2-line copyright notice too short for E4
+9261e6b7d26f3844,full,fix,B2,offset 0 <filename> tag,,
+4db3f60ebbaa059e,full,clean,,,,
+1aa2dec1075df15f,full,clean,,,,snapshot test repetition is idiomatic
+aad4ea0a1bf3f445,full,fix,B2,offset 0 <filename> tag,,
+bcb916cf874a0c2d,full,fix,B2,offset 0 <filename> tag,,
+ac23ebbaeda485c5,full,clean,,,,TS generics are not tags
+2172a7235eadf3f3,full,fix,B2,offset 0 <reponame> tag,,
+c4783fbf7aefb6aa,full,fix,B2,offset 0 <reponame> tag; offset 29 <filename> tag,,repetition is idiomatic http wrapper methods
+1834d2246bcea06b,full,clean,,,,SVG string constant is legitimate
+0b6f311d6a782cd3,full,clean,,,,advent of code personal solution
+1c8ee3746db591ca,full,clean,,,,TSX is valid
+cf2eba8be6df8abe,full,clean,,,,
+83ce227e6cb3652f,full,fix,B2,offset 0 <gh_stars> tag,,
+70b8d2e323ca53a9,full,clean,,,,
+e612f4a7d569f591,full,fix,B2,offset 0 <gh_stars> tag,,'@ts-expect-error' x6 is idiomatic
+0075813513c9d986,full,fix,B2;D3,offset 0 <gh_stars> tag | Korean comments at offset 247,,
+8ed99b0d4644a033,full,fix,B2,offset 0 <reponame> tag,,
+05b30d8047342510,full,fix,B2,offset 0 <reponame> tag; offset 22 <filename> tag,,
+5f2caeac7d891530,full,fix,B2;D3,offset 0 <filename> tag | Chinese comments at offset 120,,
+4a0cc5e9eff0a523,full,fix,A2,76 U+000D (CR) CRLF endings first at offset 20,20 U+000D CARRIAGE RETURN (76x),CRLF file
+7635ca0240f111e2,full,clean,,,,
+4737d28ab51e8ab4,full,clean,,,,d.ts documentation comments are legitimate
+bcef64ecd934f8e6,full,clean,,,,
+986cc22da57f99e0,full,clean,,,,4-line elastic license notice too short for E4
+94dcc7359b4fcf27,full,fix,A2;B2,23 U+000D (CR) first at offset 12 | offset 0 <gh_stars> tag,12 U+000D CARRIAGE RETURN (23x),CRLF file; HTML template string is legitimate
+43614608409ec93e,full,clean,,,,TSX is valid
+23423a9643620677,full,fix,B2,offset 0 <gh_stars> tag,,
+6b78884f2b3643e5,full,fix,B2,offset 0 <gh_stars> tag,,
+73a8762926ca8663,full,clean,,,,
+a7873805b1d79039,full,clean,,,,
+b9b4ed63cb31986e,full,clean,,,,
+7ffff923de0354f6,full,fix,B2,offset 0 <reponame> tag; offset 76 <filename> tag,,strip source markers
+e1ffbe04702d23eb,full,clean,,,,TypeScript declarations are code
+b6d3980dbb7b03a2,full,clean,,,,
+1712622184455e29,full,clean,,,,
+c24c92f9ea9fc9b9,full,fix,B2,offset 0 <filename> tag,,strip source markers
+dfb42b4157d8dc77,full,clean,,,,
+4eee39365ce11269,full,fix,B2,offset 0 <gh_stars> tag,,strip source markers
+7e2352fe61e392d8,full,fix,B2,offset 0 <reponame> tag,,strip source markers
+6a811f3eb64f2ebc,full,fix,B2,offset 0 <reponame> tag; offset 38 <gh_stars> tag,,strip source markers
+761c88da4454b0e1,full,fix,B2,offset 0 <reponame> tag; offset 25 <gh_stars> tag,,strip source markers
+e884a2cec42d583b,full,clean,,,,
+ce76246bb8790628,full,fix,B2,offset 0 <reponame> tag,,strip source markers
+917126e516fb69c2,full,fix,B2,offset 0 <reponame> tag,,strip source markers
+a40ff6d1acac80c4,full,fix,B2,offset 0 <filename> tag,,strip source markers
+449a304e95658631,full,fix,B2,offset 0 <reponame> tag; offset 42 <gh_stars> tag,,strip source markers
+26f861857f69a944,full,fix,B2,offset 0 <gh_stars> tag,,strip source markers
+609709a7160974d0,full,clean,,,,
+53f73b401ea17db5,full,fix,B2,offset 0 <filename> tag; offset 36 <gh_stars> tag,,strip source markers
+bbbfb26c92e2f65c,full,fix,B2,offset 0 <reponame> tag,,strip source markers
+82221f225ca38f48,full,drop,E1,autogenerated icon file header at offset 0,,generated file
+dac7cbbe77568189,full,clean,,,,
+b3030318bd40f366,full,fix,B2,offset 0 <gh_stars> tag,,strip source markers
+731346dd36ddcfdb,full,clean,,,,
+3588525160478827,full,clean,,,,
+0e2b2eca19d28908,full,clean,,,,
+15c3ca67c83f5145,full,fix,B2,offset 0 <gh_stars> tag,,strip source markers
+6b1dbe8aa2331461,full,fix,B2,offset 0 <filename> tag,,strip source markers
+781a4d5e6bc835c6,full,clean,,,,
+72c7091d35849ecb,full,fix,B2,offset 0 <gh_stars> tag,,strip source markers
+a6f3ff559dcb3f6f,full,clean,,,,
+eafb4cb79e027ae6,full,clean,,,,
+85ace23380cbef68,full,clean,,,,
+bb9d7b80bfeef30d,full,clean,,,,
+1d38b936e762258b,full,clean,,,,
+a7529f5930280cff,full,fix,A2;B2,"15 U+000D (CR) first at offset 62 (offsets 62, 64, 126) | offset 0 <reponame> tag",62 U+000D CARRIAGE RETURN (15x),CRLF file
+238f697af1681f40,full,clean,,,,
+2977e84e37b0c9e4,full,fix,B2,offset 0 <reponame> tag; offset 28 <gh_stars> tag,,strip source markers
+95044a420791544b,full,clean,,,,
+d91ce6fb7078817f,full,fix,B2,offset 0 <filename> tag,,strip source markers
+81306703f988fe64,full,fix,B2,offset 0 <filename> tag,,strip source markers
+67b1a6fd8adce7c5,full,clean,,,,
+b1bb91d56be653e5,full,fix,B2,offset 0 <gh_stars> tag,,strip source markers
+346dde1d762c60b3,full,clean,,,,
+8b02e88b1dcbbf47,full,fix,B2,offset 0 <reponame> tag; offset 28 <filename> tag,,strip source markers
+2676f545366e38eb,full,fix,B2,offset 0 <reponame> tag; offset 28 <gh_stars> tag,,strip source markers
+2201a3a4319d4c4d,full,clean,,,,
+360d4acc12f1122f,full,fix,B2,offset 0 <reponame> tag; offset 26 <filename> tag; offset 72 <gh_stars> tag,,strip source markers
+ae346c5d294a08b6,full,fix,B2,offset 0 <gh_stars> tag,,strip source markers
+fa703eba6dd8357b,full,fix,B2,offset 0 <gh_stars> tag,,strip source markers
+4a5b8b5965c5701f,full,clean,,,,
+6b355f08a0b26017,full,clean,,,,
+c3ef4b7b4f18ed32,full,clean,,,,
+08dcc349d4b2d4c7,full,clean,,,,single license header is not repeated-license disease
+0fb9ae8e6e40fb17,full,fix,B2,offset 0 <filename> tag; offset 50 <gh_stars> tag,,strip source markers
+61288b65dd2ce610,full,fix,B2,offset 0 <filename> tag,,strip source markers
+f47fa9628fdd3750,full,drop,F3,profane placeholder string at offset 54,,harmful content in training text
+c1b73c3a4cc0df17,full,fix,B2,offset 0 <reponame> tag,,strip source markers
+a5b79937f2c6e9c1,full,fix,B2,offset 0 <reponame> tag; offset 40 <filename> tag,,strip source markers
+f88e97ff2cce7c29,full,clean,,,,
+df44f1c87c388ac0,full,clean,,,,
+f767449035e50cb2,full,clean,,,,
+9aa93a0b57f7fceb,full,clean,,,,
+f29b6a54d854851b,full,clean,,,,
+9cafde5bb94c34bc,full,fix,B2,offset 0 <gh_stars> tag,,strip source markers
+5695f5cad17c8c04,full,clean,,,,TypeScript namespace declarations are code
+2269179f31decce2,full,fix,B2,offset 0 <gh_stars> tag,,strip source markers
+06201979f4ac0013,full,fix,B2,offset 0 <gh_stars> tag,,strip source markers
+2bbe749f6c711c72,full,fix,B2,offset 0 <reponame> tag,,strip source markers
+91cf7be64838e0d0,full,fix,A1;B2,BOM at offset 101 | offset 0 <reponame> tag; offset 37 <filename> tag,101 U+FEFF ZERO WIDTH NO-BREAK SPACE,remove BOM and source markers
+f13780f6cc2a9a74,full,fix,B2,offset 0 <filename> tag,,strip source markers
+2b7e557fdf555a4c,full,clean,,,,
+b428ea2f6eca22a5,full,clean,,,,
+9d4da4b070459048,full,clean,,,,
+c55e22d278dc680e,full,clean,,,,
+0c2bddd8604cdb03,full,clean,,,,
+581818a4b2f678d9,full,clean,,,,
+d758114fc842f365,full,fix,B2,offset 0 <gh_stars> tag,,strip source markers
+84ad55e7306cf324,full,clean,,,,
+6b2c94da9e4b5742,full,fix,B2,offset 0 <gh_stars> tag,,strip source markers
+bbc7aba3ea6ff4c6,full,fix,B2,offset 0 <gh_stars> tag,,strip source markers
+83d9f14541a94c53,full,fix,B2,offset 0 <gh_stars> tag,,strip source markers
+29c09b4cddfb1905,full,fix,B2,offset 0 <gh_stars> tag,,strip source markers
+80267355581ff6d9,full,clean,,,,single license header is not repeated-license disease
+971a2f156fe0c3cf,full,clean,,,,
+bab0cb146e3e81a2,full,fix,B2,offset 0 <gh_stars> tag,,strip source markers
+7288c09ef66e7226,full,clean,,,,
+d5d6768f34be80be,full,fix,B2,offset 0 <reponame> tag; offset 24 <filename> tag,,strip source markers
+65e3ef78b775587b,full,clean,,,,
+7b4bc123de59af0b,full,fix,B2,offset 0 <gh_stars> tag,,strip source markers
+2f4a4e25f3b759cd,full,clean,,,,
+541a2fcd46eea0fb,full,clean,,,,
+74a1a79638bf97ab,full,fix,B2,offset 0 <filename> tag,,strip source markers
+cf6a5b10b1f6675c,full,fix,B2,offset 0 <gh_stars> tag,,strip source markers
+52ecaed3e95c4487,full,fix,B2,offset 0 <reponame> tag,,strip source markers
+fb465becf152738f,full,fix,B2,offset 0 <reponame> tag; offset 38 <gh_stars> tag,,strip source markers
+08b2bf8f8f848c97,full,fix,B2,offset 0 <reponame> tag; offset 26 <gh_stars> tag,,strip source markers
+734ad25f93469d08,full,clean,,,,
+5866f2fb4c1448a1,full,fix,B2,offset 0 <reponame> tag,,strip source markers
+7cad4676cf83b210,full,fix,B2,offset 0 <reponame> tag,,strip source markers
+34afda8d9470ce20,full,fix,A5;B2,NFC changes 2 characters at offsets 2395 and 2401 | offset 0 <filename> tag,2395 U+F900 CJK COMPATIBILITY IDEOGRAPH-F900 (2x; expected U+8C48),normalize NFC and strip source markers
+38dd2317a7769596,full,fix,B2,offset 0 <reponame> tag; offset 35 <gh_stars> tag,,strip source markers
+8adbf54f5835ba3e,full,fix,B2,offset 0 <gh_stars> tag,,strip source markers
+d73e452aa55f3f4e,full,clean,,,,
+d0ffd9f55efb9680,full,fix,B2,offset 0 <filename> tag; offset 52 <gh_stars> tag,,strip source markers
+6c644d556aff87cc,full,fix,B2,offset 0 <reponame> tag,,strip source markers
+1517121d77ee2f27,full,clean,,,,
+31b9da67646504b5,full,clean,,,,
+ad36591f13a0f429,full,fix,B2,offset 0 <gh_stars> tag,,strip source markers
+e056435640a478eb,full,clean,,,,
+0c041fa3eaff02b4,full,clean,,,,phone regex is a false positive in example URL
+5669153586fce4eb,full,clean,,,,single license header is not repeated-license disease
+ab197730f000d4ee,full,clean,,,,
+850e5c84b10e9b1e,full,clean,,,,single license header; API_SECRET is an interface field
+e2f230d94f8d1777,full,fix,B2,offset 0 <filename> tag,,strip source markers
+0679fc37754a3a90,full,fix,B2,offset 0 <gh_stars> tag,,strip source markers
+1e5d6189e61ae856,full,clean,,,,
+00c4cf01f60fe92a,full,fix,B2,offset 0 <gh_stars> tag,,strip source markers
+b1af015e4bebd5ba,full,clean,,,,
+991e567591fcf611,full,drop,E1,autogenerated file header at offset 0,,generated contract bindings
+a4b4e71a48e496af,full,clean,,,,
+1c59b5bb4b2b7c23,full,clean,,,,
+f0a4d0542252319e,full,fix,B2,offset 0 <reponame> tag,,strip source markers
+e801a3047b942912,full,clean,,,,
+c3e3725374f454a9,full,fix,B2,offset 0 <reponame> tag; offset 33 <gh_stars> tag,,strip source markers
+ec7b008224f38bb3,full,clean,,,,
+95c641244ef1ad70,full,fix,B2,offset 0 <filename> tag,,strip source markers
+e3c95cdc5223fd28,full,fix,B2,offset 0 <filename> tag,,strip source markers
+d88bcf53867cc19d,full,fix,B2,offset 0 <reponame> tag,,strip source markers
+1de338cf1af8bb81,full,fix,B2,offset 0 <gh_stars> tag,,strip source markers
+27762ed42e5d252b,full,fix,A2;B2,89 U+000D (CR) first at offset 130 | offset 0 <reponame> tag; offset 41 <filename> tag,130 U+000D CARRIAGE RETURN (89x),normalize line endings and strip source markers
+94030c7aab6ab0c2,full,fix,B2,offset 0 <reponame> tag; offset 31 <gh_stars> tag,,strip source markers
+b0d1b4185384eadb,full,clean,,,,
+d6df5befbed41d5e,full,fix,B2,offset 0 <reponame> tag; offset 27 <filename> tag; offset 77 <gh_stars> tag,,strip source markers
+63e066fbbab70035,full,fix,B2,offset 0 <gh_stars> tag,,strip source markers
+187976c63fce9362,full,fix,B2,offset 0 <gh_stars> tag,,strip source markers
+67c9226601f26da9,full,clean,,,,single license header is not repeated-license disease
+855b6fde373c0463,full,clean,,,,

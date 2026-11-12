@@ -1,0 +1,101 @@
+doc_id,read,verdict,diseases,evidence,hex,note
+159b5dab3842f5e3,full,clean,,,,
+bc1df110aba92a7e,full,fix,F1,,,Has names. Emails are cleaned
+bdd4fc5377b79560,full,clean,,,,"Public figure, not F1"
+f038b82784b65ef4,full,drop,,,,"MoM, has names of members but no useful  info"
+6cc571f9abd01dbb,full,clean,,,,Phone number of company. Not F1
+45bd41723c3467fb,full,fix,A1;F1,⟦VS16⟧ x1 at 99757,,Public county board meeting. Has names. Emails are cleaned
+6b8fb2c3a25aefcd,full,fix,F1,,,"Tech report. Has names, Name of authors from literature cited"
+eb6ad9726f2d7ddd,full,clean,,,,"Example placeholder tags, not html tags"
+257708aec037494c,full,fix,F1,,,County meeting. Company phone number/addresses. Receipt info with cashier names. Emails are cleaned. Very large document. 
+ee1499d3a718e1a0,full,fix,F1,,,"Dental Journal publication; Has names, Name of authors from literature cited. Mark as F1?"
+33d457ec5acefd40,full,fix,F1,,,Research proposal. Name of authors from literature cited. Not F1?
+00ae28035e096c87,full,clean,,,,
+fe3ecbe55edad1ec,full,fix,F1,,,"City Council meeting. Has names (mayor, attorney, etc). Emails are cleaned."
+ae40e248efd92695,full,clean,,,,
+ed9ada074ba439d2,full,fix,F1,,,Public Utilities Telecommunication filing form. Emails are cleaned. Has name
+49e69db485ab2390,full,fix,F1,,,Lecture. Has author names
+a63794b3d7cbc946,full,fix,F1,,,"Has names, phone numbers"
+a8d40d35ce1ea9e4,full,fix,F1,,,Old letter. Has names
+5a44f586712a5f6d,full,clean,,,,"News report. Has author names, other names"
+459ba80b6a72a94b,full,fix,B2;F1,"line ""<sup>"" ×15 at 70035 + line ""</sup>"" ×15 at 70043",,"Review board. Not html tags, should text markers be cleaned? Has name and addresses (Property Owner). Emails are cleaned."
+5b00bd0c69474a20,full,fix,B2;F1,"line ""<sub>"" ×61 at 13264 + line ""</sub>"" ×61 at 13273 + line ""<sup>"" ×5  at13288 + line ""</sup>"" ×5 at 13295",,"Thesis. Has author names, other names. Not html tags, should text markers be cleaned?"
+1a12bde2b655f221,full,clean,,,,"Learning text, not real names"
+125099cc2ba40a23,full,fix,F1,,,"Agricultural report. Has author names, Name of authors from literature cited."
+c114480d7ac27b2b,full,fix,F1,,,"Has names, not sure if real or not"
+9ee23bb65259edf2,full,fix,F1,,,"Research paper. Has author names, Name of authors from literature cited. Emails are cleaned. Has lots of math content"
+b88ba3f28e408d64,full,clean,,,,"Lesson text. Has public figures, not F1"
+3e37e69afebda88c,full,fix,F1,,,Story. Has author names
+a3397ab0db5fbd5b,full,fix,F1,,,"Meeting report, names present"
+529fa3c1ef7d84f7,full,fix,B2,"line ""<sup>"" ×6 at 105355 + line ""</sup>"" ×6 at 105361 + line ""<sub>"" ×1 at 118924 + line ""</sub>"" ×1 at 118930",,"Medical Report. Has math. Name of authors from cited literature. Valid text markers, should these be cleaned?"
+f53d6a408e06879c,full,fix,F1,,,Court document. Has names of attendees
+71f3da19b24d621f,full,fix,F1,"Has names, physical addresses, phone numbers, Emails are cleaned",,"Meeting notes. Has names, physical addresses, phone numbers. Emails are cleaned."
+af7b3f0be076359d,full,fix,F1,,,Report. Has author name. Emails are cleaned.
+baca8b9a4a6a542c,full,clean,,,,Emails are cleaned.
+4fae9a39c75ae0da,full,fix,F1,,,Name of authors from literature cited
+8722016ca4e73a8a,full,fix,F1,,,"Astronomy astrophysics Report. Has author's name, Name of authors from literature cited. Emails are cleaned."
+3d0fe5dbe9d87ef1,full,fix,F1,,,Council meeting. Has names of attendees
+8ee9c53050e5c0b8,full,fix,F1,,,Articles. Has author's names
+d359242c1f5e54c7,full,clean,,,,"First names in brochure, can be ignored. Emails are cleaned."
+595dbdcf5b7e8f7e,full,fix,F1,,,Court doc. Has names
+1d9b3fca3ccd8b99,full,fix,F1,,,"Scientific Report. Has author's names, Name of authors from literature cited"
+9f8dc7a41147f990,full,drop,,,,Has names. Very short document
+66ba90840f9ee91d,full,clean,,,,Financial report. Has company names
+49f48c49475a903a,full,fix,,,,"Non-english characters. Has names, Name of authors from literature cited"
+8a3ecfade8e5b543,full,clean,,,,
+623e062989b0382a,full,fix,F1,,,Meeting. Has names of attendees
+f4905ebc675c852b,full,fix,F1,,,"News articles, newspaper ads. Has names, phone numbers. Emails are cleaned."
+c37c134e8c5f451e,full,fix,F1,,,"Technical report. Has author names, Name of authors from literature cited. Emails are cleaned"
+ae81f9cc4d3503f3,full,fix,F1,,,"Has author names, Name of authors from literature cited"
+6fe1df76ac383696,full,fix,F1,,,"Dental report. Has names, Name of authors from literature cited. Has addresses - office?"
+20a82070da482773,full,clean,,,,Medical sheet. 
+3f91dba6d4dcbafd,full,fix,F1,Email at offset 752,,"Technical paper. Has author names, Name of authors from literature cited. Personal emails"
+ac92f5b301fe7e4e,full,clean,,,,Non-indic other language characters
+71c71465c083b8ef,full,clean,,,,
+1fb76880cc032588,full,fix,F1,,,"Has author names, Name of authors from literature cited"
+e447aa9ec4a00860,full,drop,F1,,,"Has names, lots of personal info"
+2f4a77ca094bc0e4,full,clean,,,,
+df04a2fc1ff77848,full,fix,F1,,,"Thesis. Has author names, advisor names"
+37c4086bae0deaf9,full,fix,F1,,,Commitee meeting. Has names
+d56a803bdfdc2b32,full,fix,F1,,"Report. Has author names, other names",
+d0c1e4de1fe7d62c,full,fix,F1,,,"Lecture. Has author names, Name of authors from literature cited"
+1d85f207fcafaca0,full,clean,,,,
+c68c334d03b6c87e,full,fix,F1,,,"Has author names, Name of authors from literature cited. Emails are cleaned."
+1c20cfd185ae1193,full,fix,F1,,,CV. Has names. Emails are cleaned.
+c82c995cd5c52245,full,fix,F1,,,"Has author names, Name of authors from literature cited. Emails are cleaned."
+0b6b4111a2693d9a,full,clean,,,,
+84dc057034d654ae,full,fix,F1,,,"Has author names, Name of authors from literature cited. Emails are cleaned."
+a57b52c99b7869fb,full,clean,,,,"Public figure, not F1"
+3f433efbf4f7946c,full,drop,F1,,,"Too short, has names"
+e46fc94c780772eb,full,clean,,,,Emails are cleaned.
+50c3875043745086,full,clean,,,,
+319865f4ebf2fea5,full,clean,,,,
+43be1aa1c0a1484b,full,fix,,,,Has names. Emails are cleaned
+10443f83a3d4713f,full,clean,,,,Form
+5c2e6075737b31cf,full,drop,F1,,,"Meeting. Has names of attendees. Too short document, dropping it"
+79cfaf2af79da3c9,full,clean,,,,
+4615d8c0a2c17e0f,full,fix,F1,,,Court document. Has names. Emails are cleaned.
+8e821470fb72580a,full,clean,,,,Movie info. Public figures
+b468e0346a5cf820,full,drop,,,,"Very short document, two sentences"
+bb150ee2c4e3f7d7,full,clean,,,,Emails are cleaned.
+85bf5ccc2e5d3b59,full,fix,A1;F1,⟦PUA+F076⟧ x2 at 443,,"Meeting. Has names of attendees. Short document, drop?"
+279e9a77b543556c,full,fix,F1,,,Meeting notes. Has names of attendees
+942910831d83a8a5,full,clean,,,,
+8ec9cd0ceaf48db1,full,fix,F1,,,Has names
+8f0fa208da309352,full,fix,F1,,,"Medical document. Has author names, Name of authors from literature cited. Emails are cleaned."
+64e7600c4d0b04cf,full,drop,F1,,,"Meeting notes. Short document, dropping"
+a88c3e14f483db62,full,clean,,,,
+896dc8437437e129,full,fix,F1,,,Has name. Group VP. Tag as Public figure?
+0395b08f16a05eaa,full,fix,F1,,,News report.  Has author names
+57b3ed1aec7296a9,full,fix,F1,,,"Has author names, Name of authors from literature cited"
+98b64c5f324c54cd,full,clean,,,,
+a6b358ca545d5109,full,fix,F1,,,"Medical report. Has author names, Name of authors from literature cited. Emails are cleaned."
+8d7a51d509105261,full,clean,,,,
+259592641f1b7a0c,full,clean,,,,Emails are cleaned.
+cf1295c95fbaf69b,full,fix,A1;F1,Cn+2073 ×1 at 6044,,"Medical report. Has author names, Name of authors from literature cited. Emails are cleaned."
+7e33205ec9e5e8b8,full,clean,,,,
+5f95a3022d9a1dad,full,clean,,,,
+6254206bf2fa0e3e,full,fix,F1,,,Has names. Emails are cleaned.
+37968cbcf50ecb43,full,clean,,,,
+1d2ffac59c7801ae,full,fix,F1,,,"Has author names, Name of authors from literature cited. Emails are cleaned."
+6b55462173cb710c,full,fix,F1,,,"Has author names, Name of authors from literature cited"

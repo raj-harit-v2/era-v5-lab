@@ -1,0 +1,501 @@
+doc_id,read,verdict,diseases,evidence,hex,note
+c5d61b53df104867,full,drop,C3;C1,"""Example of operation [Read More >>>]"" at offset 207|""[Read More >>>]"" at offset 228",,teaser cut off at Read More; 243 chars
+adbab34e5ae0df37,full,fix,C4,"""keep aThe play"" at offset 7135",,several blog essays joined; one seam glued mid-word at the quote
+d09dc244c45fc2bf,full,fix,C1,"""Store Information"" at offset 6118",,vape-shop article; shop footer and an 'Our Guide to Vaping ...' teaser at the end
+e0d9cf468f079906,full,clean,,,,conference abstract; author names are published researchers
+85f167761b5aee0d,full,clean,,,,
+17f4af14c04c9fde,full,fix,C1;B4,"""Primary tabs"" at offset 39|""[email protected]"" at offset 803",,"public agency staff contact with an office phone; not private, so not F1"
+9f8dfc9742bda8da,full,clean,,,,no final period only; text is complete
+a79b9132feb9c66f,full,drop,C5;C4,"""Comments About mining industry in sarawak"" at offset 794|""WikipediaMining is one"" at offset 49",,SEO page of scraped search snippets glued together
+b53192f0d3a3dbfc,full,clean,,,,SEO essay-mill page of unrelated snippets; PDF accent junk 'cotˆ ´e'
+b787548f4655559b,full,fix,C1,"""Search for:"" at offset 1952",,blog footer: Search / Search for: / Author line
+29160f1b6b0823cf,full,fix,C1;D3,"""行程速览"" at offset 0|""行程速览"" at offset 0",,Chinese tour-site header glued onto English text; then several landmark texts from one site
+b1eb87d32a353c10,full,clean,,,,poem plus author bio; no final period only
+283b60b13383e951,full,clean,,,,
+ca32200e3729539d,full,fix,C1,"""Click to expand..."" at offset 1231",,"forum thread; harsh political language, not harmful content (not F3)"
+0c69e2d3936a37a9,full,drop,C3,"""(e.g., lumpy snowflake"" at offset 286",,glossary entry cut mid-sentence; 308 chars
+87c9a4cea626e330,full,fix,C3,"""by using the following link:"" at offset 977",,FOI reply; the link at the end was stripped
+e18d8d5057e2aea8,full,drop,C4;C1;C3,"""Ankit Shah"" at offset 3513|""Related Documents:"" at offset 2953|""With the…"" at offset 3993",,"essay-mill page of cut-off essay previews; names in an essay header and a shop phone, judged not F1"
+428e9a9786a8ec29,full,clean,,,,hard line breaks mid-sentence; not a listed disease
+8da768022880757d,full,clean,,,,
+056cc9bc44c927e2,full,clean,,,,missing space 'tantrum.To' only
+45cc4aca83036255,full,clean,,,,SEO essay-mill page of unrelated snippets
+cfac9458cbfdbc3f,full,clean,,,,press article with hard line breaks every ~65 chars
+792d84fd14d8433e,full,clean,,,,"comment thread; insults in a political argument, not harmful content (not F3)"
+bcf05b0db582261c,full,clean,,,,
+931738ea83d03068,full,drop,B4,"""A. The fastest What is the name"" at offset 2584",,"generated train-route FAQ; template fill-ins broken ('1 railway stations', empty answers)"
+9dee088c1d408630,full,clean,,,,
+effb46c11c1b6d64,full,fix,C1,"""Quantity"" at offset 31",,product page; price and 'Quantity' widget text
+024cf48bc1be034f,full,fix,C1,"""Contents"" at offset 0",,wiki page; 'Contents' heading and image captions; missing space 'Piranha'sCastle'
+58c21b15df9a020d,full,clean,,,,
+710c4b66eec659f9,full,clean,,,,forum thread; no final period only
+b0090aaa22e20e44,full,clean,,,,
+e4f7e440698ae68f,full,drop,C1;C5,"""Featured Manchester Subdivision Real Estate Properties"" at offset 33|""Feature agents can provide you with Manchester Subdivision,…"" at offset 215",,"templated real-estate landing page, no content"
+78a561ee28ebbb6f,full,clean,,,,
+b8e726ed25bf4dfa,full,drop,C5;C4;C1,"""Animal abuse persuasive essay list thomas jefferson"" at offset 12719|""Related articlesPerfect time management"" at offset 11813|""Most popularFunny Video"" at offset 13119",,"SEO page: mythology quotes, a war story and essay-mill ads stitched together"
+494be9a546e5e0f2,full,drop,C5;C4,"""Category: post"" at offset 0|""shorted led lights in an led tv repaired model lg shorted l…"" at offset 1329",,auto-generated keyword text from scraped circuit snippets
+a0c9ea494f4974ea,full,clean,,,,
+f4a09231f100889f,full,clean,,,,"Q&A columns from one site, dated entries"
+351055b1795d8f3b,full,clean,,,,review-site page; the TrustRating paragraph is repeated for every reviewer
+6815ebe92f7bc8bc,full,clean,,,,no final period only
+0662e244b902eb56,full,clean,,,,
+bf58bb70fdc4a7fe,full,drop,C5;C4,"""students essays sample topics narrative persuasive"" at offset 173|""It. Writing Prompts has 31 ratings"" at offset 606",,SEO page: book snippets plus a keyword string
+977dc6d0135933b0,full,clean,,,,
+492efe6c7aa42a80,full,clean,,,,no final period only
+b5f210bac82e7902,full,fix,C1,"""Home / Local News / Local middle school teams"" at offset 0",,news article; breadcrumb line at the top; the 'Posted by' byline is normal
+f458786dc712df4e,full,clean,,,,
+a3727c426e649c64,full,drop,C2;C5;F1,"""<phone>"" at offset 278 (9x)|""Betty chickened out at the last minute."" at offset 294|phone at offset 278 (9x)",,spam page: random practice sentences with one phone number repeated 9 times; number treated as personal data
+ea2309bcf778e789,full,drop,C3,""" promote your webinar via social media"" at offset 0",,fragment: starts mid-sentence; bullets turned into '?' (lost characters)
+fc652552ea53be2b,full,drop,C3;C4,"""one problem being done eac"" at offset 572|""Students can compA comprehensive"" at offset 3580",,product-listing teasers cut at a fixed length and glued
+0e3e6fdfe3d7d698,full,fix,B5,"""NativeStringValidator(self::TEST_STRINGNativeStringValidator"" at offset 7536",,"PHP tutorial; code blocks garbled in extraction; prose fine; repeated code lines are natural, not C2"
+fab230d1a3b03a77,full,fix,F1,email at offset 5221,,press release; personal gmail address and phone of a named researcher at the end; stripped links
+cf9ffce5fa114b16,full,drop,C3,"""The new organ is called the interstitium. It"" at offset 349",,news teaser cut mid-sentence; 393 chars
+45265960ead737bf,full,fix,C1,"""RSS header - this is hidden"" at offset 0",,site widget text at the top; no final period only
+fc69e8dfaf5371ec,full,clean,,,,
+3e4ee522b5c267be,full,drop,C5;C4,"""Description zoo essay"" at offset 0 (2x)|""is limitednotei will apreciate"" at offset 313",,SEO essay-mill page of unrelated snippets
+d00bc9657d915e00,full,drop,C3;C4;C1,"""ve tutored off and on"" at offset 1|""Not only presenting theHello!"" at offset 273|""Utilize Uloop.com to find Maryland Anthropology tutors toda…"" at offset 2049",,tutor-listing page: profile teasers cut and glued; site boilerplate at the end
+e1841a9e4d49586c,full,fix,C4,"""Note: In most cases, not only the student"" at offset 668",,physics note followed by an unrelated text about students and teachers
+48541ab5ac386c19,full,drop,C3,"""taking out […]"" at offset 331",,tag-archive page: one cut-off excerpt plus a fragment
+c4ec194f16d4d46a,full,clean,,,,
+c71502baf08f9886,full,clean,,,,"Vim tutorial; <CR> and <Leader> are Vim key names, not HTML; one code example stripped"
+2533f228d3219340,full,clean,,,,
+fd16036899796ca4,full,clean,,,,"missing spaces from stripped links ('Sadansaid', 'saidSanaz'); not a listed disease"
+aa45b78eb4b1b5ad,full,clean,,,,blog note plus copied BBC article
+ad9d7510b2343977,full,clean,,,,travel blog plus one comment; adult themes but not harmful
+3a8b5ee847c1afbc,full,fix,D3,"""продолжительность"" at offset 4178",,SEO essay-mill page; a Russian YouTube snippet inside
+cf2892092e61e1aa,full,clean,,,,missing spaces before footnote marks; one garbled line 'Energy Drinks. energy drinks having'
+3e3e462610631365,full,clean,,,,title line repeated twice only
+ecabcaa88c9c89f5,full,clean,,,,
+96b00cc286431230,full,clean,,,,"reads like a translation (Persian?): 'oldness', 'its value duplicates'; confirm D5"
+962bc6e4f3744dd1,full,drop,C4;C3,"""greatly expanded today.……"" at offset 416|""what the pros and cons are of the gold standard:"" at offset 785",,"two unrelated blog teasers, each cut off"
+f47414ceb26aab38,full,clean,,,,ukulele blog plus comments; one stripped link
+980120a621536d71,full,clean,,,,hard line breaks; link texts on their own lines
+5912a78c259ccd3f,full,fix,C4;C1,"""Plot: An actor and poet falls in love"" at offset 1191|""External links"" at offset 0",,file-format article with an unrelated film plot added at the end
+d5ef4cbd3802de43,full,fix,C1,"""Time to Read"" at offset 88",,blog post; read-time and share header; 'clicking the links below:' ending
+3da0a9bbeeac1a6a,full,drop,D4;D3,"""The social and economic desigualdades"" at offset 0|""Aproximadamente cinco millones of niños"" at offset 369",,half-translated Spanish/English machine output
+061da75fcc6644d8,full,clean,,,,
+a3f7a6aac0ffe16f,full,fix,A3,"""OvidAEs"" at offset 106 (2x)",110 U+0041 + U+0045 (3x),"right single quote turned into 'AE' (OvidAEs, HomerAEs)"
+aea7d6f1fcf581a4,full,clean,,,,missing space in the title 'Barber'sTomb'
+a467c67189516901,full,fix,C2,"""Describes the most important things to do"" at offset 13 (2x)",,the same sentence twice in a 320-char doc
+ae8a5a4fdf8d3351,full,drop,C5;C4;B4;D3,"""How do guysfeelaboutdatingVirgins?"" at offset 379 (2x)|""How do you feelabout guy Woman A"" at offset 95|""[email protected]"" at offset 593|""коментариев"" at offset 74",,SEO page of glued Q&A snippets; Russian widget text
+21d9a00d1cabe255,full,clean,,,,advert line at the top; no final period only
+6abe69ac7f218889,full,clean,,,,
+1c6092da9a709c2e,full,fix,C2;C3,"""A public service announcement: I'm calling out"" at offset 0 (2x)|""hotdogs or steak. You"" at offset 79 (2x)",,comment fragments; the first sentence is repeated and cut off; one passage repeated once = C2 fix (25 Oct ruling)
+bd708a0acc1ee841,full,drop,C3;C5,"""so the remaining item"" at offset 343|""6 Money Essay Is Providing The Help"" at offset 0",,"essay-mill advert text, cut off"
+07ab89a32b8c6960,full,clean,,,,SEO essay-mill page of unrelated snippets
+d5a1f09be9ba4450,full,fix,C1,"""Content from Allstate"" at offset 10173",,"news article; author bios and an advert at the end; biosecurity topic but news, no method details"
+61252972a837d608,full,clean,,,,SEO essay-mill page of unrelated snippets
+8f9a2abd4df5ce33,full,clean,,,,mailing-list post with LaTeX font code; signed with a first name only
+37a68ee0535aea68,full,drop,C3;C1;D3,"""* Phone Number (Get"" at offset 322|""se connecter pour voir l'URL"" at offset 68 (2x)|""se connecter pour voir l'URL"" at offset 68 (2x)",,job-post fragment; starts and ends mid-text; French link-hiding text
+cc62eae76a8a4428,full,drop,C3,"""what is the correct view of emptiness"" at offset 1077",,"course outline; the topic list stops mid-list (every item ends in ';'), so the page is cut off"
+2a36b6c39911155a,full,clean,,,,code-review email quoting a C header
+eb8eab5f88e01414,full,drop,C1;C3,"""… More"" at offset 468 (8x)|""not having a lesson plan often brings … More"" at offset 430",,blog index page of cut-off teasers
+ec3efd57b0ba517d,full,clean,,,,
+78c31f7fbd38c949,full,clean,,,,no final period only; stray 'Interactions?' heading
+572275c9c2abe68e,full,fix,B2;B5;C3,"""<math>"" at offset 2783 (4x)|""<math> k = {2n\pi \over Na}"" at offset 5249|""in a given state is"" at offset 12229",,old wiki physics article; <math> used as both open and close tag; formulas stripped
+c5131c4f60f9ecc3,full,fix,C4;C1,"""Hydrocephalus is characterized by walking difficulty"" at offset 490|""Posted by Brigham and Women's Hospital October 2, 2013"" at offset 434",,"Parkinson's teaser, then a byline, then a separate hydrocephalus story"
+15679c7e52150394,full,drop,C4,"""From jail martin a by the of jr law birmingham letter"" at offset 1591",,SEO essay-mill page of unrelated snippets
+9abfa40620941401,full,fix,C1;C3,"""Technology like this capsule could one day return biologica…"" at offset 4334|""between NASA and the Louisiana"" at offset 5039",,"NASA article, then related-story teasers; the last is cut off; stripped link"
+2c2327bac4e467d9,full,fix,C4,"""When studying the genetic code, the first question"" at offset 6773",,41.7k chars: an edX course page joined to an unrelated genetic-code paper; stripped figures and links
+c04a79e384a80cbf,full,drop,C5,"""What To Write On Brothers Birthday Card Elegant Brother Card"" at offset 143",,image-gallery SEO page; keyword strings
+73a72cdf38011c79,full,drop,C5;C4,"""transitional words comparing contrasting essay"" at offset 1566|""Each week we send a customized newsletter"" at offset 3630",,SEO essay-mill page of keyword snippets
+1f81df321e86e4a1,full,clean,,,,article; an image alt-text line under the title
+da11e182d78c4715,full,clean,,,,"254-char fragment, but complete sentences"
+2dddff5b5a4c89f8,full,fix,C1,"""consumer goods social"" at offset 3966",,article; title repeated; a 'social' share-widget word glued to the last sentence
+df9e18a274879daf,full,clean,,,,forum thread; the path in quotes ends the text
+f2bb5aab033c6233,full,clean,,,,HVAC how-to; figures stripped
+1f1a184d3997b17e,full,clean,,,,
+40e039f1de48043c,full,clean,,,,"exam-prep MCQs; some stems/options lost (Q3, Q6), Q11's answer belongs to Q12; not a known benchmark (not F2)"
+d94038e9459f48f5,full,clean,,,,"charity blog; the phone number is a public helpline, not personal data"
+2afe86047288a0f3,full,clean,,,,
+64f95104f1424fef,full,clean,,,,"forum question signed with a first name; only a personal domain name, not F1"
+fd97e303c09491f6,full,fix,C2,"""A cryptocurrency highly favored on the Darknet"" at offset 8 (2x)",,glossary entry; the definition is repeated
+4fdb2d51780465f2,full,fix,C1;C3,"""Related posts"" at offset 2709|""A preliminary investigation into the fatal fire"" at offset 3625",,"news article, then cut-off 'Related posts' teasers"
+28c449c0da776749,full,fix,C1,"""Resume writing advice"" at offset 2990",,article; a tag phrase glued to the end; starts at section 1 with no heading
+b009b1fd1ced405e,full,fix,C1;B4,"""Book a consultation for your business expansion today."" at offset 0|""Timothy2024-05-02T11:40:52+08:00"" at offset 9030",,firm's article; call-to-action lines; FAQ author and timestamp glued into a question
+bbe410dfbf6e94fe,full,fix,A1,ZERO WIDTH SPACE at offset 111 (43x),111 U+200B ZERO WIDTH SPACE (43x),"forum debate; 43 ZWSP used as paragraph spacers, one splits 'Radi'; insults, not harmful content (not F3)"
+5a0bc4e8f35d0cd3,full,fix,B4,"""Uses:: Cullinary: Medicinal: yes"" at offset 1231",,"plant database page: site banner, empty template fields, a doubled phrase"
+ad4c2edab80a64ec,full,fix,F1,phone at offset 0; phone at offset 3340,,"home-care company blog post; two phone numbers, at the start and the end"
+f0775cec3af5c5db,full,clean,,,,
+c8eb8f1f5e4b6cd6,full,fix,C1,"""Quantity"" at offset 48",,"product page: price, size and quantity widgets"
+1a512819e1bdd652,full,clean,,,,product description
+e8e20a4cb11c30cf,full,clean,,,,"vendor blog post; sales pitch at the end with a glued seam 'Activity Grid,If training'"
+a8ce0be1516fc8a3,full,fix,C3,"""3rd-macronutrient combining-ratio"" at offset 0",,forum question that starts at item 3; items 1-2 missing
+5ab5376973607cce,full,clean,,,,no final period only
+fb909c1fb77f3f90,full,drop,C1;C3,"""DownloadSubscribe: Google Podcasts"" at offset 22 (2x)|""She was actually one of my first..."" at offset 136",,podcast index page of cut-off episode teasers
+17b720d329e26645,full,drop,C5;C1,"""Cloud computing platform."" at offset 0|""Instagram: mister bandbproduction"" at offset 5626",,SEO page of glued search-result snippets and keyword junk
+9620bd0fcd175785,full,clean,,,,course blurb; no final period only
+f9d86e8a4fd22eb9,full,drop,C5,"""Benefits of Installing an Electric Shower in Harmonstown"" at offset 2322",,generated local-SEO page: place names swapped into headings; a section start missing
+e6fd1ae0efbc3f51,full,clean,,,,
+f8e88313db5b109e,full,fix,C1,"""The link has been copied!"" at offset 111",,"blog post; byline, read-time and share-widget text; a product plug in the middle"
+acfaa05dfcc54537,full,clean,,,,"standards mailing-list post; <certainty> etc. are spec element names, not HTML"
+c880d6f32f45ce73,full,clean,,,,"R tutorial; code blocks stripped; <directory> is command syntax, not HTML"
+afc0f8cf5538352c,full,clean,,,,book excerpt; starts with a space
+a279661cc22e91f7,full,clean,,,,career-advice article; one subsection header stands alone
+f4c365036732dbe9,full,drop,C5;C4,"""19 Related Question Answers Found:"" at offset 2163|""up to 3 days after it has been cookedHairtail"" at offset 2924",,SEO Q&A aggregator: unrelated answers glued; a broken question
+c393b1062ca941b7,full,fix,C1,"""Celebrating National Days"" at offset 30",,worksheet page; nav and category lines before the description
+8e4a518f08255acf,full,drop,C4;C5;C1,"""Is the dark web safe?"" at offset 1649|""Search BuilderUse the Search Builder"" at offset 2085|""The best VPN services you can buy in 2024"" at offset 434",,spun SEO article with stray headings and ad lines spliced in; site contact block
+d57d424ce49c5526,full,clean,,,,2007 blog post quoting a news article
+037c64dcd384d4c1,full,fix,C1;C4,"""AltonicKeys's Achievements"" at offset 0|""I wish for more money, delivered to me"" at offset 1321",,forum profile feed: unrelated posts by one user in a row
+5e4ec841a6b61041,full,fix,C4,"""Participating in a rage room event canNon-Traditional Setti…"" at offset 2099",,listicle with two sections lost and the seams glued mid-sentence
+a205042ee091439f,full,clean,,,,ant-photo blog with captions; one paragraph repeated in a caption; typo 'Tabove'
+f95a5578ac2d3928,full,clean,,,,
+6ba1cb86a7825b39,full,clean,,,,
+4f746aeb38b05694,full,clean,,,,
+6883e31062c2c887,full,clean,,,,
+cab5ba1623ef9a5b,full,drop,C5;C4;D3;A1,"""Tusentals nya"" at offset 1939|""MarineHowever, sunshine"" at offset 691|""Utlandsjobb svenska kyrkan"" at offset 3523|ZERO WIDTH SPACE at offset 5170",5170 U+200B ZERO WIDTH SPACE,SEO spam: search snippets with Swedish/Italian keyword strings; one ZWSP
+b1d0f71fdc7fc4f7,full,clean,,,,school curriculum page; title repeated; ends at a stripped link list
+6a9aac0ed37c5ccc,full,clean,,,,podcast show notes with hard line breaks and timestamps
+3cbfa469fc1b0bfe,full,fix,C4,"""second module SmartMedBox whichTable 1."" at offset 27491",,"research paper (31k chars); Table 1 spliced mid-sentence, the sentence repeated after the table"
+a0bd67f61d40e823,full,fix,C1;C2,"""source: easemytrip"" at offset 55 (3x)|""Tourists can spot the most number of tigers"" at offset 8216 (2x)",,travel listicle; image-credit lines; every FAQ answer printed twice
+c1792de8d0f91aa8,full,drop,C3,"""After the road that leads to the historical part of"" at offset 245",,news teaser cut mid-sentence; 296 chars
+eb92e5364559b834,full,drop,C4;C1;C3,"""fansApril 29, 1996"" at offset 129|""See Privacy Policy at"" at offset 700|""And for German-Americans, U.S..."" at offset 1154",,"history.com teasers for several unrelated stories, glued mid-word, each cut off at '...'"
+7d7aa191aa04f48e,full,fix,C4,"""Step 1 - Press Alt+G"" at offset 287",,"definition of a purchase order, then Tally steps, a Zoho Books line and an unrelated accounting definition run together"
+495ad78df11fc5e2,full,fix,C4,"""Omgblog has transformed"" at offset 6742",,AI business blog; an unrelated site blurb is stuck on the end; 'amazons gpt55x' inserted mid-sentence; component 4 of 5 missing
+cb734095206fb7bf,full,drop,C2;C5,"""Free Printable Number Worksheets 10-20"" at offset 0 (5x)|""Number 20 Worksheets. Young children will love"" at offset 166",,search-result snippets for number worksheets; the title repeats three times
+5224d2b4ead317b0,full,clean,,,,"forum help question about VLANs, complete"
+73271926aa192f04,full,fix,C1;C3,"""Breadcrumb"" at offset 0|""should be able to stop in:"" at offset 2838",,driving-test page; menu word at the top; the sample questions stop mid-question
+61fcd46961ee505d,full,clean,,,,"AI article on confidence; lists after 'include:' are empty (body language, assertiveness); 'Explanation:' headings are natural"
+861cfb070ec8590d,full,clean,,,,"YMCA heritage month profiles, complete"
+af17ef8e611626ae,full,clean,,,,"morning-routine article, complete"
+a15951114ae9ea15,full,clean,,,,Netflix explainer; a stock-forecast widget line sits above the title
+4166ca34e7fd45d2,full,clean,,,,"houseplant dusting article, complete"
+835b7f883211c8fc,full,clean,,,,"LLM-written post; 'Sub-Headline 1:' to '3:', 'Introduction:' and 'Conclusion:' are prompt labels left in the text"
+83fecaa73a44ab3b,full,drop,C1,"""Link to comment"" at offset 0",,"forum fragment: 'Link to comment / Share on other sites', then one spun sentence about a 'prompt writer' that makes little sense"
+fab0aab30e6f371b,full,clean,,,,"bottle P-trap guide, complete"
+8a271034033c9925,full,clean,,,,AI-written B2B advert for solar inverters; repetitive but complete
+db7eae70cf9278bd,full,clean,,,,"data-breach article (Bcc, then news cases); the list of three address fields after 'these three fields:' is empty, the title is glued to the first sentence"
+0f3d140b2d910464,full,clean,,,,"CT perfusion Q&A, complete; the table it mentions is stripped"
+3ee0ac9356485a48,full,fix,C1,"""Step 02/ 14"" at offset 648",,town scavenger-hunt page; the fire-brigade paragraph appears twice with small changes; 'Step NN/14' and 'NN/20' counters and the title repeat between questions
+9f9ffd27bac6ee27,full,clean,,,,"housing policy paragraph, complete"
+45b126bd3b538779,full,clean,,,,"workshop page; an organisation e-mail at offset 961, F1? your call (every phone is F1, e-mails not decided); the bio names a public teacher, not F1"
+e76e9408559ef4f5,full,fix,C1;C3,"""Month: October 2023"" at offset 0|""Q1 What does 'Pratyaksha'"" at offset 418",,"quiz snippet; 'Month:' label first, explanation cut at '...', then a new question with no answer"
+eca1ae497517ab21,full,clean,,,,"finance glossary entry with a byline and date, complete"
+d17a7bfd297f5f9a,full,clean,,,,"IE/Edge how-to, complete"
+013141624ef7ae03,full,clean,,,,chemical-supplier directory page: lead-generation text and a list of five suppliers around an AI-written paragraph about anti-vertigo drugs
+b264e708afafc7c7,full,fix,C1,"""The Sacred Amulet download for pc link:"" at offset 2028",,game-download SEO page; the download link is gone and the text is filler
+d0d0cfd2de559039,full,drop,C1,"""Dive into the research topics of"" at offset 152",,"a paper title plus the 'Fingerprint' widget text, nothing else"
+5215edfb302da714,full,clean,,,,"job advert, complete"
+6ebc6e0ef058a393,full,drop,C3,"""attract tourists interested"" at offset 698",,news teaser cut mid-sentence; 725 chars
+71ca6ef3cfd7a7d0,full,fix,C4,"""ELVISH YADAV VS ARJUN BIJLANI"" at offset 2268",,"three unrelated AI-written celebrity posts joined; some headings have names stuck on ('of anurag dobal', 'OF UK07'); the two emoji are real (newer than this Python), not A4"
+916179410f8b1cae,full,clean,,,,"course advert, complete"
+8646cdba0cd9a205,full,fix,C1,"""Glossary of Terms"" at offset 10",,"glossary table scraped out of order: one definition has no term ('Concept of a state...'), 'All GHG emissions' stands alone"
+a966e8d301eee114,full,fix,C4,"""Consider planting"" at offset 983",,garden article; a piece is missing after 'Consider planting' and the next section starts straight away
+91b0e61b91728ed8,full,fix,C1;C3,"""Created in"" at offset 36|""Ball/Joint/Tendon ruptures"" at offset 47",,"Achilles surgery guide; title twice and a 'Created in' stub, then the first sentence is missing and the text starts mid-sentence"
+4c90988b5b4a11cd,full,fix,C1,"""April 11, 2024"" at offset 41",,"housing blog; author line, date and reading time on top, author box at the end; one organisation e-mail at offset 2272, F1? your call"
+fe5a6b754c9a6b06,full,clean,,,,"book blurb, complete"
+a639fbc62edbe0f9,full,fix,C1,"""Updated on January 6, 2024"" at offset 62",,game-codes page with no codes in it; 'Updated on' line and a generic filler paragraph
+6e38a658db12fd1b,full,clean,,,,"game guide that looks synonym-spun ('town' for 'city', 'harm' for 'damage'); numbering runs 3, 2, 1; 'Synergies:' headings are natural"
+d39d44bbd13c7835,full,fix,C1;C4,"""Corey307"" at offset 0|""Exactly, it only benefits people"" at offset 3416",,"reddit profile feed: user name on top, then unrelated comments (guns in Vermont, 4-day week, polygraphs, moving to Vermont); user name is not F1"
+98d4d847daac51d2,full,clean,,,,"two-item news digest with a date line, complete"
+71a349332d2a5bc2,full,drop,C3,"""device manufacturer,"" at offset 179",,event teaser cut off at '...'; 202 chars
+813cc0215f658929,full,clean,,,,"book review, complete"
+353a30233c17394e,full,drop,C3,"""Some, who claim to be part of the"" at offset 589",,devotional teaser cut off at '...'; 625 chars
+9ba1a804e06a1d1c,full,fix,C1,"""STEP 3"" at offset 0",,study-abroad page: 'STEP 3 / GENERAL INFORMATION' headings above one student testimonial
+b1e659d73eecbfa7,full,clean,,,,"sailing class description, complete"
+51b5797dc17567b6,full,fix,B3,Certainly! Here's a table with information about coconut coir:,,"long AI article on coconut coir; 'Certainly! Here's a table with information about coconut coir:' is the chat assistant talking, the table is flattened; stray 'Coconut Coir' headings repeat (natural)"
+6504475770f4217d,full,drop,C5,"""best gambling online"" at offset 1246 (4x)",,"gambling SEO text: the same phrases ('internet cafe games', 'best gambling online', 'fish table games') in every paragraph, FAQ jumps from Q1 to Q3"
+8b29c4f06255d3fc,full,clean,,,,"finance newsletter with a contents list and section labels, complete"
+372d112239744cea,full,fix,C4,"""What does VEOA eligible mean?"" at offset 351",,'people also ask' scrape: answers copied from different government pages; 'OR.' left where bullets were; the 5-point question has no answer
+457d4f17b3fb8ede,full,fix,C4;C3,"""It feels like talking to a friend I haven't caught up with"" at offset 8003|""a philosophy eyes"" at offset 8181",,"author interview, complete, then a line from a different article glued on and cut mid-sentence; date and read-time line on top"
+1b0b5de672a619ad,full,clean,,,,one customer review with the reviewer's name above it
+34632ba1b7509159,full,fix,C1;C2,"""The contents of this post will automatically be included in…"" at offset 246 (5x)|""Well, the double quote thing is because excel uses double q…"" at offset 2666 (2x)",,"translator forum thread: 'Subject: / Comment:' form text five times, '... See more' previews followed by the full post, edit stamps; the screenshots and one formula are gone"
+1d8bb59dfbf6b9e4,full,drop,C5,"""카지노사이트"" at offset 1722",,"online-roulette spam: synonym-spun English ('Atlantic Metropolis', 'soccer ball', 'arbitrary number generator') with a Korean casino keyword dropped into a sentence"
+3b692a46ae01bac4,full,clean,,,,"course description, complete"
+a229b18aa8e5f7fa,full,clean,,,,"school committee page, complete"
+ba53cf6fd3e1a7d2,full,fix,C1,"""Loading..."" at offset 237",,news article with a 'Loading...' widget line between paragraphs
+59efa8fff2970f98,full,clean,,,,"dental implants guide, complete"
+5d5b1bb67b422805,full,fix,C1,"""Citation:"" at offset 2644",,"science news article; the 'Citation:' stub at the end holds only the headline twice, glued together"
+58487a51580a59be,full,drop,C1,"""Reporting Problems"" at offset 770",,"website accessibility statement: a menu page with one option missing (text resizing lists four ways, three are there); one organisation e-mail at offset 910, F1? your call"
+3a942295a20211ce,full,drop,C4;C3,"""In 1960, Democrats stole the election"" at offset 679|""Legacy Media were convinced"" at offset 1870",,"feed of cut-off teasers from one political blog: a literature essay opening, a travel story, 2020 election posts, each ending in '...'; election-fraud claims, F3? your call"
+c9e6d6b160ed24cb,full,drop,C5;A1,"""DailyMed will deliver notification of updates"" at offset 678|SOFT HYPHEN at offset 1012 (3x)",1012 U+00AD SOFT HYPHEN (3x),"keyword soup about Agaricus mushrooms: scraped sentences from drug-label, wiki and shop pages in one 13,700-char line, 'Carrinho' on top; 3 soft hyphens"
+88f9cfd55ebf150e,full,fix,C3,"""Frontiere was a fixture on the film- and TV-music scene"" at offset 0",,"composer's obituary; the opening paragraph is missing, it starts with the surname only"
+e76a5118c56e8efa,full,drop,D4,americans useless,,"Bloomberg wildfire story run through a bad paraphraser ('fireplace hazard', 'americans useless' for 'people dead'); date line on top; a journalist's e-mail twice at the end Not F1: a journalist's work e-mail is not private data (28 Oct rule); the paraphrased text is the problem (D4)."
+c9fa515a23005c73,full,fix,C2;C3,"""Community settings can provide the support patients need"" at offset 3002|""have a valuable part to play in shaping the future"" at offset 2950",,"magazine article; paragraphs split mid-sentence at page breaks, the last paragraph stops mid-sentence, a pull quote repeats a sentence from above"
+a68b159d3596920a,full,fix,C1;C3,"""Previous"" at offset 489|""Co-Director of The Areté Institute, as she"" at offset 1371",,"school page: slider labels 'Previous / Next', a blurb cut at 'as she ...' followed by its bullets"
+241d35d70bf27136,full,clean,,,,"fence shop description, complete"
+70f0d5997602af0a,full,drop,F3;C5,"""Sexy Bellina has her"" at offset 516 (3x)|""Madthumbs"" at offset 2660",,"article on sexual satisfaction in Malaysia with explicit porn-site spam pasted into and between its paragraphs, repeated; the Brazil paragraph does not belong either"
+1dc774625f80aa40,full,clean,,,,"course abstract, complete"
+ec546a36e93ce758,full,fix,C1,"""September 29, 2020September 23, 2020"" at offset 43",,news piece; two dates glued together on top; a law-firm advert ('Contact an attorney...') closes it
+9187d8e8a800f7d6,full,drop,C4;C1;C3,"""Lewis and Tolkien both hold the idea"" at offset 3218|""Related Documents"" at offset 1844|""Constantinople was named the capital of the"" at offset 6902",,"essay-mill page: excerpts of different student essays (Beowulf, King Arthur, Origen, Constantine) joined, '...show more content...' and 'Related Documents' in between, each excerpt cut off at '...'"
+9a3163e76e5e95db,full,fix,C1,"""Getty Images"" at offset 1333",,"ice-cream news piece; a photo credit line in the list; steps 5 and 6 of the seven are missing; two words glued ('creamthe', 'ofsweetness')"
+ed7ad5af5ee79c0b,full,fix,C1,"""Network"" at offset 0",,"TV review page; a header block (network, reviewer, 'TV Series Review') above the text"
+72e84bbd1c2d63dc,full,clean,,,,one-paragraph energy company blurb
+3504ffac90336816,full,clean,,,,"brand-name blog post with a date line, complete"
+5b7acb37b2c23670,full,clean,,,,"freshwater prawn production note, complete"
+19dd26058c8233c5,full,clean,,,,"packaging company blurb, complete"
+ccc87695f42bf11d,full,drop,C5,"""Download it once and read it on your Kindle device"" at offset 2569",,"keyword soup around a Haldane book title: snippets from shops, library catalogues and wikis joined, with every year and some numbers deleted ('first published inis based upon')"
+1c546e479e1cdf42,full,fix,C1,"""Registered"" at offset 0 (6x)",,"forum thread on insomnia: user-status labels ('Registered', 'Banned', a user name) between the posts; one line that reads like a signature"
+4e3b0960daa6743d,full,fix,C4;C1,"""как раз об том же самом вчера у Шмальгаузена"" at offset 780|""Encyclopedia of Psychology Alan E. Kazdin"" at offset 0",,encyclopedia excerpt snippets (organizational theories) with a Russian comment line in the middle and a book header on top
+da12a1b684530913,full,drop,C5;F1,"""Learn vocabulary, terms, and more with flashcards"" at offset 2396|email at offset 971 (+3 more)",,"keyword soup about schist and talc: sentences from quiz, wiki and shop pages in one 21,000-char line, with a loan agency's phone number three times and a student's e-mail"
+5ca8efb4c201e5ab,full,fix,C1,"""INQUIRE"" at offset 26",,"artist page: name split over two lines and gallery labels ('INQUIRE', 'ARTIST AT A GLANCE') above the bio"
+36bb0783982df32d,full,clean,,,,"market-research summary, complete"
+524bc51423dc2f47,full,drop,C1;D4;C4,"""We use cookies to personalise content"" at offset 7331|""The South Photography equipment civil legal rights unions"" at offset 17|""The giving promise is a growing trend"" at offset 7057",,"essay-mill page: a number and 'Essay' on top, 'Improve Your Essay Now' inside, a cookie banner at the end; the essay is run through a paraphraser ('Matn Luther California king', 'Montgomery Bus Bannissement'); an unrelated 'giving pledge' text glued at the end"
+8b20dab8a7cfdbb3,full,clean,,,,"ranking article that starts mid-list: jobs 1-3 are missing, it begins inside a sentence"
+bafe1fcb3c21fa0e,full,fix,C1,"""Customize"" at offset 0",,game news item; a 'Customize' widget word first and hard line breaks every few words
+220cede8261d99ab,full,fix,C4,"""SMALL BREED DRY DOG FOOD: Optimal protein levels"" at offset 2711",,"ferret-food listicle; item 1 missing, headings glued to the text, a dog-food shop description pasted into item 4 and glued to the next sentence; FAQ answers for Q1 missing"
+1f9d7ee848a02d09,full,drop,C3;C4,"""She gets that it's"" at offset 1564|""I ADORE THIS MAN"" at offset 344",,"podcast page: several listener reviews, each cut off at '...', the last one cut mid-sentence"
+e83a470630546115,full,fix,C1;C3,"""INFORMATION"" at offset 56|""compose years of research."" at offset 1696",,"book page: 'INFORMATION / DESCRIPTION' labels, the blurb has no space after full stops and is cut at '...' before an excerpt"
+ec59b95cad431b5f,full,clean,,,,"book blurb, complete"
+0e20c807c3209a48,full,clean,,,,"illustrator's about text, complete"
+3dcf579f2907b666,full,clean,,,,taco seasoning recipe; the ingredient list under 'Ingredients:' is empty
+c91a4c2cf69e4261,full,drop,C2;C5,"""How To Undo Change In Clickfunnels"" at offset 0 (17x)|""If you're searching for leads, you have two unique How To U…"" at offset 72",,SEO spam: the phrase 'How To Undo Change In Clickfunnels' sits as a heading and inside sentences nine times in spun marketing text
+1b75b5bace121eb8,full,fix,C1;A1,"""cookies"" at offset 0|ZERO WIDTH SPACE at offset 1193 (2x)",1193 U+200B ZERO WIDTH SPACE (2x),"content-marketing article; 'cookies' banner word first, two zero-width spaces inside one sentence, an agency advert closes it"
+7456cc355517ab39,full,clean,,,,"library event note, complete"
+6bfaae5cebe51936,full,fix,C3,"""These are the kind of negative externalities"" at offset 0",,hackathon project write-up that starts mid-text: the first paragraphs (inspiration) are missing
+263358818aa19500,full,fix,C1;C2,"""The Following 2 Users Say Thank You"" at offset 683|""USA Number 1# with multiple times the budgets"" at offset 250",,"political forum thread: breadcrumb glued to the title, 'You Tube' twice, thank-you line, the first post line is repeated in full"
+df0e23f89aea0e98,full,fix,C1,"""FAQsWhat makes your Speed Profile"" at offset 43",,"gym testing FAQ page; 'Assessments' header above, heading glued to the first question, the word 'What' lost in one question"
+74c62d6749024a18,full,fix,C1,"""Share on social media"" at offset 32",,regional news piece with a 'Share on social media' widget line under the title
+0c14136e3d30bb15,full,drop,C3,"""led by the Ethnic Communities Council of the South"" at offset 251",,news teaser cut mid-sentence with 'Featured' glued on the front; 301 chars
+c56cd46b0c44e03e,full,clean,,,,"maths paper abstract, complete"
+9830fa89e63f1496,full,drop,D4;C4,"""Lone wolf, Master, PhD"" at offset 902|""Any of the various available online school projects"" at offset 6369",,"study-in-the-USA guide run through a paraphraser ('Lone wolf' for Bachelor, 'understudies' for students, 'significant' for major); two teasers cut at '[...]' glued on at the end"
+2124a69a4b7c8737,full,drop,C5;C4,"""Check Out the Original vs Remake Here"" at offset 217|""The stairs lead to a section underneath the city"" at offset 378",,"game-wiki snippet soup on 'aerith death': sentences from several pages mixed in one paragraph, cut at '...'"
+33d0e1e8422b2d9f,full,fix,C1,"""Activities"" at offset 443",,"school maths page: 'Activities' header, the video it refers to is gone, a presenter bio with the name stripped"
+de12ff3026ecc2ca,full,clean,,,,"two login steps for a school portal, complete"
+566402921614f959,full,fix,C1,"""Like what you see? Enter your email to sign up"" at offset 3881",,"local news story; a newsletter sign-up line at the end, and the poem credit is glued to the opening-hours line"
+01dc993a06abd28f,full,drop,C1;C3,"""Categories"" at offset 0|""Due to improved treatment of infectious diseases"" at offset 865",,"blog archive teaser on heart disease cut at 'Read more'; the English reads like a translation ('the heart is wasted'), D4? your call"
+9826a8ca063c4aaf,full,clean,,,,"beach movie night listing, complete"
+a6dc129e028a5da2,full,fix,C1;C3,"""Meet some of our Edinburgh Violin Teachers"" at offset 240|""proceeded to join the Singapore Nati"" at offset 553",,"tutor directory page; two tutor bios cut mid-word at '...', directory text around them"
+c701e6d6c629ec31,full,clean,,,,"short medical note on deviated septum, complete"
+be7deb6ebb737b61,full,clean,,,,"sci-fi chapter excerpt, complete; character names vary (Leyla/Weyla/Chukka)"
+98c282bc8b3a7df0,full,fix,C1,"""Primary tabs"" at offset 0",,petition text with a site menu label ('Primary tabs') on top
+ce5379f938f82eee,full,drop,D4;C1;C3,"""The substitute before creating the actual murals"" at offset 489|""Thanks for visiting our website"" at offset 1402|""Many people trying to find info about Painting Childrens"" at offset 1626",,"image-site spam on wall murals: paraphrased English ('announce' for impression, 'answer upon the walls'), a 'thanks for visiting our website' line, cut mid-sentence"
+6b6f34dde3954177,full,clean,,,,student health-ethics answer with its reference list; the links after 'Retrieved from' are gone
+9878290aebde8d02,full,fix,C1,"""About the Author"" at offset 221",,book page with 'Description / About the Author / Praise For...' labels around the text
+062c516e949c4db8,full,clean,,,,"auto-generated colour-code page, complete"
+676882342d07a459,full,clean,,,,"opinion blog on Vermont's big-box order, complete; crude language and the 'Nubian prince' joke are the author's"
+18d8427b30b27b66,full,clean,,,,"weight-loss tips article, complete"
+cf2938d625654aee,full,fix,C1,"""Description"" at offset 20",,"book shop page: 'Description', 'AUTHOR:' and 'ISBN:' labels; the scanner's phone hit is the ISBN, not a phone number"
+01a6adc6c8a23797,full,fix,C1,"""Let's continue Return Home"" at offset 935 (3x)",,"teacher-training portfolio page: a table flattened into one block, slide numbers and 'Let's continue / Return Home' buttons four times"
+0be26cb23aaa3db7,full,fix,C1,"""To listen to an audio podcast, mouse over the title"" at offset 47",,"podcast shop page: player instructions, table headers 'Name / Description / Released / Price', 'Clean' tag glued to the first title"
+086f01015b4dc92e,full,drop,D4;C4;C2,"""much vitality consumption"" at offset 100 (2x)|""Web safety is a broad time period"" at offset 990|""2Of course, the need for a profound Continue Reading"" at offset 192",,"spun spam: title about removing malware, text about energy and web safety in paraphrased English ('vitality' for energy), a 'Continue Reading' teaser followed by the same paragraph in full"
+bf93b106cd5bed9f,full,clean,,,,"town statistics page, complete"
+01dece4f15cf2cfa,full,drop,C5;C4;C1,"""HOW TO REGROUT TILE"" at offset 1249|""Venom Floatshome. shop. retailers. prostaff. contact"" at offset 1595|""Contents"" at offset 26",,"grout snippet soup: sentences from several sites cut at '...', a fishing-float shop menu and a trolley-problem quote in the middle"
+dde520ad6d232761,full,clean,,,,"networking workshop page, complete"
+d5d3cae389f24f21,full,fix,A1;C2;C4,"ZERO WIDTH SPACE at offset 668 (2x)|""Rules are foolish arbitrary mindless things"" at offset 459 (2x)|""Thanks for stopping byThis little kestrel"" at offset 206",668 U+200B ZERO WIDTH SPACE (2x),"photo-forum comments: the signature quote twice, two zero-width spaces, two comments glued together"
+da2b5682fe301e4b,full,clean,,,,"craft-shop about text, complete"
+ace8a4845484d530,full,clean,,,,"game-developer interview, complete"
+93cbbeb5173738c1,full,drop,C4;C3;C1,"""Whisky is one of the most popular alcoholic beverages"" at offset 713|""after a couple of drinks become singing"" at offset 205|""Benefits"" at offset 0",,"blog index 'Benefits': ten teasers on unrelated health topics, each cut at '...'"
+49a8e820b66c9747,full,clean,,,,"farm diary entry, complete"
+b9b302bd8e60e428,full,clean,,,,"plant-science news-and-views article, complete"
+fe297bae83fbe806,full,fix,C1;C4,"""Are you paying the best price for home insurance?"" at offset 1399 (2x)|""Either drivers have an insatiable appetite for a new whip"" at offset 8381",,home-insurance blog article; an insurance ad twice in the middle and two teasers for other articles cut at 'Read More' at the end
+7a0562dd16fc56b7,full,fix,C1;C4,"""Premium Content"" at offset 212|""How COVID-19 changes worker expectations:"" at offset 2843",,"regional news story; header block with byline, date and 'Premium Content / Subscriber only', and a Reuters teaser about worker expectations glued on the end"
+2b313cb382512096,full,clean,,,,"encyclopedia text on social network analysis, hard line breaks every ~70 characters"
+830d2f02087ea7ca,full,clean,,,,"curriculum kit product description, complete"
+90533ed890b1a8fa,full,fix,C3;C1,"""They include serious choices concerning residency or health…"" at offset 2387|""You may also like these articles"" at offset 2464",,"probate article; 'Top 5 facts' stops after fact 2 at '...', date and read-time line on top, related-article teasers at the end"
+7fd6544318365df3,full,drop,C1;D4,"""We use cookies on this website"" at offset 0|""The headline"" at offset 375",,"archive page for a 1962 East German newsreel: cookie notice, the German table of contents machine-translated ('The headline', '12th artistic gymnastics around the cup')"
+a862652cec8be7f2,full,drop,C5,"""Concord Review Sample Essays, common app essay outline"" at offset 1101",,"essay-mill keyword soup about the Concord Review contest, a pharmacy spam phrase dropped in; one e-mail of a named professor at offset 6087, F1? your call"
+d1afb8173e720989,full,clean,,,,"baseball team summary; apostrophes dropped ('the As', 'teams owner') and the record written '9.028-9.452.489'"
+621706de40b822fb,full,fix,C1;B4,"""Location not specified"" at offset 101|""[[wmcoe]]"" at offset 1985",,"university event page: '[PAST EVENT]', date and 'Location not specified' blocks, and a template placeholder where the e-mail address was"
+27ce6e1dda87a6a6,full,drop,C5,"""other ways to say in conclusion in an essay"" at offset 210 (7x)",,essay-service keyword soup: the phrase 'other ways to say in conclusion in an essay' pasted through run-on text
+f1ed26cc13f2181f,full,fix,C4,"""I have many i guess."" at offset 2380",,"teen advice thread under a photo post: several replies in a row, one cut at 'Self appreciation is the' with 'key to happiness' glued after it, and an unrelated comment about alarm clocks at the end; user names are not F1"
+3d00753214ef0cc7,full,fix,C1,"""Back to school"" at offset 11",,"humour blog post; the date lost its month (starts ' 07, 2006'); the sketch itself is complete, crude language is the author's"
+a8381c8226255b4b,full,fix,A3;C1;C3,"""'Äėfair market value'Äô"" at offset 911 (2x)|""Show us some love and support our journalism"" at offset 3467|""In). However, despite the exemption notification"" at offset 1510",912 U+00C4 LATIN CAPITAL LETTER A WITH DIAERESIS (2x)|913 U+0117 LATIN SMALL LETTER E WITH DOT ABOVE|933 U+00F4 LATIN SMALL LETTER O WITH CIRCUMFLEX,"startup-tax explainer; every curly quote is mojibake ('Äė ... 'Äô, 'Äú ... 'ÄĚ), a paragraph is cut to 'In).', and a membership appeal ends it"
+b040257addd8c9c9,full,clean,,,,"reply in a comment thread about atheism and Islam, complete"
+2932422225552cf7,full,clean,,,,teaching event page; the sponsor list under 'Thank you to the following companies' is empty
+3d2f892c9543b193,full,drop,C5;A1,"""Nursing Dosage Calculations Worksheets - You are going to b…"" at offset 8461|SOFT HYPHEN at offset 365",365 U+00AD SOFT HYPHEN,"keyword soup about nursing dosage worksheets: search-snippet sentences, image captions and 'thoughts' lines in one 20,000-char line; one soft hyphen"
+ca7b98bad4afa600,full,drop,C5;C4,"""Fidget Meaning in Hindi"" at offset 1424|""Toothbrush History"" at offset 16894",,"dictionary keyword soup on 'fidgets meaning in english': search snippets from many dictionaries in one 17,000-char line, then a dental-site tagline stuck on"
+91fa026278d2db5e,full,clean,,,,"sermon on mothering, complete"
+f6d54677432cce21,full,drop,C5;F1;A1;B4,"""Since then, 35 more states, the District of Columbia"" at offset 49 (3x)|phone at offset 1542 (+2 more)|SOFT HYPHEN at offset 18261 (2x)|'[email protected]' at offset 20771",18261 U+00AD SOFT HYPHEN (2x),"'medical terminology fill in the blank' keyword soup: 45,000 chars of snippets in one line from quiz, law, form and shop pages; a forum member's profile with birth date and age at offset 1000-1100, a hotline number and other phone numbers, two soft hyphens, an '[email protected]' placeholder"
+17b06512c56082cb,full,clean,,,,"state delegate's opinion column with a disclaimer line on top, complete"
+5647f89e13068c52,full,clean,,,,"maternity-leave FAQ, complete; one stray photo-credit line"
+a563aeb47bff5397,full,drop,D4;C4;C3,"""geriatrics are overweight too and baby boomers are just get…"" at offset 183|""Education based mostly on silence teaches students"" at offset 275|""elevating a toddler or preschooler at residence"" at offset 865",,"spun spam: a teaser line, then a paraphrased paragraph ('dad and mom', 'extra motionless') with sentences from different texts, cut at 'So,...'"
+baa396dba06fb0e4,full,fix,C1,"""Sign Up for Our Newsletter"" at offset 715",,student researcher profile page: 'no upcoming events' line and a newsletter sign-up box at the end
+f1fd19165f92e4ab,full,fix,C2;C1,"""In a food processor, combine the sugar, eggs, and vanilla."" at offset 475 (2x)|""Comments"" at offset 2338",,"recipe page: the instructions appear twice in different wording, then reader comments with first-name signatures"
+5d5349aa6d322d32,full,fix,C4;A3,"""Electric lifting TV bracket"" at offset 127|lone 'Â' before space (mangled NBSP?) at offset 124",124 U+00C2 LATIN CAPITAL LETTER A WITH CIRCUMFLEX,"product page: a trailer spec line glued to a TV-bracket description, 'Our Factory:' label and one lone 'A' with circumflex where a non-breaking space was"
+2ab0c839627c34e5,full,clean,,,,"university dining history, complete"
+1cddb9966a6bc0f0,full,clean,,,,music-history abstract with hard line breaks and footnote digits inside the text
+cbd26e20383c72b3,full,drop,D4;C1,"""500g drains;"" at offset 108|""Rate this post"" at offset 63",,"apricot-compote recipe in machine-translated English from Russian ('drains' for plums, 'the pitted' for stones, 'syrup mutnates'); date and 'Rate this post' lines on top"
+d9d4d41d95e73454,full,clean,,,,"childcare first-aid course page, complete; the title is glued to the first sentence"
+2f80d8e962df2c67,full,clean,,,,"university event blurb, complete; the event title is repeated glued to its own text"
+0542405223e33f4f,full,fix,C1,"""Contact Us Today for A"" at offset 3199",,"law-firm injury page: lawyer advert, a contact-form skeleton ('Name* / Email* / Phone') and 'Testimonials' at the end; one office phone number at offset 3126; four no-break spaces inside the text, A1? your call Not F1: office phone (28 Oct rule)."
+37adaab821a6d913,full,drop,C4;C3,"""Many Georgia families rely on nursing home care"" at offset 837|""as they try to protect elder"" at offset 267",,"law-firm blog index: eight teasers on nursing-home abuse, each cut at '...', the first cut mid-word"
+4f4c05473400bea9,full,clean,,,,"speaker product features in one run-on line, complete"
+b5bddb3993b46be7,full,fix,C1,"""Apply to jobs on the go"" at offset 0",,job-site Q&A about event managers; an app promo line on top
+f27c315dee45a78b,full,drop,C5;C1,"""most commonly thesis statement question examples"" at offset 89|""Menu"" at offset 0",,"essay-service spam: 'sample paper in apa' sentences with other essay-service phrases stuffed in, a 'Menu' label on top"
+3ba8b9af47cdeee9,full,fix,C1,"""Source: YouTube"" at offset 1371 (3x)",,"company article on VR training: 'Source: YouTube / ...' caption lines, image-label lists, one 'Quelle:' and 'Motion Simulatoren' left in German, D4? your call"
+d4aa6124656a61e0,full,clean,,,,"one tweet claiming a COVID pass will become a tracking chip implant; F3? conspiracy claim, your call"
+3d92a5a472115eee,full,drop,C5;C4;F1,"""Tonto National Monument Individual Pass"" at offset 1182|""Ranger Districts: Payson, Cave Creek"" at offset 2300|phone at offset 682",,"snippet soup about the Tonto National Forest: search results with dates ('10/09/40'), a YouTube result, a forest-service phone number and an Arabic sentence in the middle"
+11136d366991f5c4,full,fix,C3,"""Our Chain Driven Drives are available"" at offset 603",,conveyor drive product page cut off at the last sentence
+2953c434889dd078,full,drop,C5;C4,"""3 days ago · Stuttgart"" at offset 1745|""4 days ago · Carl Friedrich Benz"" at offset 571",,"search-result snippets ('5 days ago', '4 days ago') about Karlsruhe, Benz, Ulm and Stuttgart joined, with a professor's profile line"
+08d1dea6b2fd2ed0,full,clean,,,,"blog post on a heritage-day exhibit, complete"
+51e25afa7141197b,full,fix,C3,"""mention it to"" at offset 7525",,"money-habits blog post, complete until the last sentence, which stops after 'mention it to'"
+fbf84989ea4e1e14,full,drop,C5;C4,"""How to Draw Baby Sonic easy from the Sonic The Hedgehog mov…"" at offset 40|""Hedgehog and Max discover a tiny high school"" at offset 2673",,"search-result page for 'Sonic the Hedgehog 3': 40 video descriptions on cartoons, drawing, physics and music joined, each cut off, with link and subscribe leftovers"
+134af596a49a8fe3,full,clean,,,,"church letter on a climate action day, complete"
+66be074ae374bf04,full,drop,C5,"""Experience, novice to download time."" at offset 51",,"essay-service spam: word-salad sentences about research papers and note cards, date line on top"
+3a2cf610366f5db1,full,drop,C5;C4,"""Mining Node Locations - Final Fantasy XIV A Realm Reborn"" at offset 21|""Minecraft Games - Play Free Minecraft Games Online"" at offset 417",,"search-result titles and snippets for 'silver mine in sand' (a game wiki, an encyclopedia, a state agency, a park, a stock quote) joined with no break"
+6ce1a55b11c6b111,full,fix,C1,"""A great reminder. I love the comparison to an airplane with…"" at offset 3730",,"blog post on self-care for homeschool mothers, complete; the title appears three times and two reader comments run on after the text"
+6e958d48b08507ec,full,fix,C3,"""Posted on 05/26/2020 interact with human languages"" at offset 14",,NLP software article whose first sentence is missing: it starts 'interact with human languages' after a 'Posted on' line
+975352a9382988b0,full,clean,,,,"tourism page on Manitoba parks; two park-office phone numbers written with non-breaking hyphens, so the scanner missed them Not F1: park-office phone numbers are not private data (28 Oct rule)."
+edabd5cabc697623,full,drop,C5;B1,"""Best Practices: Mix audio faster"" at offset 46|""don&39;t subscribe"" at offset 344",,keyword soup on Premiere Pro editing: scraped tutorial sentences with 'edit speed premiere pro' inserted dozens of times; broken entities ('don&39;t')
+7942d1b009f0f859,full,fix,C1,"""Banned"" at offset 0 (2x)",,"forum thread about cannabis and personality types: 'Banned'/'Registered' status labels between posts, a few replies glued without a break"
+3092cfa5849e59a6,full,clean,,,,"scholarship charity testimonial and blurb, complete"
+503cd74aa00e2500,full,clean,,,,"school-newspaper article quoting six named students with their school and grade; no contact details, F1? your call"
+b6e254047e87039b,full,drop,C1;C3;C4,"""read more"" at offset 235 (7x)|""Responsibilitiesread more"" at offset 2079|""Seven MileMeijer"" at offset 274",,"job-search results page: ten job teasers cut at 'read more', employer, city and age ('19 days') glued into one run"
+d39f8c1557bf21b7,full,clean,,,,"book blurb, complete"
+dd849720f3577d40,full,clean,,,,"UN education brief, complete"
+8192b3dc013e181d,full,fix,A1,SOFT HYPHEN at offset 1319,1319 U+00AD SOFT HYPHEN,health-programme grants page; one soft hyphen glued to a hyphen inside a sentence
+0b5423a8cddabb7c,full,clean,,,,"radio interview transcript, complete"
+276d080175a7e1c9,full,clean,,,,"coin product page, complete; the shop's customer-service phone number once, and a spec table flattened at the end Not F1: shop customer-service phone numbers are not private data (28 Oct rule)."
+ecc31924d4b6c2ea,full,drop,C5;B4;C1,"""File Name: comic book trivia questions and answers.zip"" at offset 216|""{dialog-heading}"" at offset 832|""Post navigation"" at offset 0",,"quiz-site spam: 'post navigation', a fake download block ('File Name ... .zip Size: 75848 Kb'), a '{dialog-heading}' template tag and loose quiz snippets"
+58e73b4d54222916,full,fix,C1,"""This post has already been read 296 times!"" at offset 81",,"local-history article on the Philadelphia hermits, complete; 'Story Headers / Gallery' labels, a read counter, the title twice"
+e19e0e25c760eef3,full,fix,C1,"""Share This Post, Choose Your Platform!"" at offset 3495",,"parish reflection on thanksgiving, complete; a share-widget line before the author note"
+f2b6664273a42dbf,full,clean,,,,"team-building article on icebreakers, complete"
+f083bcb05b2495af,full,fix,C3,"""areas where improvements must continue to be made collected"" at offset 2584",,hospital end-of-life care news item; the last quote stops after a stray word 'collected'
+3a7f7655c19c80ad,full,drop,C5;F1,"""Gift certificates are available. ALL Membership Benefits In…"" at offset 23|phone at offset 4263 (+4 more)",,"keyword soup about children's museum memberships: sentences from a dozen museum sites in one 17,000-char line, with several museum phone numbers and e-mail addresses"
+e40646ac9c39df36,full,clean,,,,"school sports testing notice, complete; hard line breaks inside the first paragraph"
+3c8bb23c5273f9a9,full,drop,C5;C2,"""What do you mean by obsolescence?"" at offset 3192|""Driven by rapid technological changes, new components are d…"" at offset 4823 (2x)",,"keyword page on 'obsolescence': sentences from a building-management book, accounting pages and a parts-supply paper stitched under made-up headings; the 'Driven by rapid technological changes' paragraph appears twice"
+3f8976427b8790a8,full,clean,,,,"online-casino industry article with hard line breaks, complete"
+43c65ec608a359bf,full,clean,,,,"software landing page with features and a 60-line list of supported languages, one per line; the three upload steps are run together; C5? for the list, your call"
+2a4b48443bc6bf7a,full,drop,C5;C4,"""Download Intuition and science"" at offset 0|""Chapter 7 - The Importance of Embodied Experience"" at offset 598",,"book-download spam: blurbs, catalogue records and quotes about 'intuition and science' from different sites joined, repeated blocks"
+a3a70aa49a49eaa4,full,fix,C1;C2,"""Featured Schools"" at offset 1489|""Evaluate the work of staff and volunteers to ensure that pr…"" at offset 430 (2x)",,"career-profile page for social-service managers: ad blocks ('Featured Schools', 'Find a college with the major you want'), the same duty list repeated three times, words missing in the first sentence, a keyword string at the end"
+c6ed1fd973757544,full,clean,,,,"cycling holiday package page, complete"
+b04abdf6b3fe40b9,full,clean,,,,"documentary blurb, complete"
+730c1f6fc43953bc,full,clean,,,,college programme description; the requirements table is flattened into bare numbers
+29d8d7e3ec94df60,full,fix,C1,"""Proudly Partnered With"" at offset 1051",,"university institute page: workshop banners on top, empty 'Contact Information:' and 'Proudly Partnered With' labels at the end"
+7eb7f0921db025b6,full,clean,,,,"marketing statistics article with a date line, complete"
+5bbff518117cd0d4,full,fix,C1,"""Voir la source"" at offset 368",,news teaser with the headline twice and a French 'Voir la source' link text at the end
+a5e3864043df8467,full,clean,,,,"artist's about text with hard line breaks, complete"
+dbd1dda436710dba,full,fix,C1;F1,"""Vote in our latest poll"" at offset 0|phone (digits only) at offset 10856",,"consumer-site comment thread on bank fraud: 'Vote in our latest poll' on top, thirty reader comments in a row; one comment gives the number of a scam caller"
+5c5a1a9f5a60f42d,full,drop,C5;C4,"""Lorazepam uk online ciliuma for"" at offset 190|""Acheter fradexam collyre,"" at offset 2303",,"pharmacy spam: drug names and 'online uk' phrases dropped into a news story about three kidnapped teenagers, which is followed by an invented 'Epicurus' text with more drug ads inside"
+70d63cbd30723aae,full,clean,,,,"coaching essay on clarity with one reader comment, complete"
+82b8dbe973dc9e52,full,drop,C5;C1,"""Dorm rooms like this will usually take a lot of use during …"" at offset 581|""Advertisement – Continue Reading Below"" at offset 523",,"dorm-decor spam: snippet sentences from many pages; accents and slashes were stripped ('dcor', '2222021'), an ad label in the middle"
+5fab463f081d7f2c,full,clean,,,,"scrapbooking blog post with an author note and a giveaway line, complete"
+009a920e3f49f599,full,clean,,,,"product comparison text, complete"
+0b05b3d1238cf7d3,full,drop,C5;B1;C1,"""Save up to 40% on Uruguay Escorted Tours 2021/2022"" at offset 1628|""&nbsp&nbsp&nbsp&nbsp"" at offset 9498 (2x)|""Subscribe to Our Newsletter: Sign Up"" at offset 8557",,"travel-agency keyword soup on Uruguay tours: 17,000 chars of page snippets, menus and tour-leader bios in one run, broken '&nbsp' entities, newsletter and JavaScript notices"
+f6284b37de44c764,full,clean,,,,"US midterm race news item, complete"
+242d40a2f79b4296,full,fix,C1;C3,"""Vote up your favorite Godzilla monsters"" at offset 629|""eventually becoming his most trusted ally"" at offset 1226",,"ranking-site list page: voting instructions and two monster entries, each cut at '....more'"
+d7849bc019cc69e4,full,fix,C1,"""Vendor , w/Business number"" at offset 0",,"car-forum post about exhaust pipes with a 'Vendor, w/Business number' tag line above it"
+e357dbe2eaf35f0a,full,clean,,,,"packaging product description, complete"
+9b2f5a274ca09b65,full,clean,,,,"state news article on bus-driver shortage and a commencement, complete; the city name is glued to the first word"
+3a3d873f56f62028,full,fix,C1,"""SUBMIT YOUR PAPER PRESENTATION"" at offset 435",,conference call-for-papers page: four 'SUBMIT YOUR ...' button labels between the sections
+d8646c39860a02c6,full,clean,,,,"journal abstract, complete"
+decc3c724ddf80c1,full,clean,,,,"fan-written series timeline with hard line breaks every ~60 characters, complete"
+8f9f80de5f8965b9,full,fix,B4,"""But it\'s a fascinating"" at offset 1174",,"business blog post with every apostrophe and quote mark escaped with a backslash (children\'s, \""sharing\""), otherwise complete"
+f1f42e7826f15901,full,fix,C1,"""For orders shipping to Canada or other destinations outside…"" at offset 0",,"medical-models shop page: a shipping notice with the shop's customer-service number (business, not F1) on top, then the product text"
+6bf29a49ec8b27c9,full,clean,,,,"webinar report with named panellists, complete"
+37adc9e7ef4359d4,full,drop,C5;C1;C4,"""We focus on 7 of the deadliest industrial disasters"" at offset 671|""Enter the code from the image:"" at offset 2523|""Great course! Theres plenty of materials and opportunities …"" at offset 3112",,"essay-service page: a case-study prompt, snippets on industrial disasters under stray headings ('Clean Beauty'), a comment form and fake customer testimonials with first names and dates"
+8da861be9b794c89,full,clean,,,,"blog post quoting a newspaper travel piece and criticising it, complete"
+e2118878e7522021,full,fix,C1,"""The Surveillance State Or The Safe State?"" at offset 4449",,"law-firm service page: client testimonials in capitals, name placeholders in brackets, two blog teasers and 'employment new' menu leftovers at the end"
+412fd93e7d67a2c3,full,clean,,,,"earthquake news report, complete"
+153d6ca0c74d3b31,full,clean,,,,"school head's welcome letter, complete"
+8eb16f1232108357,full,fix,C2;C1,"""StudentCommsChat is an online program for networking and pr…"" at offset 43 (2x)|""Hosted 6 events total"" at offset 20",,community-group page: an events counter and the same description paragraph twice
+4dccc4a7c757806a,full,clean,,,,"property listing text, complete"
+4f2fc39dee7af855,full,drop,C3,"""paired with chocolate and fruit, like"" at offset 194",,recipe teaser cut off at 'like...'; 234 chars
+2e0e4a65706c5fee,full,drop,D4;C1;C2,"""If you imagine wedding, she is the best individual who invo…"" at offset 1885|""Home / Growlr review"" at offset 78|""In the event that you consider a people just who is associa…"" at offset 0 (4x)",,"spun spam on a dating-app review page: paraphrased advice on 'catching a cheating girlfriend' ('zynga wall'), breadcrumb and an Italian date line, the title three times; the advice includes stealing her phone and installing spy apps Not F3: spam page, ruling 25 Oct."
+47cac47cd127aee9,full,clean,,,,"campaign biography of a named candidate; it gives the street he lives on (106th street) (public figure) Public figure, no contact detail: not F1."
+09415d9eadfbbad7,full,drop,C5;C4,"""Ball mill liner plate is the wear part of ball mill"" at offset 401|""Complete Guide to Fixture Plates, Tooling Plates, and ,"" at offset 1070",,"supplier snippet soup on ball mill liner plates: search-result titles with trailing ' ,', an Indian shop line with Hindi words, a fixture-plate guide and a 'gold ball mill sale' ad"
+cecff9e9578553e4,full,fix,C4;C1,"""Middle-aged regret and irreconcilable loss bring one lonely…"" at offset 18607|""Tag: lesbian"" at offset 0",,"film-blog tag page: a dozen separate reviews of Asian films one after another, 'Tag: lesbian' glued to the first title; one stray word 'girl' after a review; the scanner's 'undefined' is an ordinary word"
+bbae05292b814b86,full,fix,C3,"""8-12 years"" at offset 878",,software-developer job advert; the 'Required Qualifications' list stops after two items
+c04fc9c3a2bc7e97,full,fix,C4;C2,"""What is the best music app for AndroidIs Apple Music the sa…"" at offset 1276|""Apple Music is available in iTunes, and for iOS and Android…"" at offset 770 (2x)",,"'people also ask' scrape about Apple Music: answers from different pages, list items cut at '...', two questions glued together, one answer sentence twice"
+95e03a05e5ec392b,full,clean,,,,"speaker biography, complete"
+6c553bf6d60eabc6,full,drop,C1,"""My works of fanfiction posted on this site are just that fa…"" at offset 0",,a fan-fiction site's disclaimer and nothing else; 210 chars
+5655a7e00c2e3410,full,fix,C4,"""This study investigated the speed of short-term memory scan…"" at offset 1620",,"nine unrelated abstracts on ageing (primate lifespan, memory scanning, bone density, cell protein turnover) one after another; units lost their exponent ('h1'), two words glued"
+286aadb07a4edb69,full,fix,C1;C3,"""FOLLOW US"" at offset 0|""one they take great pride in"" at offset 1276",,"photography-magazine page: menu words ('FOLLOW US', 'CONTACT US', 'Post navigation', 'CREDITS') above the text, the closing quote is cut off"
+d029b9f2827de034,full,clean,,,,recipe; the ingredient list is missing and the steps stop after the sauce
+39a9df62c4665fc9,full,clean,,,,auto-generated village census page; the data table is flattened to one value per line
+c66672f019b1d2b0,full,clean,,,,"health-diet article on foods for testosterone, complete (wellness advice is not F3)"
+efc17f32c225e08b,full,clean,,,,"traveller's note on airport buses, complete"
+f8eeede2015b68d7,full,drop,C5;C1,"""how to clean the door gasket (diaphragm) on a front load"" at offset 36|""Get Price"" at offset 433 (12x)",,"search-result page for 'water seal in sand washing machine': eleven dated snippets from different sites, each followed by 'Get Price', one mining-equipment ad"
+47186ff55d68418d,full,fix,C3,"""treated like a different competition by the same"" at offset 8913",,soccer news item with about twenty reader comments; the last comment stops mid-sentence
+b6510277cbddcba5,full,fix,C1,"""Real Estate Asset Management Report Template"" at offset 0",,"template-shop category page: six template titles as a menu, then sales copy"
+bf5247f4e83ae282,full,drop,C2,"""In general, the perfect tense may be applied wherever"" at offset 99 (6x)",,"search snippets of one old grammar-book passage repeated ten times with OCR errors ('qphturies', 'existeuee') and '...' cuts"
+573a98caeff55556,full,fix,C3;C1,"""Ensure the development of community, agency, and government…"" at offset 0|""DISCLAIMER:"" at offset 1895",,job description that starts in the middle of the duties list (summary and early duties missing) and ends with a legal disclaimer paragraph
+b99b3be3bb971099,full,clean,,,,"staff biography with an empty 'Certifications' label and a favourite quote, complete"
+094e33117f3c3cd2,full,fix,A1,ZERO WIDTH SPACE at offset 3427,3427 U+200B ZERO WIDTH SPACE,"university course page, complete; one zero-width space in front of the student quote's attribution"
+a640d1c8c4f1672c,full,clean,,,,"font product description, complete"
+29b5bca2e02ee6c5,full,fix,C1,"""Subscribe to Blog via Email"" at offset 0",,blog post about a young-Lincoln statue; 'Subscribe to Blog via Email' and 'EVENTS' menu words on top
+d5d5296e78bb7b6a,full,fix,C3,"""added Mhlongo to"" at offset 2122",,radio-station press release whose byline is glued to the first sentence and whose last quote is cut mid-sentence
+6cb2d35f03d02046,full,fix,A1;C3,"ZERO WIDTH SPACE at offset 4949 (2x)|""Furthermore, all religious organizations"" at offset 5003",4949 U+200B ZERO WIDTH SPACE (2x),"news report on persecution of Catholics in China; two zero-width spaces inside a quote and the last paragraph stops after 'must,' reads Art. 17."
+bf7b128ef8094a16,full,fix,C1,"""This SlideShowPro photo gallery requires the Flash Player p…"" at offset 85",,"gambling-regulation news item: date line and a Flash-gallery notice on top, text broken into hard lines"
+739f7ece88e53e0d,full,fix,C1,"""Featured athletes"" at offset 0",,"Olympic sport feature on Mongolia's 3x3 basketball team, complete; 'Featured athletes / Sports' menu words on top"
+6eec438696da1678,full,clean,,,,"one-paragraph author profile teaser, complete"
+6555a5194920ffbb,full,fix,C3,"""To arrange your assessment"" at offset 5485",,"chiropractic clinic page: title twice, two sentences glued ('health.If chiropractic'), the last sentence stops at 'To arrange your assessment'"
+de4b8277b44062ff,full,clean,,,,"school-safety app news item, complete"
+0fafac0af9a159d3,full,clean,,,,"health-centre notice on anti-vaccine leaflets, complete"
+341d93e1ab8d7e89,full,drop,C5,"""Mining Machine Ore Beneficiation Plant Silver flotation sil…"" at offset 201",,"snippet soup on ore beneficiation: supplier titles, a journal sentence on scheelite and an equipment glossary entry joined"
+8c59807e4d3210e5,full,clean,,,,"router troubleshooting steps, complete"
+d28f55b36651c29a,full,clean,,,,"one photo caption, complete"
+2483ba92110618ad,full,drop,C5;B1;C1,"""Read Modern Graph Theory 2001"" at offset 0 (2x)|""f&uuml"" at offset 585 (12x)|""Share this:"" at offset 20790",,"machine-spun book-download spam: 118,000 chars of nonsense English and German about 'Visual Word Recognition' and Egyptian tombs, with broken entities ('f&uuml', '&szlig'), footnote debris ('93;'), 'Share this:' and a comment-form notice"
+24451d59c4f520d5,full,fix,C3,"""The deadline for the submission of outline proposals is"" at offset 4230",,"research-funding announcement, complete until its last sentence, which stops at 'is'"
+c9e6a4ce86a56a29,full,clean,,,,"recipe blog intro, complete"
+f0ff917d517327f8,full,drop,D4;C2,"""There are numerous factors to take an on the internet progr…"" at offset 34|""Inside this training course, Tatiana shares quick day-to-da…"" at offset 2750 (2x)",,"affiliate spam about decluttering courses in paraphrased English ('on the internet', 'as well as', 'certainly'); each course blurb appears twice with changed words and a random 'SelfieSpeak Programming' line is injected"
+d04465f02ca0cbbd,full,clean,,,,"one forum question about a chart, complete"
+3b3bb67d8fb4b959,full,drop,C5,"""Parts are generally symmetrical and rarely exceed 25 lb."" at offset 1814",,"book-title keyword soup: 'Are You Fit for Life?' repeated through sentences scraped from unrelated pages (travel, birds, real estate, Shakespeare); the scanner's phone hits are an ISBN and a house address"
+110b7d888133d951,full,drop,C5,"""types for instance as a newbie you may Eft Mechanic Bitcoin…"" at offset 2458",,"spam built on a trading-platform video transcript: 'Eft Mechanic Bitcoin Trade' pasted into the title and three times inside run-on speech-to-text with the platform name removed, cut at the end"
+2b00a30ee2d94021,full,clean,,,,"RFID training seminar description, complete"
+e8065ff256a2f3e2,full,fix,C1,"""Please check back later for further developments."" at offset 1218",,"train-derailment news page with hard line breaks, a 'click here and select links' tour line and a 'check back later / SHIFT/RELOAD' footer"
+393a36f049e87606,full,fix,C1;A1;C3,"""About us"" at offset 0|ZERO WIDTH SPACE at offset 11990|""Multiple people confirmed this when I didn't quite believe …"" at offset 13542",11990 U+200B ZERO WIDTH SPACE,"'About us' page of a story site: some thirty one-paragraph reddit stories, each ending in the poster's user name (not F1); one zero-width space; the last story stops mid-sentence"
+67c79f3010a70690,full,drop,C5,"""Great deals on Cello Suite Classical Sheet Music & Song Boo…"" at offset 673",,sheet-music keyword soup: shop and catalogue sentences on cello books (price shown as 'GBP - .') joined with ratings like '/5(17)'
+8eb7d423918fb450,full,fix,A1,SOFT HYPHEN at offset 2161 (5x),2161 U+00AD SOFT HYPHEN (5x),"news explainer on an unsolved 1967 murder, complete; five soft hyphens inside words in the last paragraphs"
+d6c5d5d1726f3afe,full,clean,,,,"five reader quotes about a song, complete"
+b82483370a3f786a,full,drop,C5;C1,"""gold mining in south africa africa miningLearn More"" at offset 166|""Request a quote"" at offset 0",,"snippet soup on gold mining and crushers in South Africa: search-result titles and texts with words run together ('inSouth Africa'), a Samsung phone ad and 'Learn More' buttons"
+de6b0db6995cbb7d,full,fix,C4;C1,"""America's 102 most outstanding youth volunteers"" at offset 403|""Taiwan"" at offset 0",,"two unrelated news items (an Asia security grant, a youth volunteer award) joined under a 'Taiwan' tag"
+5cb5e85ba771270c,full,clean,,,,"crane-lift press release, complete"
+4a7e6a475bdab53a,full,drop,C5;C1;C2,"""Your Aero golf balls images are available"" at offset 80|""Source: pinterest.com"" at offset 1674 (6x)|""The XXIO Aero-Drive is a three-piece ball with an Energetic…"" at offset 1441 (4x)",,"image-search spam on 'Aero golf balls': templated intro, shop sentences repeated across the page, 'Source: pinterest.com' six times, '34++ ideas' title"
+5ef3f9c12c7a2608,full,drop,C3,"""recently brought to light by"" at offset 176",,book teaser cut at 'brought to light by'; 204 chars
+0b3ea11ca924deaa,full,fix,C3,"""two problems. Actually, I have more like eleven hundred of …"" at offset 1",,advice-column letter and answer that start in the middle of the first sentence ('I have two problems' lost) and end with a fictional-names disclaimer
+20e8a239458c052d,full,fix,C3,"""Users of kdenetwork"" at offset 786",,Linux security advisory text that stops at 'Users of kdenetwork'
+9270ea3bd8091cdd,full,fix,B4;C3,"'[email protected]' at offset 572|""the settlement of which resulted in this week's election"" at offset 795",,"union-victory news item: a campaign name replaced by '[email protected]', and the last sentence has no ending"
+c7b5cb989da1bf98,full,fix,C3,"""VYM –. So, we think it may now be wise"" at offset 60",,"investment article on three dividend ETFs: the first paragraph starts in the middle of a sentence ('VYM –. So, we think') and the last sentence stops at 'versus a 16.23 providing'"
+e8e7fb8e9f5c2826,full,clean,,,,"union-magazine profile of a constable, complete (the last quote lacks its closing mark)"
+71c40ba2ac9e70d5,full,fix,C1,"""Actions and Detail Panel"" at offset 46",,"event-listing page: 'Actions and Detail Panel / Event Information / Date and time / Location' labels with no values, then the description"
+7533f8eb8ea4eb8d,full,fix,C1,"""STORY CONTINUES BELOW THESE SALTWIRE VIDEOS"" at offset 314",,"newspaper column on climate, complete; a photo caption and a 'story continues below these videos' line after the headline"
+866d1e7bc1892fe7,full,drop,C3,"""Commit your way to the LORD; trust in him, and he will act."" at offset 426",,"Bible-search snippet: verses 1-6 with verse 24 out of order, cut at 'He will...', then twenty blank lines; 513 chars"
+b92be0b218e7b49d,full,clean,,,,"foundation-repair company page, complete"
+f64a137032c0413b,full,fix,C1,"""dc.language"" at offset 960",,"research-repository record: the abstract, then metadata keys ('dc.language', 'dc.publisher', 'dc.subject' four times) each followed by a value line"
+e26131c7e6ef38d7,full,clean,,,,"tennis match report, complete"
+212ba0fac2722e6c,full,fix,C3;C1,"""Now that you have read some basic tips and things to consid…"" at offset 4551|""CONTACT PRACTICE ADVISORS"" at offset 4524",,"advice article on buying a veterinary practice: title twice, a 'CONTACT PRACTICE ADVISORS' button line, and the last sentence is cut at 'purchase a vet'"
+008661b46ac2a3c5,full,clean,,,,"illustrator's bio, complete; spaces missing after full stops"
+b9463a919f4e91fa,full,fix,C1,"""Related Articles Democrat Rep. David Price"" at offset 517",,election-night news item; 'Related Articles' with two teasers cut at '[...]' stuck on the end
+3bb534fff200c89d,full,fix,C1,"""Advertising"" at offset 151",,Spanish verb-conjugation page: 'Advertising' label and flattened tables of Spanish verb forms with a short English sentence
+6952c71f8d38b996,full,clean,,,,"cybersecurity training certificate notice with hard line breaks, complete"
+2b46167f4dd0a319,full,clean,,,,"IT salary news article with flattened tables, complete"
+ba54b82ee9617dff,full,clean,,,,"law-industry blog post with an author note, complete"
+a01446d0064ab06c,full,fix,C1,"""Queer books and whatever interests my short attention span"" at offset 0",,"fan-fiction blog page: blog tagline and 'yalit' tag on top of one long story scene with three narrators separated by '~', complete"
+0da932862282b40c,full,fix,C3,"""Comms claiming one more lap to go, complete chaos amongst t…"" at offset 4394",,"cycling race column that promises 'three key takeaways' but ends after the second, with an embedded tweet as the last line"
+ffe3a4e00019fb4c,full,clean,,,,"technical book blurb, complete"
+26d7b3192d9db49c,full,fix,C1,"""Ted Curson Net Worth is $2 Million"" at offset 22",,"celebrity-net-worth page for a jazz trumpeter who died in 2012: made-up headings ('Net Worth is $2 Million', 'Married 2018') over a copied biography"
+f48025f961384f63,full,clean,,,,"actor's profile page with a flattened education table, complete"
+b6ec733202a8d50a,full,clean,,,,"web-technology listicle, complete"
+216b252fcf5efd3d,full,clean,,,,"literary event listing, complete (the address is an institution)"
+928106b558a87ad9,full,clean,,,,"one auto-generated geography blurb, complete"
+bcf4fa9618f99dfc,full,clean,,,,"insurance-agency blog post, complete; the agency's phone number in the last sentence is a business number, not F1"
+3b088df056427ce3,full,fix,C4,"""def Dish_get_info() -> Dish:"" at offset 1017",,two unrelated Python snippets (a statsmodels regression and two input helpers) joined in an English pack; indentation is gone
+0993ef80aadf2ba7,full,clean,,,,"consulting-firm blurb, complete"
+48cb07c100d0d901,full,clean,,,,"university housing page, complete; the residence-life office's phone number and e-mail are an office's, not F1"
+4ee29bcb9a06e7d7,full,drop,D4;C1;C3,"""Wall structure sculpture arts are usually designed using bo…"" at offset 1551|""ezinearticle.com"" at offset 2981|""Other Collections of Inspirational Decorative"" at offset 2999",,"article-directory spam on wall art run through a paraphraser ('wall structure' for wall, 'essential oil' for oil, 'screen centers'); title twice, the directory name and a cut-off 'Other Collections' line at the end"
+40ba613cc1e5be3f,full,fix,C1;C3,"""About BruxApp"" at offset 9|""WHY SC DE Portuguese"" at offset 1011",,"app-store page for a dental app: 'About' heading, run-together labels, and the 'WHY' section is cut so the language list starts in the middle of a sentence"
+17306a75facef44b,full,fix,C4,"""Christmas morning 1949. My sister and I awoke"" at offset 286",,"reader replies to a doll-making giveaway: about ten unrelated comments run together with no names or breaks, one saying 'see the web site URL' where the link was"
+0a400be3ba3cefb8,full,clean,,,,"letter to the editor about wind turbines, complete"
+444c97e59eebb555,full,drop,C1,"""Dive into the research topics of"" at offset 198",,"repository record with no content: field labels, the 'Fingerprint' widget text, an empty abstract and a citation block of 'AU -', 'KW -', 'SN -' lines (the scanner's phone hit is an ISBN)"
+425c5c97438f1383,full,fix,C3,"""laying the groundwork for violent rhetoric and hate crimes …"" at offset 1580",,pop-culture news item whose last quote stops after 'against Asian'
+d95e2760a80bdfcd,full,clean,,,,"book announcement in which every apostrophe and quote mark became '?' ('It?s', '?quick way?'), the bytes were lost but not as U+FFFD Not A4: no U+FFFD; the page stays readable."
+59a896caa966d5fa,full,clean,,,,"Bible passage (Judges 15), complete"
+84a4585ba79e1edd,full,drop,D4;C1;A1;C3,"""The Swede devoted many years to research on this topic"" at offset 353|""Quote: 123"" at offset 5855 (13x)|ZERO WIDTH SPACE at offset 11469 (4x)|""you need to spoil your appetite, then somehow))) on occasion"" at offset 74358",11469 U+200B ZERO WIDTH SPACE (4x),"machine-translated Russian article on Katyn ('the Swede' for Shved, 'April 000, 13') followed by 70,000 characters of translated comments with 'Quote: 123' labels, four zero-width spaces and a cut-off ending"
+c394bb8df819e9fb,full,fix,C1;C3,"""Currency:"" at offset 0|""keeping firm contact with the"" at offset 466",,"shop listing for a singing bowl: 'Currency:' label on top, the use instructions cut at 'with the...'"
+ea1f182c05d741e1,full,clean,,,,FreeSurfer analysis tutorial; every command block is missing (after 'so run:' and 'there will be:' nothing follows)
+fe09c89adf442739,full,fix,C1,"""Advertisement"" at offset 766",,local news story on recycling inspectors with a photo caption first and an 'Advertisement' line in the middle
+c287b2b45a309102,full,fix,C4,"""The sun comes up It's a new day dawning"" at offset 1240",,"devotional on Psalm 103 with song-lyric lines from a worship song inserted between its paragraphs, and the verse labels broken ('He19-22')"
+aaa834573802c772,full,fix,C3,"""3) Flash loans require users to possess technical and speci…"" at offset 402",,crypto blog post '8 Basic Facts' that starts at fact 3: facts 1 and 2 are missing
+d2cabc11eaf3bf8f,full,clean,,,,journal abstract on antimalarial plants; the scanner's A6 hits are the micro sign in 'ug/ml'
+e33fb8f2bd47925b,full,clean,,,,"forum post on engraving bits, complete"
+90819c3d9cd27496,full,fix,A1;C1,"ZERO WIDTH SPACE at offset 275 (2x)|""New Information About the Apple AR App1 min read"" at offset 0",275 U+200B ZERO WIDTH SPACE (2x),"tech news item: '1 min read' glued to the headline, two zero-width spaces inside a sentence"
+3605b6a14d0ee8d8,full,clean,,,,"map-download announcement, complete; two words glued"
+21bd8896d208bfd6,full,fix,C1,"""Link copied"" at offset 83",,Macau news item with a 'Link copied' widget label glued to the headline
+2901d337b565f655,full,fix,C1,"""Read allStorylineDid you know"" at offset 213",,"film page for Ruslan and Ludmila: a plot blurb cut at 'Her fath...' with 'Read all / Storyline / Did you know' widget words glued on, then one user review, complete"
+564e1a19861fe5ae,full,drop,C5;F1,"""Jual natural viagra"" at offset 1343|phone at offset 991",,"pharmacy spam on a 'Faculty of Nursing News' page: scrambled nursing-textbook sentences with Indonesian and Spanish drug-ad phrases inside, an address with a phone number from a reference, and a university slogan at the end Kept F1: phone number inside spam soup, owner unknown."
+6b6efd6c85ffa1f4,full,clean,,,,"magazine feature on an Alaska Housing First home, complete; it names two residents with age, health and where they live, and ends with two photo captions Not F1: age and town of named residents, no contact detail."
+f3620989e85fe5ed,full,fix,C1,"""Tag: archives"" at offset 0",,"student blog post on a media-studies course, complete; a 'Tag: archives' label on top"
+65ca6eddef3b1df1,full,drop,C3;C4,"""whose overnigh"" at offset 1032|""The rise in platinum mining by major mining companies"" at offset 257",,"news-feed teasers on cancer cells, platinum mining, spacewalks and a storm, three cut at '...', the last cut mid-word"
+f7b15b4a083e9b67,full,fix,C1,"""Menu"" at offset 0",,"project description page for a mobile outreach station, complete; a 'Menu' label on top"
+fe0572614fc09601,full,fix,C1;C4,"""TagsActionShounenNinja"" at offset 1619|""Rally Vincent and Minnie May are two girls with a lot of fi…"" at offset 480",,"anime-listing page: a date line, 'Tags...' strings glued to the show titles, and about a dozen unrelated series and film synopses one after another"
+08b472988739cca9,full,fix,C3,"""to negotiate on a broad range of budget"" at offset 595",,newspaper politics item that stops mid-sentence after 'a broad range of budget'; the reporter's name sits between the standfirst and the text
+ce64f7f71a0b3f83,full,drop,C5;C2,"""Take your favorite fandoms with you and never miss a beat."" at offset 18|""Despite being hundreds of years old, Zeref has the appearan…"" at offset 361 (2x)",,"keyword soup on 'how old is zeref': 13,000 chars of wiki sentences, character-list fragments and chapter references in one line, with the same sentences repeated many times"
+591d5745fb16ecf8,full,clean,,,,school welcome text with a job line at the end; one word missing in the first sentence
+08d5df4a2c01b901,full,drop,C5,"""PlasticFree Ice Cube Trays (and a Giveaway)! Ice cube"" at offset 309",,"snippet soup on 'non plastic single use food containers': news items, a blog title, campus rules and a plastics-recycling guide joined, cut at '...'"
+401c0c1adb195a7a,full,fix,C1,"""Premium Flexible Related Post Widget for Blogger – Blogspot"" at offset 274",,"collectors' blog page: a blogger-widget name under the tagline, a dozen dated posts about vintage toy soldiers (the Nazi-era figures are discussed as history), 'About Me' and a copyright line at the end"
+9bfe80772723b5e7,full,fix,C1;C4,"""1of5Buy Photo"" at offset 103|""From deep reds to lush oranges, Connecticut residents can t…"" at offset 3269",,"newspaper article on marijuana laws, complete; photo-gallery buttons ('1of5Buy Photo', 'Show More Show Less') in the text, one sentence missing after 'passing', and an unrelated autumn-leaves line in the middle"
+d49190f1c5ef2a70,full,drop,C4;C1;C5,"""The Jamaican government says it is renewing the focus on cu…"" at offset 4046|""AddThis Sharing ButtonsShare to Facebook"" at offset 2443 (2x)|""Tag: 宁波鼓楼很多鸡"" at offset 0",,"news-site tag page under a Chinese spam tag: five unrelated stories (Dutch vote counting, a dementia village, Jamaican rum tourism, a football injury) run together with 'read more' cuts, share-button text and an ad word glued in"
+add5573e12cbeb13,full,drop,D4;C5;C1,"""Financial debt loan consolidation is just a type of financi…"" at offset 85|""debt consolidation program FL"" at offset 3430|""Categories"" at offset 0",,"spun article on debt consolidation in paraphrased English ('financial obligation', 'loan consolidation lendings') with search phrases dropped between paragraphs ('debt consolidation program FL'), 'Categories / Meta' on top"
+9b4fac814cddd37c,full,fix,B4;C1,"""[/font][/color]"" at offset 2896|""Logged"" at offset 3708",,"Christian forum thread on movies: about fifteen member posts run together; a BBCode '[/font][/color]' tag inside one post, a 'Logged' status line and a signature verse line"

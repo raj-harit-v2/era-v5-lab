@@ -1,4 +1,4 @@
-"""Tests for compute_update_weight_ratio in metrics_writer.py.
+"""Tests for compute_update_weight_ratio and step_with_update_weight_ratio in metrics_writer.py.
 
     cd teams/08-monitoring/metrics_logger && python -m pytest test_update_weight_ratio.py -q
 """
@@ -9,7 +9,7 @@ import numpy as np
 import pytest
 import torch
 
-from metrics_writer import FLUSH_EVERY, MetricsWriter, compute_update_weight_ratio
+from metrics_writer import FLUSH_EVERY, MetricsWriter, compute_update_weight_ratio, step_with_update_weight_ratio
 
 
 def rows(path):
@@ -124,3 +124,42 @@ def test_matches_manual_global_l2():
     w_norm = math.sqrt(sum(float(w.norm() ** 2) for w in weights))
     u_norm = math.sqrt(sum(float(u.norm() ** 2) for u in updates))
     assert got == pytest.approx((3e-4 * u_norm) / w_norm)
+
+
+def sgd_model(lr=0.1):
+    torch.manual_seed(0)
+    model = torch.nn.Linear(4, 2)
+    optimizer = torch.optim.SGD(model.parameters(), lr=lr)
+    model(torch.randn(8, 4)).pow(2).mean().backward()
+    return model, optimizer
+
+
+def test_step_sgd_matches_lr_times_grad():
+    # Plain SGD moves the weights by lr * grad, so the ratio is lr * |grad| / |W|.
+    model, optimizer = sgd_model(lr=0.1)
+    params = list(model.parameters())
+    grad = math.sqrt(sum(float(p.grad.pow(2).sum()) for p in params))
+    weight = math.sqrt(sum(float(p.detach().pow(2).sum()) for p in params))
+    assert step_with_update_weight_ratio(optimizer, 10) == pytest.approx(0.1 * grad / weight)
+
+
+def test_step_off_steps_still_step_and_give_none():
+    model, optimizer = sgd_model()
+    before = model.weight.detach().clone()
+    assert step_with_update_weight_ratio(optimizer, 7) is None
+    assert not torch.equal(model.weight, before)
+
+
+def test_step_every_n_steps():
+    _, optimizer = sgd_model()
+    got = [step_with_update_weight_ratio(optimizer, s, every_n_steps=3) for s in range(1, 7)]
+    assert [g is not None for g in got] == [False, False, True, False, False, True]
+
+
+def test_step_written_as_one_number(tmp_path):
+    path = tmp_path / "metrics.jsonl"
+    _, optimizer = sgd_model()
+    with MetricsWriter(str(path)) as w:
+        w.write(10, update_weight_ratio=step_with_update_weight_ratio(optimizer, 10))
+    row = rows(path)[0]
+    assert isinstance(row["update_weight_ratio"], float) and row["update_weight_ratio"] > 0

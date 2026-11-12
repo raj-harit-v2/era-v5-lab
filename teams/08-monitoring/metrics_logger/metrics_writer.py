@@ -47,6 +47,11 @@ wrong one.
     if ratio is not None:
         writer.write(step, loss_ntp=..., update_weight_ratio=ratio)
 
+`step_with_update_weight_ratio(optimizer, step)` does the same in one line: train.py calls it in place of
+`optimizer.step()`, and it returns the ratio of the weights before and after the step (None on other steps).
+
+    ratio = step_with_update_weight_ratio(optimizer, step)     # replaces optimizer.step()
+
     with MetricsWriter("metrics.jsonl") as writer:
         for step in range(n):
             ...
@@ -350,6 +355,21 @@ def compute_update_weight_ratio(
     if count == 0 or weight_sq <= 0:
         return None
     return math.sqrt(update_sq * (scale * scale)) / math.sqrt(weight_sq)
+
+
+def step_with_update_weight_ratio(optimizer, step, every_n_steps=FLUSH_EVERY):
+    """Run optimizer.step(). When step is a multiple of `every_n_steps`, return compute_update_weight_ratio over the
+    parameters the optimizer updates (weights before vs after the step); otherwise return None.
+
+    The weights are copied only on the steps that are measured.
+    """
+    if step % every_n_steps:
+        optimizer.step()
+        return None
+    params = [p.detach() for group in optimizer.param_groups for p in group["params"]]
+    before = [p.clone() for p in params]
+    optimizer.step()
+    return compute_update_weight_ratio(before, weights_after=params, every_n_steps=every_n_steps)
 
 
 class MetricsWriter:

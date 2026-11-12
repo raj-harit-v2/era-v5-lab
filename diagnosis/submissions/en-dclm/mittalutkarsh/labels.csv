@@ -1,0 +1,501 @@
+doc_id,read,verdict,diseases,evidence,hex,note
+f8c5b8c83dd28f1d,full,clean,,,,
+5f0d56eb27f018bd,full,drop,C1,'Make another search.' at offset 512; 'Related games:' at offset 968,,templated puzzle-answer page
+6adc9055301937f6,full,fix,C1,'Get more information on herbal formulas' at offset 3883,,site promo at end; anti-doctor advice at 1980 (F3?)
+e9f7ef33507c3bc6,full,drop,C5;C1,'pigmentación capilar Marbella' at offset 1794; also 3187; 3806|'Reader Comments' at offset 0; 'If you beloved this article' at offset 4028,,comment spam; spun text
+a1b97fd910707a8d,full,fix,C3,'I can't even find a link from' at offset 4095; 'Here is a picture from' at offset 17134; 'I'm not one' at offset 20360,,blog archive; link text dropped mid-sentence
+089fde49e557cc5d,full,fix,C3,'Female Problems' at offset 28738 (last heading with no body),,blog archive; embedded clips removed e.g. 22826
+6460755981418292,full,fix,C4,'The I.C.C.D. is an international organisation' at offset 193,,two unrelated snippets joined
+b9fcad1830a5db44,full,fix,C1;F1,'Copyright © 2013 Alavibohra.org' at offset 3063|names of child winners from offset 2635,,names are private minors
+50d363e8b8340b11,full,fix,C2,"'never quiet, never soft.....' signature line x21 first at offset 2715",,blog archive; 'check the teleport:' photo placeholders x12 from 1113
+b19371a31d9aed81,full,clean,,,,speaker list; contact email is institutional not private
+a6673336e37d2ca9,full,fix,C1,'You are here: Home >' at offset 17; 'Related Links:' at offset 10208; 'Copyright' at offset 10319,,1903 biography text is good
+1c562ab9ddeeaa2e,full,clean,,,,paper abstract
+c3ff48f35f98745c,full,fix,C1;F1,'Contents | < Browse | Browse >' at offset 0|phone number at offset 8567,,1995 Amiga text; phone is a hobbyist BBS line
+0864734353e1b73e,full,fix,C1,'YOU ARE HERE: LAT HomeCollections' at offset 0; 'Los Angeles Times Articles' at offset 4980,,news article is good
+96d6eba87b96011d,full,clean,,,,music blog; short lyric quotes
+a6a4ce79794ab9a9,full,clean,,,,portfolio page; empty 'The Result' heading (image removed)
+72e60eb88c598f78,full,fix,C1,'1 comment' + Indonesian reader comment at offset 3125,,two-column phrase table flattened
+ba893cf355e53633,full,drop,C1,'Manassas Plumbing Pros' business footer at offset 2832; 'Copyright Bartz' at offset 2911,,spun SEO text; business phone not F1
+57290a51b8dea4e6,full,clean,,,,ham radio repeater FAQ
+8e0775dc544a5ffe,full,drop,C1,'Click here to buy a plaque' at offset 212,,305 chars; almost no content
+3b7eee1f32b8fa69,full,fix,C1,template contact line '231 Front Street...' at offset 0,,placeholder demo contact; low-quality review
+30ab7749b79cd78f,full,clean,,,,
+cb2bdc3224b4c92f,full,fix,C1,'Your Source for Restaurant Marketing' at offset 69; newsletter box at offset 4712; 'Recent Posts' at offset 4965,,
+b0b8c0fe32cb4bee,full,fix,C1,'bigstock--191940913.jpg' at offset 126; 'Topics:' at offset 3477,,image filename glued into text
+0eadafe1aefa9fd3,full,clean,,,,book list
+4b69b83bea94d4f6,full,fix,C1,'No comments:' at offset 1516,,rude language about tourists; not F3
+b07e5aa9d697b878,full,clean,,,,blog post + reader comments
+651811b5658e102f,full,fix,C1,blog about-box 'why you need to hire an attorney' at offset 3048,,about-box unrelated to article
+cd0ef2540a4ee803,full,drop,C1;C3,'Fact Sheets' at offset 0; 'camp jabulani relais' at offset 342|excerpt cut 'and...' at offset 334,,tag page; 384 chars
+ab888248f0086290,full,clean,,,,dementia care article
+c7e02c8786c703b1,full,fix,C1,product spec list 'Binding:' at offset 2341; 'ABIS_BOOK' at offset 2425,,book blurb ok
+c10b8d249ca23d47,full,fix,C1,image caption 'Core Comp Wheel5' at offset 0; 'photo (6)' at offset 5402,,hard line wraps inside paragraphs
+5a6856a5e9397412,full,fix,C3,'miner(' at offset 347; 'business (' at offset 896,,citation links dropped
+fcb5b5983b3cdbbf,full,fix,C1,'Advertise your events and products at CISSP.COM' at offset 4311,,
+44f1692e6816edb9,full,fix,C1,'© Dave Zes 2005' at offset 2795,,
+e12a71e3cb0f9813,full,clean,,,,
+3a337776fd860920,full,clean,,,,
+1f6bf89ae8ed2bed,full,clean,,,,byline only
+cd5386850aa1f28c,full,drop,C1,'If you scroll down the page' at offset 288; 'sponsored ad' at offset 420,,templated crossword-answer page (like doc 2)
+d896b3771a4b6a3b,full,fix,C1,'Blood Omen pages: Like Dark Chronicle on Facebook' at offset 5797,,
+731be179b76b67aa,full,clean,,,,<...> are command syntax placeholders not B2
+9208782626864f39,full,clean,,,,
+171f8929566ecdac,full,fix,C1,'CSS done by Link building' at offset 858,,video embed removed
+86a9c4cf9b5c1395,full,clean,,,,dharma talk transcripts; Download: mp3 line per talk
+3625e5644c63cf19,full,fix,C1,'Rate it! 0 reviews written' at offset 44; 'Write a review:' at offset 577,,very little content
+6da64e1f3aa0f61c,full,fix,C1,'Got a joke for Douglas? Send it' at offset 45371,,joke collection; adult jokes not F3
+e3fba14beec00b2b,full,fix,B4,"fbq('track', 'ViewContent'); at offset 0",,Facebook pixel JS in prose; table flattened
+d718670c65e28a3f,full,clean,,,,chiropractor bio
+c38af51347b6da60,full,fix,C1,'Leave a Reply' at offset 4474,,
+bd61d1eb84a18b17,full,fix,C3,'profile of Tom Brady on' at offset 87,,link dropped; mostly quoted article
+8b697f9f7d91de38,full,drop,C5;C3,list of news teasers from offset 0|teasers cut mid-sentence 'Because' at offset 429; 'giant' at offset 717,,category listing page
+d7d9f2c89773b700,full,drop,C4;C5,unrelated sentences joined from offset 36 ('Actor Joel Brooks')|Korean casino tag 'Archivo de la etiqueta: 카지노 바카라 룰렛' at offset 0,,sentence-salad spam page
+6c6a180069b69bdb,full,fix,C1,'Leave a Reply' at offset 40433,,long blog reply + reader comments; pingbacks from 21826
+f7f4db20995eb625,full,fix,C1,'HealthWiki >' breadcrumb at offset 59; 'DENT Ch4 Page 52-1.png' at offset 198; 'This page was updated' at offset 3920,,health guide text is good
+8ae5d5afe72aa34f,full,fix,C1,'bomb 720' at offset 0,,image caption junk; political quote
+56b9f143e5453f22,full,fix,C1,'comments powered by Disqus' at offset 3118,,tabs are fine; resource links missing at 3041
+13c4115cd5701df2,full,clean,,,,author blog
+c64a732a64b1ce8b,full,drop,C5;A5,trading-app ad block '#1 Rated Trading App' at offset 84; keyword list at end|'naïve' with combining diaeresis at offset 5013; 'Ca ́rdenas' at offset 20021,5013 U+0069 + U+0308 COMBINING DIAERESIS|20023 U+0020 + U+0301 COMBINING ACUTE ACCENT,binary-options spam with scraped academic gibberish
+e1d3971ca464902c,full,clean,,,,spun SEO text (no matching code)
+922870aefb770bb6,full,fix,C1;C3,comment list 'Wyn said...' at offset 13516|'Today's Wild Card author is:' followed by nothing at offset 96,,blog tour post; book excerpt; author/links removed
+a874cd0a1d145148,full,fix,C1,forum profile box 'Offline Md. Al-Amin' at offset 50,,
+93e986e244fb423f,full,clean,,,,counsellor blog
+3dd2e31fb90bbd44,full,fix,C1,related-post links 'Questions About Treatments...' at offset 2680,,SEO article
+4a22b0cbca7869fc,full,fix,A1;C1,BOM at offset 0|'Family History and Genealogy Services' at offset 35,0 U+FEFF ZERO WIDTH NO-BREAK SPACE,viewer shows it as ⟦BOM⟧
+a487281daeb5f82d,full,fix,C1,'Read our next post' at offset 3161,,
+71f25549c2c4200d,full,fix,F1,email at offset 2436,,church FAQ; contested viewpoint not F3
+cfc985b22333e9ec,full,fix,C1,'Categories: Home Improvement' at offset 2601,,
+6d42edb6050b961a,full,fix,C1,'WRITTEN BY' byline template at offset 39; 'Leave a Reply' at offset 3330; 'Bot Detection' at offset 3346,,
+2810947a50680faf,full,fix,C1;C3,page nav 'Next Part Home - Random Browse' at offset 57 and at end|book stops at end of part 1,,public-domain novel (Sax Rohmer); long blank runs
+2c3b0c50e1017c59,full,drop,C4;C5,scraped snippets joined from offset 474 ('Meine B...')|keyword title + business address at offset 54,,auto-generated SEO page; business phone not F1
+bf37f4904830105a,full,fix,C1,'All comments are moderated' at offset 4404,,news post + comments
+e22858e9e5d594cd,full,fix,C1;H3,'No comments:' at offset 6986|'Source : Wikipedia' at offset 6966,,copied Wikipedia bio; infobox flattened 'Born18' at 25
+3dc93ffbd87ba839,full,drop,A3;C5,mojibake 'wasnéˆ¥æª›' at offset 1432|product keywords 'ray bans' at offset 587; 'oakley' at offset 655,1436 U+00E9 + U+02C6 + U+00A5 + U+00E6 + U+00AA + U+203A,spun spam with injected product keywords
+eacd1fb476183820,full,fix,C1,'↓ Archives ↓' at offset 0,,blog tag page; opinion posts
+b2133469fe548118,full,fix,C1,'K-bay logo Established in 1980' + phone header at offset 0,,business phones not F1; section body missing at 432
+5f743d2b23b6fcee,full,fix,C1,image alt text 'Lance-Earl-Ladn-C-trucs' at offset 42; 'holder male' at offset 612; 'holderfemale' at offset 845,,team page
+b5b565dd81a0b965,full,fix,C1,'Select Page' at offset 0,,
+699d000592d4dbdd,full,fix,B2,'[/center]' at offset 347,,BBCode tag; history article good
+3f9cf2259ef9ba72,full,fix,C1,'Skip to main content' at offset 0; 'Creative Commons License' at offset 3314,,library guide
+e58efd78573f2454,full,fix,C1,'No comments:' at offset 9273,,political blog with WSJ quotes
+70b6a3dc130af8af,full,fix,C1,'Browse the full resolution frame' at offset 1809; 'Back to Images' at offset 1873,,
+98e2b9187fb93582,full,clean,,,,329 chars; byline only
+c4346067f6dc6cc7,full,clean,,,,
+d8d4301dfe34641c,full,fix,C1;C3,'Read daily news briefs' at offset 1626|verb missing 'Ali Khamenei the' at offset 49,,link text dropped
+3e63f6dac09a37b8,full,drop,C1;B4,'facebook logo-blue twitter logo-blue' at offset 23|website template placeholder text from offset 72; 'John Doe' at offset 361,,no real content
+2b986e7167fb5edd,full,clean,,,,
+943b00214cee55c2,full,fix,C1,'Topic: Mobile Apps Author:' at offset 24,,tag page with two excerpts
+0b139d9931d96986,full,drop,C5;C1,keyword link list 'Business use for car insurance' at offset 2857|'Free AUTO INSURANCE Quotes' at offset 0,,spun insurance spam
+dcc9a0b78885599a,full,drop,C5;C4,spam keyword 'sex dating in hardin texas' at offset 198|Wikipedia text + unrelated news joined (news from 1734),,dating-spam doorway page
+046a9a747cc3ea58,full,clean,,,,band interview
+65cd48c16af5d0e9,full,fix,C1,'Comments are closed.' at offset 5069,,
+4f2d4cdfcce225a6,full,clean,,,,
+511c6e69e49229ec,full,fix,C3,'Source: Surgical errors: ... -' link dropped at offset 472,,embed removed
+e7c590189ef6675b,full,fix,C1,'Originally uploaded by Usonian.' at offset 46,,Flickr caption
+9d61ae6f81c7a9a6,full,clean,,,,
+0b737aae9e097898,full,clean,,,,religious discourse
+09319f191c620efe,full,clean,,,,WW1 memorial page; deceased 1917 so not F1
+ebc06bd761ef53df,full,clean,,,,393 chars
+a06f15e00a262200,full,fix,C1,'Post a Comment' at offset 4731,,
+4df6044c9bf97eab,full,clean,,,,
+4fa68a4510862f88,full,fix,C1,'Share this thread' at offset 497; 'Buy me a coffee :)' x2 at offset 516,,forum thread
+b9ad87575375859e,full,fix,C1,'Off the Kuff Rotating Header Image' at offset 0; 'Related Posts:' at offset 107,,post body missing; mostly comments
+9d29ecddfb4fec17,full,drop,F2,IMO 1995 problems 1-6 from offset 0,,olympiad problems; check against G9 fingerprints
+0ebbad85e2d93ed0,full,fix,C1,image caption 'ondrej krajnak - 12' at offset 835,,
+5d1d7bc9a6053135,full,clean,,,,photo captions only
+1ec7fa64b9476242,full,drop,C5;C1,jersey keywords injected e.g. 'Cheap NFL Jerseys' at offset 532|Chinese forum nav '返回列表 回復 發帖' at offset 0,,keyword spam over scraped news
+14a42e82ec01fe8c,full,fix,C1,'Promijeni jezik: Croatian' at offset 0,,language switcher
+4353fa62c6ebe96e,full,clean,,,,player profile; empty 'A profile by:' at 2822
+36cd71d636ed7125,full,fix,C1,site menu 'Iron-deficiency Anemia' at offset 0; 'Starline Hodge:' at offset 1774,,
+9c7ea3c46d1984ee,full,fix,C1,'Creative Commons License' at offset 14134; 'Share This Book' at offset 14344,,OpenStax physics textbook; good text
+a99ed02fa0c2acce,full,fix,C1,'Creative Commons License' at offset 25392,,OpenStax US history; good text
+0494a4d48ff7dd9d,full,clean,,,,
+cf633c0a1623318a,full,drop,D4,synonym-spun text 'demigod askew cheese bisected cloister' at offset 377,,spun text; D4 is nearest code (ask CAP)
+a381d9217f39570e,full,drop,C5;C1,'cheap michael kors' keywords injected from offset 93|'Account Login' at offset 0,,keyword spam
+31a945991502d589,full,clean,,,,
+0c7bd29d316af258,full,clean,,,,feature request post
+a6648e133e814749,full,fix,C1,'You are here' at offset 0,,political column
+b4ce6ce1ece93a75,full,fix,C1,'Click to Request a Free Quote' + menu at offset 0,,
+7fca094ef1dce6c6,full,drop,C5;D4,'cheap DC car insurence rates' at offset 201; 'Auto insurance qiotes Missouri' at offset 2352|spun sentences from offset 0,,insurance spam
+4de43d87c88a69ee,full,fix,C1,page menu 'Weather Station:' at offset 0; caption at offset 262,,
+e53279211deae6a8,full,fix,C1,'узнать больше' (read more) at offset 111,,news article
+5af0cc4628b6a555,full,clean,,,,question list
+d5d5ef995a71816e,full,drop,C4,unrelated sentences joined from offset 0,,spam domain
+b849e5ce91bae213,full,fix,C1,'About The Author' at offset 23150,,film essay; good text
+996a8365b5fa3ccd,full,clean,,,,product page
+e6bdda6c700ff3ba,full,drop,C4,generated sentence salad from offset 0,,insurance spam
+db1c016b4526af57,full,drop,C4,generated sentence salad from offset 0,,insurance spam; same site as 126
+5492815d709b4dbb,full,fix,C1,repeated image captions e.g. 'Slate House Sign' at offset 463; 'web mistress' at offset 1826,,
+119a1d75e769254a,full,clean,,,,
+521bbd46cf48caa3,full,fix,C1,site menu 'Developed by ETI BioInformatics' at offset 1,,
+c7d85d0189375b90,full,clean,,,,short fiction + author bio
+532c4a979ba76f49,full,fix,C3,'You can find it here:' link dropped at offset 2549,,
+33504069e58e1951,full,fix,C1,'diesel generatorsUsed' alt text at offset 53; 'Please follow and like us:' at offset 4556; 'Leave a Reply' at offset 4584,,SEO article
+2cc8913710272e6b,full,drop,C4,scrambled forum text joined from offset 32,,generated spam
+a85d5ac50a23111d,full,drop,C5,keyword-stuffed 'chicken 65 recipe' from offset 49,,no real recipe
+9b68a6ede4d26847,full,clean,,,,video embed removed
+e75dc222ef934fec,full,fix,C1,'No comments:' at offset 12012,,1916 public-domain text
+d46a7a7eb1b07c01,full,fix,C1,'Your Turn To Talk' at offset 3512; 'Your email address will not be published.' at offset 3531,,
+fa3c25263ca22ea2,full,fix,C1,'Chart1Add my vote for this tag' at offset 0; 'Share this page' at offset 95; TWiki footer at offset 6931,,reloading hobby wiki; not F3
+d45ffe23499a1a27,full,drop,C4,generated sentence salad from offset 44,,health spam
+8193a0622521740a,full,fix,C1,'Image via' at offset 3249; 'Read More >' at offset 3282,,
+50144b6540984572,full,clean,,,,
+2d31f6502e7dd5f3,full,clean,,,,band FAQ; profanity ok
+52422fff81211f50,full,drop,C1;C3,'Tag: University of Southampton' at offset 0|excerpt cut '[…]' at offset 395,,tag page; 398 chars
+e1cae8fc5802ba33,full,drop,C5;C4,match list 'Splashes vs Quick Winners' at offset 0|unrelated sentences from offset 127,,
+caae8a484a43b775,full,fix,C1,'item view' at offset 2; 'item # 22051 Jump to:' at offset 1775,,
+855032b92c2b8d25,partial,drop,D1;A1,label en but text is German from offset 0|soft hyphen in 'ge­sprochen' at offset 161,161 U+00AD SOFT HYPHEN (4x),German; I don't judge D4/D5
+7fbcdb8cf75bd35f,full,fix,C3,company name dropped '0 is an online shopping' at offset 60,,
+86a906b67f590135,full,clean,,,,
+b1707f3c8e164c07,full,clean,,,,1994 usenet discussion; line breaks lost
+e298338df5d1d6bf,full,fix,C1,'This entry was posted in' at offset 5709; 'Leave a Reply' at offset 5957,,
+6895861a81772dae,full,fix,C1,'TX Nefario - шаблон joomla Форекс' at offset 0,,template credit
+ca3abca87d5db371,full,fix,C1,'No comments:' at offset 2614,,
+287f5a893b367a07,full,fix,C1,'Une traduction pour cet article est disponible en Français' at offset 68,,
+122504afaec49b2d,full,fix,A1;C1,BOM at offset 0|share buttons '推到 Twitter!' at offset 13; footer at offset 2454,0 U+FEFF ZERO WIDTH NO-BREAK SPACE,Chinese-English dictionary page; WordNet text
+3fc1d0628849c8dc,full,fix,C1,'A Big Chat is loading...' at offset 0,,
+590087a726bd032b,full,fix,C1;C3,"'lundi, 18 mars 2019' at offset 0; 'A propos de Afriques en Lutte' at offset 2869|'Source from' link dropped at offset 2856",,
+80c9139ec8b57301,full,fix,C1;C2,'Post a Comment' at offset 2112|'Post a Comment' x9 and 'No comments' x6 (first 'No comments :' at offset 6858),,blog month archive
+e122e32555bdd7ca,full,drop,B4;C1,SQL query 'select * from master_url' at offset 0|'Rate this!' widget at offset 152,,253 chars; no content
+3dce67ac37d56429,full,drop,D4,synonym-spun text from offset 31,,spun text
+12209ba004fead07,full,drop,C5;C4,keyword list 'mlb team baseball hats|' at offset 24|unrelated sentences from offset 173,,
+7adf12ab86a77a03,full,fix,C1,'More reading about this topic:' link list at offset 4588,,
+7f3faa3d2d3dcfb6,full,fix,C1,'Follow @BBCNewsbeat on Twitter' at offset 4205,,BBC article
+81a8b64db3044266,full,fix,C1,sidebar 'Follow by Email' at offset 14033,,
+401400b4e5ef2ee8,full,fix,A1;C1,BOM at offset 0|'Skip to: Site Menu' at offset 63; 'E-mail (Will not appear online)' at offset 12257,0 U+FEFF ZERO WIDTH NO-BREAK SPACE,
+832cc105b85446ae,full,fix,C1,'By PanEris using Melati.' at offset 2378,,1913 Webster dictionary text
+f2ec2991ddda3d42,full,clean,,,,product page
+fb0a59b9ba5f74e4,full,drop,C1;C3,'Tag: heart disease' at offset 0|'… Read more →' at offset 463,,tag page excerpt
+05542377b23b184f,full,clean,,,,poem; NBSP indentation
+15e50a352493986c,full,drop,C1,templated word page 'Words that start with nogaku' at offset 0; 'Scrabble Score' at offset 415,,like docs 2 and 39
+c4d2bc14dacab2fd,full,clean,,,,B&B directions; business address
+c00987dbead78e10,full,clean,,,,
+816e5ec1fb368590,full,fix,A3;C1,"'NoÂ waste' at offset 597; 'Ã…' at offset 3092|'Jump to content' at offset 0; 'Helo sir,' at offset 4744",598 U+00C2 + U+00A0 (2x)|3092 U+00C3 + U+2026,Â before NBSP and Ã… for Å are UTF-8 read as cp1252
+8fa9168e8da3a2d4,full,fix,C5;C1,keyword line 'Individual Eyelashes Extensions' x4 first at offset 408|'Posted on' at offset 0; 'Leave a Reply' at offset 3864,,
+10355b4f94c87a2c,full,fix,A1;A5;C1,soft hyphen in 'never­ending' at offset 40|'Josué Méndez' decomposed at offset 646|'... [Read less]' at offset 1063,40 U+00AD SOFT HYPHEN|650 U+0065 + U+0301 (2x),viewer shows ⟦SHY⟧; public figure handles ok
+cd0e6e7be5e991a0,full,fix,C1,'[via environmentalgraffiti]' at offset 2123; 'More Post From The Web' at offset 2152,,
+3821f16c0b4f1675,full,fix,C1,'Main Menu' at offset 2; link text doubled 'CanadaCanada' at offset 91,,
+1655eff2d7433d05,full,clean,,,,group blog month archive
+6c7d150202550d46,full,fix,C1,'Powered by MiniDrobeCMS' at offset 2414; 'Page generated in' at offset 2614,,forum thread
+a19b84173e65ce77,full,fix,C1,'More EconTalk Episodes' at offset 20922,,podcast page + comments
+5b06c1cc270f7208,full,clean,,,,
+3c51853ef1a6fea0,full,fix,C1,'Recommended Videos :' at offset 10935; 'No comments:' at offset 10987,,
+b32e0f30c566bc02,full,fix,C1,'No comments:' + sidebar at offset 4141,,same sidebar as 182
+22f35bdc31e842ac,full,clean,,,,
+3f7bcb9571f3f7ae,full,clean,,,,
+7110f0c5f18219a2,full,clean,,,,
+3a3e1d5cdac141dc,full,clean,,,,
+6d1051dc3ca46585,full,drop,F3;B2,escort advertisements from offset 0|HTML '<a' at offset 2479; '</a></div>' at offset 2820,,sexual services ads
+7f1189c179e510b4,full,clean,,,,horoscope page about celebrities
+94f537dcf85f69f8,full,fix,A3;C1,'â\x80\x9c' for opening quote at offset 2493 (32 sequences)|'Clay12JPG.jpg' at offset 43,2493 U+00E2 + U+0080 + U+009C (32x),UTF-8 read as Latin-1; 57 C1 control chars (A2) inside
+2b494cd46dabaa58,full,fix,C1,'1 comment:' at offset 4075,,
+c6dfb4b1aa4b4331,full,fix,C1,'1 comment:' at offset 7810,,
+010283c475f53e9d,full,fix,C1,'Related Posts with Thumbnails' at offset 809,,comments from 473
+4b96b283ee061cdb,full,fix,C1,'go to Top' x3 first at offset 2662; 'Search this site' at offset 4842,,
+918b8d1453e0412e,full,fix,C1,'No comments:' at offset 3002,,
+4bf0462bc9268575,full,clean,,,,
+32f1da554b4aa8e0,full,fix,C1,image filename list 'IMG_8563 - REV' from offset 41,,
+130b9711e7fb34bd,full,fix,C1,'This post may contain affiliate links.' at offset 4763,,
+3a4316e7b3494c0d,full,clean,,,,first word cut 've been struck' at 64
+8ce791adc227e00e,full,clean,,,,
+2a6bbaa24a7a9aa5,full,fix,C1,'Advertisement' at offset 5509; 'Blog Archive' at offset 5528,,
+6c6907ab84138acf,full,fix,C1;F1,'Related Posts Plugin' at offset 1603|health data of a named child (medication) at offset 183,,parent blog; minor's psychiatric meds
+91baef5b95248038,full,fix,C1,'Free No-Obligation Consultation' at offset 2; '100% Focused on Personal Injury' at offset 1079,,law firm archive page; business phone not F1
+416e12ac72df0b07,full,fix,C1;F1,'Home button' at offset 0|personal email at offset 669,,artist price page
+e7c0d38a4e5741f1,full,clean,,,,
+c13058c496d43c09,full,clean,,,,
+b68eb96647af564c,full,fix,C1,'Blu-ray | DVD' at offset 3661,,movie reviews
+f64a9416aa04af70,full,fix,C1,'Welcome to Varied Expressions of Worship' at offset 0,,header repeated twice
+e96611d2c545044c,full,clean,,,,food blog archive; restaurant phones are businesses
+98868aa5281f5b98,full,drop,C1,'Enter Your ZIP CODE' at offset 206; 'Call me Now' at offset 5437,,templated ISP location page
+11861774c63d56a8,full,fix,C1,'Discussion comments' at offset 4066,,
+a4a6c090782f5a50,full,fix,C1,'Table Of Contents' at offset 0; 'Recently Viewed Topics' at offset 652,,
+c64caa30dd4056f1,full,clean,,,,
+bfb8d8f5c8eacc25,full,fix,C1,'Print Friendly' at offset 347,,
+0621e607ac216b18,full,fix,C1,'Sand said...' at offset 934,,
+cad93939e48fdd77,full,fix,C1,'the33_1sht_main' at offset 44; 'silktoy games' at offset 10814,,image filename + spam comment
+484c668df3c40868,full,fix,C1;C3,'University of Minnesota' at offset 0|'More information at' at offset 3584,,
+437cc09082cf6e72,full,fix,C1,'No comments:' at offset 5836,,
+ca60c67879105b5e,full,fix,C1,'Join our mailing list!' at offset 0,,
+b3109d91ab1bc018,full,fix,C1,'keep in touch' at offset 7778,,business address footer
+18f5c2a2318e8120,full,clean,,,,
+7638c21903d9cd96,full,fix,C1,'Recent quotes:' at offset 0,,quote aggregator
+27fb064d08130934,full,fix,C1,'cheap trick.jpg' at offset 180,,
+0c29895a23064d08,full,fix,C1,'everythingRF RF & Microwave Parts Database' at offset 1; 'Copyright: 1996' at offset 9373,,
+99c124999e53c002,full,fix,C1,'No comments:' at offset 3817,,
+afbffc6cb5db9330,full,clean,,,,
+ac9fa74bac26ef80,full,clean,,,,
+3006b39d1ee396a2,full,fix,C1,"'Canto 04, Chapter 17' at offset 1550",,quiz page; related links at end
+57486f8fd012d0f4,full,clean,,,,
+ec2fdafe98146940,full,fix,C1,'Share this event' at offset 1261,,
+946d8c16d3ad8d9b,full,fix,C1,'admin Author' at offset 5547; 'Leave a Reply' at offset 5561,,
+7fdf64f43c99fc87,full,fix,C1,'Please enter your comment!' at offset 2505,,
+c90f08fcec6759cc,full,fix,C1,'BROWSE DATABASE CODEX' at offset 23,,
+97cea6e308e73119,full,fix,C1,'Thank you for taking the time to leave a comment!' at offset 3927,,
+e2f62269aa2a0900,full,fix,C1,'Related Posts Plugin' at offset 48017,,blog home page
+8d9d1c4b4cbc016d,full,clean,,,,
+dff35bbe64c900bd,full,clean,,,,
+f03651e310bb768b,full,fix,B4;C1,'2017-12-17T05:19:37+00:00' at offset 17|'Contact Rabbi Davidowitz Now' at offset 3124,,timestamp template junk
+0d9cb110bfc0b6f7,full,clean,,,,sports blog + comments
+576d67cb4e71de00,full,clean,,,,student union email is organisational
+4168c04d71c94c85,full,fix,C1,'Please feel free to share your questions' at offset 1911,,
+6d2a73d93f83e3a1,full,clean,,,,
+79eef4614d5b6a42,full,fix,C1,'Related Posts Plugin' at offset 796,,
+d3cfc9f5b664306c,full,clean,,,,
+c446a6b19b8b4f2b,full,clean,,,,
+a98e659ceee80625,full,clean,,,,SEO tips article
+310916007b922eb2,full,clean,,,,car tips on unrelated domain
+bb39526f2e641a0c,full,fix,C1,'No comments:' at offset 3682,,
+e5d949484740fff3,full,fix,C1,'willberforce 3.jpg' at offset 0,,org contact email/phone not F1
+7fdf337ffd4aaf5c,full,fix,C1,'Popular Posts' at offset 5038,,
+aaca7b517076d001,full,fix,C1,'Article Details' at offset 53; 'Post your comments' at offset 3455,,
+8929b1f250675088,full,fix,C1,'Enter Your First Name' at offset 2717,,newsletter form
+e85f1cba4b604380,full,clean,,,,
+13b37bf5acff4d16,full,fix,C1,"'Global News, a division of Corus' at offset 6464; 'You May Also Like' at offset 6517",,
+40c187965e3841dd,full,fix,C1,'fraudThis' at offset 72; 'Add a comment' at offset 9963,,alt text glued
+ba1d4d51e5dacc1c,full,clean,,,,
+c8b1db27712952e2,full,fix,C1;C3,'Read the rest of this entry' at offset 2222|excerpt cut at offset 2222,,
+162a274406bbe8e7,full,fix,C1,'Leave a Reply' at offset 4583,,
+d6a8ede9eb3d1ca4,full,fix,C1,'Next: Holiday Gift Guide' at offset 1259,,
+bb46bb0201dab678,full,fix,C1;C2,'Elephant-01I' at offset 48|post title line x4 at offset 0,,blog archive
+740f22e9bfda2d9c,full,drop,C5,'approach design garden landscape' at offset 34,,keyword salad
+3b166668a547d701,full,fix,C1,'Follow by Email' at offset 0,,
+77b614ea3de96a3c,full,clean,,,,
+4f44c858b56fa9c5,full,fix,C1,"'Tags: , , , ,' at offset 24",,empty tag template
+6aa2b1b15014b8c1,full,clean,,,,
+57eb0316f8e077e0,full,clean,,,,
+8fceeb0fc9f16fcf,full,fix,C1,'Related Posts Plugin' at offset 9786,,
+c6d98701268365dc,full,fix,C1,'Previous Next' at offset 47,,
+ba717fd13068128a,full,clean,,,,
+4e70f0a440eee5b7,full,fix,C1,'No comments:' at offset 2954,,
+185b87246cba9755,full,clean,,,,personal blog archive
+9f004914c20a592b,full,drop,A1;C4,BOM x3 at offset 0|unrelated sentences from at offset 66,0 U+FEFF ZERO WIDTH NO-BREAK SPACE (3x),spun spam
+90c2a9476f8445ad,full,drop,B4;C1,'{/PARAGRAPH}' at offset 10736|'1680 1681' at offset 10751,,forex spam template
+f819811b670939d0,full,drop,B4;C1,'{/PARAGRAPH}' at offset 4371|'281 282' at offset 4386,,forex spam template
+f4f6f6b659da168a,full,clean,,,,
+448bb0bc26fcd3e3,full,fix,C1,'Website Builder' at offset 4418,,
+ccd998742edac0f3,full,clean,,,,NPR transcript
+3104f2b725e4ba5e,full,clean,,,,
+73ea678771479174,full,fix,C1,'Return to Transcripts main page' at offset 0,,CNN transcript
+950baa254c06b5f1,full,clean,,,,
+60cfa7e917bef451,full,fix,C1;C3,'Daily American Articles' at offset 3562|email removed at offset 3547,,
+921ac62bbf093baa,full,fix,C1,'The Herald-Mail Articles' at offset 2549,,court news; public record
+232fbd32d8de2e74,full,fix,C1,'YOU ARE HERE: LAT HomeCollections' at offset 0; 'Los Angeles Times Articles' at offset 5167,,
+5a9e7d4de82019f3,full,fix,C1,'YOU ARE HERE: LAT HomeCollections' at offset 0; 'Los Angeles Times Articles' at offset 1435,,
+9d428154d5826095,full,clean,,,,blog month archive
+d3f8ac61f0a10bc4,full,fix,C1,'Related Posts Plugin' at offset 4388,,
+84e21dcc265dd8b3,full,fix,C1,'No comments:' at offset 4341,,
+c25bc118f6ce4e54,full,fix,C1,'No comments:' at offset 628,,
+9bf1e91909058870,full,clean,,,,
+edbbdaeb0a45c675,full,clean,,,,
+e369350285bec7b9,full,drop,C4;C1,scraped snippets joined at offset 45|'No related post!' at offset 965,,templated snippet page
+3314df7c1b1267c8,full,drop,C4;C1,scraped snippets joined at offset 24|'No related post!' at offset 1839,,templated snippet page
+22bcae3743b47fc3,full,drop,C4;C1,scraped snippets joined at offset 37|'No related post!' at offset 1035,,templated snippet page
+20a9021ac345366c,full,fix,C1,'Return to Archived Articles' at offset 3027,,
+2b1f3d3a7800b8c0,full,fix,C1,'sexta-feira' at offset 0; 'Sem comentários:' at offset 3076,,Portuguese blog chrome
+54e1c100ba8ee731,full,clean,,,,
+339f0cd781e3f232,full,fix,C1,'No comments:' at offset 1284,,
+3f3326bf3d997b34,full,fix,C1,'My Photo' at offset 15,,blog month archive
+858a2cd26c7e3879,full,fix,C1,'No comments:' at offset 2127,,
+b945580dc8e84cdb,full,fix,C1,'Comments are closed.' at offset 47074,,
+9d0510d907e8b9f6,full,clean,,,,blog + comments
+cf1eddabedccbf9e,full,fix,C1,'Leave a Reply' at offset 1564,,
+f91d85972e923265,full,fix,C1;C3,'Read the rest of this entry' at offset 362|excerpt cut at offset 362,,
+0a2044cdb25c665f,full,fix,C1,'postbank hamburg kredit' at offset 4854; 'Leave a Reply' at offset 4930,,spam comment list
+6f8a930fbc36262a,full,clean,,,,opinion piece
+c6f44b0add5cf105,full,fix,C1,'No comments:' at offset 20212,,
+1f7822e59cd4521f,full,fix,C1,'No comments:' at offset 3350,,
+9e45034e3eba9669,full,fix,C1,'Popular Posts' at offset 2487,,
+f8abf7a9d8332d0e,full,fix,C1,'Popular Posts' at offset 3894,,
+78291034f6ea471f,full,fix,C1,'Click here for recommended' at offset 42,,product review
+8a018c712ce8f362,full,clean,,,,quotes collection
+a912fdfed31a4b04,full,fix,C1,'No comments:' at offset 1457,,
+de26498db4881321,full,clean,,,,
+a02c10c9afa1d01d,full,fix,C1,'Anonymous said...' at offset 2549,,post body missing; comments only
+84b8f1f258f66be6,full,clean,,,,
+f690ed7d88d07eda,full,fix,C1,'If you enjoyed this post' at offset 11014,,
+2e3f058c9b3f0f55,full,fix,C1,'1 comment:' at offset 55,,post body (image) missing
+0631055fcc9352f3,full,clean,,,,
+583cb5a2a10559a7,full,clean,,,,
+fd08c3a86db486c1,full,fix,C1,'Return to News' at offset 0,,
+a8693d9788af17cf,full,clean,,,,
+4eeed8740f4b762b,full,drop,C1,'ZFEET is a crossword puzzle answer' at offset 15,,templated crossword page
+0b6d3f138a3faac0,full,clean,,,,
+e215ee3ba5df3c0c,full,fix,C1,'Save with Bundles' at offset 3870,,
+e2731d08b36ad4ff,full,drop,C1,"'0 votes' at offset 58; 'answered May 2, 2017 by' at offset 4642",,spun Q&A spam
+0591ffc2571e313d,full,clean,,,,
+e576208caa1d94a1,full,clean,,,,
+7ecdf57b3e06fd56,full,drop,B4,'Google Adsense Here' at offset 23,,ad placeholder x3; spun text
+c2bf8f8ce9662fed,full,clean,,,,
+8f000081acb6e99f,full,clean,,,,
+c1ca027a5a692749,full,drop,C4,spun text + comment list at offset 89,,spam
+3b5bd621f2a52d15,full,drop,C5,'Providing software and services for SEO' at offset 70,,spam comments on course page
+31f20bb57940c2f4,full,fix,C1,'1 comment:' at offset 369,,
+141fffad19cc9fb0,full,clean,,,,
+b47b53c1fe830172,full,clean,,,,Malaysian English; natural D3
+e8b4496b49074870,full,fix,C1,'(c) EENI- Business School' at offset 4916,,
+ce2379b57ec14f48,full,fix,C1,'Melt Away Stubborn Fat' at offset 0; 'No comments:' at offset 4666,,sidebar ads
+e448c34826f5e045,full,fix,C1,'Both comments and pings are currently closed' at offset 11881,,
+e0c0d902e4cf51f5,full,fix,C1,'Leave a Reply' at offset 2864,,
+97e19ff787c65155,full,clean,,,,
+c0e81fc18ab214b9,full,clean,,,,
+aa0b27b1512332c2,full,fix,C1,'Blog Widget by LinkWithin' at offset 1403,,
+850889ced1373769,full,fix,C1,'Back to list of posts' at offset 55; 'Add a New Comment' at offset 5504,,
+887b42b5ad6bb08e,full,clean,,,,
+cab2dbea05fa92b7,full,fix,C1,'Add a New Comment' at offset 23809,,roleplay log
+e669641575ec2ed5,full,clean,,,,
+f2a65eb96f112396,full,clean,,,,
+d9f493749079bf86,full,clean,,,,
+70e9a381a17a513a,full,drop,C5,"'We like these, Block Up!' at offset 37",,game list with ratings
+790dae14dbb70fef,full,clean,,,,dialogue lines repeat on purpose
+684fce56bae3e067,full,clean,,,,
+0c7ef4e7b8ea610a,full,fix,C1,'Leave A Response' at offset 10442,,
+56cf8c739408c7f8,full,clean,,,,
+b61e52316e59faaa,full,fix,C1,'No comments:' at offset 14473,,
+f4d4bec60c1bc338,full,fix,C1,'This page is powered by Blogger' at offset 2231,,
+67c1a78fdeeb020b,full,clean,,,,
+cb77f3bf7b3a528a,full,clean,,,,idiom dictionary
+87e56bc9a994f254,full,clean,,,,
+e68dcb2914953d0b,full,clean,,,,
+1992526bd6e98869,full,drop,B2;B1,'<br />' at offset 540|'&#39;' at offset 1500,,Blogger comment feed XML
+289adac523d90837,full,clean,,,,
+5d51c4fa93622d1b,full,clean,,,,
+4d2bbc4507af6cbe,full,clean,,,,
+1bcdbfae040d734e,full,fix,C1,'Anonymous said...' at offset 1376,,empty comments
+1b74dc6b3d0b7125,full,clean,,,,
+b907cb570bf7895f,full,fix,C1,'TETELESTAI Notification List' at offset 0; 'Guest Posting' at offset 34,,
+d26cb2c96018385e,full,fix,C1,'Hokus Poke-UsHokus Poke-Us' at offset 43,,caption doubled
+65681546b6461d83,full,drop,C4,spun text + comment list at offset 79,,spam
+e1dfc43830d67de9,full,fix,C1,'No comments:' at offset 1048,,
+a6d472d9e38b2d5d,full,fix,C1,'No comments:' at offset 3796,,
+d9a8686e6037d9dc,full,clean,,,,
+467b5c0aa1d13de8,full,drop,C4,spun text + comment list at offset 44,,spam
+039f5cd8a6478e42,full,clean,,,,
+2fddba3fc9e15dac,full,fix,C3,'Source: [let' at offset 148,,link cut
+011c5fa69710197e,full,clean,,,,
+8ff35d8207fce029,full,clean,,,,
+eb137462e26e636f,full,fix,C1,'Leave a Reply' at offset 6555,,
+d8a9bc7565e56929,full,clean,,,,
+74497dbb0e751a13,full,drop,C4,spun text + comment list at offset 45,,spam
+c84f362725cdf249,full,fix,C1,'USPS Honors Letter Carrier' at offset 2992,,related headlines at end
+d86cd5a0eb38f342,full,clean,,,,
+bcdfc236accdb246,full,clean,,,,
+8500501106228397,full,clean,,,,
+58eba6d8744e9ef6,full,clean,,,,
+931955e6932d4011,full,clean,,,,
+393f4f9d78b0229a,full,fix,C1,'- dynamic website design' at offset 492,,
+fdc08d1ba4746e29,full,fix,C1,'Submitted by a LOZO expert' at offset 33; 'User Comments' at offset 588,,
+c61b9f74285b9f65,full,drop,F3,escort profile at offset 19,,sexual services ad
+b1991c8b39e58191,full,fix,C1,'Check them out on Facebook here.' at offset 2500,,
+c98d61fbe3ef9c3d,full,fix,C1,'Click to read more ...' at offset 395,,x4
+28bd69b4ed987643,full,fix,C2,'Are the price rates negot' at offset 4405,,FAQ entries duplicated
+b186cb310251a508,full,clean,,,,
+f4e27249dc2787fc,full,fix,A1,LRE at offset 90,90 U+202A LEFT-TO-RIGHT EMBEDDING,viewer shows ⟦LRE⟧
+21a5353274189f61,full,clean,,,,
+063df7cbc6cb95bc,full,clean,,,,
+4eed925d787ae5d0,full,fix,C1,"'Kamis, 27 Maret 2014' at offset 0; 'Tidak ada komentar:' at offset 1175",,Indonesian blog chrome
+ec5460962f3c6ad1,full,clean,,,,
+a55992c7a90ce4f4,full,drop,D4,spun text at offset 29,,spun astrology page
+69621caaf4c0833b,full,fix,C1,'Show all comments (33)' at offset 9312,,
+3eb154043e35afb7,full,fix,C1,'The story is too old to be commented.' at offset 121,,
+80dbb90e43c443b4,full,drop,A1;C4,LRM at offset 2574|scraped Q&A joined at offset 52,2574 U+200E LEFT-TO-RIGHT MARK (2x),spam
+2f4e718a130571c8,full,clean,,,,
+1f95702836378019,full,fix,C1,'error: Content is protected !!' at offset 4111,,
+3caaad47ab73bdb6,full,clean,,,,
+8a7b6e90a1b41eb8,full,clean,,,,
+19c051aefe84b262,full,clean,,,,
+d27b292624086b19,full,clean,,,,
+42f9d891adc96acb,full,fix,C1,'Search This Blog' at offset 0; 'Blog Archive' at offset 8018,,German letter at end
+1a1078870aa6c149,full,fix,C1,'Orioshuttle sbarca su Google Maps!' at offset 46,,Italian headline
+223c75d5ee536452,full,clean,,,,
+16b8edde6fecc6ce,full,fix,C1,'Get professional trading signals' at offset 17074,,ad at end
+5922ba20491d8f57,full,clean,,,,
+32aff3694119740d,full,fix,C1,'Share |' at offset 38; 'Previous Bulletin Next Bulletin' at offset 2508,,
+896c16a733dfd0e6,full,fix,C1,'[Link to a series of help pages]' at offset 16; '[image ALT: Valid HTML' at offset 157287,,public-domain history; long
+34615cb7df688dc8,full,fix,C1,'Stumble it Reddit this share on Facebook' at offset 1715,,
+dede015abe25b6a1,full,fix,C1,'Stumble it Reddit this share on Facebook' at offset 5117,,
+9feb439060f63c67,full,fix,C1,'Stumble it Reddit this share on Facebook' at offset 2024,,
+ece8c5ef5f5b8399,full,fix,C1,'Article author:' at offset 5406,,
+12d8c9d6756a4e16,full,fix,C1,"'miercuri, 1 iulie 2015' at offset 0; 'Niciun comentariu:' at offset 264",,Romanian blog chrome
+eba894c1f7cb6a1d,full,clean,,,,
+0e064ed012ae2caf,full,fix,C1,'Latest News from State News Desk' at offset 1511,,
+083f919b3429110a,full,clean,,,,
+e9253d74098f4f78,full,clean,,,,
+7fba65ecd9ef1d14,full,clean,,,,
+e0f442fd5ef88c60,full,fix,C1,"'Copyright 2018 NPR. To see more, visit' at offset 113",,
+1eabfe8ac5d3b5cb,full,clean,,,,quote collection
+023b7b588cc65ebc,full,fix,C1,"'Copyright 2017 NPR. To see more, visit' at offset 4298",,
+0a254925b0ff1599,full,fix,C1;C3,'Print Recipe' at offset 0; 'Always Open!' at offset 597|ingredient list missing at offset 53,,
+325f79f5f47bfaa0,full,clean,,,,
+ce9d6eb44a6b8d2d,full,drop,D4,spun text at offset 26,,
+569d0d2685634869,full,fix,C1,'Yes! I want the Releasing Kings Newsletter.' at offset 3797,,
+f4cc9de98a7e85b2,full,fix,B4,'2018-02-15T12:16:04+00:00' at offset 17,,
+8c4dfd57d9b597fd,full,fix,C1,'Share on' at offset 98,,
+c916841af90359f9,full,clean,,,,
+c966bc734ec839f8,full,clean,,,,
+68575a61a90990d5,full,drop,C5;A1;A5,'#1 Rated Trading App' at offset 106|soft hyphen x13 at offset 965|combining marks x51 at offset 941,965 U+00AD SOFT HYPHEN (13x)|941 U+0327 COMBINING CEDILLA (51 combining marks),binary-options spam like doc 58
+76a92e2254e28115,full,fix,C1,'lundi 24 mai 2010' at offset 0,,
+1f7b29a4694eaf3e,full,clean,,,,hostile political language; not judged F3
+340e1023485e84aa,full,fix,C1,'Home Forums Forum English Forum' at offset 39; 'You must be logged in to reply' at offset 1356,,
+2d251d751db8ec5f,full,fix,C1,'Click to get the gist' at offset 43; 'Leave a Reply' at offset 1409,,
+a95be3d7a3b35c0c,full,fix,C1,'Start Your Estimate' at offset 324,,
+aa68190468efbbdc,full,fix,C1,'No comments:' at offset 2722,,
+4398cd48687a46fb,full,fix,C1,'you may also like:' at offset 4586,,
+9f15a0b579aa1d41,full,fix,C1,'Image: Source' at offset 1688,,
+0f638730dd60630e,full,fix,C1,'Fresh Off The Wire' at offset 2374,,
+b5355111e78b170f,full,clean,,,,first letter lost
+15a1851e19a2c524,full,fix,C1,'About Doug Mortimer' at offset 9069; 'No comments:' at offset 9091,,
+89f4b785d08bd32d,full,clean,,,,
+151e2588446307e2,full,clean,,,,
+cb52f08275493a11,full,clean,,,,
+3f47343c139d2fa4,full,fix,C1,'Permalink Print' at offset 2758,,
+7bdfc5a0cdd2552d,full,fix,C1,'Sebarang komen dan pandangan' at offset 2310,,Malay footer
+c20aa9c003ae30c4,full,clean,,,,
+a9fd65a01b9629c3,full,fix,C1;C2,'Enhanced by Zemanta' at offset 4388|x4 at offset 913,,
+dd707bcbde2b63d0,full,fix,C1,'Talbert Pipes Website' at offset 49,,
+61cd6e76104f9bb3,full,fix,C1,'The story is too old to be commented.' at offset 34,,
+c36790313f5ec452,full,fix,C1,'No comments:' at offset 995,,
+0a28e7f42a4bba02,full,drop,C1;D4,'Write My Essay!' at offset 0|spun text at offset 72,,essay-mill spam
+0b8927b848a57933,full,clean,,,,
+1241617d2b2e6377,full,fix,C1,'Twitter icon' at offset 145,,
+2f7d4c43cfe55f59,full,clean,,,,
+9c4536a550f26b6f,full,fix,C1,'Overcame Obstacles' at offset 1854,,related headline at end
+ef398a40526f946c,full,fix,C1,'No comments:' at offset 3516,,
+7fb1c89fcfeceb5d,full,fix,C1,'Click to comment' at offset 5608; 'To Top' at offset 5642,,
+5d1fd12b101321f0,full,fix,A3;C1,mojibake apostrophe at offset 12604|'<< Home' at offset 13283,12604 U+00C2 + U+0092,Â plus C1 control (A2) for ’
+1e13b455581e96ca,full,fix,C1,'(Photo Credit:' at offset 991,,caption x4
+97b0833c788f79b2,full,clean,,,,
+cdb3abbad7f8c935,full,clean,,,,
+da38803ed868cd9a,full,clean,,,,
+11c3cd0e50856c3e,full,fix,A1,zero width space at offset 0,0 U+200B ZERO WIDTH SPACE (2x),second at 318; viewer shows ⟦ZWSP⟧
+35d00d2a930d794d,full,fix,C1,'No comments:' at offset 11568,,
+83efd6869cb74bd4,full,clean,,,,
+1187711dd37db92b,full,fix,C1,'No account? Create an account' at offset 5615,,
+0cf589a85ddcf20b,full,fix,C1,'Chaotic Sword God - TopLigh' at offset 133,,web-novel chapter page
+319afcfc2bbab65b,full,fix,C1,'Related Articles' at offset 0; 'Leave A Comment?' at offset 1614,,
+5d9b71df6042adb7,full,fix,C1,'No comments:' at offset 2859,,
+21c5f73cf737e6f6,full,clean,,,,business phone
+92bac3ec406c4344,full,clean,,,,
+25539372c6002927,full,clean,,,,
+2c170d56104265c9,full,fix,C1,'No comments:' at offset 3751,,
+d0f7dcc2e1a719de,full,fix,C1,'Disclosure Policy' at offset 2071,,
+b1aab2650228b1d1,full,fix,C1,'Leave a Reply' at offset 1341,,
+12c8bfa031e6158f,full,clean,,,,
+7b1d879aa4e04769,full,fix,A3,mojibake quotes x52 at offset 554,554 U+00E2 + U+20AC + U+201D (52x),UTF-8 read as cp1252; U+009D controls (A2) inside
+51a963459683cb42,full,drop,F3;C1,comment urging violence against police at offset 801|'Subscribe to Post Comments [Atom]' at offset 9544,,militia blog comments
+8e0d5cc62401e197,full,clean,,,,
+c4c095e15fafdd95,full,fix,C1,'FREE - On Google Play' at offset 0,,
+bd9e4bcdf3a71cc0,full,fix,C1,'Leave a Reply' at offset 709,,
+9f6971e84c472fbb,full,fix,C1,'Link to Springer' at offset 1475,,
+51a6eba698d6365e,full,fix,C1,'Rating: starstarstar' at offset 109; 'Share This:' at offset 169,,
+b612431bc1ffadd2,full,fix,B4,'[an error occurred while processing this directive]' at offset 0,,x2
+23e08a29622ba087,full,clean,,,,
+0b45e83873b13401,full,fix,C1,'Search Tags' at offset 4312; '© 2004 agencyfaqs!' at offset 4291,,
+305e03c9bac7556d,full,fix,C1,'Help and Tips' at offset 0,,help menu
+6f99bfbd4bf12311,full,fix,A1,BOM at offset 0,0 U+FEFF ZERO WIDTH NO-BREAK SPACE,
+9397c918c18821cc,full,clean,,,,
+4604ff07ce10fedb,full,clean,,,,
+e0a177b7f0872951,full,fix,C1,'1 2 3 4' at offset 878,,calendar widget
+f18b3d4f77d47002,full,fix,C1,'« Previous story' at offset 34; 'No HTML tags allowed.' at offset 7530,,
+4798c43f71c36474,full,clean,,,,SEO text on unrelated domain

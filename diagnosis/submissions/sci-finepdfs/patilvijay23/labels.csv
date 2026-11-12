@@ -1,0 +1,201 @@
+doc_id,read,verdict,diseases,evidence,hex,note
+8c1aed2f8a439b91,full,fix,C1;C2,C1: repeating slide footer at offset 3029 | C2: repeated lecture explanation at offset 6944,,Repeated lecture-slide footer and duplicated adversarial-attack explanation; remove only verified duplication.
+6d2428a3ad8e41d6,full,clean,,,,"Faith newsletter; publicly listed ministry contact numbers, venue details, and example-domain email are not private-person F1."
+2e1a062fc21d315b,full,clean,,,,Airline regulatory correspondence; institutional letterhead is valid content.
+50cc681aabd3d82b,full,clean,,,,School-board minutes and public governmental/project contact details; scanner matches are not proven private data. Long-context candidate — use for long context.
+507d7cf0978d22e4,full,clean,,,,"Court/legal record; listed firm and corporate counsel offices are professional contacts, not private-person F1. Long-context candidate — use for long context."
+3db737dca1122c53,full,fix,C2,C2: repeated test outline at offset 1137,,Test-preparation outline repeated under another step; deduplicate matching content.
+33d1f7b3eec4d2c0,full,fix,C1,C1: publisher wrapper at offset 0,,Remove publisher URL/headline wrapper; retain the full entertainment news article.
+b0d032fadb33dbf4,full,fix,F1,F1: individual direct telephone at offset 7697,,"Municipal agenda; redact a named event contact’s direct number, retaining the public meeting information."
+b7c735b64d1af67a,full,clean,,,,Municipal tax ordinance; legal structure retained.
+55f375144ed541bf,full,clean,,,,Research paper; LaTeX is valid and the email placeholder is not private data.
+73fbd40e1111121e,full,fix,F1,F1: person-linked residential address at offset 386,,Planning agenda links named household applicants to residential addresses; redact only private-person locations. Long-context candidate — use for long context.
+8b5b54304788333e,full,clean,,,,"Dental-journal and professional organization contact addresses are institutional, not F1. Long-context candidate — use for long context."
+854af92dbde41a63,full,fix,F1,F1: person-linked contact/address at offset 100,,Campaign finance disclosure includes person-linked address/contact information; redact private-person fields only.
+776e2d329eaeeb77,full,clean,,,,Mathematics text; valid equations and display-math notation preserved.
+e44cb4676171abba,full,clean,,,,Government complaint: agency and attorney office contacts are public-facing; complainant already redacted.
+7ea84af3398cb3ed,full,fix,B2,B2: literal <br> tag at offset 445945 (HTML in extracted prose),,Municipal attachment includes literal HTML line-break tags; normal table repetition and currency signs are not C2/B5. Long-context candidate — use for long context.
+8acbf1b8c927795d,full,clean,,,,Adaptation Fund project form; institutional contact details are not private-person F1. Long-context candidate — use for long context.
+4f3067e9d3a6b2b8,full,clean,,,,Commercial product/materials catalogue with legitimate tables.
+cb2c6fb11ebf329e,full,clean,,,,Entrepreneurship article; topic is not a defect in a general-purpose PDF pack.
+494eabee8799f93a,full,clean,,,,Furniture catalogue; product description and specification data are useful.
+50f74766355f26d3,full,clean,,,,Published biomedical article; author correspondence uses generic example-domain addresses.
+c298d58f6344ddde,full,clean,,,,Biomedical research article with intact scholarly structure.
+c6acd9e6d213d6f4,full,clean,,,,Public Black History Month event schedule and invited speakers; no private residential data supported.
+4656c1ed1d4393c4,full,clean,,,,Scientific slide deck repeats table/figure headings by design; not a verified C2 duplicate.
+a243639493a0e633,full,fix,C1,C1: publication footer at offset 86104,,Remove standalone commercial publication footer in embedded proposal appendix; leave organizational contacts. Long-context candidate — use for long context.
+eee25e81417bc1b7,full,drop,D1;C4,D1: Finnish source text under eng_Latn label at offset 0 | C4: unrelated content begins near offset 1286 (image narration),,Finnish source slides mixed with unrelated generated English image narration; unsuitable without source-faithful reconstruction.
+83449c2d7a1d9e03,full,clean,,,,Education advisory-council document; valid structured evidence.
+cc26121e33c42f1b,full,clean,,,,Short but coherent product specification; brevity is not a disease.
+2d2c43ce5f335d3d,full,clean,,,,Product certification text; usable general-purpose document.
+51a4fb599da754db,full,fix,C3,C3: incomplete source boundary at offset 0,,Opening text starts in the middle of a quotation; trim only incomplete leading fragment.
+053c80cc1a9b16bc,full,clean,,,,Utility regulatory filing with agency/business contacts; no verified private-person identifiers. Long-context candidate — use for long context.
+6acc7c94105bdebd,full,fix,C3;C4,C3: incomplete source boundary at offset 9393 | C4: unrelated content begins near offset 7254 (interleaved section),,Two journal case reports concatenated; second report ends abruptly. Split at verified article heading.
+42251c5ad07d17d4,full,fix,C1,C1: publication footer at offset 1797,,Remove repeated proprietary/copyright boilerplate; retain government technical correspondence.
+dbc199ea29145c03,full,clean,,,,Historical narrative; literary prose is not a disease.
+5899e41d188800b4,full,clean,,,,"Public-records petition contains published attorney/newsroom office addresses, not residential F1."
+b44b092b0e829a12,full,fix,F1,F1: personal direct phone at offset 86,,Personal résumé exposes a direct telephone number; redact private contact without treating placeholder email as personal data.
+fb2ef557617d7ad1,full,fix,F1,F1: individual direct phone at offset 3433,,"Newsletter lists individuals’ direct phone/contact numbers; redact only those, not venue information."
+54cb8c8803e08af4,full,clean,,,,Environmental assessment; coherent extended analysis. Long-context candidate — use for long context.
+e297884606b7596d,full,clean,,,,Short historical military report; brevity is not a disease.
+5e5ff4de55e7e018,full,clean,,,,"County health department public coordinator contact is official, not F1."
+6da51c7f3a3b6ff4,full,clean,,,,School accountability report; school office contacts and aggregates are public.
+d20d4f04e5704ba7,full,clean,,,,Published research paper; institutional researcher emails are not private-person F1.
+53ff455424cff71f,full,clean,,,,Published conference proceedings; publication and author contact notices are part of the source.
+d1a387dea20a1242,full,fix,F1,F1: person-linked residential address at offset 8305,,Historical membership list links private residential addresses to named individuals; redact sensitive spans. Long-context candidate — use for long context.
+26a07693d706218f,full,drop,C3,C3: incomplete source boundary at offset 1085,,Extracted practice-exam text ends mid-question after an incomplete excerpt.
+ae07689169b90384,full,clean,,,,Music history/program notes are coherent prose.
+06b18306786f56a5,full,fix,C4,C4: unrelated content begins near offset 2482 (interleaved section),,Apartment descriptions interrupted by unrelated farmers-market text; remove the inserted unrelated passage.
+3b215cb29425e7d6,full,fix,F1,F1: person-linked residential address at offset 1054,,Historical personal-record file includes an identified claimant’s residential address.
+ecf88dd0f06c4b35,full,clean,,,,Career-center handbook contains public school office addresses and policy content. Long-context candidate — use for long context.
+7ee29203d895d80f,full,clean,,,,"Council meeting record contains official rail-safety contacts, not private-person F1."
+9c3996ebe2857e30,full,clean,,,,"Published appellate court decision, complete argumentative legal text."
+6339f30546c81c2e,full,clean,,,,School camp article; short narrative content is valid.
+0e4cfb3b81d67dc5,full,drop,C2,C2: repeated figure-label fragment at offset 2,,Text consists almost entirely of near-identical figure/satellite label fragments with no supporting exposition.
+07b068caa59048f9,full,clean,,,,University performing-arts program has public box-office and institution contacts.
+a6dca2c281646a03,full,clean,,,,Long legislative statute; coherent legal sections and numbering. Long-context candidate — use for long context.
+2b0f374583268f3c,full,clean,,,,Regulatory discharge-monitoring forms contain meaningful tables; repeated field labels are structural.
+0798582b775b470f,full,clean,,,,Race-course certification has meaningful instructions; example-domain emails and public course contacts are not F1.
+08b7ae2fa0363275,full,clean,,,,Long government/political article; topic is valid for general-purpose PDF data.
+3c2aebcdc61e5694,full,clean,,,,Published actuarial paper; generic contact placeholder is not personal data.
+35eb8b91a98d3a41,full,clean,,,,Long historical legislative proceedings; preserve for long-context training. Long-context candidate — use for long context.
+c9df663ed9fb5bea,full,clean,,,,Geology examination report; legitimate recurring scientific terminology.
+6e54aa31a9a0611e,full,clean,,,,Commercial lock specification and business contact block are not F1.
+3cdf7221196813da,full,clean,,,,County procurement agreement gives official agency contacts rather than private-person data. Long-context candidate — use for long context.
+1cc10779aced9a7f,full,clean,,,,Bank disclosure statement; accounting tables are legitimate.
+44f66c3734e3d5ca,full,drop,D1;C4,D1: Latvian source text under eng_Latn label at offset 0 | C4: unrelated content begins near offset 2200 (interleaved section),,"Latvian museum presentation mislabeled English, interleaved with unrelated multilingual/generated image captions."
+192aba9b7f84e8ca,full,clean,,,,Linguistics research paper with valid bibliography and long-form content. Long-context candidate — use for long context.
+93adf8697409e36c,full,clean,,,,Commercial valve catalogue; marketing tagline and vendor business emails are ordinary content.
+5bf37f2a0813d0c1,full,clean,,,,Academic evaluation letter; document topic is valid for a general-purpose PDF pack.
+7baed34b2308e9c5,full,clean,,,,Image-dependent educational worksheet contains coherent questions; missing figures alone lack a listed disease.
+bd1a8bb7d789e910,full,clean,,,,Legal protective-order document; valid templates and signatures.
+7851ac162534fb8a,full,clean,,,,Scientific monograph; long-form bibliography and taxonomy preserved.
+373b76e02c705704,full,clean,,,,Court disciplinary decision; tables and legal formatting are legitimate.
+5938b33ca03c380a,full,clean,,,,"Public court filing includes law-firm office details, not proven private residential contacts. Long-context candidate — use for long context."
+920855df51f37db8,full,clean,,,,Engineering research paper with properly structured references.
+cdc5973ec2161f44,full,clean,,,,Published neuroscience review; legitimate LaTeX and public scholarly contact. Long-context candidate — use for long context.
+9110713e77637024,full,clean,,,,Historical statistical tables and accompanying explanatory prose; not a valueless list.
+19e4332d89d32061,full,clean,,,,"Historical newspaper has public publishing-business address, not private F1."
+0d8b7d532a14c69a,full,clean,,,,Economics article; coherent analysis.
+b09404dd12a456be,full,clean,,,,Published academic study with professional author emails.
+795fa56071e88c0c,full,clean,,,,Plant-pathology article with valid formula and citation syntax.
+8c2c1359b53f9442,full,fix,F1,F1: individual direct phone/address at offset 3340,,Village newsletter includes private individuals’ direct phone/contact and location information.
+bfbe6f0f5d61c19e,full,fix,C1;D3,C1: repeated page header at offset 3622 | D3: natural English–German mixing near offset 6897,,Remove repeated editorial-page header; retain coherent zither newsletter and natural German terms/passages.
+9486f7dfe7c330e3,full,clean,,,,Historical dining menu; legitimate categorical food list.
+fb58071a2b5e5cdb,full,clean,,,,Election results and numerical tables are valid data.
+41f54eb5c63d60cc,full,clean,,,,Oral-history interview transcript; natural repetitions should remain.
+75611d2315b9312e,full,clean,,,,Published dermatology research; placeholder correspondence email is not F1.
+0f04545eee94d987,full,clean,,,,Published biomedical study; LaTeX commands are syntactically meaningful.
+e554caf656494ae2,full,clean,,,,Published iRODS conference proceedings; standard cover/title/references and example emails. Long-context candidate — use for long context.
+a3472c2ba98c2551,full,clean,,,,Long consolidated financial report; retain structured accounting content. Long-context candidate — use for long context.
+7b3bae075770d199,full,clean,,,,"Disney promotional text is the subject content, not external site-navigation boilerplate."
+5f7545c1f4a386b1,full,clean,,,,"Long historical book; table of contents is genuine book structure, not C1 boilerplate. Long-context candidate — use for long context."
+a6e70d0fef431172,full,fix,F1,F1: instructor cell phone at offset 167,,Training presentation includes a named instructor’s direct cell number; redact only direct personal contact. Long-context candidate — use for long context.
+32e5e0b143c36d65,full,clean,,,,"Conference participant roster has professional affiliations, not private-person residential contacts."
+c6d6f16f70df8b71,full,clean,,,,Edited-volume table of contents is valid document structure.
+510796b2fbb42bb7,full,clean,,,,Council agenda and project report contain official public contacts; repeating report headings are structural. Long-context candidate — use for long context.
+d0a0a41263e845f5,full,clean,,,,Nutrition science textbook excerpt; coherent technical content.
+4b958ac1f45443b5,full,clean,,,,Published research paper; copyright notice belongs to publication and is not automatically boilerplate.
+9397bad7ea9147ce,full,clean,,,,Market news article; coherent report.
+650e04c676aed57f,full,clean,,,,Multi-article newspaper with business advertisements; public business phone numbers and section titles are not F1/C2.
+ee1386df10972650,full,clean,,,,College trustee minutes contain public officials and meeting votes; names alone are not personal-data F1.
+4c82c6872af686a7,full,clean,,,,full-text scan and structural check found no confirmed disease.
+dc0ea5f742dac85d,full,clean,,,,full-text scan and structural check found no confirmed disease.
+367496bb70a5a703,full,clean,,,,full-text scan and structural check found no confirmed disease.
+0a1ae0340b12e233,full,clean,,,,full-text scan and structural check found no confirmed disease.
+0e1f804b58f3527e,full,fix,C3,"C3: document starts mid-word at offset 0 (""fold."")",,Beginning is visibly clipped; seek the original opening or preserve the coherent remainder only after source check.
+b8190ea2548dbc2d,full,clean,,,,full-text scan and structural check found no confirmed disease.
+683374696c56b33d,full,clean,,,,full-text scan and structural check found no confirmed disease.
+c8e7a20018de961a,full,clean,,,,full-text scan and structural check found no confirmed disease.
+32fbaa355f456fb7,full,clean,,,,full-text scan and structural check found no confirmed disease.
+69bbb9c2f59d250d,full,clean,,,,full-text scan and structural check found no confirmed disease.
+d5b7d36ce46b1a18,full,clean,,,,full-text scan and structural check found no confirmed disease.
+b8674e468f26811f,full,clean,,,,full-text scan and structural check found no confirmed disease.
+44d0baa3508e89bc,full,drop,C5,"C5: PDF-download bait begins near offset 1464 (""READ ONLINE"")",,"Sales listing, generic fabricated-looking reviews and download lure rather than actual counselling textbook."
+8120291e5fc5a783,full,clean,,,,full-text scan and structural check found no confirmed disease.
+a93f02cb2efe3f4d,full,clean,,,,full-text scan and structural check found no confirmed disease.
+a66832a53e9d7d5a,full,clean,,,,full-text scan and structural check found no confirmed disease.
+9dff1aec636d9ee4,full,clean,,,,full-text scan and structural check found no confirmed disease.
+7f29065d7b40ffa9,full,clean,,,,full-text scan and structural check found no confirmed disease.
+b86ffe58776596ec,full,clean,,,,full-text scan and structural check found no confirmed disease.
+c7e98d3007819bf4,full,clean,,,,full-text scan and structural check found no confirmed disease.
+c25acba6d51c77bd,full,clean,,,,full-text scan and structural check found no confirmed disease.
+dc5add2b37a1c6db,full,clean,,,,full-text scan and structural check found no confirmed disease.
+c526df12bba206ca,full,clean,,,,full-text scan and structural check found no confirmed disease.
+861316abeb0a1bd6,full,clean,,,,"Minutes of multiple meetings appear in a chronological board archive; legitimate collected records, not automatically C4."
+16d7a196f279ba71,full,clean,,,,full-text scan and structural check found no confirmed disease.
+03e5c60403a61025,full,clean,,,,full-text scan and structural check found no confirmed disease.
+4f681b13a62c18f8,full,drop,C5,C5: unrelated Kindle book listings start near offset 1577,,SEO-like scraped book-sales listing; contains unrelated book ads and generic reviews rather than the book.
+90db57efa148fd84,full,clean,,,,full-text scan and structural check found no confirmed disease.
+d59e857a256fa892,full,clean,,,,full-text scan and structural check found no confirmed disease.
+1a91118622793fc1,full,clean,,,,full-text scan and structural check found no confirmed disease.
+08bcc42eafca5836,full,clean,,,,full-text scan and structural check found no confirmed disease.
+6ed3e5006d07d363,full,clean,,,,full-text scan and structural check found no confirmed disease.
+ca6b59cabbb34b02,full,clean,,,,full-text scan and structural check found no confirmed disease.
+e78baa816caee223,full,clean,,,,full-text scan and structural check found no confirmed disease.
+6af2bcb11b896884,full,fix,C4,C4: image-inpainting explanation abruptly changes to unrelated gesture essay at offset 1526,,Two unrelated texts joined; split at verified boundary and retain source provenance.
+b2e1c4904816169a,full,clean,,,,full-text scan and structural check found no confirmed disease.
+f6aeca3b71fab18f,full,clean,,,,full-text scan and structural check found no confirmed disease.
+feb88c9786358d9f,full,clean,,,,full-text scan and structural check found no confirmed disease.
+a7d4b3e21dc2303a,full,clean,,,,full-text scan and structural check found no confirmed disease.
+575a889f11ff3dca,full,clean,,,,full-text scan and structural check found no confirmed disease.
+ec1a854ffbf88674,full,clean,,,,full-text scan and structural check found no confirmed disease.
+3f26b37757597c50,full,clean,,,,full-text scan and structural check found no confirmed disease.
+d1ef62be07a9b627,full,clean,,,,full-text scan and structural check found no confirmed disease.
+08037ebf540d8777,full,clean,,,,full-text scan and structural check found no confirmed disease.
+eb7afffa5b6bb972,full,clean,,,,full-text scan and structural check found no confirmed disease.
+75d7c784945e31db,full,clean,,,,full-text scan and structural check found no confirmed disease.
+794c9a9b22c801a7,full,clean,,,,full-text scan and structural check found no confirmed disease.
+703403786ac525a7,full,clean,,,,full-text scan and structural check found no confirmed disease.
+cdd5cf3aa76e9128,full,clean,,,,full-text scan and structural check found no confirmed disease.
+eb448d7cac3f34ec,full,clean,,,,full-text scan and structural check found no confirmed disease.
+214aed23029bb495,full,clean,,,,full-text scan and structural check found no confirmed disease.
+e2416aa7270fa3a5,full,clean,,,,full-text scan and structural check found no confirmed disease.
+e44bce2ae1165559,full,clean,,,,full-text scan and structural check found no confirmed disease.
+7a7b33e8ba779ca3,full,clean,,,,full-text scan and structural check found no confirmed disease.
+4d3572485cb6e0c8,full,clean,,,,full-text scan and structural check found no confirmed disease.
+a0e56f3bbadf72f1,full,clean,,,,full-text scan and structural check found no confirmed disease.
+ff7eab131f21563e,full,clean,,,,full-text scan and structural check found no confirmed disease.
+02797f751889552e,full,clean,,,,full-text scan and structural check found no confirmed disease.
+869519337d0dee8b,full,clean,,,,full-text scan and structural check found no confirmed disease.
+baabcea04dda3f04,full,clean,,,,full-text scan and structural check found no confirmed disease.
+00a03d6c741c45ef,full,clean,,,,full-text scan and structural check found no confirmed disease.
+58153830618a6d38,full,clean,,,,full-text scan and structural check found no confirmed disease.
+957accc597585af1,full,clean,,,,full-text scan and structural check found no confirmed disease.
+e8f42c7d88fb075f,full,clean,,,,full-text scan and structural check found no confirmed disease.
+dd1c0d95aac65a54,full,clean,,,,full-text scan and structural check found no confirmed disease.
+19c895320632e7b0,full,clean,,,,Mixed Amharic/English prescription forms: English predominates; code-mixing and blank tables are legitimate; no D1.
+12673039c03dfd2b,full,clean,,,,"Repetition is inherent to the score/lyrics, not a C2 extraction duplicate."
+eb09e980b995001d,full,clean,,,,full-text scan and structural check found no confirmed disease.
+ad65ed98bef1fead,full,clean,,,,full-text scan and structural check found no confirmed disease.
+aaccbd8efbe0cba3,full,clean,,,,full-text scan and structural check found no confirmed disease.
+e6f1f62e166ba647,full,fix,C4;F1,C4: finance ledger is joined to legal service records near offset 26934 | F1: possible personally linked residential information in legal filings near offset 27000,,Review and separate independent financial/legal records; use protected workflow to confirm and redact private-person spans. Never publish values.
+ea8a1ef456305448,full,drop,C5,C5: repeated PDF-download and unrelated manual-keyword spam begins at offset 56,,Book-download/search-keyword spam with repeated service-manual titles rather than coherent manual content.
+58da0d7b70942ccc,full,clean,,,,full-text scan and structural check found no confirmed disease.
+844fac2e036426bc,full,clean,,,,full-text scan and structural check found no confirmed disease.
+f540748360db0e03,full,clean,,,,Four school course forms are similar but have different signatories/entries; not an identical-content C2 duplicate. Placeholder contacts are not F1.
+5ec168f3b65c1bc7,full,clean,,,,full-text scan and structural check found no confirmed disease.
+dd64bce4d198e500,full,clean,,,,full-text scan and structural check found no confirmed disease.
+fa1b2ebcf9a820af,full,clean,,,,full-text scan and structural check found no confirmed disease.
+b6fd81dbf90b0d17,full,clean,,,,full-text scan and structural check found no confirmed disease.
+167b77a9ac7f9fa4,full,clean,,,,full-text scan and structural check found no confirmed disease.
+29ada9611915bcc1,full,clean,,,,full-text scan and structural check found no confirmed disease.
+8ac0c2a0cf402113,full,clean,,,,full-text scan and structural check found no confirmed disease.
+60d96de6261ab4b1,full,clean,,,,full-text scan and structural check found no confirmed disease.
+e0a5b6c63539ceed,full,clean,,,,full-text scan and structural check found no confirmed disease.
+0f122c5843e32e0e,full,clean,,,,full-text scan and structural check found no confirmed disease.
+55d8490c04e87cb0,full,clean,,,,full-text scan and structural check found no confirmed disease.
+4d5df8dbf94d1c30,full,clean,,,,full-text scan and structural check found no confirmed disease.
+eb48a030e230b412,full,fix,C1,C1: repository cover and navigation appear near offsets 416 and 711; actual research text follows,,"Remove only verified extraneous repository wrapper; preserve title, author attribution, licence and citations."
+83eddb29978b7979,full,clean,,,,full-text scan and structural check found no confirmed disease.
+23d354ac663e3f15,full,fix,C1,C1: unrelated working-paper catalogue appended near offset 62743,,Remove the extraneous institutional working-paper list after the article references; retain article and citations.
+fa25e84658e23ebe,full,clean,,,,"Repeated blank medical intake fields are intentional form structure, not a duplicate defect or exposed patient data."
+9a24977d0c9a9390,full,clean,,,,full-text scan and structural check found no confirmed disease.
+bfc7b7390d5a1a85,full,clean,,,,full-text scan and structural check found no confirmed disease.
+16ed890959281c1c,full,clean,,,,full-text scan and structural check found no confirmed disease.
+7ba6c2ca43cfb89e,full,clean,,,,"Repeated mathematical identities, fenced notation and closing open-problem prompt are legitimate scientific slides."
+94c8e162acfa103f,full,clean,,,,full-text scan and structural check found no confirmed disease.
+fc92d823500e7369,full,clean,,,,full-text scan and structural check found no confirmed disease.
+b964ca12c26cfb74,full,fix,F1,F1: personally linked contributor street-address fields begin near offset 2323,,Political-finance disclosure contains individual-linked residential data; verify private spans and redact them before training release.
+a55d44a6faca3afe,full,clean,,,,full-text scan and structural check found no confirmed disease.
+32cefd3525658759,full,clean,,,,full-text scan and structural check found no confirmed disease.

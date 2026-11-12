@@ -1,0 +1,101 @@
+doc_id,read,verdict,diseases,evidence,hex,note
+418f92206fb79b7e,full,drop,C3;B5,"text cut mid-sentence ('equations of motion is') at offset 35173 | formulas stripped ('The signature of the metric is ,') x23 first at offset 7822; LaTeX footnote residue ^{1}^{1}1 at offset 60",,arxiv-vanity paper; maths removed and truncated
+e777fd90f7e138f6,full,fix,C1;B5,version banner at offset 0; comment box at offset 1995 | inline code spans split at offset 772; formulas stripped at offset 702; at offset 1236; at offset 1765; at offset 1883,,Scilab help page
+15eed148a4029205,full,drop,B5;C3,"bold markup run together, definition missing: ""a **sequence****terms**"" | sentences and formulas cut off, e.g. ""represent every term by a special"", explicit formula reduced to ""="", ends at ""for your enjoyment:""",,"interactive lesson 'Sequences and Patterns' copied onto an unrelated AutoCAD-help site; formulas and blanks stripped, definitions unreadablee39f04686f5fa1cf"
+e39f04686f5fa1cf,full,drop,G3;C1,minus signs removed ('A253071(2^n1)' for 2^n-1) first at offset 36 | OEIS chrome ('(list; graph; refs; ...') at offset 307,,OEIS A253072; formulas and names made wrong; URL does not match content
+c3da336975e30e44,full,drop,C5,"SEO keyword page ""Sag Mill Feed Size Distribution … Get Latest Price"" at offset 123; scraped snippet ""kirstenscrew.nl"" at offset 74",,"crusher SEO spam on a car-forum url; hyphens lost (""xMedium"" @226)"
+020cc91d2f4110d2,full,fix,F1,instructor email written as a puzzle ('(instructor's ... last name)@' + university domain) at offset 1865,,crypto course syllabus; URL does not match content
+b876503d2135bcf1,full,drop,C2;C1,"""N/AN/C"" repeated x62 at offset 39 | copyright footer ""Copyright © 2017 Canadian Livestock Records"" at offset 1015",,"livestock pedigree page, no maths"
+6bad6ef06c46ded4,full,fix,B5;C3,"LaTeX environment broken: ""end{array}"" without backslash or \begin at offset 59 | starts mid-matrix ""- #1 - 41 - 0"" at offset 0",,forum question on symmetric + skew-symmetric matrix decomposition
+b15d23975e6257d6,full,drop,C2;C5,"""Sample product N"" / ""9.99"" repeated x30 at offset 0 | shop listing only, no text",,empty shop template on a running-forum url
+41f2bced693aeadc,full,fix,C1,"""## Leave a comment"" at offset 2673",,AstroStat blog post on BUGS; readable
+e84bcd24ae62cb30,full,fix,C1,"navigation ""QUICK LINKS … Team 5 Home Mission 2009 MIT"" at offset 1; ""Page last updated by"" at offset 3451",,"MIT tsunami-algorithm page; hyphens lost (page range ""325340"" @3438)"
+487387f6895a6833,full,fix,B4;C1,"RSS markup ""<![CDATA["" x5 at offset 0 | feed chrome ""Zend_Feed"" and timestamps at offset 147",,GeoGebra forum thread as a raw RSS feed
+e499f1ba0c54c71c,full,fix,C1,"forum quote header ""Quote: Originally Posted by"" at offset 0",,"mersenneforum post on GPU linear algebra; ""esmall"" @264 lost its hyphen"
+2a335f436ca4669f,full,fix,C1,"template text ""We assume you are converting"" at offset 62; ""Use this page to learn"" at offset 394",,convertunits.com generated page
+21b95a185d388af5,full,drop,B5;C1;C2,formulas stripped ('such that (hence ).' 'where is upper triangular') from offset 497 | navigation ('** Next:** ** Up:** ** Previous:** Contents Index') at offset 0; author/date footer at offset 1625 | navigation block repeated at offset 1479,,netlib Templates book page (Lanczos deflation); most formulas removed
+482b531cd878a1b9,full,fix,C5,'Do Refer:' internal link list at offset 431,,"division lesson; repeated step lines are worked-example structure, not C2"
+14f21801b0ecf71e,full,clean,,,,physics school blog; maths intact
+1754479add8d56ae,full,drop,C5;C3,search-results listing page at offset 0 | teaser entries cut with '...' x10 first at offset 282,,list of search hits with first names; no document body
+3bde0324481e174b,full,fix,C1,'Requires a Wolfram Notebook System' banner at offset 36; 'Permanent Citation' block at offset 1461,,Wolfram Demonstration; URL does not match content
+8270757b82f6649c,full,fix,F1,obfuscated student email (ID at student domain) at offset 57,,GetDP mailing-list post; maths/code intact
+5aeb2a42f6497356,full,drop,G3,hyphens removed ('documentlevel') first at offset 136,,Lucene file-format documentation; not maths
+ab23e0843168ebb3,full,clean,,,,GCF tutorial; superscripts split over lines but readable; URL mismatch
+e866e97e46308504,full,drop,C5,SEO stock-statistics page (company name x108) at offset 0,,not maths
+de07dc7e716457e6,full,clean,,,,Rosetta Code Haskell essay; legitimate programming text
+607c6b02a1bc49e2,full,drop,C5,keyword-stuffed title line at offset 167; unrelated template link list at offset 5750,,SEO worksheet page
+b78f055e2974cb80,full,fix,C2,'Unit System: Imperial' x2 at offset 299; 'Unit System: SI' x2 at offset 653,,ft2 to m2 converter page; conversion table is fine
+663265450dae530c,full,drop,C5,'Closed Captioned Video' catalogue entries x6 first at offset 77; bit.ly link list x12 first at offset 2004,,worksheet catalogue; no maths text
+b64cad300ea7a094,full,drop,B5;C1,numbers and formulas stripped ('for minutes') x4 first at offset 224 | 'Certified Tutor' chrome at offset 4759,,Varsity Tutors; problems unsolvable without the numbers
+c5a070923fdb2a18,full,clean,,,,Mapper rst documentation
+330a60810f9db050,full,drop,C1;C5,navigation menu at offset 9 | resource link list at offset 183,,NTU QCIP page; no maths content
+30d58e04b952cb9e,full,drop,B5;C1,all formulas stripped ('defined for and conjectured that for all .') at offset 30 | 'Like Loading...' chrome at offset 359,,Kurepa conjecture post; maths removed
+ec4708729a26f6ee,full,fix,B2,HTML tags (<p> x42) first at offset 95; <li><strong> change list first at offset 1083,,Sage trac ticket RSS
+3f2cae8c98fa6e7d,full,fix,F1;C1,obfuscated email ('at' form) at offset 65 | mailing-list footer at offset 3864,,GMP-devel post; sender name MIME-encoded at offset 39; maths intact
+2e049e1bd15aab3e,full,clean,,,,CNC forum discussion of acceleration; little maths but real content
+f70cb249ea228531,full,fix,C1,'How to Cite This Entry' block at offset 26069,,Encyclopedia of Mathematics; LaTeX intact
+e558b608149464fe,full,fix,C1,'**Contents**show' widget at offset 0,,mole-mass Q&A; URL does not match content
+d7bc6cfd51ac7270,full,clean,,,,College Algebra teaching essay; URL does not match content
+a5e91ba2c775bfba,full,drop,C2,'Topics:' tag line x75 first at offset 23,,coin catalogue; not maths
+4926707dfd545fe7,full,drop,C5;C3,book-search result table at offset 0 | snippets cut with '...' x20 first at offset 32,,Google Books snippets of Euclid's axiom
+131ae5fec0f67083,full,clean,,,,MCAS grade 7 item table; readable
+e484686f25f0c7f4,full,drop,B5;C1,formulas stripped (empty '(1)' and 'where is computed mod 1') first at offset 42 | copyright line at offset 1433,,CRC MathWorld page; maths removed
+a2d21365b04a38d4,full,drop,C5,'Get Price' SEO lines x30 first at offset 310,,ball-mill sales spam
+fbae27405cc11015,full,clean,,,,SymPy tutorial introduction
+a48d61683dc0e06f,full,fix,C1;C2;G3,forum chrome ('Sign Up FREE') at offset 0; 'Thread Tools' at offset 195 | 'Join Date'/'Posts' lines x10 first at offset 238; signature lines x7 | hyphens removed from dates ('02202012') x7 first at offset 224,,maths help forum; answers partly wrong
+7bfd3c3480649f67,full,fix,C1,judge header ('Time Limit') at offset 0; submissions-table footer at offset 2867,,programming problem statement
+a9013c727356c2db,full,fix,F1;C1,obfuscated emails ('at' form) at offset 27; at offset 87 | mailing-list footer at offset 2546,,GMP-devel post
+eb5b2a71870ca9ec,full,clean,,,,worked centrifugal-pump solution; LaTeX intact; URL does not match content
+fcf84bdbb89b06dc,full,fix,C1;C2;B5,post counters at offset 0; 'out of date browser' banner at offset 199; 'Last edited'/'Share:' at offset 2008 | question block repeated (x2) at offset 1637 | [tex] BBCode x6 first at offset 18,,Physics Forums thread
+a16eb5e59c1427a6,full,drop,C5,FD-calculator snippets from several banks stitched together starting at offset 0,,SEO page; not a coherent document
+0c372a6a938629bd,full,drop,C1;C5,'Study guides'/'Write your answer'/'Submit' at offset 0 | 'Related questions' list at offset 80,,answers.com; question has no answer
+dc907ce0b9995cb8,full,drop,C5,dated SEO snippets ('Sep 11 2021·') x7 first at offset 0; 'Get Price' at offset 4435,,ball-mill sales snippets; URL unrelated
+ed5223795918331b,full,fix,C1,'Math worksheets and visual curriculum' footer at offset 498,,Cuemath solution; maths intact
+937629b2222d39bf,full,drop,B5,display equations stripped ('reduces to: where') first at offset 300,,EM GeoSci page; inline LaTeX kept but every display equation removed
+e56e4abb02a3c695,full,fix,C1,breadcrumb ('- Home - >') at offset 0,,Green's theorem article; LaTeX intact
+89e0825da18e9f3c,full,drop,C3;C1;B2,solution preview cut with '...' at offset 395 | '© SolutionLibrary' line at offset 225 | <br> tags x10 first at offset 398,,paywalled solution teaser
+d247018689027a6b,full,fix,C1;C2,'Table of Contents' widget at offset 57 | page heading repeated at offset 0,,binomial-table article; URL does not match content
+fbc7c56923efc029,full,drop,C5;A3;G3;C1,tag-search results listing ('Showing results for tags') at offset 0 | mojibake ('1Â¢' 'Newtonâ€™s') at offset 24587 | hyphens removed ('bestfit') | 'Tagged with:' x6 first at offset 541,,APlusPhysics community search page; post snippets
+1b58c8bb17aef6f9,full,fix,C1,breadcrumb 'Sampling >' at offset 0; Chegg ad at offset 3818; comments footer at offset 3964,,importance-sampling article
+21669a036cb798e1,full,drop,D4;C5;B5,spun text ('pick a map at random from a standard load' 'top top a die') | 'See more:' SEO line at offset 4702 | broken LaTeX ('fracC_1^1 time C_1^4') at offset 4640,,probability lesson rewritten by a spinner
+52a0eaa6446b6d19,full,clean,,,,R documentation page
+67495f864d6dec52,full,clean,,,,physics blog post and comments
+3513ecb6aab88491,full,fix,C1,tab bar ('Description Usage Arguments') at offset 0; 'Embedding an R snippet' footer at offset 804,,rdrr.io R documentation
+fb473fedbe9ae757,full,fix,C2;C1,repeated paragraph at offset 2120 | 'Subscribe to: Posts (Atom)' at offset 16549,,CUDA blog
+b5664cf5124cc697,full,drop,B5;C1,all formulas stripped ('Let be the Ramp Function') at offset 33 | copyright line at offset 173,,CRC MathWorld; maths removed
+2c6cf01a19786bbe,full,clean,,,,Ryder Cup probability forecasts; charts missing; little maths
+9252a3950b11790e,full,clean,,,,Hindu-Arabic arithmetic lesson
+bbfe270ee755f169,full,fix,G3,hyphens and range dashes removed ('1015 times faster' for 10-15) at offset 1589; ('oneline divisions') at offset 1030,,Vedic maths course page; promotional
+3736a33257a36998,full,clean,,,,octagon Q&A; stated answer 56 looks wrong (36+36√2≈86.9); URL mismatch
+3f7384a3a84d707d,full,fix,C1,Q&A chrome ('Questions & Answers' at offset 0; 'Verified' '129.3k+ views' at offset 196),,Vedantu solution; question stem missing
+7bc682c40b9dc79a,full,drop,C5,resource catalogue (20 '###' link entries) from offset 0,,list of learning resources; no teaching content
+f615758e6cd08316,full,fix,C1,breadcrumb 'Regression Analysis >' at offset 0; Chegg ad at offset 2153; comments footer at offset 2301,,Statistics How To article
+af6f0d22569b1be7,full,fix,C1;B5,'[ bib / .html ] Back' and bibtex2html footer at offset 1496 | LaTeX \cite without backslash ('citeDanJoiSc') at offset 268,,paper abstract page
+fd8aa6b1dd4bb3a3,full,fix,C1;C5,'ancient version' archive banner at offset 0 | tag lists ('·' x8) first at offset 3211,,Calculla fraction-compare page
+8272897ab89ad1f1,full,fix,C1,'Top' navigation line x3 first at offset 1,,signing numbers and fractions
+3a89917cc2de5d18,full,drop,C5;C3,citation list with broken references ('Phys' '- Rev. B') from offset 799 | abstract and citations cut with '… Expand' x9 first at offset 789,,Semantic Scholar landing page
+b0cd74c1c9cb9dd2,full,clean,,,,unit-converter explanation
+ad62378f3ebf63f1,full,clean,,,,MIT 6.312 lecture transcript; [INAUDIBLE] markers are part of the transcript
+d5065048d4363e87,full,drop,B5;C2;C1,formulas stripped ('i.e where and .') at offset 105 | the post text appears twice | 'Skip to content' at offset 118; 'This is the post excerpt.' at offset 183,,WordPress tag page; maths removed
+6b5cae4b9e40e02d,full,fix,C5;A3,similar-books listing from offset 597 | mojibake ('BirkhĂ¤user') at offset 1402,,free e-book description page
+8072379737b34612,full,drop,C1;C5,'Study guides'/'Write your answer'/'Submit' at offset 0 | 'Related questions' list at offset 78,,answers.com; question has no answer
+386e57cdd50d3dd1,full,fix,C5,related-problems list at offset 3121,,Coding Ninjas problem and solution
+c39b918eca3d96f8,full,fix,G3,hyphens removed from date ('20080429') at offset 56,,Boost uBLAS mailing-list post; emails already masked
+c7d9aeb8c038c7a5,full,drop,C1;C5,'Study guides'/'Write your answer'/'Submit' at offset 0 | 'Related questions' list at offset 81,,answers.com; question has no answer
+70e66b05b1177387,full,fix,C1,old-browser banner at offset 0; 'Last Updated'/'Print Page' footer at offset 2638; 'chat loading...' at offset 2753,,LibGuides complex-numbers page; maths intact
+e2f7723d7ea2f3dc,full,drop,C5,crusher SEO snippets ('More###' x36) first at offset 395,,spam
+af0da3e1a9aa821e,full,drop,C3;A3,tag-page excerpt cut with '…' at offset 281 | mojibake ('forâ€¦') at offset 281,,post teaser only
+7466c630f2bcca07,full,clean,,,,max-aware stack article; URL does not match content
+1631de9c56cd0b38,full,fix,C1;B2,Doubtnut chrome ('Apne doubts' at offset 132; 'CLICK HERE' at offset 191) | <br> tags x2 first at offset 353,,kinetic-theory solution
+27e600ff747340fe,full,clean,,,,GMAT critical-reasoning thread; not maths; spam domain
+d9db9a4e4d1af2bd,full,fix,C1,reader comments at offset 1475; at offset 1529,,sequence-impedance article
+014111869f4df84f,full,drop,C5,stitched worksheet and lesson-plan snippets ('Read More' x10) first at offset 2213; 'LESSON 17' at offset 2696; worksheet keyword list at offset 3473,,SEO page; URL unrelated
+fac3fa734ed04785,full,fix,B2;C5,<a href> embed code at offset 2971 | preset and random calculation link lists at offset 3650; at offset 3739,,decimal-to-fraction page; maths intact
+9b76f73e016fcb12,full,clean,,,,generated code description (generator matrix and weight enumerator)
+1f96ddf389c42ccd,full,fix,C1;B5,calculator menu list at offset 3617 | italics broken inside formulas ('*PF* = |cos* φ|*') x3 first at offset 872,,RapidTables power-factor page; URL does not match content
+ef0e88eb66e5cb3a,full,fix,C1,off-topic spam comment at offset 5920; commenter self-promotion link at offset 6383,,baseball linescore randomness essay with comments
+264f83c578759870,full,drop,D4;C5,spun text mixing gemstones and BMI ('Pleonaste' at offset 160; 'BMI' x9 first at offset 226) | keyword tail at the end,,SEO spam
+bc32fcd80fb3725f,full,fix,C5;C1,FAQ keyword list at offset 3926 | '© 2021' at offset 4168,,machine-generated mm to inch table
+8ebe5192c239f557,full,fix,C1,'Title:' label at offset 0,,EThOS thesis abstract (fMRI entropy)
+50bbff56e6b37a90,full,drop,C1;C5,'Study guides'/'Write your answer'/'Submit' at offset 0 | 'Related questions' list at offset 81,,answers.com; question has no answer
+587de6ce9cffe118,full,drop,C5;C3,forum search-results listing at offset 0 | snippets cut with '...' x11 first at offset 292,,Physics Forums search page

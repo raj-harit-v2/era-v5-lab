@@ -75,8 +75,9 @@ metrics:
   unit: dimensionless
   cadence: Every 10 training steps by default (step % 10 == 0; every_n_steps is configurable, 1 in unit tests)
   source: metrics_logger/metrics_writer.py compute_update_weight_ratio(...). G5 can call it around the optimizer
-    step and pass the scalar into MetricsWriter; not wired into train.py yet (G8-only helper keeps the PR inside
-    teams/08-monitoring/).
+    step and pass the scalar into MetricsWriter, or call step_with_update_weight_ratio(optimizer, step) in place of
+    optimizer.step(), which compares the weights before and after the step. Not wired into train.py yet (G8-only
+    helper keeps the PR inside teams/08-monitoring/).
   notes: One scalar for the whole model — ||lr * update||_2 / ||W||_2, i.e. sqrt(sum_p ||lr u_p||^2) /
     sqrt(sum_p ||w_p||^2). Equals ||ΔW||_2 / ||W||_2 when each update is the parameter change (weights after -
     weights before), or when update is the optimizer direction and lr is the effective step size. No value when

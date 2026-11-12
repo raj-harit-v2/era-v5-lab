@@ -1,0 +1,22 @@
+$ python teams/07-infrastructure/jobs/restore_test/restore_test.py
+PASS restore_test nproc=1 cpu: steps 101-200: loss_ntp and loss_mtp bit-equal, data ids equal
+
+$ python teams/09-evaluation/harness_lab/run_lab_ckpt.py --run-dir teams/07-infrastructure/jobs/restore_test/out/ckpt_store/restore-b
+checkpoint: lab:restore-b step 100 branch main epoch 1 (main/step_00000100-e1)
+model_revision (sha256 of MANIFEST.json): 4fd3192936845f1fd0efa471f1e6d2b915907d269cd3add534e73c4956df7a36
+export ok: step 100, probe loss bits equal the saved ones
+1 record(s)
+  ok  record count: 1 (expected 1)
+  ok  records missing a required field: 0 (expected 0)
+  ok  values outside 0-100: 0 (expected 0)
+  ok  stderr neither null nor a number >= 0: 0 (expected 0)
+  ok  duplicate keys: 0 (expected 0)
+  ok  records with an empty model_revision: 0 (expected 0)
+  ok  records with neither a seed nor greedy decoding: 0 (expected 0)
+RESULT lab_smoke_next_token acc/none = 100.0 (n=960) -> teams/09-evaluation/harness_lab/out/eval_mini_v1_lab.json
+wrote teams/09-evaluation/harness_lab/out/eval_mini_v1_lab.json (1,610 bytes, sha256 3141b270b624a28b)
+
+$ same command again: the output file must be byte-identical
+IDENTICAL
+
+env: python 3.13.13 torch 2.14.1+cpu, Windows 11, CPU, 1 thread

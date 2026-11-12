@@ -1,0 +1,501 @@
+doc_id,read,verdict,diseases,evidence,hex,note
+78952e0fa6f58c9b,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+e7de1c726bc776a6,full,fix,D3,Latin title 'Fish Tank Care' at offset 15; natural HI-EN mix,n/a,D3 natural code-mix; keep; not A1
+75f4f997eab9b2bc,full,fix,C1;C3,"C3@L13 off=4354 ""Categories: राजनीति""",n/a,truncated / weak terminator
+00de47afca2e7911,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+e49a90539eea7e8d,full,drop,C3;D3;F3,"C3@L1 off=624 ""© सेक्सी पिक्चर हिंदी में | आगंतुकों खरीदें""",n/a,truncated / weak terminator
+58ad14113bc1f59b,full,fix,A6;C3;C5;D3,"C5@L7 off=955 ""line x3: इस पोस्ट को इंस्टाग्राम पर देखें"" | C3@L25 off=6546 ""Fendi (@fendi) द्वारा Jul 20, 2019 को 3:05 पूर्वाह्न पीडीटी पर साझा की गई एक पो…""",U+8054,truncated / weak terminator; keyword/URL spam
+4b097d9cb67740d8,full,clean,,full-read; no disease signals,,clean claim; no DISEASES
+8f73e0fb991da311,full,drop,C4;D3,"C4@L0 off=285 ""trading-spam terms x4""",n/a,joined/trading-spam fragments
+28a097ed297531b9,full,fix,C3;D3,"C3@L47 off=3734 ""जानकारी विडियो से लीजिए –""",n/a,truncated / weak terminator
+ef3b8255254c8399,full,fix,D3,HI-EN mix at off=0 (Latin HatTrick in Devanagari prose),n/a,"D3 natural code-mix; label fix, not drop"
+3ec0bec604b261a2,full,fix,D3,HI-EN mix at off=0 (Latin Rising Onion Prices in Hindi news),n/a,"D3 natural code-mix; label fix, not drop"
+b7ba2d1dc60676f9,full,clean,,full-read; no disease signals,,clean claim; no DISEASES
+8729a8dcdf78e3ca,full,clean,,full-read; no disease signals,,clean claim; no DISEASES
+12e217a45fe361c3,full,clean,,full-read; no disease signals,,clean claim; no DISEASES
+5bbc4eac58066161,full,fix,C3,"C3@L7 off=2719 ""अमेरिका चुनावः बाइडेन जीते तो जानें क्या होंगे भारत को फायदे-नुकसानNEXT STORY""",n/a,truncated / weak terminator
+5afd06a063f7c67b,full,clean,,full-read; no disease signals,,clean claim; no DISEASES
+a08fe4ecc99f733a,full,clean,,full-read; no disease signals,,clean claim; no DISEASES
+c83fbbec4a82f87a,full,drop,C4,"C4@L6 off=3205 ""trading-spam terms x4""",n/a,joined/trading-spam fragments
+d91fbc23d4e7c65c,full,fix,C3,"C3@L1 off=1554 ""स्रोत: अभय चरणारविंद भक्तिवेदांत स्वामी प्रभुपाद (2014, अंग्रेजी संस्करण), “श्र…""",n/a,truncated / weak terminator
+00e8dd59dff079f6,full,clean,,full-read; no disease signals,,clean claim; no DISEASES
+bde1e3a86db5e224,full,clean,,full-read; no disease signals,,clean claim; no DISEASES
+7550aa66f80ae7c0,full,fix,C1,"C1@L0 off=0 ""Ads से है परेशान? बिना Ads खबरों के लिए इनस्टॉल करें दैनिक भास्कर ऐप""",n/a,site furniture line
+2e1ff78467f73a20,full,clean,,full-read; no disease signals,,clean claim; no DISEASES
+194abdf09df7b950,full,clean,,full-read; no disease signals,,clean claim; no DISEASES
+ffe3e6de4f94f4ed,full,clean,,full-read; no disease signals,,clean claim; no DISEASES
+97059d2068b803cb,full,clean,,full-read; no disease signals,,clean claim; no DISEASES
+29b41d89876fcf2a,full,clean,,full-read; no disease signals,,clean claim; no DISEASES
+b9b3f05c8ced5081,full,clean,,full-read; no disease signals,,clean claim; no DISEASES
+6f80aaa5d643357b,full,fix,C3,"C3@L6 off=1113 ""–आईएएनएस""",n/a,truncated / weak terminator
+9992ed6ebadee109,full,drop,C4;C5;D3,"C4@L0 off=604 ""trading-spam terms x10"" | C5@L0 off=620 ""phrase x6: IQ Option फ़ॉरेक्स""",n/a,joined/trading-spam fragments; keyword/URL spam
+2e48356fe1d4be31,full,clean,,full-read; no disease signals,,clean claim; no DISEASES
+94bf5a5a85787667,full,fix,D3,HI-EN mix: Devanagari news then English block at off~316 (Bharti Singh / NCB),n/a,D3 bilingual celebrity news; fix keep text (was weak drop-only)
+b0cf7bc2178cfd31,full,clean,,full-read; no disease signals,,clean claim; no DISEASES
+4f68adee549dbab4,full,clean,,full-read; no disease signals,,clean claim; no DISEASES
+11efa563e50c0f7c,full,clean,,full-read; no disease signals,,clean claim; no DISEASES
+3c41dd2124256f65,full,fix,C2,"C2@L3 off=1947 ""repeat of L0/off=120: विद्यालयों में स्थापित इन पावर प्लांट्स में इतनी क्षमता ह…""",n/a,repeated long sentence
+09f5c6266ac3359d,full,clean,,full-read; no disease signals,,clean claim; no DISEASES
+0a61e841f835ecd6,full,clean,,full-read; no disease signals,,clean claim; no DISEASES
+51c31e2a0264a5ca,full,fix,C3,"C3@L14 off=2321 ""- 1,230""",n/a,truncated / weak terminator
+c3d6c6b67a11a989,full,fix,C3,"C3@L12 off=1926 ""–आईएएनएस""",n/a,truncated / weak terminator
+0d100aded66a085c,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+1cee6ad3ea435ff6,full,fix,C2;C3,"C2@L2 off=293 ""repeat of L1/off=95: बिहार के गया जिले के नक्सल प्रभावित बाराचट्टी इलाके में रव…"" | C3@L8 off=1917 ""आईएएनएस के इनपुट के साथ""",n/a,repeated long sentence; truncated / weak terminator
+6e481baf5e01324e,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+0e0589b1d754cae7,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+9b55c83dcdaa293a,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+aab934b5dd08edca,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+0f7c1c3119797671,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+35d63edf3aca61a6,full,fix,C3,"C3@L23 off=771 ""💥 Shayari In Hindi 💥""",n/a,truncated / weak terminator
+a111471334c2fb8b,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+f460f1c1657623b2,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+2657de8526b14185,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+00c9417cf1282d39,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+e81054abed0ea259,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+a7de2dc157a00a1f,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+18733ec6107125fe,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+cf6b55cf528d75cb,full,fix,C3,"C3@L6 off=1499 ""WATCH LIVE TV""",n/a,truncated / weak terminator
+911027243948566b,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+51632e4fa7780315,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+b14b8e22b1b2abd7,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+c823f35a4a44b283,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+20357b2c2355d193,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+b06f51fc2f89f5d3,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+3a3f617148815241,full,fix,C1,"C1@L2 off=40 ""*Yearly subscription for just ₹299 Limited Period Offer. HURRY UP!""",n/a,site furniture line
+02ebe854d10e0ff4,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+c500da54ea4d9701,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+9338b991e6f35969,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+1a97084edd39217c,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+be9369344a323d6d,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+dce7b7f65f7534b6,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+af84226ec1488e92,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+714682d089abf2e8,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+dbd500b29638d23e,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+58c59fba9c602a44,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+2d5be362aea3f8e5,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+c32320e2e43e7537,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+95fda840ba406f05,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+85141525a3ac1954,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+2b2c1dad22564f22,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+28b5989d159301a0,full,fix,C3,"C3@L3 off=3254 ""– – – –""",n/a,truncated / weak terminator
+536ff82486f495de,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+b7f9a3ea0b5259d0,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+cbfc71938a031ff9,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+d8c0320a173a275f,full,fix,C3,"C3@L1 off=1185 ""सोनभद्र से ब्यूरोचीफ दिनेश उपाध्याय की रिपोर्ट""",n/a,truncated / weak terminator
+7a4d26d7944e45a1,full,fix,C1;C3,"C1@L5 off=1718 ""Posted By: Sanjay Savern"" | C3@L5 off=1718 ""Posted By: Sanjay Savern""",n/a,site furniture line; truncated / weak terminator
+c360ac79c7e31378,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+aa8349351a3ec6ad,full,fix,C1;C3,"C1@L4 off=873 ""Advertisement"" | C3@L5 off=887 ""Month: करेंट अफेयर्स- अक्तूबर, 2018""",n/a,site furniture line; truncated / weak terminator
+9686d0c03a5c8161,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+6f0ae93c3ce420da,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+7f02b74604f6dfd1,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+3064c157e1108887,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+9d91bafcf6c94f96,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+efebd13cc3f01b23,full,fix,C3,"C3@L5 off=2538 ""Posted By : Guru Swarup Mishra""",n/a,truncated / weak terminator
+232148a9e9f1a4fc,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+ec0d5cdd78662395,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+bcde90b292f6c824,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+037409e84be64c8c,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+1d353e7f2ac1a2aa,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+a6675a4e7a8a0a7d,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+49dd2c0be1301df5,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+076b982f34fd9683,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+38cf920aa3f64290,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+394e0e4242e51bc8,full,fix,C2,"C2@L4 off=988 ""repeat of L1/off=192: पिता की मौत के बाद उनका परिवार काफी परेशानी में आ गया था …""",n/a,repeated long sentence
+861a56d07de4f9ed,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+593adfb4ea0f942a,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+8c376bb94e61c9ae,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+0887e5955ae65887,full,fix,C1;C3,"C1@L8 off=1617 ""सामान्य सूची पर लौटें"" | C3@L8 off=1617 ""सामान्य सूची पर लौटें""",n/a,site furniture line; truncated / weak terminator
+4f095b8b3dca15e7,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+85161f8c49d4fc21,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+e4b118b7a3b964c5,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+975ed0ec67a80ca9,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+cc450fb282bf45f2,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+ac6227ffcecb494e,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+2ecb9e834a64109f,full,fix,C3,"C3@L4 off=447 ""Ibn24x7news विजय कुमार शर्मा प,च,बिहार""",n/a,truncated / weak terminator
+5f770f455e60e6ff,full,fix,C3,"C3@L3 off=1404 ""वहीं iOS उपयोगकर्ताओं के पास डार्क मोड को लागू करने के लिए दो तरीके हैं, हालांक…""",n/a,truncated / weak terminator
+4427edffc08ff4ec,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+04733ce017198f44,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+74462a9950dcb577,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+ccf062f55aa24167,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+0c9208a0c91789d6,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+589e242fa818e1c0,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+c5cb0258adf3da17,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+5309d2e769813984,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+a73c147b82325290,full,fix,C1;C3,"C1@L7 off=1448 ""First published: June 27, 2020, 2:42 PM IST"" | C3@L7 off=1448 ""First published: June 27, 2020, 2:42 PM IST""",n/a,site furniture line; truncated / weak terminator
+12e3206174509364,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+2fb148ca2a5763cd,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+48687db77f4700da,full,fix,C3,"C3@L1 off=417 ""टीम- मोहम्मद शाक़ीब रंग्रेज़, नकुल सिंह साहनी, विशाल कुमार""",n/a,truncated / weak terminator
+9ac3c8da3cf4a30f,full,fix,C2,"C2@L2 off=494 ""repeat of L1/off=87: नाग केसर दक्षिणी भारत, पूर्व बंगाल, और पूर्वी हिमालय में अ…""",n/a,repeated long sentence
+26891b0add895342,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+938a0d80813ffb04,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+e35c6f62354daaee,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+af176d91309ef358,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+2616bd080a4dc7c0,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+662ca5b09cfa64a1,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+1576e0fbca8b2c2e,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+b5b807ab0f60ce3d,full,fix,C3,"C3@L7 off=1262 ""संयुक्त डॉक्टरेट अध्ययन कार्यक्रम गवर्नेंस एंड इकोनॉमिक्स इन पब्लिक सेक्टर (तीस…""",n/a,truncated / weak terminator
+0300c70392967a73,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+366d79bbc46a6c89,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+c28b4b461e0780cf,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+eac266f940a8eb91,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+d9cce9c43ba11281,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+2b99279633577643,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+9d476f660c0a9600,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+3d2b410f7505a025,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+64c3ee18c6927da0,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+793a805de799bc9a,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+83de53a357930b2d,full,fix,C3,"C3@L5 off=1421 ""संवाददाता सुबोध""",n/a,truncated / weak terminator
+1fd9e373c72f6c12,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+719d317f0af939eb,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+1d4c34fcde4719a9,full,fix,C3,"C3@L7 off=2016 ""— ANI (@ANI_news) January 23, 2017""",n/a,truncated / weak terminator
+60d8e183bc394964,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+e6f8df619451f11c,full,fix,D3,"D3@off=0:""रेपो दर (Repo Rate)"" | D3@off=867:""रेपो रेट और रिवर्स रेपो रेट का उपयोग मुद्रास्फीति (Inflation)और मुद्रा आपूर्ति क…"" | D3@off=990:""उच्च दर शासन (High Rate Regime): जब RBI रेपो दर को उच्च रखता है, तो बैंक धन की उ…"" | D3@off=1289:""निम्न दर शासन (Low Rate Regime): इसके विपरीत, जब RBI रेपो दर को कम रखता है, तो ब…""",n/a,v8 propose; diseases=D3; purity=0.95
+a4d3c071f097b6bf,full,fix,D3,"D3@off=0:""(यह लेख मूल रूप से jasonweiland.net पर छपा है )"" | D3@off=1163:""- Lanciare il Kickstarter प्रति un gioco di ruolo - Parte 1: venti giorni prima …"" | D3@off=2124:""मैं आपको बताने वाला पहला या अंतिम नहीं हो सकता, एक व्यवसायी के रूप में मुझे आपके…""",n/a,v8 propose; diseases=D3; purity=0.95
+748f601ae024b27c,full,fix,C3;D3;F1,"C3@off=1642:""EMAIL : email , email"" | F1@off=1650:type+offset-only | D3@off=0:""TODAY EXPRESS NEWS ( Ajay verma ) जेआर प्रोडक्शन हाउस के बैनर तले समीर खान निर्द…""",,v8 propose; diseases=C3;D3;F1; purity=0.93
+346f4f81c4b9de1e,full,drop,C4;D3,"C4@off=51:""trading-spam terms x5"" | D3@off=0:""गवर्नर ने यह भी वादा किया है कि वो जंगल से लूटमारी Binomo के ट्रेडिंग खाते करने …"" | D3@off=700:""ये भारत में सबसे अच्छे पूर्ण-सेवा दलालों Binomo के ट्रेडिंग खाते में से 5 हैं। ए…"" | D3@off=1171:""जगह emus4u में बहुत सारे विकल्प उपलब्ध हैं। कुछ केवल Android के लिए उपलब्ध हैं, …"" | D3@off=1371:""राष्ट्रीय स्वयंसेवक संघ (आरएसएस) की गोवा इकाई के पूर्व प्रमुख",n/a,v8 propose; diseases=C4;D3; purity=0.94
+f20d2c1d0f21d026,full,fix,B2;C1;C3,"C1@off=1210:""इसे भी पढ़े : –"" | C3@off=1210:""इसे भी पढ़े : –""",n/a,v8 propose; diseases=B2;C1;C3; purity=0.99
+1e5508d2962ddc6a,full,fix,C3;F1,"C3@off=2042:""ईमेल email"" | F1@off=2047:type+offset-only",,v8 propose; diseases=C3;F1; purity=0.98
+12dc3faa84e51afe,full,drop,C4;D3,"C4@off=1810:""trading-spam terms x7"" | D3@off=0:""“, हाइडी Deishl एक कुशल तरीके से बंद अधिक ऋण के लिए उन्हें मदद करने के लिए प्रमा…"" | D3@off=2412:""HostBinaryTest टेम्पलेट में होस्ट-साइड निष्पादन योग्य शामिल हैं जो अन्य निर्देशि…"" | D3@off=2568:""समर्थन और प्रतिरोध सभी किस्मों और ताकत में आते हैं। वे अक्सर क्षैतिज मूल्य के स्…"" | D3@off=3999:""विदेशी मुद्रा (ECN): एक व्यापारी के रूप में, आप एक दलाल के",n/a,v8 propose; diseases=C4;D3; purity=0.96
+ee147a8ad51d5778,full,fix,D3,"D3@off=0:""पोलियो वायरस (Polio Virus) एक प्रकार का गंभीर संक्रमण (Infection) होता है, जो एक…"" | D3@off=897:""myUpchar से जुड़े डॉ. अजय मोहन के अनुसार नॉन पैरालिटिक पोलियो में लक्षण फ्लू की …"" | D3@off=2030:""myUpchar के अनुसार पोलियो होने के क्या कारण हो सकते हैं, इस बारे में समझना बहुत …"" | D3@off=3096:""न्यूज18 पर स्वास्थ्य संबंधी लेख myUpchar.com द्वारा लिखे जाते हैं। सत्यापित स्वा…""",n/a,v8 propose; diseases=D3; purity=0.95
+9779ccdb13b8b17d,full,drop,C4;D3,"C4@off=114:""trading-spam terms x7"" | D3@off=1146:""नेपाल राष्ट्र बैंकले गत आर्थिक वर्षमा बैंक तथा वित्तीय संस्थाले चुक्ता पुँजीको २…"" | D3@off=3312:""अपने IQ Option खाते में लॉगिन करें, ग्राफिकल टूल टैब का पता लगाएं, और फाइबोनैचि …"" | D3@off=4502:""द emoji व्यापार order flow suite समर्थित ट्रेडिंग प्लेटफॉर्म के लिए ऐड-इन संकेतक…"" | D3@off=5217:""आप 100 की सीमा के साथ अपने ट्रेडिंग खाते में जमा राशि का",n/a,v8 propose; diseases=C4;D3; purity=0.98
+fc67141484216745,full,fix,D3,"D3@off=0:""3. जैसे अब यह समान 900₹ का है जिसमें आप 100₹ मार्जिन डालकर उसे 1000₹ का बेंच सकत…"" | D3@off=1568:""लेकिन यह सब अधिक आराम से और जल्दी से करने के लिए, आप एमटी 4 और 5 के लिए क्षैतिज …"" | D3@off=2423:""नई दिल्ली. प्रधानमंत्री किसान सम्मान निधि स्कीम (Pradhan Mantri Kisan Samman Nid…"" | D3@off=4417:""सेवा सुविधाओं ForexTrading प्लेटफार्मों की पेशकश सबसे अच्छा प्रजातियां फर्मों मे…""",n/a,v8 propose; diseases=D3; purity=0.98
+8a6bf883cb1345bc,full,fix,D3,"D3@off=1102:""पेट खराब होने के लक्षण – Pet kharab hone ke lakshan Hindi"" | D3@off=1250:""- पेट में एसिड (acidity) बनना"" | D3@off=1550:""खराब पेट को सही करने के घरेलू उपाय – Pet kharab hone ke gharelu upay in Hindi"" | D3@off=4968:""तो ये थे kharab pet ko theek karne ke gharelu upay जिनकी मदद से आप अपने खराब पेट…""",n/a,v8 propose; diseases=D3; purity=0.97
+eb3063eaa2ebf1f4,full,fix,C1;C3,"C1@off=720:""Download Dainik Bhaskar App to read Latest Hindi News Today"" | C3@off=780:""Company officials visit for sewerage and water treatment project""",n/a,v8 propose; diseases=C1;C3; purity=0.85
+da116f6c623779ac,full,fix,D3,"D3@off=713:""फटे होंठों पर असरदार (Effective on chapped lips)"" | D3@off=1183:""झुर्रियां कम करे (Reduce Wrinkles)"" | D3@off=1500:""स्ट्रेच मार्क्स हटाने में मददगार (Remove Stretch Marks)"" | D3@off=1894:""डार्क सर्कल कम करे (Reduce dark circle)""",n/a,v8 propose; diseases=D3; purity=0.92
+e343f53509200ecf,full,drop,C4;D3,"C4@off=2248:""fragment-stitch heads=3 trade=3"" | D3@off=0:""एक फ्लोटिंग मूल्य के आधार पर एक कम भुगतान तरीका। खरीदे गए सामानों की संख्या और ब…"" | D3@off=1386:""(v)सैनिकों के बंद हो गए सभी वेतन पुस्तिका को प्राप्त करना एवं खाता अनुभाग द्वारा…"" | D3@off=2877:""- 2020 में iPhone के लिए सबसे अच्छी रणनीति के खेल"" | D3@off=2927:""लेबल्स का प्रयोग करें: लेबल्स का प्रयोग करके आप अपने मेल सन्देशों को वर्गीकृत कर",n/a,v8 propose; diseases=C4;D3; purity=0.97
+b7d3a80eedf8c233,full,fix,D3,"D3@off=0:""WhatsApp ने अपने यूजर्स के लिए नए नया Disappearing Messages फीचर रोलआउट कर दिया …"" | D3@off=238:""नई दिल्ली। पिछले काफी समय से चर्चा है कि इंस्टैंट मैसेजिंग ऐप WhatsApp एक नए फीच…"" | D3@off=718:""WhatsApp ने शेयर की जानकारी"" | D3@off=746:""Facebook के स्वामित्व वाली कंपनी WhatsApp ने Facebook के आधिकारिक ट्विटर अकाउंट …""",n/a,v8 propose; diseases=D3; purity=0.82
+abc546d2ca093cee,full,fix,C3;D3,"C3@off=28493:""सायकोलॉजिकल काउंसलर"" | D3@off=447:""सना ने कैप्शन में लिखा है कि जब तक तुमसे शादी नहीं हुई थी तब तक मुझे अंदाज़ा भी …"" | D3@off=977:""यह भी पढ़ें: ससुराल में सना खान को किया जा रहा है इस तरह पैंपर, सासू मां बिरयानी…"" | D3@off=7574:""यह भी पढ़ें: पद्मावत से लेकर छपाक, अब ड्रग कनेक्शन: इन 8 विवादों से जुड़ा है बॉल…"" | D3@off=12739:""यह भी पढ़ें: सुशांत सिंह राजपूत केसः कंगना रानौत ने साधा",n/a,v8 propose; diseases=C3;D3; purity=0.98
+0821df78be0bb368,full,fix,D3,"D3@off=0:""Syska ने भारत में Syska BT4070X वायरलेस स्पीकर किया लॉन्च, जानें कीमत"" | D3@off=70:""Syska ने भारत में अपना सबसे खास Syska BT4070X वायरलेस स्पीकर लॉन्च कर दिया है। इ…"" | D3@off=311:""Syska BT4070X की कीमत :-"" | D3@off=336:""Syska BT4070X वायरलेस स्पीकर की असल कीमत 1,499 रुपये है, लेकिन इसे कंपनी की साइट…""",n/a,v8 propose; diseases=D3; purity=0.92
+b64bd6512a79ebbf,full,fix,C1;D3,"C1@off=447:""Don't Miss!"" | D3@off=8:""- 8 min ago Toyota Innova Crysta Facelift Launched: टोयोटा इनोवा क्रिस्टा फेसलिफ…"" | D3@off=123:""- 28 min ago New Mahindra Scorpio Design: नई महिंद्रा स्कार्पियो के डिजाईन में क…"" | D3@off=226:""- 1 hr ago Pravaig Extinction MK1 EV: प्रवैग एक्सटिंक्शन एमके1 ईवी सेडान का 4 दि…""",n/a,v8 propose; diseases=C1;D3; purity=0.90
+b7d739ad6f063366,full,drop,C4;D3,"C4@off=177:""trading-spam terms x4"" | D3@off=0:""जब तक आप ""Submit "" बटन को न दबाएं सौदा लागू नहीं होगा. इसलिए आप एक और संपत्ति को…"" | D3@off=724:""(३) सेरेब्रम मस्तिष्क का प्रमुख अग्रभाग है। सेरिब्रम को दो गोलार्धों में विभाजित…"" | D3@off=2868:""२) #AMAZON AFFILIATE:- दोस्तों #AMAZON AFFLIATE से आप #GOOGLE ADSENSE भी ज्यादा …"" | D3@off=4045:""रिपोर्ट में कहा गया है, ""लेड एक शक्तिशाली न्यूरोटॉक्सिन है य",n/a,v8 propose; diseases=C4;D3; purity=0.97
+513aa97763bf5d89,full,drop,C1;C4,"C4@off=0:""trading-spam terms x7"" | C1@off=3379:""यदि आप हमारी वेबसाइट के नवीनतम अपडेट प्राप्त करना चाहते हैं, तो आपको हमारी Sahu4…""",n/a,v8 propose; diseases=C1;C4; purity=0.99
+b460eabc91dc71ab,full,fix,C3;F1,"C3@off=709:""👇🏻👇🏻👇🏻"" | F1@off=219:type+offset-only",,v8 propose; diseases=C3;F1; purity=0.97
+ecf62ffadaae8975,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+927341055e08d5be,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+e1ab4becd6c38dbb,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+7fc4a6a0c8c831ad,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+9aa74d85206e0e2b,full,fix,C1,"C1@L2 off=40 ""*Yearly subscription for just ₹299 Limited Period Offer. HURRY UP!""",,residual C1 furniture; was clean
+34d4a09fbbfafea3,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+8b129b77c4877071,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+18fe42d2a00c4fbf,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+bdca5b33d52d983e,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+74c34771bf81bd80,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+c3b2ba56f7685d9e,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+c6954c40d072a384,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+0dfbdd3dd8ebd735,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+a7a0f5ba3c8767b5,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+c225dbbcfdf9cea0,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+6b9514673a4ef7d3,full,fix,D3,parallel English block after Hindi: Every day Sanjay Sinha brings… (offset ~234),n/a,HI+EN duplicate story blurb; D3 mix
+40a874af6b31e64f,full,fix,B2;C1,(URL / HTML / Base64); purity=0.984,n/a,purity=0.98
+c8cd72c89d00fa5d,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,queued; accepted proposed clean
+96be5a5683ab3475,full,fix,B2;C1,(URL / HTML / Base64); purity=0.852,n/a,purity=0.85
+8d0703b35a772cfe,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,queued; accepted proposed clean
+9ec3f586ce560b2c,full,fix,D3;C1,English product blurb + Copyright © 2020 Alpha Arogya… (near end),n/a,HI-EN ayurveda promo + footer copyright
+e5b135ae8ef4120f,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,queued; accepted proposed clean
+c4a77a49bde1acd3,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,queued; accepted proposed clean
+e7c6e987e3078100,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,queued; accepted proposed clean
+19e8c5121af303fb,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+34d945f0de378314,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+2eac4ba26076db7e,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+4b8ae0431de8850b,full,fix,C1,"C1@L0 off=0 ""Ads से है परेशान? बिना Ads खबरों के लिए इनस्टॉल करें दैनिक भास्कर ऐप""",,residual C1 furniture; was clean
+277fa2fd630f90fd,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+deb75e80709f114e,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+124eaa7916e0d3b4,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+4f1366529a5e18b0,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+80f54374fd9ac6f1,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+9c7f9ae4a084c367,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+11fa81c37998d9c2,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+aed83aa51f30b5e5,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+d6ef71e5a265fd89,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+76e8d2463393e396,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+6003a61c8ac4ca60,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+8ee9899341e82b51,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+fd2ffffc366b1fde,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+2b34b8f8c63f87bb,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+9cc6a2877bb223ac,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+282a3153c9e20586,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+6eb0bceb5e9bdb77,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+6858fdaad3921450,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+86ef30ba0b7efc4f,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+f1da3c26654d39e8,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+0e8608e77be22c04,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+40d31f7cadad8465,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+70fef64b7264e8be,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+9fafe707617d15d1,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+a4980dfb1a672de8,full,fix,C1,"C1@L14 off=2641 ""ये भी पढ़ें""",,residual C1 furniture; was clean
+158758517ab43cb0,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+dee76ad7c1a5e1cb,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+aee95c7a0e7e0855,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+5cf40aca3297151a,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+741357de83c97067,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+6ab5d456c4159fc1,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+d47858af3f5b3cca,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,queued; accepted proposed clean
+b9480443296e0628,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,queued; accepted proposed clean
+a889f74fd0372a26,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,queued; accepted proposed clean
+1e25a2ab52d602a1,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,queued; accepted proposed clean
+7365fc70ff57f7c0,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,queued; accepted proposed clean
+bd18d6439ac40893,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,queued; accepted proposed clean
+30ffa83f7816f9f7,full,fix,D3,Latin election names + ANI English tweet block (Lok Sabha Election 2019 / pic.twitter.com),n/a,HI news + EN tweet/footer; D3 mix
+889ea51e07dc9088,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,queued; accepted proposed clean
+5dc3adcb640f7140,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+b6749ecbb6661d52,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+542bb284b00b3f9f,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+95b104e61a3e0d28,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+15cc1520eaaa516f,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+943b82135a2e442f,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+0dbd233c631c6eea,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+97db9727e3efeb2f,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+82aaaa571c06ea23,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+22255db445d71c84,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+93eaaed1e0acf83b,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+c9841f1b94130b3e,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+e9b78a4385cdb8dc,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+9637d36e110d15e7,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+db299d63b9f49ef1,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+f892a302ad4bd58e,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+f317e201dfd0f441,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+3776d34f591f896d,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+aeb8f1c0d68630cb,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+aad89d2af5abe391,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+77e34f078351ab3b,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+179554e35f340183,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+c3031a9a7ff7ebb0,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+3e94254b30a651b9,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+15b91e05d3080e51,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+9b0dab8e4ca76e05,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+9e8ff670525749e7,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+ac3a6cbb8944a970,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+1b4143577b61accb,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+b3f1cfa8805a2a02,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+b85dbd08fc68813e,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+9511d111070ee04f,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+9da724795b88deca,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+66474a87e1f36256,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+7248bd17225f475e,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+4817075025224fa9,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+d59afa17bf0b7ecd,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+ad19b84d6b2aece8,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+5e22a0826f355e47,full,fix,D3,HI-EN mix; latin_words~41 e.g. री उज्जवला योजना से Free Gas Cylinder पाने का है ये आखिरी मौ,n/a,queued; purity=0.86; D3
+25fa848878d2d546,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,queued; accepted proposed clean
+3f87faf5851872f1,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,queued; accepted proposed clean
+d32d575d913a83af,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,queued; accepted proposed clean
+826aad3a0dc8baf7,full,fix,D3,HI-EN mix; latin_words~33 e.g. ्षाएं कोरोना वायरस (Corona virus) की चलते लागू लॉकडाउन (Lock,n/a,queued; purity=0.87; D3
+657d821b0631fb28,full,fix,D3,"HI-EN mix; latin_words~132 e.g. सका भी पीछा करेगा।” Will Jordan, with his record‑equalling m",n/a,queued; purity=0.81; D3
+fca92897f8f9efdd,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,queued; accepted proposed clean
+319b74777136a2b6,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+09150859a0e79f25,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+7d2917a8e6fedc89,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+3978969e1762990f,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+77172d99db521f81,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+09de1a76bf97ceea,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+4fbeefc5d066bd0b,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+fa82e96aac3a9802,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+28f13a9375d7c6b0,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+8296566eea7d3680,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+effe83b2035da73c,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+52ff2272a63744e7,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+8982ace5cccca56d,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+a8323f37ec614a2b,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+d1c50a8eff1d881c,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+764954b8d0b67ce6,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+d9b2f8b33c8e5f29,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+f9fc78d41e77cc9c,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+51e36bde3ba3dcd2,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+6f3d0463c04288ce,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+b4a0a48c827fc66b,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+36cccf92a159ec06,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+c5ca9c114f1c6b47,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+c593b618ffb61be8,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+a5c2574659115e84,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+bc834318de0338ca,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+f1bcd75e220bf398,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+278af6460a20ef7d,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+e76b174ff754f36c,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+b2a9fccc12f30172,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+9ee7be4e0ea4dff5,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+e6f6f2b2560dacd7,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+ca0e066feec280a2,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+e62e51ad868f755c,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+46b29fb8ece7f764,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+464bc7c4ce58a897,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+f85d3068455d938c,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+1d0633cc785014ac,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+562d9c2e07cd2c28,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,queued; accepted proposed clean
+e8bfbcac0f43818e,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,queued; accepted proposed clean
+fbfd80534280a693,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,queued; accepted proposed clean
+2090ae46cd1779ea,full,fix,D3,HI-EN mix; latin_words~25 e.g. provisional,n/a,queued; purity=0.89; D3
+82b96a17ae1e1955,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,queued; accepted proposed clean
+439745d0e310fcdd,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,queued; accepted proposed clean
+7232af0838e21720,full,fix,D3,HI-EN mix; latin_words~29 e.g. Download,n/a,queued; purity=0.85; D3
+98bc809322b7c850,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+6029f87690014cbc,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+7385cf9ffc8e5a84,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+0e725c803ffe1317,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+9996c6c136b307f1,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+743ddf6c5beec45e,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+fa623399e96e9766,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+b7262775175fdcbd,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+f1248c4173543842,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+4c211d875c9a4a23,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+67dfd4f1b26ae90f,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+1d7c84c8aced12aa,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+0f8b63d3d8ea38d0,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+075fcb523a75b191,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+6a2dd5e19a13a8cb,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+7953b32103631dda,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+21534ebfb5c325cb,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+7275817406eb2877,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+50438da56f2eba55,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+169d6d7e9e3664d8,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+fa12aeef840f62f4,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+a563140251597153,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+03afbd36ab5396b7,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+676518150a28c302,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+8fdf2f34ef9a73c5,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+ce6c4bba45654960,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+0b2d08baaf732253,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+c4d6a1a4f76b288e,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+1ec02ab54c21e772,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+9446f2f26eda9d00,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+1d1b388bc939e854,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+873093118df44d6e,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,queued; accepted proposed clean
+d57107ee2b89f91b,full,fix,D3,HI-EN mix; latin_words~83 e.g. Rajabets,n/a,queued; purity=0.88; D3
+8d2d641667e98caf,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,queued; accepted proposed clean
+c5775cdff5bc4339,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,queued; accepted proposed clean
+a2d40a8dab8bfa95,full,fix,D3,HI-EN mix; latin_words~89 e.g. IBPS,n/a,queued; purity=0.84; D3
+2b3b9195a1150a0c,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,queued; accepted proposed clean
+7f86e189399c5aa3,full,fix,D3,HI-EN mix; latin_words~51 e.g. Bollywood,n/a,queued; purity=0.87; D3
+c4f7d073273b4048,full,fix,D3,HI-EN mix; latin_words~24 e.g. Mahindra,n/a,queued; purity=0.90; D3
+10ee275a9dea2acf,full,fix,B2;C1,(URL / HTML / Base64); purity=0.985,n/a,purity=0.98
+b10a74f8a7b0a2af,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,queued; accepted proposed clean
+346fab6c7c5ac52f,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,queued; accepted proposed clean
+dfb1beb30fe7fcb5,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+42ffd82ed251a6fc,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+91f24d98cc6a7860,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+f6e6f8129ccafbf5,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+abd3b8d3f5e678fc,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+d96a7dffa0d24d32,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+556d685b5769b6aa,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+82737e2262167179,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+4f56ef5e711675f0,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+aaa7312d8cbe3893,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+c4d85b820940a460,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+afbb6f07b537b6f2,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+502916904c6dd3a6,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+30007e3c252f3555,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+be8e312ca9a5b9c3,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+8f95854f321445b1,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+c01913265d73c01d,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+b94622eaecc1d8b8,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+432f31391a8e39f0,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+2d9606c73b989183,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+732bb618060b3498,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+a5b7ff6afa99d15d,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+4d2fed68832cb733,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+1eceb445ddd50427,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+4289a4bb12da1dca,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+991e455e2de757fb,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+f095093b747f6720,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+3094f3cea311494e,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+c4c430bc620aa3ff,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+0fb8ec5d454c72ca,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+1ce607bc0d8c3b63,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+ea174099640e879d,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+76dd30d606198926,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+2f2fbdf81419e6f5,full,fix,D3,HI-EN mix; latin_words~83 e.g. Mitti,n/a,queued; purity=0.87; D3
+ee19639bfb2e22a0,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,queued; accepted proposed clean
+fd775ab063b9b8bd,full,fix,B2;C1,(URL / HTML / Base64); purity=0.999,n/a,purity=1.00
+9792e8cba8d759a8,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,queued; accepted proposed clean
+bfb237ef7db35193,full,fix,B2;C1,(URL / HTML / Base64); purity=1.000,n/a,purity=1.00
+08a50388ef5e5b8f,full,fix,D3,HI-EN mix; latin_words~64 e.g. Rahul,n/a,queued; purity=0.84; D3
+72f8263db3e4f50a,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,queued; accepted proposed clean
+7a6c07cae6d0e38c,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,queued; accepted proposed clean
+27629db1e5ca2e8a,full,fix,C1,"C1@L14 off=2650 ""यह भी पढ़ें:""",,residual C1 furniture; was clean
+7d31faa89450dae7,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+dee1bb0e9f1e89d8,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+7fa5dd074daa8dd6,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+68e32a076ca825c5,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+72f7fa21d2f12354,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+01823b8c49cc47a2,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+fe70a0cfa698ce4e,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+726e3b52ae8872ba,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+b5101a8639f42f90,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+f1d8e60e89273362,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+4784eab7e4733f61,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+f4b10976ca0bcb9e,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+018948e5b897281e,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+937730b7e125e961,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+d28e5b70d9776744,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+5fec5463f611d51d,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+e8ab3696608824ca,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+0b7ee410034de12a,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+1ea557924c74f8cd,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+5c99139c3ff8cd3b,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+9ca453b9def701e2,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+5cbb58c57a05c901,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+7b2f95239e9d2daf,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+530973a469cb867d,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+ccbae864b6ece97f,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+7a3bd6b74f665e85,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+010bd2266348f6aa,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+a836a318b90d6e0d,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+f013c4a50526f337,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+5d72382fa6042f99,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+c1ee7fe99777f028,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+6cf4295919a32886,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,queued; accepted proposed clean
+c3e69a187cd9bbce,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,queued; accepted proposed clean
+7ee84503331488a3,full,fix,D3,HI-EN mix; latin_words~55 e.g. NHM,n/a,queued; purity=0.81; D3
+3d2084356c20d209,full,fix,D3,HI-EN mix; latin_words~261 e.g. epic,n/a,queued; purity=0.82; D3
+47767696c5505911,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,queued; accepted proposed clean
+3b49bb4215d47249,full,fix,D3,HI-EN mix; latin_words~40 e.g. Section,n/a,queued; purity=0.48; D3
+d9540bb96af01ed7,full,fix,D3,HI-EN mix; latin_words~133 e.g. Section,n/a,queued; purity=0.45; D3
+4b7ade7c589d9bb8,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,queued; accepted proposed clean
+63b92497f10b4673,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,queued; accepted proposed clean
+4b8b3fd7197ae6f4,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+eb64b671bf776212,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+0fba3578dcb44d9b,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+40e45493e25f385a,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+84e4a0952baf125e,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+4ef403a82948b820,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+5f9771e5f6d98140,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+295eda948f78481d,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+a7756baad271ecf1,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+ddb8b9633b1c59ff,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+7e054cd005e3db43,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+46462336cf49e643,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+3a1d53055999be3c,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+79165f3fdf5ca7dd,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+357249d2bc4ccd45,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+ec9a6795a5f8cd47,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+0f440543f40f64ce,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,no B3/HTML/foreign script found
+8c1b53a83cec3736,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+2409e1aa6ec732e3,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+44b70490c1eca8b2,full,fix,C1,"C1@L4 off=1351 ""ये भी पढ़े""",,residual C1 furniture; was clean
+36194163b7bb6192,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+b5951e9a666bd372,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+1954e181d1ea0e5b,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,high Deva purity; no DISEASES signals
+52dd76549a2ece87,full,clean,,full-read; Hindi article; no CJK/Arabic/Cyrillic runs,,queued; accepted proposed clean
+2d2861553ebe4a0b,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,queued; accepted proposed clean
+961b286f1fd3cd0b,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,queued; accepted proposed clean
+da3aaeb0b6859c88,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,queued; accepted proposed clean
+046b91b21f92f3a7,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,queued; accepted proposed clean
+dc0e94982283297c,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,queued; accepted proposed clean
+7832bbb5b35f9ce3,full,fix,D3,HI-EN mix; latin_words~55 e.g. Toyota,n/a,queued; purity=0.85; D3
+4634e93de8ad3300,full,fix,D3,HI-EN mix; latin_words~12 e.g. Chartered,n/a,queued; purity=0.89; D3
+d6611712e76c406a,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,queued; accepted proposed clean
+002ff69a0087e753,full,clean,,full-read; Devanagari body; no B3/HTML/foreign script,,queued; accepted proposed clean
+805cc15effd7a1d9,full,fix,D3,HI-EN mix; latin_words~30 e.g. Trending,n/a,queued; purity=0.86; D3
+aba71959d76cfb52,full,fix,G1,(Stray Initial Matras); purity=0.998; matra U+0940 near off=6 in की,U+0940,queued G1
+c7ac46b5daeb1d5b,full,clean,,full-read; continuous Hindi prose; no ghost markers or tags,,clean claim; no A/B/C hits
+cb584582846de8a2,full,clean,,full-read; Devanagari essay; no boilerplate/footer disease,,purity high; harm checks passed
+997538ed8e0beb4c,full,fix,D3,HI-EN mix,n/a,D3 p=0.89
+b8d161e14742a312,full,fix,D3,HI-EN mix e.g. Updated,n/a,D3 p=0.69
+a39c1d6613339084,full,fix,C1,"C1@L1 off=193 ""Recover your password."" | C1@L2 off=216 ""A password will be e-mailed to you.""",,residual C1 furniture; was clean
+d1d1391817354e55,full,fix,D3,HI-EN mix e.g. Vicky,n/a,D3 p=0.69
+db867a5028549988,full,fix,B2;C1,(URL / HTML / Base64); purity=0.729,n/a,purity=0.73
+2ae353915a1330d6,full,fix,D3,HI-EN mix e.g. Hyundai,n/a,D3 p=0.78
+225a123014b5f2b1,full,fix,B2;C1,(URL / HTML / Base64); purity=0.738,n/a,purity=0.74
+40eeb3dd0b79d9e0,full,fix,D3,HI-EN mix e.g. Chandigarh,n/a,D3 p=0.71
+bc93407efea25927,full,fix,D3,HI-EN mix e.g. CPO,n/a,D3 p=0.73
+71a9f49df22df11c,full,fix,B2;C1,(URL / HTML / Base64); purity=0.783,n/a,purity=0.78
+e946a2acf8d45626,full,fix,D3,HI-EN mix e.g. Came,n/a,D3 p=0.62

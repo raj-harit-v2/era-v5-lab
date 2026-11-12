@@ -1,0 +1,154 @@
+doc_id,read,verdict,diseases,evidence,hex,note
+de79d6228a92faeb,full,fix,G2,మిక్స్ డ్ at offset 339 + పార్ట్ నర్ at offset 1318,339 U+0020 lost ZWJ (2) (expected U+200D) + 1318 U+0020 lost ZWJ (3) (expected U+200D),
+b2cecc9a720338cb,full,fix,D4;D5;G2,యాక్టివ్గా at offset 1095 | నితొల at offset 191 | టేబుల్పైకి at offset 905 + పెరాలసిస్తో at offset 1007 + ప్రతాప్కుమార్ at offset 1583,905 U+0C2A lost ZWNJ (1) (expected U+200C) + 1007 U+0C24 lost ZWNJ (1) (expected U+200C) + 1583 U+0C15 lost ZWNJ (1) (expected U+200C),"[counts: G2 4 found, 3 shown]"
+2fb6cf727899fed3,full,fix,C3;D3,బరోడా at offset 0 | Telangana at offset 164 + Rythu Bandhu at offset 447 + PM Modi Govt at offset 774,,6 englIsh occurrences | englIsh to telugu conversion
+510706dcf275e0e1,full,drop,C2;D4;G2,"నిఖిల్, ఐశ్వర్య మీనన్ జంటగా at offset 250 | హైయెస్ట్ ఓపెనింగ్ at offset 564 + రిలీజ్ ఈవెంట్ at offset 728 + మెస్మరైజింగ్ లుక్స్తో at offset 784 | లుక్స్తో at offset 803",803 U+0C24 lost ZWNJ (1) (expected U+200C),Loads of untranslated English words written in telugu 
+932be4cb606b98e9,full,clean,,,,
+4017288f297fcfda,full,clean,,,,
+2a0cfe90fd36e4ed,full,clean,G2,హరీశ్తోపాటు at offset 557,557 U+0C24 lost ZWNJ (1) (expected U+200C),
+64c0a39ddd86d456,full,clean,,,,
+8d3c05325fbb8a5d,full,fix,D4;G2,టూవీలర్పై at offset 475 + రికార్డయ్యాయి at offset 935 | వీలర్పై at offset 482,482 U+0C2A lost ZWNJ (1) (expected U+200C),social media terms may be exempted from translation
+adb60cef617f4530,full,clean,,,,
+1c312ac9eefa118f,full,drop,D3;D4,NTR: at offset 0 | ఫ్యామిలీతో at offset 19 + రెడీగా at offset 269 + బిజీ at offset 321,,"[counts: D4 5 found, 3 shown] | Movie news has >30% englIsh words untranslated"
+a9ee60f523c326bc,partial,drop,,,,Old Telugu prose- none writes/use/understand this style anymore
+a7e015f73d20c0fd,full,fix,D4,ఫేవరెట్స్లో at offset 27 + ర్యాంకర్ at offset 198 + ర్యాంకర్ at offset 1455,,sports Jargon translated might lose the meaning
+8acd153461c0a159,full,fix,C3;D3;D5;G3,"కోసం చర్యలలో at offset 0 | evades at offset 3266 | ఫిమేల్ at offset 562 + అప్లికేషన్ at offset 2375 | మొదటి అన్ని యొక్క,  at offset 735 + కాబట్టి మీరు ఈ కోసం at offset 1139",735 U+0C2E  (1) + 1139 U+0C15  (1),Low quality score doc
+a8eb2ab1708ffaaa,full,clean,D4,లెజెండ్ at offset 193 + అపాయింట్మెంట్ at offset 1223,,Pauses as dots can be removed
+aa570ec040718364,full,fix,C5,Also Read :  at offset 391 + Also Read : MAY 01 : at offset 929,,remove until next line after the Also read: sentences
+e38b3e3a2ae85510,full,fix,D4;G2,స్కూళ్లో at offset 130 + స్టూడెంట్స్కు at offset 957 + ఫుడ్ at offset 351 | ఆదేశిం చారు at offset 392 + విద్యార్ థినులకు at offset 443 + స్టూ డెంట్స్ at offset 930,392 U+0020 lost ZWJ (1) (expected U+200D) + 443 U+0020 lost ZWJ (1) (expected U+200D) + 930 U+0020 lost ZWJ (3) (expected U+200D),lot of broken words 
+7b75b64db3dfb65b,full,fix,G2,త్తము at offset 99 + క్షణ at offset 855,99 U+0C24 space replaced ZWJ  (2) (expected U+200D) + 855 U+0C15 space replaced ZWJ  (2) (expected U+200D),
+11960d16258cd4b5,full,fix,D4,ఎమోషనలయ్యా at offset 440 + వాలైంటెన్స్ డే at offset 633 + ఎమోషనల్ at offset 1674,,
+383901372f309b2e,full,fix,D4,కెమికల్స్ at offset 143 + ఆర్గానిక్ ఫార్మింగ్ at offset 685 + బెస్ట్ at offset 1986,,
+f41ad254cac118da,full,clean,D4,ఫ్యాన్స్ at offset 1447,,
+eaff92d180453906,full,fix,C2;D3,కోట్ల చేరిక... టీ at offset 53 | Home Telugu at offset 0,,
+69b71f31a03b95bc,full,fix,D4,బాటిల్ at offset 48 + రెక్టిఫైడ్ at offset 323 + ఒరిజినల్ at offset 804,,"[counts: D4 6 found, 3 shown]"
+249674961e23e8f2,full,drop,D4;G2,ఫేం at offset 134 + టాక్ at offset 544 + ఆఫర్స్ at offset 578 | ఆర్టిస్ట్గా  at offset 186,186 U+0C17 lost ZWNJ (2) (expected U+200C),"[counts: D4 14 found, 3 shown]"
+a7592f12443cc6e6,full,fix,C1;D3,For More News.  at offset 1392 | GHMC at offset 1156,,
+75922c1ed730f2e9,full,fix,D4,మార్కెట్లో at offset 0 + ప్రొడక్ట్స్ at offset 107 + మసాజ్ at offset 369,,"[counts: D4 6 found, 3 shown]"
+4d8c7cd156f38f6e,full,fix,D4;G2,పిటిషన్పై  at offset 76 + డిపాజిట్లను  at offset 410 | నిర్ణ యిం at offset 619,619 U+0020 space replaced ZWJ (1) (expected U+200D),
+d7387323b79e1536,full,clean,A5;C3,గ్డకారి at offset 455 | మాట్లా at offset 0,455 U+0C17 Gadkari written as Gdkari (1),
+580e89828f85a98c,full,clean,G2,ఆన్ లైన్లో at offset 363,363 U+0020 space replaced ZWJ (1) (expected U+220D),
+05fa567dfc849e6b,full,fix,D4;G2,చెకప్  at offset 2236 + రొటీన్  at offset 2229 + జర్నలిస్టులు at offset 4026 | ఎన్ కౌం at offset 788 + పాటించ లేదు at offset 1308,788 U+0020 space replaced ZWJ (2) (expected U+200D) + 1308 U+0020 space replaced ZWJ (1) (expected U+200D),"[counts: D4 6 found, 3 shown]"
+c264a943099ac11a,full,fix,D3;G2,Sunday Magazine at offset 26 | వాట్సప్గ్రూప్ at offset 54 + ప్లాట్ఫామ్పైన at offset 2856,54 U+0C17 lost ZWNJ (1) (expected U+200C) + 2856 U+0C2A lost ZWNJ (1) (expected U+200C),
+daf8b4a88d22aabe,full,clean,,,,
+8d80f769a2a20c38,full,fix,A5;D4,థియేటర్కళ్ at offset 189 | సాంగ్  at offset 345 + సాంగ్  at offset 273 + సర్టిఫికెట్  at offset 570,189 U+0C30 theatrical spelling wrong (1),"[counts: D4 5 found, 3 shown]"
+4dad3347bd40bbca,partial,clean,C4;D4,(ఈరోజు ఆదివారం 23-01-2022  at offset 6326 + గత పది రోజుల్లో చాలా విశేషాలు జరిగాయి at offset 3568 | బూస్టర్  at offset 5838 + బ్రీతింగ్ ఎక్సర్ సైజ్ at offset 5111 + స్టవ్  at offset 4226,,"[counts: D4 5 found, 3 shown] | lot of English words left untranslated [counts: D4 5 found, 3 shown]"
+5533b86dfec5e557,full,clean,,,,
+ba8fbf4025410834,partial,fix,D3;D4;G3,birthmarks at offset 58 + prorochaschim  at offset 193 + Birthmarks  at offset 927 | మోల్స్  at offset 715 + అగ్లీ at offset 826 + కట్  at offset 2445 | Birthmarks స్థానిక ప్రాంతంలో at offset 927,927 U+0042  (1),"[counts: D3 5 found, 3 shown]"
+b0b57d21903011ff,full,fix,D4,టీ సెల్స్ కౌంట్ at offset 1064 + ఇమ్యూనిటీను  at offset 1095 + ఫ్రూట్  at offset 1326,,"[counts: D4 4 found, 3 shown]"
+f99f2079e093ee56,full,clean,,,,
+bd3917a23a8b62eb,full,fix,D4,టచ్  at offset 18 + గ్రీన్ సిగ్నల్ at offset 72 + యంగ్  at offset 93,,"[counts: D4 7 found, 3 shown]"
+03b7747985417b40,full,fix,C3;D4;G2, భిన్న at offset 2625 | ° ( at offset 303 | సంబం ధిం at offset 413 + వేర్వే రుగా at offset 2032 + జన్మిం చిన at offset 2295,413 U+0020 space replaced ZWJ (1) (expected U+200D) + 2032 U+0020 space replaced ZWJ (1) (expected U+200D) + 2295 U+0C1C space replaced ZWJ (1) (expected U+200D),
+6128779577671fd3,partial,fix,C3;D3;D4;G2,"దాఖలాలు లేవే, at offset 7341 | I think around six to seven years at offset 577 + Let us not మీ at offset 1042 + We want to see that the projects do get completed at offset 1089 | ఫైల్స్  at offset 10 + డిస్కస్  at offset 67 + కరెక్టు  at offset 104 | సతీష్చంద్ర at offset 2551",2551 U+0C1A lost ZWNJ (4) (expected U+200C),"[counts: D3 4 found, 3 shown; D4 7 found, 3 shown]"
+44ce4f17ccf63abb,full,clean,,,,
+866855c12c13a26a,full,drop,G3,"మాత్రమేనని at offset 509 +  లేదని, at offset 531 +  చెప్పారు. at offset 565",509 U+0C2E incomplete sentence (1) + 531 U+0020 incomplete sentence (1) + 565 U+0020 incomplete sentence (1),
+5fcfc2b6e785c4eb,partial,drop,D3;D4;D5,sundress at offset 1810 + giperdaktilicheskie at offset 1266 + Bryusov  at offset 1391 | క్రియేషన్స్  at offset 5448 + నోట్బుక్  at offset 4702 + అర్థం  at offset 4551 | షులుః at offset 708 + అనుసరించాలిః at offset 3708 + గ్లాస్ -. at offset 1807,,"[counts: D3 7 found, 3 shown; D4 5 found, 3 shown]"
+a79a2ed6b823749b,full,clean,,,,
+96e99ddc51c6be4e,full,fix,D4,మసాజ్  at offset 1736 + లగ్జరీ  at offset 1867 + లంచ్  at offset 1656,,"[counts: D4 5 found, 3 shown]"
+6d0524adfd8a53b9,full,clean,G2,జగన్మోహన్రెడ్డి at offset 1493,1493 U+0C30 lost ZWNJ (1) (expected U+200C),
+31a1818985c1dbb4,full,clean,,,,
+a953e6e2805e24ff,full,fix,C2;D3,ఇక నుంచి దేశమంతా ఒకే ఎస్బీఐ at offset 90 | Associate banks to merge with SBI | at offset 2 + Telugu Goodreturns at offset 68 + eeking to createaglobal- at offset 5495,,
+228fdafabd1d7cbe,full,fix,C3;D3;G2, ఒక పెద్ద బాధ్యత at offset 1002 | Socialism at offset 674 | పరిగ ణిం at offset 963,963 U+0020 space replaced ZWJ (1) (expected U+200D),
+7518d5973b186cec,full,fix,D4,అర్బన్ః at offset 24,,
+93d55157e97c7352,full,fix,D3;D4;D5,apartment  at offset 1449 + Internet  at offset 3112 + agent at offset 4239 | ఫెయిర్ కోర్సు at offset 575 + కేటలాగ్ at offset 1020 + అప్పీల్ at offset 2130 | గమనించాలిః at offset 92,,"[counts: D4 7 found, 3 shown]"
+7cfd1dc2bbe54b4e,full,drop,,,,
+0593d691e17a38ae,full,clean,,,,
+5a2ab2af17d7e77e,full,fix,D4,స్పోర్ట్స్  at offset 459 + విన్నర్ల  at offset 512 + లిస్ట్ను  at offset 521,,"[counts: D4 4 found, 3 shown]"
+7ae5b6d6945a0438,partial,clean,C3;D5,లును at offset 0 | న్నవారికి రికి at offset 763,,
+bfcbd413a00c8964,full,clean,,,,
+822114ef3fae2236,full,fix,C2;D3,Vizianagaram: విజయనగరంలో ఓ మహిళా ఎస్సై ఆత్మహత్యకు at offset 78 | Vizianagaram at offset 0,,
+b984e3f6a693bdde,full,fix,D4,వరల్డ్ వైడ్ at offset 542 + రిలీజ్  at offset 554 + కలెక్షన్స్  at offset 669,,"[counts: D4 11 found, 3 shown]"
+27667afb5f1275fb,partial,fix,D4;G2,మిలియన్  at offset 778 + క్వార్టర్  at offset 1366 + పాసింజర్  at offset 1447 | రీ డెవలప్మెంట్ at offset 2076,2076 U+0020 lost ZWJ (1) (expected U+200D),"[counts: D4 5 found, 3 shown]"
+bec9c250d273d115,full,fix,D4,సీక్వెల్  at offset 249 + ఫేమ్  at offset 462 + హీరోయిన్  at offset 474,,
+63993f52442f9494,full,fix,D4,చేజింగ్  at offset 744 + కెప్టెన్  at offset 1173 + సెంచరీ at offset 1538,,"[counts: D4 6 found, 3 shown] |sports jargon can be ignored from translation"
+2fc05f6b4a42a9fe,partial,drop,,,,Too old style - almost like a new language
+dec9b6dc40d35116,full,fix,D3;D4,Extramarital affair at offset 188 + Police Department at offset 1071 + Suspension  at offset 1526 | డెడ్బాడీని  at offset 2418 + లైట్  at offset 1107,,"[counts: D3 8 found, 3 shown]"
+bd4c09fda11344b9,partial,drop,,,,too many English words
+6d0e763d35ffc73c,full,fix,D3;D4,HindupuramBalakrishna at offset 3 + Hindupuram at offset 91 | చెక్పోస్టు  at offset 1727,,
+bb46733f87634e16,full,drop,C2;D4;F3,నేరస్తులు ఎంతో పకడ్బందీగా నేరాలు చే at offset 158 | హ్యాపీ at offset 62 + టైం  at offset 282 + సీరియల్  at offset 381 | ఓ ఇనుపరాడ్తో తండ్రి తలపై మోదాడు at offset 644 + తండ్రి గొంతును బట్టతో గట్టిగా బిగించి ఊపిరాడకుండా చేసి హత్య చేశాడు at offset 730,,
+29b8962d6f9e69d2,full,clean,,,,
+30a81b8cdc8fdda8,full,fix,D4;G2,ఫస్ట్  at offset 40 + సెకండ్  at offset 67 + అడ్వాన్స్డ్ సప్లిమెంటరీ at offset 173 | సబ్జెక్ట్స్లో  at offset 486,486 U+0C32 lost ZWNJ (1) (expected U+200C),"[counts: D4 7 found, 3 shown]"
+132b3fb5ba787121,full,clean,C3;D5,విజయవంతమైంది. at offset 0,,
+ad15daf77d5f5dba,full,fix,C2;D3;D4,Sunil Deodhar: రావాలి జగన్.. కావాలి జగన్ అని at offset 148 | Sunil Deodhar at offset 0 + Tirumala Tirupati Temple: at offset 1561 + Andhra Pradesh: at offset 1668 | హౌస్ అరెస్టు at offset 1705,,
+042574b1863ba17b,full,clean,D5,శుబ్రత at offset 163,,
+d457fb615a868023,full,fix,D4,డిజైన్లలో  at offset 472 + గోల్డ్  at offset 406 + లాంగ్  at offset 1760,,"[counts: D4 4 found, 3 shown]"
+c68a9eb40b9a297c,partial,clean,D4,రివిట్ మెంట్ at offset 1233 + లెవెలింగ్  at offset 917 + టెంపుల్కు  at offset 2150,,"[counts: D4 4 found, 3 shown]"
+3995ebbf4a152d99,full,fix,A5;D3;D4,నాన్వెజ్  at offset 910 | This claim is #Fake. at offset 1816 | నాన్ వెజ్ at offset 298 + మెనూ  at offset 861 + పోస్ట్  at offset 1066,910 U+0C28  (1),"[counts: D4 4 found, 3 shown]"
+38899aec9d0abbc7,partial,fix,D3;D4;D5,స్మార్ట్ home at offset 2352 | రిమోట్  at offset 691 + డోర్  at offset 1028 + ఓపెన్  at offset 1033 | ఆఫర్ at offset 645 + గేట్ మార్కెట్ at offset 625 + ఫ్రేమ్  at offset 1386,,"[counts: D4 6 found, 3 shown; D5 5 found, 3 shown]"
+d6f4ca9e67d1c377,full,clean,,,,
+c4d1eb2d85c3a769,full,fix,D4;D5,స్పోర్ట్స్ at offset 1059 + యాక్టింగ్  at offset 1071 + విన్నర్  at offset 1281 | పాకెట్ మనీ at offset 121 + చాన్స్లు  at offset 580 + విన్నర్గా  at offset 841,,"[counts: D5 4 found, 3 shown]"
+5f780207a338aae4,partial,drop,D1,"To Start receiving timely alerts please follow the below steps:⟦U+000A⟧Click on the Menu icon of the browser, it opens up a list of options.⟦U+000A⟧ Click on the ""Options "", it opens up the settings page,⟦U+000A⟧Here click on the ""Privacy & Security"" options listed on the left hand side of the page.⟦U+000A⟧ Scroll down the page to the ""Permission"" section .⟦U+000A⟧ Here click on the ""Settings"" tab of the Notification option.⟦U+000A⟧ A pop up will open with all listed sites, select the option ""ALLOW"", for the respective site under the status head to allow the notification. at offset 54",,
+26c5ea8a2cda7c47,partial,clean,,,,
+8854fb46b6011780,full,fix,D3;D4;D5;G2,Shaakuntalam  at offset 0 | వెబ్డెస్క్  at offset 75 + రిజల్ట్స్  at offset 917 | డిజాస్టర్గా  at offset 42 + లాజిక్  at offset 625 + మూవీ  at offset 905 | సీన్స్తో  at offset 687,687 U+0C24 lost ZWNJ (1) (expected U+200C),
+1eb852e39e272761,full,fix,D4;D5,లిరిక్స్ at offset 1282 | ఐ రెస్పెక్ట్ యువర్ ఒపీనియన్ at offset 1711,,
+b94b5cabecfe0a0c,partial,clean,,,,
+fa044cebde90f022,full,drop,D1,,,Sanskrit in telugu alphabet
+f99f5c4ff70ba6f6,full,fix,D3;D4;D5,Gold Overdraft Loan: at offset 53 + EMI  at offset 1674 | షటిల్  at offset 428 | అప్రూవ్  at offset 569 + ఫెలిసిటీ  at offset 1386 + షాపింగ్ at offset 2077,,"[counts: D5 4 found, 3 shown]"
+54adc53d3cf77571,full,clean,,,,
+4a0615a14b5cfdd6,full,clean,D4,ఫాదర్  at offset 192,,
+fc48a4849a6197cc,full,fix,G2,కచ్ఛపేం ద్రుం at offset 320 + శేషిం చిన at offset 756,320 U+0020 lost ZWJ (1) (expected U+200D) + 756 U+0020 lost ZWJ (1) (expected U+200D),
+3994aa2b49821ce7,full,clean,,,,
+0049a605ea022805,partial,fix,G1;G2, ఁబడి at offset 823 | గ్ర జుం డైన at offset 961,823 U+0020 o not needed (1) | 961 U+0020 lost ZWNJ (1) (expected U+200C),
+1cda0c5a620092db,full,fix,D3,HMWSSB  at offset 664,,
+31d7f8070934e90d,full,clean,,,,
+e1b87a7b79f313ec,partial,fix,C1;C2,Prajasakti::Telugu  at offset 32 | గుండ్లకమ్మలో తగ్గిన నీటిమట్టం at offset 76,,
+488f1468af64c230,full,fix,D4,పాన్ ఇండియన్ at offset 243 + ఎంట్రీ  at offset 271 + ఒరిజినల్  at offset 542,,"[counts: D4 7 found, 3 shown]"
+b4523e3d75fea2fd,partial,drop,C3,,,Old Telugu- like a new language
+4f8e1a04d3f01d37,full,clean,,,,
+baa2c61cf2fb2845,full,fix,D3;D4,"Gen-Xers, Gen-Yers  at offset 2377 | జీన్-జెర్ర్స్ at offset 2442 + జన-యర్స్ at offset 2462 + సబ్గ్రూప్స్ at offset 4072",,"[counts: D4 4 found, 3 shown]"
+f157a5cbd2fa544a,partial,fix,C3;D3,"డిగ్రీలు, పోస్ట్ గ్రాడ్యు at offset 0 | ( United Nations University World Institute for Development Economics Research  at offset 619 + NCRB  at offset 2980 + NGO  at offset 1786",,
+11146f75063611a5,full,drop,,,,more English than telugu
+ac41b46661a3b460,full,clean,,,,
+7d9dd1a8b77c0938,full,clean,,,,
+9f0c1ea67d0cd915,,,C3;D5,వేల at offset 1223 | మూఁడప at offset 17,,
+e48b101cc06f148b,full,fix,C1;D4,Home  at offset 0 | రన్  at offset 606 + రిలీజ్  at offset 488,,
+4674738ce21e2524,full,drop,D4,సెకండ్ పార్ట్ at offset 204 + బయోపిక్  at offset 119 + ఫస్ట్ పార్ట్ at offset 132,,"[counts: D4 8 found, 3 shown] | More English than Indic words"
+1dd580aff04e9f85,full,fix,C1;C4;D3;G2,IndiaGlitz.com at offset 66 + nతెలుగు » Headline News » at offset 81 | డిజిటల్లో నిర్మాతగా at offset 2753 | KCR decision Telangana lock down until 31st March at offset 0 | వైరస్పై at offset 648,648 U+0C2A lost ZWNJ (1) (expected U+200C),
+a2fe262d06a6c8d1,,,C1;D4,Apps:⟦U+000A⟧Follow us on:⟦U+000A⟧Visit: at offset 0 + Viral Video | at offset 1133 + Uorfi Javed | at offset 1247 | ఫుల్ at offset 771,,Many names have lost ZWNJ
+ea6fc7e8668c161e,partial,fix,C3;D5;G2,"దీన నీ, నా at offset 7656 | పురుపో త్త at offset 6589 | నక్ష రము at offset 6905 + శా⟦U+000A⟧పింపబడినవి at offset 6166 + తోచ టము at offset 3950",6905 U+0020 lost ZWNJ (1) (expected U+200C) + 6166 U+000A next line replace ZWJ (1) (expected U+200D) + 3950 U+0C24 space replaced ZWNJ (1) (expected U+200C),loads of ZWNJ missing
+088d8221c0d32f2f,partial,fix,D3,exercisers  at offset 121 + flexed  at offset 1521,,Remove just Latin letters
+ff63b445793a1097,full,clean,,,,
+b00e3738b8ed5649,full,fix,D4,ఆల్కహాల్  at offset 396 + చీజ్ బర్గర్స్  at offset 629 + ఫ్రైడ్ ఫుడ్స్ at offset 614,,"[counts: D4 7 found, 3 shown]"
+e9c38edc91c1f080,partial,fix,F1,ఫోన్ః 94 at offset 438,,Just remove PII and rest is clean
+b511561d22edae5d,full,clean,,,,
+f6f4daa0825fdc8d,partial,fix,D3;D4,#Jr Ntr at offset 2 | డిమాండ్  at offset 2707 + ఓపెన్  at offset 2843 + రెబల్  at offset 2004,,
+717fbadfb25f8503,full,fix,D3,"Auto news updates for at offset 0 + Sri, Telugu , 10 yrs Journalist/ P at offset 1109 +  Whatever you are reading here at offset 1482",,
+c68adcd8864502fc,full,clean,,,,
+a9211038088404f9,full,fix,D3;D4,Ram charan at offset 29 + Game Changer _ at offset 236 + Upasana  at offset 894 | బిజీగా  at offset 1587,,
+32590808fb4f7f0d,partial,fix,C3;D3;D4,ప్రపంచమున at offset 2777 | Nitrates at offset 685 + HERRERUM HEPIETERSEMMER BEHI at offset 0 + ELEMENTEN IN at offset 1860 | పదార్థము 'లను at offset 677 + లోకమున కుప at offset 627,,
+85644a4840025b6f,full,clean,,,,
+465c94fbc0c73a5e,partial,drop,D1,,,Sanskrit in telugu alphabet
+603e0918d3de0ccf,full,fix,D5,టాస్క్  at offset 1108 + ఫీటు  at offset 316,,
+2a6d1621ac47c0bd,full,clean,,,,
+5ab033afeba227e3,full,clean,D5,షాక్  at offset 549,,
+c11ef659fb1f1ad2,full,fix,D3;D5,Men's Casual Trousers) at offset 120 | షర్ట్స్  at offset 230 + క్యాజువల్ ట్రౌజర్స్ at offset 99,,
+174cc0aa52d828bf,full,fix,D4,బ్యాలన్స్  at offset 660 + కన్సాలిడేటెడ్  at offset 92 + ఇన్వెస్ట్  at offset 847,,
+0aab563c8649d2ee,full,clean,,,,
+09a87877b1879a53,partial,fix,D5,టాపర్గా at offset 95 + కేటగిరిలో  at offset 2457,,
+dc336e87d9461f6b,partial,drop,F3,,,kamasutra content
+0faffafe1ee9e0ef,full,fix,A1;A5,-జంపఁ at offset 179 + గర్మయుం- గా at offset 203 + దే -హం at offset 641 | కఁ  at offset 201 + పఁబ at offset 291 + యుఁ-  at offset 576,179 U+002D soft hyphen (1) + 203 U+0C17 soft hyphen (1) + 641 U+0C26  (1) | 201 U+0C01 Can remove Chandrabindu(CRC)  (1) + 291 U+0C01 CRC (5) + 576 U+0C41 CRC (1),"[counts: A1 4 found, 3 shown]"
+a00eafdfdfb59a55,partial,fix,D3;D4,turundochek  at offset 6909 | unrealizable  at offset 201 + Seymovoy  at offset 607 + bactericides at offset 1609,,"[counts: D4 8 found, 3 shown]"
+505b8ec94888b58a,full,fix,D3,డార్క్వెబ్లో  at offset 315 + Pawan Kalyan Ippatam Tour: at offset 991 + Drugs Supplier Edwin Arrest: at offset 0,,
+98d543bcaf0afd02,full,clean,,,,
+3f01c2b33682dafa,full,fix,D5,డిమాండ్  at offset 190,,
+acbc4d1f3b18c29c,full,fix,D4,కస్టమర్ల  at offset 32 + ఎక్స్చేంజ్  at offset 171 + గోల్డ్ జువెలరీ at offset 349,,
+51e3fc635e9b288f,full,clean,,,,
+086c14f1e3ee78f2,full,fix,D4,సీజ్  at offset 240 + బాటిళ్ల  at offset 165,,
+21640f9156d451a5,full,fix,C2,ప్రధాని నరేంద్ర మోదీ ఈ నెల 19 at offset 301,,
+f07ea660f81e992f,full,fix,C1;G3,దీనికి సబ్స్క్రయిబ్ చేయిః కామెంట్లను పోస్ట్ చేయి (At at offset 585 | Tata Consultancy Service(TCS) at offset 0 + Wipro at offset 151 + false resumes at offset 162,0 U+0054  (1) + 151 U+0057  (1) + 162 U+0066  (1),"[counts: G3 5 found, 3 shown]"
+003bf09ef71e437d,full,fix,G2;G3,యను టచే  at offset 3858 + రూపము న at offset 1156 | Paradise Lost at offset 1104 + Milton at offset 1093,3858 U+0020 space replaced ZWJ (1) (expected U+200D) + 1156 U+0020 space replaced ZWJ (1) (expected U+200D) | 1104 U+0050 Replace with Indic alphabet (1) + 1093 U+004D Replace with Indic alphabet (1),
+cf77018e696f3bff,partial,clean,,,,
+6bbc03a0a13379f9,partial,fix,D5,టచ్  at offset 2155 + న్యూస్పేపర్  at offset 2169 + రెవెన్యూ  at offset 2069,,"[counts: D5 5 found, 3 shown]"
+c65f716c472ac15c,full,clean,,,,
+5a2ba77c7c5ef7e1,full,fix,G3,Savarkar bird  at offset 0 + Karnataka Savarkar issue : at offset 1082,0 U+0053 Indic alphabet can be used (1) + 1082 U+004B Indic alphabet can be used (1),
+4b831546818ab941,partial,clean,,,,
+9ded8bb889326c2b,partial,fix,D4;D5,ఈవెంట్  at offset 1116 + రిలీజ్  at offset 687,,
+8ac600a98003bfe6,partial,fix,D3,"Importance of Vibhuti Dharana | Reason Behind Wearing Vibhudi at offset 50 + How to Apply Holy Ash, bhasma mantra, vibhuti benefits for skin, how to apply vibhuti, bhasma dharana mantra in telugu, agniriti bhasma at offset 3035",,
+fd74d21e93c41f66,full,fix,D5,బుక్ at offset 432 + డీలర్షిప్స్  at offset 406 + ఛాన్స్  at offset 839,,
+1da7a9e0a2f1180f,partial,drop,D1,,,sanskrit in telugu alphabet
+1cfaa8ec5b0b0025,full,clean,,,,
+69d160959908a39f,full,clean,,,,
+16067e53cfd058a9,full,fix,D5,సక్సెస్ ఫుల్ at offset 643,,
+b45b5f0538deb7bf,full,clean,,,,
+3c97a6485066f51b,full,drop,,,,browser pop ups
+fe3dc7a314c54877,full,fix,D3,57 Killed In Brazil Prison Gang War Several Beheaded at offset 0,,remove English text

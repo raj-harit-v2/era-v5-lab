@@ -1,0 +1,501 @@
+doc_id,read,verdict,diseases,evidence,hex,note
+8233fd0eb8b1b255,full,clean,,,,"in Data A gold set (second reader agreed clean); LaTeX KDE notes; long aligned line is math, not collapsed code; read fully"
+72f073c36305b095,full,fix,C1,"C1: ""## Similar Questions"" @1417",,"Similar Questions block at end; Q&A kept; repeated answer values are restatement, not C2"
+208e08ba378bbf9f,full,drop,C1;C2,"C1: ""11 filtered results"" @30 (x2) | C2: ""Solving Word Problems"" @111 (x3)",,catalog listing page; lesson titles printed twice; little math content
+de1b08a158de9ae9,full,drop,B4;C1;C2;C3,"B4: ""{[ snackBarMessage ]}"" @3248 | C1: ""This preview shows page"" @95 | C1: ""Subscribe to view the full document."" @282 (x2) | C2: ""Subscribe to view the full document."" @282 (x2) | C3: ""s[R2(Cgs"" @3238",,Course Hero preview: paywall stub cut mid-solution; ad testimonial block; formulas lost in extraction.
+a58f3844e1d1cc30,full,fix,C1,"C1: ""posted by ."" @8",,Q&A site chrome; the math question itself is intact
+90bbe1d4fc081caa,full,fix,C1;C2,"C1: ""Teach yourself statistics"" @11 (x2) | C2: ""Teach yourself statistics"" @11 (x2)",,site title printed twice at top (header repeat)
+b124803aff87e2d9,full,drop,C1;C2;C5,"C1: ""About Press Copyright"" @447 | C2: ""Step 1 – Find the domain of the ordered pairs"" @195 (x5) | C5: ""Domain And Range Notes Teachers"" @5708",,SEO page: repeated paragraphs and link-title list
+9ea9ec149699b344,full,fix,C1,"C1: ""Difference between revisions"" @0",,wiki diff-page header; article body clean
+80f590f918342e34,full,fix,C1;C2,"C1: ""Get ad-free questions"" @486 | C2: ""the sum of the positive odd integers less than 100 is subtracted"" @2 (x2)",,eNotes subscription banner; question title printed twice (heading and body)
+92bef36fe0c0fc40,full,fix,C1;C2,"C1: ""Replies"" @9524 (x10) | C2: ""A pendulum consists of a bob of mass M and a rigid rod"" @490 (x2)",,forum thread; question posted twice (quoted repeat); related-threads widget; generic FAQ block not labelled
+ec154a897604d041,full,fix,C1;C2,"C1: ""Joined:"" @151 (x3) | C2: ""Boolean algebra simplification using boolean rules"" @14 (x2)",,forum chrome; thread title printed twice (C2)
+b611f5af4ac5e3f3,full,fix,C1,"C1: ""Home"" @0",,Breadcrumb nav only; body clean.
+db5a45c39b512a02,full,fix,C1,"C1: ""The OEIS Foundation is supported"" @0 | C1: ""Maintained by The OEIS Foundation Inc."" @1683",,OEIS page: funder banner and nav footer
+802dfd59a67d7c72,full,fix,C1,"C1: ""Simple to use our free online calculator"" @48; ""Read more here"" @3460",,Calculator help page; marketing blurb and trailing wiki footer pointer are chrome; A1 hint is hair space U+200A (not A1)
+75e8d53c44fad9a8,full,clean,,,,Q&A thread; usernames and dates are thread content
+9e60efb955b47303,full,fix,C1,"C1: ""You might be interested"" @1054 (x2)",,related-link insertions removed; math answers not judged
+919da07039d5f8d2,full,drop,C1;C2,"C1: ""Wolfram|Alpha Widgets"" @852 | C2: ""Fitting exponential equation (y=ae^bx) - Curve f"" @468 (x2)",,fragmented formula and widget text; title printed twice; little content
+8991fe9874004563,full,fix,C1,"C1: ""``````1"" @341 (x4)",,code line-number gutters pasted from a code viewer
+98e5be6db6c1c81e,full,fix,C1;C2,"C1: ""Tags:"" @108 | C2: ""Mathematical Practice 3: Construct viable"" @2979 (x2)",,lesson-plan metadata card; MP3 and MP4 practice passages repeated once
+161572edb5830b00,full,clean,,,,in Data A gold set (second reader agreed clean); Math SE thread read in full; comment lines are thread content
+0fa51c433b6ea125,full,clean,,,,in Data A gold set (second reader agreed clean); display LaTeX kept on long lines; syntax intact; not code
+07178a3974562579,full,clean,,,,"in Data A gold set (second reader agreed clean); F-distribution page, read in full, no disease found"
+68c95473004f5b44,full,fix,C1;C2,"C1: ""Re: Solve the given differential equation"" @387 (x2) | C2: ""Solve the given differential equation"" @10 | C2: ""Solve the given differential equation"" @88",,title printed twice (thread header and post 1); Re: per-post headers
+3401462ef6bc15c3,full,fix,E2,"E2: ""4cba3d53ed3b200f8f65c5ac46021cd3"" @3885 (x5)",,Number-facts template; hash strings only; Length = n labels are per-item labels (not C2); template overlap not H2
+c5e95c369c2d56b0,full,fix,C1;C2;C3,"C1: ""Exam Prep: Bank Exams"" @315 (x7) | C2: ""Filed Under: Simplification"" @287 (x7) | C3: ""D) 38"" @1387",,Filed Under/Exam Prep footer after each item; last item ends after its options with no explanation
+26cf134cb44e3ccc,full,fix,C1;C2,"C1: ""We use cookies"" @811 | C2: ""the square root of (x+15) + (square root of x) =15"" @6 (x2)",,forum page: question title printed twice; cookie banner and forum footer
+405ced582529590c,full,fix,C1;C2,"C1: ""You can still ask an expert"" @370 | C2: ""Diffraction gratings with 10,000 lines per centimeter are readily available."" @0 (x2)",,Chegg-style ad block; first sentence printed as title and again as question; solution kept
+2d352846ebe9c8b6,full,fix,C1;C2,"C1: ""Views:"" @32 | C1: ""No description available."" @93 | C2: ""Inductive vs. Deductive Reasoning"" @232 (x2)",,"SlideShare-style metadata; slide titles printed twice; 3-2-1 slide is a complete prompt, not C3"
+f5f0ba81109f9e43,full,fix,A3;C1;C3,"A3: ""â€™s"" @5192 | C1: ""Filter by:"" @99 | C3: ""materials,. . . ."" @665",A3: U+00E2 U+20AC U+2122,NRICH listing; apostrophe mojibake; teaser cuts
+06f4f614a80259da,full,fix,C1;C2,"C1: ""No standards associated with this content."" @325 | C2: ""This lesson can be used as a pre-lesson for theSubtracting"" @245 (x2)",,Standards-widget chrome; intro sentence repeated once (ruling 13)
+ce9b0d519779eba2,full,fix,A5;C1,"A5: ""ﬀ"" @68 (x17) | C1: ""You are on page 1of 7"" @0",A5: U+FB00 U+FB01 U+FB02 U+FB03,"PDF ligatures also ﬁ x26, ﬂ x1, ﬃ x5; formulas lost in extraction (note only)"
+f88183a85617c899,full,clean,,,,"One closed code fence (valid, not B5); PASCO company phone is not F1"
+815788737e2f116e,full,clean,,,,in Data A gold set (second reader agreed clean); Blog on MaxDiff sample size read in full; no disease found
+43fe6906818d0a26,full,drop,C1;C2,"C1: ""Check GMAT Club Decision Tracker"" @0 | C2: ""we will pick new questions that match your level"" @370 (x2)",,"GMAT forum promo and per-post chrome, little content; question stem repeated x4"
+25901665fc855b35,full,drop,C1;C5;D4,"C1: ""You are watching:"" @600 | C5: ""See more: What Did Greg Giraldo"" @3568 | D4: ""Girlfriend can discover"" @197; ""You deserve to use"" @384",,Machine-spun paraphrase plus SEO keyword tail; no personal data beyond usernames
+4c76a1de494a5851,full,fix,C1;C2,"C1: ""You might be interested:"" @975 (x3) | C2: ""Divide 2.5 cubic inches into 1.6 million"" @1999",,Q&A with related-link chrome; school-bus answer repeated once in the Mini answer
+d2e9c762398cacff,full,clean,,,,"in Data A gold set (second reader agreed clean); forum thread, read fully; no disease found"
+11ff40e708e822ad,full,fix,C1;C2,"C1: ""+103913"" @405 | C2: ""Dec 13, 2018"" @388 (x2)",,forum vote counters and post date repeated (chrome); Q&A kept
+dc4514ed12c2be22,full,fix,C1;C2,"C1: ""Check GMAT Club Decision Tracker"" @0 | C2: ""we will pick new questions"" @369 (x2)",,"GMAT Club forum chrome (Kudos, Show Tags); question usable; not F2 (practice item)"
+824be00bc8836ba0,full,fix,C1,"C1: ""Choose the classification system"" @20 | C1: ""If you find the Commtap site"" @4748",,"site form and review ask; repeated materials lists are natural, not C2"
+0f39a9b0c64904fa,full,clean,,,,"in Data A gold set (second reader agreed clean); Stack Exchange-style Q&A, code fences balanced, no disease"
+8939f28c8d04f58c,full,fix,B5;C1,"B5: ""$GCF=$$"" @271 | C1: ""After you claim"" @464",,Textbook solution; unbalanced $$ delimiters in inline math; claim-footer chrome
+d640b6fcb4974fdb,full,fix,C2,"C2: ""Please consider not to encourage undesirable posting behaviour."" @2095 (x2)",,"StackExchange thread; same moderator comment repeated; long prose line is not code, so not E1."
+49c5f6078d27afc6,full,fix,C1;C2,"C1: ""Subscribe now"" @3408 | C2: ""Mathematics Questions and Answers - Form 1 End Term 1 Exams 2023"" @2 (x2)",,Exam paper; title repeated as download heading; subscribe footer; some formulas lost in extraction
+faf1229eadc6aaf4,full,clean,,,,"full read; Q&A comments are content; long line is prose LaTeX, not code"
+2d9c3add6852f806,full,fix,B4;C1,"B4: ""{{"" @0 (x14) | C1: ""An error ocurred"" @171 | C1: ""Loading content"" @10471",,"unrendered Angular templates; repeated question stems are separate parts, not C2"
+40fcbb862c8e1020,full,fix,C1;C2,"C1: ""Kudos [?]"" @812 (x9) | C2: ""the tourist cashed 7 checks and then lost all"" @1154 (x3)",,GMAT Club thread; question quoted in replies; per-post chrome
+61047783bc8e1045,full,clean,,,,"in Data A gold set (second reader agreed clean); LaTeX ${f}'(x)$ is not B4; aligned block without $$ wrapper is extraction loss, not B5."
+951a4c150e019bd5,full,fix,B2;B5;C1,"B2: ""</Math>"" @22663 | B5: ""[itex]"" @23031 | C1: ""File:Conicas1.PNG"" @90 (x10)",,Wikipedia ellipse mirror; </Math> and [itex] markup residue; File: image-name lines as text
+7de899c48fa1cb6b,full,fix,C1;C2;D3,"C1: ""Show Tags"" @995 (x20) | C2: ""does not include two people who are married"" @1300 (x9) | D3: ""لا الله"" @16467 (Arabic forum signature line, 25 letters)",,GMAT forum thread; Arabic signature line labelled D3 (not judged); repeated quotes
+4c8e31af40e627f7,full,fix,C1,"C1: ""## Related Articles"" @0",,GeeksforGeeks-style article chrome at start and end
+139a03c542cb3b18,full,fix,C1,"C1: ""TUTORIALS HOME"" @10 | C1: ""Top of Page"" @4013",,site nav menu and footer links
+b4c737f831e47836,full,fix,C1;C2,"C1: ""👍 0"" @154 (x5) | C2: ""1. 👍 0"" @151 (x5)",,vote widget; Similar Questions list; ### Geometry headings are per-item labels (not C2)
+15bb0e0bd5510c15,full,fix,C1;C2,"C1: ""Originally Posted by"" @304 | C2: ""The second term of an infinite geometric sequence is 4/9"" @92 (x2)",,Forum thread; question repeated in quote; title printed twice
+56219daa784344ec,full,clean,,,,in Data A gold set (second reader agreed clean); second answer uses a wrong linear model; not a listed disease
+02c235b035b38798,full,fix,F1,F1: email at offset 82; email at offset 112,,Notebook tutorial; two personal email addresses to redact; repeated code and outputs are not C2
+0ac5f4b7ccc8a3d9,full,fix,C1,"C1: ""posted by ."" @9",,forum header with empty username; '• Physics -' reply labels are not C2
+e8925f41a9a435bb,full,fix,C1,"C1: ""Filed under:"" @128",,blog post metadata line; body clean
+a78197ca2893977d,full,clean,,,,"in Data A gold set (second reader agreed clean); Code fences balanced (14 markers); repeated tuples are computed output, not C2"
+0dcb8d2c3732fe07,full,clean,,,,in Data A gold set (second reader agreed clean); Q&A post with answer; no disease
+5eede650c3378ff8,full,fix,C1;C3,"C1: ""Filter by"" @96 | C3: ""prove. . . ."" @3264 (x5)",,NRICH topic index; faceted filter chrome; resource summaries cut with teaser ellipses
+b2f97a074cd364c2,full,clean,,,,"in Data A gold set (second reader agreed clean); Hensel lemma post, read in full, no disease; formulas lost in extraction (note only)"
+ab295000bded241a,full,fix,A3,"A3: ""ðŸ˜€"" @118",A3: U+00F0 U+0178 U+02DC U+20AC,Emoji mojibake; rest of the Q&A is clean
+e0a34d4f27ffcca6,full,fix,C1,"C1: ""Latest conversions"" @988",,"sidebar of recent conversions with timestamps; the long line is a list, not code"
+bcf7d4b05d02f9ff,full,fix,C1,"C1: ""posted by ."" @6",,forum per-post chrome; backslash-dollar escapes are valid markdown
+1393180438544221,full,fix,C1;C2,"C1: ""Related Questions"" @676 | C2: ""Construct a quadratic in x such that A.M."" @700 (x2)",,Solution fine; related-questions block prints each question twice
+b0952ce286ffc327,full,fix,C1;C2,"C1: ""Originally Posted by"" @169 (x2) | C2: ""How do I find the are"" @26 and @200 (question quoted in reply)",,"Forum quote chrome; question quoted in reply; text ends complete, so no C3."
+4e1e6a7902a4435e,full,fix,C3,"C3: ""deeper unders..."" @6566",,catalog blurbs cut with '...'; last one cut mid-word
+a398b0f67b9e33ca,full,fix,B5;C1,"B5: ""[itex]"" @538 (x6) | C1: ""(Difference between revisions)"" @24",,"wiki revision-diff page; unrendered [itex] BBCode; pseudocode end-loop lines are code, not C2"
+584832d8739d2c5d,full,fix,C1,"C1: ""Helping Topics"" @2390",,worksheet; promised solutions absent; ends on link list (not C3)
+9d26c83f14d2087f,full,drop,C1;C2;C3,"C1: ""Want to see the full answer"" @787 | C2: ""See Solution"" @817 (x2) | C3: ""We hav"" @772",,"paywall stub; text cut at ""We hav..."""
+1eff00a48b3b10a0,full,drop,C3;C5,"C3: ""an easy place to…"" @2856 | C5: ""more rows"" @1347",,SEO FAQ farm of keyword questions; snippet residue; wrong facts
+4b44dcccfffd564c,full,clean,,,,"forum thread, read fully; no disease found"
+21e53fa9b9da799e,full,fix,C1;C2,"C1: ""This Is a Certified Answer"" @121 (x2) | C2: ""Certified answers contain reliable"" @149 (x2)",,Brainly certified-answer boilerplate repeated per answer; usernames are not F1
+0def90e4f9ff46ac,full,fix,C1;C2,"C1: ""Add additional methods for comparisons"" @129 | C2: ""Null hypothesisNull hypothesis"" @577",,"UI text; 11 table headings printed twice in-line; parallel H0/H1 bullets are template text, not C2"
+4477acbfa8e1a6da,full,fix,A3;C1;C2;F1,"A3: ""â€¦"" @1723 and ""Ă©"" @1998 | C1: ""Open this post in threaded view"" @56 (x4) | C2: ""Yes, the two methods are equivalent"" @5093 (x2) | F1: phone number at offset 2074, messenger ID at offset 2119",A3: U+00E2 U+20AC U+00A6; U+0102 U+00A9,Mailing-list thread; title printed twice; poster phone and messenger ID (F1)
+125cc1714816311c,full,fix,C1;C2,"C1: ""Sort:"" @631 | C2: ""Complementary trig ratios are ones where the val"" @173 (x2)",,forum thread; answer passage quoted twice; vote counters
+c7a4c8d5a30cbce8,full,fix,C1;C2,"C1: ""Notebook"" @139 (x30) | C1: ""DocShare.tips"" @6909 | C2: ""Notebook"" @139 (x30, Notebook/Discuss chrome block)",,Quiz answer list; Notebook/Discuss chrome x30; per-item 'Here is the answer' label is not C2.
+e28066a3ffa6649c,full,fix,C1,"C1: ""This site was built"" @1620",,S.O.S. Mathematics footer and nav; equations stripped in extraction
+0acba500be0e72a8,full,clean,,,,in Data A gold set (second reader agreed clean); gambling system article; not F3 (ruling 15); spelling not coded
+98a23798c09f0e3c,full,fix,B5;C1,"B5: ""$0.99\$"" @29657 | C1: ""Sections in this Chapter:"" @0 | C1: ""chapter5/lasso.R"" @8344",,R/Python tab labels and file names where code was stripped; footnote URLs not C5
+1d47bc0cfcb2c463,full,clean,,,,in Data A gold set (second reader agreed clean); MCQ extraction dropped several question stems; not a listed code
+e967e3352605755f,full,fix,B4;B5,"B4: ""[TheoryMissing]"" @102 | B5: ""\begin{array}{1}"" @515 (x5)",,template placeholder; invalid array spec \begin{array}{1} (B5)
+6dbea1b7e4a63a28,full,fix,A5;B4;C1;C2;C3,"A5: ""ﬁ"" @1229 | B4: ""{[ snackBarMessage ]}"" @1769 | C1: ""This preview shows page"" @93 | C2: ""math121A winter 2010 practice hw3"" @0 (x2) | C3: ""1 ..."" @1743",A5: U+FB01,Chegg-style preview; title repeated; teaser cut; template token
+a2896b6ba9a5919e,full,fix,C2,"C2: ""In an equilateral triangle ABC if AD ⊥ BC, then"" @2 (x2)",,Question stem printed as the title and again under Question:; solution kept
+0591bb5d2f4f013c,full,fix,C1;C2,"C1: ""+0"" @0 | C2: ""+27228"" @264 and @301 (post #1 block repeated x2)",,Forum vote counters; post #1 block duplicated; per-post author headers are thread structure.
+9166076cacf292ec,full,fix,C1;C2,"C1: ""← Previous 1"" @93 (x2) | C2: ""← Previous 1"" @3416 (repeated at top and bottom)",,"AP Calculus example list; pagination chrome top and bottom; question stems are templates, not C2"
+216144050512d475,full,clean,,,,full read; Q&A answer
+064d8dd19536d1d8,full,fix,A1;C1;C2,"A1: ""<U+200E LRM>"" @9 (x2) | C1: ""Click here for"" @2078 (x3) | C2: ""A.REI.1: Explain each step"" @68 (x2)",A1: U+200E,chapter header with LRM marks; standards text repeated in Notes block; resource-link chrome
+ce60fbe69947a225,full,fix,B4;C2,"B4: ""Leave the Acknowledgements here."" @6217 | C2: ""Invariant Information Measure"" @0 (x2)",,Blog post; title printed twice; template placeholder; Numerical Results section empty (figures lost)
+f40447a861fe15c6,full,clean,,,,"in Data A gold set (second reader agreed clean); Stack Exchange thread; LaTeX hint line is math prose, not code (E1 not applied)"
+157a9ba1102db7c8,full,fix,B5,"B5: ""\left\lceil t\right\rceil"" @271 (raw LaTeX, no $ delimiters)",,Editorial: LaTeX commands lost their $ delimiters (extraction); code blocks have missing lines (note only)
+3276a7ca296bf84c,full,fix,B2;C1;D2;D4,"B2: ""strong> Option"" @5151 | C1: ""16 Thoughts"" @8495 | C1: ""observed that in the world"" @9872 | C1: ""gone to say"" @10461 | D2: ""mam aur ek doubt hai"" @9278 | D4: ""I want to learn even more things"" @10402 | D4: ""I’m gone to say"" @10457",,romanised Hindi comments; spun spam comments; stray tag; repeated options not C2
+e6090455f25aa76a,full,fix,C1;C2,"C1: ""It is currently 23 Feb"" @67 | C2: ""1) Last month the phone company charged Bob"" @1598 (x10)",,GMAT forum; question quoted in replies (C2); calendar and signatures are chrome
+8ba96b4608f6c10f,full,clean,,,,in Data A gold set (second reader agreed clean); full read; 14 fences balanced; ASCII diagrams in fences are content
+a3476ae968d112bd,full,clean,,,,"Haddock package header kept as content; 0.5.0.0 is a version, author name is public"
+eb371786ee7806bb,full,clean,,,,in Data A gold set (second reader agreed clean); full read
+9c827096ebb5ff42,full,fix,C1;C2,"C1: ""Expand Messages"" @46 | C2: ""• 0 Attachment"" @252 (x9)",,Yahoo mailing-list thread; list address and truncated addresses are not F1
+5ccd37afce23b16a,full,clean,,,,in Data A gold set (second reader agreed clean); worksheet; formulas lost in extraction (not scored)
+e6b7cfc86a5a60a6,full,clean,,,,in Data A gold set (second reader agreed clean); word problem; valid LaTeX; not truncated
+54a139d866283cae,full,fix,C1,"C1: ""Write a comment"" @3015",,blog comment form and related-post teaser at the end
+b5afbb7771c60134,full,clean,,,,in Data A gold set (second reader agreed clean); full read
+ff84a3381e5cc70f,full,fix,C1,"C1: ""having trouble loading external resources"" @46",,"Khan Academy page: loading banner and discussion chrome, content kept"
+9984f58b7f0f738c,full,clean,,,,"Stack Exchange math Q&A, LaTeX balanced, no disease"
+9fd5f2644b8c04d8,full,fix,C1;C2,"C1: ""You are Here"" @0 (breadcrumb) | C2: ""This is the number of appearances of A, B, C and D"" @692 (x2, quoted reply)",,TSR exam thread; quoted posts repeat text; company number and address are not F1
+251b728e7653481e,full,fix,C1;C2;D4,"C1: ""Buscar"" @0 | C2: ""Powers with negative exponents, also called negative powers"" @62 (x2) | D4: ""power of an infringement"" @1894",,opening paragraph repeated once (C2); answers show machine-translation errors (D4)
+b1fdadabb52eb1a6,full,fix,C1;C2;F1,"C1: ""CYBER MONDAY OFFER"" @0 | C2: ""FIRSTLY WE CALCULATE THE VOLTAGE DROP."" @782 (x2) | F1: email at offset 5919 (x2)",,Promo banners; calculation block copy-pasted in a later comment; obfuscated personal emails in comment bylines
+bf73e54bda1aabdb,full,fix,B2;C1;C2,"B2: ""<br />"" @367 (x18) | C1: ""Upcoming SlideShare"" @0 | C2: ""Dp"" @25 and ""### Dp"" @339 (title printed twice)",,SlideShare page: <br /> tags in slide text; title printed twice; slide numbers are labels
+49ca36be92a6d8e8,full,fix,C2;C3;C5;D4,"C2: ""Fill in the blanks with the necessary information"" @51 (x2) | C3: ""4. Upper Quartile ("" @1900 | C5: ""You might be interested"" @1319 (x2) | D4: ""Find the sum of five numbers"" @568",,wikiHow-style steps repeated; spun You might be interested inserts; Q3 fragment cut; spun wording
+441a63e1d5a88fc4,full,fix,C1;C2,"C1: ""Joined:"" @98 (x11) | C2: ""10853 - Pablito nailed a nail"" @3 (x2)",,Forum per-post profile chrome; problem title printed twice; solution thread kept
+3f15fccd9f76020b,full,fix,B5;C1,"B5: ""$\therefore$$\vec{v}$"" @13208 | C1: ""Welcome to Edukum.com"" @0",,stray $$ breaks inline math (offset 13219); site header/footer lines
+3d55caf668a9200b,full,fix,C1,"C1: ""supported by donations"" @13",,"OEIS entry with site header, hints and footer chrome around the sequence"
+5f51c4a3e2b9b600,full,clean,,,,in Data A gold set (second reader agreed clean); Statistics article read in full; no disease found
+7a91c87f402a9608,full,fix,C1,"C1: ""Categories"" @0; ""By VEQUILL"" @2708",,How-to page with menu line and promotional author bio; step headings are not C2
+b605c8aa5c37f266,full,drop,C1;D3;E2,"C1: ""This solution is locked"" @87 | D3: ""ベクトル"" @23 | E2: ""Columns 1 through 18"" @735 (x3)",,Cody test-suite page; no problem statement; harness number arrays
+368c2491859e1cba,full,clean,,,,in Data A gold set (second reader agreed clean); Math Q&A read fully; no chrome or damage
+7e871e52b1dcc00e,full,fix,C1;C2;C3,"C1: ""Posted on"" @133 (x4) | C2: ""Determine tan2a if sina + cosa = 1"" @2 (x2, title glued) | C3: ""tg 2a= 2[(1-cos a)]/[(2 - 1/cosa)]"" @1949 (last answer stops mid-derivation)",,Q&A: title glued twice; last answer stops mid-derivation
+40b2f3d22902ce2f,full,clean,,,,"in Data A gold set (second reader agreed clean); ${x}^{...}$ is valid LaTeX, not B4"
+2194f7c1613a55c2,full,fix,C1;C2,"C1: ""Originally Posted by"" @764 (x2) | C2: ""I usually try to get zero's"" @573 (x2)",,forum post headers; quoted posts repeat earlier text
+5d1a19c79fe26d0b,full,fix,C1,"C1: ""Wiki User"" @79 (x3)",,answer-site per-answer chrome (Wiki User x3)
+57e62d62ad273696,full,fix,C1;C2,"C1: ""CFD Online Discussion Forums"" @0 | C2: ""Re: How to decide PDE type for 1st order scalar PD"" @594 (x19)",,forum thread; title and per-post subject lines repeated; real discussion kept
+7e20c8a45213d320,full,fix,C2,"C2: ""# Simple Refinement Types"" @0 (x2)",,LiquidHaskell tutorial; title printed as # and ## on consecutive lines; build-slide headings not C2
+f40147e1d612bdc0,full,fix,C1;C5,"C1: ""You may also like"" @1972 | C5: ""Tags: superposition"" @1991 (SEO keyword line)",,"Superposition article; Tags line is an SEO keyword list (C5); last comment ends complete, so no C3."
+c0987b80daa72346,full,clean,,,,in Data A gold set (second reader agreed clean); StackExchange Q&A; site-generated subtitle not a disease; code fences balanced
+dcaa196cc9b2af15,full,drop,A4;C1;C4;C5;D4,"A4: ""�"" @1261 | C1: ""Javascript"" @10089 | C1: ""Comments are closed"" @19432 | C4: ""A COVID-19 Prophecy"" @2843 | C5: ""500 Board-feet"" @1332 | D4: ""Bench Today is defined as"" @12326",A4: U+FFFD,scraped conversion-calculator spam; incoherent spun fragments
+8c2a42d92bdffd13,full,clean,,,,"in Data A gold set (second reader agreed clean); Physics StackExchange, LaTeX delimiters balanced, no disease"
+fec03b992d4b2f2a,full,fix,C1;C2,"C1: ""Views:11928"" @51 (x2) | C2: ""Views:11928"" @1642 (x2)",,View counter in header and footer; answer options repeated across questions are not C2
+480201072073dbee,full,fix,C1;C2,"C1: ""Yes"" @488 | C2: ""Polynomials - Find Irrational and Imaginary Roots"" @0 | C2: ""Polynomials - Find Irrational and Imaginary Roots"" @72",,rating-widget residue; title printed twice
+cae277b91a5e39e9,full,fix,C1;C2,"C1: ""1 Answer 0 views"" @306 | C2: ""If the pair of linear equations 8 x + 2 y = 5 m"" @3 (x2)",,question title printed twice; quiz-site metadata
+d67419f6fb285bd3,full,clean,,,,in Data A gold set (second reader agreed clean); Physics problem with answer blanks; complete
+ca992a9ad3ec9ab5,full,fix,A2;C1;C2;C5,"A2: ""[U+000F]"" @833 and ""[U+000E]"" @839 | C1: ""Show 40 post"" @62 | C2: ""Re: For those that never learnt well the epsilon-delta proofs"" @173 (x14) | C5: ""wholesale nike"" @7296",U+000F U+000E,epsilon mangled to control chars; spam lines; ends at a post header (not C3)
+addb07a0a886743c,full,fix,A5;B2;C1,"A5: ""，"" @2666 (x2) | B2: ""<ul>"" @6030 | C1: ""Added by mickfitz"" @8628",A5: U+FF0C U+FF0C,"fullwidth commas in English prose; non-native English, no MT signs; code comments not C2"
+f84670ec6cb7b64a,full,drop,C1,"C1: ""Our sister site"" @0; ""Sections:"" @66",,Worksheet catalog with little math content
+e78f8a5df9299b4a,full,fix,C1,"C1: ""Read More »"" @1044 (x20)",,puzzle-site related-link list (Read More x20)
+2bf77d0c2235018c,full,drop,C3,"C3: ""select(distribution"" @1711",,text stops mid R code block; solution cut off
+74fc89587e6921ad,full,fix,C1;C2,"C1: ""Go back to editing"" @5 | C2: ""It is clear that the solution"" @349 (x2)",,forum reply pasted twice; reply chrome
+828aeb4f851f848b,full,fix,C1;C2,"C1: ""VIEW ALL"" @524 | C2: ""In the Following Equation, Find Which Variables"" @9 and @547 (title printed twice)",,CBSE solution page; rArr arrow remnants (entity name without &) not B1; formulas lost
+c012b4fa3365f953,full,fix,C2,"C2: ""What is the autocorrelation function of white noise?"" @2 (x2)",,title printed twice (H1 and H2); Q&A content otherwise
+c9e5d27233084b62,full,fix,A3;C1,"A3: ""â€™"" @178 (x24 total: â€™ x1 @178, â€“ x18 @1350, â€‹ x4 @3252, âˆ’ x1 @3545) | C1: ""Open in App"" @0",A3: U+00E2 U+20AC U+2122 U+201C U+2039 U+02C6 U+2019,GfG-style article; mojibake in apostrophes and dashes; Distance labels with lost formulas (note only)
+948cdf8ac29ad99e,full,drop,A3;C1,"A3: ""Benâ€™s"" @7756 (â€™ at 7759) | C1: ""Filter by: Content type:"" @94",A3: U+00E2 U+20AC U+2122,"NRICH topic index: titles and blurbs; Age/Challenge labels are per-item, not C2."
+61044be7d9609067,full,clean,,,,in Data A gold set (second reader agreed clean); pseudo-science prose; not F3 (ruling 15); no disease
+faf79dee41b9691f,full,fix,C1,"C1: ""Game of PIG"" @4",,related-problem links at top
+296ba0775d5f6cca,full,drop,B5;C1;F2,"B5: ""\$"" @2063 | C1: ""Uncategorized"" @0 | F2: ""IMO 2009"" @238; ""IMO Final"" @3895; ""China TST"" @4445",,Full IMO 2009 Q5 solution plus other competition problems (F2); escaped dollar residue
+9634fbddcbf6d34b,full,clean,,,,"in Data A gold set (second reader agreed clean); full read; ${x} and {x} are LaTeX, not B4"
+c4c6e583f8989cd3,full,drop,A6;C1,"A6: ""Math՚s"" @17 | C1: ""Doorsteptutor material"" @99",A6: U+055A,formulas stripped from source; little content left
+1d5964cc6cb37bf9,full,drop,C1;C3,"C1: ""This preview shows page"" @81 | C1: ""View Full Document"" @2249 | C3: ""measure in degrees of angle"" @2218",,preview stub cut mid-sentence; jumbled
+2c49358abbf54318,full,fix,C1,"C1: ""related articles given below"" @3909",,Python tutorial; trailing related-articles stub; repeated print() lines are code
+5cef69458ab4a6fa,full,fix,C1;C2,"C1: ""Joined: 30 Aug 2005"" @983 (x3) | C2: ""After the national speed limit of 55 miles per hour was imposed in 1974"" @1293 (x3)",,GMAT forum thread; per-post chrome; question quoted in replies
+a1e5eef8155bd594,full,fix,C1;C2;C5,"C1: ""This Post Has 5 Comments"" @109 | C2: ""PLZ SOLVE I WILL GIVE BRAINLESET"" @2 (x3) | C5: ""Keywords: Three consecutive"" @1577",,Question text missing (title only); answers usable
+9a2355291f8d1b53,full,fix,C1;C2,"C1: ""Course Content"" @0 | C1: ""Section 1. Chapter 5"" @1135 | C2: ""R Introduction: Part I"" @16 (x2)",,course page chrome; title printed twice on consecutive lines
+9b197b2f42c7d7d9,full,fix,C1,"C1: ""kmmiles.com"" @0 | C1: ""Search"" @13",,"site header and search label; conversion page, no other disease"
+48537a8f06d287d9,full,fix,C1;C2,"C1: ""questions to complete"" @5356 | C1: ""Created with Sketch"" @5387 | C2: ""578×37434×34=578×37434×34"" @536 | C2: ""=17×11==17×11="" @562 | C2: ""(26)10=(10)26"" @3344 (x2) | C2: ""(100−1)n=100n−(n1)100n−1"" @4416 (x2) | C2: ""99×99=980199×99=9801"" @4818",,"MathJax formulas typed twice (Q1, Q8, Q10); Question N labels are per-item; C2 kept."
+90ca97a40fe95612,full,drop,C1;C2;C3,"C1: ""We are the best freelance writing portal"" @1906 | C2: ""Consider the following description for problems 3 and 4"" @372 (x2) | C3: ""Answer to Use MATLAB"" @1773",,"Question-only page: body repeated and answer only behind a teaser; no answer content, drop as preview stub"
+e8af6fb0b044917e,full,clean,,,,in Data A gold set (second reader agreed clean); Article read fully; no chrome or damage; wording slips are human errors
+d5bc5a8a6d30aaa9,full,clean,,,,in Data A gold set (second reader agreed clean); Q&A with LaTeX; exponent u^{-1} and |ln| formula lost in extraction (note only)
+f618961b62f38a58,full,clean,,,,"Personal blog post; arithmetic and quotient-rule slips are human errors, not coded"
+147b24e3ffbd318c,full,fix,C1;C2,"C1: ""Check GMAT Club Decision Tracker"" @0 | C2: ""we will pick new questions"" @369 (x2)",,GMAT forum thread; question usable; not F2; sidebar and profile blocks repeated
+4bbc06d580844d70,full,drop,C5;D3;D4,"C5: ""See more: Raleigh To Columbia"" @4260 | D3: ""보다"" @4806 | D4: ""optimistic integers that are only separating"" @367",,Spun SEO text with link lists; one Korean word inside an English sentence
+7c702d2d86b5c642,full,fix,C1,"C1: ""Initial conditions:"" @492",,Calculator form residue and nav links; article body usable; formulas lost (note only)
+ace41f52d349ca6b,full,fix,C1;C2;F1,"C1: ""Remember Me"" @67 | C2: ""Off-topic but might be fun"" @510 (x2, quoted question) | F1: email at offset 1447 (x2)",,"Forum thread; quoted question repeated; poster own email in opening post (F1, value not copied)"
+963fc0743c55629c,full,drop,C1,"C1: ""Next similar examples"" @427",,one calculator problem plus long related-problem list; little content
+4ba252be5024ef7f,full,fix,C1,"C1: ""p. 280"" @2423 | C1: ""»"" @2755 (x5)",,NCTM book page: print page numbers and continuation marks
+850375a7681136a9,full,clean,,,,"tangent-plane solution, read fully; no disease found"
+836bc09c3f34379f,full,clean,,,,full read; Q&A comments are content
+8d3dd1a494923f75,full,clean,,,,Short LaTeX proof; restated matrix is deliberate; clean.
+0939acf7e6d56d02,full,clean,,,,Q&A thread; usernames and dates are thread content
+fc0455aeeae84bea,full,fix,C1;C2,"C1: ""Check GMAT Club Decision Tracker"" @0 | C1: ""Kudos [?]"" @780 (x3) | C1: ""Show Tags"" @813 (x3) | C1: ""Display posts from previous"" @2140 | C2: ""we will pick new questions"" @369 (x2) | C2: ""Show Tags"" @813 (x3)",,"GMAT Club promo chrome around one LCM Q&A; profile metadata is C1 only; ends on chrome, so no C3."
+0e7a6c4765e26173,full,fix,C1;C2,"C1: ""Originally Posted by"" @902 (x4) | C2: ""So, you will have six solutions"" @628 (x2)",,forum thread with quoted replies
+2fa7ec8f2db9af94,full,clean,,,,Math Stack Exchange Q&A; LaTeX delimiters balanced
+e5dd2ed443aa937d,full,fix,B5,"B5: ""\elimination"" @266",,forum-typed LaTeX: undefined \elimination and bare double backslash
+0306000512344150,full,fix,C1;F1,"C1: ""This article is within the scope"" @85 (x2) | F1: IP address at offset 33058 (x6)",,Wikipedia talk page; anonymous editor IP addresses (F1); banner chrome; derivation formula repeat is not C2
+0f119a596e8b7f63,full,clean,,,,template conversion page; no disease found
+16fefa9e0684dfd2,full,fix,C1;C2;C5,"C1: ""Related Searches"" @2697 | C2: ""## Physics Class 11"" @122 (x2) | C2: ""118 videos|470 docs|189 tests"" @143 (x2) | C5: "","" @2715 (x21 comma-only lines)",,EduRev chrome; comma-only tag list (21 lines); site heading and stats line repeated
+2be03296ddb71e48,full,fix,C1;C2,"C1: ""Originally Posted"" @726 (x2) | C2: ""Ten identical crates each have dimensions"" @58 (x2, question quoted in reply)",,Physics forum thread; question quoted in reply; quote chrome
+916746c189a53412,full,fix,C1,"C1: ""Share"" @0 | C1: ""Explore BrainMass"" @6 | C1: ""Solution Summary"" @326",,BrainMass chrome around a problem statement
+b902db1513906cde,full,fix,C1,"C1: ""posted by"" @8",,"forum chrome; ""• Math -"" reply labels are not C2"
+45ab7c1f8949193f,full,drop,C1;C2,"C1: ""Replies"" @100 | C2: ""Quick Math Solver: An android app to solve math problems step-by-step."" @5967 (x2)",,forum index of thread stubs; mostly chrome
+ce878294b69f1b20,full,drop,C1;C3;D1,"C1: ""0 条评论"" @3152 | C3: ""断言："" @3147 | D1: ""【欧拉猜想】"" @0",,"mostly Chinese prose and Kotlin, label says en; text stops after 断言： and goes to site chrome"
+4b7db2541fcd677d,full,fix,C1,"C1: ""SchoolFamily Voices"" @3 | C1: ""Related Posts"" @1406 | C1: ""You have no rights to post comments"" @1421",,blog chrome and signup block
+5323283b31159262,full,clean,,,,math formulas lost in extraction (note only); section 5 missing
+505b2d2be1ef9b8f,full,clean,,,,Blog argument read in full; repeated formulas are deliberate restatement
+7d15acddb0419547,full,fix,C1;C5;D4,"C1: ""We apologize"" @846 | C5: ""Triangle inequality - math problems. Reason"" @1225 (tag line) | D4: ""What circuit has each of the triangles?"" @371 (literal translation signs; ""Do not forget to the triangle inequality"" @802; borderline)",,"Category page with 4 problem stubs; D4 borderline (literal translation), second reader to judge"
+ec70fb3210093363,full,fix,C1;C2,"C1: ""Unlock Full Access"" @49 | C2: ""No worries! We‘ve got your back. Try BYJU‘S free classes today!"" @167 (x3)",,paywall and app banners; upsell repeated after options; solution kept
+451400a9814b2cf6,full,clean,,,,Economics Stack Exchange Q&A; LaTeX balanced; comments are content
+ecd0cc6fee475c53,full,fix,C1;C2,"C1: ""posted by ."" @13 | C2: ""What is factoring by grouping? When factoring a trinomial"" @1192 (x2, similar-question stem)",,Jiskha-style page: posted-by and similar-questions chrome; similar stem repeated
+c391bdd380d00ad3,full,clean,,,,school blog post; figure missing (not scored)
+0523c3a83799d593,full,clean,,,,wiki template link line kept; table text flattened
+4d57615e33e7997e,full,drop,A1;C1;C4;C5,"A1: ""[U+00AD]"" @6753 | C1: ""site design"" @875 | C4: ""What mammal most abhors physical violence?"" @573 | C5: ""Canon 24-105 Macro"" @8887",A1: U+00AD,"Stack Exchange thread with unrelated injected questions, ads and a keyword list"
+e7d31a1dbf2d155a,full,fix,C1,"C1: ""• Call Now"" @0",,site header; company support number (not F1); formulas lost in extraction
+c997f535969b8ee8,full,fix,C1,"C1: ""Jump to: navigation"" @56",,"wiki chrome; repeated Example in Haskell labels are structure, not C2"
+0fd1189278cdcf2d,full,fix,C1,"C1: ""Doubtnut is"" @609 (app promo copy)",,"Doubtnut answer page: buttons and app promo copy, answer kept"
+e8c2f5d56d924698,full,fix,A4;B4;C1,"A4: ""�"" @7988 | B4: ""[["" @7979 | C1: ""Explain this"" @8329",A4: U+FFFD,U+FFFD replaces a letter in a name; wiki [[ ]] markup left; button text
+8d4983c004585641,full,fix,C1;C2,"C1: ""posted by ."" @27 | C2: ""A simple camera telephoto lens consists of two lenses."" @711 (x3)",,Q&A usable; similar-questions list copies questions with truncated snippets
+c5b36a86af256f62,full,fix,B2;C1;C2;D2,"B2: ""<br>"" @653 (x4) | C1: ""video element"" @153 | C1: ""Latest Blog"" @2368 | C2: ""The probability that contains exactly elements"" @1311 (x2) | D2: ""Apne doubts clear karein"" @9",,romanised Hindi line; tutoring WhatsApp is not F1; one question repeated in related list
+63242f1504628349,full,fix,C1,"C1: ""Share this great discussion"" @2443",,share widget at the end; forum dates and usernames are thread content
+450e2fbf34c3dd12,full,drop,C1;D4,"C1: ""Article Categories"" @3369 | D4: ""Newton’s Third Law can be seen as the most important law"" @1312",,"spun SEO article, incoherent; author bio footer"
+f246ab9d8bd7450b,full,fix,C1,"C1: ""After you claim"" @545",,Textbook solution; claim-footer chrome
+68bbe836f26b987c,full,fix,C1,"C1: ""More From Reference"" @881",,Rectangle article; empty related-links heading at the end.
+e9bc93d8821adcec,full,fix,C1;C2,"C1: ""1 Crore+ students"" @1073 | C2: ""Six friends - Ajay"" @5521 (x5)",,RC passages repeated 4-5x before questions (about 38% of text); footer chrome
+b3955d26b8b75524,full,fix,C1,"C1: ""This site is supported by donations"" @0",,OEIS entry with donation banner and nav footer
+e73db44e20a89b36,full,fix,B5,"B5: ""$$$"" @241 (x10)",,triple-dollar delimiters from extraction
+331cfcbfbd79863e,full,fix,C1,"C1: ""Thinkster is proud"" @0",,company announcement banner
+3298ace879873aa7,full,drop,C1;C2;C3,"C1: ""This preview shows"" @82 (x2) | C2: ""MGF1106 review Test - MGF 1106 Topics in Mathematics A"" @23 (x2) | C3: ""This preview has intentionally blurred sections"" @1183",,"Document preview stub: one short problem set, then blurred teaser; drop"
+66a3522eee0d28fa,full,fix,C1,"C1: ""Similar Articles"" @1240",,photo credit and related-article list; plain-text math
+56027551326bb040,full,drop,B4;C1;C3,"B4: ""{[ snackBarMessage ]}"" @1482 | C1: ""This preview shows page"" @61 | C3: ""3)"" @1402 (text stops at start of question 3)",,Course Hero paywall preview cut at question 3; only two questions solved
+fbd41c650bdc2856,full,fix,B5;C1;C2,"B5: ""[/tex]"" @3283 | C1: ""Related Introductory"" @625 | C1: ""Last edited"" @5279 | C2: ""In case you're wondering"" @323 (x3)",,forum quotes of original post; unclosed [/tex]; URL list is not C5
+eb6bb4f56c6254a8,full,drop,B1;C1;C5,"B1: ""&amp;gt;"" @4399 | C1: ""Tutorials!"" @13 | C5: ""Related topics:"" @2064",,"Algebrator promotional spam; this is the original of the known H2 pair, so no H2 here"
+574177a6a10a5750,full,fix,C1,"C1: ""+0"" @0",,vote and view counters; per-post dates are thread content
+6b279afbca803a32,full,fix,C1;C2,"C1: ""Homework Helper"" @608 (x2) | C2: ""True or False. If true explain"" @55 (x2)",,forum reply quotes the whole question; rank chrome
+60b638d770a27227,full,fix,C1,"C1: ""Cette publication est également disponible en"" @1677",,French-site chrome and Arabic UI line; content is English; not D3
+ee971e5cfb53453e,full,fix,B1;B2;C1;C2,"B1: ""&lt;"" @3598 | B2: ""<p>"" @444 (x22) | C1: ""most recent 30 from"" @72 | C2: ""Alternating sum of square roots of binomial coefficients"" @0 (x4)",,MathOverflow feed dump: raw HTML markup and feed metadata
+24a8ad8ee36f21ca,full,drop,C1;C3;C5,"C1: ""Filter by: Content type:"" @110 | C3: ""is equal to. . . ."" @1836 (x3 teaser cuts, also @3761 and @4021) | C5: ""Other tags that relate to"" @166",,"NRICH topic listing: tag lists and teaser entries cut with "". . . .""; little content"
+c04bd136642423be,full,drop,C2;C4;C5,"C2: ""### wcf simple chat example"" @0 (x2, also @4755) | C4: ""# the sharper image"" @2535 (unrelated text joined) | C5: ""wcf simple chat example"" @4 (x13)",,SEO keyword spam; unrelated texts joined; company support number is not F1
+4fe1c2fcbad20d13,full,fix,A2;A3,"A2: ""\x81"" @817 (x2) | A3: ""â‚"" @815 (x4)",A2: U+0081 | A3: U+00E2 U+20AC U+201C; U+00E2 U+201A,"subscript and en-dash mojibake (also ""â€“"" @333); repair by re-decoding cp1252"
+b6a1ee1fa12a6d5e,full,fix,C3,"C3: ""if (ans.Count == h) {"" @4904",,LeetCode page; last C# block cut mid-block; per-language template comments are natural code (ruling 4)
+c4d79bd3f03073b8,full,drop,B5,"B5: ""$G v v , v$"" @506",,LaTeX backslashes stripped from formulas; not recoverable
+f735a9e610cbe3de,full,fix,B5,"B5: ""\textcolor{b l u e}"" @177 (x7 spaced colour names)",,Socratic answer page; spaced colour names inside \textcolor
+80e030d94cf0a90d,full,clean,,,,algebra solution; no disease
+9be631b8d8a8b294,full,fix,A6;C1;C2,"A6: [U+F0C5 glyph] @6107 | C1: ""Presentation on theme"" @99 | C2: ""Lecture 3. Boolean Algebra, Logic Gates"" @2 (x4)",A6: U+F0C5,Lecture slides; symbol-font glyph stands for XOR; reviewer notes and site chrome
+135ff5d76f20a4b4,full,clean,,,,LeetCode editorial; formulas stripped in complexity lines (not coded); repeated headers are labels
+32e2c3b49bffeebd,full,fix,C1;C2;E1,"C1: ""Write comment?"" @577 | C2: ""Tutorial is loading"" @54 (x8) | E1: ""//v1 and v2 are the two convex hulls."" @27934",,Codeforces chrome; code comment collapsed into one line by extraction (E1)
+45d78b0eebeee2ca,full,clean,,,,Math SE question read in full; LaTeX valid; MATLAB lines are content
+a6f460ce507ddf0c,full,fix,C1,"C1: ""¶"" @30 (x3)",,Sphinx heading-anchor pilcrows; Julia REPL lines are code
+7ccb78c92d77b9d3,full,drop,C1;C2;C3,"C1: ""You've reached the end of your free preview"" @1842 | C2: ""physicas lab #5 (we skipped 4)"" @0 (x2) | C3: ""B) DATA:"" @1827",,"Course Hero preview cut at lab data; 32-35% overlaps are templates, not H2"
+ce5dbfb7a2a84b69,full,clean,,,,Einstein derivation article; plain-text equations (ruling 9)
+0b9be68720b81a40,full,drop,C1;C2;C3,"C1: ""www.everydaymathonline.com epresentations etoolkit"" @8587 (x3) | C2: ""Overview of Mathematics Task Arcs"" @20522 (x2) | C3: ""The task is embedded in a 2 3"" @29712",,"teaser catalogue, most cut mid-text; 3 presenter/work contacts not F1 (lead to confirm one)"
+e81cfc8654c6b24e,full,clean,,,,"exupero blog post on taxicab angles, read in full, no disease; figure captions missing (note only)"
+041e44c19a241305,full,fix,C1,"C1: ""Posted on by"" @3271",,dev blog; author bio and comment chrome at end; code intact
+31f360efa937f239,full,fix,C1,"C1: ""< 25 Design of Spur Gears"" @1465 | C1: ""You are here"" @1129",,"calculator site sidebar, breadcrumb and related-calculator list; formula restated by template (not C2)"
+ab0dcfdea8b8f728,full,fix,B1;C1;C2,"B1: ""&#40;1-2x&#41;&#94;-1&#47;3"" @1537 (x5 entities) | C1: ""Originally Posted by"" @946 (x2) | C1: ""Re: General Binomial Theorm"" @681 (x4) | C2: ""General Binomial Theorm"" @2 and @59 (title printed twice) | C2: ""I just need to verify my answer"" @83 and @973 (question quoted in post 3)",,Math Help thread; HTML entities in Wolfram text; title and question repeated.
+16d22eeb638a0307,full,fix,C1;C2,"C1: ""Schematic created"" @333 (x2) | C2: ""simulate this circuit"" @309 (x4)",,CircuitLab embed text
+03711bb05408344e,full,fix,C1;C2,"C1: ""Share"" @0 | C2: ""Solution In Fig. 10.99"" @837",,"CBSE solution page; question repeated in APPEARS IN block; ""Given that DP=QC"" line repeated once"
+2f1c23f09533d54f,full,fix,C1;C2,"C1: ""Correct! Wrong!"" @85 (x7) | C2: ""Correct! Wrong!"" @85 (x7)",,quiz widget text printed after each question (chrome); garbled formulas (note only)
+dff3e3e7d18de4a3,full,clean,,,,question-only stub; per-question Chapter labels are not C2
+ab1a0c16f15b9007,full,fix,C1;C2,"C1: ""Related Introductory Physics"" @1872 | C2: ""1. A hockey stick hits a puck"" @106 (x2)",,"forum: question quoted in replies; 'None' under Homework Equations is student text, not B4"
+9922154457f52354,full,drop,C1;D4,"C1: ""Also Read"" @2592 | C1: ""The best place to educate"" @3069 | D4: ""Once you upon a sheet"" @708",,spun SEO article with broken grammar; promo footer
+4173ab32511c6212,full,fix,C1;C2,"C1: ""You are here:"" @0 | C2: ""• eCourse selection from the following options:"" @2270 (x3)",,"breadcrumb, sales and price-tier chrome"
+2f957b7c07fd9686,full,fix,C2,"C2: ""Graphing an exponential function"" @10 (x2)",,Forum thread; page title and post heading repeat the same title
+3e58daf021db8a46,full,fix,C1,"C1: ""Home Encyclopedia Statistics"" @100",,"Menus, ad script at 1821 and FactBites block at 13282; formula symbols lost in extraction (note only)"
+161a7643db59ce25,full,fix,C1;C2,"C1: ""Request a Free Counselling"" @0 | C1: ""Why do students prefer"" @25419 | C2: ""Consider the following combination of the resistors."" @19023 (x2)",,promo banners; formulas lost in extraction (note only); consecutive duplicate block (ruling 13)
+a58934f703eac138,full,fix,C2,"C2: ""Rotating a Rectangle Help"" @10 (x2)",,forum thread title printed twice (page title and post subject)
+b92ea46e85fa8d3f,full,fix,C1;C2,"C1: ""posted by ."" @12 | C2: ""THe function h(t)=-16t^2+v0t+h0"" @760 (x2)",,similar-question preview repeated; per-answer labels not counted
+4dd5d3e3c89b86ae,full,fix,C1,"C1: ""Sales Toll Free No"" @0",,company banner line; company support number is not F1; step labels are worked-example steps
+884fc5f1c8e7cbed,full,fix,C1;C2;C3;E1,"C1: ""Open in App"" @0 | C2: ""Time Complexity: O(m*n)"" @16326 (x4) | C3: ""cout<<0<"" @17025 | E1: ""`// C++ program to multiply two numbers represented"" @985 (x18 lines)",,"GfG code page; code blocks flattened to one line (unrecoverable); 'multipliccharAtion' find-replace damage in Java; kept as fix per review decision (strip flattened code, keep explanation)"
+cc0ff1026623b8f3,full,fix,C1;C2,"C1: ""posted by ."" @8 | C2: ""Which equation shows the correct use of power of products property?"" @610 (x2)",,Q&A usable; similar-questions chrome; reply labels are natural
+0cf0828c3d63d071,full,fix,C1,"C1: ""HideShow resource information"" @148",,Flashcard-style notes with pagination and nav
+44bc4e2bd1489086,full,fix,C2,"C2: ""Two parallel sides of a trapezium are 60 m"" @2 and @137 (title and Question: body)",,Title repeats the question once; recurring derivation lines are not C2.
+6c24b958e562df0a,full,fix,C1;C2,"C1: ""Quote:"" @396 (x7) | C2: ""Originally Posted by ArTiCK"" @404 (x4)",,forum quote boilerplate; question quoted in replies (ruling 13)
+7fec63b917700801,full,fix,C2;D4,"C2: ""The binary number corresponding to 25510 is 111111112."" @2264 (x2, second copy with stray extra) | D4: ""Because the byte unit inside the computer to represent the number are fixed-length"" @478 (machine-translated paraphrase; Baidu Baiku @1274)",,Machine-translated tutorial; garbled paragraph with writer aside @4905 (note only)
+18f62f253f2163a7,full,fix,C1,"C1: ""Shodor >"" @13",,Dialogue text; breadcrumb nav only.
+95bcf153f8c4bef2,full,clean,,,,equation typo in biphenyl formula; one result lost after = (note only)
+413253553dff2871,full,drop,C1;C2,"C1: ""Go Maths"" @3664 (x2) | C2: ""Answers to this exercise are available lower down this page when you are logged in to your Transum"" @1089 (x2)",,"Mostly site chrome and testimonials; equation list present, graphs absent"
+6002cea6733036d2,full,fix,A3;C1;C2,"A3: ""gotÂ"" @493 (x2) | C1: ""Posted by"" @105 | C2: ""Level 3 Expert"" @5616 (x2)",A3: U+00C2 U+00A0 U+00E2 U+20AC U+00A2,"calculator Q&A; mojibake at 493, 555 and bullets at 2989, 3088; '?' replaces symbols (note only)"
+c46f9ecdfac73e93,full,fix,A6;C1;C2,"A6: PUA glyph U+F0D8 @875 (x9 PDF bullet glyph) | C1: ""Upcoming SlideShare"" @0 | C2: ""Lect8 Internal Forces"" @25 and @380 (title printed twice)",A6: U+F0D8,SlideShare lecture; PDF bullet glyph U+F0D8 (A6); title printed twice
+16c2e6931d7d2bdc,full,drop,C2;C5;D4,"C2: ""## How many squares are in a Super Bowl pool?"" @3199 (x2) | C5: ""check out the pool squares section"" @10242 | D4: ""if your asking about selling"" @6008",,"spun SEO article, incoherent; paraphrase-spun grammar (D4); promo tail (C5)"
+1d64b5b26356c4ce,full,fix,E2,"E2: ""md5"" @3863 (hash block, 5 strings)",,Number-facts template; hash strings only; Length = n labels are per-item; not H2 (template overlap).
+8d478dd46da51660,full,fix,B5;C1,"B5: ""\$T(z) = 1 + z"" @323 | C1: ""Location: New Zealand"" @58",,Blog sidebar at top; LaTeX written as escaped \$...\$ so math does not render; post and comments kept
+8279a849ab83c9e4,full,fix,C2;C3,"C2: ""How many edges does a truncated Icosidodecahedron have?"" @18 (x2) | C3: ""edges….Comprehensive Curriculum."" @730",,question printed twice (H1 and H2); featured-snippet cut with ellipsis
+8f09ea36d06abaef,full,fix,A1;B4;B5;C1;F2,"A1: ""\u00ad"" @3180 (x4) | B4: ""%}"" @3463 | B5: ""\begin{aligned}"" @1137 (x2) | C1: ""Sort by:"" @3467 | F2: ""IMO '59"" @2017",U+00AD U+00AD U+00AD U+00AD,Formatting-guide table and comment chrome; raw aligned blocks outside $$; drop IMO 1959 problem (F2)
+2c59f0ca117f6bdf,full,drop,A5;B4;C1;C2;C3,"A5: ""ﬂ"" @1525 (x3) and ""ﬁ"" @2115 (x2) | B4: ""{[ promptMessage ]}"" @0 (x2) and ""{[ snackBarMessage ]}"" @2616 | C1: ""View Full Document"" @282 (x4) | C2: ""e3-solutions"" @55 (x2) | C3: ""..."" @2592",U+FB02 U+FB02 U+FB02 U+FB01 U+FB01,Course Hero paywall preview; OCR-garbled exam; chrome repeats; cut at preview end
+e6ad6d99d3286da4,full,fix,C1,"C1: ""Please visit us to get"" @2751 | C1: ""Similar Pages to View"" @2864",,ad line and footer; formula terms missing in some items (not coded); repeated stems are separate problem sets
+527bddc47545b193,full,fix,C1,"C1: ""Courses for Kids"" @8",,site nav and view counters
+e76a51bcff8b40e7,full,fix,B2;C1,"B2: ""<img src="" @0 | C1: ""Show Hide Details"" @3268; ""Tags:"" @3325",,CK-12 table of contents; tracking pixel and widget chrome
+b5659c01561e2f84,full,clean,,,,actuarial exam forum thread; real discussion; plain-text math
+604e4f4ad2774e31,full,fix,C1;C2,"C1: ""👍 0"" @1099 | C2: ""A 395.0 g block is dropped onto a vertical spring"" @2274 (x5)",,forum vote chrome; similar-question snippets repeat one question
+c79257e3674b1248,full,fix,C1;C2,"C1: ""Posted on"" @514 | C2: ""Justify, with a written explanation or a mathematical reasoning"" @2 (x2)",,Q&A usable; question printed twice (title and body); Posted on residue
+4f201f1d955d8f05,full,fix,C2,"C2: ""What is the relationship between electric field vectors and equipotential lines?"" @0 (x2, question printed as line and FAQ heading)",,FAQ page; question printed twice; answer sentences repeat across items
+a8bdd40e482ac221,full,fix,C2,"C2: ""Q4: Is electric potential"" @346 (x2)",,CBSE Q&A; Q4 question stub repeated; several answers missing (extraction)
+ef268010e1c30582,full,clean,,,,Blog post with comment thread kept as content
+a9072b5ee8dfeec7,full,fix,C1;C2,"C1: ""Pvillage.org"" @0 | C2: ""What is gray code what is the advantage of using gray code?"" @16 (x2)",,site name header; title printed as # and ## on consecutive lines
+69e049e45ca77d29,full,clean,,,,personal blog; no contact data
+4ddaf821a8c31b4d,full,clean,,,,full read; business phone is not F1
+5a18bdc11d17364f,full,fix,C1,"C1: ""Posted on"" @171 (x2)",,Yahoo-style Q&A; per-post author chrome; content kept
+123c8876be705640,full,fix,C1,"C1: ""File size"" @1391",,attachment info and rank labels per post
+24ceeaa0f9862fa4,full,fix,C1,"C1: ""Archimedes of SyracuseArchimedes"" @2896",,featured-snippet and infobox residue; '6 more rows'
+263a5308b96d2e4a,full,fix,A1,"A1: ""\u200b"" @6754",U+200B,Zero-width space in item 19; title says 25 MCQs but 20 items are present
+bafd05fd24564d32,full,clean,,,,full read
+e559a2f70f05d05c,full,fix,C1,"C1: ""Metamath Proof Explorer"" @0",,nav and footer chrome; proof kept; some formula symbols lost in extraction
+9daa39ab14c87676,full,drop,C1;C2;C3,"C1: ""Topics: Acid"" @30 | C2: ""Enthalpy of Neutralization"" @2 (x2) | C3: ""starting time..."" @4059",,21-page report preview ending mid-sentence; title printed twice; cannot repair
+4f02de8adf0e2f21,full,fix,C1,"C1: ""Haven't found the Essay"" @0",,"essay-mill page: ads and copy-protection notices; closing CTA is chrome, not C3"
+b16ffd05fec7886e,full,fix,C1,"C1: ""Do you have an interesting"" @3388 | C1: ""Tip: Our Density"" @3817",,"Problem list (20 problems shown, header says 78); footer chrome; the Olympiad mention is not F2."
+c6ffbebd4e680476,full,fix,E2,"E2: ""md5"" @3677 (hash block, 5 strings)",,Number-facts template; hash strings only; not H2 (template overlap).
+5ee756dbf1307a6f,full,fix,C2,"C2: ""Let’s take a look at some examples to see how this can happen."" @2589 (x3)",,"Tutorial read fully; transition sentence repeated 3x (borderline, ruling 13)"
+64a8789e7badc700,full,fix,C1;C2,"C1: ""It is currently 20 Mar 2019"" @67 | C1: ""Re: In the United States"" @4498 (x7) | C2: ""### Show Tags"" @782 (x14) | C2: ""Joined: 29 Oct 2004"" @675 (x3) | C2: ""we will pick new questions"" @331 (x2) | C2: ""qhoc0010 wrote:"" @3967",,GMAT forum chrome and per-post headers; quoted reply repeats the question
+8d3cd2aa796817be,full,fix,A3;C1,"A3: ""¡Ý"" @84 (x6) | C1: ""posted by on ."" @11",A3: U+00A1 U+00DD U+00A1 U+00DC,≥/≤ garbled as ¡Ý/¡Ü in the question; Q&A chrome
+9bedec4eec3f3fcc,full,drop,C1;C2;C3,"C1: ""posted by"" @8 | C1: ""More Similar Questions"" @1961 | C2: ""How do you add and subtract fractions?"" @819 and @1074 (same homework copied into two entries) | C3: ""…"" @366 and @805 (teaser cuts)",,Similar Questions boilerplate; same homework copied into two entries; snippet teasers cut with ellipsis.
+427179d117e717bf,full,fix,C1;C5;D4,"C1: ""쉬운 목차"" @66 | C5: ""mastering mathematical formulas for spm key topics"" @2547 | D4: ""Grasping the discriminant’s implications allows for pre-calculation insights"" @1557",,"Korean nav label; keyword line at end; clumsy paraphrase wording (paraphrase signs, D4)"
+1cf38895ede7151b,full,fix,C1;C2,"C1: ""Joined:"" @121 | C1: ""Messages In This Thread"" @1517 | C1: ""User(s) browsing"" @1892 | C2: ""Powers simplification with mathematical correctness"" @0 (x6, title in body and thread index)",,Forum post; thread-index chrome; title repeated in body and thread index.
+08000dd144b352aa,full,fix,C1,"C1: ""Do you have a similar question?"" @1879",,"Q&A usernames kept; LaTeX braces and $ are balanced math, not B4 or B5"
+39540f4292436f74,full,fix,B5;C2,"B5: ""\ frac"" @1361 | C2: ""Find the volume of the sphere:"" @63 (x3)",,forum quotes repeat the question; one MT-spaced \ frac command
+414fe980d2e98c7f,full,fix,C1,"C1: ""Part of solved"" @442",,quiz page; related-question list removed; $$ math balanced
+72f2618656a5875f,full,clean,,,,StackExchange Q&A; LaTeX balanced; comments kept
+683c0f7d960823d0,full,fix,C1;C2,"C1: ""Originally Posted by"" @148 | C2: ""f(x)=(18^x)+(10.5e^x)+(x^20)+(58^21)"" @19 (x2)",,forum reply quotes the whole question
+0c8a5cc5f3bfd5a5,full,fix,C1;C2,"C1: ""math"" @0; ""2 thoughts on"" @1671; ""Liked by 1 person"" @1906 | C2: ""Monday Math- Symmetry"" @8 (x2)",,WordPress post; comment-section chrome; title repeated in comments heading
+37cde5a8f5d5decc,full,fix,C1,"C1: ""You are here:"" @0",,Breadcrumb and expert bio block; solution usable
+7fba52599f4973ae,full,fix,C1,"C1: ""Citation:"" @3675 | C1: ""Licence:"" @3964",,"Exam-paper page with citation and licence footer; offset-0 phone-like header judged a business contact, not F1; second reader to confirm."
+f79e6aeb5ebb6a5c,full,fix,A3;B5;C1;C2,"A3: ""тАЩ"" @4628 | A3: ""тАУ"" @4718 | B5: ""[/b]"" @3934 | C1: ""Kudos [?]"" @978 (x19) | C2: ""gmatprep09 wrote:"" @6161 (x4)",A3: U+0442 U+0410 U+0429 U+0442 U+0410 U+0423,mojibake of curly apostrophe and en dash; BBCode [/b] residue; forum chrome; question quoted in replies
+d3dc5a9f14a9a35a,full,drop,D4,"D4: ""sine regulation"" @658",,article-spinner paraphrase with wrong terms and facts
+2b0dcb71433030d5,full,drop,B5;D4,"B5: ""\ displaystyle"" @483 (x39) | D4: ""except for the digit"" @426",,machine-translated German wiki page; broken LaTeX throughout; not repairable
+1ae83eb9991b3899,full,clean,,,,tutorial; step labels recur (not C2)
+36e5d4a91bbadf24,full,clean,,,,"Math Stack Exchange Q&A; LaTeX balanced; E1 hint is a LaTeX line, not code"
+f2746fa01fbc3cf4,full,drop,A3;A6;C5;D3,"A3: ""â€¦"" @14534 (x2) | A6: ""fɑstidious"" @4991 | C5: ""cialis online"" @5651 | D3: ""Дивитися фільми"" @10238 (x4)",A3: U+00E2 U+20AC U+00A6 | A6: U+0251 U+0455 U+0461,"article to @4914, then ~80% comment spam (SEO, Ukrainian ads, spun comments): drop"
+e238227f95913a28,full,clean,,,,"Worksheet answer key; escaped dollar signs in plain text; escaped \$ is money (markdown escape), not broken syntax"
+bb516dec2c4c6d7b,full,fix,C1;C2,"C1: ""Members and 1 Guest"" @71 | C2: ""I could do the same to all positive integers"" @675 (x3)",,forum chrome; rank labels and Re: headers are per-reply labels (not C2); copied sentence repeated in replies
+e70b40860c66c262,full,clean,,,,Forage article; figures 1-2 missing (extraction); clean.
+c19da388cbf84ac5,full,clean,,,,Short article read fully; no chrome
+260877d79e0774dd,full,fix,C1;E1,"C1: ""The OEIS is supported by"" @0 | E1: ""f:= proc(n) option remember;"" @1134",,"OEIS donor banner, nav and footer; Maple/Mathematica code collapsed into one 1453-char line; sequence data kept"
+d9f97e4e820e2599,full,clean,,,,Q&A thread with comments; $$ inline math balanced
+c483df6e3fd9f283,full,clean,,,,"step list restated in summary (ruling 4, deliberate)"
+2ce05d6cf7cfdbf6,full,fix,C1;C5,"C1: ""Courses for Kids"" @8 | C5: ""Available Materials"" @880",,"NCERT solutions; nav and stats chrome, SEO filler; math usable"
+dbee9e8b046047bd,full,fix,C1,"C1: ""Email subscription"" @1642",,"site subscription footer (ends on chrome, not C3)"
+ec80b9c8f91b41f2,full,drop,C1;C2;C5,"C1: ""Reference This Converter:"" @107 | C2: ""→"" @9051 (x18); ""The value in Murabba is equal to the value of Ankanam multiplied by 0.0000661157"" @836 (x2) | C5: ""• 1 ankanam = murabba"" @8953",,Converter SEO page; templated unit list; mostly repeats and keyword list
+61fc80a49e1c13c2,full,clean,,,,"textbook solution; LaTeX array on one line (math, not code)"
+091be553b5b72d99,full,clean,,,,Aptitude Q&A with comment block kept as content
+35f55ec0647ee7fe,full,fix,C1;C2,"C1: ""TableFormulaFactorConverterTop"" @1742 | C2: ""cubic meters ()cubic miles (cu mi)"" @952 (x2)",,converter nav; table header repeated at page break; units lost in extraction
+376e639903abfe9a,full,fix,C1;C2,"C1: ""2 Next →"" @90 (x2) | C2: ""2 Next →"" @90 (x2)",,pagination repeated top and bottom; answer options belong to different questions
+39084ae21264f512,full,fix,B4;C1;C2,"B4: ""{[ snackBarMessage ]}"" @1609 | C1: ""This preview shows page"" @176 | C2: ""Algebra – X Values and Relationships True or False Questions"" @5 and @83 (title printed twice)",,"Course Hero preview; all 10 solutions present; template, chrome and title repeat removed"
+07a42ecfa26e7d2a,full,fix,C1;C2,"C1: ""Shabupc.com"" @0 | C2: ""What is the relation between magnetising current and power factor?"" @54 (x2)",,"Site banner, TOC and SEO-style FAQ kept; title printed twice (# and ##)"
+f04aba71a30e2ff9,full,fix,C1,"C1: ""Let Others Know"" @7149",,calculator page chrome; link lists; formula restatement not C2
+e2559cf9ca55d28a,full,fix,C1;C2,"C1: ""Interactive Sessions"" @3779 | C2: ""Question Video: Finding a Term in an Arithmetic Sequence under a Given Condition"" @0 (x3)",,video transcript page; title printed twice on line 1; promo blocks
+f6c1776061f622c6,full,fix,A6;C1;C2;C4,"A6: ""Є"" @14248 (x2, second @14281; Cyrillic letter used as set symbol) | C1: ""Go To Main Page"" @4660 (x16; Main page x3 more) | C1: ""Copyright Entrance"" @71271 | C2: ""LOYOLA COLLEGE (AUTONOMOUS), CHENNAI"" @94 (x19 letterhead) | C4: ""## Loyola College B.Sc. Statistics April 2009 Statistical Process Control"" @4677 (paper 2 of 20 unrelated papers)",A6: U+0404 U+0404,20 exam papers joined; split at '## Loyola College' headings; last paper is an empty stub; Cyrillic Є stands in for a set symbol.
+68b7e7c55524f01f,full,fix,B5;C1,"B5: ""$mathbb"" @360 (x13 with $; 23 mathbb forms with backslashes lost) | C1: ""Nearby Words"" @12",,"Wikipedia differintegral; LaTeX backslashes stripped (frac, mathbb, omega); repeated LHS is a deliberate definition pair."
+fff67184901b1426,full,fix,B5;C1,"B5: ""\mathmr"" @213 | C1: ""graph{(x-4)"" @562",,Undefined LaTeX command; Socratic graph-widget residue
+5b67c3690971174c,full,fix,C1;C2;C5,"C1: ""Save"" @42 | C2: ""Quant Quiz 8 for SSC CGL & Railways"" @2 (x2) | C5: ""SSC CGL Admit Card"" @325",,Quiz page; title repeated; save counter; exam-keyword link list
+a96d6c140245cd16,full,fix,A5;C1;C2;C3,"A5: ""ﬁ"" @1639 (x2) | C1: ""This preview shows pages"" @64 | C2: ""Input - a 12 = 2 200"" @2 (x2) | C3: ""steel...."" @2357",A5: U+FB01,Course Hero-style preview; ligatures; title repeated; preview cut at end
+1c922c5e6be155bf,full,fix,C1,"C1: ""posted by on ."" @20",,Jiskha-style reply labels (not C2) and attribution chrome only
+0b5ddb126c89c2b3,full,fix,A6;C1;C2,"A6: """" @50 (x39) | C1: ""Download ppt"" @5274; ""Similar presentations"" @5441 | C2: ""Newton’s Third Law: for every action"" @809 (x2)",A6: U+F0A8,PDF slide deck; private-use symbol-font bullets; slide footers
+5512733ff28b7da6,full,clean,,,,"worked sum printed as 230, terms give 238 (content error, not coded)"
+6548aeb10731e661,full,fix,C1;C5,"C1: ""google custom search"" @3176 | C5: ""WORD PROBLEMS"" @3204",,worksheet kept; topic link farm at end; problem restatement in solutions not C2
+def0057105acf8c0,full,fix,C1,"C1: ""Have you found"" @2787",,"Symbolab-style calculator page: UI chrome, step text kept"
+b34e034cab0c27a7,full,drop,C1;C5;H2,"C1: ""Please use this form"" @1894 | C5: ""Solving Quadratic Equations Solving"" @140 (x4) | H2: ""Tutorials!"" @13",,Keyword-list header and spam forum; H2 later copy of eb6bb4f56c6254a8 (52% 6-gram overlap)
+3e136806c369dfbc,full,clean,,,,
+43aee9be036c5f81,full,fix,C1;C2,"C1: ""in progress 0"" @161 | C2: ""Find the radius of a circle with a circumference of 45(3.14) centimeters"" @3 and @87 (question as heading and body)",,Q&A: question printed as heading and body; answers contradict (22.5cm vs r = 7.17)
+c93b09408d8aaa65,full,fix,C3,"C3: ""to…"" @2652 (teaser cut mid-sentence)",,Scraped FAQ; drop the teaser answer line; garbled formulas noted only.
+1e0e070a886b4eb7,full,fix,C1;C2,"C1: ""Show/hide solution"" @850 (x3) | C2: ""Show/hide solution"" @850 (x3)",,textbook UI button repeated after each solution; Figure ??? unresolved ref (note only)
+0982a9afa344a466,full,fix,C5,"C5: ""You might be interested"" @1142 (x2)",,Readers-ask FAQ page; spun link tails; definitions usable
+1a679ab5f7dbd03a,full,drop,C1;C2;C3,"C1: ""This preview shows page"" @145 | C2: ""286bvphandout"" @2 (x2) | C3: ""BVP...."" @1475",,"paywall preview cut at ""....""; title repeated; chrome"
+a5d6914aacebfa97,full,drop,B2;C5;D4,"B2: ""<bar>"" @1186 | C5: ""Conversion is the key to success"" @208 | D4: ""6 inches equals 3 thumbs up"" @4121",,spun SEO article with wrong facts; <bar> tag residue
+de704ffd4b065a23,full,clean,,,,entity names and Unicode glyph lists are content; 1/3 lost in extraction (note only)
+dc921efe0de5116b,full,drop,C2;C5,"C2: ""Because the domain refers to the set"" @1373 (x3) | C5: ""1435 185 1325 1331"" @7322",,SEO spam: repeated paragraphs and a trailing number list
+8944403230ac0c2d,full,drop,C1;C2;C5,"C1: ""show printable version"" @3768 | C2: ""Get Solutions Math Cute Christmas"" @6405 (x2) | C5: ""Math Fact Fluency Tools"" @12171",,worksheet page dominated by SEO link titles
+0b76e646af9e487c,full,fix,C1;C3,"C1: ""Collapse"" @664 (x2) | C3: ""provided by the stockholders’"" @3171",,Student homework posts; names only (not F1); last sentence cut at the end
+c916c7b4df79e657,full,fix,C1,"C1: ""kwizNET Subscribers"" @0",,ads and subscription pitch; company support address is not F1
+632d55051e04b50c,full,fix,A1;C1;C2,"A1: ""\u200b"" @2836 | C1: ""Top 5 Similar Quiz"" @336 | C2: ""Discuss"" @485 (x10)",U+200B,"Quiz-site chrome, API link at 400; Discuss button x10; blank option values from extraction"
+d13f4e5d38774db2,full,drop,C1;C5,"C1: ""Mass PercentageVolume"" @456 | C5: ""SOLVED:A lead-tin"" @2313",,"search-result snippet scrape; garbled, letters and superscripts lost (not coded)"
+c9e31fada41c0405,full,fix,C1,"C1: ""Certified answers contain"" @42",,Brainly answer; boilerplate header and promo
+78f35d4036d394d0,full,clean,,,,"CS linked-list text, not math; superscripts lost in extraction (note only)"
+ac1c11c5b7238be9,full,clean,,,,
+2d8f27657c0520ad,full,clean,,,,Tool-page copy with SEO-style FAQ; dollar math spans balanced; judged content
+803b6400d720742c,full,fix,C1,"C1: ""This is documentation for Mathematica 6"" @0",,documentation version banner; empty Out[n]= cells are formula/output loss (note only)
+32dc264837d87434,full,fix,C1;C2,"C1: ""Report this Resource to TpT"" @4648 | C2: ""List Price:"" @147 (x2)",,product-page price block repeated; divider lines not counted
+646489e8e8f3ad33,full,drop,C1;C2;C3,"C1: ""(choose chapter or problem)"" @113 | C2: ""QUESTION:"" @142 (x2) | C3: ""Step 1 of 6"" @646",,question repeated four times; paywall-style stub stops at Step 1 of 6
+8210e5fa65c2f665,full,fix,A1;D3,"A1: ""[U+200B]"" @1031 (x5) | D3: ""पाईये Index Properties"" @144",A1: U+200B U+00AD,"Marathi intro block; English body; D3 labelled, not judged"
+42640a00999160e2,full,clean,,,,short forum Q&A; metadata lines kept
+64492ee09e0f83b6,full,fix,C1;C3,"C1: ""Filter by: Content type:"" @118 | C3: ""Multiply this number by 2..."" @4969",,"NRICH listing; per-item ""Stage/Challenge"" labels not C2; teaser cuts"
+b13ac440d5437408,full,fix,C1,"C1: ""All about flooble"" @0",,"site header, comment and search chrome"
+5a9319153685fccb,full,drop,B4;C1;C2;C3,"B4: ""{[ snackBarMessage ]}"" @3683 | C1: ""This preview shows pages"" @0 | C2: ""This preview has intentionally blurred"" @898 (x2) | C3: ""b 2 ± 4 ac s 1"" @3591",,Scribd preview: ends mid-table; PDF symbol substitutions (note only)
+7d0f7abdcb51da4a,full,fix,C1;C2;C5,"C1: ""10M+ students"" @11448 | C2: ""Question for Overview: Squares and Square Roots"" @1486 (x3) | C5: ""Related Searches"" @11478",,course-site widgets; widget title repeated; tag list after Related Searches
+a5bfa20e2668e1fd,full,clean,,,,
+12bc2da06e85a70a,full,fix,C1,"C1: ""RELATED POSTS"" @10063",,Electronics textbook page; formulas lost in extraction (note only)
+fba013ed7b1ee3af,full,clean,,,,teacher blog; degree sign missing in one place (not coded)
+9c44925931fa1ae9,full,fix,C1,"C1: ""Posted on"" @182",,Answer usable; site promo and header
+3cb6b66f89c39660,full,clean,,,,Fluids notebook inside a blog post; code cells and %s format strings are content
+705b7868df7b2f7e,full,fix,C1,"C1: ""Rev. Lang"" @4607",,Codeforces revision-history table at the end
+7abf7c1ae9943307,full,fix,C1;F1,"C1: ""Rate this:"" @72; ""Last Visit"" @15505 | F1: call sign at offset 14668",,CodeProject article; unfenced HTML sample is code content (B1 and B2 not applied); call sign is F1
+1f2a7ef4bab8de44,full,fix,C1;C3,"C1: ""You are on page 1of 14"" @0 | C3: ""correctness or"" @7937",,PDF page label; formula structure lost (plain text ok); disclaimer cut mid-sentence
+5aa9e1643326cce2,full,fix,C1;C2,"C1: ""Time for Science"" @90 | C2: ""<< Back to INDEX"" @108 (x2)",,"site nav, share and related-link widgets; nav repeated top and bottom"
+41a13046c2f64478,full,fix,C1;C2,"C1: ""APPEARS IN"" @613 | C2: ""Write two solutions for the following equation :"" @78",,textbook site chrome; title repeated as the question stem
+d1043fba8068a5fc,full,drop,C2;C5,"C2: ""Every y-value is only paired"" @3155 (x2, spun paraphrase block) | C5: ""Dried Mixed Herbs"" @11781 (keyword tail)",,Keyword-stuffed paraphrase spam with repeated paraphrase blocks and keyword list at end
+585dd60fb428db7c,full,clean,,,,Physics forum thread; dates and usernames are thread content; formula superscripts lost (note only)
+b3f1c13e66c665e2,full,fix,B4;B5,"B4: ""color(blue)("" @117 (x3) | B5: ""\textcolor{b l u e}"" @166 (x4)",,"Socratic answer; color(blue) macro residue; solution complete, so no C3."
+c3ddd66c899c90e9,full,clean,,,,Exercise list read fully; last item is a complete expression (not C3)
+7f5b21f5e922685e,full,fix,C1,"C1: ""To do:This page"" @48",,Wikibook maintenance banner before body; code fences balanced; binary/hex examples are distinct operations (not C2)
+a5a48f7502b92fb0,full,clean,,,,short forum Q&A with numbered answers
+72d32f48940c6dea,full,clean,,,,MSE thread read in full; comments are thread content
+3a7e3fa49e3e13c3,full,drop,C1;C3;D4,"C1: ""Do you have an interesting"" @5329 | C3: ""How much i"" @322 | C3: ""What total revenue is requ"" @1105 | C3: ""Samuel t"" @1941 | D4: ""Imagine a word solidarity"" @1145 | D4: ""did kick wide"" @798 | D4: ""I longer watch processors"" @4601",,problem-teaser directory cut mid-sentence; machine-translated-looking word problems
+4e8b452ef39ff8b6,full,fix,A1,"A1: ""⁢"" @289 (x6)",A1: U+2062,Unit-conversion page; MathML invisible-times residue; templated conversion text
+af9d1316d085d805,full,drop,E1,"E1: ""Use of Neural Nets Toolbox"" @39",,hand-written MATLAB collapsed into one line by extraction (newlines lost); unrecoverable
+c63c463f6f8a44c7,full,fix,C1;C2,"C1: ""Earn Coins"" @1187 | C2: ""If you invest"" @12 (x2)",,question title printed twice (truncated heading and body); store footer; \$ escapes kept
+8dabf852d50092a8,full,fix,C1;C2,"C1: ""Quote by Philmac"" @145 (x27) | C2: ""Step 1. Let z in M00 be arbitrary"" @5318 (x5)",,"physics forum: quoted posts repeat text; long line is LaTeX prose, not code (E1 not applied)"
+67b15bcbb650b84e,full,clean,,,,Blog read in full; closing vendor note is content
+a745ac2ec9e4e3f9,full,drop,C5,"C5: ""#### Numbers CBSE Class 3 MCQs Mathematics"" @5594 (keyword headings)",,SEO padding around thin MCQ text; some question stems missing.
+e527f9b605a78463,full,clean,,,,full read; Q&A content
+c476b4831d07abed,full,clean,,,,"faculty office email and phone are work contacts, not F1 (ruling 6)"
+3ecd95b6d4b5be11,full,fix,C1,"C1: ""Posted by on February"" @13937",,"blog nav, footer and promo; post and comments kept; separator lines not C2"
+446ab6c92791eebb,full,fix,C1;C2,"C1: ""Wiki User"" @107 (x2) | C2: ""If you mean a circle center at (3, 1) and a radius of 2"" @506 (x2, answer copied into related questions)",,Answers.com-style page: related questions repeat the answer text
+dc73ac1a61171e7a,full,fix,C1,"C1: ""Concept wise"" @69",,Teachoo labels and Transcript heading; transcript is complete
+8a40aa2099255599,full,drop,C1;C3,"C1: ""Search 79"" @0 | C3: ""To put it..."" @293 (x5 teaser cuts)",,Snippet teasers ending in ellipsis; little content.
+425acb7bcc57efe7,full,fix,C1;C2,"C1: ""You are Here"" @0 | C1: ""(Original post by"" @509 (x5) | C1: ""personalise what you see"" @2469 (x2) | C2: ""I am rusty in stats"" @318 (x3, quoted posts) | C2: ""This is correct."" @964 (x2) | C2: ""Posted from TSR Mobile"" @1205 (x2) | C2: ""Discussions on TSR"" @2380 (x2)",,TSR forum; quoted posts and site chrome; company registration numbers are not F1.
+86c76742bc02bf16,full,drop,C5,"C5: ""There are 332 results"" @152",,"NRICH task-link listing, no math content; Stage labels are per-item labels (not C2)"
+039d77a43eee6b59,full,fix,C1,"C1: ""Try the free Mathway calculator"" @1853",,calculator CTA; learning-target list is not a disease
+510fb17a3529d41f,full,fix,C1;C2;C5;D3,"C1: ""January 24, 2023"" @44 | C2: ""I101 Introduction To Informatics Lab 7 Logic Circuits"" @2414 (x2) | C5: ""Diffe Types Of Logic Gates"" @2944 | D3: ""博客园"" @2243",,"image-title keyword list; Chinese token in caption (D3 labelled, not judged)"
+63fc938df72f69a9,full,clean,,,,StackExchange question and comments; no disease
+bd0badd79016f5d8,full,fix,B4;B5;C1,"B4: ""[forminator_quiz id=""1391""]"" @8163 | B5: ""``````Input:"" @512 | C1: ""Get free ebooK with 50 must do coding"" @0",,coding article; unclosed fence at test case; four language versions kept (not C2)
+64a7b0580b0f6cd3,full,drop,C2;C5;D4,"C2: ""Maths online can be a great way to learn Maths if you have the time"" @3601 (x2) | C5: ""Let's try the best Math solving app"" @78 | D4: ""Our website can help me with math work"" @115",,SEO filler with keyword stuffing; garbled spin wording; closing paragraph repeated
+235604fd8861438c,full,fix,B5;C1;C2,"B5: ""\begin{aligned}"" @6436 | C1: ""This page titled 1.1"" @11324 | C2: ""\newcommand{\Span}{\mathrm{span}}"" @246 (x4)",,"LibreTexts licence footer; repeated macro preamble; stray \) at 283; macro lines are LaTeX, not E1"
+8c199192838f29c9,full,fix,C1,"C1: ""+3"" @43",,Vote counter; answers kept; repeated step labels are per-item
+5f6ab4a679015c74,full,drop,C1;C2;C5,"C1: ""Home »"" @0 | C2: ""How many ml of water"" @2781 (x3) | C2: ""measuring cups fraction review"" @583 (x3) | C2: ""How much positive and negative charge"" @5581 (x3) | C5: ""Related searches"" @6057",,SEO FAQ scrape; repeated keyword lines
+54e2922e548e70f5,full,fix,C5,"C5: ""Mathematics Mcqs include basic mathematics mcqs"" @254 (SEO keyword intro) | C5: ""S.NOMaths"" @641 (category link table)",,MCQ page; keep questions; keyword intro and category table are SEO; backslash-dollar escape not in B5 list.
+f27ae5af1e050e86,full,drop,C1;C5;D4,"C1: ""쉬운 목차"" @65 | C5: ""essential latex equation examples"" @3002 | D4: ""Engaging with essential latex equation examples"" @2988",,generic SEO article with little content; garbled keyword insertion
+a0cf28b3d6e1fb1f,full,fix,C1,"C1: ""Foreigners"" @10776",,Slate article; trailing list of other articles
+e006c4871555b87a,full,fix,C1;C2,"C1: ""Go!"" @25 (keypad list to @290) | C2: ""$\int t e^{\left(5t+\pi \right)}dt$"" @315 (x2, problem repeated in analysis block)",,Symbolab-style solver page: keypad chrome; problem repeated; solution kept
+c7456096d354477e,full,fix,B5,"B5: ""\begin{aligned}"" @4898",,MSE thread; aligned and bmatrix LaTeX not inside math delimiters; rest clean
+4aa20d6b132f1bae,full,fix,A3;C1;C2,"A3: ""â€"" @1228 | C1: ""It is currently"" @0 | C2: ""All times are UTC - 5 hours [ DST ]"" @43 (x2)",A3: U+00E2 U+20AC U+2122,phpBB chrome; one double-decoded apostrophe (Letâ€™s)
+8dcefc12461589ad,full,clean,,,,Answer read fully; attribution line is Q&A content
+48080fa04dae35f1,full,fix,C1;C2;C3,"C1: ""Begin typing your search"" @2762 | C2: ""What is orthographic projection of solid?"" @2 and @48 (title printed twice) | C3: ""…"" @751 (teaser cut at solid…)",,Engineering drawing Q&A; title printed twice; teaser cut at 'solid…'; search-widget footer.
+7acedc418d1b988f,full,fix,C1;C2,"C1: ""Online since 2002"" @0 | C2: ""Page 1 of 1 [ 1 post ]"" @183 (x2)",,"phpBB chrome around one post; footer ending is chrome, not C3"
+e9d9f54a1a782960,full,drop,C3;C5;D3,"C3: ""any $n$-tall vector"" @1054 | C5: ""代写"" @8 (x5) | D3: ""线性代数作业代写"" @2",,Chinese SEO header over English linear-algebra text; text stops mid-proof
+dc3f196a43f39970,full,drop,C1;C2;E1,"C1: ""Posted 1 year ago"" @31 (x5) | C2: ""Posted 1 year ago"" @31 (x5) | E1: ""This is very slow"" @425 (2305-char line)",,Wolfram forum; Mathematica code collapsed into one 2305-char line is most of the page: drop
+e357f79a86d209bb,full,drop,C5,"C5: ""You are watching"" @310 | C5: ""See more: Which"" @7684",,SEO spam: spun See more tail; template table
+5756f3263ad9f98c,full,fix,C1,"C1: ""Associated Topics"" @0 (x2)",,"Dr. Math nav, search form and topic list; code fences balanced"
+ff6174ee282c65bb,full,fix,C1;C2,"C1: ""Archive for"" @13 | C2: ""Categories: Bible Math"" @3404 and @7484 (category footer repeated per article)",,Bible Math blog; per-article category footer repeated; derivation blocks are not C2; not F3.
+ae73490a71d1f05a,full,fix,C1,"C1: ""posted by ."" @8",,Q&A chrome and similar-question list; reply labels not counted
+e68f196ec97b88a5,full,fix,C2;C3;C4;D3,"C2: ""What is KenKen game?"" @2 (x2) | C3: ""for adults of all ages …"" @965 | C4: ""What is Kanka?"" @1865 | D3: ""賢"" @330",,"FAQ page; title repeated; answer cut; unrelated rapper FAQ appended; Japanese gloss is natural; ""Ron\$oCold"" is a name, not broken syntax"
+4e95ecbf4dc047ff,full,fix,A1;C1;C2,"A1: ""<U+FEFF>"" @0 | C1: ""Step-by-Step Examples. Precalculus. Linear Equations."" @1465 | C2: ""perpendicular line equation example"" @2 (x2)",A1: U+FEFF,BOM at start; title printed twice; = and + dropped from math lines (not coded)
+3f6226760b3c4341,full,fix,D3,"D3: ""Visto en Flicker"" @7",,"Spanish credit line; natural, labelled not judged"
+c55fa2fcaeafd041,full,fix,A6;C2;C4;D4,"A6: ""DСВ"" @456 | C2: ""Through the vertex of the right angle C of the triangle ABC"" @2 (x2) | C4: ""One of the components of a person's success"" @821 | D4: ""mastering everything new and new"" @1049",A6: U+0421 U+0412,"Cyrillic letters in English word; unrelated appended paragraph, likely machine-translated"
+da1b2d8a21ef11c7,full,fix,C1;C2,"C1: ""Joined Aug 20"" @65 and @1028 | C1: ""Attachments"" @577 | C2: ""I first found the voltage across the inductor - I * Z = 5.6*<-28."" @144 and @1266 (sentence copied into a later reply)",,"Forum profile and attachment chrome; sentence quoted in a later reply; '<90' is phasor notation, not B2."
+0c437c8c293fa532,full,drop,C1;C2,"C1: ""Home > Grade"" @0 | C2: ""Read More »"" @217 (x10)",,Index of teasers; Read More repeated; per-item Directions lines are not C2.
+60176c5247480e5d,full,drop,C1;C5,"C1: ""Filter by: Content type:"" @119 | C5: ""Resources tagged with"" @24",,Topic index: link list of 176 activity titles; original of known H2 pair (no H2 here)
+3c2ef9f64bc25d72,full,drop,C3,"C3: ""four decimal places"" @1209",,ends mid-solution with no products; skeleton
+2b7c07f7ed116433,full,fix,C1;C2,"C1: ""Published on 09th 09, 2020"" @311 (x5) | C2: ""Asked in:"" @514 (x5)",,Related-questions block and site stats; one solved question kept
+286c2289c404d339,full,drop,C3;C5,"C3: ""ability to. . . ."" @1603 | C5: ""Resources tagged with"" @24",,"NRICH topic index: teasers cut at '. . . .', no solvable content"
+d92c8f05f7134b76,full,drop,C1;C2;C5,"C1: ""Add your answer and earn points"" @989 (x2) | C2: ""Explain why a rectangle is a convex quadrilateral"" @557 (x26) | C5: ""Stretching Before Cycling"" @0 (x2)",,scraped Q&A aggregator; same question repeated dozens of times; dotted blanks not C3
+b65447202cb074c9,full,drop,C1;F2,"C1: ""top of page"" @0 | F2: ""AMC 8"" @321",,AMC 8 2012 problem with solution; nav and newsletter chrome
+6932407173cbf957,full,fix,C1,"C1: ""• Print"" @38",,print button label
+a30da84b5936192d,full,fix,C1,"C1: ""Posts by DopestMoses"" @24",,"Profile chrome (Total # Posts, Pages); physics answer kept"
+ede42f0878dcfeef,full,fix,C1;C2;C3,"C1: ""Submitted By"" @29 | C2: ""## worksheet"" @13 | C3: ""Qualitative: These"" @2071",,worksheet: title printed twice (# and ##); metadata block; cut at item h
+b0455de483812931,full,clean,,,,Q&A with comments read fully; comments are thread content
+642640266c0ae003,full,fix,C1,"C1: ""After you claim an answer"" @570",,solution-site footer; solution kept
+c16db13d63739369,full,fix,A2;A5;C1;C2,"A2: ""\x04"" @52 (x12); ""\x05"" @25692 (x5) | A5: ""ﬀ"" @313 (x91 ligatures: ﬀ x16, ﬁ x68, ﬂ x1, ﬃ x6) | C1: ""Clones and Post"" @54 (x4) | C2: ""Boolean Functions"" @1698 (x8, sidebar heading repeated)",A2: U+0004 U+0005 | A5: U+FB00 U+FB01 U+FB02 U+FB03,Lecture slides: hidden U+0004/U+0005 markers (A2); math glyphs lost in extraction (note only)
+11c5b5309ac0c0d8,full,fix,C3,"C3: ""if this is not the desire, it could"" @19031",,Response 5 cut mid-sentence; other responses complete; Response N labels are per-item
+ac0bf74b75fa035e,full,fix,B5;C1;C2,"B5: ""\frac{100\%\cdot 880\}"" @216 (escaped brace breaks \frac) | C1: ""Hello Guest!"" @137 | C2: ""880$are 27.5% how much is 100%"" @6 (x2, title repeated in body)",,German forum thread with English question; user stats and edit lines are chrome
+512d757bcfd98f3b,full,fix,C1;C2;F1,"C1: ""To: mathgroup"" @25 | C2: ""Re: challenge problem"" @0 (x3) | F1: email address at offset 218",,Wolfram mailing-list post; obfuscated private address (not copied)
+a21270e7f43afe2b,full,clean,,,,full read; comments are content
+ab9abd551eff25a8,full,drop,C5;E2,"C5: ""### Other numbers"" @2835 | E2: ""14506ccc39f3552b05392398d45abbb7"" @3861",,templated SEO number-facts page; hash block; tag-list links
+2d328b828fa97706,full,clean,,,,"usernames, dates and post number kept; not C1"
+6b81a2229e71ad83,full,fix,B5,"B5: ""{1 1}"" @140",,invalid array column spec in \begin{array}{1 1}
+d06e390edaa4ebbd,full,fix,A1;C1,"A1: ""\u200b"" @788 (x10) | C1: ""Hong Kong"" @0",A1: U+200B,ZWSP inside math text; MathJax formulas shown as TeX then text (note only)
+e3f1ec98b6453028,full,drop,C1;C4;C5;D4,"C1: ""Open navigation menu"" @2946 | C4: ""Introducing new learning courses"" @1593 | C5: ""Free tutorials differential and integral calculus"" @1535 | D4: ""tutorials that is adjusted"" @981",,"SEO spam page: spun text, keyword stuffing, joined unrelated paragraphs"
+8e9e5b4d6166454e,full,fix,A6;C1;C2,"A6: PUA glyphs (24 distinct) @384 (x622 total) | C1: ""Eka O. N."" @107 (x5 running header) | C2: ""Basic Equation 3"" @90 (x5 running header)",A6: U+F028 U+F029 U+F02B U+F02D U+F03D U+F068 U+F072 U+F078 U+F07A U+F0B6 U+F0BA U+F0D7 U+F0E6 U+F0E7 U+F0E8 U+F0E9 U+F0EA U+F0EB U+F0F6 U+F0F7 U+F0F8 U+F0F9 U+F0FA U+F0FB,"PDF lecture notes: formulas unrecoverable (PUA glyphs, A6); running headers repeat per page"
+4eb29670196b7bd5,full,fix,C1,"C1: ""Open image in a new page"" @462",,viewer link chrome
+262ebbe2695b2118,full,fix,C1;C2,"C1: ""After you claim an answer"" @1112 | C2: ""Initial values"" @180 (x2)",,textbook answer printed twice (Answer and Work Step by Step)
+16069472440a89b5,full,fix,C1,"C1: ""Format"" @3402 | C1: ""mla apa"" @3409",,citation-format widget
+35dc550bcb663db4,full,fix,C1,"C1: ""• Sunday"" @393 (x2)",,timeanddate calendar widget residue; weekday labels are not C2
+8d3d7b17eb673bcb,full,fix,C1,"C1: ""(Please open in new window"" @2570 (x2)",,Essay; animation-embed notes are chrome
+a359934b864615bc,full,fix,A6;B1;C1;C2,"A6: ""<U+F0B7 PUA bullet>"" @724 (x3) | B1: ""&copy;"" @1034 (x7) | C1: ""&copy; 2014 Project Lead The Way, Inc."" @1034 (x7) | C2: ""&copy; 2014 Project Lead The Way, Inc."" @1034 (x7)",A6: U+F0B7,PLTW worksheet: PDF private-use bullets; &amp; at 2684 also B1
+6a55d86f533134d1,full,fix,B4;C1,"B4: ""if (isMyPost)"" @4235 | C1: ""Sign up for free to access"" @4007",,Wyzant promo; JS residue if (isMyPost) { }
+65a9730b24a24909,full,fix,A1;C1,"A1: ""\u200b"" @2651 zero-width space | C1: ""Text prompt"" @6876 (UI artifact)",A1: U+200B,Square root article: zero-width space (A1); a 34 vs 52 slip is not in the taxonomy (note only)
+60d451e121a36bc6,full,fix,C3,"C3: ""Here is a solution for N=4"" @2755",,cut after intro to missing solution figure; superscripts lost in extraction
+bd18a7c912a51949,full,fix,C1;C2,"C1: ""Originally Posted by"" @513 (x2) | C2: ""Hi everyone, I am at University"" @545 (x3)",,title printed twice; question quoted in full by replies
+78d0f59b453acc46,full,drop,C1;C3,"C1: ""Filter by: Content type:"" @107 | C3: "". . . ."" @2903 (x6 teaser cuts)",,"NRICH topic index; teaser blurbs cut with ellipsis dots; Stage labels are per-item, not C2."
+8828b7bee424578d,full,clean,,,,"superscripts lost in extraction (note only); answer options (a) and (d) identical in one question (content, not C2)"
+65b8fa4a552a6926,full,drop,C1;C3,"C1: ""Register to view"" @3105 | C3: ""To unlock this lesson"" @3046",,Study.com lesson cut at paywall; little content
+189179981d1333d3,full,fix,C1,"C1: ""Hi - I'm Dave Bruns"" @2166",,"Exceljet author bio block; repeated formula lines are explanation, not C2"
+04418c45af9904cf,full,drop,C5;H2,"C5: ""There are 176 results"" @157 | H2: ""# Search by Topic"" @0 (57% 8-gram overlap with 60176c5247480e5d)",,NRICH task-link listing; known near copy of 60176c5247480e5d; Stage labels are not C2
+277106e6b67f0e1e,full,fix,C1;C2;C5,"C1: ""View Topper Answer"" @1630 | C1: ""We hope we have given"" @1650 | C2: ""A wing-body alone configuration"" @2 and @640 (question repeated under Question ID) | C5: ""11th maths guide 11th maths guide"" @1828 (keyword stuffing)",,Answer-site promo; question repeated under Question ID; keyword line in footer.
+0b78c3753889b6cc,full,fix,C2,"C2: ""question1:3^x+2 = 5 ^x-1"" @8 (x2)",,forum reply quotes the whole question
+3a2ccc88dfcd67c9,full,fix,B5;C3,"B5: ""```"" @12634 (unclosed fence) | C3: ""11. Find wrong number in series"" @12557",,placement paper; ends inside an open fence after Q11
+58c09832a59cd0c6,full,fix,C1;C2,"C1: ""Show Tags"" @909 (x8) | C2: ""Pipe A and B running together can fill a cistern in 6 minutes. If Pipe"" @589 (x16)",,"GMAT Club chrome; question quoted in replies and repeated as thread title; footer is chrome, not C3"
+976926a9d91df6a2,full,fix,C1,"C1: ""To view more posts"" @3750",,Academic blog post; footer pointer chrome; diagram captions lost (note only)
+288c69dea686549c,full,fix,C1,"C1: ""Talk to our expert"" @2936",,Aakash-style header and OTP form boilerplate; company number not F1
+610be80bcc683058,full,fix,C1;C2;C3;D3,"C1: ""Natural Log Calculator"" @899 | C2: ""The logarithm base 10 (that is b = 10) is called"" @34 (x2, paragraph repeated) | C3: ""lo expresamos en forma de potencia:"" @3684 (text stops mid-solution) | D3: ""¿Cuál es la base"" @2557 (Spanish FAQ block)",,English FAQ page with a Spanish block appended (D3); paragraph repeated; ends mid-solution
+b632bcffa59758d0,full,fix,C1,"C1: ""1"" @59",,stray counter line after title; body clean
+a288421403c368e3,full,fix,C1,"C1: ""Type like pro"" @0",,"Java code body; some for-loop lines missing (extraction, note only)"
+0abcdab8a5c7129f,full,fix,C1;C2,"C1: ""WhatsApp Chat:"" @0 (site contact line) | C1: ""Post By"" @100 | C1: ""Share Examwizard"" @3567 | C1: ""Homepage"" @3627 | C2: ""Category: Education"" @144 and @3604 (x2)",,"Exam-answer site chrome; WhatsApp contact line is a site contact, not F1 (not copied); separator lines are not C2."
+840f74585e40502e,full,fix,A1;C1;C3,"A1: ""\u200b"" @900 (x5) | C1: ""Earn Coins"" @1457 | C3: ""turned through 120"" @688",A1: U+200B,"physics solution; repair by removing U+200B; question cut at ""120"" (C3)"
+e0efced79bdb30f9,full,fix,A1;C2,"A1: [U+00AD] @4585 (x4) | C2: ""Functions can be combined using composition of functions."" @1735 (x2)",A1: U+00AD U+00AD U+00AD U+00AD,"Standards page; soft hyphens as bullets; symbol-font substitutions (£ for ≤, ¥ for ∞) not coded"
+2b2d4b3ed0f044d5,full,drop,B4;C1;C2,"B4: ""{[ snackBarMessage ]}"" @1998 | C1: ""What students are saying"" @2025 | C2: ""This preview has intentionally blurred sections"" @515 (x3)",,course-site preview; template variable; banners and testimonials; C3 not (ends on chrome)
+92c3a0c1bbf8c85f,full,fix,C1,"C1: ""This entry was posted"" @4834",,"WordPress blog post: footer chrome, notation text kept"
+48bc7841276288a7,full,fix,C1,"C1: ""posted by on ."" @19",,Q&A chrome and related-question footer
+0a2699cd84e3cb6f,full,fix,C1;C2,"C1: ""High Yielding Test Series"" @347 (x9) | C2: ""Concept Questions :-"" @297 (x10)",,NEET question bank; per-item chrome repeated; answer options lost in extraction
+ca3cb26190545cf7,full,drop,C1;C5;D4,"C1: ""DOLAR"" @0 | C5: ""http://en.wikipedia.com"" @1422 | D4: ""Naturally, they should know"" @955",,Turkish news-site chrome; spun SEO text with injected links
+8d23efe0689ebffe,full,clean,,,,full read; OpenStudy speaker labels and usernames are content
+e97ce48b5e649e37,full,fix,C1;C2,"C1: ""Wiki User"" @74 (x2) | C2: ""What are 3 least common multiples of 12 and 35?"" @5 (x2)",,Q&A site chrome; question printed as title and echoed on the Q: line
+025bc18d9fe3022f,full,clean,,,,textbook; '´' used as multiply sign and figure residue (note only)
+5cb863735ca0a12e,full,clean,,,,Seminar note with R code; output lines are natural (ruling 4)
+f4c659aeac76c1ea,full,fix,C1,"C1: ""Similar Questions"" @758",,Similar Questions list and footer; posted-by line and answer kept
+3ab1ec9136ef11b1,full,fix,C2,"C2: ""Hi people this is my last problem"" @26 (x2); ""1.) A conical tent"" @129 (x2)",,Forum reply quotes the whole post
+d72ac32262851aa2,full,fix,C1,"C1: ""Homework Helper"" @1021 (x12) | C1: ""Last edited:"" @4223 (x2)",,"forum role labels and edit lines; labels are per-post, not C2"
+2a69fcdea983d69e,full,clean,,,,ASVAB math tutorial; table text flattened; escaped \$ is valid markdown
+71b4ae1316c26690,full,drop,C1;C2;C5;D4,"C1: ""Contents"" @45 | C2: ""An ordinary (fair) die is a cube with the numbers"" @84 (x2) | C5: ""IT IS INTERESTING"" @1124 | D4: ""only using one piece"" @348",,"FAQ-farm page: spun text, copy-pasted sentence, little real content"
+a9aeeb7c1d8fe536,full,fix,C1,"C1: ""Similar Questions"" @165 | C1: ""👍"" @111",,vote widget and similar-questions list
+1e846114c6bc826c,full,fix,C1;C2,"C1: ""In summary, the conversation"" @77 | C1: ""Replies"" @3000 (x10) | C2: ""• Introductory Physics Homework Help"" @2963 (x10)",,auto-generated thread summary; related-threads list repeated
+0646e03f5bd6b8ca,full,fix,B5;C1;C2,"B5: ""\begin{align*}"" @129 | C1: ""+2666"" @203 | C2: ""Aug 16, 2022"" @186 (x3)",,Vote/reputation chrome; post date repeated per post; raw align* block outside $$
+ef8d61c96df06037,full,fix,B4,"B4: ""\newenvironment"" @1 (LaTeX preamble leaked into text)",,"LaTeX preamble leaked into text; MCQ items; benchmark status not confirmed, so no F2"
+587296d443ddc36e,full,fix,B4,"B4: ""[an error occurred while processing this directive]"" @768",,template error text; Saint Petersburg olympiad problem (not a benchmark set)
+9246ee58e19b7d38,full,fix,C1;C2;C3,"C1: ""Related Questions"" @1038 | C2: ""The apex is the pointed tip of a cone"" @80 and @1813 (x2) | C2: ""How do you find the apex angle?"" @2, @35 and @1004 (title printed three times) | C3: ""h = 13.20"" @1553 (answer cut mid-expression) | C3: ""fire Capt."" @5335 (news snippet cut mid-sentence)",,PAA aggregator; answer cut mid-expression; news snippet cut; formulas lost in extraction.
+40b62d569ee3953c,full,drop,C1,"C1: ""Back to Michigan"" @36 | C1: ""Discover the most effective"" @71 | C1: ""See Pricing"" @440",,Marketing page; standards index only.
+0ac890f082e91cbc,full,clean,,,,short solution snippet; no disease found
+b22b5d72708d7f26,full,fix,A1;C1;F2,"A1: ""\u00ad"" @2119 | C1: ""READ:"" @947 (x2) | F2: ""[IMO 1964] Find all positive integers n for which"" @2220",U+00AD,Inline READ: link lines; Olympiad and AMC mentions are not F2; drop the quoted IMO 1964 problem
+9ee90aae80566932,full,drop,C5,"C5: ""There are 40 results"" @142",,NRICH task-link listing; Stage labels are per-item labels (not C2)
+7c6df0c4a23c902b,full,fix,A4;B4;C1,"A4: ""<U+FFFD>"" @1957 | B4: ""document.write (document.title)"" @39 | C1: ""Navigation"" @0",A4: U+FFFD,replacement char replaces mu in Mobius; JS residue and site nav
+e02d2eeb2370fd18,full,fix,C1,"C1: ""Similar Lessons"" @1365",,"Lesson-site chrome (Print Lesson at 1117, similar lessons, resource counts); per-card Environment labels not C2"
+9c3ea7a4ceefc108,full,clean,,,,Q&A with comments; comment dates are thread content
+00ac15aab828f732,full,fix,A1;C1,"A1: ""[U+FEFF]"" @0 | C1: ""Back Home"" @31",U+FEFF,BOM at start; site nav line
+32cef436c4fc70da,full,fix,C1;C2,"C1: ""Subject: curve fitting"" @76 (x8) | C2: ""I'm basically trying to fit data to the curve"" @265 (x5)",,Matlab Central thread; per-message headers; earlier messages quoted in replies
+1f7fcda5732055b3,full,fix,C1,"C1: ""All about flooble"" @0",,Site nav header; comment chrome; posted-by footer at 1737
+0b24464e9c3a83c2,full,clean,,,,Byline kept; not C1; clean.
+fdf5aefb6df06947,full,fix,A1;C1;C5,"A1: ""<U+200B>"" @3285 (x3) | C1: ""27 Responses"" @1046 | C5: ""algebra tutors,"" @670 | C5: ""My Website"" @502",A1: U+200B,YouTube description with link and tag lists; zero-width spaces in a comment

@@ -1,0 +1,151 @@
+﻿doc_id,read,verdict,diseases,evidence,hex,note
+ab4df107c4d439c6,full,fix,C1;B2;D4;D3;C4,మరింత చదవండి at 871 (3x) | 24> at 1078 | 100 మీటర్లు at 100 (4x) | Fortnite at 193 (9x) | చిత్ర క్రెడిట్లు at 2581,,D4: awkward repetition of 100 మీటర్లు and fragmented quest instructions.
+5a34df03774ff1e8,full,clean,,,,
+9ddf5ae930e0e58b,full,fix,D4,కానీ ఆ సినిమా నిరాశపర్చడం at 495; ఆసక్తిగా చపడం at 1436; హడావుడి కానీ. at 936,,D4: Broken sentence structure (full stop after కానీ) and spelling error (చపడం instead of చప్పడం).
+58a735e896dd47e5,full,fix,C1,https://twitter.com/TheFigen/status/1553039353580064769?ref_src=twsrc%5Etfw%7Ctwcamp%5Etweetembed%7Ctwterm%5E1553039353580064769%7Ctwgr%5Ed77b0b44ab192fa91af941bca21ea86e948cbcbe%7Ctwcon%5Es1_c10&ref_url=https%3A%2F%2Ftv9telugu.com%2Ftrending%2Fnuclear-bomb-explosion-underwater-shocking-video-au42-756597.html at 1710,,Raw Twitter URL left at the end of the article.
+0085c49fc57558bf,full,drop,F3,GoMovies Apk at 856 (3x),,promotes piracy app (proposed disease)
+8d59bc181e2d8446,full,fix,C2;D3;D4;C1,వార్తలు at 2 | Tees Maar Khan Theme song at 128 | కాగా ఇటీవలే మేకర్స్ కాగా ఇటీవలే మేకర్స్ at 680 | #TeesMaarKhan at 1433; — idlebrain.com at 1487,,"Top navigation menu left in text (C2), English text (D3), duplicated text glitch (D4), and tweet embed/boilerplate at the end (C1)."
+a9b50e4a22b7943e,full,clean,,,,
+5d111b7935483d32,full,drop,F3,వికలాంగ యువకుడిని హతమార్చిన మైనర్ at 37,,Entire article is about murder; dropped.
+f6e21e76e2a789b0,full,clean,,,,"gender/number agreement slips at 1122, 1705; typo at 2273; no listed disease"
+7ef5b7ab6df65268,full,fix,D3;B2,"""YouTube"" at 8 (39x) | ""<span style="" at 2499",,"English names (YouTube, tool names) kept as normal mixed language, not bad; stray HTML span tag"
+67f4f373f37ed959,full,clean,,,,
+e5418018af08172d,full,fix,D3,#SONOFINDIA at 1421,,English hashtag used as part of the article content (D3).
+6e4a8698ee5cd2bb,full,fix,D3,MPDO at 3549,,English government acronym (MPDO) in Telugu text.
+5ad8d5e34eab1c17,full,fix,D3,Heroines:0 at 0,,Abruptly cut English metadata left over from a scrape.
+fdb1b904679948c6,full,fix,D3,“Lolipop” at 86; True Story With Fictional Emotions at 153,,English movie title and taglines (D3).
+668d883fb77963f5,full,drop,F3,మీ కలల స్త్రీని ఆకర్షించడానికి at 0,,Entire article is inappropriate/unsafe; unsafe for AI training. Dropped.
+4dff27fbc7052a2c,full,fix,D3;C1;D4,"AP Local Elections Phase 2 at 20 | Published On - Mar 10,2021 8:08 PM at 19997 | ధరిచేస్తేనే at 19162; చేసిన at 1402",,Live blog coverage of elections; repeated updates are timeline snapshots (not a disease). English heading/footer (D3/C1) and spelling mistakes (D4).
+c5a74a6de69221b8,full,fix,F1,phone number at 1106,,Strict PII: Public helpline numbers left in text. Needs a regex rule to strip.
+51d225e70d516a07,full,fix,D4,. at 909,,Single punctuation error: full stop used instead of a comma (D4). Everything else is clean.
+ed10c2a944c1dab3,full,clean,,,,
+16f20a9f263e8086,full,fix,D3,Ganesh Chaturthi: at 0; Ganesh Chaturthi: ఇలా వినాయకుడి పూజ చేస్తే అంత మంచి జరుగుతుంది. at 1072,,English heading at the start and an extraneous/repeated injected section at 1072 (D3).
+c366b77cfbaa1ca4,full,fix,D3;C1,First Day First Show: at 0 | - General News at 3397,,English heading at start (D3) and website boilerplate junk starting at 3397 (C1).
+be0cefed31a362c7,full,fix,C1;D3,- 23 min ago at 8; - 13 hrs ago at 85 | Just In at 0,,Website sidebar/timeline junk left at the top (C1) and English text/headings mixed in (D3).
+115bba807a058523,full,drop,D4;D5;D3,నేను అతను కాకుండా at 1345 | ఇది విశ్వసనీయమైనది అనిపించడం లేదు at 0 | GeoXH XXX at 74,,Incoherent machine translation with nonsense sentences (D4/D5) and heavily mixed English (D3). Dropped.
+f2863564f4567789,full,fix,D3,mr at 123,,Natural English abbreviation (Mr) mixed into Telugu text (D3).
+5ba5c060193cf593,full,fix,D3,IND vs AUS T20I at 107,,English cricket match abbreviation mixed into Telugu text (D3).
+7bf385a9a1c4fb03,full,fix,D3;C1,"Redmi Note 10T 5G to launch in India on July 20: at 0 | తెలుగు వార్తలు, తెలుగులో బ్రేకింగ్ at 2030; Tags: 5G Smartphone at 2203",,English title/terms (D3) and unrelated website promotional boilerplate at the end (C1).
+93bbfccf9f8b420f,full,fix,C1,మరిన్ని at 4348,,"Perfect article up to 4348, followed by unrelated English website boilerplate."
+6faa50209f00b4cf,full,drop,F3,ప్రైజ్ బాండ్ ప్రైమ్ at 0,,Lottery/gambling website content; unsafe for training. Dropped.
+cca46f4776f5b607,full,clean,,,,
+a1a061b0acc3d8d6,full,clean,,,,
+da88f8127113b503,full,fix,D3,Google free course: at 0,,English heading at the start of the article (D3).
+2e1ca01703ecdfa2,full,fix,D3,A at 0; Hz at 532,,Physics symbols/units in English alphabet (D3).
+7ad93bc101c3a384,full,drop,F3,హాట్ at 0,,Contains sexual/NSFW content. Unsafe for AI training. Dropped.
+2ce4582bc4f24c0c,full,fix,D3;D4,Alternative at 414; Surrogate at 974; Gestational surrogacy at 1454 | పద్దతిని at 550,,English terms (D3) and spelling error (పద్దతిని instead of పద్ధతిని) (D4).
+28d2e49e61f0ce06,full,fix,D3;D4,Chanakya Niti: at 0 | ఇది at 1413,,English header at start (D3) and abrupt pronoun switch/gender mismatch (ఇది) in the text (D4).
+b8ea4c807e2cd0f8,full,clean,,,,
+78d482cb86a87ec4,full,fix,D3;D5,CDO at 1486 | మిలియన్ డాలర్లను at 1012,,English finance acronym (D3) and translationese singular/plural error (D5).
+f13247880d899629,full,fix,C1;D3,Don't Miss! at 0 | Vivo at 583,,Website sidebar junk left at the top (C1) and English brand names in text (D3).
+df38a659d344fb07,full,fix,D3,Gold at 0,,English word (Gold) at the start of the article (D3).
+ba133083568cfeae,full,drop,F3,మీ పెద్ద రోజు at 0,,Contains vulgar/double-meaning content. Unsafe for AI training. Dropped.
+5503cef7a31ecb36,full,fix,C5,TAGS: at 2050,,Website tag cloud / keyword list left at the end (C5).
+b69e3e3f758e34b6,full,fix,D4,చెన్నయ్లో at 583,,Spelling/transliteration error; should be చెన్నైలో (D4).
+ca72a12f5656640f,full,clean,,,,
+8e40b1ed0575431e,full,drop,F3;C1,అనుమానాస్పద మృతి at 46 | General News at 2481,,Contains unsafe content (suicide/suspicious death) and website boilerplate. Unsafe for AI training. Dropped.
+c871c674ee4a7cae,full,fix,C1,చిత్ర మూలం - devantart.com at 4079,,Image credit/boilerplate left at the end of the article (C1).
+5c570eaba09f22b5,full,fix,C2,గోదారమ్మ మరోసారి ఉగ్రరూపం దాలుస్తోంది at 74 (2x); తెలంగాణ రాష్ట్రంలో at 534 (2x),,Duplicated blocks of text in the article (C2).
+c7c7cd3b65e5823a,full,drop,D1,Photography at 0,,Document is mostly English with very little Telugu; wrong language label. Dropped.
+b6ddb1f2f2e4456f,full,fix,F1,name and phone number at 2045,,Contains PII (name and phone number). Rest of the article is fine; remove PII to fix.
+6cf4ff7e0ca19ddf,full,fix,D3;C1,Stocks to watch: at 22; MD & CEO at 542 | Disclaimer: at 3331,,Finance terminology/headings in English (D3) and website disclaimer boilerplate at the end (C1).
+92f5760870cdd59d,full,fix,C1;D3,చెతే at 0; View this post on Instagram at 1656 | (Cheteshwar Pujara) at 107,,"Cut-off scrape artifact at start and Instagram embed boilerplate at end (C1), with English name inserted (D3)."
+93e12eda26737171,full,fix,D4;C1,ఎవరు వారు at 58; రెటైన్స్ at 364 | ఇవి కూడా చదవండి : at 1119,,"D4 for word order (ఎవరు వారు) and transliteration typo (రెటైన్స్). C1 for Telugu website boilerplate ""Read these too"" at the end."
+f787d6848da77eef,full,drop,D3;D4;F3,Shriya: at 0 | కూతుమహా at 411; క్రౌకి at 730 | అందాల ఆరబోత at 1697,,Low-quality tabloid gossip/objectification (F3) with English heading (D3) and spelling errors (D4). Dropped.
+4c9db4e00856fe76,full,fix,D3;F1,Google at 339 (4x) | email at 1497,,Repeated English brand name (D3) and sample email address left in text (F1).
+d871aec13b8eb81d,full,fix,D3;C1,Pakistan at 0 | ఇవీ at 3127,,English word at start (D3) and website boilerplate at the end (C1).
+9f312723a7f39b54,full,drop,F3,political hate speech at 0,,Contains political hate speech and extreme violence. Explicitly unsafe for AI training. Dropped.
+9f1d3e17f2fa0c25,full,fix,B2;C1,మన at 798 | మానవీయ at 77; పోస్ట్ సమయం: at 2883,,"Missing space/glued word (B2), unrelated injected text at start, and post time boilerplate at end (C1)."
+ee359bd3362ec3f1,full,drop,F3,కాలేజీ స్టూడెంట్ పై ఆటో డ్రైవర్ అఘాయిత్యం. at 0,,Contains extreme violence (assault). Explicitly unsafe for AI training. Dropped.
+188fec738adc0293,full,fix,C1,Don't Miss! at 0,,"Website sidebar/boilerplate and mixed language as well, however, boilerplate code should deleted all thatinjected at the start of the document."
+d48e99776bf45b51,full,fix,D3,Telangana at 0,,English heading at the start of the article (D3).
+49a71d88fbcc7784,full,drop,F3;D4,cuddling. at 307 | బ్రిలియంట్ ఎర్త్ మర్చండైజింగ్ & రిటైల్ విస్తరణ యొక్క SVP కాథరిన్ మనీ అందమైన రింగ్ యొక్క ప్రత్యేకతలను బట్టి ఉంటుంది. at 800,,Low-quality gossip/tabloid content (F3) with broken machine translation (D4). Dropped.
+a0c4976c8df6555e,full,drop,F3,suicide content at 0,,Contains suicide/self-harm content. Unsafe for AI training. Dropped.
+08da3c8f1d8c4459,full,fix,C1;D4,"thesakshi.com : at 0 | చరక్ సంహిత (క్రీ.పూ. 1500) ప్రకారం, బేల్ కంటే ఎక్కువ కాలం లేదా బాగా తెలిసిన ఔషధం మరియు భారతదేశ నివాసులచే ప్రశంసించబడింది. at 3368",,Website domain boilerplate at start (C1) and broken machine translation/missing subject (D4).
+ce5d37fd95493d93,full,clean,,,,
+641e38516455ddaa,full,fix,D4,మహబూబ్నగర్ at 367,,Spelling error: should be మహబూబ్‌నగర్ (long 'oo' ఊ) instead of మహబూబ్నగర్ (short 'u' ఉ) (D4).
+6f5bd09765fcba54,full,drop,C1,ఈ నిబంధనలు at 24,,Document is mostly boilerplate (rules/terms) starting at 24. No actual article content. Dropped.
+8348b209ce713e97,full,fix,D3;C1,Mohan Raja: at 99 | - 2 Dec 2022 at 1176,,English name/heading (D3) and website timestamp boilerplate at the end (C1).
+7a37badd365e0f53,full,fix,C1;C2;D4,"ABN , First at 0 | అధికారమే మాకు అండగా ఉంది at 58 (2x) | ఉదయ్భాస్కర్రాజు at 1620",,"English website boilerplate at start (C1), repeated paragraph (C2), and glued spelling error for ఉదయ్ భాస్కర్ రాజు (D4)."
+0712800649d5fb29,full,fix,C1,g-ప్రకటన at 244,,Website advertisement/notice boilerplate (C1).
+0e1b4c88a665e22b,full,fix,D3;D4,Astrology Tips: at 0; (Astrology) at 653 | చనిపోవచ్చుననడానికి at 1218,,English heading/terms (D3) and glued spelling mistake; should be చనిపోవచ్చు అనడానికి (D4).
+e40c7e6df995ca05,full,fix,D4,వారి పరిస్థితి చూసి అందరూ అనుకున్నారు మరియు రెండు లెజెండ్స్ అయిపోయాయి మరియు వారి సమయం ముగిసిపోయింది. at 216,,"Broken sentence formation/awkward use of ""మరియు"" (and); likely bad machine translation (D4)."
+0ddea5ba4fc75654,full,drop,F3,ఇక అమ్మాయిల విషయంలోకి వస్తే అమ్మాయిలకి 18 నుండి 22 సంవత్సరాల లోపు పెళ్లి చేయడం మంచిది. at 789,,"Promotes early marriage for women as ""good advice"". Unsafe for AI training. Dropped."
+3e6fd04ed222e146,full,fix,B3;D3,` at 0 | Dubai: at 234,,Stray Markdown/ghost chat marker at start (B3) and English word in text (D3).
+fa1823f097100328,full,fix,C1;D3,All nominees of the seven individual categories at 577 | All nominees of the seven individual categories at 577,,Social media embed (tweet) left in text (C1) containing English text and external links (D3).
+64092f3350df3952,full,fix,C1;D4,Don't Miss! at 0 | బిగ్బాస్ at 951,,Website sidebar boilerplate at start (C1) and spelling/formatting error: missing space; should be బిగ్ బాస్ (D4).
+44be00c2218e4ccb,full,clean,,,,
+3f7d5212207f3adc,full,fix,D3,Pushpa 2 at 0,,English movie title at the start (D3).
+d0a4489a82f809e3,full,fix,D3;D4,GOP at 310 (11x) | సేన్. at 88 (5x),,Heavy literal machine translation of US political news; English abbreviations left in Latin script (D3) and awkward translationese shorthand like సేన్. instead of సెనేటర్ (D4).
+49626812304d5150,full,clean,,,,
+a472cbb07057854e,partial,drop,F3,terrorist plot targeting religious gathering at 0,,Contains terrorist plot/violence targeting a religious event. Unsafe for AI training. Dropped.
+7662103929f8f5fa,full,fix,C1;D3,"బెంగళూరు, నవంబర్ 3 (రాయిటర్స్) at 0; చూడవలసిన స్టాక్లు: at 1452 | (.MIAPJ0000PUS) at 429",,"News dateline and unrelated stock list widget (C1), with English ticker symbols and acronyms (D3)."
+c324c2114212b31f,full,fix,D4,అడపదడపా at 1436,,Spelling error: should be అడపాదడపా (D4).
+a7d22855d95e19da,full,fix,D3,heart attack at 258; Vegetables at 1880,,English words mixed into the Telugu text (D3).
+6d807ae605962b0e,full,fix,C1,Don't Miss! at 0,,Website sidebar/boilerplate left at the top. Article itself starts after the sidebar.
+efbc8e17f4225bf3,full,fix,G2,నేనేనువ్ఞ్వ at 383,383 U+0C28+U+0C47+U+0C28+U+0C47+U+0C28+U+0C41+U+0C35+U+0C4D TELUGU SIGN VIRAMA,Broken conjunct sequence (G2).
+82cd50de1fd2248b,full,fix,C1;D4,News Reels at 3310 | ద్యాసను at 647; ఆరోపణళు at 2506,,Website boilerplate at end (C1) and spelling errors (D4).
+8ebdc344120b5e1e,full,fix,D3;D4,Linkedln at 243 | మీ వెబ్సైట్కి తిరిగి వెళ్లండి at 1293,,English text (Linkedln) in Latin script (D3) and truncated sentence with stray comma (D4).
+ff8afd3bce690d35,full,clean,,,,
+2d6385d657cf67ca,full,fix,D4,చప్పల్ని at 1446,,Spelling error: should be చెప్పల్ని (D4).
+19d2fffb2a4a774f,full,fix,D4,పి.అశోక్బాబును at 52; అశోక్బాబు at 1935,,Spacing error: missing space between first and last name; should be అశోక్ బాబు (D4).
+a70f76757da6fd5e,full,drop,F3,Tribal Girls suicides: at 0,,Contains suicide/self-harm content. Unsafe for AI training. Dropped.
+2acf40242963f9fd,full,fix,D3,Pro: Vamsi – Shekar at 2555,,English promotional byline at the end of the press release (D3).
+d847afa42c9df584,full,clean,,,,
+bc31252d51be85bd,full,drop,F3,ఓ యువతి హత్య కేసులో at 0,,Contains graphic murder details. Unsafe for AI training. Dropped.
+4b0b3187bbdf731b,full,clean,,,,
+eff5a9a9655b4a88,full,fix,D4,సెల్వం at 34; విజయ్ కూడా ఈ చిత్రం నుంచి తప్పుకోవడం మణిరత్నం డ్రీమ్ ప్రాజెక్టు వాయిదా పడింది. at 1287,,Spelling error (సెల్వం instead of సెల్వన్) and missing conjunction/broken grammar (D4).
+1528f001fa87bb6a,full,fix,C1;D3,Just In at 0 | (CDC) at 955,,Website sidebar/timeline boilerplate at start (C1) and English acronym in text (D3).
+9de3a8df3ef1041c,partial,drop,F3,pornographic/leaked content at 63,,article about pornographic/malicious leak content. Unsafe for AI training. Dropped.
+d0692f163114fdb4,full,fix,D4;D5;D3,"తాజా పరిణామంలో, ఆనంద్ వర్ధన్ కొత్త ఎగ్జిక్యూటివ్ డైరెక్టర్గా నియమితులయ్యారు నోయిడా మెట్రో రైల్ కార్పొరేషన్. at 0 | ఆమె సింహాసనాన్ని ఆంద్ వర్ధన్ at 570 | IAS at 612; ACEO at 653",,"Broken machine translation and literal wording (D4/D5), with English acronyms left in text (D3)."
+27d41b60de032ba2,full,fix,D4;C1,ఒక మంచి పత్తి ప్రామాణిక దేశం at 632 | కాంటాక్ట్ ఫారమ్ ద్వారా at 2799,,Literal machine translation (D4) and contact form boilerplate at the end (C1).
+64d976d0f5cf85f9,full,fix,D3;D4,(Prabhas) at 27 | డార్లి్ంగ్ at 852; వర్క్తో at 963,,English name in Latin script (D3) and spelling/glued word errors (D4).
+710313401d6f415f,full,drop,C4;D4,మా అత్యంత at 135 | వంట నేను at 294,,Document is too messy to clean: massive injected ads/boilerplate (C4) and broken machine translation (D4). Dropped.
+60c31dd4cf6eb104,full,fix,D4;C1;D3,తేత్రాయుగంలో at 0 | నోట్ : మీ ఫీడ్ బ్యాక్ మాకు ముఖ్యం at 1999 | abuse at 2147,,"Spelling error (తేత్రాయుగంలో instead of త్రేతాయుగంలో), website feedback boilerplate (C1), and English word 'abuse' (D3)."
+3e2e6a4b07e695d9,full,fix,C1,మరింత సమాచారం కోసం క్రింద లింక్ చూడండి at 2359,,Website boilerplate/link prompt at the end (C1).
+7971a70fc24d900c,full,fix,C2;C1,రష్యా దాడుల నేపథ్యంలో at 0 (2x) | మరిన్ని అంతర్జాతీయ వార్తల కోసం at 1458,,Duplicated block of text (C2) and website boilerplate link at the end (C1).
+7f2208938571c005,full,fix,D3;D4,PawanKalyan at 0; IPC at 916 | హైవీపై at 1095,,English terms in Latin script (D3) and spelling error హైవీపై instead of హైవేపై (D4).
+b1fc122a01e457a3,full,fix,G1;B2;D4,"ిిచేదు at 2047 | ,,,,,,,,,,,,,,,,,,,,,,,,,,,,, at 1960 | అక్షషరం at 2600",2047 U+0C3F TELUGU VOWEL SIGN I+U+0C3F TELUGU VOWEL SIGN I,"Forum discussion thread with classical poetry. Contains G1 broken matra, massive comma string (B2), and spelling typos like అక్షషరం (D4). Archaic spellings are valid."
+65ae87d74fe601f5,full,drop,F3,అఖిల్ ఎంత వద్దని చెబుతున్నా మోనాల్ అతని వెనుక పడటం మానడం లేదు at 237,,Ultra low quality gossip/flirting content; unsafe/unsuitable for AI training. Also has spelling error (అబద్దాలంటూ). Dropped.
+655f1ee7a1855455,full,clean,,,,
+0a640a92733dd1ad,full,fix,D4,మిక్సుడ్ at 509 (2x),,"Colloquial transliteration/spelling error for ""mixed"" (D4)."
+f9bec068836e0051,full,clean,,,,
+d5308e76e13e8058,full,fix,D4,డాక్టర్ కిచ్లేవ్ at 0; కిచ్లూ at 999,,Inconsistent transliteration of foreign name (కిచ్లేవ్ vs కిచ్లూ) (D4).
+142ddb551bbdbbd2,full,fix,C2;D3;C1,ఆధార్ కార్డ్ రూల్స్లో కేంద్ర ప్రభుత్వం కీలక మార్పు చేసింది. at 0 (2x) | Aadhar Card: at 192 | Attention: # at 880; ఇదీ చదవండి: at 1578,,"Duplicated lead paragraph (C2), English heading (D3), and embedded tweet/trailing link (C1)."
+6cfff787aa9eede7,full,fix,D3;C2;C1,Maradona: at 0 | సాకర్ మాంత్రికుడు at 64 (2x) | ఇవీ చదవండి at 1249,,"English title (D3), duplicated lead sentence (C2), and massive unrelated news list/boilerplate (C1)."
+5c449526d3564653,full,fix,B2;D4,- at 0 (2x) | వర్క్ఫ్లేస్ at 1465,,Stray hyphens at the start (B2) and spelling error (వర్క్ఫ్లేస్ instead of వర్క్ ప్లేస్) (D4).
+77eb3e86c02dff3e,full,fix,C2,రాహుల్..... at 0 (2x),,Entire article corpus repeats with the same meaning starting at 1602 (C2). Deduplication needed.
+16f09c1071f5ad38,full,clean,,,,
+b488551508b39dbd,full,fix,C1,Don't Miss! at 0,,Website sidebar boilerplate at the start (C1). Main article is clean.
+32ae6d250a655f24,full,fix,D4,?? at 918; నిలి నిలి at 933; నిలి ఆకాశం at 1160; ప్రజలలో at 1404; వున్న at 1966; దట్టుకొని at 1984,,"Multiple native spelling and grammar errors (నిలి, ప్రజలలో, వున్న, దట్టుకొని) and punctuation glitch."
+b5637f3271aa29f2,full,drop,B2;D3;F1;C1;B4,<span style= at 0 | Este recorrido at 173 | phone number at 3056 | మమ్మల్ని సంప్రదించండి at 3056 | [/ vc_column_text] at 3297,,"Raw HTML/shortcodes (B2/B4), untranslated Spanish (D3), boilerplate (C1), and strict PII (F1). Dropped."
+54ef598ad05107bf,full,fix,D4;C1,టెస్ట్ట్ at 6401; స్ట్టైపెండ్ at 6623; సారించవవచ్చు at 5223 | మరింత సమాచారం at 7403,,Multiple native typing/spelling errors (D4) and website boilerplate at the end (C1).
+c70552094ff4779f,full,clean,,,,
+6eab4dbf2c6122fc,full,fix,C1;D3;D4,Don't Miss! at 0 | News at 14 | ఫ్లాఠీ ఫామ్ at 1032; ఫ్యాన్ ఇండియా at 1583,,"Website sidebar boilerplate (C1), English category headings (D3), and native spelling/transliteration errors (D4)."
+0eb8aa9c275534d5,full,fix,D4,వ్యుహాలపై at 432,,Spelling error: should be వ్యూహాలపై (D4).
+7f6411728d7b8c4b,full,fix,C1,షర్మిలతో at 1023,,Unrelated related-news boilerplate starts at 1023 and goes to the end.
+4a70af0731e8c3b5,full,fix,C1;D3;D4,Recommended Video at 379 | Recommended Video at 379 | తాజాగాఆర్కే at 741,,Recommended Video widget (C1/D3) and missing space typo in తాజాగాఆర్కే (D4).
+90768e614c555e28,full,fix,C1;D4,- వార్తలు at 0 | కేసీఅర్ at 721; అమ్మవడి at 734,,"Website navigation menu at the top (C1) and spelling errors (కేసీఅర్ instead of కేసీఆర్, అమ్మవడి instead of అమ్మఒడి) (D4)."
+9c89a7eaa9e0c0cd,full,fix,D3,TDS at 506 (2x); 1A at 786; ITR at 1959 (5x),,Standard finance/tax acronyms and section numbers in English (D3).
+f0a19f07714faca5,full,fix,D3;D4;C1,Types of Thyroid: at 0 | అతఃస్రావ at 603; థైపోథైరాయిడిజం at 1717; ఛర్మం at 1916 | - Meal Maker Recipe: at 2555,,"English title (D3), native spelling errors in medical terms (D4), and unrelated related-articles boilerplate at the end (C1)."
+32af6c88af5197f5,full,fix,C1;D4,Don't Miss! at 0; Rating: 2.75/5 at 586 | గోడవపడుతూ at 1470; అంగీకరీంచారు at 1898,,Website sidebar/rating metadata (C1) and native spelling errors in review body (D4).
+13c7b26934e4bb05,partial,fix,C1,Don't Miss! at 0,,Website sidebar boilerplate at the top (C1). Read partially; actual article starts at 556.
+d4447c0c8cf4e26c,full,fix,D3;C1,EV For All at 0 | EV For All at 0,,"Top characters running till future! are unrelated English EV ad boilerplate (D3/C1), followed by a Telugu insurance ad."
+d62267ffb63586c6,full,fix,C1;F1,Hiring Content Writer at 1723 | email at 1723,,Website hiring boilerplate with English text (C1) and contains PII (email address) (F1).
+d84493a7dec5dd0b,full,fix,D4;C1,ఫ్యాన్స్కు at 148 | — Team SALAAR at 1542; మరిన్ని ఎంటర్టైన్మెంట్ వార్తల కోసం at 1590,,Spelling error (ఫ్యాన్స్కు) (D4) and Twitter embed/trailing link boilerplate (C1).
+c4036226db9700ad,full,fix,D3;D4;C2,IOS at 0; Mac at 215 | మాకోస్లో at 22 | టీవీ at 232 (4x),,"English terms (D3), transliteration error for macOS (D4), and duplicated text/repetition (C2)."
+2b2da968d594dc4c,full,drop,D5;C1,బాక్సర్ డాగ్ బహుమతులు at 0 | సూచనలు మరియు మరింత చదవడానికి: at 9950,,Machine-translated affiliate spam with unnatural phrasing (D5) and massive bibliography/reference boilerplate at the end (C1). Dropped.
+6ff09e9d46423aca,full,fix,D3;C1,Punjab New AAP Cabinet : at 0; BJP at 1059 | [insert link quote] at 1720,,English heading and acronyms (D3) and related article link boilerplate at the end (C1).
+f4decbed68c9f633,partial,fix,C1;D3,thesakshi.com : at 0 | Gujarat - A cable bridge collapsed at 1452; (Tragedy) at 1822,,Website domain and English tweet embed boilerplate (C1) with English text in brackets and embeds (D3). Read partially.
+c27423ed8f82c00f,full,fix,C1;D4,thesakshi.com : at 0 | నిర్వహాస్తోంది at 344; పవన్కల్యాణ్ను at 1012; మైండ్గేమ్లో at 1118,,"Domain boilerplate (C1). D4 for spelling (నిర్వహిస్తోంది) and explicitly flagging unsegmented compound words (పవన్ కల్యాణ్‌ను, మైండ్ గేమ్‌లో) as bad for LLM tokenization."
+4b22023a8e5e6f1e,full,fix,C1;D3,[[సంబంధిత కథనాలు]] at 2523; SehatQ కుటుంబ ఆరోగ్య యాప్లో at 3270 | SehatQ at 3270,,Website boilerplate/app ad (C1) and English app name (D3).
+40b000654e2a0798,full,fix,C1;D3,Representational Image/Pexels at 0; News Reels at 1773; ఇంట్రస్టింగ్ వీడియోలు at 2533 | (Covid 19 Vaccine) at 50; (New Zealand) at 422; Representational Image/Pexels at 0,,"Image credit, video widget, and YouTube promo boilerplate (C1) along with English text in brackets and credits (D3)."
+78383cf8751cd7f9,full,fix,C1,- వార్తలు at 0,,Website navigation menu boilerplate at the start (C1). Actual article starts at 147.
+56244645c2f33337,full,fix,D4;G2,న్యూదిల్లీ at 76 | లోక్సభలో at 368,368 U+0C15 TELUGU LETTER KA+U+0C4D TELUGU SIGN VIRAMA+U+0C38 TELUGU LETTER SA,Spelling error (న్యూదిల్లీ should be న్యూఢిల్లీ) (D4) and missing ZWNJ causing wrong rendering for Lok Sabha (G2).
+17ee9f123511b9f8,full,fix,D4;D3,నెగెటీవ్ at 1097 | krithi shetty at 1632,,Spelling/transliteration error (నెగెటీవ్ instead of నేటివ్) (D4) and English name in Latin script (D3).
+dc158151a1c2e5f4,partial,fix,C1;D3,మీ వ్యాఖ్యను తెలియజేయండి at 22106 | HypoPet at 21545,,"Comment form boilerplate (C1) and English brand name (D3). Read partially. Note: Noticed spelling errors in full text (e.g., ఎలర్జీలు instead of అలర్జీలు, వెటర్రీ instead of వెటర్నరీ), but D4 not judged due to partial read."
+2311ca6e49dffc35,partial,fix,B2;C3,¬మజ్వాలవలె at 541 | ఈ శ.. at 1200,,Stray symbol (¬) formatting artifact (B2) and document truncates abruptly at 1200 (C3). Read partially: spotted spelling errors (వేసుక instead of వేసుకోండి) but D4 not judged.
+043488b2251ca38b,partial,fix,C1,Don't Miss! at 0,,Website sidebar boilerplate at the top (C1). Read partially.
+5138ea4a5e77613d,partial,fix,D3;C1,Donne Biriyani: at 0 | మరిన్ని at 3711,,English heading (D3) and website boilerplate at the end (C1). Read partially.
+70b3fbbd3046c9e4,full,fix,D4;D3;C1,ఒషధ at 263 | COPD at 1913 | నోట్: ఇందులోని అంశాలు at 2668,,"Spelling error (ఒషధ should be ఔషధి) (D4), English acronym (COPD) (D3), and website disclaimer/link boilerplate (C1)."
+4078762d13000c5a,full,fix,D4,జఅశ్రయం at 2457,,Spelling error: జఅశ్రయం should be ఆశ్రయం (D4). Dashes and title repetition are valid for press release format.

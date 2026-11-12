@@ -1,0 +1,501 @@
+doc_id,read,verdict,diseases,evidence,hex,note
+ab4df107c4d439c6,full,drop,D4;C1;D3;B2,'మీకు పని చేస్తుంది. గాలిలో మీటర్లు' at offset 500 | '- మరింత చదవండి: IO నుండి' at offset 869 | 'Fortnite చాప్టర్ 3' at offset 188 | '- 24>' at offset 1076,,Machine-translated Fortnite guide with broken sentences and stray markup.
+5a34df03774ff1e8,full,clean,,,,"Telugu film news about Mrunal Thakur, fluent, complete."
+9ddf5ae930e0e58b,full,clean,,,,"Telugu film news on Prabhas-Maruthi project, native, complete."
+58a735e896dd47e5,full,fix,C1,tweet embed URL at offset 1710,,Underwater nuclear test video article; trailing embed URL to trim; C3 detector rejected.
+0085c49fc57558bf,full,drop,D4;D3,'తెల్లటి శ్రేణి చలనచిత్రాలు' at offset 880 + 'మూడు ఖర్చుతో అందించే' at offset 680 | 'GoMovies Apk ఫీచర్లు' at offset 1101,,"Auto-translated APK promo page, wrong meanings throughout."
+8d59bc181e2d8446,full,fix,C1,'- వార్తలు - సినిమా - స్పోర్ట్స్' at offset 0 + tweet embed '#TeesMaarKhan Theme Song Out' at offset 1433,,Telugu film news; nav menu at top and tweet embed at end to trim.
+a9b50e4a22b7943e,full,clean,,,,"Nikhil reshoot gossip news, native Telugu, complete."
+5d111b7935483d32,full,clean,,,,"Crime news: minor kills disabled youth; complete, native Telugu."
+f6e21e76e2a789b0,full,clean,,,,"Vitamin C health myths article, native Telugu, complete with disclaimer."
+7ef5b7ab6df65268,full,drop,D4;B2;C1;D3,"'పొడవైన పొడవాటి తోక కీలకపదాలను' at offset 5630 + 'ఈ వ్యాసం కోసం దాని గురించి' at offset 8525 | '<span style=""font-family: Mandali;"">' at offset 2497 | related-article teasers at offset 9839 | 'YouTube ట్యాగ్లు' at offset 716",,"Auto-translated YouTube tags article with span markup, ad and teaser list."
+67f4f373f37ed959,full,clean,,,,"Adipurush fan complaints news, native Telugu, complete."
+e5418018af08172d,full,clean,,,,"Son of India box-office gossip, native Telugu, complete."
+6e4a8698ee5cd2bb,full,clean,,,,"TDP party page on Chandrababu youth policy; native, complete, partisan."
+5ad8d5e34eab1c17,full,clean,,,,"Heroines offer-seeking gossip column, native Telugu with English loans."
+fdb1b904679948c6,full,fix,C1,"repeated cast and credits lines 'నటి నటులు, హర్ష' at offset 1237",,Lollipop film trailer press note; trailing duplicate credits block to trim.
+668d883fb77963f5,full,drop,D4;D3;C1;F3,"'ఆమెను ఏది ఆన్ చేస్తుంది' at offset 1383 + 'మీ lung పిరితిత్తుల పైన' at offset 3340 + 'కాకి-ఫన్నీ, లేదా కుంటి-ఫన్నీ' at offset 3686 | 'జస్ట్ హావ్ ఫన్' at offset 3034 | 'వ్యాఖ్యను పోస్ట్ చేయండి' at offset 4433",,Machine-translated dating-advice blog with untranslated words and comment-form tail.
+4dff27fbc7052a2c,full,fix,C1,"'Published On - Mar 10,2021 8:08 PM' at offset 19997",,AP panchayat election live blog; trailing publish stamp to trim; long name lists but real news.
+c5a74a6de69221b8,full,clean,,,,"Ganesh immersion traffic news; F1 rejected, numbers are official traffic helpline."
+51d225e70d516a07,full,clean,,,,"IPL 13 season opener preview, native Telugu, complete."
+ed10c2a944c1dab3,full,clean,,,,"Santosh Sobhan film first-look news, native Telugu, complete."
+16f20a9f263e8086,full,clean,,,,"Ganesh Chaturthi puja guidance article, native Telugu, complete."
+c366b77cfbaa1ca4,full,fix,C1,'మరిన్ని - General News' related-news list at offset 3389,,Director interview Q&A; trailing news nav list to trim; C3 detector rejected.
+be0cefed31a362c7,full,fix,C1,'Just In - 23 min ago' menu at offset 0 + 'Don't Miss - News navratri' at offset 391,,Skoda Kodiaq booking article; top news-ticker block to trim.
+115bba807a058523,full,drop,D4,"'నేను తెలియదు, నేను అతను కాకుండా' at offset 1571 + '1,200 XNUMX కన్నా తక్కువ' at offset 1851",,"Machine-translated Spanish GPS blog, broken grammar and leftover placeholders."
+f2863564f4567789,full,clean,,,,"Nidhi Agarwal Q and A news, native Telugu, complete."
+5ba5c060193cf593,full,clean,,,,"Sanjay Manjrekar comments on India losses, native Telugu, complete."
+7bf385a9a1c4fb03,full,fix,C1,"'ఇది చూడండి...' at offset 2002 + 'Tags: 5G Smartphone, Smartphones' at offset 2203",,"Redmi Note 10T launch news; trailing see-also, site footer and tags to trim."
+93bbfccf9f8b420f,full,fix,C1,'మరిన్ని - India News' related-news list at offset 4348,,"Eenadu kids moral story, good text; trailing news nav list to trim."
+6faa50209f00b4cf,full,drop,C5;F3;D4;C2,'ప్రైజ్ బాండ్ ప్రైమ్ ఫోటో స్టేట్ గెస్ పేపర్స్' at offset 1336 | prize bond guess-paper promotion at offset 0 | 'తాజా విజయం ఇక్కడ ఆట' at offset 650 | '————' line x5 at offset 1386,,"SEO spam promoting prize-bond lottery guess papers, machine-translated."
+cca46f4776f5b607,full,clean,,,,"Dhamaka film song release news, native Telugu, complete."
+a1a061b0acc3d8d6,full,clean,,,,"Bathukamma saree distribution political news, native Telugu, complete."
+da88f8127113b503,full,clean,,,,"Google free Kubernetes course news; English loanwords only, complete."
+2e1ca01703ecdfa2,full,drop,D4;C4;C3,"'ది ""సి"" బరువున్న ధ్వని స్థాయి' at offset 331 | 'సరళీకృత భిన్నాల కాలిక్యులేటర్' at offset 2424 + 'ఓస్మోసిస్ వస్తుంది' at offset 2143 | 'చిహ్నం ఒక వృత్తం మీద మంట' at offset 2736",,Scraped machine-translated Q and A snippets from unrelated topics joined together.
+7ad93bc101c3a384,full,drop,F3;C5;D4,explicit porn title list at offset 0 | porn video title and performer name list at offset 97 | 'ఫక్: ధెంగడమ్' at offset 2697,,Porn site category page: machine-translated adult video titles and spam keywords.
+2ce4582bc4f24c0c,full,fix,C1,'TAGS:' empty tag footer at offset 3623,,"Andhra Jyothy surrogacy explainer, native Telugu; empty TAGS footer to trim."
+28d2e49e61f0ce06,full,clean,,,,"Chanakya Niti five mothers explainer, native Telugu, complete."
+b8ea4c807e2cd0f8,full,clean,,,,"Nicholas Pooran T10 batting report, native Telugu, complete."
+78d482cb86a87ec4,full,drop,D4,'అనుషంగిక రుణ బాధ్యతలు' at offset 1084 + 'తనఖాలు జప్తుకు గురవుతాయని పందెం వేసింది' at offset 1084,,Auto-translated English finance article from translation site; stiff calqued grammar throughout.
+f13247880d899629,full,fix,C1,'Don't Miss! - Lifestyle Roommate' menu at offset 0,,Meera Jasmine slim look gossip; top news-ticker block to trim.
+df38a659d344fb07,full,clean,,,,"Astrology tips on pledging gold, native Telugu, complete."
+ba133083568cfeae,full,drop,D4;C5,'గౌరవ విధుల పనిమనిషి యొక్క అంతిమ జాబితా' at offset 309 + 'బ్యాచిలొరెట్ పార్టీని ప్లాన్ చేయకూడని' at offset 781 | list of unrelated article teasers at offset 0,,Auto-translated wedding site page that is only a list of article teasers.
+5503cef7a31ecb36,full,fix,C1,'TAGS:' empty tag footer at offset 2050,,"Tulsi varieties health article, native Telugu; empty TAGS footer to trim."
+b69e3e3f758e34b6,full,clean,,,,"Sukumar apologises to Mahesh Babu gossip, native Telugu, complete."
+ca72a12f5656640f,full,clean,,,,"Loan moratorium interest waiver news, native Telugu, complete."
+8e40b1ed0575431e,full,fix,C1,'మరిన్ని - General News' related-news list at offset 2473,,Eenadu crime report on suspicious death; trailing news nav list to trim.
+c871c674ee4a7cae,full,drop,D4;C1,'శిల క్రింద నివసించకపోతే' at offset 263 + 'గంగా దేవత తన జుట్టులో చిక్కుకుంది' at offset 1718 + 'అతని బ్లూ గొంతు' at offset 3148 | 'చిత్ర మూలం - devantart.com' at offset 4079,,"Auto-translated English Lord Shiva life-lessons listicle, stilted calques throughout."
+5c570eaba09f22b5,full,fix,C2;D3,repeated paragraph 'గోదారమ్మ మరోసారి ఉగ్రరూపం దాలుస్తోంది' at offset 266 | 'అతి Heavy Rains కురిసే' at offset 527,,"Godavari flood news; first paragraph repeated, English words mixed in; dedupe."
+c7c7cd3b65e5823a,full,drop,C5;B4;C1;D3,'Photography Logo Signature Fonts' repeated keyword stuffing at offset 589 | '[su_button url=' shortcode at offset 1176 | subscribe and share prompts at offset 1571 | English/Telugu duplicate text at offset 4115,,"Font-download SEO page: keyword stuffing, shortcodes, duplicate English and Telugu boilerplate."
+b6ddb1f2f2e4456f,full,fix,F1;C1,phone number at offset 2432 | byline 'జర్నలిస్ట్' at offset 2405,,Opinion on NTR university renaming; trailing journalist byline with phone to mask and trim.
+6cf4ff7e0ca19ddf,full,fix,C1,'Disclaimer: ఈ వార్త కేవలం సమాచారం' at offset 3331,,"Stocks to watch market note, native Telugu; standard site disclaimer at end to trim."
+92f5760870cdd59d,full,fix,C1,Image Source : Twitter at offset 20 + View this post on Instagram at offset 1638,,Pujara cricket news; caption and Instagram embed trailer; C3 scan false
+93e12eda26737171,full,fix,C1,ఇవి కూడా చదవండి : at offset 1119,,Jabardasth anchor gossip; trailing read-also prompt
+f787d6848da77eef,full,clean,,,,Shriya gossip article with typos; no listed disease
+4c9db4e00856fe76,full,drop,D4,మా సంప్రదించండి ఇమెయిల్లో పాఠశాల కార్యాలయం at offset 1309,,Auto-translated school remote-education page; placeholder email not F1
+d871aec13b8eb81d,full,fix,C1,ఇవీ చదవండి at offset 3127,,Eenadu Pakistan army chief news; related-headlines list at end; C3 scan false
+9f312723a7f39b54,full,clean,,,,Oneindia politics news on Jubilee Hills case; no disease
+9f1d3e17f2fa0c25,full,drop,C1;D4,పోస్ట్ సమయం: అక్టోబర్-18-2022 at offset 2883 | ఫెండాయ్ లేని చిత్రం at offset 1850 + రెన్ జికియాంగ్ ఒకసారి at offset 477,,Golf quotes page machine-translated from Chinese; mostly D4
+ee359bd3362ec3f1,full,clean,,,,Asianet news on auto driver harassment; no disease
+188fec738adc0293,full,fix,C1,Don't Miss! at offset 0 + - Sports కొలంబియా ఫుట్బాల్ at offset 105,,Filmibeat Bigg Boss article with leading Don't Miss menu list
+d48e99776bf45b51,full,clean,,,,Telangana water boards news; English title prefix only
+49a71d88fbcc7784,full,drop,D4,"ఎప్పటికీ n అప్పుడు కొన్ని at offset 200 + $ 300,000- 50,000 350,000 at offset 1300",,Auto-translated celeb engagement article; broken meaning throughout
+a0c4976c8df6555e,full,clean,D3,Groom commited sucide : at offset 0,,News18 suicide report; English title prefix and glosses only
+08da3c8f1d8c4459,full,drop,D4,ట్రైఫోలియోలేట్లో పెరిగే ఆకులను at offset 1500 + బాయిల్ పండును అగ్నికి at offset 4500,,Machine-translated English feature on bael tree; awkward throughout
+ce5d37fd95493d93,full,clean,,,,Idhatri news on Jagan cadre meeting; no disease
+641e38516455ddaa,full,clean,,,,News18 Telangana MLC election politics; no disease
+6f5bd09765fcba54,full,drop,C1;D4,స్వాగతం! terms and conditions page at offset 0 | వ్యక్తి ఈ వెబ్సైట్లో లాగిన్ అవుతారు at offset 520 + ఇందుమూలంగా సైట్లకు మీ వ్యాఖ్యలను at offset 3901,,Machine-translated boilerplate terms and conditions of a spam site; email is obfuscated token
+8348b209ce713e97,full,fix,C1,- 2 Dec 2022 12:02 PM GMT at offset 1176 + - 2 Dec 2022 2:45 PM GMT at offset 1427,,Hmtv movie gossip; trailing timestamp list of related items; C3 scan false
+7a37badd365e0f53,full,fix,C1;C2,"ABN , First Publish Date - 2022-01-24 at offset 0 | ‘‘అధికారమే మాకు అండగా ఉంది repeated at offset 333",,Andhrajyothy gravel excavation news; byline header and repeated lede paragraph
+0712800649d5fb29,full,drop,C1;D4,g-ప్రకటన at offset 248 | ప్రీపోన్ చేసినట్లు తాజా వార్త చదువుతుంది at offset 130 + బ్యాకప్తో రూపొందించబడింది at offset 700,,"Machine-translated film news (829 chars); ad label, broken date and wording"
+0e1b4c88a665e22b,full,clean,,,,News18 astrology superstitions article; no disease
+e40c7e6df995ca05,full,drop,D4,రెండు లెజెండ్స్ అయిపోయాయి at offset 280 + తరగతి శాశ్వతం at offset 1060,,Auto-translated Tollywood/Kollywood comeback article from English; unnatural wording throughout
+0ddea5ba4fc75654,full,clean,,,,Marriage age advice article; no disease
+3e6fd04ed222e146,full,fix,B5;C2,stray backtick line at offset 0 | యునైటెడ్ అరబ్ ఎమిరేట్స్ లోని దుబాయ్ intro repeated at offset 595,,Dubai Hindu temple news; stray backtick start and repeated intro sentence
+fa1823f097100328,full,fix,C1;D3,All nominees of the seven individual at offset 577 + t.co link at offset 665 | English tweet embed at offset 577,,ICC award nominees news; embedded tweet trailer
+64092f3350df3952,full,fix,C1,Don't Miss! at offset 0 + - News గూండాలు at offset 12,,Filmibeat Bigg Boss recap with leading Don't Miss menu
+44be00c2218e4ccb,full,clean,,,,News18 EPFO withdrawal claims news; no disease
+3f7d5212207f3adc,full,clean,,,,Pushpa 2 announcement news; English title prefix only
+d0a4489a82f809e3,full,drop,D4,రిపబ్లికన్ సెనేటర్ జాన్సన్ను నాయకత్వం కోసం బిడ్ at offset 974 + స్కాట్ కూడా సరసాలాడింది at offset 2900,,"Machine-translated Politico Senate GOP article; starts mid-article, broken meaning"
+49626812304d5150,full,clean,,,,Ghost film box office report; no disease
+a472cbb07057854e,full,fix,C1;G1,"ABN , First Publish Date - 2022-10-04 at offset 0 | virama after space, ్జకాగా at offset 4003 + రూట్మ్యా్పను at offset 1405 + ఐఎ్సఐ at offset 3144",4003 U+0C4D TELUGU SIGN VIRAMA | 1405 U+0C4D TELUGU SIGN VIRAMA | 3144 U+0C4D TELUGU SIGN VIRAMA,Andhrajyothy terror plot news; byline header and stray virama after full stop
+7662103929f8f5fa,full,drop,C1;D4,మా ప్రమాణాలు: థామ్సన్ రాయిటర్స్ at offset 2484 | ఫెడరల్ రిజర్వ్ పెంచారు విస్తృతంగా ఊహించిన at offset 467 + ఓపెన్లో క్షీణించవచ్చని అంచనా. . at offset 200,,Machine-translated Reuters market wrap; trailer with standards line and author tagline
+c324c2114212b31f,full,clean,,,,Gulte news on comedian Vivek heart attack; no disease
+a7d22855d95e19da,full,fix,C1,heart attack (image caption) at offset 258 + Vegetables at offset 1880 + protein rich foods at offset 2546,,Asianet gallery on foods causing heart attack; stray English image captions
+6d807ae605962b0e,full,fix,C1,Don't Miss! at offset 0 + - News చంద్రబాబు చాయ్ పే చర్చ at offset 12,,Filmibeat Bigg Boss 6 news with leading Don't Miss menu
+efbc8e17f4225bf3,full,fix,G2,"నువ్వేనేను, నేనేనువ్ఞ్వ at offset 390 + బంధువ్ఞలకంటే at offset 841 + సమస్య వ్ఞంటే at offset 1490",390 U+0C1E TELUGU LETTER NYA (expected U+0C41),"Vaartha friendship essay; legacy-font damage, vowel sign u replaced by virama plus nya (4 cases)"
+82cd50de1fd2248b,full,fix,C1,News Reels at offset 3310,,ABP Nizamabad corporation news; trailing News Reels widget; C3 scan false
+8ebdc344120b5e1e,full,drop,D4,"Linkedlnలో రెగ్యులర్ at offset 270 + శోధన ఫంక్షన్ టోపీని కలిగి ఉంది at offset 2480 + ఈ విషయం ఎందుకు? బాగా, at offset 400",,Machine-translated LinkedIn marketing SEO article; broken meaning
+ff8afd3bce690d35,full,drop,D4,సోషల్ మీడియా హ్యాండిల్స్కు తీసుకువెళ్లింది at offset 1393 + ప్రిన్సిపల్ డిస్ట్రిక్ట్ అండ్ సెషన్స్ జడ్జి at offset 1700,,"Kantara song ban news; first two paragraphs native, rest machine-translated from English"
+2d6385d657cf67ca,full,drop,D4,సీజన్ నటుడు దానిని తన పార్టీ మీట్గా at offset 1500 + వైపర్ మాట విని at offset 1700,,"Sri Reddy on Pawan Kalyan; machine-translated from English, mistranslated phrases"
+19d2fffb2a4a774f,full,clean,,,,Ashok Babu High Court bail news; no disease
+a70f76757da6fd5e,full,fix,C1;C2;C3,helpline list at offset 8256 + Related News at offset 8803 | అది కేరళలోని గిరిజన కుటుంబం repeated at offset 245 | 'ఉష్ణోగ్రతల ప్రభావం ఉంటుందని పేర్కొ' cut mid-word at offset 9196,,"Translated Kerala tribal girls suicides feature; repeated paragraph, helpline list, Related News teaser cut mid-sentence"
+2acf40242963f9fd,full,clean,,,,"Varisu film song press release with crew and PRO credits; complete, no boilerplate."
+d847afa42c9df584,full,clean,,,,Telangana rain alert bulletin; no disease
+bc31252d51be85bd,full,fix,C1,- భారత్ లో అత్యధిక విలువ ఉన్న కంపెన్లీల్లో at offset 1659 + - నిన్న ఉదయం 8.40 గంటలకు అఫ్తాబ్ను at offset 1881,,AP7AM murder arrest news; trailing unrelated headline bullets; C3 scan false
+4b0b3187bbdf731b,full,clean,,,,KA Paul statement on Srikanthachari; no disease
+eff5a9a9655b4a88,full,fix,C2,తమిళ లెజెండ్రీ డైరెక్టర్ paragraph repeated at offset 276,,Asianet Ponniyin Selvan Mahesh gossip; lede paragraph repeated in body
+1528f001fa87bb6a,full,drop,C1;D4,Just In menu at offset 0 | అకాల స్కలనం వచ్చే ప్రమాదం at offset 2250 + అనస్థీషియా వంటి పుట్టుకతో వచ్చే లోపాలను at offset 1100 + నారింజ రంగు at offset 3325,,Boldsky pregnancy diet; machine-translated with wrong medical terms; menu header
+9de3a8df3ef1041c,full,clean,D3,80 objectionable clipsను at offset 1900,,News18 CCTV technician blackmail news; one English phrase only
+d0692f163114fdb4,full,drop,D4,ఆమె సింహాసనాన్ని ఆనంద్ వర్ధన్కు ఇచ్చారు at offset 560 + ప్రతిపాదిత మార్గంలో మతపరంగా పని చేయాలని at offset 1180,,Machine-translated Noida Metro appointment news; broken meaning
+27d41b60de032ba2,full,drop,C1;D4,కజకిస్తాన్లో మెరుగైన కాటన్ భాగస్వామి at offset 569 | కనిపెట్టండి దీని భావమేమిటి? at offset 661 + అందుబాటులో ఉండు at offset 2667,,Better Cotton Kazakhstan web page; machine-translated with site nav headings
+64d976d0f5cf85f9,full,fix,C1,మరిన్ని ఎంటర్టైన్మెంట్ వార్తల కోసం at offset 1185,,Tollywood news; trailing click-for-more line trimmed.
+710313401d6f415f,full,drop,D4;C1,a హోరియాటికి గ్రీస్లో at offset 1000 + As టీస్పూన్ at offset 2354 | ఉత్తమ నుండి నేర్చుకోండి100 at offset 156,,Machine-translated recipe with MasterClass ad boilerplate; mistranslations throughout.
+60c31dd4cf6eb104,full,fix,C1,నోట్ : మీ ఫీడ్ బ్యాక్ మాకు ముఖ్యం at offset 1999,,Ram Setu news article; trailing comment-box note trimmed.
+3e2e6a4b07e695d9,full,fix,C1,మరింత సమాచారం కోసం క్రింద లింక్ చూడండి at offset 2359,,"Weight-loss drink article; trailing link prompt is C1, SCAN C3 rejected."
+7971a70fc24d900c,full,fix,C2;C1,రష్యా దాడుల నేపథ్యంలో ఉక్రెయిన్ ప్రజలకు at offset 147 | మరిన్ని అంతర్జాతీయ వార్తల కోసం at offset 1458,,"Ukraine war news; opening sentence repeated, trailing link prompt."
+7f2208938571c005,full,clean,,,,Pawan Kalyan Ippatam case news; no disease.
+b1fc122a01e457a3,full,fix,C1;G1,ఈ కామెంట్ను రచయిత తీసివేశారు at offset 330 | పైకి - ిిచేదు at offset 2047,2047 U+0C3F TELUGU VOWEL SIGN I,Blog poem-completion comment thread; comment boilerplate and stray vowel signs; C3 rejected.
+65ae87d74fe601f5,full,clean,,,,"Bigg Boss recap; ends on complete sentence, SCAN C3 rejected."
+655f1ee7a1855455,full,clean,,,,Amrapali flats Supreme Court news; no disease.
+0a640a92733dd1ad,full,clean,,,,"Galodu box office note; ellipsis style is natural, complete."
+f9bec068836e0051,full,clean,,,,Kharge Congress president nomination news; no disease.
+d5308e76e13e8058,full,fix,D5;A6,ప్రజల చే విస్తృతంగా ఆరాధించబడ్డాడు at offset 999 | వ్యక్తిత్వo Latin o at offset 2910,2910 U+006F LATIN SMALL LETTER O,"Translated Kitchlew history blog; stiff translationese, one Latin o; readable."
+142ddb551bbdbbd2,full,fix,C1;C2;D3,ఇదీ చదవండి: ఈ నెల 19 at offset 1578 + embedded tweet — Aadhaar (@UIDAI) at offset 880 | lead paragraph repeated at offset 1194 | Attention: #Aadhaar holders at offset 880,,"Aadhaar update news; embedded English tweet, repeated lead, read-more line; C3 rejected."
+6cfff787aa9eede7,full,fix,C1;C2,ఇవీ చదవండి మరిన్ని at offset 1249 | Ap-top-news News at offset 1416 + headline repeated as lead at offset 64,,"Maradona items news; trailing related-headline list trimmed, ~700 chars remain."
+5c449526d3564653,full,clean,,,,Forbes best employers Reliance news; no disease.
+77eb3e86c02dff3e,full,clean,,,,Bharat Jodo Yatra Telangana analysis; no disease.
+16f09c1071f5ad38,full,clean,,,,Nagababu and Mega family opinion piece; no disease.
+b488551508b39dbd,full,fix,C1,Don't Miss! - News కేసీఆర్ కుటుంబం at offset 0,,Tollywood drug case news; leading Don't Miss headline list trimmed.
+32ae6d250a655f24,full,clean,,,,"Rashmi on Pradeep film; sloppy spacing but human text, no disease."
+b5637f3271aa29f2,full,drop,D4;B2;B4;D3,"ఎల్ కోస్టో అడిషనల్ డి లా రెకోగిడా at offset 214 | <span style=""font-family: Mandali; ""> at offset 0 | [/ vc_column_text] at offset 3270 | Si eres vegano at offset 1445",,Spanish tour page transliterated into Telugu script; business phone not F1; drop.
+54ef598ad05107bf,full,fix,C1,మరింత సమాచారం ... మీ కోసం! at offset 7403,,Eenadu degree-student career guide; trailing promo line trimmed.
+c70552094ff4779f,full,clean,,,,SBI General flood claims news; no disease.
+6eab4dbf2c6122fc,full,fix,C1,Don't Miss! - News Khiladi lady at offset 0,,Liger OTT release news; leading Don't Miss link list trimmed.
+0eb8aa9c275534d5,full,clean,,,,Telangana night curfew cabinet news; no disease.
+7f6411728d7b8c4b,full,fix,C1,- షర్మిలతో 10 నిమిషాలు మాట్లాడిన మోదీ at offset 1021,,CM Ramesh reply news; trailing unrelated headline bullets trimmed; C3 rejected.
+4a70af0731e8c3b5,full,fix,C1,Recommended Video at offset 379,,RK Beach black sand news; inline Recommended Video label removed.
+90768e614c555e28,full,fix,C1,- వార్తలు - సినిమా - స్పోర్ట్స్ at offset 0,,Minister Niranjan Reddy tribal event news; leading site menu trimmed; C3 rejected.
+9c89a7eaa9e0c0cd,full,drop,D5,మీ యొక్క మూలం వద్ద మినహాయించబడిన at offset 520 + ఆ సందర్భంలో ఆదాయపు పన్ను నోటీసును ఎలా డీల్ చేయాలి at offset 1422,,"Income tax notice explainer; stiff translated-from-English prose, drop."
+f0a19f07714faca5,full,fix,C1,- Meal Maker Recipe: మీల్ మేకర్తో at offset 2555,,Thyroid types health article; trailing related-links list trimmed; C3 rejected.
+32af6c88af5197f5,full,fix,C1,Don't Miss! - News ఐ లవ్ యూ at offset 0,,Prince movie review; leading Don't Miss link list trimmed.
+13c7b26934e4bb05,full,fix,C1,Don't Miss! - News వైఎస్ వివేకా at offset 0,,Guppedantha Manasu episode recap; leading Don't Miss link list trimmed.
+d4447c0c8cf4e26c,full,drop,C1;D3;D5,'✓ కనీసం 20 సెకన్ల వరకు' COVID safety footer at offset 1606 | With increasing demand and use of electric at offset 11 | ఈ ప్రత్యేక ఆఫరింగ్ అనేది at offset 744,,"Bajaj Allianz insurance marketing page; English paragraphs, stiff translationese, COVID footer."
+d62267ffb63586c6,full,fix,C1;D3,Hiring Content Writer: We are looking at offset 1723 | Hiring Content Writer English line at offset 1723,,Chandrababu Tollywood comment article; trailing job ad trimmed; placeholder email not F1.
+d84493a7dec5dd0b,full,fix,C1,— Team SALAAR (@teamSalaar_) at offset 1542 + మరిన్ని ఎంటర్టైన్మెంట్ వార్తల కోసం at offset 1590,,Prabhas Salaar leak news; embed credit and read-more line trimmed.
+c4036226db9700ad,full,drop,D4;A6,చేయవచ్చుn Mac లోపల ఆపిల్ టీవీ + లో at offset 300 + మాకోస్లో మేము ఆపిల్ టీవీ అనువర్తనంలో at offset 40 | stray Latin n in చేయవచ్చుn at offset 303,303 U+006E LATIN SMALL LETTER N,"Apple TV parental controls; auto-translated from Spanish, broken grammar, drop."
+2b2da968d594dc4c,full,drop,D4;C1,ఈ పూజ్యమైన చూడండి బాక్సర్ నేపథ్య స్వాగత విగ్రహం at offset 967 + బాక్సర్లెస్ బాక్సర్ ప్రేమికుడు at offset 1781 | మీ జీవితంలో కుక్కకు పిల్లి ఉందా? at offset 5003,,"Boxer dog gift list, auto-translated from English, affiliate text; drop."
+6ff09e9d46423aca,full,fix,C1;D3,'embedded tweet pic.twitter.com' at offset 1720 | 'Chandigarh: AAP leaders Harpal Singh Cheema' at offset 1720,,Punjab AAP cabinet news; embedded English tweet to trim.
+f4decbed68c9f633,full,fix,C1;D3,"'thesakshi.com :' at offset 0 + '— ANI (@ANI) October 30, 2022' at offset 415 | 'Gujarat: A cable bridge collapsed' at offset 1452",,Morbi bridge collapse news; source prefix and three embedded English tweets.
+c27423ed8f82c00f,full,clean,,,,"AP politics analysis with leading source dateline only; complete, no boilerplate."
+4b22023a8e5e6f1e,full,drop,D4;C1,రుబులవైరస్ at offset 650 + ఈ క్రింది మార్గాలలో సంక్రమణ వ్యాప్తిని నిరోధించడానికి చర్యలు తీసుకోవాలని వారిని ఆహ్వానించండి at offset 2200 | [[సంబంధిత కథనాలు]] at offset 2510 + SehatQ కుటుంబ ఆరోగ్య యాప్లో at offset 3270,,Mumps in children; machine-translated health text with app ad; drop.
+40b000654e2a0798,full,fix,C1,Representational Image/Pexels at offset 0 + News Reels at offset 1773 + ABP Desam YouTube Channel సబ్స్క్రైబ్ చేయండి at offset 2533,,"Covid vaccine NZ news; image credit, widget label and subscribe line trimmed; C3 rejected."
+78383cf8751cd7f9,full,fix,C1,- వార్తలు - సినిమా - స్పోర్ట్స్ at offset 0,,"Formula-E Hyderabad news; leading site menu trimmed, ~740 chars remain."
+56244645c2f33337,full,fix,C2,దేశ ఆర్థిక మూలాలు బలంగా ఉన్నాయ్ at offset 1845 + మాంద్యం భయం లేదు caption at offset 1828,,Sitharaman inflation debate news; headline repeated at end; C3 rejected.
+17ee9f123511b9f8,full,fix,C1,krithi shetty at offset 1632,,Krithi Shetty gallery caption text; stray image tag line removed.
+dc158151a1c2e5f4,full,drop,D4;C1,పిల్లలు/పిల్లి confusion: పిల్లి వ్యాధికి కారణమేమిటి at offset 12211 + పిల్లి అలెర్జీలు: ఇది యునైటెడ్ స్టేట్స్లో at offset 57 | మీ వ్యాఖ్యను తెలియజేయండి |పేరు| at offset 22106,,Cat allergy spam page; spun machine translation confuses cat and child; drop.
+2311ca6e49dffc35,full,drop,C4;C3,ఈనాడు తెలంగాణ ప్రజలు దశాబ్దాలుగా at offset 0 + నిజామాబాదు ప్రాంత ఆణిముత్యాలు at offset 904 | వేసుక.. at offset 300,,Book-shop search page; many unrelated book blurbs each cut with ..; drop.
+043488b2251ca38b,full,fix,C1,Don't Miss! - Finance Twitter at offset 0,,Bigg Boss Chalaki Chanti remuneration; leading Don't Miss link list trimmed.
+5138ea4a5e77613d,full,fix,C1;C2,మరిన్ని - Politics News at offset 3711 | మా ఉత్పత్తి ప్రత్యేకతలివి. ఓసారి కొని చూడండి at offset 3458,,Donne Biriyani business story; repeated paragraph and trailing headline list; C3 rejected.
+70b3fbbd3046c9e4,full,fix,C1,మరిన్ని హెల్త్ టిప్స్ కోసం ఇక్కడ క్లిక్ చేయండి at offset 2812 + (నోట్: ఇందులోని అంశాలు at offset 2668,,Periwinkle health benefits; disclaimer and click-for-more line trimmed; C3 rejected.
+4078762d13000c5a,full,fix,C2,వయోవృద్ధులకు సముచిత గౌరవం ఇస్తూ... పి. పద్మావతి at offset 3107 + పత్రిక ప్రకటన at offset 3218,,"Telangana IPR elders day release; headline repeated at end; helpline is official, not F1; C3 rejected."
+acc33e15a02a759b,full,drop,D4;C1,'ఆర్థిక సంశ్లేషణ అది వెంటనే' at offset 300 | 'Reuters.comకు అపరిమిత ఉచిత యాక్సెస్' at offset 597 + 'ఇంకా చదవండి' at offset 2040,,Auto-translated UK Liz Truss fiscal policy article with Reuters tag line.
+faa91ae7ee48d33e,full,clean,,,,Minister Muthyala Naidu reply to Ayyanna Patrudu with summary bullets; complete.
+1439420b6d0904f6,full,clean,,,,"Naga Chaitanya and Krithi Shetty NC22 film shoot news; complete, no disease."
+774fc32b74ff9186,full,clean,,,,"Karthika Deepam TV serial episode recap; complete, no disease."
+492c90e92cdc9844,full,fix,C1;D3;D5,'Congratulations to my sisters and brothers' at offset 649 | English tweet text at offset 649 | 'జిల్లా కు చెందిన పౌరుల కు' at offset 120,,PM Modi PIB release on Burhanpur Har Ghar Jal with trailing English tweet.
+412d439befc18b1a,full,clean,,,,"Bilkis Bano remission affidavit news; complete, natural Telugu"
+72016ea2f5ed434c,full,drop,D4;C1;D3,'గ్యాస్ట్రిక్ అల్సర్లకు వివిధ కారణాలు ఉన్నాయి H.pylori' at offset 700 + 'వాకింగ్ చేసే గ్యాస్ట్రిక్ అల్సర్' at offset 4300 | '[[సంబంధిత కథనం]]' at offset 4120 | 'H.pylori' at offset 770,,"Machine-translated SehatQ health article; broken sentences, split commas, mistranslations"
+ee0e79b9aa1bb218,full,clean,,,,Telangana minister announcement on free power scheme; C3 scan false (URL ending)
+fd6f8ba32b96ab9f,full,drop,D4;C1;D3,'ఎర్రటి 011 తంతువులను కలిగి ఉంది' at offset 1600 + 'ఒక పెట్టింగ్ జూ లాగా' at offset 4400 | 'ప్రకటన' at offset 586 + 'ప్రకటన' at offset 10157 | 'The Science Behind Pixar' at offset 270,,"Machine-translated Pixar exhibit article; garbled sentences, ad markers; C3 scan is trailing ad word"
+8a6531db54116c79,full,fix,C1;D5,'Just In' at offset 0 + '- 12 min ago Carrot Juice' at offset 8 | 'విస్కస్ ఫైబర్ మొక్కల ఆహారాలలో' at offset 2854,,Weight-loss tips translated from English; leading Just In news menu to trim
+8e98aa5123625bb0,full,fix,C1;D5,'Just In' at offset 0 | 'శ్వాస తీసుకోవడం ఆపివేసినట్లయితే 911కి కాల్' at offset 2249,,Symptoms health article translated from US source; leading menu and one-word-per-line intro
+0c12a4470e696e68,full,clean,,,,Raghurama Krishnam Raju remarks on AP CID; natural Telugu news
+63ecadf069227d4c,full,clean,,,,"Dasara box office preview of three films; C3 scan false, text complete"
+e1c94120e011de52,full,clean,,,,Eclipse temple closure and Srikalahasti explainer; minor spacing typos only
+3fe11f60d6272c0a,full,clean,,,,"Payal Rajput film gossip item; complete, natural Telugu"
+e1f40ed04cdff50e,full,fix,C1,'అయ్యన్నపాత్రుడు (ఫైల్ ఫోటో)' at offset 0 + 'News Reels' at offset 1500,,TDP meeting political news; photo caption and News Reels widget label to trim
+264a06765fd90137,full,fix,C1,"'ఎన్టీఆర్, రామ్ చరణ్' at offset 0 + 'News Reels' at offset 2128",,Buchi Babu/Ram Charan film news; tag line and News Reels label to trim
+e7cabc09f81fa3ac,full,clean,,,,"Prajasakti crime report on a murder in Sattenapalli; complete, no boilerplate"
+1425b7dab09b80bd,full,fix,C1;D3,'Why Jagan DID INT Attend AKILAPAKSHA BETI' at offset 0 | 'Why Jagan DID INT Attend' at offset 0,,AP all-party meeting news; English junk title line at start to trim
+7203daff273018fa,full,fix,C1,'మరిన్ని' at offset 3537 + 'Crime News' at offset 3547 + '- Premartial Sex: పెళ్లికి ముందు' at offset 4116,,Eenadu KTR news roundup; trailing section links and related headline list to trim
+0e5ec62dc482279c,full,fix,C1,"'ABN , First Publish Date - 2022-09-25' at offset 0 + lead sentence repeated at offset 57",,Janagama lecturer POCSO news brief; dateline header and repeated lead to trim
+701668a26b4c5508,full,fix,C1;C2,'Photo Credit: buttabomma dreams/Instagram' at offset 0 + 'News Reels' at offset 1832 | 'View this post on Instagram' at offset 1843,,"Naga Shaurya wedding news; photo credit, News Reels and Instagram embed lines to trim; C3 scan false"
+df80b9d1af6e54ca,full,clean,,,,"Tungathurthi BJP-TRS clash news; complete report, names are news subjects"
+beb479b227852301,full,fix,C1,'మరిన్ని' at offset 2045 + 'Sports News' at offset 2055 + '- Weekly Horoscope: గ్రహబలం' at offset 2532,,Godfather press meet quotes; trailing news section links and related headlines to trim
+5555d8022115b22a,full,clean,,,,"Kuppam NTR fans open-letter political news; complete, natural Telugu"
+355c7af0fe13fc53,full,fix,C1,'Just In' at offset 0 + 'Don't Miss' at offset 370 + '- 2 hrs ago వైరల్ అవుతున్న' at offset 8,,Nexon EV Max altitude record article; leading Just In and Don't Miss menus to trim; some typos
+41c998453152115f,full,fix,B2;D5,"'<a href=""https://www.siasat.com/Telangan' at offset 1268 | 'ఎలాంటి మార్పులు చేయలేదు [BC(E)] రిజర్వేషన్లు' at offset 330",,Telangana Muslim quota news translated from English Siasat; one stray anchor tag to strip
+2f86ffc22b632174,full,drop,D4;C1,"'కన్వర్టోమాచైన్లు, ఎలక్ట్రానిక్ కన్వర్టర్' at offset 3963 + 'ప్యూయెంటెస్' at offset 4269 | 'మీకు ఆసక్తి ఉండవచ్చు' at offset 3406",,"Synchronous machines article machine-translated from Spanish; broken grammar, Spanish left in"
+82943ceb4f7470f2,full,clean,,,,Yashoda release outlook film commentary; complete natural Telugu
+719e238632236ea9,full,drop,C1;D4,'ఆస్ట్రోసేజ్ మీకు ఖచ్చితమైన జుచాంగ్ సమయమును' at offset 0 | 'డిఎ స్ టీ లేదా డేలైట్ సేవింగ్స్' at offset 800,,"Auto-generated astrology site time page for a city; templated, no real content"
+0971e78def9661fc,full,fix,C1,'సంఘములు (గ్రూపులు)[మార్చు]' at offset 511 + 'ఇవి కూడా చూడండి[మార్చు]' at offset 2527 + 'మూలాలు[మార్చు]' at offset 2770,,"Wikipedia page Telugu Brahmins; infobox pipes, edit markers, see-also and sources to trim"
+a9f0bba4490ce243,full,clean,,,,KCR national opposition push news; complete natural Telugu
+768b4cd95716cb01,full,drop,D4;C1,'మీ విక్రయంతో మీ అవసరాలను తీర్చండి' at offset 700 + 'నా కంపెనీ లోగో జీవితకాల వారంటీ నుండి' at offset 2880,,"Chinese glass supplier FAQ page machine-translated; broken meaning, commercial boilerplate"
+5493f4e34e3091c5,full,clean,,,,Godfather Hindi trailer launch with Salman remarks; complete natural Telugu
+1b5325715426ac9e,full,drop,D4,'చిలుకల అనలిటిక్స్ సంస్థ' at offset 221 + '- »(ఆపిల్ టీవీ +) చూడండి' at offset 1140,,"Apple TV+ series ranking machine-translated from Spanish; Parrot Analytics mistranslated, garbled sentences"
+c0c6990261d0d7ab,full,fix,C1;D3,"'how it started how it’s going' at offset 2678 + '— Pranit (@PSavgave) September 23, 2022' at offset 2772 + 'ఇది కూడా చదవండి:' at offset 2812 | 'how it started how it’s going' at offset 2678",,India-Australia T20 match report; trailing embedded tweets and Also-read line to trim
+f9114f4330b69b91,full,clean,,,,Telangana TRS-BJP central agencies raids political analysis; complete natural Telugu
+94d0703109aee211,full,clean,,,,ED raids on Vivo and Chinese phone firms news; complete
+60fc7f200e2b48e9,full,clean,D3,'(ramadan 2022)' at offset 100 + '(Iftar dinner in Hyderabad)' at offset 210,,KCR Ramzan iftar speech news; English glosses in parentheses only
+b84adcd535648e79,full,fix,C1;F1,"'Also read: కదంబ కార్యక్రమాలకు పునాది' at offset 301 + 'Also read: రేడియోకూ, పత్రికలకూ పోలిక ఉందా?' at offset 882 | phone number at offset 5462",,AIR officer memoir column; interleaved Also-read links and author mobile number to mask
+f3afb012f3c52eb2,full,fix,C1;C2,'మరింత సమాచారం కోసం మా Filmimonks అప్ ని' at offset 1364 | 'ఇన్నేళ్ల శ్రమకు తగ్గ ఫలితం' at offset 1337 + same line again at offset 1432,,Actor Raj Bala interview piece; repeated headline and app-install prompt at end; C3 scan false
+75d387e118e9fbad,full,clean,,,,Samantha-Naga Chaitanya divorce gossip; run-on style but complete natural Telugu
+8e0d4fdfedccd69a,full,clean,,,,"Tirunelveli honour killing news report; complete, no boilerplate"
+a9d090b17941483f,full,drop,D4;C2;C1;B2,'ఈ ఉత్తమ నిర్మాణాత్మక ఫైనాన్స్ పుస్తకం నుండి కీ టేకావే' at offset 2235 + 'debt ణం మరియు ఈక్విటీ మోడలింగ్' at offset 14700 | 'స్ట్రక్చర్డ్ ఫైనాన్స్ బుక్స్ రివ్యూ' at offset 1318 | '(ఈ పుస్తకం పొందండి)' at offset 358 | '<>' at offset 2730,,"WallStreetMojo finance book list machine-translated; 10x repeated review line, stray <> markers"
+27116446ff359540,full,fix,C1;C2,'కెఎస్అర్ ట్రస్ట్ చైర్మన్ శరత్ కుమార్ రెడ్డి' at offset 0 | 'దోమ నవంబర్ 24(జనం సాక్షి)' at offset 44 + same dateline at offset 70,,Janam Sakshi local aid news; photo caption and doubled dateline to trim
+b45958445e48fefe,full,fix,C1,'Don't Miss!' at offset 0 + '- News ఇక రాష్ట్ర అభివృద్ధి వేగవంతం' at offset 12,,Sreemukhi glamour photo gossip; leading Don't Miss menu to trim
+0eec31ba5b0ebe35,full,fix,C1,'Tap to Read ➤' at offset 0 + 'Ram reddy' at offset 185 + 'బంగారు జాకెట్టు ధరించిన రకుల్ ప్రీత్' at offset 713,,"Rakul Preet photo gossip stub; UI prompt, byline and trailing related headline to trim; C3 scan false"
+e75651a22860e045,full,drop,C1;D4,'AstroSage.com మీకు ఒక ఫోటో గేలరీని ఇస్తుంది' at offset 700 | 'సమాధుక్రి శాస్త్రం శస్త్రచికిత్సకు దాదాపుగా అనువదించబడుతుంది' at offset 330,,"Astrosage templated gallery page for a name; machine-translated, no real content"
+cf379cbb7b40119c,full,clean,,,,"Rupee exchange rate market report; mid-word spacing typos only, complete text."
+fa6cf942c7c88aaf,full,fix,C1,'Don't Miss!' at offset 0 + '- Technology 20 లక్షల మంది Active' at offset 389,,Hari Hara Veera Mallu update news; leading Don't Miss menu to trim
+8d3e75c32362c84a,full,clean,D3,(Samantha) at offset 22,,"Samantha film news; English names in parentheses; SCAN C3 rejected, sentence complete."
+7be2116e541aed46,full,clean,,,,Short news item about snake in TV; no disease.
+9f03cb7f3d939eea,full,fix,C1;D3,"SURYAA NEWS, synonym with professional at offset 1061 | English site blurb at offset 1061",,Cyclone news with English site footer; trim footer. C3 rejected (URL end).
+aa3d8930cac21214,full,drop,D4;D3,Y = గొడ్డలి + బి at offset 3122 + పిక్సేస్ లీనియర్ at offset 2895 | Y = x + 2 at offset 2663,,"Auto-translated electronics article; ax+b rendered as axe, piecewise as pixels."
+1a4822e65671fb58,full,clean,D3,(Warangal meeting) at offset 100 + పార్టీ extended మీటింగ్ at offset 2000,,News on Rajagopal Reddy skipping Rahul rally; English in parentheses.
+d1f226df894bd14e,full,fix,C1,డిస్క్లెయిమర్ call-consent text at offset 4483 + దయచేసి సరైన కోట్ రిఫరెన్స్ ID at offset 5274,,Bajaj insurance calculator page; disclaimer and form prompt trimmed. SCAN C3 is form text.
+7d04148e6d4f4b8a,full,clean,D3,Russia Warns Countries : at offset 0 + (Russia Warns Countries) at offset 1040,,Russia-Ukraine war news; English headline tag only.
+58251ca1eae9e9ca,full,fix,C1;D3,మరిన్ని related-links list at offset 3513 | World News / Zelensky: at offset 3523,,"Eenadu fire-safety report; related headlines tail trimmed. Phones are official officer contacts, F1 rejected."
+3052f85bd3ebad73,full,clean,,,,Director Teja web series gossip news; no disease.
+566287454cdf54bc,full,clean,,,,Andhrabhoomi column on swift birds flying ten months; no disease.
+61cb015f246c8d47,full,drop,D4,అతనికి బోంకర్లను నడిపిస్తుంది at offset 3030 + గ్రౌండింగ్ చేయగలనని at offset 4100,,Parenting essay machine-translated from English; slang and idioms mistranslated throughout.
+8abe1c3c8d3e1696,full,drop,C2;D4,భూతేశ్వర్ టెంపుల్ హర్యానా చరిత్ర పూర్తి వివరాలు at offset 755 | భూతేశ్వర అభయారణ్యం (temple as sanctuary) at offset 1083 + లొకేల్ నాయకుడు at offset 1235,,"Spun machine-translated temple page; heading repeated 4x, same paragraph rephrased 3x."
+a67b96eea7a20ae7,full,fix,C1,పొందుపరిచిన స్థానము – https://guruparamparai.wordpress.com/ at offset 4654,,Sri Vaishnava guru biography; footer link list trimmed. SCAN C3 is link line.
+bf2c24b3998b3af4,full,fix,C3,stray L after last line at offset 1959,,"KCR press meet bullets; final stray letter L, trim."
+499898c17a98e3ef,full,drop,D4;C1;C5,వర్జిన్ పిగ్గీబ్యాక్ ఏ నెట్వర్క్ చేస్తుంది at offset 328 | ఇది కూడ చూడు ఆయిల్ రిగ్లపై at offset 2132 | విషయ సూచిక question list at offset 271,,"Auto-translated SEO FAQ on Virgin Mobile; contact number is a company line, F1 rejected."
+8b81d877c44df99c,full,fix,C1;D3,Don't Miss! related-links block at offset 0 | INDvsNZ : at offset 176,,Saaho music directors exit news; trim Don't Miss link list at top.
+ed4dc90ebfde2f56,full,fix,F1;C1,phone number at offset 8072 | author byline line at offset 8038,,"Radio memoir column on Melattur dance drama; mask author mobile, trim byline."
+595abb31a1bee933,full,fix,C1,మీ అభిప్రాయమేమిటో కామెంట్ చేయండి at offset 1900,,Modi unveils Netaji memorial model news; trailing comment call-to-action.
+711ddaec95d33318,full,fix,C1;D3,(Image Credit: freepik) at offset 0 | Horoscope Today 21st January 2023 at offset 0,,Daily horoscope by sign; trim English image-credit header line.
+0642038506ef1eee,full,drop,F3;D4;D3,వారికి తెలియకుండా ఒకరి టెక్స్ట్ మెసేజ్ ఎలా చదవాలి at offset 7245 | ఇతరుల గ్రంథాలు వారికి తెలియకుండా at offset 213 | Minspy at offset 1561,,"Covert phone-spying stalkerware promotion; machine-translated, harmful."
+faaef2f14dd5768b,full,fix,C2;D3,గత కొన్ని సంవత్సరాలుగా దేశీయ ఆపరేటింగ్ సిస్టమ్లు ... repeated block at offset 643 | BharOS అంటే ఏమిటి at offset 0,,"BharOS explainer; intro sentences repeated three times, dedupe."
+ee82b5653a41e703,full,drop,G1;D4;D3;C1,"న్యూ Delhi ిల్లీ at offset 12 | ఇది కేంద్ర, ఉత్తర ప్రదేశ్ ప్రభుత్వాన్ని రేవులోకి తెచ్చింది at offset 1600 | Delhi, nd, en? at offset 1500 | పిఎన్బి కుంభకోణం: కోవిడ్ -19 at offset 1360",12 U+0C3F TELUGU VOWEL SIGN I,"Machine-translated UP Covid deaths news; broken Delhi, stray English, inserted headlines."
+7d1b11163e35e658,full,fix,C1;D3,View this post on Instagram at offset 2042 + embedded tweet t.co link at offset 1192 | A blockbuster album loading at offset 1192,,Amigos movie news; trim embedded tweet and Instagram placeholders.
+e16b17169a5ea66c,full,fix,C1;D3,Just In / Don't Miss link lists at offset 0 + (నిరాకరణ: పైన ఇవ్వబడిన సమాచారం at offset 7011 | Budh Gochar 2022 at offset 722,,Mercury transit horoscope; trim top link lists and disclaimer.
+dac2a9089dfe5454,full,clean,,,,Krishna board meeting on water release; no disease.
+f3ce3a145909c90f,full,drop,D4;C1,గుండె క్యాన్సర్ (heart cancer for liver cancer) at offset 1040 + గుండె ఆగిపోవుట for liver failure at offset 1150 | ఇది కూడా చదవండి at offset 572 + app download prompt at offset 3276,,Auto-translated hepatitis B health article; liver terms mistranslated as heart.
+d8f9ebe715f26b84,full,drop,C4;C5,Budhavanam para then Palakurthi CM visit at offset 371 + Goldconda para after Kolanupaka at offset 1688,,"Telangana magazine tourism category page; unrelated article teasers joined, not one text."
+5a47a9963f69974e,full,fix,C1,Recommended Video at offset 2719,,Pawan Kalyan fishermen rally news; trim Recommended Video line.
+c8a3e786d783465d,full,clean,,,,Short gossip on Anupama leaving DJ Tillu 2; no disease.
+45f8585fb0907b3e,full,fix,C1,తాజా జాతీయ వార్తల కోసం క్లిక్ చేయండి at offset 629,,Bandi Sanjay yatra news; trailing click-for-news link line. SCAN C3 is link.
+56ec9e8d055c1a71,full,clean,,,,Obituary of Malayalam actor Nedumudi Venu; no disease.
+c5ccbaf027e082d3,full,fix,C2,'నా పిల్లల కన్నా మోదీనే ఇష్టం' headline repeated at offset 81,,Kangana reacts to Anupam Kher mother video; headline line duplicated.
+fe01274736d95a8f,full,clean,D3,Guppedantha Manasu Dec 9 Today Episode at offset 0,,Serial episode recap; English title only.
+b936ed3b471922cc,full,drop,D4;D3,అనేక రుచులలో వస్తాయి (comes in flavors) at offset 324 + మసకబారిన జోన్లు at offset 600 | LG QNED TV లు at offset 324,,Auto-translated LG QNED TV article; short and mistranslated throughout.
+d55fceacc521ac59,full,drop,B2;C1;C5;D4,"<span style=""font-family: Mallanna; ""> at offset 326 | ఓపెన్ 24 / 7 banner list at offset 0 | సాధారణ మందులు / తక్కువ ఖర్చుతో tag list at offset 4539 | వెరీవెల్ హెల్త్ ద్వారా బ్లింక్ హెల్త్ at offset 1546",,"Online pharmacy SEO spam page, machine-translated, ends on tag list; drop."
+97b74f30fca9a73a,full,clean,,,,Veera Simha Reddy film review; no disease.
+df624e86d90050e3,full,fix,C1;D3,"embedded tweet pic.twitter.com at offset 1331 + — ANI (@ANI) May 24, 2021 at offset 1551 | Samantha - The Family Man 2: at offset 0",,Family Man 2 Tamil ban news; trim embedded English tweet.
+1ee5b379afb77b51,full,fix,C1;D3,"pic.twitter.com tweet at offset 1014 + — The Sun (@TheSun) May 30, 2021 at offset 1115",,Tiger and child glass video news; trim embedded English tweet.
+61612475b96886d7,full,drop,C1;C5;D4,ఈ ప్రోగ్రామ్ను ఎలా కొనుగోలు చేయాలో తెలుసుకోండి menu at offset 555 | |ఒకటి కంటే ఎక్కువ లైసెన్స్లను ... వీడియో చూడండి| at offset 3091 | యుఎస్యు సాఫ్ట్వేర్ ... కుంగిపోతాయి at offset 10593,,"USU software product page; mostly menu, table, repeated lists, machine-translated."
+e305f9bad4f457af,full,clean,,,,Girl with 3 kg hair removed from stomach; no disease.
+a8a1f4ce38781734,full,fix,C1;D3,Don't Miss! related-links block at offset 0 | Sports/News/Lifestyle labels at offset 12,,Allu Arjun at 18 Pages event; trim Don't Miss link list at top.
+4f49826fa1ce1e40,full,drop,D4;C1;D3,"మీ బంతులను క్రమాన్ని మార్చాలనే కోరికతో at offset 220 + చాలా ఘోరంగా the దానితో at offset 160 | అలాగే, మిస్ చేయవద్దు at offset 1771 + ఫేస్బుక్లో ఇప్పుడు మమ్మల్ని అనుసరించండి at offset 4263",,Machine-translated etiquette column with crude wording; follow prompts; drop.
+d566781e552d2129,full,fix,C1,"T. Murali Krishna, News18, Kurnool at offset 0 + related headlines list at offset 866",,Srisailam ghat road accident news; trim byline and related-headline block.
+7a0b8b7c8b50bb37,full,fix,C1,tag list - Romance-scenes-in-movies ... Balakrishna at offset 0,,Cyclist meets lion cubs story; leading tag list trimmed. SCAN D3 rejected (tags).
+c2df2d5edf1cb7b3,full,clean,,,,"Kandukur Chandrababu rally stampede news; victims named in public report, no disease."
+26ada8a405b304ba,full,fix,C1;D3,"ABN , First Publish Date - 2022-07-06 at offset 0 + truncated headline line at offset 57 | (Aga Khan Museum) at offset 220",,Kali poster apology news; trim ABN date line and headline fragment.
+875064ac3c286ea4,full,fix,C1,"T. Murali Krishna, News18, Kurnool at offset 0 + related headlines block at offset 1010",,Kurnool mining dispute news; trim byline and related-headline block.
+6428b71b32305f17,full,fix,C1;D3,'మీ అభిప్రాయాలు కామెంట్స్ రూపంలో' at offset 1180 + 'embedded tweet pic.twitter.com' at offset 1451 | '#WATCH: A part of the two-storied' at offset 1330,,Assam flood police station collapse; trim comment prompt and English tweet.
+6865c77e7538c694,full,clean,,,,Agniveer recruitment rally arrangements meeting; no disease.
+7b1bc775446bbdd3,full,drop,G2,అం దిస్తారు (space inside word) at offset 673 + ఆ నుకూలంగా at offset 5426 + ఉ స్నవారికి at offset 4333,673 U+0020 SPACE,Monthly horoscope with 4+ mid-word spaces and garbled star names; not rule-repairable.
+bd7b8892037e9bcc,full,clean,,,,"Uttarakhand Congress election news; fluent, complete."
+308da90942622a7a,full,fix,C1,Don't Miss! - News రామానుజాచార్యుల at offset 0,,Filmibeat Amala Paul article with menu header block; trim.
+f10aea445753ffde,full,fix,C1;D3,నా Gang— Nani (@NameisNani) July 24 at offset 1027 | Vikram కధ / Anirudh సౌండ్ at offset 1069,,Gang Leader teaser news with embedded tweet text; trim tweet.
+a930802df90a88c8,full,drop,D4;C1,led రగాయ చేసినప్పుడు at offset 483 + ఉండాలిపూర్తిగామునిగిపోయింది at offset 3180 | related article list at offset 6191,,"Machine-translated English corn freezing guide, broken words throughout."
+90fef4a7c164217c,full,clean,,,,Serial episode recap; complete.
+42aead0e50527dd3,full,clean,,,,"Karnataka politics news about Janardhana Reddy party; coherent, complete."
+0439fd7c5a7c2fd1,full,clean,D3,Bandla Ganesh : at offset 0,,Bandla Ganesh interview gossip news; English name prefix only.
+d38c76676dba4a66,full,clean,,,,"V6 Velugu report on vet shortage; ends on a source attribution, not truncated (C3 rejected)."
+d8c4975b14d3e971,full,clean,,,,Minor bank account explainer; complete.
+3c0ee2f8c31d576c,full,clean,,,,Obituary of Gujjula Narsaiah with condolence quotes; complete.
+b257665de9d9c2ae,full,clean,,,,Tamil Nadu CM criticises Kamal Haasan news; complete.
+80d73accbe799c13,full,drop,D4;C1;D3,"ఇన్ఫినిక్స్ఇన్బుక్ X1 నియో glued words at offset 1582 + Infinix2019-2021లో at offset 6519 | మరింత సమాచారం కోసం, దయచేసి: at offset 7521 | 8 GB LPDDR4X RAMతో at offset 508",,"Machine-translated Infinix laptop press release, spaces lost between words."
+fd5a1369c8e86371,full,clean,,,,"RGV social post gossip article; complete, no disease."
+f07c265939cf0ffa,full,fix,C2,ప్రభుత్వ పాఠశాలల్లో పిల్లల నమోదును గణనీయంగా at offset 0 and 187,,"AP Jagananna Vidyakanuka news; first sentence repeated verbatim, dedupe."
+610dd497cffec12e,full,fix,C1,Image Credit: Pexels at offset 0 + గమనిక: పలు అధ్యయనాలు disclaimer at offset 2326,,ABP sleep drinks article with image credit and disclaimer; trim.
+02195c5da5433314,full,clean,D3,Samantha: హై రేంజ్ స్కిన్ షో at offset 0,,Samantha glamour gossip article; English-heavy phrasing but complete.
+a01e604e40c46242,full,fix,C1;G2,"ABN , First Publish Date - 2022-09-11 at offset 0 | శ్రీనివా్సయాదవ్ virama after vowel sign at offset 1138",1138 U+0C4D TELUGU SIGN VIRAMA,"Andhrajyothy Ganesh immersion roundup; trim header, repair broken conjunct."
+464b115ae979672d,full,clean,,,,Amritpal Singh arrest news; complete.
+1235bc7f569c1041,full,clean,,,,List of high-paying jobs in India; complete.
+a6cc6ab62a9546e4,full,clean,D3,AP MLC Election Results: at offset 0,,TDP MLC election analysis; English heading prefix only.
+ffe4a461b9ca4727,full,fix,C1;D3,Also Read : డ్రగ్స్ కేసుల at offset 870 + Also Read : గుజరాత్ లో at offset 1159 + Also Read : ఈ గవర్నమెంట్ at offset 2856 | Also Read : at offset 870,,"ABP KCR temple for sale story; four inline Also Read links, trim."
+56e8be4376bf80d1,full,fix,C1;D3,ట్రెండింగ్ వార్తలు at offset 733 + సంబంధిత కథనం at offset 2276 | Rain Alert To Andhra : at offset 0,,"HT Telugu AP rain alert; trending/related labels inserted, trim (C3 rejected)."
+17e8f75094e39b51,full,fix,C1,- Read More Telangana News And Telugu News at offset 1653,,"Samayam KCR Nanded speech quotes; trailing Read More footer, trim (C3 rejected)."
+6ef01df58d7e7274,full,clean,,,,Somu Veerraju and Kanna resignation news; complete.
+8f210e56445c8c4b,full,fix,C1,Politics category label prefix at offset 0,,"Naga Babu criticises Roja news; leading menu/category word, trim."
+83e1ec16613f7bf3,full,clean,,,,Telangana minister warns on fake seeds; complete.
+1312bfec310c9eca,full,clean,,,,V6 Velugu BJP Mahabubnagar political analysis; complete.
+1f90517cd789c784,full,clean,,,,V6 opinion piece against KTR with trailing author attribution; complete.
+5867a656fbaaeadf,full,clean,,,,Kanna daughter-in-law death case news; complete.
+049bd46100c0f2bc,full,fix,C2,మునుగోడు నియోజకవర్గంలోని ప్రతీ బూత్ కోఆర్డినేటర్ at offset 69 and 879,,"Munugode Congress booth targets; one paragraph repeated verbatim, dedupe."
+3528822ec68da2f1,full,fix,C2,తెలుగు రాష్ట్రాల మధ్య జలవివాదాలు తారస్థాయికి at offset 46 and 204,,"TV5 Telugu water dispute explainer; truncated teaser paragraph repeated before full one, dedupe."
+27287c1c7b0ea3b3,full,fix,C1;D3,Leave a Reply at offset 2224 | Drumstick Leaves : at offset 0,,"Drumstick leaf health benefits; trailing comment-form footer, trim (C3 rejected)."
+628b1404a25677d8,full,drop,F3;C1,pornography-research job story with explicit sexual content at offset 527 | Representational Image/Unsplash at offset 0 + Also Read: ఎక్కువ సేపు శృంగారం at offset 1734,,ABP adult-video-reviewer job story with sexual clickbait links; adult content.
+64e785802da2651a,full,fix,C2;A6;C1,"త్రిమూర్తుల చిహ్నాలు వాటి యొక్క ప్రాముఖ్యత at offset 0, 840, 2316, 3744 | శoఖం Latin o at offset 3160 + కమండలo at offset 2136 + రక్షిoచే at offset 2438",3160 U+006F LATIN SMALL LETTER O (expected U+0C02) | 2136 U+006F LATIN SMALL LETTER O (expected U+0C02) | 2438 U+006F LATIN SMALL LETTER O (expected U+0C02),"Trinity symbols explainer; title repeated 4x, Latin o replaces anusvara (7 cases), hard-wrapped lines."
+7e2931c2867a729f,full,drop,C4;D3,"English press release then Telugu version at offset 0 and 2144 | TIRUMALA, 05 FEBRUARY 2023: at offset 73",,TTD notice with English text followed by Telugu translation joined; half is English.
+ce9c85c57f11fa26,full,fix,C1,ప్రపంచంలో అతి పెద్ద రివర్ క్రూయిజ్ గంగా విలాస్ at offset 870,,"Sankranti wishes and traffic news; trailing unrelated headline, trim."
+718a78420b711442,full,fix,C1,More Stories at offset 2392 + పాన్-ఆధార్ లింక్ గడువు at offset 2405,,"LIC policyholder safety statement; trailing More Stories headlines, trim (C3 rejected)."
+004f048bd785bcc4,full,clean,,,,"V6 Khammam-Vijayawada expressway report; bullet summary then text, complete."
+1f17d356ebb55601,full,clean,,,,"UP power employees strike news; occasional mid-word spacing typos only, complete text."
+ff9abe4e53e70b8d,full,drop,D4,రెండు చదరపు భోజనానికి (square meals) at offset 1240 + ఉద్యోగుల సమస్యలు వచ్చే విధంగా జోక్యం at offset 311 + ఆదా చేసిన మొత్తం డబ్బు at offset 1000,,"Machine-translated Birla Tyres English report, broken sentences and meaning throughout."
+438b58cebc7e0269,full,clean,,,,Samantha career gossip article; complete.
+5fcc07384b87d161,full,drop,C4;D3,"three unrelated stories (well death, baraat death, boat capsize) at offset 0, 1030, 2135 | A Youth dies after he fell into a Well at offset 38",,ABP crime roundup joining three unrelated local news items.
+f5d109c50bc272e2,full,fix,C2,ఈ ఫీచర్ ద్వారా ఒకే నంబర్తో రెండు ఫోన్లలో at offset 63 and 834,,"WhatsApp new features news; one sentence duplicated verbatim, dedupe."
+fa03272dccc58b90,full,clean,,,,Balakrishna film title gossip; complete.
+f415fb2adcd485e2,full,fix,C1;D3,embedded tweet pic.twitter.com at offset 2085 + Also Read: రాహుల్ వ్యాఖ్యలపై at offset 2464 | Doha IndiGo Flight: at offset 88,,"IndiGo Karachi diversion news; embedded English tweet and Also Read link, trim (C3 rejected)."
+cb1104a6585227be,full,clean,,,,Rohini Sindhuri and D Roopa social media dispute news; complete.
+b327e9b97b74a156,full,clean,,,,Pawan Kalyan AK remake cameraman change; complete.
+33b43a2348ef3164,full,fix,C1,(Image credi : tThe Gaurdian) at offset 330 + (Image credit : Orissa post) at offset 1210 + (Photo : Wikipedia) at offset 1500,,"News18 Yanomami funeral custom gallery text; inline image credits, strip."
+7bcf38293c1cf0b4,full,fix,C1;D3,"Friday,March 26,2021 - 12:34 by Z_CLU at offset 21 + Movie Review - అరణ్య header and cast block at offset 0 | జీ సినిమాలు ఎక్స్ క్లూజీవ్ రివ్యూ at offset 560",,"Aranya film review; byline and metadata header lines, trim."
+578d8f57cd0c1ce8,full,fix,C1,- Read More Telangana News And Telugu News at offset 895,,"KCR speech quote on PV and Nookala; trailing Read More footer, trim (C3 rejected)."
+25ce634440bf40d6,full,clean,,,,"Jamuna actress news piece, natural Telugu, no boilerplate."
+6c201abb1befc85a,full,fix,C1;D5,'- కస్తూర్బా గాంధీ జీవిత చరిత్ర' at offset 9386 | 'ది ప్రిప్ట్స్ ఆఫ్ జీసస్' at offset 488,,"Ram Mohan Roy biography, translated-sounding; trailing related-article list to trim."
+34c69dd5ce900f22,full,clean,,,,Short film web story about actress; no disease.
+6c02cb9e11679da8,full,clean,,,,Health article on vitamin C and iron; clean.
+e3d31e38cd709220,full,fix,C1;D3,"'IRCTC Tours:తిరుపతి నుంచి' at offset 1379 + 'Govt Jobs 2022: డిప్లొమా' at offset 2341 + 'తెలుగు వార్తలు, తెలుగులో బ్రేకింగ్' at offset 2775 | '(Financial Services)' at offset 100",,"Scholarship news; 4 C1 items (inline related headlines, footer and tags) to trim."
+85603a67bc5dba93,full,fix,C1;D3;F1,'డా.బెల్లి యాదయ్య' at offset 8403 | 'convertibility అంత సులభంగా' at offset 2282 | phone number at offset 8420,,Essay on Komuram Bheemudo song; author byline and phone to trim.
+55a68f65a10be8a9,full,clean,,,,Short news on Indians in Turkey after earthquake; clean.
+6e35d1be71ef8559,full,drop,C1;C3;D4,"'చిత్రం: షట్టర్స్టాక్' at offset 158 | 'విష్ణువు మన గత పాపాలన్నిటినీ క్షమించి, అపారా ఏకాదశి' at offset 1689 | 'వ్రతం అనేది హిందీ పదం, అంటే' at offset 1049 + 'ఒక age షి ఒక రోజు' at offset 800",,"Machine-translated Apara Ekadashi article, broken grammar, cut-off wish list."
+ac5dbe469948ac5e,full,fix,C1;D3,'ఇదీ చదవండి: సన్నీ లియోన్ లుంగీ' at offset 1771 | 'Priest Protest Against On Sunny Leone' at offset 0,,Sakshi news on Sunny Leone song protest; English title prefix and related link.
+14084cdd46c29cf0,full,fix,C1,'Read Also : కుమారుడి జ్ఞాపకార్ధం' at offset 451 + 'Also Read : కామారెడ్డి కలెక్టర్' at offset 1056 + 'Read Also : ఇబ్రహీంపట్నం' at offset 1718,,"Crime news on grandson beating grandmother; 5 C1 items (inline Read Also, related list, comment count)."
+9cd353300e1ff30c,full,clean,,,,MG Motors price hike news; clean.
+78b1d93ba9aa11f9,full,fix,C1;C2;C3;D3,'Also Read : AP Employees' at offset 1840 + 'Related News' at offset 2846 | 'ఏపీలోని అమరావతి జేఏసీ (Jagan Effect)' at offset 54 | 'ఆయన టూర్ అనగానే' at offset 2922 | 'Jagan Effect : ఉద్యోగుల' at offset 0,,"AP employees JAC news; repeated sentence, Also Read links, cut teaser at end."
+d158e2b8f94c26a8,full,fix,C1,'ALSO READ: Praveen Anumolu' at offset 1961,,Sreeleela orphanage visit news; trailing Also Read link to trim.
+a30a8962d18f1198,full,fix,C1,'Read Latest International News And' at offset 2004,,China billionaires moving to Singapore; footer line to trim.
+fd7c613412e40dfb,full,fix,C1,'- Read More Telangana News And' at offset 1704,,TSPSC paper leak news; footer line to trim.
+55e396e238eadc0e,full,clean,,,,"Devatha serial episode recap; natural Telugu, no boilerplate."
+78ffe031dc34c6b5,full,drop,D4;C1,'అసలే నల్లగా ఉన్న అతని జుట్టు నెరిసింది' at offset 270 + 'వెంట్రుకలను కలుషితం చేయకుండా' at offset 1038 | '[[సంబంధిత కథనం]]' at offset 2812,,Auto-translated gray hair remedy article; stilted wording throughout.
+d264edd18b36c0d9,full,fix,C1;D3,'మనం రోజు ఎన్నో పోస్ట్ లు షేర్' at offset 928 | 'If you have any Health related Problems' at offset 0,,"Free health helpline advert, English intro, share prompt; spelling errors only; F1 rejected: helpline service number, not private."
+085e2949c99792ea,full,fix,C1,'మీ కామెంట్ల రూపంలో తెలియజేయండి' at offset 1700,,Delhi shooting crime news; trailing comment prompt to trim.
+462de1cdfb155135,full,fix,C1,'మీ అభిప్రాయాలను కామెంట్ రూపంలో' at offset 1690,,Madurai husband attack news; trailing comment prompt to trim.
+0ad7aa8add69be00,full,fix,C1,'మీ అభిప్రాయాలను కామెంట్స్ రూపంలో' at offset 1320,,Ranbir-Alia video gossip; trailing comment prompt to trim; C3 rejected: ends with comment prompt.
+4e4fd64b4e541233,full,clean,,,,Vijay Sethupathi Supreme Court news; clean.
+1fabacb2ee62bad4,full,fix,C1;D3,'మీ అభిప్రాయాలను కామెంట్ల రూపంలో' at offset 1050 + 'ఇవి కూడా చదవండి : Young Director' at offset 1114 | 'Vishwak Sen: మొదటి సినిమాతోనే' at offset 0,,Vishwak Sen breakup interview; comment prompt and related link to trim.
+fca6f19b3aa9a76c,full,fix,C1,'ఇది కూడా చదవండి: గాయత్రి' at offset 422 + 'ఇది కూడా చదవండి: Jr.ఎన్టీఆర్' at offset 1048 + 'ఇది కూడా చదవండి: ప్రముఖ నటుడి' at offset 1718,,Director's son death news; 4 C1 items (three inline read-more links and app prompt).
+5fb038a7b64f96fd,full,clean,,,,Sri Lankan coconut toddy feature; repeats facts twice but no disease.
+2a02f3b95f06dc16,full,fix,C1;A6,'మీ అభిప్రాయాలను కామెంట్ రూపంలో' at offset 1120 + embedded Hindi tweet 'महाराष्ट्र के गोंदिया' at offset 1161 | Devanagari script in embedded Hindi tweet at offset 1161,1161 U+092E DEVANAGARI LETTER MA,Pig attack on child news; comment prompt and embedded Hindi tweet to trim.
+929389db510b2cb1,full,fix,C1,'ఇది కూడా చదవండి: బాలకృష్ణకి' at offset 1254 + 'ఇది కూడా చదవండి: 2024 ఎన్నికల్లో' at offset 1883 + 'మీ అభిప్రాయాలను కామెంట్స్ రూపంలో' at offset 2460,,Hindupur district demand news; two related links and comment prompt.
+75765e831ca1d762,full,clean,,,,Payyavula reacts to Sajjala on MLC results; headline bullets plus article.
+956c3dad0bcb3323,full,clean,,,,BJP micro-donation drive news; clean.
+0cedcacb0c9b910f,full,clean,,,,Ram Setu national monument Supreme Court news; clean.
+f96cedc7fb781e6d,full,fix,C1;D3,embedded tweet 'pic.twitter.com/jYvh0RWZG5' at offset 987 + 'ఇవి కూడా చదవండి:' at offset 1163 | 'Domestic cooking gas LPG price hiked' at offset 987,,LPG price hike news; embedded English tweet and related headlines to trim; C3 rejected: related headline list.
+b3861313f1a301b7,full,drop,D4;C1,'వర్క్ పీస్ లోపలి రంధ్రం నుండి బర్ర్స్ను' at offset 1215 + 'ఎంబాసింగ్ రోలర్లో రెండు ఎంబాసింగ్ రోలర్లు' at offset 540 | 'ఉత్పత్తి ట్యాగ్లు' at offset 81,,Machine-translated Chinese product page for embossing machine; spec boilerplate.
+cbc1bdd60924cd97,full,clean,,,,Rahul Gandhi interview news on marriage; summary bullets then article.
+8c7558f0b39dcb28,full,drop,D4;C1,'ప్రయోజన 0 పొ 0 దాల 0 టే' at offset 4700 + 'అతను చూసేవాడు ఏమి చూస్తున్నాడో ఊహిస్తూ' at offset 700 | 'ది WORD జూన్ 9.' at offset 0 + 'ఒక స్నేహితుడు [HW పెర్సివల్]' at offset 5125,,"Machine-translated Percival 1910 essay, garbled meaning, digit zeros for anusvara."
+503719a99f769a80,full,fix,C1,"'ఈనాడు, అమరావతి' at offset 215 + 'గమనిక: ఈనాడు.నెట్లో కనిపించే' at offset 3634 + 'మరిన్ని తాజా వార్తలు (Latest News)' at offset 4015",,"Eenadu pension cuts report; repeated subheads, ad disclaimer and latest-news list."
+0ac7cb6a7305ada5,full,clean,D3,'Anshula Kapoor:మన భారత' at offset 0,,"Celebrity gossip on Anshula Kapoor no-bra video; mild, no clear harm."
+da4be47b9e461796,full,fix,C1,photo caption 'కేంద్ర మంత్రి నితిన్ గడ్కరీకి జ్ఞాపిక' at offset 406,,Jagan meets Gadkari news; photo caption line to trim.
+993558c95e0d729d,full,fix,C1,'English Title: arjun kapoor and malaika' at offset 1108,,Arjun-Malaika gossip; trailing English title line to trim; C3 rejected: trailing title line.
+8c21aa15c841c9da,full,clean,,,,Kalyan Ram producer feature; ends complete without full stop.
+bde556c40be28c5f,full,fix,C1,"'తెలుగు వార్తలు, తెలుగులో బ్రేకింగ్' at offset 1319 + 'Tags: Samantha akkineni' at offset 1492",,Samantha bikini interview feature; footer and tags to trim.
+cd472e26cdda4bdb,full,drop,D4;C1,'సెల్ పాయింట్:' at offset 113 + 'అల్యూమిన్లమ్ అల్లాయ్ యొక్క ప్రీమియం తేలికపాటితో' at offset 506 | 'ఉత్పత్తి ట్యాగ్లు' at offset 95,,Machine-translated earbuds product page; stilted spec text.
+369396c61cde8ad6,full,fix,C1;D3,English title tail 'How will victory be decided' at offset 190 + 'మరిన్ని తెలంగాణ వార్తల కోసం' at offset 7527 | 'Itlu Mee Niyojakavargam: అభివృద్ధి' at offset 0,,Karimnagar constituency analysis; English title suffix and footer stub to trim.
+9c501ac3f84605e4,full,fix,C1;D3,'Empowering 140+ Indians within and abroad' at offset 1513 | English publisher blurb at offset 1513,,Anchor Ravi career gossip; English publisher about-us footer to trim.
+a6647b6cfa6b4974,full,drop,D4,'తెలుగు రంగు జుట్టు కోసం ప్రకాశవంతం' at offset 600 + 'ఇది మల్టీ టాస్కర్ అయినందున' at offset 1050,,"Translated tea-for-hair article, wrong meaning and calques throughout."
+557103b844649264,full,fix,C1,'Video Advertisement' at offset 352 + 'Also Read: “కళాతపస్వి' at offset 1742,,Balakrishna Sultan shooting anecdote; ad label and Also Read to trim.
+31bd2884a4572ea8,full,fix,C1;D3,"'Published: Mar 8, 2023, 4:47 PM' at offset 58 | 'YSRCP నాయకులు' at offset 400",,Nara Lokesh Women's Day speech report; Published line to trim.
+f5badc1d0010882d,full,clean,D3,"'Physical Standards Test (PST), Physical Efficiency' at offset 1100",,"CRPF constable recruitment notice; inline comma-joined subheads, English terms."
+fa3069b31dad3407,full,fix,C1;D3,'Empowering 140+ Indians within and abroad' at offset 1654 | English publisher blurb at offset 1654,,Shruti Haasan career gossip; English publisher about-us footer to trim.
+5fdb2b9a93cab966,full,clean,,,,AP cabinet decisions news; clean.
+4ada23cec36e569f,full,clean,,,,SBI Jan Dhan accident insurance explainer with desk dateline; complete.
+6422b623e63dddcc,full,fix,C1,tweet embed 'Superstar team…Truly deserving!!' at offset 2049,,Cricket news; trailing tweet embeds and hashtags to trim.
+8fc63c47d8d4c576,full,drop,D4,"'వాతావరణ వాతావరణం, యాంత్రిక షాక్ను' at offset 520",,"Auto-translated cable product blurb; garbled wording, missing spaces after full stops."
+5592e453e8487d63,full,drop,D4,'ప్రాణాలతో బయటపడిన వారి మాన్యువల్ లేదు' at offset 2603,,Machine-translated (from Spanish) definition article; awkward throughout.
+28b532bcdb5021e2,full,fix,C1,'Leave a Reply' at offset 1292,,Airtel 5G news; trailing 'Leave a Reply' to trim; text complete.
+037d566e9fb4531c,full,fix,C1,"'తెలుగు వార్తలు, తెలుగులో బ్రేకింగ్ న్యూస్' at offset 2392",,Mahashivratri astrology list; News18 footer blurb to trim.
+4b4dd134196ffad2,full,clean,,,,"Kareena Kapoor on Natu Natu song; complete entertainment news, English title prefix only."
+102d71a4b24f0a36,full,fix,C1,"'Murali Krishna, News18, Kurnool' at offset 0 + related headlines 'Interesting: ఆ ఆలయం చుట్టూ' at offset 1277 + News18 footer blurb at offset 2425",,"Kurnool MP cyber fraud news; 4 C1 items (byline, inline headline list, footer, tags)."
+ab92df855b9d1a03,full,clean,,,,"Maharashtra politics (Shinde revolt) news article, complete, no boilerplate."
+b59cc78294a8662b,full,fix,B2,"'width=""1600"" height=""1600"" class=""size-full' at offset 60",,KCR politics article; starts with leftover img tag attributes and alt text.
+0c45dfe04f181e76,full,fix,C1,"'PBN - February 28, 2021 / 01:04 PM IST' at offset 0",,ABN/BJP news commentary; dateline byline to trim; ending is a full sentence.
+336f5e7c94bab0c4,full,clean,,,,Chinese food vlogger fined for eating white shark; complete news article.
+ef63ad3061d4f06e,full,fix,C1,photo caption 'జిల్లా కలెక్టర్' at offset 0,,Collector's MLC election review meeting; stray caption line at start to trim.
+845c55824e6314dd,full,fix,C1;D3,'Sign in Welcome! Log into your account' at offset 528 | 'Password recovery' English login text at offset 567,,Nursery mela news; trailing login-widget text to trim.
+95a9f6930dd0130b,full,drop,D4;F3;C5,'తో ప్లే. లింక్తో ఆన్లైన్ ప్లే' at offset 0 | adult/fetish game promotion at offset 123 | SEO spam page at offset 1188,,"Adult game site spam, garbled machine translation."
+79abd596154b013a,full,fix,C1;D3,"'Read More' teasers throughout at offset 287 | 'Smartwatches: ... boAt, Fire Boltt' at offset 287",,ABP top-10 headline digest; 'Read More' teasers to trim; ending is not truncation.
+37797822aa49e4c3,full,fix,C1;D3,'Read More' teasers throughout at offset 249 | 'Ideas of India 2023:' English headline prefixes at offset 116,,ABP evening headline digest; 'Read More' teasers to trim; not truncation.
+35157e19bee3ada1,full,clean,,,,"KVS exam schedule news; starts with a continuation fragment, otherwise complete."
+454b3570dba91dfc,full,clean,,,,Taraka Ratna health update quotes; complete news text.
+c352cfa60680088d,full,clean,,,,Director reaction to film Ksheera Sagara Madanam; complete news item.
+df34dc3e0a7cad9d,full,drop,D4;C1;C5;D3,'కేవలం 3 గ్రాములలో 5 గ్రాముల అంజీర్ పండ్లను' at offset 713 | repeated English title at offset 1325 | 'Tags: benefits of eating soaked figs' at offset 2124 | English title 'Soak Figs In Milk' at offset 80,,"Figs-in-milk health article, machine-translated, duplicated title, SEO tag list."
+2211a0d36b4586b7,full,fix,C1,'CJLS CASUAL LEAVE MEMO – 2008 ... Follow Us @' at offset 2371,,Contract lecturers casual-leave grievance; trailing attachment titles and 'Follow Us' to trim.
+5f19ec824fcec596,full,fix,C1,'Leave a Reply' at offset 1475,,Amazfit T-Rex Pro launch news; trailing 'Leave a Reply' to trim; text complete.
+9186f4e2f94c90d3,full,clean,,,,"Kadapa road accident report with subheads; complete, no boilerplate."
+ac1513277ca092a1,full,fix,C1,'ఇదీ చదవండి : పార్టీ మార్పుపై' at offset 1703 + second 'ఇదీ చదవండి' at offset 2071 + third 'ఇదీ చదవండి' at offset 2579,,"Prabhas on Unstoppable 2 news; 5 C1 items (3 inline read-also lines, footer, tags)."
+cb70d68bf11cccf8,full,clean,,,,Deepika Padukone Oscars dress gossip; complete short article.
+8cac6c338ccde963,full,drop,F3;D2;C5;C1;F1,"explicit sex stories from offset 633 | 'Hi KK readers, andaru bagunnara?' at offset 2180 | story-title/teaser list with '[…]' at offset 2056 | 'Make sure your 18 above' site intro at offset 78 | phone number at offset 13400",,"Telugu sex-story aggregator page; adult, romanised, teasers; phone number in words; emails are placeholders."
+232615716ef393f4,full,fix,C3,'ఈ మద్య సం' stops mid-word at offset 875,,Blog post on 'madness'; text cuts off mid-sentence at the end.
+bb1141fb17535a2e,full,fix,C1;C2,'గమనిక: ఈనాడు.నెట్లో కనిపించే' at offset 2900 + 'తాజా వార్తలు (Latest News)' headline list at offset 3281 | opening paragraph repeated at offset 180,,"Eenadu editorial on addiction; duplicated intro paragraph, ad notice and headline list footer."
+0fa6ca72d1a01295,full,fix,C1,'Comments 1' at offset 1735,,Unstoppable 2 show announcement; trailing 'Comments 1' to trim.
+5f803ee9ffaf02c9,full,clean,,,,WETA women's day event report in Dallas; complete.
+c8940f66d6b3babf,full,fix,C1;C2,'Also Read..Indian Cricketer Ashwin' at offset 799 + 'Also Read..MS Dhoni' at offset 1337 + '10TV LIVE : నాన్ స్టాప్' at offset 2150 | intro paragraph repeated at offset 279,,"India vs SL ODI report; repeated lead paragraph, Also Read lines, channel footer."
+8220dc546df7f07a,full,clean,,,,CMRF aid cheques handed by Whip Gandhi; complete local news.
+4d783b80f34109b7,full,clean,,,,"Broccoli health benefits article; complete, fluent."
+c700a1e723aa37a8,full,fix,C1;D3,'ట్రెండింగ్ వార్తలు' at offset 595 | 'Pregnant Tips :' English prefix and bracketed English at offset 0,,Pregnancy tips article; inline 'Trending news' label to trim.
+eaf4ed73bbd6a779,full,fix,C1;D3,embedded tweet 'PM @narendramodi reviewed the status' at offset 1438 | English tweet text at offset 1438,,PM Modi 10 lakh jobs news; trailing tweet embed to trim.
+4287bce74601163a,full,fix,C1,'ఇవీ చదవండి' at offset 4170 + Eenadu ad notice 'గమనిక: ఈనాడు.నెట్లో' at offset 4181 + 'తాజా వార్తలు (Latest News)' headline list at offset 4570,,"Vaarasudu press meet quotes; trailing read-more, ad notice and headline list."
+7ea16ed50707a4bf,full,clean,,,,KTR remarks on federalism at South First event; complete short news.
+ac9023d5235fea24,full,fix,C1,'Tags;A nursing student was pushed down' at offset 701,,Nursing student pushed from floor news; trailing English tag line to trim.
+a97ef84c3d3b5ea3,full,fix,C1,related headline 'Rejina : అబ్బాయిలు మ్యాగీ కామెంట్స్ పై' at offset 475,,Regina 'Maggie' remark gossip; inline related-article headline to trim.
+0185ef658bc91c11,full,drop,D4,'గొంతు తగ్గించు' for 'tone down' at offset 5078 + 'చమురు ఎప్పుడూ ఎక్కువ నూనెను కలిగించదు' at offset 2239,,Oily-skin summer tips; machine-translated from English with wrong word choices throughout.
+5e04165acce4cb97,full,drop,D4,'శిశువు అడుగు యొక్క మొదటి అడుగు' at offset 1466 + 'మృదువైన డిజైన్ ప్రవాహంలో' at offset 459,,"Toddler development tips; machine-translated from English, wrong meanings, corrupted word near the end."
+ee4da75f8c8cf36b,full,fix,C2;D3,Aries paragraph repeated at offset 345 (same as offset 0) | 'Horoscope Today :' English heading at offset 270,,"Daily horoscope page; opening excerpt duplicates the Aries entry, which a rule can trim."
+0b297678d9a775ad,full,drop,D4;D3;C1,"'Women may flirt, but men pounce' rendered as 'మూర్ఛపోతారు' at offset 4328 | English-Telugu sentence table at offset 2635 | 'మీకు ఇది కూడా నచ్చవచ్చు' and FAQ at offset 7362",,"Flirt meaning SEO dictionary page; templated filler, mistranslated example pairs."
+70cca2352b2a2cc7,full,fix,C1,'For More Updates : Check out Filmify' at offset 1030,,Kiran Abbavaram film trailer gossip; trailing site promo to trim.
+a4edf4dfc983e325,full,fix,A6,stray Latin 'Š' after Telugu word 'బోల్ట్స' at offset 2140,2140 U+0160 LATIN CAPITAL LETTER S WITH CARON,Goa drug pedlar arrest news; one stray Latin character inside a Telugu word.
+beda22408ef9fdcc,full,fix,C1;D3,embedded tweets 'Don't feel safe here then why' at offset 1138 + 'What your opinion about movie:' at offset 1992 | English tweet text from offset 1138,,"Laal Singh Chaddha boycott news; trailing tweet embeds to trim; Devanagari is only a handle, A6 rejected."
+7269fb98f8501a7e,full,clean,,,,"PAN-Aadhaar linking explainer; official SMS shortcodes only, complete."
+a267748e42a23432,full,clean,,,,"Warangal politics analysis on Errabelli and Revanth; complete, subheads only."
+f7dafcbdfdb85610,full,fix,A6;C1,digit zero used as anusvara in 'స౦గతి' at offset 70 | 'Video Credits: BBC' at offset 961,70 U+0C66 TELUGU DIGIT ZERO (expected U+0C02),Sadhguru BBC interview row; legacy font digit-zero for anusvara in many words.
+08b9504d78941047,full,clean,,,,Vijayendra Prasad on Karthikeya 2 pre-release event; complete short news.
+05d78ba5426dad02,full,drop,F3;C1,"explicit sex story, sexual acts at offset 7535 | 'The post స్నేహం హద్దు మీరితే – 19 appeared' at offset 9037",,"Telugu erotic story chapter from sex-stories site; harmful, dropped."
+8e78feb05133fb0a,full,clean,,,,ABP news roundup of several AP items; no disease.
+5409fdd86d99abc8,full,fix,C1,'Read Latest Astrology News and Telugu News' at offset 2613 + 'Taurus Horoscope 2023 వృషభరాశి వారు' related headline at offset 512,,"Gemini 2023 horoscope; related-headline and footer boilerplate; C3 rejected (footer, not truncation)."
+dbeffea727bc96b6,full,drop,H2;D3,"near-duplicate of doc 719e238632236ea9 (index 179), later copy, at offset 0 | 'Sidi Bel Abbes సమయం' at offset 585",,Templated AstroSage city-time page; near duplicate of earlier doc 179.
+6f14215ff2bdeffb,full,clean,,,,Zomato CEO Ferrari news article; no disease.
+19499950e087f669,full,fix,G1,'రోల్స్ లో ంంంంచి తీసివేశా' junk vowel signs at offset 1704,1704 U+0C02 TELUGU SIGN ANUSVARA,"Short Telugu story; one damaged word 'ంంంంచి'; C3 rejected, ends complete."
+64f8c52a4e1de626,full,fix,C1,'Advertisement' at offset 217 + 'Also Read: కీరవాణికి అమ్మాయి' at offset 470 + 'Also Read:91 ఏళ్ల కీరవాణి' at offset 1752,,Pavitra Lokesh gossip article with Advertisement and Also Read lines.
+199a9d76fc5ad8dd,full,clean,,,,Ramayapatnam port news article; no disease.
+627ededaad9703f6,full,fix,C1,"'Sudhir Babu, Bharat Niwas' caption/tag at offset 68",,Hunt film press quotes; stray English tag line at top.
+3df441bc6d3f0838,full,clean,,,,AP new districts news; no disease.
+ecd0b0c3c0a83258,full,fix,C1;A6,"'Also Read : బెల్లంపల్లి అభివృద్ధికి' at offset 1024 + 'Also Read : ఇ డబ్ల్యు ఎస్' at offset 1901 + 'for telugu news live alerts like, follow' at offset 2575 | Devanagari danda '।' in footer at offset 2642",2642 U+0964 DEVANAGARI DANDA,Wanaparthy politics news; Also Read lines and follow-prompt footer; A6/C3 rejected.
+d87157a4d57322bd,full,drop,D4;D3;C1,'ఇది మిమ్మల్ని మాత్రమే తీసుకుంటుంది సెకండ్స్ సెకండ్స్' at offset 596 | 'YouTube వీడియో లింక్ను VideoDownloader.Tube' at offset 722 | 'రేటింగ్స్: 5.0' at offset 6890,,Machine-translated YouTube downloader promo page with app-store footer; drop.
+890a5766b7175c74,full,drop,D4;C1,"'ధన్యవాదాలు,BY డేవిడ్వెల్వాంగర్ఆగస్టు 19' at offset 363 | 'స్మార్ట్ డేటాను ఎలా చదవాలి' related title at offset 336",,"Auto-translated forum Q&A comments, names mangled; short and MT; drop."
+be436e7d7a74c411,full,drop,D4;C2,'ఇది 2 ను పరిష్కరించే సామర్థ్యాన్ని కలిగి ఉంది8=' at offset 1631 + 'ది 8085 యొక్క బోధనా సెట్ మైక్రోప్రాసెసర్' at offset 12812 | 'సమయ రేఖాచిత్రం:' x5 at offset 11557,,"Auto-translated 8085 microprocessor article, garbled terms and tables; mostly MT; drop."
+e24f1debb8df9dd9,full,clean,,,,Post office ATM application news article; no disease.
+c31e2c87167d34a8,full,drop,D4;C1,'మొదటి ప్రధానమంత్రి అయ్యాడు పాకిస్తాన్ని అధికారం నుండి అనాలోచితంగా' at offset 672 + '“స్థాపన నాకు మూడు ఎంపికలు' at offset 431 | 'డౌన్లోడ్ చేయండి ది ఎకనామిక్ టైమ్స్ న్యూస్ యాప్' at offset 2639,,"Machine-translated Economic Times Imran Khan article; broken grammar, app-download footer."
+8e0e3b4e6e2e051c,full,fix,C1,'More Stories' related headlines at offset 3115,,Canada fake-offer-letter students news; trailing More Stories headline list; C3 rejected.
+d7c2b27098b3ea30,full,fix,C1,'More Stories' related headlines at offset 1900,,SVB Indian startups deposits news; trailing More Stories list; C3 rejected.
+239c49263bce7e5d,full,clean,,,,Euro Cup football match report; no disease.
+57eb7a0ee026b5dc,full,drop,D4;D3,'వీరికి ఒక రోజులో ఎక్కువ కాలం ఉంటుంది' at offset 90 | 'ప్రాజెక్ట్ పేరు : PACO Operation Hub' at offset 566,,Machine-translated office-design award blurb; broken grammar; short.
+f1d608e91febca90,full,fix,C1,'Photo : Twitter' photo credit at offset 1220 + '(Twitter/Photo)' at offset 4440 + 'Photo : Instagram' at offset 4750,,Samantha film news gallery text; repeated 'Photo : Twitter' credits; C3 rejected.
+a21d4277b589c5e4,full,drop,D4;D3;C2,'పండితుల యొక్క పారదర్శక డేటాబేస్' at offset 4688 + 'సరళీకరించండివిద్యార్థులకు d ప్రక్రియ' at offset 4884 | 'నేషనల్ స్కాలర్షిప్ పోర్టల్' repeated at offset 917,,Machine-translated National Scholarship Portal explainer; garbled terms and mixed English; drop.
+b0e9faff408bb5c3,full,fix,C1,'A quiet start to the morning in Nottingham' tweet embed at offset 1318 + 'చదవండి: విషాదం.. క్రికెట్ ఆడుతూ' at offset 1497,,Joe Root cricket report; embedded tweet and Read-also line; C3 rejected.
+8edfa083803b1147,full,clean,,,,Pawan Kalyan birthday wishes to Venkatesh; no disease.
+d9c658fa3276f9f0,full,fix,C1,'మరింత సమాచారం ... మీ కోసం!' at offset 4841 + '‣ అంతర్గత ప్రజాస్వామ్యం ఎండమావి' related link at offset 4868,,Eenadu Salesforce careers article; trailing related-story link; C3 rejected.
+7f13dedd14627775,full,drop,D4;C2;D3,'మీరు రాత్రి టాస్ లేదా నొప్పి తో మేల్కొలపడానికి' at offset 1800 | 'Rayson Rayson ఇండస్ట్రియల్ జోన్' repeated at offset 742 | 'EuroTop 5 స్టార్ హోటల్' at offset 120,,Machine-translated Chinese mattress factory ad with repeated sentences and broken grammar.
+07485a3bd56ab847,full,drop,D4;C1,'అనిమే enthusత్సాహికులు' at offset 280 + 'ట్విట్టర్ వినియోగదారు అబ్దుల్ జోల్డిక్' at offset 1182 | 'dbs మాంగా 66' related link at offset 340 + '- దేశం:' at offset 132,,"Auto-translated Boruto episode spoiler article; mangled names, junk related links."
+6f34f3b3e3b1a493,full,drop,D4;C1,'హాలీవుడ్ నటుడు పమేలా ఆండర్సన్' at offset 0 | 'జైల్బ్రేక్ నక్క' at offset 1029 + '(ఈ కథనాన్ని టాప్ న్యూస్ సిబ్బంది' at offset 1928,,Auto-translated Pamela Anderson wedding news with wrong gender and junk link lines.
+8c5a7540bec0d441,full,drop,C4;C3,excerpt blocks from unrelated PCB/cricket posts joined at offset 381 | 'పాకిస్థాన్ క్రికెట్ […]' truncated excerpt at offset 540,,Tag archive page of many truncated news excerpts ending in […].
+0a9ff9e0c5b7b1ac,full,drop,D4;C3,'నేను ఒక ద్వీపాన్ని కొనుగోలు చేయడానికి' at offset 91 | 'కలలుగన్నారా? ఉంటే' at offset 1200,,Auto-translated Bocas del Toro travel teaser list; ends mid-teaser; disjoint snippets.
+a87f66fe7b7604c8,full,fix,C1;D3,"'తెలుగు వార్తలు, తెలుగులో బ్రేకింగ్ న్యూస్' at offset 2361 + 'Tags: Career and Courses' at offset 2534 | 'గ్లోబల్ వార్మింగ్(Global Warming)' at offset 0",,Clean-air jobs news article; site footer and tags; C3 rejected (tag list).
+4553d17362551f2b,full,fix,C1,'- Read Latest Andhra Pradesh News and Telugu News' at offset 397,,Nellore collector office fire news; footer line; about 395 chars of text remain.
+0d4c6a8f9ba38b04,full,fix,C1,'Sign in Welcome! Log into your account' at offset 1136 + 'A password will be e-mailed to you.' at offset 1215,,Pakistan economic crisis news; trailing login-form boilerplate.
+be0033d6d9dc244c,full,fix,C1,'ట్రెండింగ్ వార్తలు' at offset 744,,Brahmastra box office news; stray 'Trending news' label mid-text.
+7412cf99ec995197,full,fix,C1,'ట్రెండింగ్ వార్తలు' at offset 410 + 'సంబంధిత కథనం' at offset 1634 + 'టాపిక్' at offset 1647,,Sensex crash news; trending label and trailing related/topic labels; C3 rejected.
+e272065773f36e6c,full,clean,,,,Upasana surrogacy rumours gossip news; no disease.
+ce4e28159abb2483,full,clean,,,,US president salary and perks explainer; no disease.
+a58cadd5f9159920,full,clean,,,,Pervez Musharraf obituary news; no disease.
+77064dd209fdc72e,full,clean,,,,"Upasana apologises to Kiara Advani; short news, no disease."
+b3707e7b2e4a3b61,full,fix,C1,'ఇది కూడా చదవండి: గుజరాత్ లో రూ.25.80కోట్ల' at offset 1300,,Bharat Jodo Yatra Telangana news; trailing 'also read' line; C3 rejected.
+c00df237859828d4,full,clean,,,,"Valimai box-office news; short, no disease."
+a8448bb7b7f27c7e,full,clean,,,,Sri Satya Bigg Boss gossip article; no disease.
+6f76bd988a1da563,full,drop,D4;C2,'ఉత్తమంగా ఉంచబడిన రహస్యాలు' at offset 1601 + 'హోల్డర్' stray token at offset 29 | '28ºC/82ºF సగటు అధిక ఉష్ణోగ్రత' x5 at offset 878,,"Machine-translated Costa Rica travel season guide, broken grammar, repeated lines."
+cddaf967665ddca9,full,drop,D4,'ఎ రాజకీయ నాయకుడు 20 వ సాహిత్య' at offset 109 + 'ఎస్ఐ బొబ్డే అధీనంలో ఉన్న ఒక రోజు' at offset 1601,,Translated current-affairs quiz with garbled phrases.
+c1c9e7c7f8f6f055,full,fix,C2,'Indonesia: ఫారిన్ దేశాల్లో ప్రకృతి వైపరిత్యాలు' repeated at offset 63 and 133,,Indonesia earthquake news; lede sentence duplicated in two lines.
+c7845715100960a2,full,clean,,,,Waltair Veerayya movie review; no disease.
+0dbd676f15002de1,full,clean,,,,"Devil movie special song news; short, no disease."
+86ff5e274b5e8a3e,full,clean,,,,AP CM tours cancelled political news; no disease.
+c1fb9f0797aa8ce5,full,clean,,,,"High court judges division news; stray word-internal spaces, no clear damage."
+d0f75edfb86e01af,full,fix,C1;C2,'Home » agriculture » The Use Of Organic' at offset 0 | 'పచ్చిరొట్టను ప్రధాన పంటకు ముందుగా' paragraph repeated at offset 106 and 2483,,Organic fertilizer farming article; breadcrumb header and one paragraph repeated.
+1a53f19156659652,full,fix,C1;C5,"Keywords : madhyapradesh, gow rakshak at offset 1698 + Suggested Posts at offset 1866 | related headline list with teasers at offset 1882",,News article about MP lynching followed by keywords and ~60 related headlines; trim after article.
+240989c65c2a74d6,full,fix,C1,Intinti Gruhalakshmi 28 July Today Episode 696 : at offset 1486,,TV serial episode recap; repeated title/teaser headline mid-text.
+5b3f463ca88e83ac,full,fix,C1,Intinti Gruhalakshmi 29 July Today Episode 697 : at offset 1107,,TV serial episode recap; repeated title/teaser headline mid-text; stray (c) sign.
+53528390a7864618,full,fix,D3;C1,"English press release then Telugu version at offset 115 | ISSUED BY THE PUBLIC RELATIONS OFFICER at offset 875 + తి.తి.దే., ప్రజాసంబంధాల అధికారిచే at offset 4025",,TTD temple news: English original followed by Telugu translation; footer lines.
+833386dd5068f617,full,drop,D4,కెరీర్-బెస్ట్ నంబర్లను అందించగలదు at offset 270 + రేపు మరియు శుక్రవారాలు వారాంతపు రోజులు at offset 1100,,"Movie talk article, machine-translated from English; stiff, wrong phrasing throughout."
+33817e6f4452aec1,full,fix,C1,Read More: RRR: 'భీమా నిన్ను కన్న at offset 2113,,Rajamouli/Russo Brothers film news; trailing Read More link.
+937d8a613a18e6fc,full,fix,C1,Tags:Anniversary of Shri Choudeshwari at offset 801,,Local temple anniversary news; trailing English tag line (scan C3 false).
+d4e888ed611d98e5,full,fix,G2,శాస్తవ్రేత్త (for శాస్త్రవేత్త) at offset 1109 + రాష్టప్రతి at offset 992,1109 U+0C4D TELUGU SIGN VIRAMA,Teachers essay; legacy-font conjunct order errors and stray spaces inside words.
+cc7210ddc1a4c6e6,full,drop,D1;F1;C1,"English profile text, Telugu 36% at offset 0 | address at offset 4078 + phone number at offset 4245 | Recent Activities at offset 4277",,"Local politician profile mostly English with contact details; wrong language, personal data."
+c2cdd498ecf10a2b,full,fix,C1,courtesy Andhrajyothy… at offset 3661,,"Thomas Cook collapse news; trailing source credit (scan C3 is a credit, not truncation)."
+ae717ef9da38e753,full,fix,C1,ఇవీ చదవండి at offset 2221 + గమనిక: ఈనాడు.నెట్లో కనిపించే at offset 2232 + తాజా వార్తలు (Latest News) list at offset 2621,,"Eenadu Foxconn AirPods news; trailing read-also, ad disclaimer and news list."
+9f05eb65302e645a,full,clean,,,,Fact-check article on Scindia video from Bucharest; no disease found.
+817cfe49e9073f5a,full,drop,D4,జారీ చేయబడిన చెల్లుబాటు అయ్యే వీసాలు at offset 15 + ఉటంకిస్తూ పేర్కొంది at offset 400,,"China visa policy wire news, literal machine translation with stiff passive phrasing."
+851fe1fec1d49c0a,full,drop,D4;B4;C1,కేక్ను ఎలా సమీకరించాలో నేను మీకు at offset 281 + గాలి బయటకు ఉంచడానికి అది sifting at offset 1100 | [url:3] at offset 2279 | వ్యాఖ్యానించిన మొదటి వ్యక్తి అవ్వండి at offset 2502,,"Strawberry cocoa cake recipe auto-translated from Spanish; broken phrasing, leftover [url:3] token."
+e7d4e52fa23118e1,full,fix,C1;C2,Home » Life Style » Do You Know at offset 0 + READ ALSO : Apple Cider Vinegar at offset 1071 + READ ALSO : Winter Immunity Booster at offset 2212 | repeated paragraph ఆప్రికాట్స్లో విటమిన్ సి at offset 1980,,"Apricot health article; breadcrumb, two read-also lines, one paragraph repeated."
+dd64aef74210ffe8,full,fix,C1,"తెలుగు వార్తలు, తెలుగులో బ్రేకింగ్ న్యూస్ at offset 2292 + Tags: Trending, VIRAL NEWS at offset 2465",,Viral news on 3-year-old reciting poems; trailing site promo and tags (scan C3 false).
+53d7f0d3b32a954e,full,fix,C2,i) మీ ఖాతాపై క్లిక్ చేయండి. repeated 4x at offset 2097,,"Pratilipi app help page; repeated step lines; emails are company/placeholder, not F1; F1 rejected: company support email."
+c668ed9dcedeb374,full,clean,,,,Foxconn-Telangana investment news with bullet summary; no disease found.
+0c66224d946fa1da,full,fix,C2,lead paragraph టాలీవుడ్ లో పెద్ద పెద్ద నటీనటుల repeated at offset 315 + first copy cut at offset 0,,Chiranjeevi helps actor Ponnambalam; opening teaser repeated with a title prefix.
+6c593bbe5b8d94e9,full,fix,C1,Empowering 140+ Indians within and abroad at offset 1985 + India Herald Group of Publishers P LIMITED at offset 2152,,Crime news on RMP doctor brothel arrest; English about-us footer to trim; D3 rejected: English is only the about-us footer.
+517651eb715d8ee0,full,drop,D4;C1;C5,"ఇది మీరు ఒక కనుగొనేందుకు అనుమతిస్తుంది చౌకైన ప్రైవేట్ ఆరోగ్య బీమా in అమెరికా at offset 2140 + ఈ విధంగా, మీరు ఒక కనుగొనడం ఉత్తమం చౌకైన at offset 6400 | సంబంధిత శోధనలు: డెస్జార్డిన్స్ ఇన్సూరెన్స్ at offset 1130 + ఇది కూడ చూడు: https://www.investopedia.com at offset 10862",,"SEO article on US health insurance, machine-translated, keyword-stuffed fragments, related-search lines."
+e0fa9348d960c464,full,clean,,,,Eenadu Pratibha editorial on Smart Cities with title bullet and author sign-off; complete.
+9c8ce3e93918aee7,full,clean,,,,Film gossip on Sukumar and Allu Arjun film; no disease found.
+2beeb23880a0f1b4,full,fix,C1,- TRENDING TOPICS at offset 0 + ఇవీ చదవండి at offset 2621 + గమనిక: ఈనాడు.నెట్లో కనిపించే at offset 2632,,"Gujarat Titans lavender jersey news; 4 C1 items (leading topics, read-also, ad disclaimer, news list)."
+a0c8c72f78be4bd9,full,clean,,,,Kakinada political speculation news; no disease found.
+be0a3e30ba42803f,full,drop,C4;D4;C1,"~40 unrelated news items with dates, 30 Mar 2023గూగుల్ at offset 15 + 02 Mar 2023రిలయెన్స్ at offset 11757 | ఇకపై అన్ని UPI QRలు, ఆన్లైన్ వ్యాపారులకు ఉపయోగపడునున్న at offset 692",,"NewsBytes tech/business headline-and-blurb feed of many unrelated stories, translated from English."
+a00e1e04c8d2e398,full,fix,A6,stray Latin S inside Telugu word తయారుచేయగలిగేS at offset 2260,2260 U+0053 LATIN CAPITAL LETTER S,Tirupati laddu history and free-laddu news; one stray Latin letter.
+a2df7ce2cf3b171e,full,clean,,,,Tribal mining opinion piece with trailing author sign-off; complete.
+e2d13005ae441fb6,full,fix,C2;C1,lead paragraph వెంకటగిరి ఎమ్మెల్యే ఆనం రామనారాయణ రెడ్డి repeated at offset 263 | మీ అభిప్రాయాలను తెలియజేయండి at offset 1690,,"Anam Ramanarayana Reddy political remarks; lede repeated, reader-comment prompt at end."
+f1058ebe8fbacedd,full,fix,C1,Empowering 140+ Indians within and abroad at offset 1440 + India Herald Group of Publishers P LIMITED at offset 1607,,Pushpa Russia release flop gossip; English about-us footer to trim (scan C3 false); D3 rejected: English only in about-us footer.
+a07af5085485b490,full,fix,C1,- ఇంటర్నెట్ డెస్క్ at offset 2463 + గమనిక: ఈనాడు.నెట్లో కనిపించే at offset 2482 + తాజా వార్తలు (Latest News) list at offset 2871,,"Eenadu daily horoscope; trailing byline, ad disclaimer and latest-news list (scan C3 false)."
+54d708ad4ecdc9b8,full,fix,C1,గమనిక: ఈనాడు.నెట్లో కనిపించే at offset 2200 + తాజా వార్తలు (Latest News) list at offset 2589 + leading headline and sub-headlines at offset 0,,"Tripura CM race news; headline stack at top, disclaimer and news list at end."
+22794ad1a892545a,full,fix,C1,Read more: RC15: ‘ఆర్సీ15’ షూటింగ్పై చరణ్ at offset 1737,,Varisu/Vaarasudu Telugu song release news; trailing Read more link.
+e502c073875a174e,full,clean,,,,Imran Khan arrest and Lahore tension news; no disease found.
+1a613ea256ca0f07,full,clean,,,,FAQ explainer on government borrowing; no disease found.
+a6b289f078bb4893,full,clean,,,,"Bandi Sanjay unemployment rally speech report; headline bullets then speech, no boilerplate."
+513989c1a2d0fabd,full,clean,,,,Short news on ABK Prasad receiving Raja Ram Mohan Roy award; no disease found.
+2186eb75c8d2b5b9,full,clean,,,,Film launch news for Viswamitra with crew credits; credits are part of the story.
+3717a47e1c7afe08,full,drop,C1;B2;C5,మరింత చదవండి at offset 220 | FastSupport వైరస్ మరియు మాల్వేర్లను ఎలా తొలగించాలి'/> at offset 505 | list of unrelated article teasers at offset 0,,"IT-site homepage teasers (fonts, sexting, PowerPoint); no real article text."
+49f7a4236aa9f245,full,fix,C1;C2,"ఈనాడు, హైదరాబాద్ at offset 221 + గమనిక: ఈనాడు.నెట్లో కనిపించే at offset 2163 + తాజా వార్తలు (Latest News) list at offset 2552 | lede డేటా కేంద్రాలు స్థిరాస్తి రంగంలో repeated at offset 238",,"Data centres boost real estate; lede repeated, ad disclaimer and news list trailing."
+1f828617fd28bb92,full,fix,C1,"ABN , First Publish Date - 2023-04-30T15:55:10+05:30 IST at offset 93",,Shruti Haasan four films in 2023 gossip; publish-date byline line.
+f5c729b9bd76a4dc,full,clean,,,,Short news on India wheat export ban and G7 criticism; no disease found.
+83d7892bab5d76c0,full,drop,C1;C4;D2,"By ramakrishna - May 6, 2018 4 Facebook Twitter Pinterest at offset 40 | unrelated comments on Disha case at offset 155 | Disha case lo Telangana samjam okka sariga at offset 451",,"Photo-gallery page header plus unrelated reader comments, one in romanised Telugu."
+bff97488d7a2a56e,full,clean,,,,"Karan Johar Koffee season 8 gossip; site style puts spaces inside words, no listed disease."
+af0b1ed4a7ffe48b,full,fix,C2;C1,opening sentences మనం నిత్యం బస్సులలో సీటు కోసం repeated at offset 260 | ఈ సంఘటనపై మీ అభిప్రాయాన్ని కామెంట్ల రూపంలో at offset 1560 + Brawl at Chicago O’Hare airport pic.twitter.com at offset 1690,,"Chicago airport fight news; lede repeated, comment prompt and embedded tweet text at end."
+6daa18b05c96f932,full,clean,,,,"Actress Nagma gossip; text begins mid-article with 'అంతేకాదు', otherwise no listed disease."
+0f828a96df65197c,full,fix,C1,Empowering 140+ Indians within and abroad at offset 1625 + India Herald Group of Publishers P LIMITED at offset 1792,,Pushpa story rumour about Mahesh Babu; English about-us footer to trim (scan C3 false); D3 rejected: English only in about-us footer.
+0144d53f72675f91,full,drop,D4;C1,కూడా బావుందిfuboTV అనేది at offset 206 | ప్రణాళికలను వీక్షించండిప్రణాళికలను వీక్షించండి at offset 159 + ఇక్కడ క్లిక్ చేయండి ! at offset 2157 + ప్రముఖ పోస్ట్లు at offset 10805,,"Affiliate streaming-service spam on watching CNN without cable, machine-translated with sign-up prompts."
+9e40cb21c44e1477,full,drop,D4;C2,ప్లెయినెడ్జ్ స్కూల్ డిస్ట్రిక్ట్ బోర్డ్ ఆఫ్ ఎడ్యుకేషన్ at offset 0 + సిడబ్ల్యు పోస్ట్లో LIU కోసం కరికులం మరియు ఇన్స్ట్రక్షన్ at offset 1332 | first sentence repeated at offset 1695,,"US school superintendent appointment notice, auto-translated from English; transliterated terms, repeated sentence."
+c6af6433091eae83,full,clean,,,,Bigg Boss contestant Sohel event comments gossip; no disease found.

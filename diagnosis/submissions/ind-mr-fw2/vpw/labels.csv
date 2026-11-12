@@ -1,0 +1,501 @@
+doc_id,read,verdict,diseases,evidence,hex,note
+a04bc6869aca8184,full,clean,,,,
+29f9f308afd0859e,full,clean,,,,
+00eed90bde196e9c,full,clean,D3,"'How To Find Sweet Watermelon:' offset 0,563",,"verdict fix->clean: D3 is label-only (do not judge), English title kept"
+870fb0ffd8d7a041,full,clean,,,,
+45099f1718f10018,full,clean,D3,D3: English title 'Lioness And leopard Fight Viral Video' at offset 0,,"English title flagged D3 (title-level mixed language) per pack convention | verdict fix->clean: D3 is label-only (do not judge), English title kept"
+924d41c82dfe4138,full,clean,D3,D3: English title 'Viral Video' at offset 0,,"English title flagged D3 per pack convention | verdict fix->clean: D3 is label-only (do not judge), English title kept"
+117918b8e9db997e,full,clean,D3,"D3: 'The port' at offset 1683, 'appeared first on' at offset 1753",,"verdict fix->clean: D3 is label-only (do not judge), English title kept"
+626fc9159542b61c,full,fix,C5;D3,C5: 'Tags: Diabetes' at offset 2770; D3: 'View this post on Instagram' at offset 2402,,Many english words written in Marathi script
+06b7a9d549057fa5,full,clean,D3,'बिना ड्राइवर के' offset1145,,"This is a hindi tweet references in this Marathi article | verdict fix->clean: D3 is label-only (do not judge), English title kept"
+5c05e18231a55839,full,fix,C5,'Maharashtra News' offset 1715,,"Names, tags about the news source in the article"
+c8ad1802a6fbb058,full,clean,D3,'Maharashtra news' offset 1698,,"Names, tags about the news source in the articl | verdict fix->clean: D3 is label-only (do not judge), English title kept"
+d4026c405ed1a1a7,full,clean,D3,D3: English title 'Health Tips:' at offset 0,,"English title flagged D3 per pack convention | verdict fix->clean: D3 is label-only (do not judge), English title kept"
+654e623661c0b8c6,full,fix,C1;C5,"C5: related-article headline/link list from offset 617 ('Raj Thackeray Rally : ...'); 'Tags: गणेश नाईक' at offset 1802; C1: News18 site boilerplate footer 'मराठी बातम्या, ब्रेकिंग न्यूज...' at offset 1631",,recoded C4->C1;C5: not a second article; clean body then a related-links list + site boilerplate/tags chrome
+bc2933ac4de734d9,full,clean,,,,
+857af36e6c2121c5,full,clean,,,,
+26dda2c33506f1ff,full,fix,D3;F1,D3: 'Fact Check' at offset 0 + '- By Vishvas News' at offset 127 + 'Claim Review' at offset 2051 + 'Claimed By' at offset 2123 + 'Know the truth' at offset 2168; F1: phone number at offset 2435,,"quoted English tweet 'The scene...#JummahMubarak' at offset 1516 left uncited: verbatim reproduction of the source being fact-checked, natural content not a defect"
+9c9cb2366bc14d88,full,fix,C1,'देखील वाचा' ('also read' divider) at offset 1187; 'This News has been' RSS-feed boilerplate at offset 2008,,
+b254602c4b779579,full,clean,,,,
+41e0cdfe755b14a1,full,clean,,,,
+f87818242ed54e26,full,clean,,,,
+1afac20e086d5472,full,fix,C1;D3,C1: 'देखील वाचा' ('also read') at offset 464; D3: 'Download Our' at offset 0,,"A5 removed: only अ+ॅ present (standard Marathi loanword spelling), no co-occurring precomposed ऍ U+090D"
+36198f74122a5919,full,fix,C1,C1: RSS-feed boilerplate footer 'This News has been Retrieved from RSS feed...All Credits and Copyrights Belongs to feed owner' at offset 1437,,"recoded C5->C1: cited content is an RSS boilerplate footer, not a keyword/link list (same footer coded C1 in 9c9cb2...)"
+47df80cd39779c69,full,clean,,,,
+8207d3c24ce05878,full,fix,C1;C5,C1: 'महत्वाच्या बातम्या' related-news heading at offset 829; C5: bulleted related-article headline list from offset 850 to end,,recoded C4->C1;C5: not a second article; clean body then 'important news' related-links widget (cf 654e...)
+0cd78c6d499c4cb5,full,fix,C1;C5,C1: 'महत्वाच्या बातम्या' related-news heading at offset 1025; C5: bulleted related-article headline list from offset 1046 to end,,recoded C4->C1;C5: not a second article; clean body then 'important news' related-links widget (cf 654e...)
+e942a698aab509da,full,clean,D3,D3: English title 'Pune News' at offset 0,,"D3 recorded for English title; kept per 'label it, do not judge it' (title is natural, not removed)"
+2250aa0eb13684a2,full,clean,,,,
+8be5674f271d5ed9,full,clean,,,,"relabeled A5->clean: only अ+ॅ present (standard Marathi loanword spelling), no co-occurring precomposed ऍ U+090D"
+878959ae05c2463e,full,clean,,,,
+a9c0097cced5f9c3,full,clean,,,,Emojis in this doc - TBC
+dac55ea8bc131eb1,full,fix,F1,F1: phone number at offset 108,,"A5 removed: only अ+ॅ present (standard Marathi loanword spelling), no co-occurring precomposed ऍ U+090D"
+052f2791183c599c,full,drop,C2,"C2: line 'आधी रोटी खाएंगे, इंदिरा को जिताएंगे !' repeated 5 times",,"Too long, many different kinds of content, many issues, difficult to highlight and fix all, hence dropping"
+ab077875d8ddc109,full,clean,,,,
+7a0d083844bbcacb,full,clean,,,,
+d900a0ecc88002fe,full,clean,,,,
+d6ac7b4f104ac3c6,full,fix,C1,C1: 'देखील वाचा' ('also read' teaser between ===== rules) at offset 1245,,relabeled clean->fix: missed read-also teaser block (देखील वाचा sweep)
+ea74237e4114182f,full,fix,C1;D3,C1: Saam TV boilerplate 'Read the latest Marathi news...' at offset 1242 + follow/subscribe CTA at offset 1537; D3: English title 'Janhavi Kapoor New Film' at offset 91,,recoded C5->C1;D3: tail is Saam TV boilerplate/CTA (not a link list); English article title prefix = D3
+a84ec9a0a34a3f12,full,drop,C1;C3,C1: chunk 'आपल्या शहरातील ताज्या बातम्या आणि ई-पेपर…' at offset 0 + 'Copyright' at offset 924; C3: content truncated after a few lines (ends at offset 1023),,Copyrighted content truncated after few lines
+d40a6e0c632b3dd0,full,fix,C1;G1,C1: 'आपल्या शहरातील ताज्या बातम्या आणि ई-पेपर मिळवा मोफतडाउनलोड करा' at offset 0 + 'Copyright' at offset 1686; G1: detached 'ि' (U+093F) in 'वादग्रस्त िनर्णय' at offset 698,E0 A4 BF (U+093F),"added G1: 'वादग्रस्त िनर्णय' detached ि (U+093F) at offset 698 (handover-flagged, was C1 only)"
+634febec33cccdb9,full,clean,,,,
+aae28d64e5a7a4c2,full,clean,,,,
+85abff30cb7aa9cd,full,clean,,,,
+48fa412a505a1e68,full,drop,D4,D4: Spanish men's-grooming page machine-translated to Marathi; broken grammar/word-order e.g. 'कुरळे केस शक्तीच्या कल्पनेत जा छान लहराती केस मिळवा' at offset 0; src hombresconestilo.com,,Looks like a translated product page
+6a1148d21a1bdb8a,full,fix,C1;D3,'आम्ही दिलेल्या' from offset 7404; D3: English title 'Helen Keller Information in Marathi' at offset 0,,REst of the document is boilerplate
+b511159269dc64a0,full,fix,G1,' िजल्हयातील' at offset 597,598 U+093F U+091C,
+2815f742fa358d99,full,fix,C1,'This Post' at offset 9345,,Has many english topic names e.g. Mutual Fund etc. but the descriptions for those are correct and the names fit in the document well
+28d9d12b99013cf5,full,clean,,,,
+f538068dc5d94562,full,clean,,,,
+a729bd3f77150f07,full,clean,D3,D3: English title 'Sane Guruji Memorial' at offset 0,,"D3 recorded for English title; kept per 'label it, do not judge it' (title is natural, not removed)"
+506a604b057244e5,full,fix,G2,G2: standalone visarga 'ः' used as dateline colon in 'ता. १९ ः' at offset 182 (legacy-font residue),E0 A4 83 (U+0903),
+ab7b8730dcfc685c,full,clean,D3,D3: English title 'Kanak Rele Demise' at offset 0,,"D3 recorded for English title; kept per 'label it, do not judge it' (title is natural, not removed)"
+b0cf975e873b0abe,full,clean,,,,
+8799d7c0d8d9feb7,full,fix,G2,G2: standalone visarga 'ः' used as colon/space at offset 79 (legacy-font residue),E0 A4 83 (U+0903),Visarga is used instead of a space and colon - also seen in some other docs.
+745bc8d768c61ac9,full,clean,,,,
+ea06c5a71185f889,full,fix,G2,G2: standalone visarga 'ः' used as dateline colon at offset 68 (legacy-font residue),E0 A4 83 (U+0903),Devnagari Visarga used instead of colon
+11510602ccca7ed5,full,clean,,,,
+b9b5c5030d193afa,full,clean,,,,
+ca7a4a4beac6c0f0,full,clean,,,,
+08dbb49c409f6de0,full,clean,D3,D3: English title 'Rupali Chakankar News' at offset 0,,"D3 recorded for English title; kept per 'label it, do not judge it' (title is natural, not removed)"
+d108e5db4a6b9cb1,full,clean,,,,Small advert line in between
+1870bd9485daced5,full,clean,,,,
+8933f70d630848de,full,fix,C1,'हेही वाचा' offset 505 +(2x),,Line has to be deleted at the offsets
+1686935b1034083d,full,drop,C4;D3,C4: unrelated share-price paragraphs of different companies concatenated with no boundary; D3: English title 'Vodafone Idea Share Price' at offset 0,,Many indepedent paras about share price of different companies - did not find it as a good source (also has many disease entries) hence dropping
+029206ce3dee294b,full,clean,,,,
+0394fb9307ff52b3,full,clean,,,,
+db98ccd3357dd806,full,fix,G2,"G2 legacy-font damage: 'मोठय़ा'(=मोठ्या, ड्ह/stray nukta य़)  at offset 1856",U+092F U+093C,relabeled clean->G2: subtle nukta/virama drop missed on first read (caught by G2 harm test)
+d712fbf7e6fc5cbf,full,fix,A4;C1;D3,A4: U+FFFD replacement char at offset 6633 (x2 total); C1: '1 thought' at offset 6518; D3: English title 'Gat Sheti Yojana information in Marathi' at offset 0,6633 U+FFFD (2x),
+b07709b7ea20272a,full,fix,C1,'महत्त्वाच्या बातम्या' from offset 926,,Unrelated news links and comments - to be removed
+f2c7bce34d00c7fe,full,fix,C1,'Live Updates' at offset 871 + 'MHADA 	Lottery' at offset 928 + 'Tags' at offset 3470,,
+ad782b41a7f176e1,full,fix,C1,C1: '@maharashtracity' source handle at offset 0,,"recoded clean->fix/C1: stray social handle at top is chrome (was noted 'English title' but it is a handle, not D3)"
+711b2cd6ed84d737,full,clean,,,,
+a9cabc0f10b5a600,full,fix,C1,'हेही वाचा' at offset 1496,,
+cf729f19705f3870,full,clean,,,,
+6bba28af129d5af6,full,clean,,,,
+238a427ec0b96c30,full,clean,,,,
+b70eafb3c3632311,full,clean,,,,
+d444122e90922982,full,drop,G4,G4: inter-word spaces stripped — run-on 'मराठीविज्ञानपरिषदपुणेवपिपरीचिंचवडसायन्सपार्कआयोजित' at offset 483,,No space between words in 'मराठीविज्ञानपरिषदपुणेवपिपरीचिंचवडसायन्सपार्कआयोजित' at offset 483 - no way to automate space generation between words
+02e13933a0b4b214,full,clean,,,,"relabeled A5->clean: only अ+ॅ present (standard Marathi loanword spelling), no co-occurring precomposed ऍ U+090D"
+d38482760a703dc8,full,fix,C1,'Subscribe to:' at offset 12618,,Drop from offset
+98cde70aac792386,full,clean,,,,
+7cbdfaf7efca1892,full,clean,,,,
+fc3b4acf243b91ef,full,clean,,,,"relabeled A5->clean: only अ+ॅ present (standard Marathi loanword spelling), no co-occurring precomposed ऍ U+090D"
+cedda2a2f29ef819,full,fix,C1,"C1: chunk 'आपल्या शहरातील ताज्या बातम्या आणि ई-पेपर'... at offset 0 shared with 7 other doc(s); 'Copyright © 2023-24 DB Corp ltd., All Rights Reserved' footer at offset 1182",,
+17779e3e1cc7368b,full,fix,C1,'Leave a Reply' at offset 640,,
+89a763f7e28a818a,full,fix,C1;D3,'नक्की वाच:\nResume Format in Marathi\nSection 364 in Marathi\nSection 377 in Marathi\nSection 363 in Marathi\nFAQ' at offse 6002; D3: English title 'IPC Section 498a information in Marathi' at offset 0,,
+d2c46431cba7b1a8,full,clean,,,,
+51b91de49faf6839,full,clean,,,,
+05b7b743f394e916,full,drop,C4;C3,"C4;C3: short, incomplete clips of unrelated news items joined together",,"These are short, incomplete clips of various news items, hence dropping"
+a494d8524fd5ab1f,full,clean,,,,
+0cb5008eaad984f6,full,fix,G2,"G2 legacy-font damage: 'अधिकाऱयांकडून'(=अधिकाऱ्यांकडून, ऱ+य virama dropped) at offset 1469",U+0931 U+092F,relabeled clean->G2: subtle nukta/virama drop missed on first read (caught by G2 harm test)
+bf0651cd1e50c67e,full,clean,D3,D3: English title 'DY Chandrachud' at offset 0,,"D3 recorded for English title; kept per 'label it, do not judge it' (title is natural, not removed)"
+05665424dad157af,full,fix,G2,"G2 legacy-font damage: 'आय़ुष्य'(=आयुष्य), stray nukta on य at offsets 5102 and 5526",U+092F U+093C,relabeled clean->G2: subtle nukta/virama drop missed on first read (caught by G2 harm test)
+70386fb4070fc50f,full,fix,C1;G2,'Previous Article' from offset 582; G2: 'झेंडय़ाखाली' (should be झेंड्याखाली) — ड्य conjunct mis-encoded as ड + य़ (ya+nukta) at offset 180,U+092F U+093C (य़ stray nukta),
+191216cbbb6a160c,full,fix,C1,'Leave a Reply' from offset 1907,,
+678e525481bd9723,full,fix,C1,'खान्देश लाईव्हचे अपडेट्स' from offset 605,,
+3f85da49bbc24a5d,full,clean,,,,
+5df8923f64020418,full,clean,,,,
+71156cc8fc55ecf4,full,clean,,,,
+8512a0825d5bd3c2,full,clean,,,,
+c39f8e3a3bd77000,full,fix,C1,'Marathi News' at offset 727,,
+063df505951fad06,full,clean,,,,
+f899da392317ff11,full,clean,,,,
+8520764191a4c336,full,clean,,,,Incorrect word: 'से क्स' - should be no space in between.
+82f0bd04a6819213,full,fix,C1,'Leave a Reply' at 1277,,
+05afe284c0ca10e3,full,clean,,,,
+26669cbf3978deb0,full,clean,,,,
+0a290aa47ef50b79,full,clean,,,,
+1f07e6acdcca7e3f,full,clean,,,,
+9971000ff54bff62,full,fix,C1;D3,'Also Read:' at offset 1255 + 'ब्रेकिंग न्यूज आणि लाइव्ह अपडेट्ससाठी ' at offset 3169; D3: English title 'Benefits Of Curry Patta' at offset 0,,
+635dd58764672993,full,clean,,,,
+489da5c3b5d9ffe2,full,fix,C1,'[ad_1]' at offset 115 + '[ad_2]' at offset 3492,,
+8445992d98332735,full,fix,C1,'हे ही वाच भिडू:' from offset 3657,,
+3621f9c755f06081,full,clean,,,,
+0e8893761b8a7317,full,fix,C2,'पिंपरी एच३एन२' offset 0,,Repeated twice one after other
+23d8d35ab252e3c4,partial,drop,C3,"C3: incomplete paragraph (truncated), partial read; sourced from Wikipedia",,Incomplete para (picked from wikipedia) and has an Old Marathi quote
+875818dd2944faba,full,clean,,,,"relabeled A5->clean: only अ+ॅ present (standard Marathi loanword spelling), no co-occurring precomposed ऍ U+090D"
+730af6bef1cad8f8,full,clean,D3,D3: English title 'FIFA World Cup' at offset 0,,"D3 recorded for English title; kept per 'label it, do not judge it' (title is natural, not removed)"
+da1e5d4acc917e99,full,clean,,,,
+36996cb14a78aae6,full,clean,D3,D3: English title 'Team Agrowon' at offset 0,,"D3 recorded for English title; kept per 'label it, do not judge it' (title is natural, not removed)"
+353f4c3c7379b107,full,clean,,,,
+657cb79b1fac5309,full,clean,,,,
+db4e23d6415a7ac0,full,clean,,,,
+97333df118ec5df2,full,fix,C1;C5,"C1: 'स्वास्थ्य सल्ला मिळवा फक्त' at offset 11686 + AstroSage CTA 'Astrological services for accurate answers...'/'AstroSage on Mobile'/'All Mobile Apps' at offset 12322; C5: multilingual horoscope/app link list ('- Horoscope 2023', '- राशिफल 2023', ... 'Rashi Bhavishya 2023 Kannada') from offset 12469 to end (13089)",,"A5 removed: only अ+ॅ present (standard Marathi loanword spelling), no co-occurring precomposed ऍ U+090D"
+e1dc211abdf5bf39,full,clean,,,,
+6169b09fe7801904,full,drop,F1,F1: email at offset 1171,,Advert with too much product names info and less content
+38806429bafb2555,full,clean,,,,
+5882f47ccec0c8ad,full,fix,C1,"C1: chunk 'आपल्या शहरातील ताज्या बातम्या आणि ई-पेपर'... at offset 0 shared with 7 other doc(s); 'Copyright © 2023-24 DB Corp ltd., All Rights Reserved' footer at offset 1188",,
+c85acdaeebe64599,full,clean,,,,
+699300b19e4c14a2,full,fix,C1,'Image Credit'... at offset 360,,
+e6b4976ea98d0201,full,fix,C1;D2,C1: '(Prajakta Mali Photoshoot Troll)' at offset 290 (3x) + 'हे देखील वाचा' ('also read') at offset 1220; D2: 'Atta ही कोणती pose म्हणायची जी 1 no pic madhe आहे' at offset 1005,,
+87ac98e488e32993,full,clean,,,,
+a0a3bdda244b85cd,full,clean,,,,
+cf2cc036c7bee041,full,fix,C1,'# ऑनलाईन'  at offset 544 onwards,,remaining doc from offset is link spam
+73b61617b0b013a5,full,clean,,,,English sentences to illustrate examples about use of the 'vibes' word - keep it
+12330d6d4acdba12,full,clean,,,,
+bcad9002241e874b,full,fix,C1,"C1: chunk 'आपल्या शहरातील ताज्या बातम्या आणि ई-पेपर'... at offset 0 shared with 7 other doc(s); 'Copyright © 2023-24 DB Corp ltd., All Rights Reserved' footer at offset 2432",,
+75649161ae22af18,full,fix,C1,"C1: chunk 'आपल्या शहरातील ताज्या बातम्या आणि ई-पेपर'... at offset 0 shared with 7 other doc(s); 'Copyright © 2023-24 DB Corp ltd., All Rights Reserved' footer at offset 2762",,
+37b39cee868cd044,full,fix,C1;D3,C1: '- Fig Side Effects' at offset 1080; D3: English title 'WhatsApp New Features' at offset 0,,"A5 removed: only अ+ॅ present (standard Marathi loanword spelling), no co-occurring precomposed ऍ U+090D"
+c7544ec96afb2ada,full,clean,,,,
+dcd72432c2110cef,full,clean,,,,
+214c57cad973771c,full,clean,,,,
+9b72ed35dc9f139d,full,clean,,,,
+f7f5e6381cde4883,full,clean,,,,
+95c44a1c33389719,full,fix,C1,"'View this post on Instagram' at offset 1333 + 'Tags: Autorickshaw driver, Chennai' at offset 2040",,
+8542df4ed14728c2,full,fix,C1,'Read Goa news in Marathi' from offset 1195,,
+4d9bf15a8b501e04,full,clean,,,,
+bef7e6421a1599d6,full,clean,,,,
+8ec10cf3cd52da8d,full,clean,,,,
+97df0aeb95263c9d,full,clean,,,,
+98829eca5df6ab39,full,clean,,,,"'जी वनातील' at offset 92- spurious space, 'स माजात ' offset 2250 - spurious space, 'जी वन' at offset 2545 - spurious space"
+b5953d1758f4f0ec,full,clean,,,,
+5fc9c4afe4c1afd4,full,fix,C1,'हेही वाचा-' related-article teaser inline at offset 837,,inline teaser block
+c2ddc9e12111b403,full,clean,,,,
+28ec331050fc069c,full,fix,C1,'Leave a Reply' footer at offset 1301,,
+f21b3178cb113107,full,fix,B4,"filter-evasion ':-' inserted inside words: 'ध:- म:- का:- वू:- न' (=धमकावून) at offset 307; 11+ occurrences (गु:-न्हा, आ:-रो:-पी:-, अ:-ट:-क)",,obfuscation; filed B4 pending lead ruling (not a clean DISEASES.md fit)
+5c283a7d039a2a51,full,fix,C1,'हे ही वाचा >>' related-article teaser inline at offset 1601,,inline teaser block
+4816319ebae6cf01,full,fix,C1,promo/CTA footer 'लेख आवडला तर लाईक व शेअर करा' ... 'येथे क्लिक करा' from offset 6855,,"article complete; detector C3 overruled (tail is promo footer, not truncation)"
+3568375385323e30,full,fix,G2,"'मुख्याधिकाऱयांनी' (ऱ+य, virama dropped) at offset 24; 'पंधरवडय़ा' (stray nukta on य) at offset 972",U+0931 U+092F at 34 (missing U+094D); U+092F U+093C at 978,legacy-font conversion damage
+fc9290beea94f4df,full,drop,D4,"broken machine translation, ungrammatical word-salad Marathi: 'वायू प्रदूषण हवा तेथे हवेत विविध विषारी साहित्य उपस्थिती...' at offset 6",,essaybank.net SEO essay; unusable MT
+8201070a548d3e9d,full,drop,D5,"translationese, literal MT of English marketing: 'एक लहान बाटली खूप लांब जाईल' (=a little bottle goes a long way) at offset 330",,auto-translated foreign craft-site marketing
+0c41a70258bbc0b4,full,fix,C1,"'Tags: Diabetes, Health Tips' + News18 footer + 'हे वाचा-' teasers from offset 2133",,
+818a7989ee6bbb3a,full,fix,C1,"C1: mid-article related-headline link block from offset 754 to 1698 (article body resumes at 1699); 'हेही वाचा - Gulabrao Patil...' related teaser at offset 2763; 'मराठी बातम्या, ब्रेकिंग न्यूज...' News18 footer at offset 3197",,
+d480e3d4e3540606,full,clean,,,,
+7c1eb17e89c7a9fd,full,fix,C1;D3,D3: English 'News English Summary' block at offset 1747; C1: 'संबंधित बातम्या' nav/video/stock lists from offset 2125,,
+a3103fc0cfd04984,full,clean,,,,
+edbb8eec4ef0bc61,full,fix,C1;D3,D3: English title 'AAI Recruitment' at offset 4; C1: 'महत्वाच्या बातम्या' list + 'Comments are closed' at offset 1988,,
+5f210b56229c1330,full,fix,C1;D3,D3: English title 'Weather Update' at offset 0; C1: related-news list + 'Comments are closed' at offset 1959,,
+0fd39ea5ea950f6d,full,clean,,,,
+34ff15beb901f308,full,fix,C1;D3,D3: English title 'Bazar Samiti Election:' at offset 0; C1: 'Read Latest Marathi Political News' footer at offset 1859,,
+1f6ac623059aea97,full,fix,C1,'Post a Comment' footer at offset 1511,,MCQ quiz; 'उत्तर D' x5 benign answer-key repeat (not C2); short lines are options (not C5)
+2f6422226564c55b,full,fix,C1,'कर्मचारी विषयक पदभरती / योजना व ताज्या बातम्यांच्या'+ related-news list from offset 1235,,
+ac1a6c2fe0f1ee3a,full,fix,C1,'Leave a Reply' footer at offset 821,,
+b4cc0708554b2f74,full,clean,,,,
+112af4f1b7aaf460,full,clean,D3,'Daily Today Horoscope:' at offset 0,,"verdict fix->clean: D3 is label-only (do not judge), English title kept"
+1f2b883d24e8de1a,full,fix,C1,'वाचा-' teasers + News18 footer + 'Tags: Sushant Singh Rajput' at offset 2228,,
+cb4ad24f3cb1b80b,full,fix,C1,'(हे वाचा-...' related-article teaser at offset 1510; News18 footer + 'Tags:' at offset 2524,,
+298caa7f2c01cdec,full,clean,,,,
+da27f4ec218e37a5,full,clean,,,,
+a1dc0d2729341601,full,clean,,,,
+fcc33c5d6cd5950d,full,fix,C1;D3,"D3: English 'MS Dhoni','IPL','CSK' from offset 64; C1: 'Read Goa news in Marathi' footer at offset 2045 + CTA footer 'दैनिक गोमन्तक आता सर्व सोशल मीडिया प्लॅटफॉर्मवर. ताज्या घडामोडींसाठी फेसबुक, इन्स्टाग्राम, ट्विटर, शेअर चॅट आणि टेलिग्राम आम्हाला फॉलो करा … सबस्क्राइब करा' at offset 2275",,
+954988888ff1d4ad,full,clean,,,,
+69cad4dfe33ff529,full,clean,,,,
+506aa8862704f462,full,fix,C1;D3,D3: English tweet 'AIMIM MP Asaduddin Owaisi declared...' at offset 299; C1: embedded-tweet attribution '— Hindustan Times (@htTweets)' at offset 426,,
+3960dc670ad0c781,full,clean,,,,
+e2a39bab4d12c71d,full,fix,C1,'हे देखील वाचा –' related-article teaser at offset 1430,,parenthetical English is natural (skipped D3)
+fef7b755c76715d1,full,drop,D4,"broken machine translation of English finance content, broken word order: 'आहेत मनोरंजनासाठी विविध प्रकारचे स्नोमोबाईल्स' at offset 977",,auto-translated foreign loan site (suntrustblog.com/mr)
+2542e8ad88e5f64e,full,fix,C1;C2;D3,"C1: 'Whatsapp स्टेटस, Facebook, Instagram' share CTA at offset 589; C2: 'Birthday wishes in marathi for best friend girl' repeated; D3: bilingual SEO headers at offset 41",,SEO wishes listicle; final paragraph keyword-stuffs title variants (C5-ish)
+a11f9a91dc5d2fb9,full,clean,,,,
+72143596edf44e56,full,fix,G2,'जाळय़ातून' (ळ्या rendered as ळ + य़ stray nukta) at offset 108; also offset 98,U+092F U+093C at 110,legacy-font conversion damage (्य -> य़)
+ed5e9d22283ae0b8,full,fix,C1;D3,C1: 'जॉइन करण्यासाठी येथे क्लिक करा' CTA at offset 1351; CMS leak 'Web title: Good news for farmers...' at offset 1524; D3: English title 'Tractor Subsidy',,"article complete; detector C3 overruled (tail is CMS metadata, not truncation)"
+ca612c764bdb90df,full,fix,C1;D3,C1: 'Last Updated...by Jyoti S.' + WhatsApp CTA at offset 353 + 'हेही वाचा:' teasers; D3: 'Poultry Farming news' title,,"detector C3 declined (final sentence complete, only missing danda)"
+dab034f33ff9d20d,full,fix,C1,'...नक्की लाईक करा आणि...शेयर करायला विसरू नका...कमेंट करून' share CTA footer at offset 2375,,
+526f8907abab9469,full,clean,,,,"reconsidered: inheritanceneeds.com/mr bio page is fluent, grammatical Marathi; only minor calques ('वाणिज्य चे स्नातक', split postpositions) typical of web Marathi -> below D5 drop bar; kept as clean"
+5522a00d18758427,full,fix,C1;D3,C1: breadcrumb+slug 'Home Maharashtra model murder...' at offset 791; D3: English URL slug 'hong kong model murdered...' at offset 1007,,body precedes headline (nav/slug boilerplate mixed in)
+9a8de2f8ed443bd8,full,fix,C1,shared-boilerplate header 'आपल्या शहरातील ताज्या बातम्या' at offset 0 + 'Copyright © 2023-24 DB Corp' footer at offset 1067,,
+ea1f9b7878ed8ce6,full,clean,,,,
+c9ab4cea4bc9aa08,full,clean,,,,
+3b055384083b2e63,full,clean,,,,
+ab22eedcc6c0a206,full,fix,C1,'ICC ODI World Cup 2023 : ...' related-article teaser inserted mid-article at offset 868,,
+787ee315f56122c5,full,fix,C1,'हेही वाचा : Army Chopper Crashed...' related-article teaser at offset 1380,,"article complete; detector C3 overruled (the teaser is cut, not the article)"
+ecee5e412aa34abf,full,fix,C1,'हेही वाचा :' teaser stub at offset 1855,,
+7df4eacf72a54083,full,fix,C1,'हेही वाचा :' teaser stub at offset 1429,,
+aef47ee08575addb,full,fix,C1;C2;D3,C1: blog comment thread + '© ...The copyright...' at offset 1240; C2: 'LikeLiked by 1 person' x3; D3: English comments/copyright,,poem body is clean; comment section is boilerplate
+7de8c0bc7475be32,full,fix,C1;D3,D3: English title 'Couple Romance Video :' at offset 0 + Hindi tweet 'बिहार में चलती ट्रेन में इश्क लड़ाते दिखे कपल' at offset 1584; C1: embedded-tweet attribution '— Viral Baba (@user189876)' at offset 1694,,
+eb58923ac5a7af40,full,fix,C1;D3,D3: English title 'BMC Ward structure dispute :' at offset 4; C1: 'Read Latest Marathi Political News' footer at offset 1489,,
+590af45ae97223c0,full,fix,C1;D3,D3: English title 'Marathwada :' at offset 0; C1: 'Read Latest Marathi Political News' footer at offset 1846,,
+404bf59b3e404df9,full,fix,C1;D3,D3: English title 'Satara NCP News :' at offset 0; C1: 'Read Latest Marathi Political News' footer at offset 2113,,
+a07fe05e85964e12,full,clean,,,,
+3d13b73bda767c1d,full,clean,,,,"parenthetical English name-glosses only (natural, not D3)"
+c5c7f7feea32245d,full,fix,C3;D3,"C3: text cut mid-sentence, ends '[…]' at offset 445; D3: English title 'Ind vs Aus' / 'India vs Australia WTC Final Scenario'",,detector missed C3 (tail ends in ']' which RE_SENT_END accepts)
+74d2e5307d961c6a,full,fix,C1,'Video: ...' related-video teaser inserted mid-article at offset 1383,,
+1631e1007d2597aa,full,clean,,,,
+ebe8d7dec6c3d48a,full,fix,G2,'दुसऱया सामन्यात' (दुसऱ्या -> ऱ+य virama dropped) at offset 1615,1618 U+0931 U+092F,legacy-font conversion damage
+938e94f290a0ade7,full,clean,,,,
+2b2687b09f65be13,full,clean,,,,"detector C3 declined (final sentence complete, only missing danda); 'अकोला :-' is a place not obfuscation"
+4154a72d05b206c2,full,clean,D3,English headline prefix 'Uddhav Thackeray Resigns:' at offset 0,,"otherwise clean Marathi; D3 for the English title only | verdict fix->clean: D3 is label-only (do not judge), English title kept"
+57c53c3aa56ba8ad,full,fix,C1,C1: site intro+FB-like CTA 'नमस्कार मित्रांनो न्यूज फीड...फेसबुक पेज लाईक करा' at offset 46; copyright/share disclaimer footer at offset 2408,,
+5b8b98ebe42aed86,full,clean,,,,"English acronyms (IIT/JEE) transliterated, natural"
+33aa67bee8d6ed8c,full,clean,,,,
+d618f2f374d381ad,full,fix,C1,"'हेही वाचा :' related-article teasers (x3) inserted mid-article, first at offset 1582",,
+17bd562710302c89,full,clean,,,,
+58cbeada08e9b632,full,clean,,,,
+e18b2b9f09421434,full,fix,C1;C3,"C3: truncated tag-archive excerpt, ends 'Continue Reading' at offset 743; C1: tag-archive template echoes the article title 'पूर्व प्राथमिक शिक्षण' at offset 0 and again at offset 760 (after the 'Continue Reading' link)",,possibly D5 translationese (translated preschool-ed text)
+5ab6e7d65bf6026c,full,fix,C1;D3,"D3: English title 'Chhatrapati Sambhajinagar :' at offset 0 + 'Read the latest agriculture news' footer; C1: CTA footer 'ताज्या घडामोडींसाठी फेसबुक, ट्विटर, इन्स्टाग्राम आणि टेलिग्रामवर आम्हाला फॉलो करा … सबस्क्राइब करा' at offset 1710",,
+77e0f263b27bd9bc,full,fix,C1,'000000' placeholder + 'Leave a Reply' footer at offset 4918,,
+6a8c8cc39593b15e,full,fix,C1;D3,"C1: cookie banner 'By clicking ""Accept All Cookies""' at offset 0 + 'You may like to read' + India.Com footer; D3: English title 'BSF Soldier Wedding :'",,article complete; detector C3 overruled (tail is India.com footer)
+1401d16ddf700386,full,clean,D3,English headline prefix 'MaharashtraPoliticalUpdate :' at offset 0,,"otherwise clean Marathi | verdict fix->clean: D3 is label-only (do not judge), English title kept"
+f9ce635f0c8ab1a2,full,clean,,,,
+2dbccb592ceb456b,full,fix,C1,"News18 footer 'मराठी बातम्या, ब्रेकिंग न्यूज' at offset 1856",,
+62b7c3478b8ad2b5,full,clean,,,,"bilingual dateline 'मुंबई | Mumabi' + gloss (Samana Editorial) are natural, not D3"
+6584bcd16dc3fdbf,full,drop,C4;D3,"op-ed archive index page: 5 unrelated teaser blocks joined (3 English, 2 Marathi), no single coherent article; D3 English 'DeltaCron is a variant...' at offset 1",,"columns/op-ed archive page (sudhirmehta.in/columns-op-eds); unrelated 1-2 sentence excerpts concatenated, ~half English -> splitting yields only teaser stubs, not a usable Marathi doc -> drop"
+9ee21706c4baece5,full,drop,D4,"broken machine translation of English SEO govt-scheme content, broken word order: 'आम्ही वर जाऊ ई श्रम कार्ड शिल्लक तपासा प्रक्रिया' at offset 442",,memarathi.co.in e-shram MT; also broken |x||y| table
+1c4c09b0a7058db8,full,clean,,,,
+3bbae9e0209d7119,full,fix,C1,injected ad-spam text glued into prose: 'novelty and best selling clothing' at offset 306,,
+849dec3e0ba97c8a,full,fix,C1;D3,C1: cookie banner 'By clicking...' at offset 3 + 'You may like to read' + India.Com footer; D3: English title 'Kirit Somaiya And Nilesh Rane Arrested:',,article complete; detector C3 overruled (tail is India.com footer)
+0647ceb86c7bc920,full,clean,,,,
+db0fe148de5877e0,full,fix,C1;C3,"interleaved related-article teaser headlines (e.g. 'महेश मांजरेकरांनी...प्रोमो शेअरच केला नाही') at offset 816; C3: truncated -- final line 'भूमिकेविषयी उत्सुकता' is a section header with no body text following (content not captured, doc ends at the heading) at offset 1176",,jumbled gossip page with teaser fragments
+b6202b16f16f2c6a,full,fix,C1;D3,C1: 'Amitabh Bachchan:' related teasers at offset 1443; D3: English sentence '(Seeing the concern of the fans...)' at offset 373,,
+10d9eedb3b23075f,full,clean,,,,"web-story caption slides, coherent"
+5cf39e4d221fc993,full,fix,C1;D3,"D3: English title 'Lucknow News:' at offset 0; C1: English site footer 'Read the latest Marathi news...Download the Saam Tv...app for Android and IOS' at offset 1273 + saamtv CTA footer 'साम आता सर्व सोशल मीडिया प्लॅटफॉर्मवर. ताज्या घडामोडींसाठी फेसबुक, ट्विटर, इन्स्टाग्राम, शेअर चॅट आणि टेलिग्रामवर आम्हाला फॉलो करा … सबस्क्राइब करा' at offset 1568",,
+03c60c87c6487b0e,full,fix,G2,'जिल्हाधिकाऱयांना' (जिल्हाधिकाऱ्यांना -> ऱ+य virama dropped) at offset 172,U+0931 U+092F,legacy-font conversion damage; also शुल्य typo
+783ec9bb96d9b0dd,full,clean,,,,web-story caption slides
+05045fec2475fdb9,partial,fix,B4;C1;D3,"B4: unrendered WordPress shortcode '[sc_fs_faq html=""true""...]' at offset 8232; C1: site intro 'नमस्कार मित्रांनो' + 'also read :'; D3: bilingual SEO title 'Sanskruti In Marathi Information'",,essay body is clean; shortcode + SEO wrapper are the diseases
+23726a04d8316b4c,full,fix,C1,"interleaved related-headline teaser block: 12 clickbait teaser headlines spanning offset 939-1887 ('अजितदादांनी हॉटेल मालकाला...' through '...Jeff Bezos यांनी कमवली इतकी संपत्ती'), article body resumes at 'घरात झालेले गोंधळ ऐकून' (offset 1888) + News18 footer + 'Tags:'",,
+fef736a3964c17e6,full,fix,C1,'संबंधित बातम्या :' related-news teaser list at offset 1717,,article complete; detector C3 overruled (tail is teaser list)
+95aba01030e1795e,full,drop,D4,"machine translation of Chinese EMC-lab marketing, broken grammar + CJK fullwidth comma U+FF0C: quote 'वहन, किरणोत्सर्ग आणि इतर चाचणी आयटम' at offset 646",,mr.anbotek.com auto-translated; fullwidth comma present (A6-ish)
+d753ce6f62d2723e,full,fix,C1,shared-boilerplate header 'आपल्या शहरातील ताज्या बातम्या' at offset 0 + 'Copyright © 2023-24 DB Corp' footer at offset 3012,,
+fb42a6458cd3395d,partial,fix,C1,recommended-books link list (aparnachipane.blogspot URLs) at offset 12214 + long reader-comment thread,,"read=partial: 16153 chars, batch viewer elided ~2153 chars of the middle"
+c548a3c86ef17ccf,full,clean,,,,
+d73bb6ebb787ecc0,full,clean,,,,
+cb7c19c7c4cb696e,full,fix,C1,"C1: CMS metadata leak -- English publish-date line 'Published on : 16 May 2022, 9:30 am' between headline and body at offset 65",,"single CMS dateline leaked in English; minor C1 (template chrome, not article prose)"
+99aa07a986e2d813,full,fix,C4,"taxonomy/archive page: disjoint travel-post excerpts concatenated (Khidrapur, then Rajgad, then 'भारताच्या ट्रीप वरून कालच परतले' Rajasthan) at offset 883",,maayboli /taxonomy/term archive; unrelated post intros joined
+58918e71881435d9,full,clean,,,,"genuine Marathi essay, coherent"
+fc57a774a310779d,full,fix,C1,embedded tweet 'pic.twitter.com/...' + '— Belgaumlive (@belgaumlive)' at offset 1647,,
+dcf5cdfe1a2f568c,full,fix,C1,'Leave a Comment' footer at offset 1166,,
+0fc288aad801a887,full,clean,,,,
+bc4252265c68248b,full,fix,C1;D3,"D3: English title 'Cashew Feni Goa' at offset 0; C1: English site footer 'Read Goa news in Marathi...Get Goa news live updates on the Dainik Gomantak Mobile app' at offset 1133 + Gomantak CTA footer 'दैनिक गोमन्तक आता सर्व सोशल मीडिया प्लॅटफॉर्मवर. ताज्या घडामोडींसाठी फेसबुक, इन्स्टाग्राम, ट्विटर, शेअर चॅट आणि टेलिग्राम आम्हाला फॉलो करा … सबस्क्राइब करा' at offset 1363",,
+7b321d126e5720a1,full,clean,,,,
+6ef8d6b10a49fb1e,full,clean,,,,
+609cdef1eea67e99,full,clean,,,,
+9f255bf93465f132,full,clean,,,,
+05168934608f3383,full,clean,,,,"daily horoscope, coherent per-sign prose"
+ddde580d86b94b61,full,clean,,,,
+57a9b8518eb43349,full,clean,,,,
+4ab66b3a5d21bfe7,full,fix,C1;C5;D3,"D3: English title prefix 'Hardik Pandya Fitness Update :' at offset 0; C5: SEO keyword-slug leak '(odi world cup 2023 hardik pandya fitness upadte did he play semi final match ind vs eng 2023)' (lowercase, query-shaped, 'upadte' typo = auto-gen slug) at offset 446; C1: 'हे ही वाचा :' related-article teasers at offsets 1078 and 1874",,
+6b3cbccbf69063ad,full,fix,C1,"'Tags: अजब गजब, मालमत्ता' + 'प्रथम प्रकाशित:' footer at offset 1591",,viral/translated foreign news but readable Marathi
+4b6545c4893c3141,full,clean,,,,
+1a0463d29958d890,full,fix,C1;C2,C2: 'आयसीआयसीआय बँक' ICICI section duplicated verbatim at offset 1163; C1: inline CTA 'सोन्याच्या दरात...येथे क्लिक करून' at offset 532,,trailing 'SBI-HDFC-ICICI' keyword slug at end (not C3 truncation)
+bc8ad309586730d2,full,fix,C5;C2,C5: long keyword-style product list 'बांबू पलंग / बांबू खुर्ची / बांबू टेबल...' at offset 2582; C2: 'बांबू हे एक बहुगुणी वनस्पती' sentence repeated,,AI-generated content (url /article-by-ai/); coherent but repetitive
+7db3c549c74f6cfa,full,fix,C2,word tripled in headline: 'कौतुककौतुककौतुक' at offset 45,,copy/render glitch; body is clean
+8b1bbb0542cfd85f,full,fix,C1,share CTA 'शेअर करून इतर लोकांपर्यंत' at offset 1613,,
+3fad0f6069c1f9b4,full,clean,,,,"literary obituary editorial, coherent"
+11ec0723000bcf1a,full,drop,D4,"machine translation of a Portuguese dream-dictionary, glued words + foreign refs ('जोआओ डी बॅरो' = João de Barro): quote 'समर्पित करण्याची वेळ आली आहेस्वारस्य' at offset 1351",,fernandoruiz.digital/mr auto-translated; also 'हे देखील पहा:' teasers
+f43e153124bd1ad8,full,clean,,,,
+17db1a2aef500839,full,clean,,,,
+c249b172f4eff618,full,clean,,,,"minor dittography 'सादर करत होते सादर करत होते' (trivial typo, not C2)"
+b89cd17dff998622,full,fix,C1;D3,D3: English headline 'MLA Doctor Devraoji Holi visited the chain hunger strike' at offset 320; C1: 'santoshbharatnews gadchiroli' site slug at offset 483,,
+e9695776c7f0759f,partial,fix,C1;C2;D3,"D3: bilingual SEO 'Top 10 Best Motivational Books To Read In Marathi' at offset 0; C1: 'येथे क्लिक करून वाचू शकतात' download CTAs + 'Thank You,'; C2: book#10 'अवचेतन मनाची शक्ती' description duplicated at offset 10599",,SEO/PDF listicle; translated book summaries
+d19fcee8e135563b,full,clean,,,,
+98ad9cb430d718bd,full,fix,C1;D3,C1: '@maharashtracity' social byline at offset 0; D3: English sentences '(Unrest among farmers over Lakhimpura kheri incident)' at offset 597 + '(Shiv Sena extended full support to Maharashtra Bandh)' at offset 827,,
+baf65fb63aad97d8,full,fix,C1;D3,D3: English title 'Cryptocurrency |' + 'Web Title :'; C1: 'हेही वाचा :' + 'Web Title :' CMS metadata at offset 1282 + inline 'वाचा : Monthly Horoscope' teaser,,
+d9abc0a9e976cd2f,full,drop,D5;A5,"translationese - English coding-site article (codegym.cc) auto-translated to Marathi, raw source URLs dumped mid-text at offset 730; A5: 'अॅ' (U+0905 U+0945) at offset 2097 co-occurs with precomposed 'ऍ' (U+090D) at offset 5176 — same vowel, two byte forms",U+0905 U+0945 (अॅ) vs U+090D (ऍ),long/fairly coherent but clearly translated foreign content; debatable drop
+0003a4fd0993baa0,full,clean,,,,
+9bd1124a99482d95,full,clean,,,,
+720f323c65c9a60a,full,clean,,,,
+22cd4a9b7a6cd91e,full,fix,G2,"'हुंडय़ा'(=हुंड्या, ड+य stray nukta) at offset 95, offset 635, offset 1020",U+092F U+093C,legacy-font conversion damage
+de5ff8321272be6b,full,clean,D3,English headline prefix 'Today Horoscope 9 April 2023:' at offset 0,,"rashi (Aries)(Taurus) glosses are natural; D3 for English title only | verdict fix->clean: D3 is label-only (do not judge), English title kept"
+e895af9ea2291b7d,full,clean,,,,"vastu-tips bullet list, coherent advice (not C5 keyword spam)"
+16802c1b71453845,full,clean,,,,"'| Sangamner' bilingual dateline gloss, natural"
+a2cd82847c9c81ef,full,clean,,,,
+a17a859aa9af0546,full,fix,B4,placeholder email 'firstname.lastname@example.org' leaked in byline at offset 3849,,"detector F1 OVERRULED: example.org is a reserved placeholder domain, not real PII"
+56716cfb71fb4e80,full,fix,C1,disclaimer + 'आमचे पेज आत्ताच लाईक करा आणि शेअर' CTA footer at offset 2268,,
+1aafd46e3b030a04,full,fix,C1;G1,"G1: 'हिं दू ध र्म' - word split with spurious spaces at offset 2821; C1: site intro 'आपल्या मराठमोळ्या पेजवर' at offset 0 + share-CTA footer 'मित्रांनो, जर तुम्हाला ही माहिती आवडली असेल, तर या पेजशी जोडलेले राहा...आमच्या पेजशी कनेक्ट रहा, धन्यवाद.!' at offset 3945",,only 'हिंदू धर्म' is spaced out - looks like deliberate filter-evasion (cf B4)
+e7ea086180b82980,full,fix,C1;D3,D3/C1: English SEO slug 'Business electricity rates' injected at start and mid-text (offset 2115),,
+86960adf0d53a266,full,fix,C1;D3,C1: 'महत्वाच्या बातम्या –' related-news teasers at offset 1431; D3: English slug '(England Captain Unhappy With Dharamshala Stadium Outfield)',,article complete; detector C3 overruled (tail is teaser list)
+ae7305a6399c73a4,full,drop,D4;A5,"machine translation of a Portuguese gardening page (uelnation.org/mr), broken grammar + stray HTML fragments '<18'/'<25': quote '⚡️ एक शॉर्टकट घ्या:' at offset 821; A5: 'अॅ' (U+0905 U+0945) at offset 217 co-occurs with precomposed 'ऍ' (U+090D) at offset 2481 — same vowel, two byte forms",U+0905 U+0945 (अॅ) vs U+090D (ऍ),"auto-translated foreign content; also B2-ish '<18','<25' tag fragments"
+938347ab2e1ff915,full,fix,C1;D3,D3: English title 'Marathwada :' at offset 0 + parenthetical English; C1: 'Read Latest Marathi Political News' footer at offset 1968,,
+b2c79a2eae208440,full,clean,D3,English headline prefix 'online gaming gst :' at offset 0,,"content coherent; D3 for English title/slug | verdict fix->clean: D3 is label-only (do not judge), English title kept"
+89b526bb71969b29,full,clean,,,,"FLAG: pervasive missing inter-word spaces (कीत्या, नाहीपरंतु, दिलीव) + danda misuse (।mid-text); no DISEASES.md code fits cleanly - lead to rule"
+c89bd165a8a88b95,full,clean,D3,D3: English headers 'Board Exam Timetable :' / '10th Board Exam Timetable 2024' at offset 0,,
+40835ade5f55ecc9,full,fix,B4,"filter-evasion obfuscation: hyphens/apostrophes inserted inside intimacy words 'चुं-बन','की-स','रो’मँटिक','संबं’ध','हा’र्मोन्स' at offset 35",,same class as the ':-' B4 case but uses '-'/'’' (detector missed)
+0595387dd1d3949e,full,clean,,,,
+844159ca76fd1261,full,clean,D3,D3: English title 'CSK Vs GTFinal IPL 2023 :' at offset 0,,
+f2787f86944373b8,full,clean,,,,
+ebbc060f7cb05821,full,clean,D3,English headline prefix 'Education Loan Interest Rates :' at offset 0,,"verdict fix->clean: D3 is label-only (do not judge), English title kept"
+af6d761021e6cdf8,partial,fix,C2;D3,C2: bilingual title line 'Swachata che mahatva Nibandh in Marathi' repeated ~6x; D3: bilingual SEO headers at offset 0,,3 distinct essays compiled; coherent Marathi
+a2cc292928d87a78,full,clean,D3,English slugs inline: 'Gadchiroli –' at offset 240 + 'mla dr.devrao holi',,"detector C3 declined (final sentence complete, only missing danda) | verdict fix->clean: D3 is label-only (do not judge), English title kept"
+588d253eb1bc0e41,full,fix,C1;C2;D3;G2,D3: 'Uddhav Thackeray |' title; G2: 'घटनाद्रोहय़ाना' stray nukta at offset 5253; C2: editorial opening 'देशातील आजचे वातावरण' repeated at offset 424; C1: 'सौजन्य – सामना' credit at offset 5461 + 'महत्त्वाच्या बातम्या' related-article link list (5 unrelated news teasers: Weather Update / Madhuri Dixit / Uddhav Thackeray / Shubman Gill / Raj Thackeray) spanning offset 5476-5943 (to end),U+092F U+093C,Samana editorial shown twice (intro + full)
+0e41c94f73355980,full,clean,,,,
+1d5e83f3412c672f,full,clean,,,,
+378dee6f2fd1442d,full,fix,C1,'महत्वाच्या बातम्या –' related-news list at offset 2070,,
+540d704aaa18e470,full,clean,,,,
+08c4b174352c713d,full,clean,,,,
+ccc4bbadeaf8f912,full,clean,D3,English headline prefix 'Chhagan Bhujbal :' at offset 0,,"verdict fix->clean: D3 is label-only (do not judge), English title kept"
+e05f6dce2f8eba1a,full,fix,C1;C2,"C1: 'महत्वाच्या बातम्या-' + embedded-tweet teaser at offset 830; C2: '— घडामोडी (@ghadamodi1) December 11, 2019' line duplicated",,
+dd08cde67fab9123,full,clean,,,,"Jio True 5G brand terms are natural, not D3"
+6aa0a0efaccea398,full,clean,,,,
+4de8badb28d8f285,full,clean,,,,
+96dbea403c1b3529,full,fix,C1,'Non Stop LIVE Update' / 'Most Read Stories' footer at offset 440,,
+425d3422d52e8f35,full,clean,,,,
+b57707000541ae0a,full,clean,,,,
+cbeb9bba95657c1a,full,fix,C1;C3;D3,"C3: article cut mid-city-list, ends '...अहमदनगर,' at offset 2162; C1/D3: CMS 'Web Title: Maharashtra real estate...css' English metadata leak",,
+1423b6de3513ed5e,full,clean,,,,
+b02b443392670a23,full,clean,,,,
+be2be5831e4d9d11,full,fix,C1,'Related News' section + 'इतर महत्वाच्या बातम्या:' at offset 1174,,parenthetical English (OBC Sabha)(Beed) natural
+e881fad32bed4244,partial,clean,,,,"celebrity interview, coherent (SEO-keyword taxonomy URL but single clean article)"
+bcada8fd4b1655b6,partial,clean,,,,"celebrity interview, coherent"
+fa3ce28286fd823b,full,clean,D3,D3: English title 'Politics News ।' at offset 0 + English sentence '(uddhav thackeray and sanjay raut meet ncp chief...)' at offset 792,,"verdict fix->clean: D3 is label-only (do not judge), English title kept"
+ff3e37d4f67063ee,full,fix,C1;D3,D3: English title 'Chhatrapati SambhajiNagar :' at offset 0 + parenthetical English; C1: 'Read Latest Marathi Political News…Download the Sarkarnama Mobile App' footer at offset 2027,,
+48a79b58a0f7b759,full,clean,,,,
+a140b6d7ca3730ac,full,clean,,,,"'Manipur video' 2-word tag/gloss, natural"
+25072b9c6732785a,full,drop,D4,"machine translation of a Brazilian true-crime bio (soureporter.com.br), glued words (काढलामालमत्ता, दिलाज्याने) + 'हे देखील पहा:' PT teasers: quote 'डोरोथिया पुएन्टे' at offset 0",,auto-translated foreign content
+39812fb180ad85ed,full,clean,,,,
+2ef1cc9a544e3b4b,full,clean,,,,
+815d754817953f6b,full,fix,C1;D3,D3: English title 'Pimpari Chinchwad Crime News:' at offset 0 + parenthetical English; C1: Saam TV English footer at offset 838,,
+4942a2ec0be9855c,full,clean,,,,
+d105bc0a3cae322a,full,drop,B4;C1;D3,"B4: pervasive anti-copy/filter-evasion dash-masking -- 49 em-dash + 10 en-dash forming ~20 masked tokens across English and Marathi words, e.g. 'f—–l c——r'(=financial creditor), 'र—–म'(=रक्कम), 'b————————-', 'cor—–Code' from offset ~3231; inner letters replaced (unrecoverable); D3: English title 'Pan Card Club Last Date:' + heavy English form fields; C1: 'हे देखील वाचा:' + WhatsApp/Telegram/YouTube CTAs at offset 5366",,"dropped: dash-masking so pervasive (esp. offsets ~3200-4500) that letters are replaced, not just separated, so the text is not cleanly recoverable -- unlike the strippable ':-'/'-' splice cases"
+a6ba71b74be1f28f,full,fix,B5,"mangled pipe-table markup in prose: '|हे काय आहे?||','|कव्हरेज तपशील||' with empty cells + content on separate lines, at offset 1119",,"coherent insurance explainer; detector C4 declined (one article, not two joined)"
+38326254a7a58219,full,clean,,,,"professionally localized health article, coherent"
+7fdb75839679465b,full,clean,D3,English slug 'polling in Dimani' injected inline at offset 7 (repeats),,"verdict fix->clean: D3 is label-only (do not judge), English title kept"
+9c1228170dc9ea99,full,clean,,,,
+a2e44c403a265323,full,fix,C1,image-caption boilerplate '| शिवप्रतिमेस पुष्पहार अर्पण करताना मनसे अध्यक्ष श्री. राज ठाकरे' repeated at offset 744,,
+1cb554da556a1498,full,clean,,,,"feel-good piece, coherent; emoji bullets decorative not disease"
+5e5dfd4352f5175a,partial,drop,C2;C4;D3;F1;G1;A6,C4: BenQ monitor review + Dutch Zelda-wiki content concatenated; G1/A6: 'वा ree ्यासारखे' detached virama + Latin inside word at offset 607; C2: 'एडी नंतर लेख चालू आहे' x23; F1: phone number at offset 111156; D3: Marathi/English/Dutch mix,U+094D at 607,"168432 chars (largest in pack), middle elided -> partial; handover's 'third genuine G1'; unusable multilingual MT concatenation"
+2311366c2cef62fb,full,fix,C1,'Related News' + 'इतर महत्वाची बातमी :' sections at offset 1066,,parenthetical English (Nashik district)(Grampanchayat) natural
+92c30ce9ad78447f,full,clean,,,,
+a3c0a0d6b5881dbf,full,fix,C1,"C1: 'Published on : 20 November 2023, 4:03 pm' CMS timestamp boilerplate at offset 0",,"recoded clean->fix/C1: top-of-doc 'Published on' timestamp is chrome, not a title"
+1be7909189f52352,full,clean,,,,
+8b95af72d3d7dbbc,full,fix,C1;D3,D3: English title 'Max Fit Program – Wellness Benefits –' + heavy English terms throughout; C1: 'व्हाट्सअप ग्रुप जॉईन करा' CTA + company list at offset 2353,,
+28a323519ad6e0ba,full,clean,,,,
+6b8fea38b34223ee,full,drop,D4,"machine translation of a Chinese industrial-machine product page (mr.dynamic-eq.com), broken: 'डायनॅमिक पेव्हमेंट मिलिंग प्लॅनर फाइन ऍडजस्टर्न नेन्थव्हील उपकरण' at offset 0",,auto-translated foreign product page
+fffbc3de78a629e0,full,fix,C1;F1,F1: contact phone number at offset 4599; C1: 'First Published by Team Jaaglya Bharat...' + 'WebTitle –' footer at offset 4665,,book review clean; phone value not copied
+f1c61977a289ff20,full,fix,C1;D3,C1: 'गुगल जाहिरातीसाठी क्षमस्व!' ad note + 'First Published'/'WebTitle –' at offset 2476; D3: English 'WebTitle – Ram Nath Kovind created a wrong tradition...',,article complete; detector C3 overruled (tail is CMS metadata)
+561817de9996b7ac,full,clean,D3,D3: English sentence '(ICC 2023 Why is Rohit Sharma a successful World Cup captain...)' at offset 207,,"verdict fix->clean: D3 is label-only (do not judge), English title kept"
+b7d906cbed711445,full,clean,,,,
+aea966f414a22290,full,clean,,,,Sri Aurobindo/Mother spiritual text with citation; coherent literary
+26963164f069c368,full,fix,C1,'आपल्या मित्रांना शेअर करायला विसरू नका !!!' share CTA at offset 699,,
+882d0520964c5691,full,fix,C1;D3,C1: 'Table of Contents' + 'हे ही वाचा :' teaser + 'Please Do Visit To www.aboutindianenglish.com' footer; D3: English title 'Jim Corbett National Park 2023',,
+cf4161b8b550a3f4,full,clean,,,,
+87f0f97dc51276b1,full,clean,,,,
+d4b738c2269d2ff7,full,clean,D3,English headline prefix 'Ahmednagar News :' at offset 0,,"verdict fix->clean: D3 is label-only (do not judge), English title kept"
+cfdce96132a5f50f,full,fix,C1,'जाहिरात' ad-slot marker at offset 2941,,
+99cba3d3f7d8c595,full,fix,B5,"stray leading '|' on every line of a flattened 2-col table: 8 pipes, line-start, offsets 1326-2538 (e.g. '|ब्रँड स्पॉन्सरशिप' header, '|प्रसारण हक्क...' body)",,coherent IPL-finance article; pipe-table cells mangled
+4675a6fa4875bc96,full,clean,D3,English title 'World Consumer Rights Day In Marathi' bookending the article (start + end) at offset 0,,"verdict fix->clean: D3 is label-only (do not judge), English title kept"
+ca2b697ca7c3f71f,partial,clean,,,,"long reflective essay/speech, coherent literary Marathi"
+e5d27bfa1e779613,full,clean,,,,
+235af31f6022ea73,full,drop,D5,translationese - coinatory.com/mr auto-translated crypto news: quote 'ब्लॉकचेन सुरक्षा तज्ञ CertiK ने Ethereum वर' at offset 0,,foreign crypto site's /mr auto-translation; coherent but translated - debatable drop
+b316e5f209173981,full,clean,D3,English title 'PCMC News :' at offset 0 + repeated '(PCMC News)' inline tags,,"verdict fix->clean: D3 is label-only (do not judge), English title kept"
+eb11b94d18769352,full,clean,,,,"recipe, coherent"
+47ab2c2ce04ee5f7,full,clean,,,,
+abb2b8479a3cfd76,full,clean,,,,
+4ea8009ed9db9d67,full,clean,,,,
+4b1aba1bdd7d0f2b,full,fix,C1,'अस्वीकरण:' medical disclaimer footer at offset 1649,,
+d371d07939ac6d17,full,fix,C5,C5: page URL-slug 'keto diet good for weight loss' leaked inline as a standalone line at offset 518 (verbatim match of source URL ujobs.in/keto-diet-good-for-weight-loss/),,"verdict fix->clean: D3 is label-only (do not judge), English title kept"
+e15a9416d5f3b378,full,clean,,,,
+ae54fcaed1d127ca,full,fix,C1;D3,C1: 'Web Title:' CMS metadata + '(आवाज :...)' at offset 2340; D3: English title 'Madhuvanti Kelkar's Journey From IT to IP Industry...',,
+3aa093a0ac2d60e4,full,clean,,,,"detector C3 declined (final sentence complete, only missing danda); '( Aheri )' gloss natural"
+3088291538a576fb,full,clean,,,,"detector C2 declined: 'स्पष्टीकरण' x3 is a legit recurring section header (explanation), not repetition disease"
+794655e8b619fa8d,full,clean,,,,"religious essay, coherent"
+276ff8047514a194,full,drop,D4,"machine translation of a Greek-mythology site (greekmythology.biz/mr), untranslated English headings + stray markup '>16>': quote 'Amphiaraus Son of Oecles' at offset 204",,auto-translated foreign content; also '>'/'16>' fragments
+dd4c7834eff01ca4,full,fix,G2,"legacy-font conversion damage, pervasive रु/रू -> ऊ substitution: 'तऊणाच्या'(=तरुणाच्या) at offset 111, 'कऊन'(=करून), 'सुऊ'(=सुरू), 'कारणावऊन'(=कारणावरून)",E0 A4 8A (U+090A ऊ) substituted for रु/रू,distinct from ऱय pattern; systematic रु/रू glyph corruption
+9c89c65a56773845,full,drop,D5,"auto-translated/generated foreign area-code reference page (desakoda.info), templated: 'क्षेत्र कोड Southampton and Portsmouth' at offset 0",,foreign auto-generated template; also '|' pipe-table fragments
+b01d9268b6216d6c,full,clean,D3,"D3: heavy English banking terms 'NPCI Mapping form','adhar seeding','National Payment Corporation of India' at offset 213",,"detector C3 declined (final sentence complete) | verdict fix->clean: D3 is label-only (do not judge), English title kept"
+d2d4dd2de855539a,full,clean,D3,English headline prefix 'IND vs SA Sunil Gavaskar Slams South Africa:' at offset 0,,"verdict fix->clean: D3 is label-only (do not judge), English title kept"
+134b36242af0cc86,full,clean,,,,
+5ec762020d7f64fa,full,fix,C1;D3,D3: English '(Latest Entertainment News)' at offset 1400; C1: Saam TV English footer 'Read the latest Marathi news',,
+b02550f0456edee0,full,clean,,,,science/myth article coherent; trailing comment sign-off minor
+1b4157e305d9f847,full,fix,C1,'हेही वाचा :' teaser stub at offset 1306,,
+d74f7ae6c429aecf,full,clean,,,,
+494783408f63181a,full,clean,D3,English headline prefix 'Maharashtra Women Rape News :' at offset 0,,"verdict fix->clean: D3 is label-only (do not judge), English title kept"
+2575adfe593246a8,full,clean,D3,D3: Hindi couplet quoted in Marathi speech 'जली को आग खते है और बुझी को राख कहते है...' at offset 606,,"Hindi shayari quote (natural in political speech, but mixed-language) | verdict fix->clean: D3 is label-only (do not judge), English title kept"
+a222819721e4377c,full,fix,C1;D3,'News34 chandrapur' at offset 0; D3: English title 'News34 chandrapur' at offset 0,,
+88f54c54630de3a4,full,clean,,,,
+02e12881785842fa,full,clean,,,,
+6b4787634c323530,full,clean,,,,
+f1df86c8801084ea,full,fix,C1,"e-commerce product page: prices '₹748.00','-किंमत २९९' + order CTA 'घरपोच मिळतील' at offset 39",,vaachan.com/product book-bundle listing (commerce boilerplate)
+829ad6bc1b89893f,full,drop,D4,"machine translation of an English gaming article (crashtheteaparty.org/mt), 'Contents' heading + number corruption 'अॅडम २०१ 2013': quote at offset 706",,"auto-translated foreign gaming content; repeated title, affiliate footer"
+29b7e0061bbecb09,full,clean,,,,
+8f32aa8956388251,full,fix,C1;D3,D3: English title 'Raghav Chadha Parineeti Chopra Engagement Updates :' at offset 0 + '(Latest Marathi News)'; C1: English boilerplate footer 'Read the latest Marathi news and watch Live Streaming on Saam TV...' at offset 1143,,
+289deea5cb40dfd8,full,fix,C1,'आणखी वाचा :' related-article teaser at offset 514,,
+f9688f6466441c5f,full,clean,D3,English SEO slug 'Pradhanmantri Gharkul Yojana' injected repeatedly (start/mid/end) at offset 0,,"verdict fix->clean: D3 is label-only (do not judge), English title kept"
+7e79c712d70e4f59,full,fix,C1,'हेही वाचा-' teaser stub at offset 2017,,
+cf3cb94171281399,full,clean,,,,photo-caption line minor
+ef8095349fcd9b59,full,fix,C1;D3,D3: English title 'Kisan Sabha :' at offset 0; C1: 'Read the Latest Agriculture News' footer at offset 2131,,
+5eefa1cabceec302,full,clean,,,,
+f5173b6ce87f3538,full,clean,,,,"detector C3 declined (final sentence complete, only missing danda)"
+5586728a7d74efd7,full,drop,D5,translationese - English Bundesliga football report MT'd to Marathi (hemantkadam.in): literal 'घड्याळ वळवून घरच्या दिशेने हातोडा मारला' at offset 507,,foreign auto-translated sports content
+3cd39218930da1e3,full,fix,B4;C1,B4: ad shortcodes '[ad_1]'/'[ad_2]' leaked in prose at offset 0; C1: 'हेही वाचा:' teaser at offset 1618,,
+f6519a395e783f87,full,clean,,,,
+589e9e8bf1376693,full,clean,,,,
+dc43770e8c7ea499,full,clean,,,,
+70baf989bef8791d,full,clean,,,,
+29bcfa5910e8db5c,full,fix,G2;D3,"legacy-font gibberish: 'डअध छज ढज ऊठणॠड' (non-Unicode font rendering, likely 'SAY NO TO DRUGS') at offset 1170; standalone visarga 'ः' used as dateline colon in 'नवी मुंबई ः' at offset 74; D3: English title 'Breaking News' at offset 0",visarga-as-colon @74: E0 A4 83 (U+0903),encoding/font damage; 'Breaking News' English header minor
+f12b7422779b5e1f,full,fix,C3;D3,"D3: English title 'SBI Pensioners Jeevan Pramaan Patra :' at offset 0; C3: how-to truncated mid-steps, ends 'व्हिडिओ कॉल पर्याय निवडणे आवश्यक आहे' at offset 1652",,also MT ('वाष्पीकरण कोड'=verification code)
+063a5502a992bd85,full,fix,D3;F1,"D3: English opening paragraphs 'Stick to the syllabus, read State level...' at offset 0; F1: WhatsApp contact number at offset 2129",,phone value not copied
+5d7826c12d978706,full,fix,C1,"'(हेही वाचा, ...)' related-article teasers (x3) + embedded tweet '— ANI (@ANI)' at offset 1186",,parenthetical English names natural
+a38b25d1523e45f9,full,fix,C1;D3;F1,poem page; C1: 'THE END' + submission CTA 'Whats App करू शकता'; D3: bilingual slug 'Baap kavita in marathi' (repeated); F1: contact phone at offset 1134,,declined detector C5 (short lines are poem verses); phone value not copied
+c2bdd48dd41bfd63,full,fix,C2;D3,"C2: 'हॅपी चॉकलेट डे”' refrain repeated 4x; D3: English brand/wish lines 'Five Star','Kit-Kat','Happy Chocolate Day!' at offset 2156",,
+9cf29773a348e554,full,clean,,,,
+5942ca188f5e62d3,full,fix,C1;D3;F1,D3: English title 'Chhatrapati Sambhajinagar :' at offset 0 + many English glosses (Pomegranate)(Mosambi); F1: two contact phone numbers (Devanagari digits) at offsets 4216 and 4228; C1: 'Read the Latest Agriculture News' footer at offset 4239,,detector missed F1 (Devanagari-digit phones); values not copied
+53107bedab0a3461,full,drop,D5,translationese - forexlens.com/mr auto-translated English forex-trading content: 'फॉरेक्स सिग्नल किंवा ट्रेड आयडिया हे ट्रेड सेटअप आहेत' at offset 27,,foreign auto-translated; heavy English trading terms
+6a2486046297a0f3,full,clean,,,,parenthetical English names natural
+a042cee16d499f88,full,fix,C2;D3,D3: English title 'Kargil Vijay Diwas Messages In Marathi' at offset 0; C2: 'हे मातृभूमी तू नेहमीच विजय असो' couplet repeated at offset 374,,"wishes compilation; declined detector C5 (verse, not spam)"
+08bcea3851725af6,full,drop,D4;C2;D3,"AI-generated SEO father's-day page: broken/nonsensical Marathi 'quotes' ('वाढतं आपल्यातला आश्रय, श्रेष्ठ पिता या जगातला यशः।') + English marketing 'Immerse yourself in a poetic odyssey...'; C2: 'Father's Day Quotes in Marathi' x4",,statusdekho.in; Marathi quotes are machine/AI-generated word-salad
+ba58e86ce60ab1f8,full,clean,,,,"heartfelt obituary, coherent"
+9888c808dbb1a294,full,fix,C1;D3,D3: English title 'Ram Mandir Ceremony :' at offset 206; C1: 'आणखी वाचा:' teaser at offset 1415,,
+4910d8ebf4514afa,full,fix,C1,'Read latest Marathi news...Esakal' English footer at offset 3897,,ward-boundary + candidate-name lists are legit article content
+c3377293ca780352,full,fix,C2,C2 splice: clause 'शेतकरयांनी अर्जाच्या नमुन्यासाठी...कृषी पर्यवेक्षक' repeats at offsets 826 & 991; eligibility tail 'वयोगटातील सातबाराधारक...आवश्यक आहे' repeats at 730 & 895 — a garbled hybrid sentence at 826-990,,
+b67f822c10563004,full,drop,D5,translationese - Chinese leather-bags OEM B2B page (mr.bagsfactorycn.com) auto-translated: broken 'आम्ही लवचिक cutomized सेवा ऑफर करतो' at offset 0,,foreign auto-translated; misspelled English 'cutomized'
+85e7f0ac6bb975d0,full,fix,C1;D3,D3: English title 'Vardha Murder Case:' + '(Dead body)' at offset 0; C1: 'Web Title: Dead Body of young woman found in well' CMS metadata at offset 1216,,article complete; detector C3 overruled (tail is CMS metadata)
+a0760efae2c899b4,full,clean,,,,"Ram Mandir features, coherent"
+f49e13860c8afb0b,full,clean,D3,English headline prefix 'Model Divya Pahuja Murder Case :' at offset 0,,"verdict fix->clean: D3 is label-only (do not judge), English title kept"
+cc43c83fe2ef8d66,full,clean,,,,
+5ec19407faee7c3b,full,clean,D3,English headline prefix 'Health : Heart Attack पासून...' at offset 0,,"verdict fix->clean: D3 is label-only (do not judge), English title kept"
+f547d9d6447cd0b2,full,fix,C1;D3,C1: 'View this post on Instagram' embed at offset 1186; D3: Punjabi quote 'रब्बा बख्शियां तू एन्नियान मेहरबानियां' at offset 859,,
+5003be98207c7290,full,fix,C1,'View this post on Instagram' embed (x2) at offset 1163,,
+831c2e8f89cd9871,full,fix,C1,'Share this on :' buttons + 'संबंधित लेख' related-article list at offset 795,,
+b3f3bb32f749c62d,full,fix,C1;D3,D3: English title 'Maharashtra Weather :' at offset 0; C1: 'नक्की वाचा :' teaser at offset 367,,
+b6efff7de60dc482,full,clean,,,,
+5346b49e2a4b329c,full,clean,,,,"scholarship-scheme info, coherent structured content"
+3a87c3949bbefd3e,full,fix,C1;D3;A5,"D3: English 'YONO for Every Indian' + banking terms; C1: 'हे देखील वाचा:' + 'Alos वाचा:' teasers + 'Web Title –' CMS at offset 1544; A5: 'अॅ' (U+0905 U+0945) at offset 66 co-occurs with precomposed 'ऍ' (U+090D) at offset 940 — same vowel, two byte forms",U+0905 U+0945 (अॅ) vs U+090D (ऍ),article complete; detector C3 overruled
+089a742f50fbbc9a,full,clean,,,,thefreemedia.in/mr but coherent native-ish Marathi political news
+159dde63411f8659,full,clean,,,,"detector C3 declined (ends with intentional bulleted allegations list, complete)"
+5ff361fb24727718,full,fix,C1;D3,D3: English title 'Sajid Khan Passes Away:' at offset 0; C1: '(हेही वाचा:...)' teaser + '— LatestLY' tweet + 'SocialLY' disclaimer at offset 1131,,
+4f0cf0d4db298c0e,full,clean,D3,D3: English title 'Rohit Sharma' at offset 0,,"D3 recorded for English title; kept per 'label it, do not judge it' (title is natural, not removed)"
+3858f35f6b0b9b49,full,clean,,,,
+e44e79f1da899fb0,full,clean,,,,one MT artifact 'सामान्य गुदगुल्या' (general tickling) but otherwise coherent
+ba36a8311f65450e,full,fix,C1;D3,D3: English '(BCCI)' + English tweet 'A warm welcome of team India in Lucknow'; C1: embedded tweets + 'SocialLY' disclaimer at offset 814,,
+c1b37e05dadd58f1,full,clean,,,,
+79e2d3a40fb83158,full,fix,C1;D3,D3: English glosses '(azatobactor)'(cow urine) at offset 34; C1: 'Read the Latest Agriculture News' footer,,
+340ec57eef39bb14,full,drop,C5;C3,"C5: category/archive listing page — whole document is aggregated headline+lead teasers of many articles, no article body, from offset 0; C3: teasers truncated mid-sentence (e.g. '…राज्यपाल' offset 369, '…बिहार' offset 614, '…हाती' offset 715, '…औचित्य' offset 1300) and final teaser cut mid-sentence '…विश्वराज हाॅस्पिटल' at offset 1827-1935",,mahametronews /category page
+ff938cd35c411d2a,full,fix,C1;D3,D3: English titles 'Delivery Boy Trailer:'/'Prathamesh Parab Movie:' at offset 0; C1: 'वाचा:' teaser at offset 1180,,
+67c11a7f15e0359d,full,fix,C1;D3,D3: English titles 'Ajit Pawar:'/'NCP Name and Symbol:' at offset 0; C1: 'NCP Crisis :' teaser at offset 901,,
+3c2d5230c3ab9bfc,full,clean,D3,English title/subtitle 'Sharad Mohol Wife :'/'Sharad Mohol Death Threats :' at offset 0,,"verdict fix->clean: D3 is label-only (do not judge), English title kept"
+cc74bb5bc8494450,full,clean,,,,NPR/NRC/CAA acronyms natural
+eb873938610a9252,full,clean,,,,
+8fd42ac1d4a71f5c,full,clean,,,,"stray 'vainganga' English word, trivial"
+5bd2abb7ccd597f2,full,clean,,,,
+135958d1c25f7217,full,clean,,,,
+8bcd75fa5cc11574,full,fix,C1;D3,C1: Wikipedia chrome - infobox '|धूमावती|Affiliation|...' + '[संपादन]' edit-links + reference section; D3: English infobox labels 'Affiliation'/'Weapon'/'Consort' at offset 10,,mr.wikipedia.org dump
+e24303fde745b0f8,full,fix,B4;C1,B4: WordPress obfuscated-email placeholder '[email protected]' at offset 2526; C1: 'सामील होण्यासाठी येथे क्लिक करा' + share CTA at offset 2544,,helpline/toll-free are public govt numbers (not F1)
+66691b8c81a65659,full,clean,,,,
+a5f0c335e9254f6f,full,fix,C1,C1: '|अर्चनेची आवश्यकता |लिंगांग योगाचे प्रमुख लक्षण' nav bookended (top+bottom) + English 'Reference:' citation block at offset 6869,,essay body coherent; nav/reference boilerplate
+334025442f6f0460,full,clean,D3,"D3: full English sentence ""('Kranti Haq Morcha' on behalf of Navi Mumbai District Youth Congress on February 8 to 9)"" at offset 152",,"verdict fix->clean: D3 is label-only (do not judge), English title kept"
+7b32b1404461d953,full,clean,,,,
+395a35af39d62efd,full,clean,,,,
+35695912a418a275,full,clean,,,,"job notice, coherent"
+41cb0794c0d942d6,full,drop,D5;C2,"translationese - keyceo.com/mr English keyboard product article MT'd to Marathi (promotes 'keyceo KY-X015'); C2: 'त्याच्या नावाप्रमाणे, स्विचच्या आत एक कात्रीची यंत्रणा' paragraph duplicated at offset 508", ,foreign auto-translated product content
+b1a8a62a023f1493,full,fix,C1,'हे ही वाच भिडू' + related-article list at offset 3890,,Usha Uthup bio body is clean literary Marathi
+fc518c50e8c7a84e,full,clean,,,,coherent essay on tilak
+3f3b5897bb69925d,full,clean,,,,
+73e70a437948e32b,full,clean,,,,"well-researched Modi-lipi history article, coherent"
+26aa02f2eea467db,full,fix,C1;D3,C1: 'हे सुद्धा वाचा' related list + '|नाव|हवामान अंदाज' infobox + 'Whatsapp Group' CTA at offset 2691; D3: English teaser titles 'Weather Update'/'Maharashtra Rain',,
+a787b90db16f6706,full,fix,C1;D3,D3: full English sentence '(Sanjay Raut Criticism Shinde-Fadnavis government is like a buffalo sitting in water)' at offset 619; C1: 'हे सुद्धा वाचा' teaser at offset 1089,,
+ca76ceb329a19822,full,fix,C1,site intro 'नमस्कार मित्रांनो' + share-CTA 'लाईक करा शेअर करा' + 'टीप' disclaimers at offset 1694,,"trailing spaced words ('ज्यो तिषी','श कता') - minor spacing noise"
+17075405b827d855,full,clean,,,,
+47fd960f86f0047e,full,clean,D3,English headline prefix 'SBFC Finance शेअर्स IPO...' + heavy English finance terms at offset 0,,"'निरोगी प्रीमियम' (healthy premium) MT-ish but coherent | verdict fix->clean: D3 is label-only (do not judge), English title kept"
+46de01ec8c194c12,full,clean,D3,"D3: heavy English tech terms 'OTP','TOTP','HOTP','Two-Factor Authentication','Algorithm' at offset 430",,"FAQ answers shown without questions (minor) | verdict fix->clean: D3 is label-only (do not judge), English title kept"
+5fe8c64a3c3b7580,full,clean,,,,
+7e8233811b68273b,full,clean,,,,"reflective life-blog essay, coherent literary"
+8fbde2b199e0b20c,full,fix,C1,share CTA 'शेअर करायला विसरू नका...फेसबुक पेज' + 'सूचना-' disclaimer footer at offset 2952,,food-safety content reads MT-ish but coherent
+2e6e4a75e3574d7b,full,fix,C1,'सामील होण्यासाठी येथे क्लिक करा !!' + share footer at offset 3218,,parenthetical English finance terms natural
+1978df7bdb023294,full,clean,D3,bilingual English headers 'Blood Cancer Symptoms in Marathi'/'What is Blood Cancer Symptoms in Marathi?' at offset 16,,"verdict fix->clean: D3 is label-only (do not judge), English title kept"
+86fe9a52066df1a6,full,fix,C1,"related-article list with English slugs 'crop insurance - January 21, 2024' etc at offset 2061",,
+2881328211d80253,full,clean,,,,(Mahindra CNG Tractor) glosses natural
+45e629cd4dbed94b,full,clean,,,,
+2f76dcdd58ba62b2,full,clean,,,,
+44dfe8ca9af05a1b,full,clean,,,,
+b5721d846cdd46cf,full,clean,,,,
+d8c2c10fd5dbdc45,full,clean,,,,
+43803bb17b7381c9,full,clean,,,,finance news; transliterated English terms natural
+515ce925c40d60fd,full,clean,,,,
+283a442276f97544,full,clean,,,,
+ae95f5ae119cc448,full,clean,,,,
+921cd61b0b3e5e1e,full,fix,B4,stray superscript '⁵' (U+2075) alone on its own line at offset 339 — orphaned footnote/markup residue in prose,E2 81 B5 (U+2075),single-char fix: delete the orphan '\n⁵\n' line; article otherwise coherent Marathi
+c4cb18ec6f6ef5a9,full,clean,,,,
+b179896057d31d6d,full,clean,,,,press-release style; CNG English natural
+b8fe461aa712d377,full,fix,C1;C2,C1: 'हे ही वाचा' + embedded tweet '— Adv. Ashish Shelar (@ShelarAshish)'; C2: the quote 'सिनेट निवडणूक मतदार नोंदणीत उबाठा सेनेने...' duplicated verbatim at offset 642,,
+230cadf12dc0641a,full,fix,C1;D3,D3: English titles 'Rose Day 2024:'/'History and Significance of Rose Day:' + glosses; C1: '(Disclaimer :...हिंदुस्तान टाइम्स मराठी...)' footer at offset 2037,,
+1a11cf88d8618b35,full,fix,C3;D3,"C3: excerpt truncated, ends 'सरासरी.. पुढे वाचा.' at offset 398; D3: English 'Weather Update' prefix at offset 0",,read-more excerpt stub

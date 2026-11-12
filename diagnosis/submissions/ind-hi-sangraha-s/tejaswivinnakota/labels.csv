@@ -1,0 +1,501 @@
+doc_id,read,verdict,diseases,evidence,hex,note
+635cbbdde03f1dad,full,fix,D4,D4@189 'सहयोगी थे।एफ। हार्वर्ड',,Initials split by danda and garbled names
+22fd653de4dd666a,full,fix,D4,D4@5285 'कार्ल थ। डेनमार्क',,"Garbled initials, empty parens, currency garble"
+0901d3609c93ba66,full,fix,D4,D4@652 'उस महिला के किले के परिवार का दौरा',,Mistranslated phrases and stripped area values
+257cef1fe99b6355,full,fix,D4,D4@1508 'पोप निर्दोष III',,"'died childless' translated as 'निःसंतान हो गए', 'Count of' as 'की गिनती', 'Pope Innocent' as 'पोप निर्दोष'"
+b1a4beabde242ec5,full,fix,D4,D4@1 'डुलोवा बनाम',,"Date in place of area, empty parens"
+0db0dfc12b4842e9,full,clean,,,,
+6ac8afdd66e11675,full,fix,D4,D4@296 'नंबर एक पर रखा गया था। 1951 की',,Garbled sentence structure
+ad0f03ef5647eb98,full,clean,,,,
+70bab8ad5d120193,full,clean,,,,
+69f40eead2c85643,full,fix,D4,D4@1 'आग लगी',,Mistranslated title
+e9572dd501de07d7,full,fix,D4,D4@137 'तत्काल ब्रांडों के साथ विलय',,"Brand names 'Instant Brands'/'Visions' translated as 'तत्काल ब्रांड'/'दर्शन', plus abbreviation splits ('Co.' -> 'को।')"
+1b0e1771a362f1a5,full,fix,B4;D4,B4@1845 '!कोलन = 9| प्रदर्शनी खेल' | D4@1144 'भिक्षुओं ने दो बार रैंक',,Template table junk and literal name translations
+76348bdb82fa269c,full,fix,D4,D4@211 'शीर्ष चार बीजों को',,Seeds and title translated literally
+0f7cde1fcef08bf0,full,fix,D4,"D4@389 'बार हेब्रियस (""ओब"") का'",,Garbled names and quote fragments
+1977bf6aaac83a24,full,fix,D4,D4@309 'हमें $300 मिलियन का प्रबंधन',,"U.S. garbled, company names literal"
+5700b1ccb1a5ed64,full,fix,D4,D4@445 'लीग बाजी में',,"Names translated literally, empty parens"
+a8ce5f6e95ad2475,full,fix,D4,D4@667 'बह 'ई लेखन',,Split name and duplicated words
+7952bb46c0b45a56,full,fix,A6;D4,A6@57 'слаото отоманоч' | D4@369 'प्रत्येक गिनती के दो आरोपों',57 U+0441 + U+043B + U+0430 + U+043E + U+0442 + U+043E + U+0020 + U+043E + U+0442 + U+043E + U+043C + U+0430 + U+043D + U+043E + U+0447,
+106eb9e71a3035f6,full,clean,,,,
+949b011c468a916c,full,fix,D4,D4@3041 'सोने के बर्तनों का कोई निशान',,"Gilding mistranslated, stray quotes"
+ced961b49f66b7de,full,fix,D4,D4@488 'घंटी प्रणाली द्वारा अनिवार्य',,Bell System and company names translated literally
+833503e3ce02a9e2,full,fix,D4,D4@214 'दूधिया रास्ते से लगभग दूरी पर',,"Milky Way literal, stripped distance and mass values"
+7d88f7c2eb90abbc,full,fix,D4,D4@1438 'चाल-या-उपचार के लिए वैकल्पिक',,"'fabrications by children' mistranslated as 'बच्चों द्वारा बनाए गए कपड़े', 'Long Island' as 'लंबे द्वीप', 'trick-or-treating' as 'बच्चों को धोखा देने या उनका इलाज करने'"
+fe0a866d7c8c7717,full,fix,D4,"D4@1197 'विभिन्न नदियाँ (डेन्यूब, राइन, मुख्य'",,"Main river translated as common word, garbled sentence"
+9ad88495ac2a9591,full,fix,D4,D4@54 'करियर खेलना।',,"Heading 'Playing career' mistranslated as 'करियर खेलना।', dropped name at start (' वह एक पूर्व जापानी'), and 'center back' as 'केंद्र के रूप में'"
+d03d715fba423b64,full,fix,D4,D4@540 'स्पष्ट चैनल मनोरंजन द्वारा',,Company and venue names translated literally
+b7c291414b1d1553,full,fix,D4,D4@1 'पश्चिमी बाजार का अंतिम स्थान',,"Title mistranslated, empty parens"
+d78afe8e0a9b11c3,full,fix,D4,"D4@1046 'होती है। विरोधाभास,'",,"Species epithet translated, garbled abbreviations"
+2410658861c91c7f,full,fix,D4,D4@709 'क्रिकेट का नीला रंग प्राप्त किया',,Cricket Blue rendered as a colour
+a2298260d4c4d456,full,fix,D4,D4@14805 'कुछ बाल पिन पैरों से ऊंचाई',,"Multiple MT sense errors ('no meandering to speak of, and thus no plain' -> 'बोलने के लिए कोई भटकना नहीं है, और इस प्रकार कोई सादा नहीं है', 'hairpin turns' -> 'बाल पिन पैरों')"
+7d19a48a349e18f7,full,fix,B4;D4,B4@84 'टीम ने अपने पिछले आई. डी. 1. के उत्पादन' | D4@957 'नाशपाती खींचने के लिए एक पास पूरा किया',,"Placeholder token 'आई. डी. 1.', empty schedule notes ('सप्ताह 10।\n \n \n \n \nसप्ताह 12।'), and 'Drew Pearson' translated as 'नाशपाती खींचने'"
+031c25fdc5b1710b,full,fix,D4,D4@130 'अमेरिकी वकील के रूप में कार्य किया।एस।',,"U.S. Representative garbled, names translated literally"
+3878784268dd0561,full,drop,D4,D4@133 'प्रशंसक का जन्म 1965 में',,Heavy literal MT throughout: names and team names translated as common nouns.
+0638ed1bc06eb740,full,fix,D4,D4@1492 'इस मिलन के कारण एनी और एलिजाबेथ बाहर हो',,"D4 mistranslations ('fell out' translated literally as 'बाहर हो गए', incomplete sentence on Jan Volek, dropped daughter name)."
+131b86eb077ba739,full,clean,,,,
+b44e4ce7241a069b,full,fix,D4,D4@243 'पत्रिका को अमूर्त और अनुक्रमित किया गया',,"D4 wrong word sense: 'abstracted' (indexed in abstracting services) mistranslated as 'अमूर्त' (abstract/intangible), plus missing list after colon."
+64fe6627135b0e41,full,drop,D4,D4@867 '2012 में कीमत वाइसिंग आर्ट्स सेंटर में',,"Heavy D4: surname Price repeatedly translated as 'कीमत' and 'मूल्य', The Guardian as 'संरक्षक', garbled critic quote."
+cadf0743e3d490e9,full,fix,D4,D4@879 'वे 1938 में राजा की परिषद बन गए।',,"D4 mistranslations ('King's Counsel' translated as 'राजा की परिषद', dangling 'उनके प्रकाशनों में शामिल थे;' with dropped list)."
+c99469874d292a0d,full,fix,D4,D4@144 'निर्दलीयों के रूप में दौड़े',,Local translation error in the quoted passage.
+d91bed496e0da474,full,fix,D4,D4@271 'हमारी महिला द्वारा स्वयं फीटिमा',,Literal MT of proper names in places; locally fixable.
+8ff676daebfe5bfa,full,fix,D4,D4@153 'कीव के ग्रैंड प्रिंस मिस्टिस्लाव आई और',,"D4: Roman numeral 'I' in monarch names Mstislav I and Valdemar I transliterated as English letter 'आई' (eye), plus ambiguous pronoun in murder sentence."
+ab8eff5a1410461c,full,fix,D4,D4@621 'एक एक्सल अंतर और व्यास के पहियों के साथ',,D4/template drop: missing measurement numbers before 'एक्सल अंतर और व्यास के पहियों' and AL10 transliterated as 'अल10'.
+0817927a5ec42a91,full,fix,D4,D4@12 'फॉर्मेट टूर संयुक्त राज्य',,Local translation error in the quoted passage.
+30657509e9c576e9,full,fix,D4,"D4@3107 'हिटजिग वी। कनाडा, 2003 कैनली 30796 (सी प'",,"D4: legal citation abbreviations 'v.' and 'On. C.A.' broken into fake sentences at the end, plus 'New Democratic Party के लिए भाग लिया' ('ran for')."
+03ef91506ee28682,full,clean,,,,
+99184df1a9f23e59,full,drop,D4,"D4@1059 'मारोटा, फटे हुए और सफेद सिर'",,
+4495e33ab8e92bf2,full,fix,D4,D4@560 'लंदन का शिकार',,Place and company names translated literally; local fixes.
+4646ca4e8734be64,full,clean,,,,
+0aa74f7dffb64b11,full,fix,D4,D4@1304 'एम द्वारा सेटिंग। ट्वैचमैन',,Initials split into fake sentences; a reference stub at the end is not truncation.
+ddb13bd73de06a29,full,fix,D4,D4@1320 '1897 के वर्ष में लगभग रु. की लागत से',,"D4 sentence splits on abbreviations ('रु. की लागत से...। 1.126 मिलियन', 'कोलकाता विशेषज्ञ पी. टी। एक संदर्भ पुस्तकालय बनाने के लिए।') and truncated name 'रायन और न'."
+ea9b683e28d08e16,full,drop,D4,D4@1915 'कप्तान कारभारी कुल मिलाकर कर्नल हेज़ के',,"Heavy D4 throughout: surnames translated as common nouns (Hays -> घास, Stewart -> कारभारी, Storey -> मंजिला, Chief Numaga -> मुख्य नंगा, breastworks -> स्तन कार्य) plus U.S./Col. sentence splits."
+c1820ebf7ce53eb0,full,clean,,,,
+d949333c427f33a8,full,clean,,,,
+8d4a1eb74b3a464c,full,fix,B2;D4,B2@54 '<पेरेंटिड> 1151694113 </पेरेंटिड>' | D4@862 'यह पी द्वारा दान की गई भूमि पर बनाया गया',,
+81fe62ad39e19ba7,full,fix,D4,D4@1 'शांति बनाएँ',,Some titles/names translated literally; local fixes.
+f2fa6087adc78d55,full,fix,D4,D4@68 'वह रक्त द्वारा पूर्ववत (आफ्टरशॉक कॉमिक्स',,"D4: second sentence lacks a main verb ('वह रक्त द्वारा पूर्ववत...') and comic titles are translated literally ('Undone by Blood' -> 'रक्त द्वारा पूर्ववत', 'Deer Editor' -> 'हिरण संपादक')."
+2cc722936df3fb3d,full,fix,D4,"D4@485 'एमिली (बी। 1826), लुईसा (बी। 1834)'",,"D4: abbreviations 'W.', 'Dr.', 'b.', and 'Mt. Union College' split with dandas ('एम. टी. में प्रवेश किया। यूनियन कॉलेज'), Alliance translated as 'गठबंधन'."
+f8d5ecf7edddbda5,full,clean,,,,
+83b44e39038ea65f,full,fix,D4,D4@1102 'संपत्तियों को रसद और खुदरा व्यवसायों में',,Local translation error in the quoted passage.
+bc3b79b5a25ba346,full,fix,D4,D4@1 'स्पष्ट रूप से',,Titles and names translated literally in places; local fixes.
+e1fa2554801a813d,full,fix,D4,"D4@1899 'बैंगनी लोगों का पुल 23 मई, 2007 को बंद ह'",,Local translation error in the quoted passage.
+7df1d3a9a7ec1385,full,fix,D4,D4@524 'सौम्य एनी खदान',,Place name Gentle Annie translated literally and inconsistently.
+b15d3f318559de09,full,fix,D4,"D4@664 'सूचीबद्ध किया गया था। लुरिडा ""और"" एफ।'",,"D4: binomial abbreviations 'F. lurida' and 'F. murina' split across dandas ('किया गया था। लुरिडा ""और"" एफ। मुरीना।') plus stray unmatched quotes."
+fb3ca263e5e2d7e1,full,fix,D4,D4@5203 'कौवे के घोंसले के पास रेलवे',,"Mostly readable; Crow's Nest Pass calqued, St. Paul split, surname spelled inconsistently."
+bbf3a00fa8618995,full,fix,D4,D4@1232 'उसके माता-पिता हाथ चाफलान',,"Readable plot summary with literal MT slips, broken 'Mr.' and gender errors; local fixes."
+faea12423891cfc0,full,drop,B4;D4,B4@173 'सूत्र _ 2' | D4@446 'फॉर्मूला _ 7 भूलना',,Formula placeholders left in text plus heavy literal machine translation
+1bc87864360367e1,full,fix,B4;D4,B4@283 'बोस्टन कबूतर <5>' | D4@12 'सर्वकालिक रोस्टर में बहादुरी दिखाई',,Placeholder tokens and literal team-name translations
+9060c017863bf369,full,clean,,,,
+3ded81eed3f30293,full,fix,D4,D4@5178 'टूटने के साथ अपने संबंध',,Some mistranslated phrasing
+b7591d3cd2d9902d,full,fix,D4,D4@1181 'रजत पदक के लिए कतार में खड़े थे',,Local D4 word-sense error: 'They rowed to a silver medal' mistranslated as 'वे रजत पदक के लिए कतार में खड़े थे' ('stood in a queue').
+9c5687343dbf4ce6,full,drop,C2;D4,C2@633 'नोटः जी = खेल पिच किए गए;' | D4@711 'युग = अर्जित रन औसत',,Stats-table boilerplate with repeated legend lines and garbled translation
+5cf2e6f6f7976eb1,full,fix,D4,D4@1943 'गोल थे-फिर से औसत के खिलाफ',,"Local D4 mistranslations: 'goals-against average' rendered as 'गोल थे-फिर से औसत के खिलाफ', 'temporal lobe' as 'अस्थायी खंड', and goalkeeper conceding goals as '14 गोल किए'."
+cbcd66923da5dee2,full,clean,,,,
+eebf9f56c634b9f2,full,fix,A6;D4,A6@59 'оладален оламироч олоч' | D4@275 'स्नातक किया। 6 गोर्नो-अल्टेस्क में।',59 U+043E + U+043B + U+0430 + U+0434 + U+0430 + U+043B + U+0435 + U+043D + U+0020 + U+043E + U+043B + U+0430 + U+043C + U+0438 + U+0440 + U+043E + U+0447 + U+0020 + U+043E + U+043B + U+043E + U+0447,Garbled Cyrillic gloss 'оладален оламироч олоч' for 'Владилен Владимирович Волков' (A6) and 'School No. 6' split into fake sentence (D4).
+fb1677b8ca634f25,full,clean,,,,
+191796a185633ae1,full,fix,D4,D4@253 'ए में मारा गया था।डी। 303',,Local translation error in the quoted passage.
+55686def0b8c7f0e,full,fix,D4,D4@1650 'भेड़िया।',,Team names translated literally
+59f1c95699cb5c9d,full,fix,D4,D4@616 '(FL) की बेटी थीं। 1672-1711)',,Genealogical 'fl.' abbreviation split into fake sentences and 'vice-ispán' mistranslated as 'उप-द्वीप' (sub-island).
+bb1d0da7e5c5ffad,full,fix,D4,D4@301 'महाकाव्य रिकॉर्ड',,Literal name translations and broken abbreviation punctuation
+38feeeb836f714f2,full,fix,D4,D4@115 'यू की सहायक कंपनी के रूप में स्थापित',,Abbreviation splitting and literal name translation
+832ae2abf19b1b5a,full,fix,D4,D4@2716 'अंडे खाने और तलने के लिए',,Local D4 word-sense errors: fish 'fry' translated as cooking verb 'तलने' and 'spawn' translated as 'पैदा होंगे'.
+24b172241f306228,full,fix,D4,D4@5039 'आई. डी. 1. की अवधि में',,Unresolved placeholder 'आई. डी. 1. की अवधि में' and place name 'Staines-upon-Thames' mistranslated as 'थेम पर दाग'.
+348e788b312ce257,full,fix,D4,D4@190 'एक युवा योद्धा',,Broken abbreviation punctuation from translation
+3c1ecc71b8881ead,full,clean,,,,
+88675e33d5967cab,full,fix,D4,D4@494 'रोसिग्नोल',,Initial-period splitting breaks sentences
+1fedd9210f5cdc43,full,clean,,,,
+a03f2dc0faf05339,full,fix,D4,D4@2694 'रोबर्ट लिगेटी',,Abbreviation splitting and garbled date phrasing
+1e605651dd5280dd,full,clean,,,,
+487a621e98c3ad74,full,fix,D4,D4@216 'रॉड डिडॉक्स के रूप में प्रशिक्षित',,
+f57f4eed69d45877,full,fix,D4,D4@1 'पाप विचित्र',,Literal name translation and split abbreviation
+6d07b5b4acfd0166,full,fix,D4,D4@676 'इसे xxiii/2 बैंड में रखा गया है',,Garbled citation and date fragments
+1153e16da42c42be,full,fix,D4,D4@240 'को जन्म देने के लिए थे',,Awkward mistranslated constructions
+1cb395f2e1b82560,full,fix,D4,D4@534 'घोड़ा।',,Split abbreviation and literal translation
+b67f592914513f24,full,clean,,,,
+d4594986e19e46c2,full,clean,,,,
+c798c9f911ed53f7,full,fix,D4,D4@1450 'बदसूरत खाड़ी।',,Place and person names mistranslated literally
+6b3ce1fe30309bee,full,fix,D4,D4@1266 'बोझ फिर कभी नहीं देखा गया',,"Proper names translated literally (Burdick, Fox)"
+f4081ac8b58e6150,full,fix,D4,D4@582 'लेनन के सिर',,Place names translated literally (Lenan Head)
+97c453c003f59b98,full,fix,B2;D4,"B2@1529 '</रेफ>' | D4@781 'किशोर (133), किशोर (133)'",,Leftover translated closing ref tag and local MT errors including broken S.S. abbreviation and 'Spit' mistranslated as spitting.
+640077f08addc1a6,full,fix,D4,D4@324 'कारिंथिया के दासों के साथ',,Local MT word-sense error ('Slavs of Carinthia' mistranslated as 'slaves/दासों') and garbled numeral 'छियास'.
+c0a4b051b8d083be,full,fix,D4,D4@441 'दोनों लाइनों के मालिक बेन और न ही हैं',,Garbled MT sentence
+b0f98468f972a16a,full,fix,D4,D4@1383 'मृत्यु के समय',,A nonsense phrase in a match report; the honour list at the end is not truncation.
+7711e74518460dcc,full,clean,,,,
+2a9ae40b2d21a874,full,fix,D4,"D4@1980 'एक बेटी, दुल्हन, और एक बेटा'",,"Local MT errors: daughter's name Bridget/Bride translated as 'दुल्हन', broken 'डब्ल्यू।सी।' abbreviation, and missing verb in award sentence."
+432c8ea3c2505fcd,full,fix,D4,D4@322 'प्रोप के रूप में खेला।ई. नंबर 1 या 3',,Abbreviation split garbling
+d74c9f254b46cf28,full,fix,D4,D4@1546 'धब्बा और टोपी छतरीदार हैं',,Local MT error ('smock' of a windmill translated as 'धब्बा'/stain) and missing converted measurement values.
+962fbef3cc8ed296,full,fix,D4,D4@1053 'पुराना दोस्त है।के.ए। रोबोट।',,Abbreviation split garbling
+c4a878c137f88d1f,full,clean,,,,
+05f4f73fd55814e7,full,fix,D4,D4@12855 'जैसा कि 1992 में एक अलग निदान',,"Local MT errors: abbreviation 'AS' translated as 'जैसा कि' ('as'), section title 'Coinage' translated as 'सिक्का', and 'PE' as 'पी'."
+3fdec6e075a99ac7,full,fix,D4,"D4@2788 'यू में 1,148 से अधिक ट्रेल्स।एस।'",,U.S. abbreviation split garbling
+5e5b08e16e550221,full,fix,D4,D4@1361 'आँख और मिट्टी के सैक्सन बस्तियाँ',,Name mistranslations (Domesday Book as dome book)
+c2c8f48e0361453a,full,fix,D4,"D4@217 'शहर का क्षेत्रफल जून 2018 में 84,613 था'",,"Stripped area unit caused population figure 84,613 to be stated as the city's area."
+d3fa124f72def16f,full,fix,D4,D4@119 'एच लिप्यंतरण।आई। या के।i',,Garbled abbreviation/bracket fragments
+c099c502b455b43e,full,clean,,,,
+0d7483eb103b5b18,full,fix,B4;D4,"B4@1770 '!कोलन = ""16""|' | D4@1848 'साफ-सुथरी चादरें।'",,"MediaWiki table syntax '!colspan=""16""|' leaked into prose and local MT errors ('Clean sheets' -> 'साफ-सुथरी चादरें', 'The U's' -> 'यू. एस.')."
+7a89f4b71605c4d9,full,clean,,,,
+e99d4ff7e81d23d9,full,fix,D4,"D4@4108 'घाव (मिल), घाव।'",,"Multiple local MT/extraction errors: 'Sorel' mistranslated as 'घाव', abbreviations 'W.J.', 'St.', 'N.O.I./C.' split across sentences, and a long dot run."
+477e266c1fdf6b4b,full,clean,,,,
+881e6f3b3d8f418b,full,fix,D4,"D4@577 'सैम एच में ""इट्स ए बॉय""'",,Sam H. Harris Theatre split garbling
+ea42f741155c3523,full,clean,,,,
+2cf437a706bcb66d,full,clean,,,,
+2d0a7c663fbb2a07,full,fix,D4,D4@1415 'था।बी।मोंडियल',,"Abbreviation periods mistranslated as danda, fused tokens."
+4b2734409d912d63,full,fix,D4,D4@545 'पहला गणराज्य बन गया',,Party name Republican mistranslated as republic and missing subject in second sentence.
+7ffbed1808e12d6f,full,fix,D4,"D4@55 'जन्म 3 जुलाई 31,1896'",,Local translation error in the quoted passage.
+94f9ac0d9c39d021,full,fix,B2,B2@289 '<बी. आर.>',,Leftover angle-bracket tag markup.
+882a6808fb9cc17e,full,fix,D4,"D4@707 'ले गए। पैट्रिक कॉलेज, वेलिंगटन।'",,"St. Patrick's College split into Saint Petersburg and fragment, plus untranslated ID placeholder."
+4c30265eec2a2512,full,fix,D4,D4@270 'जारी किया गया था।एस',,"Abbreviation periods turned into danda, fused tokens."
+fa3576b785b17bfd,full,fix,D4,D4@755 'आई।डी।ई. थॉमस',,Initials and degree abbreviations broken by danda substitution.
+ac6cc35c126d836c,full,fix,D4,D4@11 'स्वर्ण चिह्न',,Proper name literally translated.
+051faf7c89e0395e,full,fix,D4,D4@55 'परिवार का एक पतंग है।',,Moth mistranslated as kite and wing anatomy terms garbled.
+953802712c4548e6,full,fix,D4,D4@562 'वार्ड सेंट में पढ़ाया जाता है।',,St. Joseph's University split at St. across sentence boundary and autumn translated as downfall.
+7c9266370547c51b,full,drop,D4,D4@268 'वह घोड़े के हाथों से बाहर थी।',,Severe MT mistranslations and broken abbreviations across nearly every sentence of horse biography.
+9f2c1e544fb0d4bc,full,fix,D4,D4@464 'समाज की स्थापना की। 1927)',,Parenthetical est. 1927 mistranslated and split across sentence boundary.
+a9faf786b84ac401,full,fix,D4,"D4@3329 'सड़े हुए टमाटर पर, फिल्म'",,Literal mistranslation of Rotten Tomatoes and inverted meaning in plot sentence.
+3ffc0e5657047c48,full,fix,D4,D4@69 'एरी काउंटी में भैंस में',,City name Buffalo literally translated as animal.
+130d3a87fc6ebaa2,full,fix,D4,D4@3018 'मछुआरे और पैटरसन',,Surname literally translated; case name broken by danda.
+06fd08e5ff003854,full,fix,D4,D4@418 'एक हंस का पीछा करते हुए',,Idiom/title literally translated; St. Louis split.
+ede046aff8410b34,full,fix,B2;D4,B2@1694 '<रेफ नाम =' | D4@1615 'ध्वनिक चट्टान',,Leftover ref tag and literal genre translation.
+8c8e5d81e49a40c9,full,fix,D4,D4@1 'टायरोन गले लगाता है',,Names and team names literally translated.
+cc0755ef1a1aeaf3,full,fix,D4,D4@79 'नदी परीक्षण की एक सहायक',,Place and title names literally translated.
+ad64756420739330,full,fix,D4,D4@4275 'तेंदुए ने',,"Proper names (Leopard, White Plains) literally translated."
+4c4226d7c805606e,full,fix,D4,D4@1 'बुलेवार्ड काटना',,Local mistranslations of road descriptions.
+3927a2a187c58aac,full,clean,,,,
+154d8a5e9e11b4a1,full,fix,D4,D4@1189 '8 बजे प्रस्तुत किया गया था।एम',,Time abbreviation broken by danda; spelled-out acronym.
+36d7a626b8928ad7,full,fix,D4,D4@513 'एक सार्वजनिक कपास के बड़े थे',,Occupation public cotton weigher mistranslated as nonsensical phrase.
+23777890ab7140a9,full,fix,D4,D4@1016 'हैस्टिंग्स बंद ने',,Names literally translated.
+32087613332979f7,full,fix,D4,D4@2261 'घोड़े की बाढ़',,Proper names literally translated.
+162ec962a3a4568e,full,fix,D4,D4@855 'उत्परिवर्तन विद्यालय',,Mutare and Heroes Acre literally translated.
+933f9f99ffa5df97,full,fix,D4,D4@2202 'युवा विवियन के मंत्रिमंडल',,Party name Young Vivian and idiom literally translated.
+31c2330c494b53f5,full,fix,D4,D4@2781 'एक प्रतिष्ठित यू।एस। जनरल',,"MT broke U.S. abbreviation into sentence breaks; local, repairable"
+75a7b13d473abf7d,full,fix,D4,"D4@1759 'ओल्सन, एम।बी।जबकि'",,Broken initials/abbreviations from MT sentence splitting
+002be249488d52e1,full,clean,,,,
+e9378b26a87af988,full,fix,D4,"D4@598 'गैलाघेर, गैलाघेर, गैलाघेर, गैलाघेर'",,Missing IPA leaves pronunciation clause incomplete and distinct English surname spellings collapse into repeated transliterations.
+adf9e0b02bb38d84,full,fix,D4,D4@2024 'रोमन फुटबॉल महासंघ की देखरेख में।',,Mistranslates 'Romanian' as 'रोमन' (Roman) and football 'promote' as 'प्रचार करना'.
+e90cdc206f82eb31,full,fix,D4,D4@245 'एक स्थिर यू बनाए रखा है।एस।',,U.S. abbreviation split across sentence by MT
+1d73bfa1e18b4663,full,fix,D4,D4@881 'रात 8 बजे निर्धारित की गई थी।एम.',,P.m. abbreviation broken into sentence break
+6d66c2edfa049473,full,fix,D4,"D4@98 'वेल्श टीवी साबुन ""पोबोल वाई सीडब्ल्यूएम""'",,Mistranslates 'TV soap' (soap opera) literally as 'टीवी साबुन' and 'playing the character' as 'चरित्र खेलने'.
+4a26d9ce3fbaa87b,full,fix,B4;D4,B4@16 'छत का तापमान (सूत्र _ 1)' | D4@163 'बहुलक और अपतटीयकरण की दर बराबर होती है',,"Contains translated formula placeholders ('सूत्र _ 1'..'सूत्र _ 8'), stripped equations, and mistranslates depolymerization as 'अपतटीयकरण' (offshoring)."
+e0eaf29d68950240,full,fix,D4,D4@1 'कीथ डी। काला',,Surname Black literally translated; broken initials
+183904f0198028f4,full,fix,D4,D4@2014 'इस दर्रे को पहली बार 1976 में गिरो डी 'इ',,
+269ef3369a560508,full,fix,D4,"D4@1399 'मिनी-सीरीज़, जिसका शीर्षक था, 10 अगस्त'",,"Missing title in 'जिसका शीर्षक था,' and literal translation of group/title names ('Kemono Friends' -> 'केमोनो मित्र', 'Gothic x Luck' -> 'गॉथिक × भाग्य')."
+9056bfe057729e8e,full,fix,D4,D4@2341 'पर बमबारी की गई।',,"Mistranslates box-office 'bombed' as literal bombing ('पर बमबारी की गई'), splits 'Dr. Pasupathy' at 'Dr.', and splits I.A.S./I.P.S. initials."
+75051abf5dd019da,full,fix,D4,D4@1320 'द्वीप पेरिग्यूक्स के माध्यम से बहता है',,
+e459b420bddc1812,full,fix,D4,D4@1115 'कोरिंथियन राजधानियाँ और प्रवेशिका कोशिका',,Mistranslates architectural column 'capitals' as 'राजधानियाँ' (political capitals) and 'entablature/cella' as 'प्रवेशिका कोशिका'.
+1c879a3e87806105,full,fix,D4,D4@261 'कमल चालक इमर्सन फिटिपाल्डी',,Team names Lotus/Shadow literally translated
+7db54e1857b6991e,full,fix,D4,D4@265 'तीन मोड़ जोड़े',,Wrong technical term; omitted equation values are not broken markup or truncation.
+adc639e30cf4b95b,full,drop,D4,D4@2786 'इसमें एक श्री और एक श्री होंगे। ग्रंथि',,
+589ec7d152ef6686,full,fix,D4,D4@330 'प्रति कचरा 10-20 सेमी लंबाई',,Mistranslates biological 'per litter' as 'प्रति कचरा' (garbage) and splits 'Carter R. Gilbert' at initial 'R.'.
+17b449a9c9f819c2,full,clean,,,,
+30318038456aa369,full,clean,,,,
+d197c92b0dd2f669,full,fix,D4,D4@772 'डिब्बाबंद गर्मी',,Band and person names literally translated
+39c1b81b0ab5d73f,full,fix,D4,D4@1730 'गुलदस्ता',,Wrong senses for instrument parts; a list ending is not truncation.
+6779b0ad36d5159e,full,fix,D4,D4@202 'सी सीज़न देखा।डी।',,Broken C.D. abbreviation; Python literally translated
+6f393c00c1e73405,full,fix,D4,D4@1 '2002 मिलवॉकी शराब बनाने वालों का मौसम',,Team name Brewers literally translated throughout
+b36daaf85b415849,full,fix,D4,D4@74 'सेंट के लिए खेलते थे। जॉर्ज',,St. abbreviation split by MT; some garbled lines
+33ec0915207451ed,full,fix,D4,D4@2380 'सट्टेबाजी को अस्वीकार कर देते हैं',,Name Betty mistranslated as betting; broken abbreviations
+ea426bbcbf76818c,full,fix,D4,D4@152 'पादुआ प्रांत में मखमली से लगभग 4 किमी',,Mistranslates Italian town 'Conselve' as 'मखमली' (velvet) and 'billeting' as 'बिलिंग' (billing).
+3f26225f90bf69d4,full,fix,D4,D4@570 'स्क्रिबे में लीबनिज़ के संयोजन पर',,Mangles advisor name 'Christoph J. Scriba' into 'स्क्रिबे में ... क्रिस्टोफ़ को डॉक्टरेट प्राप्त हुई'.
+1e00238d3df0f9c7,full,fix,D4,D4@1269 'यू ने इसमें शामिल हुए।एस।',,U.S. abbreviation broken; Endeavour translated literally
+55f43c788c69a796,full,fix,D4,D4@40 '316 एन पर एक ऐतिहासिक घर है। मेवुड',,N. street abbreviation split into sentence break
+7cecc8230c52fcd5,full,fix,D4,"D4@38 'ए।एम., छोटा।डी।'",,Garbled MT abbreviation punctuation in names.
+f8d37e168a260a86,full,fix,D4,D4@128 'रानी में रातोंरात केनेडी हवाई अड्डे',,Proper noun Queens translated literally as rani and John W. Campbell split at initial.
+7fb8a72f26527014,full,fix,B4;D4,B4@765 '45 (20)' | D4@20 'f.सी। मौसम',,Stats-table residue and garbled abbreviations.
+231705c3478e196a,full,fix,D4,D4@2239 'सभी संगीत से अनुकूलित',,Proper noun AllMusic translated literally as sabhi sangeet and song titles mistranslated.
+b513d95900d4f094,full,fix,D4,D4@1729 'आर की राय है। एन.',,MT split of name initials mid-sentence.
+59aef801fa585bdf,full,drop,A3;B4;C2,A3@105 'Â Â' | B4@87 '<unk>' | C2@677 'पुरुषः योशिकाज़ू हरा (<unk>',105 U+00C2 + U+0020 + U+00C2,Mostly <unk> tokens and mojibake filler; little usable text.
+4823e59f8dae012b,full,fix,B2;D4,"B2@273 '<बी. आर.>' | D4@1 'Wogciechówki, Wwivodesphy'",,Garbled Latin title and HTML <br> tag transliterated into Devanagari at the end.
+6372390106dd3151,full,fix,D4,D4@950 'आधा रास्ता पार कर गया है।',,Literal MT errors in physical description ('halfway across' translated as 'crossed halfway').
+7c45693829d0c668,full,fix,D4,D4@822 'घंटी बजाती है',,Literal MT of a proper name.
+4c1a1bc76e248ea5,full,fix,D4,D4@590 'जूनियर।कार्ल एडवर्ड',,MT abbreviation punctuation garbling in names.
+183dd9cf54a08ca2,full,fix,D4,D4@1 'कि बीजिंग है',,Local MT mistranslation.
+e4067212c78b964c,full,clean,,,,
+eeb679930d964315,full,fix,D4,D4@208 'खजाने को लूटने का घर था।',,"Mistranslated phrase ('looting treasure'), mixed-script initial 'v.आर. मनोहर', and double period."
+8aa47ccedd25af6b,full,fix,D4,D4@1 'मैं रेंटज़ौ',,"English ""I"" translated as pronoun in a name."
+2159deadb8cd9585,full,fix,D4,D4@137 'नदी की लंबाई है।',,Truncated MT sentence missing the value.
+04783c940ab30ff7,full,drop,B4,B4@41 'निम्नलिखित समुदायों की स्थापना',,
+2e53b3108343105d,full,fix,D4,D4@1 'क्लार्क विश्वविद्यालय में रहते हैं',,Album title 'Live at Clark University' mistranslated as 'reside at Clark University' and band name 'Experience' translated literally.
+7e9b53477d1f40f6,full,fix,D4,D4@976 'डेविड एम। दसवें परिपथ का इबल',,MT split of a judge name around initial.
+c5bcec22a769f8e0,full,fix,D4,D4@438 'वह भूल की पत्नी के स्वामित्व में थी',,"Severe MT errors: owner surname Forget translated as bhool, sire as sir, fillies as bharav, and horse names translated as gibberish."
+55fd71e07f34885b,full,fix,B4;D4,B4@2723 'सिवाय आई. डी. 1 के' | D4@4627 'दोई अपराधियों को विशेष प्लेटें',,"Leaked MT placeholder 'ID 1' (आई. डी. 1), missing template values '(आज के $के बराबर)', and DUI translated as 'दोई'/'युगल'."
+9e50ece9a4d4dd49,full,drop,B4;C2;D4,B4@184 '! शैली = पृष्ठभूमिः सफेद कोलन = 9 |' | C2@184 '! शैली = पृष्ठभूमिः सफेद कोलन = 9 |' | D4@77 'युद्ध प्रेस',,
+43124e427b00c97e,full,fix,D4,D4@508 'सी में इस कस्टम ग्रिस्ट मिल',,MT garbling of abbreviated place/date.
+e1d57a598d4f0476,full,fix,D4,"D4@484 'मानक पी. आर. एस. ए"". में आरोपों पर'",,Financial 'charges' (fees) mistranslated as 'आरोपों' (accusations) with stray quote mark.
+59c3bfe033d2b672,full,fix,D4,D4@2463 'के सोआस गए।डी।',,MT garbling of degree abbreviation.
+ffcdbf3b75c15038,full,fix,D4,D4@1728 'तुम दूध। . . . 12 दिसंबर 2003',,"Severe MT errors: 'Tumse Milke' garbled as 'तुम दूध', names and 'Rediff.com' split at periods into broken sentences."
+8f19dfb84174b48a,full,fix,D4,D4@1305 '1927 में सी. सी. आई. एल. बी. डेमिल',,Name spelled out as initials by MT.
+4f582ab333d48352,full,fix,D4,D4@322 'रणनीतिक वायु कमान (थैली)',,Acronym SAC translated literally as sack.
+1bde78790eb836c3,full,fix,D4,D4@482 'एस। टेक्सरकाना',,MT split of U.S. abbreviation.
+8d73071e61bd24ef,full,clean,,,,
+776cf4e8d0aabc1d,full,fix,D4,D4@10149 'जैसे।जी. बी।',,Garbled e.g. and literal party-name translation.
+688981b1174c1697,full,fix,D4,D4@1728 'संदर्भित करता है।ई. प्राप्तकर्ताओं',,Fluent MT of an aesthetic-illusion article; repeated mistranslated abbreviations (e.g./i.e./B.C.).
+fb11ea9a427aad4c,full,fix,D4,D4@116 'सेवा है।एस। नई जर्सी',,Fluent MT of NJ Transit rail line article; 'U.S.' abbreviation split/mistranslated twice.
+10537713438d015c,full,fix,D4,D4@3898 'मिलवॉकी शराब बनाने वाले।',,MT baseball bio; team names translated literally (Brewers/Nationals/Braves) and batting averages garbled.
+11d4e824d00d6de3,full,fix,D4,D4@219 'टी. में स्नातक हैं।एल. बे सिटी',,"MT jazz bio; 'T.L.' and 'Mr.' split, 'No. 1' mistranslated as negation 'नहीं'."
+ac5e9472f780ad89,full,fix,D4,"D4@1469 '(i.ई., एस = 1 बजे'",,"MT card-game article; 'i.e.' split, Ace rendered as 'एस', alternate names collapsed into 'घड़ी'."
+d1bb93071ffd5f86,full,drop,D4,D4@10985 'छह खेलों में फिलाडेल्फिया फैंटम्स से चोट',,
+c48f3e47d9ef2887,full,clean,,,,
+7490306c2273b566,full,fix,D4,D4@278 'लापरवाह रिकॉर्ड',,"MT DJ bio; names translated literally (Reckless Records, Kiss 100, Forge->'जाली')."
+f0d7c279aeaf2432,full,fix,D4,D4@1 'आर्चफोर्ड का अर्ल',,"MT peerage article; title name inconsistent (Archford/Rochford), 'Earls' rendered as 'कान' (ears), Orange as 'नारंगी'."
+dfb81d8434acb2d9,full,fix,D4,D4@63 'हेनरी जे हैं। हेंज द्वितीय',,MT economist bio; 'Henry J. Heinz II' and degree abbreviations split.
+ec95ed1fb82e3503,full,clean,,,,
+2d893ae7459cad50,full,fix,D4,D4@4374 'आई. डी. 2. आयु वर्ग के निवासियों',,"MT village article; several census percentages replaced by 'आई. डी.' placeholders, mangled Chaucer quote, place name inconsistent."
+96f436b8ff53a8bd,full,fix,D4,D4@1008 'जो वास्तविक बेटिस पर 2-0 से जीत',,"'Real Betis' translated as 'वास्तविक बेटिस', 'suffering relegation' translated as 'निर्वासन से पीड़ित होने के बाद', and 'B-team' rendered as bare 'बी'."
+8814b7e96f6fdff7,full,fix,D4,"D4@3041 'संरक्षक"" के अनुसार'",,"MT comic-strip article; Guardian translated literally, abbreviations split (D.C./D.S.O.), leotard rendered as leopard."
+19f30f42d6a5abc0,full,fix,D4,D4@3270 'ई के साथ स्प्रिंट कार की सवारी की थी।टी।',,"MT racing bio; abbreviations split (E.T./A.J./St. Paul), surnames translated literally (Sessions->'सत्रों', Rice->'चावल')."
+4d08d4882b4d26ec,full,fix,D4,D4@956 'इसे संरक्षक में पाँच सितारा',,"MT film article; title rendered inconsistently, Guardian/Little White Lies translated literally, 'Release' heading as 'रिहा करें'."
+65c0fecfb65e05ec,full,fix,D4,D4@76 'जीवन संगीत मनोरंजन के लिए',,"MT album article; label and RIAJ mistranslated, 'Release' heading rendered as 'रिहा किया गया', sister's name inconsistent."
+a7b1407b379b061a,full,clean,,,,
+1722d58401827170,full,fix,D4,D4@1281 'प्रति घंटे का मतलब चुनें।',,MT robotics article; 'Mean picks per hour' heading mistranslated and 6.7 million rendered as 6.7 lakh.
+b30e51d4cd2cfe7f,full,fix,D4,D4@1258 'कॉन्वायर आरबी-36एच शांति निर्माता',,
+520dd0b10c215e87,full,fix,A6;D4,"A6@11 'किंडलाइन (यिद्दीशः Кинелия, एक' | D4@1559 'विशेष मुद्दों में दिखाई देती हैं'",11 U+0915 + U+093F + U+0902 + U+0921 + U+0932 + U+093E + U+0907 + U+0928 + U+0020 + U+0028 + U+092F + U+093F + U+0926 + U+094D + U+0926 + U+0940 + U+0936 + U+0903 + U+0020 + U+041A + U+0438 + U+043D + U+0435 + U+043B + U+0438 + U+044F + U+002C + U+0020 + U+090F + U+0915,Yiddish name in parentheses replaced by garbled Cyrillic 'Кинелия' with missing closing parenthesis.
+b3f7fde713afb821,full,fix,D4,D4@547 'डी के शासनकाल के दौरान हुई थी। मारिया II',,"D4 broken Portuguese honorific abbreviations (D., S., Na. Sra., St.) split into sentences and mistranslations like 'चींटी की लड़ाई' for Battle of Antas."
+23282c5f6023c120,full,fix,D4,D4@298 '1086 की गुंबद पुस्तक में',,D4 'Domesday Book' mistranslated as 'गुंबद पुस्तक' (Dome Book) and missing distance in 'गाँव शेफ़ील्ड से स्थित है'.
+e5d87ae0c9767889,full,fix,D4,D4@705 'आपका अनुसरण कर सकते हैं।एस। उपयोग',,"D4 repeated broken abbreviations (U.S., U.K., U.A.E., i.e., A.) split across sentences with 'U.' translated as 'आपका', plus 'भैंस में' for Buffalo."
+d6acdbe109fbe1cd,full,fix,D4,D4@694 'प्रो रेसलिंग ए में',,"D4 'Pro Wrestling A.C.E.' split across periods, wrestler Ito mistranslated as 'यह', and missing subject at start of lead sentence."
+4a25059e2ff2aeda,full,fix,D4,D4@273 'केंद्र जिले की तहसील',,D4 proper noun 'Hub District' mistranslated twice as 'केंद्र जिले'.
+4650ed5c8e4bccf7,full,clean,,,,
+a38f58ace8271835,full,fix,D4,D4@281 'साइमन भूखों क्लासिकवाद शैली में',,Proper name translated literally.
+a285d1d618a6c203,full,fix,B4;D4,B4@49 '<unk> <unk> <unk>' | D4@1297 'ईसन के नाम से एक आदर्श है',,"B4 long run of 60 '<unk>' tokens where Chinese characters were lost; D4 literal mistranslations ('idol' -> 'आदर्श', 'written out' -> 'लिखा न जाए')."
+06a4475d6fe6f971,full,fix,D4,D4@1 'बुराई का योग सुनें',,"D4 proper names and titles mistranslated literally ('Hear Sum Evil' -> 'बुराई का योग सुनें', 'Lord Infamous' -> 'लार्ड के साथ कुख्यात', 'mixtape' -> 'मिश्रण')."
+c0d76190e7567c09,full,fix,D4,D4@3979 'आदरणीय कपास के माथेर',,Cotton Mather translated literally.
+2ee06880093dbbc0,full,fix,D4,D4@449 'इसे आपके दरवाजे के रिकॉर्ड पर एक भेड़िये',,
+d8cad7ce2c4ceabd,full,fix,D4,D4@183 'जी। एक खोपड़ी और आंशिक गर्दन से जाना',,"D4 binomial 'G. latens' split at period and translated as 'जी। ... अक्षत', 'cervical vertebrae' mistranslated as 'गर्भाशय ग्रीवा' (uterine cervix), and missing measurement in 'लगभग लंबी होती है'."
+8f3b75d9b7925a54,full,fix,D4,D4@95 'अक्षांश-31°23′18′s 143°52′21′e और',,D4 corrupted coordinate string (duplicated longitude inside latitude) and broken syntax in the tourism sentence.
+5922a815195d2cbb,full,fix,B2;D4,B2@413 '<br> <br>' | D4@1 'वनस्पति ए। कीमत (स्किपजैक)',,B2 literal '<br> <br>' tags; D4 ship name 'Flora A. Price' split at middle initial and translated literally as 'वनस्पति ए। कीमत'.
+3480b47070644e63,full,fix,D4,D4@1 'अबियोला अनुदान',,Surname Grant translated literally.
+c1ff32172da8d54c,full,fix,D4,D4@334 'सह-प्रविष्टि शहर',,Coventry City mistranslated.
+1732fe6b5a4af41c,full,fix,D4,D4@936 'गैर-लीग क्लब चेम्सफोर्ड शहर के लिए',,"D4 literal MT calques ('चेम्सफोर्ड शहर' for Chelmsford City, 'आरक्षित पक्ष' for reserve side, 'रिहाई' for contract release, 'मे 1963' for मई 1963)."
+0b23988b37224b61,full,fix,D4,D4@376 'समुद्र तट के लड़कों',,Beach Boys translated literally.
+a13028df02ac76db,full,fix,B4;D4,"B4@10225 '! शैली = ""रंगः सफेद; पृष्ठभूमिः लाल;""| क' | D4@3647 'पख्ताकोर और मूर्ख को हराने'",,
+0c3f77bc51651127,full,fix,D4,D4@899 'जैसे।जी. बागवानी',,"D4 'e.g.' split as 'जैसे।जी.', 'In the U.S.' split as 'यू में।एस।', beehives mistranslated as 'पित्ती' (urticaria), and missing converted unit in 'भूमि से कम थी'."
+2b7ae325fbd1bbb5,full,clean,,,,
+80df1ed94e9f26a7,full,fix,D4,D4@724 'इससे पहले हम सऊदी अरब के जेद्दा स्थित',,"D4 mistranslation ('he' -> 'हम', and textbook title 'Polymer English Grammar and Composition' literally translated as chemical polymer 'बहुलक अंग्रेजी व्याकरण और रचना')."
+b9d6b315a70bc0cb,full,clean,,,,
+39541eafd965a2e8,full,clean,,,,
+901ad6ab506007b3,full,fix,D4,D4@182 'मानचित्र जेट',,Airline MAP Jet translated literally.
+db6179d6fcafba98,full,fix,D4,"D4@242 'युद्ध खाड़ी, मी'",,Place name translated literally.
+bd35e7895a6aa697,full,clean,,,,
+80ca104819761b62,full,fix,B4;D4,B4@1166 'बनाकर स्टालियन को आई. डी. 2 तक पहुँचाया।' | D4@2077 'वे गेंद के साथ दांतों को दोहरा नहीं सके',,"B4 unexpanded MT placeholder tokens ('आई. डी. 2', 'आई. डी. 1') where match figures were stripped; D4 mistranslations ('Season summary' -> 'मौसम का सारांश', 'Colombo Kings' -> 'कोलंबो राजाओं', 'feat' -> 'दांतों')."
+0ec08a8576d522d7,full,fix,D4,D4@481 'उनके मुर्गे की शादी',,Morganatic marriage mistranslated; ages garbled.
+3c7c94ffb22bd4cd,full,fix,D4,D4@15 'मार्जोरी एम। लीयू',,Initials broken by sentence-split; names/terms translated in wrong sense.
+85fe2578ed130406,full,fix,D4,D4@1 'डेविड गंजापन',,Surname Balding translated as 'baldness'.
+56b224b14928dd28,full,fix,D4,D4@835 'एक मील का मानदंड माना जाता है',,D4: cycling terms 'course' and 'criterium' mistranslated as 'पाठ्यक्रम' (curriculum) and 'मानदंड' (criterion).
+7f147a72b53922f0,full,fix,D4,D4@1 'एडवर्ड एफ। वेल्च जूनियर।',,Initials broken; SALT translated as 'salt'.
+9f9ca3b803de6c51,full,fix,D4,D4@1726 'हाल के मौसम।',,"D4: 'Recent seasons' mistranslated as 'हाल के मौसम' (weather), 'A Lyga' as 'एक लाइगा', and 'parting with players' inverted."
+14c290608262f7d9,full,fix,D4,"D4@1732 'किया।""मारिया ऑरेलिया कैपमैन'",,"D4: sentence split mid-clause after company name 'Ca, Barret!', gender mismatch ('आयोजक भी थीं'), and 'unrealized' translated as 'अवास्तविक'."
+7ceec467c19f6af2,full,clean,,,,
+83d97a93e138db08,full,fix,D4,D4@205 'वर्णित किया गया था। डब्ल्यू।',,Initials broken; place names translated literally.
+288256abc87a0394,full,fix,D4,D4@531 'टीम बदलती है।',,D4: section heading 'Team changes' mistranslated as verb clause 'टीम बदलती है।' followed by empty table-header fragments.
+d632f8bf5991cfb8,full,clean,,,,
+42a6a4ae00db0272,full,fix,D4,D4@1881 'मादा द्वारा उबाले जाते हैं',,Eggs 'boiled' instead of incubated.
+3cad1ca15bcaf37b,full,fix,D4,D4@1136 'जर्जर राज्य',,Local translation error in the quoted passage.
+8c307b1726c9d96a,full,fix,D4,D4@3051 'मानद डी से सम्मानित किया गया था।छोटा।',,D.Litt. broken into fragments.
+927068cf9fe8563d,full,fix,D4,D4@215 'डी में आयोजित किए गए थे।सी।',,D.C. broken by sentence split.
+f43635c0a383442e,full,fix,D4,D4@381 'मी एक इकाई रहित संख्या है',,D4: abbreviation 'MI' (Mechanical Index) mistranslated as 'मी' throughout; formula stripped after 'परिभाषित किया गया है'.
+67f1b57dc0af0f36,full,fix,D4,"D4@261 'प्रीमियरशिप में पुरुष, बालमैन'",,Club Manly translated as 'men'.
+215becaf742884bd,full,fix,D4,D4@470 'जे के स्वामित्व में 840 केएचजेड',,Initials broken; garbled phrasing.
+2ef517e5d76c6941,full,fix,D4,D4@113 'सेंट के लोकतांत्रिक सदस्य हैं। लुई',,St. Louis broken by sentence split.
+7196d76c66f5ef3a,full,fix,B4;D4,"B4@1662 '<unk>' | D4@3112 'सड़क शहर, ब्रिटिश वर्जिन'",,<unk> replaces hryvnia sign; Road Town translated literally.
+cb3db8be595c55f8,full,fix,D4,D4@252 'स्नान के रेक्टर',,Local translation error in the quoted passage.
+9d3ec1201c8e61a8,full,clean,,,,
+39a32e49baaf8bcc,full,fix,D4,"D4@2079 'बड़ी लकड़ी, मोंटाना'",,Big Timber translated literally; initials broken.
+5ecf2af8a7f4bbf6,full,fix,D4,D4@571 'छोटे लाल सवारी हुड',,Little Red Riding Hood translated literally.
+23126aa51f23afda,full,fix,D4,"D4@1038 'व्यक्ति किन्फोसिया रोमन, उद-म्विंडा'",,D4: French given name 'Guy' (Guy Romain Kinfoussia) mistranslated as common noun 'व्यक्ति' (person).
+f9a950b0e39d7702,full,fix,D4,D4@805 'व्रण परमाणु अनुसंधान केंद्र',,"Soreq as 'sore', WiSE as 'wise'; initials broken."
+15d8cb83486bc38e,full,fix,D4,D4@1836 'HTTT:// W.शोध-द्वार।नेट',,Reference URLs translated/garbled; acronym broken.
+95d462d827229106,full,fix,D4,"D4@632 'मानदंडों को पूरा करना बनाम संघ। कारण,'",,Local translation error in the quoted passage.
+f5a2c8f48edabbd6,full,fix,B2;D4,B2@353 '<बी. आर.>' | D4@2757 '13 मीटरः 13एस',,Translated <br> tag; min:sec rendered as metres.
+ad029c7bf3f6d363,full,fix,D4,D4@564 'उत्तरी रानी भूमि में एक महत्वपूर्ण',,D4: 'North Queensland' mistranslated literally as 'उत्तरी रानी भूमि' (Queen land).
+96f5126308ccd2d7,full,clean,,,,
+f5e11562da4c1cef,full,clean,,,,
+61a5af528d75c1d7,full,fix,D4,"D4@1149 '""प्रवेश"" माना जाता था'",,Local translation error in the quoted passage.
+5f3423e2ce7728f5,full,fix,D4,D4@451 'एक यू थे।एस।',,"U.S., D.C., A.B., J.D. broken; 'Republican landslide' literal."
+d41c5e52a125d364,full,fix,D4,D4@654 'क्लिकसेफ की सह-स्थापना की।कॉम',,ClickSafe.com broken; Parks rendered as 'gardens'.
+c06fbdf28f2bee24,full,fix,D4,D4@1 'एस. एन. आर. एन. पी. 70',,Gene/protein symbols spelled letter by letter; 70K garbled.
+19b5b7b98d4748a1,full,fix,D4,D4@362 'फ्लाई क्रीक ग्रेंज नं. शामिल है। 844',,D4: 'Fly Creek Grange No. 844' split into two sentences at 'No.'; missing list after 'तीन बस्ती समूह शामिल हैंः'.
+6ba96faa8c0aee8a,full,fix,C3;D4,C3@1597 'धर्म परिवर्तन की कहानी का वर्णन कियाः' | D4@1359 'इसके बाद उन्होंने बाद में इस्लाम में',,C3: ends on a colon with the conversion story blockquote missing; D4: broken grammar and gender agreement.
+05ebeaba9b521511,full,fix,C2;D4,C2@167 'नोटः जी = लक्ष्य; ए = सहायता' | D4@52 'राष्ट्र-ए.',,"Stub with tables stripped, note line repeated; NLA translated literally."
+6ca77e73f453087d,full,fix,D4,D4@129 'वास्तविक मैड्रिड',,Real Madrid/Valladolid rendered as 'real/actual'.
+0799de218d4b1a22,full,fix,D4,D4@1041 'रो वी। शासन',,"Mangled abbreviations from MT (Roe v. Wade, Planned Parenthood v. Casey) split into broken sentences."
+9dc8bedc6f3876b4,full,fix,D4,D4@997 'युग = अर्जित रन औसत',,Baseball abbreviations ERA and SO mistranslated as Hindi words for 'era' (युग) and 'so' (तो); literal team/stat translations
+cb6c56e00c6c572f,full,fix,D4,D4@27 'सेंट। ल्यूक',,"Abbreviation periods translated as sentence breaks, garbling names."
+b59148c4a11dc6e8,full,clean,,,,
+2dfad6b6d65d8594,full,fix,D4,D4@3069 'जोसेफ एम को बेच दिया। वार्डेल',,"Abbreviation splits on H.K. Porter and Joseph M. Wardell, plus literal mistranslations ('ध्वनि' for Nantucket Sound)"
+ce2de0e7ac7041ae,full,clean,,,,
+cfa027b3b6b147f2,full,clean,,,,
+067b75fd660e1c86,full,fix,D4,D4@2579 'तुकबंदी परिवर्तन का हिस्सा है',,Geological term rhyolite/rhyolitic mistranslated as तुकबंदी (rhyming) and कविताएँ (poems); Waihi as माफी
+8ee76b71bcd12eec,full,fix,D4,D4@742 'जहाँ उन्होंने पीएच. डी. की।डी। और',,"Ph.D. split and duplicated into 'पीएच. डी. की।डी।', Langadas region mistranslated as 'लंगड़ा क्षेत्र'"
+952e95d0efe79f04,full,fix,D4,D4@352 'टेलीविजन में स्नातक होने',,Local translation error in the quoted passage.
+3c75d3f48300947d,full,clean,,,,
+930a7dc9d4be2b34,full,fix,B4;D4,B4@603 'जिनमें से आई. डी. 2. के 18 वर्ष' | D4@799 '13.सभी घरों में से 3 प्रतिशत',,MT placeholder tokens (ID1/ID2/ID3) leaked as 'आई. डी. 2.' and numbers/decimals broken ('13.सभी घरों में से 3 प्रतिशत')
+3eac70164b00781e,full,fix,B4,B4@21 '<unk>',,Tokenizer <unk> residue in text.
+9fe1888bae36591e,full,fix,D4,D4@364 'लैंगस्टन गले लगाने',,"Name mistranslated literally (Hughes->hug), distorting meaning."
+292b61da014bdccc,full,clean,,,,
+f8a7ebb1360bddf8,full,fix,B4;D4,"B4@1891 '<unk>' | D4@30 '(बी। 1955, मुरातली-डी। 5 अक्टूबर 2003)'",,<unk> token in spouse name and birth/death abbreviations b./d. split with danda
+5d0b3cde35a83ad1,full,fix,D4,D4@1377 'आलोचना की गई थी। लेन।',,Initial split by danda garbles name and sentence.
+c1935132969c659b,full,fix,D4,D4@424 'छह गैर-न्यायपूर्ण-बच्चों के लिए सीडी',,"Heavy proper-noun and idiom MT errors ('not-just-for-kids' -> 'गैर-न्यायपूर्ण-बच्चों', sentence splits on 'Mr.', 'Chuck E. Weiss')"
+c343fc75f141ec48,full,fix,D4,D4@181 'यू के साथ एक चौराहे पर है।एस। मार्ग 29',,'U.S. Route 29' split at 'U.S.' and 'US 84' mistranslated as 'हमारे 84' ('our 84')
+2b493b7ab40a193c,full,clean,,,,
+209120880d49ca9a,full,fix,D4,D4@510 'फ्रेंच और अंग्रेजी दोनों के अश्लील में',,Word-sense mistranslation of 'vulgar' (vernacular language) as 'अश्लील' (obscene) and doubled quote marks
+e47347f33f033f7d,full,fix,D4,D4@327 'एक फ्रेम किरायेदार घर और मकई की पालना',,Proper noun estate 'Western Fields' translated into varying phrases and 'corn crib' mistranslated as 'मकई की पालना' (baby cradle)
+a0e5d259cbcf3e1a,full,fix,D4,D4@491 'स्थिरांक पी। मग्लाना ने इस जिले',,Politician name 'Constancio P. Maglana' mistranslated as 'स्थिरांक पी। मग्लाना' ('Constant P.') with sentence split
+89de00d999ddc05d,full,fix,D4,D4@419 'बिस्तर के साथ',,
+4ac4131b45950799,full,clean,,,,
+4bfc54e4911629a0,full,fix,D4,D4@393 'इस खेल को अग्रणी गेंद के रूप में',,Football bowl game 'Pioneer Bowl' mistranslated literally as 'अग्रणी गेंद' (leading ball)
+01645176f698fe99,full,fix,D4,D4@38 'चक माला और आर। नॉरिस विलियम्स',,"Player surname 'Chuck Garland' mistranslated as 'चक माला' (flower garland), name split at 'R.', and 'Draw' translated as 'ड्रा करें।'"
+3b0fd1c9ccb3b3e9,full,fix,D4,D4@455 'उपकरण से मेडवॉच कार्यक्रम के कारण',,"The sentence makes MedWatch sound like the cause of the adverse event, rather than the reporting route."
+442f0955f983c5b0,full,fix,D4,D4@260 'उनके अविभाज्य कोड',,
+9c9f1a13d39084da,full,fix,B4,B4@34 '|स्ट्रोक-चौड़ाई =}}',,Wiki template markup residue.
+1411a1cc55dffe03,full,fix,D4,D4@333 'जॉनसन सी में अध्ययन किया। स्मिथ',,"Sentence splits at abbreviations ('Johnson C. Smith', 'Vol. 1') and proper-noun mistranslations ('Red Richards' -> 'लाल अमीर', 'Waller' -> 'दीवार')"
+108e211dcee6bd41,full,fix,D4,D4@614 'जनरल ने संभाली। घेराबंदी करने वाला।',,Broken sentences from abbreviation/MT errors.
+78fb82223145085f,full,fix,D4,D4@804 'लार्सी विश्वास।',,Section heading 'Larceny conviction' mistranslated as 'लार्सी विश्वास।' (belief/faith) and middle initial split at 'एच।'
+6e913a193e12eb37,full,fix,D4,D4@935 '1936 में उन्हें डॉक्टर नौकरी की उपाधि',,'Doktor nauk' (Doctor of Sciences) mistranslated as 'डॉक्टर नौकरी की उपाधि' (Doctor job degree) and initials 'A. I.' split as sentences
+16e8bf2e18d66972,full,fix,D4,D4@1797 'फ़्रैंको-रूसी युद्ध',,
+18b948fcfff02bf3,full,fix,D4,D4@325 'सामान्य होम्स ड्राइव से जोड़ता है',,"Proper noun road 'General Holmes Drive' mistranslated as 'सामान्य होम्स ड्राइव', 'Botany Road' as 'वनस्पति सड़क', and 'Mill Stream' as 'मिल भाप'"
+63548becd083d18a,full,drop,D4,D4@2471 'रेसाक्का की लड़ाई हो सकती है',,
+7e03dd7e5e4c6ea2,full,fix,D4,D4@1101 'एन. एफ. एल. के एटलांटा बाज़ों द्वारा',,"NFL teams 'Atlanta Falcons' and 'New Orleans Saints' mistranslated literally as 'एटलांटा बाज़ों' and 'न्यू ऑरलियन्स के संतों', and sentence split at 'जूनियर।'"
+007cf53be3a3e6cd,full,clean,,,,
+2d3c348e10c327bf,full,fix,D4,D4@525 'दयाहर्स्ट कॉलेज में अपना खेल करियर',,"'Mercyhurst College' mistranslated as 'दयाहर्स्ट कॉलेज', 'St. Thomas' split across sentences, 'Staley' mistranslated as 'गतिरोध' (stalemate), and 'Chicago Bears' as 'शिकागो भालू'"
+d2492c0ecbb2ef5a,full,fix,D4,D4@287 'रेया में टूटने वाले कई अस्थिभंगों',,Geological 'fractures' on Enceladus crater mistranslated as 'अस्थिभंगों' (bone fractures)
+e4f8a5e8b6c6f286,full,fix,B4;D4,"B4@706 '!कोलन = 8 शैली = ""पृष्ठभूमिः #a10022' | D4@648 'एक बड़े आकाशीय सदस्य संस्कार राज्य से'",,Leaked MediaWiki table header markup ('!कोलन = 8 शैली = ...') in Schedule section and 'Sacramento State' mistranslated as 'संस्कार राज्य'
+5e8db573dace30b7,full,clean,,,,
+fc6ecd54e31a7f9e,full,fix,D4,D4@844 '45.9 जून',,Garbled date number distorts meaning.
+38ea6e7718826a61,full,fix,A6;D4,"A6@512 'саfarikova उलिका' | D4@707 'हदीस उल्रिका (हदीस उल्रिका), हदीस'",512 U+0441 + U+0430 + U+0066 + U+0061 + U+0072 + U+0069 + U+006B + U+006F + U+0076 + U+0061 + U+0020 + U+0909 + U+0932 + U+093F + U+0915 + U+093E,Cyrillic look-alike letters inside a name and a repeated-name loop from MT
+6dcce271f1e920c7,full,fix,D4,"D4@3075 'पर आधारित """" नामक एक जर्मन भाषा'",,"Missing film title in empty quotes with wrong subject pronoun, plus sentence split after 'लिमिटेड की स्थापना की। - फॉस्कोर'."
+c4d90516156fbad2,full,fix,D4,D4@153 'नए आदेश ने सात वर्षों',,Band name literally translated as a common phrase
+2dfe2398fc510edf,full,fix,D4,D4@24 'एक आदमी का एक खंड-एक खंड',,Album title mistranslated literally
+accb39e8e9fec362,full,fix,D4,D4@9395 '1868 में उड़ान द्वारा',,Surname literally translated plus garbled initials
+902e54e1a689f94f,full,fix,D4,D4@538 '(जैसे।जी. निचले वन)',,"Abbreviation 'e.g.' half-translated and split into '(जैसे।जी.' three times; 'mountaineers, climbers and hikers' translated as 'पर्वतारोहियों' thrice."
+c5c3213f172cb0e2,full,fix,A6,A6@358 'саминjonu derība',358 U+0441 + U+0430 + U+043C + U+0438 + U+043D + U+006A + U+006F + U+006E + U+0075 + U+0020 + U+0064 + U+0065 + U+0072 + U+012B + U+0062 + U+0061,Mixed Cyrillic/Latin script in a foreign title
+96b84f4f5949b4cf,full,clean,,,,
+32d511fb9f89b137,full,fix,D4,D4@1653 'कैथलीन ओलेरेंशॉ और डेविड एस। ब्रि',,"Initial 'David S. Brée' split across sentence boundary ('डेविड एस। ब्रि') and broken exponents ('1 से ""एन"" 2 तक', '1044')."
+325c0f09cd34614f,full,fix,D4,D4@342 'हारोल्ड एफ किया गया था। हरा।',,Garbled MT sentence around a name
+c0b5c388fb39960e,full,clean,,,,
+5a10830296e474fa,full,clean,,,,
+a1ca4fd7bef6c01c,full,fix,D4,D4@189 'क्षेत्र के शिक्षाविदों के लिए एक',,"'Acadians' mistranslated as 'शिक्षाविदों' (academics), sentence broken after 'इंक.', and 'applied to CRTC' mistranslated as 'लागू किया'."
+f9bc160931bf399e,full,fix,D4,D4@2938 'सड़े हुए टमाटर',,Proper names literally translated
+3a6243bc1b19bda9,full,fix,D4,D4@779 'पोप निर्दोष x',,"Papal names literally translated (Innocent, Urban); otherwise readable long article"
+f3ef734c322cdd88,full,fix,D4,D4@841 'एक पेडिकल पर लगभग लंबे समय तक होता है',,Stripped convert templates caused 'about [X mm] long' to become 'लगभग लंबे समय तक' (long time); 'Mt. Tarrengower' split across sentence boundary at 'एम. टी.'.
+8230e9510d5e8536,full,fix,D4,"D4@332 'डी ""प्लूरोटोमिडे की नोव्यू शैली का निदान'",,French zoological citation in External Links machine-translated into broken Hindi imperative ('Diagnose d'un nouveau genre...').
+68121059c53eabb9,full,fix,D4,D4@690 'जारी रहने के बाद कुल 314 एस. डी.',,"Dropped mileage before 'SD 314' merged into 'कुल 314 एस. डी.', plus 'as Deer Boulevard' mistranslated as 'क्रॉस डीयर बुलेवार्ड'."
+c9ffe4441ddba8be,full,fix,D4,D4@1400 'वास्तुकार एन थे।जी.',,Garbled architect initials sentence from MT
+32de2a5abc0c682b,full,fix,D4,"D4@1774 '""ध्वनि"" या सहीह'",,Hadith grading terms and titles literally translated
+6c304c38b8839caf,full,clean,,,,
+3118541eb2f4d0e8,full,fix,D4,D4@1 'आयरिश बेसबॉल से लड़ते हुए नहीं',,"Mistranslated names/terms (Fighting Irish, Frank, locker room, South Bend) in MT article."
+5bd5ab3c1433a82e,full,clean,,,,
+8f6671e9baaf7402,full,fix,D4,D4@3171 'पतवार में अलेक्जेंड्रा थिएटर',,Literal MT of place/play names and broken initials.
+20af588b1d0ffcbc,full,fix,B4;D4,B4@2880 '<6> जबकि इनमें से किसी को भी' | D4@3206 'न्यूनतम एक मीटर है।एस। डिग्री',,"Unstripped <6>/<2> reference markers and MT errors ('M.S. degree' as 'one meter. S. degree', FASS as slaves, trailing split heading)."
+1c4ed634fe2f65fa,full,fix,D4,D4@174 'नई श्रृंखला को दिखाया गया है',,Several garbled MT sentences and literal title translations.
+53a38d84a65b608f,full,clean,,,,
+44d6dc1164caa51e,full,clean,,,,
+884f96ca18e5221b,full,fix,D4,D4@253 'उनका मसौदा तैयार किया गया था',,Literal MT of sports terms and team names.
+f24efb20fa74e208,full,fix,D4,D4@87 'भौंकने वाली सड़क',,"Proper names translated literally (Barking Road, High Street) and broken initials."
+23e31b557e118aae,full,fix,D4,D4@154 'नए क्रॉस और नए क्रॉस गेट',,Place/department names mistranslated.
+5c80cc6e103ea504,full,fix,D4,D4@1079 'टोपोलॉजी में बिना किसी परिवर्तन के परिवर',,Mathematical terms mistranslated (multiply connected surface).
+5c3227e6f85e06dc,full,fix,D4,D4@85 'एक अंग्रेजी चयनकर्ता और संगीतकार',,Mistranslated terms and duplicated names from MT.
+a4bda0a7a4546b9f,full,fix,D4,D4@545 'मार्क डब्ल्यू। गॉर्डन ने इसे',,MT splits middle initial 'Mark W. Gordon' into a sentence break and scrambles 'Temple Covenant of Peace'.
+531244e78a917e0f,full,fix,D4,D4@286 '1992 के कोड अधिस्थगन',,Local mistranslated legal/technical term.
+7f567271735435a2,full,fix,D4,"D4@522 'यूजीन मिरमैन, एच शामिल हैं। जॉन बेंजामिन'",,Broken initials and mistranslated phrases.
+2726e7d4117a106f,full,drop,D4,D4@226 'मिचिगन झील में पत्थर गिर गया',,"Heavy D4 throughout: surname Stone translated as rock with inanimate/feminine verbs, 'written off' as 'written', 'stampeded' as 'stamped'."
+fe6215b6a719cec7,full,fix,D4,D4@565 'पर फिरौती सेवा की गई',,Surname Ransom translated literally; truncated name.
+ad7dee6b1ef00fb8,full,fix,D4,D4@2764 'भेड़िया (जो मूल ग्लैडिएटर्स',,"Names (Wolf, Sky) translated literally and garbled sentences."
+e503278c63f37efa,full,fix,B4;D4,B4@1997 'हेफेनहोफेन की जनसंख्या () है।' | D4@187 'संत पित्त के मठ का एक जागीरदार',,Stripped templates leave empty '()' and missing area figures; MT translates 'Abbey of Saint Gall' as 'Abbey of Saint Bile'.
+512fae0a78fb1ee0,full,fix,D4,D4@173 'अपने दूसरे प्रयास के इतने बुरे हिस्से',,Song/EP title mistranslated literally.
+ec5155bfb5a397b7,full,fix,D4,D4@96 'इसका औपचारिक नाम है।',,Dropped Japanese names leave broken sentences; odd MT phrasing.
+2b1cb6aa4aa4c670,full,fix,B4;D4,B4@682 'थॉमस ओवेन क्रेन (आई. डी. 1) थे' | D4@1 'एडमंड डब्ल्यू। भौंकने वाला',,"Title translates surname Barker as 'one who barks' and splits W.; body has (आई. डी. 1) placeholders, POWs as 'bows', and split death date."
+24dca057e85850bc,full,fix,D4,"D4@23999 'सेंट सेंट में मुख्यमंत्री (""हाप्टपास्टर""'",,MT splits on 'St. James' ('सेंट ...। जेम्स चर्च') and literal translation of Dietrich Reinkingk as 'आहार समृद्ध रिन्क'.
+0c386843a7e0eeb9,full,fix,D4,D4@578 'फेज परमाणु घेराव',,The passage describes a nucleus-like enclosure but calls it an atomic enclosure.
+246f4c3cee15575f,full,fix,D4,D4@2337 'एक साझा हिस्से के लिए एक पूरा किया',,
+42e2417541f003e4,full,fix,D4,D4@622 'सीधे नागरिक ब्रिगेड थिएटर',,"Literal machine translation of proper nouns and titles ('Upright Citizens Brigade' -> 'सीधे नागरिक ब्रिगेड', 'The Onion' -> 'द प्याज', 'Mad Men' -> 'पागल लोग')."
+cc3cda269a590169,full,fix,D4,D4@1385 'जेरोम के में मिस रिकेट्स के रूप में। रॉय',,MT sentence split on 'Jerome K. Jerome' and literal translation of 'West End' as 'पश्चिम छोर'.
+6785746cee0cab05,full,fix,B4;D4,B4@1603 'जिसमें उन्होंने आई. डी. 1 से सेवा की।' | D4@548 'ऑक्सफ़ोर्ड में महान अध्ययन किया',,Unreplaced translation placeholder 'आई. डी. 1' for dates and literal MT ('studied Greats' -> 'महान अध्ययन किया').
+161b1e127c8f24b6,full,fix,D4,D4@1109 'सभी आयोगों के लिए आईओसी खेल',,Mistranslation of 'IOC Sport for All Commission' as 'सभी आयोगों के लिए आईओसी खेल' and incomplete final clause.
+89cdd4d0da816b1a,full,fix,C3,C3@141 'ये तीन प्रजातियाँ लाइगेनोकोरिने उप-परिवा',,Dangling list intro with no list; trim last sentence
+7d7e53374a6b61d7,full,fix,D4,D4@4135 'क्लार्क ने पादरी के साथ अपने अनुबंध के त',,"MT errors: San Diego Padres translated as 'पादरी', batting averages split at decimal points ('. 262', '। 1789'), and 'HR' translated as 'घंटे'."
+3765c1b11c37904e,full,clean,,,,
+270907588eb82476,full,clean,,,,
+d1d7285997eaf4b3,full,fix,D4,D4@1 '2007-08 यह क्रॉस-कंट्री विश्व कप है',,
+2594bb58ca4f0afc,full,clean,,,,
+7ec0f06b671e74ac,full,fix,D4,D4@1133 'ताकि शरीर के बाकी हिस्सों को सुगंधित किय',,"MT medical mistranslations ('perfuse' -> 'सुगंधित', 'afterload' -> 'भार के बाद') and incomplete clause 'इस प्रकार एक ल्वोटो।'."
+ffde058bc0afc083,full,fix,D4,D4@119 'इसका निर्देशन ई. ने किया था। मेसॉन हॉपर',,"MT sentence split on 'E. Mason Hopper', 'Follies dancer' translated as 'मूर्ख नर्तक', and film title translated as 'महान सफेद तरीके'."
+9fc6ddfa556b5dec,full,fix,B4;D4,B4@946 'आई. डी. 1.' | D4@432 'चेतावनी देने वाले संगीत',,
+e46937227c99c268,full,fix,D4,D4@345 'हसनज़ादे नंबर बन गया। 1 तुरंत',,MT sentence split on 'No. 1' ('नंबर बन गया। 1 तुरंत') and garbled clause in the Inter Baku paragraph.
+b95fc67a0f94b28b,full,fix,D4,D4@1374 'रेलवे पत्नियां बनने के लिए शिक्षित किया ',,MT mistranslations including '1st Marquess of Dalhousie' -> 'डलहौजी के पहले प्रमुख' and garbled 'other Indians' clause.
+62e18b629833d89a,full,fix,D4,D4@181 'जहाँ उन्होंने एम. ए. की उपाधि प्राप्त की',,"Severe MT errors: 'M.A.' split into 'एम. ए. ...।ए।', Borrowstounness -> 'उधार लेने वाले', and 'intercourse with the south' -> 'दक्षिण के साथ संभोग'."
+2c83b66ded5e4a3d,full,clean,,,,
+30d2cd7994ccf272,full,fix,D4,D4@433 'लंबा नंदा तना',,"Local MT errors: garbled name, wrong word"
+648012e895412a1a,full,fix,D4,D4@4469 'इंडीगेम्स।कॉम',,Gamasutra article with several local MT errors
+c6c6d10a056ee095,full,fix,D4,D4@340 'यह कार्यक्रम सीधे अंतिम के रूप में',,"The race is described as a programme, and the word for the final is left as an adjective."
+243ff4701f1bd1d8,full,fix,D4,D4@523 'अपना महल की शुरुआत',,Footballer bio with literal MT of club name/position
+b71a44a27d24445a,full,fix,D4,D4@1138 'सेंट में हुई। जॉन 4 अगस्त',,St. John's split by danda; riding translated literally
+24deb927e3ce5720,full,fix,D4,D4@306 'गुलाबी-भूरे रंग का दम घुटता है',,Moth stub with local MT errors
+8bf042a658ef04b3,full,fix,D4,D4@1 'सड़क पर छुट्टी',,Street vacation as holiday; Amazon.com danda; Whole Foods literal
+4a7d732bcb2cad19,full,fix,D4,D4@3175 'जोनाथन गरीब',,"Stencil House; surname Poor translated literally, garbled place name"
+51484519ff053749,full,fix,D4,"D4@642 'आर्थर जी। विशेष रूप से, हेडन'",,Rigid-frame bridge article; initial split by danda
+2dea0206768489b3,full,fix,D4,D4@1462 'पक्षी पुरस्कार',,"Astrophysicist bio; Bird Prize literal, Ph.D. garbled"
+dd917c1f07793d4b,full,fix,D4,D4@20 'ईएन/अपसी प्रतीक बारकोड',,EAN-8 article; EAN/UPC transliterated inconsistently
+953f87af2516aa53,full,fix,D4,D4@315 'यू में मैरीलैंड का प्रतिनिधित्व किया।एस।',,US/DC abbreviations split by danda; Hereford mistranslated
+4d17b1316f5c5d16,full,clean,,,,
+17a5b53b1ffb39ee,full,fix,D4,D4@1635 'तार के अग्रभाग पर',,Banknote article; garbled numbers/phrasing from MT
+3a2877516d31aea7,full,fix,D4,D4@120 'सेंट के लिए एक रक्षक के रूप में खेलते',,Footballer bio; St. Louis/St. John's split by danda
+c29e5b93132f0216,full,clean,,,,
+4ea2c05e453daeda,full,fix,D4,D4@1140 'डीन खनिजों के वन तक',,Lydney station; Forest of Dean/GWR/Midland translated literally
+346ff46d92dc37cb,full,clean,,,,
+1d27be12f3076f8a,full,fix,D4,D4@195 'सभी बीजों को दूसरे दौर में एक बाई',,Tennis draw; seeds translated literally as बीज
+aa5cc37d6c8a7c88,full,clean,,,,
+fad18b87d7ef8910,full,fix,D4,D4@975 'छठे सड़क रेल पुल',,NRHP house; Sixth Street bridge and 'project' verb translated literally
+b2082db5abd35eab,full,fix,D4,D4@1 'नाम रहता है',,"Album article; title and band name translated literally, moonshine as moon"
+e4d93bb28447fec1,full,fix,D4,D4@825 'पी के साथ। एम. पीटरसन',,Shipowner bio; initial P. M. Petersen split by danda
+e1ac3af033a393d1,full,clean,,,,
+45cd05522ae26d77,full,fix,D4,D4@307 'ध्वनि-अधिमान और विज्ञापनों',,"Actress bio; voice-overs garbled, nonsense sentence"
+f63f2566b0abbab6,full,fix,D4,D4@2424 'राजा हेनरी बनाम',,"Courtenay bio; Henry V as बनाम, 'died without issue' literal"
+70a017ca102c2218,full,fix,D4,D4@250 'भ्रूण परिवार',,"Romanian commune; boyars as boys, family name literal"
+f8ee17dfbc850ac1,full,clean,,,,
+4747eaa7373ffcc4,full,fix,D4,D4@2368 'छिटपुट द्वीप।',,Greek islands list; Sporades translated as छिटपुट; list-intro ending not C3
+57bbded37065f38b,full,fix,D4,D4@141 'इसका असंगत उत्तराधिकारी',,"LGA 1156; front-side bus literal, successor phrasing garbled"
+f3cef4b62bf2e173,full,fix,D4,D4@1085 'डेविड आर थे। ओल्सन',,"McLuhan program; David R. Olson split, surnames translated literally"
+2ac82658849a6a8c,full,clean,,,,
+ac307c4a0cd8fe68,full,fix,D4,D4@739 'घुटने में सेवा करने वाले',,"Berenschot bio; Aceh garbled, 'served in the KNIL' mistranslated"
+2ba2ffc1a9821979,full,fix,D4,"D4@228 '""रेत और रे""'",,Slovene village; historical name garbled by MT; otherwise fluent
+507bb94a22aabce1,full,fix,D4,D4@15 'रिगन 'रोल',,"Rig'n'Roll game; title garbled, fire as आग, e.g. split by danda"
+b51c8ad7926c36f5,full,fix,D4,D4@176 'एच डी डेव गौड़ा',,"Hassan-Bangalore line; Deve Gowda garbled, sentence split misplaced"
+7e41016550a672ab,full,fix,D4,D4@246 'भैंस बाइसन',,Broadcaster bio; Buffalo/minor translated literally; list-intro ending not C3
+c37037669dcfee31,full,fix,D4,"D4@221 'औपचारिक रूप से ""मिन्नेपोलिस'",,Local translation error in the quoted passage.
+b7ce1a3f11625f5c,full,fix,D4,"D4@1280 'आज, यू।एस। पर्यावरण संरक्षण एजेंसी'",,"D4 broken abbreviations (U.S., V., Col.), mistranslated proper nouns (Lemuel Wells as कुओं, Nor'easter), and dropped template measurements."
+5ef6fd86577026ea,full,fix,A6;D4,"A6@13028 'झिंग्टियन (синтия)' | D4@13104 'qi"" () और ""yue"" () भारी अक्ष हैं।'",13028 U+091D + U+093F + U+0902 + U+0917 + U+094D + U+091F + U+093F + U+092F + U+0928 + U+0020 + U+0028 + U+0441 + U+0438 + U+043D + U+0442 + U+0438 + U+044F + U+0029,A6 garbled Cyrillic gloss for Chinese deity Xingtian; D4 untranslated terms with empty parens and 'axes' mistranslated as अक्ष (axis) and Song dynasty as गीत राजवंश.
+b502f70b3b4e9b6c,full,fix,D4,D4@2677 'यह मॉडल लक्षणों का एक जैक है;',,"D4 literal idiom mistranslation ('jack of all trades' as लक्षणों का एक जैक), 'unexploded ordnance' as अप्रकाशित आयुध, and missing speed/payload numbers."
+8bd5e637044c82bb,full,clean,,,,
+6c8db6f7b01348ae,full,fix,D4,D4@479 'गुलाब के कटोरे',,Local mistranslation: 'Rose Bowl' rendered literally as rose bowls.
+7003bc70d6dd300d,full,clean,,,,
+c2f0c1fc71e1306e,full,clean,,,,
+58d292289f293aaa,full,fix,D4,D4@2845 'तितलियों के बीच शयनकक्ष देखा जा सकता है',,"D4 severe word-sense errors: 'dormouse' mistranslated as शयनकक्ष (bedroom), 'hawthorn' as हथौड़ा (hammer), 'spoil heaps' as ढेरों को खराब करती हैं, and 'River Yarty' as नदी की नदी."
+f4364e163bcf39bd,full,fix,B4;D4,B4@4568 'आई. डी. 1. के 18 वर्ष से कम' | D4@4763 '31.सभी घरों में से 0 प्रतिशत',,"B4 leaked MT placeholder tokens (आई. डी. 1..4) in census percentages; D4 broken decimal/circa abbreviations, missing template measurements, and Genesee River mistranslated as उत्पत्ति नदी."
+00b0597bc4a38718,full,fix,D4,D4@119 'दक्षिण-पश्चिमी तोप काउंटी',,D4 proper noun Cannon County mistranslated literally as तोप काउंटी (artillery cannon county).
+74b9b5b1466fab24,full,fix,D4,D4@634 'चतुर्भुज ने मेरठ',,Local mistranslation: a name/term rendered literally as 'quadrilateral'.
+e1c6142366171718,full,fix,D4,D4@1723 'ओ से समर्थन भी मिला।बी। टैम्पन।',,"D4 broken abbreviation o.b. tampons split across sentences, Pokhara mistranslated as पोखरों (ponds), mountain summit as शिखर सम्मेलन, and forging trail as जाली रास्ते."
+cf6717c05be9cc86,full,fix,D4,D4@737 'बाज़ की खाड़ी स्किंक',,Local damage: place name in species common name translated literally and mangled quoting around scientific name.
+16da19edbd3bc095,full,fix,D4,"D4@760 'रियो, इंक।सोनिकब्लू की एक सहायक कंपनी'",,"D4 abbreviation Inc. split with danda (रियो, इंक।सोनिकब्लू) and audio player device mistranslated as खिलाड़ी (athlete) in opening paragraph."
+18cecb129cab4db5,full,fix,D4,D4@885 'तूफानों ने वर्ष को समाप्त करते हुए',,"D4 Miami Hurricanes team name mistranslated literally as तूफानों (storms), Big East as बड़े पूर्वी with duplicated award phrase, and missing final danda at end of doc."
+bcbbabd72dd6915d,full,fix,D4,D4@890 'स्पेन की 50.5 लाख हेक्टेयर भूमि में से 6',,"MT errors: broken decimal '20.6 million' split at period, 'pen-fed' translated as 'कलम से पोषित' (writing pen), 'minifundios' as 'लघु धन', and missing 2018 production list after colon."
+d19465913fbd01d3,full,fix,D4,D4@27 'डेनियल एल। हंट',,"MT artifacts: initial split by danda, surname Hunt translated"
+064eb4d899fff0ef,full,clean,,,,
+a0e8ae7f7d9deb55,full,fix,B4;D4,B4@2041 'आई. डी. 1. के दौरान उन्होंने' | D4@854 'उन्होंने अपना बी प्राप्त किया।ए। 1971',,"Leaked MT placeholder 'आई. डी. 1.' (B4) and multiple abbreviations split into fake sentences ('बी।ए।', 'एम।ए।', 'पीएच।डी।', 'यू।एस') plus 'Fort Worth' translated as 'क़िले' (D4)."
+58fd8377be1c6d90,full,clean,,,,
+a6022431e5616c9b,full,fix,A6;D4,A6@26 'βεν άθρι' | D4@1075 'क्षतिग्रस्त हो गया था।एस।',26 U+03B2 + U+03B5 + U+03BD + U+0020 + U+03AC + U+03B8 + U+03C1 + U+03B9,Stray Greek-script fragment and U.S. abbreviation split by danda
+6169794a6a1b9ce8,full,fix,C3;D4,C3@2882 'निकायों से बना होगाः' | D4@1193 'आंद्रे के मैन्युअल लोपेज़ ओब्राडोर',,Garbled name; doc ends introducing a list that is missing
+90e7dc91712e2e29,full,clean,,,,
+7379cdc76a62e547,full,fix,D4,D4@1 'मरियम ए। सुनहरा',,"Surname Gold translated, Ph.D. abbreviation mangled"
+7fbaabc56d330719,full,fix,D4,D4@1 'किसी भी तरह से',,Literal MT errors (cum laude rendered as candle)
+4993421a808271a6,full,fix,B4;D4,B4@136 'पंखों की लंबाई लगभग है' | D4@59 'का एक पतंग है',,
+3caf02b800a7082a,full,fix,B4;D4,"B4@3996 '25 से 44 वर्ष की आयु के <ID1,45 से 64' | D4@3329 '15.2000 की जनगणना के अनुसार 0 प्रतिशत'",,"Leaked MT placeholders '<ID1,45', '<ID2,', and 'आई. डी. 1..4' (B4), plus broken decimals ('15. ... 0 प्रतिशत'), split abbreviations ('एस. आर. ... ।,', 'यू।एस।'), and missing area/density numbers (D4)."
+7ce7ed15a974ce7b,full,fix,B4;D4,B4@2395 'आई. डी. 1 से उन्होंने श्रम' | D4@611 'एक एम पूरा किया।1978 में लीड्स',,"Leaked placeholder 'आई. डी. 1' (B4) and degree abbreviations ('बी. ए. ... एड', 'एम. ए.', 'पीएच. डी.') split across sentences (D4)."
+0f79aacb83085f2e,full,fix,D4,D4@152 'सेंट की बहनों द्वारा की गई थी। लुई',,St. Louis split at abbreviation dot
+440de22a1d63d3bc,full,fix,D4,D4@263 'क्रूर ने गीत लिखे',,Surname Savage translated as cruel/barbarian
+9ef6baa30a1a0459,full,clean,,,,
+f97484118803aafe,full,fix,D4,D4@654 'एक 1983-1984 में समेकित शक्ति ने तख्तापल',,"'Cameroonian' repeatedly mistranslated as 'कैमरामैन' (cameraman), 'PEN International' as 'कलम लेखकों', 'Chantal Biya' as 'जप बिया', feminine verb agreement for Paul Biya, split 'यू।एस।', and transliterated external URL."
+e472793747c8c8c8,full,fix,B4;D4,"B4@932 'स्मॉल 1975 में """" के पहले एपिसोड' | D4@1 'छोटे-छोटे'",,Surname Small translated; empty quoted title
+21c930c0b47fdf70,full,fix,D4,D4@1053 'कल्पनाओं के एरिक रेइनोल्ड्स',,Proper names Fantagraphics/Mercury translated literally
+083edddcf8649321,full,fix,D4,D4@2237 'यू को वापस लेने की वकालत की।एस।',,Garbled abbreviation splitting from MT; local D4
+ff2b4752dfc437cf,full,fix,D4,D4@223 'राष्ट्रीय मसौदे में कुल मिलाकर बत्तीसवें',,D4: AFL sports 'draft' and 'drafted' mistranslated literally as 'मसौदे' (document draft) and 'तैयार किया गया था'.
+ab96cf91f2c7c2a1,full,fix,D4,"D4@874 '2018 तक, कब्रिस्तान है।'",,"Local MT mistranslations, rule-repairable"
+93bd9194af361a7d,full,fix,D4,D4@680 '9ः40',,Visarga used in place of colon in time; local D4
+24ddee77224e2a2c,full,fix,D4,D4@90 'एक रोमन राजनेता थे',,Romanian rendered as Roman
+bd760241b44d162f,full,clean,,,,
+34278cc4a98370a5,full,fix,D4,D4@991 'था।सी।ए।',,Abbreviation dots as danda and literal name translation
+57d6ce3583960cad,full,fix,D4,D4@124 'बड़े आकाश सम्मेलन',,"Proper names translated literally (Big Sky, Bengals)"
+8fc1c7e4a81d352c,full,fix,D4,D4@1732 'और सेंट सहित अध्ययन के नए क्षेत्रों',,Name fragments split by MT; local D4
+23179d32af9f2c6b,full,fix,D4,D4@1 'खेल रक्त (1940 फ़िल्म)',,Film title translated literally; broken U.S. abbreviation
+ee0fbac771c37719,full,fix,D4,D4@2167 'मोती बंदरगाह हमले के बाद',,Pearl Harbor and fall translated literally
+d74a88596b00a6a7,full,fix,D4,D4@78 'योजनाबद्ध कब्जा के लिए',,Local MT grammar error
+e41c4a93b962ecf8,full,fix,D4,D4@539 'गेंद ने कंपनी के पूर्ववर्ती',,Surname and film title translated literally
+a36e110fa43b62f1,full,fix,D4,D4@35 '(गैर-पदनाम n06625)',,UNS designation and ASTM rendered literally
+77af5cca6c03aa54,full,fix,D4,D4@1136 'पीपुल्स यूनाइटेड पार्टी (पिल्ला)',,Acronym and organisation name translated literally
+8b8163f3385141dc,full,fix,D4,D4@1090 'वे इसे शहर में बना दिए',,Local MT idiom mistranslations
+f42727a7ffdff72e,full,clean,,,,
+64f4471b8abe9fa4,full,fix,D4,D4@64 'एक नए ज़ीलैंड लॉन बाउल खिलाड़ी',,New Zealand rendered as naye Zealand; OBE rendered literally
+992c63a7bed22578,full,fix,B2;D4,B2@645 '<बी. आर.>' | D4@292 '9वीं गिनती ऑफ़ लॉस मोलरेस',,Transliterated br tag; count rendered as counting
+4511fd00fccf2132,full,clean,,,,
+b9ddb778d21a2902,full,fix,D4,D4@1373 'सिक्किम के पूर्व मुख्यमंत्री होने की संभ',,Garbled former-CM-probable sentence
+ac789d08377cc4a4,full,clean,,,,

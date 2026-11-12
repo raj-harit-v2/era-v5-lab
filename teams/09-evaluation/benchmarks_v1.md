@@ -4,7 +4,7 @@ Licence and item count for each benchmark in the V5 evaluation suite.
 Priority order: Coding & Agentic → Indic → everything else.
 
 Status: ✅ checked against an official source · ⚠️ to be rechecked or licence unclear · ❓ information still to collect.
-Use: **Evaluation** = cleared for evaluation · **Internal only** = run internally; never publish its items and never copy its items into this repo · **Decontamination only** = fingerprinted so training data can be checked against it; not evaluated · **Not available** = cannot be run (private) · **Harness check** = run on public models only, to check the harness or a quantization against published scores; not a score for our model.
+Use: **Evaluation** = cleared for evaluation · **Internal only** = run internally; never publish its items and never copy its items into this repo · **Decontamination only** = fingerprinted so training data can be checked against it; not evaluated · **Not available** = cannot be run (private) · **Harness check** = run on public models to check the harness or a quantization against published scores; on lab checkpoints only as a labelled diagnostic (Decision 7); never a score for our model.
 
 ## 1. Coding & Agentic
 
@@ -103,7 +103,8 @@ Benchmarks the harness runs on public models (`results/compare_v0.md`, `results/
 4. **Accepted licences for evaluation:** MIT, Apache-2.0, CC-BY-4.0, CC-BY-SA-4.0, CC-BY-NC-SA-4.0 and ODC-By-4.0.
 5. **GAIA** is internal only (its gated terms are not on the accepted list).
 6. **FLORES-200, IN22 and GSM8K** are decontamination only.
-7. **Harness checks** (lead, 31 Oct 2026): ARC, TruthfulQA, MMLU-Pro, BBH, HumanEval(+), MBPP(+) and Belebele check the harness and quantizations against published scores on public models. GSM8K stays decontamination only for our model's scores; eval-mini also uses it as a harness check.
+7. **Harness checks** (lead, 31 Oct 2026; updated 12 Nov 2026 after TSAI's decision on #357): ARC, TruthfulQA, MMLU-Pro, BBH, HumanEval(+), MBPP(+) and Belebele check the harness and quantizations against published scores on public models. On lab checkpoints, ARC-Challenge, MMLU-Pro and Belebele (hi, te, ta), and HellaSwag (Decision 8), may run as diagnostics: every number is labelled "diagnostic, not cleared for contamination", they never pick or block a candidate, and no score is shown as a model score outside the lab. None of them is a score for our model. GSM8K stays decontamination only for our model's scores; eval-mini also uses it as a harness check.
+
 8. **HellaSwag** (lead, 31 Oct 2026): internal only. The dataset card states no licence, and GitHub blocks the source repo under a wikiHow DMCA notice (14 Sep 2026). Never copy its items into the repo.
 
 ## Verification

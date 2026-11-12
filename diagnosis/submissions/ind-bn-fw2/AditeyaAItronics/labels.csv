@@ -1,0 +1,501 @@
+doc_id,read,verdict,diseases,evidence,hex,note
+95cd9f65c491346d,full,clean,,,,
+e6c808e5f32205b8,full,fix,A3,"""ফু¬রাইড"" at 875",877 U+00AC NOT SIGN (expected U+09CD U+09B2 ্ল),legacy font conversion residue U+00AC inside a word
+db8919b6ef3b8e5e,full,clean,,,,
+6d86f37aa102097c,full,fix,C1,"""একই জাতীয় আরো লেখা :"" at 7377",,hard line breaks every ~100 chars mid-sentence; stray caption CONSTRUCTION WORKERS FOREIGNER
+3337d2286363530b,full,fix,G3,"""ডাক্তারের তালিকা"" at 2272",,section headings with their list/table body missing
+874ac01ed8db4951,full,fix,A3,"""দ্রæত"" at 568",571 U+00E6 LATIN SMALL LETTER AE (expected U+09C1 BENGALI VOWEL SIGN U),legacy font conversion residue U+00E6 in দ্রুত; trailing desk tag স/বি
+f69405e5e5f7f6cf,full,clean,,,,
+8df271d1a8ce6895,full,clean,,,,
+9fc3b0862388450e,full,fix,A3,"""উলঈ"" at 697",698 U+09B2 BENGALI LETTER LA + U+0988 BENGALI LETTER II (expected U+0999 U+09CD U+0997 ঙ্গ) (2x),legacy font conversion: ঙ্গ became ঈ (twice)
+aad9723755a20145,full,fix,A3;A5,"""কর্মকা"" at 1238|""যাবত্"" at 1058",1238 U+0995 BENGALI LETTER KA + U+09B0 BENGALI LETTER RA + U+09CD BENGALI SIGN VIRAMA + U+09AE BENGALI LETTER MA + U+0995 BENGALI LETTER KA + U+09BE BENGALI VOWEL SIGN AA (expected U+09A3 U+09CD U+09A1 ণ্ড missing) (2x)|1061 U+09A4 BENGALI LETTER TA + U+09CD BENGALI SIGN VIRAMA (expected U+09CE),ণ্ড dropped in কর্মকাণ্ড (2x); ত+virama used for khanda-ta ৎ
+7ff0fdbd02a94210,full,fix,C1,"""ছবি সংযুক্ত"" at 832",,trailing 'photo attached' line
+39781e2b3b664613,full,clean,,,,one sentence repeated with a different verb ending (author's error)
+8d74f52316ccc621,full,clean,,,,
+9844654adb2e8f96,full,fix,G3;D3,"""4. বিজ্ঞানী"" at 713|""Bangla blog ( বাংলা ব্লগ )"" at 0",,"numbered list lost items 1,2,3,5,12 titles (were links)"
+9fa84d9869309681,full,drop,D4,"""যার বিপরীত বিকৃতি রয়েছে"" at 48",,machine-translated product page from a Chinese rubber manufacturer
+70ed9ea8f54b4c9d,full,drop,C4;C3;D3,"""পূর্ব অংশ গোধূলির"" at 355|""(Trinamool"" at 344|""Mamata Banerjee"" at 189",,tag page: 3 unrelated excerpts glued together
+fb97c8e54faa6ea5,full,fix,A6;F1,"""গ্রামে৷"" at 170|phone number at offset 2620; phone number at offset 2634",176 U+09F7 BENGALI CURRENCY NUMERATOR FOUR (expected U+0964) (15x),U+09F7 used as danda; donation bKash numbers at end
+6ffbbf510a981e67,full,fix,C1,"""এ বিভাগের সর্বাধিক পঠিত"" at 1139",,"page header/footer: date|print, Posted time, site|author, most-read widget"
+cf36b4821fc79560,full,fix,C1,"""[[ আপনি জানেন কি?"" at 1366",,site promo paragraphs (click here / like our Facebook page) after the article
+31669a47eb052fda,full,clean,,,,
+926ebfd4255ef0a5,full,fix,C2;C1;A5;D3,"""HTLS 2022: মহিলারা চাইলে সবকিছুই করতে পারেন।"" at 0|""আরও পড়ুন: Nykaa:"" at 1320|""উচিত্"" at 3911|""HTLS 2022"" at 0",3369 U+09A4 BENGALI LETTER TA + U+09CD BENGALI SIGN VIRAMA (expected U+09CE) (2x),lead paragraph duplicated; inline read-more link
+2d2fb093d289594b,full,clean,,,,
+fecbca3176ea7642,full,clean,,,,
+de3a5c9980984ea0,full,fix,C1,"""১১৬ বার পঠিত"" at 44",,byline/date/view-count header; stray '.3' after a sentence
+bd20ad606ae3d60b,full,clean,,,,"names of student-league office bearers are from a public press notice, not F1"
+e9bc37a7fcf3808d,full,fix,C1;C5;C2,"""আরো পড়ুনঃ"" at 2247|""ট্যাগঃ উদ্যোক্তা মানে কি ?"" at 8381|""উদ্যোক্তা মানে কি ? সফল উদ্যোক্তা হওয়ার উপায় …"" at 8388",,"SEO article with read-more blocks, tag spam repeated 6x, share/comment footer"
+34522c8835083731,full,clean,,,,names and a court case number in a local news report; no contact data
+d19cf4a56cd1726d,full,clean,,,,"ends with '#' end-of-story marker (newsroom convention, kept)"
+311c046b321381bd,full,clean,,,,
+a3dd3f2b1f45e9aa,full,clean,,,,
+20eb3e61ca9713c1,full,fix,C1,"""3,619 total views, 1 views today"" at 1220",,view-counter widget at end
+61dc0261aeb4ced0,full,fix,C1;D3,"""pic.twitter.com/"" at 1193|""FIFA World Cup 2022"" at 48",,two embedded English tweets and a trailing 'Highlights' label
+81aa335138508d57,full,fix,C1,"""আরও পড়ুন- নওগাঁর মান্দায় বীজ-সার পেল ৪ হাজার …"" at 1618",,unrelated read-more link inside the story
+3f910908c7b4bc62,full,clean,,,,desk tag স্ব.বা/বা at end (kept)
+dc3570a119740353,full,clean,,,,desk tag স্ব.বা/ম at end (kept)
+9f4dc6055629d6b8,full,clean,,,,
+48adbd496e262e88,full,clean,,,,
+57bd192d39a618be,full,clean,,,,long list of local party members present is normal local-news style
+977423f75b08e75f,full,drop,D4;G2;C1,"""নামে পরিচিত উপজাতগুলির"" at 40|""র্যাডিক্যাল"" at 28|""প্রদান করেছে।বিজ্ঞাপন"" at 402",28 U+09B0 BENGALI LETTER RA + U+09CD BENGALI SIGN VIRAMA + U+09AF BENGALI LETTER YA (expected U+09B0 U+200D U+09CD U+09AF),MT of an English health page; র্যা missing ZWJ; inline 'বিজ্ঞাপন' ad label
+67cf0263943dd1d9,full,drop,D4;D3;C3,"""আপনি আপনার পাখি এবং তার পরিবেশ উভয় আচরণ করতে হবে"" at 3568|""cockatiels fleas পেতে পারেন?"" at 390|""পরজীবী আছে, তা"" at 6518",,auto-translated pet site (/bn/); English words left untranslated; one paragraph cut mid-word
+3c0d0458978d7c51,full,drop,D4;A6;F3,"""নির্বাচনী অনলাইন ক্যাসিনোতে"" at 580|""অনুসরণ করুন৷"" at 918|""লাইভ ক্যাসিনো"" at 8",929 U+09F7 BENGALI CURRENCY NUMERATOR FOUR (expected U+0964),machine-translated online-casino promotion
+1389a8ce5eb872bf,full,fix,C1;D3,"""সুচিপত্র"" at 785; ""আমাদের লেখা গুলো ভালো লাগলে"" at 4265|""(Baccaurea motleyang)"" at 34",,empty table-of-contents heading; site self-promo paragraphs
+88a736676df9ec84,full,fix,A3;D3,"""চ্চলচিত্র"" at 629; ""খু্ব"" at 874|""Ritu, do you think"" at 4357",629 U+099A BENGALI LETTER CA + U+09CD BENGALI SIGN VIRAMA + U+099A BENGALI LETTER CA + U+09B2 BENGALI LETTER LA + U+099A BENGALI LETTER CA + U+09BF BENGALI VOWEL SIGN I + U+09A4 BENGALI LETTER TA + U+09CD BENGALI SIGN VIRAMA + U+09B0 BENGALI LETTER RA (expected চলচ্চিত্র) (3x)|874 U+0996 BENGALI LETTER KHA + U+09C1 BENGALI VOWEL SIGN U + U+09CD BENGALI SIGN VIRAMA + U+09AC BENGALI LETTER BA (expected U+0996 U+09C1 খু),চলচ্চিত্র stored as চ্চলচিত্র (3x); stray virama in খু্ব
+c51e9c7b3b6abb6e,full,fix,C3;C1,"""তাই প্রধানমন্ত্রী নরেন্দ্র মোদী দ্বারা"" at 0|""যদি ভালো লেগে থাকে তাহলে অবশ্যই সকলের থাকে শেয়…"" at 1587",,"starts mid-argument with তাই (so); toll-free govt number is public, not F1"
+d8c94bd2d4de29e8,full,clean,,,,"names/ages/villages of private people in a crime report; no phone, email or street address"
+2e787ced72539a9f,full,fix,C1,"""শীর্ষ সংবাদ:"" at 1158; ""প্রকাশিত: ০৯:১৪, ২৩ সেপ্টেম্বর ২০১৬"" at 40",,published-time line and trailing 'top news:' widget title
+a883c482c9238757,full,clean,,,,
+339de1637c5fea10,full,clean,,,,
+ea1a5f0452280ed3,full,clean,D3,"""“war is nothing but a continuation of political…"" at 491",,long essay with footnote markers [১] and a reference list; English quotes inline (natural D3)
+df8c2c8a0e2d0fc2,full,clean,,,,
+4e9345a59bf25445,full,clean,,,,
+542d70c88f5c6509,full,clean,,,,first line is the article's subhead (repeats a later quote by design)
+21afef8eea1c7483,full,clean,,,,
+f93b659eb49f48a6,full,fix,C1,"""বাংলাদেশ সময়: ২১১৫ ঘণ্টা, অক্টোবর ০৫, ২০২২"" at 2340",,banglanews24 timestamp line + desk initials at end
+0317cbfd3bd64711,full,clean,,,,
+be9fb809be7a58d7,full,clean,,,,
+61e81566d086ef88,full,fix,G2,"""র্যালী"" at 36",36 U+09B0 BENGALI LETTER RA + U+09CD BENGALI SIGN VIRAMA + U+09AF BENGALI LETTER YA (expected U+09B0 U+200D U+09CD U+09AF),র্যা written without ZWJ
+25ce3d7ca0f24773,full,fix,C1;D3,"""For all the latest Sports News Click Here"" at 1294|""For all the latest Sports News Click Here"" at 1294",,scraper site; English 'click here' footer
+45231975fe2a8a6a,full,fix,A3;C1;D3,"""মতামত্মরে"" at 2670|""Support Context:"" at 5182|""(World Heritage Sites)"" at 208",2673 U+09AE BENGALI LETTER MA + U+09A4 BENGALI LETTER TA + U+09CD BENGALI SIGN VIRAMA + U+09AE BENGALI LETTER MA + U+09B0 BENGALI LETTER RA + U+09C7 BENGALI VOWEL SIGN E (expected ন্তরে),মতান্তরে → মতামত্মরে (font conversion); broken source list with empty bullets
+7eaecd9fbc29ab74,full,fix,C1,"""বাংলাদেশ সময়: ১৪৫৫ ঘণ্টা, সেপ্টেম্বর ২৯, ২০২২"" at 679",,timestamp line + desk initials
+3d1bc6eb238cbbb1,full,drop,F3;A6;C1,"""ইহুদি ষড়যন্ত্রের বিরদ্ধে দুনিয়া কাঁপানো এক বি…"" at 390|""গ্ৰন্থ"" at 520|""অরিজিনাল বইটি সংগ্রহ করুন"" at 7742",522 U+09F0 BENGALI LETTER RA WITH MIDDLE DIAGONAL (expected U+09B0),promo for an antisemitic conspiracy book; Assamese ৰ inside a Bengali word
+e9410476bfce6d73,full,drop,D4;D3,"""- ফাইল আপলোড কর."" at 1755|""APT34 (Advanced Persistent Threat)"" at 6",,auto-translated security-vendor page (/bn/)
+3972c3ae1fef99c2,full,clean,,,,
+3f65eacb574f2b00,full,clean,,,,
+c6fe4fe0f83b9e7a,full,clean,,,,"mentions a phone was switched off, no number given"
+e5e627361261f59c,full,drop,D4;C1,"""এমনকি সামান্য মাত্রা নিয়মিত চক্র প্রভাবিত করতে…"" at 755|""মূল হাইলাইট"" at 0",,machine-translated health page; 'Key Highlights' label glued to first sentence
+cc07a8eb9ec9edb7,full,fix,G2,"""র্যাব-৩"" at 1185",1185 U+09B0 BENGALI LETTER RA + U+09CD BENGALI SIGN VIRAMA + U+09AF BENGALI LETTER YA (expected U+09B0 U+200D U+09CD U+09AF) (3x),RAB written র্যাব without ZWJ (3x); one sentence repeated by the reporter
+348f4b788d95b888,full,clean,,,,"deliberate colloquial literary style (দিয়া, থামাইতে পারে নাই) — not D4/D5"
+b205db03a45e1e9f,full,fix,C1;D3,"""View this post on Instagram"" at 1419|""(Zee Bangla)"" at 342",,Instagram embed label left in text
+4af8e0f4f412f97b,full,clean,,,,
+9cd509dae48459d5,full,clean,,,,
+c080bb03e4187d8e,full,fix,A3;B5;C1,"""এ চাড়ওে"" at 362|""**মনোযোগ দিতে অসুবিধা"" at 712|""প্রতীকী ছবি"" at 57",364 U+099A BENGALI LETTER CA + U+09BE BENGALI VOWEL SIGN AA + U+09A1 BENGALI LETTER DDA + U+09BC BENGALI SIGN NUKTA + U+0993 BENGALI LETTER O + U+09C7 BENGALI VOWEL SIGN E (expected ছাড়াও),এছাড়াও garbled by font conversion; unclosed ** bold; photo caption line
+c0ad4fa953e43062,full,clean,,,,
+292b33b6c670628d,full,fix,A3,"""সমে্মেলন"" at 147",148 U+09AE BENGALI LETTER MA + U+09C7 BENGALI VOWEL SIGN E + U+09CD BENGALI SIGN VIRAMA + U+09AE BENGALI LETTER MA + U+09C7 BENGALI VOWEL SIGN E (expected ম্মে),সম্মেলন stored with misplaced e-kar and virama
+852e647a717f1a04,full,fix,B4,"""[hfe_template id=’81’]"" at 656",,WordPress shortcode left in text
+258f1a8d90585fdc,full,fix,C5;C1;B4;G2,"""- গুদামে চালের জায়গা হচ্ছে না"" at 0|""প্রকাশিত: ০৫. ফেব্রুয়ারি. ২০২২"" at 766|""[hupso]"" at 1701|""র্যাবের"" at 1310",1310 U+09B0 BENGALI LETTER RA + U+09CD BENGALI SIGN VIRAMA + U+09AF BENGALI LETTER YA (expected U+09B0 U+200D U+09CD U+09AF),10-line headline ticker before the article; publish line; [hupso] share shortcode; র্যাব without ZWJ
+8225f65057f1384c,full,fix,C1;D3,"""View this post on Instagram"" at 903|""(Srabanti Chatterjee)"" at 284",,Instagram embed label; English names in brackets
+025cb48d54a14830,full,fix,C2;D3,"""আমরা ভাষা, ভাষার বৈচিত্র, বহুভাষিকতা ইত্যাদি না…"" at 20|""(linguistic diversity)"" at 1080",,teaser paragraph repeated in full later
+642e2d510bf80d87,full,clean,,,,
+9caff49a81c9531d,full,fix,C1,"""মঙ্গলবার, ০৬ ডিসেম্বর ২০২২, ০৭:০৭ পূর্বাহ্ন"" at 0",,page date/time header
+38f950f6b0b45fdc,full,clean,D3,"""শুভেন্দু অধিকারী (Suvendu Adhikari)"" at 76",,"English names in brackets (natural D3, no action)"
+d338560be5f02297,full,clean,,,,short text that introduces a video
+2a060f1893662d3b,full,fix,C1,"""সুপ্রভাত ডেস্ক :"" at 0",,byline 'সুপ্রভাত ডেস্ক :' repeated as a dangling last line
+7ecf7c161cd90024,full,clean,,,,
+cd84ba161e1da3d2,full,fix,C1;C2,"""—ফাইল চিত্র।"" at 198|""বিধানসভা অধিবেশনে সোমবার কৃষি বাজেট নিয়ে আলোচন…"" at 0",,photo caption + credit line; caption text repeated in body
+bc5e3f5507654361,full,fix,C1,"""বাংলাদেশ সময়: ২২৩০ ঘণ্টা, ডিসেম্বর ১৮, ২০১৪"" at 1487",,timestamp line at end
+ae3a77cf830ea0ca,full,fix,A3,"""র্ধষণের"" at 41; ""দুপুওে"" at 717",41 U+09B0 BENGALI LETTER RA + U+09CD BENGALI SIGN VIRAMA + U+09A7 BENGALI LETTER DHA + U+09B7 BENGALI LETTER SSA (expected ধর্ষ)|719 U+09AA BENGALI LETTER PA + U+09C1 BENGALI VOWEL SIGN U + U+0993 BENGALI LETTER O + U+09C7 BENGALI VOWEL SIGN E (expected পুরে),ধর্ষণের and দুপুরে garbled by font conversion
+dff386ed0d879f5c,full,clean,,,,
+3024066d06a72875,full,fix,G2,"""র্যাব"" at 105",105 U+09B0 BENGALI LETTER RA + U+09CD BENGALI SIGN VIRAMA + U+09AF BENGALI LETTER YA (expected U+09B0 U+200D U+09CD U+09AF) (2x),RAB written without ZWJ (2x)
+3f0c89c1bc69537e,full,drop,D1;D4;C1,"""Assalamu Alaikum Dear Students."" at 0|""আমাদের পরিবেশ দূষণের নতুন তুর মুখোমুখি হচ্ছে।"" at 3537|""You Can Share it With Your Facebook Friends."" at 6558",,English student essay + machine-translated Bengali copy; English intro/outro spam
+2f8ac20ad5636040,full,fix,C1,"""বিস্তারিত আরোও জানতে ক্লিক করুন"" at 7002",,'click to know more' line at end
+fda8d15780cdc0d2,full,clean,,,,
+0ca0ac43cc9f2526,full,fix,A6;C1;D3,"""‘গ্রিন হ্যান্ডিক্রাফটস’ l"" at 451|""Writer Information:"" at 6334|""Department of Textile Engineering"" at 6403",475 U+006C LATIN SMALL LETTER L (expected U+0964) (8x),Latin lowercase l (U+006C) used as danda; English author block and broken source list
+af02998ff264d50b,full,clean,,,,
+b2fc1fd4e984416c,full,drop,D4;D3,"""যেহেতু বীমা বীমা সংস্থার জন্য বীমা সংস্থা যদি অ…"" at 299|""সিদ্ধান্ত নেয় dec"" at 4409",,machine-translated finance glossary page; English fragment 'dec' left
+e53f75c3f57cb8d5,full,fix,C1;D3,"""Picture courtesy: Money Control, NDTV & various…"" at 3624|""East Turkishtan Islamic Movement"" at 2465",,English picture-credit line
+0e17bd15660c43eb,full,fix,G2,"""র্যাব"" at 1459",1459 U+09B0 BENGALI LETTER RA + U+09CD BENGALI SIGN VIRAMA + U+09AF BENGALI LETTER YA (expected U+09B0 U+200D U+09CD U+09AF),RAB without ZWJ
+10d3fe2c68c46a8a,full,clean,,,,advertorial for a micronutrient powder brand
+bfb033a731f20dc9,full,fix,A3,"""বিক্ষােভ"" at 588",593 U+09BE BENGALI VOWEL SIGN AA + U+09C7 BENGALI VOWEL SIGN E (expected U+09CB),ো typed as া+ে (wrong order) in বিক্ষোভ
+7fce6c0a8d04204a,full,fix,A3,"""রির্পোট"" at 12",12 U+09B0 BENGALI LETTER RA + U+09BF BENGALI VOWEL SIGN I + U+09B0 BENGALI LETTER RA + U+09CD BENGALI SIGN VIRAMA + U+09AA BENGALI LETTER PA + U+09CB BENGALI VOWEL SIGN O + U+099F BENGALI LETTER TTA (expected রিপোর্ট),ref placed on the wrong letter (রিপোর্ট → রির্পোট)
+473a8d0c3326a027,full,clean,,,,
+c1a6de14a0de428a,full,clean,,,,"email is the dataset's PII placeholder firstname.lastname@example.org, not real data"
+6a18f8751bb83059,full,drop,D4;D3,"""তখন আপনার খালি ব্যাংক অ্যাকাউন্টটি মনে রাখে না you"" at 439|""ভেনাস ভার্জুতে"" at 356",,machine-translated horoscope; English 'you' left at sentence end
+ab7da7647bb4d31f,full,fix,G2,"""র্যাবের"" at 169",169 U+09B0 BENGALI LETTER RA + U+09CD BENGALI SIGN VIRAMA + U+09AF BENGALI LETTER YA (expected U+09B0 U+200D U+09CD U+09AF) (3x),RAB without ZWJ (3x)
+8f26076a0a745d10,full,fix,A3;G1,"""অগ্নিকা-ের"" at 1433|""অগ্নিকা-ের"" at 1433",1438 U+0995 BENGALI LETTER KA + U+09BE BENGALI VOWEL SIGN AA + U+002D HYPHEN-MINUS + U+09C7 BENGALI VOWEL SIGN E (expected U+09A3 U+09CD U+09A1 ণ্ড)|1440 U+002D HYPHEN-MINUS + U+09C7 BENGALI VOWEL SIGN E,ণ্ড converted to '-' so e-kar sits after a hyphen
+af4b5309bf223fef,full,clean,,,,
+cf051ae9dd32f868,full,clean,,,,
+0cc55d56de34d944,full,fix,A3,"""স¦াক্ষর"" at 456",457 U+00A6 BROKEN BAR (expected U+09CD U+09AC ্ব),U+00A6 BROKEN BAR inside স্বাক্ষর
+5eaac4023d33e1ba,full,clean,,,,names/ages/villages of arrested men from police report; no contact data
+c7275e19a636a8cc,full,clean,,,,
+8bad1e43c93843ec,full,clean,,,,
+1b3f77a799e452d2,full,fix,A5,"""পশ্চাত্পদ"" at 725",730 U+09A4 BENGALI LETTER TA + U+09CD BENGALI SIGN VIRAMA + U+09AA BENGALI LETTER PA (expected U+09CE U+09AA),ত+virama used instead of khanda-ta ৎ
+41c2b232cc7c5931,full,clean,,,,
+cce7279bc231cf64,full,drop,D4;A6;C1,"""যিনি প্রকাশ্যে কৌতুক"" at 1112|""‘Godশ্বর"" at 1483|""শাটারস্টক (2)"" at 84",1484 U+0047 LATIN CAPITAL LETTER G + U+006F LATIN SMALL LETTER O + U+0064 LATIN SMALL LETTER D + U+09B6 BENGALI LETTER SHA + U+09CD BENGALI SIGN VIRAMA + U+09AC BENGALI LETTER BA + U+09B0 BENGALI LETTER RA (expected ঈশ্বর),auto-translated celebrity gallery; English and Bengali fused in one word
+17d425168aa54166,full,fix,A6,"""পারেন না৷"" at 226",234 U+09F7 BENGALI CURRENCY NUMERATOR FOUR (expected U+0964) (7x),U+09F7 used as danda (7x)
+cce9dc39b1581ffb,full,fix,C1;D3,"""Best Branding Agency in Bangladesh"" at 5936|""“Products are made in the factory, but brands a…"" at 740",,ends with an English agency ad link; emoji is fine
+270d783d23da3dcb,full,clean,,,,
+202059b445168aba,full,clean,,,,
+ab0b007c59871bbf,full,clean,,,,
+ee301d65a8a7ad00,full,clean,,,,
+f82ccea06d46472e,full,clean,,,,
+167e0c6eee7886c4,full,clean,,,,
+7fc5aee6ac7e2659,full,clean,,,,
+39feeae74731a5f8,full,fix,A3;C3,"""ফেরদৈাসি"" at 247|""করে নিয়ে যায়"" at 2102",251 U+09C8 BENGALI VOWEL SIGN AI + U+09BE BENGALI VOWEL SIGN AA (expected U+09CC) (3x),many Bijoy-conversion errors; text cut at the end; victim is a named 16-year-old
+93ff7035f09206e1,full,fix,A3,"""রির্টানিং"" at 292",292 U+09B0 BENGALI LETTER RA + U+09BF BENGALI VOWEL SIGN I + U+09B0 BENGALI LETTER RA + U+09CD BENGALI SIGN VIRAMA + U+099F BENGALI LETTER TTA + U+09BE BENGALI VOWEL SIGN AA + U+09A8 BENGALI LETTER NA + U+09BF BENGALI VOWEL SIGN I + U+0982 BENGALI SIGN ANUSVARA (expected রিটার্নিং),ref on the wrong letter in রিটার্নিং
+9b2133913fa2e071,full,drop,C4;D4;A6,"""The Olymp Trade প্লার্টফর্মে ৩ টি উপায়ে প্রবেশ…"" at 746|""সমস্ত দাতব্য ট্যাক্স deductions বাছা হবে বিল পাস"" at 448|""দৃ Sen়ভাবে"" at 1739",1742 U+0053 LATIN CAPITAL LETTER S + U+0065 LATIN SMALL LETTER E + U+006E LATIN SMALL LETTER N + U+09BC BENGALI SIGN NUKTA (expected ঢ়),MT advocacy letter with an injected Olymp Trade spam paragraph
+e7aafb7e6bc62a54,full,fix,A3,"""পড়–য়া"" at 2820",2823 U+2013 EN DASH (expected U+09C1) (2x),u-kar replaced by EN DASH U+2013 in পড়ুয়া (2x)
+79d342d94467ab43,full,fix,C1,"""প্রকাশিত : ২২ আগস্ট ২০২২ ১১:৪৮ পূর্বাহ্ণ"" at 0",,publish timestamp line
+2d21197c634b5e8f,full,clean,,,,
+09519b65c42592a4,full,clean,,,,"self-promotional candidate interview; many stray chandrabindu typos (আঁলাপচারীতায়, পঁথচলা)"
+7cc880e702074e64,full,clean,,,,
+b81402677842bbf2,full,fix,A3;D3,"""হয়েেছে"" at 1203|""رُفِعَ الْقَلَمُ عَنْ ثَلَاثَةٍ"" at 453",1206 U+09C7 BENGALI VOWEL SIGN E + U+09C7 BENGALI VOWEL SIGN E (expected U+09C7),double e-kar in হয়েছে; Arabic hadith quotes inline (natural)
+01ac505c4311afec,full,fix,G2,"""কইর্যা"" at 5298",5300 U+09B0 BENGALI LETTER RA + U+09CD BENGALI SIGN VIRAMA + U+09AF BENGALI LETTER YA (expected U+09B0 U+200D U+09CD U+09AF),"dialect spelling কইর‍্যা lost its ZWJ; story contains masked profanity in dialogue (literary, kept)"
+cb9abca041ef36ef,full,drop,D4,"""ফিলিপস হিউ ফিলামেন্ট:। 19.95 (স্ট্যান্ডার্ড বাল…"" at 790",,auto-translated Spanish gadget site (/bn/); euro sign turned into danda
+22bbaeb20947a96e,full,fix,C1,"""সর্বস্বত্ব সংরক্ষিত © 2001-2021 - আনন্দ আলো"" at 0",,copyright footer placed as first line
+e9a441084a00d125,full,clean,,,,
+7a4b97fbc397b456,full,clean,,,,names of family members in an accident report; no contact data
+5c43f40898c42566,full,clean,D3,"""দেবশ্রী রায় (Debashree Roy)"" at 24",,English names in brackets (natural D3)
+778a94e9434a6bb0,full,clean,,,,names of arrested men from police briefing; no contact data
+e06dddb2c1f370c2,full,clean,,,,
+a4673237f685474d,full,clean,,,,
+30cd94a533fc4770,full,fix,A3;D3,"""তড়িৎ্বাহী"" at 1579|""HSC Physics 2nd Paper Suggestion 2022"" at 332",1583 U+09CE BENGALI LETTER KHANDA TA + U+09CD BENGALI SIGN VIRAMA (expected U+09CE),"khanda-ta followed by virama (invalid); exam-suggestion questions (not an LLM benchmark, so not F2)"
+c9d5215bdd385911,full,clean,,,,"ends with '#' end mark glued to danda (kept, desk-mark rule)"
+ad67093156f785b1,full,clean,,,,
+3190209debfab88d,full,drop,C4;C3,"""কামরুজ্জামান, বাগনান, ২৮ জুন।"" at 266|""পারে পৌঁছে দেয়। […]"" at 597",,"tag page: two unrelated excerpts, second ends with […]"
+f4309ce0444f174d,full,clean,,,,"hard line breaks mid-sentence; 'ঃ' used as colon after a space (common BD style, not G1)"
+323c7ceb51d3097b,full,fix,C4;C1,"""তুর্কি যুদ্ধজাহাজে পাকিস্তান নৌবাহিনীর শক্তি বৃ…"" at 0|""দৈনিক ইনকিলাব সংবিধান ও জনমতের প্রতি শ্রদ্ধাশীল।"" at 2426",,headline/subhead from a different story; comment-policy footer
+b3078fdb5f1f3ae9,full,fix,C1,"""আরও পড়ুন:"" at 792; ""২১ আগস্ট, ২০২০ at ১১:৩৯:৪২ (GMT+06)"" at 2547",,inline read-more block with 3 unrelated headlines; timestamp + desk tags
+a005aedd65fe3aa8,full,fix,C5;C1;A5,"""- বিয়ানীবাজারের ১ নম্বর কূপ থেকে গ্যাস উত্তোলন…"" at 1399|""প্রকাশিত: ২৩ সেপ্টেম্বর ২০২১"" at 42|""জোত্স্নায়"" at 131",133 U+09A4 BENGALI LETTER TA + U+09CD BENGALI SIGN VIRAMA + U+09B8 BENGALI LETTER SA (expected U+09CE U+09B8),short equinox article followed by a 50-line list of unrelated headlines
+c670e9ca233e7628,full,clean,,,,
+71bb93238817a1c8,full,fix,A3,"""চত্ত¡রে"" at 334; ""সহÑসভাপতি"" at 543",338 U+00A1 INVERTED EXCLAMATION MARK,"Bijoy residue U+00A1, U+00D1 and a stray ” inside words"
+2a662b3c3193d8da,full,fix,C3,"""পের ঘোষণা দিয়ে"" at 0",,text starts mid-word
+0d0cf7fcbba3fef6,full,clean,,,,
+c41a3831933bd446,full,clean,,,,two hard line breaks mid-sentence
+ecc8c36a9f69a7c1,full,clean,,,,Indian (Kolkata) Bengali
+6b7d2e572bf71bb6,full,clean,,,,
+b30117058e80e37a,full,clean,,,,
+827c5713ead4aeeb,full,clean,,,,
+8afa095fdf0f7b21,full,clean,,,,Indian Bengali
+7c6ec112e632de8b,full,clean,,,,
+8c5effdd6a07346b,full,fix,C1,"""আরও পড়ুন: স্কটিশ স্বাধীনতার প্রশ্নে ব্রিটেনের …"" at 1072",,inline read-more link
+605429156ca4df6d,full,drop,C5;C4;C3,"""হাওর বার্তা ডেস্কঃ"" at 0|""বিস্তারিত.."" at 230|""জাতির পিতা বিস্তারিত.."" at 219",,date-archive page: 10 unrelated teasers each cut with 'বিস্তারিত..'
+03cffb5d0d4a1426,full,clean,,,,
+bd59fdf51e29e37b,full,fix,A6;C2,"""চাইৰে"" at 3800|""সমাজকর্ম সম্পর্কিত প্রত্যয়’র সৃজনশীল প্রশ্নোত্তর"" at 213",3803 U+09F0 BENGALI LETTER RA WITH MIDDLE DIAGONAL (expected U+09B0),HSC exam Q&A; heading repeated 5x; Assamese ৰ in চাইবে
+ce8a91b51a89e51a,full,fix,A3;G2,"""মু্িক্তযোদ্ধার"" at 28|""র্যাবের"" at 2406",28 U+09AE BENGALI LETTER MA + U+09C1 BENGALI VOWEL SIGN U + U+09CD BENGALI SIGN VIRAMA + U+09BF BENGALI VOWEL SIGN I + U+0995 BENGALI LETTER KA + U+09CD BENGALI SIGN VIRAMA + U+09A4 BENGALI LETTER TA + U+09AF BENGALI LETTER YA|2406 U+09B0 BENGALI LETTER RA + U+09CD BENGALI SIGN VIRAMA + U+09AF BENGALI LETTER YA (expected U+09B0 U+200D U+09CD U+09AF),virama/i-kar misordered in মুক্তিযোদ্ধা; RAB without ZWJ
+c17461be51e4549a,full,fix,C1,"""প্রিয় পাঠক আপনার চারপাশে ঘটে যাওয়া নানা খবর"" at 3926",,reader-submission footer with placeholder email; stray fragment 'বিশ্বা'
+a03da238fe5d7dcd,full,fix,C3,"""সহযোগী সংগঠনের সভা"" at 832",,cut mid-word at end
+cb7d46d934d552a5,full,clean,,,,
+1dcd9a93f5d16664,full,fix,C5;C1;G2,"""(how to look attractive with short height girl)"" at 216|""POPxo এখন চারটে ভাষায়!"" at 2077|""র্যাপ"" at 1524",1524 U+09B0 BENGALI LETTER RA + U+09CD BENGALI SIGN VIRAMA + U+09AF BENGALI LETTER YA (expected U+09B0 U+200D U+09CD U+09AF),English SEO keyword inserted 5x; app promo footer; wrap → র্যাপ without ZWJ
+1f032c5f60e5bc95,full,drop,D4;A5,"""লিঙ্গের গুহাযুক্ত দেহগুলি ছোট জাহাজের সাথে সরবর…"" at 429|""তাত্ক্ষণিকভাবে"" at 2230",2232 U+09A4 BENGALI LETTER TA + U+09CD BENGALI SIGN VIRAMA (expected U+09CE),machine-translated potency/supplement page
+eee8451cd86282ad,full,fix,C1;D3,"""Wednesday, March 3 2021, 1:15 pm"" at 97|""Key Highlights"" at 130",,English date and 'Key Highlights' label
+a56a957cb95356f8,full,fix,C1;D3,"""— Narendra Modi (@narendramodi) November 25, 2022"" at 1478|""(Post Independence Era)"" at 25",,embedded English tweet; English glosses in brackets throughout
+bce5245dbc354ba8,full,drop,D4,"""(শুধু Ls চারপাশে)"" at 434",,auto-translated US reality-TV gossip on a spam domain
+3092e9bd6566d7fc,full,drop,D4,"""একটি বিরল সুযোগ মানুষ এটি লাঠি, বা তাকে সমর্থন."" at 40",,auto-translated UK opinion piece on a spam domain
+d89fc5af090d1a0e,full,drop,D4,"""টিতিনি আবেদন করেন যে এনপার্লামেন্ট"" at 1634",,auto-translated; drop-cap letters glued into words
+3e25eb24bc975891,full,fix,A1,"""ঘনি’ষ্ঠ"" at 54",57 U+2019 RIGHT SINGLE QUOTATION MARK (31x),apostrophe U+2019 inserted inside ~30 words (filter-evasion trick)
+757546d646487766,full,clean,,,,
+004f611d3e5f577f,full,fix,C3;C1,"""শনিবার (১৭ মার্চ) বিকেলে কাশিপুর এলাকার"" at 0|""শিরোনামOther"" at 939",,lead paragraph missing; widget text 'শিরোনামOther' glued at end
+ade5fc15eb163a87,full,clean,D3,"""গজেন্দ্র- (Gogendra) ঐরাবত"" at 2337",,SEO name-list page; romanised names in brackets
+caff60831d4a5172,full,fix,G2,"""র্যাব"" at 84",84 U+09B0 BENGALI LETTER RA + U+09CD BENGALI SIGN VIRAMA + U+09AF BENGALI LETTER YA (expected U+09B0 U+200D U+09CD U+09AF),RAB without ZWJ (6x); 14-year-old kidnap victim named
+4040d1c6b90ddd77,full,drop,C4;C1;C3,"""আজাদুর রহমান চন্দন"" at 0|""Continue Reading →"" at 850|""রবিবার দুপুরে হোটেলে অসুস্থ হয়ে পড়লে সেখানেই …"" at 788",,"category page (?cat=3): two article excerpts, each cut with 'Continue Reading →'"
+afb58e535766a26f,full,fix,C1,"""আলোকিত কক্সবাজার ।। সংবাদটি প্রকাশিত হয়ঃ ২০১৫-…"" at 71",,site name + publish timestamp line
+bc20b85a2908e493,full,clean,,,,
+b16ae372405b0813,full,fix,A3;C1,"""আন্তভর্’ক্ত"" at 674|""শনিবার, ০৩ ডিসেম্বর ২০২২, ০৯:০৪ অপরাহ্ন"" at 0",681 U+2019 RIGHT SINGLE QUOTATION MARK,অন্তর্ভুক্ত garbled by font conversion; crawl-date header
+dcd2963fe8df5f41,full,clean,,,,Indian Bengali
+35fd8e384286cd77,full,fix,C1,"""বাংলাদেশ সময়: ১৮০৫ ঘণ্টা, অক্টোবর ০৪, ২০২২"" at 1118",,timestamp line + desk initials
+1ac1c6b10e0021f9,full,fix,C4;D3;C1,"""In this Hero Pleasure review we will let you kn…"" at 7510|""Hero Pleasure 100-এর বিস্তারিত বিবরণ"" at 2314|""Hero Pleasure Video Review"" at 10922",,Bengali review + separate English review appended; spec table with English values
+872916955c6e2e95,full,drop,D4;C1;G2,"""রোয়েনা রেভেনক্ল 10 সালে হগওয়ার্টস স্কুল অফ উই…"" at 192|""আমাদের পাঠকরা আমাদের সমর্থন করেন। এই পোস্টে অধি…"" at 80|""র্যাভেনক্ল"" at 1600",1600 U+09B0 BENGALI LETTER RA + U+09CD BENGALI SIGN VIRAMA + U+09AF BENGALI LETTER YA (expected U+09B0 U+200D U+09CD U+09AF),auto-translated Harry Potter fan page with affiliate disclaimer
+d18557e95188d16c,full,clean,,,,
+8be70ef41a0b9729,full,drop,D4;G4;D3,"""তারা সব অযৌক্তিক চোখ একই মনে"" at 172|""466২04"" at 3589|""sturdiness এবং স্থায়িত্ব"" at 2470",3589 U+0034 DIGIT FOUR + U+0036 DIGIT SIX + U+0036 DIGIT SIX + U+09E8 BENGALI DIGIT TWO + U+0030 DIGIT ZERO + U+0034 DIGIT FOUR,auto-translated product listicle; model number with mixed Latin/Bengali digits
+9b98d007715f43e1,full,clean,,,,
+04e967f91a68f9d2,full,clean,,,,crime report naming the accused
+1abc081b1ce17469,full,drop,D4;C1;C2;D3,"""তাদের খারাপ প্রদর্শনের জন্য তাদের মারধর করতে থাকে"" at 533|""Read Entire Article🡽"" at 5320|""T20 WC-তে জিম্বাবুয়ের কাছে পাকিস্তানের হারের প…"" at 2588|""I’ve made it my mission to maintain you up-to-date"" at 2722",,MT cricket story from a Nigerian aggregator + English spinner-text spam
+7c0457dedb71f333,full,clean,,,,"one Latin-digit number (11) in an otherwise Bengali-digit text: flag case, not G4"
+567b3f7d45e2b61b,full,fix,G2,"""র্যাকহ্যাম"" at 7724",7724 U+09B0 BENGALI LETTER RA + U+09CD BENGALI SIGN VIRAMA + U+09AF BENGALI LETTER YA (expected U+09B0 U+200D U+09CD U+09AF),Rackham written without ZWJ (2x)
+5e073b0e7d74980d,full,clean,,,,names of arrested hundi traders from a CID briefing
+f51ec15558ffa0c2,full,clean,,,,Indian Bengali
+a2eedd6ca520dbc3,full,clean,,,,
+e30ac351dc720e10,full,fix,A3,"""নি¤œমানের"" at 629; ""্িবট"" at 1052",631 U+00A4 CURRENCY SIGN,Bijoy residue ¤œ for ন্ম; stray virama in বিট
+af7f5f0c071e1304,full,fix,C1,"""সম্পর্কিত নিউজ"" at 324",,'related news' widget with English dates
+b3a83b2daa8b8ba3,full,clean,,,,
+4f21302fa2468076,full,fix,A5;D3,"""উত্কণ্ঠাকে"" at 2022; ""চিকিত্সার"" at 2308|""(OPDAT)"" at 422",2023 U+09A4 BENGALI LETTER TA + U+09CD BENGALI SIGN VIRAMA (expected U+09CE),ত্ক/ত্স for ৎক/ৎস; English acronyms
+60716b8ee7feac53,full,clean,D3,"""ঋষি সুনক (Rishi Sunak)"" at 357",,English name in brackets repeated (Ei Samay style)
+8d5c27c9f6ada628,full,clean,,,,
+55243d40f3d02d5a,full,clean,,,,
+c58791879cebdba1,full,clean,,,,
+b67a73a5df700388,full,clean,,,,
+3c0e338578d39683,full,clean,,,,'>>' bullets are a list style
+6b0281663c1d8160,full,fix,A3,"""সমপ্রচার"" at 222",222 U+09B8 BENGALI LETTER SA + U+09AE BENGALI LETTER MA + U+09AA BENGALI LETTER PA + U+09CD BENGALI SIGN VIRAMA + U+09B0 BENGALI LETTER RA + U+099A BENGALI LETTER CA + U+09BE BENGALI VOWEL SIGN AA + U+09B0 BENGALI LETTER RA,সম্প্রচার stored as সমপ্রচার (virama lost in conversion)
+7c9e5a6c16c6a394,full,clean,,,,
+116e3be712329bf6,full,clean,,,,short film-song quote is part of the article
+771844321cc1047e,full,clean,,,,
+e5ac353708dd834e,full,clean,,,,"Indian Bengali (Bhangar, South 24 Parganas)"
+b71a659adbcbe209,full,clean,,,,
+92109d4f2bfd8c59,full,clean,,,,
+4c28fa404de97630,full,clean,,,,
+2f2eef9258a54167,full,fix,A3,"""রির্পোট"" at 12",12 U+09B0 BENGALI LETTER RA + U+09BF BENGALI VOWEL SIGN I + U+09B0 BENGALI LETTER RA + U+09CD BENGALI SIGN VIRAMA + U+09AA BENGALI LETTER PA + U+09CB BENGALI VOWEL SIGN O + U+099F BENGALI LETTER TTA + U+003A COLON,"ref on wrong letter (same as rows 99, 124)"
+b9c8f89ff096bcd9,full,fix,A3;C3;D3,"""খ¦লিক"" at 10|""এরপর যিনি খ¦লিক যিনি মালিক"" at 0|""يَا أَيُّهَا النَّبِيُّ"" at 119",11 U+00A6 BROKEN BAR (2x),Bijoy residue ¦; starts mid-sermon with এরপর; Arabic verses inline
+eb4b8b3b4e6d1917,full,fix,C1,"""বিস্তারিত ভিডিওতে দেখুনঃ"" at 2773",,'watch the video for details' trailer
+0d2fc8a8aba35aa3,full,clean,,,,
+929cccd1843c8e38,full,clean,,,,"religious protest news; reported, not hateful"
+448d894cd2d20ced,full,clean,,,,government digital-literacy page
+392194eefa44ef05,full,fix,A6,"""তাইলে পড়ুক৷"" at 6930",6941 U+09F7 BENGALI CURRENCY NUMERATOR FOUR (expected U+0964) (2x),serialised online novel (episode 4) with dialect dialogue; U+09F7 as danda twice
+482a27019963a3e4,full,fix,C5;C1,"""- সরকার বিকল্প প্রস্তাব না দিলে নয়াপল্টনেই সমা…"" at 0|""প্রকাশিত: ০৬. জানুয়ারি. ২০২০"" at 625",,10-line headline ticker + publish line (same ticker as row 224)
+760ff5d5ee5af700,full,fix,C5;C1,"""- নয়াপল্টনে সমাবেশ করলে আইন অনুযায়ী ব্যবস্থা"" at 66|""প্রকাশিত: ২৯. ফেব্রুয়ারি. ২০২০"" at 619",,same 10-line ticker as row 223
+1fe1d1e7d0f8acc9,full,fix,C2;C1;G2;F3,"""পার্বত্য চট্টগ্রামের পাহাড়ি আর বাঙালিদের মধ্যে…"" at 596|""ছবিঃ ফেসবুক"" at 1466|""র্যালীতে"" at 17412|""পার্বত্য চট্টগ্রামে বসবাসকারী মুসলিম বাঙালিরা চ…"" at 21891",17412 U+09B0 BENGALI LETTER RA + U+09CD BENGALI SIGN VIRAMA + U+09AF BENGALI LETTER YA (expected U+09B0 U+200D U+09CD U+09AF),"32k-char CHT history essay; F3 = review queue, not auto-drop"
+4b0b3423594d7d68,full,clean,,,,
+aad00b2a6c2b4d1a,full,clean,,,,
+34913f39bc6b9352,full,clean,,,,
+fde2dcb6eddec24b,full,fix,A3,"""রির্পোটার"" at 6",6 U+09B0 BENGALI LETTER RA + U+09BF BENGALI VOWEL SIGN I + U+09B0 BENGALI LETTER RA + U+09CD BENGALI SIGN VIRAMA + U+09AA BENGALI LETTER PA + U+09CB BENGALI VOWEL SIGN O + U+099F BENGALI LETTER TTA + U+09BE BENGALI VOWEL SIGN AA,"ref on wrong letter (same site pattern as rows 99, 216)"
+9081ef144575cc57,full,clean,,,,
+b212de6c049657c8,full,clean,,,,one mid-sentence line break
+55ef2fa8a30df3f0,full,clean,,,,
+1ba45950a6ce0fe9,full,fix,C1,"""বৃহস্পতিবার, ০৮ ডিসেম্বর ২০২২, ১১:০৬ অপরাহ্ন"" at 0",,crawl-date header
+1f6944960d96ed13,full,clean,,,,Indian Bengali
+8fc750f8932bf677,full,fix,C1;D3,"""ছবিঃ সোশ্যাল মিডিয়া"" at 6978|""(MGNREGA)"" at 724",,photo-credit line; English acronyms (CPI(M) West Bengal site)
+b53cbeffb92978a9,full,clean,,,,"quotes a student's note about suicidal thoughts (news reporting, not harmful)"
+fecc7182638377e6,full,fix,A3,"""আকাক্সক্ষা"" at 1410; ""প্রযুুক্তি"" at 1753",1410 U+0986 BENGALI LETTER AA + U+0995 BENGALI LETTER KA + U+09BE BENGALI VOWEL SIGN AA + U+0995 BENGALI LETTER KA + U+09CD BENGALI SIGN VIRAMA + U+09B8 BENGALI LETTER SA + U+0995 BENGALI LETTER KA + U+09CD BENGALI SIGN VIRAMA,"আকাঙ্ক্ষা stored with ক্স (Bijoy); doubled u-kar; pro-Khomeini essay (opinion, not flagged F3)"
+98e5974ca028e7f9,full,fix,C1,"""Powered by Hooligan Media"" at 772; ""আরোও প্রকাশিত হয়েছে"" at 1701; ""শেয়ার করুন:"" at 3537",,"job-circular SEO page: ad label, related-links list, share footer; one spun nonsense sentence"
+bde4733b285a23a5,full,clean,,,,
+fbace8ff6bc4892d,full,clean,,,,
+9cb3f78dbf4d7626,full,fix,C1,"""প্রকাশিতঃ ২৬/০৫/২০১৯"" at 0",,publish/view-count header; bKash promotional press release
+51e4193eaccde5b7,full,fix,C1,"""গণস্বাস্থ্য কেন্দ্রের প্রতিষ্ঠাতা ডা. জাফরুল্লা…"" at 0",,photo caption as first line
+c469aa2a04ac5d73,full,clean,,,,
+26e407dabf4bd5f1,full,fix,C1,"""03-10-2022 03:35PM"" at 622",,headline repeated after body + English timestamp
+a2e13f30666ebefe,full,fix,A3;C1,"""২৪ী৭"" at 384|""প্রতিদিনের সংবাদ ইউটিউব চ্যানেলে সাবস্ক্রাইব করুন"" at 1033",384 U+09E8 BENGALI DIGIT TWO + U+09EA BENGALI DIGIT FOUR + U+09C0 BENGALI VOWEL SIGN II + U+09ED BENGALI DIGIT SEVEN + U+0020 SPACE + U+09AA BENGALI LETTER PA + U+09BE BENGALI VOWEL SIGN AA + U+0993 BENGALI LETTER O,24x7 → ২৪ী৭ (× mapped to ী); related headlines + subscribe footer
+d37c4544c07da96f,full,clean,,,,
+a041c47c2735d3f0,full,fix,C4;D3,"""Original strip the other healthier and minutes …"" at 4583|""cialisresultgroup.com"" at 4653",,English spam sentence (drug-pharmacy link) injected at the end
+619c1b99cb552c4b,full,clean,,,,
+92476775107a72df,full,clean,,,,
+39f0d74762af1982,full,drop,D4;D3,"""উচ্ছ্বাস সিজন 2 অবশেষে মুক্তি পেতে চলেছে।"" at 0|""প্রতি রবিবার রাত 9 pm ET-এ HBO এবং HBO Max-এ"" at 505",,auto-translated TV-release page on a spam domain
+94b094821893c821,full,fix,C5;C1;D3;F1,"""All Bengali Stories"" at 0|""-------- বিজ্ঞপ্তি ----------"" at 70|""## Disclaimer: RiyaButu.com is not responsible"" at 9747|phone number at offset 10396; phone number at offset 10424",,"story page wrapped in page-number nav, notice board, English disclaimer and a contact footer with 2 mobile numbers"
+4daaf2d1c7aea69f,full,fix,A3,"""অনু্িষ্ঠত"" at 190; ""বøুপ"" at 1231",190 U+0985 BENGALI LETTER A + U+09A8 BENGALI LETTER NA + U+09C1 BENGALI VOWEL SIGN U + U+09CD BENGALI SIGN VIRAMA + U+09BF BENGALI VOWEL SIGN I + U+09B7 BENGALI LETTER SSA + U+09CD BENGALI SIGN VIRAMA + U+09A0 BENGALI LETTER TTHA,stray virama/i-kar order; ø for ্ল (Bijoy residue)
+c098bebbb5dfe613,full,clean,,,,
+7a616da4d780d6cc,full,clean,,,,Indian Bengali
+5b6d66dabc0aec16,full,clean,,,,Indian Bengali
+af3ee7b4cba8c76f,full,clean,,,,Indian Bengali opinion by a former labour commissioner
+e05468e09852b6b5,full,clean,,,,Indian Bengali
+3565629bf4c02e8d,full,fix,A6;C1,"""ফজরের আজানটা কেবল কানে এসেছে"" at 67|""সাজির সাজানো ঘর পর্ব প্রবন্ধটি পড়া শেষ হলে শেয…"" at 0",95 U+007C VERTICAL LINE (expected U+0964) (79x),ASCII pipe '|' used as the danda throughout; share/click-here lines
+0373d1923847c1dc,full,clean,,,,Indian Bengali
+4c3a514616f31a33,full,fix,A3;C1,"""চৈাধুরী"" at 56|""Related News"" at 873",57 U+09C8 BENGALI VOWEL SIGN AI + U+09BE BENGALI VOWEL SIGN AA (3x),ৌ stored as ৈ+া; 'Related News ... Read More' block
+7e6d5db9d0e8bb0c,full,fix,C2;C1;C4,"""“১১ দিন পর মৃত্যুর কাছে হার মানলেন সোনাগাজীর স্…"" at 0|""প্রকাশের সময় : নভেম্বর ১৩, ২০২২, ৪:৪৬ অপরাহ্ন /"" at 79|""“ফেনীতে সিলিন্ডার লিকেজ হয়ে মাদ্রাসায় অগ্নিকা…"" at 1449",,headline twice; publish time + view count; second unrelated story appended
+33ea39c3e25f527c,full,clean,,,,Indian Bengali
+0236f7515e926ec4,full,clean,,,,
+f6bda68b8a9ac51e,full,clean,,,,desk credit glued to site name
+f815940ddf0fd422,full,fix,C1;B4,"""নির্বাহী সম্পাদক: গোলাম যাকারিয়া"" at 1957|""[email protected]"" at 2087",,"publisher footer (office address, office phones); Cloudflare '[email protected]' placeholder"
+f31201dc061fecbc,full,fix,A3;G1,"""ছেেল"" at 621; ""শিেল্পাদ্যোক্তার"" at 1554; ""অাপনাদের"" at 1970; ""তঁারা"" at 6726|""িশক্ষা ক্ষেত্রে আরও বেশি বিনিয়োগ করতে হবে"" at 265",622 U+09C7 BENGALI VOWEL SIGN E + U+09C7 BENGALI VOWEL SIGN E (4x)|265 U+09BF BENGALI VOWEL SIGN I,Prothom Alo roundtable (19.5k chars) with dozens of old-font conversion errors
+0d84f9fe6fa84de8,full,clean,,,,
+f347918ae5124bc7,full,clean,,,,child-rape crime report; victim not named; one typo ঘটনাৎটি
+375e040343227754,full,fix,A3;C3,"""কোিিট"" at 136|""বৃহস্পতিবার (৯ নভেম্বর) জাতীয় অর্থনৈতিক কমিটির…"" at 0",136 U+0995 BENGALI LETTER KA + U+09CB BENGALI VOWEL SIGN O + U+09BF BENGALI VOWEL SIGN I + U+09BF BENGALI VOWEL SIGN I + U+099F BENGALI LETTER TTA + U+0020 SPACE + U+099F BENGALI LETTER TTA + U+09BE BENGALI VOWEL SIGN AA,doubled i-kar in কোটি; lead paragraph missing
+c9fd863b7f8bc8d9,full,fix,A3,"""উঠেিন"" at 365",365 U+0989 BENGALI LETTER U + U+09A0 BENGALI LETTER TTHA + U+09C7 BENGALI VOWEL SIGN E + U+09BF BENGALI VOWEL SIGN I + U+09A8 BENGALI LETTER NA + U+0020 SPACE + U+0996 BENGALI LETTER KHA + U+09C7 BENGALI VOWEL SIGN E,উঠানে garbled
+e2151b8902a9093f,full,fix,C1,"""প্রকাশিতঃ 2:49 pm"" at 0",,publish timestamp line (English time/date)
+32ce1d4f4ac6557e,full,fix,C1,"""প্রকাশিতঃ 12:13 pm"" at 0",,publish timestamp line
+e6fab2d58d724c25,full,fix,C1,"""প্রকাশিতঃ 11:08 am"" at 0",,publish timestamp line
+4fbe26122ef6cf99,full,clean,,,,
+e190a2e835dbb558,full,fix,A3,"""অগ্নিকা-"" at 3005; ""¯পর্শ"" at 6911; ""চ্যা¤িপয়নড"" at 14471; ""খাতেÑ"" at 10457",3012 U+002D HYPHEN-MINUS,"Bijoy residue throughout (¯ for স, ¤ for ম্প, Ñ for dash, - for ণ্ড/ণ্ড)"
+aa334afca76b3dc9,full,fix,C1,"""প্রিয় পাঠক, চাইলে এগিয়ে চলোতে লিখতে পারেন আপনিও!"" at 4353",,'write for us' footer
+43804ba72410d8ff,full,drop,D4;F3,"""এই ভিডিওটিতে 2 টি দর্শন রয়েছে এবং 0 জন এটি প্র…"" at 132|""আপনার প্রিয় পর্ন টিউব"" at 0",,"porn tube page, auto-translated"
+c4d8cbb3d694c56a,full,clean,,,,
+825fb2363530926a,full,fix,C1,"""আরও পড়ুনঃ"" at 1197; ""View this post on Instagram"" at 1691",,read-more link + Instagram embed label
+860901cc949596e0,full,clean,,,,
+7e65948a05a57713,full,clean,,,,
+a56c3f7ed18e4d07,full,clean,,,,
+ee16a8085dc668fa,full,clean,,,,
+57e4d2a24da23fa2,full,fix,A3,"""উ”চ"" at 313; ""শুভে”ছা"" at 1132",314 U+201D RIGHT DOUBLE QUOTATION MARK,চ্চ → ”চ (old-font residue)
+5fb8dab81c2debc3,full,drop,D4;C1,"""খসড়াটির সংরক্ষণ রাশিয়াকে"" at 754|""সাবস্ক্রাইব করুন এবং সর্বশেষ খবর"" at 2543",,topwar.ru /bn/ auto-translation
+9d9d23ebec33c594,full,drop,D4;C1,"""История ভবিষ্যতের মহান বিজ্ঞান"" at 824|""সাবস্ক্রাইব করুন এবং সর্বশেষ খবর"" at 10441",,"topwar.ru /bn/ auto-translation, Cyrillic left in"
+39a83529d646f458,full,clean,,,,
+752243b9f1f3e228,full,clean,,,,
+b8dd7e44be68d6e8,full,clean,,,,judgment: named 16-year-old acid-attack victim
+0797b23ded114680,full,fix,A3;G2,"""ধানুয়াÍকামালপুরের"" at 1561; ""সহÍসভাপতি"" at 2323|""র্যাম্পসহ"" at 1009",1568 U+00CD LATIN CAPITAL LETTER I WITH ACUTE (2x)|1009 U+09B0 BENGALI LETTER RA + U+09CD BENGALI SIGN VIRAMA + U+09AF BENGALI LETTER YA (expected U+09B0 U+200D U+09CD U+09AF),Í (U+00CD) for hyphen; র্যাম্প without ZWJ
+dae088abe4b59bac,full,clean,,,,
+64a86e739a472867,full,clean,,,,
+ab9a0079afc95a73,full,fix,G2,"""র্যাডার"" at 454",454 U+09B0 BENGALI LETTER RA + U+09CD BENGALI SIGN VIRAMA + U+09AF BENGALI LETTER YA (expected U+09B0 U+200D U+09CD U+09AF),র্যাডার without ZWJ
+004b0e27856341f4,full,clean,,,,
+a4354cd5a0ba6120,full,clean,,,,
+a315585629ebfd19,full,fix,A3;A6,"""প্রিয়ম হােসেন"" at 2032|""তালিকা নিচে দেয়া হলো৷"" at 1909",2041 U+09BE BENGALI VOWEL SIGN AA + U+09C7 BENGALI VOWEL SIGN E|1930 U+09F7 BENGALI CURRENCY NUMERATOR FOUR (expected U+0964),া+ে for ো; ৷ (U+09F7) as danda
+56d02da293d783b2,full,clean,,,,
+7cf586fbf15a514a,full,fix,C1,"""আরও পড়ুন:"" at 1730",,empty read-more stub at the end
+b12d4aa765fb806a,full,fix,C1,"""প্রকাশিত: ২৮-৯-২০২৩ দুপুর ২:৩৯"" at 46",,timestamp line
+5fa2a5abaa7280a2,full,fix,C1,"""প্রকাশিত: ২১-১১-২০২৩ বিকাল ৫:১"" at 52",,timestamp line
+a8094b3ee64cf78e,full,clean,,,,
+bbc3da5468a6f601,full,fix,C1;C3,"""প্রতিনিধি প্রিন্ট সংস্করণ"" at 0|""পিঠা- পায়েসের স্টল স্থাপন করা হয়"" at 1848",,'print edition' label; ends mid-sentence without danda
+fb25628d14ed717a,full,fix,C4;A3,"""এবং তাদের"" at 367|""অশা›ত"" at 6890",6893 U+203A SINGLE RIGHT-POINTING ANGLE QUOTATION MARK (3x),magazine intro cut and joined to an essay; › for ন্ত
+680d23c0f9fc8a88,full,clean,,,,
+a04341dee190908a,partial,drop,D4;C1,"""আইডিল তখন অনেক ইসরায়েলি বিশ্বাস করত"" at 387|""সাবস্ক্রাইব করুন এবং সর্বশেষ খবর"" at 19883",,topwar.ru /bn/ auto-translation (20k chars)
+7cd9a97ad8ff07e4,full,drop,D4;C1,"""জার্মান সাংবাদিকরা, রাশিয়ান-চীনা কৌশলগুলির স্ক…"" at 305|""আমাদের নিউজ চ্যানেল"" at 1254",,topwar.ru /bn/ auto-translation
+4257b1b94789b299,partial,drop,D4;C1,"""সবকিছু অনেক বেশী prosaic"" at 874|""সাবস্ক্রাইব করুন এবং সর্বশেষ খবর"" at 4647",,topwar.ru /bn/ auto-translation
+f806110a17510df0,full,clean,,,,
+03b9440809615f38,full,fix,C3,"""অধ্যক্ষ আঃ মালেক"" at 1187",,ends mid-list
+60c136495bf9fa03,full,clean,,,,
+9466cc6947624db7,partial,fix,C1,"""আরও পড়ুন: ছাগলের খাদ্য তালিকা।"" at 4205",,read-more link at the end
+e25d53fb0d3bbdac,full,clean,,,,
+c7b30c40e27f255d,full,clean,,,,
+be054cc37cfac54d,full,clean,,,,
+6765e34f5b9e37ef,full,clean,,,,
+10e1e7400c8b3ae1,full,clean,,,,
+8daaf9c4fe64adc6,full,clean,,,,
+48ba73eb81e30063,full,clean,,,,
+a3acd247f639a7bf,full,clean,,,,
+bb4a327ce2e54290,partial,fix,A6;G1;C1,"""উত্তর৷"" at 104|""সম ্প্রদায়"" at 5974|""অথবা, ভারতীয় দর্শন বলতে কী বুঝ? এর বৈশিষ্ট্যসম…"" at 0",109 U+09F7 BENGALI CURRENCY NUMERATOR FOUR (expected U+0964)|5977 U+09CD BENGALI SIGN VIRAMA,৷ as danda; virama after a space; question title repeated as footer
+8d8e16b8a976243b,full,fix,A6;C1;D3,"""উত্তর।৷"" at 124|""অথবা, সংস্থাপনের সংজ্ঞা দাও।"" at 0|""Placement may be defined as the determination o…"" at 474",130 U+09F7 BENGALI CURRENCY NUMERATOR FOUR (expected U+0964),।৷ double danda; repeated title footer; English quote
+740b87d9773606f0,partial,drop,D4;A6,"""সম্ভবতঅনেক বেশি সাধারণ লোকেদের মধ্যে যা আপনার ম…"" at 798|""অপ্রত্যাশিত জায়গায়৷"" at 1392",1412 U+09F7 BENGALI CURRENCY NUMERATOR FOUR (expected U+0964) (27x),/bn/ auto-translated self-help blog
+1ebe2a72dbcacec7,full,fix,C1;A3,"""১০ই ডিসেম্বর ২০২৩ খ্রিস্টাব্দ"" at 0; ""প্রকাশিত: ১১:২৫ পূর্বাহ্ণ, নভেম্বর ২০, ২০২৩"" at 61|""রাজনীতি&বিমুখ"" at 1245",1252 U+0026 AMPERSAND,date bar + timestamp; & for hyphen
+38bcba20e8eefc32,partial,drop,D5;C1,"""স্বপ্নের আগাম এবং এসে যাওয়া পথে অত্যন্ত অনেক ব…"" at 422|""আরো পড়ুন :"" at 4793",,"SEO loan page, translationese"
+bde37d75fee48d42,full,fix,C1,"""Advertisement"" at 684",,ad label line
+13d6cbbcd66f028d,full,clean,,,,
+9925f66047c2517d,full,fix,A3,"""নোয়াপাাড়া"" at 168",174 U+09BE BENGALI VOWEL SIGN AA + U+09BE BENGALI VOWEL SIGN AA (2x),doubled vowel sign া+া
+517584a748ce6f8e,full,clean,,,,
+e3056440a69157e3,full,drop,D4;C1,"""Teflon ফিল্ম glued করা যাবে না."" at 1092|""পোস্টের সময়: আগস্ট-০১-২০২২"" at 1955",,Chinese supplier /bn/ auto-translation
+b3cd92949f09442c,partial,drop,D4;A5,"""Antiangiogenesis পার্শ্ব প্রতিক্রিয়া"" at 4203|""চিকিত্সা"" at 2849",2853 U+09A4 BENGALI LETTER TA + U+09CD BENGALI SIGN VIRAMA (expected U+09CE),auto-translated health site; ত্স for ৎস
+f8060b24f459de40,partial,drop,D4;C1,"""এই একটি ফ্যাক্টর আপনি অভিনয় আপনার আবেগ নিয়ন্ত…"" at 939|""এ এখন ডাউনলোড করুন অ্যাপ স্টোর এবং গুগল প্লে"" at 5525",,auto-translated SehatQ article + app promo
+9da37291e0a0537a,full,fix,B5;C1,"""গদ্য"" at 359|""অনুগ্রহ করে আমাদের পোস্টগুলো আপনাদের বন্ধুদের স…"" at 2101",,flattened table with pipes; share request
+b3f6f70c95b0cec3,full,clean,,,,
+5beb0fcfa17dd809,full,clean,,,,
+5729a9e05daa6227,full,clean,,,,
+f67d8e7a67a83a60,full,clean,,,,
+8be7623e883624df,full,clean,,,,
+996a8382ab3cc9af,full,fix,C1,"""সিলেট ৩০শে নভেম্বর, ২০২৩ খ্রিস্টাব্দ"" at 0; ""প্রকাশিত: ৭:৫৮ অপরাহ্ণ, নভেম্বর ১৮, ২০২৩"" at 68",,date bar + timestamp
+8720a91b78e495ff,full,clean,,,,
+bd3515a808a05f32,full,fix,C1,"""প্রকাশিত : ০৫:৪৩ পিএম, ১৩ আগস্ট ২০২৩ রোববার"" at 70; ""আরও পড়ুন: স্বস্তিতে খামারিরা, অস্বস্তি ক্রেতার"" at 794; ""আরও পড়ুন: হাত বদলেই এক ডিমে বাড়ছে ৩ টাকা"" at 1570",,timestamp + three read-more links + related headline
+a83f815713b9abeb,full,fix,C1,"""বিজ্ঞাপন"" at 598",,two ad-slot labels
+12b68e432770e58f,full,fix,C1,"""হোয়াটসঅ্যাপে ফলো করুন এই সময়কে।"" at 1606",,follow-us footer
+01d455bebba21ef1,full,fix,A3;C5,"""শে°বে"" at 861|""Tag: সূরা লাহাবের শানে নুজুল, সুরা লাহাব এর শান…"" at 1452",863 U+00B0 DEGREE SIGN,° inside a word; tag keyword list
+8ace8930167d6b84,full,clean,,,,
+d800125d14abf623,full,clean,,,,
+26ff33a2ab5df26b,full,fix,C1,"""প্রকাশিত হয়েছে : ০৭ নভেম্বর ২০২৩, ৭:২০:৫০ অপরাহ্ন"" at 65",,timestamp line
+7d9c6bfe71e1cdbb,full,fix,A5;C1,"""চিকিত্সাধীন"" at 821|""আরও পড়ুনঃ নূপুর ডান্স একাডেমির বার্ষিক উৎসব"" at 1138; ""- More Stories On :"" at 1183",825 U+09A4 BENGALI LETTER TA + U+09CD BENGALI SIGN VIRAMA (expected U+09CE),ত্স for ৎস; read-more + 'More Stories' footer
+3f714f926687d616,full,clean,,,,
+afa756faaec849d9,full,drop,D4;C1,"""রাশিয়ান ফেডারেশনের জন্য নিখুঁত অগ্রাধিকার হ'ল"" at 1089|""সাবস্ক্রাইব করুন এবং সর্বশেষ খবর"" at 1380",,topwar.ru /bn/ auto-translation
+1c748f4d41f5cb07,full,fix,A3,"""পূর্ণ হলাে"" at 586; ""প্রয়ােজন"" at 648",594 U+09BE BENGALI VOWEL SIGN AA + U+09C7 BENGALI VOWEL SIGN E (16x),া+ে for ো (16x)
+4eb8cb8bed8f5f1e,full,fix,A3,"""কাতারেে"" at 750",755 U+09C7 BENGALI VOWEL SIGN E + U+09C7 BENGALI VOWEL SIGN E,doubled vowel sign ে+ে
+7bbe5a23532255c3,partial,fix,D5;D3;C1,"""বিজেপি (বিজেপি) এবং কংগ্রেস (কংগ্রেস)"" at 176|""What I have seen on the ground is very disturbing"" at 991|""— ANI (@ANI) July 8, 2023"" at 1276",,translated-from-Hindi feel; embedded English tweets
+ac4cc9f6403f5c65,full,clean,,,,
+f083f2ab76070f25,full,clean,,,,
+be82912699f5ef34,full,fix,A3,"""সংর্ঘষের"" at 703; ""চিহিৃত"" at 905",703 U+09B8 BENGALI LETTER SA + U+0982 BENGALI SIGN ANUSVARA + U+09B0 BENGALI LETTER RA + U+09CD BENGALI SIGN VIRAMA + U+0998 BENGALI LETTER GHA + U+09B7 BENGALI LETTER SSA + U+09C7 BENGALI VOWEL SIGN E + U+09B0 BENGALI LETTER RA,ref on the wrong letter; ৃ for ্ন
+03af12da56523789,full,clean,,,,
+e47781b74a6c386f,full,drop,C4,"""বৃষ্টি আইনে নিউজিল্যান্ডকে হারাল পাকিস্তান"" at 513",,photo-story index page joining 5 unrelated blurbs
+00cc5724980f5a39,partial,fix,C1,"""আরো পড়ুন: থাইল্যান্ডে তরুণরা কেন বিক্ষোভ করছে?"" at 566",,read-more link
+bec63c2f1b3712ed,full,clean,,,,
+52251869ac20a5f2,full,clean,,,,
+eeaf038b617fa990,full,clean,,,,
+dd254eac2a6b4ce7,full,clean,,,,
+95261ddc152835cc,partial,drop,F3;D4,"""মোস্টবেট অ্যাপ্লিকেশনটি বাংলাদেশের মধ্যে একেবার…"" at 1371|""তারা আপনার যা খুব দ্রুত প্রক্রিয়া করে।"" at 331",,"betting-app promotion, spun/auto-translated"
+57ab10cbd7478219,full,clean,,,,
+a9939c6f7a261453,full,clean,,,,
+138b777477338cb0,full,clean,,,,
+44b419b70b6d9c1a,full,clean,,,,
+e4aa2126d8505b14,partial,fix,C5,"""পোস্ট ট্যাগ -"" at 4002",,post-tag keyword list at the end
+68ab1e22efcfaf3f,full,clean,,,,
+159c369a04f071eb,full,clean,,,,
+59ece596d9e9c1d9,full,clean,,,,
+62916634ca799c90,full,clean,,,,
+57bccd4594fb4f48,full,clean,,,,
+4e45f99b4192a309,full,fix,C1,"""মন্তব্য করুন"" at 718",,'comment' button text
+9287c1903a2f201b,full,fix,C1,"""মন্তব্য করুন"" at 2845",,'comment' button text
+4d3cd80521918292,partial,fix,C5;C1,"""- সেলফি তুলে এক রাতে ২০-৩০ লাখ টাকা আয় করেন ওরি!"" at 3091|""– লালমনিরহাট বার্তা নিউজ ডেস্ক –"" at 1526",,related-headline list appended
+0992269c10034b77,full,clean,,,,
+9124690eea013210,partial,fix,C1,"""সুচিপত্র"" at 856; ""আরও পড়ুন :"" at 2315; ""প্রিয়জন বা বন্ধুদের সাথে শেয়ার করতে পারেন"" at 12817",,"TOC label, empty read-more stubs, share request"
+61243f5a0b8ec5b2,full,clean,,,,
+77dce307571584f0,full,clean,,,,
+fced7dbaf445e641,full,fix,C1,"""আরও পড়ুন > এবার দুই দিনের অবরোধের ডাক দিলো বিএনপি"" at 1183",,read-more link
+f6af8060b15e4a87,full,fix,A6,"""শীত পড়ছে আসতে আসতে"" at 117",137 U+007C VERTICAL LINE (expected U+0964) (9x),ASCII | used as danda
+f4c0e4a2e8aa9370,full,fix,C1,"""দিন বদল বাংলাদেশ ডেস্ক"" at 50; ""সাতজনের যাবজ্জীবন কারাদণ্ড দিয়েছেন আদালত…"" at 140",,byline bar + teaser line
+268c680cfbd8edc0,full,drop,F3;C1,"""কন -ডম গুপ্ত – স্থান মেয়েদের পু -শি কিনতে – এখ…"" at 274|""Description"" at 0",,sexual-product sales page with obscene link text
+7b65bbecd0338588,full,drop,F1;B4;C1;C5;D3,"phone at 214|""[email protected]"" at 234|""** ANTI-PIRACY WARNING **"" at 964|""#Karbala #কারবালা #imamhussain"" at 933|""Script & Vocal: Advocate Mostaque Bahar"" at 60",,"YouTube description: contact phone, email-protect stub, disclaimers, keyword dump"
+abdbff5a3ccb01d6,full,clean,,,,
+6485c3463fba5d7a,full,clean,,,,
+27fc3258e4c1e797,full,fix,C1,"""সম্পর্কিত খবর"" at 505; ""- সর্বশেষ"" at 1547; ""- সর্বাধিক পঠিত"" at 1557",,related-news and tab labels
+a8ed274888a45acf,full,clean,,,,
+16c4265f3d5620ae,full,clean,,,,
+3d4f668f93cafbd4,full,fix,C1,"""383Published on ডিসেম্বর 14, 2021"" at 0",,view count + English 'Published on' line
+25e2faa686bb8b66,partial,drop,D4;A6,"""রান্নার জন্য আমাদের ergonomically ডিজাইন করা পা…"" at 935|""আমরা পণ্য সামগ্রীর নিরাপত্তার দিকে মনোযোগ দিই৷"" at 442",487 U+09F7 BENGALI CURRENCY NUMERATOR FOUR (expected U+0964) (10x),Chinese supplier /bn/ auto-translation
+893791e8990b313e,full,clean,,,,
+6509f26088548f1e,full,clean,,,,
+cef955deba88bebb,full,clean,,,,
+16b0ef19cedf0abb,full,clean,,,,
+bd83076a33551679,full,clean,,,,
+7cb3aae927303312,full,clean,,,,
+529567589848cc21,full,clean,,,,
+241485aee4d1a252,full,clean,,,,
+606133d02eb2c9a9,full,fix,A3,"""যত্মেম্নর"" at 337",337 U+09AF BENGALI LETTER YA + U+09A4 BENGALI LETTER TA + U+09CD BENGALI SIGN VIRAMA + U+09AE BENGALI LETTER MA + U+09C7 BENGALI VOWEL SIGN E + U+09AE BENGALI LETTER MA + U+09CD BENGALI SIGN VIRAMA + U+09A8 BENGALI LETTER NA,Bijoy residue for যত্নের
+c887daadf17b4463,full,clean,,,,
+f13b6d701750caea,full,clean,,,,
+db400bba81d0bd4a,full,clean,,,,
+4b93d08ed10573b7,full,fix,D3;C1,"""A group of Shiv Sena workers pelt stones at BJP…"" at 2533|""— ANI (@ANI) August 24, 2021"" at 2779",,embedded English ANI tweets
+3983a89afb7dfda1,full,clean,,,,
+e99e13cadb1ddbff,full,fix,C1;D3,"""Buy Book Online: Cheapest, Fastest and Secure"" at 16; ""Your email address will not be published. Requi…"" at 2254|""এরপর গল্পের protagonist রা কিভাবে"" at 887",,shop page chrome + review form; English words in review
+c89a08bc1e97aac7,full,clean,,,,
+ab306b59d8e205f6,full,fix,C1,"""হোয়াটসঅ্যাপে ফলো করুন এই সময়কে।"" at 1856",,follow-us footer
+cb19cd93fa425783,full,clean,,,,
+bc6a17dd316fbe46,full,clean,,,,
+74cfc35c73599b14,full,fix,C1;B4,"""নির্বাহী সম্পাদক: গোলাম যাকারিয়া"" at 2092|""[email protected]"" at 2222",,masthead footer with office contacts; email-protect stub
+a7372b7ec4beac31,full,clean,,,,
+8890381f8b7ea519,full,fix,C1,"""শেষ আপডেট: 15th May 2023 12:51"" at 0",,last-updated stamp
+cac9207a5bb4e30d,full,clean,,,,
+f8e678e2636af1dd,full,clean,,,,
+2d5cb140654e24a6,full,drop,D4;C1,"""পূর্বে, আমেরিকান দেশপ্রেমিকরা ইতিমধ্যেই রাজ্যে …"" at 563|""সাবস্ক্রাইব করুন এবং সর্বশেষ খবর"" at 1578",,topwar.ru /bn/ auto-translation
+32281667fd465199,full,drop,D4;C1,"""পোরোশেঙ্কো সুপরিচিত পথ অনুসরণ করেন ঐতিহাসিক অক্ষর"" at 980|""আমাদের নিউজ চ্যানেল"" at 1439",,topwar.ru /bn/ auto-translation
+65f54f99dd2c851b,full,clean,,,,
+f9082ffd058f43f6,full,fix,C1,"""আরও পড়ুন: শাহজির খোয়াবনামা অতঃকিম ঘোড়ার ডিম"" at 1265",,unrelated read-more link at the end
+759de77eb87d5e49,full,fix,C1,"""জানতে পারেনঃ অনলাইনে কলেজে এপ্লাই করার নিয়ম।"" at 2387",,inline read-more link
+b30b06f8ae85adf3,full,fix,A6,"""ওয়েবসাইটেiitkgp.ac.in"" at 1036",1046 U+0069 LATIN SMALL LETTER I + U+0069 LATIN SMALL LETTER I + U+0074 LATIN SMALL LETTER T + U+006B LATIN SMALL LETTER K + U+0067 LATIN SMALL LETTER G + U+0070 LATIN SMALL LETTER P,Latin URL fused to a Bengali word
+d3f39c19a040518c,full,clean,,,,
+6dcf62d99e1f8038,full,clean,,,,
+1b0655f3d45064c2,full,clean,,,,
+2d8b84b571bd0076,full,clean,,,,
+70bb16a1853ec898,full,clean,,,,
+727e5fdf242d7b2a,full,clean,,,,
+80d6bada82e5ff0b,partial,drop,F3;B5,"""বাংলাদেশে 888starz অনলাইন স্পোর্টস বেটিং এবং ক্…"" at 0|""মূল কোম্পানি"" at 727",,betting/casino review page targeting Bangladesh
+3769362018639d20,full,clean,,,,
+37e2209eb0c6ba96,full,fix,C1,"""পরিচ্ছেদসমূহ"" at 322",,TOC label
+7806d286fa99b29e,partial,drop,C4;C1;D3;A6,"""সুধী, নিবন্ধ প্রতিযোগিতা ২০১৮-এ অংশ নিয়ে"" at 924|""সর্বশেষ মন্তব্য: ৫ বছর পূর্বে১টি মন্তব্য১ জন ব্…"" at 856|""Before December, the Growth team will initiate …"" at 44672|""সিদ্ধান্তগ্ৰহণকারী"" at 14484",14495 U+09F0 BENGALI LETTER RA WITH MIDDLE DIAGONAL (expected U+09B0),Wikipedia user-talk page: dozens of bot/template messages
+6487ea22ab837380,full,clean,,,,
+77184dddf99d56c0,full,clean,,,,
+3c0de9b8acf6b2fd,partial,fix,G1,"""ধর্মের ্র সার্বজনী"" at 2264",2271 U+09CD BENGALI SIGN VIRAMA,stray virama+র after a space
+735dde1b37156260,full,fix,C1,"""Published on: জুলা ১৬, ২০১৮ @ ১৬:৩১"" at 0",,'Published on' line at top and bottom
+8cc468f2057b8502,full,fix,C1,"""- আপডেট সময় ০৮:৪৫:৫৯ পূর্বাহ্ন, মঙ্গলবার, ১৪ জ…"" at 86; ""- / ৬৯৪ বার পড়া হয়েছে"" at 141",,update time + view counter
+4da42ae54f8dc190,full,clean,,,,
+c48541eb279e96d7,partial,drop,D4;G4,"""এই উত্তরের লোকেদের একটি বৃত্তাকার পরিসীমা রয়েছে"" at 1302|""24-২7 ইঞ্চি"" at 377",380 U+09E8 BENGALI DIGIT TWO + U+0037 DIGIT SEVEN,/bn/ auto-translated bird page; mixed digits
+5d5539f0bcb7a1c8,partial,drop,D4,"""কিভাবে আপনি একটি ছোট বাথরুম একটি বড় বাথটব হইয়…"" at 25",,/bn/ auto-translated product round-up
+f043584d6c27e3d7,full,drop,D4;F3,"""এই ভিডিওটিতে 3 টি দর্শন রয়েছে এবং 0 জন এটি প্র…"" at 119|""আপনার প্রিয় পর্ন টিউব"" at 0",,"porn tube page, auto-translated"
+656e1a989097ab40,full,clean,,,,
+1cb79850d34fe70e,full,clean,,,,
+210708bdcab22317,full,clean,,,,
+ad13e0a296579edf,full,fix,C1,"""Powered by Froala Editor"" at 1525",,editor credit line
+4aad3f8606053132,full,fix,D5;D3;C1,"""এই দেশ এমন কিছুর মধ্য দিয়ে গেছে যা কোনো দেশ, ক…"" at 1389|""I am sorry to be here in such terrible circumst…"" at 1016|""— ANI (@ANI) October 19, 2023"" at 1256",,translated wire copy; embedded English tweet
+ecdd110f0dce3705,full,clean,D3,"""stars from the sky"" at 208",,English org name inside a sentence
+8703fd540e80f43c,full,clean,,,,
+31fd6915b1241a1a,full,clean,,,,
+52dc5dca65253770,full,clean,,,,
+89cc0315d0049b46,full,clean,,,,
+74e67a941dbac79d,full,fix,G2;A3,"""র্যালি"" at 45|""ভ‚মি"" at 352",45 U+09B0 BENGALI LETTER RA + U+09CD BENGALI SIGN VIRAMA + U+09AF BENGALI LETTER YA (expected U+09B0 U+200D U+09CD U+09AF)|353 U+201A SINGLE LOW-9 QUOTATION MARK,র্যালি without ZWJ; ‚ for ূ
+5e97b5c50857ac64,full,fix,D3;C1,"""Just wondering if his act is to be admired or c…"" at 1184|""— Harsh Goenka (@hvgoenka) June 16, 2020"" at 1281",,embedded English tweets
+6aadfebca92adffb,full,clean,,,,
+01528adaec298f5b,full,fix,A3,"""উপ¯ি’ত"" at 721",723 U+00AF MACRON (2x),¯ি’ for স্থি
+3b076d6ea54d58f5,full,fix,C1,"""# দেশ-বিদেশের গুরুত্বপূর্ণ খবর জানতে প্রতিসময় …"" at 2475; ""Last Updated on August 7, 2021 11:20 am by প্রত…"" at 2575",,like-our-page + last-updated footer
+dcfb4dde46d6ca77,full,fix,G2,"""র্যালি"" at 155",155 U+09B0 BENGALI LETTER RA + U+09CD BENGALI SIGN VIRAMA + U+09AF BENGALI LETTER YA (expected U+09B0 U+200D U+09CD U+09AF),র্যালি without ZWJ
+debb87243b3ee46e,full,clean,,,,
+13e5a8133c64b9b4,full,drop,D4,"""বুড়ো আল আরব সাইল হোটেল, দৈত্য বুর্জ খলিফা"" at 0",,/bn/ auto-translated tour listing
+a44f375480d89ac5,full,clean,,,,
+2e5b2ac4ca738bc0,full,clean,,,,
+f4231ee2bacfb917,full,drop,D4;G4,"""গ্রিন রুম থিয়েটারে টিকিট সংগ্রহকারী হিসাবে কাজ…"" at 757|""১৯ 1971১"" at 353",353 U+09E7 BENGALI DIGIT ONE + U+09EF BENGALI DIGIT NINE + U+0020 SPACE + U+0031 DIGIT ONE + U+0039 DIGIT NINE + U+0037 DIGIT SEVEN + U+0031 DIGIT ONE + U+09E7 BENGALI DIGIT ONE,/bn/ auto-translated biography; mixed digits
+9e59d3bf8d83f090,full,fix,C1;C3,"""প্রতিনিধি প্রিন্ট সংস্করণ"" at 0|""তাদের গ্রেফতার করা হয়।"" at 121",,print-edition label; lead missing
+ad775f9e632a9a9c,full,fix,C1,"""প্রতিনিধি প্রিন্ট সংস্করণ"" at 0",,print-edition label
+d0bc1ac9bb1c9143,full,fix,A3,"""অখ-তার"" at 929",931 U+002D HYPHEN-MINUS,ণ্ড → hyphen
+0f0d9033daec2b61,full,clean,,,,
+020c3f944f6cb98f,full,clean,,,,
+a5f662ce33955cc7,full,fix,G2,"""র্যাব"" at 1127",1127 U+09B0 BENGALI LETTER RA + U+09CD BENGALI SIGN VIRAMA + U+09AF BENGALI LETTER YA (expected U+09B0 U+200D U+09CD U+09AF),র্যাব without ZWJ
+7a627cfdce433f0c,full,clean,,,,
+62bb12b3f2f47890,full,clean,,,,
+645fe68eb711300e,full,clean,,,,
+fddf2b4465067433,full,clean,,,,
+c5e8a92c152419e4,full,clean,,,,
+de304d6c307923e1,full,clean,,,,
+16cee304b419b31e,full,clean,,,,
+5388245eaf318599,full,fix,C4,"""সাংবাদিক নিয়োগ বিজ্ঞপ্তি! তানিম টিভি লি: এর সং…"" at 1760",,recruitment ad appended; placeholder email
+d585cfb0a9f303cf,full,fix,C1,"""মাসের সেরা হওয়ার দৌড়ে নাহিদা-ফারজানা"" at 2901; ""প্রতিদিনের সংবাদ ইউটিউব চ্যানেলে সাবস্ক্রাইব করুন"" at 3022",,"stray quote, related headlines, subscribe line"
+62c5f3e4025232d1,full,fix,C1,"""প্রকাশিত: নভেম্বর ২০, ২০২৩, ০৪:১২ দুপুর"" at 66",,timestamp line
+5cfcd987be67df33,full,clean,,,,
+67d01c06777591ff,full,clean,,,,
+2e8caa68e9819bf4,full,clean,,,,
+8ef5470cc1b397b7,full,fix,A3,"""স্লােগান"" at 1650",1653 U+09BE BENGALI VOWEL SIGN AA + U+09C7 BENGALI VOWEL SIGN E,া+ে for ো
+b14e9693052092b1,full,clean,,,,
+dcd2c02f6daa9af7,full,fix,C1;B5,"""Download Link of শেষের অশ্রু PDF বই"" at 1734; ""আরো পিডিএফ ডাউনলোড করুন"" at 1771|""বইয়ের নামঃ"" at 420",,PDF-download page chrome; flattened table
+8bd11e9b57655523,full,clean,,,,
+be5469f19ac9f9ab,full,clean,,,,
+a0d44e27d217989b,partial,drop,D4;D3;A5,"""একটি হাসি পৃথিবী পরিবর্তন করতে পারে না, কিন্তু …"" at 986|""Love is a beautiful feeling that can be express…"" at 0|""চমত্কার"" at 9575",9577 U+09A4 BENGALI LETTER TA + U+09CD BENGALI SIGN VIRAMA (expected U+09CE),English SEO page with machine-translated captions
+016f4687d4a36ce9,full,clean,D3,"""GE Power India Ltd, GE T&D India Ltd"" at 547",,company names in English
+7b6cf56273856d1b,partial,drop,D4;C1,"""তাদের মধ্যে কয়েকজন ওজন কমানোর জন্য ডায়েট এবং …"" at 49|""এছাড়াও পড়ুন: আসুন এইচআইভি/এইডস সংক্রমণ চিনতে,…"" at 468",,/bn/ auto-translated Good Doctor article
+9ae4f5a45a71c518,full,clean,,,,
+d47da4befd3d83de,full,clean,,,,
+472a7c984104da64,partial,fix,C1,"""আরো পড়তে পারেন:"" at 9889",,empty read-more stub at the end
+2f7dbf5e15f335d3,full,clean,,,,
+937ce1e450b426b5,full,fix,G2,"""র্যাপিড অ্যাকশন ব্যাটালিয়ন (র্যাব)"" at 648",648 U+09B0 BENGALI LETTER RA + U+09CD BENGALI SIGN VIRAMA + U+09AF BENGALI LETTER YA (expected U+09B0 U+200D U+09CD U+09AF),র্যাপিড/র্যাব without ZWJ
+e9ab2a2b522f5799,full,fix,C5;D3,"""- আসানসোলে বিজেপি বিধায়ক অগ্নিমিত্রা পালের পৈত…"" at 1164|""Agnimitra Pal के पैतृक घर के बाहर प्रदर्शन"" at 1308",,related-headline list incl. Hindi headlines
+df219423876b3c6c,full,clean,,,,
+14ba579cdd10b026,full,clean,,,,
+65d53111eecdb10d,full,clean,,,,judgment: phone number is the fire station's official line
+1ba559f84f223c6d,partial,fix,C1,"""পোস্ট সূচিপত্রঃ কি খেলে মাথা ঘোরা কমবে - মাথা ঘ…"" at 229",,table-of-contents block
