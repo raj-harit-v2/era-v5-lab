@@ -25,7 +25,7 @@ Bottlenecks below are from the v0 traces (`results/slowest5_v0.md`, A100, `base.
 |---|---|---|---|
 | Batch sampling + host-to-device copy | `data` (1); `data:prefetch` (3) | `data.prefetch` | CPU, copy overlap |
 | KE2 / KE v1 code + projection | `embed.ke` (3), in `embed` (2) | `model.embedding`, `model.ke_mode` | memory |
-| LayerNorm x 2 per block | `blockN.ln1`, `blockN.ln2` (3) | | memory |
+| LayerNorm x 2 per block | `blockN.ln1`, `blockN.ln2` (3) | `model.ln_impl` | memory |
 | QKV matmul (+ RoPE) | `blockN.attn.qkv` (3) | `model.position` | compute |
 | Attention kernel | `blockN.attn.sdpa` (3) | `model.attn_impl` | compute / memory |
 | Output projection | `blockN.attn.proj` (3) | | memory |
@@ -33,7 +33,7 @@ Bottlenecks below are from the v0 traces (`results/slowest5_v0.md`, A100, `base.
 | MoE router | `blockN.moe.router` (3) | | launch |
 | MoE dispatch: gather, experts, combine | `blockN.moe.dispatch` (3) and its `.expertE` / `.grouped` / `.grouped_fixed` | `model.moe.dispatch` | host syncs + launch |
 | MoE shared experts | `blockN.moe.shared` (3) | | compute |
-| Final LN + head + cross-entropy | `head+loss` (2); `head+loss.mtp` (3) | `model.ce_impl`, `model.mtp` | **memory (fp32 logits)** |
+| Final LN + head + cross-entropy | `head+loss` (2); `head+loss.ln_f`, `head+loss.mtp` (3) | `model.ln_impl`, `model.ce_impl`, `model.mtp` | **memory (fp32 logits)** |
 | Backward of every part above | `bwd:<part>` | same switches | ~2x forward |
 | Reversible: invert, recompute, local backward | `bwd.invert:blockN`, `bwd.recompute:blockN`, `bwd:blockN.grad` (3) | `model.reversible`, `model.rev_impl` | launch |
 | fp16 unscale, gradient clipping | `opt.unscale`, `opt.clip` (2) | | small |
