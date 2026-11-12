@@ -6,6 +6,7 @@
 | `slowest5_v0.md` | The five slowest parts of the step, each with a trace and a week-2 idea | A100-SXM4-40GB | `f1ed7f2` |
 | `repeat_check_v1.md` | The 5% repeat check on hosts other than Colab (week 2) | several, named per section | named per section |
 | `speed_v1.md` | Gate 2 evidence: baseline, CE A/B, MoE dispatch | named per row | named per row |
+| `gate2_proposal.md` | Gate 2 Week-2 handout: Sat-14 ask + evidence pointers | n/a (points at pack rows) | tip `g6/dev` after #68 |
 | `headloss_fwd_t4.md` | Part 6 (`fwd:head+loss`) profile, torch vs chunked CE | Tesla T4 | `7bc8bee` |
 
 The v0 pairs are `baseline_v0` + `baseline_v0-run2` and `mtp_v0` + `mtp_v0-run2` (`model.mtp=true`). Their run JSONs,

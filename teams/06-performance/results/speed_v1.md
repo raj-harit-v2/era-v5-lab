@@ -27,13 +27,13 @@ Windows WDDM is out of scope for benchmark gating. No row in this pack comes fro
 | :--- | :--- | :--- | :--- | ---: | ---: | ---: | :--- |
 | baseline_v0 (ref) | A100-SXM4-40GB | `f1ed7f2` | `configs/base.yaml` | 42.9 | 95,400 | 6.54 | Week-1 tip baseline |
 | baseline_v1 (job) | one lab GPU | `9b43b9a` (job #239) | wrapper `--synthetic`; `clean,layer` L3; bf16; B×T 16×256 | **86.09 / 86.99** (1.0%) | **47,576 / 47,086** | — | Early Gate-2 **clean** row (history). Layer `--repeat 2` FAIL (heat). MFU/HFU scrubbed. |
-| baseline_v1 Lab Cap A4 | one lab GPU (SwPowerCap) | `95bd81a` (job #239) | wrapper `--synthetic`; cool-down → discard `layerW` → `layerA` vs `layerB`; L3 | **~101.1** (cite **101–107** across last 3 runs; do not lock) | — | — | **PASS** exit 0, **26/26** within 10% or 0.5 ms (**0** by abs floor only). Recorder overhead 0.7–3.7%. Keep harness warning: 20 gated parts p10–p90 >10%. Job-only Lab Cap (not tip default). **Pre tip #60.** |
+| baseline_v1 Lab Cap A4 | one lab GPU (SwPowerCap) | `95bd81a` (job #239) | wrapper `--synthetic`; cool-down → discard `layerW` → `layerA` vs `layerB`; L3 | **~101.1** (cite **101–107** across last 3 runs; do not lock) | **~40,514** (B×T 16×256 / 0.1011 s; TSAI median) | — | **PASS** exit 0, **26/26** within 10% or 0.5 ms (**0** by abs floor only). Recorder overhead 0.7–3.7%. Keep harness warning: 20 gated parts p10–p90 >10%. Job-only Lab Cap (not tip default). **Pre tip #60.** |
 
 Sources: Week-1 docs; [class PR #239](https://github.com/theschoolofai/era-v5-lab/pull/239) TSAI wrapper results (4 Nov early clean; 12 Nov Lab Cap A4 @ `95bd81a`).
 
 Lab Cap (job-only on this node): `compare_clean_step=false`, `tol_pct=10`, `abs_tol_ms=0.5`, warm layer pair after 120s cool-down. Tip `base.yaml` defaults unchanged. Tip #60 (Muon launch cut + void fill) is on `g6/dev` but **not** in the #239 class job tree.
 
-Class #369 @ 1123e50 (post tip #60) also PASS: exit 0, 26/26 under the same Lab Cap A4. Clean step median 116.7 ms with SwPowerCap on all clean samples (12/12); 1 part passed by the 0.5 ms rule; 23 parts have p10–p90 spread above 10%. Do not compare 116.7 ms with #239 (101–107 ms) as a speed change. #239 @ 95bd81a stays the Gate-2 baseline.
+Footnote: class #369 @ 1123e50 (post tip #60) also PASS under SwPowerCap; do not compare its clean ms to #239. Gate 2 baseline remains #239 @ `95bd81a`.
 
 ---
 
@@ -258,6 +258,4 @@ G5 Colab MoE §3 timed t1/t2 **shapes** for dispatch A/B only — not TSAI arm j
 
 ## 5. Trainer recommendation (Gate 2)
 
-**Ask for Sat 14:** Keep trainer defaults on **torch CE**, **`moe.dispatch=sorted`**, and **bf16** (already the measured path). Use class **#239 Lab Cap A4** (`95bd81a`) as the lab baseline under the **job-only** warm-layer pair rule (tol 10%, abs 0.5 ms unused; clean step about **101–107 ms** across recent runs — cite the range, do not lock a single KPI; keep the harness spread warning). Prefer **torch** for step; treat fused/Triton CE (including merged tip #52) as **memory options, not step wins** (same-SHA A100 §2c). Offer **B3 `batch32.yaml`** as an explicit throughput config (+11% tokens/s on A100); do **not** change default batch. Leave **B2** (no win at V=131072), **B5** (already present / no win), and **B1** (opt-in compile) out of the default flip. Arm jobs t1–t3 remain **awaiting**. Tip #60 is on `g6/dev` but this #239 evidence is **pre-#60**; post-#60 class #369 PASS under SwPowerCap; #239 remains the baseline (see §1). Hold **#61 g6-v2 MFU** until after Gate 2 / G8 labeling.
-
-Short CAP/TSAI handout: [`gate2_proposal.md`](gate2_proposal.md).
+Canonical Sat-14 ask (and open items): [`gate2_proposal.md`](gate2_proposal.md).
