@@ -4,11 +4,13 @@ One table of measured runs for baseline, CE A/B, and MoE dispatch. Fill empty ar
 
 | Section | Status |
 | :--- | :--- |
-| Baseline (Week-1 ref + #239 clean) | Filled |
+| Baseline (Week-1 ref + #239 clean + Lab Cap A4) | Filled (`95bd81a` PASS 26/26; clean ~101–107 ms range) |
+| B-stack (B1–B5) | Filled: B3 throughput option; B2/B5 no default win; B1 opt-in; B4 already-on |
 | Fused / Triton CE A/B | Filled: 2a/2b cross-SHA (A100-40GB); 2c same-SHA on `7ef9f14` (A100-80GB, plus T4) |
+| Triton CE/LN backends | Merged tip #52 @ `710f53e` — **opt-in only**; defaults stay torch |
 | MoE loop / sorted / grouped | Filled (#53 / Adinath) |
-| Config arms t1–t3 (job requests) | TBD |
-| Recommendation | Draft below |
+| Config arms t1–t3 (job requests) | Awaiting (jobs not filed) |
+| Recommendation | Polished below (Gate 2 ask) |
 | Repeat check scope | Windows WDDM out of scope ([repeat_check_v1 §4](repeat_check_v1.md#4-rtx-5070-ti-windows-wddm--out-of-scope-2727-code-parts-pass-windows-disk-gap-recorded)) |
 
 ---
@@ -24,9 +26,28 @@ Windows WDDM is out of scope for benchmark gating. No row in this pack comes fro
 | Run | GPU | Commit | Config | step_ms med | tokens/s | peak_alloc GiB | Notes |
 | :--- | :--- | :--- | :--- | ---: | ---: | ---: | :--- |
 | baseline_v0 (ref) | A100-SXM4-40GB | `f1ed7f2` | `configs/base.yaml` | 42.9 | 95,400 | 6.54 | Week-1 tip baseline |
-| baseline_v1 (job) | one lab GPU | `9b43b9a` (job #239) | wrapper `--synthetic`; `clean,layer` L3; bf16; B×T 16×256 | **86.09 / 86.99** (1.0%) | **47,576 / 47,086** | — | Gate-2 **clean** baseline. Layer `--repeat 2` FAIL (heat pause in run 2). MFU/HFU scrubbed. |
+| baseline_v1 (job) | one lab GPU | `9b43b9a` (job #239) | wrapper `--synthetic`; `clean,layer` L3; bf16; B×T 16×256 | **86.09 / 86.99** (1.0%) | **47,576 / 47,086** | — | Early Gate-2 **clean** row (history). Layer `--repeat 2` FAIL (heat). MFU/HFU scrubbed. |
+| baseline_v1 Lab Cap A4 | one lab GPU (SwPowerCap) | `95bd81a` (job #239) | wrapper `--synthetic`; cool-down → discard `layerW` → `layerA` vs `layerB`; L3 | **~101.1** (cite **101–107** across last 3 runs; do not lock) | — | — | **PASS** exit 0, **26/26** within 10% or 0.5 ms (**0** by abs floor only). Recorder overhead 0.7–3.7%. Keep harness warning: 20 gated parts p10–p90 >10%. Job-only Lab Cap (not tip default). **Pre tip #60.** |
 
-Sources: Week-1 docs; [class PR #239](https://github.com/theschoolofai/era-v5-lab/pull/239) TSAI wrapper result (4 Nov).
+Sources: Week-1 docs; [class PR #239](https://github.com/theschoolofai/era-v5-lab/pull/239) TSAI wrapper results (4 Nov early clean; 12 Nov Lab Cap A4 @ `95bd81a`).
+
+Lab Cap (job-only on this node): `compare_clean_step=false`, `tol_pct=10`, `abs_tol_ms=0.5`, warm layer pair after 120s cool-down. Tip `base.yaml` defaults unchanged. Tip #60 (Muon launch cut + void fill) is on `g6/dev` but **not** in the #239 class job tree.
+
+Class #369 @ 1123e50 (post tip #60) also PASS: exit 0, 26/26 under the same Lab Cap A4. Clean step median 116.7 ms with SwPowerCap on all clean samples (12/12); 1 part passed by the 0.5 ms rule; 23 parts have p10–p90 spread above 10%. Do not compare 116.7 ms with #239 (101–107 ms) as a speed change. #239 @ 95bd81a stays the Gate-2 baseline.
+
+---
+
+## 1b. B-stack (compile / vocab / batch / bf16 / pinmem)
+
+| Item | Tip PR | Result | Pack reading |
+| :--- | :--- | :--- | :--- |
+| B1 compile | [#58](https://github.com/vaibh27/era-v5-lab/pull/58) | Opt-in full-model compiler mode | Available behind flag; not a default flip for Gate 2 |
+| B2 vocab pad ×128 | [#63](https://github.com/vaibh27/era-v5-lab/pull/63) + [gist](https://gist.github.com/smitasasindran/a85832df93d7c4c423f9a435611a937e) | Win on unaligned vocab; **no gain at current V=131072** | Keep pad/mask for future tokenizer; **no trainer default change today** |
+| B3 batch 32 | [#64](https://github.com/vaibh27/era-v5-lab/pull/64) + [gist](https://gist.github.com/keshavamurali/97edd9f62db9d20388dde754fd1cf6ce) | B16→B32 **+11% tokens/s** on A100 (note B and LR) | **Config throughput option** via `configs/batch32.yaml`; not a silent `base.yaml` flip |
+| B4 bf16 | closed as baseline | bf16 already the measured path | Cite as **already on**, not a speedup claim |
+| B5 pinmem H2D | [#65](https://github.com/vaibh27/era-v5-lab/pull/65) | Pinmem/non-blocking already in baseline; prefetch ON/OFF no reliable step win | Results-only; **no trainer speedup** |
+
+Tip #52 (Triton CE/LN) merged @ `710f53e`: defaults remain `ce_impl=torch` / `ln_impl=torch_ln`. Memory-bound path only; do not cite as step win (see §2).
 
 ---
 
@@ -223,7 +244,7 @@ same CE, so the A/B is clean. Across arms, compare the **dispatch** column, not 
 
 ---
 
-## 4. Config arm jobs (TBD)
+## 4. Config arm jobs (awaiting)
 
 | Run | Config | Status |
 | :--- | :--- | :--- |
@@ -231,8 +252,10 @@ same CE, so the A/B is clean. Across arms, compare the **dispatch** column, not 
 | arm t2 | `arms/t2.yaml` | Job not filed / awaiting TSAI |
 | arm t3 | `arms/t3.yaml` | Job not filed / awaiting TSAI |
 
+G5 Colab MoE §3 timed t1/t2 **shapes** for dispatch A/B only — not TSAI arm job rows.
+
 ---
 
-## 5. Draft trainer recommendation (Gate 2)
+## 5. Trainer recommendation (Gate 2)
 
-Until arm jobs and a cooled layer re-run land: use **#239 clean** (~87 ms / ~47k tok/s on `9b43b9a`, synthetic) as the lab baseline; keep **`moe.dispatch=sorted`** as the MoE default for the measured single-pass regime; treat fused/Triton CE as **memory wins, not step wins** vs torch (A100-40GB cross-SHA evidence, 2a/2b). The same-SHA A100 run on `7ef9f14` (2c) confirms it on one commit: torch fastest; `chunked` and `fused` tied at about +34% as the cheapest low-memory options; `triton_ce` and `fused_cce` tied at about +150% with the lowest peak. Revisit after the layer re-run.
+**Ask for Sat 14:** Keep trainer defaults on **torch CE**, **`moe.dispatch=sorted`**, and **bf16** (already the measured path). Use class **#239 Lab Cap A4** (`95bd81a`) as the lab baseline under the **job-only** warm-layer pair rule (tol 10%, abs 0.5 ms unused; clean step about **101–107 ms** across recent runs — cite the range, do not lock a single KPI; keep the harness spread warning). Prefer **torch** for step; treat fused/Triton CE (including merged tip #52) as **memory options, not step wins** (same-SHA A100 §2c). Offer **B3 `batch32.yaml`** as an explicit throughput config (+11% tokens/s on A100); do **not** change default batch. Leave **B2** (no win at V=131072), **B5** (already present / no win), and **B1** (opt-in compile) out of the default flip. Arm jobs t1–t3 remain **awaiting**. Tip #60 is on `g6/dev` but this #239 evidence is **pre-#60**; post-#60 class #369 PASS under SwPowerCap; #239 remains the baseline (see §1). Hold **#61 g6-v2 MFU** until after Gate 2 / G8 labeling.
