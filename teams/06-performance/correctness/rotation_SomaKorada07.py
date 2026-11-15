@@ -241,7 +241,8 @@ def test_pair(name, device):
 
 @pytest.mark.parametrize("name", FP32_PAIRS)
 def test_pair_fails_the_1_01_drill(name, device):
-    with pytest.raises(AssertionError):
+    # must fail on the numerical comparison of the output, not on any other assertion
+    with pytest.raises(AssertionError, match=r"out\[0\]: rel_err="):
         check(PAIRS[name], device, fast_override=scaled(1.01))
 
 
