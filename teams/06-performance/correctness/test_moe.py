@@ -8,16 +8,19 @@ no shared), .bf16 (routing replayed), .swiglu, .swiglu.bf16. The fp32 pairs rout
 asserts every routing margin is > 1e-6; if that fires after a change, change SEED.
 Routing replay: replay gives the normal forward, holds the choice across a near tie and a clear switch.
 Properties: router_bias changes selection not gates, update_bias, counts, shared expert, fp32 router, init scale.
+Additional .extended. pairs add direct 16-expert dispatch/count/gate-gradient boundaries and 16+1 integration.
+Run --all-configs to include all implementations; new fp32 pairs have explicit 1.01 rejection tests.
 """
 from __future__ import annotations
 
 import math
+from contextlib import nullcontext
 
 import pytest
 import torch
 import torch.nn as nn
 
-from correctness.framework import PAIRS, Case, check, pair, pairs_in, rel_err, to64
+from correctness.framework import PAIRS, Case, check, pair, pairs_in, rel_err, scaled, to64
 from models.config import ModelConfig
 from models.gpt import MLP, _residual_std
 from models.moe import DISPATCH, SparseMoE, record_routing, replay_routing
@@ -156,16 +159,133 @@ for _d in DISPATCH:
     pair(f"moe.{_d}.swiglu.bf16", dtype=torch.bfloat16)(_bf16_case(_d, activation="swiglu"))
 
 
+# Extended coverage: direct gate gradients/counts and 16+1 expert integration.
+
+EXTENDED_EXPERTS = 16
+EXTENDED_FAST_DISPATCH = ("sorted", "grouped")
+# name, tokens, input width, expert hidden width, top-k, activation
+EXTENDED_DISPATCH_CASES = (
+    ("single", 1, 17, 29, 2, "gelu"),
+    ("ragged", 19, 33, 47, 2, "gelu"),
+    ("strided", 9, 17, 31, 2, "swiglu"),
+    ("top1", 5, 13, 23, 1, "gelu"),
+    ("topall", 3, 7, 11, EXTENDED_EXPERTS, "swiglu"),
+)
+
+
+def _extended_strided_values(x):
+    """Same values, noncontiguous last dimension, with a differentiable path to x."""
+    return torch.stack((x, torch.zeros_like(x)), dim=-1).flatten(-2)[..., ::2]
+
+
+def _extended_routes(n, k):
+    # Distinct expert IDs per token, includes wraparound at expert 15, and has
+    # deliberately unequal counts when n is not a multiple of EXTENDED_EXPERTS.
+    return (torch.arange(n)[:, None] * 3 + torch.arange(k)[None, :] * 7 + 15) % EXTENDED_EXPERTS
+
+
+def _extended_moe(dispatch, dim, hidden, k=2, shared=0, activation="gelu"):
+    torch.manual_seed(307)
+    module = SparseMoE(dim, EXTENDED_EXPERTS, k, expert_hidden=hidden,
+                       num_shared=shared, dispatch=dispatch, activation=activation)
+    rng = torch.Generator().manual_seed(308)
+    with torch.no_grad():
+        for name, p in module.named_parameters():
+            p.copy_(torch.randn(p.shape, generator=rng) * (0.12 if name.endswith("weight") else 0.03))
+        module.router_bias.copy_(torch.randn(EXTENDED_EXPERTS, generator=rng) * 0.03)
+    return module
+
+
+def _extended_dispatch_case(dispatch, spec):
+    label, n, dim, hidden, k, activation = spec
+
+    def build(device):
+        fast = _extended_moe(dispatch, dim, hidden, k, activation=activation).to(device)
+        ref = to64(fast)
+        routes = _extended_routes(n, k)  # CPU indices for the token-wise definition.
+        indices = routes.to(device)
+        expected_counts = torch.bincount(routes.flatten(), minlength=EXTENDED_EXPERTS).to(device)
+        rng = torch.Generator().manual_seed(309)
+        x = torch.randn(n, dim, generator=rng).to(device).requires_grad_()
+        gates = torch.rand(n, k, generator=rng) + 0.2
+        gates = (gates / gates.sum(-1, keepdim=True)).to(device).requires_grad_()
+
+        def definition(inp, weights):
+            rows = [sum(weights[t, j] * ref_expert(ref.experts[int(routes[t, j])], inp[t])
+                        for j in range(k)) for t in range(n)]
+            return torch.stack(rows), expected_counts.double()
+
+        def packed(inp, weights):
+            if label == "strided":
+                inp, weights = _extended_strided_values(inp), _extended_strided_values(weights)
+                assert not inp.is_contiguous() and not weights.is_contiguous()
+            out, counts = DISPATCH[dispatch](fast, inp, indices, weights)
+            assert torch.equal(counts, expected_counts.to(counts.dtype)), "dispatch route counts changed"
+            return out, counts
+
+        # Direct dispatch excludes router/shared parameters: neither is used by
+        # this kernel. Gates are independent differentiable inputs instead.
+        params = lambda m: list(m.experts.parameters())
+        return Case(definition, packed, [x, gates], params(ref), params(fast))
+
+    return build
+
+
+def _extended_integration_case(dispatch, activation, bf16=False):
+    def build(device):
+        if bf16 and device.type == "cuda" and not torch.cuda.is_bf16_supported():
+            pytest.skip("CUDA bf16 unsupported")
+        fast = _extended_moe(dispatch, 17, 31, shared=1, activation=activation).to(device)
+        ref = to64(fast)
+        x = torch.randn(1, 19, 17, generator=torch.Generator().manual_seed(310)).to(device).requires_grad_()
+        # Hold the bf16 discrete choice fixed, as the existing MoE pairs do.
+        # FP32 pairs independently select routes on each side with safe margins.
+        routes = []
+        if bf16:
+            with torch.no_grad(), torch.autocast(device.type, dtype=torch.bfloat16), record_routing(fast, routes):
+                fast(x.to(torch.bfloat16))
+        else:
+            margins = []
+            with torch.no_grad():
+                reference_moe(ref, x.double(), margins=margins)
+            assert min(margins) > MIN_MARGIN, "16-expert fixture has an ambiguous routing margin"
+
+        def fast_fn(inp):
+            with torch.autocast(device.type, dtype=torch.bfloat16) if bf16 else nullcontext():
+                return fast(inp)
+
+        return Case(ref=lambda inp: reference_moe(ref, inp, forced=routes[0] if bf16 else None),
+                    fast=fast_fn, inputs=[x], params_ref=list(ref.parameters()), params_fast=list(fast.parameters()))
+
+    return build
+
+
+for _dispatch in EXTENDED_FAST_DISPATCH:
+    for _spec in EXTENDED_DISPATCH_CASES:
+        _suffix = ".swiglu" if _spec[-1] == "swiglu" else ""
+        pair(f"moe.{_dispatch}.extended.dispatch16.{_spec[0]}{_suffix}")(_extended_dispatch_case(_dispatch, _spec))
+    for _activation in ("gelu", "swiglu"):
+        _suffix = ".swiglu" if _activation == "swiglu" else ""
+        pair(f"moe.{_dispatch}.extended.shared16{_suffix}")(_extended_integration_case(_dispatch, _activation))
+    pair(f"moe.{_dispatch}.extended.shared16.bf16", dtype=torch.bfloat16)(
+        _extended_integration_case(_dispatch, "gelu", bf16=True))
+
+
 @pytest.mark.parametrize("name", pairs_in(__name__))
 def test_pair(name, device):
     errors = check(PAIRS[name], device)
     assert "out[0]" in errors and "grad_in[0]" in errors, f"{name}: output and input gradient must be compared"
+    if ".dispatch16." in name:
+        assert "out[1]" in errors and "grad_in[1]" in errors, "counts and independent gate gradients must be checked"
     assert len([k for k in errors if k.startswith("grad_param")]) >= 5, f"{name}: too few gradients compared"
 
 
 def test_one_set_of_pairs_per_dispatch():
     want = [f"moe.{d}{s}" for d in DISPATCH for s in ("", ".idle", ".top3", ".bf16", ".swiglu", ".swiglu.bf16")]
-    assert sorted(pairs_in(__name__)) == sorted(want)
+    # Keep the original six baseline variants per registry entry. Additional
+    # boundary/integration pairs are registered above and run by test_pair too.
+    baseline = [name for name in pairs_in(__name__) if ".extended." not in name]
+    assert sorted(baseline) == sorted(want)
 
 
 def test_idle_expert_gets_no_tokens(device):
@@ -357,3 +477,17 @@ def test_lab_init_matches_dense_scale():
         lab, dflt = (moe(x).std() / base).item(), (default(x).std() / base).item()
     assert 0.5 < lab < 2.0, f"lab init f is {lab:.2f}x the dense MLP"
     assert dflt > 4.0, f"default init gives {dflt:.2f}x: the bound above would not catch a lost init"
+
+@pytest.mark.parametrize("name", [n for n in pairs_in(__name__) if ".extended." in n and PAIRS[n].drill])
+def test_extended_fp32_pair_rejects_one_percent_error(name, device):
+    with pytest.raises(AssertionError, match=r"out\[0\]: rel_err=.* > tol="):
+        check(PAIRS[name], device, fast_override=scaled(1.01))
+
+
+@pytest.mark.parametrize("dispatch", EXTENDED_FAST_DISPATCH)
+def test_dispatch_pair_rejects_wrong_gate_slot(dispatch, device):
+    def swap_gates(fn):
+        return lambda x, gates: fn(x, gates.flip(-1))
+
+    with pytest.raises(AssertionError, match=r"out\[0\]: rel_err=.* > tol="):
+        check(PAIRS[f"moe.{dispatch}.extended.dispatch16.ragged"], device, fast_override=swap_gates)

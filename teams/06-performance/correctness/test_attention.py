@@ -8,16 +8,19 @@ Pairs: attention.causal[.mha|.mqa|.lab] (SDPA), [.fallback|.mqa_fallback|.lab_fa
 .eager[_mha|_mqa|_lab|_bf16]; attention.rope[.mha|.mqa|.fallback|.eager|.theta500|.bf16]. T = 37.
 Properties: causality on every path, the paths agree, RoPE scores depend only on relative position.
 The k part of c_attn.bias has an exact zero gradient, so errors are taken over whole tensors.
+Additional .extended. pairs add sequence/head-width boundaries, strided inputs and bf16 GQA;
+explicit 1.01, causal-gradient and removed-mask checks live in this same file.
 """
 from __future__ import annotations
 
 import math
+from contextlib import nullcontext
 
 import pytest
 import torch
 
 import models.gpt as gpt
-from correctness.framework import PAIRS, Case, check, pair, pairs_in, rel_err, to64
+from correctness.framework import PAIRS, Case, check, pair, pairs_in, rel_err, scaled, to64
 from models.config import ModelConfig
 from models.gpt import GQAttention
 
@@ -153,6 +156,76 @@ pair("attention.causal.eager_bf16", dtype=torch.bfloat16)(_bf16_build("eager"))
 pair("attention.rope.bf16", dtype=torch.bfloat16)(_bf16_build("sdpa", rope_theta=10000.0))
 
 
+# Extended coverage: sequence/head-width boundaries, strided inputs and precision.
+
+def _extended_strided_values(x):
+    """Same values, noncontiguous last dimension, with a differentiable path to x."""
+    return torch.stack((x, torch.zeros_like(x)), dim=-1).flatten(-2)[..., ::2]
+
+
+def _extended_attention_module(tokens, heads, head_dim, kv, impl, theta=None):
+    torch.manual_seed(311)
+    cfg = ModelConfig(n_embd=heads * head_dim, n_head=heads, n_kv_head=kv,
+                      block_size=max(tokens, 65), attn_impl=impl,
+                      position="rope" if theta is not None else "learned", rope_theta=theta)
+    module = GQAttention(cfg, "extended.attn")
+    rng = torch.Generator().manual_seed(312)
+    with torch.no_grad():
+        for name, p in module.named_parameters():
+            p.copy_(torch.randn(p.shape, generator=rng) * (0.08 if name.endswith("weight") else 0.03))
+    return module
+
+
+def _extended_attention_case(tokens, heads=4, head_dim=16, kv=4, impl="sdpa",
+                    theta=None, fallback=False, strided=False, bf16=False):
+    def build(device):
+        if impl == "sdpa" and kv != heads and not fallback and not gpt._SDPA_GQA:
+            pytest.skip("native SDPA GQA requires torch >= 2.5")
+        if bf16 and device.type == "cuda" and not torch.cuda.is_bf16_supported():
+            pytest.skip("CUDA bf16 unsupported")
+        fast = _extended_attention_module(tokens, heads, head_dim, kv, impl, theta).to(device)
+        ref = to64(fast)
+        x = torch.randn(1, tokens, heads * head_dim,
+                        generator=torch.Generator().manual_seed(313)).to(device).requires_grad_()
+
+        def fast_fn(inp):
+            old = gpt._SDPA_GQA
+            try:
+                if fallback:
+                    gpt._SDPA_GQA = False
+                if strided:
+                    inp = _extended_strided_values(inp)
+                    assert not inp.is_contiguous()
+                with torch.autocast(device.type, dtype=torch.bfloat16) if bf16 else nullcontext():
+                    return fast(inp)
+            finally:
+                gpt._SDPA_GQA = old
+
+        def definition(inp):
+            return naive_attention(inp, ref.c_attn.weight, ref.c_attn.bias,
+                                   ref.c_proj.weight, ref.c_proj.bias, heads, kv, theta)
+
+        return Case(definition, fast_fn, [x], list(ref.parameters()), list(fast.parameters()))
+
+    return build
+
+
+for _impl in ("eager", "sdpa"):
+    for _tokens in (1, 2, 31, 32, 33, 64, 65):
+        pair(f"attention.causal.extended.{_impl}.mha.t{_tokens}", tol=1e-5, grad_tol=1e-4)(
+            _extended_attention_case(_tokens, impl=_impl))
+    for _label, _heads, _hd, _kv in (("mha", 4, 32, 4), ("gqa", 8, 64, 2), ("mqa", 4, 16, 1)):
+        pair(f"attention.causal.extended.{_impl}.{_label}.hd{_hd}", tol=1e-5, grad_tol=1e-4)(
+            _extended_attention_case(33, _heads, _hd, _kv, _impl, strided=True))
+    pair(f"attention.rope.extended.{_impl}.gqa.hd32", tol=1e-5, grad_tol=1e-4)(
+        _extended_attention_case(33, head_dim=32, kv=2, impl=_impl, theta=10000.0))
+    pair(f"attention.causal.extended.{_impl}.gqa.bf16", dtype=torch.bfloat16)(
+        _extended_attention_case(33, head_dim=32, kv=2, impl=_impl, bf16=True))
+
+pair("attention.causal.extended.sdpa.gqa.fallback", tol=1e-5, grad_tol=1e-4)(
+    _extended_attention_case(33, head_dim=32, kv=2, fallback=True))
+
+
 @pytest.mark.parametrize("name", pairs_in(__name__))
 def test_pair(name, device):
     errors = check(PAIRS[name], device)
@@ -248,3 +321,38 @@ def test_rope_buffers_not_in_state_dict():
     plain, rope = _module(N_HEAD // 2), _module(N_HEAD // 2, rope_theta=10000.0)
     assert plain.state_dict().keys() == rope.state_dict().keys()
     assert sum(p.numel() for p in plain.parameters()) == sum(p.numel() for p in rope.parameters())
+
+@pytest.mark.parametrize("name", [n for n in pairs_in(__name__) if ".extended." in n and PAIRS[n].drill])
+def test_extended_fp32_pair_rejects_one_percent_error(name, device):
+    with pytest.raises(AssertionError, match=r"out\[0\]: rel_err=.* > tol="):
+        check(PAIRS[name], device, fast_override=scaled(1.01))
+
+
+@pytest.mark.parametrize("impl", ["eager", "sdpa"])
+@pytest.mark.parametrize("theta", [None, 10000.0], ids=["learned", "rope"])
+def test_attention_prefix_has_no_future_output_or_gradient(impl, theta, device):
+    module = _extended_attention_module(33, 4, 32, 4, impl, theta).to(device)
+    rng = torch.Generator().manual_seed(314)
+    x = torch.randn(1, 33, 128, generator=rng).to(device).requires_grad_()
+    changed = x.detach().clone()
+    changed[:, 17:] += torch.randn(1, 16, 128, generator=rng).to(device)
+    y = module(x)
+    with torch.no_grad():
+        other = module(changed)
+    torch.testing.assert_close(y[:, :17], other[:, :17], atol=1e-6, rtol=0.)
+    assert (y[:, 17:] - other[:, 17:]).abs().max() > 1e-3, "perturbation did not exercise future outputs"
+    dx, = torch.autograd.grad(y[:, :17].square().sum(), x)
+    assert torch.count_nonzero(dx[:, 17:]) == 0, "future input received a prefix gradient"
+    assert torch.count_nonzero(dx[:, :17]) > 0, "prefix gradient check is vacuous"
+
+
+def test_attention_pair_rejects_removed_causal_mask(device, monkeypatch):
+    original = gpt.F.scaled_dot_product_attention
+
+    def unmasked(q, k, v, **kwargs):
+        kwargs["is_causal"] = False
+        return original(q, k, v, **kwargs)
+
+    monkeypatch.setattr(gpt.F, "scaled_dot_product_attention", unmasked)
+    with pytest.raises(AssertionError, match=r"out\[0\]: rel_err=.* > tol="):
+        check(PAIRS["attention.causal.extended.sdpa.mha.t33"], device)
