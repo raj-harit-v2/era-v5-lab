@@ -1,0 +1,67 @@
+{
+  "pack": "en-nemotroncc-synth.parquet",
+  "pack_sha256": "0f1c3a9866ada7fb5ea2a244135d9766375351bec366c13cd9c5abfb3d82573c",
+  "gold": "en-nemotroncc-synth_gold.csv",
+  "gold_sha256": "075d0f0fe43592787e0ec46761053118419a042a2cb189e75c93e73b63373ee5",
+  "gold_count": 326,
+  "rules": "teams/01-data-a/spec_v1_1/sheets/medicine_english.md",
+  "rules_file_sha256": "bf44f07546f50c3b964f438a91db6286de2aae84d93b8e4f84c4b583c0f417c1",
+  "code_sha256": "882209876997f090dacc2ad2ee71f478be07641ae4b65a3ed227d0c8e716e2e6",
+  "limit_percent": "1",
+  "limit_documents": 3,
+  "status": "PASS",
+  "results": [
+    {
+      "rule": "DA-A8-003",
+      "changed": 0,
+      "dropped": 0,
+      "affected_unique": 0,
+      "errors": 0,
+      "error_types": [],
+      "percent": "0.000000",
+      "result": "PASS",
+      "changed_ids": [],
+      "dropped_ids": [],
+      "affected_ids": []
+    },
+    {
+      "rule": "DA-D7-001",
+      "changed": 0,
+      "dropped": 0,
+      "affected_unique": 0,
+      "errors": 0,
+      "error_types": [],
+      "percent": "0.000000",
+      "result": "PASS",
+      "changed_ids": [],
+      "dropped_ids": [],
+      "affected_ids": []
+    },
+    {
+      "rule": "DA-A8-004",
+      "changed": 0,
+      "dropped": 0,
+      "affected_unique": 0,
+      "errors": 0,
+      "error_types": [],
+      "percent": "0.000000",
+      "result": "PASS",
+      "changed_ids": [],
+      "dropped_ids": [],
+      "affected_ids": []
+    },
+    {
+      "rule": "ALL IN ORDER",
+      "changed": 0,
+      "dropped": 0,
+      "affected_unique": 0,
+      "errors": 0,
+      "error_types": [],
+      "percent": "0.000000",
+      "result": "PASS",
+      "changed_ids": [],
+      "dropped_ids": [],
+      "affected_ids": []
+    }
+  ]
+}

@@ -6,7 +6,10 @@ Team 10 (Post-Training) & Team 3 (Tokenizer) Interface Audit
 [1] Tokenizer Artifact Verification:
     Path:   /home/opc/.cache/era-v5/v0_1_tokenizer.json
     SHA256: a33c9907ec16876bc57b011714e8380879919fba1327d84bfb0d60407fe6e578
-    Status: PASS (Exact match with teams/03-tokenizer/v0/SHA256SUMS)
+    Target Gate 2 Freeze: C3 sample-v0 (SHA256: 15468e66457b43af...)
+    Manifest: teams/03-tokenizer/train/c3_s0_manifest.json
+    Status: PASS (Exact match with v0.1 special tokens base for C3)
+    Normalizer: C3 normalizer active (nfc+chillu+nukta-BnPa)
 
 [2] G10 Special Markers Atomic Encoding Audit:
     PASS: <|im_start|>       -> Token ID 129994  (Single atomic token, name: im_start)

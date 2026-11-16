@@ -5,11 +5,11 @@
   "gold_sha256": "0aa12af6cd0a2a52435111621dac7e65766554e57da58643bdfb14b57d0648d8",
   "gold_count": 202,
   "rules": "teams/01-data-a/spec_v1_1/sheets/medicine_sci.md",
-  "rules_file_sha256": "c46f53c24715a657620ac0eaf08621232d06a7b976156682cc3ffd6d81b3fe5b",
-  "code_sha256": "3efa627d461c3155f8d00140fcf832ebb60d24597ad50d1d0185498c14f3c2d9",
+  "rules_file_sha256": "7ae4ac12a82cef1658a7f51b77ff23bc308b369072da0b63168b514dfd68f120",
+  "code_sha256": "ed7d1cc0a0b4e2620c7e206ab1fd40a172b71442209524461ead92754c00b0cd",
   "limit_percent": "1",
   "limit_documents": 2,
-  "status": "PASS",
+  "status": "FAIL",
   "results": [
     {
       "rule": "DA-A7-001",
@@ -94,20 +94,119 @@
       "affected_ids": []
     },
     {
-      "rule": "ALL IN ORDER",
-      "changed": 1,
+      "rule": "DA-A7-002",
+      "changed": 0,
       "dropped": 0,
+      "affected_unique": 0,
+      "errors": 0,
+      "error_types": [],
+      "percent": "0.000000",
+      "result": "PASS",
+      "changed_ids": [],
+      "dropped_ids": [],
+      "affected_ids": []
+    },
+    {
+      "rule": "DA-A7-003",
+      "changed": 0,
+      "dropped": 0,
+      "affected_unique": 0,
+      "errors": 0,
+      "error_types": [],
+      "percent": "0.000000",
+      "result": "PASS",
+      "changed_ids": [],
+      "dropped_ids": [],
+      "affected_ids": []
+    },
+    {
+      "rule": "DA-A8-002",
+      "changed": 0,
+      "dropped": 0,
+      "affected_unique": 0,
+      "errors": 0,
+      "error_types": [],
+      "percent": "0.000000",
+      "result": "PASS",
+      "changed_ids": [],
+      "dropped_ids": [],
+      "affected_ids": []
+    },
+    {
+      "rule": "DA-C7-005",
+      "changed": 0,
+      "dropped": 1,
       "affected_unique": 1,
       "errors": 0,
       "error_types": [],
       "percent": "0.495050",
       "result": "PASS",
+      "changed_ids": [],
+      "dropped_ids": [
+        "b6fd81dbf90b0d17"
+      ],
+      "affected_ids": [
+        "b6fd81dbf90b0d17"
+      ]
+    },
+    {
+      "rule": "DA-C7-004",
+      "changed": 3,
+      "dropped": 0,
+      "affected_unique": 3,
+      "errors": 0,
+      "error_types": [],
+      "percent": "1.485149",
+      "result": "FAIL",
       "changed_ids": [
-        "920855df51f37db8"
+        "4b958ac1f45443b5",
+        "d0a0a41263e845f5",
+        "eb6ad9726f2d7ddd"
       ],
       "dropped_ids": [],
       "affected_ids": [
-        "920855df51f37db8"
+        "4b958ac1f45443b5",
+        "d0a0a41263e845f5",
+        "eb6ad9726f2d7ddd"
+      ]
+    },
+    {
+      "rule": "DA-C8-005",
+      "changed": 0,
+      "dropped": 0,
+      "affected_unique": 0,
+      "errors": 0,
+      "error_types": [],
+      "percent": "0.000000",
+      "result": "PASS",
+      "changed_ids": [],
+      "dropped_ids": [],
+      "affected_ids": []
+    },
+    {
+      "rule": "ALL IN ORDER",
+      "changed": 4,
+      "dropped": 1,
+      "affected_unique": 5,
+      "errors": 0,
+      "error_types": [],
+      "percent": "2.475248",
+      "result": "FAIL",
+      "changed_ids": [
+        "4b958ac1f45443b5",
+        "920855df51f37db8",
+        "d0a0a41263e845f5",
+        "eb6ad9726f2d7ddd"
+      ],
+      "dropped_ids": [
+        "b6fd81dbf90b0d17"
+      ],
+      "affected_ids": [
+        "4b958ac1f45443b5",
+        "920855df51f37db8",
+        "d0a0a41263e845f5",
+        "eb6ad9726f2d7ddd",
+        "b6fd81dbf90b0d17"
       ]
     }
   ]

@@ -144,7 +144,7 @@ def medicine_a1(text: str) -> str:  # added by Data B: the name harm_test_indic.
 5. **Side effects:** a soft hyphen (U+00AD) inside a word is removed; that is what the author intended. ZWJ and ZWNJ: the counts before and after are the same by construction (the set holds neither), and `test_filters.py` checks it on made-up text of all nine scripts, with each junk character before, after and inside a word that holds a ZWJ or a ZWNJ. NFC is not called, and the text is not re-normalised.
    - Scope: exactly the characters `DISEASES.md` lists for A1 (12 code points; PR #114's rule removes the same 12, which a test checks). Other characters that look invisible (U+200E and U+200F direction marks, U+2060 word joiner, U+061C, U+034F, U+2028, U+00A0) are not A1 in v1 and stay; a test pins that.
    - Order: A1 runs before G1, so a zero-width space between a consonant and its vowel sign no longer hides the cut from G1 (tested).
-   - Real packs: none of the 9 packs on hand holds any of the 12 characters, so the harm result there is 0 changed and shows nothing about A1. The packs that do (`ind-mr-fw2`, `ind-te-sangraha-v`) are not on hand; the authors' results on them are in spec v1.
+   - Real packs: none of the 10 packs on hand holds any of the 12 characters, so the harm result there is 0 changed and shows nothing about A1. The packs that do (`ind-mr-fw2`, `ind-te-sangraha-v`) are not on hand; the authors' results on them are in spec v1.
 6. **Spec v1:** not in spec v1 yet; a candidate for Data B's next rules sheet.
 
 ## Medicine 3: broken vowel sign
@@ -270,6 +270,6 @@ def medicine_g1(text):
    - A visarga with or without a space before it stays as written (TSAI, #240); `test_filters.py` checks it for Kannada, Malayalam and Devanagari.
    - ZWJ and ZWNJ: no owner's function touches either; the counts before and after are checked in `test_filters.py` and in `harm_<pack>.md`. Malayalam: the rule changes no chillu (atomic chillu U+0D7A to U+0D7F, or a consonant + virama + ZWJ), as Team 3's normalizer (#134) expects. Odia and others: the nukta (U+0B3C) count is the same after the fix.
    - NFC: the Kannada and Tamil code call `unicodedata.normalize('NFC', ...)` as the authors wrote it; NFKC is never called.
-   - Hindi and Sanskrit documents get the Devanagari rule too. Its author harm-tested it on `ind-mr-fw2` only (0 of 142 changed); the result for the Hindi and Sanskrit packs is in their `harm_<pack>.md` once the pack files are available.
+   - Hindi and Sanskrit documents get the Devanagari rule too. Its author harm-tested it on `ind-mr-fw2` only (0 of 142 changed). Here it was run on one Hindi pack: `ind-hi-sangraha-s`, 0 of 24 gold documents changed (`harm_ind-hi-sangraha-s.md`). The other Hindi packs and the Sanskrit pack are in their `harm_<pack>.md` once the pack files are available.
    - A mixed-script document gets the owner's fix of its largest Indic script only.
 6. **Spec v1:** not in spec v1 yet; a candidate for Data B's next rules sheet.

@@ -1,8 +1,8 @@
-# Gate 2 proposal, 12 Nov 2026. TSAI signs this on 14 Nov.
-# optim.lr is 1e-3, provisional, for 245-step T1 runs only.
-# Every other open value stays the config v0 default.
+# Gate 2 decision, 14 Nov 2026.
+# Muon, v0 attention, 16 routed experts plus 1 shared, top-2.
+# optim.lr stays 1e-3 and stays provisional.
 # Model sizes and embedding.ke2_output_dim stay empty.
-# The numbers are in experiments/results_v1.md. The reasons are in decisions.md.
+# The reasons are in decisions.md.
 settings:
   - key: run.seed
     value: 1234
@@ -11,12 +11,12 @@ settings:
     value: 1.0
     source: "The harness sets the clip. DeepSpeed clips at 1.0 by default and plain DDP does not."
   - key: optim.name
-    value: adamw
-    source: "No optimizer result. EXP-2 has no held-out bits per byte. Config v0 default stays. 12 Nov 2026."
+    value: muon
+    source: "Gate 2, 14 Nov 2026. The optimizer is Muon. A separate Muon matrix rate was not named, so muon_lr is not set in this file."
   - key: optim.lr
     value: 0.001
     open: true
-    source: "Provisional T1 rate, instructor 12 Nov 2026. 1e-3 has the lowest whole-file val/bpb on all three seeds and the smallest spread, mean 1.9686, SD 0.0070. The three-group, code, and Indic values were not measured. This choice holds for 245-step T1 runs only. EXP-2 and EXP-3 keep their own test of the rate."
+    source: "Gate 2, 14 Nov 2026. The learning rate 1e-3 stays provisional. The T1 table still stands: lowest whole-file val/bpb on all three seeds, smallest spread, mean 1.9686, SD 0.0070, for 245-step T1 runs. Three-group, code, and Indic values were not measured."
   - key: tokenizer.name
     value: BrahmicTokenizer-131K
     source: "G3 week-1 note. BrahmicTokenizer-131K is tokenizer v0. The file arrives 28 Oct."
@@ -32,41 +32,42 @@ settings:
   - key: embedding.ke2_output_dim
     value: null
     open: true
-    source: "TSAI decides the output head. The test models use the dense untied head. This stays empty. 12 Nov 2026."
+    source: "TSAI decides the output head. The test models use the dense untied head. This stays empty. 14 Nov 2026."
   - key: model.n_layer
     value: null
     open: true
-    source: "TSAI fills model sizes on 31 Oct. The test-size line is not copied in."
+    source: "Model sizes stay empty. The T1, T2, and T3 lines are test sizes. 14 Nov 2026."
   - key: model.d_model
     value: null
     open: true
-    source: "TSAI fills model sizes on 31 Oct. The test-size line is not copied in."
+    source: "Model sizes stay empty. The T1, T2, and T3 lines are test sizes. 14 Nov 2026."
   - key: model.n_head
     value: null
     open: true
-    source: "TSAI fills model sizes on 31 Oct. The test-size line is not copied in."
+    source: "Model sizes stay empty. The T1, T2, and T3 lines are test sizes. 14 Nov 2026."
   - key: model.d_ff
     value: null
     open: true
-    source: "TSAI fills model sizes on 31 Oct. The test-size line is not copied in."
+    source: "Model sizes stay empty. The T1, T2, and T3 lines are test sizes. 14 Nov 2026."
   - key: attention.impl
     value: eager
-    source: "Attention has no official bits-per-byte result. RoPE and the window are not copied in. Eager stays. 12 Nov 2026."
+    source: "Gate 2, 14 Nov 2026. Keep the v0 attention. Eager stays. RoPE and the window are not copied in."
   - key: moe.n_expert
-    value: null
-    open: true
-    source: "EXP-3 has no bits per byte. The test-size line is not copied in. 12 Nov 2026."
+    value: 16
+    source: "Gate 2, 14 Nov 2026. 16 routed experts."
+  - key: moe.n_shared
+    value: 1
+    source: "Gate 2, 14 Nov 2026. 1 shared expert."
   - key: moe.top_k
-    value: null
-    open: true
-    source: "TSAI fills model sizes on 31 Oct. The test-size line is not copied in."
+    value: 2
+    source: "Gate 2, 14 Nov 2026. Top-2."
   - key: loss.train_on
     value: ntp
     source: "The logged training loss is next-token loss. A second head is trained on t+2 and logged as loss_mtp."
   - key: data.seq_len
     value: null
     open: true
-    source: "TSAI fills model sizes on 31 Oct. The test-size line is not copied in."
+    source: "Model sizes stay empty. The T1, T2, and T3 lines are test sizes. 14 Nov 2026."
   - key: precision
     value: null
     open: true

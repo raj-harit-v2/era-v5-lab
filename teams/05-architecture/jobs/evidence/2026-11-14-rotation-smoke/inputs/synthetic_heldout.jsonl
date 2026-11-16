@@ -1,0 +1,3 @@
+{"id":"synthetic-eval-en","text":"The committee reviewed the proposal and agreed to meet again next week. Several members asked for more data on the cost of the plan, and the chair promised a short report by Friday. "}
+{"id":"synthetic-eval-code","text":"def merge(a, b):\n    out = []\n    i = j = 0\n    while i < len(a) and j < len(b):\n        if a[i] <= b[j]:\n            out.append(a[i]); i += 1\n        else:\n            out.append(b[j]); j += 1\n    return out + a[i:] + b[j:]\n"}
+{"id":"synthetic-eval-hi","text":"भारत एक विशाल देश है जहाँ कई भाषाएँ बोली जाती हैं। हर राज्य की अपनी संस्कृति और परंपराएँ हैं, और लोग त्योहारों को मिलकर मनाते हैं। "}

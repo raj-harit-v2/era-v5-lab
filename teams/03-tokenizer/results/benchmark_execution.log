@@ -1,0 +1,46 @@
+bench_cpu_speed.py start 2026-11-16T00:21:31+0530
+python 3.11.8 (main, May  2 2025, 02:17:14) [Clang 16.0.0 (clang-1600.0.26.4)]
+platform macOS-15.1.1-arm64-arm-64bit machine=arm64 processor=arm
+affinity {"os": "Darwin", "sched_setaffinity_available": false, "requested": "one CPU core", "enforced": false, "method": null, "cpus": null, "limitation": "Darwin provides no os.sched_setaffinity; TOKENIZERS_PARALLELISM=false and OMP/MKL/OPENBLAS/VECLIB/NUMEXPR threads=1 are set, but a hard one-core CPU affinity pin could not be verified."}
+tokenizers {'c3_sample_v0': {'path': 'teams/03-tokenizer/release/tokenizer.json', 'sha256': '15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3'}, 'p1536': {'path': '$WEEK3DATA/archive/tokenizer.json', 'sha256': 'e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b'}}
+target_bytes 1000000000 runs 3 warmup 1
+loading domain english from $WEEK3DATA/english
+  records=354320 utf8_bytes=1000002183 sha256=c4b96c7a05961246… used_all=False
+loading domain code from $WEEK3DATA/code
+  records=233254 utf8_bytes=1000000966 sha256=d534c7485e69546f… used_all=False
+loading domain indic from $WEEK3DATA/indic
+  records=42260 utf8_bytes=309018421 sha256=57109b404789c22f… used_all=True
+wrote teams/03-tokenizer/results/dataset_manifest.json
+smoke c3_sample_v0: tokens_on_2_docs=1208
+smoke p1536: tokens_on_2_docs=1208
+=== english / c3_sample_v0 (3 runs, warmup=1) ===
+  run 1: 556.826s  1.80 MB/s  371039 tokens/s  tokens=206604413
+  run 2: 602.047s  1.66 MB/s  343170 tokens/s  tokens=206604413
+  run 3: 611.272s  1.64 MB/s  337991 tokens/s  tokens=206604413
+  median: 1.66 MB/s  343170 tokens/s
+=== english / p1536 (3 runs, warmup=1) ===
+  run 1: 627.213s  1.59 MB/s  329511 tokens/s  tokens=206673500
+  run 2: 610.339s  1.64 MB/s  338621 tokens/s  tokens=206673500
+  run 3: 602.615s  1.66 MB/s  342961 tokens/s  tokens=206673500
+  median: 1.64 MB/s  338621 tokens/s
+=== code / c3_sample_v0 (3 runs, warmup=1) ===
+  run 1: 649.900s  1.54 MB/s  395225 tokens/s  tokens=256856455
+  run 2: 393.240s  2.54 MB/s  653180 tokens/s  tokens=256856455
+  run 3: 383.199s  2.61 MB/s  670295 tokens/s  tokens=256856455
+  median: 2.54 MB/s  653180 tokens/s
+=== code / p1536 (3 runs, warmup=1) ===
+  run 1: 387.658s  2.58 MB/s  667893 tokens/s  tokens=258914207
+  run 2: 388.390s  2.57 MB/s  666634 tokens/s  tokens=258914207
+  run 3: 398.909s  2.51 MB/s  649055 tokens/s  tokens=258914207
+  median: 2.57 MB/s  666634 tokens/s
+=== indic / c3_sample_v0 (3 runs, warmup=1) ===
+  run 1: 89.829s  3.44 MB/s  429593 tokens/s  tokens=38589939
+  run 2: 88.285s  3.50 MB/s  437108 tokens/s  tokens=38589939
+  run 3: 88.496s  3.49 MB/s  436066 tokens/s  tokens=38589939
+  median: 3.49 MB/s  436066 tokens/s
+=== indic / p1536 (3 runs, warmup=1) ===
+  run 1: 97.234s  3.18 MB/s  376891 tokens/s  tokens=36646601
+  run 2: 95.216s  3.25 MB/s  384880 tokens/s  tokens=36646601
+  run 3: 96.173s  3.21 MB/s  381047 tokens/s  tokens=36646601
+  median: 3.21 MB/s  381047 tokens/s
+wrote teams/03-tokenizer/results/speed_v1.json

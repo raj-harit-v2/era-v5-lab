@@ -1,0 +1,4 @@
+$ python teams/05-architecture/harness/train_week2.py --config teams/05-architecture/configs/arms/exp3_experts_32.yaml --runtime teams/05-architecture/configs/runtime.yaml --tokenizer ./inputs/tokenizer_v0.json --byte-table ./inputs/raw_table_P32.npz --train-data ./inputs/synthetic_train.jsonl --heldout-data ./inputs/synthetic_heldout.jsonl --device cpu --seed 1243 --lr 0.001 --smoke --smoke-steps 6 --smoke-seq-len 160 --smoke-batch-size 1 --no-checkpoint --out ./out/exp3-experts32
+exit code: 0
+wall seconds (whole command): 46.4
+peak memory of the run (MiB): 6083

@@ -10,8 +10,8 @@ change is enough. Nothing here holds document text.
 U+00AD soft hyphen, U+202A to U+202E bidi embedding and override marks, U+2066 to U+2069 bidi isolate marks.
 **Never removed:** U+200D ZWJ and U+200C ZWNJ. They are part of Indic spelling.
 
-**What the packs we hold contain.** We scanned 4,500 documents in 9 packs (bn-fw2, bn-sangraha-v, kn-fw2,
-kn-sangraha-s, ml-fw2, or-fw2, ta-fw2, ta-sangraha-s, te-sangraha-s) for every invisible, format, control, odd-space,
+**What the packs we hold contain.** We scanned 5,000 documents in 10 packs (bn-fw2, bn-sangraha-v, hi-sangraha-s,
+kn-fw2, kn-sangraha-s, ml-fw2, or-fw2, ta-fw2, ta-sangraha-s, te-sangraha-s) for every invisible, format, control, odd-space,
 private-use and unassigned character. Only three kinds occur:
 
 | Character | Count | Where |
@@ -21,7 +21,7 @@ private-use and unassigned character. Only three kinds occur:
 | U+0C49 (unassigned Telugu code point) | 2 in 1 document | te-sangraha-s |
 
 None of the 12 A1 characters occur, and neither do U+200E, U+200F, U+00A0 or any other space variant. There is also no
-ZWJ in any pack. These packs look cleaned already. Zero ZWJ in 4,500 Indic documents may mean joiners were lost earlier
+ZWJ in any pack. These packs look cleaned already. Zero ZWJ in 5,000 Indic documents may mean joiners were lost earlier
 (disease G2); that is outside the v1 filters, but you may want to know.
 
 **Design consideration for LLM training.** Remove a character only if it means nothing in a left-to-right Indic script
@@ -100,7 +100,7 @@ Options:
 ## 4. The pack files we are missing: please share the links again
 
 The harm test needs `<pack_id>.parquet` for each pack. The links ended on 6 Nov and I misread the instruction and downloaded only the gold set csv files and did not download the packs I needed. 
-I hold the 9 packs listed in section 1. **Please can you share links for these 13:**
+I hold the 10 packs listed in section 1. **Please can you share links for these 12:**
 
 | Pack | Needed for |
 |---|---|
@@ -111,7 +111,6 @@ I hold the 9 packs listed in section 1. **Please can you share links for these 1
 | ind-hi-fw2 | harm test |
 | ind-hi-hplt | harm test; D1 marks (4) |
 | ind-hi-indiccorp | harm test |
-| ind-hi-sangraha-s | harm test |
 | ind-mr-fw2 | harm test; the Devanagari G1 rule's author tested it only here; holds an A1 rule (DB-A1-001) |
 | ind-mr-sangraha-v | harm test; G1 target |
 | ind-gu-fw2 | harm test |
@@ -122,8 +121,8 @@ I hold the 9 packs listed in section 1. **Please can you share links for these 1
 
 ## Current state, so you know what the answers change
 
-- 49 unit tests pass (made-up text only). The harm test passes (D1, A1, G1 and all in order) on the 5 packs that have both a
-  pack file and a gold set: bn-fw2, bn-sangraha-v, kn-fw2, kn-sangraha-s, te-sangraha-s. Each result file also shows the
+- 49 unit tests pass (made-up text only). The harm test passes (D1, A1, G1 and all in order) on the 6 packs that have both a
+  pack file and a gold set: bn-fw2, bn-sangraha-v, hi-sangraha-s, kn-fw2, kn-sangraha-s, te-sangraha-s. Each result file also shows the
   ZWJ and ZWNJ counts before and after.
 - ta-fw2, ta-sangraha-s, ml-fw2, or-fw2 have a pack file but no gold set yet: "gold set empty, not testable".
 - NFC only, never NFKC. ZWJ and ZWNJ are never removed or added.

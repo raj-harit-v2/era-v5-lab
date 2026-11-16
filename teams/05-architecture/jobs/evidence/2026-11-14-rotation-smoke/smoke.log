@@ -1,0 +1,20 @@
+train_week2.py smoke log, 14 Nov 2026 (CPU, fp32, 6 steps, context 160, batch 1, seed 1237)
+Source: teams/05-architecture/harness/train_week2.py at lab main 3af7741. torch 2.5.1+cpu, tokenizers 0.20.3, numpy 2.2.5, PyYAML 6.0.3, Python 3.12.
+Inputs: tokenizer v0 (sha256 2de039f20d17afd17615095c406c43087359673b767ed0fe2c480b995f2af8e5), raw_table_P32.npz rebuilt for v0 (file sha256 5e99508660799f43508a0df0060590e96fa253dd1bb69e2575d8e0f302fdd77f, content sha256 47d411a9c6cae6fa2075935567243e51f4efbc377ccef3eef42c32fce66f869f), synthetic text in inputs/ (not a quality result).
+
+== attn-2 (attn2_swa128_sink.yaml) ==
+command: python teams/05-architecture/harness/train_week2.py --config teams/05-architecture/configs/arms/attn2_swa128_sink.yaml --runtime teams/05-architecture/configs/runtime.yaml --tokenizer ./inputs/tokenizer_v0.json --byte-table ./inputs/tables/raw_table_P32.npz --train-data ./inputs/synthetic_train.jsonl --heldout-data ./inputs/synthetic_heldout.jsonl --device cpu --seed 1237 --smoke --smoke-steps 6 --smoke-seq-len 160 --smoke-batch-size 1 --no-checkpoint --out ./out/attn-2-cpu-6steps-ctx160
+exit code: 0
+model: 237,052,464 parameters, n_layer 8, attn_pattern ['L', 'L', 'L', 'G', 'L', 'L', 'L', 'G'], attn_window 128, attn_sink True
+train CE by step: 1: 11.864, 2: 11.837, 3: 11.735, 4: 9.076, 5: 8.407, 6: 4.552
+val/bpb (synthetic held-out, 3 documents): 1.8781
+summary: status SMOKE, steps 6, wall_seconds 22.1, timed_out False, eligible_for_quality_comparison False, final_model_sha256 20cd0392abf6e084127d5cfa41eb4c27c4708dca2657d2598a9b59ef44696939
+
+== attn-0 (t2.yaml) ==
+command: python teams/05-architecture/harness/train_week2.py --config teams/05-architecture/configs/arms/t2.yaml --runtime teams/05-architecture/configs/runtime.yaml --tokenizer ./inputs/tokenizer_v0.json --byte-table ./inputs/tables/raw_table_P32.npz --train-data ./inputs/synthetic_train.jsonl --heldout-data ./inputs/synthetic_heldout.jsonl --device cpu --seed 1237 --smoke --smoke-steps 6 --smoke-seq-len 160 --smoke-batch-size 1 --no-checkpoint --out ./out/attn-0-cpu-6steps-ctx160
+exit code: 0
+model: 237,052,416 parameters, n_layer 8, attn_pattern all global (T2 reference), attn_window -, attn_sink -
+train CE by step: 1: 11.867, 2: 11.835, 3: 11.737, 4: 9.153, 5: 8.589, 6: 4.734
+val/bpb (synthetic held-out, 3 documents): 1.9542
+summary: status SMOKE, steps 6, wall_seconds 17.6, timed_out False, eligible_for_quality_comparison False, final_model_sha256 f8b8076d451fecf23193ea5e7e3592b95152cf30dec3e052fe714faaee4d88d3
+

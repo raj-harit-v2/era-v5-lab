@@ -2648,6 +2648,14 @@ An `excluded` set is out of training, so it was not run.
 | `sft-safety-wildjailbreak` | excluded | GPT-4 and GPT-3.5. |
 | `sft-safety-nemotron-sft-v2` | excluded | English generator is not named. |
 | `sft-code-self-oss-instruct` | excluded | StarCoder2, BigCode OpenRAIL-M. |
+| `sft-code-swe-smith` | excluded | o3-mini (closed OpenAI) is the main bug-writing model. |
+| `sft-agentic-swe-smith-trajectories` | excluded | Claude 3.7 Sonnet (closed Anthropic) writes most trajectories. |
+| `sft-reasoning-r1-distill-sft` | excluded | cc-by-nc-sa-4.0, non-commercial. |
+| `sft-agentic-apigen-mt-5k` | excluded | cc-by-nc-4.0 and GPT-4o. |
+| `sft-agentic-open-agentrl-sft-3k` | excluded | No licence stated. |
+| `rl-agentic-open-agentrl-30k` | excluded | No licence stated; includes 3K cc-by-nc-sa-4.0 rows. |
+
+The three other sets added on 12 Nov (`sft-code-nemotron-cascade-swe`, `sft-agentic-nemotron-agentic-v1`, `sft-agentic-nemotron-sft-agentic-v2-tool-calling`) were already run on every converted row of the whole source. Their rows are in section 2: 210,582, 315,560 and 364,889 rows in, 18,248, 432 and 2,146 removed, 0 canaries. No new run was needed for the 12 Nov sets.
 
 ## 8. What this check does not cover
 

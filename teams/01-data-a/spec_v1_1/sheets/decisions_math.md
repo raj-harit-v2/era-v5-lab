@@ -34,7 +34,7 @@
   - `2d328b828fa97706` has `fieldtrip.Write` (`DA-A8-001`)
   - `0f119a596e8b7f63` is a converter template page (`DA-C9-003`)
 
-  Counted, they take finemath in order to 2/86, over the limit of 1. The proposal (aneeshads, 13 Nov) is to record them as gold contradictions, as spec v1 did for `eee25e81417bc1b7`: out of the count for these two rules only, and re-read at the next gold refresh. **Waiting for Vijay's ruling.**
+  Counted, they take finemath in order to 2/86, over the limit of 1. The proposal (aneeshads, 13 Nov) was to record them as gold contradictions, as spec v1 did for `eee25e81417bc1b7`: out of the count for these two rules only, and re-read at the next gold refresh. **Vijay agreed**, so finemath in order passes at 0/84.
 - **New codes.** A7–A9, B6, C7–C9 and D6 are proposed in `NEW_DISEASES.md`. C6 is the Indic family's code, for inconsistent punctuation and formatting. The new codes need the team's agreement, an entry in `DISEASES.md`, and `CODE_ORDER` in `spec_v1/tools/build_clean.py`.
 - **Where v1.1 rules run.** Readers found these diseases in v1-cleaned text, so v1.1 rules should run after the family's v1 rules.
 - **Which harm run counts.** Is it the v1.1 rules alone, or all v1 + v1.1 rules in order?

@@ -70,6 +70,22 @@ def sha256_bytes(raw: bytes) -> str:
     return hashlib.sha256(raw).hexdigest()
 
 
+def version_key(version: str) -> tuple[tuple[int, ...], int]:
+    """A version string as numbers, so that "2.9.0" sorts below "2.14.1" (as plain strings it sorts above).
+
+    The local part ("+cpu", "+cu130") is ignored, and a pre-release or dev build ("2.14.1rc1", "2.15.0a0",
+    "2.15.0.dev20261101") sorts just below its release. No dependency on ``packaging``, which the job may not have.
+    """
+    m = re.fullmatch(r"(\d+(?:\.\d+)*)(.*)", str(version).split("+", 1)[0].strip())
+    if not m:
+        raise ValueError(f"not a version number: {version!r}")
+    release = [int(x) for x in m.group(1).split(".")]
+    while len(release) > 1 and release[-1] == 0:
+        release.pop()  # "2.14" and "2.14.0" are the same version
+    pre_release = re.match(r"[.-]?(a|b|rc|dev)", m.group(2)) is not None
+    return tuple(release), 0 if pre_release else 1
+
+
 def read_pointer(run_dir: Path, step: int | None) -> dict:
     """The one pointer to read: ``latest.json``, or the ``commits.jsonl`` line of ``step``. Never a directory listing."""
     if step is None:
@@ -238,7 +254,7 @@ def main(argv=None) -> int:
 
     import torch
 
-    if torch.__version__ < MIN_TORCH:
+    if version_key(torch.__version__) < version_key(MIN_TORCH):
         ap.error(f"needs torch {MIN_TORCH} or newer, found {torch.__version__}")
     if a.scorer != "smoke":
         raise SystemExit("--scorer <module>:<function> is not wired yet: it needs an lm-eval wrapper that loads the "

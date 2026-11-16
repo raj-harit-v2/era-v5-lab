@@ -1,7 +1,9 @@
-"""Verify G10 chat format v0 on Team 3's frozen tokenizer (v0.1).
+"""Verify G10 chat format v0 on Team 3's Gate 2 frozen tokenizer (C3 sample-v0 / v0.1).
 
 Validates:
-1. Frozen tokenizer v0.1 SHA-256 is `a33c9907ec16876bc57b011714e8380879919fba1327d84bfb0d60407fe6e578`.
+1. Team 3 Gate 2 Frozen Tokenizer specification (PR #340):
+   - Target C3 sample-v0 SHA-256: `15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3`
+   - Intermediate/Specials base v0.1 SHA-256: `a33c9907ec16876bc57b011714e8380879919fba1327d84bfb0d60407fe6e578`
 2. Each of the 9 active G10 markers encodes as exactly ONE atomic token with its assigned ID:
    - <|im_start|>: 129994
    - <|im_end|>: 130816
@@ -14,14 +16,16 @@ Validates:
    - <|/tool_result|>: 130826
 3. Base <think> (128512) and plain-text lookalikes (<think>, <tool_call>, <｜think｜>)
    never resolve to the atomic special tokens.
-4. Rendered multi-turn conversations round-trip through encode and decode with exact fidelity.
-5. Indic orthography: ZWJ (U+200D) and ZWNJ (U+200C) in Marathi, Hindi, Telugu, Kannada,
-   and Tamil are preserved without character loss or normalization corruption.
+4. Indic orthography: ZWJ (U+200D) and ZWNJ (U+200C) in Marathi, Hindi, Telugu, Kannada,
+   and Tamil are preserved without character loss or normalization corruption under C3's
+   normalizer (`nfc+chillu+nukta-BnPa`).
+5. Rendered multi-turn conversations round-trip through encode and decode with exact fidelity.
 """
 
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import os
 import subprocess
 import sys
@@ -35,8 +39,9 @@ _TEAM = _HERE.parent
 _REPO = _TEAM.parent.parent
 
 sys.path.insert(0, str(_HERE))
-import render  # noqa: E402
+import render
 
+EXPECTED_FROZEN_C3_SHA256 = "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3"
 EXPECTED_V0_1_SHA256 = "a33c9907ec16876bc57b011714e8380879919fba1327d84bfb0d60407fe6e578"
 BASELINE_SHA256 = "01d968a7970b029c071b29f060abf6104b66168dedf2ff3b1a0290a545739fff"
 V0_SHA256 = "2de039f20d17afd17615095c406c43087359673b767ed0fe2c480b995f2af8e5"
@@ -54,12 +59,41 @@ EXPECTED_MARKERS = {
 }
 
 
+def load_c3_normalizer():
+    """Load Team 3's C3 normalizer (nfc+chillu+nukta-BnPa) if available."""
+    norm_script = _REPO / "teams" / "03-tokenizer" / "v1" / "normalizer_experiment_v2.py"
+    if norm_script.is_file():
+        spec = importlib.util.spec_from_file_location("g3_norm_exp", norm_script)
+        if spec and spec.loader:
+            mod = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(mod)
+            return mod.VARIANTS.get("nfc+chillu+nukta-BnPa")
+    return None
+
+
 def ensure_frozen_tokenizer() -> Path:
-    """Ensure the frozen tokenizer v0.1 file is available and verified."""
+    """Ensure a verified frozen tokenizer file is available.
+
+    Checks:
+    1. C3 sample-v0 (15468e66...) if Kaggle/release build is cached or mounted.
+    2. v0.1 tokenizer (a33c9907...), which provided the exact 356 special token
+       layout used by C3 sample-v0 (--special-layout v0 --v0-tokenizer v0.1/tokenizer.json).
+    """
     cache_dir = Path(os.environ.get("G10_TOKENIZER_CACHE") or Path.home() / ".cache" / "era-v5")
     cache_dir.mkdir(parents=True, exist_ok=True)
-    v0_1_path = cache_dir / "v0_1_tokenizer.json"
 
+    # 1. Check for C3 sample-v0
+    c3_path = cache_dir / "c3_tokenizer.json"
+    if c3_path.is_file() and hashlib.sha256(c3_path.read_bytes()).hexdigest() == EXPECTED_FROZEN_C3_SHA256:
+        return c3_path
+
+    # Check release/tokenizer.json if present
+    repo_rel_path = _REPO / "teams" / "03-tokenizer" / "release" / "tokenizer.json"
+    if repo_rel_path.is_file() and hashlib.sha256(repo_rel_path.read_bytes()).hexdigest() == EXPECTED_FROZEN_C3_SHA256:
+        return repo_rel_path
+
+    # 2. Check for v0.1 tokenizer (canonical special tokens layout for C3)
+    v0_1_path = cache_dir / "v0_1_tokenizer.json"
     if v0_1_path.is_file():
         sha = hashlib.sha256(v0_1_path.read_bytes()).hexdigest()
         if sha == EXPECTED_V0_1_SHA256:
@@ -99,10 +133,23 @@ def main() -> int:
     print("\n[1] Tokenizer Artifact Verification:")
     print(f"    Path:   {tokenizer_path}")
     print(f"    SHA256: {sha256_hex}")
-    assert sha256_hex == EXPECTED_V0_1_SHA256, "SHA256 mismatch!"
-    print("    Status: PASS (Exact match with teams/03-tokenizer/v0/SHA256SUMS)")
+
+    c3_manifest = _REPO / "teams" / "03-tokenizer" / "train" / "c3_s0_manifest.json"
+    if c3_manifest.is_file():
+        print(f"    Target Gate 2 Freeze: C3 sample-v0 (SHA256: {EXPECTED_FROZEN_C3_SHA256[:16]}...)")
+        print(f"    Manifest: {c3_manifest.relative_to(_REPO)}")
+    if sha256_hex == EXPECTED_FROZEN_C3_SHA256:
+        print("    Status: PASS (Exact match with C3 sample-v0 frozen tokenizer)")
+    elif sha256_hex == EXPECTED_V0_1_SHA256:
+        print("    Status: PASS (Exact match with v0.1 special tokens base for C3)")
+    else:
+        raise AssertionError(f"Unexpected tokenizer SHA-256: {sha256_hex}")
 
     tok = Tokenizer.from_file(str(tokenizer_path))
+    c3_norm = load_c3_normalizer()
+    if c3_norm is not None:
+        tok.normalizer = c3_norm
+        print("    Normalizer: C3 normalizer active (nfc+chillu+nukta-BnPa)")
 
     print("\n[2] G10 Special Markers Atomic Encoding Audit:")
     loaded_ids = render.load_team3_marker_ids(tokenizer_path)

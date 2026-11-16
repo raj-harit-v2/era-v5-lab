@@ -36,7 +36,7 @@ Because ERA V5 is an **agentic coding and reasoning model with first-class Indic
 | **1. Code** *(Generation, Commits & Competitive Reasoning)* | **35%** | Core polyglot programming, surgical diffs, unit-test synthesis, and long-CoT algorithmic problem solving | `sft-code-opencodereasoning` (`nvidia/OpenCodeReasoning`, `DeepSeek-R1` MIT), `sft-code-opencodereasoning-2` (`nvidia/OpenCodeReasoning-2`, `DeepSeek-R1` MIT + `QwQ-32B` Apache-2.0), `sft-code-codeforces-cots` (`open-r1/codeforces-cots`, `DeepSeek-R1` MIT), `sft-code-commitpackft` (`bigcode/commitpackft`, human commits, MIT) |
 | **2. Agentic** *(Multi-Turn SWE & Terminal Trajectories)* | **25%** | Repository navigation, multi-step bash/terminal debugging, fault localization, patch generation, and test verification | `sft-code-swe-rebench-openhands` (`nebius/SWE-rebench-openhands-trajectories`), `sft-code-nemotron-terminal` (`nvidia/Nemotron-Terminal-Corpus`), `sft-code-nemotron-cascade-swe` (`nvidia/Nemotron-Cascade-SFT-SWE`) |
 | **3. Tool Use** *(Structured Function Calling & Schema Binding)* | **15%** | Deterministic JSON tool invocation inside `<\|tool_call\|>...<\|/tool_call\|>`, parallel tool `id` binding, and reasoning over `<\|tool_result\|>` | `sft-salesforce-xlam-60k` (`Salesforce/xlam-function-calling-60k`), `sft-agentic-nemotron-agentic-v1` (`nvidia/Nemotron-Agentic-v1`), `sft-agentic-nemotron-sft-agentic-v2-tool-calling` (`nvidia/Nemotron-SFT-Agentic-v2`, tool-calling part only) |
-| **4. Indic** *(Native-Script Instruction, Translation & Code-Switching)* | **15%** | Native Indic instruction following across the 10 Brahmic scripts (`hi, mr, ta, te, kn, bn, gu, ml, or, pa`), preserving `ZWJ`/`ZWNJ` and avoiding translationese | `sft-indic-aya-dataset` (`CohereLabs/aya_dataset`), `sft-indic-aya-collection` (`CohereLabs/aya_collection`, 12 templated Indic subsets only) |
+| **4. Indic** *(Native-Script Instruction, Translation & Code-Switching)* | **15%** | Native Indic instruction following across the 10 Brahmic scripts (`hi, mr, ta, te, kn, bn, gu, ml, or, pa`), preserving `ZWJ`/`ZWNJ` and avoiding translationese | `sft-indic-aya-dataset` (`CohereLabs/aya_dataset`), `sft-indic-aya-collection` (`CohereLabs/aya_collection`, 10 subsets with permissive source licences, TSAI reserves) |
 | **5. General** *(Math, Science & Calibrated Reasoning Effort)* | **7%** | Formal math proofs, STEM reasoning, general instruction following, and calibrating the four plain-text effort budgets (`1k, 4k, 16k, 64k`) | `sft-stem-code-openthoughts3` (`open-thoughts/OpenThoughts3-1.2M`), `sft-rl-math-openmathreasoning` (`nvidia/OpenMathReasoning`), `sft-math-openr1-math` (`open-r1/OpenR1-Math-220k`), `sft-math-nemotron-math-v2` (`nvidia/Nemotron-Math-v2`), `sft-math-nemotron-proofs` (`nvidia/Nemotron-Math-Proofs-v1`), `sft-science-nemotron-science` (`nvidia/Nemotron-Science-v1`), `sft-bespoke-stratos-17k` (`bespokelabs/Bespoke-Stratos-17k`), `sft-dolly-15k` (`databricks/databricks-dolly-15k`); additions for TSAI decision: `sft-chat-nemotron-if-v1`, `sft-chat-nemotron-if-v2`, `sft-science-nemotron-science-v2`, `sft-science-glm51-phd`, `sft-oasst2` |
 | **6. Safety** *(English & Indic Safety Supervision)* | **3% proposed** | Appropriate refusals, helpful answers to benign but sensitive requests, and culturally relevant English/Indic safety supervision | `sft-safety-indicguard`, `sft-safety-nemotron-guard-v3`, `sft-safety-aegis-v1`, `sft-safety-wildjailbreak`, `sft-safety-nemotron-sft-v2`; all `TSAI reserves`, with final dataset/subset selection by TSAI |
 | **Total** | **100%** | | |
@@ -68,7 +68,7 @@ Because ERA V5 is an **agentic coding and reasoning model with first-class Indic
 - **Why 15%:** `BrahmicTokenizer-131K` allocates dedicated script blocks across 9 Brahmic scripts (`Devanagari`, `Bengali`, `Tamil`, `Telugu`, `Kannada`, `Malayalam`, `Gujarati`, `Gurmukhi`, `Odia`). If SFT is 98% English/code, post-training causes catastrophic forgetting on Indic scripts and breaks `ZWJ`/`ZWNJ` conjunct generation. A 15% Indic share preserves native-script fluency on `MILU` and `IndicGenBench`.
 - **Composition within the 15%:**
   - **10% Human-Written Indic Instructions (`CohereLabs/aya_dataset`):** Pure human-written prompts and responses (`Apache-2.0`) with zero translationese (`D5`) or machine-translation damage (`D4`).
-  - **5% Curated Indic Task Templates (`CohereLabs/aya_collection`):** Only the 12 templated Indic subsets listed in `licence_table.md` (Hindi, Bengali, Tamil, Telugu; `Apache-2.0`), pre-processed with G10's text-prep rule (strip `U+200B`/`U+FEFF`, preserve `U+200D` ZWJ and `U+200C` ZWNJ, no NFKC). The 19 translated datasets and all other subsets are `excluded`. These subsets are task-style data and cover four of the ten scripts, so if `convert.py` finds too little usable text, the difference moves to `aya_dataset` instead of widening the `aya_collection` list.
+  - **5% Curated Indic Task Templates (`CohereLabs/aya_collection`):** Use the 10 subsets with permissive source licences (Apache 2.0, CC0, or MIT) identified in the merged [Aya licence review](https://github.com/theschoolofai/era-v5-lab/pull/399). Of the other two reviewed subsets, `templated_hindi_headline` is excluded (CC BY-NC-SA 4.0), and `templated_hindi_news` is held for a TSAI decision (CC BY-SA 4.0). The 10 subsets remain `TSAI reserves`. The multilingual paraphrase and sentiment subsets bring coverage to nine of the ten target languages across eight scripts. Hindi has about 2,157 rows and Odia is absent. Filter to the ten proposal languages before conversion, including dropping Urdu rows from `templated_indic_sentiment`. Apply G10's text-prep rule (strip `U+200B`/`U+FEFF`, preserve `U+200D` ZWJ and `U+200C` ZWNJ, no NFKC). The 19 translated datasets and other unreviewed subsets are `excluded`. If `convert.py` finds too little usable text, move the difference to `aya_dataset`.
 
 ### Area 5: General (Math, Science & Effort Calibration) — 7%
 - **Why 7%:** Retain a general reasoning and instruction-following supplement while reserving 3% for explicit safety supervision. The primary coding, agentic, tool-use, and Indic shares remain unchanged.
@@ -110,7 +110,7 @@ Every rendered SFT transcript starts with `Reasoning effort: {level}` in the fir
 | `Nemotron-Cascade-SFT-SWE`, `Nemotron-Agentic-v1`, `Nemotron-SFT-Agentic-v2` | Added to `licence_table.md` with licence, generator and decision | They were in the mix (Agentic and Tool Use, up to 22%) without an entry. Generators are open-weight models, so they pass the Week 2 rule |
 | `Nemotron-SFT-Agentic-v2` search and customer-service parts | `excluded`; only the tool-calling part stays | The card names no generator for them |
 | `NuminaMath-1.5` | `excluded`; removed from General | Model-written sources (`orca_math` is GPT-4 Turbo), no generator stated, same reason as `NuminaMath-CoT` |
-| `aya_collection` | 12 templated Indic subsets stay; the 19 translated datasets and other subsets are `excluded` | The translated sets have untraced English sources, at least one distilled from InstructGPT |
+| `aya_collection` | 12 templated Indic subsets shortlisted at this revision. See Area 4 for the source licence review. The 19 translated datasets and other subsets are `excluded` | The translated sets have untraced English sources, at least one distilled from InstructGPT |
 | `sft-code-self-oss-instruct` (`StarCoder2`) | `excluded`; removed from Area 1 (Code) | TSAI decision (3 Nov): `StarCoder2` has the BigCode OpenRAIL-M licence, which makes a model trained on its output a derivative carrying its use restrictions |
 | Open-weight generators with MIT or Apache-2.0 licences (`gpt-oss`, `DeepSeek-R1`, `Qwen` Apache-2.0 versions, `QwQ`, `Mixtral`) | Approved (`IN`) with generator model + generator licence recorded in `licence_table.md` | TSAI decision (3 Nov): open-weight models whose licence is MIT or Apache-2.0 and allows training other models on their output are in; unknown generators are out (`excluded`) |
 
@@ -128,20 +128,20 @@ The five-set licence review above left the shares unchanged at that revision. Th
 
 ## 7. Revision note (6 Nov): Indic quantity check
 
-Row counts for the Indic area, read from the Hugging Face datasets-server statistics and from `convert.py` runs on 6 Nov. Shares are not changed here.
+Row counts for the Indic area from Hugging Face datasets-server statistics and `convert.py` runs. The Aya template estimate applies the 12 Nov source licence review to the earlier counts.
 
 | Set | Rows for the ten proposal languages | Notes |
 | :--- | ---: | :--- |
 | `sft-indic-aya-dataset` | 41,261 | Tamil 14,133, Telugu 8,439, Panjabi 6,385, Gujarati 3,989, Marathi 3,545, Malayalam 1,749, Bengali 1,534, **Hindi 1,153**, Kannada 334, **Odia 0**. Single turn |
-| `sft-indic-aya-collection` (12 templated subsets) | 688,637 | 467,090 are `templated_telugu_news` and 170,848 are Hindi news or headlines (68% and 25%). Task-style, four scripts |
+| `sft-indic-aya-collection` (10 subsets with permissive source licences) | 517,789 (estimate) | 688,637 prior rows minus 170,848 from the two Hindi subsets. `templated_telugu_news` contributes 467,090 rows (about 90% before further language filtering or caps). |
 | `sft-indic-indic-align-oasst-t` (new) | 19,909 | Human-written oasst1 conversations translated by IndicTrans2 (MIT). One language per conversation, about 2,000 each, Odia included. 12,686 have two or more assistant turns |
 | `sft-indic-indic-align-dolly-t` (new) | 10,541 of 15,011 | Human-written Dolly translated by IndicTrans2. 4,455 rows lost their context passage in translation; `convert.py` drops them (9 Nov) |
 
 What this means for the 15%:
 
 - **Human-written Indic chat is small and uneven.** `aya_dataset` has 1,153 Hindi rows and none in Odia, while Tamil alone is a third of it. Adding `oasst-t` gives the area its only multi-turn data and a near-even spread over the ten languages, roughly half again as many conversations as `aya_dataset`.
-- **`aya_collection` must be capped per subset.** Without a cap, Telugu news is two thirds of the Indic area. A cap of a few thousand rows per subset keeps the 12 subsets as task variety, not as the bulk.
-- **Proposed composition inside the 15%:** `aya_dataset` (all rows), `oasst-t` (all rows), `aya_collection` (capped per subset), `dolly-t` (10,541 rows after the context filter). All of them are short (effort `1k`), so the Indic share adds no long-reasoning data.
+- **`aya_collection` must be capped per subset.** Telugu news accounts for about 90% of the uncapped Aya template pool after excluding the Hindi headline subset and holding the Hindi news subset. A cap of a few thousand rows per subset limits that concentration.
+- **Proposed composition inside the 15%:** `aya_dataset` (all rows), `oasst-t` (all rows), `aya_collection` (subsets with permissive source licences, capped per subset, subject to TSAI selection), `dolly-t` (10,541 rows after the context filter). All of them are short (effort `1k`), so the Indic share adds no long-reasoning data.
 - **Decontamination:** `oasst-t` was run on 6 Nov with fingerprints v2, full set: 9 of 19,909 rows flagged (`in22_conv`, `hle`) and removed, 0 canary, 19,900 kept. `dolly-t` was run on 9 Nov after the context filter: 0 of 10,541 flagged, 0 canary.
 
 ## 8. Revision note (9 Nov): three more checks, and sets that are out
@@ -159,3 +159,56 @@ Added to `sft/decontam_report.md` on 9 and 10 Nov, same fingerprints, 0 canaries
 All 70 OpenCodeReasoning-2 python shards are converted. Of the 1,398,166 raw rows, 268,752 are upstream test splits, 3,629 are protected family, 513,809 fail the quality proposal and 69,690 are held because the `open-r1/codeforces` revision is not established; 542,286 join, 67 are rejected by the converter and 542,219 reach the scan, with 0 canaries. The joined rows are 19,825 distinct problems by position (19,340 by content at Jaccard 0.8). The 427,152 kept rows are 15,670 problems by position and 15,402 by content at Jaccard 0.8, about 2.54B trained tokens (2,539,177,884). In the proofs part, 121,242 of the 414,890 source rows are over the 64k budget and were not converted, so they were not checked.
 
 `sft-safety-aegis-v1` has no assistant turn. Its stored `text` column was still checked on 9 Nov (11,997 rows, 2 removed, 0 canary). That does not make it chat training data. `sft-safety-indicguard`, `sft-safety-nemotron-guard-v3`, `sft-safety-wildjailbreak`, `sft-safety-nemotron-sft-v2`, and `sft-code-self-oss-instruct` are `excluded`. So are `rl-community-alignment`, `rl-safety-hh-rlhf`, `rl-safety-alignment-faking`, and `rl-wildguardmix`. Until TSAI names an allowed safety set with chat rows, use the section 6 fallback: **0% Safety / 10% General**.
+
+## 9. TSAI decision items for Gate 2 (Sat 14 Nov)
+
+TSAI decides these four items at Gate 2. They do not block the Gate 2 file. Each item has the facts and a proposed answer for TSAI to accept or change. The numbers come from `decontam_report.md`, `results/ocr2_coverage.md` and `ocr2_policy.json`.
+
+### 9.1 OCR-2 quality threshold
+
+- **What is set now:** `ocr2_policy.json` admits only rows judged `right` with `min_pass_rate` 1.0. A critique of "wrong" or a pass rate under 1 leaves the row out. A row with no execution evidence (`pass_rate` -1) is kept and tagged `exec_missing`, never counted as a pass.
+- **Effect (all 70 Python shards, measured):** of 1,398,166 raw rows, 310,019 are left out for a "wrong" critique and 203,790 for a pass rate under 1 (513,809 in all). After the join and the scan, 427,152 rows are kept (15,670 distinct problems by position, 2,539,177,884 trained tokens).
+- **What a lower threshold would add:** measured on the first three shards only: a pass rate of 0.9 recovers 2,421 rows (445 problems), and 0.5 recovers 6,694 rows (1,259 problems). It is not measured on all 70 shards and is not extrapolated here.
+- **Proposed answer:** keep `right` and 1.0 for the first pack. The kept set is already large (15,670 problems), and a lower threshold admits rows that failed a test or were called wrong by the critic. Revisit only if TSAI wants more problems.
+
+### 9.2 Codeforces rows
+
+There are two separate Codeforces questions.
+
+- **OCR-2 rows held (SFT):** 69,690 rows name `open-r1/codeforces`, and no producer revision is established. `ocr2_policy.json` records `training_approved: false` for this source, with the statement terms not recorded and Team 9 confirmation open. These rows are not in the 427,152 kept rows.
+  - **Proposed answer:** keep them held. They enter the pack only after a revision is named and Team 9 confirms.
+- **41 rows of the RL Codeforces pool:** the pick is to drop them, and TSAI's instructor accepted it for the clean set on 12 Nov. Rebuilt result (from G10, 12 Nov): 8,891 rows kept (8,932 before), new clean sha256 `220b2f86…`, raw `efe89e87…` unchanged, and the excluded contest and problem ids in `rl-code-codeforces.excluded_ids.jsonl` next to the clean file.
+  - **Done (13 Nov, fork PR #75):** `rl/decontam_report.md` records the drop. 8,891 rows kept, clean sha256 `220b2f86…`. The 41 ids are in `rl-data/rl-code-codeforces.excluded_ids.jsonl`. The rebuilt clean file is recorded by hash and is not committed.
+
+### 9.3 SFT mix shares
+
+- **Proposal, unchanged:** Code 35%, Agentic 25%, Tool Use 15%, Indic 15%, General 7%, Safety 3%. See section 2.
+- **What is measured:** kept rows per set after the Team 9 check (`decontam_kept_rows.md`; 33 sets run on every converted row). Token supply is measured for OCR-2 only; 32 other sets have row counts and no token record (`../docs/eligibility_ledger.md`, section 6). The shares are token and trajectory shares, and no per-area token supply is measured.
+- **Open quantity risks:** Indic (the human-written sets hold 41,261 `aya_dataset` rows, 19,909 `oasst-t` rows and 10,541 `dolly-t` rows; `aya_collection` has to be capped per subset, section 7) and General (`dolly-15k` is small).
+- **`aya_collection`:** Ranjani's licence check of the 12 templated Indic subsets is merged upstream (school repo PR 399, `teams/12-quantization/docs/aya_licence_check.md`; the file is not on this branch). Result: 10 usable (Apache-2.0, CC0 or MIT), 1 excluded and 1 for TSAI. `templated_hindi_headline` is excluded (CC BY-NC-SA 4.0, non-commercial). `templated_hindi_news` needs a TSAI decision because its source dataset, the Hindi Text Short/Large Summarization corpus (Kaggle), is CC BY-SA 4.0 (share-alike). Hindi news and headlines together are 170,848 of the 688,637 rows in section 7, so the headline exclusion and the decision on `templated_hindi_news` both change the Hindi supply.
+- **Proposed answer:** accept the shares as the starting proposal, with the two quantity risks above as the first things to re-check once `convert.py` row counts and token counts exist for the whole mix.
+
+### 9.4 Safety share fallback
+
+- **Facts:** `sft-safety-indicguard`, `sft-safety-nemotron-guard-v3`, `sft-safety-wildjailbreak` and `sft-safety-nemotron-sft-v2` are `excluded` (section 8). `sft-safety-aegis-v1` has no assistant turn, so it is not chat training data. No allowed safety set with chat rows exists today.
+- **Fallback (section 6):** **0% Safety / 10% General**, with General's 7% math and STEM plus 3% concise instructions split.
+- **Proposed answer:** use the fallback until TSAI names an allowed safety set with chat rows. If TSAI names one, the 3% Safety share applies and General returns to 7%.
+
+## 10. Revision note (12 Nov): the ten new datasets
+
+Ten sets were checked against the Hub cards, the papers and the branch tip on 12 Nov. Three are usable and already covered, six are `excluded`, and one (MadeAgents/Hammer) was unresolved on 12 Nov and resolved on 13 Nov.
+
+- **Usable and already covered:** `sft-code-nemotron-cascade-swe`, `sft-agentic-nemotron-agentic-v1` and `sft-agentic-nemotron-sft-agentic-v2-tool-calling`. Each has a licence row (`TSAI reserves`), a place in this proposal (Agentic and Tool Use) and a full-set run in `decontam_report.md`.
+- **Excluded (licence rows added, with the reason in each):**
+
+| Set | Licence | Reason |
+|---|---|---|
+| `sft-code-swe-smith` | mit | o3-mini (closed OpenAI) is the main bug-writing model (paper) |
+| `sft-agentic-swe-smith-trajectories` | mit | Claude 3.7 Sonnet (closed Anthropic) writes most trajectories |
+| `sft-reasoning-r1-distill-sft` | cc-by-nc-sa-4.0 | Non-commercial |
+| `sft-agentic-apigen-mt-5k` | cc-by-nc-4.0 | Non-commercial, and GPT-4o (closed OpenAI). Row was already in the table |
+| `sft-agentic-open-agentrl-sft-3k` | none stated | Unstated licences are out. The paper names Qwen3-Coder-30B-A3B (Apache-2.0) as teacher for the self-curated trajectories |
+| `rl-agentic-open-agentrl-30k` | none stated | RL data. No licence, and 3K MegaScience rows are cc-by-nc-sa-4.0 |
+
+- **Resolved (13 Nov, chapanduk):** "MadeAgents/Hammer" is the model family, not a dataset. Both MadeAgents datasets now have licence rows: `sft-tool-xlam-irrelevance-7.5k` (cc-by-4.0, 7,500 xlam-60k rows with the right tool removed; `needs TSAI decision`, the same DeepSeek-V2-Chat question as When2Call) and `rl-tool-hammerbench` (apache-2.0 benchmark with unnamed open-source generators; `excluded` from training, proposed to Team 9 as an eval probe).
+- **No decontam run was needed** for any of the ten (see `decontam_report.md`, section 7).

@@ -5,7 +5,7 @@ The rules for where files go are in `teams/10-post-training/README.md`. This pag
 | Folder | What it holds | README |
 |---|---|---|
 | `special-tokens/` | The special-token lists prepared for Team 3 (v0 and the consolidated v1 with real IDs). | `special-tokens/README.md` |
-| `chat-format/` | Chat format v0: the specification, the renderer and parser, the Jinja template and the frozen-tokenizer check. | `chat-format/README.md` |
+| `chat-format/` | Chat format v0: the specification, the renderer and parser, the Jinja template and the tokenizer v0.1 check. | `chat-format/README.md` |
 | `licences/` | The licence table: every SFT and RL set we considered, with licence, generator model and decision. | `licences/README.md` |
 | `sft/` | SFT data tools: conversion to chat format, decontamination, the decontam report and mix proposal, and the OCR-2 pack admission scripts. | `sft/README.md` |
 | `rl/` | The RL code verifier and tasks, the single reward entry point, the warm container pool and the RL decontam report. | `rl/README.md` |

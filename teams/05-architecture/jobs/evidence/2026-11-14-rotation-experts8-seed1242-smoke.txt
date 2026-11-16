@@ -1,0 +1,18 @@
+Rotation R1 reduced CPU smoke of train_week2.py: exp3-experts-8 and the T2 reference at seed 1242
+Trainer commit: 71bc0fbb99fbe5e90d8a09055b7622010e8ab23f (the pinned trainer for seed repeats of Week 2 runs)
+Runtime: configs/runtime.yaml. configs/runtime_fast.yaml is not in the repo; TSAI applies it and the speed fixes at run time.
+Environment: PyTorch 2.12.1, CPU (macOS arm64). A smoke, not a result.
+Inputs: synthetic train (16 rows) and heldout (4 rows) JSONL, made for this smoke only.
+Tokenizer: teams/03-tokenizer/v0 built with build_v0.py from BrahmicTokenizer-131K at 7dfcf39;
+  sha256 2de039f20d17afd17615095c406c43087359673b767ed0fe2c480b995f2af8e5 (matches teams/03-tokenizer/v0/SHA256SUMS).
+Byte table: raw_table_P32.npz built from that tokenizer with teams/04-ke2/src/build_tables.py --pos-dims 32;
+  sha256 5e99508660799f43508a0df0060590e96fa253dd1bb69e2575d8e0f302fdd77f.
+Scope: six steps at sequence length 8, batch size 1, no checkpoint. Fixture resolution (configs/small/smoke_resolution.yaml).
+Command (run once for each CONFIG stem below):
+python teams/05-architecture/harness/train_week2.py --config teams/05-architecture/configs/arms/CONFIG.yaml --runtime teams/05-architecture/configs/runtime.yaml --resolution teams/05-architecture/configs/small/smoke_resolution.yaml --tokenizer ./inputs/tokenizer_v0.json --byte-table ./inputs/raw_table_P32.npz --train-data ./inputs/train.jsonl --heldout-data ./inputs/heldout.jsonl --device cpu --lr 0.001 --seed 1242 --out ./out/CONFIG --smoke --smoke-steps 6 --smoke-seq-len 8 --smoke-batch-size 1 --no-checkpoint
+
+Results from run manifests and summaries:
+exp3_experts_8 exit=0 status=SMOKE steps=6 routed=8 shared=1 top_k=2 expert_ffn=768 seed=1242 first_ce=11.7149 last_ce=4.2941 wall_s=4.77 quality_eligible=False final_model_sha256=7ce9071780c8ea471dbc5ad7c40e41241169dacff5bbdc30aa5ce0344ca90e11
+t2             exit=0 status=SMOKE steps=6 routed=16 shared=1 top_k=2 expert_ffn=768 seed=1242 first_ce=12.0163 last_ce=4.7146 wall_s=5.63 quality_eligible=False
+
+Config check: exp3_experts_8.yaml loads with week2.config.load_runtime and runtime.yaml; validate() returns 0 errors.

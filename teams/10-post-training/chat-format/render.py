@@ -5,9 +5,9 @@ Rule (instructor, 27 Oct & Week 2 brief):
   role-turn start/end, tool-call start/end, tool-result start/end, thinking start/end.
 - Values inside that structure (tool names, arguments, effort level, options) are plain text.
 - Effort is a plain-text line at the top of the first system turn: `Reasoning effort: {level}`.
-- Token IDs are read from Team 3's tokenizer specification (`teams/03-tokenizer/v0/build_v0_1.py`
-  / `special_slots.md`, or a `tokenizer.json` file). The old 000..255 slot numbering is removed:
-  IDs 0..255 are byte tokens in BrahmicTokenizer-131K.
+- Token IDs are read from Team 3's tokenizer specification (`teams/03-tokenizer/v0/build_v0_1.py`,
+  the Gate 2 frozen tokenizer C3 sample-v0 `c3_s0_manifest.json`, or a `tokenizer.json` file).
+  The old 000..255 slot numbering is removed: IDs 0..255 are byte tokens in BrahmicTokenizer-131K.
 """
 
 from __future__ import annotations
@@ -44,6 +44,7 @@ _TEAM = _HERE.parent
 _REPO_ROOT = _TEAM.parent.parent
 TEAM3_BUILD_V0_1 = _REPO_ROOT / "teams" / "03-tokenizer" / "v0" / "build_v0_1.py"
 TEAM3_SPECIAL_SLOTS = _REPO_ROOT / "teams" / "03-tokenizer" / "v0" / "special_slots.md"
+TEAM3_C3_MANIFEST = _REPO_ROOT / "teams" / "03-tokenizer" / "train" / "c3_s0_manifest.json"
 G10_SPECIAL_TOKENS_V1 = _TEAM / "special-tokens" / "special_tokens_v1.md"
 
 

@@ -58,20 +58,21 @@ No setting reaches 0 gold flags, and the one closest to it finds fewer D2 docume
 
 ## Measurement on the sample packs
 
-`token_share.py`, word-list detector, all 22 `ind-*` sample packs (500 documents each), `romanised_token_share_v1.csv`:
+`token_share.py`, word-list detector, all 22 `ind-*` sample packs (500 documents each), frozen tokenizer p1536,
+`romanised_token_share_v2.csv`:
 
 | lang | tokens | romanised documents | cap share | romanised segment tokens in native documents |
 |---|---|---|---|---|
-| hi | 2,678,910 | 0 | 0% | 1,088 (0.041%) |
-| ta | 1,518,893 | 0 | 0% | 765 (0.050%) |
-| te | 1,628,410 | 0 | 0% | 456 (0.028%) |
-| gu | 438,226 | 0 | 0% | 97 (0.022%) |
-| sa | 1,607,854 | 0 | 0% | 326 (0.020%) |
-| bn | 952,141 | 0 | 0% | 140 (0.015%) |
-| mr | 886,761 | 0 | 0% | 49 (0.006%) |
-| kn | 1,540,104 | 0 | 0% | 80 (0.005%) |
-| ml, or | 866,051 | 0 | 0% | 0 |
-| **all** | **12,117,350** | **0** | **0%** | **3,001 (0.025%)** |
+| hi | 2,523,352 | 0 | 0% | 1,085 (0.043%) |
+| ta | 1,159,694 | 0 | 0% | 710 (0.061%) |
+| te | 1,267,496 | 0 | 0% | 466 (0.037%) |
+| gu | 375,135 | 0 | 0% | 98 (0.026%) |
+| sa | 1,505,274 | 0 | 0% | 310 (0.021%) |
+| bn | 826,219 | 0 | 0% | 134 (0.016%) |
+| mr | 680,066 | 0 | 0% | 40 (0.006%) |
+| kn | 1,185,943 | 0 | 0% | 81 (0.007%) |
+| ml, or | 552,979 | 0 | 0% | 0 |
+| **all** | **10,076,158** | **0** | **0%** | **2,924 (0.029%)** |
 
 - **Cap share** = tokens of romanised documents / all tokens of the language. The word list finds no sample document
   that is mostly romanised; its highest share is 35% (ind-hi-indiccorp `62707cd1ddf37b45`).
@@ -86,10 +87,10 @@ No setting reaches 0 gold flags, and the one closest to it finds fewer D2 docume
   rough count about 40% of its words are romanised Telugu (55% are Latin-letter words, the rest of the Latin text is
   English), while the word list gives 10% because common words in it (naku, nannu, ani, andi, tanu) are not on the
   list. It stays under 50%, and both readers drop it (F3), so it changes nothing here.
-- **Tokenizer: stand-in.** Tokens are counted with BrahmicTokenizer-131K (`github.com/theschoolofai/BrahmicTokenizer-131K`,
-  commit `7dfcf398`, sha256 `01d968a7…`, the same file team 03-tokenizer pins as its baseline), the baseline team
-  03-tokenizer measures its candidates against. When the project tokenizer is final, re-run as in
-  [Re-run with the frozen tokenizer](#re-run-with-the-frozen-tokenizer) and update this table.
+- **Tokenizer: frozen p1536** (sha256 `e6b93a93…`), which replaces C3 by TSAI's Gate 3 notice of 15 Nov. The table
+  was re-run as in [Re-run with the frozen tokenizer](#re-run-with-the-frozen-tokenizer). Only the token counts changed:
+  the romanised documents (0) and the cap share (0%) come from the detector, not the tokenizer. The first table, with
+  the stand-in BrahmicTokenizer-131K (commit `7dfcf398`, sha256 `01d968a7…`), stays in `romanised_token_share_v1.csv`.
 
 ## Cap options for Gate 2
 
@@ -102,7 +103,7 @@ corpus, where a source not in the sample (for example a forum or chat crawl) cou
 | **B (proposed)** | **1%** | keep a small amount of romanised text, since users type romanised Hindi, Tamil and others; drop only if a source brings in more |
 | C | 2% | as B, more permissive |
 
-Proposal: **B, 1% per language.** It is about 40 times the romanised share seen inside native documents in the sample,
+Proposal: **B, 1% per language.** It is about 34 times the romanised share seen inside native documents in the sample,
 so it will not bind unless a new source is heavy in romanised text, and it still bounds what such a source can add.
 
 ## How the cap is applied
@@ -129,15 +130,16 @@ documents in 18 packs, including ind-hi-sangraha-v; the gold check (`eval_v2.py`
 
 ## Re-run with the frozen tokenizer
 
-The token share above uses a stand-in tokenizer. When TSAI freezes the project tokenizer, re-run it as below; it takes
-about one minute on a laptop CPU. Nothing else changes: same packs, same detector, same rules.
+The token share above was re-run this way with the frozen p1536 on 15 Nov (`romanised_token_share_v2.csv`). If the
+tokenizer changes again, re-run it as below; it takes about one minute on a laptop CPU. Nothing else changes: same
+packs, same detector, same rules.
 
 **Inputs**
 
 | input | where | check |
 |---|---|---|
 | 22 `ind-*` sample packs (500 documents each) | `teams/02-data-b/romanised/packs/<pack_id>.parquet` (not committed; the pack links expired on 6 Nov, so copy them from a Data B member who has them) | sha256 of each in `packs_SHA256SUMS`, checked by the script |
-| frozen tokenizer | `tokenizer.json` from team 03-tokenizer. Proposed in `teams/03-tokenizer/freeze_report.md`: C3 sample-v0, built by `teams/03-tokenizer/train/rebuild_c3_s0.py` as `out/c3_s0/tokenizer.json` | the sha256 TSAI freezes at Gate 2 (C3 sample-v0: `15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3`), checked by the script |
+| frozen tokenizer | `tokenizer.json` from team 03-tokenizer: p1536 (#414), frozen by TSAI's Gate 3 notice of 15 Nov. Before it: C3 sample-v0 (`teams/03-tokenizer/freeze_report.md`, built by `teams/03-tokenizer/train/rebuild_c3_s0.py`) | the frozen sha256, checked by the script: p1536 `e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b` since TSAI's Gate 3 notice of 15 Nov (C3 sample-v0, `15468e66…`, before it) |
 | code | `token_share.py` and `doc_detector.py`, with the word list in `detector.py`, at the commit that has this section | - |
 | Python | `tokenizers==0.23.3` (team 03's version), `pyarrow`, `numpy`; checked with Python 3.12.11, pyarrow 26.0.1, numpy 2.5.4 | - |
 
@@ -182,5 +184,5 @@ Check that the command is right: with the stand-in (`--tokenizer tokenizer/token
 | `indiclid_segments.py` | IndicLID as a segment classifier, labels cached in `indiclid/` (not committed) |
 | `eval_v2.py`, `eval_v2.md` | word list against IndicLID, precision, recall and gold check |
 | `indiclid_variants.py`, `eval_v2_indiclid_variants.md` | IndicLID with length and score thresholds |
-| `token_share.py`, `romanised_token_share_v1.csv` | token share per language (v1: stand-in tokenizer) |
+| `token_share.py`, `romanised_token_share_v1.csv`, `romanised_token_share_v2.csv` | token share per language (v1: stand-in tokenizer; v2: frozen p1536) |
 | `packs_SHA256SUMS` | sha256 of the 22 sample packs, checked by `token_share.py` |

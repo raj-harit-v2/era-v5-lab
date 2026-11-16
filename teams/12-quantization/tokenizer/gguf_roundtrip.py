@@ -184,15 +184,15 @@ def make_tiny_model(tok_json: Path, out: Path, bos: str, eos: str) -> int:
     return n_vocab
 
 
-def convert(llama_cpp: Path, model_dir: Path, pre: str, outfile: Path):
-    """Run llama.cpp's converter in a child process with get_vocab_base_pre forced to `pre`."""
+def convert(llama_cpp: Path, model_dir: Path, pre: str, outfile: Path, outtype: str = "f16", python=None):
+    """Run llama.cpp's converter in a child process (`python`, default this one) with get_vocab_base_pre forced to `pre`."""
     code = ("import sys, runpy; L = sys.argv[1]; sys.path[:0] = [L, L + '/gguf-py']\n"
             "import conversion.base as b; pre = sys.argv[2]\n"
             "b.TextModel.get_vocab_base_pre = lambda self, tokenizer: pre\n"
             "sys.argv = [L + '/convert_hf_to_gguf.py'] + sys.argv[3:]\n"
             "runpy.run_path(sys.argv[0], run_name='__main__')")
-    r = subprocess.run([sys.executable, "-c", code, str(llama_cpp), pre, str(model_dir),
-                        "--outfile", str(outfile), "--outtype", "f16"], capture_output=True, text=True)
+    r = subprocess.run([str(python or sys.executable), "-c", code, str(llama_cpp), pre, str(model_dir),
+                        "--outfile", str(outfile), "--outtype", outtype], capture_output=True, text=True)
     if r.returncode or not outfile.exists():
         sys.exit(f"conversion with pre={pre} failed:\n{r.stderr[-3000:]}")
 
@@ -552,22 +552,26 @@ def main():
                     f"(default: {' '.join(DEFAULT_PRE)})")
     ap.add_argument("--normalize-first", action="store_true",
                     help="also run llama.cpp on normalizer(text) against HF on the same text (for a tokenizer with a normalizer)")
+    ap.add_argument("--gguf", type=Path, help="check this converted GGUF (from tokenizer/convert_frozen.py) instead of converting a tiny model; its tokenizer.ggml.pre must equal the first --pre")
     ap.add_argument("--llama-tokenize", type=Path, help="llama-tokenize binary of the same llama.cpp build (optional)")
     ap.add_argument("--bos", default="<|begin_of_text|>")
     ap.add_argument("--eos", default="<|end_of_text|>")
     args = ap.parse_args()
     args.pre = args.pre or DEFAULT_PRE
+    if args.gguf:   # one given file, one pre-tokenizer
+        args.pre = args.pre[:1]
     args.work.mkdir(parents=True, exist_ok=True); args.out.mkdir(parents=True, exist_ok=True)
 
     import llama_cpp, tokenizers, torch, transformers
     from tokenizers import Tokenizer
     sets = load_sets(args.work)
     model_dir = args.work / f"tiny_{args.name}"
-    n_vocab = make_tiny_model(args.tokenizer, model_dir, args.bos, args.eos)
+    n_vocab = make_tiny_model(args.tokenizer, model_dir, args.bos, args.eos) if not args.gguf else None
     tok = json.loads(args.tokenizer.read_text(encoding="utf-8"))
     nj = tok.get("normalizer")
     info = {"date": time.strftime("%Y-%m-%d"), "machine": f"{platform.machine()} {platform.system()}, CPU",
-            "stock_error": stock_convert_error(args.llama_cpp, model_dir, args.work),
+            "stock_error": stock_convert_error(args.llama_cpp, model_dir, args.work) if not args.gguf
+            else "not run: this GGUF was made by convert_frozen.py with the pre-tokenizer set by name",
             "normalizer": "none" if nj is None else nj["type"] + (f", {len(nj['normalizers'])} steps" if nj.get("normalizers") else ""),
             "sha256": {f"tokenizer.json ({args.name})": sha256(args.tokenizer),
                        "fineweb-2 dataset commit": FW2[1], "fineweb dataset commit": FW[1],
@@ -577,7 +581,8 @@ def main():
             "versions": {"Python": platform.python_version(), "llama-cpp-python": llama_cpp.__version__,
                          "tokenizers": tokenizers.__version__, "transformers": transformers.__version__,
                          "torch": torch.__version__, **{m: v for m in ("datasets", "regex") if (v := _version(m))}},
-            "tiny_model": f"Llama, 1 layer, hidden 64, vocab {n_vocab:,}, random weights (seed 0), f16 GGUF"}
+            "tiny_model": f"Llama, 1 layer, hidden 64, vocab {n_vocab:,}, random weights (seed 0), f16 GGUF" if not args.gguf
+            else "none: the GGUF checked is the converter's output for a real checkpoint"}
     # byte-level vocab: one character per byte. llama-cpp-python's detokenize holds one token's text in 32 bytes, so a
     # longer token makes the GGUF decode check fail on its own, with the ids still right (BrahmicTokenizer's rule: <= 32)
     info["longest_token_bytes"] = max(len(t) for t in tok["model"]["vocab"])
@@ -592,10 +597,13 @@ def main():
                  for n, s in sets.items()}
     results = {}
     for pre in args.pre:
-        gguf = args.work / f"tiny_{args.name}_{pre}.gguf"
-        convert(args.llama_cpp, model_dir, pre, gguf)
+        gguf = args.gguf or args.work / f"tiny_{args.name}_{pre}.gguf"
+        if not args.gguf:
+            convert(args.llama_cpp, model_dir, pre, gguf)
         info["sha256"][f"GGUF ({pre}), not committed"] = sha256(gguf)
         results[pre] = r = check(gguf, hf, plain, tok, sets, norm_sets, args.normalize_first)
+        if args.gguf and r["pre"] != pre:
+            sys.exit(f"{gguf} has tokenizer.ggml.pre = {r['pre']!r}, not {pre!r}: converted without the forced pre-tokenizer")
         r["cli"] = cli_check(args.llama_tokenize, gguf, hf, {n: s["lines"] for n, s in sets.items()}, args.work) \
             if args.llama_tokenize else {}
         r["cli_norm"] = cli_check(args.llama_tokenize, gguf, plain, norm_sets, args.work) \

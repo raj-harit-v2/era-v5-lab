@@ -319,13 +319,23 @@ pytest teams/04-ke2/tests -q
 
 `tests/conftest.py` and the scripts also find a folder named `kronecker-embeddings` next to the lab repository (see `src/ke2/upstream.py`).
 
-On the real tokenizer (needs `pip install tokenizers`; download `tokenizer.json`, `tokenizer_config.json` and
-`special_tokens_map.json` from https://huggingface.co/theschoolofai/BrahmicTokenizer-131K into a folder outside this repository):
+On the pinned baseline tokenizer (needs `pip install tokenizers`; download `tokenizer.json`,
+`tokenizer_config.json` and `special_tokens_map.json` from
+https://huggingface.co/theschoolofai/BrahmicTokenizer-131K into a folder outside this repository):
 
 ```
 export BRAHMIC_TOKENIZER_DIR=<that folder>
 pytest teams/04-ke2/tests/test_proof_checks.py -q          # skipped when the variable is not set
 python teams/04-ke2/src/proofs/proof_checks.py $BRAHMIC_TOKENIZER_DIR       # rewrites results/proof_checks.json
+```
+
+These commands and the committed `results/proof_checks.json` use the pinned baseline tokenizer.
+For frozen Team 3 C3-s0, place the `special_tokens_map.json` and `tokenizer_config.json` from
+merged Team 3 PR #407 beside its hash-verified `tokenizer.json`. Eos is `<|endoftext|>` (id 130822);
+id 36 has no named model role. Write a C3-s0 proof run to a separate output path:
+
+```
+python teams/04-ke2/src/proofs/proof_checks.py /path/to/c3-s0 /path/to/c3-s0-proof-checks.json
 ```
 
 Section 4 gives the expected numbers. With the tokenizer all 16 proof tests pass (about 2.5 minutes on CPU), including one that

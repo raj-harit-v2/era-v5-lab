@@ -1,0 +1,58 @@
+1. sha256
+  ok   tokenizer.json 15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3
+  ok   repo file train/c3_s0_manifest.json
+  ok   repo file train/mix_s0.json
+  ok   repo file train/slots_v2.json
+  ok   repo file train/train_bpe.py
+  ok   repo file train/rebuild_c3_s0.py
+  ok   repo file train/rebuild_c3_s0.json
+  ok   repo file jobs/2026-11-02-c3-s0-rebuild.md
+  ok   repo file jobs/2026-11-02-c3-s0-rebuild.log
+  ok   repo file jobs/2026-11-13-c3-s0-rebuild-pr414.log
+  ok   repo file release/tokenizer_config.json
+  ok   repo file release/special_tokens_map.json
+  ok   repo file release/SPECIAL_TOKENS.md
+  ok   repo file release/verify_release.py
+2. structure
+  ok   model type BPE
+  ok   ids 0..131071 with no gaps (131072 ids)
+  ok   130460 merges
+  ok   356 special tokens
+3. special-token roles
+  ok   bos <|begin_of_text|> = 130725 (SPECIAL_TOKENS.md: 130725)
+  ok   eos <|endoftext|> = 130822 (SPECIAL_TOKENS.md: 130822)
+  ok   pad <|pad|> = 130726 (SPECIAL_TOKENS.md: 130726)
+  ok   unk <|unk|> = 130727 (SPECIAL_TOKENS.md: 130727)
+  ok   each of the 356 special tokens encodes to its own single id
+4. round trip (no bos / eos added)
+  ok   Hi: 7 tokens
+  ok   Mr: 6 tokens
+  ok   Bn: 4 tokens
+  ok   As: 4 tokens
+  ok   Ta: 5 tokens
+  ok   Te: 6 tokens
+  ok   Kn: 6 tokens
+  ok   Ml: 6 tokens
+  ok   Gu: 6 tokens
+  ok   Pa: 4 tokens
+  ok   Or: 7 tokens
+  ok   En: 10 tokens
+  ok   Code: 15 tokens
+5. transformers AutoTokenizer
+  ok   eos_token_id 130822
+  ok   same ids as tokenizers, nothing added
+RESULT: PASS
+
+=== p1536 archive SHA256 (expected from archive/SHA256SUMS) ===
+expected: e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b
+got:      e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b
+p1536 SHA: PASS
+
+=== note: verify_release.py is pinned to frozen C3 (15468e66...); p1536 is a different candidate ===
+=== p1536 structure / EOS (preserve frozen specials incl. 130822) ===
+eos_id 130822
+n_ids 131072 first_last 0 131071
+merges 130460
+specials 356
+special_encode_bad 0
+p1536 structure/EOS: PASS

@@ -61,6 +61,12 @@ table is bound to its `tokenizer.json` SHA-256 (`01d968a7…739fff`). `build_tab
 fetches it when it is missing. The MPS step runs only where MPS is available.
 `KE2_RUN_V1_MPS_TESTS=1` enables the MPS integration test, and `KE2_RUN_GPU_TESTS=1` the CUDA one.
 
+For the frozen Team 3 C3-s0 tokenizer, use its SHA-256 `15468e66…2ddc3` and place the
+`special_tokens_map.json` and `tokenizer_config.json` from merged Team 3 PR #407 beside its
+`tokenizer.json`. The named roles are bos 130725, eos `<|endoftext|>` 130822, pad 130726 and
+unk 130727. ID 36 `<|end_of_text|>` is still marked special but has no named model role.
+The pinned baseline tables and results above remain tied to their original tokenizer hash.
+
 ### `decode_ref.py`: the reference decoder for G6
 
 ```python

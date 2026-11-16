@@ -39,6 +39,13 @@ class JsonWriter:
         self.file.close()
 
 
+def scored_ntp_loss(model, ids, targets):
+    """Sum next-token NLL without materializing logits for ignored positions."""
+    scored = targets != -100
+    hidden = model.hidden(ids, scored)
+    return token_nll(model.head(hidden[scored]), targets[scored]).sum()
+
+
 def model_hash(model):
     h = hashlib.sha256()
     for name, value in sorted(model.state_dict().items()):
@@ -417,10 +424,12 @@ def main():
                 tx, ty = x[start : start + micro], y[start : start + micro]
                 # Normalize each microbatch by the full batch target count.
                 with amp():
-                    logits, mtp_logits = model(tx, ty != -100, return_mtp=True)
-                    ntp = token_nll(logits, ty).sum() / count
                     mtp = None
-                    if mtp_logits is not None:
+                    if model.mtp_head is None:
+                        ntp = scored_ntp_loss(model, tx, ty) / count
+                    else:
+                        logits, mtp_logits = model(tx, ty != -100, return_mtp=True)
+                        ntp = token_nll(logits, ty).sum() / count
                         targets = torch.full_like(ty, -100)
                         targets[:, :-1] = ty[:, 1:]
                         mtp = token_nll(mtp_logits, targets).sum() / max(mtp_count, 1)

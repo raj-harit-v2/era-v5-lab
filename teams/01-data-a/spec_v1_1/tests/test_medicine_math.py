@@ -1,4 +1,4 @@
-"""Tests for the rules in sheets/medicine_math.md, loaded the way tools/harm_test.py loads them. All text is made up.
+"""Tests for the rules in sheets/medicine_math.md, loaded the way harmtest/harm_test.py loads them. All text is made up.
 
   python3 -m unittest discover -s spec_v1_1/tests      (from teams/01-data-a)
 """
@@ -7,7 +7,7 @@ import unittest
 from pathlib import Path
 
 SPEC = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(SPEC.parent / "tools"))
+sys.path.insert(0, str(SPEC.parent / "harmtest"))  # harm_test.py moved here from tools/ (theschoolofai/era-v5-lab#244)
 import harm_test  # noqa: E402  (only its loader is used; the file is not changed)
 
 SHEET = SPEC / "sheets" / "medicine_math.md"

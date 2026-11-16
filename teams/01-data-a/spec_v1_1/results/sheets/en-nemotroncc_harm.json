@@ -1,0 +1,81 @@
+{
+  "pack": "en-nemotroncc.parquet",
+  "pack_sha256": "6eae1507bc689c79ec8b73011b264f5b4558ef8eb3ddbf866a598588b7cf0fbb",
+  "gold": "en-nemotroncc_gold.csv",
+  "gold_sha256": "955598fb766f49633d0ea4c5a9621bc5f4b8e1bff8f4121c69438118685de735",
+  "gold_count": 129,
+  "rules": "teams/01-data-a/spec_v1_1/sheets/medicine_english.md",
+  "rules_file_sha256": "bf44f07546f50c3b964f438a91db6286de2aae84d93b8e4f84c4b583c0f417c1",
+  "code_sha256": "882209876997f090dacc2ad2ee71f478be07641ae4b65a3ed227d0c8e716e2e6",
+  "limit_percent": "1",
+  "limit_documents": 1,
+  "status": "FAIL",
+  "results": [
+    {
+      "rule": "DA-A8-003",
+      "changed": 1,
+      "dropped": 0,
+      "affected_unique": 1,
+      "errors": 0,
+      "error_types": [],
+      "percent": "0.775194",
+      "result": "PASS",
+      "changed_ids": [
+        "056cc9bc44c927e2"
+      ],
+      "dropped_ids": [],
+      "affected_ids": [
+        "056cc9bc44c927e2"
+      ]
+    },
+    {
+      "rule": "DA-D7-001",
+      "changed": 0,
+      "dropped": 0,
+      "affected_unique": 0,
+      "errors": 0,
+      "error_types": [],
+      "percent": "0.000000",
+      "result": "PASS",
+      "changed_ids": [],
+      "dropped_ids": [],
+      "affected_ids": []
+    },
+    {
+      "rule": "DA-A8-004",
+      "changed": 1,
+      "dropped": 0,
+      "affected_unique": 1,
+      "errors": 0,
+      "error_types": [],
+      "percent": "0.775194",
+      "result": "PASS",
+      "changed_ids": [
+        "fd16036899796ca4"
+      ],
+      "dropped_ids": [],
+      "affected_ids": [
+        "fd16036899796ca4"
+      ]
+    },
+    {
+      "rule": "ALL IN ORDER",
+      "changed": 2,
+      "dropped": 0,
+      "affected_unique": 2,
+      "errors": 0,
+      "error_types": [],
+      "percent": "1.550388",
+      "result": "FAIL",
+      "changed_ids": [
+        "056cc9bc44c927e2",
+        "fd16036899796ca4"
+      ],
+      "dropped_ids": [],
+      "affected_ids": [
+        "056cc9bc44c927e2",
+        "fd16036899796ca4"
+      ]
+    }
+  ]
+}

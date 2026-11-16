@@ -31,7 +31,7 @@ Each harm cell gives the gold harm % (gold docs changed or dropped / gold docs) 
 
 These are gold contradictions, not false positives. Under spec v1's hold rule, `DA-A8-001` would be held, because it treats fewer reading rows, and that would leave A8 without a working medicine.
 
-**Proposed handling: gold contradictions** (aneeshads, 13 Nov; waiting for Vijay's ruling). This is how spec v1 handled `eee25e81417bc1b7` in sci.
+**Handling: gold contradictions** (proposed by aneeshads on 13 Nov; Vijay agreed). This is how spec v1 handled `eee25e81417bc1b7` in sci.
 - Both docs stay out of the count for these two rules only.
 - They are flagged for a reader to check again at the next gold refresh.
 - Without them, finemath in order touches 0 of the other 84 gold docs and passes.
@@ -241,11 +241,19 @@ C9_DROP = re.compile("|".join((
     r"you may not be perplexed to enjoy",
 )), re.I | re.M)
 C9_INJECTED = re.compile(r"^[ \t]*you are watching:[^\n]*(?:\n|$)", re.I | re.M)
+# Speed (14 Nov): every C9_DROP sentence holds one of these, and C9_INJECTED holds "you are watch". casefold() maps every
+# character re.I matches to them (each is cut before any "i", which re.I also matches as a dotless "ı" that casefold()
+# keeps), so a doc without them can't match, and the 11-way case-insensitive search is skipped.
+C9_NEEDS = ("tutor", "teachers", "homework", "math problems", "6ya", "shortcut tr", "road d", "such a referred",
+            "perplexed to enjoy")
 
 
 def medicine_c9(text):
-    if C9_DROP.search(text):
+    low = text.casefold()
+    if any(k in low for k in C9_NEEDS) and C9_DROP.search(text):
         return True
+    if "you are watch" not in low:
+        return text
     return C9_INJECTED.sub("", text)
 
 
@@ -399,11 +407,23 @@ C7_NO_OBJECT = re.compile(r"\b(?:is|are|as|that|of|to|by|be|get|gives?|obtain|eq
 C7_OPTION = re.compile(r"^[ \t]*\(?[A-Da-d][).][ \t]*$")
 C7_QUESTION_MARK = re.compile(r"[:=][ \t]*\?[ \t]*$|(?<!\?)\?{3,}", re.M)
 C7_MIN_GAPS = 4  # the most gaps in a gold doc is 3; the reading docs it drops have 4 to over 100
+# Speed (14 Nov). C7_NO_OBJECT needs a space or tab before . , or ;, and C7_QUESTION_MARK needs a "?": without them
+# each counts 0. A line adds a gap only if it ends in "=" or a dangling word, or is an empty answer option:
+# C7_CANDIDATE finds such a line anywhere in the text, so without one the line loop adds nothing. And the count
+# only grows, so once it reaches C7_MIN_GAPS the answer is known.
+C7_SPACE_PUNCT = re.compile(r"[ \t][.,;]")
+C7_CANDIDATE = re.compile("|".join(p.pattern for p in (C7_EQ_END, C7_DANGLING, C7_OPTION)), re.I | re.M)
 
 
 def medicine_c7(text):
+    gaps = len(C7_NO_OBJECT.findall(text)) if C7_SPACE_PUNCT.search(text) else 0
+    if "?" in text:
+        gaps += len(C7_QUESTION_MARK.findall(text))
+    if gaps >= C7_MIN_GAPS:
+        return True
+    if not C7_CANDIDATE.search(text):
+        return False
     lines = [line for line in text.split("\n") if line.strip()]
-    gaps = len(C7_NO_OBJECT.findall(text)) + len(C7_QUESTION_MARK.findall(text))
     for k, line in enumerate(lines):
         nxt = lines[k + 1] if k + 1 < len(lines) else ""
         if (C7_EQ_END.search(line) or C7_DANGLING.search(line)) and not (C7_VALUE.match(nxt) or C7_CONTINUES.search(nxt)):
@@ -580,11 +600,17 @@ C8T_SHARE = 0.8
 C8T_MIN_ROWS = 1  # each reading doc has one such row; no gold doc has a numeric line of 20+ tokens (the longest is 15)
 
 
+# Speed (14 Nov): one regex pass counts the whitespace-separated tokens C8T_CELL matches whole, instead of a Python
+# loop over the tokens. (?<!\S) and (?!\S) make a match start and end at a token's edges: \s and str.split() use the
+# same whitespace.
+C8T_TOKEN = re.compile(r"(?<!\S)(?:" + C8T_CELL.pattern + r")(?!\S)")
+
+
 def _c8t_flat_row(line):
     tokens = line.split()
     if len(tokens) < C8T_MIN_TOKENS:
         return False
-    return sum(1 for t in tokens if C8T_CELL.fullmatch(t)) >= C8T_SHARE * len(tokens)
+    return len(C8T_TOKEN.findall(line)) >= C8T_SHARE * len(tokens)
 
 
 def medicine_c8t(text):

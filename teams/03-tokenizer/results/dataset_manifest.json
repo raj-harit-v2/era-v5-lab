@@ -1,0 +1,236 @@
+{
+  "target_bytes": 1000000000,
+  "notes": [
+    "Input size is UTF-8 bytes of the strings passed to Tokenizer.encode.",
+    "Selection is deterministic: sorted parquet paths, row order within each file.",
+    "No record duplication; if available text < target_bytes, all available text is used.",
+    "source_files lists every parquet discovered under the domain; selection stops at target_bytes."
+  ],
+  "domains": {
+    "english": {
+      "source_files": [
+        {
+          "path": "$WEEK3DATA/english/part-00000 (1).parquet",
+          "sha256": "2d0ac7331258ba29acd652875b2eb012417741bda82b776fa8f5069084ac434b",
+          "rows": 53598,
+          "text_column": "text",
+          "parquet_bytes": 111268453
+        },
+        {
+          "path": "$WEEK3DATA/english/part-00000 (2).parquet",
+          "sha256": "56ded7e8d4277d84f665a86e7aa12860177e75dc14dcdccfcf6b238af1c2a877",
+          "rows": 66074,
+          "text_column": "text",
+          "parquet_bytes": 109871775
+        },
+        {
+          "path": "$WEEK3DATA/english/part-00000.parquet",
+          "sha256": "8d0d8aa581f0d56bd3984e9d010c0f1dbe37ff9e4aea799155eb7d45e4722648",
+          "rows": 147598,
+          "text_column": "text",
+          "parquet_bytes": 125728238
+        },
+        {
+          "path": "$WEEK3DATA/english/part-00001 (1).parquet",
+          "sha256": "30fedabc6fc8befc6d2395e6a5439f74b0c31fed3bdfc0e1ae2ee05ab8f61971",
+          "rows": 49309,
+          "text_column": "text",
+          "parquet_bytes": 42062981
+        },
+        {
+          "path": "$WEEK3DATA/english/part-00001 (2).parquet",
+          "sha256": "f2f89744215cf72cfe34b5c9e597d594ffd38ca27ebcdb82c0ec75a20120c2d7",
+          "rows": 17776,
+          "text_column": "text",
+          "parquet_bytes": 37223771
+        },
+        {
+          "path": "$WEEK3DATA/english/part-00001.parquet",
+          "sha256": "277ece79c797c6191ef374109f6b15f9449303128d5f40507b0a6ac19ae51b41",
+          "rows": 22194,
+          "text_column": "text",
+          "parquet_bytes": 36775469
+        }
+      ],
+      "text_column": "text",
+      "record_count_available": 356549,
+      "selected_records": 354320,
+      "selected_from_files": [
+        {
+          "path": "$WEEK3DATA/english/part-00000 (1).parquet",
+          "selected_rows": 53598
+        },
+        {
+          "path": "$WEEK3DATA/english/part-00000 (2).parquet",
+          "selected_rows": 66074
+        },
+        {
+          "path": "$WEEK3DATA/english/part-00000.parquet",
+          "selected_rows": 147598
+        },
+        {
+          "path": "$WEEK3DATA/english/part-00001 (1).parquet",
+          "selected_rows": 49309
+        },
+        {
+          "path": "$WEEK3DATA/english/part-00001 (2).parquet",
+          "selected_rows": 17776
+        },
+        {
+          "path": "$WEEK3DATA/english/part-00001.parquet",
+          "selected_rows": 19965
+        }
+      ],
+      "input_utf8_bytes": 1000002183,
+      "benchmark_input_sha256": "c4b96c7a05961246eb4eb4a58fafa5a54dd50b79681f5ab713b9e87f5a0e6516",
+      "used_all_available": false,
+      "target_bytes": 1000000000
+    },
+    "code": {
+      "source_files": [
+        {
+          "path": "$WEEK3DATA/code/part-00000 (1).parquet",
+          "sha256": "8251d51398d3cc5e01d97e8eda2136643d3831843a982e96e0dad777e4f2484b",
+          "rows": 62443,
+          "text_column": "text",
+          "parquet_bytes": 65670141
+        },
+        {
+          "path": "$WEEK3DATA/code/part-00000 (2).parquet",
+          "sha256": "c445482684f015a9ce72cc6c34811b265c6c78183beff17b61ecfb9fcb7e3fd5",
+          "rows": 40418,
+          "text_column": "text",
+          "parquet_bytes": 65514841
+        },
+        {
+          "path": "$WEEK3DATA/code/part-00000 (3).parquet",
+          "sha256": "c54f8a6b673b7a45aa3e6f3fe7cc68589c62ba1fac37271496fd81867a27ead6",
+          "rows": 56702,
+          "text_column": "text",
+          "parquet_bytes": 61208363
+        },
+        {
+          "path": "$WEEK3DATA/code/part-00000.parquet",
+          "sha256": "1ea06089a9cf4bd58e5ffb21f6a6e92d7cb1a986de7f5af7addd078374909068",
+          "rows": 53419,
+          "text_column": "text",
+          "parquet_bytes": 73982239
+        },
+        {
+          "path": "$WEEK3DATA/code/part-00001 (1).parquet",
+          "sha256": "064ade4cee91a9ddf073fbb4f2bb38dbab2eb9d1e4a523727e57279153438376",
+          "rows": 22236,
+          "text_column": "text",
+          "parquet_bytes": 23312418
+        },
+        {
+          "path": "$WEEK3DATA/code/part-00001 (2).parquet",
+          "sha256": "b98f1f7f56a2a731c6e551c7489c9667805a457783d28704653fb8c0c0f31b72",
+          "rows": 14170,
+          "text_column": "text",
+          "parquet_bytes": 23200916
+        },
+        {
+          "path": "$WEEK3DATA/code/part-00001 (3).parquet",
+          "sha256": "b003f01f57f4366fe311a23bb8b9dcb0a7a048d085396154fa9ec663f19772a4",
+          "rows": 20253,
+          "text_column": "text",
+          "parquet_bytes": 21728347
+        },
+        {
+          "path": "$WEEK3DATA/code/part-00001.parquet",
+          "sha256": "ee73f83bb2daffe4fec15e54fca77e06d0cd4a1b19b1873bc9db392e3529f726",
+          "rows": 19185,
+          "text_column": "text",
+          "parquet_bytes": 26272498
+        }
+      ],
+      "text_column": "text",
+      "record_count_available": 288826,
+      "selected_records": 233254,
+      "selected_from_files": [
+        {
+          "path": "$WEEK3DATA/code/part-00000 (1).parquet",
+          "selected_rows": 62442
+        },
+        {
+          "path": "$WEEK3DATA/code/part-00000 (2).parquet",
+          "selected_rows": 40418
+        },
+        {
+          "path": "$WEEK3DATA/code/part-00000 (3).parquet",
+          "selected_rows": 56702
+        },
+        {
+          "path": "$WEEK3DATA/code/part-00000.parquet",
+          "selected_rows": 53419
+        },
+        {
+          "path": "$WEEK3DATA/code/part-00001 (1).parquet",
+          "selected_rows": 20273
+        }
+      ],
+      "input_utf8_bytes": 1000000966,
+      "benchmark_input_sha256": "d534c7485e69546f497c523df377e13f59dcfe4056611bb1ef3183d34c5ff8cc",
+      "used_all_available": false,
+      "target_bytes": 1000000000
+    },
+    "indic": {
+      "source_files": [
+        {
+          "path": "$WEEK3DATA/indic/part-00000 (1).parquet",
+          "sha256": "13570df82df624da82e73989177a018a5ca85a14ecf30393bb31dd8ea2a75c67",
+          "rows": 14709,
+          "text_column": "text",
+          "parquet_bytes": 21517593
+        },
+        {
+          "path": "$WEEK3DATA/indic/part-00000 (4).parquet",
+          "sha256": "611865114451be0ba79472c64878d6869738ed973a5907bda09dc0235be95131",
+          "rows": 10645,
+          "text_column": "text",
+          "parquet_bytes": 15913644
+        },
+        {
+          "path": "$WEEK3DATA/indic/part-00000.parquet",
+          "sha256": "80a392e855bec00b1101b796642969a8e2fec6825a0f677c5e6f5e7060943ff5",
+          "rows": 8280,
+          "text_column": "text",
+          "parquet_bytes": 20227201
+        },
+        {
+          "path": "$WEEK3DATA/indic/part-00000hplt.parquet",
+          "sha256": "25278716d89932eca78682281e69bb2f7763df59bb410d1d506f5afdb0a98d01",
+          "rows": 8626,
+          "text_column": "text",
+          "parquet_bytes": 20456830
+        }
+      ],
+      "text_column": "text",
+      "record_count_available": 42260,
+      "selected_records": 42260,
+      "selected_from_files": [
+        {
+          "path": "$WEEK3DATA/indic/part-00000 (1).parquet",
+          "selected_rows": 14709
+        },
+        {
+          "path": "$WEEK3DATA/indic/part-00000 (4).parquet",
+          "selected_rows": 10645
+        },
+        {
+          "path": "$WEEK3DATA/indic/part-00000.parquet",
+          "selected_rows": 8280
+        },
+        {
+          "path": "$WEEK3DATA/indic/part-00000hplt.parquet",
+          "selected_rows": 8626
+        }
+      ],
+      "input_utf8_bytes": 309018421,
+      "benchmark_input_sha256": "57109b404789c22fb2e9e9379d22c95a1128a2c2aa4ce16aa29c286c1e206a26",
+      "used_all_available": true,
+      "target_bytes": 1000000000
+    }
+  }
+}

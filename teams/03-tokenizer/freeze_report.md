@@ -73,6 +73,8 @@ The C3 normalizer changed 406 docs. That is expected: the round trip checks agai
 
 ## 7. release/
 
+**Start at `release/README.md`.** It covers where to download `tokenizer.json`, how to check it (`release/verify_release.py`), how to load it with `AutoTokenizer`, and how to rebuild it.
+
 `release/SHA256SUMS` lists the frozen tokenizer.json and every repo file needed to rebuild it. Check with:
 
 ```

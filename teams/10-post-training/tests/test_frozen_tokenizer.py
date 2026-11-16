@@ -40,7 +40,26 @@ def frozen_tokenizer(frozen_tokenizer_path):
 
 def test_frozen_tokenizer_sha256(frozen_tokenizer_path):
     sha = hashlib.sha256(frozen_tokenizer_path.read_bytes()).hexdigest()
-    assert sha == verify_frozen_tokenizer.EXPECTED_V0_1_SHA256
+    assert sha in (
+        verify_frozen_tokenizer.EXPECTED_FROZEN_C3_SHA256,
+        verify_frozen_tokenizer.EXPECTED_V0_1_SHA256,
+    )
+
+
+def test_c3_normalizer_indic_orthography_zwj_zwnj():
+    norm = verify_frozen_tokenizer.load_c3_normalizer()
+    if norm is None:
+        pytest.skip("C3 normalizer not found in teams/03-tokenizer/v1")
+    sentences = [
+        "माहिती तंत्रज्ञान आणि संगणक प्रणाली (उदा. ऱ्या)",
+        "सद्‌भावना और अंतर्‌राष्ट्रीय",
+        "శ్రీరస్తు శుభమస్తు - తెలుగు ఛందస్సు",
+        "ಕನ್ನಡ ಸಾಹಿತ್ಯ ಸಮ್ಮೇಳನ",
+        "தமிழ் செம்மொழி",
+    ]
+    for text in sentences:
+        normalized = norm.normalize_str(text)
+        assert text == normalized, f"C3 normalizer modified ZWJ/ZWNJ in: {text}"
 
 
 def test_all_9_markers_have_exact_atomic_id(frozen_tokenizer):

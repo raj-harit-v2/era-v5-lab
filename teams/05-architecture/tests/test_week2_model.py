@@ -17,7 +17,7 @@ TEAM = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(TEAM / "harness"))
 from week2.model import KE2, codec, GQA, MoE, LanguageModel, SwiGLU
 from week2.config import load, load_runtime, merge, validate
-from train_week2 import apply_resolution
+from train_week2 import apply_resolution, scored_ntp_loss
 
 
 def fixture(mtp=False):
@@ -77,6 +77,38 @@ class CodecTests(unittest.TestCase):
         torch.testing.assert_close(
             a.projection.weight.grad, b.projection.weight.grad, rtol=3e-5, atol=3e-5
         )
+
+
+class ScoredTrainingLossTests(unittest.TestCase):
+    def test_padding_does_not_change_loss_or_gradients(self):
+        torch.manual_seed(1234)
+        cfg, rows, lengths = fixture()
+        ids = torch.randint(0, 31, (2, 8))
+        targets = torch.randint(0, 31, (2, 8))
+        targets[0, 4:] = -100
+        targets[1, :] = -100
+
+        for batch in (slice(None), slice(1, None)):
+            with self.subTest(batch=batch):
+                dense = LanguageModel(cfg["model"], rows, lengths)
+                packed = copy.deepcopy(dense)
+                x, y = ids[batch], targets[batch]
+                expected = F.cross_entropy(
+                    dense(x, y != -100).flatten(0, 1), y.flatten(), reduction="sum"
+                )
+                actual = scored_ntp_loss(packed, x, y)
+                torch.testing.assert_close(actual, expected)
+                expected.backward()
+                actual.backward()
+                for (name, reference), parameter in zip(
+                    dense.named_parameters(), packed.parameters()
+                ):
+                    if reference.grad is None:
+                        self.assertIsNone(parameter.grad, name)
+                    else:
+                        torch.testing.assert_close(
+                            parameter.grad, reference.grad, rtol=3e-5, atol=3e-6, msg=name
+                        )
 
 
 class BackboneTests(unittest.TestCase):

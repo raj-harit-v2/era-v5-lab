@@ -8,6 +8,11 @@ import yaml
 
 TEAM = Path(__file__).resolve().parents[2]
 
+# Both names select the same input path: the G4 raw-code projection, week2.model.KE2.
+# ke2 is the name. ke1 is the older arm value and stays accepted, so arm files and pinned
+# job requests written before this change load unchanged. The value is recorded as written.
+KE2_EMBEDDING_NAMES = ("ke2", "ke1")
+
 
 class UniqueLoader(yaml.SafeLoader):
     pass
@@ -208,7 +213,10 @@ def load_runtime(arm_path, runtime_path=None):
         ],
         "lead run",
     )
-    if src.get("embedding") not in ["ke1", "g4_raw_ke"] or src.get("ffn") != "moe":
+    if (
+        src.get("embedding") not in [*KE2_EMBEDDING_NAMES, "g4_raw_ke"]
+        or src.get("ffn") != "moe"
+    ):
         raise ValueError("Native harness requires the declared Kronecker/MoE path")
     if src.get("ke_mode") not in [None, "dynamic"]:
         raise ValueError(
@@ -421,9 +429,10 @@ def validate(c):
         errors.append("Only eager attention/torch CE implemented")
     if "head_mode" in m or "tie_embeddings" in m:
         errors.append("Output head is fixed dense untied; head switches are removed")
-    if m.get("embedding") != "ke1":
+    if m.get("embedding") not in KE2_EMBEDDING_NAMES:
         errors.append(
-            "Only arm embedding ke1 is implemented with G4 raw-code projection"
+            "Arm embedding must be ke2, or the older name ke1: "
+            "only the G4 raw-code projection is implemented"
         )
     if r["batch_size"] % r["micro_batch_size"]:
         errors.append("Batch not divisible by microbatch")

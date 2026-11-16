@@ -1,23 +1,23 @@
 ## D1
-4. **Harm test:** gold set of 137 documents (ind-bn-sangraha-v 137), medicine.md sha256 cf92d89bc394; rule: changed or dropped at most 1% or 1 document, whichever is more.
+4. **Harm test:** gold set of 137 documents (ind-bn-sangraha-v 137), medicine.md sha256 099e41a7ce39; rule: changed or dropped at most 1% or 1 document, whichever is more.
    - Changed 0 of 137 (0.00%). Dropped 0 of 137 (0.00%). **PASS**
    - ZWJ/ZWNJ audit: 0 changed documents with a different count. **PASS**
    - Normal-form audit: 0 changed documents left NFC or lost a compatibility character. **PASS**
 
 ## A1
-4. **Harm test:** gold set of 137 documents (ind-bn-sangraha-v 137), medicine.md sha256 cf92d89bc394; rule: changed or dropped at most 1% or 1 document, whichever is more.
+4. **Harm test:** gold set of 137 documents (ind-bn-sangraha-v 137), medicine.md sha256 099e41a7ce39; rule: changed or dropped at most 1% or 1 document, whichever is more.
    - Changed 0 of 137 (0.00%). Dropped 0 of 137 (0.00%). **PASS**
    - ZWJ/ZWNJ audit: 0 changed documents with a different count. **PASS**
    - Normal-form audit: 0 changed documents left NFC or lost a compatibility character. **PASS**
 
 ## G1
-4. **Harm test:** gold set of 137 documents (ind-bn-sangraha-v 137), medicine.md sha256 cf92d89bc394; rule: changed or dropped at most 1% or 1 document, whichever is more.
+4. **Harm test:** gold set of 137 documents (ind-bn-sangraha-v 137), medicine.md sha256 099e41a7ce39; rule: changed or dropped at most 1% or 1 document, whichever is more.
    - Changed 0 of 137 (0.00%). Dropped 0 of 137 (0.00%). **PASS**
    - ZWJ/ZWNJ audit: 0 changed documents with a different count. **PASS**
    - Normal-form audit: 0 changed documents left NFC or lost a compatibility character. **PASS**
 
 ## ALL IN ORDER
-4. **Harm test:** gold set of 137 documents (ind-bn-sangraha-v 137), medicine.md sha256 cf92d89bc394; rule: changed or dropped at most 1% or 1 document, whichever is more.
+4. **Harm test:** gold set of 137 documents (ind-bn-sangraha-v 137), medicine.md sha256 099e41a7ce39; rule: changed or dropped at most 1% or 1 document, whichever is more.
    - Changed 0 of 137 (0.00%). Dropped 0 of 137 (0.00%). **PASS**
    - ZWJ/ZWNJ audit: 0 changed documents with a different count. **PASS**
    - Normal-form audit: 0 changed documents left NFC or lost a compatibility character. **PASS**

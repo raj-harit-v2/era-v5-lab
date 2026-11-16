@@ -13,9 +13,9 @@ a harm result for each pack, judged on that pack's own gold set (never pooled).
 ## Filters
 | Code | Filter | Whose code | Status |
 |---|---|---|---|
-| D1 | Script share: drop a document where another script dominates | Data B (no author had a D1 rule) | code, tests; harm run on 5 packs, all PASS, but 0 changed: no pack on hand holds an A1 character |
-| A1 | Invisible junk characters; ZWJ and ZWNJ are kept | the author's: adinathauti, PR #114 | code, tests; harm run on 5 packs, all PASS, but 0 changed: no pack on hand holds an A1 character |
-| G1 | Broken vowel sign for Kannada, Devanagari, Malayalam, Tamil, Odia | the authors' code per script (see below) | code, tests; harm run on 5 packs, all PASS, but 0 changed: no pack on hand holds an A1 character |
+| D1 | Script share: drop a document where another script dominates | Data B (no author had a D1 rule) | code, tests; harm run on 6 packs, all PASS (0 changed). On all documents of the 10 packs on hand: 0 dropped, 8 flagged |
+| A1 | Invisible junk characters; ZWJ and ZWNJ are kept | the author's: adinathauti, PR #114 | code, tests; harm run on 6 packs, all PASS, but 0 changed: no pack on hand holds an A1 character |
+| G1 | Broken vowel sign for Kannada, Devanagari, Malayalam, Tamil, Odia | the authors' code per script (see below) | code, tests; harm run on 6 packs, all PASS (0 changed; the Hindi pack ind-hi-sangraha-s is the first Devanagari run on real text) |
 
 D2 (romanised text) is @keshavamurali's (#213); G2/visarga/F1/F2 and the per-pack fixes are out, as listed in the issue.
 
@@ -91,8 +91,9 @@ Changed / dropped, for D1, A1, G1 and "all in order"; `joiners` and `form` are o
 | ind-kn-fw2 | 115 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | PASS |
 | ind-kn-sangraha-s | 22 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | PASS |
 | ind-te-sangraha-s | 24 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | PASS |
+| ind-hi-sangraha-s | 24 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | PASS |
 | ind-ta-fw2, ind-ta-sangraha-s, ind-ml-fw2, ind-or-fw2 | 0 | | | | | gold set empty, not testable |
-| ind-te-fw2, ind-te-sangraha-v, ind-kn-sangraha-v, ind-ta-sangraha-v, ind-hi-fw2, ind-hi-hplt, ind-hi-indiccorp, ind-hi-sangraha-s, ind-hi-sangraha-v, ind-mr-fw2, ind-mr-sangraha-v, ind-gu-fw2, ind-sa-fw2 | per `../gold/gold_coverage.csv` | | | | | not run yet: pack file missing |
+| ind-te-fw2, ind-te-sangraha-v, ind-kn-sangraha-v, ind-ta-sangraha-v, ind-hi-fw2, ind-hi-hplt, ind-hi-indiccorp, ind-hi-sangraha-v, ind-mr-fw2, ind-mr-sangraha-v, ind-gu-fw2, ind-sa-fw2 | per `../gold/gold_coverage.csv` | | | | | not run yet: pack file missing |
 
 **Information only, not a harm result** (packs with no gold set, all 500 documents; ZWJ/ZWNJ and NFC differences: 0 everywhere):
 
@@ -104,14 +105,14 @@ Changed / dropped, for D1, A1, G1 and "all in order"; `joiners` and `form` are o
 | ind-ta-sangraha-s | 0 / 0 | 0 | 1 of 500 (no reader has looked at it) |
 
 On the packs run, the lowest script share among gold documents is 0.81 (ind-bn-fw2) and 0.93 or higher elsewhere,
-far above the 0.30 drop line. Over all documents of the 9 packs on hand, D1 drops none. Over the first 8 of them (before ind-ml-fw2 was added) it
-flagged 6 and kept them (share 0.40 to 0.43; in ind-bn-fw2, ind-kn-fw2, ind-or-fw2 and ind-ta-fw2). **A pass on gold shows no harm. It does not show that a filter catches the defect:** the packs with most of the
+far above the 0.30 drop line. Over all documents of the 10 packs on hand, D1 drops none. It flags and keeps 8 (share 0.31 to 0.44, all with Latin letters
+as the largest other script; in ind-bn-fw2, ind-kn-fw2 (2), ind-ml-fw2, ind-or-fw2, ind-ta-fw2 (2) and ind-hi-sangraha-s). **A pass on gold shows no harm. It does not show that a filter catches the defect:** the packs with most of the
 D1 marks (ind-te-sangraha-v, ind-sa-fw2, ind-hi-hplt) and most A1 marks are among the missing pack files.
 
 ## For Friday (#217: Gate 2 asks for script-aware filters that pass the harm test)
 - [x] D1, A1 and G1: functions, unit tests, before-and-after ZWJ/ZWNJ counts, NFC only.
-- [x] Harm result for each pack whose pack file is here: 5 tested (PASS), 4 "gold set empty, not testable".
-- [ ] Harm results for the 13 packs with gold documents whose pack file is missing (list above).
+- [x] Harm result for each pack whose pack file is here: 6 tested (PASS), 4 "gold set empty, not testable".
+- [ ] Harm results for the 12 packs with gold documents whose pack file is missing (list above).
 - [ ] Open the PR with `Closes #214` as the first line of its description; it must pass pr-guard.
 - [x] Draft of "our proposal for the native Indic share" (#217, due Thu 12 Nov): `../native_indic_share_v1.md`.
 

@@ -1,0 +1,295 @@
+{
+  "schema": "tokenizer_cpu_speed_v1",
+  "created_at": "2026-11-16T07:54:30+0530",
+  "script": "teams/03-tokenizer/harness/bench_cpu_speed.py",
+  "script_sha256": "e6798946fdb561d0ca6b8d91214724b5aa3e8374688e8b1edee3f62e49c55308",
+  "git_commit": "ae4c03dbe69b9a46bfdd8a0922cf5d48118ab51f",
+  "machine": {
+    "platform": "macOS-15.1.1-arm64-arm-64bit",
+    "system": "Darwin",
+    "release": "24.1.0",
+    "machine": "arm64",
+    "processor": "arm",
+    "python": "3.11.8 (main, May  2 2025, 02:17:14) [Clang 16.0.0 (clang-1600.0.26.4)]",
+    "tokenizers": "0.21.1",
+    "pyarrow": "21.0.0",
+    "cpu_brand": "Apple M2",
+    "logical_cpus": 8
+  },
+  "affinity": {
+    "os": "Darwin",
+    "sched_setaffinity_available": false,
+    "requested": "one CPU core",
+    "enforced": false,
+    "method": null,
+    "cpus": null,
+    "limitation": "Darwin provides no os.sched_setaffinity; TOKENIZERS_PARALLELISM=false and OMP/MKL/OPENBLAS/VECLIB/NUMEXPR threads=1 are set, but a hard one-core CPU affinity pin could not be verified."
+  },
+  "config": {
+    "runs": 3,
+    "warmup": 1,
+    "target_bytes": 1000000000,
+    "add_special_tokens": false,
+    "timing": "encode loop only; load/decode/warmup excluded"
+  },
+  "tokenizers": {
+    "c3_sample_v0": {
+      "path": "teams/03-tokenizer/release/tokenizer.json",
+      "sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3"
+    },
+    "p1536": {
+      "path": "$WEEK3DATA/archive/tokenizer.json",
+      "sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b"
+    }
+  },
+  "domains": {
+    "english": {
+      "input_utf8_bytes": 1000002183,
+      "selected_records": 354320,
+      "benchmark_input_sha256": "c4b96c7a05961246eb4eb4a58fafa5a54dd50b79681f5ab713b9e87f5a0e6516",
+      "used_all_available": false
+    },
+    "code": {
+      "input_utf8_bytes": 1000000966,
+      "selected_records": 233254,
+      "benchmark_input_sha256": "d534c7485e69546f497c523df377e13f59dcfe4056611bb1ef3183d34c5ff8cc",
+      "used_all_available": false
+    },
+    "indic": {
+      "input_utf8_bytes": 309018421,
+      "selected_records": 42260,
+      "benchmark_input_sha256": "57109b404789c22fb2e9e9379d22c95a1128a2c2aa4ce16aa29c286c1e206a26",
+      "used_all_available": true
+    }
+  },
+  "results": {
+    "english": {
+      "c3_sample_v0": {
+        "runs": [
+          {
+            "run": 1,
+            "elapsed_s": 556.8260707089939,
+            "total_tokens": 206604413,
+            "input_bytes": 1000002183,
+            "mb_per_s": 1.795896843922412,
+            "tokens_per_s": 371039.4032681252,
+            "tokens_per_byte": 0.206603961983551
+          },
+          {
+            "run": 2,
+            "elapsed_s": 602.0465737919949,
+            "total_tokens": 206604413,
+            "input_bytes": 1000002183,
+            "mb_per_s": 1.6610046905532219,
+            "tokens_per_s": 343170.1499415577,
+            "tokens_per_byte": 0.206603961983551
+          },
+          {
+            "run": 3,
+            "elapsed_s": 611.2722084170018,
+            "total_tokens": 206604413,
+            "input_bytes": 1000002183,
+            "mb_per_s": 1.6359359532959687,
+            "tokens_per_s": 337990.8495022846,
+            "tokens_per_byte": 0.206603961983551
+          }
+        ],
+        "median_mb_per_s": 1.6610046905532219,
+        "median_tokens_per_s": 343170.1499415577,
+        "tokens_per_byte": 0.206603961983551,
+        "total_tokens": 206604413,
+        "input_bytes": 1000002183,
+        "benchmark_input_sha256": "c4b96c7a05961246eb4eb4a58fafa5a54dd50b79681f5ab713b9e87f5a0e6516"
+      },
+      "p1536": {
+        "runs": [
+          {
+            "run": 1,
+            "elapsed_s": 627.2131198330026,
+            "total_tokens": 206673500,
+            "input_bytes": 1000002183,
+            "mb_per_s": 1.5943578847111068,
+            "tokens_per_s": 329510.80496375373,
+            "tokens_per_byte": 0.2066730488327344
+          },
+          {
+            "run": 2,
+            "elapsed_s": 610.3385409170005,
+            "total_tokens": 206673500,
+            "input_bytes": 1000002183,
+            "mb_per_s": 1.6384385319949664,
+            "tokens_per_s": 338621.08673242934,
+            "tokens_per_byte": 0.2066730488327344
+          },
+          {
+            "run": 3,
+            "elapsed_s": 602.6154266669982,
+            "total_tokens": 206673500,
+            "input_bytes": 1000002183,
+            "mb_per_s": 1.6594367464684825,
+            "tokens_per_s": 342960.8517377146,
+            "tokens_per_byte": 0.2066730488327344
+          }
+        ],
+        "median_mb_per_s": 1.6384385319949664,
+        "median_tokens_per_s": 338621.08673242934,
+        "tokens_per_byte": 0.2066730488327344,
+        "total_tokens": 206673500,
+        "input_bytes": 1000002183,
+        "benchmark_input_sha256": "c4b96c7a05961246eb4eb4a58fafa5a54dd50b79681f5ab713b9e87f5a0e6516"
+      }
+    },
+    "code": {
+      "c3_sample_v0": {
+        "runs": [
+          {
+            "run": 1,
+            "elapsed_s": 649.9001281659876,
+            "total_tokens": 256856455,
+            "input_bytes": 1000000966,
+            "mb_per_s": 1.5386994442084414,
+            "tokens_per_s": 395224.50276298093,
+            "tokens_per_byte": 0.25685620687690414
+          },
+          {
+            "run": 2,
+            "elapsed_s": 393.2401629590022,
+            "total_tokens": 256856455,
+            "input_bytes": 1000000966,
+            "mb_per_s": 2.5429777021637956,
+            "tokens_per_s": 653179.6067503383,
+            "tokens_per_byte": 0.25685620687690414
+          },
+          {
+            "run": 3,
+            "elapsed_s": 383.1990721660113,
+            "total_tokens": 256856455,
+            "input_bytes": 1000000966,
+            "mb_per_s": 2.609612179767426,
+            "tokens_per_s": 670295.0859148308,
+            "tokens_per_byte": 0.25685620687690414
+          }
+        ],
+        "median_mb_per_s": 2.5429777021637956,
+        "median_tokens_per_s": 653179.6067503383,
+        "tokens_per_byte": 0.25685620687690414,
+        "total_tokens": 256856455,
+        "input_bytes": 1000000966,
+        "benchmark_input_sha256": "d534c7485e69546f497c523df377e13f59dcfe4056611bb1ef3183d34c5ff8cc"
+      },
+      "p1536": {
+        "runs": [
+          {
+            "run": 1,
+            "elapsed_s": 387.65833083300095,
+            "total_tokens": 258914207,
+            "input_bytes": 1000000966,
+            "mb_per_s": 2.5795936433281237,
+            "tokens_per_s": 667892.7973600997,
+            "tokens_per_byte": 0.25891395688911767
+          },
+          {
+            "run": 2,
+            "elapsed_s": 388.3903029159992,
+            "total_tokens": 258914207,
+            "input_bytes": 1000000966,
+            "mb_per_s": 2.5747320633189945,
+            "tokens_per_s": 666634.0664432031,
+            "tokens_per_byte": 0.25891395688911767
+          },
+          {
+            "run": 3,
+            "elapsed_s": 398.90937845800363,
+            "total_tokens": 258914207,
+            "input_bytes": 1000000966,
+            "mb_per_s": 2.506837442292117,
+            "tokens_per_s": 649055.2014616472,
+            "tokens_per_byte": 0.25891395688911767
+          }
+        ],
+        "median_mb_per_s": 2.5747320633189945,
+        "median_tokens_per_s": 666634.0664432031,
+        "tokens_per_byte": 0.25891395688911767,
+        "total_tokens": 258914207,
+        "input_bytes": 1000000966,
+        "benchmark_input_sha256": "d534c7485e69546f497c523df377e13f59dcfe4056611bb1ef3183d34c5ff8cc"
+      }
+    },
+    "indic": {
+      "c3_sample_v0": {
+        "runs": [
+          {
+            "run": 1,
+            "elapsed_s": 89.82914974998857,
+            "total_tokens": 38589939,
+            "input_bytes": 309018421,
+            "mb_per_s": 3.4400684172126352,
+            "tokens_per_s": 429592.6111668992,
+            "tokens_per_byte": 0.12487908932781713
+          },
+          {
+            "run": 2,
+            "elapsed_s": 88.28466758299328,
+            "total_tokens": 38589939,
+            "input_bytes": 309018421,
+            "mb_per_s": 3.50025015056553,
+            "tokens_per_s": 437108.05122217815,
+            "tokens_per_byte": 0.12487908932781713
+          },
+          {
+            "run": 3,
+            "elapsed_s": 88.49567066699092,
+            "total_tokens": 38589939,
+            "input_bytes": 309018421,
+            "mb_per_s": 3.4919043911519227,
+            "tokens_per_s": 436065.84038685786,
+            "tokens_per_byte": 0.12487908932781713
+          }
+        ],
+        "median_mb_per_s": 3.4919043911519227,
+        "median_tokens_per_s": 436065.84038685786,
+        "tokens_per_byte": 0.12487908932781713,
+        "total_tokens": 38589939,
+        "input_bytes": 309018421,
+        "benchmark_input_sha256": "57109b404789c22fb2e9e9379d22c95a1128a2c2aa4ce16aa29c286c1e206a26"
+      },
+      "p1536": {
+        "runs": [
+          {
+            "run": 1,
+            "elapsed_s": 97.23407641600352,
+            "total_tokens": 36646601,
+            "input_bytes": 309018421,
+            "mb_per_s": 3.1780876868506915,
+            "tokens_per_s": 376890.5136015508,
+            "tokens_per_byte": 0.11859034448952802
+          },
+          {
+            "run": 2,
+            "elapsed_s": 95.21562558300502,
+            "total_tokens": 36646601,
+            "input_bytes": 309018421,
+            "mb_per_s": 3.2454591261453256,
+            "tokens_per_s": 384880.11579625675,
+            "tokens_per_byte": 0.11859034448952802
+          },
+          {
+            "run": 3,
+            "elapsed_s": 96.17336541699478,
+            "total_tokens": 36646601,
+            "input_bytes": 309018421,
+            "mb_per_s": 3.213139310038051,
+            "tokens_per_s": 381047.29767025687,
+            "tokens_per_byte": 0.11859034448952802
+          }
+        ],
+        "median_mb_per_s": 3.213139310038051,
+        "median_tokens_per_s": 381047.29767025687,
+        "tokens_per_byte": 0.11859034448952802,
+        "total_tokens": 36646601,
+        "input_bytes": 309018421,
+        "benchmark_input_sha256": "57109b404789c22fb2e9e9379d22c95a1128a2c2aa4ce16aa29c286c1e206a26"
+      }
+    }
+  }
+}

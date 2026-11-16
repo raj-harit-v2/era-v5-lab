@@ -1,0 +1,101 @@
+doc_id,read,verdict,diseases,evidence,hex,note
+00c9417cf1282d39,full,clean,,,,
+00de47afca2e7911,full,fix,A5,'मणिकांंत तिवा' at offset 5,5 U+0902 DEVANAGARI SIGN ANUSVARA 6 U+0902 DEVANAGARI SIGN ANUSVARA, doubled anusvara in byline; names+village of private people judged not F1
+010bd2266348f6aa,full,clean,,,, natural D3 prefix
+018948e5b897281e,full,fix,A5,'कांग्रेेस को म' at offset 827,827 U+0947 DEVANAGARI VOWEL SIGN E 828 U+0947 DEVANAGARI VOWEL SIGN E, doubled vowel sign in कांग्रेेस
+0300c70392967a73,full,fix,C1,share appeal 'इसे अपने दोस्तों व रिश्तेदारों के साथ भी जरुर शेयर कीजिये' at offset 4878,, '#' heading markers left as is
+03afbd36ab5396b7,full,fix,A5,'ं को काॅलेज की' at offset 1241,1241 U+093E DEVANAGARI VOWEL SIGN AA 1242 U+0945 DEVANAGARI VOWEL SIGN CANDRA E, ा+ॅ for ॉ (also 1513 1751 2110) and nukta after vowel sign; serial part 9
+04733ce017198f44,full,clean,,,, headings glued by lost line breaks
+076b982f34fd9683,full,clean,,,,
+09150859a0e79f25,full,clean,,,,
+09de1a76bf97ceea,full,clean,,,,
+09f5c6266ac3359d,full,clean,,,,
+0a61e841f835ecd6,full,fix,A5,'ढ़ की ह़अडी बैं' at offset 4683,4683 U+0939 DEVANAGARI LETTER HA 4684 U+093C DEVANAGARI SIGN NUKTA 4685 U+0905 DEVANAGARI LETTER A, garbled हड्डी
+0c9208a0c91789d6,full,clean,,,,
+0e725c803ffe1317,full,clean,,,, headings glued by lost line breaks
+0e8608e77be22c04,full,clean,,,,
+0f440543f40f64ce,full,clean,,,,
+0f8b63d3d8ea38d0,full,fix,C1,signature block '…………………परम श्रद्धेय सौम्य मूर्ति' at offset 11144,, horoscope
+0fb8ec5d454c72ca,full,clean,,,,
+11efa563e50c0f7c,full,clean,,,,
+12e217a45fe361c3,full,clean,,,,
+12e3206174509364,full,clean,,,,
+1576e0fbca8b2c2e,full,clean,,,,
+158758517ab43cb0,full,clean,,,,
+15b91e05d3080e51,full,clean,,,,
+15cc1520eaaa516f,full,fix,A1,'‘धूम्र’पान प' at offset 15,15 U+0930 DEVANAGARI LETTER RA, curly quote U+2019 inside words (also 162); closest code A1
+169d6d7e9e3664d8,full,fix,C1,"page metadata 'Published: Sep 08, 2023 02:41:31 pm' + byline at offset 0",,
+179554e35f340183,full,clean,,,,
+18fe42d2a00c4fbf,full,clean,,,,
+194abdf09df7b950,full,clean,,,,
+1954e181d1ea0e5b,full,clean,,,,
+1a97084edd39217c,full,clean,,,,
+1d1b388bc939e854,full,clean,,,,
+1d353e7f2ac1a2aa,full,clean,,,,
+1d7c84c8aced12aa,full,clean,,,,
+1ea557924c74f8cd,full,clean,,,,
+1fd9e373c72f6c12,full,clean,,,,
+20357b2c2355d193,full,fix,A3;C1,'ुकीन (त्वीपजनापदम) को प' at offset 1168 | site name line 'अनिवार्य प्रश्न । संवाद' at offset 0,1168 U+0924 DEVANAGARI LETTER TA 1169 U+094D DEVANAGARI SIGN VIRAMA 1170 U+0935 DEVANAGARI LETTER VA 1171 U+0940 DEVANAGARI VOWEL SIGN II 1172 U+092A DEVANAGARI LETTER PA 1173 U+091C DEVANAGARI LETTER JA 1174 U+0928 DEVANAGARI LETTER NA 1175 U+093E DEVANAGARI VOWEL SIGN AA 1176 U+092A DEVANAGARI LETTER PA 1177 U+0926 DEVANAGARI LETTER DA 1178 U+092E DEVANAGARI LETTER MA, legacy-font mojibake; lost spaces 572 620 1206; चैथा 2519
+21534ebfb5c325cb,full,fix,D4,'लेकिन बहुत कुछ हासिल हुआ है.' contradicts article at offset 262,, stray ending 'क्या होगा।' at 3265
+22255db445d71c84,full,clean,,,,
+232148a9e9f1a4fc,full,fix,A5,'ो करोड़़ रूपया' at offset 770,770 U+093C DEVANAGARI SIGN NUKTA 771 U+093C DEVANAGARI SIGN NUKTA, double nukta; also लाइनोें at 621
+2409e1aa6ec732e3,full,clean,,,,
+2616bd080a4dc7c0,full,clean,,,,
+26891b0add895342,full,clean,,,,
+277fa2fd630f90fd,full,fix,C2,paragraph at 95 repeated word for word (176 chars) at offset 1175,,
+278af6460a20ef7d,full,clean,,,,
+29b41d89876fcf2a,full,clean,,,,
+2b2c1dad22564f22,full,clean,,,,
+2b34b8f8c63f87bb,full,clean,,,,
+2b99279633577643,full,fix,D4,'हेडविन्ड्स में चल रहा है' literal translation at offset 907,, also 1100
+2d2861553ebe4a0b,full,fix,C5,keyword heading 'Blogging Business Idea in Hindi' at offset 542,, also 1611
+2d9606c73b989183,full,clean,,,,
+2e48356fe1d4be31,full,clean,,,,
+2eac4ba26076db7e,full,fix,C1,credit line 'समाचार साभार आज तक' at offset 0,,
+30007e3c252f3555,full,clean,,,,
+3064c157e1108887,full,fix,A5,'ब को लाॅन्च हो' at offset 800,800 U+093E DEVANAGARI VOWEL SIGN AA 801 U+0945 DEVANAGARI VOWEL SIGN CANDRA E, ा+ॅ for ॉ
+3094f3cea311494e,full,fix,A3,'े साथ षामिल क' at offset 273,273 U+0937 DEVANAGARI LETTER SSA," ष for श (legacy font), also पषु 1023"
+319b74777136a2b6,full,fix,F1;C1,vehicle registration number at offset 419 and 997 | image caption line at offset 518,, also caption at 1120
+34d945f0de378314,full,clean,,,,
+36194163b7bb6192,full,clean,,,,
+36cccf92a159ec06,full,fix,C1,"site tag 'Old Coin Bazaar, Digital Desk, Delhi:' at offset 99",,
+3978969e1762990f,full,clean,,,,
+3a1d53055999be3c,full,clean,,,,
+3e94254b30a651b9,full,clean,,,,
+40e45493e25f385a,full,clean,,,, natural D3
+4289a4bb12da1dca,full,clean,,,, natural D3
+42ffd82ed251a6fc,full,drop,F3,communal framing 'लव जिहाद या कहें ग्रूमिंग जिहाद' at offset 0,, judgement call
+432f31391a8e39f0,full,clean,,,,
+46462336cf49e643,full,fix,C1,'हमारा ऐप डाउनलोड करें … 16 Views … Share this post:' at offset 740,,
+47767696c5505911,full,clean,,,,
+4784eab7e4733f61,full,drop,C3,"intro only, article body missing (254 chars) at offset 254",,
+49dd2c0be1301df5,full,fix,D4,'उसकी वापसी की प्रक्रिया' (refund mistranslated) at offset 540,, also 842
+4b097d9cb67740d8,full,clean,,,,
+4b8b3fd7197ae6f4,full,clean,,,, natural D3
+4c211d875c9a4a23,full,clean,,,,
+4d2fed68832cb733,full,clean,,,,
+4f68adee549dbab4,full,clean,,,,
+4fbeefc5d066bd0b,full,clean,,,,
+502916904c6dd3a6,full,fix,B5,headlines wrapped in '*…*' at offset 0,,
+51632e4fa7780315,full,fix,C1;A5,'TODAY EXPRESS NEWS :' prefix and closing credit at 1268 at offset 0 | 'र्थियोंं के बी' at offset 786,786 U+0902 DEVANAGARI SIGN ANUSVARA 787 U+0902 DEVANAGARI SIGN ANUSVARA,
+51e36bde3ba3dcd2,full,clean,,,,
+52dd76549a2ece87,full,fix,C5,'(Security Arrangements)' keyword on every sub-headline at offset 508,, also 871 1170 1513 1838
+530973a469cb867d,full,clean,,,,
+5309d2e769813984,full,clean,,,,
+536ff82486f495de,full,clean,,,,
+58c59fba9c602a44,full,clean,,,,
+593adfb4ea0f942a,full,clean,,,,
+5afd06a063f7c67b,full,drop,C3,"intro paragraph only, symptoms list missing at offset 508",,
+5c99139c3ff8cd3b,full,clean,,,,
+5cf40aca3297151a,full,drop,C3,"video intro only, no body at offset 490",,
+5d72382fa6042f99,full,clean,,,,
+5f9771e5f6d98140,full,fix,C1,'खबरों के लिए क्लिक करें:- www.raftaar.in' at offset 1957,,
+5fec5463f611d51d,full,clean,,,,
+6003a61c8ac4ca60,full,fix,C1;A5,'ये भी पढ़िए' / 'फैक्ट चेक' leftover lines at offset 544 | 'नहीं हैै. और न' at offset 1689,1689 U+0948 DEVANAGARI VOWEL SIGN AI 1690 U+0948 DEVANAGARI VOWEL SIGN AI,
+662ca5b09cfa64a1,full,clean,,,,
+676518150a28c302,full,clean,,,,
+67dfd4f1b26ae90f,full,fix,A5,'धायक डाॅ प्रमो' at offset 102,102 U+093E DEVANAGARI VOWEL SIGN AA 103 U+0945 DEVANAGARI VOWEL SIGN CANDRA E," ा+ॅ for ॉ (6 times), nukta after vowel sign at 1177"
+6858fdaad3921450,full,clean,,,,
+68e32a076ca825c5,full,clean,,,,
+6ab5d456c4159fc1,full,fix,A5,'से जुडे़ व्यवस' at offset 439,439 U+0947 DEVANAGARI VOWEL SIGN E 440 U+093C DEVANAGARI SIGN NUKTA, nukta after vowel sign
+6f0ae93c3ce420da,full,fix,B4;A3,"'[email protected]' Cloudflare leftover at offset 1159 | '-सूई, स्टे्रचर-एम्' at offset 717",717 U+0938 DEVANAGARI LETTER SA 718 U+094D DEVANAGARI SIGN VIRAMA 719 U+091F DEVANAGARI LETTER TTA 720 U+0947 DEVANAGARI VOWEL SIGN E 721 U+094D DEVANAGARI SIGN VIRAMA 722 U+0930 DEVANAGARI LETTER RA, also C1 header/bio lines

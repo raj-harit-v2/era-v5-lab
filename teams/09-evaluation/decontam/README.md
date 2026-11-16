@@ -99,6 +99,64 @@ The summary goes to stderr (`docs N with_canary N hits N`). Exit code 1 means a 
 could not be read (it is named on stderr and skipped, the scan goes on); else 0. A pipeline can stop on any non-zero code. `decontam_check.py` also flags the lab canary (item `era-v5-lab:canary`), so the full
 check covers it too.
 
+## Training shards (`decode_shard.py`)
+
+Data A's training shards ([shard format v1](../../01-data-a/shards/shard_format_v1.md)) hold token IDs, not text, and
+`.docs.parquet` has IDs and counts only. `decode_shard.py` turns each shard back into a `doc_id, text` Parquet that
+`decontam_check.py` and `canary_scan.py` read as it is. Use this one script for every shard check (task 2 and the
+rotators' R1), so all shards are decoded the same way.
+
+```bash
+python teams/09-evaluation/decontam/decode_shard.py <shards folder or .bin> --tokenizer <p1536>/tokenizer.json --out <dir>
+python teams/09-evaluation/decontam/decontam_check.py <dir>/<shard_id>.text.parquet    # full set
+python teams/09-evaluation/decontam/canary_scan.py <dir>/<shard_id>.text.parquet
+```
+
+- **Tokenizer:** only a frozen `tokenizer.json` is accepted, and it must be the one the shard's manifest names:
+  - **p1536** (sha256 `e6b93a93…25a64b`), frozen at Gate 3 (TSAI notice, 15 Nov; #414). **The first training shards use
+    it.** Download it from the link in that notice.
+  - **C3** (sha256 `15468e66…02ddc3`, G3 #340), the earlier freeze. Data A's sample shard (#373) and earlier work use it;
+    G3 shares it on Kaggle.
+  - The two have the same vocab (131,072), EOS (`<|endoftext|>` 130822) and 356 special tokens. Neither file is in the
+    repo (8 MB).
+- **Checks before decoding** (the rules `shard_writer.py` asserts, so a shard with a bad structure is refused even when its
+  manifest hashes match):
+  - header (magic 20261025, version 2); file size = the manifest's `payload_bytes`;
+  - `.idx.npy` starts at 0, rises, ends at the token count;
+  - `.docs.parquet`: one row per document, `doc_id` unique and not null, `n_tokens` equal to each document's length in
+    the index (so doc_ids cannot attach to the wrong text);
+  - manifest: `schema_version`, `token_dtype`, `shard_id` and the file names (the last part of each `*_uri`, which may
+    be a full store path as in the template) match the files; payload, index and docs sha256, doc and token counts, EOS id
+    and tokenizer sha256 match;
+  - every token id is below the vocab size (131,072); every document ends with EOS 130822 and holds no special id,
+    EOS included. Special ids are the same set the writer refuses: the tokenizer's special tokens (9 of them below
+    130,725, e.g. 36 and 129994) plus 130,725 and above.
+- **On failure:** the shard is reported and skipped, any old output for it is removed, and nothing new is written. Other
+  shards still run; the exit code is 1 if any shard failed. A shard with a file missing (e.g. an incomplete download)
+  fails. A `.bin` with none of the shard files next to it (e.g. a model file) is listed and ignored.
+- **Which shard:** the printed summary and the output's columns give `payload_sha256`, `dataset_version` and `split`, so
+  a result can be tied to the exact shard bytes in the run's shard list.
+- **Text:** each document is its tokens minus the final EOS, decoded with the shard's tokenizer, so it is the
+  tokenizer-normalized text the model trains on. `--check-text <run_clean.py *_clean.parquet>` (one shard per run)
+  compares every decoded document with the normalized source text (round trip).
+- **Output holds document text:** keep it local; never commit or paste it. Reports give IDs, items, coverage and offsets.
+- **Tested** on Data A's sample shard, rebuilt with the two commands in
+  [`../../01-data-a/shards/sample/README.md`](../../01-data-a/shards/sample/README.md). The rebuilt `.bin` and `.idx.npy`
+  match the published sha256. The rebuilt `.docs.parquet` holds the same rows but is not byte-identical (Parquet output
+  depends on the writer version), so the test used the manifest the rebuild wrote; against the committed manifest the
+  decoder refuses it on `sample_metadata_sha256`, as it should. Result: 271 documents decoded, 271/271 round-trip;
+  `decontam_check.py` 0 of 271 flagged (set `2826a3b8…`, full set); `canary_scan.py` 0 hits. Decoding took 0.4 s for
+  262,032 tokens on a laptop CPU; a full-size shard (67M tokens) took about 33 s and 1.8 GB of memory. Corrupted copies
+  of that shard (an EOS or an id ≥ 131,072 inside a document, rows shifted, two documents merged, a renamed shard, a
+  broken or missing manifest) are all refused.
+- **Tested with p1536:** a shard written by `shard_writer.py` from the same cleaned part with the p1536 tokenizer (the
+  writer still pins C3, so it was run with `--any-tokenizer` and the shard is marked `dataset_version: test`): 263
+  documents decoded, 263/263 round-trip; `decontam_check.py` 0 of 263 flagged; `canary_scan.py` 0 hits. Decoding the
+  p1536 shard with C3, or the C3 shard with p1536, is refused on `tokenizer_sha256`.
+- **Tests:** `pytest teams/09-evaluation/decontam/tests/test_decode_shard.py -q` (toy shards, no tokenizer file needed).
+  Set `ERA_SHARD`, `ERA_TOKENIZER` (the shard's frozen tokenizer; the old name `ERA_C3_TOKENIZER` also works) and
+  optionally `ERA_SHARD_CLEAN` to also test a real shard.
+
 ## Normalize
 
 Before the cut into runs, the text of an item and of a document is normalized, so that
