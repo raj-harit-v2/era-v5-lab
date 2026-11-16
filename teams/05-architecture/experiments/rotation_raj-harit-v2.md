@@ -6,7 +6,7 @@
 - Steps: 1221
 - Eval: heldout_v1
 - Job request: `jobs/2026-11-15-rotation-muon-seed1244.md`
-- Job / PR: pending Lead / TSAI
+- Job / PR: https://github.com/theschoolofai/era-v5-lab/pull/487
 - Log / comment: pending
 
 ## Reference (original T2 Muon)
