@@ -20,7 +20,9 @@ except ImportError:
     triton = None
     tl = None
 
-BM, BV, BK = 16, 128, 32
+# Reuse each vocabulary tile across 32 token rows. Masks handle short/tail tiles.
+# See docs/LINEAR_CE.md for the measured scope; accumulation and precision stay unchanged.
+BM, BV, BK = 32, 128, 32
 BACKWARD_IMPLS = ("auto", "vocab", "chunked", "recompute")
 GRAD_PRECISIONS = ("auto", "fp32")
 LAUNCH = dict(num_warps=4, num_stages=1, enable_fp_fusion=True)

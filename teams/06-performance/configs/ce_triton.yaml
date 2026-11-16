@@ -1,0 +1,6 @@
+# Explicit CUDA profile for the optimized output head; base.yaml remains unchanged.
+inherit: base.yaml
+run:
+  device: cuda
+model:
+  ce_impl: triton_ce

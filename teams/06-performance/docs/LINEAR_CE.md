@@ -228,3 +228,34 @@ projection/reduction structure; benchmark and tune its tile sizes separately on 
 
 For a valid performance comparison, use the same committed tree, GPU, config, and run conditions, and
 compare each mode against a `torch` baseline. GPU timings are intentionally not recorded by correctness.
+
+
+## Week 3: 32-token tiles
+
+The Triton token tile (`BM`) is 32 instead of 16. For the same token count this
+halves the number of forward/dlogit token tiles and reuses a loaded vocabulary
+weight tile across twice as many rows. Gradient accumulation, precision controls,
+scratch limits, loss semantics and the masked tail remain unchanged.
+
+Basis for tile size: none in the literature index. The choice is empirical: the
+same-device 16-versus-32 benchmark and the existing uneven-shape, ignored-target,
+BF16/FP16, real-vocabulary, loss and gradient tests. Treat the measured gain as
+specific to the tested shapes/devices; this is not an autotuner or a universal
+hardware optimum. Session 9 output-head notes motivate fused CE, not this tile size.
+
+`configs/ce_triton.yaml` selects this CUDA backend explicitly and inherits the
+remaining base settings. It does not change the default base configuration, model
+architecture, optimizer or MFU method. Use the same data-source override for both
+sides of a comparison:
+
+```bash
+python -m pytest correctness/test_ce_triton.py --all-configs -q -rs
+python -m perfkit.bench --config configs/base.yaml --modes clean --steps 100 --warmup 10 --repeat 2 --tag torch_control data.source=synthetic
+python -m perfkit.bench --config configs/ce_triton.yaml --modes clean --steps 100 --warmup 10 --repeat 2 --tag triton32 data.source=synthetic
+```
+
+To isolate the kernel improvement from the backend selection, compare
+`model.ce_impl=triton_ce` at the base commit with the same override at this commit.
+Retain exact SHAs, clean-tree metadata, raw timings, peak allocation and environment
+in the linked PR evidence. Synthetic small-model measurements do not replace the
+full-width dry-run profile. No g6-v2 MFU default flip is included.
