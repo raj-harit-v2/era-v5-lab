@@ -1,0 +1,44 @@
+# dryrun1_nsys test log, 2026-11-16 05:32 UTC, Colab
+# GPU Tesla T4 | torch 2.14.1+cu130 CUDA 13.0 | python 3.13.16
+# class main 7ed75b8 tokenizer: convert_frozen.py puts the frozen tokenizer into the GGUF converter and runs the round trip (G12 week 3, task 2) (#467); the two job files applied on top (uncommitted, so the run reports the commit as dirty)
+
+===== 1. smoke-cpu: python -B teams/06-performance/jobs/run_dryrun1_nsys.py --smoke-cpu --out /content/smoke_out
+[dryrun1_nsys] device=x86_64 dtype=fp32 B=2 T=64 layers=2 d=64 ffn=moe
+[dryrun1_nsys] traced 2 steps in 949.4 ms (under nsys); losses [11.800116539001465, 11.79448413848877]
+exit=0
+
+===== 2. TSAI command on this GPU: python -B teams/06-performance/jobs/run_dryrun1_nsys.py --config teams/05-architecture/configs/config_v1.yaml --tag dryrun1_nsys --out out --synthetic
+[dryrun1_nsys] nsys: /usr/local/bin/nsys (NVIDIA Nsight Systems version 2025.3.1.0)
+[dryrun1_nsys] $ /usr/local/bin/nsys profile --trace=cuda,nvtx --sample=none --cpuctxsw=none --capture-range=cudaProfilerApi --capture-range-end=stop --force-overwrite=true -o /content/era-v5-lab/out/dryrun1_nsys /usr/bin/python3 -B /content/era-v5-lab/teams/06-performance/jobs/run_dryrun1_nsys.py --inner --config /content/era-v5-lab/teams/05-architecture/configs/config_v1.yaml --tag dryrun1_nsys --out /content/era-v5-lab/out --warmup 5 --steps 3 --level 3 --synthetic
+[dryrun1_nsys] device=Tesla T4 dtype=fp16 B=16 T=256 layers=6 d=256 ffn=moe
+[dryrun1_nsys] note: run.dtype=bf16 but this GPU has no native bf16: using fp16 + GradScaler
+[dryrun1_nsys] note: fp16 + GradScaler: scaler.step reads found_inf on the host, one sync per step inside opt (docs/PARTS.md timing rule cannot hold for fp16)
+Capture range started in the application.
+Capture range ended in the application.
+Generating '/tmp/nsys-report-49d0.qdstrm'
+[1/1] [0%                          ] dryrun1_nsys.nsys-repProcessing events...
+[1/1] [0%                          ] dryrun1_nsys.nsys-rep[1/1] [=======38%                  ] dryrun1_nsys.nsys-rep[1/1] [==================78%       ] dryrun1_nsys.nsys-rep[1/1] [===================81%      ] dryrun1_nsys.nsys-rep[1/1] [===================82%      ] dryrun1_nsys.nsys-rep[1/1] [========================100%] dryrun1_nsys.nsys-rep[1/1] [========================100%] dryrun1_nsys.nsys-rep
+[dryrun1_nsys] traced 3 steps in 1194.8 ms (under nsys); losses [11.83292293548584, 11.838929176330566, 11.84604263305664]
+Generated:
+	/content/era-v5-lab/out/dryrun1_nsys.nsys-rep
+[dryrun1_nsys] $ /usr/local/bin/nsys stats --report cuda_gpu_kern_sum --format csv --force-export=true --output /content/era-v5-lab/out/dryrun1_nsys /content/era-v5-lab/out/dryrun1_nsys.nsys-rep
+[dryrun1_nsys] $ /usr/local/bin/nsys stats --report nvtx_sum --format csv --force-export=true --output /content/era-v5-lab/out/dryrun1_nsys /content/era-v5-lab/out/dryrun1_nsys.nsys-rep
+[dryrun1_nsys] $ /usr/local/bin/nsys stats --report cuda_gpu_mem_time_sum --format csv --force-export=true --output /content/era-v5-lab/out/dryrun1_nsys /content/era-v5-lab/out/dryrun1_nsys.nsys-rep
+[dryrun1_nsys] $ /usr/local/bin/nsys stats --report cuda_gpu_mem_size_sum --format csv --force-export=true --output /content/era-v5-lab/out/dryrun1_nsys /content/era-v5-lab/out/dryrun1_nsys.nsys-rep
+[dryrun1_nsys] $ /usr/local/bin/nsys stats --report cuda_api_sum --format csv --force-export=true --output /content/era-v5-lab/out/dryrun1_nsys /content/era-v5-lab/out/dryrun1_nsys.nsys-rep
+[dryrun1_nsys] wrote /content/era-v5-lab/out/result.json and /content/era-v5-lab/out/dryrun1_nsys.md; out/ 0.8 MB
+exit=0
+
+===== out/ files
+total 904
+drwxr-xr-x 2 root root   4096 Nov 16 05:33 .
+drwxr-xr-x 5 root root   4096 Nov 16 05:32 ..
+-rw-r--r-- 1 root root    857 Nov 16 05:33 dryrun1_nsys_cuda_api_sum.csv
+-rw-r--r-- 1 root root  32273 Nov 16 05:33 dryrun1_nsys_cuda_gpu_kern_sum.csv
+-rw-r--r-- 1 root root    341 Nov 16 05:33 dryrun1_nsys_cuda_gpu_mem_size_sum.csv
+-rw-r--r-- 1 root root    376 Nov 16 05:33 dryrun1_nsys_cuda_gpu_mem_time_sum.csv
+-rw-rw-rw- 1 root root   1186 Nov 16 05:33 dryrun1_nsys_inner.json
+-rw-r--r-- 1 root root   7014 Nov 16 05:33 dryrun1_nsys.md
+-rw-rw-r-- 1 root root 821042 Nov 16 05:33 dryrun1_nsys.nsys-rep
+-rw-r--r-- 1 root root  19115 Nov 16 05:33 dryrun1_nsys_nvtx_sum.csv
+-rw-r--r-- 1 root root  16332 Nov 16 05:33 result.json

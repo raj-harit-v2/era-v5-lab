@@ -1,0 +1,68 @@
+[dryrun1_prof] running timed profile: C:\Users\chenn\AppData\Local\Programs\Python\Python311\python.exe -B -m perfkit.bench --config configs/tiny_cpu.yaml --modes clean,layer,trace --level 3 --tag dryrun1_prof --warmup 2 --steps 10 model.ffn=moe model.moe.num_experts=4 model.moe.num_shared=1 model.moe.top_k=2 model.moe.dispatch=sorted optim.name=muon optim.lr=0.001 run.seed=1234 run.grad_clip=1.0 data.source=synthetic run.device=cpu run.dtype=fp32 bench.out_dir=E:\ERA Project\team-6\era-v5-lab\out
+[bench] Intel64 Family 6 Model 154 Stepping 4, GenuineIntel | fp32 | B=2 T=64 V=131072 | modes clean,layer,trace | level 3 | 10 steps after 2 warmup
+[bench] clean ...
+[bench] live JSONL -> E:\ERA Project\team-6\era-v5-lab\out\dryrun1_prof.jsonl (run_id=3cf36203f76c49cfa5369e37d569a108, node_id=Varshith)
+[bench] layer (level 3) ...
+[bench] trace ...
+
+Intel64 Family 6 Model 154 Stepping 4, GenuineIntel | fp32 | B=2 T=64 V=131072 | commit 9da1e35bfa (DIRTY) | tag dryrun1_prof
+step  median 1016.39 ms  p10 843.78  p90 1628.77  spread 77.2%   data 0.883 ms
+      126 tokens/s   MFU n/a   HFU n/a
+
+parts under the 5% rule (level <= 2), recorder overhead 1.28%
+  part                                median ms           p10..p90  % step  spread% lvl calls
+  data                                    0.160         0.13..0.18     0.0     29.7   1     1
+  fwd                                    80.655       72.16..90.60     9.7     22.9   1     1
+    fwd:embed                             2.229         1.96..3.17     0.3     54.0   2     1
+    fwd:stack                            14.297       11.68..19.03     1.7     51.4   1     1
+      fwd:block0                          7.980         6.19..9.06     1.0     36.0   2     1
+      fwd:block1                          6.056         5.11..9.08     0.7     65.4   2     1
+    fwd:head+loss                        61.918       57.19..66.21     7.5     14.6   2     1
+  bwd                                   160.501     120.71..233.58    19.4     70.3   1     1
+    bwd:head+loss                        87.096      79.31..151.92    10.5     83.4   2     1
+    bwd:stack                            49.471       41.07..87.27     6.0     93.4   1     1
+      bwd:block1                         23.637       20.37..28.87     2.9     36.0   2     1
+      bwd:block0                         23.714       20.34..50.70     2.9    128.0   2     1
+    bwd:embed                             5.366         4.01..9.83     0.6    108.6   2     1
+  opt                                   588.745     550.88..609.69    71.1     10.0   1     1
+    opt:opt.clip                         16.443       12.85..20.57     2.0     47.0   2     1
+    opt:opt.muon                        475.556     455.74..492.85    57.4      7.8   2     1
+    opt:opt.adamw                        88.698      69.73..109.21    10.7     44.5   2     1
+
+inside the blocks (information only, not gated; summed over layers), top 15:
+  opt:opt.muon.ns                                404.165 ms   48.8%
+  bwd:block*.grad                                 14.806 ms    1.8%
+  bwd.recompute:block*                            10.797 ms    1.3%
+  bwd.invert:block*                               10.626 ms    1.3%
+  bwd.recompute:block*.moe.dispatch                4.803 ms    0.6%
+  bwd.invert:block*.moe.dispatch                   4.563 ms    0.6%
+  fwd:block*.moe.dispatch                          4.184 ms    0.5%
+  bwd.recompute:block*.moe.dispatch.grouped        1.917 ms    0.2%
+  fwd:embed.ke                                     1.810 ms    0.2%
+  opt:opt.zero_grad                                1.560 ms    0.2%
+  bwd.invert:block*.moe.dispatch.grouped           1.559 ms    0.2%
+  fwd:block*.moe.dispatch.grouped                  1.538 ms    0.2%
+  bwd.invert:block*.attn.sdpa                      1.466 ms    0.2%
+  fwd:block*.attn.sdpa                             1.442 ms    0.2%
+  bwd.recompute:block*.attn.sdpa                   1.423 ms    0.2%
+
+slowest parts (summed over layers):
+  1. opt:opt.muon.ns                             404.17 ms   39.8%  trace E:\ERA Project\team-6\era-v5-lab\out\dryrun1_prof_parts\1_opt_opt.muon.ns.json
+  2. opt:opt.adamw                                88.70 ms    8.7%  trace E:\ERA Project\team-6\era-v5-lab\out\dryrun1_prof_parts\2_opt_opt.adamw.json
+  3. bwd:head+loss                                87.10 ms    8.6%  trace E:\ERA Project\team-6\era-v5-lab\out\dryrun1_prof_parts\3_bwd_head+loss.json
+  4. opt:opt.clip                                 16.44 ms    1.6%  trace E:\ERA Project\team-6\era-v5-lab\out\dryrun1_prof_parts\4_opt_opt.clip.json
+  5. bwd:block*.grad                              14.81 ms    1.5%  trace E:\ERA Project\team-6\era-v5-lab\out\dryrun1_prof_parts\5_bwd_block1.grad.json
+trace (CPU run: no GPU numbers) -> C:\Users\chenn\.cache\era-perf\traces\dryrun1_prof.json
+
+[bench] run JSON -> E:\ERA Project\team-6\era-v5-lab\out\dryrun1_prof.json
+[bench] event log complete -> E:\ERA Project\team-6\era-v5-lab\out\dryrun1_prof.jsonl
+[bench] report   -> E:\ERA Project\team-6\era-v5-lab\out\dryrun1_prof.md
+[warn] uncommitted changes: Gate 1 numbers must come from committed code
+[warn] rule 3b: checkpoint and comm not measured; add checkpoint,comm to --modes
+[warn] 15 gated part(s) have p10..p90 spread > 10%, so may miss the 5% check: data, fwd, fwd:embed, fwd:stack, fwd:block0, fwd:block1 (+9 more)
+
+--- stderr ---
+USDT:2026-11-14 22:56:55 2376:14160 C:\actions-runner\_work\pytorch\pytorch\third_party\kineto\libkineto\src\SyncActivityProfilerHandler.cpp:52] profiler_start
+USDT:2026-11-14 22:56:56 2376:14160 C:\actions-runner\_work\pytorch\pytorch\third_party\kineto\libkineto\src\SyncActivityProfilerHandler.cpp:59] profiler_stop
+
+[dryrun1_prof] wrote summary -> E:\ERA Project\team-6\era-v5-lab\out\result.json

@@ -1,2 +1,4 @@
 *.log
 **/*.log
+# Task 3's full-run log is Gate 3 evidence (src/run_every_id.py writes it with local paths removed)
+!every_id/every_id_P32.log

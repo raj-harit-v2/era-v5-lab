@@ -1,0 +1,17 @@
+[bench] Intel64 Family 6 Model 186 Stepping 3, GenuineIntel | fp32 | B=2 T=64 V=131072 | modes comm | level 3 | 10 steps after 2 warmup
+[bench] clean ...
+[bench] live JSONL -> out\dryrun1_a2a_smoke_cpu.jsonl (run_id=d1108e9c0dec4dd4948406ea59b8f1de, node_id=W-PF50MJJR)
+
+Intel64 Family 6 Model 186 Stepping 3, GenuineIntel | fp32 | B=2 T=64 V=131072 | commit 917fafb2e4 (DIRTY) | tag dryrun1_a2a_smoke_cpu
+step  median 550.49 ms  p10 528.57  p90 618.32  spread 16.3%   data 0.491 ms
+      233 tokens/s   MFU n/a   HFU n/a
+MoE all-to-all not measured (one GPU; run: torchrun --nproc_per_node 2 -m perfkit.bench ... --modes comm); 0.1 MB/call, 16 calls/step
+
+[bench] run JSON -> out\dryrun1_a2a_smoke_cpu.json
+[bench] event log complete -> out\dryrun1_a2a_smoke_cpu.jsonl
+[bench] report   -> out\dryrun1_a2a_smoke_cpu.md
+[warn] uncommitted changes: Gate 1 numbers must come from committed code
+[warn] rule 3b: checkpoint not measured; add checkpoint to --modes
+cwd: teams\06-performance
+cmd: python.exe -m perfkit.bench --config configs\tiny_cpu.yaml --tag dryrun1_a2a_smoke_cpu --modes comm bench.out_dir=out data.source=synthetic run.device=cpu run.dtype=fp32 run.seed=1234 optim.name=muon optim.lr=0.001 model.ffn=moe model.moe.dispatch=sorted
+{"pass": true, "exit_code": 0, "tag": "dryrun1_a2a_smoke_cpu", "smoke_cpu": true, "time_utc": "2026-11-16T06:40:29.682402+00:00", "out_dir": "out", "config": "teams\\06-performance\\configs\\tiny_cpu.yaml"}

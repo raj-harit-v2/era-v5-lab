@@ -1,0 +1,235 @@
+{
+  "run_id": "dryrun1_ckpt_smoke",
+  "device": "cpu",
+  "save_ms": 60.817229037638754,
+  "to_cpu_ms": 1.2489375658333302,
+  "write_ms": 59.56829147180542,
+  "size_mb": 111.0622205734253,
+  "warmup_steps": 1,
+  "state_coverage_complete": true,
+  "wall_s": 0.7682874168967828,
+  "output": "/Users/siva/Downloads/era-v5-lab-g6-ckpt/teams/06-performance/out/dryrun1_ckpt_smoke.json"
+}
+real 7.10
+user 3.77
+sys 0.53
+
+
+FULL SMOKE JSON EVIDENCE
+========================
+{
+  "evidence_status": "SMALL-WIDTH TEST ONLY - NOT TSAI FULL-WIDTH DRY RUN 1",
+  "run_id": "dryrun1_ckpt_smoke",
+  "timestamp_utc": "2026-11-15T19:11:49.986406+00:00",
+  "source_sha": "6b90f6636f9b852409439db39ee681aa2ce40cc4",
+  "git": {
+    "sha": "6b90f6636f9b852409439db39ee681aa2ce40cc4",
+    "dirty": true,
+    "dirty_paths": [
+      " M teams/06-performance/jobs/2026-11-15-dryrun1-ckpt.md",
+      " M teams/06-performance/jobs/dryrun1_ckpt.py",
+      "?? .venv/",
+      "?? .venv311/",
+      "?? teams/06-performance/dataio/__pycache__/",
+      "?? teams/06-performance/kernels/__pycache__/",
+      "?? teams/06-performance/models/__pycache__/",
+      "?? teams/06-performance/perfkit/__pycache__/"
+    ]
+  },
+  "resolved_config": {
+    "run": {
+      "device": "cpu",
+      "dtype": "fp32",
+      "batch_size": 1,
+      "seed": 1234,
+      "compile": false,
+      "compile_mode": "default",
+      "grad_clip": 1.0
+    },
+    "data": {
+      "source": "synthetic",
+      "dir": "~/.cache/era-perf/fineweb-brahmic131k",
+      "tokenizer_path": null,
+      "prefetch": false
+    },
+    "model": {
+      "vocab_size": 131072,
+      "vocab_pad_mode": "mask",
+      "vocab_pad_multiple": 1,
+      "block_size": 32,
+      "n_layer": 2,
+      "n_head": 4,
+      "n_kv_head": null,
+      "n_embd": 64,
+      "ln_impl": "torch_ln",
+      "attn_impl": "eager",
+      "position": "learned",
+      "rope_theta": null,
+      "mlp_ratio": 4,
+      "activation": "gelu",
+      "embedding": "ke2",
+      "tie_embeddings": false,
+      "ke_max_pos": 32,
+      "ke_mode": "dynamic",
+      "ffn": "moe",
+      "moe": {
+        "num_experts": 16,
+        "top_k": 2,
+        "num_shared": 1,
+        "bias_gamma": 0.01,
+        "dispatch": "sorted",
+        "ffn_hidden": null
+      },
+      "reversible": true,
+      "rev_h": 1.0,
+      "rev_impl": "two_pass",
+      "ce_impl": "chunked",
+      "ce_chunks": 8,
+      "ce_vocab_chunk": 4096,
+      "ce_token_chunk": 16,
+      "ce_triton_backward": "auto",
+      "ce_triton_chunk": 128,
+      "ce_triton_vocab_chunk": 4096,
+      "ce_triton_scratch_mb": 64,
+      "ce_triton_grad_precision": "auto",
+      "ce_triton_validate_targets": false,
+      "mtp": false
+    },
+    "optim": {
+      "name": "muon",
+      "muon_impl": "batched",
+      "adamw_impl": "foreach",
+      "lr": 0.001,
+      "muon_lr": 0.01,
+      "weight_decay": 0.0,
+      "schedule": "constant",
+      "warmup_steps": 0,
+      "min_lr_ratio": 0.1
+    },
+    "bench": {
+      "modes": [
+        "clean",
+        "layer",
+        "trace",
+        "checkpoint",
+        "comm"
+      ],
+      "warmup": 10,
+      "steps": 100,
+      "level": 3,
+      "trace_steps": 3,
+      "ckpt_repeats": 10,
+      "max_overhead_pct": 2.0,
+      "layer_warmup": 2,
+      "layer_prefill": true,
+      "comm_reps": 30,
+      "peak_tflops": null,
+      "out_dir": "results/runs"
+    },
+    "smoke": {
+      "warmup": 10,
+      "steps": 30
+    },
+    "report": {
+      "gate_level": 2,
+      "tol_pct": 5.0,
+      "abs_tol_ms": 0.05,
+      "min_compare_steps": 100
+    }
+  },
+  "g5_config": "teams/05-architecture/configs/config_v1.yaml",
+  "g5_signed": {
+    "optim.name": "muon",
+    "attention.impl": "eager",
+    "moe.n_expert": 16,
+    "moe.n_shared": 1,
+    "moe.top_k": 2
+  },
+  "small_model": {
+    "layers": 2,
+    "width": 64,
+    "heads": 4,
+    "sequence": 32,
+    "batch_size": 1,
+    "experts": 16,
+    "shared": 1,
+    "top_k": 2
+  },
+  "optimizer": {
+    "name": "muon",
+    "lr": 0.001,
+    "muon_lr": 0.01,
+    "state_counts": {
+      "opt.muon": 74,
+      "opt.adamw": 87
+    },
+    "coverage": {
+      "opt.muon": {
+        "expected_parameters": 74,
+        "complete_parameters": 74,
+        "missing_count": 0,
+        "missing": []
+      },
+      "opt.adamw": {
+        "expected_parameters": 87,
+        "complete_parameters": 87,
+        "missing_count": 0,
+        "missing": []
+      }
+    },
+    "warmup_steps": 1
+  },
+  "python": "3.11.18",
+  "torch": "2.15.0",
+  "gpu": "CPU",
+  "device": "cpu",
+  "params": 10075936,
+  "warm_step_s": 0.25399095902685076,
+  "warm_loss": 11.796826362609863,
+  "wall_s": 0.7682874168967828,
+  "checkpoint": {
+    "save_ms": {
+      "median": 60.817229037638754,
+      "p10": 60.22797942860052,
+      "p90": 61.40647864667699,
+      "iqr": 0.7365620112977922,
+      "min": 60.08066702634096,
+      "max": 61.553791048936546,
+      "n": 2,
+      "spread_pct": 1.93777197140487,
+      "mean": 60.817229037638754,
+      "std": 1.0416559859061425
+    },
+    "to_cpu_ms": {
+      "median": 1.2489375658333302,
+      "p10": 1.1021211743354797,
+      "p90": 1.3957539573311806,
+      "iqr": 0.18352048937231302,
+      "min": 1.0654170764610171,
+      "max": 1.4324580552056432,
+      "n": 2,
+      "spread_pct": 23.51060541603454,
+      "mean": 1.2489375658333302,
+      "std": 0.2595371650436725
+    },
+    "write_ms": {
+      "median": 59.56829147180542,
+      "p10": 59.12585825426504,
+      "p90": 60.01072468934581,
+      "iqr": 0.5530415219254792,
+      "min": 59.015249949879944,
+      "max": 60.1213329937309,
+      "n": 2,
+      "spread_pct": 1.4854655274099768,
+      "mean": 59.56829147180542,
+      "std": 0.78211882086247
+    },
+    "size_mb": 111.0622205734253,
+    "write_mb_per_s": 1864.4520067524973,
+    "level": 2,
+    "repeats": 2,
+    "discarded_first": true,
+    "pinned": false,
+    "where": "local disk, ~/.cache/era-perf/ckpt (deleted after)"
+  }
+}

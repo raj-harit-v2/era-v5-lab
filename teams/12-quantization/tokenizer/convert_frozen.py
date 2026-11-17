@@ -18,7 +18,7 @@ quantize_eval.py can import convert_frozen() for step 2 alone. tokenizer.json is
 """
 from __future__ import annotations
 
-import argparse, json, subprocess, sys
+import argparse, json, shutil, subprocess, sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -32,9 +32,10 @@ TOKENIZER_FILES = ("tokenizer.json", "tokenizer_config.json", "tokenizer.model",
 
 def stage(checkpoint: Path, tokenizer_json: Path, out: Path, bos: str, eos: str) -> None:
     """`out` = the checkpoint's files (symlinks) minus its tokenizer, plus the frozen one."""
-    out.mkdir(parents=True, exist_ok=True)
+    shutil.rmtree(out, ignore_errors=True)   # a reused --work must not keep another checkpoint's symlinks
+    out.mkdir(parents=True)
     for f in checkpoint.iterdir():
-        if f.name not in TOKENIZER_FILES and not (out / f.name).exists():
+        if f.name not in TOKENIZER_FILES:
             (out / f.name).symlink_to(f.resolve())
     (out / "tokenizer.json").write_bytes(tokenizer_json.read_bytes())
     (out / "tokenizer_config.json").write_text(json.dumps(
@@ -42,13 +43,17 @@ def stage(checkpoint: Path, tokenizer_json: Path, out: Path, bos: str, eos: str)
 
 
 def convert_frozen(checkpoint: Path, tokenizer_json: Path, sha256: str, llama_cpp: Path, outfile: Path, work: Path,
-                   outtype: str = "bf16", bos: str = "<|begin_of_text|>", eos: str = "<|end_of_text|>", python=None) -> Path:
+                   outtype: str = "bf16", bos: str = "<|begin_of_text|>", eos: str = "<|endoftext|>", python=None) -> Path:
     """The converter step. SystemExit with a message if the tokenizer is not the one asked for or does not fit."""
     got = rt.sha256(tokenizer_json)
     if got != sha256.lower():
         sys.exit(f"refusing: {tokenizer_json} has sha256 {got}, asked for {sha256}")
     t = json.loads(tokenizer_json.read_text(encoding="utf-8"))
-    n_vocab = 1 + max(max(t["model"]["vocab"].values()), max(a["id"] for a in t["added_tokens"]))
+    n_vocab = 1 + max(max(t["model"]["vocab"].values(), default=-1), max((a["id"] for a in t["added_tokens"]), default=-1))
+    known = set(t["model"]["vocab"]) | {a["content"] for a in t["added_tokens"]}
+    for role, tok in (("bos", bos), ("eos", eos)):
+        if tok not in known:
+            sys.exit(f"refusing: {role} token {tok!r} is not in {tokenizer_json.name}; pass --{role} with a token it has")
     cfg_vocab = json.loads((checkpoint / "config.json").read_text(encoding="utf-8")).get("vocab_size", 0)
     if cfg_vocab < n_vocab:
         sys.exit(f"refusing: the tokenizer has {n_vocab:,} ids, the checkpoint's embedding table {cfg_vocab:,}")
@@ -68,7 +73,7 @@ def main() -> None:
     ap.add_argument("--out", type=Path, required=True, help="folder for the round-trip report")
     ap.add_argument("--outtype", default="bf16")
     ap.add_argument("--bos", default="<|begin_of_text|>")
-    ap.add_argument("--eos", default="<|end_of_text|>", help='the frozen tokenizer\'s is "<|endoftext|>"')
+    ap.add_argument("--eos", default="<|endoftext|>", help="the frozen tokenizer's eos (id 130822)")
     ap.add_argument("--convert-python", type=Path, help="python of the converter's venv (default: this one)")
     ap.add_argument("--llama-tokenize", type=Path)
     a = ap.parse_args()

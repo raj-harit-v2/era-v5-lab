@@ -1,5 +1,10 @@
 # KE2 decision input for Gate 2 (Team 04-ke2, consolidated 10 Nov and updated 14 Nov 2026; TSAI decides Sat 14 Nov)
 
+> **Gate 3 tokenizer update, 16 Nov:** TSAI replaced the C3-s0 freeze with p1536-s0
+> (Team 3 PR #414, SHA-256 `e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b`).
+> Sections 1–6 below record the Gate 2 decision and evidence as they stood; the current
+> p1536 measurements and implications are in section 7. C3-s0 remains historical.
+
 Decisions requested:
 1. Byte table: the raw byte table, not `decode([id])` text (section 1).
 2. P = 32, D = 8,192, supported by the frozen C3-s0 tokenizer; recheck any newly accepted candidate (section 2).
@@ -167,3 +172,23 @@ reads the special IDs from `tokenizer.json` in both local-JSON paths. Local befo
 C3-s0 changed only the displayed split from 131,072 / 0 to 130,716 normal / 356 special; maximum byte length 32,
 zero over-limit tokens, zero cross-script tokens and the PASS verdict remained the same. The PR is open as of 13 Nov.
 Use `added_tokens.special` as provenance until the fix is merged and the released verifier is rerun.
+
+## 7. Gate 3 tokenizer freeze: p1536-s0 (16 Nov)
+
+TSAI's replacement tokenizer passed the exact SHA-256 gate before measurement. Its 131,072
+IDs include 356 special tokens. The bos, eos, pad and unk IDs are unchanged from C3-s0;
+eos is `<|endoftext|>` at ID 130822, and ID 36 has no named model role. The raw byte table
+has 131,072 unique rows at P = 32 and P = 64: zero collisions, zero truncated tokens,
+zero empty rows, and maximum raw length 32 bytes. The lossy `decode([id])` table has
+10 known `decode_collapse` groups containing 867 token IDs, or 857 excess collisions,
+at either P. No unexplained group was found. P = 32 remains sufficient for this tokenizer.
+
+Relative to C3-s0, 13,824 raw rows and 13,824 decode rows changed. The current tables are
+in `results/tables/p1536-s0/`; the hash-gated audit and exact collision-group IDs are in
+`results/tokenizer_candidates/gate3_p1536/`. Use those artifacts for new tokenizer-dependent
+work. The Gate 2 proof, margin, CPU/GPU determinism and tau results above used the historical
+HF baseline tokenizer; this update does not claim that those experiments were rerun on p1536.
+
+Risk 5 is closed for the current frozen tokenizer's byte length and collisions. Risk 6's
+special-token role mapping is unchanged, while the separate proof integration noted above
+remains pending. The older C3 measurements and decisions are retained for provenance.

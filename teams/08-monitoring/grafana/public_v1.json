@@ -1,0 +1,789 @@
+{
+  "editable": false,
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "panels": [],
+      "title": "Training & Held-Out Progress",
+      "type": "row",
+      "description": "Public training and held-out validation curves recorded by Team 08 Monitoring."
+    },
+    {
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "${ds}"
+      },
+      "description": "Average next-token prediction loss across training steps. Lower values indicate better prediction on training text. Final public text to be confirmed by Team 11 Release and TSAI at Gate 3.",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "lineWidth": 2,
+            "showPoints": "auto"
+          },
+          "unit": "short",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 1
+      },
+      "id": 2,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        },
+        "xField": "step"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "${ds}"
+          },
+          "editorType": "sql",
+          "format": 1,
+          "queryType": "table",
+          "rawSql": "SELECT step, run_id, value FROM metrics_raw WHERE name = 'loss_ntp' AND run_id IN ($run) AND value IS NOT NULL ORDER BY step",
+          "refId": "A"
+        }
+      ],
+      "title": "Training Loss (Next-Token)",
+      "transformations": [
+        {
+          "id": "partitionByValues",
+          "options": {
+            "fields": [
+              "run_id"
+            ],
+            "naming": {
+              "asLabels": true
+            }
+          }
+        },
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "step",
+            "mode": "outer"
+          }
+        }
+      ],
+      "type": "trend"
+    },
+    {
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "${ds}"
+      },
+      "description": "Smoothed next-token prediction loss averaged over fixed step buckets from ClickHouse rollups. Final public text to be confirmed by Team 11 Release and TSAI at Gate 3.",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "lineWidth": 2,
+            "showPoints": "auto"
+          },
+          "unit": "short",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 1
+      },
+      "id": 9,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        },
+        "xField": "step"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "${ds}"
+          },
+          "editorType": "sql",
+          "format": 1,
+          "queryType": "table",
+          "rawSql": "SELECT step_bucket AS step, run_id, mean AS value FROM metrics_rollup_${bucket} WHERE name = 'loss_ntp' AND run_id IN ($run) ORDER BY step_bucket",
+          "refId": "A"
+        }
+      ],
+      "title": "Training Loss (Step-Bucket Mean)",
+      "transformations": [
+        {
+          "id": "partitionByValues",
+          "options": {
+            "fields": [
+              "run_id"
+            ],
+            "naming": {
+              "asLabels": true
+            }
+          }
+        },
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "step",
+            "mode": "outer"
+          }
+        }
+      ],
+      "type": "trend"
+    },
+    {
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "${ds}"
+      },
+      "description": "Prediction loss measured on held-out text that the model does not train on, compared alongside training loss. Final public text to be confirmed by Team 11 Release and TSAI at Gate 3.",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "axisLabel": "nats per token",
+            "lineWidth": 1,
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "decimals": 3,
+          "unit": "none",
+          "displayName": "${__field.labels.series}",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "step"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "short"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "custom.axisLabel",
+                "value": "step"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": ".*validation_loss.*"
+            },
+            "properties": [
+              {
+                "id": "custom.showPoints",
+                "value": "always"
+              },
+              {
+                "id": "custom.pointSize",
+                "value": 7
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 2
+              },
+              {
+                "id": "custom.spanNulls",
+                "value": true
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 9
+      },
+      "id": 20,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        },
+        "xField": "step"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "${ds}"
+          },
+          "editorType": "sql",
+          "format": 1,
+          "queryType": "table",
+          "rawSql": "SELECT x AS step, series, y AS value FROM (SELECT step AS x, concat(run_id, ' ', name) AS series, value AS y FROM metrics_raw WHERE name IN ('validation_loss', 'loss_ntp') AND run_id IN ($run) AND value IS NOT NULL UNION ALL SELECT step AS x, concat(run_id, ' validation_loss') AS series, sumIf(value, name = 'val/nll_nats') / sumIf(value, name = 'val/scored_tokens') AS y FROM metrics_raw WHERE name IN ('val/nll_nats', 'val/scored_tokens') AND run_id IN ($run) AND value IS NOT NULL GROUP BY run_id, step HAVING countIf(name = 'val/nll_nats') = 1 AND countIf(name = 'val/scored_tokens') = 1 AND sumIf(value, name = 'val/scored_tokens') > 0) ORDER BY step, series",
+          "refId": "A"
+        }
+      ],
+      "title": "Held-Out Validation Loss",
+      "transformations": [
+        {
+          "id": "partitionByValues",
+          "options": {
+            "fields": [
+              "series"
+            ],
+            "naming": {
+              "asLabels": true
+            }
+          }
+        },
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "step",
+            "mode": "outer"
+          }
+        }
+      ],
+      "type": "trend"
+    },
+    {
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "${ds}"
+      },
+      "description": "Held-out prediction loss normalized per UTF-8 byte rather than per token, allowing fair comparison across tokenizers and scripts. Final public text to be confirmed by Team 11 Release and TSAI at Gate 3.",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "axisLabel": "bits per byte",
+            "lineWidth": 2,
+            "showPoints": "always",
+            "spanNulls": true,
+            "pointSize": 7
+          },
+          "decimals": 3,
+          "unit": "none",
+          "displayName": "${__field.labels.series}",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "step"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "short"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "custom.axisLabel",
+                "value": "step"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 9
+      },
+      "id": 25,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        },
+        "xField": "step"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "${ds}"
+          },
+          "editorType": "sql",
+          "format": 1,
+          "queryType": "table",
+          "rawSql": "SELECT x AS step, series, y AS value FROM (SELECT step AS x, concat(run_id, ' validation_bpb') AS series, multiIf(countIf(name = 'validation_bpb') > 0, anyIf(value, name = 'validation_bpb'), countIf(name = 'val/bpb') > 0, anyIf(value, name = 'val/bpb'), countIf(name = 'val/nll_nats') = 1 AND countIf(name = 'val/utf8_bytes') = 1 AND sumIf(value, name = 'val/utf8_bytes') > 0, sumIf(value, name = 'val/nll_nats') / (log(2) * sumIf(value, name = 'val/utf8_bytes')), NULL) AS y FROM metrics_raw WHERE name IN ('validation_bpb', 'val/bpb', 'val/nll_nats', 'val/utf8_bytes') AND run_id IN ($run) AND value IS NOT NULL GROUP BY run_id, step) WHERE y IS NOT NULL ORDER BY step, series",
+          "refId": "A"
+        }
+      ],
+      "title": "Held-Out Validation Bits per Byte",
+      "transformations": [
+        {
+          "id": "partitionByValues",
+          "options": {
+            "fields": [
+              "series"
+            ],
+            "naming": {
+              "asLabels": true
+            }
+          }
+        },
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "step",
+            "mode": "outer"
+          }
+        }
+      ],
+      "type": "trend"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 17
+      },
+      "id": 8,
+      "panels": [],
+      "title": "Schedule, Routing & Multilingual Tokenization",
+      "type": "row",
+      "description": "Learning-rate schedule, Mixture-of-Experts routing balance, and multilingual byte efficiency."
+    },
+    {
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "${ds}"
+      },
+      "description": "Optimizer learning rate applied at each training step across warmup, steady state, and decay phases. Final public text to be confirmed by Team 11 Release and TSAI at Gate 3.",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "lineWidth": 2,
+            "showPoints": "auto"
+          },
+          "unit": "short",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 18
+      },
+      "id": 4,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        },
+        "xField": "step"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "${ds}"
+          },
+          "editorType": "sql",
+          "format": 1,
+          "queryType": "table",
+          "rawSql": "SELECT step, run_id, value FROM metrics_raw WHERE name = 'lr' AND run_id IN ($run) AND value IS NOT NULL ORDER BY step",
+          "refId": "A"
+        }
+      ],
+      "title": "Learning Rate Schedule",
+      "transformations": [
+        {
+          "id": "partitionByValues",
+          "options": {
+            "fields": [
+              "run_id"
+            ],
+            "naming": {
+              "asLabels": true
+            }
+          }
+        },
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "step",
+            "mode": "outer"
+          }
+        }
+      ],
+      "type": "trend"
+    },
+    {
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "${ds}"
+      },
+      "description": "Tokenization compactness across overall text and individual language slices. Final public text to be confirmed by Team 11 Release and TSAI at Gate 3.",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "axisLabel": "tokens per byte",
+            "lineWidth": 2,
+            "showPoints": "auto"
+          },
+          "decimals": 3,
+          "min": 0,
+          "unit": "short",
+          "displayName": "${__field.labels.series}",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "step"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "short"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "custom.axisLabel",
+                "value": "step"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 18
+      },
+      "id": 23,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        },
+        "xField": "step"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "${ds}"
+          },
+          "editorType": "sql",
+          "format": 1,
+          "queryType": "table",
+          "rawSql": "SELECT step, concat(run_id, ' ', series) AS series, v AS value FROM (SELECT run_id, step, if(name = 'tokens_per_byte', 'all', replaceOne(name, 'tokens_per_byte_by_lang.', '')) AS series, value AS v FROM metrics_raw WHERE (name = 'tokens_per_byte' OR name LIKE 'tokens_per_byte_by_lang.%') AND run_id IN ($run) AND value IS NOT NULL UNION ALL SELECT run_id, step, 'all' AS series, sumIf(value, name = 'train/scored_tokens') / sumIf(value, name = 'train/utf8_bytes') AS v FROM metrics_raw WHERE name IN ('train/scored_tokens', 'train/utf8_bytes') AND run_id IN ($run) AND run_id NOT IN (SELECT DISTINCT run_id FROM metrics_raw WHERE name = 'tokens_per_byte' AND run_id IN ($run)) GROUP BY run_id, step HAVING sumIf(value, name = 'train/utf8_bytes') > 0) ORDER BY step, series",
+          "refId": "A"
+        }
+      ],
+      "title": "Tokens per Byte (All Text & by Language)",
+      "transformations": [
+        {
+          "id": "partitionByValues",
+          "options": {
+            "fields": [
+              "series"
+            ],
+            "naming": {
+              "asLabels": true
+            }
+          }
+        },
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "step",
+            "mode": "outer"
+          }
+        }
+      ],
+      "type": "trend"
+    },
+    {
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "${ds}"
+      },
+      "description": "Ratio of the busiest routed expert to the average routed expert in the Mixture-of-Experts layers, showing whether experts share work evenly. Final public text to be confirmed by Team 11 Release and TSAI at Gate 3.",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "lineWidth": 2,
+            "showPoints": "auto",
+            "thresholdsStyle": {
+              "mode": "line"
+            }
+          },
+          "unit": "short",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "step"
+            },
+            "properties": [
+              {
+                "id": "custom.axisLabel",
+                "value": "step"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "^value.*"
+            },
+            "properties": [
+              {
+                "id": "custom.axisLabel",
+                "value": "busiest / average"
+              },
+              {
+                "id": "min",
+                "value": 1
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 26
+      },
+      "id": 27,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        },
+        "xField": "step"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "${ds}"
+          },
+          "editorType": "sql",
+          "format": 1,
+          "queryType": "table",
+          "rawSql": "SELECT step, run_id, value FROM metrics_raw WHERE name = 'expert_load_imbalance' AND run_id IN ($run) AND value IS NOT NULL ORDER BY step",
+          "refId": "A"
+        }
+      ],
+      "title": "Mixture-of-Experts Load Balance",
+      "transformations": [
+        {
+          "id": "partitionByValues",
+          "options": {
+            "fields": [
+              "run_id"
+            ],
+            "naming": {
+              "asLabels": true
+            }
+          }
+        },
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "step",
+            "mode": "outer"
+          }
+        }
+      ],
+      "type": "trend"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 39,
+  "tags": [
+    "era-v5",
+    "monitoring",
+    "public",
+    "v1"
+  ],
+  "templating": {
+    "list": [
+      {
+        "current": {},
+        "hide": 0,
+        "label": "ClickHouse",
+        "name": "ds",
+        "query": "grafana-clickhouse-datasource",
+        "type": "datasource"
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": {
+          "type": "grafana-clickhouse-datasource",
+          "uid": "${ds}"
+        },
+        "definition": "SELECT DISTINCT run_id FROM metrics_raw ORDER BY run_id",
+        "includeAll": true,
+        "label": "run_id",
+        "multi": true,
+        "name": "run",
+        "query": "SELECT DISTINCT run_id FROM metrics_raw ORDER BY run_id",
+        "refresh": 2,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "text": "100",
+          "value": "100"
+        },
+        "label": "rollup step bucket",
+        "name": "bucket",
+        "options": [
+          {
+            "selected": false,
+            "text": "10",
+            "value": "10"
+          },
+          {
+            "selected": true,
+            "text": "100",
+            "value": "100"
+          },
+          {
+            "selected": false,
+            "text": "1000",
+            "value": "1000"
+          },
+          {
+            "selected": false,
+            "text": "10000",
+            "value": "10000"
+          }
+        ],
+        "query": "10,100,1000,10000",
+        "type": "custom"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-30d",
+    "to": "now"
+  },
+  "timezone": "utc",
+  "title": "ERA V5 \u2014 Public Training Progress (v1)",
+  "uid": "era-v5-public-v1",
+  "version": 1,
+  "description": "Read-only public dashboard candidate built by Team 08 Monitoring. Panel selection and final public text are subject to TSAI Gate 3 approval and Team 11 Release review."
+}

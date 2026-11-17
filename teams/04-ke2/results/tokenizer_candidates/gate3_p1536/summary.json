@@ -1,0 +1,353 @@
+{
+  "candidate_order": [
+    "C3-s0",
+    "p1536-s0"
+  ],
+  "candidates": {
+    "C3-s0": {
+      "added_tokens": 356,
+      "collision_totals": {
+        "decode_P32": {
+          "causes": {
+            "decode_collapse": 14
+          },
+          "largest_group": 655,
+          "n_excess_tokens": 1095,
+          "n_groups": 14,
+          "n_tokens_in_groups": 1109
+        },
+        "decode_P64": {
+          "causes": {
+            "decode_collapse": 14
+          },
+          "largest_group": 655,
+          "n_excess_tokens": 1095,
+          "n_groups": 14,
+          "n_tokens_in_groups": 1109
+        },
+        "raw_P32": {
+          "causes": {},
+          "largest_group": 0,
+          "n_excess_tokens": 0,
+          "n_groups": 0,
+          "n_tokens_in_groups": 0
+        },
+        "raw_P64": {
+          "causes": {},
+          "largest_group": 0,
+          "n_excess_tokens": 0,
+          "n_groups": 0,
+          "n_tokens_in_groups": 0
+        }
+      },
+      "gate_zero_other_collision_groups": true,
+      "max_raw_byte_length": 32,
+      "mean_raw_byte_length": 7.1002655029296875,
+      "special_ids": 356,
+      "tables": {
+        "decode_P32": {
+          "content_sha256": "09658e368a74e9dc1ac6c9fa6673c49aa4e3b5dba018afb9d72fcbe2623c4976",
+          "n_colliding_tokens": 1095,
+          "n_empty_rows": 0,
+          "n_rows_containing_U+FFFD": 1465,
+          "n_truncated": 0,
+          "n_unique_rows": 129977,
+          "shape": [
+            131072,
+            32
+          ]
+        },
+        "decode_P64": {
+          "content_sha256": "2e1f47b34eedb15d98839d24176aae7b7c9eab925dc714f92577e062bfe5d661",
+          "n_colliding_tokens": 1095,
+          "n_empty_rows": 0,
+          "n_rows_containing_U+FFFD": 1465,
+          "n_truncated": 0,
+          "n_unique_rows": 129977,
+          "shape": [
+            131072,
+            64
+          ]
+        },
+        "raw_P32": {
+          "content_sha256": "fc5e5f8ffacbe93ecdedc276661edfd43ed9a13621eb4a68166ef80e24e88f9b",
+          "n_colliding_tokens": 0,
+          "n_empty_rows": 0,
+          "n_rows_containing_U+FFFD": 13,
+          "n_truncated": 0,
+          "n_unique_rows": 131072,
+          "shape": [
+            131072,
+            32
+          ]
+        },
+        "raw_P64": {
+          "content_sha256": "cd049dfb6b91455f7d7cb98632ed51953dfbec6ed34b29c9cc496a642a525085",
+          "n_colliding_tokens": 0,
+          "n_empty_rows": 0,
+          "n_rows_containing_U+FFFD": 13,
+          "n_truncated": 0,
+          "n_unique_rows": 131072,
+          "shape": [
+            131072,
+            64
+          ]
+        }
+      },
+      "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3",
+      "vocab_size": 131072
+    },
+    "p1536-s0": {
+      "added_tokens": 356,
+      "collision_totals": {
+        "decode_P32": {
+          "causes": {
+            "decode_collapse": 10
+          },
+          "largest_group": 580,
+          "n_excess_tokens": 857,
+          "n_groups": 10,
+          "n_tokens_in_groups": 867
+        },
+        "decode_P64": {
+          "causes": {
+            "decode_collapse": 10
+          },
+          "largest_group": 580,
+          "n_excess_tokens": 857,
+          "n_groups": 10,
+          "n_tokens_in_groups": 867
+        },
+        "raw_P32": {
+          "causes": {},
+          "largest_group": 0,
+          "n_excess_tokens": 0,
+          "n_groups": 0,
+          "n_tokens_in_groups": 0
+        },
+        "raw_P64": {
+          "causes": {},
+          "largest_group": 0,
+          "n_excess_tokens": 0,
+          "n_groups": 0,
+          "n_tokens_in_groups": 0
+        }
+      },
+      "gate_zero_other_collision_groups": true,
+      "max_raw_byte_length": 32,
+      "mean_raw_byte_length": 7.888710021972656,
+      "special_ids": 356,
+      "tables": {
+        "decode_P32": {
+          "content_sha256": "2c92cb80b52c48ee37c0c5be07303d450872871bd68971a3e43eb1c52c89fa58",
+          "n_colliding_tokens": 857,
+          "n_empty_rows": 0,
+          "n_rows_containing_U+FFFD": 1144,
+          "n_truncated": 0,
+          "n_unique_rows": 130215,
+          "shape": [
+            131072,
+            32
+          ]
+        },
+        "decode_P64": {
+          "content_sha256": "18e779f860fc6a2d9634bf979160af98ed7a470449988ec7c0c60cacd4bd904f",
+          "n_colliding_tokens": 857,
+          "n_empty_rows": 0,
+          "n_rows_containing_U+FFFD": 1144,
+          "n_truncated": 0,
+          "n_unique_rows": 130215,
+          "shape": [
+            131072,
+            64
+          ]
+        },
+        "raw_P32": {
+          "content_sha256": "21072027b19ef6f05d57ead7a2fc9fb4c52129e491186bf38d0ba079e8d5168a",
+          "n_colliding_tokens": 0,
+          "n_empty_rows": 0,
+          "n_rows_containing_U+FFFD": 9,
+          "n_truncated": 0,
+          "n_unique_rows": 131072,
+          "shape": [
+            131072,
+            32
+          ]
+        },
+        "raw_P64": {
+          "content_sha256": "fb4194d985622a8664a5e48fb07479151da661d41cea89b8a8b4afd2ae7f2b5a",
+          "n_colliding_tokens": 0,
+          "n_empty_rows": 0,
+          "n_rows_containing_U+FFFD": 9,
+          "n_truncated": 0,
+          "n_unique_rows": 131072,
+          "shape": [
+            131072,
+            64
+          ]
+        }
+      },
+      "tokenizer_sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b",
+      "vocab_size": 131072
+    }
+  },
+  "differences_from_previous_candidate": {
+    "p1536-s0": {
+      "decode_changed": {
+        "count": 13824,
+        "first_32_token_ids": [
+          304,
+          371,
+          588,
+          611,
+          620,
+          637,
+          672,
+          689,
+          702,
+          710,
+          795,
+          835,
+          857,
+          913,
+          929,
+          983,
+          1013,
+          1050,
+          1096,
+          1099,
+          1111,
+          1150,
+          1217,
+          1245,
+          1276,
+          1327,
+          1353,
+          1398,
+          1415,
+          1488,
+          1519,
+          1528
+        ],
+        "ids_sha256": "2eca6069dfb319cf27c921e4cce35f8f7b59fe383d0fa37edf3ffcbeb7ee311b",
+        "last_32_token_ids": [
+          114235,
+          114237,
+          114239,
+          114243,
+          114244,
+          114247,
+          114248,
+          114249,
+          114250,
+          114252,
+          114254,
+          114255,
+          114258,
+          114261,
+          114264,
+          114265,
+          114271,
+          114273,
+          114274,
+          114275,
+          114281,
+          114283,
+          114291,
+          114297,
+          114302,
+          114306,
+          114311,
+          114313,
+          114314,
+          114318,
+          114325,
+          114326
+        ]
+      },
+      "raw_changed": {
+        "count": 13824,
+        "first_32_token_ids": [
+          304,
+          371,
+          588,
+          611,
+          620,
+          637,
+          672,
+          689,
+          702,
+          710,
+          795,
+          835,
+          857,
+          913,
+          929,
+          983,
+          1013,
+          1050,
+          1096,
+          1099,
+          1111,
+          1150,
+          1217,
+          1245,
+          1276,
+          1327,
+          1353,
+          1398,
+          1415,
+          1488,
+          1519,
+          1528
+        ],
+        "ids_sha256": "2eca6069dfb319cf27c921e4cce35f8f7b59fe383d0fa37edf3ffcbeb7ee311b",
+        "last_32_token_ids": [
+          114235,
+          114237,
+          114239,
+          114243,
+          114244,
+          114247,
+          114248,
+          114249,
+          114250,
+          114252,
+          114254,
+          114255,
+          114258,
+          114261,
+          114264,
+          114265,
+          114271,
+          114273,
+          114274,
+          114275,
+          114281,
+          114283,
+          114291,
+          114297,
+          114302,
+          114306,
+          114311,
+          114313,
+          114314,
+          114318,
+          114325,
+          114326
+        ]
+      },
+      "reference": "C3-s0"
+    }
+  },
+  "format": "ke2-tokenizer-candidate-revalidation-v2",
+  "pos_dims": [
+    32,
+    64
+  ],
+  "versions": {
+    "numpy": "2.5.3",
+    "python": "3.14.9",
+    "tokenizers": "0.23.3"
+  }
+}

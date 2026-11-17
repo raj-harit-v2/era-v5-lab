@@ -1,0 +1,78 @@
+{
+  "format_version": 2,
+  "tokenizer": {
+    "file": "tokenizer.json",
+    "sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b",
+    "vocab_size": 131072,
+    "added_tokens": 356,
+    "special_ids": 356
+  },
+  "char_dim": 256,
+  "tables": {
+    "decode_table_P32.npz": {
+      "kind": "decode",
+      "pos_dim": 32,
+      "shape": [
+        131072,
+        32
+      ],
+      "ke2_output_dim": 8192,
+      "n_truncated": 0,
+      "n_empty_rows": 0,
+      "n_rows_containing_U+FFFD": 1144,
+      "n_unique_rows": 130215,
+      "n_colliding_tokens": 857,
+      "tokenizer_sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b",
+      "sha256": "2c92cb80b52c48ee37c0c5be07303d450872871bd68971a3e43eb1c52c89fa58"
+    },
+    "raw_table_P32.npz": {
+      "kind": "raw",
+      "pos_dim": 32,
+      "shape": [
+        131072,
+        32
+      ],
+      "ke2_output_dim": 8192,
+      "n_truncated": 0,
+      "n_empty_rows": 0,
+      "n_rows_containing_U+FFFD": 9,
+      "n_unique_rows": 131072,
+      "n_colliding_tokens": 0,
+      "tokenizer_sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b",
+      "sha256": "21072027b19ef6f05d57ead7a2fc9fb4c52129e491186bf38d0ba079e8d5168a"
+    },
+    "decode_table_P64.npz": {
+      "kind": "decode",
+      "pos_dim": 64,
+      "shape": [
+        131072,
+        64
+      ],
+      "ke2_output_dim": 16384,
+      "n_truncated": 0,
+      "n_empty_rows": 0,
+      "n_rows_containing_U+FFFD": 1144,
+      "n_unique_rows": 130215,
+      "n_colliding_tokens": 857,
+      "tokenizer_sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b",
+      "sha256": "18e779f860fc6a2d9634bf979160af98ed7a470449988ec7c0c60cacd4bd904f"
+    },
+    "raw_table_P64.npz": {
+      "kind": "raw",
+      "pos_dim": 64,
+      "shape": [
+        131072,
+        64
+      ],
+      "ke2_output_dim": 16384,
+      "n_truncated": 0,
+      "n_empty_rows": 0,
+      "n_rows_containing_U+FFFD": 9,
+      "n_unique_rows": 131072,
+      "n_colliding_tokens": 0,
+      "tokenizer_sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b",
+      "sha256": "fb4194d985622a8664a5e48fb07479151da661d41cea89b8a8b4afd2ae7f2b5a"
+    }
+  },
+  "max_raw_byte_length": 32
+}

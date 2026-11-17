@@ -21,6 +21,9 @@ import gguf_roundtrip as rt  # noqa: E402
 import test_gguf_roundtrip_normalizer as nt  # noqa: E402
 
 
+BE = ("<|begin_of_text|>", "<|end_of_text|>")   # the test tokenizers' bos / eos
+
+
 def run(llama_cpp: Path, work: Path) -> list[str]:
     from llama_cpp import Llama
     from tokenizers import Tokenizer
@@ -33,19 +36,38 @@ def run(llama_cpp: Path, work: Path) -> list[str]:
     bad = []
     if json.loads((ckpt / "config.json").read_text())["vocab_size"] < 700:   # table smaller than B's vocabulary: refused
         try:
-            cf.convert_frozen(ckpt, b, rt.sha256(b), llama_cpp, work / "small.gguf", work / "w0")
+            cf.convert_frozen(ckpt, b, rt.sha256(b), llama_cpp, work / "small.gguf", work / "w0", "bf16", *BE)
             bad.append("a checkpoint with a too small embedding table was accepted")
         except SystemExit as e:
             bad += [] if "embedding table" in str(e) else [f"too small table: unexpected result {e}"]
     try:
-        cf.convert_frozen(ckpt, b, "0" * 64, llama_cpp, work / "no.gguf", work / "w1")
+        cf.convert_frozen(ckpt, b, "0" * 64, llama_cpp, work / "no.gguf", work / "w1", "bf16", *BE)
         bad.append("a wrong sha256 was accepted")
     except SystemExit as e:
         if "refusing" not in str(e) or (work / "no.gguf").exists():
             bad.append(f"wrong sha256: unexpected result {e}")
     cfg = json.loads((ckpt / "config.json").read_text()); cfg["vocab_size"] = 700   # room for B (the embedding is not read)
     (ckpt / "config.json").write_text(json.dumps(cfg))
-    out = cf.convert_frozen(ckpt, b, rt.sha256(b), llama_cpp, work / "ok.gguf", work / "w2")
+    # the eos default is the frozen tokenizer's, not these tokenizers'; a token the tokenizer lacks is refused early
+    try:
+        cf.convert_frozen(ckpt, b, rt.sha256(b), llama_cpp, work / "eos.gguf", work / "w3")
+        bad.append("an eos token that is not in tokenizer.json was accepted")
+    except SystemExit as e:
+        bad += [] if "refusing: eos token" in str(e) else [f"missing eos: unexpected result {e}"]
+    # no added tokens at all: no ValueError from max() (the vocabulary's own tokens serve as bos / eos here)
+    e = json.loads(b.read_text(encoding="utf-8")); e["added_tokens"] = []
+    (work / "e.json").write_text(json.dumps(e), encoding="utf-8")
+    try:
+        cf.convert_frozen(ckpt, work / "e.json", rt.sha256(work / "e.json"), llama_cpp, work / "e.gguf", work / "w4", "bf16", "a", "b")
+    except SystemExit:
+        pass
+    # staging into a reused work folder drops what the previous checkpoint left
+    for name in ("old", "new"):
+        (work / name).mkdir(); (work / name / f"{name}.bin").write_text("x")
+    cf.stage(work / "old", b, work / "stg", *BE); cf.stage(work / "new", b, work / "stg", *BE)
+    if sorted(x.name for x in (work / "stg").iterdir()) != ["new.bin", "tokenizer.json", "tokenizer_config.json"]:
+        bad.append("a reused staging folder kept files of the previous checkpoint")
+    out = cf.convert_frozen(ckpt, b, rt.sha256(b), llama_cpp, work / "ok.gguf", work / "w2", "bf16", *BE)
     llm = Llama(model_path=str(out), vocab_only=True, verbose=False)
     if llm.metadata.get("tokenizer.ggml.pre") != cf.PRE:
         bad.append(f"pre-tokenizer is {llm.metadata.get('tokenizer.ggml.pre')}")

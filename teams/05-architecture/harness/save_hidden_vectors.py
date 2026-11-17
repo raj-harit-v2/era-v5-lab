@@ -16,7 +16,7 @@ Output, one ``.npz``:
 Usage:
     python teams/05-architecture/harness/save_hidden_vectors.py --run OUT_DIR_OF_THE_RUN
         --tokenizer TOKENIZER_JSON --byte-table RAW_TABLE_NPZ --heldout-data HELDOUT_JSONL
-        --out hidden_vectors.npz [--rows 4096] [--seed 0] [--device cpu|cuda]
+        --out hidden_vectors.npz [--rows 16384] [--seed 0] [--device cpu|cuda]
 
 ``--run`` is the output folder of ``train_week2.py``. It must hold ``manifest.json`` and
 ``checkpoint.pt``. Only load a checkpoint that your own harness run wrote.
@@ -123,7 +123,7 @@ def main():
     )
     for name in ["run", "tokenizer", "byte-table", "heldout-data", "out"]:
         p.add_argument("--" + name, type=Path, required=True)
-    p.add_argument("--rows", type=int, default=4096)
+    p.add_argument("--rows", type=int, default=16384)
     p.add_argument("--seed", type=int, default=0)
     p.add_argument("--device", choices=["cpu", "cuda"], default="cpu")
     args = p.parse_args()

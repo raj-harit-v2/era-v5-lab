@@ -19,7 +19,7 @@ from pathlib import Path
 
 import numpy as np
 
-from .config import CHAR_DIM, HF_ID, POS_DIMS
+from .config import CHAR_DIM, HF_ID, POS_DIMS, TOKENIZER_SHA256
 from .tokenizer import (
     U_FFFD,
     TokenizerBundle,
@@ -227,11 +227,12 @@ def build_all(tb: TokenizerBundle, out_dir: Path, pos_dims: Sequence[int] = POS_
             "vocab_size": tb.vocab_size,
             "added_tokens": len(tb.added),
             "special_ids": len(tb.special_ids),
-            "hf_id": HF_ID,
         },
         "char_dim": CHAR_DIM,
         "tables": {},
     }
+    if tb.sha256 == TOKENIZER_SHA256:
+        manifest["tokenizer"]["hf_id"] = HF_ID
     raw_lens = [len(raw_bytes_for_id(tb, i)) for i in range(tb.vocab_size)]  # raises on holes
     manifest["max_raw_byte_length"] = int(max(raw_lens))
     for P in pos_dims:

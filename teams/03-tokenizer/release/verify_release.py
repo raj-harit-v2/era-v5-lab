@@ -3,9 +3,11 @@
 verify_release.py
 =================
 
-Checks a downloaded copy of the frozen G3 tokenizer (C3 sample-v0, #340) before a team uses it:
+Checks a downloaded copy of a G3 release before a team uses it: the frozen tokenizer in release/ (p1536, frozen
+by TSAI on 16 Nov), or an archived one in release/archive/<name>/ (C3 sample-v0, #340). It checks the release in
+its own folder:
 
-  1. tokenizer.json has the sha256 pinned in release/SHA256SUMS, and every repo file listed there matches.
+  1. tokenizer.json has the sha256 pinned in the folder's SHA256SUMS, and every repo file listed there matches.
   2. Structure: BPE, vocab 131,072 (ids 0..131071, no gaps), 130,460 merges, 356 special tokens.
   3. Roles: bos / eos / pad / unk in special_tokens_map.json have the ids in SPECIAL_TOKENS.md, and each
      special token encodes to exactly its own id.
@@ -17,6 +19,7 @@ Checks a downloaded copy of the frozen G3 tokenizer (C3 sample-v0, #340) before 
 Only the standard library and `tokenizers` are needed (`transformers` for check 5, skipped without it).
 
     python teams/03-tokenizer/release/verify_release.py /path/to/tokenizer.json
+    python teams/03-tokenizer/release/archive/c3-sample-v0/verify_release.py /path/to/c3/tokenizer.json
 """
 import argparse
 import hashlib
@@ -28,7 +31,8 @@ import tempfile
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-TEAM = HERE.parent
+TEAM = next(p for p in HERE.parents if p.name == "03-tokenizer")
+TOKENIZER = (HERE / "tokenizer.json").relative_to(TEAM).as_posix()   # its key in SHA256SUMS
 VOCAB, MERGES, SPECIALS = 131072, 130460, 356
 
 SAMPLES = {
@@ -45,7 +49,7 @@ def sha256(path):
 
 
 def pinned():
-    """{path relative to teams/03-tokenizer: sha256} from release/SHA256SUMS."""
+    """{path relative to teams/03-tokenizer: sha256} from this folder's SHA256SUMS."""
     out = {}
     for line in (HERE / "SHA256SUMS").read_text(encoding="utf-8").splitlines():
         if line.strip():
@@ -74,9 +78,9 @@ def main():
     print("1. sha256")
     sums = pinned()
     got = sha256(args.tokenizer)
-    check(got == sums["release/tokenizer.json"], f"tokenizer.json {got}")
+    check(got == sums[TOKENIZER], f"tokenizer.json {got} (pinned for {TOKENIZER})")
     for name, digest in sums.items():
-        if name != "release/tokenizer.json":
+        if name != TOKENIZER:
             check((TEAM / name).is_file() and sha256(TEAM / name) == digest, f"repo file {name}")
 
     print("2. structure")

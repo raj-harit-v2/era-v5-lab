@@ -1,0 +1,10 @@
+{
+  "tokenizer_class": "PreTrainedTokenizerFast",
+  "bos_token": "<|begin_of_text|>",
+  "eos_token": "<|endoftext|>",
+  "pad_token": "<|pad|>",
+  "unk_token": "<|unk|>",
+  "add_bos_token": false,
+  "add_eos_token": false,
+  "clean_up_tokenization_spaces": false
+}

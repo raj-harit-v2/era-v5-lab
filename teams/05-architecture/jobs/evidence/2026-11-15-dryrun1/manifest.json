@@ -1,0 +1,165 @@
+{
+  "config": {
+    "intended": {
+      "arm": "exp2-muon",
+      "official_step_time": false,
+      "instructor_expert_ffn": 768,
+      "loaded_expert_ffn": null,
+      "mlp_ratio": null,
+      "activation_intended": "SwiGLU",
+      "position_intended": "RoPE",
+      "tied_embeddings_intended": true,
+      "comparison_final": false,
+      "profile": "T2",
+      "lead_intent": {
+        "arm": "exp2-muon",
+        "official_step_time": false,
+        "instructor_expert_ffn": 768,
+        "loaded_expert_ffn": null,
+        "mlp_ratio": null,
+        "activation_intended": "SwiGLU",
+        "position_intended": "RoPE",
+        "tied_embeddings_intended": true,
+        "comparison_final": false
+      }
+    },
+    "model": {
+      "activation": "swiglu",
+      "position": "rope",
+      "rope_theta": 10000.0,
+      "rotary_fraction": 1.0,
+      "norm_eps": 1e-05,
+      "mtp_weight": 0.0,
+      "moe": {
+        "bias": false,
+        "bias_gamma": 0.0,
+        "num_experts": 16,
+        "top_k": 2,
+        "num_shared": 1,
+        "dispatch": "loop",
+        "ffn_hidden": 768
+      },
+      "embedding": "ke1",
+      "attn_impl": "eager",
+      "mtp": false,
+      "reversible": false,
+      "ce_impl": "torch",
+      "vocab_size": 131072,
+      "block_size": 32,
+      "n_layer": 8,
+      "n_head": 8,
+      "n_kv_head": 2,
+      "n_embd": 512,
+      "ke_max_pos": 32
+    },
+    "optim": {
+      "betas": [
+        0.9,
+        0.999
+      ],
+      "eps": 1e-08,
+      "schedule": "constant",
+      "name": "muon",
+      "lr": 0.001,
+      "weight_decay": 0.0,
+      "muon_lr": 0.01
+    },
+    "run": {
+      "micro_batch_size": 2,
+      "eval_every_steps": 50,
+      "compile": false,
+      "flush_every_steps": 10,
+      "steps": 3,
+      "max_time_min": 90,
+      "seed": 1236,
+      "batch_size": 2,
+      "grad_clip": 1.0,
+      "dtype": "fp32"
+    },
+    "approval": {
+      "status": "pending",
+      "reference": null
+    },
+    "evaluation": {
+      "boundary_policy": "bos_then_all_text_tokens_document_isolated",
+      "approved": false
+    },
+    "provenance": {
+      "arm_sources": [
+        {
+          "path": "configs/arms/exp2_muon.yaml",
+          "sha256": "22c0e8e9ea1503330d170c6b0a669366ed1de312701e56908a4d48b7592c375f"
+        },
+        {
+          "path": "configs/arms/t2.yaml",
+          "sha256": "a7e2974f45534be119054238d194507a06750eac061bbe47516d3235dd76edf2"
+        }
+      ],
+      "runtime_sha256": "cee02ccadbad0ac39866ce227f06ba5194249ed56144249fc368dfa173481244",
+      "plan_sha256": "b9edabe7696d5e33ed1e885bcba02d5cb2db61724007306e63966c8d11a3f0c5",
+      "plan_hash_normalization": "UTF-8 with LF newlines",
+      "lead_snapshot": "3a2f898b990d253d8422419f31e147ae65ec1747",
+      "expert_width_source": "intended.instructor_expert_ffn",
+      "lead_explicit_choices": {
+        "model.reversible": false,
+        "model.mtp": false
+      },
+      "g6_inheritance": "not loaded; explicit G5 declarations only"
+    }
+  },
+  "artifacts": {
+    "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3",
+    "table_file_sha256": "dfbb3207bba13cb46899afc7aad06e876a84961f6a4e206980cd39071f2926d3",
+    "table_content_sha256": "fc5e5f8ffacbe93ecdedc276661edfd43ed9a13621eb4a68166ef80e24e88f9b",
+    "vocab_size": 131072,
+    "pos_dim": 32,
+    "bos_id": 130725,
+    "pad_id": 130726
+  },
+  "train_sha256": "678ec9b63300fad299223e42f360096864d52f7404d67f69c50c898a745b25a1",
+  "heldout_sha256": "c8a2edf84b60ba1bd7e98e1f00dc96e248b4d916c697bcba4eedd2baa9c04f17",
+  "heldout_sources_sha256": "c9c8b7a77b0b6a02bf8f4691d9336001d21ff4c08fd682bf06309ff5312fb77c",
+  "heldout_checksum_sha256": null,
+  "sources": {
+    "train_week2.py": "0bc1e22dba150ee7465630567ee47631876d9837d1134c6af329a09f4c71c5da",
+    "config.py": "4f4236524d1af2bec10e1f6455d63621a30f5863c87a362d64d5288cdeb55b77",
+    "scoring.py": "009f0b9a16c15f46603265e73085003ab985211ae2e944fe01cf4bd81b4803c7",
+    "evaluation.py": "c5bc14f279f295933634ec65b9f015db1cef705b7c0d88dba7072a73396d5b0e",
+    "__init__.py": "efb6f85c6ea25364a24baddf112017ba5522f0006376f91f78ff3ea4c472a8a4",
+    "model.py": "0dd834590a728da14d0104a3b1caabdd95c011b2a6583bbd640b9cd6a1738e7e",
+    "artifacts.py": "06edc089ceab49e03751770eb85c84146c2117fd69184b0ce766273377759656",
+    "optim.py": "7db330dab81b7e7259ebed97f103a3c4dd2e004b66a346c537a812b8276b5e5d",
+    "data.py": "55d086c8374684d735d82ee5e950ae0d92330017ccf58c2860e735352196686f"
+  },
+  "device": "cpu",
+  "torch": "2.13.0",
+  "smoke": true,
+  "bpb_policy": "original UTF-8 bytes, with C3 tokenizer normalization",
+  "identity_sha256": "cbba3d193d2851383bbd35acb319fb33708e9d358d86ab96e202745c7078b0ae",
+  "baseline_commit": "3a2f898b990d253d8422419f31e147ae65ec1747",
+  "parameters": 237052416,
+  "optimizer": {
+    "name": "muon",
+    "source": "teams/06-performance/models/optim.py@0968eb8 (loop path)",
+    "muon_lr": 0.01,
+    "adamw_lr": 0.001,
+    "momentum": 0.95,
+    "nesterov": true,
+    "ns_steps": 5,
+    "ns_coefficients": [
+      3.4445,
+      -4.775,
+      2.0315
+    ],
+    "muon_parameters": 165740544,
+    "adamw_parameters": 71311872
+  },
+  "gpu": null,
+  "status": "SMOKE_NOT_A_QUALITY_RESULT",
+  "heldout_provenance": null,
+  "g8_external_writer": false,
+  "token_budget_note": "Input positions include right padding; scored tokens/bytes reported separately",
+  "train_documents": 2,
+  "heldout_documents": 15,
+  "data_load_seconds": 0.010468792170286179
+}

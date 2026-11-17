@@ -1,5 +1,7 @@
 # G3 Tokenizer: Gate 2 freeze report (10 Nov 2026)
 
+> **Superseded on 16 Nov 2026.** TSAI froze **p1536** (`e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b`, #414; pass bar in #436) in place of C3 sample-v0. The current release is `release/README.md`. This report and the C3 release (`release/archive/c3-sample-v0/`) are kept as the Gate 2 record.
+
 > Gate 2 proposal. If the Thu 12 Nov retrain on Data A's cleaned sample beats C3 sample-v0 under the same rules (pass bar, no language worse, fresh build matches), this PR is updated with the new sha before Thu 12 Nov 23:59 IST. Otherwise C3 sample-v0 below is the frozen tokenizer.
 
 ## 1. Decision
@@ -73,7 +75,7 @@ The C3 normalizer changed 406 docs. That is expected: the round trip checks agai
 
 ## 7. release/
 
-**Start at `release/README.md`.** It covers where to download `tokenizer.json`, how to check it (`release/verify_release.py`), how to load it with `AutoTokenizer`, and how to rebuild it.
+**The C3 release is now `release/archive/c3-sample-v0/`** (its own README, SHA256SUMS and verify script, paths updated). `release/` holds p1536. The commands below were written for C3 when it was in `release/`; for C3 now use `release/archive/c3-sample-v0/SHA256SUMS`.
 
 `release/SHA256SUMS` lists the frozen tokenizer.json and every repo file needed to rebuild it. Check with:
 

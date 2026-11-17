@@ -1,8 +1,8 @@
 # KE2 output shape (for G5)
 
-**Status:** revalidated through the committed C3 chain; C1-s0, C2-s0, and frozen C3-s0 were measured on 12 Nov.
-The v2 file is not yet measured. Both P = 32 and P = 64 are supported; P = 32 is
-recommended.
+**Status:** Gate 3 p1536-s0 is the current frozen tokenizer (16 Nov); its exact file hash passed
+the loader gate and both P = 32 and P = 64 were measured. C3-s0 remains a historical result.
+Both P values are supported; P = 32 is recommended.
 
 ## Shape
 
@@ -45,9 +45,9 @@ token's position in the sequence; sequence positions (e.g. RoPE) are handled as 
 | Code memory for 8,192 tokens (e.g. `B = 8`, `T = 1,024`) | 256 MB | 512 MB |
 | Tokens longer than P (cut off) | 0 | 0 |
 | Collisions | 0 | 0 |
-| Slots used on average (candidate means = 6.5854–7.1404 bytes) | 20.58–22.31 % | 10.29–11.16 % |
+| Slots used on average (current p1536 mean = 7.8887 bytes) | 24.65 % | 12.33 % |
 
-On every measured candidate both give identical codes for every token's bytes; P = 64 costs twice the size
+On every measured candidate both retain every token's bytes; P = 64 costs twice the size
 with no gain. The longest token is exactly 32 bytes, so P = 32 has no spare room: any longer
 token in a future tokenizer would be cut off.
 
@@ -82,8 +82,8 @@ The two former pending checks are closed. The compact reproducible outputs are
 token IDs are recorded by collision equivalence group in
 [`collision_groups.csv`](results/tokenizer_candidates/collision_groups.csv): every pair of IDs in
 one group collides, and `n_pairs = n_tokens · (n_tokens - 1) / 2`. This lossless group form avoids
-expanding large groups into hundreds of thousands of redundant pair rows. The tokenizer files and
-generated NPZ tables are not committed.
+expanding large groups into hundreds of thousands of redundant pair rows. Tokenizer files are
+not committed; the Gate 3 p1536 tables are committed under `results/tables/p1536-s0/`.
 
 The complete Team 3 verification set was also rerun on v0 and v0.1. For both candidates:
 
@@ -109,9 +109,10 @@ vocabulary and pass, but those two displayed category counts should not be used 
 | Team 3 C3 | `54f20825…055306` | 131,072 | 32 | 0 | 0 / 0 | 1,096 / 1,096 excess tokens |
 | Team 3 C1 sample-v0 | `36acf126…01c82a2` | 131,072 | 32 | 0 | 0 / 0 | 1,094 / 1,094 excess tokens |
 | Team 3 C2 sample-v0 | `b0d44576…f8488a` | 131,072 | 32 | 0 | 0 / 0 | 1,095 / 1,095 excess tokens |
-| Team 3 C3 sample-v0 (frozen, #340) | `15468e66…2ddc3` | 131,072 | 32 | 0 | 0 / 0 | 1,095 / 1,095 excess tokens |
+| Team 3 C3 sample-v0 (previous freeze, #340) | `15468e66…2ddc3` | 131,072 | 32 | 0 | 0 / 0 | 1,095 / 1,095 excess tokens |
+| Team 3 p1536 sample-v0 (current freeze, #414) | `e6b93a93…25a64b` | 131,072 | 32 | 0 | 0 / 0 | 857 / 857 excess tokens |
 
-For frozen C3-s0, merged Team 3 PR #407 names `<|endoftext|>` (id 130822) as eos in both
+For C3-s0 and p1536-s0, merged Team 3 PR #407 names `<|endoftext|>` (id 130822) as eos in both
 `release/special_tokens_map.json` and `release/tokenizer_config.json`. ID 36 `<|end_of_text|>`
 remains a distinct special token with no named model role. This role assignment does not change
 the byte-table collision counts above.
@@ -139,6 +140,14 @@ earlier C1–C3 candidate chain remains intact. C2 sample-v0 changes exactly 8,7
 8,704 decode rows relative to C1 sample-v0. C3-s0 changes 5,406 raw rows and 5,406 decode rows
 relative to C2-s0; its SHA-256 matches Team 3's frozen #340 artifact.
 
+Gate 3 p1536-s0 has 10 known `decode_collapse` groups containing 867 tokens (857 excess)
+at both P values, with zero raw collisions, truncations, empty rows or unexplained groups.
+Its maximum raw token length is 32 bytes. Relative to C3-s0, exactly 13,824 raw rows and
+13,824 decode rows changed. The independently built raw and decode NPZ tables and manifest
+are under [`results/tables/p1536-s0/`](results/tables/p1536-s0/); the compact collision
+report is under [`results/tokenizer_candidates/gate3_p1536/`](results/tokenizer_candidates/gate3_p1536/).
+The tokenizer itself is kept outside the repository.
+
 v0.1 differs from v0 only at token IDs 130822–130826, the five G10 slot renames. Therefore five
 raw rows and five decode rows change, while vocabulary size, output shape, maximum byte length,
 truncation counts and collision counts stay unchanged. P = 32 is final for v0.1.
@@ -154,7 +163,7 @@ Run the same validator within one day of every delivered candidate. The registry
 published hashes for v1-c1 (PR #137), C1, C2 and C3, plus their sample-v0 retrains. A candidate is
 reported as measured only after its exact `tokenizer.json` has been supplied or rebuilt and its
 SHA-256 has passed the loader gate. At this revision, v0, v0.1, v1-c1, the committed C1–C3, C1-s0,
-C2-s0 and C3-s0 are measured. v1-c1 was
+C2-s0, C3-s0 and p1536-s0 are measured. v1-c1 was
 rebuilt with the exact PR #137 scripts after all 11 corpus byte counts and hashes matched its
 manifest; the rebuilt tokenizer matched `7d2cff92…6af44`. C1–C3 were rebuilt from those same
 verified corpus files and each matched its published hash. C1-s0 and C2-s0 were measured from
@@ -163,6 +172,9 @@ C3-s0 was rebuilt from the #195 job with checksum-verified sample-v0 and corpus6
 matched Team 3's frozen #340 artifact (`15468e66…2ddc3`). The v2 file in Team 3's `train/v2_manifest.json` (sha
 `0862f6…bc47`) is likewise unmeasured and is not in the script's hash registry. Manifest claims
 alone are not copied into the KE collision results.
+The current p1536-s0 file matched the Gate 3 announced SHA-256 (`e6b93a93…25a64b`) before its
+tables and collision report were generated. New tokenizer-dependent work must use this hash and
+the p1536-s0 tables; earlier C3 and baseline results are preserved as historical measurements.
 
 Reproduce from locally built, hash-verified tokenizer files:
 
@@ -180,12 +192,21 @@ python teams/04-ke2/src/revalidate_tokenizer_candidates.py \
   --candidate C2-s0=/path/to/c2-sample-v0/tokenizer.json \
   --candidate C3-s0=/path/to/c3-sample-v0/tokenizer.json \
   --out teams/04-ke2/results/tokenizer_candidates/sample_v0
+
+python teams/04-ke2/src/revalidate_tokenizer_candidates.py \
+  --candidate C3-s0=/path/to/c3-sample-v0/tokenizer.json \
+  --candidate p1536-s0=/path/to/p1536-sample-v0/tokenizer.json \
+  --out teams/04-ke2/results/tokenizer_candidates/gate3_p1536
+
+python teams/04-ke2/src/build_tables.py \
+  --tokenizer /path/to/p1536-sample-v0/tokenizer.json \
+  --out teams/04-ke2/results/tables/p1536-s0 --pos-dims 32 64
 ```
 
 For a newly announced candidate not yet in the registry, pin it on the command line as
 `--candidate NAME@FULL_SHA256=/path/to/tokenizer.json`.
 
-Based on: Team 3 tokenizer v0, v0.1, v1-c1, C1–C3, C1-s0, C2-s0 and C3-s0, all accepted only at the full
+Based on: Team 3 tokenizer v0, v0.1, v1-c1, C1–C3, C1-s0, C2-s0, C3-s0 and p1536-s0, all accepted only at the full
 hashes recorded above and in the generated reports; BrahmicTokenizer-131K baseline
 `01d968a7970b029c071b29f060abf6104b66168dedf2ff3b1a0290a545739fff`; and
 kronecker-embeddings 0.1.1 (commit d07cb54, as pinned in `src/ke2/config.py`).

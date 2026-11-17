@@ -1,0 +1,302 @@
+{
+  "checks": [
+    {
+      "check": "table",
+      "device": "cuda",
+      "full": true,
+      "rows": 131072,
+      "sha256": "21072027b19ef6f05d57ead7a2fc9fb4c52129e491186bf38d0ba079e8d5168a",
+      "table": "p1536",
+      "tokenizer_sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b"
+    },
+    {
+      "check": "round_trip_structural",
+      "device": "cuda",
+      "dtype": "fp32",
+      "full": true,
+      "ids": 131072,
+      "table": "p1536",
+      "wrong": 0
+    },
+    {
+      "check": "round_trip_structural",
+      "device": "cuda",
+      "dtype": "bf16",
+      "full": true,
+      "ids": 131072,
+      "table": "p1536",
+      "wrong": 0
+    },
+    {
+      "check": "round_trip_cosine",
+      "device": "cuda",
+      "dtype": "fp32",
+      "full": true,
+      "id_sha256": "736eb0cf03a0275579724d63a5f429396444f7de5c542cfa653e7b2d5dd91fa0",
+      "ids": 131072,
+      "min_margin": 0.015809297561645508,
+      "min_margin_id": 1214,
+      "table": "p1536",
+      "ties": 0,
+      "wrong": 0
+    },
+    {
+      "check": "round_trip_cosine",
+      "device": "cuda",
+      "dtype": "bf16",
+      "full": true,
+      "id_sha256": "736eb0cf03a0275579724d63a5f429396444f7de5c542cfa653e7b2d5dd91fa0",
+      "ids": 131072,
+      "min_margin": 0.015809178352355957,
+      "min_margin_id": 2420,
+      "table": "p1536",
+      "ties": 0,
+      "wrong": 0
+    },
+    {
+      "check": "input_path",
+      "device": "cuda",
+      "dtype": "fp32",
+      "full": true,
+      "grad_tol": 5e-05,
+      "ids": 131072,
+      "impl": "team5",
+      "table": "p1536",
+      "tol": 1e-05,
+      "worst_grad": 4.658906214727363e-07,
+      "worst_out": 7.610511280929015e-08,
+      "worst_row": 1.607882478903744e-07,
+      "worst_row_id": 125895
+    },
+    {
+      "check": "input_path",
+      "device": "cuda",
+      "dtype": "bf16",
+      "full": true,
+      "grad_tol": 0.03,
+      "ids": 131072,
+      "impl": "team5",
+      "table": "p1536",
+      "tol": 0.01,
+      "worst_grad": 4.658906214727363e-07,
+      "worst_out": 7.610511280929015e-08,
+      "worst_row": 1.607882478903744e-07,
+      "worst_row_id": 125895
+    },
+    {
+      "check": "input_path",
+      "device": "cuda",
+      "dtype": "fp32",
+      "full": true,
+      "grad_tol": 5e-05,
+      "ids": 131072,
+      "impl": "team6",
+      "table": "p1536",
+      "tol": 1e-05,
+      "worst_grad": 1.609105689925427e-07,
+      "worst_out": 7.838985278862248e-08,
+      "worst_row": 1.2232367552541469e-07,
+      "worst_row_id": 97814
+    },
+    {
+      "check": "input_path",
+      "device": "cuda",
+      "dtype": "bf16",
+      "full": true,
+      "grad_tol": 0.03,
+      "ids": 131072,
+      "impl": "team6",
+      "table": "p1536",
+      "tol": 0.01,
+      "worst_grad": 1.609105689925427e-07,
+      "worst_out": 7.838985278862248e-08,
+      "worst_row": 1.2232367552541469e-07,
+      "worst_row_id": 97814
+    },
+    {
+      "check": "bf16_code_bits",
+      "device": "cuda",
+      "full": true,
+      "ids": 131072,
+      "rows_differ": 0,
+      "table": "p1536"
+    },
+    {
+      "check": "table",
+      "device": "cuda",
+      "full": true,
+      "rows": 131072,
+      "sha256": "b3f5476ec6ae8a6bc3a8ca18e6662d2407645c2ed6f3b3ca4561a9bafd8d04db",
+      "table": "committed",
+      "tokenizer_sha256": "01d968a7970b029c071b29f060abf6104b66168dedf2ff3b1a0290a545739fff"
+    },
+    {
+      "check": "round_trip_structural",
+      "device": "cuda",
+      "dtype": "fp32",
+      "full": true,
+      "ids": 131072,
+      "table": "committed",
+      "wrong": 0
+    },
+    {
+      "check": "round_trip_structural",
+      "device": "cuda",
+      "dtype": "bf16",
+      "full": true,
+      "ids": 131072,
+      "table": "committed",
+      "wrong": 0
+    },
+    {
+      "check": "round_trip_cosine",
+      "device": "cuda",
+      "dtype": "fp32",
+      "full": true,
+      "id_sha256": "31c8d0e0ac50cff5c8021f88a2b608de2298fdbf216c620a40e83d2adbe26f9a",
+      "ids": 131072,
+      "min_margin": 0.01580911874771118,
+      "min_margin_id": 50346,
+      "table": "committed",
+      "ties": 0,
+      "wrong": 0
+    },
+    {
+      "check": "round_trip_cosine",
+      "device": "cuda",
+      "dtype": "bf16",
+      "full": true,
+      "id_sha256": "31c8d0e0ac50cff5c8021f88a2b608de2298fdbf216c620a40e83d2adbe26f9a",
+      "ids": 131072,
+      "min_margin": 0.015809178352355957,
+      "min_margin_id": 83647,
+      "table": "committed",
+      "ties": 0,
+      "wrong": 0
+    },
+    {
+      "check": "input_path",
+      "device": "cuda",
+      "dtype": "fp32",
+      "full": true,
+      "grad_tol": 5e-05,
+      "ids": 131072,
+      "impl": "team5",
+      "table": "committed",
+      "tol": 1e-05,
+      "worst_grad": 2.9722233617310756e-07,
+      "worst_out": 6.663410921689925e-08,
+      "worst_row": 1.592257307001152e-07,
+      "worst_row_id": 119906
+    },
+    {
+      "check": "input_path",
+      "device": "cuda",
+      "dtype": "bf16",
+      "full": true,
+      "grad_tol": 0.03,
+      "ids": 131072,
+      "impl": "team5",
+      "table": "committed",
+      "tol": 0.01,
+      "worst_grad": 2.9722233617310756e-07,
+      "worst_out": 6.663410921689925e-08,
+      "worst_row": 1.592257307001152e-07,
+      "worst_row_id": 119906
+    },
+    {
+      "check": "input_path",
+      "device": "cuda",
+      "dtype": "fp32",
+      "full": true,
+      "grad_tol": 5e-05,
+      "ids": 131072,
+      "impl": "team6",
+      "table": "committed",
+      "tol": 1e-05,
+      "worst_grad": 1.217176598920244e-07,
+      "worst_out": 6.134732735929804e-08,
+      "worst_row": 1.1697440748926168e-07,
+      "worst_row_id": 60016
+    },
+    {
+      "check": "input_path",
+      "device": "cuda",
+      "dtype": "bf16",
+      "full": true,
+      "grad_tol": 0.03,
+      "ids": 131072,
+      "impl": "team6",
+      "table": "committed",
+      "tol": 0.01,
+      "worst_grad": 1.217176598920244e-07,
+      "worst_out": 6.134732735929804e-08,
+      "worst_row": 1.1697440748926168e-07,
+      "worst_row_id": 60016
+    },
+    {
+      "check": "bf16_code_bits",
+      "device": "cuda",
+      "full": true,
+      "ids": 131072,
+      "rows_differ": 0,
+      "table": "committed"
+    }
+  ],
+  "environment": {
+    "cuda_runtime": "13.0",
+    "device": "cuda",
+    "gpu": "NVIDIA RTX 5000 Ada Generation Laptop GPU",
+    "numpy": "2.5.4",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "python": "3.13.5",
+    "tokenizers": "0.23.3",
+    "torch": "2.14.1+cu130"
+  },
+  "format": "ke2-every-id-run-v1",
+  "git_head": "917fafb2e42ff6b0d8ee75a83162b1ecab393ef8",
+  "inputs": {
+    "committed_table": "results/tables/raw_table_P32.npz",
+    "frozen_name": "p1536",
+    "frozen_table_sha256": "21072027b19ef6f05d57ead7a2fc9fb4c52129e491186bf38d0ba079e8d5168a",
+    "pos_dim": 32,
+    "tokenizer_sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b"
+  },
+  "passed": true,
+  "sources_sha256_lf": {
+    "teams/04-ke2/src/build_tables.py": "297fc4735ccddccc130c019b5c5502085f1f1972f3cb2ff1d428d06c3da52a70",
+    "teams/04-ke2/src/decode_ref.py": "83e2e9f0968b34e4b169491a6d74aa25b8755957ca596bfccef743d828f46608",
+    "teams/04-ke2/src/determinism/decode_gpu.py": "c82e28ea70193b1eaef16e1bf8131b970d6e9361480f9a3bfc72cc30937c07d8",
+    "teams/04-ke2/src/ke2/codec.py": "78888d49026692cb9d5d6c2375294d7e30a3e3d66b4d6dff44868efbd354ccde",
+    "teams/04-ke2/src/ke2/scoring.py": "a5ce19fcae6df17ff19b3616e32f30d8ac7e0afcd8b4c9c23748c6aebc5a11d8",
+    "teams/04-ke2/src/ke2/tables.py": "97d49c3859f797c8425f73a8122725ff13c6762a53de6b5af66ce1bc8e0e73b7",
+    "teams/04-ke2/src/ke2/tokenizer.py": "9bb6d5a89adbf5505a89e1559764a2ac60a7953e0ac604021bff3778e20eb0e7",
+    "teams/04-ke2/src/proofs/decode_theorems.py": "d3cf9f94f3de4a5a791681b019fc41a528cecf4ac467b87d3e6cfa3f7c294411",
+    "teams/04-ke2/src/run_every_id.py": "804215424d67327213e56c621dd189c62f2eb1bfa3a92221c049a029d9eed674",
+    "teams/04-ke2/tests/test_every_id.py": "f9d6bc8525022b5a6e0b3cbb21f16ae36b7e561e101114416d2039609eb97186",
+    "teams/05-architecture/harness/week2/model.py": "0dd834590a728da14d0104a3b1caabdd95c011b2a6583bbd640b9cd6a1738e7e",
+    "teams/05-architecture/tests/test_week2_ke2_g4_codec.py": "bc181e50127598dc7dbb9125d23b797c77cd38082cc74069315d6eae8d05cc66",
+    "teams/06-performance/correctness/framework.py": "084b6d2edb5a6e48603929fa0f20a43060971b953e9471fc0bfe86f1632e9623",
+    "teams/06-performance/models/ke2.py": "40cca4fcc430f28b2cc5fe9294b9d9d38d49bbd98d010dd81d521d0bddd2c06d"
+  },
+  "suites": {
+    "team5_g4_codec": {
+      "counts": {
+        "ok": true,
+        "ran": 5
+      },
+      "exit_code": 0,
+      "seconds": 8.5
+    },
+    "test_every_id": {
+      "counts": {
+        "error": 0,
+        "failed": 0,
+        "passed": 20,
+        "skipped": 0
+      },
+      "exit_code": 0,
+      "seconds": 281.9
+    }
+  }
+}

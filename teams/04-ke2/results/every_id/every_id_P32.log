@@ -1,0 +1,75 @@
+$ python teams/04-ke2/src/build_tables.py --tokenizer <tokenizer> --pos-dims 32 --out <tmp>
+tokenizer: tokenizer.json (V=131072, sha256=e6b93a93a605…)
+[decode P=32] shape=(131072, 32) truncated=0 empty=0 U+FFFD rows=1144 unique rows=130215/131072 sha256=2c92cb80b52c…
+[raw    P=32] shape=(131072, 32) truncated=0 empty=0 U+FFFD rows=9 unique rows=131072/131072 sha256=21072027b19e…
+
+
+$ KE2_EVERY_ID_FULL=1 KE2_FROZEN_TOKENIZER=<tokenizer> KE2_FROZEN_TABLE=<tmp>/raw_table_P32.npz python -m pytest tests/test_every_id.py -v -rs  (cwd teams/04-ke2)
+============================= test session starts =============================
+platform win32 -- Python 3.13.5, pytest-9.1.1, pluggy-1.7.0 -- <venv>\Scripts\python.exe
+rootdir: <repo>\teams\04-ke2
+plugins: anyio-4.16.0
+collecting ... collected 20 items
+
+tests/test_every_id.py::test_table_is_the_recorded_one[p1536] PASSED     [  5%]
+tests/test_every_id.py::test_round_trip_structural[p1536-fp32] PASSED    [ 10%]
+tests/test_every_id.py::test_round_trip_structural[p1536-bf16] PASSED    [ 15%]
+tests/test_every_id.py::test_round_trip_cosine[p1536-fp32] PASSED        [ 20%]
+tests/test_every_id.py::test_round_trip_cosine[p1536-bf16] PASSED        [ 25%]
+tests/test_every_id.py::test_input_path_matches_float64_codec[p1536-team5-fp32] PASSED [ 30%]
+tests/test_every_id.py::test_input_path_matches_float64_codec[p1536-team5-bf16] PASSED [ 35%]
+tests/test_every_id.py::test_input_path_matches_float64_codec[p1536-team6-fp32] PASSED [ 40%]
+tests/test_every_id.py::test_input_path_matches_float64_codec[p1536-team6-bf16] PASSED [ 45%]
+tests/test_every_id.py::test_trainer_code_rounds_to_reference_bf16[p1536] PASSED [ 50%]
+tests/test_every_id.py::test_table_is_the_recorded_one[committed] PASSED [ 55%]
+tests/test_every_id.py::test_round_trip_structural[committed-fp32] PASSED [ 60%]
+tests/test_every_id.py::test_round_trip_structural[committed-bf16] PASSED [ 65%]
+tests/test_every_id.py::test_round_trip_cosine[committed-fp32] PASSED    [ 70%]
+tests/test_every_id.py::test_round_trip_cosine[committed-bf16] PASSED    [ 75%]
+tests/test_every_id.py::test_input_path_matches_float64_codec[committed-team5-fp32] PASSED [ 80%]
+tests/test_every_id.py::test_input_path_matches_float64_codec[committed-team5-bf16] PASSED [ 85%]
+tests/test_every_id.py::test_input_path_matches_float64_codec[committed-team6-fp32] PASSED [ 90%]
+tests/test_every_id.py::test_input_path_matches_float64_codec[committed-team6-bf16] PASSED [ 95%]
+tests/test_every_id.py::test_trainer_code_rounds_to_reference_bf16[committed] PASSED [100%]
+
+============================== slowest durations ==============================
+26.06s call     tests/test_every_id.py::test_input_path_matches_float64_codec[p1536-team5-fp32]
+24.39s call     tests/test_every_id.py::test_input_path_matches_float64_codec[p1536-team5-bf16]
+22.72s call     tests/test_every_id.py::test_input_path_matches_float64_codec[p1536-team6-bf16]
+22.43s call     tests/test_every_id.py::test_input_path_matches_float64_codec[p1536-team6-fp32]
+21.72s call     tests/test_every_id.py::test_input_path_matches_float64_codec[committed-team5-bf16]
+21.68s call     tests/test_every_id.py::test_input_path_matches_float64_codec[committed-team5-fp32]
+21.56s call     tests/test_every_id.py::test_input_path_matches_float64_codec[committed-team6-fp32]
+21.34s call     tests/test_every_id.py::test_input_path_matches_float64_codec[committed-team6-bf16]
+16.98s call     tests/test_every_id.py::test_round_trip_structural[committed-bf16]
+14.15s call     tests/test_every_id.py::test_round_trip_structural[p1536-bf16]
+13.39s call     tests/test_every_id.py::test_round_trip_cosine[p1536-bf16]
+12.39s call     tests/test_every_id.py::test_round_trip_cosine[committed-bf16]
+11.54s call     tests/test_every_id.py::test_round_trip_structural[committed-fp32]
+6.71s call     tests/test_every_id.py::test_trainer_code_rounds_to_reference_bf16[p1536]
+5.74s call     tests/test_every_id.py::test_round_trip_structural[p1536-fp32]
+5.18s call     tests/test_every_id.py::test_trainer_code_rounds_to_reference_bf16[committed]
+5.06s call     tests/test_every_id.py::test_round_trip_cosine[p1536-fp32]
+4.79s call     tests/test_every_id.py::test_round_trip_cosine[committed-fp32]
+0.66s setup    tests/test_every_id.py::test_table_is_the_recorded_one[p1536]
+0.25s setup    tests/test_every_id.py::test_table_is_the_recorded_one[committed]
+0.11s call     tests/test_every_id.py::test_table_is_the_recorded_one[committed]
+0.07s setup    tests/test_every_id.py::test_round_trip_cosine[p1536-fp32]
+0.06s setup    tests/test_every_id.py::test_round_trip_cosine[committed-fp32]
+0.05s call     tests/test_every_id.py::test_table_is_the_recorded_one[p1536]
+
+(36 durations < 0.005s hidden.  Use -vv to show these durations.)
+======================= 20 passed in 279.12s (0:04:39) ========================
+
+
+$ ERA_KE2_TABLE=<tmp>/raw_table_P32.npz python -m unittest -v tests.test_week2_ke2_g4_codec  (cwd teams/05-architecture)
+test_dense_reference_codec_matches_g4_f64_codec (tests.test_week2_ke2_g4_codec.G4CodecOnCommittedTableTests.test_dense_reference_codec_matches_g4_f64_codec) ... ok
+test_leading_dimensions_are_kept (tests.test_week2_ke2_g4_codec.G4CodecOnCommittedTableTests.test_leading_dimensions_are_kept) ... ok
+test_projection_gradient_matches_g4_f64_codec (tests.test_week2_ke2_g4_codec.G4CodecOnCommittedTableTests.test_projection_gradient_matches_g4_f64_codec) ... ok
+test_projection_matches_g4_f64_codec_for_every_token_id (tests.test_week2_ke2_g4_codec.G4CodecOnCommittedTableTests.test_projection_matches_g4_f64_codec_for_every_token_id) ... ok
+test_table_passes_the_g4_integrity_contract (tests.test_week2_ke2_g4_codec.G4CodecOnCommittedTableTests.test_table_passes_the_g4_integrity_contract) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 6.373s
+
+OK

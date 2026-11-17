@@ -85,10 +85,46 @@ METRICS = frozenset({
     "model_flops_utilization", "loader_wait_time",
     "gpu_temp_c", "gpu_thermal_throttle", "gpu_memory_used",
     "tokens_per_byte", "tokens_per_byte_by_lang",
+    "reward_per_env", "solved_share", "entropy", "masked_tokens", "train_inference_mismatch",
 })
 
-# Names used by train.py that are written under a different name.
-ALIASES = {"gpu_alloc_gb": "gpu_alloc_gib", "temp_c": "gpu_temp_c"}
+# Names used by train.py / RL harnesses that are written under a different name.
+ALIASES = {
+    "gpu_alloc_gb": "gpu_alloc_gib",
+    "temp_c": "gpu_temp_c",
+    "rl_entropy": "entropy",
+    "rl_masked_tokens": "masked_tokens",
+    "rl_solved_share": "solved_share",
+}
+
+
+def train_inference_mismatch(p_train, p_infer):
+    """Max |p_train - p_infer| across rollout tokens between trainer and inference engine.
+
+    Accepts 1-D or N-D iterables, NumPy arrays, or PyTorch tensors of probabilities.
+    Returns None when inputs are None or empty, and NaN if any entry is non-finite or lengths differ.
+    """
+    if p_train is None or p_infer is None:
+        return None
+    if hasattr(p_train, "detach"):
+        p_train = p_train.detach()
+    if hasattr(p_infer, "detach"):
+        p_infer = p_infer.detach()
+    if hasattr(p_train, "reshape"):
+        a = [float(x) for x in p_train.reshape(-1).tolist()]
+    else:
+        a = [float(x) for x in p_train]
+    if hasattr(p_infer, "reshape"):
+        b = [float(x) for x in p_infer.reshape(-1).tolist()]
+    else:
+        b = [float(x) for x in p_infer]
+    if not a and not b:
+        return None
+    if len(a) != len(b):
+        return float("nan")
+    if not (all(math.isfinite(x) for x in a) and all(math.isfinite(x) for x in b)):
+        return float("nan")
+    return max(abs(x - y) for x, y in zip(a, b))
 
 
 def _max_vio(loads):
@@ -525,6 +561,12 @@ class MetricsWriter:
                 bpb = _bpb_value(g5_bpb)
             if bpb is not None:
                 metrics["validation_bpb"] = bpb
+        # train_inference_mismatch from p_train and p_infer when passed; an explicit scalar wins.
+        p_train, p_infer = metrics.pop("p_train", None), metrics.pop("p_infer", None)
+        if metrics.get("train_inference_mismatch") is None:
+            mismatch = train_inference_mismatch(p_train, p_infer)
+            if mismatch is not None:
+                metrics["train_inference_mismatch"] = mismatch
         # Names outside the metric list are skipped, not written.
         for name in metrics:
             if name not in METRICS and name not in self._warned:

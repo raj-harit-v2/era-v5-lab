@@ -1,0 +1,2045 @@
+{
+  "corpus": {
+    "Hi": {
+      "config": "hin_Deva",
+      "docs": 14047,
+      "bytes": 91012925,
+      "sha256": "9c9ffc7d51936fbcee30d49709344c3e3740d1785d54423a6973fb6e805d64e8"
+    },
+    "Bn": {
+      "config": "ben_Beng",
+      "docs": 13194,
+      "bytes": 91000725,
+      "sha256": "ef12afd3917876cb06d60054af76d74247be92fc1408b3bf74bcd1cc5fe7e7dc"
+    },
+    "Ta": {
+      "config": "tam_Taml",
+      "docs": 9295,
+      "bytes": 91004074,
+      "sha256": "26323250fb8e4257899de16050a7f44a59a31321eed1adbb9b56fbd10073fb3a"
+    },
+    "Te": {
+      "config": "tel_Telu",
+      "docs": 9254,
+      "bytes": 91001199,
+      "sha256": "3c88610344d49bebbf8f44a9de30c9720d844f0c2e13a3149e4d73bbe4c85b41"
+    },
+    "Kn": {
+      "config": "kan_Knda",
+      "docs": 12626,
+      "bytes": 91003262,
+      "sha256": "09ad028665654db1cf49ec2bde357507354b2d5a29be75931dac1eac6aecc130"
+    },
+    "Ml": {
+      "config": "mal_Mlym",
+      "docs": 10332,
+      "bytes": 91012674,
+      "sha256": "bbe3a063e077c9f931b87957d75ceb7ac7b89d74820042b053276b592933eecc"
+    },
+    "Mr": {
+      "config": "mar_Deva",
+      "docs": 11784,
+      "bytes": 91001569,
+      "sha256": "317eeefc135d081e16f480d4501bfab1c97e86ff30d0aa78cd0b77abf8962a6f"
+    },
+    "Gu": {
+      "config": "guj_Gujr",
+      "docs": 12719,
+      "bytes": 91005840,
+      "sha256": "291995ecde0f6c08297ae9740b29b6a18961110d376e9a4a6a960988fb57593d"
+    },
+    "Pa": {
+      "config": "pan_Guru",
+      "docs": 11850,
+      "bytes": 91002211,
+      "sha256": "38f62ae0fde00c7cc9f5703ef826ecb55ea3a0be42c8cae949becdacbf8e1c5c"
+    },
+    "Or": {
+      "config": "ory_Orya",
+      "docs": 20802,
+      "bytes": 91001523,
+      "sha256": "12b2104bd5e9c0e373fe2d714ae7369d3363539911a9dbc1922c40d69328fbcd"
+    },
+    "As": {
+      "config": "asm_Beng",
+      "docs": 13233,
+      "bytes": 91007512,
+      "sha256": "6d3036cab91b4562a9e02d5a0afcb1f39b12d4c497cf7ac3f88d3f5a8cd59a3d"
+    }
+  },
+  "env": {
+    "python": "3.12.4",
+    "tokenizers": "0.23.3",
+    "machine": "arm64",
+    "platform": "macOS-15.1-arm64-arm-64bit",
+    "cpu_count": 14,
+    "repeats": 3,
+    "chunk": 256
+  },
+  "runs": {
+    "p1536": {
+      "tokenizer_sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b",
+      "single": {
+        "processes": 1,
+        "threads_per_process": 1,
+        "chunk": 256,
+        "api": "plain",
+        "per_lang": {
+          "Hi": {
+            "bytes": 91012925,
+            "docs": 12543,
+            "tokens": 10845764,
+            "seconds_median": 11.9912,
+            "seconds_all": [
+              11.484,
+              12.0735,
+              11.9912
+            ],
+            "mb_per_s": 7.59,
+            "tokens_per_s": 904475.7
+          },
+          "Bn": {
+            "bytes": 91000725,
+            "docs": 11916,
+            "tokens": 10622595,
+            "seconds_median": 13.0435,
+            "seconds_all": [
+              12.6956,
+              13.0772,
+              13.0435
+            ],
+            "mb_per_s": 6.977,
+            "tokens_per_s": 814400.7
+          },
+          "Ta": {
+            "bytes": 91004074,
+            "docs": 8665,
+            "tokens": 8821085,
+            "seconds_median": 11.8366,
+            "seconds_all": [
+              11.8155,
+              11.8662,
+              11.8366
+            ],
+            "mb_per_s": 7.688,
+            "tokens_per_s": 745238.5
+          },
+          "Te": {
+            "bytes": 91001199,
+            "docs": 8519,
+            "tokens": 10468129,
+            "seconds_median": 12.2993,
+            "seconds_all": [
+              12.4257,
+              12.2993,
+              12.2595
+            ],
+            "mb_per_s": 7.399,
+            "tokens_per_s": 851116.9
+          },
+          "Kn": {
+            "bytes": 91003262,
+            "docs": 11497,
+            "tokens": 9770608,
+            "seconds_median": 13.1473,
+            "seconds_all": [
+              13.1859,
+              13.1473,
+              13.1435
+            ],
+            "mb_per_s": 6.922,
+            "tokens_per_s": 743164.0
+          },
+          "Ml": {
+            "bytes": 91012674,
+            "docs": 9449,
+            "tokens": 8987194,
+            "seconds_median": 12.0021,
+            "seconds_all": [
+              12.1107,
+              11.9769,
+              12.0021
+            ],
+            "mb_per_s": 7.583,
+            "tokens_per_s": 748801.3
+          },
+          "Mr": {
+            "bytes": 91001569,
+            "docs": 10690,
+            "tokens": 9819968,
+            "seconds_median": 12.227,
+            "seconds_all": [
+              12.3685,
+              12.2207,
+              12.227
+            ],
+            "mb_per_s": 7.443,
+            "tokens_per_s": 803140.9
+          },
+          "Gu": {
+            "bytes": 91005840,
+            "docs": 11672,
+            "tokens": 11419777,
+            "seconds_median": 13.1518,
+            "seconds_all": [
+              13.2532,
+              13.1518,
+              13.1156
+            ],
+            "mb_per_s": 6.92,
+            "tokens_per_s": 868305.0
+          },
+          "Pa": {
+            "bytes": 91002211,
+            "docs": 10623,
+            "tokens": 11669127,
+            "seconds_median": 12.5171,
+            "seconds_all": [
+              12.6291,
+              12.5171,
+              12.4343
+            ],
+            "mb_per_s": 7.27,
+            "tokens_per_s": 932258.1
+          },
+          "Or": {
+            "bytes": 91001523,
+            "docs": 17892,
+            "tokens": 10263064,
+            "seconds_median": 12.2482,
+            "seconds_all": [
+              12.3746,
+              12.2151,
+              12.2482
+            ],
+            "mb_per_s": 7.43,
+            "tokens_per_s": 837921.8
+          },
+          "As": {
+            "bytes": 91007512,
+            "docs": 11823,
+            "tokens": 10886703,
+            "seconds_median": 13.0485,
+            "seconds_all": [
+              13.3297,
+              12.9709,
+              13.0485
+            ],
+            "mb_per_s": 6.975,
+            "tokens_per_s": 834324.6
+          }
+        },
+        "total": {
+          "bytes": 1001053514,
+          "tokens": 113574014,
+          "seconds_median": 137.5159,
+          "seconds_all": [
+            137.6725,
+            137.5159,
+            137.35
+          ],
+          "mb_per_s": 7.28,
+          "tokens_per_s": 825897.1
+        }
+      },
+      "batch": {
+        "processes": 1,
+        "threads_per_process": 14,
+        "chunk": 256,
+        "api": "plain",
+        "per_lang": {
+          "Hi": {
+            "bytes": 91012925,
+            "docs": 12543,
+            "tokens": 10845764,
+            "seconds_median": 1.9092,
+            "seconds_all": [
+              1.7042,
+              1.9092,
+              2.1451
+            ],
+            "mb_per_s": 47.67,
+            "tokens_per_s": 5680761.3
+          },
+          "Bn": {
+            "bytes": 91000725,
+            "docs": 11916,
+            "tokens": 10622595,
+            "seconds_median": 1.962,
+            "seconds_all": [
+              1.8097,
+              1.962,
+              2.2069
+            ],
+            "mb_per_s": 46.382,
+            "tokens_per_s": 5414159.3
+          },
+          "Ta": {
+            "bytes": 91004074,
+            "docs": 8665,
+            "tokens": 8821085,
+            "seconds_median": 1.6412,
+            "seconds_all": [
+              1.6096,
+              1.6412,
+              1.8115
+            ],
+            "mb_per_s": 55.45,
+            "tokens_per_s": 5374835.7
+          },
+          "Te": {
+            "bytes": 91001199,
+            "docs": 8519,
+            "tokens": 10468129,
+            "seconds_median": 1.722,
+            "seconds_all": [
+              1.722,
+              1.6906,
+              1.8506
+            ],
+            "mb_per_s": 52.846,
+            "tokens_per_s": 6079014.7
+          },
+          "Kn": {
+            "bytes": 91003262,
+            "docs": 11497,
+            "tokens": 9770608,
+            "seconds_median": 1.9002,
+            "seconds_all": [
+              1.8412,
+              1.9002,
+              1.9806
+            ],
+            "mb_per_s": 47.892,
+            "tokens_per_s": 5141965.0
+          },
+          "Ml": {
+            "bytes": 91012674,
+            "docs": 9449,
+            "tokens": 8987194,
+            "seconds_median": 1.643,
+            "seconds_all": [
+              1.6367,
+              1.643,
+              1.7547
+            ],
+            "mb_per_s": 55.393,
+            "tokens_per_s": 5469863.5
+          },
+          "Mr": {
+            "bytes": 91001569,
+            "docs": 10690,
+            "tokens": 9819968,
+            "seconds_median": 1.897,
+            "seconds_all": [
+              1.7702,
+              1.897,
+              1.9443
+            ],
+            "mb_per_s": 47.971,
+            "tokens_per_s": 5176533.6
+          },
+          "Gu": {
+            "bytes": 91005840,
+            "docs": 11672,
+            "tokens": 11419777,
+            "seconds_median": 2.0565,
+            "seconds_all": [
+              1.9081,
+              2.1157,
+              2.0565
+            ],
+            "mb_per_s": 44.254,
+            "tokens_per_s": 5553118.8
+          },
+          "Pa": {
+            "bytes": 91002211,
+            "docs": 10623,
+            "tokens": 11669127,
+            "seconds_median": 2.0288,
+            "seconds_all": [
+              1.9395,
+              2.0993,
+              2.0288
+            ],
+            "mb_per_s": 44.854,
+            "tokens_per_s": 5751649.5
+          },
+          "Or": {
+            "bytes": 91001523,
+            "docs": 17892,
+            "tokens": 10263064,
+            "seconds_median": 1.853,
+            "seconds_all": [
+              1.853,
+              1.8868,
+              1.7796
+            ],
+            "mb_per_s": 49.111,
+            "tokens_per_s": 5538727.6
+          },
+          "As": {
+            "bytes": 91007512,
+            "docs": 11823,
+            "tokens": 10886703,
+            "seconds_median": 2.1195,
+            "seconds_all": [
+              2.0011,
+              2.1222,
+              2.1195
+            ],
+            "mb_per_s": 42.938,
+            "tokens_per_s": 5136449.6
+          }
+        },
+        "total": {
+          "bytes": 1001053514,
+          "tokens": 113574014,
+          "seconds_median": 20.8673,
+          "seconds_all": [
+            19.7953,
+            20.8673,
+            21.6781
+          ],
+          "mb_per_s": 47.972,
+          "tokens_per_s": 5442691.2
+        }
+      },
+      "procs": {
+        "processes": 14,
+        "threads_per_process": 1,
+        "chunk": 256,
+        "api": "plain",
+        "per_lang": {
+          "Hi": {
+            "bytes": 91012925,
+            "docs": 12543,
+            "tokens": 10845764,
+            "seconds_median": 1.3158,
+            "seconds_all": [
+              1.27,
+              1.3298,
+              1.3158
+            ],
+            "mb_per_s": 69.17,
+            "tokens_per_s": 8242802.1
+          },
+          "Bn": {
+            "bytes": 91000725,
+            "docs": 11916,
+            "tokens": 10622595,
+            "seconds_median": 1.4129,
+            "seconds_all": [
+              1.3992,
+              1.4249,
+              1.4129
+            ],
+            "mb_per_s": 64.409,
+            "tokens_per_s": 7518502.8
+          },
+          "Ta": {
+            "bytes": 91004074,
+            "docs": 8665,
+            "tokens": 8821085,
+            "seconds_median": 1.3011,
+            "seconds_all": [
+              1.2748,
+              1.3186,
+              1.3011
+            ],
+            "mb_per_s": 69.945,
+            "tokens_per_s": 6779852.3
+          },
+          "Te": {
+            "bytes": 91001199,
+            "docs": 8519,
+            "tokens": 10468129,
+            "seconds_median": 1.3532,
+            "seconds_all": [
+              1.4382,
+              1.3355,
+              1.3532
+            ],
+            "mb_per_s": 67.249,
+            "tokens_per_s": 7735798.3
+          },
+          "Kn": {
+            "bytes": 91003262,
+            "docs": 11497,
+            "tokens": 9770608,
+            "seconds_median": 1.4581,
+            "seconds_all": [
+              1.4391,
+              1.4657,
+              1.4581
+            ],
+            "mb_per_s": 62.413,
+            "tokens_per_s": 6700987.7
+          },
+          "Ml": {
+            "bytes": 91012674,
+            "docs": 9449,
+            "tokens": 8987194,
+            "seconds_median": 1.3295,
+            "seconds_all": [
+              1.346,
+              1.3295,
+              1.3282
+            ],
+            "mb_per_s": 68.458,
+            "tokens_per_s": 6760026.6
+          },
+          "Mr": {
+            "bytes": 91001569,
+            "docs": 10690,
+            "tokens": 9819968,
+            "seconds_median": 1.3673,
+            "seconds_all": [
+              1.3673,
+              1.3428,
+              1.417
+            ],
+            "mb_per_s": 66.554,
+            "tokens_per_s": 7181863.6
+          },
+          "Gu": {
+            "bytes": 91005840,
+            "docs": 11672,
+            "tokens": 11419777,
+            "seconds_median": 1.432,
+            "seconds_all": [
+              1.4287,
+              1.4862,
+              1.432
+            ],
+            "mb_per_s": 63.55,
+            "tokens_per_s": 7974516.2
+          },
+          "Pa": {
+            "bytes": 91002211,
+            "docs": 10623,
+            "tokens": 11669127,
+            "seconds_median": 1.3834,
+            "seconds_all": [
+              1.3834,
+              1.47,
+              1.3603
+            ],
+            "mb_per_s": 65.782,
+            "tokens_per_s": 8435173.0
+          },
+          "Or": {
+            "bytes": 91001523,
+            "docs": 17892,
+            "tokens": 10263064,
+            "seconds_median": 1.3513,
+            "seconds_all": [
+              1.3431,
+              1.3513,
+              1.3755
+            ],
+            "mb_per_s": 67.343,
+            "tokens_per_s": 7594864.4
+          },
+          "As": {
+            "bytes": 91007512,
+            "docs": 11823,
+            "tokens": 10886703,
+            "seconds_median": 1.512,
+            "seconds_all": [
+              1.4631,
+              1.512,
+              1.5121
+            ],
+            "mb_per_s": 60.189,
+            "tokens_per_s": 7200065.9
+          }
+        },
+        "total": {
+          "bytes": 1001053514,
+          "tokens": 113574014,
+          "seconds_median": 15.266,
+          "seconds_all": [
+            15.153,
+            15.3664,
+            15.266
+          ],
+          "mb_per_s": 65.574,
+          "tokens_per_s": 7439679.6
+        }
+      },
+      "single_fast": {
+        "processes": 1,
+        "threads_per_process": 1,
+        "chunk": 256,
+        "api": "fast",
+        "per_lang": {
+          "Hi": {
+            "bytes": 91012925,
+            "docs": 12543,
+            "tokens": 10845764,
+            "seconds_median": 9.7973,
+            "seconds_all": [
+              9.3912,
+              9.7973,
+              9.9772
+            ],
+            "mb_per_s": 9.29,
+            "tokens_per_s": 1107019.8
+          },
+          "Bn": {
+            "bytes": 91000725,
+            "docs": 11916,
+            "tokens": 10622595,
+            "seconds_median": 10.6275,
+            "seconds_all": [
+              10.4716,
+              10.6275,
+              10.7041
+            ],
+            "mb_per_s": 8.563,
+            "tokens_per_s": 999535.3
+          },
+          "Ta": {
+            "bytes": 91004074,
+            "docs": 8665,
+            "tokens": 8821085,
+            "seconds_median": 9.5772,
+            "seconds_all": [
+              9.5772,
+              9.5304,
+              9.5786
+            ],
+            "mb_per_s": 9.502,
+            "tokens_per_s": 921052.7
+          },
+          "Te": {
+            "bytes": 91001199,
+            "docs": 8519,
+            "tokens": 10468129,
+            "seconds_median": 9.957,
+            "seconds_all": [
+              9.9743,
+              9.9039,
+              9.957
+            ],
+            "mb_per_s": 9.139,
+            "tokens_per_s": 1051336.7
+          },
+          "Kn": {
+            "bytes": 91003262,
+            "docs": 11497,
+            "tokens": 9770608,
+            "seconds_median": 10.5528,
+            "seconds_all": [
+              10.5266,
+              10.5528,
+              10.5701
+            ],
+            "mb_per_s": 8.624,
+            "tokens_per_s": 925876.4
+          },
+          "Ml": {
+            "bytes": 91012674,
+            "docs": 9449,
+            "tokens": 8987194,
+            "seconds_median": 9.6343,
+            "seconds_all": [
+              9.5614,
+              9.6343,
+              9.6375
+            ],
+            "mb_per_s": 9.447,
+            "tokens_per_s": 932830.3
+          },
+          "Mr": {
+            "bytes": 91001569,
+            "docs": 10690,
+            "tokens": 9819968,
+            "seconds_median": 9.9047,
+            "seconds_all": [
+              9.7046,
+              9.9047,
+              9.9147
+            ],
+            "mb_per_s": 9.188,
+            "tokens_per_s": 991441.3
+          },
+          "Gu": {
+            "bytes": 91005840,
+            "docs": 11672,
+            "tokens": 11419777,
+            "seconds_median": 10.7646,
+            "seconds_all": [
+              10.6659,
+              10.7646,
+              10.8383
+            ],
+            "mb_per_s": 8.454,
+            "tokens_per_s": 1060867.3
+          },
+          "Pa": {
+            "bytes": 91002211,
+            "docs": 10623,
+            "tokens": 11669127,
+            "seconds_median": 10.2006,
+            "seconds_all": [
+              10.0715,
+              10.2006,
+              10.2785
+            ],
+            "mb_per_s": 8.921,
+            "tokens_per_s": 1143961.2
+          },
+          "Or": {
+            "bytes": 91001523,
+            "docs": 17892,
+            "tokens": 10263064,
+            "seconds_median": 10.3985,
+            "seconds_all": [
+              10.2416,
+              10.3985,
+              10.4985
+            ],
+            "mb_per_s": 8.751,
+            "tokens_per_s": 986975.2
+          },
+          "As": {
+            "bytes": 91007512,
+            "docs": 11823,
+            "tokens": 10886703,
+            "seconds_median": 10.8154,
+            "seconds_all": [
+              10.7362,
+              10.8154,
+              11.0208
+            ],
+            "mb_per_s": 8.415,
+            "tokens_per_s": 1006593.0
+          }
+        },
+        "total": {
+          "bytes": 1001053514,
+          "tokens": 113574014,
+          "seconds_median": 112.1301,
+          "seconds_all": [
+            110.922,
+            112.1301,
+            112.9752
+          ],
+          "mb_per_s": 8.928,
+          "tokens_per_s": 1012877.2
+        }
+      },
+      "batch_fast": {
+        "processes": 1,
+        "threads_per_process": 14,
+        "chunk": 256,
+        "api": "fast",
+        "per_lang": {
+          "Hi": {
+            "bytes": 91012925,
+            "docs": 12543,
+            "tokens": 10845764,
+            "seconds_median": 1.4168,
+            "seconds_all": [
+              1.4168,
+              1.4104,
+              1.4618
+            ],
+            "mb_per_s": 64.24,
+            "tokens_per_s": 7655325.7
+          },
+          "Bn": {
+            "bytes": 91000725,
+            "docs": 11916,
+            "tokens": 10622595,
+            "seconds_median": 1.421,
+            "seconds_all": [
+              1.4064,
+              1.421,
+              1.4573
+            ],
+            "mb_per_s": 64.042,
+            "tokens_per_s": 7475626.4
+          },
+          "Ta": {
+            "bytes": 91004074,
+            "docs": 8665,
+            "tokens": 8821085,
+            "seconds_median": 1.2588,
+            "seconds_all": [
+              1.2588,
+              1.263,
+              1.2165
+            ],
+            "mb_per_s": 72.296,
+            "tokens_per_s": 7007673.2
+          },
+          "Te": {
+            "bytes": 91001199,
+            "docs": 8519,
+            "tokens": 10468129,
+            "seconds_median": 1.3513,
+            "seconds_all": [
+              1.3966,
+              1.3471,
+              1.3513
+            ],
+            "mb_per_s": 67.342,
+            "tokens_per_s": 7746563.2
+          },
+          "Kn": {
+            "bytes": 91003262,
+            "docs": 11497,
+            "tokens": 9770608,
+            "seconds_median": 1.3646,
+            "seconds_all": [
+              1.3736,
+              1.316,
+              1.3646
+            ],
+            "mb_per_s": 66.687,
+            "tokens_per_s": 7159836.8
+          },
+          "Ml": {
+            "bytes": 91012674,
+            "docs": 9449,
+            "tokens": 8987194,
+            "seconds_median": 1.2128,
+            "seconds_all": [
+              1.2628,
+              1.1875,
+              1.2128
+            ],
+            "mb_per_s": 75.044,
+            "tokens_per_s": 7410310.0
+          },
+          "Mr": {
+            "bytes": 91001569,
+            "docs": 10690,
+            "tokens": 9819968,
+            "seconds_median": 1.3664,
+            "seconds_all": [
+              1.408,
+              1.3002,
+              1.3664
+            ],
+            "mb_per_s": 66.598,
+            "tokens_per_s": 7186549.0
+          },
+          "Gu": {
+            "bytes": 91005840,
+            "docs": 11672,
+            "tokens": 11419777,
+            "seconds_median": 1.5028,
+            "seconds_all": [
+              1.5054,
+              1.4516,
+              1.5028
+            ],
+            "mb_per_s": 60.557,
+            "tokens_per_s": 7598905.1
+          },
+          "Pa": {
+            "bytes": 91002211,
+            "docs": 10623,
+            "tokens": 11669127,
+            "seconds_median": 1.55,
+            "seconds_all": [
+              1.5555,
+              1.4828,
+              1.55
+            ],
+            "mb_per_s": 58.712,
+            "tokens_per_s": 7528596.9
+          },
+          "Or": {
+            "bytes": 91001523,
+            "docs": 17892,
+            "tokens": 10263064,
+            "seconds_median": 1.3751,
+            "seconds_all": [
+              1.3751,
+              1.3594,
+              1.3911
+            ],
+            "mb_per_s": 66.176,
+            "tokens_per_s": 7463318.5
+          },
+          "As": {
+            "bytes": 91007512,
+            "docs": 11823,
+            "tokens": 10886703,
+            "seconds_median": 1.467,
+            "seconds_all": [
+              1.4516,
+              1.467,
+              1.5602
+            ],
+            "mb_per_s": 62.039,
+            "tokens_per_s": 7421315.6
+          }
+        },
+        "total": {
+          "bytes": 1001053514,
+          "tokens": 113574014,
+          "seconds_median": 15.4106,
+          "seconds_all": [
+            15.4106,
+            15.0059,
+            15.4348
+          ],
+          "mb_per_s": 64.959,
+          "tokens_per_s": 7369878.3
+        }
+      },
+      "procs_fast": {
+        "processes": 14,
+        "threads_per_process": 1,
+        "chunk": 256,
+        "api": "fast",
+        "per_lang": {
+          "Hi": {
+            "bytes": 91012925,
+            "docs": 12543,
+            "tokens": 10845764,
+            "seconds_median": 1.0815,
+            "seconds_all": [
+              1.0815,
+              1.0654,
+              1.0903
+            ],
+            "mb_per_s": 84.155,
+            "tokens_per_s": 10028526.4
+          },
+          "Bn": {
+            "bytes": 91000725,
+            "docs": 11916,
+            "tokens": 10622595,
+            "seconds_median": 1.1633,
+            "seconds_all": [
+              1.1633,
+              1.1176,
+              1.1814
+            ],
+            "mb_per_s": 78.226,
+            "tokens_per_s": 9131438.7
+          },
+          "Ta": {
+            "bytes": 91004074,
+            "docs": 8665,
+            "tokens": 8821085,
+            "seconds_median": 1.0653,
+            "seconds_all": [
+              1.0423,
+              1.0653,
+              1.0672
+            ],
+            "mb_per_s": 85.428,
+            "tokens_per_s": 8280618.7
+          },
+          "Te": {
+            "bytes": 91001199,
+            "docs": 8519,
+            "tokens": 10468129,
+            "seconds_median": 1.1087,
+            "seconds_all": [
+              1.1087,
+              1.1542,
+              1.1062
+            ],
+            "mb_per_s": 82.082,
+            "tokens_per_s": 9442073.4
+          },
+          "Kn": {
+            "bytes": 91003262,
+            "docs": 11497,
+            "tokens": 9770608,
+            "seconds_median": 1.1231,
+            "seconds_all": [
+              1.1231,
+              1.1074,
+              1.1242
+            ],
+            "mb_per_s": 81.028,
+            "tokens_per_s": 8699646.1
+          },
+          "Ml": {
+            "bytes": 91012674,
+            "docs": 9449,
+            "tokens": 8987194,
+            "seconds_median": 1.0811,
+            "seconds_all": [
+              1.0828,
+              1.0811,
+              1.0729
+            ],
+            "mb_per_s": 84.187,
+            "tokens_per_s": 8313134.3
+          },
+          "Mr": {
+            "bytes": 91001569,
+            "docs": 10690,
+            "tokens": 9819968,
+            "seconds_median": 1.1099,
+            "seconds_all": [
+              1.0826,
+              1.1099,
+              1.1324
+            ],
+            "mb_per_s": 81.993,
+            "tokens_per_s": 8847873.5
+          },
+          "Gu": {
+            "bytes": 91005840,
+            "docs": 11672,
+            "tokens": 11419777,
+            "seconds_median": 1.1627,
+            "seconds_all": [
+              1.1656,
+              1.1627,
+              1.1121
+            ],
+            "mb_per_s": 78.272,
+            "tokens_per_s": 9821847.9
+          },
+          "Pa": {
+            "bytes": 91002211,
+            "docs": 10623,
+            "tokens": 11669127,
+            "seconds_median": 1.1555,
+            "seconds_all": [
+              1.1555,
+              1.1461,
+              1.2187
+            ],
+            "mb_per_s": 78.753,
+            "tokens_per_s": 10098369.4
+          },
+          "Or": {
+            "bytes": 91001523,
+            "docs": 17892,
+            "tokens": 10263064,
+            "seconds_median": 1.1509,
+            "seconds_all": [
+              1.1274,
+              1.1576,
+              1.1509
+            ],
+            "mb_per_s": 79.072,
+            "tokens_per_s": 8917621.6
+          },
+          "As": {
+            "bytes": 91007512,
+            "docs": 11823,
+            "tokens": 10886703,
+            "seconds_median": 1.1751,
+            "seconds_all": [
+              1.1184,
+              1.1751,
+              1.2284
+            ],
+            "mb_per_s": 77.445,
+            "tokens_per_s": 9264312.0
+          }
+        },
+        "total": {
+          "bytes": 1001053514,
+          "tokens": 113574014,
+          "seconds_median": 12.3423,
+          "seconds_all": [
+            12.2512,
+            12.3423,
+            12.4848
+          ],
+          "mb_per_s": 81.108,
+          "tokens_per_s": 9202036.4
+        }
+      },
+      "fast_ids_equal": true
+    },
+    "brahmic": {
+      "tokenizer_sha256": "01d968a7970b029c071b29f060abf6104b66168dedf2ff3b1a0290a545739fff",
+      "single": {
+        "processes": 1,
+        "threads_per_process": 1,
+        "chunk": 256,
+        "api": "plain",
+        "per_lang": {
+          "Hi": {
+            "bytes": 91012925,
+            "docs": 12543,
+            "tokens": 11506495,
+            "seconds_median": 9.7753,
+            "seconds_all": [
+              9.7753,
+              9.8352,
+              9.7132
+            ],
+            "mb_per_s": 9.31,
+            "tokens_per_s": 1177093.3
+          },
+          "Bn": {
+            "bytes": 91000725,
+            "docs": 11916,
+            "tokens": 12305229,
+            "seconds_median": 11.3493,
+            "seconds_all": [
+              11.4942,
+              11.3071,
+              11.3493
+            ],
+            "mb_per_s": 8.018,
+            "tokens_per_s": 1084230.5
+          },
+          "Ta": {
+            "bytes": 91004074,
+            "docs": 8665,
+            "tokens": 11839542,
+            "seconds_median": 11.0553,
+            "seconds_all": [
+              11.2554,
+              10.994,
+              11.0553
+            ],
+            "mb_per_s": 8.232,
+            "tokens_per_s": 1070940.9
+          },
+          "Te": {
+            "bytes": 91001199,
+            "docs": 8519,
+            "tokens": 13633074,
+            "seconds_median": 11.3957,
+            "seconds_all": [
+              11.6501,
+              11.3957,
+              11.3374
+            ],
+            "mb_per_s": 7.986,
+            "tokens_per_s": 1196329.8
+          },
+          "Kn": {
+            "bytes": 91003262,
+            "docs": 11497,
+            "tokens": 12807277,
+            "seconds_median": 11.554,
+            "seconds_all": [
+              11.7445,
+              11.554,
+              11.507
+            ],
+            "mb_per_s": 7.876,
+            "tokens_per_s": 1108470.3
+          },
+          "Ml": {
+            "bytes": 91012674,
+            "docs": 9449,
+            "tokens": 11631941,
+            "seconds_median": 10.7293,
+            "seconds_all": [
+              10.9032,
+              10.7084,
+              10.7293
+            ],
+            "mb_per_s": 8.483,
+            "tokens_per_s": 1084124.5
+          },
+          "Mr": {
+            "bytes": 91001569,
+            "docs": 10690,
+            "tokens": 12822585,
+            "seconds_median": 11.2428,
+            "seconds_all": [
+              11.4969,
+              11.2428,
+              11.1756
+            ],
+            "mb_per_s": 8.094,
+            "tokens_per_s": 1140520.1
+          },
+          "Gu": {
+            "bytes": 91005840,
+            "docs": 11672,
+            "tokens": 13260195,
+            "seconds_median": 11.4784,
+            "seconds_all": [
+              11.7466,
+              11.4784,
+              11.3248
+            ],
+            "mb_per_s": 7.928,
+            "tokens_per_s": 1155234.2
+          },
+          "Pa": {
+            "bytes": 91002211,
+            "docs": 10623,
+            "tokens": 17858920,
+            "seconds_median": 12.1032,
+            "seconds_all": [
+              12.3344,
+              12.1032,
+              12.0178
+            ],
+            "mb_per_s": 7.519,
+            "tokens_per_s": 1475548.4
+          },
+          "Or": {
+            "bytes": 91001523,
+            "docs": 17892,
+            "tokens": 20483194,
+            "seconds_median": 12.1349,
+            "seconds_all": [
+              12.1349,
+              12.3713,
+              11.8069
+            ],
+            "mb_per_s": 7.499,
+            "tokens_per_s": 1687950.9
+          },
+          "As": {
+            "bytes": 91007512,
+            "docs": 11823,
+            "tokens": 14251758,
+            "seconds_median": 11.8835,
+            "seconds_all": [
+              11.899,
+              11.8835,
+              11.5917
+            ],
+            "mb_per_s": 7.658,
+            "tokens_per_s": 1199289.2
+          }
+        },
+        "total": {
+          "bytes": 1001053514,
+          "tokens": 152400210,
+          "seconds_median": 124.8736,
+          "seconds_all": [
+            126.4345,
+            124.8736,
+            123.6084
+          ],
+          "mb_per_s": 8.017,
+          "tokens_per_s": 1220435.9
+        }
+      },
+      "batch": {
+        "processes": 1,
+        "threads_per_process": 14,
+        "chunk": 256,
+        "api": "plain",
+        "per_lang": {
+          "Hi": {
+            "bytes": 91012925,
+            "docs": 12543,
+            "tokens": 11506495,
+            "seconds_median": 1.5941,
+            "seconds_all": [
+              1.5413,
+              1.5941,
+              1.6099
+            ],
+            "mb_per_s": 57.094,
+            "tokens_per_s": 7218237.0
+          },
+          "Bn": {
+            "bytes": 91000725,
+            "docs": 11916,
+            "tokens": 12305229,
+            "seconds_median": 1.6746,
+            "seconds_all": [
+              1.6274,
+              1.6746,
+              1.6806
+            ],
+            "mb_per_s": 54.343,
+            "tokens_per_s": 7348372.1
+          },
+          "Ta": {
+            "bytes": 91004074,
+            "docs": 8665,
+            "tokens": 11839542,
+            "seconds_median": 1.5419,
+            "seconds_all": [
+              1.5419,
+              1.546,
+              1.5322
+            ],
+            "mb_per_s": 59.02,
+            "tokens_per_s": 7678392.4
+          },
+          "Te": {
+            "bytes": 91001199,
+            "docs": 8519,
+            "tokens": 13633074,
+            "seconds_median": 1.6651,
+            "seconds_all": [
+              1.6651,
+              1.6536,
+              1.6806
+            ],
+            "mb_per_s": 54.651,
+            "tokens_per_s": 8187379.7
+          },
+          "Kn": {
+            "bytes": 91003262,
+            "docs": 11497,
+            "tokens": 12807277,
+            "seconds_median": 1.6364,
+            "seconds_all": [
+              1.6364,
+              1.6291,
+              1.6516
+            ],
+            "mb_per_s": 55.613,
+            "tokens_per_s": 7826604.2
+          },
+          "Ml": {
+            "bytes": 91012674,
+            "docs": 9449,
+            "tokens": 11631941,
+            "seconds_median": 1.4952,
+            "seconds_all": [
+              1.4952,
+              1.4565,
+              1.5125
+            ],
+            "mb_per_s": 60.868,
+            "tokens_per_s": 7779277.3
+          },
+          "Mr": {
+            "bytes": 91001569,
+            "docs": 10690,
+            "tokens": 12822585,
+            "seconds_median": 1.6645,
+            "seconds_all": [
+              1.6926,
+              1.6128,
+              1.6645
+            ],
+            "mb_per_s": 54.674,
+            "tokens_per_s": 7703783.2
+          },
+          "Gu": {
+            "bytes": 91005840,
+            "docs": 11672,
+            "tokens": 13260195,
+            "seconds_median": 1.6977,
+            "seconds_all": [
+              1.7559,
+              1.6829,
+              1.6977
+            ],
+            "mb_per_s": 53.605,
+            "tokens_per_s": 7810608.1
+          },
+          "Pa": {
+            "bytes": 91002211,
+            "docs": 10623,
+            "tokens": 17858920,
+            "seconds_median": 1.9145,
+            "seconds_all": [
+              2.0247,
+              1.9145,
+              1.9099
+            ],
+            "mb_per_s": 47.534,
+            "tokens_per_s": 9328323.0
+          },
+          "Or": {
+            "bytes": 91001523,
+            "docs": 17892,
+            "tokens": 20483194,
+            "seconds_median": 1.8764,
+            "seconds_all": [
+              1.9424,
+              1.8764,
+              1.8382
+            ],
+            "mb_per_s": 48.499,
+            "tokens_per_s": 10916447.0
+          },
+          "As": {
+            "bytes": 91007512,
+            "docs": 11823,
+            "tokens": 14251758,
+            "seconds_median": 1.822,
+            "seconds_all": [
+              1.8409,
+              1.7693,
+              1.822
+            ],
+            "mb_per_s": 49.95,
+            "tokens_per_s": 7822193.7
+          }
+        },
+        "total": {
+          "bytes": 1001053514,
+          "tokens": 152400210,
+          "seconds_median": 18.5996,
+          "seconds_all": [
+            18.7639,
+            18.4097,
+            18.5996
+          ],
+          "mb_per_s": 53.821,
+          "tokens_per_s": 8193714.6
+        }
+      },
+      "procs": {
+        "processes": 14,
+        "threads_per_process": 1,
+        "chunk": 256,
+        "api": "plain",
+        "per_lang": {
+          "Hi": {
+            "bytes": 91012925,
+            "docs": 12543,
+            "tokens": 11506495,
+            "seconds_median": 1.0698,
+            "seconds_all": [
+              1.0677,
+              1.0901,
+              1.0698
+            ],
+            "mb_per_s": 85.078,
+            "tokens_per_s": 10756196.9
+          },
+          "Bn": {
+            "bytes": 91000725,
+            "docs": 11916,
+            "tokens": 12305229,
+            "seconds_median": 1.237,
+            "seconds_all": [
+              1.237,
+              1.2256,
+              1.2444
+            ],
+            "mb_per_s": 73.564,
+            "tokens_per_s": 9947479.5
+          },
+          "Ta": {
+            "bytes": 91004074,
+            "docs": 8665,
+            "tokens": 11839542,
+            "seconds_median": 1.209,
+            "seconds_all": [
+              1.2202,
+              1.209,
+              1.1979
+            ],
+            "mb_per_s": 75.271,
+            "tokens_per_s": 9792641.3
+          },
+          "Te": {
+            "bytes": 91001199,
+            "docs": 8519,
+            "tokens": 13633074,
+            "seconds_median": 1.2522,
+            "seconds_all": [
+              1.2534,
+              1.2522,
+              1.2515
+            ],
+            "mb_per_s": 72.673,
+            "tokens_per_s": 10887351.5
+          },
+          "Kn": {
+            "bytes": 91003262,
+            "docs": 11497,
+            "tokens": 12807277,
+            "seconds_median": 1.287,
+            "seconds_all": [
+              1.287,
+              1.2785,
+              1.3058
+            ],
+            "mb_per_s": 70.708,
+            "tokens_per_s": 9951068.3
+          },
+          "Ml": {
+            "bytes": 91012674,
+            "docs": 9449,
+            "tokens": 11631941,
+            "seconds_median": 1.2022,
+            "seconds_all": [
+              1.2356,
+              1.2022,
+              1.1635
+            ],
+            "mb_per_s": 75.706,
+            "tokens_per_s": 9675626.8
+          },
+          "Mr": {
+            "bytes": 91001569,
+            "docs": 10690,
+            "tokens": 12822585,
+            "seconds_median": 1.2559,
+            "seconds_all": [
+              1.2566,
+              1.2559,
+              1.2534
+            ],
+            "mb_per_s": 72.46,
+            "tokens_per_s": 10210006.8
+          },
+          "Gu": {
+            "bytes": 91005840,
+            "docs": 11672,
+            "tokens": 13260195,
+            "seconds_median": 1.2775,
+            "seconds_all": [
+              1.2725,
+              1.2926,
+              1.2775
+            ],
+            "mb_per_s": 71.24,
+            "tokens_per_s": 10380198.5
+          },
+          "Pa": {
+            "bytes": 91002211,
+            "docs": 10623,
+            "tokens": 17858920,
+            "seconds_median": 1.3071,
+            "seconds_all": [
+              1.3036,
+              1.3204,
+              1.3071
+            ],
+            "mb_per_s": 69.623,
+            "tokens_per_s": 13663311.1
+          },
+          "Or": {
+            "bytes": 91001523,
+            "docs": 17892,
+            "tokens": 20483194,
+            "seconds_median": 1.3258,
+            "seconds_all": [
+              1.3666,
+              1.3258,
+              1.2667
+            ],
+            "mb_per_s": 68.64,
+            "tokens_per_s": 15450014.9
+          },
+          "As": {
+            "bytes": 91007512,
+            "docs": 11823,
+            "tokens": 14251758,
+            "seconds_median": 1.2978,
+            "seconds_all": [
+              1.2812,
+              1.2978,
+              1.3355
+            ],
+            "mb_per_s": 70.125,
+            "tokens_per_s": 10981532.3
+          }
+        },
+        "total": {
+          "bytes": 1001053514,
+          "tokens": 152400210,
+          "seconds_median": 13.7501,
+          "seconds_all": [
+            13.7813,
+            13.7501,
+            13.673
+          ],
+          "mb_per_s": 72.804,
+          "tokens_per_s": 11083600.4
+        }
+      },
+      "single_fast": {
+        "processes": 1,
+        "threads_per_process": 1,
+        "chunk": 256,
+        "api": "fast",
+        "per_lang": {
+          "Hi": {
+            "bytes": 91012925,
+            "docs": 12543,
+            "tokens": 11506495,
+            "seconds_median": 7.4913,
+            "seconds_all": [
+              7.2814,
+              7.5257,
+              7.4913
+            ],
+            "mb_per_s": 12.149,
+            "tokens_per_s": 1535990.0
+          },
+          "Bn": {
+            "bytes": 91000725,
+            "docs": 11916,
+            "tokens": 12305229,
+            "seconds_median": 8.871,
+            "seconds_all": [
+              8.8708,
+              8.871,
+              8.901
+            ],
+            "mb_per_s": 10.258,
+            "tokens_per_s": 1387135.9
+          },
+          "Ta": {
+            "bytes": 91004074,
+            "docs": 8665,
+            "tokens": 11839542,
+            "seconds_median": 8.6403,
+            "seconds_all": [
+              8.6403,
+              8.6594,
+              8.6136
+            ],
+            "mb_per_s": 10.532,
+            "tokens_per_s": 1370264.1
+          },
+          "Te": {
+            "bytes": 91001199,
+            "docs": 8519,
+            "tokens": 13633074,
+            "seconds_median": 8.979,
+            "seconds_all": [
+              8.9984,
+              8.979,
+              8.9736
+            ],
+            "mb_per_s": 10.135,
+            "tokens_per_s": 1518328.7
+          },
+          "Kn": {
+            "bytes": 91003262,
+            "docs": 11497,
+            "tokens": 12807277,
+            "seconds_median": 8.8055,
+            "seconds_all": [
+              8.8411,
+              8.7675,
+              8.8055
+            ],
+            "mb_per_s": 10.335,
+            "tokens_per_s": 1454466.0
+          },
+          "Ml": {
+            "bytes": 91012674,
+            "docs": 9449,
+            "tokens": 11631941,
+            "seconds_median": 8.2407,
+            "seconds_all": [
+              8.3287,
+              8.2212,
+              8.2407
+            ],
+            "mb_per_s": 11.044,
+            "tokens_per_s": 1411518.2
+          },
+          "Mr": {
+            "bytes": 91001569,
+            "docs": 10690,
+            "tokens": 12822585,
+            "seconds_median": 8.7531,
+            "seconds_all": [
+              8.76,
+              8.7389,
+              8.7531
+            ],
+            "mb_per_s": 10.396,
+            "tokens_per_s": 1464913.1
+          },
+          "Gu": {
+            "bytes": 91005840,
+            "docs": 11672,
+            "tokens": 13260195,
+            "seconds_median": 8.7989,
+            "seconds_all": [
+              8.7823,
+              8.7989,
+              8.8168
+            ],
+            "mb_per_s": 10.343,
+            "tokens_per_s": 1507025.3
+          },
+          "Pa": {
+            "bytes": 91002211,
+            "docs": 10623,
+            "tokens": 17858920,
+            "seconds_median": 9.3956,
+            "seconds_all": [
+              9.4254,
+              9.3956,
+              9.3746
+            ],
+            "mb_per_s": 9.686,
+            "tokens_per_s": 1900782.4
+          },
+          "Or": {
+            "bytes": 91001523,
+            "docs": 17892,
+            "tokens": 20483194,
+            "seconds_median": 9.4235,
+            "seconds_all": [
+              9.4891,
+              9.4183,
+              9.4235
+            ],
+            "mb_per_s": 9.657,
+            "tokens_per_s": 2173620.9
+          },
+          "As": {
+            "bytes": 91007512,
+            "docs": 11823,
+            "tokens": 14251758,
+            "seconds_median": 9.4364,
+            "seconds_all": [
+              9.4364,
+              9.3898,
+              9.4613
+            ],
+            "mb_per_s": 9.644,
+            "tokens_per_s": 1510288.8
+          }
+        },
+        "total": {
+          "bytes": 1001053514,
+          "tokens": 152400210,
+          "seconds_median": 96.854,
+          "seconds_all": [
+            96.854,
+            96.7653,
+            96.8551
+          ],
+          "mb_per_s": 10.336,
+          "tokens_per_s": 1573504.5
+        }
+      },
+      "batch_fast": {
+        "processes": 1,
+        "threads_per_process": 14,
+        "chunk": 256,
+        "api": "fast",
+        "per_lang": {
+          "Hi": {
+            "bytes": 91012925,
+            "docs": 12543,
+            "tokens": 11506495,
+            "seconds_median": 1.2153,
+            "seconds_all": [
+              1.2153,
+              1.2449,
+              1.1885
+            ],
+            "mb_per_s": 74.888,
+            "tokens_per_s": 9467829.8
+          },
+          "Bn": {
+            "bytes": 91000725,
+            "docs": 11916,
+            "tokens": 12305229,
+            "seconds_median": 1.2311,
+            "seconds_all": [
+              1.2328,
+              1.2311,
+              1.2193
+            ],
+            "mb_per_s": 73.916,
+            "tokens_per_s": 9995005.5
+          },
+          "Ta": {
+            "bytes": 91004074,
+            "docs": 8665,
+            "tokens": 11839542,
+            "seconds_median": 1.1498,
+            "seconds_all": [
+              1.1841,
+              1.1498,
+              1.1152
+            ],
+            "mb_per_s": 79.15,
+            "tokens_per_s": 10297400.3
+          },
+          "Te": {
+            "bytes": 91001199,
+            "docs": 8519,
+            "tokens": 13633074,
+            "seconds_median": 1.2572,
+            "seconds_all": [
+              1.2586,
+              1.2572,
+              1.2238
+            ],
+            "mb_per_s": 72.384,
+            "tokens_per_s": 10843934.5
+          },
+          "Kn": {
+            "bytes": 91003262,
+            "docs": 11497,
+            "tokens": 12807277,
+            "seconds_median": 1.1971,
+            "seconds_all": [
+              1.1996,
+              1.1971,
+              1.1684
+            ],
+            "mb_per_s": 76.018,
+            "tokens_per_s": 10698334.4
+          },
+          "Ml": {
+            "bytes": 91012674,
+            "docs": 9449,
+            "tokens": 11631941,
+            "seconds_median": 1.0958,
+            "seconds_all": [
+              1.0971,
+              1.0958,
+              1.0634
+            ],
+            "mb_per_s": 83.052,
+            "tokens_per_s": 10614546.0
+          },
+          "Mr": {
+            "bytes": 91001569,
+            "docs": 10690,
+            "tokens": 12822585,
+            "seconds_median": 1.2349,
+            "seconds_all": [
+              1.27,
+              1.2349,
+              1.2246
+            ],
+            "mb_per_s": 73.69,
+            "tokens_per_s": 10383309.4
+          },
+          "Gu": {
+            "bytes": 91005840,
+            "docs": 11672,
+            "tokens": 13260195,
+            "seconds_median": 1.3086,
+            "seconds_all": [
+              1.3277,
+              1.2311,
+              1.3086
+            ],
+            "mb_per_s": 69.545,
+            "tokens_per_s": 10133244.0
+          },
+          "Pa": {
+            "bytes": 91002211,
+            "docs": 10623,
+            "tokens": 17858920,
+            "seconds_median": 1.5254,
+            "seconds_all": [
+              1.5534,
+              1.4794,
+              1.5254
+            ],
+            "mb_per_s": 59.658,
+            "tokens_per_s": 11707615.1
+          },
+          "Or": {
+            "bytes": 91001523,
+            "docs": 17892,
+            "tokens": 20483194,
+            "seconds_median": 1.4402,
+            "seconds_all": [
+              1.4402,
+              1.3628,
+              1.4523
+            ],
+            "mb_per_s": 63.185,
+            "tokens_per_s": 14222085.2
+          },
+          "As": {
+            "bytes": 91007512,
+            "docs": 11823,
+            "tokens": 14251758,
+            "seconds_median": 1.347,
+            "seconds_all": [
+              1.347,
+              1.3003,
+              1.4226
+            ],
+            "mb_per_s": 67.565,
+            "tokens_per_s": 10580648.2
+          }
+        },
+        "total": {
+          "bytes": 1001053514,
+          "tokens": 152400210,
+          "seconds_median": 13.9121,
+          "seconds_all": [
+            14.1258,
+            13.7845,
+            13.9121
+          ],
+          "mb_per_s": 71.956,
+          "tokens_per_s": 10954546.4
+        }
+      },
+      "procs_fast": {
+        "processes": 14,
+        "threads_per_process": 1,
+        "chunk": 256,
+        "api": "fast",
+        "per_lang": {
+          "Hi": {
+            "bytes": 91012925,
+            "docs": 12543,
+            "tokens": 11506495,
+            "seconds_median": 0.8214,
+            "seconds_all": [
+              0.8362,
+              0.8036,
+              0.8214
+            ],
+            "mb_per_s": 110.802,
+            "tokens_per_s": 14008383.5
+          },
+          "Bn": {
+            "bytes": 91000725,
+            "docs": 11916,
+            "tokens": 12305229,
+            "seconds_median": 0.9606,
+            "seconds_all": [
+              0.9606,
+              0.9408,
+              0.9966
+            ],
+            "mb_per_s": 94.737,
+            "tokens_per_s": 12810496.9
+          },
+          "Ta": {
+            "bytes": 91004074,
+            "docs": 8665,
+            "tokens": 11839542,
+            "seconds_median": 0.9574,
+            "seconds_all": [
+              0.9574,
+              0.9302,
+              0.9614
+            ],
+            "mb_per_s": 95.057,
+            "tokens_per_s": 12366843.1
+          },
+          "Te": {
+            "bytes": 91001199,
+            "docs": 8519,
+            "tokens": 13633074,
+            "seconds_median": 1.0264,
+            "seconds_all": [
+              1.037,
+              0.9805,
+              1.0264
+            ],
+            "mb_per_s": 88.662,
+            "tokens_per_s": 13282677.5
+          },
+          "Kn": {
+            "bytes": 91003262,
+            "docs": 11497,
+            "tokens": 12807277,
+            "seconds_median": 0.9854,
+            "seconds_all": [
+              0.9894,
+              0.9854,
+              0.9767
+            ],
+            "mb_per_s": 92.353,
+            "tokens_per_s": 12997219.4
+          },
+          "Ml": {
+            "bytes": 91012674,
+            "docs": 9449,
+            "tokens": 11631941,
+            "seconds_median": 0.9145,
+            "seconds_all": [
+              0.9448,
+              0.9145,
+              0.8964
+            ],
+            "mb_per_s": 99.523,
+            "tokens_per_s": 12719668.8
+          },
+          "Mr": {
+            "bytes": 91001569,
+            "docs": 10690,
+            "tokens": 12822585,
+            "seconds_median": 0.9645,
+            "seconds_all": [
+              1.0013,
+              0.9645,
+              0.9565
+            ],
+            "mb_per_s": 94.349,
+            "tokens_per_s": 13294271.3
+          },
+          "Gu": {
+            "bytes": 91005840,
+            "docs": 11672,
+            "tokens": 13260195,
+            "seconds_median": 0.9699,
+            "seconds_all": [
+              0.9645,
+              0.9699,
+              0.9818
+            ],
+            "mb_per_s": 93.831,
+            "tokens_per_s": 13671769.4
+          },
+          "Pa": {
+            "bytes": 91002211,
+            "docs": 10623,
+            "tokens": 17858920,
+            "seconds_median": 1.0027,
+            "seconds_all": [
+              1.1163,
+              1.0027,
+              0.9996
+            ],
+            "mb_per_s": 90.759,
+            "tokens_per_s": 17811175.7
+          },
+          "Or": {
+            "bytes": 91001523,
+            "docs": 17892,
+            "tokens": 20483194,
+            "seconds_median": 1.028,
+            "seconds_all": [
+              1.0429,
+              0.9889,
+              1.028
+            ],
+            "mb_per_s": 88.522,
+            "tokens_per_s": 19924981.5
+          },
+          "As": {
+            "bytes": 91007512,
+            "docs": 11823,
+            "tokens": 14251758,
+            "seconds_median": 1.0103,
+            "seconds_all": [
+              1.0103,
+              1.0008,
+              1.0292
+            ],
+            "mb_per_s": 90.078,
+            "tokens_per_s": 14106203.7
+          }
+        },
+        "total": {
+          "bytes": 1001053514,
+          "tokens": 152400210,
+          "seconds_median": 10.6739,
+          "seconds_all": [
+            10.8607,
+            10.4817,
+            10.6739
+          ],
+          "mb_per_s": 93.785,
+          "tokens_per_s": 14277777.1
+        }
+      },
+      "fast_ids_equal": true
+    }
+  }
+}

@@ -1,0 +1,20 @@
+G6 W3 Kaggle PRELIMINARY checkpoint rehearsal (NOT the PR job script; not full-width Dry Run 1)
+Date: 2026-11-15 13:58 UTC
+Source pinned: theschoolofai/era-v5-lab 6728a7a02f13fd7e0d2d230241407d9059ffff36
+G5 input: teams/05-architecture/configs/config_v1.yaml
+Runtime: Tesla T4; Python 3.13.16; torch 2.11.0+cu130; single CUDA process
+Model: MoE 16 routed + 1 shared, top-2; Muon; eager attention; n_layer=2, n_embd=64, n_head=4, block_size=32, batch_size=1, fp32; synthetic
+Model parameters: 10075936
+Warm-up: one real training step, 1.46 s, loss 11.852063179016113
+Optimizer state entries: opt.muon=70; opt.adamw=83
+Measurement: G6 perfkit.bench.run_checkpoint; 1 warm save discarded; 5 measured saves
+save_ms median: 525.607627 (p10 523.940653, p90 528.473149)
+to_cpu_ms median: 11.990474 (p10 11.901480, p90 12.040455)
+write_ms median: 513.617153 (p10 511.900198, p90 516.571669)
+size_mb: 110.803218 (MiB)
+write_mb_per_s: 215.731148
+Where: local disk torch.save + fsync, temporary file deleted after
+
+This is a user-supplied Kaggle result. It establishes rehearsal of the G6 timing routine,
+not a pass of the newly introduced jobs/dryrun1_ckpt.py script. Attach that same-script
+CPU smoke log before submitting this job to TSAI for execution.
