@@ -10,10 +10,13 @@
 | Commit | _awaiting_ |
 | Config / layout | _G5 config · G7 parallel layout_ |
 | Job tags | `dryrun1_a2a`, `dryrun1_ckpt` (+ profile SHA if shared) |
+| a2a job | class [#496](https://github.com/theschoolofai/era-v5-lab/pull/496), `jobs/2026-11-14-dryrun1-a2a.md`, pin `aec75af` (config_v1, #447) |
+| TSAI log / gist | _awaiting_ |
 
 ## 1. MoE dispatch (compute)
 
-Method: level-3 sum of `fwd:block*.moe.dispatch` medians; default **`model.moe.dispatch=sorted`**.
+Method: level-3 sum of `fwd:block*.moe.dispatch` medians; default **`model.moe.dispatch=sorted`**.  
+Source: needs a `--modes layer --level 3` run. The #496 job runs `--modes comm` only, so it gives `clean step_ms` but no dispatch regions.
 
 | metric | ms | source SHA |
 | :--- | ---: | :--- |
@@ -22,15 +25,16 @@ Method: level-3 sum of `fwd:block*.moe.dispatch` medians; default **`model.moe.d
 
 ## 2. MoE all-to-all (`comm`)
 
-Command shape: `torchrun --nproc_per_node ≥2 -m perfkit.bench --modes comm model.ffn=moe --tag dryrun1_a2a`.  
-Isolated a2a (no compute overlap). One GPU = not measured.
+Job: class #496, 1 GPU: `cd teams/06-performance && python jobs/run_dryrun1_a2a.py --nproc 1 --out out`.  
+Isolated a2a (no compute overlap). On 1 GPU the comm latency (`per_call_ms`, `per_step_ms`) is not measured; payload and calls/step still come from the log.  
+Fill after TSAI posts the #496 logs. Multi-GPU later: same wrapper with `--nproc ≥2`.
 
 | metric | value | source SHA |
 | :--- | :--- | :--- |
 | per_call_ms (slowest rank) | _awaiting_ | |
-| calls_per_step | | |
-| per_step_ms | | |
-| payload_mb_per_call | | |
+| calls_per_step | _awaiting_ | |
+| per_step_ms | _awaiting_ | |
+| payload_mb_per_call | _awaiting_ | |
 
 ## 3. Full-size checkpoint
 
