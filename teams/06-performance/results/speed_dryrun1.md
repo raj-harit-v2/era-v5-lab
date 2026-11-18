@@ -50,11 +50,39 @@ Fill after TSAI posts the #496 logs. Multi-GPU later: same wrapper with `--nproc
 
 ## 4. Per-rank step time + slow ranks
 
-| rank | step_ms | note |
-| ---: | ---: | :--- |
-| _awaiting G7 layout_ | | |
+**Owner:** Sunil · **Scope (agreed with Raj, G6 16–17 Nov):** TSAI runs 1-GPU jobs only this week, so per-rank = **one rank**; slow ranks are deferred until a multi-GPU run with the G7 layout.  
+**Source:** class [#486](https://github.com/theschoolofai/era-v5-lab/pull/486) (`dryrun1_prof`, `--modes clean,layer,trace --level 3`, 1 GPU), results as posted by TSAI in the G6 group, 17 Nov 2026 12:44 IST. TSAI kept absolute times and device details, so this section has **shares and counts only** (no invented ms).  
+**Width:** small-width. The job maps G5's signed `config_v1.yaml` settings (pin `aec75af`, #447) onto `configs/base.yaml` because `config_v1` leaves model sizes open; MoE 16 routed + 1 shared, top-2, `dispatch=sorted`, Muon, `mfu_method=g6-v1`.
 
-**Slow ranks:** _awaiting_
+### 4a. Per-rank step time
+
+| rank | step_ms | GPU busy (share of step) | kernels / step | host syncs / step | GPU starved (steps) | source |
+| ---: | ---: | ---: | ---: | ---: | ---: | :--- |
+| 0 (only rank) | _unavailable (TSAI held absolutes)_ | 31.1% | 3,693 | 19 | 20 of 20 | #486 |
+
+GPU / SHA: _unavailable (TSAI held device details; run SHA not reported)_. Job file: class `main` at the #486 merge, `b016b71`.
+
+### 4b. Where rank 0's step goes (share of one training step, #486)
+
+| part | share of step |
+| :--- | ---: |
+| backward of the block gradients | 17.7% |
+| Muon Newton-Schulz update | 5.3% |
+| backward of the head and loss | 5.2% |
+| MoE dispatch (`sorted` path; profiler region named `dispatch.grouped`), recompute pass | 2.3% |
+| MoE dispatch (`sorted` path; profiler region named `dispatch.grouped`), forward pass | 2.3% |
+
+Caveats from TSAI's report:
+
+- The GPU ran out of queued work in all 20 recorded steps, so these part times **include host time** (time the GPU spent waiting for Python to launch work), not only kernel time.
+- 22 gated parts had a repeat spread above 10% (the 5% repeat gate does not hold for them); read small differences between parts as noise.
+- Rule 3b: checkpoint and comm were **not** measured in this run (checkpoint is §3 / #485; a2a is §2 / #496).
+
+### 4c. Slow ranks
+
+**Not measurable on 1 GPU.** A slow rank only exists when ranks are compared, and a step on N GPUs takes as long as its slowest rank (every collective waits for it). Deferred until TSAI runs a multi-GPU job with the G7 layout; then this table gets one row per rank (median / p95 / max step_ms and ratio to the cross-rank median), mapped to node and GPU.
+
+**What one rank already shows:** rank 0 is bound by the host, not by the GPU. With the GPU busy 31.1% of the step and starved in every recorded step, about two-thirds of the step is the GPU waiting for the CPU (3,693 kernel launches and 19 host syncs per step). On more GPUs every rank pays this, and host jitter becomes rank-to-rank skew, so cutting launches and syncs comes before any slow-rank work. Analysis and kernel proposals: §5 and `kernels_dryrun2.md`.
 
 ## 5. MoE analysis (Adinath)
 
