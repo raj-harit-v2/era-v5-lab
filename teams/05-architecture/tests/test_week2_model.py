@@ -264,10 +264,11 @@ class ConfigTests(unittest.TestCase):
         self.assertEqual(c["optim"]["lr"], 0.001)
         self.assertFalse(any("MTP" in e for e in validate(c)))
 
-    def test_muon_rate_and_comparison_remain_pending(self):
+    def test_exp2_rates_are_set_and_comparisons_remain_provisional(self):
         c = load_runtime(TEAM / "configs/arms/exp2_muon.yaml")
-        self.assertIsNone(c["optim"]["muon_lr"])
-        self.assertIsNone(c["optim"]["lr"])
+        self.assertGreater(c["optim"]["muon_lr"], 0)
+        self.assertGreater(c["optim"]["lr"], 0)
+        self.assertIs(c["intended"]["comparison_final"], False)
         a = load_runtime(TEAM / "configs/arms/exp2_adamw.yaml")
         self.assertIs(a["intended"]["comparison_final"], False)
 
@@ -319,10 +320,12 @@ class ConfigTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             apply_resolution(self.resolved(), {"model": {"n_embd": 128}})
 
-    def test_muon_not_silently_adamw(self):
+    def test_muon_requires_an_explicit_rate(self):
         c = self.resolved("exp2_muon.yaml")
         self.assertEqual(c["optim"]["name"], "muon")
-        self.assertTrue(any("Muon" in e for e in validate(c)))
+        self.assertEqual(validate(c), [])
+        c["optim"]["muon_lr"] = None
+        self.assertTrue(any("muon_lr" in error for error in validate(c)))
 
     def test_instructor_dimensions_and_lead_budgets(self):
         for name, w, l, h, kv, e, ffn, ctx, steps in [

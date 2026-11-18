@@ -1,0 +1,22 @@
+Rotation R1 reduced check of exp2-muon at seed 1244 (config load + Week-2 optim tests).
+Trainer pin for the quality job: 71bc0fbb99fbe5e90d8a09055b7622010e8ab23f (same pin peers use for Week-2 seed repeats).
+Runtime for the quality job: configs/runtime_fast.yaml (TSAI supplies; not in the repo). This check used configs/runtime.yaml for load_runtime only.
+Environment: PyTorch 2.13.0+cpu, Windows. A check, not a bits-per-byte result.
+Scope: no full train_week2.py --smoke run here — BrahmicTokenizer is not installed, so tokenizer_v0.json was not rebuilt for a CPU smoke. Config and optim tests cover the arm.
+
+Config check:
+  arm: teams/05-architecture/configs/arms/exp2_muon.yaml
+  runtime: teams/05-architecture/configs/runtime.yaml
+  load_runtime + validate() -> 0 errors
+  intended.arm=exp2-muon
+  optim.name=muon  optim.lr=0.001  optim.muon_lr=0.01
+  seed for quality job: 1244 (CLI only; arm YAML unchanged)
+
+Tests:
+  python -m pytest teams/05-architecture/tests/test_week2_optim.py -q
+  15 passed
+
+Quality command (TSAI / Lead; not run locally):
+  python teams/05-architecture/harness/train_week2.py --config teams/05-architecture/configs/arms/exp2_muon.yaml --runtime teams/05-architecture/configs/runtime_fast.yaml --resolution ./inputs/resolution.yaml --tokenizer ./inputs/tokenizer_v0.json --byte-table ./inputs/raw_table_P32.npz --train-data ./inputs/train.jsonl --heldout-data ./inputs/heldout.jsonl --heldout-sources ./inputs/heldout_sources.jsonl --heldout-sha256 ./inputs/heldout.sha256 --heldout-report ./inputs/heldout_report.json --device cuda --seed 1244 --out ./out/exp2_muon-1244
+
+status=CONFIG_AND_OPTIM_OK quality_eligible=False

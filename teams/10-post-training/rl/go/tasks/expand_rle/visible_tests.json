@@ -1,0 +1,23 @@
+[
+ {
+  "args": [
+   "3a2b",
+   100
+  ],
+  "expected": "aaabb"
+ },
+ {
+  "args": [
+   "12x",
+   11
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "",
+   5
+  ],
+  "expected": ""
+ }
+]

@@ -1,0 +1,2195 @@
+{
+ "counts": {
+  "adapters": 33,
+  "allowed": 4,
+  "hold": 4,
+  "out": 50,
+  "owned": 1,
+  "reserved": 19,
+  "stage1_sets": 78
+ },
+ "inputs_sha256": {
+  "convert_py": "1f8709cae2999081588cb2c65c7f5fc14f8b3437c26d04875e25a8aa64eaab92",
+  "licence_table": "003b15d4f88032d644e9e20c8f1499f8e878eac3bfeb1be0ec8024708204885e",
+  "sft_mix_proposal": "7c05153b2bddc77e55cdfce0936d1930ec48c1b4a4ab3d694dd934185bce6ebb"
+ },
+ "lists": {
+  "allowed": [
+   "sft-dolly-15k",
+   "sft-indic-indic-align-dolly-t",
+   "sft-math-nemotron-math-v2",
+   "sft-math-nemotron-proofs"
+  ],
+  "hold": [
+   "sft-chat-nemotron-if-v1",
+   "sft-chat-nemotron-if-v2",
+   "sft-salesforce-xlam-60k",
+   "sft-science-nemotron-science-v2"
+  ],
+  "out": [
+   "sft-agentic-apigen-mt-5k",
+   "sft-agentic-nemotron-sft-agentic-v2-other",
+   "sft-agentic-toucan",
+   "sft-chat-dolci-think-sft",
+   "sft-chat-dolci-think-sft-other",
+   "sft-chat-puffin",
+   "sft-code-afm-codeagent",
+   "sft-code-codefeedback",
+   "sft-code-magicoder-oss",
+   "sft-code-nemotron-cp-v2",
+   "sft-code-nemotron-cuda",
+   "sft-code-nemotron-opencode",
+   "sft-code-nemotron-swe-v3",
+   "sft-code-opencodeinstruct",
+   "sft-code-self-oss-instruct",
+   "sft-code-swe-fixer",
+   "sft-code-swe-gym-trajectories",
+   "sft-code-swe-hero-openhands",
+   "sft-code-swe-zero-openhands",
+   "sft-glaive-fc-v2",
+   "sft-indic-aya-collection-other",
+   "sft-indic-code-oss-codes-coding",
+   "sft-indic-code-oss-codes-cs",
+   "sft-indic-indic-align",
+   "sft-indic-indic-instruct-hi",
+   "sft-indic-math-aryabhatta-orca-hi",
+   "sft-indic-math-orca-math-hi",
+   "sft-indic-samvaad-hi",
+   "sft-indic-updesh",
+   "sft-lmsys-chat-1m",
+   "sft-math-nemotron-sft-math-v4",
+   "sft-math-numinamath-1.5",
+   "sft-math-numinamath-cot",
+   "sft-math-openmathinstruct-2",
+   "sft-math-openr1-math-raw",
+   "sft-numinamath-tir",
+   "sft-openhermes-2.5",
+   "sft-rl-code-rstar-coder",
+   "sft-safety-aegis-v1",
+   "sft-safety-indicguard",
+   "sft-safety-nemotron-guard-v3",
+   "sft-safety-nemotron-sft-v2",
+   "sft-safety-wildjailbreak",
+   "sft-stem-code-acereason-1.1-sft",
+   "sft-stem-code-acereason-1.1-sft-other",
+   "sft-stem-code-nemotron-post-v1",
+   "sft-stem-code-nemotron-post-v2",
+   "sft-tool-when2call",
+   "sft-tulu3-filtered",
+   "sft-ultradata-cot-agent"
+  ],
+  "owned": [
+   "sft-code-opencodereasoning-2"
+  ],
+  "reserved": [
+   "sft-agentic-nemotron-agentic-v1",
+   "sft-agentic-nemotron-sft-agentic-v2-tool-calling",
+   "sft-bespoke-stratos-17k",
+   "sft-code-codeforces-cots",
+   "sft-code-commitpackft",
+   "sft-code-nemotron-cascade-swe",
+   "sft-code-nemotron-terminal",
+   "sft-code-opencodereasoning",
+   "sft-code-swe-rebench-openhands",
+   "sft-indic-aya-collection",
+   "sft-indic-aya-dataset",
+   "sft-indic-indic-align-oasst-t",
+   "sft-math-nemotron-proofs-v3-sft",
+   "sft-math-openr1-math",
+   "sft-oasst2",
+   "sft-rl-math-openmathreasoning",
+   "sft-science-glm51-phd",
+   "sft-science-nemotron-science",
+   "sft-stem-code-openthoughts3"
+  ]
+ },
+ "schema": "g10-sft-v1-worklist/1",
+ "sets": [
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "excluded",
+   "decision_class": "excluded",
+   "file_spec": null,
+   "flags": [],
+   "generator": "GPT-4o (OpenAI, proprietary closed) and DeepSeek-V3 (MIT) write the agent and simulated-user turns (arXiv 2504.03601)",
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "cc-by-nc-4.0 (Hub tag; non-commercial; card: \"for research purposes only\")",
+   "licence_table_caveats": [
+    "- **Licence:** `cc-by-nc-4.0` — Hugging Face tag read on 10 Nov 2026 (gated: \"Acknowledge to follow the corresponding license and cite APIGen-MT to access the repository\").",
+    "Non-commercial.",
+    "- **Decision:** `excluded` — data licence rule: non-commercial licences are out, and text made by closed OpenAI models is out.",
+    "they carry the same CC-BY-NC terms."
+   ],
+   "reasons": [
+    "licence decision is excluded",
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-agentic-apigen-mt-5k",
+   "source": "Salesforce/APIGen-MT-5k",
+   "track": "out"
+  },
+  {
+   "adapter": true,
+   "area": "tool_use",
+   "decision": "TSAI reserves",
+   "decision_class": "reserved",
+   "file_spec": "data/tool_calling.jsonl",
+   "flags": [],
+   "generator": "Qwen3-235B-A22B-Thinking-2507 (Apache-2.0), Qwen3-235B-A22B-Instruct-2507 (Apache-2.0), Qwen3-32B (Apache-2.0) and GPT-OSS-120B (Apache-2.0) simulate and judge the dialogues",
+   "hf": {
+    "card_licence": "cc-by-4.0",
+    "card_sha256": "52885e836d16e73cc0c20d27c7846fe33d04758f130c56a38a4acd141bc925cd",
+    "gated": false,
+    "last_modified": "2025-12-15T13:48:35.000Z",
+    "sha": "650d590978ca35c8f1ecea2faf136e5fac421b62"
+   },
+   "in_area_table": true,
+   "in_proposal_text": true,
+   "licence": "cc-by-4.0 (Hub tag; the card adds apache-2.0 for the Glaive-Function-Calling-v2 part)",
+   "licence_table_caveats": [
+    "The tool sets come from public datasets that the card does not name (except Glaive v2), so their licences are unchecked."
+   ],
+   "reasons": [
+    "TSAI reserves: measurement only, not admitted"
+   ],
+   "selection": "tool_calling file",
+   "set": "sft-agentic-nemotron-agentic-v1",
+   "source": "nvidia/Nemotron-Agentic-v1",
+   "track": "reserved"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "excluded",
+   "decision_class": "excluded",
+   "file_spec": null,
+   "flags": [],
+   "generator": "Unknown (not stated on the card for either part)",
+   "hf": {
+    "card_licence": [
+     "cc-by-4.0",
+     "apache-2.0",
+     "mit"
+    ],
+    "card_sha256": "0c8eda1886256837995c0f51a80d50179eebcb36265096e222cfe7abbf7a6475",
+    "gated": false,
+    "last_modified": "2026-08-10T11:39:11.000Z",
+    "sha": "7c804833427f633ccd53b582dbf02525fd680f78"
+   },
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "cc-by-4.0, apache-2.0, mit (Hub tags)",
+   "licence_table_caveats": [
+    "- **Generator model:** Not stated."
+   ],
+   "reasons": [
+    "licence decision is excluded",
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-agentic-nemotron-sft-agentic-v2-other",
+   "source": "nvidia/Nemotron-SFT-Agentic-v2",
+   "track": "out"
+  },
+  {
+   "adapter": true,
+   "area": "tool_use",
+   "decision": "TSAI reserves",
+   "decision_class": "reserved",
+   "file_spec": "data/tool_calling.jsonl",
+   "flags": [],
+   "generator": "DeepSeek-V3.2 (MIT) and GLM-4.6 (MIT, open weights) simulate and judge",
+   "hf": {
+    "card_licence": [
+     "cc-by-4.0",
+     "apache-2.0",
+     "mit"
+    ],
+    "card_sha256": "0c8eda1886256837995c0f51a80d50179eebcb36265096e222cfe7abbf7a6475",
+    "gated": false,
+    "last_modified": "2026-08-10T11:39:11.000Z",
+    "sha": "7c804833427f633ccd53b582dbf02525fd680f78"
+   },
+   "in_area_table": true,
+   "in_proposal_text": true,
+   "licence": "cc-by-4.0, apache-2.0, mit (Hub tags; commercial use permitted per tag)",
+   "licence_table_caveats": [
+    "The licences of the seed tool sets are unchecked."
+   ],
+   "reasons": [
+    "TSAI reserves: measurement only, not admitted"
+   ],
+   "selection": "",
+   "set": "sft-agentic-nemotron-sft-agentic-v2-tool-calling",
+   "source": "nvidia/Nemotron-SFT-Agentic-v2",
+   "track": "reserved"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "TSAI reserves",
+   "decision_class": "reserved",
+   "file_spec": null,
+   "flags": [
+    "modified_mit_generator"
+   ],
+   "generator": "GPT-OSS-120B (Apache-2.0), Kimi-K2 (Modified MIT) and Qwen3-32B (Apache-2.0) write the trajectories, one config each; tasks by Mistral-Small, DevStral-Small, GPT-OSS, Kimi-K2 and Qwen3-32B; Kimi-K2 annotates and GPT-OSS-120B judges (arXiv 2510.01179); all open weights",
+   "hf": {
+    "card_licence": "apache-2.0",
+    "card_sha256": "59eb287d06206f09c3a4f27d8b77b11600b54d81daa328b5ce2d1e15485efb13",
+    "gated": false,
+    "last_modified": "2025-10-04T00:51:18.000Z",
+    "sha": "0df3cf37f2abefb380370cfb02eabea2a35ae782"
+   },
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "apache-2.0 (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-agentic-toucan",
+   "source": "Agent-Ark/Toucan-1.5M",
+   "track": "out"
+  },
+  {
+   "adapter": true,
+   "area": "general",
+   "decision": "TSAI reserves",
+   "decision_class": "reserved",
+   "file_spec": "data/train-00000-of-00001.parquet",
+   "flags": [],
+   "generator": "DeepSeek-R1 (MIT, open weights)",
+   "hf": {
+    "card_licence": "apache-2.0",
+    "card_sha256": "a9b9b2b2a59c9aed6d759800dc5dae3d3cfd99bed88a0374afa6d8b290b78382",
+    "gated": false,
+    "last_modified": "2025-01-31T00:00:38.000Z",
+    "sha": "9e9adba943911a9fc44dffcb30aaa18dc96ae6df"
+   },
+   "in_area_table": true,
+   "in_proposal_text": true,
+   "licence": "apache-2.0 (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "TSAI reserves: measurement only, not admitted"
+   ],
+   "selection": "",
+   "set": "sft-bespoke-stratos-17k",
+   "source": "bespokelabs/Bespoke-Stratos-17k",
+   "track": "reserved"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "TSAI reserves",
+   "decision_class": "reserved",
+   "file_spec": null,
+   "flags": [],
+   "generator": "DeepSeek-R1 and R1-0528 (MIT) write the traces over human WildChat, OASST1 and Aya prompts; the OpenThoughts3 rows are the existing QwQ-32B (Apache-2.0) traces",
+   "hf": {
+    "card_licence": "odc-by",
+    "card_sha256": "76f8b0572853fa61dc5c049c85cacdef0e26725e91e93bf8608f0c9eb3fb93ce",
+    "gated": false,
+    "last_modified": "2026-03-02T20:38:19.000Z",
+    "sha": "7668c638cc84100951973b456069a1a462d6d915"
+   },
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "odc-by (Hub tag; card adds \"intended for research and educational use\" under Ai2's Responsible Use Guidelines, a statement of intent, not a licence term)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-chat-dolci-think-sft",
+   "source": "allenai/Dolci-Think-SFT",
+   "track": "out"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "excluded",
+   "decision_class": "excluded",
+   "file_spec": null,
+   "flags": [],
+   "generator": "Three new Ai2 subsets (Think Persona IF, Precise IF, Think Python; about 823k rows) name no generator; SYNTHETIC-2 has no licence on its own card; Nemotron-Post-Training-v1 code is `excluded` above; WildGuardMix, WildJailbreak and CoCoNot prompts were written by GPT-4 or unnamed models; TableGPT synthesis method not verified",
+   "hf": {
+    "card_licence": "odc-by",
+    "card_sha256": "76f8b0572853fa61dc5c049c85cacdef0e26725e91e93bf8608f0c9eb3fb93ce",
+    "gated": false,
+    "last_modified": "2026-03-02T20:38:19.000Z",
+    "sha": "7668c638cc84100951973b456069a1a462d6d915"
+   },
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "odc-by (Hub tag) on the release; upstream licences or generators unstated",
+   "licence_table_caveats": [
+    "The Dolci-Think-SFT-Python card is ODC-By but names no generator.",
+    "- **Generator model:** Not stated for the three new Ai2 subsets (Think Python, Think Persona IF, Precise IF;",
+    "SYNTHETIC-2 traces are DeepSeek-R1-0528 (MIT) but its task sources are not stated.",
+    "CoCoNot prompts were expanded \"by iteratively prompting different LMs\" that the paper (arXiv 2407.12043) does not name, and its responses are GPT-4."
+   ],
+   "reasons": [
+    "licence decision is excluded",
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-chat-dolci-think-sft-other",
+   "source": "allenai/Dolci-Think-SFT",
+   "track": "out"
+  },
+  {
+   "adapter": true,
+   "area": "general",
+   "decision": "TSAI reserves",
+   "decision_class": "reserved",
+   "file_spec": "data/structured_outputs.jsonl",
+   "flags": [
+    "unknown_generator",
+    "adapter_reads_unknown_generator_split:structured_outputs"
+   ],
+   "generator": "GPT-OSS-120B (Apache-2.0), Qwen3-235B-A22B-Thinking-2507 (Apache-2.0), Qwen3-235B-A22B-Instruct-2507 (Apache-2.0) for chat split; structured-outputs split has unknown generator (exclude structured-outputs split)",
+   "hf": {
+    "card_licence": "cc-by-4.0",
+    "card_sha256": "332155e4ba76072a497a1bc0c850aec2b5444feff59d77c684c28c5bee7a7cc5",
+    "gated": false,
+    "last_modified": "2025-12-15T05:27:15.000Z",
+    "sha": "83dcd3aded0d289b0bbc018d3f9af4c5dd4005df"
+   },
+   "in_area_table": true,
+   "in_proposal_text": true,
+   "licence": "ODC-By-1.0 (chat); CC-BY-4.0 (structured outputs)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "data-rule flag: unknown_generator",
+    "data-rule flag: adapter_reads_unknown_generator_split:structured_outputs"
+   ],
+   "selection": "structured_outputs file",
+   "set": "sft-chat-nemotron-if-v1",
+   "source": "nvidia/Nemotron-Instruction-Following-Chat-v1",
+   "track": "hold"
+  },
+  {
+   "adapter": true,
+   "area": "general",
+   "decision": "TSAI reserves",
+   "decision_class": "reserved",
+   "file_spec": "data/reasoning_on.jsonl",
+   "flags": [
+    "modified_mit_generator"
+   ],
+   "generator": "Kimi-K2-Thinking (Modified MIT), GLM-4.6 (MIT), Qwen3-235B-A22B-Thinking-2507 (Apache-2.0), GPT-OSS-120b (Apache-2.0), Kimi-K2-Instruct-0905 (Modified MIT), Qwen3-235B-A22B-Instruct-2507 (Apache-2.0)",
+   "hf": {
+    "card_licence": [
+     "odc-by"
+    ],
+    "card_sha256": "b65ea5e616771282978fc9c8e1bbb7a87984800d5c9c044d7a469a912bbb5bf6",
+    "gated": false,
+    "last_modified": "2026-03-11T15:32:04.000Z",
+    "sha": "1a9454ed054b8544503ab8d8c0a519d141a44c5b"
+   },
+   "in_area_table": true,
+   "in_proposal_text": true,
+   "licence": "ODC-By (card does not specify version)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "data-rule flag: modified_mit_generator"
+   ],
+   "selection": "reasoning_on file",
+   "set": "sft-chat-nemotron-if-v2",
+   "source": "nvidia/Nemotron-SFT-Instruction-Following-Chat-v2",
+   "track": "hold"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "excluded",
+   "decision_class": "excluded",
+   "file_spec": null,
+   "flags": [],
+   "generator": "GPT-4 (OpenAI, proprietary closed) writes every response",
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "apache-2.0 (Hub tag; the OpenAI terms on GPT-4 output still apply)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "licence decision is excluded",
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-chat-puffin",
+   "source": "LDJnr/Puffin",
+   "track": "out"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "excluded",
+   "decision_class": "excluded",
+   "file_spec": null,
+   "flags": [],
+   "generator": "Unknown (distilled from the OAgents multi-agent framework; the backbone LLM is not named on the card or in arXiv 2508.13167)",
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "apache-2.0 (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [
+    "- **Generator model:** Unknown.",
+    "- **Decision:** `excluded` — the generator model is not stated."
+   ],
+   "reasons": [
+    "licence decision is excluded",
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-code-afm-codeagent",
+   "source": "PersonalAILab/AFM-CodeAgent-SFT-Dataset",
+   "track": "out"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "excluded",
+   "decision_class": "excluded",
+   "file_spec": null,
+   "flags": [],
+   "generator": "Mixed upstream sets (Magicoder, Evol-Instruct code, ShareGPT — GPT-3.5 / GPT-4, OpenAI proprietary closed); Qwen-72B-Chat (Tongyi Qianwen Research/Commercial Licence, not MIT/Apache-2.0) used as filter",
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "apache-2.0 (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "licence decision is excluded",
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-code-codefeedback",
+   "source": "m-a-p/CodeFeedback-Filtered-Instruction",
+   "track": "out"
+  },
+  {
+   "adapter": true,
+   "area": "code",
+   "decision": "TSAI reserves",
+   "decision_class": "reserved",
+   "file_spec": "glob:solutions/",
+   "flags": [],
+   "generator": "DeepSeek-R1 (MIT, open weights)",
+   "hf": {
+    "card_licence": "cc-by-4.0",
+    "card_sha256": "803febddfe902a99949340f5fb01792897c080f92cfebc45b348d4a8045d4054",
+    "gated": false,
+    "last_modified": "2025-03-28T12:21:06.000Z",
+    "sha": "39ac85c150806230473c70ad72c31f6232fe3f41"
+   },
+   "in_area_table": true,
+   "in_proposal_text": true,
+   "licence": "cc-by-4.0 (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "TSAI reserves: measurement only, not admitted"
+   ],
+   "selection": "solutions config",
+   "set": "sft-code-codeforces-cots",
+   "source": "open-r1/codeforces-cots",
+   "track": "reserved"
+  },
+  {
+   "adapter": true,
+   "area": "code",
+   "decision": "TSAI reserves",
+   "decision_class": "reserved",
+   "file_spec": "glob:data/*/data.jsonl",
+   "flags": [],
+   "generator": "none (real human GitHub commits; no model generator)",
+   "hf": {
+    "card_licence": "mit",
+    "card_sha256": "69799047051e9d487d20e8930d73de1b3023ee1c75cf36dc3d2dfca2643f0bb0",
+    "gated": false,
+    "last_modified": "2023-08-20T07:13:43.000Z",
+    "sha": "fc56fe33c030c6daa414c2b112c932b8eed085e6"
+   },
+   "in_area_table": true,
+   "in_proposal_text": true,
+   "licence": "mit (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "TSAI reserves: measurement only, not admitted"
+   ],
+   "selection": "all 277 language files (data/<language>/data.jsonl)",
+   "set": "sft-code-commitpackft",
+   "source": "bigcode/commitpackft",
+   "track": "reserved"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "excluded",
+   "decision_class": "excluded",
+   "file_spec": null,
+   "flags": [],
+   "generator": "GPT-3.5 (OpenAI, proprietary closed licence)",
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "mit (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "licence decision is excluded",
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-code-magicoder-oss",
+   "source": "ise-uiuc/Magicoder-OSS-Instruct-75K",
+   "track": "out"
+  },
+  {
+   "adapter": true,
+   "area": "agentic",
+   "decision": "TSAI reserves",
+   "decision_class": "reserved",
+   "file_spec": "swe_localization.jsonl|swe_repair.jsonl|swe_testgen.jsonl",
+   "flags": [],
+   "generator": "DeepSeek-R1-0528 (MIT, open weights) writes every response (the card's `generator` field)",
+   "hf": {
+    "card_licence": "cc-by-4.0",
+    "card_sha256": "e28679db4605fd3b1ae7b41656e366c54c0fe97dc12d35f346e4e3dc11a51cd7",
+    "gated": false,
+    "last_modified": "2025-12-16T08:42:08.000Z",
+    "sha": "b4ef73ff9bbcfc33d1ec7a48e53017f9ce7af7a3"
+   },
+   "in_area_table": true,
+   "in_proposal_text": true,
+   "licence": "cc-by-4.0 (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "TSAI reserves: measurement only, not admitted"
+   ],
+   "selection": "all three files (localization, repair, testgen)",
+   "set": "sft-code-nemotron-cascade-swe",
+   "source": "nvidia/Nemotron-Cascade-SFT-SWE",
+   "track": "reserved"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "excluded",
+   "decision_class": "excluded",
+   "file_spec": null,
+   "flags": [],
+   "generator": "Unknown on card (Competitive subset: model not named, DeepSeek-R1-0528 MIT cited; Exercism subset: synthetic, model not named; Text-to-SQL: LLM not named)",
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "cc-by-4.0, odc-by, mit (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [
+    "- **Generator model:** Competitive subset: model not named on the card (NeMo-Skills pipeline;",
+    "Exercism subset: synthetic, model not named.",
+    "Text-to-SQL: NVIDIA Data Designer, LLM not named"
+   ],
+   "reasons": [
+    "licence decision is excluded",
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-code-nemotron-cp-v2",
+   "source": "nvidia/Nemotron-SFT-Competitive-Programming-v2",
+   "track": "out"
+  },
+  {
+   "adapter": true,
+   "area": "code",
+   "decision": "TSAI reserves",
+   "decision_class": "reserved",
+   "file_spec": "data/train.jsonl",
+   "flags": [],
+   "generator": "GLM-4.7 (MIT, open weights) writes the problems and the solutions; only runs that pass the hidden tests with no Compute-Sanitizer errors are kept (execution-verified)",
+   "hf": {
+    "card_licence": [
+     "cc-by-4.0"
+    ],
+    "card_sha256": "ab911683beca72ce0f04e3482620ea0268e6be81c85a66866247d7f84f47be95",
+    "gated": false,
+    "last_modified": "2026-06-04T04:35:43.000Z",
+    "sha": "1a06167a6e1e90d928094184173898cbb9bf42de"
+   },
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "cc-by-4.0 (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": "",
+   "set": "sft-code-nemotron-cuda",
+   "source": "nvidia/Nemotron-SFT-CUDA-v1",
+   "track": "out"
+  },
+  {
+   "adapter": true,
+   "area": "code",
+   "decision": "TSAI reserves",
+   "decision_class": "reserved",
+   "file_spec": "agent_skills/data.jsonl",
+   "flags": [],
+   "generator": "gpt-oss-120b (Apache-2.0, open weights) writes the questions and agent skills; Qwen3-Coder-480B-A35B-Instruct (Apache-2.0, open weights) writes the solution traces",
+   "hf": {
+    "card_licence": "cc-by-4.0",
+    "card_sha256": "45118edcfa79ffd26e1f6391cb80acad3f9b24989b76c5d1e8231d83d7770076",
+    "gated": false,
+    "last_modified": "2026-03-23T23:32:38.000Z",
+    "sha": "556d5237acff203f3e1a0be49428634c3606cda2"
+   },
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "cc-by-4.0 (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": "agent_skills file",
+   "set": "sft-code-nemotron-opencode",
+   "source": "nvidia/Nemotron-SFT-OpenCode-v1",
+   "track": "out"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "excluded",
+   "decision_class": "excluded",
+   "file_spec": null,
+   "flags": [],
+   "generator": "Unknown on card (names only OpenHands, SWE-agent and mini-SWE-agent harnesses; generator model not stated on the dataset card)",
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "cc-by-4.0, apache-2.0, mit, bsd-3-clause, bsd-2-clause (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "licence decision is excluded",
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-code-nemotron-swe-v3",
+   "source": "nvidia/Nemotron-SFT-SWE-v3",
+   "track": "out"
+  },
+  {
+   "adapter": true,
+   "area": "agentic",
+   "decision": "TSAI reserves",
+   "decision_class": "reserved",
+   "file_spec": "dataset_adapters/code.parquet",
+   "flags": [],
+   "generator": "DeepSeek-V3.2 (MIT, open weights) for both the synthetic tasks and the trajectories (paper, arXiv 2602.21193)",
+   "hf": {
+    "card_licence": "cc-by-4.0",
+    "card_sha256": "ab2e781e4dc4cf7db8931078b5dfa72f5e02629937775d518bf88ed5e6e153e7",
+    "gated": false,
+    "last_modified": "2026-11-07T02:27:21.000Z",
+    "sha": "67a3e039a1b07079c04dcf9d0d03fc5798e24fd9"
+   },
+   "in_area_table": true,
+   "in_proposal_text": true,
+   "licence": "cc-by-4.0 (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [
+    "The teacher model is not stated on the card."
+   ],
+   "reasons": [
+    "TSAI reserves: measurement only, not admitted"
+   ],
+   "selection": "code adapter file",
+   "set": "sft-code-nemotron-terminal",
+   "source": "nvidia/Nemotron-Terminal-Corpus",
+   "track": "reserved"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "TSAI reserves",
+   "decision_class": "reserved",
+   "file_spec": null,
+   "flags": [],
+   "generator": "Qwen2.5-32B-Instruct (Apache-2.0) writes the instructions; Qwen2.5-Coder-32B-Instruct (Apache-2.0) writes the solutions, the unit tests and the quality scores (arXiv 2504.04030; the card itself names no model)",
+   "hf": {
+    "card_licence": "cc-by-4.0",
+    "card_sha256": "2449b70191f455f0e904ff78fabfd7185f20dbe89165ce70ca39a8193241ebd4",
+    "gated": false,
+    "last_modified": "2025-04-28T19:08:02.000Z",
+    "sha": "8f3ba5bafe4d6e8db46082cf7ae6741bc370604d"
+   },
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "cc-by-4.0 (Hub tag and card text; \"ready for commercial/non-commercial use\")",
+   "licence_table_caveats": [
+    "The card says \"This dataset is licensed under the Creative Commons Attribution 4.0 International License (CC BY 4.0)\" and \"This dataset is ready for commercial/non-commercial use.\" Permissive with attribution: in under the data licence rule.",
+    "- **Generator model:** Not named on the card (\"Hybrid: Automated, Synthetic\")."
+   ],
+   "reasons": [
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-code-opencodeinstruct",
+   "source": "nvidia/OpenCodeInstruct",
+   "track": "out"
+  },
+  {
+   "adapter": true,
+   "area": "code",
+   "decision": "TSAI reserves",
+   "decision_class": "reserved",
+   "file_spec": "glob:split_0/",
+   "flags": [],
+   "generator": "DeepSeek-R1 (MIT, open weights)",
+   "hf": {
+    "card_licence": "cc-by-4.0",
+    "card_sha256": "1c495c3b54d40dea0c95a5fae926cce6e1567be26ee36e5d750d98bfaf66f196",
+    "gated": false,
+    "last_modified": "2025-05-04T23:54:22.000Z",
+    "sha": "20a1ca19c0d050fe9057fc08339d6b370ec1c67a"
+   },
+   "in_area_table": true,
+   "in_proposal_text": true,
+   "licence": "cc-by-4.0 (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "TSAI reserves: measurement only, not admitted"
+   ],
+   "selection": "split_0, all 30 shards (split_1 withholds the questions)",
+   "set": "sft-code-opencodereasoning",
+   "source": "nvidia/OpenCodeReasoning",
+   "track": "reserved"
+  },
+  {
+   "adapter": true,
+   "area": "code",
+   "decision": "allowed (TSAI admitted, 11 Nov 2026)",
+   "decision_class": "allowed",
+   "file_spec": "train/python/train-00000-of-00070.parquet",
+   "flags": [],
+   "generator": "DeepSeek-R1 (MIT) for solutions, QwQ-32B (Apache-2.0) for critiques (both open weights)",
+   "hf": {
+    "card_licence": "cc-by-4.0",
+    "card_sha256": "41342603f3f2562dcb9355a59d7bb809c16097fc926e7befc7f05f5d6d9df809",
+    "gated": false,
+    "last_modified": "2025-05-17T00:19:15.000Z",
+    "sha": "eadf535931451525f3e5621d0f960c240bc62fd9"
+   },
+   "in_area_table": true,
+   "in_proposal_text": true,
+   "licence": "cc-by-4.0 (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "OCR-2 is the WP1 pack: not converted or counted here"
+   ],
+   "selection": "python, first shard",
+   "set": "sft-code-opencodereasoning-2",
+   "source": "nvidia/OpenCodeReasoning-2",
+   "track": "owned"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "excluded",
+   "decision_class": "excluded",
+   "file_spec": null,
+   "flags": [],
+   "generator": "StarCoder2-15B (BigCode OpenRAIL-M licence — has use restrictions; makes a model trained on its output a derivative carrying those restrictions) via SelfCodeAlign (arXiv 2410.24198)",
+   "in_area_table": false,
+   "in_proposal_text": true,
+   "licence": "odc-by (Hub tag on dataset; generator model is BigCode OpenRAIL-M)",
+   "licence_table_caveats": [
+    "generator model (`StarCoder2-15B`) is under the **BigCode OpenRAIL-M** licence, which has use restrictions and makes a model trained on its output a derivative that must carry its use restrictions.",
+    "- **Generator model:** `StarCoder2-15B` (BigCode OpenRAIL-M licence, use restrictions) generates instructions, responses and tests in the SelfCodeAlign method (arXiv 2410.24198).",
+    "- **Decision:** `excluded` — TSAI decision on generator models (3 Nov): output of models with use-restriction licences such as OpenRAIL-M is out.",
+    "StarCoder2 is out because its licence makes a model trained on its output a derivative that must carry its use restrictions."
+   ],
+   "reasons": [
+    "licence decision is excluded",
+    "no adapter in convert.py ADAPTERS",
+    "named in the proposal text but not in the section 2 area table"
+   ],
+   "selection": null,
+   "set": "sft-code-self-oss-instruct",
+   "source": "bigcode/self-oss-instruct-sc2-exec-filter-50k",
+   "track": "out"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "TSAI reserves",
+   "decision_class": "reserved",
+   "file_spec": null,
+   "flags": [
+    "closed_model"
+   ],
+   "generator": "none (human GitHub issues, hints, PR patches and test patches; the paper's GPT-4o chain-of-thought is not in this release)",
+   "hf": {
+    "card_licence": "mit",
+    "card_sha256": "04d6954f687587ec0bc64f262fe59b026489b317a016b590a654cc87314968c4",
+    "gated": false,
+    "last_modified": "2025-03-17T02:34:03.000Z",
+    "sha": "9e3f1366be2c9a1a230d243b4008354436685501"
+   },
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "mit (Hub tag; commercial use permitted per tag; upstream repository licences not filtered)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-code-swe-fixer",
+   "source": "internlm/SWE-Fixer-Train-110K",
+   "track": "out"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "excluded",
+   "decision_class": "excluded",
+   "file_spec": null,
+   "flags": [],
+   "generator": "Claude 3.5 Sonnet (Anthropic, proprietary closed) and GPT-4o (OpenAI, closed) via OpenHands",
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "mit (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [
+    "the checked card does not name all response generators.",
+    "the card does not name all response generators, and the paper describes Llama-based candidate generation.",
+    "closed-Anthropic provenance conflicts with the week 2 generator rule and is recorded for TSAI.",
+    "- **Generator model:** Unknown for the test inputs.",
+    "The paper (arXiv 2504.14655, Figures 4 and 5) prompts \"the LLM\" for about 100+ inputs per problem and does not name the model;",
+    "the GitHub README does not name it either.",
+    "If TSAI prefers to keep this set, the open questions are the Still licence, the closed-model filter, and the unverified Gemini answer extraction;",
+    "- **Decision:** `TSAI reserves` — permissive licence, human-written prompts, no generator model."
+   ],
+   "reasons": [
+    "licence decision is excluded",
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-code-swe-gym-trajectories",
+   "source": "SWE-Gym/OpenHands-SFT-Trajectories",
+   "track": "out"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "TSAI reserves",
+   "decision_class": "reserved",
+   "file_spec": null,
+   "flags": [],
+   "generator": "Qwen3-Coder-480B-A35B-Instruct (Apache-2.0, open weights) writes all trajectories and the regenerated R2E-Gym-Subset issue statements",
+   "hf": {
+    "card_licence": "cc-by-4.0",
+    "card_sha256": "018c3ca426aa3a4f8f3dc4082f8dd1da458a60ca5ce69175c890f60b7db95578",
+    "gated": false,
+    "last_modified": "2026-05-08T17:10:16.000Z",
+    "sha": "150bc119e52c647216fce285fd801f16b6fd745b"
+   },
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "cc-by-4.0 (Hub tag; repositories limited to MIT, Apache-2.0, BSD-2, BSD-3; attribution needed)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-code-swe-hero-openhands",
+   "source": "nvidia/SWE-Hero-openhands-trajectories",
+   "track": "out"
+  },
+  {
+   "adapter": true,
+   "area": "agentic",
+   "decision": "TSAI reserves",
+   "decision_class": "reserved",
+   "file_spec": "trajectories.parquet",
+   "flags": [],
+   "generator": "Qwen3-Coder-480B-A35B-Instruct (Apache-2.0, open weights) via OpenHands",
+   "hf": {
+    "card_licence": "cc-by-4.0",
+    "card_sha256": "90fa586c747d9ed1022c28847439489576049cde7de1fdfb80d24b2a0ae77b32",
+    "gated": false,
+    "last_modified": "2025-12-27T14:08:07.000Z",
+    "sha": "35455389ab51bf5e2306bfd436ef72d0f98bf882"
+   },
+   "in_area_table": true,
+   "in_proposal_text": true,
+   "licence": "cc-by-4.0 (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "TSAI reserves: measurement only, not admitted"
+   ],
+   "selection": "",
+   "set": "sft-code-swe-rebench-openhands",
+   "source": "nebius/SWE-rebench-openhands-trajectories",
+   "track": "reserved"
+  },
+  {
+   "adapter": true,
+   "area": "agentic",
+   "decision": "TSAI reserves",
+   "decision_class": "reserved",
+   "file_spec": "glob:data/",
+   "flags": [
+    "closed_model"
+   ],
+   "generator": "Qwen3-Coder-480B-A35B-Instruct (Apache-2.0, open weights) via OpenHands; audit of all 318,115 rows found no Claude data",
+   "hf": {
+    "card_licence": "cc-by-4.0",
+    "card_sha256": "d299937438e7eb0db77c0747cf5ad4ea68829432f0a74e7ce3692fb42a6bf06d",
+    "gated": false,
+    "last_modified": "2026-05-05T19:34:05.000Z",
+    "sha": "7b3cd106d00f60918e722d33a1d74bc67072a7ea"
+   },
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "cc-by-4.0 (Hub tag; attribution required; per-repo licences all permissive)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": "all 64 shards",
+   "set": "sft-code-swe-zero-openhands",
+   "source": "nvidia/SWE-Zero-openhands-trajectories",
+   "track": "out"
+  },
+  {
+   "adapter": true,
+   "area": "general",
+   "decision": "allowed (CC-BY-SA, attribution needed)",
+   "decision_class": "allowed",
+   "file_spec": "databricks-dolly-15k.jsonl",
+   "flags": [],
+   "generator": "none (human-written by Databricks employees; no model generator)",
+   "hf": {
+    "card_licence": "cc-by-sa-3.0",
+    "card_sha256": "db06c60090a11b20e79d1933b2f316f781605f07761ff2ae2795d6523e3e960b",
+    "gated": false,
+    "last_modified": "2023-06-30T18:34:13.000Z",
+    "sha": "bdd27f4d94b9c1f951818a7da7fd7aeea5dbff1a"
+   },
+   "in_area_table": true,
+   "in_proposal_text": true,
+   "licence": "cc-by-sa-3.0 (Hub tag; share-alike, attribution needed)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "allowed + adapter + in proposal, generator text shows no flag"
+   ],
+   "selection": "",
+   "set": "sft-dolly-15k",
+   "source": "databricks/databricks-dolly-15k",
+   "track": "allowed"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "excluded",
+   "decision_class": "excluded",
+   "file_spec": null,
+   "flags": [],
+   "generator": "Unknown (synthetic schema generator by Glaive AI; generator model and its licence are not named on the card)",
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "apache-2.0 (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [
+    "generator model not named on card, verify)."
+   ],
+   "reasons": [
+    "licence decision is excluded",
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-glaive-fc-v2",
+   "source": "glaiveai/glaive-function-calling-v2",
+   "track": "out"
+  },
+  {
+   "adapter": true,
+   "area": "indic",
+   "decision": "TSAI reserves",
+   "decision_class": "reserved",
+   "file_spec": null,
+   "flags": [],
+   "generator": "none (human speaker-written templates applied to human-annotated Indic NLP datasets; no model generator)",
+   "hf": {
+    "card_licence": "apache-2.0",
+    "card_sha256": "2f7cbdd9c396f88047a69569e71141ba6c8c520133f7451d078dbc75f934c0fa",
+    "gated": false,
+    "last_modified": "2025-04-15T08:52:39.000Z",
+    "sha": "09069079fad96ad9c7f8781be8c1d70471dfa768"
+   },
+   "in_area_table": true,
+   "in_proposal_text": true,
+   "licence": "apache-2.0 (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [
+    "The source datasets are not named on the card."
+   ],
+   "reasons": [
+    "TSAI reserves: measurement only, not admitted"
+   ],
+   "selection": "10 templated Indic subsets with permissive source licences (PR #399; hindi_headline excluded, hindi_news pending TSAI), language in ben,guj,hin,kan,mal,mar,ory,pan,tam,tel, equal share of rows from the start of each",
+   "set": "sft-indic-aya-collection",
+   "source": "CohereLabs/aya_collection",
+   "track": "reserved"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "excluded",
+   "decision_class": "excluded",
+   "file_spec": null,
+   "flags": [],
+   "generator": "NLLB-3.3B (CC-BY-NC-4.0, non-commercial) machine translation; upstream English generator models not stated on the card",
+   "hf": {
+    "card_licence": "apache-2.0",
+    "card_sha256": "2f7cbdd9c396f88047a69569e71141ba6c8c520133f7451d078dbc75f934c0fa",
+    "gated": false,
+    "last_modified": "2025-04-15T08:52:39.000Z",
+    "sha": "09069079fad96ad9c7f8781be8c1d70471dfa768"
+   },
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "apache-2.0 (Hub tag)",
+   "licence_table_caveats": [
+    "Open question for TSAI: the card of `facebook/nllb-200-3.3B` gives the model licence as `cc-by-nc-4.0`.",
+    "Whether translations made with it carry that restriction is not for us to decide."
+   ],
+   "reasons": [
+    "licence decision is excluded",
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-indic-aya-collection-other",
+   "source": "CohereLabs/aya_collection",
+   "track": "out"
+  },
+  {
+   "adapter": true,
+   "area": "indic",
+   "decision": "TSAI reserves",
+   "decision_class": "reserved",
+   "file_spec": "data/train-00000-of-00001.parquet",
+   "flags": [],
+   "generator": "none (human-written annotations; no model generator)",
+   "hf": {
+    "card_licence": "apache-2.0",
+    "card_sha256": "3ac54f63eec84100c155571945da01c7c18cd8ec97ea94639e2b94a6860e8573",
+    "gated": false,
+    "last_modified": "2025-04-15T08:51:55.000Z",
+    "sha": "f9ea04583f02a8f86404ff6c58bf75fe637df8a2"
+   },
+   "in_area_table": true,
+   "in_proposal_text": true,
+   "licence": "apache-2.0 (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "TSAI reserves: measurement only, not admitted"
+   ],
+   "selection": "language_code in ben,guj,hin,kan,mal,mar,ory,pan,tam,tel",
+   "set": "sft-indic-aya-dataset",
+   "source": "CohereLabs/aya_dataset",
+   "track": "reserved"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "excluded",
+   "decision_class": "excluded",
+   "file_spec": null,
+   "flags": [],
+   "generator": "Unknown (not stated; the card is empty)",
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "mit (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [
+    "- **Generator model:** Not stated;"
+   ],
+   "reasons": [
+    "licence decision is excluded",
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-indic-code-oss-codes-coding",
+   "source": "oss-codes/Coding-Conversational-Dataset-Indic",
+   "track": "out"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "excluded",
+   "decision_class": "excluded",
+   "file_spec": null,
+   "flags": [],
+   "generator": "Unknown (not stated; the card is empty)",
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "mit (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [
+    "- **Generator model:** Not stated;"
+   ],
+   "reasons": [
+    "licence decision is excluded",
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-indic-code-oss-codes-cs",
+   "source": "oss-codes/Computer-Science-Conversational-Dataset-Indic",
+   "track": "out"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "excluded",
+   "decision_class": "excluded",
+   "file_spec": null,
+   "flags": [],
+   "generator": "Llama-2-70B-Chat (Llama 2 Community Licence, use restrictions) for many parts; Mistral-7B (Apache-2.0) in some parts",
+   "hf": {
+    "card_licence": "cc-by-4.0",
+    "card_sha256": "e38dac3a832c6ee2b7cacc70ae10893f3d051fe25003432e0bf62eaa00fb93af",
+    "gated": false,
+    "last_modified": "2024-07-25T03:38:13.000Z",
+    "sha": "032b6a9070e7f85f1a38e0506419f4590a20455a"
+   },
+   "in_area_table": false,
+   "in_proposal_text": true,
+   "licence": "cc-by-4.0 (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "licence decision is excluded",
+    "no adapter in convert.py ADAPTERS",
+    "named in the proposal text but not in the section 2 area table"
+   ],
+   "selection": null,
+   "set": "sft-indic-indic-align",
+   "source": "ai4bharat/indic-align",
+   "track": "out"
+  },
+  {
+   "adapter": true,
+   "area": "indic",
+   "decision": "allowed (CC-BY-SA, attribution needed)",
+   "decision_class": "allowed",
+   "file_spec": "indicalign-instruct/dolly/Dolly.parquet",
+   "flags": [],
+   "generator": "none for the text (human-written databricks-dolly-15k); translated with IndicTrans2 (MIT, open weights)",
+   "hf": {
+    "card_licence": "cc-by-4.0",
+    "card_sha256": "e38dac3a832c6ee2b7cacc70ae10893f3d051fe25003432e0bf62eaa00fb93af",
+    "gated": false,
+    "last_modified": "2024-07-25T03:38:13.000Z",
+    "sha": "032b6a9070e7f85f1a38e0506419f4590a20455a"
+   },
+   "in_area_table": false,
+   "in_proposal_text": true,
+   "licence": "cc-by-4.0 (Hub tag); source dolly cc-by-sa-3.0 (share-alike, attribution needed)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "named in the proposal text but not in the section 2 area table",
+    "allowed + adapter + in proposal, generator text shows no flag"
+   ],
+   "selection": "rows whose English question has no context passage in databricks-dolly-15k; one native-script column per row by sha256(doc_id) from ben_Beng,guj_Gujr,hin_Deva,kan_Knda,mal_Mlym,mar_Deva,ory_Orya,pan_Guru,tam_Taml,tel_Telu",
+   "set": "sft-indic-indic-align-dolly-t",
+   "source": "ai4bharat/indic-align",
+   "track": "allowed"
+  },
+  {
+   "adapter": true,
+   "area": "indic",
+   "decision": "TSAI reserves",
+   "decision_class": "reserved",
+   "file_spec": "indicalign-instruct/oasst/oasst.parquet",
+   "flags": [],
+   "generator": "none for the text (human-written OpenAssistant v1 conversations); translated with IndicTrans2 (MIT, open weights)",
+   "hf": {
+    "card_licence": "cc-by-4.0",
+    "card_sha256": "e38dac3a832c6ee2b7cacc70ae10893f3d051fe25003432e0bf62eaa00fb93af",
+    "gated": false,
+    "last_modified": "2024-07-25T03:38:13.000Z",
+    "sha": "032b6a9070e7f85f1a38e0506419f4590a20455a"
+   },
+   "in_area_table": false,
+   "in_proposal_text": true,
+   "licence": "cc-by-4.0 (Hub tag); source oasst1 apache-2.0",
+   "licence_table_caveats": [],
+   "reasons": [
+    "named in the proposal text but not in the section 2 area table",
+    "TSAI reserves: measurement only, not admitted"
+   ],
+   "selection": "one native-script column per row by sha256(doc_id) from ben_Beng,guj_Gujr,hin_Deva,kan_Knda,mal_Mlym,mar_Deva,ory_Orya,pan_Guru,tam_Taml,tel_Telu",
+   "set": "sft-indic-indic-align-oasst-t",
+   "source": "ai4bharat/indic-align",
+   "track": "reserved"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "TSAI reserves",
+   "decision_class": "reserved",
+   "file_spec": null,
+   "flags": [
+    "use_restricted_or_llama"
+   ],
+   "generator": "none: `wikihow` is native Hindi wikiHow text, `nmt-seed` is human-made BPCC-Human en-hi pairs; the other subsets (Llama-2-70B in `anudesh`, closed models in `lm_sys` and `hh-rlhf`) are not part of this set",
+   "hf": {
+    "card_licence": null,
+    "card_sha256": "1638a6c9f46b85588a2ec00b73ec9ae65815917e5b0ca9ca570cdeff47aaf04a",
+    "gated": false,
+    "last_modified": "2024-03-01T04:07:46.000Z",
+    "sha": "82cd1437a0a59eec714dfa9521b6efcdc907de00"
+   },
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "no Hub tag; per-subset licences stated in arXiv 2401.15006: `wikihow` CC-0, `nmt-seed` CC-BY-4.0",
+   "licence_table_caveats": [
+    "- **Decision:** `TSAI reserves` — human-written text, no generator model, permissive licences per the report."
+   ],
+   "reasons": [
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-indic-indic-instruct-hi",
+   "source": "ai4bharat/indic-instruct-data-v0.1",
+   "track": "out"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "excluded",
+   "decision_class": "excluded",
+   "file_spec": null,
+   "flags": [],
+   "generator": "GPT-4 (OpenAI, proprietary closed) via Orca-Math, then translated",
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "mit (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "licence decision is excluded",
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-indic-math-aryabhatta-orca-hi",
+   "source": "GenVRadmin/Aryabhatta-Orca-Maths-Hindi",
+   "track": "out"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "excluded",
+   "decision_class": "excluded",
+   "file_spec": null,
+   "flags": [],
+   "generator": "GPT-4 (OpenAI, proprietary closed) via Orca-Math, then translated",
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "mit (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "licence decision is excluded",
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-indic-math-orca-math-hi",
+   "source": "BhabhaAI/orca-math-word-problems-200k-hindi-filtered",
+   "track": "out"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "excluded",
+   "decision_class": "excluded",
+   "file_spec": null,
+   "flags": [],
+   "generator": "Unknown (not stated on the card or in Sarvam's announcement)",
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "apache-2.0 (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [
+    "- **Generator model:** Not stated on the card or in Sarvam's announcement;",
+    "unknown"
+   ],
+   "reasons": [
+    "licence decision is excluded",
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-indic-samvaad-hi",
+   "source": "sarvamai/samvaad-hi-v1",
+   "track": "out"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "excluded",
+   "decision_class": "excluded",
+   "file_spec": null,
+   "flags": [],
+   "generator": "Qwen3-235B-A22B (Updesh-G); Llama-3.1-405B-Instruct (translation) and Llama 3.3 70B (back-translation quality check) named; reasoning part translated from Microsoft Orca sets",
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "other: Microsoft Research License (non-commercial research use only, no redistribution)",
+   "licence_table_caveats": [
+    "- **Licence:** `other` — [Microsoft Research License](https://huggingface.co/datasets/microsoft/Updesh_beta/blob/main/LICENSE.md), read on 8 Nov 2026: \"use the Materials solely for non-commercial, non-revenue generating, research purposes\" and \"you may not distribute the data or your modifications to the data\".",
+    "- **Decision:** `excluded` — data licence rule: non-commercial licences are out.",
+    "- **Generator model:** Not named in the paper's main text (tests and issues are LLM-generated by back-translation from commits, arXiv 2504.07164);",
+    "The issue text and some tests are written by an LLM that the card and paper do not name;",
+    "- **Generator model:** Unknown."
+   ],
+   "reasons": [
+    "licence decision is excluded",
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-indic-updesh",
+   "source": "microsoft/Updesh_beta",
+   "track": "out"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "excluded",
+   "decision_class": "excluded",
+   "file_spec": null,
+   "flags": [],
+   "generator": "Closed & Llama models in Chatbot Arena (custom non-standard LMSYS agreement)",
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "LMSYS Agreement (custom terms, not standard permissive)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "licence decision is excluded",
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-lmsys-chat-1m",
+   "source": "lmsys/lmsys-chat-1m",
+   "track": "out"
+  },
+  {
+   "adapter": true,
+   "area": "general",
+   "decision": "allowed (CC-BY-SA, attribution needed)",
+   "decision_class": "allowed",
+   "file_spec": "glob:data/*.parquet",
+   "flags": [],
+   "generator": "gpt-oss-120b (Apache-2.0, open weights) for all solution traces",
+   "hf": {
+    "card_licence": [
+     "cc-by-4.0",
+     "cc-by-sa-4.0"
+    ],
+    "card_sha256": "f925874fce18ab9a774021109bb1e92512f28d0a9e6986fa58d2e86125fdf315",
+    "gated": false,
+    "last_modified": "2026-02-11T22:43:35.000Z",
+    "sha": "8e793210e175b6406c752a870f585f62de98c0d3"
+   },
+   "in_area_table": true,
+   "in_proposal_text": true,
+   "licence": "cc-by-4.0, cc-by-sa-4.0 (Hub tag; share-alike, attribution needed)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "allowed + adapter + in proposal, generator text shows no flag"
+   ],
+   "selection": "all 5 parquet files (high x3, medium, low); the jsonl copies of the same data are not read",
+   "set": "sft-math-nemotron-math-v2",
+   "source": "nvidia/Nemotron-Math-v2",
+   "track": "allowed"
+  },
+  {
+   "adapter": true,
+   "area": "general",
+   "decision": "allowed (CC-BY-SA, attribution needed)",
+   "decision_class": "allowed",
+   "file_spec": "data/lean.jsonl",
+   "flags": [],
+   "generator": "gpt-oss-120b (Apache-2.0) for statement formalisation and Goedel-Prover-V2-32B (Apache-2.0) for proofs",
+   "hf": {
+    "card_licence": "cc-by-sa-4.0",
+    "card_sha256": "7ba0e7f3cc813f292bc7465956113ce23215d6c50f6860a5a9da86264f230392",
+    "gated": false,
+    "last_modified": "2026-01-05T18:40:31.000Z",
+    "sha": "97229c590831adfe96202f5cd071d444d535bf91"
+   },
+   "in_area_table": true,
+   "in_proposal_text": true,
+   "licence": "cc-by-sa-4.0 (Hub tag; share-alike, attribution needed)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "allowed + adapter + in proposal, generator text shows no flag"
+   ],
+   "selection": "whole lean file",
+   "set": "sft-math-nemotron-proofs",
+   "source": "nvidia/Nemotron-Math-Proofs-v1",
+   "track": "allowed"
+  },
+  {
+   "adapter": true,
+   "area": "general",
+   "decision": "TSAI reserves",
+   "decision_class": "reserved",
+   "file_spec": "glob:data/*.jsonl",
+   "flags": [],
+   "generator": "DeepSeek-V4-Pro (MIT, open weights) writes the proof, refinement, verification and meta-verification traces; problems are human-written AoPS proof problems",
+   "hf": {
+    "card_licence": [
+     "cc-by-4.0"
+    ],
+    "card_sha256": "200128474435239fc530a048e31752405c532a3ea0f348ddb92d60e6b302c7f8",
+    "gated": false,
+    "last_modified": "2026-09-11T17:21:35.000Z",
+    "sha": "bdfde42d2d75c5f8fcc3e295bc150b15b42eaf17"
+   },
+   "in_area_table": false,
+   "in_proposal_text": true,
+   "licence": "cc-by-4.0 (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [
+    "Proof correctness is judged by model verifier traces, not by execution, so treat the traces as unverified proofs."
+   ],
+   "reasons": [
+    "named in the proposal text but not in the section 2 area table",
+    "TSAI reserves: measurement only, not admitted"
+   ],
+   "selection": "all 10 jsonl files",
+   "set": "sft-math-nemotron-proofs-v3-sft",
+   "source": "nvidia/Nemotron-Math-Proofs-v3-SFT",
+   "track": "reserved"
+  },
+  {
+   "adapter": true,
+   "area": "general",
+   "decision": "allowed (CC-BY-SA, attribution needed)",
+   "decision_class": "allowed",
+   "file_spec": "glob:data/",
+   "flags": [],
+   "generator": "DeepSeek-V4-Pro (MIT, open weights) writes all solutions; problems are human-written (AoPS, Math StackExchange) and only solutions that match the reference answer are kept",
+   "hf": {
+    "card_licence": [
+     "cc-by-4.0",
+     "cc-by-sa-4.0"
+    ],
+    "card_sha256": "f979f03a730d021537a6896211d55f6ef2dc2bdc629279720547c72a14de0986",
+    "gated": false,
+    "last_modified": "2026-08-12T11:25:33.000Z",
+    "sha": "84d42ad0cb960f07f951b9baa9ed2b46a5a18c66"
+   },
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "cc-by-4.0 (AoPS-derived), cc-by-sa-4.0 (Math StackExchange-derived) (Hub tags; share-alike on part, attribution needed)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": "all 12 shards",
+   "set": "sft-math-nemotron-sft-math-v4",
+   "source": "nvidia/Nemotron-SFT-Math-v4",
+   "track": "out"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "excluded",
+   "decision_class": "excluded",
+   "file_spec": null,
+   "flags": [],
+   "generator": "Unknown / closed (orca_math uses GPT-4 Turbo, OpenAI closed; synthetic_math and metamath generators not stated)",
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "apache-2.0 (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [
+    "- **Generator model:** Not stated on the card."
+   ],
+   "reasons": [
+    "licence decision is excluded",
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-math-numinamath-1.5",
+   "source": "project-numina/NuminaMath-1.5",
+   "track": "out"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "excluded",
+   "decision_class": "excluded",
+   "file_spec": null,
+   "flags": [],
+   "generator": "GPT-4 and GPT-4o (OpenAI, proprietary closed)",
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "apache-2.0 (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "licence decision is excluded",
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-math-numinamath-cot",
+   "source": "project-numina/NuminaMath-CoT",
+   "track": "out"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "excluded",
+   "decision_class": "excluded",
+   "file_spec": null,
+   "flags": [],
+   "generator": "Llama-3.1-405B-Instruct (Llama 3.1 Community Licence)",
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "cc-by-4.0 (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "licence decision is excluded",
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-math-openmathinstruct-2",
+   "source": "nvidia/OpenMathInstruct-2",
+   "track": "out"
+  },
+  {
+   "adapter": true,
+   "area": "general",
+   "decision": "TSAI reserves",
+   "decision_class": "reserved",
+   "file_spec": "glob:all/train-",
+   "flags": [],
+   "generator": "DeepSeek-R1 (MIT, open weights)",
+   "hf": {
+    "card_licence": "apache-2.0",
+    "card_sha256": "87a0390ba632618254d50c1614feb6a5a7803a28710118e1705bab18bda5e64e",
+    "gated": false,
+    "last_modified": "2025-02-18T11:45:27.000Z",
+    "sha": "e4e141ec9dea9f8326f4d347be56105859b2bd68"
+   },
+   "in_area_table": true,
+   "in_proposal_text": true,
+   "licence": "apache-2.0 (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "TSAI reserves: measurement only, not admitted"
+   ],
+   "selection": "config all, 20 shards",
+   "set": "sft-math-openr1-math",
+   "source": "open-r1/OpenR1-Math-220k",
+   "track": "reserved"
+  },
+  {
+   "adapter": true,
+   "area": "general",
+   "decision": "TSAI reserves",
+   "decision_class": "reserved",
+   "file_spec": "glob:data/",
+   "flags": [
+    "use_restricted_or_llama"
+   ],
+   "generator": "DeepSeek-R1 (MIT, open weights) writes the traces; Llama-3.3-70B-Instruct (Llama 3.3 Community Licence) is used only as a verifier",
+   "hf": {
+    "card_licence": "apache-2.0",
+    "card_sha256": "b8eb0875cd0292815251f950e07db7aafbbbff1d33459ba38928b12d931ccbfb",
+    "gated": false,
+    "last_modified": "2025-02-24T15:22:26.000Z",
+    "sha": "8d393c2b3e26e522ba5a9f57ded43211a55e65c7"
+   },
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "apache-2.0 (Hub tag; commercial use permitted per tag; inherits NuminaMath-1.5 overlap, keep rows with a passing `correctness` flag)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": "all 39 shards; first generation, rows whose first generation passes llama_verification",
+   "set": "sft-math-openr1-math-raw",
+   "source": "open-r1/OpenR1-Math-Raw",
+   "track": "out"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "excluded",
+   "decision_class": "excluded",
+   "file_spec": null,
+   "flags": [],
+   "generator": "GPT-4 (OpenAI, proprietary closed) generated Python tool-integrated reasoning traces",
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "apache-2.0 (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "licence decision is excluded",
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-numinamath-tir",
+   "source": "AI-MO/NuminaMath-TIR",
+   "track": "out"
+  },
+  {
+   "adapter": true,
+   "area": "general",
+   "decision": "TSAI reserves",
+   "decision_class": "reserved",
+   "file_spec": "data/train-00000-of-00001-88ba0162028a73fc.parquet",
+   "flags": [],
+   "generator": "none for human turns (`synthetic=False`, human-written crowdsourced messages; filter out any `synthetic=True` nodes)",
+   "hf": {
+    "card_licence": "apache-2.0",
+    "card_sha256": "52bd472cf3cae04a4b21ecd5316f929741c47d991d4763b041c3a94de072dc31",
+    "gated": false,
+    "last_modified": "2024-01-11T06:09:29.000Z",
+    "sha": "179dd21fc55192153d94adb0e0ce8f69e222bf75"
+   },
+   "in_area_table": true,
+   "in_proposal_text": true,
+   "licence": "Apache-2.0",
+   "licence_table_caveats": [],
+   "reasons": [
+    "TSAI reserves: measurement only, not admitted"
+   ],
+   "selection": "best-ranked reply at each step; not deleted, not synthetic, ready_for_export trees",
+   "set": "sft-oasst2",
+   "source": "OpenAssistant/oasst2",
+   "track": "reserved"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "excluded",
+   "decision_class": "excluded",
+   "file_spec": null,
+   "flags": [],
+   "generator": "GPT-4 (OpenAI, proprietary closed), Mixtral-8x7B (Apache-2.0), and Llama (Llama licence)",
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "apache-2.0 (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "licence decision is excluded",
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-openhermes-2.5",
+   "source": "teknium/OpenHermes-2.5",
+   "track": "out"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "excluded",
+   "decision_class": "excluded",
+   "file_spec": null,
+   "flags": [],
+   "generator": "GPT-4o (OpenAI, proprietary closed) for problem synthesis and test-input generators; QwQ-32B (Apache-2.0) for the long-reasoning solutions (paper, arXiv 2505.21297)",
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "cc-by-4.0 (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "licence decision is excluded",
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-rl-code-rstar-coder",
+   "source": "microsoft/rStar-Coder",
+   "track": "out"
+  },
+  {
+   "adapter": true,
+   "area": "general",
+   "decision": "TSAI reserves",
+   "decision_class": "reserved",
+   "file_spec": "glob:data/cot-",
+   "flags": [],
+   "generator": "DeepSeek-R1 (MIT) and QwQ-32B (Apache-2.0, both open weights)",
+   "hf": {
+    "card_licence": "cc-by-4.0",
+    "card_sha256": "976666d0a4848732990c96e3b1111ec4938f215b212b3ee8231ad10052d905e6",
+    "gated": false,
+    "last_modified": "2025-05-27T18:43:44.000Z",
+    "sha": "d3d08664755704f422af97d43a7ff0ded4bd95df"
+   },
+   "in_area_table": true,
+   "in_proposal_text": true,
+   "licence": "cc-by-4.0 (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "TSAI reserves: measurement only, not admitted"
+   ],
+   "selection": "all 144 cot shards",
+   "set": "sft-rl-math-openmathreasoning",
+   "source": "nvidia/OpenMathReasoning",
+   "track": "reserved"
+  },
+  {
+   "adapter": false,
+   "area": "safety",
+   "decision": "TSAI reserves",
+   "decision_class": "reserved",
+   "file_spec": null,
+   "flags": [],
+   "generator": "Mistral-7B-v0.1 (Apache-2.0) responses with NVIDIA human safety annotations (prompts from HH-RLHF, MIT)",
+   "hf": {
+    "card_licence": "cc-by-4.0",
+    "card_sha256": "5cea7efa47c4029ea9b04e266a4cabf53d8a771335ecac60961a8b256cba3592",
+    "gated": false,
+    "last_modified": "2025-06-09T19:15:15.000Z",
+    "sha": "bd96d862068e47630197de64eb91f8d1481ff3e0"
+   },
+   "in_area_table": true,
+   "in_proposal_text": true,
+   "licence": "CC-BY-4.0; card also contains research-purpose/dialogue-training restrictions",
+   "licence_table_caveats": [
+    "card also contains research-purpose/dialogue-training restrictions"
+   ],
+   "reasons": [
+    "no adapter in convert.py ADAPTERS"
+   ],
+   "selection": null,
+   "set": "sft-safety-aegis-v1",
+   "source": "nvidia/Aegis-AI-Content-Safety-Dataset-1.0",
+   "track": "out"
+  },
+  {
+   "adapter": false,
+   "area": "safety",
+   "decision": "excluded",
+   "decision_class": "excluded",
+   "file_spec": null,
+   "flags": [],
+   "generator": "Google Translate API (Google, closed) + unnamed LLMs (unknown generator)",
+   "in_area_table": true,
+   "in_proposal_text": true,
+   "licence": "CC-BY-4.0",
+   "licence_table_caveats": [],
+   "reasons": [
+    "licence decision is excluded",
+    "no adapter in convert.py ADAPTERS"
+   ],
+   "selection": null,
+   "set": "sft-safety-indicguard",
+   "source": "l3cube-pune/IndicGuard",
+   "track": "out"
+  },
+  {
+   "adapter": false,
+   "area": "safety",
+   "decision": "excluded",
+   "decision_class": "excluded",
+   "file_spec": null,
+   "flags": [],
+   "generator": "Mixtral-8x22B (Apache-2.0) and Mixtral-8x7B (Apache-2.0), but uses Google Translate (Google, closed) and Llama/Nemotron jury (Llama licence)",
+   "in_area_table": true,
+   "in_proposal_text": true,
+   "licence": "CC-BY-4.0",
+   "licence_table_caveats": [],
+   "reasons": [
+    "licence decision is excluded",
+    "no adapter in convert.py ADAPTERS"
+   ],
+   "selection": null,
+   "set": "sft-safety-nemotron-guard-v3",
+   "source": "nvidia/Nemotron-Safety-Guard-Dataset-v3",
+   "track": "out"
+  },
+  {
+   "adapter": false,
+   "area": "safety",
+   "decision": "excluded",
+   "decision_class": "excluded",
+   "file_spec": null,
+   "flags": [],
+   "generator": "Unknown English response/reasoning generator (not named on the card); Riva-Translate-4B-Instruct-v1.1 translates",
+   "in_area_table": true,
+   "in_proposal_text": true,
+   "licence": "CC-BY-4.0; additional Apache-2.0 / MIT terms",
+   "licence_table_caveats": [
+    "- **Generator model:** English response/reasoning model not named on the card;"
+   ],
+   "reasons": [
+    "licence decision is excluded",
+    "no adapter in convert.py ADAPTERS"
+   ],
+   "selection": null,
+   "set": "sft-safety-nemotron-sft-v2",
+   "source": "nvidia/Nemotron-SFT-Safety-v2",
+   "track": "out"
+  },
+  {
+   "adapter": false,
+   "area": "safety",
+   "decision": "excluded",
+   "decision_class": "excluded",
+   "file_spec": null,
+   "flags": [],
+   "generator": "GPT-4 and GPT-3.5 (OpenAI, proprietary closed) + Mixtral-8x7B (Apache-2.0)",
+   "in_area_table": true,
+   "in_proposal_text": true,
+   "licence": "ODC-By; gated AI2 conditions",
+   "licence_table_caveats": [],
+   "reasons": [
+    "licence decision is excluded",
+    "no adapter in convert.py ADAPTERS"
+   ],
+   "selection": null,
+   "set": "sft-safety-wildjailbreak",
+   "source": "allenai/wildjailbreak",
+   "track": "out"
+  },
+  {
+   "adapter": true,
+   "area": "tool_use",
+   "decision": "TSAI reserves",
+   "decision_class": "reserved",
+   "file_spec": "xlam_function_calling_60k.json",
+   "flags": [
+    "use_restricted_or_llama"
+   ],
+   "generator": "Mixtral-8x22B-Instruct (Apache-2.0, open weights) and DeepSeek-V2-Chat (DeepSeek Licence; keep only Mixtral-8x22B-Instruct Apache-2.0 rows if split by generator) via Salesforce APIGen (arXiv 2406.18518)",
+   "hf": {
+    "card_licence": "cc-by-4.0",
+    "card_sha256": "8564c08b4555289ef4bb488f876ea4d7505d18e9f09edd9ec7869e6d0bbe523f",
+    "gated": "auto",
+    "last_modified": "2025-01-24T19:25:58.000Z",
+    "sha": "26d14ebfe18b1f7b524bd39b404b50af5dc97866"
+   },
+   "in_area_table": true,
+   "in_proposal_text": true,
+   "licence": "cc-by-4.0 (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "data-rule flag: use_restricted_or_llama"
+   ],
+   "selection": "all rows",
+   "set": "sft-salesforce-xlam-60k",
+   "source": "Salesforce/xlam-function-calling-60k",
+   "track": "hold"
+  },
+  {
+   "adapter": true,
+   "area": "general",
+   "decision": "TSAI reserves",
+   "decision_class": "reserved",
+   "file_spec": "PHD-Science.jsonl",
+   "flags": [],
+   "generator": "GLM-5.1 (MIT, open weights) generates reasoning and final answers (`PHD-Science` Apache-2.0 config only)",
+   "hf": {
+    "card_licence": "apache-2.0",
+    "card_sha256": "7700fadabf6d1df81dccdd4b0d3f2d893f5fb27c8a32cb1ed65dc599156762a2",
+    "gated": false,
+    "last_modified": "2026-04-19T05:05:17.000Z",
+    "sha": "f6d6ccafe40359d5ec2515ee25e92aac8cae9c3d"
+   },
+   "in_area_table": true,
+   "in_proposal_text": true,
+   "licence": "Apache-2.0 (cleaned and upstream publisher cards)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "TSAI reserves: measurement only, not admitted"
+   ],
+   "selection": "PHD-Science config",
+   "set": "sft-science-glm51-phd",
+   "source": "Jackrong/GLM-5.1-Reasoning-1M-Cleaned",
+   "track": "reserved"
+  },
+  {
+   "adapter": true,
+   "area": "general",
+   "decision": "TSAI reserves",
+   "decision_class": "reserved",
+   "file_spec": "data/MCQ.jsonl",
+   "flags": [],
+   "generator": "gpt-oss-120b (Apache-2.0, open weights)",
+   "hf": {
+    "card_licence": "cc-by-4.0",
+    "card_sha256": "c04f6658322f7ba8c185c9fc48d4f766680f84b7e0760e43ed92eb7baf7a00d6",
+    "gated": false,
+    "last_modified": "2025-12-15T03:40:01.000Z",
+    "sha": "82e1af468197076b4f0f392c239274eac032adc7"
+   },
+   "in_area_table": true,
+   "in_proposal_text": true,
+   "licence": "cc-by-4.0 (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "TSAI reserves: measurement only, not admitted"
+   ],
+   "selection": "MCQ file",
+   "set": "sft-science-nemotron-science",
+   "source": "nvidia/Nemotron-Science-v1",
+   "track": "reserved"
+  },
+  {
+   "adapter": true,
+   "area": "general",
+   "decision": "allowed (CC-BY-SA, attribution needed)",
+   "decision_class": "allowed",
+   "file_spec": "syn_mcq.jsonl",
+   "flags": [
+    "modified_mit_generator"
+   ],
+   "generator": "GPT-OSS (Apache-2.0), Kimi-K2-Instruct (Modified MIT), DeepSeek-V3.2 (MIT), DeepSeek-V4-Pro (MIT)",
+   "hf": {
+    "card_licence": "cc-by-sa-4.0",
+    "card_sha256": "0e43bc4fe2f72bf17535f2294ca8698d6ddf4ea0b6a432af310fa709ce6b32f1",
+    "gated": false,
+    "last_modified": "2026-06-04T04:50:29.000Z",
+    "sha": "6536a5021222a94126968e8c92f29ee47fc8a7df"
+   },
+   "in_area_table": true,
+   "in_proposal_text": true,
+   "licence": "CC-BY-SA-4.0 (attribution and share-alike obligations)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "data-rule flag: modified_mit_generator"
+   ],
+   "selection": "syn_mcq file",
+   "set": "sft-science-nemotron-science-v2",
+   "source": "nvidia/Nemotron-SFT-Science-v2",
+   "track": "hold"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "TSAI reserves",
+   "decision_class": "reserved",
+   "file_spec": null,
+   "flags": [],
+   "generator": "DeepSeek-R1 (MIT) writes every response; these prompts are human competition problems or come from sets already `TSAI reserves` in this table",
+   "hf": {
+    "card_licence": "cc-by-4.0",
+    "card_sha256": "65713d9fade612aea4637d9c16e49e099a26e4f4ff37e33933acd15cd71dc447",
+    "gated": false,
+    "last_modified": "2025-06-18T19:01:52.000Z",
+    "sha": "5ac692742de9f2481f8274d022dc78d5fc96c249"
+   },
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "cc-by-4.0 (Hub tag and card text; commercial use permitted per tag)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-stem-code-acereason-1.1-sft",
+   "source": "nvidia/AceReason-1.1-SFT",
+   "track": "out"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "excluded",
+   "decision_class": "excluded",
+   "file_spec": null,
+   "flags": [],
+   "generator": "DeepSeek-R1 (MIT) writes the responses, but the prompts come from GPT-4 / GPT-4o text (NuminaMath-CoT, Magicoder Evol-Instruct), from a set whose card names no generator (opc-sft-stage2), or from LeetCode problem text with no stated licence",
+   "hf": {
+    "card_licence": "cc-by-4.0",
+    "card_sha256": "65713d9fade612aea4637d9c16e49e099a26e4f4ff37e33933acd15cd71dc447",
+    "gated": false,
+    "last_modified": "2025-06-18T19:01:52.000Z",
+    "sha": "5ac692742de9f2481f8274d022dc78d5fc96c249"
+   },
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "cc-by-4.0 (Hub tag) on the release; upstream prompt licences closed or unstated",
+   "licence_table_caveats": [
+    "the OpenCoder opc-sft-stage2 card (MIT) names no generator and its `evol_instruct` part is Magicoder Evol-Instruct again;",
+    "- **Generator model:** DeepSeek-R1 (MIT, open weights) writes the responses, but the prompts were written or rewritten by closed OpenAI models (NuminaMath-CoT, Magicoder) or by a model the card does not name (opc-sft-stage2)."
+   ],
+   "reasons": [
+    "licence decision is excluded",
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-stem-code-acereason-1.1-sft-other",
+   "source": "nvidia/AceReason-1.1-SFT",
+   "track": "out"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "excluded",
+   "decision_class": "excluded",
+   "file_spec": null,
+   "flags": [],
+   "generator": "DeepSeek-R1-0528 (MIT) and Qwen3-235B-A22B (Apache-2.0); built for Llama-3.3-Nemotron-Super under NVIDIA/Llama terms",
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "cc-by-4.0 (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "licence decision is excluded",
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-stem-code-nemotron-post-v1",
+   "source": "nvidia/Nemotron-Post-Training-Dataset-v1",
+   "track": "out"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "excluded",
+   "decision_class": "excluded",
+   "file_spec": null,
+   "flags": [],
+   "generator": "DeepSeek-R1-0528 (MIT), Qwen3-235B-A22B (Apache-2.0), Qwen3-30B-A3B (Apache-2.0), Qwen2.5-14B-Instruct (Apache-2.0) and Qwen2.5-32B-Instruct-AWQ (Apache-2.0); card does not map models to subsets",
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "cc-by-4.0 (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "licence decision is excluded",
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-stem-code-nemotron-post-v2",
+   "source": "nvidia/Nemotron-Post-Training-Dataset-v2",
+   "track": "out"
+  },
+  {
+   "adapter": true,
+   "area": "general",
+   "decision": "TSAI reserves",
+   "decision_class": "reserved",
+   "file_spec": "glob:data/*.parquet",
+   "flags": [],
+   "generator": "QwQ-32B (Apache-2.0, open weights)",
+   "hf": {
+    "card_licence": "apache-2.0",
+    "card_sha256": "8bc5c1c91e5fce307d33b049701606f2a3fb73521c4bae89e16cdacf1aa9b2e1",
+    "gated": false,
+    "last_modified": "2025-06-09T16:14:06.000Z",
+    "sha": "61bcf9d4eb38b30295efc2021227a63cc5bb34c8"
+   },
+   "in_area_table": true,
+   "in_proposal_text": true,
+   "licence": "apache-2.0 (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "TSAI reserves: measurement only, not admitted"
+   ],
+   "selection": "all 120 parquet shards",
+   "set": "sft-stem-code-openthoughts3",
+   "source": "open-thoughts/OpenThoughts3-1.2M",
+   "track": "reserved"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "needs TSAI decision",
+   "decision_class": "undecided",
+   "file_spec": null,
+   "flags": [
+    "use_restricted_or_llama"
+   ],
+   "generator": "Mixtral-8x22B (Apache-2.0) rewrites questions and answers built on APIGen (xLAM) data, which includes DeepSeek-V2-Chat rows (DeepSeek Licence); rows carry no generator field",
+   "hf": {
+    "card_licence": "cc-by-4.0",
+    "card_sha256": "14217217ba73b9421b5c8ac9b35b0c210836212ea007b65ec866513fdb67aa75",
+    "gated": false,
+    "last_modified": "2025-04-29T00:14:10.000Z",
+    "sha": "0582f7749df63a96fdc3070932e83e72396ace53"
+   },
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "cc-by-4.0 (Hub tag; attribution needed); `train_sft` and `train_pref` only, the test split is built from BFCL v2 Live",
+   "licence_table_caveats": [],
+   "reasons": [
+    "licence decision is 'needs TSAI decision', neither allowed nor TSAI reserves",
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-tool-when2call",
+   "source": "nvidia/When2Call",
+   "track": "out"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "excluded",
+   "decision_class": "excluded",
+   "file_spec": null,
+   "flags": [],
+   "generator": "Llama-3.1-70B / Llama-3.1-405B (Llama 3.1 Community Licence) and GPT-4o (OpenAI, closed)",
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "odc-by (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "licence decision is excluded",
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-tulu3-filtered",
+   "source": "allenai/tulu-3-sft-mixture",
+   "track": "out"
+  },
+  {
+   "adapter": false,
+   "area": null,
+   "decision": "excluded",
+   "decision_class": "excluded",
+   "file_spec": null,
+   "flags": [],
+   "generator": "GPT-3.5 / GPT-4 (OpenAI, proprietary closed) in OpenBMB UltraInteract tree construction",
+   "in_area_table": false,
+   "in_proposal_text": false,
+   "licence": "mit (Hub tag; commercial use permitted per tag)",
+   "licence_table_caveats": [],
+   "reasons": [
+    "licence decision is excluded",
+    "no adapter in convert.py ADAPTERS",
+    "not named in sft_mix_proposal.md (#391)"
+   ],
+   "selection": null,
+   "set": "sft-ultradata-cot-agent",
+   "source": "openbmb/UltraInteract_sft",
+   "track": "out"
+  }
+ ]
+}

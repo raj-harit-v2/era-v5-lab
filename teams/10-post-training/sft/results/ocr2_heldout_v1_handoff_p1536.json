@@ -1,0 +1,39 @@
+{
+ "checks": {
+  "every_family_held_under_rule": true,
+  "families_equal_manifest": true,
+  "id_list_sha256_equals_manifest": true,
+  "ids_unique": true,
+  "rows_by_shard_equal_manifest": true,
+  "rows_by_source_equal_manifest": true,
+  "rows_equal_manifest": true,
+  "rule_in_manifest_equals_policy": true
+ },
+ "families": 317,
+ "families_not_held_under_rule": 0,
+ "family_list_sha256": "4aee753af62fbcc5b856af0e4351b17ac2c58b205b9703fbe2d482a81089838f",
+ "id_list_sha256": "193d589d942ec54b44c64ddf66d32af7f3a99ea842689b1275d6881f6bced7f1",
+ "ok": true,
+ "pack_manifest": {
+  "name": "ocr2_pack_v1_p1536_manifest.json",
+  "sha256": "fab395750fad3329c6b612493641f37c42792e46219a521fca74c30e21b7783b"
+ },
+ "private_bundle_note": "the id list and family list are private (ids and keys only, no text); TSAI receives them through a job request, and Git holds only these hashes",
+ "rows": 8507,
+ "rows_by_source": {
+  "apps/train": 2550,
+  "code_contests/train": 1225,
+  "taco/train": 4732
+ },
+ "schema": "g10-ocr2-heldout-handoff/1",
+ "shards_with_heldout_rows": 70,
+ "split_rule": {
+  "code": "sft/pack_admission.py heldout_selector",
+  "fraction": 0.02,
+  "function": "held(family) = int.from_bytes(sha256(salt + '\\n' + family)[:8], 'big') < fraction * 2**64",
+  "random_seed": null,
+  "salt": "g10-ocr2-heldout-eval-v1",
+  "seed_note": "deterministic salted hash: the salt and fraction are the split seed",
+  "unit": "problem family key"
+ }
+}

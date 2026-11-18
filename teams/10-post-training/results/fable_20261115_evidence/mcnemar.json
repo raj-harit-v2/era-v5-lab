@@ -1,0 +1,34 @@
+{
+ "loram vs dtm17b-s1": {
+  "n": 110,
+  "a_valid": 81,
+  "b_valid": 76,
+  "a_only": 19,
+  "b_only": 14,
+  "p_exact": 0.4869
+ },
+ "loram vs lora17b-s1": {
+  "n": 110,
+  "a_valid": 81,
+  "b_valid": 84,
+  "a_only": 14,
+  "b_only": 17,
+  "p_exact": 0.7201
+ },
+ "loram vs full17b-s1": {
+  "n": 110,
+  "a_valid": 81,
+  "b_valid": 93,
+  "a_only": 7,
+  "b_only": 19,
+  "p_exact": 0.029
+ },
+ "dtm vs lora": {
+  "n": 110,
+  "a_valid": 76,
+  "b_valid": 84,
+  "a_only": 10,
+  "b_only": 18,
+  "p_exact": 0.1849
+ }
+}

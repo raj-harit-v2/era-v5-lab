@@ -1,0 +1,97 @@
+{
+ "checks": {
+  "checks_failed": {},
+  "checks_ok": true,
+  "effort_rows": {
+   "16k": 0,
+   "1k": 0,
+   "4k": 0,
+   "64k": 34
+  },
+  "files": [
+   {
+    "bytes": 22347346,
+    "name": "sft-math-nemotron-proofs-v3-sft.first1000.jsonl",
+    "sha256": "d18bb50628180a3ae698c13df29ff6ee8c1381defe4b9d21553cc718e4fa82ce"
+   }
+  ],
+  "info": {},
+  "length": {
+   "max": 67634,
+   "min": 35960,
+   "p50": 58877,
+   "p95": 67409
+  },
+  "max_len": 32768,
+  "rows": 34,
+  "rows_over_max_len": 34,
+  "rows_with_tool_blocks": 0,
+  "shifted_supervised_targets": 1853549,
+  "tokens": 1885993,
+  "tool_call_blocks": 0,
+  "tool_call_tokens_untrained": 0,
+  "tool_result_blocks": 0,
+  "train_spans": 34,
+  "trained_share": 0.982797,
+  "trained_tokens": 1853549,
+  "unique_ids": true
+ },
+ "checks_wall_s": 2.55,
+ "content_sha256": "d18bb50628180a3ae698c13df29ff6ee8c1381defe4b9d21553cc718e4fa82ce",
+ "convert": {
+  "cpu_sys_s": 49.604,
+  "cpu_user_s": 300.213,
+  "hub_bytes_read": 696011606,
+  "max_rss_mb": 1845.4,
+  "wall_s": 196.97
+ },
+ "decision": "TSAI reserves",
+ "deterministic_rerun": true,
+ "effort_manifest": {
+  "16k": 0,
+  "1k": 0,
+  "4k": 0,
+  "64k": 34
+ },
+ "file_bytes": 22347346,
+ "file_sha256": "d18bb50628180a3ae698c13df29ff6ee8c1381defe4b9d21553cc718e4fa82ce",
+ "generator_model": "DeepSeek-V4-Pro (MIT, open weights) writes the proof, refinement, verification and meta-verification traces; problems are human-written AoPS proof problems",
+ "hub_revision": "bdfde42d2d75c5f8fcc3e295bc150b15b42eaf17",
+ "input": "hub file nvidia/Nemotron-Math-Proofs-v3-SFT glob:data/*.jsonl rows 0..999999999",
+ "licence": "cc-by-4.0 (Hub tag; commercial use permitted per tag)",
+ "rerun_content_sha256": "d18bb50628180a3ae698c13df29ff6ee8c1381defe4b9d21553cc718e4fa82ce",
+ "rerun_wall_s": 190.031,
+ "rows_in": 1000,
+ "rows_out": 34,
+ "rows_per_s_convert": 5.08,
+ "rows_scanned": 1000,
+ "scope": "first 1000 selected rows, source order, C3",
+ "selection": "all 10 jsonl files",
+ "set": "sft-math-nemotron-proofs-v3-sft",
+ "skipped": {
+  "trace over the 64k effort budget": 966
+ },
+ "source": "nvidia/Nemotron-Math-Proofs-v3-SFT",
+ "token_record": {
+  "basis": "first 1000 selected rows, source order, C3; not the admissible kept rows",
+  "effort": {
+   "16k": 0,
+   "1k": 0,
+   "4k": 0,
+   "64k": 34
+  },
+  "length": {
+   "max": 67634,
+   "min": 35960,
+   "p50": 58877,
+   "p95": 67409
+  },
+  "rows": 34,
+  "sequence_tokens": 1885993,
+  "set_id": "sft-math-nemotron-proofs-v3-sft",
+  "shifted_supervised_targets": 1853549,
+  "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3"
+ },
+ "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3",
+ "tokens_per_s_convert": 9575
+}

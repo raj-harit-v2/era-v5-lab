@@ -51,7 +51,7 @@ Paths are from the repository root.
 |---|---|
 | [`teams/01-data-a/spec_v1_1/tests/test_medicine_english.py`](tests/test_medicine_english.py), [`test_medicine_math.py`](tests/test_medicine_math.py), [`test_medicine_sci.py`](tests/test_medicine_sci.py), [`test_medicine_indic.py`](tests/test_medicine_indic.py) | Unit tests of the new medicines, one file per sheet. All text in them is made up |
 | [`teams/01-data-a/spec_v1_1/tests/test_code_lang_label.py`](tests/test_code_lang_label.py) | TSAI's Gate 2 request: a code rule (`DA-A1-001`) fires on a doc labelled `lang_label = "code"` |
-| [`teams/01-data-a/spec_v1_1/tests/test_combine_spec.py`](tests/test_combine_spec.py) | `combine_spec.py`'s tests, and that `specv1_1.md` is up to date |
+| [`teams/01-data-a/spec_v1_1/tests/test_combine_spec.py`](tests/test_combine_spec.py) | `combine_spec.py`'s tests |
 
 **5. This guide:** [`teams/01-data-a/spec_v1_1/README.md`](README.md).
 

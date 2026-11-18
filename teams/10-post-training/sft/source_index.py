@@ -36,7 +36,11 @@ from typing import Iterator
 MANIFEST_SCHEMA = "g10-ocr2-source-manifest/1"
 INDEX_SCHEMA = "g10-ocr2-source-index/1"
 MAX_ORDINAL = 2**63 - 1
-IDENTITY_LEVELS = ("verified", "diagnostic")
+# verified: per-row identity reviewed and signed off. pinned_revision: the source repo and exact revision are
+# recorded and every file hash equals the Hub object at that revision (the 14 Nov 2026 TSAI rule for TACO, APPS
+# and code_contests). diagnostic: evidence for review only. Which levels admit a row is the policy's call
+# (pack.accepted_identity_levels); diagnostic never does.
+IDENTITY_LEVELS = ("verified", "pinned_revision", "diagnostic")
 KINDS = ("parquet", "jsonl", "arrow", "statement_extraction")
 ASSEMBLIES = ("question", "description", "codeforces")
 _CANONICAL_INT = re.compile(r"0|[1-9][0-9]*")

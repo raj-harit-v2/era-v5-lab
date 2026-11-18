@@ -1,0 +1,26 @@
+[
+ {
+  "role": "system",
+  "content": "You can call tools. When a tool has answered, reply to the user from its result and copy every value exactly as the tool wrote it: the same digits, letters, letter case and units.\nTools: [{\"description\": \"Current weather for a city.\", \"name\": \"get_weather\", \"parameters\": {\"properties\": {\"city\": {\"type\": \"string\"}, \"unit\": {\"enum\": [\"celsius\", \"fahrenheit\"], \"type\": \"string\"}}, \"required\": [\"city\"], \"type\": \"object\"}}]"
+ },
+ {
+  "role": "user",
+  "content": "What is the temperature in Nagpur right now?"
+ },
+ {
+  "role": "assistant",
+  "tool_calls": [
+   {
+    "name": "get_weather",
+    "arguments": {
+     "city": "Nagpur",
+     "unit": "celsius"
+    }
+   }
+  ]
+ },
+ {
+  "role": "tool",
+  "content": "{\"city\": \"Nagpur\", \"temperature\": 31.6, \"feels_like\": 34.2, \"humidity_pct\": 41, \"unit\": \"celsius\"}"
+ }
+]

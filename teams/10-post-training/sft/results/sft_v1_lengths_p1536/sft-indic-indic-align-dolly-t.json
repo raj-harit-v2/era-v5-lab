@@ -1,0 +1,58 @@
+{
+ "schema": "g10-sft-v1-lengths/1",
+ "set": "sft-indic-indic-align-dolly-t",
+ "area": "indic",
+ "tokenizer_sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b",
+ "rows_read": 10541,
+ "filter": {
+  "keep_ids": true,
+  "status": null
+ },
+ "fit_rule": "a row fits L when its whole token count is <= L",
+ "note": "admitted rows (after decontam, held-out and the 32,768 limit)",
+ "rows": 10541,
+ "tokens": 1795934,
+ "shifted_targets": 1296485,
+ "by_limit": {
+  "2048": {
+   "rows_fit": 10526,
+   "rows_fit_share": 0.998577,
+   "tokens_fit": 1753374,
+   "tokens_fit_share": 0.976302,
+   "shifted_targets_fit": 1261171,
+   "tokens_if_truncated": 1784094
+  },
+  "4096": {
+   "rows_fit": 10540,
+   "rows_fit_share": 0.999905,
+   "tokens_fit": 1789035,
+   "tokens_fit_share": 0.996159,
+   "shifted_targets_fit": 1296117,
+   "tokens_if_truncated": 1793131
+  },
+  "8192": {
+   "rows_fit": 10541,
+   "rows_fit_share": 1.0,
+   "tokens_fit": 1795934,
+   "tokens_fit_share": 1.0,
+   "shifted_targets_fit": 1296485,
+   "tokens_if_truncated": 1795934
+  },
+  "32768": {
+   "rows_fit": 10541,
+   "rows_fit_share": 1.0,
+   "tokens_fit": 1795934,
+   "tokens_fit_share": 1.0,
+   "shifted_targets_fit": 1296485,
+   "tokens_if_truncated": 1795934
+  }
+ },
+ "length": {
+  "min": 28,
+  "p50": 126,
+  "p90": 318,
+  "p99": 865,
+  "max": 6899,
+  "mean": 170.4
+ }
+}

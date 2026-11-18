@@ -9,6 +9,9 @@ using the rules from Session 15:
   4. throughput_drop (warn): tokens_per_second drops > 10% below the trailing 100-step
                          mean for 100 consecutive steps (step 0 setup is skipped).
   5. moe_routing (warn): expert_load MaxVio > 1.0 or dead_experts > 0 for moe_patience steps.
+  6. static_bound (warn): optional (lo, hi) bounds per metric, edge-triggered (off unless `bounds` is passed).
+  7. val_regression (warn): optional; validation_bpb or validation_loss more than val_regression_frac above its
+                         best value so far for val_patience validation runs in a row (off unless the fraction is set).
 
 Usage:
   python -I alarms.py --synthetic 3000
@@ -18,6 +21,7 @@ from collections import deque
 import argparse, json, math, random, sys
 
 SPIKE_METRICS = ("loss_ntp", "loss_mtp", "gradient_norm", "loss")
+VAL_METRICS = ("validation_bpb", "validation_loss")   # lower is better; only validation rows carry them
 SCALAR_METRICS = (
     "loss_ntp", "loss_mtp", "loss", "gradient_norm", "lr",
     "tokens_per_second", "gpu_alloc_gib", "gpu_alloc_gb",
@@ -114,6 +118,8 @@ class AlarmMonitor:
         moe_max_vio_limit=1.0,
         moe_patience=1000,
         bounds=None,
+        val_regression_frac=None,
+        val_patience=1,
     ):
         self.window = window
         self.min_window = min(min_window, window)
@@ -126,6 +132,8 @@ class AlarmMonitor:
         self.moe_max_vio_limit = moe_max_vio_limit
         self.moe_patience = moe_patience
         self.bounds = dict(bounds) if bounds else {}
+        self.val_regression_frac = val_regression_frac
+        self.val_patience = val_patience
 
         self._trailing = {m: _TrailingStats(window) for m in SPIKE_METRICS}
         self._ema_mu = None
@@ -137,6 +145,8 @@ class AlarmMonitor:
         self._moe_bad_streak = {}
         self._moe_last_step = {}
         self._bound_latched = set()
+        self._val_best = {}
+        self._val_streak = {}
 
     def check(self, step, metric, value):
         """Check a single metric at `step` and return a list of alarm dicts."""
@@ -158,6 +168,7 @@ class AlarmMonitor:
                 "last_step": dict(self._moe_last_step),
             },
             "bound_latched": [list(x) for x in sorted(self._bound_latched)],
+            "val": {"best": dict(self._val_best), "streak": dict(self._val_streak)},
         }
 
     def load_state_dict(self, state):
@@ -197,6 +208,12 @@ class AlarmMonitor:
             for item in (state.get("bound_latched") or ())
             if isinstance(item, (list, tuple)) and len(item) == 2
         }
+        val = state.get("val") or {}  # absent in checkpoints written before val_regression
+        self._val_best = {
+            str(k): f for k, f in ((k, _to_float(v)) for k, v in (val.get("best") or {}).items())
+            if f is not None and math.isfinite(f)
+        }
+        self._val_streak = {str(k): int(v) for k, v in (val.get("streak") or {}).items()}
 
     def step(self, step, **metrics):
         """Inspect one step's metrics and return a list of fired alarm dicts."""
@@ -393,6 +410,37 @@ class AlarmMonitor:
                     })
             else:
                 self._bound_latched.discard((name, "hi"))
+
+        # 7. Optional validation regression: a validation metric above its best so far by more than
+        # val_regression_frac, for val_patience validation runs in a row. Fires once per streak; a new best resets it.
+        if self.val_regression_frac is not None:
+            for name in VAL_METRICS:
+                if name not in metrics or name in nonfinite_names:
+                    continue
+                x = _to_float(metrics[name])
+                if x is None or not math.isfinite(x):
+                    continue
+                best = self._val_best.get(name)
+                if best is None or x < best:
+                    self._val_best[name] = x
+                    self._val_streak[name] = 0
+                    continue
+                if x > best * (1.0 + self.val_regression_frac):
+                    self._val_streak[name] = self._val_streak.get(name, 0) + 1
+                    if self._val_streak[name] == self.val_patience:
+                        rise = (x / best - 1.0) * 100.0
+                        alarms.append({
+                            "step": step,
+                            "metric": name,
+                            "rule": "val_regression",
+                            "severity": "warn",
+                            "value": x,
+                            "best": best,
+                            "detail": (f"{name}={x:.4g} is {rise:.1f}% above its best {best:.4g} "
+                                       f"for {self.val_patience} validation run(s)"),
+                        })
+                else:
+                    self._val_streak[name] = 0
 
         return alarms
 

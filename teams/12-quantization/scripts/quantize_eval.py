@@ -1,23 +1,39 @@
 #!/usr/bin/env python3
-"""G12 week 1: bf16 baseline + llama.cpp quantization ladder + eval, one command.
+"""G12: bf16 baseline + llama.cpp quantization ladder + eval, one command.
 
-    python teams/12-quantization/scripts/quantize_eval.py --eval <eval_mini_v0.json>
+    python teams/12-quantization/scripts/quantize_eval.py --eval <eval_mini_v0.json>                 # a Hub model (week 1)
+    python teams/12-quantization/scripts/quantize_eval.py --checkpoint <run dir> \\
+        --tokenizer teams/03-tokenizer/release/tokenizer.json --eval <items.json>                    # our checkpoint (week 3)
 
 Steps (each one is skipped when its output already exists, so a rerun resumes):
-  1. download the HF checkpoint (plain HTTPS, pinned revision)
+  1. get the Hugging Face model folder:
+       --model/--revision   download it from the Hub (plain HTTPS, pinned revision)
+       --checkpoint         a G5 checkpoint (train_week2.py run folder, checkpoint.pt or model.safetensors) is
+                            exported with export_hf.py as Granite MoE Shared, and test A1 (same logits as G5's model)
+                            must pass; a folder that already has config.json is used as it is. After step 2,
+                            check_gguf_logits.py (test A3) compares llama.cpp on the bf16 GGUF with G5's model and
+                            its result is reported
   2. convert it to a bf16 GGUF with llama.cpp's convert_hf_to_gguf.py, at the same llama.cpp
-     build as the installed binaries (a private Python 3.12 venv is made for this step only)
+     build as the installed binaries (a private Python 3.12 venv is made for steps 1 and 2 only).
+     With --tokenizer the GGUF carries that tokenizer.json (it must have --tokenizer-sha256, default the frozen
+     tokenizer, p1536) and the pre-tokenizer is set to granite-embed-multi-97m, the only llama.cpp type that splits
+     Indic text like tokenizer.json does (docs/unsupported_parts.md, section 4a). --roundtrip then runs
+     tokenizer/gguf_roundtrip.py on the GGUF: the same token ids as tokenizer.json on held-out text. Its exit code
+     (0 same ids, 2 only the dropped normalizer differs, 1 anything else) is reported, and does not stop the run
   3. quantize to each format; router gates (ffn_gate_inp) are never quantized by llama.cpp
      and the output layer is forced to Q8_0; both are checked in the GGUF and written to runs.csv.
      Each GGUF's SHA-256 is written to runs/manifest_<date>.json (same folder as runs.csv)
   4. serve each GGUF with llama-server, run the eval, append one row per format to runs.csv
+
+Out: the GGUF files in --work, one runs.csv row per format, and --scores-out (default <work>/<name>-scores.json):
+the checkpoint and tokenizer hashes, the A1 result, and for each format the file, its SHA-256, size and scores.
 
 Needs: llama.cpp binaries on PATH (brew install llama.cpp) or --llama-bin, and uv or python3.12.
 Big files live in --work (default ~/.cache/era-v5-quant), never in the repo.
 Disk: about 14 GB HF + 14 GB bf16 GGUF + 28 GB for the six quants (use --delete-hf / --cleanup to save space).
 """
 import argparse, csv, datetime, hashlib, json, os, platform, random, re, shutil, signal, socket, subprocess, sys, time
-import urllib.parse, urllib.request
+import urllib.error, urllib.parse, urllib.request
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
@@ -25,6 +41,18 @@ DEFAULT_RUNS = REPO_ROOT / 'teams/12-quantization/runs/runs.csv'
 DEFAULT_FORMATS = 'bf16,Q8_0,Q6_K,Q5_K_M,Q4_K_M,Q3_K_M,Q2_K'
 RUN_FIELDS = ['date', 'model', 'revision', 'format', 'bpw', 'size_gb', 'router_type', 'output_type', 'eval_set',
               'n_items', 'score', 'score_by_kind', 'quant_time_s', 'eval_time_s', 'gen_tok_s', 'machine', 'runtime', 'notes']
+EXPORT_HF = Path(__file__).resolve().with_name('export_hf.py')
+CHECK_GGUF = Path(__file__).resolve().with_name('check_gguf_logits.py')
+TOKENIZER_DIR = REPO_ROOT / 'teams/12-quantization/tokenizer'
+ROUNDTRIP_PACKAGES = ['llama-cpp-python==0.3.36', 'datasets==4.8.5', 'regex']  # the versions in gguf_roundtrip.py
+ROUNDTRIP_VERDICT = {0: 'same token ids on every line', 2: 'differences only on lines the normalizer changes (GGUF has no normalizer)',
+                     1: 'differences the dropped normalizer does not explain, on lines or in the whole-vocabulary check: read the report'}
+# teams/03-tokenizer/release/README.md: the frozen tokenizer, p1536 (16 Nov 2026; it replaced C3 sample-v0)
+FROZEN_TOKENIZER_SHA256 = 'e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b'
+PRE_TOKENIZER = 'granite-embed-multi-97m'
+TOKENIZER_FILES = ('tokenizer.json', 'tokenizer_config.json', 'tokenizer.model', 'special_tokens_map.json',
+                   'vocab.json', 'merges.txt', 'added_tokens.json', 'chat_template.jinja', 'chat_template.json')
+WINDOWS = platform.system() == 'Windows'
 
 
 def log(*a):
@@ -64,7 +92,7 @@ def record_manifest(runs_csv, gguf, fmt, model, revision):
 
 # ---------------------------------------------------------------- environment
 def find_bin(name, bindir):
-    p = Path(bindir) / name if bindir else shutil.which(name)
+    p = Path(bindir) / (name + '.exe' if WINDOWS else name) if bindir else shutil.which(name)
     if not p or not Path(p).exists():
         sys.exit(f'{name} not found. Install llama.cpp (brew install llama.cpp) or pass --llama-bin.')
     return str(p)
@@ -129,18 +157,112 @@ def convert_env(work, tag):
     if not (src / 'convert_hf_to_gguf.py').exists():
         run(['git', 'clone', '--depth', '1', '--branch', tag, 'https://github.com/ggml-org/llama.cpp', src])
     venv = work / '.venv-convert'
-    py = venv / 'bin' / 'python'
+    py = venv / 'Scripts' / 'python.exe' if WINDOWS else venv / 'bin' / 'python'
+    extra = [src / 'gguf-py', 'pyarrow<19']
     if not py.exists():
         req = src / 'requirements/requirements-convert_hf_to_gguf.txt'
         if shutil.which('uv'):
             run(['uv', 'venv', '--python', '3.12', venv])
             run(['uv', 'pip', 'install', '--python', py, '-r', req, '--index-strategy', 'unsafe-best-match'])
-            run(['uv', 'pip', 'install', '--python', py, src / 'gguf-py', 'pyarrow<19'])
+            run(['uv', 'pip', 'install', '--python', py, *extra])
         else:
             base = shutil.which('python3.12') or sys.exit('need uv or python3.12 for the conversion venv')
             run([base, '-m', 'venv', venv])
-            run([py, '-m', 'pip', 'install', '-r', req, src / 'gguf-py', 'pyarrow<19'])
+            run([py, '-m', 'pip', 'install', '-r', req, *extra])
     return src, py
+
+
+def convert(py, src, model_dir, outfile, pre=None):
+    """HF folder -> bf16 GGUF. `pre` sets the pre-tokenizer type by name: the stock converter stops on a tokenizer
+    whose hash it does not know ("BPE pre-tokenizer was not recognized"), and ours is not in its list."""
+    if pre is None:
+        return run([py, src / 'convert_hf_to_gguf.py', model_dir, '--outtype', 'bf16', '--outfile', outfile])
+    sys.path.insert(0, str(TOKENIZER_DIR))
+    import gguf_roundtrip  # the forced pre-tokenizer conversion that tokenizer/convert_frozen.py uses
+    log(f'$ convert_hf_to_gguf.py (pre-tokenizer {pre}) {model_dir} --outtype bf16 --outfile {outfile}')
+    gguf_roundtrip.convert(src, model_dir, pre, outfile, 'bf16', py)
+
+
+def tokenizer_ids(tokenizer_json):
+    """Number of ids a tokenizer.json needs in the embedding table."""
+    t = json.loads(Path(tokenizer_json).read_text(encoding='utf-8'))
+    return 1 + max(max(t['model']['vocab'].values()), max((a['id'] for a in t.get('added_tokens', [])), default=0))
+
+
+def stage_tokenizer(model_dir, tokenizer_json, out, bos, eos):
+    """`out` = the model folder's files (links, or copies where the file system has no links) with its own tokenizer
+    files replaced by tokenizer.json. As stage() in tokenizer/convert_frozen.py, which uses symlinks; Windows refuses
+    those without a privilege, so this one makes hard links or copies."""
+    have = json.loads((model_dir / 'config.json').read_text(encoding='utf-8')).get('vocab_size', 0)
+    if have < tokenizer_ids(tokenizer_json):
+        sys.exit(f'refusing: the tokenizer has {tokenizer_ids(tokenizer_json):,} ids, the checkpoint\'s embedding table {have:,}')
+    out.mkdir(parents=True, exist_ok=True)
+    for f in model_dir.iterdir():
+        if f.name in TOKENIZER_FILES or (out / f.name).exists() or not f.is_file(): continue
+        try: os.link(f, out / f.name)
+        except OSError: shutil.copyfile(f, out / f.name)
+    shutil.copyfile(tokenizer_json, out / 'tokenizer.json')
+    (out / 'tokenizer_config.json').write_text(json.dumps(
+        {'tokenizer_class': 'PreTrainedTokenizerFast', 'bos_token': bos, 'eos_token': eos}), encoding='utf-8')
+    return out
+
+
+def prepare_checkpoint(args, py, work, name):
+    """--checkpoint -> (HF folder ready for the converter, export report or None)."""
+    ckpt = Path(args.checkpoint).expanduser()
+    if (ckpt / 'config.json').exists():  # already a Hugging Face folder
+        return (stage_tokenizer(ckpt, Path(args.tokenizer), work / 'hf' / name, args.bos, args.eos) if args.tokenizer else ckpt), None
+    if not args.tokenizer:
+        sys.exit('--checkpoint is a G5 checkpoint, which has no tokenizer: pass --tokenizer <tokenizer.json>')
+    out = work / 'hf' / name
+    report = out / 'export_report.json'
+    if not report.exists():  # the report is written last, so a folder without it is a broken export
+        if out.exists(): shutil.rmtree(out)
+        run([py, EXPORT_HF, '--checkpoint', ckpt, '--out', out, '--tokenizer', args.tokenizer, '--bos', args.bos,
+             '--eos', args.eos, '--verify', args.verify, *(['--spec', args.spec] if args.spec else [])])
+    return out, json.loads(report.read_text(encoding='utf-8'))
+
+
+def roundtrip(args, py, src, work, name, bf16):
+    """Run tokenizer/gguf_roundtrip.py on the bf16 GGUF: does llama.cpp give the token ids of tokenizer.json?"""
+    out = work / f'{name}-roundtrip'
+    result = out / 'result.json'
+    if not result.exists():
+        if subprocess.run([str(py), '-c', 'import llama_cpp, datasets, regex'], capture_output=True).returncode:
+            run(['uv', 'pip', 'install', '--python', py, *ROUNDTRIP_PACKAGES] if shutil.which('uv')
+                else [py, '-m', 'pip', 'install', *ROUNDTRIP_PACKAGES])
+        cmd = [py, TOKENIZER_DIR / 'gguf_roundtrip.py', '--tokenizer', args.tokenizer, '--name', name, '--gguf', bf16,
+               '--normalize-first', '--llama-cpp', src, '--work', work / 'roundtrip', '--out', out, '--pre', PRE_TOKENIZER,
+               '--bos', args.bos, '--eos', args.eos]
+        log('$', ' '.join(map(str, cmd)))
+        code = subprocess.run(list(map(str, cmd)), env=dict(os.environ, PYTHONUTF8='1')).returncode
+        if code not in ROUNDTRIP_VERDICT or not (out / f'gguf_roundtrip_{name}.md').exists():
+            sys.exit(f'the tokenizer round trip did not finish (exit code {code})')
+        result.write_text(json.dumps(dict(exit_code=code, verdict=ROUNDTRIP_VERDICT[code],
+                                          report=str(out / f'gguf_roundtrip_{name}.md'))), encoding='utf-8')
+    r = json.loads(result.read_text(encoding='utf-8'))
+    log(f'tokenizer round trip: exit code {r["exit_code"]}, {r["verdict"]}. Report: {r["report"]}')
+    return r
+
+
+def checkpoint_weights(path):
+    """The file that holds the weights of a --checkpoint (hashed for its name and the revision column)."""
+    path = Path(path).expanduser()
+    if path.is_file(): return path
+    found = [path / n for n in ('checkpoint.pt', 'model.safetensors') if (path / n).exists()] or sorted(path.glob('*.safetensors'))
+    if not found: sys.exit(f'{path}: no checkpoint.pt or *.safetensors')
+    return found[0]
+
+
+def gguf_meta(py, gguf):
+    """Architecture, trained context, pre-tokenizer, vocabulary size and EOS id of a GGUF, using gguf-py."""
+    code = ('import sys,json; from gguf import GGUFReader\n'
+            'r=GGUFReader(sys.argv[1]); f=r.fields\n'
+            'def s(k): return f[k].contents() if k in f else None\n'
+            'a=s("general.architecture")\n'
+            'print(json.dumps(dict(arch=a,n_ctx_train=s(a+".context_length"),pre=s("tokenizer.ggml.pre"),'
+            'n_vocab=len(f["tokenizer.ggml.tokens"].data),eos_id=s("tokenizer.ggml.eos_token_id"))))')
+    return json.loads(subprocess.run([str(py), '-c', code, str(gguf)], capture_output=True, text=True, check=True).stdout)
 
 
 def tensor_types(py, gguf):
@@ -158,7 +280,7 @@ def tensor_types(py, gguf):
 
 # ---------------------------------------------------------------- eval data
 def load_eval(path):
-    data = json.load(open(path))
+    data = json.load(open(path, encoding='utf-8'))
     items = data.get('items') or data.get('data') or data.get('questions') if isinstance(data, dict) else data
     out = []
     for i, it in enumerate(items):
@@ -194,7 +316,7 @@ def make_standin(path, py, n_each=100, seed=0):
     out = subprocess.run([str(py), '-c', code, str(files['mmlu']), str(files['gsm8k']), str(n_each), str(seed)],
                          capture_output=True, text=True, check=True).stdout
     items = json.loads(out)
-    json.dump({'name': f'standin-v0 (mmlu{n_each}+gsm8k{n_each}, seed {seed})', 'items': items}, open(path, 'w'), indent=1)
+    json.dump({'name': f'standin-v0 (mmlu{n_each}+gsm8k{n_each}, seed {seed})', 'items': items}, open(path, 'w', encoding='utf-8'), indent=1)
     log(f'stand-in eval written: {path} ({len(items)} items)')
 
 
@@ -247,9 +369,9 @@ def free_port():
     s = socket.socket(); s.bind(('127.0.0.1', 0)); p = s.getsockname()[1]; s.close(); return p
 
 
-def evaluate(server_bin, gguf, items, args):
+def evaluate(server_bin, gguf, items, args, ctx):
     port = free_port()
-    cmd = [server_bin, '-m', str(gguf), '--port', str(port), '-ngl', str(args.ngl), '-c', str(args.ctx), '--temp', '0',
+    cmd = [server_bin, '-m', str(gguf), '--port', str(port), '-ngl', str(args.ngl), '-c', str(ctx), '--temp', '0',
            '--seed', '0', '--no-webui', '-np', '1']
     log('$', ' '.join(cmd))
     srv = subprocess.Popen(cmd, stdout=subprocess.DEVNULL, stderr=open(Path(args.work) / 'llama-server.log', 'ab'))
@@ -261,7 +383,7 @@ def evaluate(server_bin, gguf, items, args):
             except Exception: pass
             if srv.poll() is not None: sys.exit(f'llama-server exited, see {args.work}/llama-server.log')
             time.sleep(1)
-        correct, by_kind, tps, t0 = 0, {}, [], time.time()
+        correct, by_kind, tps, rejected, t0 = 0, {}, [], 0, time.time()
         for n, it in enumerate(items, 1):
             max_tok = args.max_tokens_mcq if it['kind'] == 'mcq' else args.max_tokens
             if args.prompt_mode == 'chat':
@@ -270,7 +392,14 @@ def evaluate(server_bin, gguf, items, args):
                 url, body = '/v1/completions', {'prompt': completion_prompt_for(it), 'stop': STOP}
             body.update(temperature=0, seed=0, max_tokens=max_tok)
             req = urllib.request.Request(base + url, json.dumps(body).encode(), {'Content-Type': 'application/json'})
-            r = json.load(urllib.request.urlopen(req, timeout=600))
+            try:
+                r = json.load(urllib.request.urlopen(req, timeout=600))
+            except urllib.error.HTTPError as e:
+                if e.code != 400: raise
+                # the server refuses a prompt longer than the context (small test models). The item counts as
+                # wrong and the number of such items goes into the row, so the score is never silently partial.
+                rejected += 1
+                r = {'choices': [{'text': '', 'message': {'content': ''}}]}
             c = r['choices'][0]
             text = (c['message']['content'] if args.prompt_mode == 'chat' else c['text']) or ''
             ok = score_item(it, text)
@@ -279,9 +408,9 @@ def evaluate(server_bin, gguf, items, args):
             if r.get('timings', {}).get('predicted_per_second'): tps.append(r['timings']['predicted_per_second'])
             if n % 25 == 0: log(f'  {n}/{len(items)} acc so far {correct / n:.3f}')
         return dict(score=correct / len(items), by_kind={k: round(a / b, 4) for k, (a, b) in by_kind.items()},
-                    eval_time=time.time() - t0, tps=sum(tps) / len(tps) if tps else 0)
+                    eval_time=time.time() - t0, tps=sum(tps) / len(tps) if tps else 0, rejected=rejected)
     finally:
-        srv.send_signal(signal.SIGINT)
+        srv.terminate() if WINDOWS else srv.send_signal(signal.SIGINT)  # Windows has no SIGINT for a child process
         try: srv.wait(30)
         except subprocess.TimeoutExpired: srv.kill()
 
@@ -291,6 +420,20 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('--model', default='allenai/OLMoE-1B-7B-0924')
     ap.add_argument('--revision', default='6d84c48581ece794365f2b8e9cfb043c68ade9c5')
+    ap.add_argument('--checkpoint', help='our own checkpoint instead of --model: a G5 run folder, checkpoint.pt or '
+                    'model.safetensors (exported with export_hf.py), or a Hugging Face folder with config.json')
+    ap.add_argument('--spec', help='model settings for a G5 checkpoint without a manifest.json beside it (see export_hf.py)')
+    ap.add_argument('--name', help='name for the files and the model column (default: the checkpoint folder or file name)')
+    ap.add_argument('--tokenizer', help='tokenizer.json to put into the GGUF; needed for a G5 checkpoint')
+    ap.add_argument('--tokenizer-sha256', default=FROZEN_TOKENIZER_SHA256,
+                    help='SHA-256 that --tokenizer must have (default: the frozen tokenizer, p1536)')
+    ap.add_argument('--bos', default='<|begin_of_text|>')
+    ap.add_argument('--eos', default='<|endoftext|>', help='end of document in the frozen tokenizer')
+    ap.add_argument('--verify', type=int, default=64, help='prompts for test A1 during the export of a G5 checkpoint')
+    ap.add_argument('--roundtrip', action='store_true', help='also run tokenizer/gguf_roundtrip.py on the bf16 GGUF: llama.cpp '
+                    'must give the token ids of --tokenizer on held-out text (downloads about 20 MB the first time)')
+    ap.add_argument('--no-a3', action='store_true', help="skip test A3 (llama.cpp on the bf16 GGUF against G5's model)")
+    ap.add_argument('--scores-out', help='JSON with the files, hashes and scores of this run (default: <work>/<name>-scores.json)')
     ap.add_argument('--prompt-mode', choices=['auto', 'chat', 'completion'], default='auto',
                     help='auto = chat for *Instruct* models, few-shot completion for base models')
     ap.add_argument('--formats', default=DEFAULT_FORMATS, help='comma list; bf16 = the unquantized baseline')
@@ -310,8 +453,22 @@ def main():
     args = ap.parse_args()
 
     work = Path(args.work).expanduser(); work.mkdir(parents=True, exist_ok=True); args.work = str(work)
+    tok_sha = None
+    if args.roundtrip and not args.tokenizer: ap.error('--roundtrip needs --tokenizer')
+    if args.tokenizer:  # checked first: a wrong tokenizer must not cost an export and a conversion
+        tok_sha = file_sha256(args.tokenizer)
+        if tok_sha != args.tokenizer_sha256.lower():
+            sys.exit(f'refusing: {args.tokenizer} has sha256 {tok_sha}, asked for {args.tokenizer_sha256}')
+    if args.checkpoint:
+        weights = checkpoint_weights(args.checkpoint)
+        ckpt_sha = file_sha256(weights)
+        base = args.name or (weights.parent.name if weights.name in ('checkpoint.pt', 'model.safetensors') else weights.stem)
+        # the weights' hash is in every file name, so a new checkpoint under an old name never reuses old files
+        name, model, revision = f'{base}-{ckpt_sha[:8]}', base, ckpt_sha
+    else:
+        name, model, revision = args.model.split('/')[-1], args.model, args.revision
     if args.prompt_mode == 'auto':
-        args.prompt_mode = 'chat' if re.search(r'instruct|chat', args.model, re.I) else 'completion'
+        args.prompt_mode = 'chat' if re.search(r'instruct|chat', model, re.I) else 'completion'
     qbin, sbin = (find_bin(b, args.llama_bin) for b in ('llama-quantize', 'llama-server'))
     build, commit = llama_build(sbin)  # llama-quantize does not print its version
     tag = llama_tag(build, commit)
@@ -319,14 +476,40 @@ def main():
     machine = machine_string()
     log(f'{runtime} | {machine}')
 
-    name = args.model.split('/')[-1]
     hf_dir, bf16 = work / 'hf' / name, work / f'{name}-bf16.gguf'
     src, py = convert_env(work, tag)
-    if not bf16.exists():
+    export = None
+    if args.checkpoint:
+        if (work / 'hf' / name / 'export_report.json').exists() or not bf16.exists():
+            model_dir, export = prepare_checkpoint(args, py, work, name)
+            if not bf16.exists(): convert(py, src, model_dir, bf16, PRE_TOKENIZER if args.tokenizer else None)
+    elif not bf16.exists():
         hf_download(args.model, args.revision, hf_dir)
-        run([py, src / 'convert_hf_to_gguf.py', hf_dir, '--outtype', 'bf16', '--outfile', bf16])
+        if args.tokenizer:
+            convert(py, src, stage_tokenizer(hf_dir, Path(args.tokenizer), work / 'hf' / f'{name}-staged', args.bos, args.eos),
+                    bf16, PRE_TOKENIZER)
+        else:
+            convert(py, src, hf_dir, bf16)
+    info = gguf_meta(py, bf16)
+    if args.tokenizer and (info['pre'] != PRE_TOKENIZER or info['n_vocab'] < tokenizer_ids(args.tokenizer)):
+        sys.exit(f'{bf16.name} does not carry --tokenizer (pre-tokenizer {info["pre"]}, {info["n_vocab"]:,} tokens): '
+                 f'it was made without it; delete it and rerun')
+    a3 = None
+    if export is not None and not args.no_a3:  # test A3: llama.cpp on the bf16 GGUF against G5's model
+        a3_path = work / f'{name}-a3.json'
+        if not a3_path.exists():
+            subprocess.run([str(py), str(CHECK_GGUF), '--checkpoint', str(Path(args.checkpoint).expanduser()), '--gguf', str(bf16),
+                            '--llama-server', sbin, '--out', str(a3_path), *(['--spec', args.spec] if args.spec else [])])
+        if not a3_path.exists(): sys.exit('test A3 did not run (see the error above); --no-a3 skips it')
+        a3 = json.loads(a3_path.read_text(encoding='utf-8'))
+        if not a3['passed']:  # reported, not fatal: the limit is not calibrated on a trained checkpoint yet
+            log(f'WARNING: A3 failed: same top-1 on {a3["same_top1"]}/{a3["prompts"]} prompts, max log-probability '
+                f'difference {a3["max_abs_logprob_diff"]:.4f}. Read check_gguf_logits.py before trusting the scores.')
+    trip = roundtrip(args, py, src, work, name, bf16) if args.roundtrip else None
     if args.delete_hf and hf_dir.exists():
         shutil.rmtree(hf_dir); log('deleted HF download')
+    ctx = min(args.ctx, info['n_ctx_train'] or args.ctx)  # never serve past the length the model was trained on
+    if ctx < args.ctx: log(f'context {ctx} (the model\'s trained length), not --ctx {args.ctx}')
 
     if args.eval:
         eval_path = Path(args.eval)
@@ -336,10 +519,14 @@ def main():
     items = load_eval(eval_path)
     if args.limit is not None:  # seeded sample so a smoke test covers every subset
         items = random.Random(0).sample(items, min(args.limit, len(items)))
-    meta = json.load(open(eval_path))
+    meta = json.load(open(eval_path, encoding='utf-8'))
     eval_name = (meta.get('name') if isinstance(meta, dict) else None) or eval_path.name
     log(f'eval: {eval_name}, {len(items)} items')
 
+    scores_path = Path(args.scores_out).expanduser() if args.scores_out else work / f'{name}-scores.json'
+    scores = dict(model=model, revision=revision, checkpoint=str(args.checkpoint or ''), tokenizer_sha256=tok_sha,
+                  gguf=info, export_a1=(export or {}).get('verify'), gguf_a3=a3, tokenizer_roundtrip=trip, runtime=runtime, machine=machine,
+                  eval_set=eval_name, n_items=len(items), prompt_mode=args.prompt_mode, context=ctx, formats=[])
     n_params = None
     for fmt in [f.strip() for f in args.formats.split(',') if f.strip()]:
         out = bf16 if fmt.lower() == 'bf16' else work / f'{name}-{fmt}.gguf'
@@ -364,14 +551,16 @@ def main():
         if n_params is None:  # bf16 = 2 bytes per weight
             n_params = bf16.stat().st_size / 2
         if not args.no_record:  # hash before eval, so a failed eval still records the file that was measured
-            record_manifest(args.runs_csv, out, fmt, args.model, args.revision)
-        res = evaluate(sbin, out, items, args)
-        row = dict(date=datetime.date.today().isoformat(), model=args.model, revision=args.revision[:12], format=fmt,
+            record_manifest(args.runs_csv, out, fmt, model, revision)
+        res = evaluate(sbin, out, items, args, ctx)
+        row = dict(date=datetime.date.today().isoformat(), model=model, revision=revision[:12], format=fmt,
                    bpw=round(8 * size / n_params, 2), size_gb=round(size / 1e9, 2), router_type=types['router'],
                    output_type=types['output'], eval_set=eval_name, n_items=len(items), score=round(res['score'], 4),
                    score_by_kind=json.dumps(res['by_kind']), quant_time_s=round(qtime, 1), eval_time_s=round(res['eval_time'], 1),
                    gen_tok_s=round(res['tps'], 1), machine=machine, runtime=runtime,
-                   notes='; '.join(x for x in [f'prompt={args.prompt_mode}', args.notes, f'limit={args.limit}' if args.limit is not None else ''] if x))
+                   notes='; '.join(x for x in [f'prompt={args.prompt_mode}', args.notes, f'limit={args.limit}' if args.limit is not None else '',
+                                               f'tokenizer={tok_sha[:12]}' if tok_sha else '',
+                                               f'{res["rejected"]} prompts over the context' if res['rejected'] else ''] if x))
         log(f'{fmt}: score {row["score"]} {row["score_by_kind"]} | {row["size_gb"]} GB, {row["bpw"]} bpw | '
             f'quant {row["quant_time_s"]}s, eval {row["eval_time_s"]}s, {row["gen_tok_s"]} tok/s')
         if not args.no_record:
@@ -381,8 +570,13 @@ def main():
                 w = csv.DictWriter(f, fieldnames=RUN_FIELDS)
                 if new: w.writeheader()
                 w.writerow(row)
+        # written after every format, so a run that stops half way still leaves the scores it has
+        scores['formats'].append(dict(row, score_by_kind=res['by_kind'], file=str(out), sha256=file_sha256(out),
+                                      size_bytes=size, prompts_over_context=res['rejected']))
+        scores_path.write_text(json.dumps(scores, indent=2) + '\n', encoding='utf-8')
         if args.cleanup and out != bf16:
             out.unlink(); log(f'deleted {out.name}')
+    log(f'scores: {scores_path}')
 
 
 if __name__ == '__main__':

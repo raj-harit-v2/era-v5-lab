@@ -9,8 +9,9 @@ A training pack needs more, and this is the one place that checks all of it:
 run level (any one of these is a blocker; `--mode training` then writes nothing and exits 3)
     the set is `allowed` in the policy AND in licences/licence_table.md; the join ran in admission mode;
     policy, source manifest, sidecar and render are the exact files the join and the scan were bound to;
-    the teacher is known and approved; every source that supplied a row is approved for training, is
-    identity-verified and has known statement terms and attribution; the tokenizer and the fingerprint
+    the teacher is known and approved; every source that supplied a row is approved for training, has an
+    identity level the policy accepts (`pack.accepted_identity_levels`, default verified only; diagnostic
+    never) and has known statement terms and attribution; the tokenizer and the fingerprint
     set are the approved ones; the scan was the full set with zero canaries and a zero-hit second pass
     over the retained file; a context limit is set; the run is not a test fixture.
 
@@ -20,8 +21,16 @@ row level (a failing row is rejected and counted; the others still pass)
     mask recompute exactly; at least one shifted assistant target exists (loss_mask[1:]); the sequence
     fits the context limit.
 
+held-out split (only when the policy has `pack.heldout_eval_v1`)
+    a row that passed every row check goes to the held-out file instead of the pack when the salted
+    sha256 of its problem family key falls under `fraction`. The unit is the problem family (exact
+    statement identity across sources), so a held-out problem has no completion in the pack. In training
+    mode the held-out rows are written to `<out stem>.heldout_eval_v1<suffix>` with their own sha256.
+    Nothing is deleted: setting the fraction to 0 folds them back.
+
 `--mode report` runs the same checks, never writes rows and exits 0: it says what would block a pack.
-`clean rows = pack rejected + pack admitted` always holds. The pack manifest is a small JSON written by
+`clean rows = pack rejected + row checks passed` and `row checks passed = train rows + held-out rows`
+always hold. The pack manifest is a small JSON written by
 `run_ocr2.py` (paths relative to its own folder). Keep packs and reports with ids out of Git.
 """
 
@@ -52,6 +61,9 @@ ROW_OUTCOMES = (
 )
 
 
+ENCODE_CHUNK = 256  # rows per tokenizer.encode_batch call in the row check; 1 reproduces the per-row path
+
+
 class PackError(Exception):
     """An input of the admission check cannot be read (exit code 2)."""
 
@@ -80,8 +92,27 @@ def _percentile(sorted_values: list[int], q: float) -> int | None:
     return sorted_values[min(len(sorted_values) - 1, int(q * len(sorted_values)))]
 
 
-def row_outcome(row: dict, entry: dict | None, policy: dict, tok, limit: int | None) -> tuple[str, int, int]:
-    """(outcome, tokens, shifted targets) of one retained row. `entry` is its sidecar line."""
+def heldout_selector(policy: dict):
+    """The policy's held-out rule as a function of a problem family key, or None when there is no hold-out."""
+    spec = (policy.get("pack") or {}).get("heldout_eval_v1")
+    if not spec or spec.get("fraction", 0) == 0:
+        return None
+    threshold, salt = int(spec["fraction"] * 2**64), spec["salt"]
+
+    def held(family: str) -> bool:
+        digest = hashlib.sha256(f"{salt}\n{family}".encode("utf-8")).digest()
+        return int.from_bytes(digest[:8], "big") < threshold
+    return held
+
+
+def heldout_path(out_path: Path) -> Path:
+    return out_path.with_name(f"{out_path.stem}.heldout_eval_v1{out_path.suffix}")
+
+
+def row_outcome(row: dict, entry: dict | None, policy: dict, tok, limit: int | None, enc=None) -> tuple[str, int, int]:
+    """(outcome, tokens, shifted targets) of one retained row. `entry` is its sidecar line.
+
+    `enc` is the row text already encoded by `tok` (a batched caller passes it); None encodes here."""
     if entry is None:
         return "rejected_unmapped_id", 0, 0
     if row.get("set") != join.SET_ID or row.get("source_id") != entry["ocr_id"]:
@@ -96,7 +127,8 @@ def row_outcome(row: dict, entry: dict | None, policy: dict, tok, limit: int | N
     ids, mask = row.get("input_ids"), row.get("loss_mask")
     if tok is None or not isinstance(ids, list) or not isinstance(mask, list):
         return "rejected_not_tokenized", 0, 0
-    enc = tok.encode(text, add_special_tokens=False)
+    if enc is None:
+        enc = tok.encode(text, add_special_tokens=False)
     if len(ids) != len(mask) or enc.ids != ids or g10.token_mask(spans, enc.offsets) != mask:
         return "rejected_mask_mismatch", len(ids), 0
     targets = sum(mask[1:])  # position 0 is never predicted: a next-token target starts at index 1
@@ -107,7 +139,17 @@ def row_outcome(row: dict, entry: dict | None, policy: dict, tok, limit: int | N
     return "passed_row_checks", len(ids), targets
 
 
-def evaluate(pack_manifest_path, mode: str, out_path=None) -> dict:
+def _encode_chunk(tok, rows: list) -> list:
+    """Encodings of the chunk's row texts in one batch call; None where there is nothing to encode."""
+    at = [i for i, row in enumerate(rows) if isinstance(row, dict) and isinstance(row.get("text"), str)]
+    out = [None] * len(rows)
+    if tok is not None and at:
+        for i, enc in zip(at, tok.encode_batch([rows[i]["text"] for i in at], add_special_tokens=False)):
+            out[i] = enc
+    return out
+
+
+def evaluate(pack_manifest_path, mode: str, out_path=None, encode_chunk: int = ENCODE_CHUNK) -> dict:
     """Run every check. In training mode with no blocker the admitted rows are written to `out_path`."""
     if mode not in MODES:
         raise PackError(f"unknown mode {mode!r}")
@@ -141,6 +183,8 @@ def evaluate(pack_manifest_path, mode: str, out_path=None) -> dict:
     block(not (teacher["approved"] and teacher["model"] and teacher["licence"]), "teacher_unknown_or_not_approved")
     block(not policy["ocr2"]["distribution_licence"], "ocr2_distribution_licence_unknown")
 
+    accepted_levels = join.accepted_identity_levels(policy)
+    held = heldout_selector(policy)
     sidecar_path = at("sidecar")
     block(si.sha256_file(sidecar_path) != (join_manifest.get("outputs") or {}).get("joined.sidecar.jsonl"), "sidecar_not_the_joined_one")
     sidecar: dict[str, dict] = {}
@@ -155,7 +199,8 @@ def evaluate(pack_manifest_path, mode: str, out_path=None) -> dict:
         dataset = entry["source_row_key"][2]
         src = policy["sources"].get(dataset, {})
         block(not src.get("training_approved"), f"source_not_approved_for_training:{dataset}")
-        block(entry.get("source_identity_level") != "verified", f"source_identity_not_verified:{dataset}/{entry['split_membership']}")
+        block(entry.get("source_identity_level") not in accepted_levels,
+              f"source_identity_level_not_accepted:{dataset}/{entry['split_membership']}")
         block(not (src.get("statement_licence") and src.get("attribution")), f"source_terms_or_attribution_unknown:{dataset}")
         block(not entry["licence"].get("row_tag"), "row_licence_unknown")
 
@@ -194,77 +239,127 @@ def evaluate(pack_manifest_path, mode: str, out_path=None) -> dict:
 
     writing = mode == "training" and out_path is not None
     out_path = Path(out_path) if out_path is not None else None
+    held_out_path = heldout_path(out_path) if writing else None
     tmp = out_path.with_name(out_path.name + ".tmp") if writing else None
+    held_tmp = held_out_path.with_name(held_out_path.name + ".tmp") if writing else None
     outcomes: Counter = Counter()
     lengths: list[int] = []
     tokens = targets = retained_rows = 0
     by_source: Counter = Counter()
     families: set = set()
     seen: set = set()
-    digest = hashlib.sha256()
+    digest, held_digest = hashlib.sha256(), hashlib.sha256()
+    held_stats = {"rows": 0, "tokens": 0, "shifted_assistant_targets": 0, "length_max": None}
+    held_by_source: Counter = Counter()
+    held_families: set = set()
+    train_families: set = set()
     sink = open(tmp, "wb") if writing else None
+    held_sink = open(held_tmp, "wb") if writing else None
+
+    def check(chunk: list) -> None:
+        nonlocal tokens, targets
+        encodings = _encode_chunk(tok, [row for _, row in chunk]) if encode_chunk > 1 else [None] * len(chunk)
+        for (line, row), enc in zip(chunk, encodings):
+            rid = row.get("id")
+            if rid in seen:
+                outcome, n, t = "rejected_duplicate_id", 0, 0
+            else:
+                seen.add(rid)
+                outcome, n, t = row_outcome(row, sidecar.get(rid), policy, tok, limit, enc)
+            outcomes[outcome] += 1
+            if outcome != "passed_row_checks":
+                continue
+            entry = sidecar[rid]
+            lengths.append(n)
+            tokens += n
+            targets += t
+            source = f"{entry['source_row_key'][2]}/{entry['split_membership']}"
+            by_source[source] += 1
+            families.add(entry["problem_family_key"])
+            data = line if line.endswith(b"\n") else line + b"\n"
+            if held is not None and held(entry["problem_family_key"]):
+                held_stats["rows"] += 1
+                held_stats["tokens"] += n
+                held_stats["shifted_assistant_targets"] += t
+                held_stats["length_max"] = max(held_stats["length_max"] or 0, n)
+                held_by_source[source] += 1
+                held_families.add(entry["problem_family_key"])
+                if held_sink is not None:
+                    held_sink.write(data)
+                    held_digest.update(data)
+            else:
+                train_families.add(entry["problem_family_key"])
+                if sink is not None:
+                    sink.write(data)
+                    digest.update(data)
+
     try:
         if retained_path is not None:
+            chunk: list = []
             with open(retained_path, "rb") as stream:
                 for line in stream:
                     if not line.strip():
                         continue
                     retained_rows += 1
-                    row = json.loads(line)
-                    rid = row.get("id")
-                    if rid in seen:
-                        outcome, n, t = "rejected_duplicate_id", 0, 0
-                    else:
-                        seen.add(rid)
-                        outcome, n, t = row_outcome(row, sidecar.get(rid), policy, tok, limit)
-                    outcomes[outcome] += 1
-                    if outcome != "passed_row_checks":
-                        continue
-                    entry = sidecar[rid]
-                    lengths.append(n)
-                    tokens += n
-                    targets += t
-                    by_source[f"{entry['source_row_key'][2]}/{entry['split_membership']}"] += 1
-                    families.add(entry["problem_family_key"])
-                    if sink is not None:
-                        data = line if line.endswith(b"\n") else line + b"\n"
-                        sink.write(data)
-                        digest.update(data)
+                    chunk.append((line, json.loads(line)))
+                    if len(chunk) >= max(1, encode_chunk):
+                        check(chunk)
+                        chunk = []
+            if chunk:
+                check(chunk)
         if record is not None:
             block(record.get("rows_kept") != retained_rows, "retained_row_count_differs_from_scan_record")
-        if sink is not None:
-            sink.flush()
-            os.fsync(sink.fileno())
+        for stream in (sink, held_sink):
+            if stream is not None:
+                stream.flush()
+                os.fsync(stream.fileno())
     finally:
-        if sink is not None:
-            sink.close()
+        for stream in (sink, held_sink):
+            if stream is not None:
+                stream.close()
 
     passed = outcomes["passed_row_checks"]
-    admitted = passed if (mode == "training" and not blockers) else 0
+    train_rows = passed - held_stats["rows"]
+    admitted = train_rows if (mode == "training" and not blockers) else 0
     if writing:
         if blockers:
             tmp.unlink(missing_ok=True)
+            held_tmp.unlink(missing_ok=True)
         else:
             os.replace(tmp, out_path)
+            if held is not None:
+                os.replace(held_tmp, held_out_path)
+            else:
+                held_tmp.unlink(missing_ok=True)
     lengths.sort()
+    spec = (policy.get("pack") or {}).get("heldout_eval_v1") or {}
     report = {
         "schema": REPORT_SCHEMA, "set": join.SET_ID, "mode": mode,
         "training_admissible": not blockers, "blockers": sorted(blockers),
         "attempted": retained_rows, "row_checks_passed": passed, "pack_rejected": retained_rows - passed,
+        "train_rows": train_rows, "heldout_rows": held_stats["rows"],
         "admitted": admitted, "emitted": admitted if writing else 0,
         "row_outcomes": {o: outcomes[o] for o in ROW_OUTCOMES if outcomes[o]},
         "passed_rows": {"tokens": tokens, "shifted_assistant_targets": targets, "unique_families": len(families),
                         "by_source": dict(sorted(by_source.items())),
                         "length_p50": _percentile(lengths, 0.50), "length_p95": _percentile(lengths, 0.95),
                         "length_max": lengths[-1] if lengths else None},
+        "train_pack": {"rows": train_rows, "tokens": tokens - held_stats["tokens"],
+                       "shifted_assistant_targets": targets - held_stats["shifted_assistant_targets"],
+                       "unique_families": len(train_families)},
+        "heldout_eval_v1": {**held_stats, "unique_families": len(held_families), "by_source": dict(sorted(held_by_source.items())),
+                            "fraction": spec.get("fraction", 0), "salt": spec.get("salt"), "unit": "problem_family_key",
+                            "sha256": held_digest.hexdigest() if (writing and not blockers and held is not None) else None},
         "context_limit": limit, "tokenizer_sha256": tokenizer_sha,
         "bound_to": {"policy_sha256": policy_sha, "source_manifest_sha256": manifest_sha, "rendered_sha256": rendered_sha,
                      "join_mode": join_manifest.get("mode"),
                      "fingerprint_set_sha256": record.get("set_sha256") if record else None},
         "pack_sha256": digest.hexdigest() if (writing and not blockers) else None,
     }
-    if retained_rows != report["pack_rejected"] + passed:
+    if retained_rows != report["pack_rejected"] + passed or passed != train_rows + held_stats["rows"]:
         raise AssertionError("pack counts do not reconcile")
+    if held_families & train_families:
+        raise AssertionError("a problem family is on both sides of the held-out split")
     return report
 
 

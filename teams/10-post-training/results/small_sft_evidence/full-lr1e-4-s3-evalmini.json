@@ -1,0 +1,37 @@
+{
+ "schema": "g10-bench-eval/1",
+ "device": "cpu",
+ "torch": "2.14.1",
+ "compute_dtype": "float32 (TF32 off)",
+ "eval_mini": {
+  "command": "<repo>/teams/09-evaluation/harness/run_eval_mini.py --model <slice>/private/models/full-lr1e-4-s3 --profile mini --tasks arc_challenge hellaswag --dtype float32 --device cpu --runs-dir <slice>/evals/full-lr1e-4-s3-evalmini.runs",
+  "returncode": 0,
+  "seconds": 108.4,
+  "records": [
+   {
+    "task": "arc_challenge",
+    "metric": "acc_norm",
+    "filter": "none",
+    "value": 0.284,
+    "stderr": 0.020186703693570774,
+    "n_items": 500,
+    "num_fewshot": 0
+   },
+   {
+    "task": "hellaswag",
+    "metric": "acc_norm",
+    "filter": "none",
+    "value": 0.435,
+    "stderr": 0.024818892876375905,
+    "n_items": 400,
+    "num_fewshot": 0
+   }
+  ],
+  "harness": {
+   "lm_eval": "0.4.13",
+   "torch": "2.14.1",
+   "transformers": "5.20.2",
+   "python": "3.12.16"
+  }
+ }
+}

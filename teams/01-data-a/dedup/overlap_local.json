@@ -1,0 +1,20 @@
+{
+  "inputs": "../erav5-lab-other-files/cleaned_samples",
+  "splits": [
+    "train",
+    "heldout"
+  ],
+  "out": "out/overlap",
+  "floor": 0.5,
+  "k": 5,
+  "block": 256,
+  "top": 20,
+  "max_output_mb": 50,
+  "expected_packs": [
+    "code-rust",
+    "en-fineweb-edu",
+    "ind-hi-hplt",
+    "ind-mr-sangraha-v",
+    "math-finemath"
+  ]
+}

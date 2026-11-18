@@ -1,0 +1,91 @@
+dedup.py local test log, Tuesday 10 November 2026
+==================================================
+Input: TSAI's returned 38-pack overlap run of 5 Nov 2026 (code 86ecdd4), copied unchanged to out/overlap_tsai/
+(overlap_summary.json, overlap_matches.csv, overlap_docs.parquet; SHA-256 of the last two checked by dedup.py against
+the summary). No cleaned parts on this machine, so "inputs" is "" and rule 2 (url) decides nothing.
+Config: out/dedup_local.json = teams/01-data-a/dedup/dedup.json with results "out/overlap_tsai", inputs "", out "out/dedup".
+
+1. Windows 11, Git Bash, Python venv (pyarrow 26.0.0, pytest 9.2.0), user's terminal transcript, verbatim
+--------------------------------------------------------------------------------------------------------
+$ python -m pytest -q teams/01-data-a/dedup/tests/test_dedup.py
+.....................                                                                   [100%]
+21 passed in 0.71s
+$ python teams/01-data-a/dedup/dedup.py --config out/dedup_local.json
+1,416,236 documents, 2,711 matches, 1,085 clusters
+removed 1,351 (0.0954%): by rule {'H2': 1289, 'H1': 62}, by stage {'within_pack': 1310, 'cross_pack': 41}
+clusters decided by priority rule: {'0': 27, '3': 770, '4': 288}
+held-out removed: 0 (must be 0); held-out <-> held-out pairs reported: 0
+note: no inputs given: url unknown, rule 2 decided nothing
+note: licence map not filled for 38 packs; default used
+harm check: not_testable
+wrote remove_list.csv, dedup_log.jsonl, heldout_duplicates.csv and dedup_summary.json to out\dedup
+$ sha256sum out/dedup/remove_list.csv
+656b051bad16e6eed61a355dc9316f7ef79dc2a54bf5d3e1654211bfdcaeb22c *out/dedup/remove_list.csv
+
+2. Linux (x86_64, Python 3.10.12, pyarrow 25.0.1), same inputs and config, output to out/dedup_linux
+-----------------------------------------------------------------------------------------------------
+$ /usr/bin/time -v python3 teams/01-data-a/dedup/dedup.py --config out/dedup_local_linux.json
+removed 1,351 (0.0954%): by rule {'H2': 1289, 'H1': 62}, by stage {'within_pack': 1310, 'cross_pack': 41}
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:06.84
+	Maximum resident set size (kbytes): 1035616
+
+Windows and Linux outputs are byte-identical:
+  remove_list.csv         656b051bad16e6eed61a355dc9316f7ef79dc2a54bf5d3e1654211bfdcaeb22c  (103,547 bytes)
+  dedup_log.jsonl         ca5f3a5a77f1711a9cf3a1505ff44bdd3750d6232c243eeb373f796211b682b3  (592,640 bytes)
+  heldout_duplicates.csv  bda0cd4afca13791f8e5a7e615d5d26d50f096012dc0ddc6065cfedfef9ebab9  (63 bytes, header only)
+
+Checks on the output: remove_list.csv and dedup_log.jsonl both have 1,351 rows, all distinct documents; no held-out
+document is removed; no survivor is also removed; 63 train copies are removed by rule 0, equal to TSAI's 63
+train x heldout pairs among the matches.
+
+3. Rule 2 on real parts: local math E1 run (out/overlap_math, inputs inputs/sample_v0_math, raw sample-v0 parts)
+---------------------------------------------------------------------------------------------------------------
+$ python3 teams/01-data-a/dedup/dedup.py --config out/dedup_math.json
+47,250 documents, 36 matches, 10 clusters
+removed 18 (0.0381%): by rule {'H2': 18}, by stage {'within_pack': 17, 'cross_pack': 1}
+clusters decided by priority rule: {'0': 1, '3': 9}
+held-out removed: 0 (must be 0); held-out <-> held-out pairs reported: 0
+note: licence map not filled for 2 packs; default used
+harm check: not_testable
+Every matched document's doc_id matched its part row (url read); every copy had a url, so rule 2 decided no cluster.
+
+4. Empty-document fix: dedup.py sets aside matches between documents with no shingles (added 10 Nov 2026)
+--------------------------------------------------------------------------------------------------------
+macOS 26.4.1 (arm64), Python 3.12.10, pyarrow 23.0.1, pytest 9.1.1; Aneesha Das's machine; console output verbatim.
+Input: TSAI's returned 38-pack overlap run of 5 Nov 2026 (code 86ecdd4) in out/overlap_tsai/; overlap_docs.parquet
+(15ed5627...d67c9c) and overlap_matches.csv (a3ecfba7...e18c1b) equal the summary's SHA-256.
+Config: out/dedup_empty_fix.json = teams/01-data-a/dedup/dedup.json with results "out/overlap_tsai", inputs "",
+out "out/dedup_empty_fix".
+
+$ python3 -B -m pytest teams/01-data-a/dedup/tests -q -p no:cacheprovider
+89 passed in 1.77s
+$ python3 -B -m pytest teams/01-data-a/dedup/tests/test_dedup.py -q -p no:cacheprovider
+24 passed in 0.65s
+$ /usr/bin/time -l python3 teams/01-data-a/dedup/dedup.py --config out/dedup_empty_fix.json
+1,416,236 documents, 2,690 matches, 1,084 clusters
+removed 1,345 (0.0950%): by rule {'H2': 1289, 'H1': 56}, by stage {'within_pack': 1309, 'cross_pack': 36}
+clusters decided by priority rule: {'0': 27, '3': 770, '4': 287}
+held-out removed: 0 (must be 0); held-out <-> held-out pairs reported: 0
+empty documents: 7 listed, not removed; 21 matches between them set aside
+note: no inputs given: url unknown, rule 2 decided nothing
+note: licence map not filled for 38 packs; default used
+harm check: not_testable
+wrote remove_list.csv, dedup_log.jsonl, heldout_duplicates.csv, empty_documents.csv and dedup_summary.json to out/dedup_empty_fix
+        6.73 real         5.40 user         0.69 sys
+           974405632  maximum resident set size
+
+Outputs:
+  remove_list.csv         913e66a67034cd638eb53702d528ec2e69eb1981372096837deb22fa6e438af1  (103,135 bytes)
+  dedup_log.jsonl         e85330a11e4de3b84feb3c51150e62c0645c56e0bde3e514bf6056c4628fcfa4  (590,121 bytes)
+  heldout_duplicates.csv  bda0cd4afca13791f8e5a7e615d5d26d50f096012dc0ddc6065cfedfef9ebab9  (63 bytes, header only)
+  empty_documents.csv     d55f940a87844f08ff7f7fcb07f1a1b652fec817a65df6a987a69a32f3b0efa6  (522 bytes, 7 rows)
+
+Checks on the output: remove_list.csv and dedup_log.jsonl both have 1,345 rows, all distinct documents; no held-out
+document is removed; no survivor is also removed; 63 train copies are removed by rule 0.
+
+Comparison with the code before the fix (git HEAD dedup.py, run on the same inputs to out/dedup_before_fix): it removed
+1,351 documents and its remove_list.csv has SHA-256 656b051b..., as in runs 1 and 2. The fixed list is that list minus
+exactly 6 rows, all empty documents (code-cpp 79fa36f8339f9ebd; code-java d5d0b4192775579c, 4a67489226159c57,
+8a07c8e5f95eee27, 91f4b8de1c11bf4b; code-js-ts fff1410ec5527f29). The 7th empty document (code-js-ts a2ffa5d828d9e9ab) had
+been their survivor. The other 1,345 log lines and heldout_duplicates.csv are identical. Removals change only in
+code-cpp (7 -> 6), code-java (8 -> 4) and code-js-ts (1 -> 0).

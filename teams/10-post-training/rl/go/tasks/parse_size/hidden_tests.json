@@ -1,0 +1,134 @@
+[
+ {
+  "args": [
+   "0"
+  ],
+  "expected": 0
+ },
+ {
+  "args": [
+   "1KB"
+  ],
+  "expected": 1000
+ },
+ {
+  "args": [
+   "1 KiB"
+  ],
+  "expected": 1024
+ },
+ {
+  "args": [
+   "1.5KiB"
+  ],
+  "expected": 1536
+ },
+ {
+  "args": [
+   "0.5B"
+  ],
+  "expected": 0
+ },
+ {
+  "args": [
+   "1.999KB"
+  ],
+  "expected": 1999
+ },
+ {
+  "args": [
+   "  12  GiB "
+  ],
+  "expected": 12884901888
+ },
+ {
+  "args": [
+   "10"
+  ],
+  "expected": 10
+ },
+ {
+  "args": [
+   "3 gb"
+  ],
+  "expected": 3000000000
+ },
+ {
+  "args": [
+   "1.0000001KiB"
+  ],
+  "expected": 1024
+ },
+ {
+  "args": [
+   ".5KB"
+  ],
+  "expected": 500
+ },
+ {
+  "args": [
+   "5."
+  ],
+  "expected": 5
+ },
+ {
+  "args": [
+   "9223372036854775807"
+  ],
+  "expected": 9223372036854775807
+ },
+ {
+  "args": [
+   "9223372036854775808"
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   ""
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "KB"
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "1.2.3KB"
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "5 TB"
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "-5KB"
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "1e3"
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "12 KB extra"
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "."
+  ],
+  "raises": "error"
+ }
+]

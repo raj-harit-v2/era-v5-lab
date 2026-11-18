@@ -1,0 +1,97 @@
+{
+ "checks": {
+  "checks_failed": {},
+  "checks_ok": true,
+  "effort_rows": {
+   "16k": 100,
+   "1k": 536,
+   "4k": 352,
+   "64k": 12
+  },
+  "files": [
+   {
+    "bytes": 30245677,
+    "name": "sft-science-nemotron-science.first1000.jsonl",
+    "sha256": "17d1fcc03ef7c5fd18c70729ff0d0fb7096bcdeebd3249bce61ba28828b2d3db"
+   }
+  ],
+  "info": {
+   "decode_equals_normalised_text_only": 8
+  },
+  "length": {
+   "max": 37776,
+   "min": 220,
+   "p50": 1340,
+   "p95": 7389
+  },
+  "max_len": 32768,
+  "rows": 1000,
+  "rows_over_max_len": 1,
+  "rows_with_tool_blocks": 0,
+  "shifted_supervised_targets": 2025789,
+  "tokens": 2323067,
+  "tool_call_blocks": 0,
+  "tool_call_tokens_untrained": 0,
+  "tool_result_blocks": 0,
+  "train_spans": 1000,
+  "trained_share": 0.872032,
+  "trained_tokens": 2025789,
+  "unique_ids": true
+ },
+ "checks_wall_s": 3.66,
+ "content_sha256": "17d1fcc03ef7c5fd18c70729ff0d0fb7096bcdeebd3249bce61ba28828b2d3db",
+ "convert": {
+  "cpu_sys_s": 0.586,
+  "cpu_user_s": 7.49,
+  "hub_bytes_read": 10064904,
+  "max_rss_mb": 227.0,
+  "wall_s": 6.914
+ },
+ "decision": "TSAI reserves",
+ "deterministic_rerun": true,
+ "effort_manifest": {
+  "16k": 100,
+  "1k": 536,
+  "4k": 352,
+  "64k": 12
+ },
+ "file_bytes": 30245677,
+ "file_sha256": "17d1fcc03ef7c5fd18c70729ff0d0fb7096bcdeebd3249bce61ba28828b2d3db",
+ "generator_model": "gpt-oss-120b (Apache-2.0, open weights)",
+ "hub_revision": "82e1af468197076b4f0f392c239274eac032adc7",
+ "input": "hub file nvidia/Nemotron-Science-v1 data/MCQ.jsonl rows 0..999999999",
+ "licence": "cc-by-4.0 (Hub tag; commercial use permitted per tag)",
+ "rerun_content_sha256": "17d1fcc03ef7c5fd18c70729ff0d0fb7096bcdeebd3249bce61ba28828b2d3db",
+ "rerun_wall_s": 6.064,
+ "rows_in": 1000,
+ "rows_out": 1000,
+ "rows_per_s_convert": 144.63,
+ "rows_scanned": 1000,
+ "scope": "first 1000 selected rows, source order, C3",
+ "selection": "MCQ file",
+ "set": "sft-science-nemotron-science",
+ "skipped": {},
+ "source": "nvidia/Nemotron-Science-v1",
+ "token_record": {
+  "basis": "first 1000 selected rows, source order, C3; not the admissible kept rows",
+  "effort": {
+   "16k": 100,
+   "1k": 536,
+   "4k": 352,
+   "64k": 12
+  },
+  "length": {
+   "max": 37776,
+   "min": 220,
+   "p50": 1340,
+   "p95": 7389
+  },
+  "rows": 1000,
+  "sequence_tokens": 2323067,
+  "set_id": "sft-science-nemotron-science",
+  "shifted_supervised_targets": 2025789,
+  "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3"
+ },
+ "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3",
+ "tokens_per_s_convert": 335995
+}

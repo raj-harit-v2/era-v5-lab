@@ -1,0 +1,46 @@
+{
+ "decontam": {
+  "by_benchmark": {
+   "gpqa_diamond": 1,
+   "heldout_g5_v1": 3,
+   "hle": 22,
+   "livecodebench": 1
+  },
+  "complete": false,
+  "covers": "3 of 287 parts",
+  "fingerprint_set_sha256": "2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a",
+  "parts_uncovered": 284,
+  "records": 3,
+  "rows_canary": 0,
+  "rows_flagged": 27
+ },
+ "excluded_each": {
+  "decontam": 27,
+  "heldout": 0,
+  "over_max_len": 18661
+ },
+ "excluded_sha256": "74dd30718191775d05e8e06a99f5831111f011f5ce292f80e4005a2e5c09be0a",
+ "heldout_lists": [],
+ "kept_ids_sha256": "d7daa10b2ae27bbd18232b1663f3f0c6e2e2f051a7fe46e3ecdc4135456f2e34",
+ "kept_max_len": 32768,
+ "licence_decision": "allowed (CC-BY-SA, attribution needed)",
+ "max_len": 32768,
+ "parts": 287,
+ "parts_from_stored_check": 287,
+ "parts_read": 0,
+ "private_outputs_note": "kept_ids.txt and excluded.jsonl hold row ids: private, not in Git",
+ "record": {
+  "content_sha256": "d9c9d00024268d48eda21a6e5afd1885ef1554cd866bea90216b739a1da6c1ec",
+  "name": "sft-math-nemotron-proofs.full.record.json",
+  "sha256": "8d138c5e552e63f0fe8d15552e342b8cb6fe4f21a60b183f4ef5b03cd9d074a1",
+  "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3"
+ },
+ "rows_excluded": 18687,
+ "rows_in": 920881,
+ "rows_kept": 902194,
+ "schema": "g10-sft-v1-admission/1",
+ "set": "sft-math-nemotron-proofs",
+ "status": "decontam_pending",
+ "tokens_in": 10383997134,
+ "tokens_kept": 9695160211
+}

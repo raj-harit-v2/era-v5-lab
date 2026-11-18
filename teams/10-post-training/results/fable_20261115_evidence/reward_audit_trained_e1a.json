@@ -1,0 +1,104 @@
+{
+ "fetch": {
+  "tasks_with_a_pass": 93,
+  "files": 34,
+  "kept_prefix_mismatch": 0,
+  "no_hidden_tests": 0,
+  "hidden_tests": 7440,
+  "file_sha_mismatch": 0,
+  "seconds": 61.6
+ },
+ "base": {
+  "by_set": {
+   "heldout": {
+    "completions": 768,
+    "reward_pass": 111,
+    "strict_pass": 111
+   },
+   "cohort": {
+    "completions": 448,
+    "reward_pass": 143,
+    "strict_pass": 140
+   }
+  },
+  "reward1_without_hidden_tests": 0,
+  "reward1_completions_audited": 254,
+  "tasks_audited": 77,
+  "hidden_tests_per_task_median": 80,
+  "verdict_on_hidden_tests": {
+   "pass": 251,
+   "runtime_error": 1,
+   "wrong_answer": 2
+  },
+  "false_positive_share": 0.0118,
+  "false_positive_share_excluding_timeouts": 0.0118,
+  "by_judge": {
+   "hackerearth": {
+    "pass": 130,
+    "wrong_answer": 2
+   },
+   "aizu": {
+    "pass": 76
+   },
+   "atcoder": {
+    "pass": 13,
+    "runtime_error": 1
+   },
+   "codechef": {
+    "pass": 32
+   }
+  },
+  "tasks_where_every_pass_fails_hidden": 2,
+  "tasks_where_some_pass_fails_hidden": 1,
+  "tasks_where_no_pass_fails_hidden": 74,
+  "seconds": 106.0
+ },
+ "trained": {
+  "by_set": {
+   "heldout": {
+    "completions": 768,
+    "reward_pass": 200,
+    "strict_pass": 197
+   },
+   "cohort": {
+    "completions": 448,
+    "reward_pass": 427,
+    "strict_pass": 411
+   }
+  },
+  "reward1_without_hidden_tests": 0,
+  "reward1_completions_audited": 627,
+  "tasks_audited": 88,
+  "hidden_tests_per_task_median": 80,
+  "verdict_on_hidden_tests": {
+   "pass": 608,
+   "runtime_error": 8,
+   "timeout": 1,
+   "wrong_answer": 10
+  },
+  "false_positive_share": 0.0303,
+  "false_positive_share_excluding_timeouts": 0.0287,
+  "by_judge": {
+   "hackerearth": {
+    "pass": 299,
+    "wrong_answer": 8
+   },
+   "aizu": {
+    "pass": 178,
+    "wrong_answer": 2
+   },
+   "atcoder": {
+    "pass": 16,
+    "runtime_error": 8
+   },
+   "codechef": {
+    "pass": 115,
+    "timeout": 1
+   }
+  },
+  "tasks_where_every_pass_fails_hidden": 3,
+  "tasks_where_some_pass_fails_hidden": 5,
+  "tasks_where_no_pass_fails_hidden": 80,
+  "seconds": 244.3
+ }
+}

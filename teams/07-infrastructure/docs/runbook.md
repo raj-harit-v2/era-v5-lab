@@ -1,7 +1,7 @@
-# G7 runbook: restore a run from its last checkpoint, and how long it takes
+# G7 runbook: restore and restart a run, and handle node failures, NCCL hangs and bad checkpoints
 
-Team 07, Infrastructure. Status: **v1** (week 2, Gate 2). One runbook, consolidated from the week-2 rotation
-runbooks (section 10 lists the sources). Code: [`ckpt/ckpt.py`](../ckpt/ckpt.py),
+Team 07, Infrastructure. Status: **v2** (week 3, dry run 1). One runbook, consolidated from the week-2 rotation
+runbooks (section 13 lists the sources); sections 10 to 12 cover node failures, NCCL hangs and bad checkpoints. Code: [`ckpt/ckpt.py`](../ckpt/ckpt.py),
 [`ckpt/supervisor.py`](../ckpt/supervisor.py). Tests: [`jobs/restore_test/`](../jobs/restore_test/README.md),
 [`jobs/restart_test/`](../jobs/restart_test/README.md), [`jobs/restore_time/`](../jobs/restore_time/README.md).
 Rules: [queue rules v1](queue_rules_v1.md). Causes and actions:
@@ -30,6 +30,9 @@ Where this file and the code disagree, the code wins and this file is fixed.
 | alert **CK-13** | restore is slow (job start to first productive step) | section 8.5 |
 | NaN or loss spike | the guards stopped the run with 78; nothing was saved after the bad step | roll back (section 6) |
 | you changed `ckpt/`, the image or the store | you need proof that restore still works | rehearse (section 9) |
+| a node drained (`sinfo -R` shows `v5:<checks>`) or `NODE_FAIL` | a health check failed, or the node died | fix or replace the node; check the run came back (section 10) |
+| exit 1 / 134 with a NCCL timeout, or cause `hang_watchdog`; alert H-14 or H-16 | a collective or a step never finished | find the rank that stopped (section 11) |
+| alert CK-04 or CK-05, or `restore.failed` in the events | a checkpoint is damaged or does not restore exactly | pin the last good step, find the bad ones (section 12) |
 
 `python metrics/explain.py <cause>` prints the full answer for any cause, exit code or alert id.
 
@@ -210,7 +213,7 @@ Whole-test wall times (the restore test runs A, B twice and the comparison) are 
 
 ### 8.1 Measured on CPU: the restore test (tiny MoE, step 100, about 1.5 MB, local folder store)
 
-Five independent runs by the week-2 rotation (slots R1 to R5, section 10). Median seconds. All runs **PASS**:
+Five independent runs by the week-2 rotation (slots R1 to R5, section 13). Median seconds. All runs **PASS**:
 steps 101–200 `loss_ntp` and `loss_mtp` bit-equal, data IDs equal, `"resharded": false`.
 
 | Slot | Machine | Runs | Devices | `verify_s` | `download_s` | `load_s` | `checks_s` | **`restore_s`** | whole test |
@@ -339,7 +342,204 @@ Copy only the PASS line and the numbers.
 
 ---
 
-## 10. Sources
+## 10. Node failures
+
+> **In simple words.** A node can break in two ways. Either our health check sees it first: the node is drained,
+> the job saves and moves, and almost nothing is lost. Or the node just dies: the job loses the steps since the
+> last checkpoint, and runs them again on another node. In both cases nobody picks a checkpoint by hand.
+
+### 10.1 What you see, and what was already done
+
+| Kind | How it shows | Already done | Steps run again |
+|---|---|---|---|
+| **Health check failed** (Xid, ECC, GPU missing, NCCL test, NVMe, clock, temperature) | `sinfo -R` shows `v5:<checks>`; job cause `saved_and_stopped`, exit 75 | node drained; SIGUSR1 to its jobs; emergency checkpoint committed; Slurm requeues on a healthy node or the spare | about 0 (Docker drill: 0 steps lost, back in 60–88 s, [health README](../health/README.md)) |
+| **Node died** (power, kernel panic, network gone) | Slurm `NODE_FAIL` (no answer for `SlurmdTimeout` 30 s); no `job.ended` from that node | Slurm requeues; the next attempt restores the newest COMPLETE checkpoint (section 3) | the steps since the last commit: at most `INTERVAL_S` of work (600 s in dry run 1) |
+| **Node cut off, process still alive** | later, a `FencedError` (78) from the old attempt | the new attempt claimed `latest.json`; the old attempt's commit is refused | none |
+| **No healthy node left** | `PENDING`, `Reason=Resources` or `ReqNodeNotAvail`; alert Q-01 after 10 min | the main run waits; no crash loop | none, but time is lost |
+
+"Steps run again" are not lost: the data position and the random state come back with the checkpoint, so the run
+repeats them bit-equal. A step is **lost** only if the restore skips a COMPLETE checkpoint (section 10.4).
+
+### 10.2 Fix the node (main run, operator)
+
+```bash
+sinfo -R                                    # drained nodes and their reason v5:<checks>
+python metrics/explain.py v5:<checks>       # what each check means, and what to do
+python queue/job_queue.py status            # where the job went
+```
+
+| Drain reason | Do |
+|---|---|
+| `xid` (fatal code), `ecc_uncorrectable`, `dcgm_diag`, `remapped_rows` (failure) | replace the instance; the Xid code is in the health report |
+| `gpu_inventory`, `nvlink`, `remapped_rows` (pending) | reboot or reset the GPUs; replace if still wrong |
+| `nccl_collectives`, `nccl_all_reduce`, `nccl_reduce_scatter`, `nccl_all_gather`, `nccl_all_to_all` | `health_check.py --mode full` on the node; read the flight-recorder dump (section 11.3); replace if it fails again |
+| `dcgm_health`, `gpu_temperature` | `health_check.py --mode full`; check cooling; replace if it repeats |
+| `nvme_free` | clean `/nvme` (old restore folders, data cache) |
+| `clock_offset` | fix the time service (chrony) |
+
+A repaired node goes back only after a full check passes:
+
+```bash
+python health/health_check.py --mode full --report-only    # on the repaired node; "verdict" must be "pass"
+scontrol update nodename=<node> state=resume
+```
+
+Never resume a node with `--mode full` at `warn` or `fail` into the main run. One slow node slows every GPU.
+
+### 10.3 Check the run came back
+
+1. `restore.done` for the new attempt (section 3, "How to tell it worked"), on the new node (`host` field).
+2. The restored step is the newest commit, or an older one with a `restore.failed` that says why (section 12).
+3. The loss of the first steps after the restore continues the curve from before the stop.
+
+### 10.4 Dry run 1: read it from the returned logs
+
+TSAI runs dry run 1, and we only get the logs back (queue rules R3), so we cannot type `sinfo` or `scontrol`.
+Read the same facts from `./out/<run_id>/logs/`:
+
+```bash
+L=./out/<run_id>/logs
+# every attempt: exit code, what it means, what the supervisor did, the step latest.json named
+python -c 'import sys,json
+for l in open(sys.argv[1]): e=json.loads(l); print(e.get("attempt"), e.get("rc"), e.get("meaning"), e.get("action"), e.get("pointer_step"))' $L/supervisor.jsonl
+# every restore: time, result, step, the folder it came from (or the cause)
+grep -h '"restore\.\(done\|failed\|fatal\)"' $L/events.jsonl | python -c 'import sys,json
+for l in sys.stdin: e=json.loads(l); print(e["time"], e["event"], e.get("step"), e.get("from_path") or e.get("cause"))'
+python ckpt/ckpt.py list --run ./out/<run_id>/ckpt/<arm>     # the COMPLETE checkpoints
+python queue/queue_rules.py check-out ./out --run-id <run_id>  # paths, COMPLETE rule (R4), size
+```
+
+Gate 3 asks for **no lost steps and only COMPLETE-checkpoint restarts**. For every restart:
+
+| Check | Pass when |
+|---|---|
+| Restarted from a COMPLETE checkpoint | the `from_path` of each `restore.done` is a `path` in `ckpt.py list` |
+| No lost steps | the `restore.done` step equals the `pointer_step` of the restart before it, or a `restore.failed` explains each skipped step |
+| Work run again | the step where the attempt stopped (`job.log`) minus the restored step; at most one interval |
+| Clean end | the last attempt has `rc` 0, and `check-out` prints `PASS` |
+
+Example from the restart test (CPU, SIGKILL after step 140, `--run-id` job form, 15 Nov):
+
+```text
+0 -9 crash: killed by SIGKILL restart 125
+1 0 done stop None
+2026-11-15T17:20:43.691Z restore.done 125 main/step_00000125-e1
+{"step": 125, "branch": "main", "path": "main/step_00000125-e1", ...}
+PASS: ./out follows queue rules v1.
+```
+
+Restored 125 = `pointer_step` 125, the path is in the list: COMPLETE, nothing lost, 15 steps run again.
+
+---
+
+## 11. NCCL hangs
+
+> **In simple words.** In every step the GPUs exchange data with NCCL, and each one waits until all have joined.
+> If one GPU stops, the others wait. Without limits they wait forever on a paid node. Two timers turn the wait
+> into a restart. **The NCCL timeout** stops a collective that never finishes. **The step watchdog** catches a
+> hang that NCCL does not see (a data wait, a deadlock in Python, a frozen rank).
+
+### 11.1 The settings
+
+| Setting | Dry run 1 | Where | Effect |
+|---|---|---|---|
+| `TORCH_NCCL_ASYNC_ERROR_HANDLING` | `1` | `slurm/mainrun.sbatch` | a NCCL error or timeout aborts the process (exit 1 or 134) instead of hanging |
+| NCCL collective timeout | **10 min** | the trainer's `init_process_group(timeout=...)` | later: 3 × the longest collective measured in the dry runs ([ADR 0003](../adr/0003-node-health-checks.md) §2) |
+| `TORCH_NCCL_TRACE_BUFFER_SIZE`, `TORCH_NCCL_DUMP_ON_TIMEOUT` | `2000`, `1` | `slurm/mainrun.sbatch` | the flight recorder: on a timeout, each rank dumps its last 2000 collectives |
+| `TORCH_NCCL_DEBUG_INFO_TEMP_FILE` | `./out/<run_id>/logs/nccl_trace/rank_` (`mkdir -p` the folder first) | the job's start command (**not set yet**, section 14) | where the dumps go; the default is `/tmp`, which queue rules R3 forbid and which TSAI does not send back |
+| `WATCHDOG_S` | `600` | `--watchdog-s` (`slurm/mainrun.sbatch`) | no step in 600 s: dump every Python stack, exit 75 (cause `hang_watchdog`) |
+
+Both timers are 10 min in dry run 1. Whichever fires first, the result is the same: the attempt stops, the
+supervisor or Slurm restarts it, and it restores the newest COMPLETE checkpoint (section 3). A hang loses at most
+one interval of steps (run again) plus the 10 min of waiting.
+
+### 11.2 What you see
+
+| Signal | Means |
+|---|---|
+| exit 1 with `Watchdog caught collective operation timeout` or `NCCL error` in `job.log` | NCCL timed out or failed; async error handling stopped the process |
+| exit 134 (SIGABRT) or 139 (SIGSEGV) | NCCL or CUDA aborted, or native code crashed |
+| cause `hang_watchdog`, exit 75, stack dump in `job.log` | no step for `WATCHDOG_S`, with no NCCL error |
+| alert H-16 (2 or more NCCL timeouts in an hour), H-14 (2 or more watchdog restarts in an hour) | it is not a one-off: page |
+| the same rank or node in every hang | a bad node: section 10 |
+
+The supervisor counts each of these as a crash (or a 75). Three crashes in 30 min become 78 `crash_loop`: the job is
+held so it stops burning node hours (section 7).
+
+### 11.3 Find the rank that stopped
+
+```bash
+L=./out/<run_id>/logs
+grep -n -E 'collective operation timeout|NCCL error|hang_watchdog' $L/job.log $L/rank*.log | head
+torchfrtrace $L/nccl_trace -p rank_ --allow-incomplete-ranks     # ships with torch; reads one dump per rank
+```
+
+`torchfrtrace` lines up the collectives of all ranks. The rank that is **missing** a collective the others
+entered, or that left **no dump at all**, is the one that stopped. `--allow-incomplete-ranks` is needed because a
+frozen rank often writes nothing. For a `hang_watchdog`, read the Python stack of each rank in `job.log`:
+
+| The stuck rank is in | Likely cause | Do |
+|---|---|---|
+| a collective (`all_reduce`, `all_gather`, `all_to_all`, ...) while the others are past it | that rank's GPU or link | drain the node (section 10.2), `health_check.py --mode full` |
+| the data loader (`__next__`, reading a shard) | the store or the data, not NCCL | check the store and the shard it was reading; tell Teams 01/02 if a shard is bad |
+| ranks in **different** collectives | code: ranks took different branches (a rank-dependent `if`, uneven MoE routing, a save on rank 0 only) | a bug for Team 05; a restart does not fix it, so expect 78 `crash_loop` |
+| `checkpoint` or a store upload | a slow or stuck store | CK-11 (throughput), CK-10 (backpressure); save time in [checkpoint_interval.md](checkpoint_interval.md) |
+
+Rehearse it on 2 GPUs: `torchrun --nproc_per_node=2 support/kaggle/nccl_timeout_test.py --timeout-s 20` (rank 1
+sleeps on purpose; rank 0 must stop about 20 s after the timeout and leave a trace).
+
+---
+
+## 12. Bad checkpoints
+
+> **In simple words.** A checkpoint can be bad in three ways. A file is damaged (its sha256 does not match). The
+> files are fine, but loading them does not give back the saved state. Or the state is exact but the model in it
+> was already going wrong. Restore catches the first two by itself and falls back to the commit before. The
+> third one needs a person to roll back.
+
+### 12.1 What restore does by itself
+
+| Bad in this way | Caught by | Already done | You do | Alert |
+|---|---|---|---|---|
+| a file does not match its sha256 (disk, network, store) | `IntegrityError`, restore step 3 or 5 | that commit is skipped; the previous one is tried | `verify` the bad step; `pin` the good one; find the hop that corrupts | CK-04 |
+| the loaded state differs from the saved state (digest, probe loss, next batch, frozen tensors) | `RestoreCheckError`, step 8 | that commit is skipped; the previous one is tried | compare the two printed values; **never continue on that checkpoint** | CK-05 |
+| every commit fails | `CheckpointError` | 78, held | section 12.3 | CK-06 |
+| save cut before its commit (no `MANIFEST.json`, or no pointer names it) | the COMPLETE rule (section 2) | it is not a checkpoint, never a candidate | nothing | - |
+| a save that never finished (`UploadTimeout`, `nvme_full`) | the save path | not committed; training continues unprotected | fix the store or disk before the next save | CK-03 |
+
+A fallback costs one interval more of steps run again. It does **not** lose steps from the run, as long as the
+older commit is COMPLETE.
+
+### 12.2 Find which checkpoints are bad
+
+```bash
+python ckpt/ckpt.py list --run <run> | sed -E 's/.*"step": ([0-9]+).*/\1/' |
+  while read s; do python ckpt/ckpt.py verify --run <run> --step "$s" | grep -v '"bad": \[\]'; done
+grep -h '"restore.failed"' $V5_EVENTS_DIR/*.jsonl | tail -5         # which commit was skipped, and why
+```
+
+`verify` prints only the steps with damaged files (exit 1). `verify` checks sha256 only. A checkpoint that
+`verify` passes can still fail the four proofs (CK-05): only a restore runs those.
+
+### 12.3 When to roll back by hand
+
+| Case | Roll back to |
+|---|---|
+| `nonfinite` or `loss_spike` (78) | the last step **before the loss started to rise**, not only the last commit before the trip: the guard needs 3 high steps, and a slow rise can sit in one or two commits |
+| CK-05 on the newest commit, and the previous one also fails | the newest step that passes `verify` and a test restore |
+| `FrozenChangedError` | the last commit; fix the code that trains the frozen tensor first |
+| `CheckpointError` (nothing usable) | check the store first (access, missing files); if every commit is truly bad, tell the lead: the run starts again from the newest protected step that passes |
+
+Then section 6 (`--from-step K --skip N --branch <new>`), after `verify` and `pin` of step K.
+
+**Keep a good step reachable.** Retention keeps `--keep 9 --protect-every 15` in dry run 1, about the last 90 min
+([checkpoint_interval.md](checkpoint_interval.md) §5). A bad checkpoint found later than that can only roll back to
+a protected or pinned step. So **pin the last known-good step** as soon as a CK-04, CK-05 or loss alarm fires,
+before retention runs again. Pinned steps are never deleted (`pins.json`).
+
+---
+
+## 13. Sources
 
 Each week-2 rotation member ran the tests on their own machine and wrote a runbook; this file merges them. Slots
 are in PR order (names are not used in team files).
@@ -356,7 +556,7 @@ Other evidence: [`results/restore_test_cpu.txt`](../results/restore_test_cpu.txt
 [`results/restore_test_gpu.txt`](../results/restore_test_gpu.txt) (TSAI, 1 GPU), [`results/restart_cpu.txt`](../results/restart_cpu.txt)
 (restart, CPU), [`results/restart_node.txt`](../results/restart_node.txt) (restart, TSAI, 1 GPU), PR #249, open (restore test on Windows, CPU).
 
-## 11. Open items
+## 14. Open items
 
 | Item | Owner | Due |
 |---|---|---|
@@ -364,9 +564,14 @@ Other evidence: [`results/restore_test_cpu.txt`](../results/restore_test_cpu.txt
 | Restart on the lab node, `results/restart_node.txt` | Lead | **done**: TSAI job on #258, 1 GPU, PASS (8.3) |
 | Real restore time at config v1 size on the real store (8.5) | checkpoint owner + Team 6 | after Sat 14 Nov |
 | 2-GPU restore | TSAI | after Gate 2 |
+| Dry run 1 start command sets `TORCH_NCCL_DEBUG_INFO_TEMP_FILE` (11.1), the 10 min NCCL timeout and `WATCHDOG_S=600` | Lead, with Team 5 (`jobs/dryrun1/`) | Tue 17 Nov |
+| Confirm Team 5's trainer has the step watchdog (`--watchdog-s`); today only the test trainer in `support/simulation/` has it | Team 5 | Tue 17 Nov |
+| Fill the 10.4 checks from the dry run 1 logs (restarts, restored steps, steps run again) | Member C, with the lead's restore drill | Fri 20 Nov |
+| NCCL timeout test on 2 real GPUs (`support/kaggle/nccl_timeout_test.py`), trace read with `torchfrtrace` | TSAI job | after dry run 1 |
 
-## 12. Change log
+## 15. Change log
 
 | Version | Date | Change |
 |---|---|---|
 | v1 | 2026-11-11 | one runbook from the five rotation runbooks (R1–R5); replaces `docs/runbook_restore_restart_cpu.md` |
+| v2 | 2026-11-15 | week-3 core task 4: node failures (10), NCCL hangs (11), bad checkpoints (12); Gate 3 restart checks from the returned logs (10.4); sources, open items and change log move to 13–15 |

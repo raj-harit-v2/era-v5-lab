@@ -1,0 +1,462 @@
+
+baseline, run 1: python -I <snapshot>/teams/01-data-a/dedup/overlap.py --config <snapshot>/config.json
+3 cleaned parts found (input checksum verification deferred)
+train/code-rust/part-00000.parquet: 4000 documents (1s)
+train/en-dclm/part-00000.parquet: 4000 documents (2s)
+train/math-finemath/part-00000.parquet: 4000 documents (3s)
+12000 documents, 318001 distinct shingles, 298001 of them in 2+ documents; about 24,196,000 intersection steps
+  rows 256/12000: 0s, about 0s left
+  rows 12000/12000: 0s, about 0s left
+Applying H1/H2 rules; scoring code token pairs independently of raw word scores
+{
+  "status": "complete",
+  "normalize_id": "g1-spec-v1",
+  "key": "h1_key of h1_sha256.py: normalize.match_key, then NFKC, casefold, whitespace runs to one space",
+  "shingles": "word 5-grams of the key as 64-bit hashes (gram_hashes: pandas SipHash per word, combined per window); a key under 5 words is one shingle",
+  "documents": {
+    "code-rust": {
+      "train": 4000,
+      "all": 4000
+    },
+    "en-dclm": {
+      "train": 4000,
+      "all": 4000
+    },
+    "math-finemath": {
+      "train": 4000,
+      "all": 4000
+    }
+  },
+  "documents_all": 12000,
+  "ids_used_by_2_or_more_documents": 0,
+  "h1_exact_groups": 2000,
+  "documents_in_h1_exact_groups": 4000,
+  "empty_documents": 0,
+  "distinct_shingles": 318001,
+  "shingles_in_2_or_more_documents": 298001,
+  "pairs_compared": 71994000,
+  "pairs_sharing_a_shingle": 565500,
+  "pairs_at_or_above": {
+    "0.70": 34000,
+    "0.75": 34000,
+    "0.80": 34000,
+    "0.85": 34000,
+    "0.90": 34000,
+    "0.95": 29000
+  },
+  "pairs_stored": 34000,
+  "qualifying_pairs_by_rule": {
+    "H1": 2000,
+    "H2": 11000
+  },
+  "matrix_definition": "distinct documents in row source with another qualifying H1/H2 match in column source / row source documents",
+  "duplicate_rules": {
+    "prose": "word Jaccard >= 0.80; both >= 50 words",
+    "math": "word Jaccard >= 0.90; identical signed number multisets",
+    "code": "token Jaccard >= 0.85; both >= 20 nonblank lines after comment removal",
+    "mixed_domains": "both domains' rules must pass on both documents",
+    "h1": "same H1 SHA256; bypasses H2 guards",
+    "translations": "not detected"
+  },
+  "pack_domains": {
+    "code-rust": "code",
+    "en-dclm": "prose",
+    "math-finemath": "math"
+  },
+  "wall_seconds": 12.9,
+  "peak_rss_mb": 292.6,
+  "versions": {
+    "python": "3.12.12",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3",
+    "pyarrow": "19.0.1",
+    "pygments": "2.21.0",
+    "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39"
+  },
+  "output_mb": 7.0
+}
+
+Pairs at Jaccard 0.80 and above:
+  code-rust x code-rust                         6000
+  en-dclm x en-dclm                             6000
+  en-dclm x math-finemath                       16000
+  math-finemath x math-finemath                 6000
+
+Pairs at Jaccard 1.00 and above:
+  en-dclm x en-dclm                             1000
+  math-finemath x math-finemath                 1000
+
+Pairs at exact (same H1 key):
+  en-dclm x en-dclm                             1000
+  math-finemath x math-finemath                 1000
+
+Top 20 pairs:
+  1.0000  exact en-dclm-en-dclm-000002  en-dclm-en-dclm-000003
+  1.0000  exact en-dclm-en-dclm-000006  en-dclm-en-dclm-000007
+  1.0000  exact en-dclm-en-dclm-000010  en-dclm-en-dclm-000011
+  1.0000  exact en-dclm-en-dclm-000014  en-dclm-en-dclm-000015
+  1.0000  exact en-dclm-en-dclm-000018  en-dclm-en-dclm-000019
+  1.0000  exact en-dclm-en-dclm-000022  en-dclm-en-dclm-000023
+  1.0000  exact en-dclm-en-dclm-000026  en-dclm-en-dclm-000027
+  1.0000  exact en-dclm-en-dclm-000030  en-dclm-en-dclm-000031
+  1.0000  exact en-dclm-en-dclm-000034  en-dclm-en-dclm-000035
+  1.0000  exact en-dclm-en-dclm-000038  en-dclm-en-dclm-000039
+  1.0000  exact en-dclm-en-dclm-000042  en-dclm-en-dclm-000043
+  1.0000  exact en-dclm-en-dclm-000046  en-dclm-en-dclm-000047
+  1.0000  exact en-dclm-en-dclm-000050  en-dclm-en-dclm-000051
+  1.0000  exact en-dclm-en-dclm-000054  en-dclm-en-dclm-000055
+  1.0000  exact en-dclm-en-dclm-000058  en-dclm-en-dclm-000059
+  1.0000  exact en-dclm-en-dclm-000062  en-dclm-en-dclm-000063
+  1.0000  exact en-dclm-en-dclm-000066  en-dclm-en-dclm-000067
+  1.0000  exact en-dclm-en-dclm-000070  en-dclm-en-dclm-000071
+  1.0000  exact en-dclm-en-dclm-000074  en-dclm-en-dclm-000075
+  1.0000  exact en-dclm-en-dclm-000078  en-dclm-en-dclm-000079
+
+Wrote overlap_pairs.csv, overlap_matrix.npz, overlap_docs.parquet, overlap_by_pack.csv, overlap_histogram.csv, overlap_matches.csv, overlap_matrix.csv, overlap_matrix_counts.csv and overlap_summary.json to out/overlap (7.0 MB)
+
+baseline, run 2: python -I <snapshot>/teams/01-data-a/dedup/overlap.py --config <snapshot>/config.json
+3 cleaned parts found (input checksum verification deferred)
+train/code-rust/part-00000.parquet: 4000 documents (2s)
+train/en-dclm/part-00000.parquet: 4000 documents (2s)
+train/math-finemath/part-00000.parquet: 4000 documents (3s)
+12000 documents, 318001 distinct shingles, 298001 of them in 2+ documents; about 24,196,000 intersection steps
+  rows 256/12000: 0s, about 0s left
+  rows 12000/12000: 0s, about 0s left
+Applying H1/H2 rules; scoring code token pairs independently of raw word scores
+{
+  "status": "complete",
+  "normalize_id": "g1-spec-v1",
+  "key": "h1_key of h1_sha256.py: normalize.match_key, then NFKC, casefold, whitespace runs to one space",
+  "shingles": "word 5-grams of the key as 64-bit hashes (gram_hashes: pandas SipHash per word, combined per window); a key under 5 words is one shingle",
+  "documents": {
+    "code-rust": {
+      "train": 4000,
+      "all": 4000
+    },
+    "en-dclm": {
+      "train": 4000,
+      "all": 4000
+    },
+    "math-finemath": {
+      "train": 4000,
+      "all": 4000
+    }
+  },
+  "documents_all": 12000,
+  "ids_used_by_2_or_more_documents": 0,
+  "h1_exact_groups": 2000,
+  "documents_in_h1_exact_groups": 4000,
+  "empty_documents": 0,
+  "distinct_shingles": 318001,
+  "shingles_in_2_or_more_documents": 298001,
+  "pairs_compared": 71994000,
+  "pairs_sharing_a_shingle": 565500,
+  "pairs_at_or_above": {
+    "0.70": 34000,
+    "0.75": 34000,
+    "0.80": 34000,
+    "0.85": 34000,
+    "0.90": 34000,
+    "0.95": 29000
+  },
+  "pairs_stored": 34000,
+  "qualifying_pairs_by_rule": {
+    "H1": 2000,
+    "H2": 11000
+  },
+  "matrix_definition": "distinct documents in row source with another qualifying H1/H2 match in column source / row source documents",
+  "duplicate_rules": {
+    "prose": "word Jaccard >= 0.80; both >= 50 words",
+    "math": "word Jaccard >= 0.90; identical signed number multisets",
+    "code": "token Jaccard >= 0.85; both >= 20 nonblank lines after comment removal",
+    "mixed_domains": "both domains' rules must pass on both documents",
+    "h1": "same H1 SHA256; bypasses H2 guards",
+    "translations": "not detected"
+  },
+  "pack_domains": {
+    "code-rust": "code",
+    "en-dclm": "prose",
+    "math-finemath": "math"
+  },
+  "wall_seconds": 12.6,
+  "peak_rss_mb": 296.3,
+  "versions": {
+    "python": "3.12.12",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3",
+    "pyarrow": "19.0.1",
+    "pygments": "2.21.0",
+    "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39"
+  },
+  "output_mb": 7.0
+}
+
+Pairs at Jaccard 0.80 and above:
+  code-rust x code-rust                         6000
+  en-dclm x en-dclm                             6000
+  en-dclm x math-finemath                       16000
+  math-finemath x math-finemath                 6000
+
+Pairs at Jaccard 1.00 and above:
+  en-dclm x en-dclm                             1000
+  math-finemath x math-finemath                 1000
+
+Pairs at exact (same H1 key):
+  en-dclm x en-dclm                             1000
+  math-finemath x math-finemath                 1000
+
+Top 20 pairs:
+  1.0000  exact en-dclm-en-dclm-000002  en-dclm-en-dclm-000003
+  1.0000  exact en-dclm-en-dclm-000006  en-dclm-en-dclm-000007
+  1.0000  exact en-dclm-en-dclm-000010  en-dclm-en-dclm-000011
+  1.0000  exact en-dclm-en-dclm-000014  en-dclm-en-dclm-000015
+  1.0000  exact en-dclm-en-dclm-000018  en-dclm-en-dclm-000019
+  1.0000  exact en-dclm-en-dclm-000022  en-dclm-en-dclm-000023
+  1.0000  exact en-dclm-en-dclm-000026  en-dclm-en-dclm-000027
+  1.0000  exact en-dclm-en-dclm-000030  en-dclm-en-dclm-000031
+  1.0000  exact en-dclm-en-dclm-000034  en-dclm-en-dclm-000035
+  1.0000  exact en-dclm-en-dclm-000038  en-dclm-en-dclm-000039
+  1.0000  exact en-dclm-en-dclm-000042  en-dclm-en-dclm-000043
+  1.0000  exact en-dclm-en-dclm-000046  en-dclm-en-dclm-000047
+  1.0000  exact en-dclm-en-dclm-000050  en-dclm-en-dclm-000051
+  1.0000  exact en-dclm-en-dclm-000054  en-dclm-en-dclm-000055
+  1.0000  exact en-dclm-en-dclm-000058  en-dclm-en-dclm-000059
+  1.0000  exact en-dclm-en-dclm-000062  en-dclm-en-dclm-000063
+  1.0000  exact en-dclm-en-dclm-000066  en-dclm-en-dclm-000067
+  1.0000  exact en-dclm-en-dclm-000070  en-dclm-en-dclm-000071
+  1.0000  exact en-dclm-en-dclm-000074  en-dclm-en-dclm-000075
+  1.0000  exact en-dclm-en-dclm-000078  en-dclm-en-dclm-000079
+
+Wrote overlap_pairs.csv, overlap_matrix.npz, overlap_docs.parquet, overlap_by_pack.csv, overlap_histogram.csv, overlap_matches.csv, overlap_matrix.csv, overlap_matrix_counts.csv and overlap_summary.json to out/overlap (7.0 MB)
+
+candidate, run 1: python -I <snapshot>/teams/01-data-a/dedup/overlap.py --config <snapshot>/config.json
+3 cleaned parts found (input checksum verification deferred)
+train/code-rust/part-00000.parquet: 4000 documents (1s)
+train/en-dclm/part-00000.parquet: 4000 documents (2s)
+train/math-finemath/part-00000.parquet: 4000 documents (3s)
+12000 documents, 318001 distinct shingles, 298001 of them in 2+ documents; about 24,196,000 intersection steps
+  rows 256/12000: 0s, about 0s left
+  rows 12000/12000: 0s, about 0s left
+Applying H1/H2 rules; scoring code token pairs independently of raw word scores
+{
+  "status": "complete",
+  "normalize_id": "g1-spec-v1",
+  "key": "h1_key of h1_sha256.py: normalize.match_key, then NFKC, casefold, whitespace runs to one space",
+  "shingles": "word 5-grams of the key as 64-bit hashes (gram_hashes: pandas SipHash per word, combined per window); a key under 5 words is one shingle",
+  "documents": {
+    "code-rust": {
+      "train": 4000,
+      "all": 4000
+    },
+    "en-dclm": {
+      "train": 4000,
+      "all": 4000
+    },
+    "math-finemath": {
+      "train": 4000,
+      "all": 4000
+    }
+  },
+  "documents_all": 12000,
+  "ids_used_by_2_or_more_documents": 0,
+  "h1_exact_groups": 2000,
+  "documents_in_h1_exact_groups": 4000,
+  "empty_documents": 0,
+  "distinct_shingles": 318001,
+  "shingles_in_2_or_more_documents": 298001,
+  "pairs_compared": 71994000,
+  "pairs_sharing_a_shingle": 565500,
+  "pairs_at_or_above": {
+    "0.70": 34000,
+    "0.75": 34000,
+    "0.80": 34000,
+    "0.85": 34000,
+    "0.90": 34000,
+    "0.95": 29000
+  },
+  "pairs_stored": 34000,
+  "qualifying_pairs_by_rule": {
+    "H1": 2000,
+    "H2": 11000
+  },
+  "matrix_definition": "distinct documents in row source with another qualifying H1/H2 match in column source / row source documents",
+  "duplicate_rules": {
+    "prose": "word Jaccard >= 0.80; both >= 50 words",
+    "math": "word Jaccard >= 0.90; identical signed number multisets",
+    "code": "token Jaccard >= 0.85; both >= 20 nonblank lines after comment removal",
+    "mixed_domains": "both domains' rules must pass on both documents",
+    "h1": "same H1 SHA256; bypasses H2 guards",
+    "translations": "not detected"
+  },
+  "pack_domains": {
+    "code-rust": "code",
+    "en-dclm": "prose",
+    "math-finemath": "math"
+  },
+  "wall_seconds": 12.4,
+  "peak_rss_mb": 286.2,
+  "versions": {
+    "python": "3.12.12",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3",
+    "pandas": "2.3.3",
+    "pyarrow": "19.0.1",
+    "pygments": "2.21.0",
+    "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39"
+  },
+  "output_mb": 7.0
+}
+
+Pairs at Jaccard 0.80 and above:
+  code-rust x code-rust                         6000
+  en-dclm x en-dclm                             6000
+  en-dclm x math-finemath                       16000
+  math-finemath x math-finemath                 6000
+
+Pairs at Jaccard 1.00 and above:
+  en-dclm x en-dclm                             1000
+  math-finemath x math-finemath                 1000
+
+Pairs at exact (same H1 key):
+  en-dclm x en-dclm                             1000
+  math-finemath x math-finemath                 1000
+
+Top 20 pairs:
+  1.0000  exact en-dclm-en-dclm-000002  en-dclm-en-dclm-000003
+  1.0000  exact en-dclm-en-dclm-000006  en-dclm-en-dclm-000007
+  1.0000  exact en-dclm-en-dclm-000010  en-dclm-en-dclm-000011
+  1.0000  exact en-dclm-en-dclm-000014  en-dclm-en-dclm-000015
+  1.0000  exact en-dclm-en-dclm-000018  en-dclm-en-dclm-000019
+  1.0000  exact en-dclm-en-dclm-000022  en-dclm-en-dclm-000023
+  1.0000  exact en-dclm-en-dclm-000026  en-dclm-en-dclm-000027
+  1.0000  exact en-dclm-en-dclm-000030  en-dclm-en-dclm-000031
+  1.0000  exact en-dclm-en-dclm-000034  en-dclm-en-dclm-000035
+  1.0000  exact en-dclm-en-dclm-000038  en-dclm-en-dclm-000039
+  1.0000  exact en-dclm-en-dclm-000042  en-dclm-en-dclm-000043
+  1.0000  exact en-dclm-en-dclm-000046  en-dclm-en-dclm-000047
+  1.0000  exact en-dclm-en-dclm-000050  en-dclm-en-dclm-000051
+  1.0000  exact en-dclm-en-dclm-000054  en-dclm-en-dclm-000055
+  1.0000  exact en-dclm-en-dclm-000058  en-dclm-en-dclm-000059
+  1.0000  exact en-dclm-en-dclm-000062  en-dclm-en-dclm-000063
+  1.0000  exact en-dclm-en-dclm-000066  en-dclm-en-dclm-000067
+  1.0000  exact en-dclm-en-dclm-000070  en-dclm-en-dclm-000071
+  1.0000  exact en-dclm-en-dclm-000074  en-dclm-en-dclm-000075
+  1.0000  exact en-dclm-en-dclm-000078  en-dclm-en-dclm-000079
+
+Wrote overlap_pairs.csv, overlap_matrix.npz, overlap_docs.parquet, overlap_by_pack.csv, overlap_histogram.csv, overlap_matches.csv, overlap_matrix.csv, overlap_matrix_counts.csv and overlap_summary.json to out/overlap (7.0 MB)
+
+candidate, run 2: python -I <snapshot>/teams/01-data-a/dedup/overlap.py --config <snapshot>/config.json
+3 cleaned parts found (input checksum verification deferred)
+train/code-rust/part-00000.parquet: 4000 documents (1s)
+train/en-dclm/part-00000.parquet: 4000 documents (2s)
+train/math-finemath/part-00000.parquet: 4000 documents (3s)
+12000 documents, 318001 distinct shingles, 298001 of them in 2+ documents; about 24,196,000 intersection steps
+  rows 256/12000: 0s, about 0s left
+  rows 12000/12000: 0s, about 0s left
+Applying H1/H2 rules; scoring code token pairs independently of raw word scores
+{
+  "status": "complete",
+  "normalize_id": "g1-spec-v1",
+  "key": "h1_key of h1_sha256.py: normalize.match_key, then NFKC, casefold, whitespace runs to one space",
+  "shingles": "word 5-grams of the key as 64-bit hashes (gram_hashes: pandas SipHash per word, combined per window); a key under 5 words is one shingle",
+  "documents": {
+    "code-rust": {
+      "train": 4000,
+      "all": 4000
+    },
+    "en-dclm": {
+      "train": 4000,
+      "all": 4000
+    },
+    "math-finemath": {
+      "train": 4000,
+      "all": 4000
+    }
+  },
+  "documents_all": 12000,
+  "ids_used_by_2_or_more_documents": 0,
+  "h1_exact_groups": 2000,
+  "documents_in_h1_exact_groups": 4000,
+  "empty_documents": 0,
+  "distinct_shingles": 318001,
+  "shingles_in_2_or_more_documents": 298001,
+  "pairs_compared": 71994000,
+  "pairs_sharing_a_shingle": 565500,
+  "pairs_at_or_above": {
+    "0.70": 34000,
+    "0.75": 34000,
+    "0.80": 34000,
+    "0.85": 34000,
+    "0.90": 34000,
+    "0.95": 29000
+  },
+  "pairs_stored": 34000,
+  "qualifying_pairs_by_rule": {
+    "H1": 2000,
+    "H2": 11000
+  },
+  "matrix_definition": "distinct documents in row source with another qualifying H1/H2 match in column source / row source documents",
+  "duplicate_rules": {
+    "prose": "word Jaccard >= 0.80; both >= 50 words",
+    "math": "word Jaccard >= 0.90; identical signed number multisets",
+    "code": "token Jaccard >= 0.85; both >= 20 nonblank lines after comment removal",
+    "mixed_domains": "both domains' rules must pass on both documents",
+    "h1": "same H1 SHA256; bypasses H2 guards",
+    "translations": "not detected"
+  },
+  "pack_domains": {
+    "code-rust": "code",
+    "en-dclm": "prose",
+    "math-finemath": "math"
+  },
+  "wall_seconds": 12.5,
+  "peak_rss_mb": 288.7,
+  "versions": {
+    "python": "3.12.12",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3",
+    "pandas": "2.3.3",
+    "pyarrow": "19.0.1",
+    "pygments": "2.21.0",
+    "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39"
+  },
+  "output_mb": 7.0
+}
+
+Pairs at Jaccard 0.80 and above:
+  code-rust x code-rust                         6000
+  en-dclm x en-dclm                             6000
+  en-dclm x math-finemath                       16000
+  math-finemath x math-finemath                 6000
+
+Pairs at Jaccard 1.00 and above:
+  en-dclm x en-dclm                             1000
+  math-finemath x math-finemath                 1000
+
+Pairs at exact (same H1 key):
+  en-dclm x en-dclm                             1000
+  math-finemath x math-finemath                 1000
+
+Top 20 pairs:
+  1.0000  exact en-dclm-en-dclm-000002  en-dclm-en-dclm-000003
+  1.0000  exact en-dclm-en-dclm-000006  en-dclm-en-dclm-000007
+  1.0000  exact en-dclm-en-dclm-000010  en-dclm-en-dclm-000011
+  1.0000  exact en-dclm-en-dclm-000014  en-dclm-en-dclm-000015
+  1.0000  exact en-dclm-en-dclm-000018  en-dclm-en-dclm-000019
+  1.0000  exact en-dclm-en-dclm-000022  en-dclm-en-dclm-000023
+  1.0000  exact en-dclm-en-dclm-000026  en-dclm-en-dclm-000027
+  1.0000  exact en-dclm-en-dclm-000030  en-dclm-en-dclm-000031
+  1.0000  exact en-dclm-en-dclm-000034  en-dclm-en-dclm-000035
+  1.0000  exact en-dclm-en-dclm-000038  en-dclm-en-dclm-000039
+  1.0000  exact en-dclm-en-dclm-000042  en-dclm-en-dclm-000043
+  1.0000  exact en-dclm-en-dclm-000046  en-dclm-en-dclm-000047
+  1.0000  exact en-dclm-en-dclm-000050  en-dclm-en-dclm-000051
+  1.0000  exact en-dclm-en-dclm-000054  en-dclm-en-dclm-000055
+  1.0000  exact en-dclm-en-dclm-000058  en-dclm-en-dclm-000059
+  1.0000  exact en-dclm-en-dclm-000062  en-dclm-en-dclm-000063
+  1.0000  exact en-dclm-en-dclm-000066  en-dclm-en-dclm-000067
+  1.0000  exact en-dclm-en-dclm-000070  en-dclm-en-dclm-000071
+  1.0000  exact en-dclm-en-dclm-000074  en-dclm-en-dclm-000075
+  1.0000  exact en-dclm-en-dclm-000078  en-dclm-en-dclm-000079
+
+Wrote overlap_pairs.csv, overlap_matrix.npz, overlap_docs.parquet, overlap_by_pack.csv, overlap_histogram.csv, overlap_matches.csv, overlap_matrix.csv, overlap_matrix_counts.csv and overlap_summary.json to out/overlap (7.0 MB)

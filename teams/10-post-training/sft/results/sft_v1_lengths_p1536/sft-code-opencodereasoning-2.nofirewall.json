@@ -1,0 +1,58 @@
+{
+ "schema": "g10-sft-v1-lengths/1",
+ "set": "sft-code-opencodereasoning-2",
+ "area": "code",
+ "tokenizer_sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b",
+ "rows_read": 542043,
+ "filter": {
+  "keep_ids": false,
+  "status": "pack"
+ },
+ "fit_rule": "a row fits L when its whole token count is <= L",
+ "note": "training rows of the p1536 pack (held-out rows excluded), all 70 shards",
+ "rows": 418496,
+ "tokens": 2661573319,
+ "shifted_targets": 2489211865,
+ "by_limit": {
+  "2048": {
+   "rows_fit": 77944,
+   "rows_fit_share": 0.186248,
+   "tokens_fit": 107704700,
+   "tokens_fit_share": 0.040467,
+   "shifted_targets_fit": 88135506,
+   "tokens_if_truncated": 805155196
+  },
+  "4096": {
+   "rows_fit": 176281,
+   "rows_fit_share": 0.421225,
+   "tokens_fit": 402061048,
+   "tokens_fit_share": 0.151061,
+   "shifted_targets_fit": 348073930,
+   "tokens_if_truncated": 1394173688
+  },
+  "8192": {
+   "rows_fit": 292513,
+   "rows_fit_share": 0.698962,
+   "tokens_fit": 1089358137,
+   "tokens_fit_share": 0.409291,
+   "shifted_targets_fit": 986133494,
+   "tokens_if_truncated": 2121410873
+  },
+  "32768": {
+   "rows_fit": 418496,
+   "rows_fit_share": 1.0,
+   "tokens_fit": 2661573319,
+   "tokens_fit_share": 1.0,
+   "shifted_targets_fit": 2489211865,
+   "tokens_if_truncated": 2661573319
+  }
+ },
+ "length": {
+  "min": 232,
+  "p50": 5004,
+  "p90": 13638,
+  "p99": 19108,
+  "max": 29846,
+  "mean": 6359.9
+ }
+}

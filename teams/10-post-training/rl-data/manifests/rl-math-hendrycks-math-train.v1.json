@@ -1,0 +1,89 @@
+{
+ "schema": "g10-rl-data-manifest/1",
+ "set": "rl-math-hendrycks-math-train",
+ "version": "v1 (11 Nov build, reproduced 15 Nov)",
+ "source": {
+  "dataset": "hendrycks MATH (EleutherAI/hendrycks_math layout)",
+  "revision": "21a5633873b6a120296cce3e2df9d5550074f4a3",
+  "split": "train",
+  "files": [
+   {
+    "file": "algebra/train-00000-of-00001.parquet",
+    "bytes": 505186,
+    "sha256": "73347f5b55869f21ff094361025dbd12d291e971aa4d72142eacee10438e449f"
+   },
+   {
+    "file": "counting_and_probability/train-00000-of-00001.parquet",
+    "bytes": 329354,
+    "sha256": "d37ae017930df41678edee50dcde18c17fb06afaff9eb505c1b95f1002bfcb31"
+   },
+   {
+    "file": "geometry/train-00000-of-00001.parquet",
+    "bytes": 549388,
+    "sha256": "9dbf5e5b55499e696e0ba72da9d85d4f0be3acbf7eaa6cb014b0fc78bb63784f"
+   },
+   {
+    "file": "intermediate_algebra/train-00000-of-00001.parquet",
+    "bytes": 575154,
+    "sha256": "0c87f3798ebdfb915b1f9b6fc13c1a8d064c3cb91631ccbe85b83ed5d71150f6"
+   },
+   {
+    "file": "number_theory/train-00000-of-00001.parquet",
+    "bytes": 308653,
+    "sha256": "81c08649149b39811f2d1d7ddf5dfccf6c4c8044a2e169cfb24db09160c941f4"
+   },
+   {
+    "file": "prealgebra/train-00000-of-00001.parquet",
+    "bytes": 383626,
+    "sha256": "765b526fb5c0b8385cb7be2c16bf4f6f28cf71f2bc15c826abfbb5fa7f8616cc"
+   },
+   {
+    "file": "precalculus/train-00000-of-00001.parquet",
+    "bytes": 353745,
+    "sha256": "28bb1ff95525c8d32521509bef91de76339659f5467a381e6e8deea204538f0e"
+   }
+  ]
+ },
+ "generator": "none (human competition problems and solutions)",
+ "licence": "MIT (upstream hendrycks/math repo); not re-verified this session",
+ "licence_table": "MISSING: no row in licences/licence_table.md at 7a3f122",
+ "training_approval": "no licence-table row: not approved; MATH RL use pending a row and a TSAI/lead decision",
+ "heldout_boundaries": "train files only (7 parquets); MATH test split not present/read; MATH-500 read only by math500_guard (91 train tasks sharing a 13-word run removed); v2 fingerprints removed 175",
+ "counts": {
+  "built": 7498,
+  "v2_flagged": 175,
+  "math500_overlap": 91,
+  "math500_overlap_also_v2_flagged": 2,
+  "removed": 264,
+  "v1": 7234,
+  "sha256": "630c6dae44cd60ce8a35a6ce66ee391843a964e0dac8fab3b3e7eb5c7489a65c",
+  "v1_by_level": {
+   "Level 1": 555,
+   "Level 2": 1325,
+   "Level 3": 1548,
+   "Level 4": 1636,
+   "Level 5": 2168,
+   "Level ?": 2
+  }
+ },
+ "output": {
+  "file": "math.jsonl (local only, not in Git)",
+  "rows": 7234,
+  "sha256": "630c6dae44cd60ce8a35a6ce66ee391843a964e0dac8fab3b3e7eb5c7489a65c"
+ },
+ "decontam": {
+  "record_sha256_rebuild": "8d06720aeeb85c3844d48e24065ef2bc8192dd8daae421eff847989ac51c8358",
+  "record_equal_to_11nov_except_run_at": true,
+  "fingerprints": "v2",
+  "set_sha256": "2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a",
+  "rows_canary": 0
+ },
+ "prompt_pool": {
+  "layout": "JSONL {id, text}; Team 9 decontam_check.py --id-field id",
+  "rows": 7234,
+  "sha256": "5148ce7a52f8767755957d8981bc9db3a62d8049fcc3369835223762d8180de4",
+  "file": "local only (rldata_rebuild/pool)"
+ },
+ "rebuild": "work/wp4-rl-integration-2026-11-15/rldata_rebuild/run_rebuild.sh (wrappers copied byte-for-byte from work/rl-data-v1-2026-11-11: verify_pins.py, build_v1.py, assemble_v1.py, math500_guard.py; builders teams/10-post-training/rl-data/{build,build_math}.py; decontam teams/10-post-training/sft/decontam_run.py with Team 9 tools b470b4c)",
+ "rebuild_seconds_total_both_sets": 63
+}

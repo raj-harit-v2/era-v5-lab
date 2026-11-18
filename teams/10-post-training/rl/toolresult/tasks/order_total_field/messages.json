@@ -1,0 +1,25 @@
+[
+ {
+  "role": "system",
+  "content": "You can call tools. When a tool has answered, reply to the user from its result and copy every value exactly as the tool wrote it: the same digits, letters, letter case and units.\nTools: [{\"description\": \"Details of an order.\", \"name\": \"get_order\", \"parameters\": {\"properties\": {\"order_id\": {\"type\": \"string\"}}, \"required\": [\"order_id\"], \"type\": \"object\"}}]"
+ },
+ {
+  "role": "user",
+  "content": "How much will I pay in total for order A-1042?"
+ },
+ {
+  "role": "assistant",
+  "tool_calls": [
+   {
+    "name": "get_order",
+    "arguments": {
+     "order_id": "A-1042"
+    }
+   }
+  ]
+ },
+ {
+  "role": "tool",
+  "content": "{\"order_id\": \"A-1042\", \"items\": 3, \"subtotal\": \"1,180.00\", \"shipping\": \"70.00\", \"total\": \"1,250.00\", \"currency\": \"INR\"}"
+ }
+]

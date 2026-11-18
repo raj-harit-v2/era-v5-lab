@@ -1,0 +1,13 @@
+{
+  "_comment": "overlap.py job config. Paths are relative to the repository root, the job's working directory. The sample v0 parts are checked against SHA256SUMS, pinned by the same sha256 as teams/03-tokenizer/train/rebuild_c3_s0.json.",
+  "inputs": "inputs/sample_v0",
+  "sha256sums_sha256": "0b7da76396a7078b07a5e5f96a4ced88279e77205c164a35f284f387b0546faa",
+  "packs": ["en-dclm", "en-fineweb-edu", "en-nemotroncc", "en-nemotroncc-synth"],
+  "splits": ["train", "heldout"],
+  "out": "out/overlap_en",
+  "floor": 0.5,
+  "k": 5,
+  "block": 256,
+  "top": 20,
+  "max_output_mb": 50
+}

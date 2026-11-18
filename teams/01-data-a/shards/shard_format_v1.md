@@ -30,16 +30,17 @@ tokenizer sample, with every file below except the `.bin` and `.docs.parquet`, w
 
 ## Tokenizing (G3's answers)
 
-- **Tokenizer:** C3 sample-v0, frozen (#340), `tokenizer.json` sha256 `15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3`
-  (`teams/03-tokenizer/release/SHA256SUMS`). The writer refuses any other file. The file (8 MB) is not in the repo: it comes
-  from G3's Kaggle dataset, or is rebuilt with `teams/03-tokenizer/train/rebuild_c3_s0.py` and checked against that sha256.
+- **Tokenizer:** p1536, frozen at Gate 3 in place of C3 (C3 was `15468e66…`, #340), `tokenizer.json` sha256 `e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b`
+  (G3 `train/p1536_s0_manifest.json`, Kaggle `sohiyiy/p1536-sample-v0`). The writer refuses any other file. The file is not in the repo: it comes
+  from G3's Kaggle dataset and is checked against that sha256.
   It is loaded with `tokenizers.Tokenizer.from_file`, not G6's `BrahmicTokenizer` (that pins the baseline).
 - **EOS:** `<|endoftext|>`, id 130,822, after every document: G10's end-of-document marker, the same id in C3, so pretraining
   and G10's `render.py` end documents the same way. Not id 36.
 - **No BOS and no language tag** for now (the `lang_slot` ids are not named).
 - **Normalizer:** inside `tokenizer.json` (NFC, Malayalam chillu, Bengali/Punjabi nukta). No normalizer of our own, and no
   NFKC in cleaning (`clean.py` uses NFC; NFKC only folds the Latin ligatures U+FB00–FB06 in English packs).
-- **Encoding:** `encode_batch(texts, add_special_tokens=False)`, one process per pack part.
+- **Encoding:** `encode_batch_fast(texts, add_special_tokens=False)`, 256 documents per batch, one process per pack part.
+  It skips character offsets, which the writer does not use (it reads only the IDs); the IDs are the same as `encode_batch`.
 
 A document is left out, counted, and listed by doc_id in the shard's quality report when:
 
@@ -62,7 +63,7 @@ A document is left out, counted, and listed by doc_id in the shard's quality rep
 | `index_uri`, `index_sha256` | the `.idx.npy`: hashed separately, so a broken index is caught too |
 | `doc_count`, `token_count` | documents and tokens in the shard, EOS included |
 | `eos_token_id` | 130,822 |
-| `tokenizer_sha256` | sha256 of the `tokenizer.json` bytes that made the IDs (C3: `15468e66…`) |
+| `tokenizer_sha256` | sha256 of the `tokenizer.json` bytes that made the IDs (p1536: `e6b93a93…`) |
 | `pack_id`, `language`, `script`, `domain`, `capability_lane`, `split` | what is in the shard. `split` is `train` or `validation` only: test and benchmark data are never sharded (eval firewall, G9 #269) |
 | `inputs_sha256` | sha256 of the sorted lines `<input_sha256> <part>` of the input parts `run_clean.py` read (from its summaries) |
 | `cleaning_pipeline_sha256` | sha256 of `cleaning_pipeline.json`: the `clean.py` sha256, the F2 fingerprint set and the dedup version |

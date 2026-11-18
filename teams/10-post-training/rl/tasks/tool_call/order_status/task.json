@@ -1,0 +1,10 @@
+{
+  "id": "order_status",
+  "type": "tool_call",
+  "title": "Look up an order without its event history",
+  "difficulty": "easy",
+  "eligibility": "eval",
+  "author": "LokeshJatangi",
+  "source": "original: written with Codex for LokeshJatangi, 2026-11-16; not copied from a benchmark",
+  "tags": ["tool-use", "exact-json", "argument-types"]
+}

@@ -14,7 +14,9 @@ A private dashboard that reads training metrics from ClickHouse. Panels:
 - MoE expert load imbalance (panel 27, `metrics_raw`), next to Router MaxVio (panel 21): `expert_load_imbalance`, busiest expert / average expert (`max(shares) * num_experts`) in the worst MoE layer, per step and run. 1.0 is perfectly balanced; orange from 1.5, red from 2.0 (the busiest expert gets twice the average share). It equals `router_max_vio` + 1. Worked out by `metrics_logger/metrics_writer.py` `expert_load_imbalance` from `expert_load`.
 - Update-to-weight ratio (panel 24, `metrics_raw`): `update_weight_ratio`, global L2 `||lr * update|| / ||W||` (default every 10 steps). Worked out by `metrics_logger/metrics_writer.py` `compute_update_weight_ratio`.
 
-MFU and GPU panels stay empty until a run that logs those metrics is loaded.
+- Eval-mini score per checkpoint (panel 28, `eval_mini`): Team 9's eval-mini score of each lab checkpoint, filled by Team 9's `eval_watcher.py`. x is `checkpoint_step`, y the task's primary metric in percent (`primary = 1`, `teams/09-evaluation/results/eval_mini_v1_schema.md`), one line per run and task. Rows with no checkpoint step (the Hugging Face reference models) are left out. When one checkpoint has more than one row (scored again, or the same step after a restart, also across loader `run_id`s), the query keeps the row with the highest `checkpoint_epoch`, then the latest `loaded_at`. Pick runs and tasks with the `eval_run` and `eval_task` variables.
+
+MFU, GPU and eval panels stay empty until a run that logs those metrics is loaded.
 
 ## 1. Start ClickHouse and load the data
 

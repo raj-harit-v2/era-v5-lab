@@ -1,0 +1,25 @@
+[
+ {
+  "role": "system",
+  "content": "You can call tools. When a tool has answered, reply to the user from its result and copy every value exactly as the tool wrote it: the same digits, letters, letter case and units.\nTools: [{\"description\": \"Run a shell command and return its exit code and output.\", \"name\": \"run_command\", \"parameters\": {\"properties\": {\"command\": {\"type\": \"string\"}}, \"required\": [\"command\"], \"type\": \"object\"}}]"
+ },
+ {
+  "role": "user",
+  "content": "Run the database migration and tell me whether it worked."
+ },
+ {
+  "role": "assistant",
+  "tool_calls": [
+   {
+    "name": "run_command",
+    "arguments": {
+     "command": "python manage.py migrate"
+    }
+   }
+  ]
+ },
+ {
+  "role": "tool",
+  "content": "{\"exit_code\": 1, \"stdout\": \"\", \"stderr\": \"ModuleNotFoundError: No module named 'yaml'\"}"
+ }
+]

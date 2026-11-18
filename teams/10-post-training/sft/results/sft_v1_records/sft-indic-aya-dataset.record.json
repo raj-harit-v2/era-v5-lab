@@ -1,0 +1,97 @@
+{
+ "checks": {
+  "checks_failed": {},
+  "checks_ok": true,
+  "effort_rows": {
+   "16k": 0,
+   "1k": 1000,
+   "4k": 0,
+   "64k": 0
+  },
+  "files": [
+   {
+    "bytes": 5364044,
+    "name": "sft-indic-aya-dataset.first1000.jsonl",
+    "sha256": "643613dbd13ba8dc012e1271158af335689a54c716dcb19a4b195c86396a4ca8"
+   }
+  ],
+  "info": {
+   "decode_equals_normalised_text_only": 115
+  },
+  "length": {
+   "max": 6576,
+   "min": 33,
+   "p50": 169,
+   "p95": 947
+  },
+  "max_len": 32768,
+  "rows": 1000,
+  "rows_over_max_len": 0,
+  "rows_with_tool_blocks": 0,
+  "shifted_supervised_targets": 202054,
+  "tokens": 304967,
+  "tool_call_blocks": 0,
+  "tool_call_tokens_untrained": 0,
+  "tool_result_blocks": 0,
+  "train_spans": 1000,
+  "trained_share": 0.662544,
+  "trained_tokens": 202054,
+  "unique_ids": true
+ },
+ "checks_wall_s": 0.7,
+ "content_sha256": "643613dbd13ba8dc012e1271158af335689a54c716dcb19a4b195c86396a4ca8",
+ "convert": {
+  "cpu_sys_s": 0.283,
+  "cpu_user_s": 1.283,
+  "hub_bytes_read": 33956063,
+  "max_rss_mb": 345.4,
+  "wall_s": 6.839
+ },
+ "decision": "TSAI reserves",
+ "deterministic_rerun": true,
+ "effort_manifest": {
+  "16k": 0,
+  "1k": 1000,
+  "4k": 0,
+  "64k": 0
+ },
+ "file_bytes": 5364044,
+ "file_sha256": "643613dbd13ba8dc012e1271158af335689a54c716dcb19a4b195c86396a4ca8",
+ "generator_model": "none (human-written annotations; no model generator)",
+ "hub_revision": "f9ea04583f02a8f86404ff6c58bf75fe637df8a2",
+ "input": "hub file CohereLabs/aya_dataset data/train-00000-of-00001.parquet rows 0..999999999",
+ "licence": "apache-2.0 (Hub tag; commercial use permitted per tag)",
+ "rerun_content_sha256": "643613dbd13ba8dc012e1271158af335689a54c716dcb19a4b195c86396a4ca8",
+ "rerun_wall_s": 6.886,
+ "rows_in": 1000,
+ "rows_out": 1000,
+ "rows_per_s_convert": 709.17,
+ "rows_scanned": 4850,
+ "scope": "first 1000 selected rows, source order, C3",
+ "selection": "language_code in ben,guj,hin,kan,mal,mar,ory,pan,tam,tel",
+ "set": "sft-indic-aya-dataset",
+ "skipped": {},
+ "source": "CohereLabs/aya_dataset",
+ "token_record": {
+  "basis": "first 1000 selected rows, source order, C3; not the admissible kept rows",
+  "effort": {
+   "16k": 0,
+   "1k": 1000,
+   "4k": 0,
+   "64k": 0
+  },
+  "length": {
+   "max": 6576,
+   "min": 33,
+   "p50": 169,
+   "p95": 947
+  },
+  "rows": 1000,
+  "sequence_tokens": 304967,
+  "set_id": "sft-indic-aya-dataset",
+  "shifted_supervised_targets": 202054,
+  "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3"
+ },
+ "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3",
+ "tokens_per_s_convert": 44592
+}

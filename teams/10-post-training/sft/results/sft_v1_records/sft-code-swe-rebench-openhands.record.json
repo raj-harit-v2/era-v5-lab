@@ -1,0 +1,100 @@
+{
+ "checks": {
+  "checks_failed": {},
+  "checks_ok": true,
+  "effort_rows": {
+   "16k": 2,
+   "1k": 0,
+   "4k": 0,
+   "64k": 467
+  },
+  "files": [
+   {
+    "bytes": 314426149,
+    "name": "sft-code-swe-rebench-openhands.first1000.jsonl",
+    "sha256": "b8fc9c6707d2152420a91857c547cf21d422ce6256659e31fde32f44cf5a35c4"
+   }
+  ],
+  "info": {
+   "decode_equals_normalised_text_only": 2
+  },
+  "length": {
+   "max": 80330,
+   "min": 23941,
+   "p50": 47256,
+   "p95": 70935
+  },
+  "max_len": 32768,
+  "rows": 469,
+  "rows_over_max_len": 445,
+  "rows_with_tool_blocks": 469,
+  "shifted_supervised_targets": 6539070,
+  "tokens": 22977354,
+  "tool_call_blocks": 26786,
+  "tool_call_tokens_untrained": 0,
+  "tool_result_blocks": 26317,
+  "train_spans": 26786,
+  "trained_share": 0.284588,
+  "trained_tokens": 6539070,
+  "unique_ids": true
+ },
+ "checks_wall_s": 43.11,
+ "content_sha256": "b8fc9c6707d2152420a91857c547cf21d422ce6256659e31fde32f44cf5a35c4",
+ "convert": {
+  "cpu_sys_s": 6.88,
+  "cpu_user_s": 87.649,
+  "hub_bytes_read": 130429124,
+  "max_rss_mb": 819.1,
+  "wall_s": 73.963
+ },
+ "decision": "TSAI reserves",
+ "deterministic_rerun": true,
+ "effort_manifest": {
+  "16k": 2,
+  "1k": 0,
+  "4k": 0,
+  "64k": 467
+ },
+ "file_bytes": 314426149,
+ "file_sha256": "b8fc9c6707d2152420a91857c547cf21d422ce6256659e31fde32f44cf5a35c4",
+ "generator_model": "Qwen3-Coder-480B-A35B-Instruct (Apache-2.0, open weights) via OpenHands",
+ "hub_revision": "35455389ab51bf5e2306bfd436ef72d0f98bf882",
+ "input": "hub file nebius/SWE-rebench-openhands-trajectories trajectories.parquet rows 0..999999999",
+ "licence": "cc-by-4.0 (Hub tag; commercial use permitted per tag)",
+ "rerun_content_sha256": "b8fc9c6707d2152420a91857c547cf21d422ce6256659e31fde32f44cf5a35c4",
+ "rerun_wall_s": 72.038,
+ "rows_in": 1000,
+ "rows_out": 469,
+ "rows_per_s_convert": 13.52,
+ "rows_scanned": 1000,
+ "scope": "first 1000 selected rows, source order, C3",
+ "selection": "all rows",
+ "set": "sft-code-swe-rebench-openhands",
+ "skipped": {
+  "trace over the 64k effort budget": 23,
+  "trajectory did not resolve the issue (resolved != 1)": 508
+ },
+ "source": "nebius/SWE-rebench-openhands-trajectories",
+ "token_record": {
+  "basis": "first 1000 selected rows, source order, C3; not the admissible kept rows",
+  "effort": {
+   "16k": 2,
+   "1k": 0,
+   "4k": 0,
+   "64k": 467
+  },
+  "length": {
+   "max": 80330,
+   "min": 23941,
+   "p50": 47256,
+   "p95": 70935
+  },
+  "rows": 469,
+  "sequence_tokens": 22977354,
+  "set_id": "sft-code-swe-rebench-openhands",
+  "shifted_supervised_targets": 6539070,
+  "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3"
+ },
+ "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3",
+ "tokens_per_s_convert": 310660
+}

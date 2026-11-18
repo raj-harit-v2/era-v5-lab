@@ -24,7 +24,7 @@ model:
   ke_max_pos: 32
   ke_mode: dynamic
   ffn: moe
-  moe: {num_experts: 16, top_k: 2, num_shared: 1, dispatch: loop}
+  moe: {num_experts: 16, top_k: 2, num_shared: 1, dispatch: loop, ffn_hidden: 768}
   reversible: false
   ce_impl: torch
   mtp: false

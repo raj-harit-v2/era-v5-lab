@@ -1,0 +1,95 @@
+{
+ "checks": {
+  "checks_failed": {},
+  "checks_ok": true,
+  "effort_rows": {
+   "16k": 0,
+   "1k": 1000,
+   "4k": 0,
+   "64k": 0
+  },
+  "files": [
+   {
+    "bytes": 6246346,
+    "name": "sft-code-commitpackft.first1000.jsonl",
+    "sha256": "d2009fa3aafd8b68b33906974447580aac544a956034423bff85d42beadf46b8"
+   }
+  ],
+  "info": {},
+  "length": {
+   "max": 778,
+   "min": 71,
+   "p50": 483,
+   "p95": 696
+  },
+  "max_len": 32768,
+  "rows": 1000,
+  "rows_over_max_len": 0,
+  "rows_with_tool_blocks": 0,
+  "shifted_supervised_targets": 280084,
+  "tokens": 462863,
+  "tool_call_blocks": 0,
+  "tool_call_tokens_untrained": 0,
+  "tool_result_blocks": 0,
+  "train_spans": 1000,
+  "trained_share": 0.605112,
+  "trained_tokens": 280084,
+  "unique_ids": true
+ },
+ "checks_wall_s": 0.87,
+ "content_sha256": "d2009fa3aafd8b68b33906974447580aac544a956034423bff85d42beadf46b8",
+ "convert": {
+  "cpu_sys_s": 0.155,
+  "cpu_user_s": 1.289,
+  "hub_bytes_read": 2791146,
+  "max_rss_mb": 175.1,
+  "wall_s": 8.171
+ },
+ "decision": "TSAI reserves",
+ "deterministic_rerun": true,
+ "effort_manifest": {
+  "16k": 0,
+  "1k": 1000,
+  "4k": 0,
+  "64k": 0
+ },
+ "file_bytes": 6246346,
+ "file_sha256": "d2009fa3aafd8b68b33906974447580aac544a956034423bff85d42beadf46b8",
+ "generator_model": "none (real human GitHub commits; no model generator)",
+ "hub_revision": "fc56fe33c030c6daa414c2b112c932b8eed085e6",
+ "input": "hub file bigcode/commitpackft glob:data/*/data.jsonl rows 0..999999999",
+ "licence": "mit (Hub tag; commercial use permitted per tag)",
+ "rerun_content_sha256": "d2009fa3aafd8b68b33906974447580aac544a956034423bff85d42beadf46b8",
+ "rerun_wall_s": 7.803,
+ "rows_in": 1000,
+ "rows_out": 1000,
+ "rows_per_s_convert": 122.38,
+ "rows_scanned": 1000,
+ "scope": "first 1000 selected rows, source order, C3",
+ "selection": "all 277 language files (data/<language>/data.jsonl)",
+ "set": "sft-code-commitpackft",
+ "skipped": {},
+ "source": "bigcode/commitpackft",
+ "token_record": {
+  "basis": "first 1000 selected rows, source order, C3; not the admissible kept rows",
+  "effort": {
+   "16k": 0,
+   "1k": 1000,
+   "4k": 0,
+   "64k": 0
+  },
+  "length": {
+   "max": 778,
+   "min": 71,
+   "p50": 483,
+   "p95": 696
+  },
+  "rows": 1000,
+  "sequence_tokens": 462863,
+  "set_id": "sft-code-commitpackft",
+  "shifted_supervised_targets": 280084,
+  "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3"
+ },
+ "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3",
+ "tokens_per_s_convert": 56647
+}

@@ -1,0 +1,62 @@
+{
+  "command": [
+    "python",
+    "teams/05-architecture/harness/train_week2.py",
+    "--config",
+    "teams/05-architecture/configs/arms/attn1_mqa.yaml",
+    "--runtime",
+    "teams/05-architecture/configs/runtime_t2_150min.yaml",
+    "--tokenizer",
+    "<inputs>/tokenizer_v0.json",
+    "--byte-table",
+    "<inputs>/tables/raw_table_P32.npz",
+    "--train-data",
+    "<inputs>/preliminary/train.jsonl",
+    "--heldout-data",
+    "<inputs>/preliminary/heldout.jsonl",
+    "--heldout-sources",
+    "<inputs>/preliminary/heldout_sources.jsonl",
+    "--heldout-sha256",
+    "<inputs>/preliminary/heldout.sha256",
+    "--heldout-report",
+    "<inputs>/preliminary/heldout_report.json",
+    "--seed",
+    "1238",
+    "--lr",
+    "0.001",
+    "--device",
+    "cuda",
+    "--smoke",
+    "--smoke-steps",
+    "1221",
+    "--out",
+    "<runs>/rotation-mqa-seed1238"
+  ],
+  "differs_from_screen_attn_1": [
+    "--seed 1238 (screen: 1235)",
+    "--runtime runtime_t2_150min.yaml (screen: runtime.yaml)",
+    "--out"
+  ],
+  "working_directory": "source tree of c1849c1b; runtime_t2_150min.yaml (this folder) copied to teams/05-architecture/configs/, which load_runtime requires",
+  "environment": {
+    "PYTHONPATH": "teams/05-architecture/harness",
+    "G5_DOCUMENT_CACHE_DIR": "<window-cache>",
+    "OMP_NUM_THREADS": "4",
+    "MKL_NUM_THREADS": "4",
+    "CUBLAS_WORKSPACE_CONFIG": ":4096:8"
+  },
+  "source_commit": "c1849c1b9dd11eec9ed1958c07deee173ca73265",
+  "data_loader_sha256": "0bff11279729d373a10d1e43e5830029caac95cf4602d9f41de3f9e3bc0dd862",
+  "runtime_sha256": "75d3cdb0c56dd86792b375ab166e2ca454ee9d869fa25c4f5aa4179c76207481",
+  "inputs": {
+    "tokenizer_sha256": "2de039f20d17afd17615095c406c43087359673b767ed0fe2c480b995f2af8e5",
+    "table_content_sha256": "47d411a9c6cae6fa2075935567243e51f4efbc377ccef3eef42c32fce66f869f",
+    "train_sha256": "368c6d7bf9185f5d16c73fd7262e0a4ed4cf3d11797d172d973e0c822c13ce20",
+    "heldout_sha256": "21c6e4b2df8dae9d69e254f4a00fc934d2a3c70f0675065a03724299d94312bb",
+    "heldout_sources_sha256": "95585a25bdccb077130432d49b6427c5ff5f756d5b43b9c7033803326f65e0d6"
+  },
+  "python": "3.12.13",
+  "torch": "2.11.0+cu130",
+  "gpu": "NVIDIA RTX 5000 Ada Generation Laptop GPU",
+  "started": "2026-11-15T19:57:22+05:30"
+}

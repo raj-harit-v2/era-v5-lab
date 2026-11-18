@@ -1,0 +1,19 @@
+{
+ "file": "Qwen3-1.7B-Q4_K_M.gguf",
+ "format": "Q4_K_M",
+ "architecture": "qwen3",
+ "bytes": 1357799328,
+ "n_params": 2031739904,
+ "bits_per_weight": 5.35,
+ "router_type": "none (dense model)",
+ "output_type": "Q8_0",
+ "output_tied_to_token_embd": false,
+ "params_by_type": {
+  "Q8_0": 311164928,
+  "F32": 123904,
+  "Q4_K": 1514930176,
+  "Q6_K": 205520896
+ },
+ "ok": true,
+ "problems": []
+}

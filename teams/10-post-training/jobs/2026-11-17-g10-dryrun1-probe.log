@@ -1,0 +1,39 @@
+# CPU test log: G10 day-one probe, same script as this job (capstone/day_one_probe.py), 17 Nov 2026
+# Source: clean `git archive 82c4bc5 teams/10-post-training` (not a working tree). Hardware: Apple M1 Pro, 16 GB, CPU only.
+# Stand-in run folder: d128, 4 layers, 16+1 experts, context 256, 24,716,416 parameters, trained with Team 5's
+# train_week2.py on the p1536 tokenizer, the tokenizer dry run 1 used (TSAI's result comment on #475).
+# Tokenizer e6b93a93...25a64b; byte table = the committed teams/04-ke2/results/tables/p1536-s0/raw_table_P32.npz
+# (file e19a6cae..., content 21072027...). The pins step checks both against the stand-in's manifest.json.
+# Reduced settings vs the job: --sft-steps 30 --sft-max-train-seconds 120 --rl-limit 8 --rl-max-new 72
+# --sample-len 128 --probe-max-new 96 --device cpu. RL screen: ids that do not fit the stand-in's 256-token context are
+# counted as skipped_too_long; verifier runner docker.
+# Command (local paths shown as <...>):
+# python teams/10-post-training/capstone/day_one_probe.py --g5-root <G5 checkout the stand-in ran from> \
+#   --run-folder <stand-in run folder> --tokenizer <p1536 tokenizer.json> --byte-table <p1536 raw_table_P32.npz> \
+#   --heldout <heldout_v1 balanced sample> --heldout-sources <its sources> --sft-dolly <databricks-dolly-15k.jsonl> \
+#   --rl-tasks <RL data v1 cc.jsonl> --rl-ids teams/10-post-training/capstone/probe_rl_easy_ids.txt --rl-limit 8 \
+#   --rl-max-new 72 --sft-steps 30 --sft-max-train-seconds 120 --sample-len 128 --probe-max-new 96 --device cpu --out <out>
+# Result checks: out/pins.json all three hashes match the stand-in manifest; out/inputs.json train c273a4d7... eval
+# f77fc96c... (5,255 / 589 rows, p1536); RL screen 4 prompts scored, 4 skipped_too_long; after exit out/ held reports only
+# (152 KB): no _inputs/, no model.safetensors, no generations.jsonl.
+export: git archive 82c4bc5 teams/10-post-training
+script sha256: f7460eb73c8c95e5f75f8a2bde2c7a278da87fbd36e2624394e2bd5a82b4c997
+{"pins": {"tokenizer_sha256": ["e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b", "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b"], "table_content_sha256": ["21072027b19ef6f05d57ead7a2fc9fb4c52129e491186bf38d0ba079e8d5168a", "21072027b19ef6f05d57ead7a2fc9fb4c52129e491186bf38d0ba079e8d5168a"], "table_file_sha256": ["e19a6cae8a6e9e5f74c47748f459df4b156bb61b8cec2af485b439c7132a39b0", "e19a6cae8a6e9e5f74c47748f459df4b156bb61b8cec2af485b439c7132a39b0"]}}
+{"step": "pins", "ok": true, "seconds": 0.0}
+{"step": "inputs", "ok": true, "seconds": 4.0}
+{"step": "adapter", "ok": true, "seconds": 1.8}
+{"step": "forgetting", "ok": true, "seconds": 24.7}
+{"step": "sampling", "ok": true, "seconds": 20.6}
+{"step": "mismatch", "ok": true, "seconds": 108.1}
+{"step": "format", "ok": true, "seconds": 19.2}
+{"step": "rl_screen", "ok": true, "seconds": 7.6}
+{"step": "sft_full", "ok": true, "seconds": 124.9}
+{"step": "sft_markers", "ok": true, "seconds": 105.0}
+{"step": "sft_lora", "ok": true, "seconds": 111.8}
+{"step": "sft_lora_markers", "ok": true, "seconds": 131.6}
+{"step": "sft_dt", "ok": true, "seconds": 111.7}
+{"ok": true, "steps": 13, "failed_steps": []}
+real 771.39
+user 1111.88
+sys 568.51
+exit=0

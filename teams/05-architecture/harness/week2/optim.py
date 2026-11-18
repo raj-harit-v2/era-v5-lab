@@ -35,6 +35,21 @@ def zeropower_via_newtonschulz5(G, steps=5, eps=1e-7):
     return X.T if transpose else X
 
 
+def zeropower_batched(G, steps=5, eps=1e-7):
+    """zeropower_via_newtonschulz5 for a stack G[n, rows, cols] of same-shape matrices."""
+    a, b, c = NS_COEFFS
+    X = G.to(torch.bfloat16 if (not G.is_cuda or _native_bf16()) else torch.float32)
+    transpose = X.size(1) > 0 and X.size(1) > X.size(2)
+    if transpose:
+        X = X.transpose(1, 2)
+    X = X / (X.flatten(1).norm(dim=1)[:, None, None] + eps)
+    for _ in range(steps):
+        A = X @ X.transpose(1, 2)
+        B = b * A + c * (A @ A)
+        X = a * X + B @ X
+    return X.transpose(1, 2) if transpose else X
+
+
 class Muon(torch.optim.Optimizer):
     def __init__(
         self, params, lr, momentum=0.95, nesterov=True, ns_steps=5, weight_decay=0.0
@@ -52,7 +67,10 @@ class Muon(torch.optim.Optimizer):
 
     @torch.no_grad()
     def step(self, closure=None):
+        # Execution-only (TSAI): same update as the per-matrix loop, but matrices of one shape are
+        # orthogonalised together in one batched Newton-Schulz call (far fewer kernel launches).
         for group in self.param_groups:
+            by_shape = {}
             for p in group["params"]:
                 # Like AdamW: an expert that saw no tokens gets no update and keeps its momentum.
                 if p.grad is None:
@@ -60,16 +78,17 @@ class Muon(torch.optim.Optimizer):
                 state = self.state[p]
                 if "buf" not in state:
                     state["buf"] = torch.zeros_like(p.grad)
-                buf = state["buf"]
-                buf.lerp_(p.grad, 1 - group["momentum"])
-                g = p.grad.lerp(buf, group["momentum"]) if group["nesterov"] else buf
-                u = zeropower_via_newtonschulz5(g, group["ns_steps"])
+                by_shape.setdefault((tuple(p.shape), p.dtype), []).append(p)
+            for (shape, _), ps in by_shape.items():
+                bufs = [self.state[p]["buf"] for p in ps]
+                grads = [p.grad for p in ps]
+                torch._foreach_lerp_(bufs, grads, 1 - group["momentum"])
+                gs = torch._foreach_lerp(grads, bufs, group["momentum"]) if group["nesterov"] else bufs
+                U = zeropower_batched(torch.stack(gs), group["ns_steps"])
                 if group["weight_decay"]:
-                    p.mul_(1 - group["lr"] * group["weight_decay"])
-                p.add_(
-                    u.to(p.dtype),
-                    alpha=-group["lr"] * max(1.0, p.size(0) / p.size(1)) ** 0.5,
-                )
+                    torch._foreach_mul_(ps, 1 - group["lr"] * group["weight_decay"])
+                alpha = -group["lr"] * max(1.0, shape[0] / shape[1]) ** 0.5
+                torch._foreach_add_(ps, [u.to(p.dtype) for u, p in zip(U.unbind(0), ps)], alpha=alpha)
 
 
 class Optimizers:

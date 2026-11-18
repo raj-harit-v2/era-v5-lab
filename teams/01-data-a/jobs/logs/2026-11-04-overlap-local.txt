@@ -1,0 +1,146 @@
+12 cleaned parts found (input checksum verification deferred)
+train/code-rust/part-00000.parquet: 44581 documents (22s)
+train/code-rust/part-00001.parquet: 15545 documents (30s)
+train/en-fineweb-edu/part-00000.parquet: 54004 documents (70s)
+train/en-fineweb-edu/part-00001.parquet: 17929 documents (85s)
+train/ind-hi-hplt/part-00000.parquet: 8745 documents (95s)
+train/ind-mr-sangraha-v/part-00000.parquet: 12172 documents (100s)
+train/math-finemath/part-00000.parquet: 29122 documents (123s)
+heldout/code-rust/part-00000.parquet: 612 documents (123s)
+heldout/en-fineweb-edu/part-00000.parquet: 732 documents (124s)
+heldout/ind-hi-hplt/part-00000.parquet: 95 documents (124s)
+heldout/ind-mr-sangraha-v/part-00000.parquet: 127 documents (124s)
+heldout/math-finemath/part-00000.parquet: 312 documents (124s)
+183976 documents, 107935932 distinct shingles, 2750600 of them in 2+ documents; about 785,566,084 intersection steps
+  rows 256/183976: 0s, about 26s left
+  rows 13056/183976: 1s, about 18s left
+  rows 25856/183976: 3s, about 16s left
+  rows 38656/183976: 4s, about 14s left
+  rows 51456/183976: 5s, about 12s left
+  rows 64256/183976: 5s, about 10s left
+  rows 77056/183976: 6s, about 8s left
+  rows 89856/183976: 6s, about 6s left
+  rows 102656/183976: 6s, about 5s left
+  rows 115456/183976: 7s, about 4s left
+  rows 128256/183976: 7s, about 3s left
+  rows 141056/183976: 7s, about 2s left
+  rows 153856/183976: 7s, about 1s left
+  rows 166656/183976: 8s, about 1s left
+  rows 179456/183976: 8s, about 0s left
+  rows 183976/183976: 8s, about 0s left
+Applying H1/H2 rules; scoring code token pairs independently of raw word scores
+{
+  "status": "complete",
+  "normalize_id": "g1-spec-v1",
+  "key": "h1_key of h1_sha256.py: normalize.match_key, then NFKC, casefold, whitespace runs to one space",
+  "shingles": "word 5-grams of the key as 8-byte BLAKE2b digests; a key under 5 words is one shingle",
+  "documents": {
+    "code-rust": {
+      "train": 60126,
+      "heldout": 612,
+      "all": 60738
+    },
+    "en-fineweb-edu": {
+      "train": 71933,
+      "heldout": 732,
+      "all": 72665
+    },
+    "ind-hi-hplt": {
+      "train": 8745,
+      "heldout": 95,
+      "all": 8840
+    },
+    "ind-mr-sangraha-v": {
+      "train": 12172,
+      "heldout": 127,
+      "all": 12299
+    },
+    "math-finemath": {
+      "train": 29122,
+      "heldout": 312,
+      "all": 29434
+    }
+  },
+  "documents_all": 183976,
+  "ids_used_by_2_or_more_documents": 0,
+  "h1_exact_groups": 0,
+  "documents_in_h1_exact_groups": 0,
+  "empty_documents": 0,
+  "distinct_shingles": 107935932,
+  "shingles_in_2_or_more_documents": 2750600,
+  "pairs_compared": 16923492300,
+  "pairs_sharing_a_shingle": 107507009,
+  "pairs_at_or_above": {
+    "0.70": 71,
+    "0.75": 47,
+    "0.80": 33,
+    "0.85": 19,
+    "0.90": 13,
+    "0.95": 4
+  },
+  "pairs_stored": 1330,
+  "qualifying_pairs_by_rule": {
+    "H2": 372
+  },
+  "matrix_definition": "distinct documents in row source with another qualifying H1/H2 match in column source / row source documents",
+  "duplicate_rules": {
+    "prose": "word Jaccard >= 0.80; both >= 50 words",
+    "math": "word Jaccard >= 0.90; identical signed number multisets",
+    "code": "token Jaccard >= 0.85; both >= 20 nonblank lines after comment removal",
+    "mixed_domains": "both domains' rules must pass on both documents",
+    "h1": "same H1 SHA256; bypasses H2 guards",
+    "translations": "not detected"
+  },
+  "pack_domains": {
+    "code-rust": "code",
+    "en-fineweb-edu": "prose",
+    "ind-hi-hplt": "prose",
+    "ind-mr-sangraha-v": "prose",
+    "math-finemath": "math"
+  },
+  "wall_seconds": 570.8,
+  "peak_rss_mb": 2827.1,
+  "versions": {
+    "python": "3.12.12",
+    "numpy": "2.5.0",
+    "scipy": "1.18.1",
+    "pyarrow": "25.0.0",
+    "pygments": "2.21.0",
+    "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39"
+  },
+  "output_mb": 5.4
+}
+
+Pairs at Jaccard 0.80 and above:
+  en-fineweb-edu x en-fineweb-edu               7
+  en-fineweb-edu x math-finemath                1
+  ind-hi-hplt x ind-hi-hplt                     1
+  math-finemath x math-finemath                 24
+
+Pairs at Jaccard 1.00 and above:
+
+Pairs at exact (same H1 key):
+
+Top 20 pairs:
+  0.9812        math-finemath-c4913a9b5d184eaa  math-finemath-146a8c2c27f7084b
+  0.9678        en-fineweb-edu-7da2517916cee669  en-fineweb-edu-f63e94d90f6f164c
+  0.9664        math-finemath-782e60137800ad12  math-finemath-e46f63c14abbc4ec
+  0.9533        ind-hi-hplt-0320d700d08c7f82  ind-hi-hplt-4f3793afcc14b975
+  0.9285        en-fineweb-edu-d4dd222ac3caed8b  en-fineweb-edu-b79164980fa09857
+  0.9194        math-finemath-fdd9586ec9f56acd  math-finemath-58947a1732b3aa01
+  0.9152        en-fineweb-edu-88ccbe85066d986b  en-fineweb-edu-37edff55c8a86baf
+  0.9146        en-fineweb-edu-42ce694754dfd481  en-fineweb-edu-4147dc22ebf8c73d
+  0.9116        en-fineweb-edu-f398107f808fd48c  en-fineweb-edu-06e72ffd469a3bd8
+  0.9069        en-fineweb-edu-a6c7d9f88716b8aa  en-fineweb-edu-8b7c4d6d1121ed4a
+  0.9062        math-finemath-2d10df9851e07bc2  math-finemath-1a75f0b258e34510
+  0.9054        en-fineweb-edu-9458f74680af6e0a  math-finemath-4b463e53a7ef2966
+  0.9031        en-fineweb-edu-48b39a3d237e9623  en-fineweb-edu-01440c4ad332c303
+  0.8995        math-finemath-e6bb2a83fa2b784e  math-finemath-8f63fc4054f42613
+  0.8929        math-finemath-9be896b604489b92  math-finemath-57aaa85f1dec5c9c
+  0.8893        math-finemath-faea8d0c6c98037d  math-finemath-768424af98ea5fed
+  0.8853        math-finemath-1e018937b58848db  math-finemath-0ca2bd54dbff60d3
+  0.8775        math-finemath-4c424fb42eaa8152  math-finemath-95bd414e4f147e4a
+  0.8510        math-finemath-69a673305de259e2  math-finemath-46e96a837be4cd58
+  0.8417        math-finemath-64da020839a68079  math-finemath-cf61a5ec0cc6b39d
+
+Wrote overlap_pairs.csv, overlap_matrix.npz, overlap_docs.parquet, overlap_by_pack.csv, overlap_histogram.csv, overlap_matches.csv, overlap_matrix.csv, overlap_matrix_counts.csv and overlap_summary.json to out/overlap (5.4 MB)

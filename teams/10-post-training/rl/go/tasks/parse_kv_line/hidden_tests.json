@@ -1,0 +1,155 @@
+[
+ {
+  "args": [
+   ""
+  ],
+  "expected": {}
+ },
+ {
+  "args": [
+   "   "
+  ],
+  "expected": {}
+ },
+ {
+  "args": [
+   "k="
+  ],
+  "expected": {
+   "k": ""
+  }
+ },
+ {
+  "args": [
+   "k=\"\" j=2"
+  ],
+  "expected": {
+   "k": "",
+   "j": "2"
+  }
+ },
+ {
+  "args": [
+   "a=1 a=2"
+  ],
+  "expected": {
+   "a": "2"
+  }
+ },
+ {
+  "args": [
+   "q=\"say \\\"hi\\\"\""
+  ],
+  "expected": {
+   "q": "say \"hi\""
+  }
+ },
+ {
+  "args": [
+   "p=\"C:\\\\dir\""
+  ],
+  "expected": {
+   "p": "C:\\dir"
+  }
+ },
+ {
+  "args": [
+   "  a=1    b=2  "
+  ],
+  "expected": {
+   "a": "1",
+   "b": "2"
+  }
+ },
+ {
+  "args": [
+   "_k9=\"v w\""
+  ],
+  "expected": {
+   "_k9": "v w"
+  }
+ },
+ {
+  "args": [
+   "a=\"é ü\" b=ok"
+  ],
+  "expected": {
+   "a": "é ü",
+   "b": "ok"
+  }
+ },
+ {
+  "args": [
+   "a=\"x=y\""
+  ],
+  "expected": {
+   "a": "x=y"
+  }
+ },
+ {
+  "args": [
+   "noequals"
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "1a=3"
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "a=b=c"
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "a=\"x\"y"
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "a=\"x\\n\""
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "a=\"x\" b"
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "a=x\"y"
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "ключ=1"
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "=v"
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "a=\"x\\"
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "a=\"x\\\""
+  ],
+  "raises": "error"
+ }
+]

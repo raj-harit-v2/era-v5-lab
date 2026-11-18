@@ -1,0 +1,121 @@
+{
+  "inputs": {
+    "kind": "synthetic",
+    "per_pack": 4000,
+    "sources": [],
+    "parts": [
+      {
+        "path": "inputs/train/code-rust/part-00000.parquet",
+        "sha256": "13869bd9dff4f6d241924f7a9189200bde8a507ee2d35b097ca1818548237e3a",
+        "rows": 4000
+      },
+      {
+        "path": "inputs/train/en-dclm/part-00000.parquet",
+        "sha256": "e46baf495abc85c43c3d1b8b61c45ac3283a994d2506ae65217bc654271612e2",
+        "rows": 4000
+      },
+      {
+        "path": "inputs/train/math-finemath/part-00000.parquet",
+        "sha256": "4a509b34c9b61a566ae7f6488974ead46c999dddaaf23ea01b35d816e8ed3ea1",
+        "rows": 4000
+      }
+    ]
+  },
+  "baseline": "43fa750014b3f6deec6347ece82439e7beeefebb",
+  "candidate": "working files",
+  "runs": [
+    {
+      "label": "baseline",
+      "run": 1,
+      "wall_seconds": 15.375,
+      "scoring_seconds": 14.5,
+      "peak_rss_mb": 291.2,
+      "versions": {
+        "python": "3.12.12",
+        "numpy": "2.2.6",
+        "scipy": "1.15.3",
+        "pyarrow": "19.0.1",
+        "pygments": "2.21.0",
+        "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39"
+      }
+    },
+    {
+      "label": "candidate",
+      "run": 1,
+      "wall_seconds": 13.936,
+      "scoring_seconds": 12.0,
+      "peak_rss_mb": 288.6,
+      "versions": {
+        "python": "3.12.12",
+        "numpy": "2.2.6",
+        "scipy": "1.15.3",
+        "pandas": "2.3.3",
+        "pyarrow": "19.0.1",
+        "pygments": "2.21.0",
+        "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39"
+      }
+    },
+    {
+      "label": "candidate",
+      "run": 2,
+      "wall_seconds": 14.461,
+      "scoring_seconds": 12.2,
+      "peak_rss_mb": 289.9,
+      "versions": {
+        "python": "3.12.12",
+        "numpy": "2.2.6",
+        "scipy": "1.15.3",
+        "pandas": "2.3.3",
+        "pyarrow": "19.0.1",
+        "pygments": "2.21.0",
+        "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39"
+      }
+    },
+    {
+      "label": "baseline",
+      "run": 2,
+      "wall_seconds": 15.961,
+      "scoring_seconds": 14.9,
+      "peak_rss_mb": 290.6,
+      "versions": {
+        "python": "3.12.12",
+        "numpy": "2.2.6",
+        "scipy": "1.15.3",
+        "pyarrow": "19.0.1",
+        "pygments": "2.21.0",
+        "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39"
+      }
+    }
+  ],
+  "equivalence": {
+    "byte_identical": [
+      "overlap_pairs.csv",
+      "overlap_docs.parquet",
+      "overlap_by_pack.csv",
+      "overlap_histogram.csv",
+      "overlap_matrix.csv",
+      "overlap_matrix_counts.csv"
+    ],
+    "matches": "same rows",
+    "sparse_matrix": "same values",
+    "summary": "same counts/config/rules; timing, versions, hashes and hashing description excluded"
+  },
+  "source_sha256": {
+    "baseline": {
+      "teams/01-data-a/dedup/h1_sha256.py": "ace87252938b707e22f1dd73fec82300c4e79743962f6cb2c53f43558343ccf7",
+      "teams/01-data-a/dedup/jaccard_matrix.py": "0e540b2974b78400c2a1619303f28e5668030247e3e3d783b40dd5022bde7e09",
+      "teams/01-data-a/dedup/overlap.py": "ea1b55092fa0494042de1c1671956c82991b83eb70d57647ec839dcfccb34e83",
+      "teams/01-data-a/dedup/overlap_report.py": "a6196dff18d899429b767d861aba3310221eaee9317a3c816dec9d54354cb944",
+      "teams/01-data-a/dedup/overlap_rules.py": "cb51088f33c814bb3b1e27d779ca5be634661dfc26dc6a740cd4fd6967c0a007",
+      "teams/01-data-a/spec_v1/tools/normalize.py": "b96e39af6b048cf135e5915acb13c2d5630d1a238760df494776c6783a0a6669"
+    },
+    "candidate": {
+      "teams/01-data-a/dedup/h1_sha256.py": "ace87252938b707e22f1dd73fec82300c4e79743962f6cb2c53f43558343ccf7",
+      "teams/01-data-a/dedup/jaccard_matrix.py": "03526717fe0b0ac0450d52c00bd95fb74431bca2b562e1c7ca077306bdcb4647",
+      "teams/01-data-a/dedup/overlap.py": "e12a25ffa6cfa11b2454be27454731e6a4c7fcfe7876de94abee0c13650b55df",
+      "teams/01-data-a/dedup/overlap_report.py": "a6196dff18d899429b767d861aba3310221eaee9317a3c816dec9d54354cb944",
+      "teams/01-data-a/dedup/overlap_rules.py": "063242944c5af5291e17f7b4a80d4d9398367fce3a47de8ef6ce4fa6b69dddcd",
+      "teams/01-data-a/spec_v1/tools/normalize.py": "b96e39af6b048cf135e5915acb13c2d5630d1a238760df494776c6783a0a6669"
+    }
+  }
+}

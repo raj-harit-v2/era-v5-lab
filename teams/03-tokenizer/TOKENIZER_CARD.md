@@ -10,7 +10,7 @@ Cite this card with the sha below. Every number links to the PR or file it comes
 | Name | p1536 |
 | File | `tokenizer.json` (8 MB, not in the repo: over pr-guard's 5 MB limit) |
 | sha256 | `e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b` |
-| Pinned in | `release/SHA256SUMS` (#340) |
+| Pinned in | `release/SHA256SUMS` (#504) |
 | Rebuild | `train/rebuild_cand.py` (p1536); TSAI rebuilt it and got the same sha |
 | Type | byte-level BPE, Hugging Face `tokenizers` format |
 | Base | BrahmicTokenizer-131K (`theschoolofai/BrahmicTokenizer-131K`, commit `7dfcf398`) |

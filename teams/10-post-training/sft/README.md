@@ -14,6 +14,12 @@ This README covers the tools that turn a candidate SFT set into chat-format v0 r
 | `test_decontam_run.py` | Tests for `decontam_run.py` and `decontam_report.py`, on a toy fingerprint set built from made-up items. |
 | `decontam_report.md` | The result per set: flagged, canary and kept rows, benchmarks hit, and the inputs to reproduce a run. |
 | `decontam_kept_rows.md` | Rows in, removed and kept per set for the sets run on every converted row. |
+| `sft_v1_worklist.py` | Builds the SFT v1 work list from `convert.py` ADAPTERS, the Stage 1 licence table and `sft_mix_proposal.md`, with the reason each set is in or out and the pinned Hub revisions (`fetch-hf` writes the pins; `results/sft_v1_hf_pins.json` is the committed copy). |
+| `sft_v1_records.py` | One set at a time: `run` (first N rows), `full` (whole set, streamed, gzipped parts, disk budgets), `check` (row checks), `verify-local` (staged files against pinned sha256). Refuses any tokenizer but C3. |
+| `sft_v1_report.py` | Builds `results/sft_v1_token_records.md` and the JSONL for `mix_inventory.py --c3-records` from the per-set records in `results/sft_v1_records/`. |
+| `test_sft_v1_records.py` | Tests for the three scripts, the batched path of `convert.py` and the ledger input. Hand-written rows and a toy tokenizer only. |
+| `deletion_tuning.py` | Deletion Tuning mask from arXiv 2611.10866: frozen weight, soft mask, hard mask, Wanda init. |
+| `dt_vs_fft.py`, `test_deletion_tuning.py` | Equal-step comparison of Deletion Tuning, LoRA, and full fine-tuning on one synthetic slice. |
 
 The RL sets use the same tools. Their report is `rl/decontam_report.md`.
 
@@ -42,6 +48,33 @@ It writes `<out>` and `<out>.manifest.json`.
 - A row that does not fit the chat format is skipped and counted by reason. It is never patched.
 - The effort level is the smallest budget (1k, 4k, 16k, 64k) that holds the row's trace. Without `--tokenizer` the token count is an estimate (UTF-8 bytes / 4), and the manifest says so. With `--tokenizer`, each row also gets `input_ids` and a per-token `loss_mask`.
 - Source options: `--input` (a local `.parquet` or `.jsonl`), `--hf-rows N` (from the Hugging Face datasets-server) or `--hf-file N` (N rows read from the set's own file in the Hub repo by ranged download; `--file-spec`, `--index-base` and `--roll-mb` are what `decontam_pipeline.py` uses for parallel runs).
+
+### Token records for the SFT v1 mix (C3)
+
+```bash
+python teams/10-post-training/sft/sft_v1_worklist.py build --hf-pins teams/10-post-training/sft/results/sft_v1_hf_pins.json --out-json worklist.json --out-md worklist.md
+python teams/10-post-training/sft/sft_v1_records.py run --set sft-dolly-15k --rows 1000 --tokenizer tokenizer.json --revisions-json teams/10-post-training/sft/results/sft_v1_hf_pins.json --out-dir out/p1 --record-dir out/records
+python teams/10-post-training/sft/sft_v1_records.py full --set sft-dolly-15k --tokenizer tokenizer.json --revisions-json teams/10-post-training/sft/results/sft_v1_hf_pins.json --out-dir out/full --record-dir out/records
+```
+
+- `convert.py --revisions-json` reads the Hub files at the pinned commits instead of `main`; `G10_MAX_HUB_BYTES` stops a run that reads more than that many bytes. Rows are tokenised in chunks of 32 through `encode_batch` (the output is byte-identical to one call per row; see `results/sft_v1_token_records.md`). Set `RAYON_NUM_THREADS` to bound the tokenizer's threads.
+- The checks in `sft_v1_records.py` accept a decode that differs from the text only by the C3 normaliser (NFC, Malayalam chillu rewrite) and count those rows. They do not claim raw-byte-exact decoding.
+- A full output is **converted, not decontaminated, and not a pack**: it can hold rows over 32,768 tokens, it has not been through the decontamination run at the pinned revision, and a held-out id list, if one exists, has not been applied. `TSAI reserves` sets are measurements only.
+- `full` keeps no source copy, gzips each finished part and checks that it decompresses to the same bytes, and stops if one set passes `--budget-gb` or everything under `--out-dir` passes `--global-budget-gb` (default 80). `--local-root` reads a staged copy of the Hub repo (`<root>/<dataset id>/<file>`; check it with `verify-local`) and uses no network.
+
+## Recover a completed conversion
+
+`sft_v1_records.py check-parts` checks completed gzip parts while conversion runs. `finalize` verifies the manifest,
+all decompressed hashes/CRC, row counts and source-prefix determinism, then aggregates valid stored checks. See
+each command's `--help` for required paths. Stored checks bind the gzip/tokenizer hashes, row-check source,
+renderer source, effective marker assignments/surfaces, maximum length and NumPy/tokenizers/Python versions.
+Keep the checked source and environment fixed during a run. Changed dependencies invalidate the stored checks.
+
+The full Proofs execution used revision `8574a9b516562ca6d5086c36ef64b276ba21871e` and its historical checker key.
+`results/sft_v1_proofs_execution_context.json` records the observed dependency context. The broader cache key was
+added after that verified run; the completed record retains the key actually used. In a finalized record,
+`checks_wall_s` covers cache validation/aggregation and any uncached checks, excluding earlier per-part work.
+Conversion metrics unavailable from the original driver stay `null`, rather than being inferred from these times.
 
 ## Decontaminate a set
 
@@ -81,6 +114,31 @@ G10_DECONTAM_TOOLS=<lab main>/teams/09-evaluation/decontam \
 ```
 
 The Hub calls in `test_convert.py` are mocked, and `test_decontam_run.py` states that it needs no network. Without `G10_DECONTAM_TOOLS` pointing at a v2 folder, the decontam tests that need Team 9's tools are skipped.
+
+## OCR-2 pack v1 under C3 (14 Nov 2026)
+
+TSAI decided the OCR-2 pack on 14 Nov (G10 group): C3 frozen (eos 130822), `max_sequence_tokens` 32768 provisional for SFT
+data v1, the 69,690 Codeforces rows held out of v1, the source repo and revision recorded for TACO, APPS and code_contests,
+and rows without a clear source left out. The pack v1 was built under that ruling with C3: `results/ocr2_pack_v1_c3.md` and
+`results/ocr2_pack_v1_c3_manifest.json` (418,496 training rows, 8,507 held-out rows, 0 blockers in training mode). It is not
+yet reviewed or stored by TSAI, and no model has been fine-tuned on it.
+
+- **Context limit:** 32768 is set in `manifests/ocr2_source_manifest_v1_c3.json`. No row exceeds it (longest 29,829 C3 tokens).
+- **Source identity:** taco/apps/code_contests train are `pinned_revision` (repo and revision recorded, every file sha256 equal
+  to the Hub object). They are not relabelled `verified`; `diagnostic` still never admits a row.
+- **Tokenizer:** the C3 sha256 is approved in `ocr2_policy.json`; the file itself is still not in the repo.
+- **Codeforces:** the 69,690 rows stay held under the ruling. 0 are eligible in the pack.
+- **Still open:** the quality threshold (the #391 rule, which the policy calls a proposal); the human spot check of the 14
+  unclear-source TACO problems; and whether the 2% `heldout_eval_v1` split stays, which is a G10 proposal. Both of the last
+  two change the pack hashes if changed. Bytes are stored by TSAI through `../jobs/2026-11-16-ocr2-pack-v1-c3.md`, which is not sent.
+
+This C3 section is kept as a record (TSAI, 15 Nov: C3 work stays valid as a record). SFT data v1 is now built with p1536
+(instructor, 16 Nov): `results/ocr2_pack_v1_p1536.md`, `results/sft_data_v1_p1536.md`, rebuild-and-store job
+`../jobs/2026-11-17-ocr2-pack-v1-p1536.md`. The lead's evaluation firewall (16 Nov) is applied after the pack stage by
+`eval_firewall.py` (record `results/ocr2_eval_firewall_v1.json`); the p1536 manifest before it is kept as
+`results/sft_data_v1_p1536_nofirewall_manifest.json`.
+
+> Status as of 12 Nov 2026 (kept from `main`). Where it differs from the 14 Nov section above, the 14 Nov section is current.
 
 ## Gate
 

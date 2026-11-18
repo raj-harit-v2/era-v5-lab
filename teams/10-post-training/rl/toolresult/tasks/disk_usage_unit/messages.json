@@ -1,0 +1,25 @@
+[
+ {
+  "role": "system",
+  "content": "You can call tools. When a tool has answered, reply to the user from its result and copy every value exactly as the tool wrote it: the same digits, letters, letter case and units.\nTools: [{\"description\": \"Disk space used under a path.\", \"name\": \"get_disk_usage\", \"parameters\": {\"properties\": {\"path\": {\"type\": \"string\"}}, \"required\": [\"path\"], \"type\": \"object\"}}]"
+ },
+ {
+  "role": "user",
+  "content": "How much space does /var/log use?"
+ },
+ {
+  "role": "assistant",
+  "tool_calls": [
+   {
+    "name": "get_disk_usage",
+    "arguments": {
+     "path": "/var/log"
+    }
+   }
+  ]
+ },
+ {
+  "role": "tool",
+  "content": "{\"path\": \"/var/log\", \"used\": \"3.7 GiB\", \"files\": 1284}"
+ }
+]

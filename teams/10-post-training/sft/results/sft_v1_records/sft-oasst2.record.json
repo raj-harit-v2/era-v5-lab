@@ -1,0 +1,97 @@
+{
+ "checks": {
+  "checks_failed": {},
+  "checks_ok": true,
+  "effort_rows": {
+   "16k": 0,
+   "1k": 737,
+   "4k": 0,
+   "64k": 0
+  },
+  "files": [
+   {
+    "bytes": 4446185,
+    "name": "sft-oasst2.first1000.jsonl",
+    "sha256": "2fa92b10aec5bdd4829321101b4fd36e2f4d540d9105f4e4ab36e9065b124b23"
+   }
+  ],
+  "info": {},
+  "length": {
+   "max": 5263,
+   "min": 34,
+   "p50": 342,
+   "p95": 1138
+  },
+  "max_len": 32768,
+  "rows": 737,
+  "rows_over_max_len": 0,
+  "rows_with_tool_blocks": 0,
+  "shifted_supervised_targets": 268497,
+  "tokens": 323135,
+  "tool_call_blocks": 0,
+  "tool_call_tokens_untrained": 0,
+  "tool_result_blocks": 0,
+  "train_spans": 1081,
+  "trained_share": 0.830913,
+  "trained_tokens": 268497,
+  "unique_ids": true
+ },
+ "checks_wall_s": 0.63,
+ "content_sha256": "2fa92b10aec5bdd4829321101b4fd36e2f4d540d9105f4e4ab36e9065b124b23",
+ "convert": {
+  "cpu_sys_s": 0.532,
+  "cpu_user_s": 2.279,
+  "hub_bytes_read": 64090358,
+  "max_rss_mb": 839.8,
+  "wall_s": 13.501
+ },
+ "decision": "TSAI reserves",
+ "deterministic_rerun": true,
+ "effort_manifest": {
+  "16k": 0,
+  "1k": 737,
+  "4k": 0,
+  "64k": 0
+ },
+ "file_bytes": 4446185,
+ "file_sha256": "2fa92b10aec5bdd4829321101b4fd36e2f4d540d9105f4e4ab36e9065b124b23",
+ "generator_model": "none for human turns (`synthetic=False`, human-written crowdsourced messages; filter out any `synthetic=True` nodes)",
+ "hub_revision": "179dd21fc55192153d94adb0e0ce8f69e222bf75",
+ "input": "hub file OpenAssistant/oasst2 data/train-00000-of-00001-88ba0162028a73fc.parquet rows 0..999999999",
+ "licence": "Apache-2.0",
+ "rerun_content_sha256": "2fa92b10aec5bdd4829321101b4fd36e2f4d540d9105f4e4ab36e9065b124b23",
+ "rerun_wall_s": 13.654,
+ "rows_in": 1000,
+ "rows_out": 737,
+ "rows_per_s_convert": 74.07,
+ "rows_scanned": 1000,
+ "scope": "first 1000 selected rows, source order, C3",
+ "selection": "best-ranked reply at each step; not deleted, not synthetic, ready_for_export trees",
+ "set": "sft-oasst2",
+ "skipped": {
+  "thread does not end on an assistant reply": 263
+ },
+ "source": "OpenAssistant/oasst2",
+ "token_record": {
+  "basis": "first 1000 selected rows, source order, C3; not the admissible kept rows",
+  "effort": {
+   "16k": 0,
+   "1k": 737,
+   "4k": 0,
+   "64k": 0
+  },
+  "length": {
+   "max": 5263,
+   "min": 34,
+   "p50": 342,
+   "p95": 1138
+  },
+  "rows": 737,
+  "sequence_tokens": 323135,
+  "set_id": "sft-oasst2",
+  "shifted_supervised_targets": 268497,
+  "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3"
+ },
+ "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3",
+ "tokens_per_s_convert": 23934
+}

@@ -34,7 +34,7 @@ run() {  # label, then the test files
 }
 
 run "new: source index and join"      "$HERE/test_prepare_ocr2.py"
-run "new: pack admission"             "$HERE/test_pack_admission.py"
+run "new: pack admission"             "$HERE/test_pack_admission.py" "$HERE/test_check_pack_rows.py"
 run "new: shard runner and resume"    "$HERE/test_ocr2_resume.py"
 run "reused tools still pass"         "$HERE/test_convert.py" "$HERE/test_decontam_run.py"
 echo "verify: OK"

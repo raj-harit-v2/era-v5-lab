@@ -1,0 +1,86 @@
+[
+ {
+  "completions": 1536,
+  "workers": 8,
+  "early_exit": false,
+  "pool": false,
+  "scorer_process_rss_mb": 104.1,
+  "score_s": 603.47,
+  "rewards_sha256": "890f6c9cd6bbe2f21f730332dbf67ee838072d19384c4fea8a05e13856c6c232",
+  "full_result_sha256": "990061ed48c04804c1b832b8aff0b3ee361094315e4eee37363a87b2693eb327",
+  "passes": 162,
+  "matches_gpu_job_rewards": 1536,
+  "reasons": {
+   "all tests passed": 162,
+   "error on a test": 455,
+   "no code block": 113,
+   "timeout on a test": 28,
+   "wrong answer on a test": 778
+  },
+  "cpu_count": 48,
+  "seconds": 604.7
+ },
+ {
+  "completions": 1536,
+  "workers": 8,
+  "early_exit": true,
+  "pool": false,
+  "scorer_process_rss_mb": 116.6,
+  "score_s": 191.0,
+  "rewards_sha256": "890f6c9cd6bbe2f21f730332dbf67ee838072d19384c4fea8a05e13856c6c232",
+  "full_result_sha256": "121253233e81353b04af7cb744137695173ec60d061f3e8f98b40e05327ac5d5",
+  "passes": 162,
+  "matches_gpu_job_rewards": 1536,
+  "reasons": {
+   "all tests passed": 162,
+   "error on a test": 456,
+   "no code block": 113,
+   "timeout on a test": 27,
+   "wrong answer on a test": 778
+  },
+  "cpu_count": 48,
+  "seconds": 191.1
+ },
+ {
+  "completions": 1536,
+  "workers": 32,
+  "early_exit": true,
+  "pool": false,
+  "scorer_process_rss_mb": 125.5,
+  "score_s": 232.65,
+  "rewards_sha256": "890f6c9cd6bbe2f21f730332dbf67ee838072d19384c4fea8a05e13856c6c232",
+  "full_result_sha256": "a39e7652ab1613deaf2e832c1380b1bf1da3bec79725b7ab4447575d619b033f",
+  "passes": 162,
+  "matches_gpu_job_rewards": 1536,
+  "reasons": {
+   "all tests passed": 162,
+   "error on a test": 455,
+   "no code block": 113,
+   "timeout on a test": 28,
+   "wrong answer on a test": 778
+  },
+  "cpu_count": 48,
+  "seconds": 232.7
+ },
+ {
+  "completions": 1536,
+  "workers": 32,
+  "early_exit": true,
+  "pool": true,
+  "scorer_process_rss_mb": 144.4,
+  "score_s": 36.25,
+  "rewards_sha256": "890f6c9cd6bbe2f21f730332dbf67ee838072d19384c4fea8a05e13856c6c232",
+  "full_result_sha256": "d789eb981dc398f3b2172940a7e927f44579271300e3d0b5d7e64668d328d544",
+  "passes": 162,
+  "matches_gpu_job_rewards": 1536,
+  "reasons": {
+   "all tests passed": 162,
+   "error on a test": 454,
+   "no code block": 113,
+   "timeout on a test": 29,
+   "wrong answer on a test": 778
+  },
+  "cpu_count": 48,
+  "seconds": 36.5
+ }
+]

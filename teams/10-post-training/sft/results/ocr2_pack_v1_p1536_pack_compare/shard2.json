@@ -1,0 +1,37 @@
+{
+ "shard": 2,
+ "pack.jsonl": {
+  "rows_p1536": 7974,
+  "rows_c3": 7974,
+  "compared": 7974,
+  "same_id_same_order": 7974,
+  "trained_text_identical": 7974,
+  "text_identical": 7974,
+  "text_differs_only_in_effort_line": 0,
+  "text_differs_otherwise": 0,
+  "effort_flips_c3_to_p1536": {},
+  "tokens": {
+   "c3": 51235416,
+   "p1536": 51246747
+  },
+  "row_token_ratio_median": 1.0,
+  "ok": true
+ },
+ "pack.heldout_eval_v1.jsonl": {
+  "rows_p1536": 189,
+  "rows_c3": 189,
+  "compared": 189,
+  "same_id_same_order": 189,
+  "trained_text_identical": 189,
+  "text_identical": 189,
+  "text_differs_only_in_effort_line": 0,
+  "text_differs_otherwise": 0,
+  "effort_flips_c3_to_p1536": {},
+  "tokens": {
+   "c3": 1180154,
+   "p1536": 1180326
+  },
+  "row_token_ratio_median": 1.0,
+  "ok": true
+ }
+}

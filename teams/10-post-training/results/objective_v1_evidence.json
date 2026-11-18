@@ -1,0 +1,446 @@
+{
+  "schema": "g10-objective-v1-execution-evidence/1",
+  "scope": "CPU mechanics and benign Linux local-runner probes; not an LLM learning result",
+  "cpu_final_benchmark": {
+    "config": {
+      "k": 8,
+      "T": 1024,
+      "real_tokens": 5524,
+      "repeats": 20,
+      "warmup": 3,
+      "dtype": "float32 (ratio in float64)",
+      "threads": 2,
+      "torch": "2.14.1",
+      "machine": "arm64",
+      "platform": "macOS-15.8.1-arm64-arm-64bit"
+    },
+    "dr_grpo_policy_loss_fwd_bwd": {
+      "median_ms": 0.6523,
+      "min_ms": 0.2454,
+      "value": 0.030977297574281693
+    },
+    "objective_v1_batched_fwd_bwd": {
+      "median_ms": 0.7167,
+      "min_ms": 0.3178,
+      "value": -0.059928759932518005
+    },
+    "lead_reference_scalar_fwd_only": {
+      "median_ms": 1.3101,
+      "min_ms": 1.2058,
+      "value": -0.059928758945516705
+    },
+    "objective_v1_matches_reference": true,
+    "objective_v1_masked_frac": 0.1756
+  },
+  "cpu_final_smoke": {
+    "algo": "objective_v1",
+    "steps": 80,
+    "k": 8,
+    "prompts_per_step": 16,
+    "max_new": 2,
+    "sampler": "hf_batch",
+    "trainable_params": 34080,
+    "fp32_master_params": 0,
+    "tis_clip": null,
+    "router_params_frozen": [
+      "model.layers.0.mlp.gate.weight",
+      "model.layers.1.mlp.gate.weight"
+    ],
+    "router_checksum_before": "f1f3f453f866e71ad5a011c3bec7c2487eda794a8a87f585d6723a1c796d29a6",
+    "router_checksum_after": "f1f3f453f866e71ad5a011c3bec7c2487eda794a8a87f585d6723a1c796d29a6",
+    "router_unchanged": true,
+    "heldout_reward_start": 0.05078125,
+    "heldout_reward_end": 0.2578125,
+    "heldout_curve": [
+      [
+        0,
+        0.05078125
+      ],
+      [
+        20,
+        0.205078125
+      ],
+      [
+        40,
+        0.26171875
+      ],
+      [
+        60,
+        0.21875
+      ],
+      [
+        80,
+        0.2578125
+      ]
+    ],
+    "heldout_change": {
+      "problems": 64,
+      "start": 0.0508,
+      "end": 0.2578,
+      "diff": 0.207,
+      "ci_low": 0.1055,
+      "ci_high": 0.3184,
+      "ci_excludes_zero": true,
+      "resamples": 10000
+    },
+    "groups_used_total": 173,
+    "trainable_weight_change": {
+      "share_changed": 1.0,
+      "relative_l2": 1.462
+    },
+    "step1_s": 0.189,
+    "mean_step_s_after_step1": 0.053,
+    "mean_times_s_after_step1": {
+      "rollout": 0.007,
+      "reward": 0.001,
+      "old_logprobs": 0.004,
+      "train": 0.041,
+      "sync": 0.0
+    },
+    "mean_rollout_tokens_per_s": 39161.4,
+    "routing_curve": [
+      {
+        "step": 0,
+        "truncated": 1.0,
+        "mean_tokens": 2.0
+      },
+      {
+        "step": 20,
+        "truncated": 1.0,
+        "mean_tokens": 2.0
+      },
+      {
+        "step": 40,
+        "truncated": 1.0,
+        "mean_tokens": 2.0
+      },
+      {
+        "step": 60,
+        "truncated": 1.0,
+        "mean_tokens": 2.0
+      },
+      {
+        "step": 80,
+        "truncated": 1.0,
+        "mean_tokens": 2.0
+      }
+    ],
+    "vllm_sync_path": null,
+    "vllm_sync_check": null,
+    "gpu_name": null,
+    "seconds": 4.6,
+    "seconds_per_step": 0.06,
+    "peak_gpu_memory_gb": null,
+    "versions": {
+      "torch": "2.14.1",
+      "transformers": "5.22.1",
+      "vllm": null
+    },
+    "router_trainable": false,
+    "objective": {
+      "name": "objective_v1",
+      "contract": "rl/objective_v1.md (lead, commit ff19ce2)",
+      "tr_epsilon": 0.2,
+      "reference_kl": "none (not in the contract)",
+      "steps_with_optimizer_update": 52,
+      "group_kinds_total": {
+        "all_one": 156,
+        "all_zero": 951,
+        "tied_other": 0,
+        "singleton": 0,
+        "mixed": 173
+      }
+    },
+    "saved_trainable_weights": null
+  },
+  "legacy_reproduction_before_final_invalid_input_guard": {
+    "grpo": {
+      "metrics_identical": true,
+      "summary_identical": true,
+      "heldout_curve": [
+        [
+          0,
+          0.05078125
+        ],
+        [
+          10,
+          0.37109375
+        ]
+      ]
+    },
+    "dr_grpo": {
+      "metrics_identical": true,
+      "summary_identical": true,
+      "heldout_curve": [
+        [
+          0,
+          0.05078125
+        ],
+        [
+          10,
+          0.208984375
+        ]
+      ]
+    },
+    "rloo": {
+      "metrics_identical": true,
+      "summary_identical": true,
+      "heldout_curve": [
+        [
+          0,
+          0.05078125
+        ],
+        [
+          10,
+          0.185546875
+        ]
+      ]
+    },
+    "gspo": {
+      "metrics_identical": true,
+      "summary_identical": true,
+      "heldout_curve": [
+        [
+          0,
+          0.05078125
+        ],
+        [
+          10,
+          0.21875
+        ]
+      ]
+    }
+  },
+  "local_isolation_cpu_preflight": {
+    "isolation": {
+      "isolation_available": [
+        true,
+        "ok"
+      ],
+      "uid": 0,
+      "euid": 0,
+      "platform": "linux",
+      "valid_reference": {
+        "task_id": "probe",
+        "reward": 1,
+        "passed": 1,
+        "total": 1,
+        "reason": "all tests passed"
+      },
+      "wrong_solution": {
+        "task_id": "probe",
+        "reward": 0,
+        "passed": 0,
+        "total": 1,
+        "reason": "wrong answer on a test"
+      },
+      "read_expected_file": {
+        "task_id": "probe",
+        "reward": 0,
+        "passed": 0,
+        "total": 1,
+        "reason": "error on a test"
+      },
+      "probe": {
+        "uid": 61004,
+        "euid": 61004,
+        "gid": 61004,
+        "groups": [],
+        "cwd": "/tmp/g10sbx/r61004-bdf95dbd43f7",
+        "read_fake_answers": "denied: PermissionError",
+        "list_secret_dir": "denied: PermissionError",
+        "list_vol_runs": "denied: PermissionError",
+        "read_parent_environ": "denied: PermissionError",
+        "read_parent_mem_maps": "denied: PermissionError",
+        "read_pid1_environ": "denied: PermissionError",
+        "list_parent_fds": "denied: PermissionError",
+        "list_sandbox_base": "denied: PermissionError",
+        "read_root_home": "denied: PermissionError",
+        "read_team_code": "denied: PermissionError",
+        "setuid_0": "denied: PermissionError",
+        "kill_parent": "denied: PermissionError",
+        "write_tmp_outside": "ALLOWED: 1",
+        "network_connect": "denied: OSError"
+      },
+      "probe_wrote_tmp_visible_to_root": true,
+      "cross_run_a": [
+        {
+          "status": "ok",
+          "stdout": "a\n"
+        }
+      ],
+      "cross_run_b": {
+        "glob": [],
+        "ls": "denied: PermissionError"
+      },
+      "sandbox_uid_processes_left": 0
+    },
+    "task": {
+      "train": 64,
+      "heldout": 48,
+      "max_prompt_tokens": 788,
+      "eos": 151645,
+      "empty_completion_reward": 0.0
+    },
+    "perms": {
+      "/vol/runs": "0o700",
+      "/vol/runs/_preflight": "0o700",
+      "/vol/runs/_preflight/data": "0o700",
+      "/vol/runs/_preflight/data/tasks.jsonl": "0o600"
+    },
+    "seconds": 29.0,
+    "usd": 0.001
+  },
+  "tests": {
+    "broad_final": {
+      "passed": 166,
+      "skipped": 30,
+      "seconds": 98.86,
+      "skip_scope": "25 Team5 input-dependent adapter tests; 5 math-verify-dependent tests in the base environment"
+    },
+    "math_and_human_reference_in_dependency_environment": {
+      "passed": 15,
+      "seconds": 13.26
+    },
+    "math_task_in_dependency_environment": {
+      "passed": 1,
+      "seconds": 1.53
+    }
+  },
+  "scope_notes": [
+    "The math-dependent cases skipped in the broad base environment passed in the existing era-v5 environment; these are overlapping checks, not additive unique-test counts.",
+    "No source data, task statements, hidden answers or credentials are included.",
+    "GPU pilot source predates the final overflowed-ratio guard; finite-valid input semantics are unchanged, but this guard was tested on CPU only."
+  ],
+  "docker_with_init_local_runner_probe": {
+    "isolation_available": [
+      true,
+      "ok"
+    ],
+    "uid": 0,
+    "euid": 0,
+    "platform": "linux",
+    "valid_reference": {
+      "task_id": "probe",
+      "reward": 1,
+      "passed": 1,
+      "total": 1,
+      "reason": "all tests passed"
+    },
+    "wrong_solution": {
+      "task_id": "probe",
+      "reward": 0,
+      "passed": 0,
+      "total": 1,
+      "reason": "wrong answer on a test"
+    },
+    "read_expected_file": {
+      "task_id": "probe",
+      "reward": 0,
+      "passed": 0,
+      "total": 1,
+      "reason": "error on a test"
+    },
+    "probe": {
+      "uid": 61004,
+      "euid": 61004,
+      "gid": 61004,
+      "groups": [],
+      "cwd": "/tmp/g10sbx/r61004-5c0acacf8082",
+      "read_fake_answers": "denied: PermissionError",
+      "list_secret_dir": "denied: PermissionError",
+      "list_vol_runs": "denied: PermissionError",
+      "read_parent_environ": "denied: PermissionError",
+      "read_parent_mem_maps": "denied: PermissionError",
+      "read_pid1_environ": "denied: PermissionError",
+      "list_parent_fds": "denied: PermissionError",
+      "list_sandbox_base": "denied: PermissionError",
+      "read_root_home": "denied: PermissionError",
+      "read_team_code": "denied: PermissionError",
+      "setuid_0": "denied: PermissionError",
+      "kill_parent": "denied: PermissionError",
+      "write_tmp_outside": "ALLOWED: 1",
+      "network_connect": "denied: OSError"
+    },
+    "probe_wrote_tmp_visible_to_root": true,
+    "cross_run_a": [
+      {
+        "status": "ok",
+        "stdout": "a\n"
+      }
+    ],
+    "cross_run_b": {
+      "glob": [],
+      "ls": "denied: PermissionError"
+    },
+    "sandbox_uid_processes_left": 0
+  },
+  "docker_without_init_control": {
+    "remaining_sandbox_uid_process_entries": 1,
+    "entry_state": "not recorded; container removed",
+    "interpretation": "The no-init control did not satisfy the zero-leftover gate. The published reproduction command uses --init and passed it."
+  },
+  "docker_with_init_asserting_cli_probe": {
+    "isolation_available": [
+      true,
+      "ok"
+    ],
+    "uid": 0,
+    "euid": 0,
+    "platform": "linux",
+    "valid_reference": {
+      "task_id": "probe",
+      "reward": 1,
+      "passed": 1,
+      "total": 1,
+      "reason": "all tests passed"
+    },
+    "wrong_solution": {
+      "task_id": "probe",
+      "reward": 0,
+      "passed": 0,
+      "total": 1,
+      "reason": "wrong answer on a test"
+    },
+    "read_expected_file": {
+      "task_id": "probe",
+      "reward": 0,
+      "passed": 0,
+      "total": 1,
+      "reason": "error on a test"
+    },
+    "probe": {
+      "uid": 61004,
+      "euid": 61004,
+      "gid": 61004,
+      "groups": [],
+      "cwd": "/tmp/g10sbx/r61004-75dff05e93b3",
+      "read_fake_answers": "denied: PermissionError",
+      "list_secret_dir": "denied: PermissionError",
+      "list_vol_runs": "denied: PermissionError",
+      "read_parent_environ": "denied: PermissionError",
+      "read_parent_mem_maps": "denied: PermissionError",
+      "read_pid1_environ": "denied: PermissionError",
+      "list_parent_fds": "denied: PermissionError",
+      "list_sandbox_base": "denied: PermissionError",
+      "read_root_home": "denied: PermissionError",
+      "read_team_code": "denied: PermissionError",
+      "setuid_0": "denied: PermissionError",
+      "kill_parent": "denied: PermissionError",
+      "write_tmp_outside": "ALLOWED: 1",
+      "network_connect": "denied: OSError"
+    },
+    "probe_wrote_tmp_visible_to_root": true,
+    "cross_run_a": [
+      {
+        "status": "ok",
+        "stdout": "a\n"
+      }
+    ],
+    "cross_run_b": {
+      "glob": [],
+      "ls": "denied: PermissionError"
+    },
+    "sandbox_uid_processes_left": 0
+  }
+}

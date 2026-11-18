@@ -1,0 +1,122 @@
+[
+ {
+  "args": [
+   "I"
+  ],
+  "expected": 1
+ },
+ {
+  "args": [
+   "III"
+  ],
+  "expected": 3
+ },
+ {
+  "args": [
+   "IV"
+  ],
+  "expected": 4
+ },
+ {
+  "args": [
+   "IX"
+  ],
+  "expected": 9
+ },
+ {
+  "args": [
+   "LVIII"
+  ],
+  "expected": 58
+ },
+ {
+  "args": [
+   "MMMCMXCIX"
+  ],
+  "expected": 3999
+ },
+ {
+  "args": [
+   "MMMM"
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "IIII"
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "VX"
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "IL"
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "iv"
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   ""
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "XIIII"
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "MCMXLIV"
+  ],
+  "expected": 1944
+ },
+ {
+  "args": [
+   "VV"
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "IIX"
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "CMC"
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   " X"
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "XLIX"
+  ],
+  "expected": 49
+ },
+ {
+  "args": [
+   "MMXXVI"
+  ],
+  "expected": 2026
+ }
+]

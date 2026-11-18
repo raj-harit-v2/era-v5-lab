@@ -18,6 +18,10 @@ python teams/10-post-training/rl-data/filter.py --tasks out/tasks.jsonl --server
 python -m pytest teams/10-post-training/rl-data/test_rl_data.py -q -p no:cacheprovider
 ```
 
+## DeepCoder Python
+
+See the [Week 3 Task 2 pilot](deepcoder.md) for the pinned PrimeIntellect build, Docker verifier checks, and decontamination evidence.
+
 ## Files
 
 | File | What |
@@ -34,3 +38,29 @@ python -m pytest teams/10-post-training/rl-data/test_rl_data.py -q -p no:cachepr
 - **Licences:** `deepmind/code_contests` is CC-BY-4.0 and `TSAI reserves` in `licences/licence_table.md` (`rl-code-code-contests`). TSAI picks the RL sets.
 - **No data in the repo:** task records and manifests go to `out/`. Only the summary in `results/` is committed: ids and numbers, no problem text.
 - **Decontamination:** run the task statements through the decontamination runner from #34 (fingerprints v2, full set) before any training. Codeforces problems overlap with code benchmarks.
+
+## Evaluation recommendation: score on the unused source tests too (16 Nov)
+
+A code_contests task in RL data v1 keeps 20 tests; the pinned source row usually has more (median 101). The training
+reward stays on the kept 20. Held-out evaluation should also run the unused source tests where they exist: in the
+15 Nov audit 5 of 162 rewarded completions at step 0 (3.1%) and 19 of 627 from the trained state (3.0%) failed a test
+the reward never ran. Evidence: `../results/verifier_data_note_20261115.md` (R5), `../results/code_rl_e1_20261115.md`
+(R5b), `../results/fable_20261115_evidence/reward_audit_e1a.json`. This is a recommendation; the reward is unchanged.
+
+## RL data v1 close (16 Nov)
+
+`rl_v1_close.py` applies the pool flags (116 statement-less tasks and the 55 effort-suite tasks out; Python-2-only
+references sized, not applied; MATH kept as a separate reserved part) as fields of `manifests/rl_data_v1_close.json`.
+Each flag is reversed or applied by one switch. Report: `../results/rl_data_v1_close.md`.
+
+## Rebuild RL data v1 from pinned bytes (16 Nov)
+
+`rebuild_v1/rebuild_v1.py` rebuilds both v1 sets, re-runs Team 9's decontamination, writes the Team 9 pool files and
+checks 12 outputs against `rebuild_v1/pins_v1.json` (file names, sizes and sha256 only; no local paths). The four step
+scripts in `rebuild_v1/` are byte copies of the 11 Nov scripts that produced the recorded hashes; the driver refuses a
+changed copy. Job request: `../jobs/2026-11-18-rl-data-v1-pool.md`.
+
+```bash
+python teams/10-post-training/rl-data/rebuild_v1/rebuild_v1.py --cc-dir <code_contests@802411c3>/data \
+    --math-dir <hendrycks_math@21a56338> --math500 <MATH-500 test.jsonl> --g9-tools <Team 9 decontam @ b470b4c0> --out out/run
+```

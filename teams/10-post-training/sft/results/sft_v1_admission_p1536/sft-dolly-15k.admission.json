@@ -1,0 +1,44 @@
+{
+ "decontam": {
+  "by_benchmark": {
+   "milu": 2,
+   "mmlu": 2
+  },
+  "complete": true,
+  "covers": "whole set",
+  "fingerprint_set_sha256": "2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a",
+  "parts_uncovered": 0,
+  "records": 1,
+  "rows_canary": 0,
+  "rows_flagged": 4
+ },
+ "excluded_each": {
+  "decontam": 4,
+  "heldout": 0,
+  "over_max_len": 0
+ },
+ "excluded_sha256": "f6677ae20737bc0c68dfb805a06d6d848588e2314ff90defc92992f11f6d7e23",
+ "heldout_lists": [],
+ "kept_ids_sha256": "9b3b49f602270661e037ab9822e9c2a299a6a3dbc7c24558cae6360f1ed8992c",
+ "kept_max_len": 5664,
+ "licence_decision": "allowed (CC-BY-SA, attribution needed)",
+ "max_len": 32768,
+ "parts": 3,
+ "parts_from_stored_check": 0,
+ "parts_read": 3,
+ "private_outputs_note": "kept_ids.txt and excluded.jsonl hold row ids: private, not in Git",
+ "record": {
+  "content_sha256": "fedf5d399bbe1095c6b93f1129b247f90472202949df7eb5ee728577db5086bc",
+  "name": "sft-dolly-15k.full.record.json",
+  "sha256": "f9519ae2405d02b01df97342d4fe9d17d9e3a53a911a27ba7394a722e19f193e",
+  "tokenizer_sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b"
+ },
+ "rows_excluded": 4,
+ "rows_in": 15011,
+ "rows_kept": 15007,
+ "schema": "g10-sft-v1-admission/1",
+ "set": "sft-dolly-15k",
+ "status": "admissible",
+ "tokens_in": 2924760,
+ "tokens_kept": 2922204
+}

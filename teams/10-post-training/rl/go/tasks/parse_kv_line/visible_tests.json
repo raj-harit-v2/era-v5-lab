@@ -1,0 +1,26 @@
+[
+ {
+  "args": [
+   "a=1 b=two"
+  ],
+  "expected": {
+   "a": "1",
+   "b": "two"
+  }
+ },
+ {
+  "args": [
+   "msg=\"hello world\" n=3"
+  ],
+  "expected": {
+   "msg": "hello world",
+   "n": "3"
+  }
+ },
+ {
+  "args": [
+   "x=\"open"
+  ],
+  "raises": "error"
+ }
+]

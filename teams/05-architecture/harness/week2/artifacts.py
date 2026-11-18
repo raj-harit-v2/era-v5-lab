@@ -6,7 +6,8 @@ import json
 import numpy as np
 from tokenizers import Tokenizer
 
-V0_SHA256 = "2de039f20d17afd17615095c406c43087359673b767ed0fe2c480b995f2af8e5"
+import os
+V0_SHA256 = os.environ.get("TOKBPB_SHA", "2de039f20d17afd17615095c406c43087359673b767ed0fe2c480b995f2af8e5")
 
 
 def sha256(path):

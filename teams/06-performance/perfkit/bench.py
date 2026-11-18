@@ -691,7 +691,12 @@ def quick_compare(a: dict, b: dict, tol_pct: float, gate_level: int, abs_tol_ms:
         if va != vb:
             problems.append(f"different {section} config" if key is None else
                             f"different {section}.{key}: {va} vs {vb}")
-    pairs = [("step (clean)", a["clean"]["step_ms"]["median"], b["clean"]["step_ms"]["median"])]
+    # Default true: Gate-2 / --repeat still gate clean step. Job may set report.compare_clean_step=false
+    # so a layer-only --against run does not dual-gate cold clean under lab SwPowerCap (Choice A+).
+    pairs = []
+    rep = (a.get("config") or {}).get("report") or {}
+    if rep.get("compare_clean_step", True):
+        pairs.append(("step (clean)", a["clean"]["step_ms"]["median"], b["clean"]["step_ms"]["median"]))
     ra, rb = (a.get("layer") or {}).get("regions", {}), (b.get("layer") or {}).get("regions", {})
     gated = [n for n, r in ra.items() if r["level"] <= gate_level]
     gated += [n for n, r in rb.items() if r["level"] <= gate_level and n not in ra]     # a part only b has

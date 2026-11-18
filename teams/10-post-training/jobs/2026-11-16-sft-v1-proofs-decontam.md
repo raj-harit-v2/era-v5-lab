@@ -1,0 +1,25 @@
+# SFT data v1: rebuild, decontamination check and admission index for nvidia/Nemotron-Math-Proofs-v1
+
+```
+Team:            10-post-training
+Owner:           f20201351h-maker
+Lead approval:   saitej123
+Question:        After Team 9's full fingerprint set (v2) and the 32,768-token limit, how many of the 920,881 C3 rows of Nemotron-Math-Proofs-v1 (revision 97229c590831) are admissible for SFT data v1, and does the rebuild reproduce content_sha256 d9c9d00024268d48eda21a6e5afd1885ef1554cd866bea90216b739a1da6c1ec?
+Script:          teams/10-post-training/sft/sft_v1_records.py, sft/sft_v1_decontam_parts.py, sft/sft_v1_admit.py   (with sft/convert.py, sft/decontam_run.py, chat-format/render.py and sft/results/sft_v1_hf_pins.json, all in this PR; Team 9's decontam folder from lab main)
+Command:         python teams/10-post-training/sft/sft_v1_records.py full --set sft-math-nemotron-proofs --tokenizer tokenizer.json --revisions-json teams/10-post-training/sft/results/sft_v1_hf_pins.json --local-root hub --out-dir out/full --record-dir out --budget-gb 30 --global-budget-gb 40 --max-hub-gb 35 --threads 4 --roll-mb 400 && G10_DECONTAM_TOOLS=teams/09-evaluation/decontam python teams/10-post-training/sft/sft_v1_decontam_parts.py --record out/sft-math-nemotron-proofs.full.record.json --parts-dir out/full/sft-math-nemotron-proofs --out-dir out/decontam --workers 8 && python teams/10-post-training/sft/sft_v1_admit.py --record out/sft-math-nemotron-proofs.full.record.json --parts-dir out/full/sft-math-nemotron-proofs --decontam-record out/decontam/*/sft-math-nemotron-proofs.record.json --max-len 32768 --out-dir out/admit --summary out/sft-math-nemotron-proofs.admission.json
+Config:          teams/10-post-training/sft/results/sft_v1_hf_pins.json
+Inputs:          nvidia/Nemotron-Math-Proofs-v1 at 97229c590831adfe96202f5cd071d444d535bf91 (data/lean.jsonl, 29.5 GB) staged under hub/nvidia/Nemotron-Math-Proofs-v1/ and checked first with: python teams/10-post-training/sft/sft_v1_records.py verify-local --set sft-math-nemotron-proofs --root hub --revisions-json teams/10-post-training/sft/results/sft_v1_hf_pins.json ; C3 tokenizer.json (sha256 15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3, supplied by TSAI; the script refuses any other file); Team 9 fingerprints v2 (set_sha256 2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a; decontam_run.py refuses any other set)
+Hardware:        CPU (8 cores, 16 GB RAM, 50 GB free disk)
+Max time:        720 (minutes; estimate, see below)
+Precision:       not used
+Measures:        rows, tokens and content_sha256 of the rebuild; per part rows flagged by benchmark and canary hits; rows over 32,768; rows and tokens kept; sha256 of the kept-id list
+Expected result: rebuild content_sha256 d9c9d000…; 18,661 rows over 32,768; about 0.3% of rows flagged (27 of 8,263 rows in the 3 test parts); 0 canaries; status admissible
+Outputs:         out/sft-math-nemotron-proofs.full.record.json, out/decontam/<part>/sft-math-nemotron-proofs.record.json (287 records, ids and offsets only), out/sft-math-nemotron-proofs.admission.json (counts and hashes). out/admit/*.txt|jsonl hold row ids and the gz parts (10.2 GiB) hold training rows: TSAI storage, not the PR.
+Test log:        teams/10-post-training/jobs/2026-11-16-sft-v1-proofs-decontam.log
+```
+
+What the job does: step 1 is the same full conversion that produced the 920,881-row record already in this PR (`sft/results/sft_v1_records/sft-math-nemotron-proofs.full.record.json`), read from the staged pinned file with no network; its content_sha256 must equal the recorded one. Step 2 checks every gz part against the record, decompresses it, runs Team 9's `decontam_check.py` on the full fingerprint set and `canary_scan.py`, writes the part with the flagged rows removed, rechecks that copy (it must flag 0) and deletes it. Step 3 drops the flagged and canary rows and every row over 32,768 tokens and writes the kept-id list. No cleaned copy of the data is written by this job: it measures which rows to exclude and records them, so it does not replace TSAI's own cleaning step (job rule 6). If TSAI prefers to apply decontamination itself, step 2 and 3 are the recipe and their records are the evidence format.
+
+Estimate, not a measurement: conversion was observed at 160 to 167 MB of source per minute with 4 tokenizer threads on an M1 Pro (WP14 checkpoint, 14 Nov), about 3 hours for 29.5 GB; the original run's exact wall time was not recorded. Decontamination measured on this laptop under load: one 3,347-row part took 366 CPU-s (499 s wall), and two parts (4,916 rows) took 506 CPU-s in 371 s wall with 2 workers, so about 6 CPU-minutes per part. 287 parts at that CPU rate is about 29 CPU-hours, about 4 hours on 8 workers if they get a core each. Peak memory about 0.9 GB per decontam worker. Disk: 10.2 GiB of gz parts plus one 0.4 GB decompressed part and its clean copy per worker.
+
+What this output is not: a licence admission (Proofs is `allowed`, CC-BY-SA, attribution needed) or the final mix share. No held-out id list exists for this source, so none is applied.

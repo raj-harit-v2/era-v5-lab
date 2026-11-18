@@ -483,3 +483,121 @@ def test_all_four_publisher_sources_resolve_at_the_card_recipe(tmp_path):
     assert result["by_source"]["open-r1/codeforces/train"] == {
         "eligible_joined": 2, "index_out_of_bounds": 1, "source_question_unusable": 2}
     assert result["by_source"]["open-r1/codeforces/test"] == {"policy_protected_split": 1}
+
+
+# --- pack v1 rules (TSAI, 14 Nov 2026): identity levels, unclear sources, pinned revisions ------------
+
+def _pinned(world, *keys):
+    for key in keys:
+        world.source_specs[key]["identity"] = {"level": "pinned_revision"}
+    world.write()
+
+
+def test_pinned_revision_admits_only_when_the_policy_accepts_it(tmp_path, monkeypatch):
+    allow_in_table(monkeypatch)
+    rows = [ocr_row(0, "taco", "train", "0"), ocr_row(1, "code_contests", "train", "1")]
+    world = World(tmp_path / "w", {0: rows}, verified=())
+    allow_everything(world)
+    _pinned(world, "taco/train")
+    held = world.prepare(tmp_path / "default", mode="admission")  # no accepted levels named: verified only
+    assert held["outcomes"] == {"held_identity_unverified": 2}
+    world.policy["pack"]["accepted_identity_levels"] = ["verified", "pinned_revision"]
+    world.write()
+    result = world.prepare(tmp_path / "accepted", mode="admission")
+    assert result["outcomes"] == {"held_identity_unverified": 1, "eligible_joined": 1}  # cc/train is still diagnostic
+    entry = read_jsonl(tmp_path / "accepted" / "joined.sidecar.jsonl")[0]
+    assert entry["source_identity_level"] == "pinned_revision"  # the level is carried, never relabelled verified
+
+
+@parametrize("levels", [["diagnostic"], ["verified", "diagnostic"], [], ["checked"], "pinned_revision"])
+def test_a_diagnostic_or_unknown_identity_level_is_never_accepted(tmp_path, levels):
+    world = World(tmp_path / "w", {0: [ocr_row(0, "taco", "train", "0")]})
+    world.policy["pack"]["accepted_identity_levels"] = levels
+    world.write()
+    with pytest.raises(si.SourceIndexError, match="accepted_identity_levels"):
+        join.load_policy(world.policy_path)
+
+
+def test_an_unknown_identity_level_in_the_manifest_stops_the_build(tmp_path):
+    world = World(tmp_path / "w", {0: [ocr_row(0, "taco", "train", "0")]})
+    world.source_specs["taco/train"]["identity"] = {"level": "probably_fine"}
+    world.write()
+    with pytest.raises(si.SourceIndexError, match="identity.level"):
+        world.prepare(tmp_path / "out")
+
+
+@parametrize("revision", [None, ""])
+def test_a_source_with_no_revision_stops_the_build(tmp_path, revision):
+    world = World(tmp_path / "w", {0: [ocr_row(0, "taco", "train", "0")]})
+    if revision is None:
+        del world.source_specs["taco/train"]["revision"]
+    else:
+        world.source_specs["taco/train"]["revision"] = revision
+    world.write()
+    with pytest.raises(si.SourceIndexError, match="revision is missing"):
+        world.prepare(tmp_path / "out")
+
+
+def test_an_unclear_source_row_stays_out_in_both_modes(tmp_path, monkeypatch):
+    allow_in_table(monkeypatch)
+    rows = [ocr_row(0, "taco", "train", "0"), ocr_row(1, "taco", "train", "1"), ocr_row(2, "apps", "train", "0")]
+    world = World(tmp_path / "w", {0: rows}, verified=("taco/train", "apps/train"),
+                  policy={"unclear_source_rows": {"reason": "test", "rows": [{"dataset": "taco", "split": "train", "ordinal": 1},
+                                                                            {"dataset": "apps", "split": "test", "ordinal": 0}]}})
+    allow_everything(world)
+    for mode in ("diagnostic", "admission"):
+        result = world.prepare(tmp_path / mode, mode=mode)
+        assert result["outcomes"] == {"policy_unclear_source": 1, "eligible_joined": 2}
+        assert result["groups"]["policy_excluded"] == 1 and result["raw_rows"] == 3
+        assert [r["index"] for r in joined(tmp_path / mode)] == ["0", "0"]  # apps/test 0 names another split: no effect
+
+
+@parametrize("bad", [{"rows": [{"dataset": "taco", "split": "train", "ordinal": "1"}]},
+                     {"rows": [{"dataset": "taco", "ordinal": 1}]}, {"rows": "taco"}, []])
+def test_a_malformed_unclear_source_list_is_refused(tmp_path, bad):
+    world = World(tmp_path / "w", {0: [ocr_row(0, "taco", "train", "0")]}, policy={"unclear_source_rows": bad})
+    with pytest.raises(si.SourceIndexError, match="unclear_source_rows"):
+        join.load_policy(world.policy_path)
+
+
+def test_a_policy_revision_must_be_the_manifest_revision(tmp_path):
+    world = World(tmp_path / "w", {0: [ocr_row(0, "taco", "train", "0")]})
+    world.policy["sources"]["taco"]["revision"] = "f" * 40  # the fixture revision: agrees
+    world.write()
+    assert world.prepare(tmp_path / "same")["outcomes"] == {"eligible_joined": 1}
+    world.policy["sources"]["taco"]["revision"] = "e" * 40
+    world.write()
+    with pytest.raises(join.Refusal, match="revision"):
+        world.prepare(tmp_path / "other")
+    world.policy["sources"]["taco"]["revision"] = "e" * 12
+    world.write()
+    with pytest.raises(si.SourceIndexError, match="40-character"):
+        join.load_policy(world.policy_path)
+
+
+@parametrize("heldout", [{"fraction": 0.5, "salt": "s"}, {"fraction": -0.1, "salt": "s"}, {"fraction": True, "salt": "s"},
+                         {"fraction": 0.02, "salt": ""}, {"fraction": 0.02}])
+def test_a_bad_heldout_rule_is_refused(tmp_path, heldout):
+    world = World(tmp_path / "w", {0: [ocr_row(0, "taco", "train", "0")]})
+    world.policy["pack"]["heldout_eval_v1"] = heldout
+    world.write()
+    with pytest.raises(si.SourceIndexError, match="heldout_eval_v1"):
+        join.load_policy(world.policy_path)
+
+
+def test_the_real_policy_carries_the_14_nov_pack_ruling():
+    """The committed policy says what TSAI ruled on 14 Nov 2026 (tokenizer: the 15 Nov p1536 notice), and nothing looser."""
+    policy, _ = join.load_policy(HERE / "ocr2_policy.json")
+    pack = policy["pack"]
+    # p1536 only: C3 (15468e66...) is kept as a superseded record and no longer approves a pack
+    assert pack["approved_tokenizer_sha256"] == ["e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b"]
+    assert list(pack["superseded_tokenizer_sha256"]) == ["15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3"]
+    assert join.accepted_identity_levels(policy) == ("verified", "pinned_revision")
+    assert policy["sources"]["open-r1/codeforces"]["training_approved"] is False
+    for name in ("taco", "apps", "code_contests"):
+        src = policy["sources"][name]
+        assert src["training_approved"] is True and len(src["revision"]) == 40 and src["approval"]["by"] == "TSAI"
+        assert src["statement_licence"] and src["attribution"]
+    assert len(join.unclear_source_keys(policy)) == 14
+    assert pack["heldout_eval_v1"]["fraction"] == 0.02
+    assert policy["target_quality"] == {**policy["target_quality"], "admit_judgements": ["right"], "min_pass_rate": 1.0}

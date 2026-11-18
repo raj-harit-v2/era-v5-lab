@@ -1,0 +1,248 @@
+{
+ "schema": "g10-rl-data-manifest/1",
+ "set": "rl-code-code-contests-noncf",
+ "version": "v1 (11 Nov build, reproduced 15 Nov)",
+ "source": {
+  "dataset": "deepmind/code_contests",
+  "revision": "802411c3010cb00d1b05bad57ca77365a3c699d6",
+  "split": "train",
+  "files": [
+   {
+    "file": "train-00000-of-00039-e991a271dbfa9925.parquet",
+    "bytes": 180227735,
+    "sha256": "950bfdefde1f274edf93963e7e23c93ab16034de344aa7b7c32d14145e8d5232"
+   },
+   {
+    "file": "train-00001-of-00039-e092fe56fda18715.parquet",
+    "bytes": 208507780,
+    "sha256": "7bcc72d98a3d97f07be90ea70bf8db834c8f29ac2c7626d7cfc657bae6f5ddd9"
+   },
+   {
+    "file": "train-00002-of-00039-9cea23812e920e41.parquet",
+    "bytes": 226940997,
+    "sha256": "d67c9643019e632941b045f115c6bdf5925a4b32cd9f3fc991734970669b4a29"
+   },
+   {
+    "file": "train-00003-of-00039-e3822fccad6e083a.parquet",
+    "bytes": 180680623,
+    "sha256": "f4952386b2958bddb71ff6713b273b5425b1191084ef75923731b111bc20485f"
+   },
+   {
+    "file": "train-00004-of-00039-cefe355b4667b27e.parquet",
+    "bytes": 195299927,
+    "sha256": "f28993a19d927561b30873a0adf26d5e06bc649fa2b14fc8223de8fecb0b68a9"
+   },
+   {
+    "file": "train-00005-of-00039-b7580d2d846c2136.parquet",
+    "bytes": 174068638,
+    "sha256": "4904c25acd90c3e3882167efd2d70b371e6f8dfc996b65606435e44d58fad78c"
+   },
+   {
+    "file": "train-00006-of-00039-65184bb9f7d61fde.parquet",
+    "bytes": 186169733,
+    "sha256": "8ab765a7f8595c3f24f2f12eaac0f2d03ac626f9218abce127aa9ab898d011ff"
+   },
+   {
+    "file": "train-00007-of-00039-05785de21e8b8429.parquet",
+    "bytes": 172039390,
+    "sha256": "b9587e7767286768a039a316600232f49edbcdd6f645097db865f8e2ce262304"
+   },
+   {
+    "file": "train-00008-of-00039-7246e6b7423b404f.parquet",
+    "bytes": 199862972,
+    "sha256": "fe4e8a9c029563128882a101a06d427b8c7a8fbf7f273c76e09176fbb664fc88"
+   },
+   {
+    "file": "train-00009-of-00039-b8c920f6629b57b2.parquet",
+    "bytes": 204590259,
+    "sha256": "11844dd410f284f8e4db32970bd3968db82280e2c2971f33699f61baccfa656f"
+   },
+   {
+    "file": "train-00010-of-00039-6de28ba20654f69b.parquet",
+    "bytes": 178085060,
+    "sha256": "0b83e96a5a9717ea60c2e6fd44bde4ac2215834e78ba3b78f04b621a9b7b5cdc"
+   },
+   {
+    "file": "train-00011-of-00039-5de236be5188959d.parquet",
+    "bytes": 164271996,
+    "sha256": "facf7036a71d74cd8415dd2180deabc0d943b67219eb07b239e80af2d490dcdf"
+   },
+   {
+    "file": "train-00012-of-00039-da9476a39a1bdbb7.parquet",
+    "bytes": 199746101,
+    "sha256": "c4ec5429c2b920173f4662b5dc9ec0db40e9f3ddf5b139bad126d49ab598c635"
+   },
+   {
+    "file": "train-00013-of-00039-30b8c3829ee3b962.parquet",
+    "bytes": 197142293,
+    "sha256": "a03f874674808641cf4b2a8ac1b13a9cd6a28b4ffda329bc60dd1804ec315186"
+   },
+   {
+    "file": "train-00014-of-00039-dc3ebb07a3cba8e4.parquet",
+    "bytes": 211187756,
+    "sha256": "429d22b44ed3134a1e345bb39e5d395900bb6f4fad1ffe32844e972914f2bc30"
+   },
+   {
+    "file": "train-00015-of-00039-19ccd7331d695677.parquet",
+    "bytes": 178946180,
+    "sha256": "130ef71583565d5b2887a186cb0c64578486f1c7dfdff4bcb9c1107f807b0768"
+   },
+   {
+    "file": "train-00016-of-00039-bf38b0908b322307.parquet",
+    "bytes": 202144829,
+    "sha256": "7528a2ee39b08a78c6f9ffe16d9a18fb3e4de24e34fe2e899c795fc31acf2c76"
+   },
+   {
+    "file": "train-00017-of-00039-ae5533a2f822e6ef.parquet",
+    "bytes": 169304362,
+    "sha256": "895fe5a77c17f0ab4a364e01745a882b977e6da2e3580e8b171d59fcf816f971"
+   },
+   {
+    "file": "train-00018-of-00039-8c793837880f5507.parquet",
+    "bytes": 184831619,
+    "sha256": "8a214241c33628e6a01952088046b0561bd6e2941a39ce492bb59597bc93e8f6"
+   },
+   {
+    "file": "train-00019-of-00039-d688fad5ee604390.parquet",
+    "bytes": 190554330,
+    "sha256": "bd4b85d9ec0f7b16d38c9a296c6333f15720f0a019582d223480be5c90b2a864"
+   },
+   {
+    "file": "train-00020-of-00039-5d59387098675b73.parquet",
+    "bytes": 211262604,
+    "sha256": "b2a03b3940b6de703c18a0b55111e7aa979e2399b29f3f96c4abca706d5830db"
+   },
+   {
+    "file": "train-00021-of-00039-b257bf03d6876780.parquet",
+    "bytes": 181119876,
+    "sha256": "444b82044438c76d6e2cf79000615349b1dd7ba165da9118924ebcb427e6febc"
+   },
+   {
+    "file": "train-00022-of-00039-1cfd39fa43c1917c.parquet",
+    "bytes": 193915223,
+    "sha256": "63ff8266ec628a64417d7dda7754ed0366522c4cef5217e990487f83af2b1e53"
+   },
+   {
+    "file": "train-00023-of-00039-d078bcb55e45cbf0.parquet",
+    "bytes": 176115120,
+    "sha256": "2aa78452a6a3306536b2f000a4431c048282426a47e7197210155bedbad82c49"
+   },
+   {
+    "file": "train-00024-of-00039-f4e3da0e5661e6d1.parquet",
+    "bytes": 180979071,
+    "sha256": "c958b0997f636ea83fbf21c08adda22897dd35ca8cd1e5a97e5be16f832af28d"
+   },
+   {
+    "file": "train-00025-of-00039-3f6ebfbaba5f4c70.parquet",
+    "bytes": 205823196,
+    "sha256": "5ae9793f8d97c4448d8053475c10007215a9d819168e3f68a9af4cc2e335da84"
+   },
+   {
+    "file": "train-00026-of-00039-7d4898300894cbbe.parquet",
+    "bytes": 188681982,
+    "sha256": "cb60563bba14228dba3addd8a5be6a998654113bd734b3c54271dfe6e30e63c7"
+   },
+   {
+    "file": "train-00027-of-00039-f8196766547533a2.parquet",
+    "bytes": 217005966,
+    "sha256": "8b1464860f954fff785255b6f744aeaaba224c0e6b9ac2c74c6b832eedbbccbb"
+   },
+   {
+    "file": "train-00028-of-00039-79a302af3c924863.parquet",
+    "bytes": 178924886,
+    "sha256": "f32b70263520ba04d01efda103d8ddbbf2f158b60931caae83d67f5d49b6dc62"
+   },
+   {
+    "file": "train-00029-of-00039-2b6615897d038115.parquet",
+    "bytes": 197596694,
+    "sha256": "a2d76b2c01471ec07d4a724391f76123d54f66dc11fb24b531c3a056cbbfe7b0"
+   },
+   {
+    "file": "train-00030-of-00039-4135cc54050afc22.parquet",
+    "bytes": 223399896,
+    "sha256": "fe9d77f481b639e21867942ad1061f8a3b7bfb82b3357e6c7ec96da55c6373cd"
+   },
+   {
+    "file": "train-00031-of-00039-40309dd907c042b7.parquet",
+    "bytes": 181140154,
+    "sha256": "2daeff73dc92b289ec9aeaa6f52af9e7665aae45ade8a172e5dad9a130a48fb2"
+   },
+   {
+    "file": "train-00032-of-00039-7b7d2068a3d9c359.parquet",
+    "bytes": 186381035,
+    "sha256": "fe24e9818595a3fa467a8986f4d341cf1cbcdb6f1d2c0900b4e995b25597f9ad"
+   },
+   {
+    "file": "train-00033-of-00039-53b0f749aacff9c1.parquet",
+    "bytes": 203741870,
+    "sha256": "65366660f211cfa6e18c81086348713805dd874b708b0bf2e3d0b6de2556cebf"
+   },
+   {
+    "file": "train-00034-of-00039-a36ff0bff7d2a76f.parquet",
+    "bytes": 187767858,
+    "sha256": "5ea8c872ec944013b661f23203f8d4b82e46dc8dec204c32af89ba7153035171"
+   },
+   {
+    "file": "train-00035-of-00039-d28f9be60314601f.parquet",
+    "bytes": 151356957,
+    "sha256": "4a7ed07e1f67ca32ed03a874b96dfc9f4f43be0563734b33085bf0b653c65c47"
+   },
+   {
+    "file": "train-00036-of-00039-146e1a11c054aeab.parquet",
+    "bytes": 204394454,
+    "sha256": "cb14ebff9529e89c5fd5659b7de0352858f6a514fc63e2111daed392511eafa8"
+   },
+   {
+    "file": "train-00037-of-00039-995207c374a4e6f2.parquet",
+    "bytes": 231402023,
+    "sha256": "bc6e40d8b2de70a52056f0d25d70cac57dd77b8671fa5d1e467e330156addca0"
+   },
+   {
+    "file": "train-00038-of-00039-96a59dd6a98cd075.parquet",
+    "bytes": 204141641,
+    "sha256": "62a3f1e1a56485b7b8514d969e803a844fae89e29b985995109f860f50d042ed"
+   }
+  ]
+ },
+ "generator": "none (human problems and solutions; extra tests are programmatic mutations)",
+ "licence": "CC-BY-4.0 (Hub tag)",
+ "licence_table": "allowed (TSAI, 6 Nov), train splits only: licences/licence_table.md row rl-code-code-contests (L141) and summary (L287) at 7a3f122",
+ "training_approval": "allowed for RL by TSAI 6 Nov (train split only)",
+ "heldout_boundaries": "train split only; valid/test splits not read; Codeforces-sourced rows (source==2) excluded entirely; v2 fingerprints (incl. livecodebench, codeforces, heldout_g5_v1) removed 1,369",
+ "counts": {
+  "built": 5092,
+  "v2_flagged": 1369,
+  "math500_overlap": 0,
+  "math500_overlap_also_v2_flagged": 0,
+  "removed": 1369,
+  "v1": 3723,
+  "sha256": "91ee99512f0411aea2de4ca5eaf10b87b2d8f785ca73747bf8deb45dd6ea9be0",
+  "v1_by_judge": {
+   "codechef": 489,
+   "hackerearth": 1056,
+   "atcoder": 208,
+   "aizu": 1970
+  }
+ },
+ "output": {
+  "file": "cc.jsonl (local only, not in Git)",
+  "rows": 3723,
+  "sha256": "91ee99512f0411aea2de4ca5eaf10b87b2d8f785ca73747bf8deb45dd6ea9be0"
+ },
+ "decontam": {
+  "record_sha256_rebuild": "789e5a4c6c3a477cd6ebc091c68c264f3c7a9d89d0721fd065303a18df123ed1",
+  "record_equal_to_11nov_except_run_at": true,
+  "fingerprints": "v2",
+  "set_sha256": "2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a",
+  "rows_canary": 0
+ },
+ "prompt_pool": {
+  "layout": "JSONL {id, text}; Team 9 decontam_check.py --id-field id",
+  "rows": 3723,
+  "sha256": "84b0a645882fd3c518eb543432f3758bbde564e9aab3dca99e534834abc2b5f1",
+  "file": "local only (rldata_rebuild/pool)"
+ },
+ "rebuild": "work/wp4-rl-integration-2026-11-15/rldata_rebuild/run_rebuild.sh (wrappers copied byte-for-byte from work/rl-data-v1-2026-11-11: verify_pins.py, build_v1.py, assemble_v1.py, math500_guard.py; builders teams/10-post-training/rl-data/{build,build_math}.py; decontam teams/10-post-training/sft/decontam_run.py with Team 9 tools b470b4c)",
+ "rebuild_seconds_total_both_sets": 63,
+ "open_decision": "codechef (489) and hackerearth (1,056) v1 tasks have only Python 2 human references; their correct-answer test converts them with lib2to3. Lead decision (16 Nov): keep in v1 close pool (3,577 tasks; candidate Python 3 completions are checked against I/O pairs); TSAI can reverse with --drop-python2."
+}

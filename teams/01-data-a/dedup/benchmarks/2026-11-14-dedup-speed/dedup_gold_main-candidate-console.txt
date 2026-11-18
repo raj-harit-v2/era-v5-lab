@@ -1,0 +1,11 @@
+1,416,236 documents, 2,690 matches, 1,084 clusters
+removed 1,345 (0.0950%): by rule {'H2': 1289, 'H1': 56}, by stage {'within_pack': 1309, 'cross_pack': 36}
+clusters decided by priority rule: {'0': 27, '3': 770, '4': 287}
+held-out removed: 0 (must be 0); held-out <-> held-out pairs reported: 0
+empty documents: 7 listed, not removed; 21 matches between them set aside
+note: no inputs given: url unknown, rule 2 decided nothing
+note: licence map not filled for 38 packs; default used
+harm check: not_testable
+wrote remove_list.csv, dedup_log.jsonl, heldout_duplicates.csv, empty_documents.csv, dedup_groups.csv and dedup_summary.json to out/bench_dedup_20261114_r4/dedup_gold_main/candidate-out
+
+BENCH {"peak_mb": 401.01953125}

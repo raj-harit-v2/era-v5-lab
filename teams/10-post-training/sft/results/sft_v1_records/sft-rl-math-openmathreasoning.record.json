@@ -1,0 +1,97 @@
+{
+ "checks": {
+  "checks_failed": {},
+  "checks_ok": true,
+  "effort_rows": {
+   "16k": 647,
+   "1k": 46,
+   "4k": 305,
+   "64k": 2
+  },
+  "files": [
+   {
+    "bytes": 85812705,
+    "name": "sft-rl-math-openmathreasoning.first1000.jsonl",
+    "sha256": "fe116059d02663fe3969794c30ac18663cf7c5a8ef5e08a94717f6f8b0417509"
+   }
+  ],
+  "info": {
+   "decode_equals_normalised_text_only": 1
+  },
+  "length": {
+   "max": 18443,
+   "min": 633,
+   "p50": 6787,
+   "p95": 15451
+  },
+  "max_len": 32768,
+  "rows": 1000,
+  "rows_over_max_len": 0,
+  "rows_with_tool_blocks": 0,
+  "shifted_supervised_targets": 7505780,
+  "tokens": 7599133,
+  "tool_call_blocks": 0,
+  "tool_call_tokens_untrained": 0,
+  "tool_result_blocks": 0,
+  "train_spans": 1000,
+  "trained_share": 0.987715,
+  "trained_tokens": 7505780,
+  "unique_ids": true
+ },
+ "checks_wall_s": 9.44,
+ "content_sha256": "fe116059d02663fe3969794c30ac18663cf7c5a8ef5e08a94717f6f8b0417509",
+ "convert": {
+  "cpu_sys_s": 1.14,
+  "cpu_user_s": 20.568,
+  "hub_bytes_read": 33619968,
+  "max_rss_mb": 418.2,
+  "wall_s": 16.847
+ },
+ "decision": "TSAI reserves",
+ "deterministic_rerun": true,
+ "effort_manifest": {
+  "16k": 647,
+  "1k": 46,
+  "4k": 305,
+  "64k": 2
+ },
+ "file_bytes": 85812705,
+ "file_sha256": "fe116059d02663fe3969794c30ac18663cf7c5a8ef5e08a94717f6f8b0417509",
+ "generator_model": "DeepSeek-R1 (MIT) and QwQ-32B (Apache-2.0, both open weights)",
+ "hub_revision": "d3d08664755704f422af97d43a7ff0ded4bd95df",
+ "input": "hub file nvidia/OpenMathReasoning glob:data/cot- rows 0..999999999",
+ "licence": "cc-by-4.0 (Hub tag; commercial use permitted per tag)",
+ "rerun_content_sha256": "fe116059d02663fe3969794c30ac18663cf7c5a8ef5e08a94717f6f8b0417509",
+ "rerun_wall_s": 15.749,
+ "rows_in": 1000,
+ "rows_out": 1000,
+ "rows_per_s_convert": 59.36,
+ "rows_scanned": 1000,
+ "scope": "first 1000 selected rows, source order, C3",
+ "selection": "all 144 cot shards",
+ "set": "sft-rl-math-openmathreasoning",
+ "skipped": {},
+ "source": "nvidia/OpenMathReasoning",
+ "token_record": {
+  "basis": "first 1000 selected rows, source order, C3; not the admissible kept rows",
+  "effort": {
+   "16k": 647,
+   "1k": 46,
+   "4k": 305,
+   "64k": 2
+  },
+  "length": {
+   "max": 18443,
+   "min": 633,
+   "p50": 6787,
+   "p95": 15451
+  },
+  "rows": 1000,
+  "sequence_tokens": 7599133,
+  "set_id": "sft-rl-math-openmathreasoning",
+  "shifted_supervised_targets": 7505780,
+  "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3"
+ },
+ "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3",
+ "tokens_per_s_convert": 451067
+}

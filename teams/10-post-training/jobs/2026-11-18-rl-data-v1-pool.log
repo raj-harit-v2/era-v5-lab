@@ -1,0 +1,31 @@
+CPU log of rl-data/rebuild_v1/rebuild_v1.py (the script this request runs), Apple M1 Pro 8 cores, shared machine,
+macOS, Python 3.12 with pyarrow and math-verify 0.9.0. Inputs staged under ROOT as in the request, every file checked
+against pins_v1.json by the driver. Outputs contain data and stay out of Git.
+
+Same bytes as this commit (git blob ids, compared 17 Nov 2026 between the tree that produced runs 1 and 2 and this commit):
+  7762d7b66722 rl-data/rebuild_v1/rebuild_v1.py     a21c3c9095f5 rl-data/rebuild_v1/pins_v1.json
+  d935b2bd1d3f rl-data/rebuild_v1/build_v1.py       fd480a790217 rl-data/rebuild_v1/assemble_v1.py
+  4b1039762734 rl-data/rebuild_v1/math500_guard.py  b61704375399 rl-data/rebuild_v1/verify_pins.py
+  217da7fe30b7 sft/decontam_run.py
+
+== Run 1 (16 Nov, before the firewall lists), from the repo copy, exit 0
+$ python rl-data/rebuild_v1/rebuild_v1.py --cc-dir ROOT/code_contests/data --math-dir ROOT/hendrycks_math \
+    --math500 ROOT/math500/test.jsonl --g9-tools ROOT/g9/teams/09-evaluation/decontam --out out/run
+{"outputs_checked": 12, "mismatches": {}, "ok": true, "code_pool": 3577, "math_reserved": 7209, "seconds": {"pins": 5.7, "build": 15.6, "decontam": 63.9, "assemble": 65.7, "total": 66.7}}
+real 66.73
+user 57.39
+sys 5.37
+exit 0
+
+== Run 2 (16 Nov, with the two private evaluation-firewall lists), fresh from scratch
+$ python rl-data/rebuild_v1/rebuild_v1.py --cc-dir ROOT/code_contests/data --math-dir ROOT/hendrycks_math \
+    --math500 ROOT/math500/test.jsonl --g9-tools ROOT/g9/teams/09-evaluation/decontam --out out/run \
+    --rl-heldout-ids ROOT/rl_heldout_v1_ids.txt --sft-heldout-match-ids ROOT/sft_heldout_match_ids.txt
+{"outputs_checked": 14, "mismatches": {}, "ok": true, "code_pool": 3577, "math_reserved": 7209, "code_train_pool": 3251, "rl_heldout": 255, "seconds": {"pins": 7.5, "build": 20.1, "decontam": 86.7, "assemble": 89.1, "total": 90.7}}
+(the exit status of run 2 was not written to its log; the summary line above is the driver's own final line)
+
+== Not measured: peak memory (the Hardware line is an estimate); the inputs were removed from the machine after run 2.
+
+== Tests that need no data, run 17 Nov 2026 at this commit
+$ python -m pytest teams/10-post-training/rl-data/test_rebuild_v1.py -q
+4 passed in 0.08s

@@ -220,15 +220,21 @@ class MoE(nn.Module):
         gates, choice = scores.topk(self.topk, dim=-1)
         gates = gates / gates.sum(-1, keepdim=True)
         output = torch.zeros_like(flat)
-        # Each expert sees only selected non-padding rows. Distinct row indices
-        # within an expert -> no many-to-one atomic combine operation.
-        for e, expert in enumerate(self.experts):
-            selected = (choice == e) & active[:, None]
-            rows = selected.any(-1).nonzero().flatten()
-            if rows.numel():
-                weight = (gates[rows] * selected[rows]).sum(-1, keepdim=True)
-                values = expert(flat[rows]) * weight.to(flat.dtype)
-                output = output + torch.zeros_like(flat).index_copy(0, rows, values)
+        # Execution-only fast path (TSAI): every expert runs on every token in one batched product, then each
+        # token keeps only its selected experts with their normalised gates. Same value as the loop below,
+        # with no data-dependent shapes and no host synchronisation. Padding rows get gate 0.
+        gate_dense = torch.zeros_like(scores).scatter(-1, choice, gates) * active[:, None]
+        Wg = torch.stack([e.gate.weight for e in self.experts])   # [E, h, w]
+        Wu = torch.stack([e.up.weight for e in self.experts])
+        Wd = torch.stack([e.down.weight for e in self.experts])   # [E, w, h]
+        dt = flat.dtype
+        if torch.is_autocast_enabled():
+            dt = torch.get_autocast_dtype("cuda")
+        xe = flat.to(dt)
+        hg = torch.einsum("td,ehd->teh", xe, Wg.to(dt))
+        hu = torch.einsum("td,ehd->teh", xe, Wu.to(dt))
+        y = torch.einsum("teh,edh->ted", F.silu(hg) * hu, Wd.to(dt))
+        output = torch.einsum("te,ted->td", gate_dense.float(), y.float()).to(flat.dtype)
         for expert in self.shared:
             output = output + expert(flat) * active[:, None]
         return output.reshape(shape)

@@ -1,0 +1,124 @@
+{
+ "schema": "g10-tokenizer-transfer/1",
+ "old": {
+  "name": "C3",
+  "sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3"
+ },
+ "new": {
+  "name": "p1536",
+  "sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b"
+ },
+ "tokenizer_files": {
+  "added_tokens_identical": true,
+  "added_tokens": 356,
+  "vocab_size": 131072,
+  "vocab_entries_same_id": 117248,
+  "normalizer_pretokenizer_decoder_identical": true
+ },
+ "scope": {
+  "dolly": "every converted row (3 parts)",
+  "dolly-t": "every converted row (1 part)",
+  "ocr2_shards_0-3": "every train and held-out pack row of OCR-2 shards 0-3 (4 of 70)",
+  "proofs_10_parts": "10 of 287 converted parts (the mask-check sample)"
+ },
+ "sets": {
+  "dolly": {
+   "rows": 15011,
+   "old_reencode_equal": 15011,
+   "tokens_old": 2923577,
+   "tokens_new": 2924760,
+   "trained_old": 1186477,
+   "trained_new": 1186875,
+   "over_limit_old": 0,
+   "over_limit_new": 0,
+   "enter_limit": 0,
+   "leave_limit": 0,
+   "effort_changed": 0,
+   "max_len": {
+    "old": 5664,
+    "new": 5664
+   },
+   "token_ratio_new_over_old": 1.0004,
+   "mask_violations_new": {},
+   "effort_transitions": {
+    "1k->1k": 15011
+   }
+  },
+  "dolly-t": {
+   "rows": 10541,
+   "old_reencode_equal": 10541,
+   "tokens_old": 1951624,
+   "tokens_new": 1795934,
+   "trained_old": 1425682,
+   "trained_new": 1296485,
+   "over_limit_old": 0,
+   "over_limit_new": 0,
+   "enter_limit": 0,
+   "leave_limit": 0,
+   "effort_changed": 0,
+   "max_len": {
+    "old": 7379,
+    "new": 6899
+   },
+   "token_ratio_new_over_old": 0.92023,
+   "mask_violations_new": {},
+   "effort_transitions": {
+    "1k->1k": 10541
+   }
+  },
+  "ocr2_shards_0-3": {
+   "rows": 32855,
+   "old_reencode_equal": 32855,
+   "tokens_old": 212547311,
+   "tokens_new": 212593659,
+   "trained_old": 197555144,
+   "trained_new": 197584460,
+   "over_limit_old": 0,
+   "over_limit_new": 0,
+   "enter_limit": 0,
+   "leave_limit": 0,
+   "effort_changed": 2,
+   "max_len": {
+    "old": 19366,
+    "new": 19366
+   },
+   "token_ratio_new_over_old": 1.00022,
+   "mask_violations_new": {},
+   "effort_transitions": {
+    "16k->16k": 18650,
+    "1k->1k": 1862,
+    "4k->16k": 2,
+    "4k->4k": 12341
+   }
+  },
+  "proofs_10_parts": {
+   "rows": 30821,
+   "old_reencode_equal": 30821,
+   "tokens_old": 344976545,
+   "tokens_new": 345290918,
+   "trained_old": 280824563,
+   "trained_new": 281071268,
+   "over_limit_old": 647,
+   "over_limit_new": 650,
+   "enter_limit": 0,
+   "leave_limit": 3,
+   "effort_changed": 15,
+   "max_len": {
+    "old": 55487,
+    "new": 55496
+   },
+   "token_ratio_new_over_old": 1.00091,
+   "mask_violations_new": {},
+   "effort_transitions": {
+    "16k->16k": 17430,
+    "16k->64k": 3,
+    "1k->1k": 740,
+    "1k->4k": 1,
+    "4k->16k": 11,
+    "4k->4k": 10908,
+    "64k->64k": 1728
+   }
+  }
+ },
+ "note": "counts only. ocr2 and proofs were measured with a local copy of sft/tokenizer_transfer.py with the same logic; the repo version re-run on dolly and dolly-t gives identical counts"
+}

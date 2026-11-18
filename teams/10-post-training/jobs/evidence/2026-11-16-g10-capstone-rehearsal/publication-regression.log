@@ -1,0 +1,9 @@
+........................................................................ [ 41%]
+................s...................................s................... [ 83%]
+...........ss................                                            [100%]
+=========================== short test summary info ============================
+SKIPPED [1] teams/10-post-training/rl-loop/test_rollout_routing.py:254: math_verify not installed: math_task scoring is UNTESTED here
+SKIPPED [1] teams/10-post-training/rl-loop/test_team5_adapter.py:702: math_verify not installed: math_check.score on codec text is UNTESTED in this environment
+SKIPPED [1] teams/10-post-training/sft/bench/tests/test_bench.py:143: G10_BENCH_SLICE not set
+SKIPPED [1] teams/10-post-training/sft/bench/tests/test_bench.py:160: G10_BENCH_SLICE not set
+169 passed, 4 skipped in 227.55s (0:03:47)

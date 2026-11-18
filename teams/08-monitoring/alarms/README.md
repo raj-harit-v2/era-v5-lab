@@ -38,6 +38,7 @@ for step in range(steps):
 | `throughput_drop` | `tokens_per_second` | $> 10\%$ below the trailing 100-step mean for 100 consecutive steps | `warn` | Skips `step == 0` setup time; fires once when the streak reaches 100 and resets when speed recovers. |
 | `moe_routing` | `expert_load` | $\text{MaxVio} > 1.0$ or $\text{dead\_experts} > 0$ for `moe_patience` consecutive steps (default 1,000) | `warn` | Accepts a single list of expert load fractions or a `{layer: [fractions]}` dict. |
 | `static_bound` | any scalar in `bounds={name: (lo, hi)}` | Value $< \text{lo}$ or $> \text{hi}$ (optional, folded in from `@rahulsharmaf81` PR #122) | `warn` | Edge-triggered latch: fires once on crossing and re-arms only when the metric returns in-bounds, so cumulative counters do not re-fire on every subsequent step. |
+| `val_regression` | `validation_bpb`, `validation_loss` (rows of a validation run only) | Value more than `val_regression_frac` above that metric's best (lowest) value so far, for `val_patience` validation runs in a row (default 1); off unless `val_regression_frac` is set, e.g. `0.02` | `warn` | Fires once per streak; a new best resets it. Neither `spike_score` (training losses only) nor a fixed `static_bound` catches a validation curve that turns back up (G8 W3 rotation, Issue #25, `test_alert_injection_sohamniyogi.py`). |
 
 Input and reset behaviour:
 
@@ -45,9 +46,9 @@ Input and reset behaviour:
 - Throughput and MoE streaks are tracked per metric (per layer for MoE). A gap, repeat or backward step in that metric, or a null, malformed, negative or non-finite value, restarts the streak; baseline history is kept.
 - Zero throughput counts as a slowdown once 20 positive samples (after step 0) form a baseline; it never enters the baseline.
 - Severities are labels: the caller stops training and handles notifications. Spike events are returned on every qualifying step.
-- **Checkpoint hand-off (Team 07 `Checkpointer`):** `monitor.state_dict()` returns a JSON-serializable snapshot (`schema: "v5-alarms/1"`) of all trailing windows (`_trailing`), ZClip EMA stats, throughput baseline and streak counters, per-layer MoE streaks, and latched static bounds; `monitor.load_state_dict(state)` restores it so a run resumed from a checkpoint continues with identical alarm state and no cold-start warmup gap.
+- **Checkpoint hand-off (Team 07 `Checkpointer`):** `monitor.state_dict()` returns a JSON-serializable snapshot (`schema: "v5-alarms/1"`) of all trailing windows (`_trailing`), ZClip EMA stats, throughput baseline and streak counters, per-layer MoE streaks, latched static bounds, and the validation best values and streaks; `monitor.load_state_dict(state)` restores it so a run resumed from a checkpoint continues with identical alarm state and no cold-start warmup gap.
 
-Resume with a monitor constructed using the same settings, including `bounds`; configuration is not saved in the checkpoint. Checkpoints must use schema `v5-alarms/1`.
+A checkpoint written before `val_regression` existed (no `val` entry) still loads, with no validation best yet. Resume with a monitor constructed using the same settings, including `bounds` and `val_regression_frac`; configuration is not saved in the checkpoint. Checkpoints must use schema `v5-alarms/1`.
 
 ## 2. Results on 3,000 synthetic steps (`--synthetic 3000`)
 

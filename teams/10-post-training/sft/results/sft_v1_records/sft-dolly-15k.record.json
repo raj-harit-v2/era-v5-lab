@@ -1,0 +1,97 @@
+{
+ "checks": {
+  "checks_failed": {},
+  "checks_ok": true,
+  "effort_rows": {
+   "16k": 0,
+   "1k": 1000,
+   "4k": 0,
+   "64k": 0
+  },
+  "files": [
+   {
+    "bytes": 2758600,
+    "name": "sft-dolly-15k.first1000.jsonl",
+    "sha256": "178731329f8e7c4628bac86e6e40083837b591c30f0cde184c9fed0bdbba2cc9"
+   }
+  ],
+  "info": {
+   "decode_equals_normalised_text_only": 1
+  },
+  "length": {
+   "max": 2549,
+   "min": 30,
+   "p50": 129,
+   "p95": 536
+  },
+  "max_len": 32768,
+  "rows": 1000,
+  "rows_over_max_len": 0,
+  "rows_with_tool_blocks": 0,
+  "shifted_supervised_targets": 84057,
+  "tokens": 193844,
+  "tool_call_blocks": 0,
+  "tool_call_tokens_untrained": 0,
+  "tool_result_blocks": 0,
+  "train_spans": 1000,
+  "trained_share": 0.433632,
+  "trained_tokens": 84057,
+  "unique_ids": true
+ },
+ "checks_wall_s": 0.88,
+ "content_sha256": "178731329f8e7c4628bac86e6e40083837b591c30f0cde184c9fed0bdbba2cc9",
+ "convert": {
+  "cpu_sys_s": 0.086,
+  "cpu_user_s": 0.815,
+  "hub_bytes_read": 872862,
+  "max_rss_mb": 176.4,
+  "wall_s": 1.818
+ },
+ "decision": "allowed (CC-BY-SA, attribution needed)",
+ "deterministic_rerun": true,
+ "effort_manifest": {
+  "16k": 0,
+  "1k": 1000,
+  "4k": 0,
+  "64k": 0
+ },
+ "file_bytes": 2758600,
+ "file_sha256": "178731329f8e7c4628bac86e6e40083837b591c30f0cde184c9fed0bdbba2cc9",
+ "generator_model": "none (human-written by Databricks employees; no model generator)",
+ "hub_revision": "bdd27f4d94b9c1f951818a7da7fd7aeea5dbff1a",
+ "input": "hub file databricks/databricks-dolly-15k databricks-dolly-15k.jsonl rows 0..999999999",
+ "licence": "cc-by-sa-3.0 (Hub tag; share-alike, attribution needed)",
+ "rerun_content_sha256": "178731329f8e7c4628bac86e6e40083837b591c30f0cde184c9fed0bdbba2cc9",
+ "rerun_wall_s": 1.568,
+ "rows_in": 1000,
+ "rows_out": 1000,
+ "rows_per_s_convert": 550.06,
+ "rows_scanned": 1000,
+ "scope": "first 1000 selected rows, source order, C3",
+ "selection": "all rows",
+ "set": "sft-dolly-15k",
+ "skipped": {},
+ "source": "databricks/databricks-dolly-15k",
+ "token_record": {
+  "basis": "first 1000 selected rows, source order, C3; not the admissible kept rows",
+  "effort": {
+   "16k": 0,
+   "1k": 1000,
+   "4k": 0,
+   "64k": 0
+  },
+  "length": {
+   "max": 2549,
+   "min": 30,
+   "p50": 129,
+   "p95": 536
+  },
+  "rows": 1000,
+  "sequence_tokens": 193844,
+  "set_id": "sft-dolly-15k",
+  "shifted_supervised_targets": 84057,
+  "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3"
+ },
+ "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3",
+ "tokens_per_s_convert": 106625
+}

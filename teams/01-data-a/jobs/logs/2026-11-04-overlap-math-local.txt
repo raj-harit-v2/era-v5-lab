@@ -1,0 +1,108 @@
+4 cleaned parts found (input checksum verification deferred)
+train/math-finemath/part-00000.parquet: 29122 documents (44s)
+train/math-megamath/part-00000.parquet: 17647 documents (86s)
+heldout/math-finemath/part-00000.parquet: 312 documents (87s)
+heldout/math-megamath/part-00000.parquet: 169 documents (87s)
+47250 documents, 41044511 distinct shingles, 1323577 of them in 2+ documents; about 119,532,150 intersection steps
+  rows 256/47250: 0s, about 5s left
+  rows 13056/47250: 1s, about 2s left
+  rows 25856/47250: 2s, about 1s left
+  rows 38656/47250: 2s, about 0s left
+  rows 47250/47250: 2s, about 0s left
+Applying H1/H2 rules; scoring code token pairs independently of raw word scores
+{
+  "status": "complete",
+  "normalize_id": "g1-spec-v1",
+  "key": "h1_key of h1_sha256.py: normalize.match_key, then NFKC, casefold, whitespace runs to one space",
+  "shingles": "word 5-grams of the key as 8-byte BLAKE2b digests; a key under 5 words is one shingle",
+  "documents": {
+    "math-finemath": {
+      "train": 29122,
+      "heldout": 312,
+      "all": 29434
+    },
+    "math-megamath": {
+      "train": 17647,
+      "heldout": 169,
+      "all": 17816
+    }
+  },
+  "documents_all": 47250,
+  "ids_used_by_2_or_more_documents": 0,
+  "h1_exact_groups": 0,
+  "documents_in_h1_exact_groups": 0,
+  "empty_documents": 0,
+  "distinct_shingles": 41044511,
+  "shingles_in_2_or_more_documents": 1323577,
+  "pairs_compared": 1116257625,
+  "pairs_sharing_a_shingle": 12073463,
+  "pairs_at_or_above": {
+    "0.70": 369,
+    "0.75": 243,
+    "0.80": 131,
+    "0.85": 68,
+    "0.90": 46,
+    "0.95": 18
+  },
+  "pairs_stored": 845,
+  "qualifying_pairs_by_rule": {
+    "H2": 36
+  },
+  "matrix_definition": "distinct documents in row source with another qualifying H1/H2 match in column source / row source documents",
+  "duplicate_rules": {
+    "prose": "word Jaccard >= 0.80; both >= 50 words",
+    "math": "word Jaccard >= 0.90; identical signed number multisets",
+    "code": "token Jaccard >= 0.85; both >= 20 nonblank lines after comment removal",
+    "mixed_domains": "both domains' rules must pass on both documents",
+    "h1": "same H1 SHA256; bypasses H2 guards",
+    "translations": "not detected"
+  },
+  "pack_domains": {
+    "math-finemath": "math",
+    "math-megamath": "math"
+  },
+  "wall_seconds": 96.7,
+  "peak_rss_mb": 1002.2,
+  "versions": {
+    "python": "3.13.18",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "pyarrow": "26.0.1",
+    "pygments": "2.21.0",
+    "platform": "Linux-6.18.44-fc-v233-x86_64-with-glibc2.39"
+  },
+  "output_mb": 1.7
+}
+
+Pairs at Jaccard 0.80 and above:
+  math-finemath x math-finemath                 24
+  math-finemath x math-megamath                 7
+  math-megamath x math-megamath                 100
+
+Pairs at Jaccard 1.00 and above:
+
+Pairs at exact (same H1 key):
+
+Top 20 pairs:
+  0.9963        math-megamath-383ffa5e23527466  math-megamath-c454178b24b0d891
+  0.9868        math-megamath-955f087b91868657  math-megamath-31fd69b5b46dad6b
+  0.9825        math-megamath-dc3abea5168c61ca  math-megamath-1a2d4bc9a1078e5a
+  0.9812        math-finemath-c4913a9b5d184eaa  math-finemath-146a8c2c27f7084b
+  0.9755        math-megamath-526f0b97aa68215d  math-megamath-d7b4b25d1a7861aa
+  0.9739        math-megamath-dc3abea5168c61ca  math-megamath-147c1f6fd0b0c5ca
+  0.9739        math-megamath-147c1f6fd0b0c5ca  math-megamath-1a2d4bc9a1078e5a
+  0.9724        math-finemath-ed88355d6144551d  math-megamath-0c86608b5adcec8a
+  0.9676        math-finemath-a313f6b2b60c5712  math-megamath-4fa848b010a721ed
+  0.9664        math-finemath-782e60137800ad12  math-finemath-e46f63c14abbc4ec
+  0.9655        math-megamath-dc3abea5168c61ca  math-megamath-f132ffcea956fb37
+  0.9655        math-megamath-f132ffcea956fb37  math-megamath-1a2d4bc9a1078e5a
+  0.9621        math-megamath-72fc2387e15d7aef  math-megamath-605e7ee5301f09f9
+  0.9573        math-megamath-90239bb3aa56bfe9  math-megamath-dc3abea5168c61ca
+  0.9573        math-megamath-90239bb3aa56bfe9  math-megamath-1a2d4bc9a1078e5a
+  0.9573        math-megamath-147c1f6fd0b0c5ca  math-megamath-f132ffcea956fb37
+  0.9571        math-megamath-2c79ea3f95ffe914  math-megamath-1147232ccc92e1f6
+  0.9571        math-megamath-eabd38a8c63d837f  math-megamath-1147232ccc92e1f6
+  0.9492        math-megamath-90239bb3aa56bfe9  math-megamath-147c1f6fd0b0c5ca
+  0.9437        math-megamath-e5200b8290552de6  math-megamath-1147232ccc92e1f6
+
+Wrote overlap_pairs.csv, overlap_matrix.npz, overlap_docs.parquet, overlap_by_pack.csv, overlap_histogram.csv, overlap_matches.csv, overlap_matrix.csv, overlap_matrix_counts.csv and overlap_summary.json to out/overlap_math (1.7 MB)

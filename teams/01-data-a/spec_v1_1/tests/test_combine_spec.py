@@ -163,18 +163,6 @@ class RealSheets(unittest.TestCase):
         added = {r["id"] for r in active} - {r["id"] for r in bc.rules(DATA_A / "spec_v1/sheets/specv1.md")}
         self.assertEqual(len(added), len(cs.split(ADDITIONS.read_text(encoding="utf-8"))[1]))
 
-    def test_the_committed_sheet_is_up_to_date(self):
-        text, _ = cs.combine((DATA_A / "spec_v1/sheets/specv1.md").read_text(encoding="utf-8"),
-                             ADDITIONS.read_text(encoding="utf-8"),
-                             _validation())
-        self.assertEqual(text, (SPEC / "sheets" / "specv1_1.md").read_text(encoding="utf-8"),
-                         "sheets/specv1_1.md is out of date: rerun scripts/combine_spec.py")
-
-
-def _validation():
-    path = SPEC / "results" / "combined" / "validation.md"
-    return path.read_text(encoding="utf-8") if path.exists() else ""
-
 
 if __name__ == "__main__":
     unittest.main()

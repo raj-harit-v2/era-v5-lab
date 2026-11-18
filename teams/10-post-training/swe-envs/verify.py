@@ -35,6 +35,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import posixpath
 import re
 import shlex
@@ -308,8 +309,10 @@ def docker_run(env: dict, script: str, files: dict[str, bytes], timeout_s: float
     """
     with tempfile.TemporaryDirectory(prefix="g10swe-") as tmp:
         pdir = Path(tmp)
+        os.chmod(pdir, 0o755)  # TemporaryDirectory defaults to 0700; container's non-root user needs to read it
         for fname, data in files.items():
             (pdir / fname).write_bytes(data)  # bytes: no CRLF change
+            os.chmod(pdir / fname, 0o644)
         name = f"g10swe-{uuid.uuid4().hex[:12]}"
         cmd = ["docker", "run", "--rm", "--name", name, *DOCKER_LIMITS,
                *(["--platform", PLATFORM] if PLATFORM else []),

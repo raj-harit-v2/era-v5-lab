@@ -1,0 +1,108 @@
+{
+ "dt_markers": {
+  "steps": "300",
+  "seed": "1",
+  "lr": "0.001",
+  "marker_lr": "0.001",
+  "train_seconds": 649.8,
+  "hardware": "Apple M1 Pro, 16 GB unified memory, device=cpu",
+  "train_rows": 5255,
+  "closed_im_end_before_after": [
+   0.0,
+   0.9375
+  ],
+  "format_valid_after": 0.9375,
+  "gen_prompts": 64,
+  "eval_nll_before_after": [
+   6.835170248393344,
+   6.350611555375964
+  ],
+  "heldout_bpb_before_after": [
+   2.3163690883527797,
+   2.2585306796061295
+  ],
+  "frozen_weights_unchanged": true,
+  "reload_parity": true,
+  "mask_checks": {
+   "rows": 4,
+   "labels_match_mask": true,
+   "loss_equals_manual_masked_sum": true,
+   "loss_invariant_to_masked_logits": true,
+   "supervised_targets": 240,
+   "context_positions": 186,
+   "im_end_targets_supervised": 4,
+   "assistant_header_supervised": false
+  },
+  "writeback_step1": {
+   "tensor": "blocks.0.moe.experts.0.gate.gate",
+   "storage_dtype": "torch.float32",
+   "fraction_moved_fp32_storage": 1.0,
+   "fraction_would_move_bf16_storage": 0.6448974609375,
+   "pass": true
+  },
+  "dt": {
+   "wanda_prior": {
+    "eta": 0.05,
+    "prior_strength": 3.0,
+    "prior_deleted": 284838,
+    "targeted": 5701632,
+    "layers_without_scores": 30,
+    "unseen_policy": "keep"
+   },
+   "layers_without_calibration_tokens": 30,
+   "deleted_frac_of_targeted_init": 0.04384942148246017,
+   "deleted_frac_of_targeted_final": 0.05212955848843444,
+   "deleted_final": 348469,
+   "targeted": 6684672,
+   "deleted_frac_of_all_weights_final": 0.014098686476226974,
+   "keep_masks": {
+    "layers": 204,
+    "bits": 6684672,
+    "sha256": "2c0c5c57e10ebbc19d2bad6d95a74c2a4cb6da1a73608c8518e7392d03ba3b99",
+    "deleted_final": 348469
+   }
+  }
+ },
+ "lora_markers": {
+  "steps": "300",
+  "seed": "1",
+  "lr": "0.001",
+  "marker_lr": "0.001",
+  "train_seconds": 651.0,
+  "hardware": "Apple M1 Pro, 16 GB unified memory, device=cpu",
+  "train_rows": 5255,
+  "closed_im_end_before_after": [
+   0.0,
+   0.890625
+  ],
+  "format_valid_after": 0.890625,
+  "gen_prompts": 64,
+  "eval_nll_before_after": [
+   6.835170248393344,
+   6.325878682565891
+  ],
+  "heldout_bpb_before_after": [
+   2.3163690883527797,
+   2.250763559749555
+  ],
+  "frozen_weights_unchanged": true,
+  "reload_parity": true,
+  "mask_checks": {
+   "rows": 4,
+   "labels_match_mask": true,
+   "loss_equals_manual_masked_sum": true,
+   "loss_invariant_to_masked_logits": true,
+   "supervised_targets": 240,
+   "context_positions": 186,
+   "im_end_targets_supervised": 4,
+   "assistant_header_supervised": false
+  },
+  "writeback_step1": {
+   "tensor": "blocks.0.attn.q.lora_B",
+   "storage_dtype": "torch.float32",
+   "fraction_moved_fp32_storage": 1.0,
+   "fraction_would_move_bf16_storage": 1.0,
+   "pass": true
+  }
+ }
+}

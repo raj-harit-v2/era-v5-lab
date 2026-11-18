@@ -1,0 +1,508 @@
+{
+ "heldout": {
+  "curve": [
+   [
+    0,
+    0.1471
+   ],
+   [
+    10,
+    0.1419
+   ],
+   [
+    20,
+    0.1536
+   ],
+   [
+    30,
+    0.1549
+   ],
+   [
+    40,
+    0.1458
+   ],
+   [
+    50,
+    0.1628
+   ],
+   [
+    60,
+    0.1667
+   ]
+  ],
+  "meta": {
+   "0": {
+    "pass": 0.14713541666666666,
+    "truncated": 0.0299,
+    "mean_tokens": 564.6,
+    "reasons": {
+     "no_code": 65,
+     "pass": 113,
+     "runtime_error": 248,
+     "timeout": 18,
+     "wrong_answer": 324
+    },
+    "k": 8
+   },
+   "10": {
+    "pass": 0.14192708333333334,
+    "truncated": 0.0039,
+    "mean_tokens": 407.4,
+    "reasons": {
+     "no_code": 41,
+     "pass": 109,
+     "runtime_error": 281,
+     "timeout": 29,
+     "wrong_answer": 308
+    },
+    "k": 8
+   },
+   "20": {
+    "pass": 0.15364583333333334,
+    "truncated": 0.0091,
+    "mean_tokens": 401.3,
+    "reasons": {
+     "no_code": 39,
+     "pass": 118,
+     "runtime_error": 259,
+     "timeout": 23,
+     "wrong_answer": 329
+    },
+    "k": 8
+   },
+   "30": {
+    "pass": 0.15494791666666666,
+    "truncated": 0.0013,
+    "mean_tokens": 396.4,
+    "reasons": {
+     "no_code": 40,
+     "pass": 119,
+     "runtime_error": 274,
+     "timeout": 26,
+     "wrong_answer": 309
+    },
+    "k": 8
+   },
+   "40": {
+    "pass": 0.14583333333333334,
+    "truncated": 0.0039,
+    "mean_tokens": 392.3,
+    "reasons": {
+     "no_code": 37,
+     "pass": 112,
+     "runtime_error": 280,
+     "timeout": 23,
+     "wrong_answer": 316
+    },
+    "k": 8
+   },
+   "50": {
+    "pass": 0.16276041666666666,
+    "truncated": 0.0,
+    "mean_tokens": 389.5,
+    "reasons": {
+     "no_code": 43,
+     "pass": 125,
+     "runtime_error": 264,
+     "timeout": 25,
+     "wrong_answer": 311
+    },
+    "k": 8
+   },
+   "60": {
+    "pass": 0.16666666666666666,
+    "truncated": 0.0104,
+    "mean_tokens": 397.7,
+    "reasons": {
+     "no_code": 34,
+     "pass": 128,
+     "runtime_error": 263,
+     "timeout": 29,
+     "wrong_answer": 314
+    },
+    "k": 8
+   }
+  },
+  "vs_step0": {
+   "10": {
+    "problems": 96,
+    "start": 0.1471,
+    "end": 0.1419,
+    "diff": -0.0052,
+    "ci95": [
+     -0.0326,
+     0.0234
+    ],
+    "excludes_zero": false,
+    "problems_up": 11,
+    "problems_down": 16
+   },
+   "20": {
+    "problems": 96,
+    "start": 0.1471,
+    "end": 0.1536,
+    "diff": 0.0065,
+    "ci95": [
+     -0.0169,
+     0.0312
+    ],
+    "excludes_zero": false,
+    "problems_up": 16,
+    "problems_down": 13
+   },
+   "30": {
+    "problems": 96,
+    "start": 0.1471,
+    "end": 0.1549,
+    "diff": 0.0078,
+    "ci95": [
+     -0.0117,
+     0.0286
+    ],
+    "excludes_zero": false,
+    "problems_up": 14,
+    "problems_down": 10
+   },
+   "40": {
+    "problems": 96,
+    "start": 0.1471,
+    "end": 0.1458,
+    "diff": -0.0013,
+    "ci95": [
+     -0.0299,
+     0.0273
+    ],
+    "excludes_zero": false,
+    "problems_up": 10,
+    "problems_down": 14
+   },
+   "50": {
+    "problems": 96,
+    "start": 0.1471,
+    "end": 0.1628,
+    "diff": 0.0156,
+    "ci95": [
+     -0.0117,
+     0.0456
+    ],
+    "excludes_zero": false,
+    "problems_up": 15,
+    "problems_down": 16
+   },
+   "60": {
+    "problems": 96,
+    "start": 0.1471,
+    "end": 0.1667,
+    "diff": 0.0195,
+    "ci95": [
+     -0.0078,
+     0.0482
+    ],
+    "excludes_zero": false,
+    "problems_up": 20,
+    "problems_down": 13
+   }
+  },
+  "by_judge_last_step": {
+   "aizu": {
+    "problems": 49,
+    "start": 0.1148,
+    "end": 0.1429,
+    "diff": 0.0281,
+    "ci95": [
+     -0.0051,
+     0.0612
+    ],
+    "excludes_zero": false,
+    "problems_up": 11,
+    "problems_down": 5
+   },
+   "atcoder": {
+    "problems": 4,
+    "start": 0.1562,
+    "end": 0.1875
+   },
+   "codechef": {
+    "problems": 9,
+    "start": 0.0694,
+    "end": 0.0972,
+    "diff": 0.0278,
+    "ci95": [
+     -0.0417,
+     0.125
+    ],
+    "excludes_zero": false,
+    "problems_up": 1,
+    "problems_down": 1
+   },
+   "hackerearth": {
+    "problems": 34,
+    "start": 0.2132,
+    "end": 0.2169,
+    "diff": 0.0037,
+    "ci95": [
+     -0.0515,
+     0.0625
+    ],
+    "excludes_zero": false,
+    "problems_up": 7,
+    "problems_down": 7
+   }
+  },
+  "problems_zero_at_step0": 64,
+  "of_those_nonzero_at_last": 7
+ },
+ "train_cohort": {
+  "curve": [
+   [
+    0,
+    0.3482
+   ],
+   [
+    10,
+    0.3705
+   ],
+   [
+    20,
+    0.4129
+   ],
+   [
+    30,
+    0.3973
+   ],
+   [
+    40,
+    0.4062
+   ],
+   [
+    50,
+    0.4018
+   ],
+   [
+    60,
+    0.3973
+   ]
+  ],
+  "meta": {
+   "0": {
+    "pass": 0.3482142857142857,
+    "truncated": 0.0089,
+    "mean_tokens": 477.3,
+    "reasons": {
+     "no_code": 13,
+     "pass": 156,
+     "runtime_error": 92,
+     "timeout": 5,
+     "wrong_answer": 182
+    },
+    "k": 8
+   },
+   "10": {
+    "pass": 0.3705357142857143,
+    "truncated": 0.0,
+    "mean_tokens": 323.8,
+    "reasons": {
+     "no_code": 2,
+     "pass": 166,
+     "runtime_error": 94,
+     "timeout": 7,
+     "wrong_answer": 179
+    },
+    "k": 8
+   },
+   "20": {
+    "pass": 0.41294642857142855,
+    "truncated": 0.0022,
+    "mean_tokens": 313.4,
+    "reasons": {
+     "no_code": 11,
+     "pass": 185,
+     "runtime_error": 88,
+     "timeout": 8,
+     "wrong_answer": 156
+    },
+    "k": 8
+   },
+   "30": {
+    "pass": 0.39732142857142855,
+    "truncated": 0.0,
+    "mean_tokens": 302.9,
+    "reasons": {
+     "no_code": 2,
+     "pass": 178,
+     "runtime_error": 92,
+     "timeout": 8,
+     "wrong_answer": 168
+    },
+    "k": 8
+   },
+   "40": {
+    "pass": 0.40625,
+    "truncated": 0.0,
+    "mean_tokens": 306.6,
+    "reasons": {
+     "no_code": 2,
+     "pass": 182,
+     "runtime_error": 81,
+     "timeout": 10,
+     "wrong_answer": 173
+    },
+    "k": 8
+   },
+   "50": {
+    "pass": 0.4017857142857143,
+    "truncated": 0.0067,
+    "mean_tokens": 308.1,
+    "reasons": {
+     "no_code": 8,
+     "pass": 180,
+     "runtime_error": 83,
+     "timeout": 11,
+     "wrong_answer": 166
+    },
+    "k": 8
+   },
+   "60": {
+    "pass": 0.39732142857142855,
+    "truncated": 0.0,
+    "mean_tokens": 306.2,
+    "reasons": {
+     "no_code": 5,
+     "pass": 178,
+     "runtime_error": 77,
+     "timeout": 7,
+     "wrong_answer": 181
+    },
+    "k": 8
+   }
+  },
+  "vs_step0": {
+   "10": {
+    "problems": 56,
+    "start": 0.3482,
+    "end": 0.3705,
+    "diff": 0.0223,
+    "ci95": [
+     -0.0491,
+     0.0938
+    ],
+    "excludes_zero": false,
+    "problems_up": 21,
+    "problems_down": 20
+   },
+   "20": {
+    "problems": 56,
+    "start": 0.3482,
+    "end": 0.4129,
+    "diff": 0.0647,
+    "ci95": [
+     -0.0022,
+     0.1339
+    ],
+    "excludes_zero": false,
+    "problems_up": 26,
+    "problems_down": 16
+   },
+   "30": {
+    "problems": 56,
+    "start": 0.3482,
+    "end": 0.3973,
+    "diff": 0.0491,
+    "ci95": [
+     0.0,
+     0.0982
+    ],
+    "excludes_zero": false,
+    "problems_up": 25,
+    "problems_down": 15
+   },
+   "40": {
+    "problems": 56,
+    "start": 0.3482,
+    "end": 0.4062,
+    "diff": 0.058,
+    "ci95": [
+     0.0067,
+     0.1094
+    ],
+    "excludes_zero": true,
+    "problems_up": 23,
+    "problems_down": 13
+   },
+   "50": {
+    "problems": 56,
+    "start": 0.3482,
+    "end": 0.4018,
+    "diff": 0.0536,
+    "ci95": [
+     -0.0201,
+     0.1272
+    ],
+    "excludes_zero": false,
+    "problems_up": 26,
+    "problems_down": 17
+   },
+   "60": {
+    "problems": 56,
+    "start": 0.3482,
+    "end": 0.3973,
+    "diff": 0.0491,
+    "ci95": [
+     -0.0201,
+     0.1183
+    ],
+    "excludes_zero": false,
+    "problems_up": 25,
+    "problems_down": 17
+   }
+  },
+  "by_judge_last_step": {
+   "aizu": {
+    "problems": 13,
+    "start": 0.4038,
+    "end": 0.3654,
+    "diff": -0.0385,
+    "ci95": [
+     -0.1923,
+     0.1058
+    ],
+    "excludes_zero": false,
+    "problems_up": 5,
+    "problems_down": 5
+   },
+   "atcoder": {
+    "problems": 2,
+    "start": 0.375,
+    "end": 0.5625
+   },
+   "codechef": {
+    "problems": 13,
+    "start": 0.2788,
+    "end": 0.4231,
+    "diff": 0.1442,
+    "ci95": [
+     0.0,
+     0.3077
+    ],
+    "excludes_zero": false,
+    "problems_up": 7,
+    "problems_down": 3
+   },
+   "hackerearth": {
+    "problems": 28,
+    "start": 0.3527,
+    "end": 0.3884,
+    "diff": 0.0357,
+    "ci95": [
+     -0.0536,
+     0.1295
+    ],
+    "excludes_zero": false,
+    "problems_up": 11,
+    "problems_down": 9
+   }
+  },
+  "problems_zero_at_step0": 10,
+  "of_those_nonzero_at_last": 5
+ }
+}

@@ -1,0 +1,97 @@
+{
+ "checks": {
+  "checks_failed": {},
+  "checks_ok": true,
+  "effort_rows": {
+   "16k": 380,
+   "1k": 99,
+   "4k": 515,
+   "64k": 2
+  },
+  "files": [
+   {
+    "bytes": 54730458,
+    "name": "sft-math-openr1-math.first1000.jsonl",
+    "sha256": "556f5b805540fb0b7281059a5540245f62afe9546dc6d3c4ffafcecdb871a954"
+   }
+  ],
+  "info": {},
+  "length": {
+   "max": 17381,
+   "min": 183,
+   "p50": 3771,
+   "p95": 12243
+  },
+  "max_len": 32768,
+  "rows": 996,
+  "rows_over_max_len": 0,
+  "rows_with_tool_blocks": 0,
+  "shifted_supervised_targets": 4697013,
+  "tokens": 4809673,
+  "tool_call_blocks": 0,
+  "tool_call_tokens_untrained": 0,
+  "tool_result_blocks": 0,
+  "train_spans": 996,
+  "trained_share": 0.976576,
+  "trained_tokens": 4697013,
+  "unique_ids": true
+ },
+ "checks_wall_s": 5.83,
+ "content_sha256": "556f5b805540fb0b7281059a5540245f62afe9546dc6d3c4ffafcecdb871a954",
+ "convert": {
+  "cpu_sys_s": 0.931,
+  "cpu_user_s": 13.226,
+  "hub_bytes_read": 58785792,
+  "max_rss_mb": 335.4,
+  "wall_s": 17.266
+ },
+ "decision": "TSAI reserves",
+ "deterministic_rerun": true,
+ "effort_manifest": {
+  "16k": 380,
+  "1k": 99,
+  "4k": 515,
+  "64k": 2
+ },
+ "file_bytes": 54730458,
+ "file_sha256": "556f5b805540fb0b7281059a5540245f62afe9546dc6d3c4ffafcecdb871a954",
+ "generator_model": "DeepSeek-R1 (MIT, open weights)",
+ "hub_revision": "e4e141ec9dea9f8326f4d347be56105859b2bd68",
+ "input": "hub file open-r1/OpenR1-Math-220k glob:all/train- rows 0..999999999",
+ "licence": "apache-2.0 (Hub tag; commercial use permitted per tag)",
+ "rerun_content_sha256": "556f5b805540fb0b7281059a5540245f62afe9546dc6d3c4ffafcecdb871a954",
+ "rerun_wall_s": 18.548,
+ "rows_in": 1000,
+ "rows_out": 996,
+ "rows_per_s_convert": 57.92,
+ "rows_scanned": 1000,
+ "scope": "first 1000 selected rows, source order, C3",
+ "selection": "config all, 20 shards",
+ "set": "sft-math-openr1-math",
+ "skipped": {
+  "content contains plain-text marker <think>; every chat marker must be one special token": 4
+ },
+ "source": "open-r1/OpenR1-Math-220k",
+ "token_record": {
+  "basis": "first 1000 selected rows, source order, C3; not the admissible kept rows",
+  "effort": {
+   "16k": 380,
+   "1k": 99,
+   "4k": 515,
+   "64k": 2
+  },
+  "length": {
+   "max": 17381,
+   "min": 183,
+   "p50": 3771,
+   "p95": 12243
+  },
+  "rows": 996,
+  "sequence_tokens": 4809673,
+  "set_id": "sft-math-openr1-math",
+  "shifted_supervised_targets": 4697013,
+  "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3"
+ },
+ "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3",
+ "tokens_per_s_convert": 278563
+}

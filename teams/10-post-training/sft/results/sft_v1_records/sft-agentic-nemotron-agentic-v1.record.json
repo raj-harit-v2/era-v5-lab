@@ -1,0 +1,97 @@
+{
+ "checks": {
+  "checks_failed": {},
+  "checks_ok": true,
+  "effort_rows": {
+   "16k": 159,
+   "1k": 255,
+   "4k": 585,
+   "64k": 0
+  },
+  "files": [
+   {
+    "bytes": 49669272,
+    "name": "sft-agentic-nemotron-agentic-v1.first1000.jsonl",
+    "sha256": "4729e1179a080d210001bdb95b7978b42548327c08f54f1fe02e6c25a17c4165"
+   }
+  ],
+  "info": {},
+  "length": {
+   "max": 16226,
+   "min": 229,
+   "p50": 3320,
+   "p95": 8768
+  },
+  "max_len": 32768,
+  "rows": 999,
+  "rows_over_max_len": 0,
+  "rows_with_tool_blocks": 872,
+  "shifted_supervised_targets": 2482652,
+  "tokens": 3756262,
+  "tool_call_blocks": 2094,
+  "tool_call_tokens_untrained": 0,
+  "tool_result_blocks": 2047,
+  "train_spans": 3439,
+  "trained_share": 0.660937,
+  "trained_tokens": 2482652,
+  "unique_ids": true
+ },
+ "checks_wall_s": 5.83,
+ "content_sha256": "4729e1179a080d210001bdb95b7978b42548327c08f54f1fe02e6c25a17c4165",
+ "convert": {
+  "cpu_sys_s": 0.514,
+  "cpu_user_s": 11.324,
+  "hub_bytes_read": 16501777,
+  "max_rss_mb": 239.7,
+  "wall_s": 6.836
+ },
+ "decision": "TSAI reserves",
+ "deterministic_rerun": true,
+ "effort_manifest": {
+  "16k": 159,
+  "1k": 255,
+  "4k": 585,
+  "64k": 0
+ },
+ "file_bytes": 49669272,
+ "file_sha256": "4729e1179a080d210001bdb95b7978b42548327c08f54f1fe02e6c25a17c4165",
+ "generator_model": "Qwen3-235B-A22B-Thinking-2507 (Apache-2.0), Qwen3-235B-A22B-Instruct-2507 (Apache-2.0), Qwen3-32B (Apache-2.0) and GPT-OSS-120B (Apache-2.0) simulate and judge the dialogues",
+ "hub_revision": "650d590978ca35c8f1ecea2faf136e5fac421b62",
+ "input": "hub file nvidia/Nemotron-Agentic-v1 data/tool_calling.jsonl rows 0..999999999",
+ "licence": "cc-by-4.0 (Hub tag; the card adds apache-2.0 for the Glaive-Function-Calling-v2 part)",
+ "rerun_content_sha256": "4729e1179a080d210001bdb95b7978b42548327c08f54f1fe02e6c25a17c4165",
+ "rerun_wall_s": 6.868,
+ "rows_in": 1000,
+ "rows_out": 999,
+ "rows_per_s_convert": 146.28,
+ "rows_scanned": 1000,
+ "scope": "first 1000 selected rows, source order, C3",
+ "selection": "tool_calling file",
+ "set": "sft-agentic-nemotron-agentic-v1",
+ "skipped": {
+  "content contains plain-text marker <tool_call>; every chat marker must be one special token": 1
+ },
+ "source": "nvidia/Nemotron-Agentic-v1",
+ "token_record": {
+  "basis": "first 1000 selected rows, source order, C3; not the admissible kept rows",
+  "effort": {
+   "16k": 159,
+   "1k": 255,
+   "4k": 585,
+   "64k": 0
+  },
+  "length": {
+   "max": 16226,
+   "min": 229,
+   "p50": 3320,
+   "p95": 8768
+  },
+  "rows": 999,
+  "sequence_tokens": 3756262,
+  "set_id": "sft-agentic-nemotron-agentic-v1",
+  "shifted_supervised_targets": 2482652,
+  "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3"
+ },
+ "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3",
+ "tokens_per_s_convert": 549482
+}

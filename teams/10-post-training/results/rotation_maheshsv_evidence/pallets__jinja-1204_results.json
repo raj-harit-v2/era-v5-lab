@@ -1,0 +1,52 @@
+{
+ "gold_check": {
+  "instance_id": "pallets__jinja-1204",
+  "repo": "pallets/jinja",
+  "f2p": 1,
+  "p2p": 32,
+  "image_id": "sha256:f4f31226fbbd",
+  "runs": 5,
+  "problems": [],
+  "fails_before": "5/5",
+  "passes_after": "5/5",
+  "seconds": 0.5,
+  "ok": true
+ },
+ "gold": {
+  "instance_id": "pallets__jinja-1204",
+  "reward": 1,
+  "failed": [],
+  "n_failed": 0,
+  "seconds": 0.6
+ },
+ "wrong": {
+  "instance_id": "pallets__jinja-1204",
+  "reward": 0,
+  "failed": [
+   "tests.test_api.TestUndefined::test_default_undefined"
+  ],
+  "n_failed": 1,
+  "seconds": 0.5
+ },
+ "alt_fix": {
+  "instance_id": "pallets__jinja-1204",
+  "reward": 1,
+  "failed": [],
+  "n_failed": 0,
+  "seconds": 0.5
+ },
+ "partial": {
+  "instance_id": "pallets__jinja-1204",
+  "reward": 0,
+  "failed": [
+   "tests.test_api.TestUndefined::test_default_undefined"
+  ],
+  "n_failed": 1,
+  "seconds": 0.5
+ },
+ "tamper": {
+  "instance_id": "pallets__jinja-1204",
+  "reward": 0,
+  "reason": "patch edits test files: ['tests/test_rotation_extra.py']"
+ }
+}

@@ -1,0 +1,14 @@
+{
+ "id": "expand_rle",
+ "title": "Expand run-length text with a size limit",
+ "entry_point": "ExpandRLE",
+ "time_limit_s": 5,
+ "difficulty": "medium",
+ "tags": [
+  "strings",
+  "parsing",
+  "limits"
+ ],
+ "language": "go",
+ "source": "original: written by Claude (AI assistant) for Ravi Naik (RaviNaik), 2026-11-14; not from any benchmark; reference solution execution-verified by go_verifier.py --check-task"
+}

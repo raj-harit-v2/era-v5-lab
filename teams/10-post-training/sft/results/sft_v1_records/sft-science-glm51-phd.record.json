@@ -1,0 +1,95 @@
+{
+ "checks": {
+  "checks_failed": {},
+  "checks_ok": true,
+  "effort_rows": {
+   "16k": 20,
+   "1k": 0,
+   "4k": 980,
+   "64k": 0
+  },
+  "files": [
+   {
+    "bytes": 46231384,
+    "name": "sft-science-glm51-phd.first1000.jsonl",
+    "sha256": "16605e34b5d805af44f38ad35058d982d7364d2bf1ef7fd9a8889248782a7cc8"
+   }
+  ],
+  "info": {},
+  "length": {
+   "max": 9336,
+   "min": 2479,
+   "p50": 3374,
+   "p95": 4404
+  },
+  "max_len": 32768,
+  "rows": 1000,
+  "rows_over_max_len": 0,
+  "rows_with_tool_blocks": 0,
+  "shifted_supervised_targets": 3431187,
+  "tokens": 3497577,
+  "tool_call_blocks": 0,
+  "tool_call_tokens_untrained": 0,
+  "tool_result_blocks": 0,
+  "train_spans": 1000,
+  "trained_share": 0.981018,
+  "trained_tokens": 3431187,
+  "unique_ids": true
+ },
+ "checks_wall_s": 5.11,
+ "content_sha256": "16605e34b5d805af44f38ad35058d982d7364d2bf1ef7fd9a8889248782a7cc8",
+ "convert": {
+  "cpu_sys_s": 0.484,
+  "cpu_user_s": 10.034,
+  "hub_bytes_read": 30685915,
+  "max_rss_mb": 237.1,
+  "wall_s": 6.743
+ },
+ "decision": "TSAI reserves",
+ "deterministic_rerun": true,
+ "effort_manifest": {
+  "16k": 20,
+  "1k": 0,
+  "4k": 980,
+  "64k": 0
+ },
+ "file_bytes": 46231384,
+ "file_sha256": "16605e34b5d805af44f38ad35058d982d7364d2bf1ef7fd9a8889248782a7cc8",
+ "generator_model": "GLM-5.1 (MIT, open weights) generates reasoning and final answers (`PHD-Science` Apache-2.0 config only)",
+ "hub_revision": "f6d6ccafe40359d5ec2515ee25e92aac8cae9c3d",
+ "input": "hub file Jackrong/GLM-5.1-Reasoning-1M-Cleaned PHD-Science.jsonl rows 0..999999999",
+ "licence": "Apache-2.0 (cleaned and upstream publisher cards)",
+ "rerun_content_sha256": "16605e34b5d805af44f38ad35058d982d7364d2bf1ef7fd9a8889248782a7cc8",
+ "rerun_wall_s": 6.736,
+ "rows_in": 1000,
+ "rows_out": 1000,
+ "rows_per_s_convert": 148.3,
+ "rows_scanned": 1000,
+ "scope": "first 1000 selected rows, source order, C3",
+ "selection": "PHD-Science config",
+ "set": "sft-science-glm51-phd",
+ "skipped": {},
+ "source": "Jackrong/GLM-5.1-Reasoning-1M-Cleaned",
+ "token_record": {
+  "basis": "first 1000 selected rows, source order, C3; not the admissible kept rows",
+  "effort": {
+   "16k": 20,
+   "1k": 0,
+   "4k": 980,
+   "64k": 0
+  },
+  "length": {
+   "max": 9336,
+   "min": 2479,
+   "p50": 3374,
+   "p95": 4404
+  },
+  "rows": 1000,
+  "sequence_tokens": 3497577,
+  "set_id": "sft-science-glm51-phd",
+  "shifted_supervised_targets": 3431187,
+  "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3"
+ },
+ "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3",
+ "tokens_per_s_convert": 518697
+}

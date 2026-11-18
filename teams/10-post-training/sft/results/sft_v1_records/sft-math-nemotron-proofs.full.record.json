@@ -1,0 +1,3556 @@
+{
+ "checks": {
+  "checks_failed": {},
+  "checks_ok": true,
+  "effort_rows": {
+   "16k": 529257,
+   "1k": 21363,
+   "4k": 319910,
+   "64k": 50351
+  },
+  "files": [
+   {
+    "bytes": 38836325,
+    "name": "sft-math-nemotron-proofs.part0000.jsonl.gz",
+    "sha256": "aa3e8e805dd92ac09621de68ffb967e02ef2d5f9fce9f3978e36f64850a8fa80"
+   },
+   {
+    "bytes": 38209522,
+    "name": "sft-math-nemotron-proofs.part0001.jsonl.gz",
+    "sha256": "97d5ad2354b8efa9dc5fa9a0079fb5f64a342931faf7e3e221f20af7cc267061"
+   },
+   {
+    "bytes": 38066249,
+    "name": "sft-math-nemotron-proofs.part0002.jsonl.gz",
+    "sha256": "fee9d623f3af50933d665134d8bbd800c768fea7f4d678de9cdded6204548bd4"
+   },
+   {
+    "bytes": 38790292,
+    "name": "sft-math-nemotron-proofs.part0003.jsonl.gz",
+    "sha256": "b4f41445deb95cab4bad4f75bd9949e73dbbae28275ce9d042f84cf74f0862c6"
+   },
+   {
+    "bytes": 38883566,
+    "name": "sft-math-nemotron-proofs.part0004.jsonl.gz",
+    "sha256": "4432b33acbc7732d2678f5293122e5f246b598760b399355b1d0e564c3fe922d"
+   },
+   {
+    "bytes": 38062358,
+    "name": "sft-math-nemotron-proofs.part0005.jsonl.gz",
+    "sha256": "4a5abb77cf57532a7bd397d9efcd2dbc72b46d023e348a11b02f33e39cdc12dc"
+   },
+   {
+    "bytes": 38736247,
+    "name": "sft-math-nemotron-proofs.part0006.jsonl.gz",
+    "sha256": "ce24815be1ca4555bfbc715974e529e398d4e9a5e7b6078fd5a0b30a509a53fd"
+   },
+   {
+    "bytes": 38343941,
+    "name": "sft-math-nemotron-proofs.part0007.jsonl.gz",
+    "sha256": "dc2a1260a81796686425fc46f3bbd2d25cfe7ef3573ae63f39733c9c9933189e"
+   },
+   {
+    "bytes": 38801229,
+    "name": "sft-math-nemotron-proofs.part0008.jsonl.gz",
+    "sha256": "728e56a460fa9d776b06ddea03152799393b997d97a274cd665a851c92f2ee54"
+   },
+   {
+    "bytes": 38428955,
+    "name": "sft-math-nemotron-proofs.part0009.jsonl.gz",
+    "sha256": "56c73c65ff89defe2acd6613c0edd44fc64695ac3cf91b60641f1d2a18272194"
+   },
+   {
+    "bytes": 38557350,
+    "name": "sft-math-nemotron-proofs.part0010.jsonl.gz",
+    "sha256": "7bd7de54c6ebba153fd40854f98b7dfb8d97294389922ecca1b7525f3cd44b97"
+   },
+   {
+    "bytes": 38219151,
+    "name": "sft-math-nemotron-proofs.part0011.jsonl.gz",
+    "sha256": "352a85a888f1d0bb162e48d8940524327fe3a3bdafaf76b28ff1192c910ce20b"
+   },
+   {
+    "bytes": 37881928,
+    "name": "sft-math-nemotron-proofs.part0012.jsonl.gz",
+    "sha256": "d7a25088314e87aec8d285b418a690adbd6a4556d999f679ccf5878e9d1f8676"
+   },
+   {
+    "bytes": 37882145,
+    "name": "sft-math-nemotron-proofs.part0013.jsonl.gz",
+    "sha256": "63dbde72fb8c3a6f8d779e261473a0c92c7fc189003de9003f2b2cf69a67d387"
+   },
+   {
+    "bytes": 38599064,
+    "name": "sft-math-nemotron-proofs.part0014.jsonl.gz",
+    "sha256": "bef8d04e9a4afabf57db9ee735112404c6b7a14a1eeadc57c301d3f75268785f"
+   },
+   {
+    "bytes": 38216703,
+    "name": "sft-math-nemotron-proofs.part0015.jsonl.gz",
+    "sha256": "49efd1e1f4a7760ac3e47d515cced1bc28b7ae4305afe92165731e03ec5b7482"
+   },
+   {
+    "bytes": 37494281,
+    "name": "sft-math-nemotron-proofs.part0016.jsonl.gz",
+    "sha256": "1c198afee3050fc66b0fbe7440d367619c15eb25abf05f89f81481388575df3e"
+   },
+   {
+    "bytes": 39275645,
+    "name": "sft-math-nemotron-proofs.part0017.jsonl.gz",
+    "sha256": "0271bf4fb8b9e1fb119afb293832d0e7e14031c25c9aa2406de5e50ed818053c"
+   },
+   {
+    "bytes": 37975503,
+    "name": "sft-math-nemotron-proofs.part0018.jsonl.gz",
+    "sha256": "709a3617e142f668dfc988db08dbb633ccd47e5ad2054eb6f2259ecda62878ae"
+   },
+   {
+    "bytes": 38707499,
+    "name": "sft-math-nemotron-proofs.part0019.jsonl.gz",
+    "sha256": "62ac2e01a72c1e22506c2019c9fc61d31e9f253ded1118516129b4675f3ce7bf"
+   },
+   {
+    "bytes": 38449655,
+    "name": "sft-math-nemotron-proofs.part0020.jsonl.gz",
+    "sha256": "3d42b10c36e20d95fbf10c282cdb345c4898f7d16bf06a7a31dc537dc9d73474"
+   },
+   {
+    "bytes": 38668012,
+    "name": "sft-math-nemotron-proofs.part0021.jsonl.gz",
+    "sha256": "03fa76023c7ded051919f784ee68fc6798f6614acb59dd245208feaa94bb232e"
+   },
+   {
+    "bytes": 38165943,
+    "name": "sft-math-nemotron-proofs.part0022.jsonl.gz",
+    "sha256": "10bce6e16d78672276d3cb86fa3811f3a83f676cd28e8e34173f20ac456e0f75"
+   },
+   {
+    "bytes": 38046561,
+    "name": "sft-math-nemotron-proofs.part0023.jsonl.gz",
+    "sha256": "cda2d908b65709adc16a1d1d2e92326432da39729a9546cdde2b1ba65825a943"
+   },
+   {
+    "bytes": 37901547,
+    "name": "sft-math-nemotron-proofs.part0024.jsonl.gz",
+    "sha256": "f655d245ceb58123a863ec724a38eb6139a04b12533ebaa58eacfbb7fea3b888"
+   },
+   {
+    "bytes": 37915261,
+    "name": "sft-math-nemotron-proofs.part0025.jsonl.gz",
+    "sha256": "a039ec4707360fb940f9c8f8eb9a1f0045862bb557c496cb1769431914d76a05"
+   },
+   {
+    "bytes": 38976097,
+    "name": "sft-math-nemotron-proofs.part0026.jsonl.gz",
+    "sha256": "81c779e3b5013ae5fc55728a605e92a8957ee7305f1bbcd5e71ce68ba7882bde"
+   },
+   {
+    "bytes": 37909291,
+    "name": "sft-math-nemotron-proofs.part0027.jsonl.gz",
+    "sha256": "31900854f26db4bac7040d0e3416c81b9211022a8759aa74f15940dfb7ec1bb1"
+   },
+   {
+    "bytes": 38740779,
+    "name": "sft-math-nemotron-proofs.part0028.jsonl.gz",
+    "sha256": "4f82c9eff759abe1dca87f3ed361b1da47e65a488e10b036bcdef8ca162a3fc3"
+   },
+   {
+    "bytes": 38146683,
+    "name": "sft-math-nemotron-proofs.part0029.jsonl.gz",
+    "sha256": "63070920addff7af86a3d76384dd52a1923175eb9c469b97f1a35e4cfb51d998"
+   },
+   {
+    "bytes": 38415551,
+    "name": "sft-math-nemotron-proofs.part0030.jsonl.gz",
+    "sha256": "f4315ba7eaa96120fed5376f54e1954b7ea4d5fcb62cad20276faac53e24f396"
+   },
+   {
+    "bytes": 38204220,
+    "name": "sft-math-nemotron-proofs.part0031.jsonl.gz",
+    "sha256": "67df8847c3b9ec6344a29562795be6d635752e9714251b1f157fa26ed9b10e43"
+   },
+   {
+    "bytes": 37896466,
+    "name": "sft-math-nemotron-proofs.part0032.jsonl.gz",
+    "sha256": "61c1c064d761a3761658b64ef66372728300940d125d95a52487188fd032552f"
+   },
+   {
+    "bytes": 38236545,
+    "name": "sft-math-nemotron-proofs.part0033.jsonl.gz",
+    "sha256": "262621f65ef71ce491e5beeafdffdd91bcbb3cb047aae2a5b944edc7fb8a246b"
+   },
+   {
+    "bytes": 39299194,
+    "name": "sft-math-nemotron-proofs.part0034.jsonl.gz",
+    "sha256": "563d8f6c4774314642426409e2981584e9aff599a0a4b65ad536932948a9211e"
+   },
+   {
+    "bytes": 37887443,
+    "name": "sft-math-nemotron-proofs.part0035.jsonl.gz",
+    "sha256": "abe018a55ad8c370503145ad5ff9606a98801e13dd733a5b40506184faa7ecfd"
+   },
+   {
+    "bytes": 37989436,
+    "name": "sft-math-nemotron-proofs.part0036.jsonl.gz",
+    "sha256": "80e232aee1c9a3d93a6152115469bd2b0b2693e0063343ef771ccd066d1f5b79"
+   },
+   {
+    "bytes": 38442399,
+    "name": "sft-math-nemotron-proofs.part0037.jsonl.gz",
+    "sha256": "878512f147a1d3b510b2e3c0e9b45903cc4563c492dd8e0fb542f833fe5099ed"
+   },
+   {
+    "bytes": 39462530,
+    "name": "sft-math-nemotron-proofs.part0038.jsonl.gz",
+    "sha256": "ceb4e28974bf8baebea6e52ffbf52b9b5d26e1d6da1ac09d94428fb418244206"
+   },
+   {
+    "bytes": 38798482,
+    "name": "sft-math-nemotron-proofs.part0039.jsonl.gz",
+    "sha256": "49a4a90ed745c9fb4e9f474970823718fce4d10d20ce652ab66747b57ca62089"
+   },
+   {
+    "bytes": 37113132,
+    "name": "sft-math-nemotron-proofs.part0040.jsonl.gz",
+    "sha256": "4636f514d10c90f6d4c1c63502fe372bf92e023dbae29559d58ce486b4cc29a9"
+   },
+   {
+    "bytes": 38102015,
+    "name": "sft-math-nemotron-proofs.part0041.jsonl.gz",
+    "sha256": "a8a129b0948a53504edef9f68806296aa0278814ed9f988bfb64dfd3098d5c75"
+   },
+   {
+    "bytes": 37551693,
+    "name": "sft-math-nemotron-proofs.part0042.jsonl.gz",
+    "sha256": "bfcfa8fa2d7c734b738102168b297f26da7e537e67a24a3808c4c9763ad216e2"
+   },
+   {
+    "bytes": 37885065,
+    "name": "sft-math-nemotron-proofs.part0043.jsonl.gz",
+    "sha256": "911264e8ab4023cfa88bf62a4754604c9d2ed46ae8782a9ee344e33262376919"
+   },
+   {
+    "bytes": 38994757,
+    "name": "sft-math-nemotron-proofs.part0044.jsonl.gz",
+    "sha256": "81a23df84c5d2488bb9166e9e5ef262f037ebb707461a9f5ec1eb395726fb4ce"
+   },
+   {
+    "bytes": 38656623,
+    "name": "sft-math-nemotron-proofs.part0045.jsonl.gz",
+    "sha256": "55ebf587b2fd551254f64f3693d4158ca0fa3e93c4119a13c19a28b24c175ecd"
+   },
+   {
+    "bytes": 38267152,
+    "name": "sft-math-nemotron-proofs.part0046.jsonl.gz",
+    "sha256": "3ea98be7724fb77a64be71371775b5e538d3f6881ba91cbd0f2b1ac2edba13fa"
+   },
+   {
+    "bytes": 38575247,
+    "name": "sft-math-nemotron-proofs.part0047.jsonl.gz",
+    "sha256": "ae771d36c96c6a063ef8958c91c69505721472202934f681a9bf3a1c9dcecc24"
+   },
+   {
+    "bytes": 37713371,
+    "name": "sft-math-nemotron-proofs.part0048.jsonl.gz",
+    "sha256": "f524ccc1553f809aa6d35846acea38f719885a955322fa1117123118f64e1f5c"
+   },
+   {
+    "bytes": 38220720,
+    "name": "sft-math-nemotron-proofs.part0049.jsonl.gz",
+    "sha256": "01588c8a4d514eb7ef681dee2b8544b923c9a54e011f99f2585a73bda3d436d2"
+   },
+   {
+    "bytes": 38541369,
+    "name": "sft-math-nemotron-proofs.part0050.jsonl.gz",
+    "sha256": "11feb91d2afd5ec8dbc64d3d44dd2cb58d006dd3c43e831a11348c604eab3afe"
+   },
+   {
+    "bytes": 37758318,
+    "name": "sft-math-nemotron-proofs.part0051.jsonl.gz",
+    "sha256": "26ea1f16642e76e96db8f3493d862f4511837a6459cec7ee5ca30a5c3f97d441"
+   },
+   {
+    "bytes": 38138667,
+    "name": "sft-math-nemotron-proofs.part0052.jsonl.gz",
+    "sha256": "c198a3b360860d4b3506ce2b9a479a4ad544a851647680424646fa2bc48e6901"
+   },
+   {
+    "bytes": 38462425,
+    "name": "sft-math-nemotron-proofs.part0053.jsonl.gz",
+    "sha256": "5a14cbdc80e7561c20957cf3dfac4a80e99a384cacc20553ec0fe8530002f7fd"
+   },
+   {
+    "bytes": 38378825,
+    "name": "sft-math-nemotron-proofs.part0054.jsonl.gz",
+    "sha256": "b678221b5e05fa928451ced46e7fe268a00e87dc9b249c55b025b4c620b7dffe"
+   },
+   {
+    "bytes": 38528025,
+    "name": "sft-math-nemotron-proofs.part0055.jsonl.gz",
+    "sha256": "fbe7084e8ea3fd47ed97f2c879e78d9a0eb02f4c2d7eceafc69a56839452a102"
+   },
+   {
+    "bytes": 38730972,
+    "name": "sft-math-nemotron-proofs.part0056.jsonl.gz",
+    "sha256": "c9b02e3bf9531a35089d12418b7c8535bffabebbd84f652b98c93ae35766f861"
+   },
+   {
+    "bytes": 38069386,
+    "name": "sft-math-nemotron-proofs.part0057.jsonl.gz",
+    "sha256": "25f56dc5b1a62d6b664c3f2737398faada38f8586d1fb2ad8bcc418e0a894e19"
+   },
+   {
+    "bytes": 38405031,
+    "name": "sft-math-nemotron-proofs.part0058.jsonl.gz",
+    "sha256": "5897a29edcadbd567b4d96b59401af55ac7b50c0a8304a6d46340347f72c97df"
+   },
+   {
+    "bytes": 38162106,
+    "name": "sft-math-nemotron-proofs.part0059.jsonl.gz",
+    "sha256": "bc87a07977f705ec44c8b7d970e623fdea0efa08fe20cf022de51dac0bb61295"
+   },
+   {
+    "bytes": 39170422,
+    "name": "sft-math-nemotron-proofs.part0060.jsonl.gz",
+    "sha256": "9756cf9aebb2d9e921e5ce5efb35f10f7c930050eaad1402553b2b062adefd21"
+   },
+   {
+    "bytes": 38624250,
+    "name": "sft-math-nemotron-proofs.part0061.jsonl.gz",
+    "sha256": "b1b759f39556214cd39c2461e55d87443a397949c87acd46d400062079fc4c4c"
+   },
+   {
+    "bytes": 38279064,
+    "name": "sft-math-nemotron-proofs.part0062.jsonl.gz",
+    "sha256": "da246b8db79fe48504973d3f1081d409295b5cfa8c26e422860c93f7f6e1d682"
+   },
+   {
+    "bytes": 38546991,
+    "name": "sft-math-nemotron-proofs.part0063.jsonl.gz",
+    "sha256": "efe797f632c6aba7d700ce4b32aa1a363d43f90766ab8b64508eca749318bdd9"
+   },
+   {
+    "bytes": 38413966,
+    "name": "sft-math-nemotron-proofs.part0064.jsonl.gz",
+    "sha256": "40d9e43364deb20bda8268be6fb365e448d153925a6737c5b709faa49144291f"
+   },
+   {
+    "bytes": 38966370,
+    "name": "sft-math-nemotron-proofs.part0065.jsonl.gz",
+    "sha256": "0a4ab5330557144f284709583b95cf1d0b55fbae421fa2267cdb47b141584a5a"
+   },
+   {
+    "bytes": 38815545,
+    "name": "sft-math-nemotron-proofs.part0066.jsonl.gz",
+    "sha256": "57c596b8d45e1a98698f7f974c9481e95ca68b956ba07b6c2290389352a0976b"
+   },
+   {
+    "bytes": 38779321,
+    "name": "sft-math-nemotron-proofs.part0067.jsonl.gz",
+    "sha256": "10543313afedde928225afd07871e2f736b47946b3e230caebeccaa91be4e01e"
+   },
+   {
+    "bytes": 38531101,
+    "name": "sft-math-nemotron-proofs.part0068.jsonl.gz",
+    "sha256": "06fcf998781cc54097462b89d080ef571950c0a803c36cd90722b7aeb94f0d26"
+   },
+   {
+    "bytes": 38998008,
+    "name": "sft-math-nemotron-proofs.part0069.jsonl.gz",
+    "sha256": "5b8df3fbb5297f3647c9d82e5d1511b9cb9098e8ecdad05e5b1b91afb7428b21"
+   },
+   {
+    "bytes": 38658010,
+    "name": "sft-math-nemotron-proofs.part0070.jsonl.gz",
+    "sha256": "d8311fdf9a41c6c48f9356adc27d0044da1d87d75e574d388959f6301e58b8ea"
+   },
+   {
+    "bytes": 37942359,
+    "name": "sft-math-nemotron-proofs.part0071.jsonl.gz",
+    "sha256": "ee6af626a15e3beb277f96f70c5efee043062a3c53b63f6f7f0f7faa3ae67bd3"
+   },
+   {
+    "bytes": 38286156,
+    "name": "sft-math-nemotron-proofs.part0072.jsonl.gz",
+    "sha256": "e7dc3c5f4cf5e7247189916b22635bf86b28a9d275188973a0b1d83dca046e21"
+   },
+   {
+    "bytes": 37456321,
+    "name": "sft-math-nemotron-proofs.part0073.jsonl.gz",
+    "sha256": "96ada8b238c11b1be3dce3e7b14e212b35124f10f0adde37cc3617b53eddf3b6"
+   },
+   {
+    "bytes": 38646025,
+    "name": "sft-math-nemotron-proofs.part0074.jsonl.gz",
+    "sha256": "10ebefb98ded3264afa2fbc67ceede91b9693cc4ca916a2e207f69825065494b"
+   },
+   {
+    "bytes": 38200264,
+    "name": "sft-math-nemotron-proofs.part0075.jsonl.gz",
+    "sha256": "f9bac483f17c8c79ac93a740be1f874149fe7664f535cb505c2ed547e0422cbd"
+   },
+   {
+    "bytes": 38917489,
+    "name": "sft-math-nemotron-proofs.part0076.jsonl.gz",
+    "sha256": "43945700f45891fbbe41bc05a640fe3654f507855d21c9fe1425b1c6a7bc472c"
+   },
+   {
+    "bytes": 37777466,
+    "name": "sft-math-nemotron-proofs.part0077.jsonl.gz",
+    "sha256": "b9774488f0a09ebc4f38487e7b350cb64e1e510137a6ba83351b75ae05d71057"
+   },
+   {
+    "bytes": 37967236,
+    "name": "sft-math-nemotron-proofs.part0078.jsonl.gz",
+    "sha256": "9077c18804b1ef4799653b3df73cd60cadb498b820f25c44d5982c24d03ae309"
+   },
+   {
+    "bytes": 38430542,
+    "name": "sft-math-nemotron-proofs.part0079.jsonl.gz",
+    "sha256": "c8d50e8e9648c7012d517e68d765d739b7178a1fb37798f235696b5d4b01c808"
+   },
+   {
+    "bytes": 37943337,
+    "name": "sft-math-nemotron-proofs.part0080.jsonl.gz",
+    "sha256": "acf30fae18b006949900a120f2717828d9b895c4e647d90465c7c304fd70a82a"
+   },
+   {
+    "bytes": 39380864,
+    "name": "sft-math-nemotron-proofs.part0081.jsonl.gz",
+    "sha256": "f7d1ccc625b3ae301651bf130cc8aa89c03c3b8a34b0d6c9e34e5841b2aa34b6"
+   },
+   {
+    "bytes": 37957265,
+    "name": "sft-math-nemotron-proofs.part0082.jsonl.gz",
+    "sha256": "e2e89da8f0a4e9158db801cd97cb4fc9884853c6300ea425bf8978bf9fdf53b6"
+   },
+   {
+    "bytes": 39147085,
+    "name": "sft-math-nemotron-proofs.part0083.jsonl.gz",
+    "sha256": "fcb9f16878657b31ccf887aa2c870b94ee64d06983e5a6f6c30d5f4e89cb7f48"
+   },
+   {
+    "bytes": 38554187,
+    "name": "sft-math-nemotron-proofs.part0084.jsonl.gz",
+    "sha256": "6752565b74a6ef15b25e80df22a6cab49aa624acadd4f613467e785c8d1b1de6"
+   },
+   {
+    "bytes": 37843829,
+    "name": "sft-math-nemotron-proofs.part0085.jsonl.gz",
+    "sha256": "2a1d8e57d91fbdd41991c59340cae129ae6c97094311eecc64a3e217cdd86322"
+   },
+   {
+    "bytes": 38907656,
+    "name": "sft-math-nemotron-proofs.part0086.jsonl.gz",
+    "sha256": "9c494af6c913926e0c968f3c1f7865b425408164102e8575677934a7dd2bb581"
+   },
+   {
+    "bytes": 38494467,
+    "name": "sft-math-nemotron-proofs.part0087.jsonl.gz",
+    "sha256": "be566f8a53e4935c488c51e5f26430a0a87b043b0344be88246821c1d6f91663"
+   },
+   {
+    "bytes": 37926911,
+    "name": "sft-math-nemotron-proofs.part0088.jsonl.gz",
+    "sha256": "dd217ebbf6a33f36d1883ab0a92646acb8b58ed8ce440d8370711a6fbede79c8"
+   },
+   {
+    "bytes": 38661923,
+    "name": "sft-math-nemotron-proofs.part0089.jsonl.gz",
+    "sha256": "11a6581bf538e07de40cb5490662be6027fc4ee17ccdb862b1bf4f9e44d83aa1"
+   },
+   {
+    "bytes": 37805637,
+    "name": "sft-math-nemotron-proofs.part0090.jsonl.gz",
+    "sha256": "3bcca06f674f0e07a1b6d1f38cc22a7347fdadacd556a436f460f8e41ff338cc"
+   },
+   {
+    "bytes": 37485048,
+    "name": "sft-math-nemotron-proofs.part0091.jsonl.gz",
+    "sha256": "50f179d671843c379c8898cb15e84b0fd8463e5c997ed1336696f5c3e476f82f"
+   },
+   {
+    "bytes": 37799359,
+    "name": "sft-math-nemotron-proofs.part0092.jsonl.gz",
+    "sha256": "65117be70382bdeb35321a9c53d24f9917efb0d5a5ddc4775f76debaceee3239"
+   },
+   {
+    "bytes": 38689493,
+    "name": "sft-math-nemotron-proofs.part0093.jsonl.gz",
+    "sha256": "42cac0e8d72f43daba483c119301afda9d964b4ca530b7e30607bfa5546bdbda"
+   },
+   {
+    "bytes": 38852349,
+    "name": "sft-math-nemotron-proofs.part0094.jsonl.gz",
+    "sha256": "c88cf60f7381b9408d1784785772644a3d5365d907d4c86b03fe8afb2f54784b"
+   },
+   {
+    "bytes": 39165605,
+    "name": "sft-math-nemotron-proofs.part0095.jsonl.gz",
+    "sha256": "5d7a2412933c08992aff230d4c29bfb26c1f11fa654cc6ee6884153a41f0b139"
+   },
+   {
+    "bytes": 39307772,
+    "name": "sft-math-nemotron-proofs.part0096.jsonl.gz",
+    "sha256": "2512a9ad0ec0e378a2829eeabf740e6d19f07ccc511ef77e0a5eb7ff087e51ba"
+   },
+   {
+    "bytes": 37967642,
+    "name": "sft-math-nemotron-proofs.part0097.jsonl.gz",
+    "sha256": "8bf1d09e8e9efd3f2232692afd1c46e032cb0bbfac5bcb4e1efd329f14e8d180"
+   },
+   {
+    "bytes": 39075293,
+    "name": "sft-math-nemotron-proofs.part0098.jsonl.gz",
+    "sha256": "6a02a3ff2c4db7165d9fbeff8f76f5ae7f25a88c9601ddfa8444012438034e41"
+   },
+   {
+    "bytes": 38650661,
+    "name": "sft-math-nemotron-proofs.part0099.jsonl.gz",
+    "sha256": "7baa1e4c388bd1149177b3a9f5b3498d8e2b683f67a9b8a003fd38fe4958c2da"
+   },
+   {
+    "bytes": 38232966,
+    "name": "sft-math-nemotron-proofs.part0100.jsonl.gz",
+    "sha256": "10d2c88398267ecb5b0fde9b67b63d37fec98002ba004de65c9aa3dbed18163b"
+   },
+   {
+    "bytes": 38515242,
+    "name": "sft-math-nemotron-proofs.part0101.jsonl.gz",
+    "sha256": "6584722dbf4b062aa407da452ec4d964f1c413a7907729b561f6ae26ead057a5"
+   },
+   {
+    "bytes": 38428124,
+    "name": "sft-math-nemotron-proofs.part0102.jsonl.gz",
+    "sha256": "9ef96d653f0acf8adcc20ff9ad9d492e949c6a8d0f98090e227d1b7ef1a1981c"
+   },
+   {
+    "bytes": 38571528,
+    "name": "sft-math-nemotron-proofs.part0103.jsonl.gz",
+    "sha256": "c11d0aad8a2f51643d93531341b8a5d2917d0d982697f46158e97e81315ead54"
+   },
+   {
+    "bytes": 39249317,
+    "name": "sft-math-nemotron-proofs.part0104.jsonl.gz",
+    "sha256": "11cebbf0b5578d770b8cba414e31e6cf9be98faede7c7cba061cb697c35f5d2b"
+   },
+   {
+    "bytes": 38259913,
+    "name": "sft-math-nemotron-proofs.part0105.jsonl.gz",
+    "sha256": "b4001233c4f4a1ff38e8d8e4549efa5c8112b8d7e7282c79e22fba76e104fc3d"
+   },
+   {
+    "bytes": 38396184,
+    "name": "sft-math-nemotron-proofs.part0106.jsonl.gz",
+    "sha256": "6e1f8f05cfe8848528cc2445d6ffc2ef7dbaf0a9d1b98fd8015a9afc5b128615"
+   },
+   {
+    "bytes": 38663274,
+    "name": "sft-math-nemotron-proofs.part0107.jsonl.gz",
+    "sha256": "c97e82ab42a9ce9cb229fd2968810b394d0d9fe3a090193ae0c58c82f75c74e3"
+   },
+   {
+    "bytes": 38853477,
+    "name": "sft-math-nemotron-proofs.part0108.jsonl.gz",
+    "sha256": "6fb114e68be7f9ed5a5c142f3b8ff4c6951aec6e43c5367d8fdb23c18f2899a9"
+   },
+   {
+    "bytes": 38821543,
+    "name": "sft-math-nemotron-proofs.part0109.jsonl.gz",
+    "sha256": "30dad266320f558de79bd55b2d34c471c9f60d2cf3df44ec0865dc72e4bcf7a0"
+   },
+   {
+    "bytes": 38202995,
+    "name": "sft-math-nemotron-proofs.part0110.jsonl.gz",
+    "sha256": "63a7e46e428c90206cf4c702c70724723df5021a5557cb14783329072067586e"
+   },
+   {
+    "bytes": 38918303,
+    "name": "sft-math-nemotron-proofs.part0111.jsonl.gz",
+    "sha256": "adc8f4defc358524734dad94d62140014fc751cd324e348f1964081de38a4355"
+   },
+   {
+    "bytes": 38708741,
+    "name": "sft-math-nemotron-proofs.part0112.jsonl.gz",
+    "sha256": "ceb6486ca934f979313d2899469fda4e1253c4126be5c7e4d0f43f6a37b8507a"
+   },
+   {
+    "bytes": 38858946,
+    "name": "sft-math-nemotron-proofs.part0113.jsonl.gz",
+    "sha256": "327dcb582c09f70816fe0f75978fee0d4aa86540a8279b4f4641c1ffeda558f0"
+   },
+   {
+    "bytes": 38623656,
+    "name": "sft-math-nemotron-proofs.part0114.jsonl.gz",
+    "sha256": "79b292c63601ef1fa45ba4c740eaf8d76cdd08f5f7db6d0bc4898e491e087fca"
+   },
+   {
+    "bytes": 38983851,
+    "name": "sft-math-nemotron-proofs.part0115.jsonl.gz",
+    "sha256": "369263bd52dc9aa077f7593c284bd7835fbbd38911eb3e8b02dc72b2e951ef4f"
+   },
+   {
+    "bytes": 39004513,
+    "name": "sft-math-nemotron-proofs.part0116.jsonl.gz",
+    "sha256": "246a2e4d9b53a7c4487ee2122e4044ce91cd589539e63ac0ec53fe5e62748018"
+   },
+   {
+    "bytes": 39405682,
+    "name": "sft-math-nemotron-proofs.part0117.jsonl.gz",
+    "sha256": "b6f1788e786aa144031b0fe31ddee4f56bfc65e36516eb4ec94997c66ba39f7c"
+   },
+   {
+    "bytes": 37802368,
+    "name": "sft-math-nemotron-proofs.part0118.jsonl.gz",
+    "sha256": "2d85c20528f940373b6f830c0083de7472e763bab33d000aeb49cf269fd53559"
+   },
+   {
+    "bytes": 38075049,
+    "name": "sft-math-nemotron-proofs.part0119.jsonl.gz",
+    "sha256": "db7702d1665fa3b2606bcbfa342e92336f7beda421c3873f7003d8f4a188db63"
+   },
+   {
+    "bytes": 38341467,
+    "name": "sft-math-nemotron-proofs.part0120.jsonl.gz",
+    "sha256": "0b87993e1c1bdf881186f963c8847544b035dac0ec881bd635bda940912b1e44"
+   },
+   {
+    "bytes": 37544941,
+    "name": "sft-math-nemotron-proofs.part0121.jsonl.gz",
+    "sha256": "d2a066b03fa53ff7e2255a958dd3bbe09958412865213e0012e0ce82c7167be8"
+   },
+   {
+    "bytes": 38770466,
+    "name": "sft-math-nemotron-proofs.part0122.jsonl.gz",
+    "sha256": "25d0782436f4b9476108bc133ff5ac3494c611b054d8c8185a1e981d55645bde"
+   },
+   {
+    "bytes": 38327455,
+    "name": "sft-math-nemotron-proofs.part0123.jsonl.gz",
+    "sha256": "256176466893055d06b1ea28a0460b7279e8b252ecf298a8c04434b37c4bf758"
+   },
+   {
+    "bytes": 38673659,
+    "name": "sft-math-nemotron-proofs.part0124.jsonl.gz",
+    "sha256": "3538bad14e517c72872b624317174b6dc7dcd076267162cdde7e8e6e9abb11c6"
+   },
+   {
+    "bytes": 39213532,
+    "name": "sft-math-nemotron-proofs.part0125.jsonl.gz",
+    "sha256": "e2054597ba0a531b002c6abc0ef0df487de998d53d06542d5d649d1b954b76a5"
+   },
+   {
+    "bytes": 37320345,
+    "name": "sft-math-nemotron-proofs.part0126.jsonl.gz",
+    "sha256": "644a76a579482ed222d1bd8941b67ff23f5180e1ef4ce8f9ff0c881134a7468b"
+   },
+   {
+    "bytes": 37897518,
+    "name": "sft-math-nemotron-proofs.part0127.jsonl.gz",
+    "sha256": "e2d02787b623e434b88cbdbbf5ca166982284653b5c000415841ac6f347d4264"
+   },
+   {
+    "bytes": 38603470,
+    "name": "sft-math-nemotron-proofs.part0128.jsonl.gz",
+    "sha256": "8527678394969337414e277119978e0428bec05365c7d6a8de191f8078dd9105"
+   },
+   {
+    "bytes": 38359834,
+    "name": "sft-math-nemotron-proofs.part0129.jsonl.gz",
+    "sha256": "4c7f26cc69ad0ab84d438c4ead6bbd01cd8433d52da86cc2228cddb1d53964c4"
+   },
+   {
+    "bytes": 37950418,
+    "name": "sft-math-nemotron-proofs.part0130.jsonl.gz",
+    "sha256": "e5ac323450594d128133b50a61601972cadd8cb6aeb748b15d0d9bc4f6e31f4a"
+   },
+   {
+    "bytes": 38729931,
+    "name": "sft-math-nemotron-proofs.part0131.jsonl.gz",
+    "sha256": "924d71f1e051c87b73a6a2dea059075bfc747f43d14cceb63d70d454bcb0c97e"
+   },
+   {
+    "bytes": 38460446,
+    "name": "sft-math-nemotron-proofs.part0132.jsonl.gz",
+    "sha256": "848ae12bb6e2ca9d33fa553df78485bc1934a3283e403a57eeb739b6ea99279d"
+   },
+   {
+    "bytes": 37340257,
+    "name": "sft-math-nemotron-proofs.part0133.jsonl.gz",
+    "sha256": "f2aadafca9cc274a282c22af9c5558064300e5612bdc72e531ae4f22f442de75"
+   },
+   {
+    "bytes": 37817981,
+    "name": "sft-math-nemotron-proofs.part0134.jsonl.gz",
+    "sha256": "0f6af22489eece6b91f2ab74b349b492271d192ff8bfbd9b207d47f16cb42ba5"
+   },
+   {
+    "bytes": 38169682,
+    "name": "sft-math-nemotron-proofs.part0135.jsonl.gz",
+    "sha256": "1c2da0fae583d5aa94b230fbcba15da8ba7cf872c9612005e20141f925fcd7b8"
+   },
+   {
+    "bytes": 37489371,
+    "name": "sft-math-nemotron-proofs.part0136.jsonl.gz",
+    "sha256": "1b59159c5ebcb92b4c43dc2b8922f6ab0b37ba8e66ccd69c1d3f9ae5c9f92534"
+   },
+   {
+    "bytes": 38769829,
+    "name": "sft-math-nemotron-proofs.part0137.jsonl.gz",
+    "sha256": "e9167a31699d7bf684a09cd6e57caf4a765064d5f708f9a9a08205045fb1bbe5"
+   },
+   {
+    "bytes": 38491031,
+    "name": "sft-math-nemotron-proofs.part0138.jsonl.gz",
+    "sha256": "3fd472b4a3e6c1a811d953e8e69955fefa7c8746867a8c9c48f5e87f790dfc8d"
+   },
+   {
+    "bytes": 38741641,
+    "name": "sft-math-nemotron-proofs.part0139.jsonl.gz",
+    "sha256": "209e15cd221e6ffe9cf3e49077ac11919a0345e3b834ba5b11874b9106e06dbd"
+   },
+   {
+    "bytes": 38494368,
+    "name": "sft-math-nemotron-proofs.part0140.jsonl.gz",
+    "sha256": "f63a10a1a6b21740d7fef194a0ae1e40eef2f82101084e63aeb9fd7a952a0902"
+   },
+   {
+    "bytes": 39020720,
+    "name": "sft-math-nemotron-proofs.part0141.jsonl.gz",
+    "sha256": "874035e9a6aa9118773148b8005ac275baf3ab7f39c3d711d9975721d7943354"
+   },
+   {
+    "bytes": 38104647,
+    "name": "sft-math-nemotron-proofs.part0142.jsonl.gz",
+    "sha256": "35cbb491c79c9652105bd0afed8933bc7839c6b9b14ede49ff2053b102402b75"
+   },
+   {
+    "bytes": 37636755,
+    "name": "sft-math-nemotron-proofs.part0143.jsonl.gz",
+    "sha256": "00d0965f7ae3c569739eb8ea306217e9cf6cd4757b0dc8a0b5acd4bfe9ced4e6"
+   },
+   {
+    "bytes": 37753209,
+    "name": "sft-math-nemotron-proofs.part0144.jsonl.gz",
+    "sha256": "f5110524b826a17273fc18910a4be494d0f559492e765410197a702303d90a44"
+   },
+   {
+    "bytes": 38737265,
+    "name": "sft-math-nemotron-proofs.part0145.jsonl.gz",
+    "sha256": "975dc9829198f6a9d7c68299bcac61c0be2fb8214b53e014f7d14c284750df71"
+   },
+   {
+    "bytes": 39245405,
+    "name": "sft-math-nemotron-proofs.part0146.jsonl.gz",
+    "sha256": "e9e5d536952f09e724d1e7e357e8c9e67ebf279c0a0cd2870fec501f4d49fb8c"
+   },
+   {
+    "bytes": 38820658,
+    "name": "sft-math-nemotron-proofs.part0147.jsonl.gz",
+    "sha256": "2689d7605abdc0488ebbc2d332cffc89ad68cb7b75b545948627fb09da8a5148"
+   },
+   {
+    "bytes": 38366366,
+    "name": "sft-math-nemotron-proofs.part0148.jsonl.gz",
+    "sha256": "0791662b6384dc37a705ea1c3dfc2599e98158fe38230084b4116bc809e26f8d"
+   },
+   {
+    "bytes": 38403916,
+    "name": "sft-math-nemotron-proofs.part0149.jsonl.gz",
+    "sha256": "6ab6093b537874a3dc5f2bd8a6e1d77a9db77269fb6b42380155cbeda918f2b2"
+   },
+   {
+    "bytes": 37590676,
+    "name": "sft-math-nemotron-proofs.part0150.jsonl.gz",
+    "sha256": "e7b08146678e8758a8c0f595d64b0e138644a610f148df1719ab11c923a1ace4"
+   },
+   {
+    "bytes": 38192117,
+    "name": "sft-math-nemotron-proofs.part0151.jsonl.gz",
+    "sha256": "bda0f883358a86fa12db9f586aa0adb92c54d38362cd8e8eaf16b5fda978474c"
+   },
+   {
+    "bytes": 37592200,
+    "name": "sft-math-nemotron-proofs.part0152.jsonl.gz",
+    "sha256": "b30f6fb2cc2f5d83027d9e281cc2e3ff8be4d17e7101e19ef443f9b732e33865"
+   },
+   {
+    "bytes": 38358588,
+    "name": "sft-math-nemotron-proofs.part0153.jsonl.gz",
+    "sha256": "8bc8f120ce1a10a6c66a3434ce63c702318841772fa301537ace947e00362a1b"
+   },
+   {
+    "bytes": 38632956,
+    "name": "sft-math-nemotron-proofs.part0154.jsonl.gz",
+    "sha256": "fce62b11d081fc59bd2e9511b2bc3d81cde57f39a80fa96e22a30a05f8673444"
+   },
+   {
+    "bytes": 38165642,
+    "name": "sft-math-nemotron-proofs.part0155.jsonl.gz",
+    "sha256": "e37da615ee6a0c4e138233f1efb3aaa48e65d5fa78dfe2dc047ca5e8fe65b89e"
+   },
+   {
+    "bytes": 38962730,
+    "name": "sft-math-nemotron-proofs.part0156.jsonl.gz",
+    "sha256": "53278ef7b4a2fb54e71a38976e683cdb33ac4cc76a013eb574484552cc3bc8b2"
+   },
+   {
+    "bytes": 38077332,
+    "name": "sft-math-nemotron-proofs.part0157.jsonl.gz",
+    "sha256": "305c596cead28d7c091f59df95b29d53416d44d492934cac62301b81b88ef067"
+   },
+   {
+    "bytes": 38223773,
+    "name": "sft-math-nemotron-proofs.part0158.jsonl.gz",
+    "sha256": "afe1b841f03c8a8680597240ad023f9318a961990b4e134bd65b2ecee4384ac6"
+   },
+   {
+    "bytes": 39472768,
+    "name": "sft-math-nemotron-proofs.part0159.jsonl.gz",
+    "sha256": "a375d990f9d2e3ebfab75756771ce994f47209a8fdf2f875260d8d84465c80ff"
+   },
+   {
+    "bytes": 38798066,
+    "name": "sft-math-nemotron-proofs.part0160.jsonl.gz",
+    "sha256": "de52ba90413354996b4063e81c28ca081c92f0cb060abf4655b63049c0c4b0c1"
+   },
+   {
+    "bytes": 38788269,
+    "name": "sft-math-nemotron-proofs.part0161.jsonl.gz",
+    "sha256": "d3f52d9dc2a1fc04d482f63ae8f277feca0bebb173e2495a977e77dd9c4cd6bd"
+   },
+   {
+    "bytes": 37620078,
+    "name": "sft-math-nemotron-proofs.part0162.jsonl.gz",
+    "sha256": "def5cd890408c14823142f6d25ea122332e023cca41dae3507a42ecad30f4544"
+   },
+   {
+    "bytes": 37914133,
+    "name": "sft-math-nemotron-proofs.part0163.jsonl.gz",
+    "sha256": "e45d82c1c6763f718e111f16a8a6dfbf78de3fcebd2368ce69af757c59ab84bc"
+   },
+   {
+    "bytes": 38959097,
+    "name": "sft-math-nemotron-proofs.part0164.jsonl.gz",
+    "sha256": "f375c81ae2b927b0c3be9471e2417b6dda6077ff788fc9e17e5056b54ab32b3b"
+   },
+   {
+    "bytes": 39023214,
+    "name": "sft-math-nemotron-proofs.part0165.jsonl.gz",
+    "sha256": "2a06e1e3b7a65c2680f65ed4292164153413ff88e88d28abb97274829eae1347"
+   },
+   {
+    "bytes": 38406905,
+    "name": "sft-math-nemotron-proofs.part0166.jsonl.gz",
+    "sha256": "81a3ca5f7b481dc547d721c6c82da47285cd1c391b96166411d84213cc1687d9"
+   },
+   {
+    "bytes": 38380711,
+    "name": "sft-math-nemotron-proofs.part0167.jsonl.gz",
+    "sha256": "6f2927a4f3f3965d53535d00227cd676d741f6426a8d190eebb528ed98068a3a"
+   },
+   {
+    "bytes": 38570016,
+    "name": "sft-math-nemotron-proofs.part0168.jsonl.gz",
+    "sha256": "140ad733bc58ff78a1b429e2bf9c08fc9987b8c220969071e8fa35ebf7a41fca"
+   },
+   {
+    "bytes": 38884518,
+    "name": "sft-math-nemotron-proofs.part0169.jsonl.gz",
+    "sha256": "88e855bc3a5837a58ef17e83849cfe4a917b90ed1970b8486ac84495d0b71e50"
+   },
+   {
+    "bytes": 38160383,
+    "name": "sft-math-nemotron-proofs.part0170.jsonl.gz",
+    "sha256": "ddea842665a018c41e0b86e83185ec3d6daf744d850b26288e4901daae10040b"
+   },
+   {
+    "bytes": 38365256,
+    "name": "sft-math-nemotron-proofs.part0171.jsonl.gz",
+    "sha256": "623f812d9b56904ddf72724f03dbe772a58b684b50857c9b97b92f2c10c5c8d5"
+   },
+   {
+    "bytes": 38782734,
+    "name": "sft-math-nemotron-proofs.part0172.jsonl.gz",
+    "sha256": "1cb204985732c0e8678fac5d5f5684c90291cd5a6fd5154ae227b6c4e184a65f"
+   },
+   {
+    "bytes": 38551920,
+    "name": "sft-math-nemotron-proofs.part0173.jsonl.gz",
+    "sha256": "469b804545c74bf11e93bfc6668902e1b0f072b64e4209a2bfce1eb640444a9a"
+   },
+   {
+    "bytes": 38808787,
+    "name": "sft-math-nemotron-proofs.part0174.jsonl.gz",
+    "sha256": "5bf259587a974fa49cd3235531e652bd9eb77acd7ac8d276c88f2b0938a80f6e"
+   },
+   {
+    "bytes": 38281742,
+    "name": "sft-math-nemotron-proofs.part0175.jsonl.gz",
+    "sha256": "aa3c88b2564d568b152cd1b98164211f797cb5055f585cc0a771583fe5cccc2b"
+   },
+   {
+    "bytes": 38896635,
+    "name": "sft-math-nemotron-proofs.part0176.jsonl.gz",
+    "sha256": "ee9e2c2e00c21dcd6e07d331b8b32ac620e630b555d0afe5a66cdd420ce8ccd1"
+   },
+   {
+    "bytes": 38310266,
+    "name": "sft-math-nemotron-proofs.part0177.jsonl.gz",
+    "sha256": "66ac56a9bfc25278e6090b67a52fb081c06b60f1f04c54d4bcacc44b8aa1b003"
+   },
+   {
+    "bytes": 38440193,
+    "name": "sft-math-nemotron-proofs.part0178.jsonl.gz",
+    "sha256": "a1da3ae4a626e1af8cc0940ce79a1aa108d825dc173c4a863b81d0713602db3f"
+   },
+   {
+    "bytes": 37577396,
+    "name": "sft-math-nemotron-proofs.part0179.jsonl.gz",
+    "sha256": "5682cfe932cdad5fc6c8e185dcd47ec6fcb8f7063c7475dfead9ee3c9d94e77e"
+   },
+   {
+    "bytes": 37801688,
+    "name": "sft-math-nemotron-proofs.part0180.jsonl.gz",
+    "sha256": "50bfc563a782c4e53367ff59938188078347b5c5f3c3ea20a7a10ff4a017d46d"
+   },
+   {
+    "bytes": 39401593,
+    "name": "sft-math-nemotron-proofs.part0181.jsonl.gz",
+    "sha256": "817aae211b9c28519e6f5a98c2604fbcc3022cdb5cfea658fc0fab70d0be17c9"
+   },
+   {
+    "bytes": 38188623,
+    "name": "sft-math-nemotron-proofs.part0182.jsonl.gz",
+    "sha256": "a46079bc98f9ed0ec6713cb7ae0e6ee464248bab21f0ea5a9fadf380a7e8562b"
+   },
+   {
+    "bytes": 37825341,
+    "name": "sft-math-nemotron-proofs.part0183.jsonl.gz",
+    "sha256": "662430602dcc5a336d0cae85930237c41d9d3ce377508b600db32110c977b43d"
+   },
+   {
+    "bytes": 38122427,
+    "name": "sft-math-nemotron-proofs.part0184.jsonl.gz",
+    "sha256": "31c7fad4fb9e2e5e400ebadca136d644164b2b6cfbc7f010fa08366847f267c0"
+   },
+   {
+    "bytes": 37758691,
+    "name": "sft-math-nemotron-proofs.part0185.jsonl.gz",
+    "sha256": "c2a6627bfbaa039723de7eb329b8b53cef8af4608de67ae962b6a43b9a3cd6e1"
+   },
+   {
+    "bytes": 38891852,
+    "name": "sft-math-nemotron-proofs.part0186.jsonl.gz",
+    "sha256": "cfe37c3e250b6b68d88aef219406df7ab1e1e541e3a5c905b52e1156c4b92057"
+   },
+   {
+    "bytes": 38211498,
+    "name": "sft-math-nemotron-proofs.part0187.jsonl.gz",
+    "sha256": "e133ed262dc3b1caeb186b7c71ea013b659faaf4ee9d195a77bcfb08ef2d5dda"
+   },
+   {
+    "bytes": 38274030,
+    "name": "sft-math-nemotron-proofs.part0188.jsonl.gz",
+    "sha256": "58f502c5ee6347b6d74b9ebdab1acfac1a5f816684d941b0198c99673fc8dcf1"
+   },
+   {
+    "bytes": 38123136,
+    "name": "sft-math-nemotron-proofs.part0189.jsonl.gz",
+    "sha256": "02ae47550c118929a4026a713fabac15aee0425c824d47c6456436bffc9c4fc3"
+   },
+   {
+    "bytes": 39363008,
+    "name": "sft-math-nemotron-proofs.part0190.jsonl.gz",
+    "sha256": "646d078fca5a474a422b92fb39af17fea0d8fc54bcad591457f379cf3d524de5"
+   },
+   {
+    "bytes": 38493932,
+    "name": "sft-math-nemotron-proofs.part0191.jsonl.gz",
+    "sha256": "09f1090b00d5866c890ca9ef36394e34979acd7e106857e0953a9d0d917be26e"
+   },
+   {
+    "bytes": 38351725,
+    "name": "sft-math-nemotron-proofs.part0192.jsonl.gz",
+    "sha256": "85b3bb6916f294da3de24e96513ce0e756113e6849079bfc01dfcfaf46ec1bf6"
+   },
+   {
+    "bytes": 38294558,
+    "name": "sft-math-nemotron-proofs.part0193.jsonl.gz",
+    "sha256": "67df7899dc860322fabc536974c5e4fb40607ae6f29aaa7728779b2a1789d811"
+   },
+   {
+    "bytes": 37728740,
+    "name": "sft-math-nemotron-proofs.part0194.jsonl.gz",
+    "sha256": "d64ba2c7d2cedd8382259deb4080d90d9dc17847f14c8b380f7f28feadcef385"
+   },
+   {
+    "bytes": 38562585,
+    "name": "sft-math-nemotron-proofs.part0195.jsonl.gz",
+    "sha256": "24065c0d9da837fff5f97cf80df955864f72d631cb3939b449d1af1f13480133"
+   },
+   {
+    "bytes": 37737823,
+    "name": "sft-math-nemotron-proofs.part0196.jsonl.gz",
+    "sha256": "baf94c33f812fe14c0bdcd516dd0c00a5d9291461b6610016d22849322a66d7e"
+   },
+   {
+    "bytes": 37998888,
+    "name": "sft-math-nemotron-proofs.part0197.jsonl.gz",
+    "sha256": "4e51a79e965ddf60f8af13c68eb83e5a4edaa00ff0a5179e306a75a8a6b90896"
+   },
+   {
+    "bytes": 38002957,
+    "name": "sft-math-nemotron-proofs.part0198.jsonl.gz",
+    "sha256": "386c5234dd06d722f4877a314488d03a07bd72256e19cf1dfbd108f8704bf97a"
+   },
+   {
+    "bytes": 38962783,
+    "name": "sft-math-nemotron-proofs.part0199.jsonl.gz",
+    "sha256": "6d8979f95de39197b98d2dc3ea94734e026223b60ac1b9758bf552418d087c1f"
+   },
+   {
+    "bytes": 37780106,
+    "name": "sft-math-nemotron-proofs.part0200.jsonl.gz",
+    "sha256": "ee26508859289914403634ba7d77c22172eaa4ec52025847dc8a1beb8cadf7e6"
+   },
+   {
+    "bytes": 38550480,
+    "name": "sft-math-nemotron-proofs.part0201.jsonl.gz",
+    "sha256": "05dbde8da387857cf9aae40e4227bd631691755e9013f2ff9e3f29329c1b5ecd"
+   },
+   {
+    "bytes": 38670479,
+    "name": "sft-math-nemotron-proofs.part0202.jsonl.gz",
+    "sha256": "c322dfe1e9f72e0aef7d1f5303045137748d8c9d6f4724c6a4c6b26f611bcf1f"
+   },
+   {
+    "bytes": 38317253,
+    "name": "sft-math-nemotron-proofs.part0203.jsonl.gz",
+    "sha256": "3241daa5ffbe96b53c97a79da87500352fb4f3f38610552cdacc5a8881fb1e9e"
+   },
+   {
+    "bytes": 38446968,
+    "name": "sft-math-nemotron-proofs.part0204.jsonl.gz",
+    "sha256": "b5dfbbc31816a7d6340cd00b8967c5bfd08992c20d3940812de54c2269a7314f"
+   },
+   {
+    "bytes": 38102462,
+    "name": "sft-math-nemotron-proofs.part0205.jsonl.gz",
+    "sha256": "be4e145b1baa6f640ee4bdd8a8f71e10093be133a159bd4688fe1ca43dd37801"
+   },
+   {
+    "bytes": 37865184,
+    "name": "sft-math-nemotron-proofs.part0206.jsonl.gz",
+    "sha256": "f9afc1babc9242f6d63b5c018bd2240c0d17d9fac9abd663acccb0a250a1a77e"
+   },
+   {
+    "bytes": 38687484,
+    "name": "sft-math-nemotron-proofs.part0207.jsonl.gz",
+    "sha256": "f9488325eb2001984a276a2b9c26e66c9df519b1ca70c8a6fcee842f0303f70c"
+   },
+   {
+    "bytes": 38200282,
+    "name": "sft-math-nemotron-proofs.part0208.jsonl.gz",
+    "sha256": "722f1a54d8c3e55858061ed0a904cf2cbe947702cbc0b869adc4459e0b2177f0"
+   },
+   {
+    "bytes": 38787305,
+    "name": "sft-math-nemotron-proofs.part0209.jsonl.gz",
+    "sha256": "f5abd144f2049c5fdca02564548020190b61f959648add66c718ad848bec084f"
+   },
+   {
+    "bytes": 38909788,
+    "name": "sft-math-nemotron-proofs.part0210.jsonl.gz",
+    "sha256": "9ebc395d5579a53b0902703a3ca4955c7d9906ff909164392debab76711d1fe1"
+   },
+   {
+    "bytes": 38593988,
+    "name": "sft-math-nemotron-proofs.part0211.jsonl.gz",
+    "sha256": "7f1dbe1ce673cb8249f4462d6b4257b4a0e4616e698e28d17740e1776a7b1c92"
+   },
+   {
+    "bytes": 38981131,
+    "name": "sft-math-nemotron-proofs.part0212.jsonl.gz",
+    "sha256": "6804884fe1d0a3dba1026172965d9a24b8fc16214cd1b0964f490f2048fff34b"
+   },
+   {
+    "bytes": 37930145,
+    "name": "sft-math-nemotron-proofs.part0213.jsonl.gz",
+    "sha256": "cb3f42699ff111f72ad47664c1b8230584da8341ba4bb3ca4e069c8e539ce11a"
+   },
+   {
+    "bytes": 37597223,
+    "name": "sft-math-nemotron-proofs.part0214.jsonl.gz",
+    "sha256": "280416e6e82cf81b08ce8b825db544847380dc85d5971abab1b17d573cc548b3"
+   },
+   {
+    "bytes": 37153923,
+    "name": "sft-math-nemotron-proofs.part0215.jsonl.gz",
+    "sha256": "04747bf448d9a3868ad683be0942c1b5eebf8a73a38f1189cc37deb9d190b35c"
+   },
+   {
+    "bytes": 38745457,
+    "name": "sft-math-nemotron-proofs.part0216.jsonl.gz",
+    "sha256": "31698d87d19a3c7037378d3103e8bf77449e5f6d7183bdec852bf391d3dd82b3"
+   },
+   {
+    "bytes": 38780728,
+    "name": "sft-math-nemotron-proofs.part0217.jsonl.gz",
+    "sha256": "069231e64c78e4144f5dd3d0128d229b63da5057bd5d1540db4ccdd091584b69"
+   },
+   {
+    "bytes": 38506184,
+    "name": "sft-math-nemotron-proofs.part0218.jsonl.gz",
+    "sha256": "2ae2b237892230deb900ed116195f16193db7ba0d2c7abec2b7b99f73e38201b"
+   },
+   {
+    "bytes": 38370170,
+    "name": "sft-math-nemotron-proofs.part0219.jsonl.gz",
+    "sha256": "f1f9ed2e648f6ea0703c0ac2993ce5f9eaa6fc8db998caaef0faf6cf3479b095"
+   },
+   {
+    "bytes": 37280631,
+    "name": "sft-math-nemotron-proofs.part0220.jsonl.gz",
+    "sha256": "95188d7e2ad2276916ed22e239d676a3b5b68d5544902181572c7c60b5e434cf"
+   },
+   {
+    "bytes": 38341117,
+    "name": "sft-math-nemotron-proofs.part0221.jsonl.gz",
+    "sha256": "b1b5368420b1d7fa0ca80f858ea911abb80e545004a6c152f2bfcc9d84645e18"
+   },
+   {
+    "bytes": 37908698,
+    "name": "sft-math-nemotron-proofs.part0222.jsonl.gz",
+    "sha256": "74984843fce218333802e8ef26b106186156419e314323eb1e04566749298454"
+   },
+   {
+    "bytes": 38451210,
+    "name": "sft-math-nemotron-proofs.part0223.jsonl.gz",
+    "sha256": "67c6145509fdf50489193601221259dd4807ef5a0cdf198935e80b5ddff78d8c"
+   },
+   {
+    "bytes": 38321417,
+    "name": "sft-math-nemotron-proofs.part0224.jsonl.gz",
+    "sha256": "b8c5188decae8a487e5a40615fc7a02a023fb0a2b25fc5b1048270752902d28a"
+   },
+   {
+    "bytes": 37789012,
+    "name": "sft-math-nemotron-proofs.part0225.jsonl.gz",
+    "sha256": "9fd394f28ace3675fbd51d125c5d6122875684aa9ab08b8458d81fd7289c12b7"
+   },
+   {
+    "bytes": 37932349,
+    "name": "sft-math-nemotron-proofs.part0226.jsonl.gz",
+    "sha256": "ef1cdb58cc1e78515eb99fd73427915a86ad3d276f921b44cae6208dcd1966b1"
+   },
+   {
+    "bytes": 37884644,
+    "name": "sft-math-nemotron-proofs.part0227.jsonl.gz",
+    "sha256": "e5fa3a75deb6749e956ee4e09fd9aff15ed6029bc67e71e7c9afd3e29419a534"
+   },
+   {
+    "bytes": 37735635,
+    "name": "sft-math-nemotron-proofs.part0228.jsonl.gz",
+    "sha256": "63c6b4859051bbe52523db899cb864fa358cf48af10d71aa481965ca385f7f7f"
+   },
+   {
+    "bytes": 38348060,
+    "name": "sft-math-nemotron-proofs.part0229.jsonl.gz",
+    "sha256": "432b3ed4649b7c72087ea3b6560522873e03a08c99273663fc95be3d80b5a4da"
+   },
+   {
+    "bytes": 38139093,
+    "name": "sft-math-nemotron-proofs.part0230.jsonl.gz",
+    "sha256": "c7bd14a889a1bea916a2f0ff970b425d9521371711a14ad317722e29355ca939"
+   },
+   {
+    "bytes": 39189126,
+    "name": "sft-math-nemotron-proofs.part0231.jsonl.gz",
+    "sha256": "cb7dae7112f763416ca7d816eaa787efcbc9b02214865d2a3cfb32780a3c0524"
+   },
+   {
+    "bytes": 38159819,
+    "name": "sft-math-nemotron-proofs.part0232.jsonl.gz",
+    "sha256": "47e9dd61d93a0ec38c038777765bfb598af7f504c42a346f8395ecb06453737a"
+   },
+   {
+    "bytes": 38593994,
+    "name": "sft-math-nemotron-proofs.part0233.jsonl.gz",
+    "sha256": "9bc5376e6f45702a1d5666aee3bbeaee89ec8036439df5140be38d596fba45e1"
+   },
+   {
+    "bytes": 37885536,
+    "name": "sft-math-nemotron-proofs.part0234.jsonl.gz",
+    "sha256": "a1ee3011a8d50a8489aebc2c50912ad3022f29dffec94645708d354292696a2e"
+   },
+   {
+    "bytes": 38455985,
+    "name": "sft-math-nemotron-proofs.part0235.jsonl.gz",
+    "sha256": "5c1eb4e209f8f7e73280fc17cb341c003c753a00c9e5713583a166cdc511bb54"
+   },
+   {
+    "bytes": 37553992,
+    "name": "sft-math-nemotron-proofs.part0236.jsonl.gz",
+    "sha256": "23df4acecd92b11092b5e8e7f9ee7d2c9168621969d1b1e7f103c78cbb9b23a3"
+   },
+   {
+    "bytes": 37601855,
+    "name": "sft-math-nemotron-proofs.part0237.jsonl.gz",
+    "sha256": "1ceefe941d57ef00f636bea9edc70f2e84999738e82e4fc3cb302a93a763b0d9"
+   },
+   {
+    "bytes": 37881626,
+    "name": "sft-math-nemotron-proofs.part0238.jsonl.gz",
+    "sha256": "a34e07c45377f660fbfc997d8c7c3b8e4ad7f593b527a21e9354283aeda28789"
+   },
+   {
+    "bytes": 38624644,
+    "name": "sft-math-nemotron-proofs.part0239.jsonl.gz",
+    "sha256": "cefe24be6c128ccedcc1c79cc0de9d918b28f55886b1eef68d0402aa9959e868"
+   },
+   {
+    "bytes": 37795954,
+    "name": "sft-math-nemotron-proofs.part0240.jsonl.gz",
+    "sha256": "f5728f534ad28050a422bda3a18173144ff41af30ea03a04d7d5fd4cfa184d79"
+   },
+   {
+    "bytes": 38087186,
+    "name": "sft-math-nemotron-proofs.part0241.jsonl.gz",
+    "sha256": "8e9e22bcb7a7e2c4e76314b8c29c1b67f5560495c6cf848ecf12a8a500878d7e"
+   },
+   {
+    "bytes": 38499950,
+    "name": "sft-math-nemotron-proofs.part0242.jsonl.gz",
+    "sha256": "9b2f28534b6113afb22758ef098d8a5b0a0c48f3a048d5d3bdd3d6bd43a4ea9a"
+   },
+   {
+    "bytes": 39019984,
+    "name": "sft-math-nemotron-proofs.part0243.jsonl.gz",
+    "sha256": "4d9d723aecab94d8d159a045f112d9bef0f39e99978664407fa00a68ecc6c26a"
+   },
+   {
+    "bytes": 37814003,
+    "name": "sft-math-nemotron-proofs.part0244.jsonl.gz",
+    "sha256": "1928d08bdc4dfb55ff1a127c11cf8361b1921b54daea17611254e10527a9d952"
+   },
+   {
+    "bytes": 38220226,
+    "name": "sft-math-nemotron-proofs.part0245.jsonl.gz",
+    "sha256": "9998ad78cc7a04c7be939529903944984c1790552ac4e9f2f5d2f9ff707c1e50"
+   },
+   {
+    "bytes": 38028643,
+    "name": "sft-math-nemotron-proofs.part0246.jsonl.gz",
+    "sha256": "6df90e756d08e68c464d193a50903d5c4632a01610fed703c820087357490008"
+   },
+   {
+    "bytes": 38220812,
+    "name": "sft-math-nemotron-proofs.part0247.jsonl.gz",
+    "sha256": "0f4819f9af1b2c50a3a1d43c30820256e3a4d12d76e6fff5114faba53c9e0a63"
+   },
+   {
+    "bytes": 38063138,
+    "name": "sft-math-nemotron-proofs.part0248.jsonl.gz",
+    "sha256": "fb57ffbe24fffde283c502b285f283b66c6cd13eab7f683bdaf6b31fcda00057"
+   },
+   {
+    "bytes": 37919364,
+    "name": "sft-math-nemotron-proofs.part0249.jsonl.gz",
+    "sha256": "ce3d5fde19367c6c283b931b4b23afcae53e1b3117a8131ffdd62e60e6487ce3"
+   },
+   {
+    "bytes": 38294711,
+    "name": "sft-math-nemotron-proofs.part0250.jsonl.gz",
+    "sha256": "877a96ba7d18347f04dd88496dea224cf400ddfba04426a1795dc8f1bae36690"
+   },
+   {
+    "bytes": 38579357,
+    "name": "sft-math-nemotron-proofs.part0251.jsonl.gz",
+    "sha256": "bac6dcacf1d514bc453c00d05cdbf51d24a82d27f6d992469b6be5f76a35a1ec"
+   },
+   {
+    "bytes": 38802567,
+    "name": "sft-math-nemotron-proofs.part0252.jsonl.gz",
+    "sha256": "02aa9418ee421ca9684c7b887dabd49eae522d29a8d6297d91a6414873c6d5f7"
+   },
+   {
+    "bytes": 38172807,
+    "name": "sft-math-nemotron-proofs.part0253.jsonl.gz",
+    "sha256": "425ec4788908b7f1b5ac1af83112b89f49888108eebc976140775b8f8a490fc6"
+   },
+   {
+    "bytes": 37656815,
+    "name": "sft-math-nemotron-proofs.part0254.jsonl.gz",
+    "sha256": "b28f28ce6898e95c1def5cae40c64ba9d46e2dff94af9ee34d147a2baaa67688"
+   },
+   {
+    "bytes": 39156173,
+    "name": "sft-math-nemotron-proofs.part0255.jsonl.gz",
+    "sha256": "69c19d44bf00fb0d839c549f6ec2d927cb24667d9b92feebd9e3bc275750c01c"
+   },
+   {
+    "bytes": 37872909,
+    "name": "sft-math-nemotron-proofs.part0256.jsonl.gz",
+    "sha256": "d6ba795292211d838926fd1092ce79f0d003164f30c9a731fec95967e0509e80"
+   },
+   {
+    "bytes": 38467610,
+    "name": "sft-math-nemotron-proofs.part0257.jsonl.gz",
+    "sha256": "965dc4264a58a8cff7e92abf83fa51b4f51694d85e75ab2f1aecfa352c9cfbf9"
+   },
+   {
+    "bytes": 38007729,
+    "name": "sft-math-nemotron-proofs.part0258.jsonl.gz",
+    "sha256": "a1838cff4ae6c6ede5373a44761563f384203e974d66552e184073033c89155d"
+   },
+   {
+    "bytes": 37821389,
+    "name": "sft-math-nemotron-proofs.part0259.jsonl.gz",
+    "sha256": "7ba7453f07aee8c3438baa8b7cf94a29d8fb018930d59b76336988630ca4bf01"
+   },
+   {
+    "bytes": 38541297,
+    "name": "sft-math-nemotron-proofs.part0260.jsonl.gz",
+    "sha256": "9ccc79018dd6df6b88ff272454246d2715f3d6516d63b26df7cf7dcc0e31722f"
+   },
+   {
+    "bytes": 38363820,
+    "name": "sft-math-nemotron-proofs.part0261.jsonl.gz",
+    "sha256": "bd35f255cf9f863692160a8876850b67b40056e9a93a5a45b2d658857d435930"
+   },
+   {
+    "bytes": 37968064,
+    "name": "sft-math-nemotron-proofs.part0262.jsonl.gz",
+    "sha256": "a93521904d33890ef712946a64c85a0f738f67daf38054e8b71831fea1b8e331"
+   },
+   {
+    "bytes": 38602982,
+    "name": "sft-math-nemotron-proofs.part0263.jsonl.gz",
+    "sha256": "9aebd4ab803afd2fad5f7c02a52472be760f8a687fff3d7444f757b8abe28129"
+   },
+   {
+    "bytes": 39041476,
+    "name": "sft-math-nemotron-proofs.part0264.jsonl.gz",
+    "sha256": "a0791f0b35b065d2ab24105ddac5b3bd1b1855d18a52a233021c446f8b961ed5"
+   },
+   {
+    "bytes": 37913737,
+    "name": "sft-math-nemotron-proofs.part0265.jsonl.gz",
+    "sha256": "f230c8699cad81b58918b46d86906b981162bc65b27edd810e4b2e2d834d91e4"
+   },
+   {
+    "bytes": 37985501,
+    "name": "sft-math-nemotron-proofs.part0266.jsonl.gz",
+    "sha256": "30a1b98c625e61d66da0a04d6cfb225ac8276d45df79aee86b8de108557b7068"
+   },
+   {
+    "bytes": 38255357,
+    "name": "sft-math-nemotron-proofs.part0267.jsonl.gz",
+    "sha256": "4e38928a496427a4642fdcfb3724b88f1cf70299d1e69bc5d5e121347c9193cc"
+   },
+   {
+    "bytes": 38141311,
+    "name": "sft-math-nemotron-proofs.part0268.jsonl.gz",
+    "sha256": "26bebe56e01f20d3a7768842c386c6dd4e42663e2a916528cb438afed876ba38"
+   },
+   {
+    "bytes": 38030790,
+    "name": "sft-math-nemotron-proofs.part0269.jsonl.gz",
+    "sha256": "6f87e6d859cd1b633f2b0ebd7841807a1f4f037c7504eced666391a62ed9950a"
+   },
+   {
+    "bytes": 38522766,
+    "name": "sft-math-nemotron-proofs.part0270.jsonl.gz",
+    "sha256": "6c192db18d5e432a5fdffe515e027da60b9d58322acf3cff1aaf9aad7e397903"
+   },
+   {
+    "bytes": 38302927,
+    "name": "sft-math-nemotron-proofs.part0271.jsonl.gz",
+    "sha256": "7927f0c4774d0acec90d70da0a577d4d9ae721b6b58db1eafa41c6b95a5e454d"
+   },
+   {
+    "bytes": 37857342,
+    "name": "sft-math-nemotron-proofs.part0272.jsonl.gz",
+    "sha256": "7c548dbdf4d6a776e234162a40dec6954d3523dae490eafa5f255ecfd3d7e6c1"
+   },
+   {
+    "bytes": 38518576,
+    "name": "sft-math-nemotron-proofs.part0273.jsonl.gz",
+    "sha256": "a6fd8bbfb198e71e2fb5b04b1b35e92f802e1ac9ad9d3661ad1793942d55ad70"
+   },
+   {
+    "bytes": 38518863,
+    "name": "sft-math-nemotron-proofs.part0274.jsonl.gz",
+    "sha256": "d896272ccae51f1dd3e281fd4e50ba254282fa356eb8dea594fdc44d32485c57"
+   },
+   {
+    "bytes": 38975793,
+    "name": "sft-math-nemotron-proofs.part0275.jsonl.gz",
+    "sha256": "c9b9ae0b58cd1465958886c133219ced5492278c762d6a8de182ccb4845699c2"
+   },
+   {
+    "bytes": 38824134,
+    "name": "sft-math-nemotron-proofs.part0276.jsonl.gz",
+    "sha256": "c77eee6eb5c7059d4c69ee3ec98c9b3ee87393a3daaf635b55c286b61f8c4cc4"
+   },
+   {
+    "bytes": 38384968,
+    "name": "sft-math-nemotron-proofs.part0277.jsonl.gz",
+    "sha256": "0229925614a9519a52328fb7116679d926dadeabe4ce9f3c782830c6fbc1e917"
+   },
+   {
+    "bytes": 39175861,
+    "name": "sft-math-nemotron-proofs.part0278.jsonl.gz",
+    "sha256": "c0e8a4c5673cc0c5d2a906b3b172c80fd8fe4c06d73a411a2ee47cd409da2041"
+   },
+   {
+    "bytes": 38107255,
+    "name": "sft-math-nemotron-proofs.part0279.jsonl.gz",
+    "sha256": "8251f97c1aa166638c4ddb8ff1e85c52e2b09a83bc8355b183755fd043e5829f"
+   },
+   {
+    "bytes": 38453811,
+    "name": "sft-math-nemotron-proofs.part0280.jsonl.gz",
+    "sha256": "45de01df47da83aab932775cb0ea5c563614350451f524e6876f73c3639eea4e"
+   },
+   {
+    "bytes": 38885985,
+    "name": "sft-math-nemotron-proofs.part0281.jsonl.gz",
+    "sha256": "88a041fa98215eca7594ed421e53e722f6ac674d0e96db066bf38185919e4a42"
+   },
+   {
+    "bytes": 38991038,
+    "name": "sft-math-nemotron-proofs.part0282.jsonl.gz",
+    "sha256": "196f5a2177a818955261c12811c4c09ab899f6aa75c8d47f2aff48a38f9d14e9"
+   },
+   {
+    "bytes": 37608509,
+    "name": "sft-math-nemotron-proofs.part0283.jsonl.gz",
+    "sha256": "be093e60421a1f5d88498380d6ca85cebcf4166162083c584fe173b821e8e113"
+   },
+   {
+    "bytes": 37789867,
+    "name": "sft-math-nemotron-proofs.part0284.jsonl.gz",
+    "sha256": "d7ee2aa240927da581f10d96474b129a19b3e17b3e619edd3069ab676592933e"
+   },
+   {
+    "bytes": 38808928,
+    "name": "sft-math-nemotron-proofs.part0285.jsonl.gz",
+    "sha256": "ab84461b913b20f66628cbc411b4a590cc84297ba9d5e503e6e97e26cb3dcd1c"
+   },
+   {
+    "bytes": 19658543,
+    "name": "sft-math-nemotron-proofs.part0286.jsonl.gz",
+    "sha256": "8ce86b2dbda9b896cc249bee8078f1f1d4571a1dcfe7d84dc24cdd52b0ea12e3"
+   }
+  ],
+  "info": {
+   "decode_equals_normalised_text_only": 109
+  },
+  "length": {
+   "max": 80407,
+   "min": 694,
+   "p50": 9269,
+   "p95": 27182
+  },
+  "max_len": 32768,
+  "rows": 920881,
+  "rows_over_max_len": 18661,
+  "rows_with_tool_blocks": 0,
+  "shifted_supervised_targets": 8434061917,
+  "tokens": 10383997134,
+  "tool_call_blocks": 0,
+  "tool_call_tokens_untrained": 0,
+  "tool_result_blocks": 0,
+  "train_spans": 920881,
+  "trained_share": 0.812217,
+  "trained_tokens": 8434061917,
+  "unique_ids": true
+ },
+ "checks_wall_s": 7.5,
+ "content_sha256": "d9c9d00024268d48eda21a6e5afd1885ef1554cd866bea90216b739a1da6c1ec",
+ "convert": {
+  "cpu_sys_s": null,
+  "cpu_user_s": null,
+  "hub_bytes_read": null,
+  "max_rss_mb": null,
+  "threads": null,
+  "unknown": "unknown: the converter was not run by this command, and the original driver did not record it",
+  "wall_s": null
+ },
+ "decision": "allowed (CC-BY-SA, attribution needed)",
+ "decontam": "not run on this output: no kept-row record exists for this set; converted, not decontaminated",
+ "deterministic_rerun": true,
+ "effort_manifest": {
+  "16k": 529257,
+  "1k": 21363,
+  "4k": 319910,
+  "64k": 50351
+ },
+ "finalized": {
+  "by": "sft_v1_records.py finalize",
+  "check_threads": 4,
+  "checker_version": "cee869b4db22e71e848417a8d532a6dc2f171263e458b2d6ad7659344f41c4d7",
+  "convert_py_sha256": "71c00be1edcfd63345ef75798544ca227dd5b4090397ab3d9a13e9ebf90edbb2",
+  "integrity_pass_wall_s": 204.0,
+  "parts_checked_here": 0,
+  "parts_reused_from_stored_checks": 287
+ },
+ "generator_model": "gpt-oss-120b (Apache-2.0) for statement formalisation and Goedel-Prover-V2-32B (Apache-2.0) for proofs",
+ "gz_bytes": 10991641481,
+ "gz_ratio": 10.43,
+ "heldout_ids_excluded": 0,
+ "heldout_note": "no held-out id list exists for this set at run time (WP15 lists cover OCR-2 shards only)",
+ "hub_revision": "97229c590831adfe96202f5cd071d444d535bf91",
+ "input": "hub file nvidia/Nemotron-Math-Proofs-v1 data/lean.jsonl rows 0..999999999999",
+ "licence": "cc-by-sa-4.0 (Hub tag; share-alike, attribution needed)",
+ "parts": [
+  {
+   "gz_bytes": 38836325,
+   "gz_sha256": "aa3e8e805dd92ac09621de68ffb967e02ef2d5f9fce9f3978e36f64850a8fa80",
+   "name": "sft-math-nemotron-proofs.part0000.jsonl.gz",
+   "plain_bytes": 400102965,
+   "plain_sha256": "032bf245c17046eed4899f55570a1640d88d8d4a3d87c27a129b4dc8e9b8d4c7"
+  },
+  {
+   "gz_bytes": 38209522,
+   "gz_sha256": "97d5ad2354b8efa9dc5fa9a0079fb5f64a342931faf7e3e221f20af7cc267061",
+   "name": "sft-math-nemotron-proofs.part0001.jsonl.gz",
+   "plain_bytes": 400028487,
+   "plain_sha256": "caa3ef4f3e7328cb9d60729061a0886d26f552b7da470dde0ba96f88df1991d4"
+  },
+  {
+   "gz_bytes": 38066249,
+   "gz_sha256": "fee9d623f3af50933d665134d8bbd800c768fea7f4d678de9cdded6204548bd4",
+   "name": "sft-math-nemotron-proofs.part0002.jsonl.gz",
+   "plain_bytes": 400034266,
+   "plain_sha256": "9db8a54083bd11a9c1b36372c5ff1e6abead7a3e3f8b7bafdf90c98307d72899"
+  },
+  {
+   "gz_bytes": 38790292,
+   "gz_sha256": "b4f41445deb95cab4bad4f75bd9949e73dbbae28275ce9d042f84cf74f0862c6",
+   "name": "sft-math-nemotron-proofs.part0003.jsonl.gz",
+   "plain_bytes": 400052208,
+   "plain_sha256": "bc16055f298e09c8fbb616eae1e0249d36392ebf2804bd103bf5111dda268dca"
+  },
+  {
+   "gz_bytes": 38883566,
+   "gz_sha256": "4432b33acbc7732d2678f5293122e5f246b598760b399355b1d0e564c3fe922d",
+   "name": "sft-math-nemotron-proofs.part0004.jsonl.gz",
+   "plain_bytes": 400145730,
+   "plain_sha256": "b6f16c2826fa724ff1979c58d66fadc30450d8aa3190e8292549aa1d81452896"
+  },
+  {
+   "gz_bytes": 38062358,
+   "gz_sha256": "4a5abb77cf57532a7bd397d9efcd2dbc72b46d023e348a11b02f33e39cdc12dc",
+   "name": "sft-math-nemotron-proofs.part0005.jsonl.gz",
+   "plain_bytes": 400000946,
+   "plain_sha256": "bf89c6e31edc9d88e6c7a185b52235d43222a565182282455506bc96f1baee5b"
+  },
+  {
+   "gz_bytes": 38736247,
+   "gz_sha256": "ce24815be1ca4555bfbc715974e529e398d4e9a5e7b6078fd5a0b30a509a53fd",
+   "name": "sft-math-nemotron-proofs.part0006.jsonl.gz",
+   "plain_bytes": 400047244,
+   "plain_sha256": "2e84a02f6ca09dc9f3878a6832a10fb9616216d5ad6f15dab32f7b8a615fee25"
+  },
+  {
+   "gz_bytes": 38343941,
+   "gz_sha256": "dc2a1260a81796686425fc46f3bbd2d25cfe7ef3573ae63f39733c9c9933189e",
+   "name": "sft-math-nemotron-proofs.part0007.jsonl.gz",
+   "plain_bytes": 400175458,
+   "plain_sha256": "4d51921c83f6bddd0315e6e3a6b9b8e7b74489769109ebfe01cae200e0fb64f3"
+  },
+  {
+   "gz_bytes": 38801229,
+   "gz_sha256": "728e56a460fa9d776b06ddea03152799393b997d97a274cd665a851c92f2ee54",
+   "name": "sft-math-nemotron-proofs.part0008.jsonl.gz",
+   "plain_bytes": 400032356,
+   "plain_sha256": "ee8cff5b6a8b457695ee59b2de782f79bc9d9a11aafa3d3a3f1f134dbdb48934"
+  },
+  {
+   "gz_bytes": 38428955,
+   "gz_sha256": "56c73c65ff89defe2acd6613c0edd44fc64695ac3cf91b60641f1d2a18272194",
+   "name": "sft-math-nemotron-proofs.part0009.jsonl.gz",
+   "plain_bytes": 400068361,
+   "plain_sha256": "1e22aaff0cf71db369a745e94daf74b1275099373e72a33375b0a9f23ae71230"
+  },
+  {
+   "gz_bytes": 38557350,
+   "gz_sha256": "7bd7de54c6ebba153fd40854f98b7dfb8d97294389922ecca1b7525f3cd44b97",
+   "name": "sft-math-nemotron-proofs.part0010.jsonl.gz",
+   "plain_bytes": 400116855,
+   "plain_sha256": "205972da69a5e06ff67066bf37a67ec620c6890bd11f98b3c084cede058db1ad"
+  },
+  {
+   "gz_bytes": 38219151,
+   "gz_sha256": "352a85a888f1d0bb162e48d8940524327fe3a3bdafaf76b28ff1192c910ce20b",
+   "name": "sft-math-nemotron-proofs.part0011.jsonl.gz",
+   "plain_bytes": 400027924,
+   "plain_sha256": "4ba8e2d1db6d4accbebb2124eea9c49910ce0bcf1ec53d26655dc6d6b38f4438"
+  },
+  {
+   "gz_bytes": 37881928,
+   "gz_sha256": "d7a25088314e87aec8d285b418a690adbd6a4556d999f679ccf5878e9d1f8676",
+   "name": "sft-math-nemotron-proofs.part0012.jsonl.gz",
+   "plain_bytes": 400102694,
+   "plain_sha256": "c7fac50b42b7ea616e27d30e7ce106a81e32c8bb05aa6e0fcbb422b1d9421c08"
+  },
+  {
+   "gz_bytes": 37882145,
+   "gz_sha256": "63dbde72fb8c3a6f8d779e261473a0c92c7fc189003de9003f2b2cf69a67d387",
+   "name": "sft-math-nemotron-proofs.part0013.jsonl.gz",
+   "plain_bytes": 400202065,
+   "plain_sha256": "e83ce6091bd97f2afd2d02b487db9e4c0b600d23df610fe88709993d950c6c8d"
+  },
+  {
+   "gz_bytes": 38599064,
+   "gz_sha256": "bef8d04e9a4afabf57db9ee735112404c6b7a14a1eeadc57c301d3f75268785f",
+   "name": "sft-math-nemotron-proofs.part0014.jsonl.gz",
+   "plain_bytes": 400096032,
+   "plain_sha256": "3abcee9515900a0926dff6e3a1f9f9b270f64e1e0634a8d4fb3a53babcc89207"
+  },
+  {
+   "gz_bytes": 38216703,
+   "gz_sha256": "49efd1e1f4a7760ac3e47d515cced1bc28b7ae4305afe92165731e03ec5b7482",
+   "name": "sft-math-nemotron-proofs.part0015.jsonl.gz",
+   "plain_bytes": 400021554,
+   "plain_sha256": "3fc9df1ec5f08e3424f2ebf4d45e019c8c6c3de23300f2c3ed5b37641a0c53e0"
+  },
+  {
+   "gz_bytes": 37494281,
+   "gz_sha256": "1c198afee3050fc66b0fbe7440d367619c15eb25abf05f89f81481388575df3e",
+   "name": "sft-math-nemotron-proofs.part0016.jsonl.gz",
+   "plain_bytes": 400046042,
+   "plain_sha256": "0222d1d95d1cb7033f028f99740810a2249d811d14bc3516a66d1d2f83010cd4"
+  },
+  {
+   "gz_bytes": 39275645,
+   "gz_sha256": "0271bf4fb8b9e1fb119afb293832d0e7e14031c25c9aa2406de5e50ed818053c",
+   "name": "sft-math-nemotron-proofs.part0017.jsonl.gz",
+   "plain_bytes": 400115226,
+   "plain_sha256": "3a77102c49d4f1a8eff3f9e54dfa92edc55ca9a33a3f6a18a7add3f871aaea15"
+  },
+  {
+   "gz_bytes": 37975503,
+   "gz_sha256": "709a3617e142f668dfc988db08dbb633ccd47e5ad2054eb6f2259ecda62878ae",
+   "name": "sft-math-nemotron-proofs.part0018.jsonl.gz",
+   "plain_bytes": 400199095,
+   "plain_sha256": "4ef8bc78c51ae01f3dfe3763c2843b406af84d0cefcac5017a2315518fe6d954"
+  },
+  {
+   "gz_bytes": 38707499,
+   "gz_sha256": "62ac2e01a72c1e22506c2019c9fc61d31e9f253ded1118516129b4675f3ce7bf",
+   "name": "sft-math-nemotron-proofs.part0019.jsonl.gz",
+   "plain_bytes": 400147886,
+   "plain_sha256": "f9bf2f458bdbd29b09a579d37e6eac22fac7ce9fd44f9f5c40e8870a278d7802"
+  },
+  {
+   "gz_bytes": 38449655,
+   "gz_sha256": "3d42b10c36e20d95fbf10c282cdb345c4898f7d16bf06a7a31dc537dc9d73474",
+   "name": "sft-math-nemotron-proofs.part0020.jsonl.gz",
+   "plain_bytes": 400087193,
+   "plain_sha256": "b401f29dc682a5539cc89939e78176aad4a830a1346d345ff685f53814694017"
+  },
+  {
+   "gz_bytes": 38668012,
+   "gz_sha256": "03fa76023c7ded051919f784ee68fc6798f6614acb59dd245208feaa94bb232e",
+   "name": "sft-math-nemotron-proofs.part0021.jsonl.gz",
+   "plain_bytes": 400125335,
+   "plain_sha256": "a5f9a45cd8b19f4fef8001225eeb774ff4ccbb74366c8e622676a42e396caadb"
+  },
+  {
+   "gz_bytes": 38165943,
+   "gz_sha256": "10bce6e16d78672276d3cb86fa3811f3a83f676cd28e8e34173f20ac456e0f75",
+   "name": "sft-math-nemotron-proofs.part0022.jsonl.gz",
+   "plain_bytes": 400109578,
+   "plain_sha256": "74b1de4f1dc0603c85157430cfc73df4be04093192dd48e5efb58550cbaa8929"
+  },
+  {
+   "gz_bytes": 38046561,
+   "gz_sha256": "cda2d908b65709adc16a1d1d2e92326432da39729a9546cdde2b1ba65825a943",
+   "name": "sft-math-nemotron-proofs.part0023.jsonl.gz",
+   "plain_bytes": 400100403,
+   "plain_sha256": "001ef56672d44447c62625b585aef650ace1b1eef182e9978123bc3dde7ab558"
+  },
+  {
+   "gz_bytes": 37901547,
+   "gz_sha256": "f655d245ceb58123a863ec724a38eb6139a04b12533ebaa58eacfbb7fea3b888",
+   "name": "sft-math-nemotron-proofs.part0024.jsonl.gz",
+   "plain_bytes": 400200594,
+   "plain_sha256": "dff3f48a315ccc889bd04d971dc9d4fa94fd435b6f747bcdc46854175943f7dd"
+  },
+  {
+   "gz_bytes": 37915261,
+   "gz_sha256": "a039ec4707360fb940f9c8f8eb9a1f0045862bb557c496cb1769431914d76a05",
+   "name": "sft-math-nemotron-proofs.part0025.jsonl.gz",
+   "plain_bytes": 400075143,
+   "plain_sha256": "7db51ce9f9912c2c852cde47a6e906b1b570b72f65c0066077ba141281d2bf88"
+  },
+  {
+   "gz_bytes": 38976097,
+   "gz_sha256": "81c779e3b5013ae5fc55728a605e92a8957ee7305f1bbcd5e71ce68ba7882bde",
+   "name": "sft-math-nemotron-proofs.part0026.jsonl.gz",
+   "plain_bytes": 400209903,
+   "plain_sha256": "e9e5f8bf9c7a1b7b5320069e4ae2498f3dff803f15e5a40863c628cf38d7aa20"
+  },
+  {
+   "gz_bytes": 37909291,
+   "gz_sha256": "31900854f26db4bac7040d0e3416c81b9211022a8759aa74f15940dfb7ec1bb1",
+   "name": "sft-math-nemotron-proofs.part0027.jsonl.gz",
+   "plain_bytes": 400292221,
+   "plain_sha256": "c114fe103d700c395fd867037b149a06829d1cf7b8df03094668d16d96056684"
+  },
+  {
+   "gz_bytes": 38740779,
+   "gz_sha256": "4f82c9eff759abe1dca87f3ed361b1da47e65a488e10b036bcdef8ca162a3fc3",
+   "name": "sft-math-nemotron-proofs.part0028.jsonl.gz",
+   "plain_bytes": 400206136,
+   "plain_sha256": "742642cc4ca1704ee98d6f24787997e7111a480557c31e2414147b3268dc5502"
+  },
+  {
+   "gz_bytes": 38146683,
+   "gz_sha256": "63070920addff7af86a3d76384dd52a1923175eb9c469b97f1a35e4cfb51d998",
+   "name": "sft-math-nemotron-proofs.part0029.jsonl.gz",
+   "plain_bytes": 400366700,
+   "plain_sha256": "a65e6ac5f7b183653213aeac93b5300df91eb8f2116780f1fdbc2c89056551b5"
+  },
+  {
+   "gz_bytes": 38415551,
+   "gz_sha256": "f4315ba7eaa96120fed5376f54e1954b7ea4d5fcb62cad20276faac53e24f396",
+   "name": "sft-math-nemotron-proofs.part0030.jsonl.gz",
+   "plain_bytes": 400142987,
+   "plain_sha256": "55fa597b41cc82635c2662335e71a757603220db115e1308e58a5b04044050d3"
+  },
+  {
+   "gz_bytes": 38204220,
+   "gz_sha256": "67df8847c3b9ec6344a29562795be6d635752e9714251b1f157fa26ed9b10e43",
+   "name": "sft-math-nemotron-proofs.part0031.jsonl.gz",
+   "plain_bytes": 400143241,
+   "plain_sha256": "f3d4f20208f59457257924ca27f3bbf7ed8d4a43f81f66c6ce5ba891aa268ed8"
+  },
+  {
+   "gz_bytes": 37896466,
+   "gz_sha256": "61c1c064d761a3761658b64ef66372728300940d125d95a52487188fd032552f",
+   "name": "sft-math-nemotron-proofs.part0032.jsonl.gz",
+   "plain_bytes": 400053228,
+   "plain_sha256": "0da66136141807d820fb9ff24a5554617ce2c45d273e305c8c2bbc027e6af3ec"
+  },
+  {
+   "gz_bytes": 38236545,
+   "gz_sha256": "262621f65ef71ce491e5beeafdffdd91bcbb3cb047aae2a5b944edc7fb8a246b",
+   "name": "sft-math-nemotron-proofs.part0033.jsonl.gz",
+   "plain_bytes": 400069168,
+   "plain_sha256": "c8871a7d6f166203b020476b66fbcb7e08c09b9362152766c156a1981bc4a78c"
+  },
+  {
+   "gz_bytes": 39299194,
+   "gz_sha256": "563d8f6c4774314642426409e2981584e9aff599a0a4b65ad536932948a9211e",
+   "name": "sft-math-nemotron-proofs.part0034.jsonl.gz",
+   "plain_bytes": 400031853,
+   "plain_sha256": "0a2148360a4fa3e535b7d04aa5a645f49c800adeb3e8c8446d82e450c739eadf"
+  },
+  {
+   "gz_bytes": 37887443,
+   "gz_sha256": "abe018a55ad8c370503145ad5ff9606a98801e13dd733a5b40506184faa7ecfd",
+   "name": "sft-math-nemotron-proofs.part0035.jsonl.gz",
+   "plain_bytes": 400035808,
+   "plain_sha256": "40983caf812048b646a3e45f7a6ff29d2fc0834cc727d97ddbac7a9afcab6bd5"
+  },
+  {
+   "gz_bytes": 37989436,
+   "gz_sha256": "80e232aee1c9a3d93a6152115469bd2b0b2693e0063343ef771ccd066d1f5b79",
+   "name": "sft-math-nemotron-proofs.part0036.jsonl.gz",
+   "plain_bytes": 400052551,
+   "plain_sha256": "7cbf763f5d5b2e67bd66075503c11d8b9f55879d513d3ab7c364c5c988ca2e7b"
+  },
+  {
+   "gz_bytes": 38442399,
+   "gz_sha256": "878512f147a1d3b510b2e3c0e9b45903cc4563c492dd8e0fb542f833fe5099ed",
+   "name": "sft-math-nemotron-proofs.part0037.jsonl.gz",
+   "plain_bytes": 400047971,
+   "plain_sha256": "d59a944f640f2e58aee3f1b96e9fadbed216fc658233e3d6a710ccc0e3aabee8"
+  },
+  {
+   "gz_bytes": 39462530,
+   "gz_sha256": "ceb4e28974bf8baebea6e52ffbf52b9b5d26e1d6da1ac09d94428fb418244206",
+   "name": "sft-math-nemotron-proofs.part0038.jsonl.gz",
+   "plain_bytes": 400022868,
+   "plain_sha256": "02e2a83aa6edbf79df6d4726193c4bf4f400668d8154e7264bed96481921f90b"
+  },
+  {
+   "gz_bytes": 38798482,
+   "gz_sha256": "49a4a90ed745c9fb4e9f474970823718fce4d10d20ce652ab66747b57ca62089",
+   "name": "sft-math-nemotron-proofs.part0039.jsonl.gz",
+   "plain_bytes": 400065544,
+   "plain_sha256": "ca996d4d2b03db56dc889b2b604d4bd6dc4949ddff8f662bd13dec8f90ed101c"
+  },
+  {
+   "gz_bytes": 37113132,
+   "gz_sha256": "4636f514d10c90f6d4c1c63502fe372bf92e023dbae29559d58ce486b4cc29a9",
+   "name": "sft-math-nemotron-proofs.part0040.jsonl.gz",
+   "plain_bytes": 400208789,
+   "plain_sha256": "6063a6712ef3c2c0e0fd023efaef95f083f53307e0e790498492d460b0fbff90"
+  },
+  {
+   "gz_bytes": 38102015,
+   "gz_sha256": "a8a129b0948a53504edef9f68806296aa0278814ed9f988bfb64dfd3098d5c75",
+   "name": "sft-math-nemotron-proofs.part0041.jsonl.gz",
+   "plain_bytes": 400208231,
+   "plain_sha256": "f428b6959adee52b1301b64df22cca947f80dcead2e2ca96073d8389d0c2389a"
+  },
+  {
+   "gz_bytes": 37551693,
+   "gz_sha256": "bfcfa8fa2d7c734b738102168b297f26da7e537e67a24a3808c4c9763ad216e2",
+   "name": "sft-math-nemotron-proofs.part0042.jsonl.gz",
+   "plain_bytes": 400235662,
+   "plain_sha256": "eb35544523f55c98a7b795429bdb45c6cec0374023946465eb6642a6adbdd1af"
+  },
+  {
+   "gz_bytes": 37885065,
+   "gz_sha256": "911264e8ab4023cfa88bf62a4754604c9d2ed46ae8782a9ee344e33262376919",
+   "name": "sft-math-nemotron-proofs.part0043.jsonl.gz",
+   "plain_bytes": 400036540,
+   "plain_sha256": "768c30f1a58f355e0e2b4a6a443fe689ee340812cd9cdfe005b92fd318d64f16"
+  },
+  {
+   "gz_bytes": 38994757,
+   "gz_sha256": "81a23df84c5d2488bb9166e9e5ef262f037ebb707461a9f5ec1eb395726fb4ce",
+   "name": "sft-math-nemotron-proofs.part0044.jsonl.gz",
+   "plain_bytes": 400056000,
+   "plain_sha256": "ab075f28d63d4c53bade9fe5642fe38a8fc75235e13e1ca93fc624e9a366d800"
+  },
+  {
+   "gz_bytes": 38656623,
+   "gz_sha256": "55ebf587b2fd551254f64f3693d4158ca0fa3e93c4119a13c19a28b24c175ecd",
+   "name": "sft-math-nemotron-proofs.part0045.jsonl.gz",
+   "plain_bytes": 400113455,
+   "plain_sha256": "1dbfb5014891145e53cb16727ed3e7ea45b28adca5e6780d6f80e6e2beeae466"
+  },
+  {
+   "gz_bytes": 38267152,
+   "gz_sha256": "3ea98be7724fb77a64be71371775b5e538d3f6881ba91cbd0f2b1ac2edba13fa",
+   "name": "sft-math-nemotron-proofs.part0046.jsonl.gz",
+   "plain_bytes": 400094992,
+   "plain_sha256": "825eb45f797e233933a9140f8a878e0a6ba44eaeba9c5a430f7a0d0b59c490ab"
+  },
+  {
+   "gz_bytes": 38575247,
+   "gz_sha256": "ae771d36c96c6a063ef8958c91c69505721472202934f681a9bf3a1c9dcecc24",
+   "name": "sft-math-nemotron-proofs.part0047.jsonl.gz",
+   "plain_bytes": 400017222,
+   "plain_sha256": "0c11f304c48f7b0e69bc50a9ccf2418a64bf154132acf87c1fb4ff05cd597356"
+  },
+  {
+   "gz_bytes": 37713371,
+   "gz_sha256": "f524ccc1553f809aa6d35846acea38f719885a955322fa1117123118f64e1f5c",
+   "name": "sft-math-nemotron-proofs.part0048.jsonl.gz",
+   "plain_bytes": 400102088,
+   "plain_sha256": "943de8682f38ce7fe8a9c1255564fcf4f003c6263804cf40573a3adc4f83f075"
+  },
+  {
+   "gz_bytes": 38220720,
+   "gz_sha256": "01588c8a4d514eb7ef681dee2b8544b923c9a54e011f99f2585a73bda3d436d2",
+   "name": "sft-math-nemotron-proofs.part0049.jsonl.gz",
+   "plain_bytes": 400174555,
+   "plain_sha256": "d0abc3ff2129b8ed17cc55ed08f74df36682124d68bef05d0e2bcfd8ddc9ebbe"
+  },
+  {
+   "gz_bytes": 38541369,
+   "gz_sha256": "11feb91d2afd5ec8dbc64d3d44dd2cb58d006dd3c43e831a11348c604eab3afe",
+   "name": "sft-math-nemotron-proofs.part0050.jsonl.gz",
+   "plain_bytes": 400069738,
+   "plain_sha256": "9c8b5aa7892f760bd291c3315acd6894f0df601792e1ab6411587b35fb19a71b"
+  },
+  {
+   "gz_bytes": 37758318,
+   "gz_sha256": "26ea1f16642e76e96db8f3493d862f4511837a6459cec7ee5ca30a5c3f97d441",
+   "name": "sft-math-nemotron-proofs.part0051.jsonl.gz",
+   "plain_bytes": 400106275,
+   "plain_sha256": "e9b2d208efe40b1f0d25f4b39c7898da8678d6b12c572b3539102fb07ff6a23c"
+  },
+  {
+   "gz_bytes": 38138667,
+   "gz_sha256": "c198a3b360860d4b3506ce2b9a479a4ad544a851647680424646fa2bc48e6901",
+   "name": "sft-math-nemotron-proofs.part0052.jsonl.gz",
+   "plain_bytes": 400021071,
+   "plain_sha256": "e82195dc53f1b1c0362a8a1d2737432909b5a5d922927c3611fb21d3ff5cd0c6"
+  },
+  {
+   "gz_bytes": 38462425,
+   "gz_sha256": "5a14cbdc80e7561c20957cf3dfac4a80e99a384cacc20553ec0fe8530002f7fd",
+   "name": "sft-math-nemotron-proofs.part0053.jsonl.gz",
+   "plain_bytes": 400092619,
+   "plain_sha256": "72a46c2b56d45efdc0d632b90ff22037a6ac99198947aed6fcedcb66117e4d2a"
+  },
+  {
+   "gz_bytes": 38378825,
+   "gz_sha256": "b678221b5e05fa928451ced46e7fe268a00e87dc9b249c55b025b4c620b7dffe",
+   "name": "sft-math-nemotron-proofs.part0054.jsonl.gz",
+   "plain_bytes": 400014841,
+   "plain_sha256": "d9bbafd4952669d2a3b06722bdac97795c63336f1bdf8f5f1644c6a2fb08af4b"
+  },
+  {
+   "gz_bytes": 38528025,
+   "gz_sha256": "fbe7084e8ea3fd47ed97f2c879e78d9a0eb02f4c2d7eceafc69a56839452a102",
+   "name": "sft-math-nemotron-proofs.part0055.jsonl.gz",
+   "plain_bytes": 400046399,
+   "plain_sha256": "13ea7958db5b97cdab1e189425bc2062e338926b45385b29a4c0d6a8f342e19a"
+  },
+  {
+   "gz_bytes": 38730972,
+   "gz_sha256": "c9b02e3bf9531a35089d12418b7c8535bffabebbd84f652b98c93ae35766f861",
+   "name": "sft-math-nemotron-proofs.part0056.jsonl.gz",
+   "plain_bytes": 400116588,
+   "plain_sha256": "b4c8129f0beef2fc15c2c572a101b9c34c9e9801d239569bea971dde73cbaf08"
+  },
+  {
+   "gz_bytes": 38069386,
+   "gz_sha256": "25f56dc5b1a62d6b664c3f2737398faada38f8586d1fb2ad8bcc418e0a894e19",
+   "name": "sft-math-nemotron-proofs.part0057.jsonl.gz",
+   "plain_bytes": 400012571,
+   "plain_sha256": "ffdfa09fd9d0a87664566baafeb336ca2c0e8f0cd91cd19e8bf298b02a2585a0"
+  },
+  {
+   "gz_bytes": 38405031,
+   "gz_sha256": "5897a29edcadbd567b4d96b59401af55ac7b50c0a8304a6d46340347f72c97df",
+   "name": "sft-math-nemotron-proofs.part0058.jsonl.gz",
+   "plain_bytes": 400090596,
+   "plain_sha256": "592455456be7873ffa1483ef37038621b200c3c7c187d1942b731e356240f009"
+  },
+  {
+   "gz_bytes": 38162106,
+   "gz_sha256": "bc87a07977f705ec44c8b7d970e623fdea0efa08fe20cf022de51dac0bb61295",
+   "name": "sft-math-nemotron-proofs.part0059.jsonl.gz",
+   "plain_bytes": 400100433,
+   "plain_sha256": "9ccfddfafc27373e44f7e4df11603a7d27574b106dea50197150f4138019dde9"
+  },
+  {
+   "gz_bytes": 39170422,
+   "gz_sha256": "9756cf9aebb2d9e921e5ce5efb35f10f7c930050eaad1402553b2b062adefd21",
+   "name": "sft-math-nemotron-proofs.part0060.jsonl.gz",
+   "plain_bytes": 400069550,
+   "plain_sha256": "42c2447bf4d6f6f0e4a40c780a52b861f7e945baff98de6d3c2ec7df2a7c8379"
+  },
+  {
+   "gz_bytes": 38624250,
+   "gz_sha256": "b1b759f39556214cd39c2461e55d87443a397949c87acd46d400062079fc4c4c",
+   "name": "sft-math-nemotron-proofs.part0061.jsonl.gz",
+   "plain_bytes": 400197739,
+   "plain_sha256": "ad4dabed1ee7931b9319f935cb052b018bf1bd31d46baacd9f4369f735b255bd"
+  },
+  {
+   "gz_bytes": 38279064,
+   "gz_sha256": "da246b8db79fe48504973d3f1081d409295b5cfa8c26e422860c93f7f6e1d682",
+   "name": "sft-math-nemotron-proofs.part0062.jsonl.gz",
+   "plain_bytes": 400075275,
+   "plain_sha256": "c503ef2045f82cafdf2fa4ed821ea880321fc509839d0e6656ea79abe703fb5e"
+  },
+  {
+   "gz_bytes": 38546991,
+   "gz_sha256": "efe797f632c6aba7d700ce4b32aa1a363d43f90766ab8b64508eca749318bdd9",
+   "name": "sft-math-nemotron-proofs.part0063.jsonl.gz",
+   "plain_bytes": 400106606,
+   "plain_sha256": "1fbca5325c6ade98dac03146f8280b005cf0af278996170ba0a493baf2f01f09"
+  },
+  {
+   "gz_bytes": 38413966,
+   "gz_sha256": "40d9e43364deb20bda8268be6fb365e448d153925a6737c5b709faa49144291f",
+   "name": "sft-math-nemotron-proofs.part0064.jsonl.gz",
+   "plain_bytes": 400016825,
+   "plain_sha256": "6960a339233bbed7a6aa3af8d90a16633cd5eed9060b0c9fd72bf6296e5af1e9"
+  },
+  {
+   "gz_bytes": 38966370,
+   "gz_sha256": "0a4ab5330557144f284709583b95cf1d0b55fbae421fa2267cdb47b141584a5a",
+   "name": "sft-math-nemotron-proofs.part0065.jsonl.gz",
+   "plain_bytes": 400005622,
+   "plain_sha256": "200a64253a2f47d5ba6f33a4ff728f8bac1cc418132a06d441218e201e1a635f"
+  },
+  {
+   "gz_bytes": 38815545,
+   "gz_sha256": "57c596b8d45e1a98698f7f974c9481e95ca68b956ba07b6c2290389352a0976b",
+   "name": "sft-math-nemotron-proofs.part0066.jsonl.gz",
+   "plain_bytes": 400007809,
+   "plain_sha256": "d6a9bf03e0d3b981e5fae154ed2b41e527401658eb4374b47b6f9f731e7b4fd1"
+  },
+  {
+   "gz_bytes": 38779321,
+   "gz_sha256": "10543313afedde928225afd07871e2f736b47946b3e230caebeccaa91be4e01e",
+   "name": "sft-math-nemotron-proofs.part0067.jsonl.gz",
+   "plain_bytes": 400039403,
+   "plain_sha256": "8ae4b5e78aa7b1be054cd4cc863bd098a30f27b9a3084c0cd237a382cd93b4c0"
+  },
+  {
+   "gz_bytes": 38531101,
+   "gz_sha256": "06fcf998781cc54097462b89d080ef571950c0a803c36cd90722b7aeb94f0d26",
+   "name": "sft-math-nemotron-proofs.part0068.jsonl.gz",
+   "plain_bytes": 400030905,
+   "plain_sha256": "a94b37d033688a8a3cce55d24f58d09691118339254f5fb0675721f5de7abee3"
+  },
+  {
+   "gz_bytes": 38998008,
+   "gz_sha256": "5b8df3fbb5297f3647c9d82e5d1511b9cb9098e8ecdad05e5b1b91afb7428b21",
+   "name": "sft-math-nemotron-proofs.part0069.jsonl.gz",
+   "plain_bytes": 400008238,
+   "plain_sha256": "da00041a35104dad679caac736c302a079c771995c9e7d51f8efc1ea564f3fbe"
+  },
+  {
+   "gz_bytes": 38658010,
+   "gz_sha256": "d8311fdf9a41c6c48f9356adc27d0044da1d87d75e574d388959f6301e58b8ea",
+   "name": "sft-math-nemotron-proofs.part0070.jsonl.gz",
+   "plain_bytes": 400025241,
+   "plain_sha256": "c0599720663ed0c48e371eee2778e8ee7cfd1f68442f66d32277710ae03f72b3"
+  },
+  {
+   "gz_bytes": 37942359,
+   "gz_sha256": "ee6af626a15e3beb277f96f70c5efee043062a3c53b63f6f7f0f7faa3ae67bd3",
+   "name": "sft-math-nemotron-proofs.part0071.jsonl.gz",
+   "plain_bytes": 400029274,
+   "plain_sha256": "1548d85ffdbaec8c9341d026ccc453e5a5c550f5cc946d61fcf9fba832a8c6a6"
+  },
+  {
+   "gz_bytes": 38286156,
+   "gz_sha256": "e7dc3c5f4cf5e7247189916b22635bf86b28a9d275188973a0b1d83dca046e21",
+   "name": "sft-math-nemotron-proofs.part0072.jsonl.gz",
+   "plain_bytes": 400087825,
+   "plain_sha256": "f9b12477f1703f2f38e6dd01741f311fe03079d6627e634b969e1b05f58d78b2"
+  },
+  {
+   "gz_bytes": 37456321,
+   "gz_sha256": "96ada8b238c11b1be3dce3e7b14e212b35124f10f0adde37cc3617b53eddf3b6",
+   "name": "sft-math-nemotron-proofs.part0073.jsonl.gz",
+   "plain_bytes": 400037405,
+   "plain_sha256": "189e8bde38ad781d8f226cd4517b127a50a9dd7d08416b7970c85fcda2854934"
+  },
+  {
+   "gz_bytes": 38646025,
+   "gz_sha256": "10ebefb98ded3264afa2fbc67ceede91b9693cc4ca916a2e207f69825065494b",
+   "name": "sft-math-nemotron-proofs.part0074.jsonl.gz",
+   "plain_bytes": 400049156,
+   "plain_sha256": "583bbb9804891a0de7225e52e5b83529d872efb5b05d4c45a24d6259a0571bb8"
+  },
+  {
+   "gz_bytes": 38200264,
+   "gz_sha256": "f9bac483f17c8c79ac93a740be1f874149fe7664f535cb505c2ed547e0422cbd",
+   "name": "sft-math-nemotron-proofs.part0075.jsonl.gz",
+   "plain_bytes": 400062049,
+   "plain_sha256": "0b95282f0f3c5a98211a3057ade941f16d7382e4960d15ff235ffe11ab3338b9"
+  },
+  {
+   "gz_bytes": 38917489,
+   "gz_sha256": "43945700f45891fbbe41bc05a640fe3654f507855d21c9fe1425b1c6a7bc472c",
+   "name": "sft-math-nemotron-proofs.part0076.jsonl.gz",
+   "plain_bytes": 400066273,
+   "plain_sha256": "da29fa00b134d0f98bd9122338a3c57643211f0e4ac072bf2f1f8d82ffc1a9b8"
+  },
+  {
+   "gz_bytes": 37777466,
+   "gz_sha256": "b9774488f0a09ebc4f38487e7b350cb64e1e510137a6ba83351b75ae05d71057",
+   "name": "sft-math-nemotron-proofs.part0077.jsonl.gz",
+   "plain_bytes": 400079295,
+   "plain_sha256": "b2ae7ebbd6af5c09f1c1c88e17389b8982d347bedec3ca6ccdeb93d5b0a42ef8"
+  },
+  {
+   "gz_bytes": 37967236,
+   "gz_sha256": "9077c18804b1ef4799653b3df73cd60cadb498b820f25c44d5982c24d03ae309",
+   "name": "sft-math-nemotron-proofs.part0078.jsonl.gz",
+   "plain_bytes": 400071835,
+   "plain_sha256": "ac0f5e1b1afe8e6b7a57e080598c8248b72c5a89f0f9decfc595099602ef03a9"
+  },
+  {
+   "gz_bytes": 38430542,
+   "gz_sha256": "c8d50e8e9648c7012d517e68d765d739b7178a1fb37798f235696b5d4b01c808",
+   "name": "sft-math-nemotron-proofs.part0079.jsonl.gz",
+   "plain_bytes": 400357803,
+   "plain_sha256": "e11ef6974b2c028e9ed58b4d93d29c4f54d6f0cbbf22cb39e756064bb7f20c4e"
+  },
+  {
+   "gz_bytes": 37943337,
+   "gz_sha256": "acf30fae18b006949900a120f2717828d9b895c4e647d90465c7c304fd70a82a",
+   "name": "sft-math-nemotron-proofs.part0080.jsonl.gz",
+   "plain_bytes": 400097630,
+   "plain_sha256": "88e237fd7dc52432a73f5f4030b313148fa77fbd1895cea25cb65291de6c6cd9"
+  },
+  {
+   "gz_bytes": 39380864,
+   "gz_sha256": "f7d1ccc625b3ae301651bf130cc8aa89c03c3b8a34b0d6c9e34e5841b2aa34b6",
+   "name": "sft-math-nemotron-proofs.part0081.jsonl.gz",
+   "plain_bytes": 400008510,
+   "plain_sha256": "1e69c73af7b76062b491ed5b734a7b25d41b55d9e3b21056d498e5b1e443febd"
+  },
+  {
+   "gz_bytes": 37957265,
+   "gz_sha256": "e2e89da8f0a4e9158db801cd97cb4fc9884853c6300ea425bf8978bf9fdf53b6",
+   "name": "sft-math-nemotron-proofs.part0082.jsonl.gz",
+   "plain_bytes": 400166123,
+   "plain_sha256": "a721de911e19d28db3eeaabaabcc92ba45196be4b707593cbac5f36a07c8803f"
+  },
+  {
+   "gz_bytes": 39147085,
+   "gz_sha256": "fcb9f16878657b31ccf887aa2c870b94ee64d06983e5a6f6c30d5f4e89cb7f48",
+   "name": "sft-math-nemotron-proofs.part0083.jsonl.gz",
+   "plain_bytes": 400029913,
+   "plain_sha256": "03120785b2ab30f9da6371b96b74cf8d56a9c8e96468f93f9572f3717cabb316"
+  },
+  {
+   "gz_bytes": 38554187,
+   "gz_sha256": "6752565b74a6ef15b25e80df22a6cab49aa624acadd4f613467e785c8d1b1de6",
+   "name": "sft-math-nemotron-proofs.part0084.jsonl.gz",
+   "plain_bytes": 400017567,
+   "plain_sha256": "0353d18fbfae1abbc14e9794a1feb1403a7a11168701f74be9c558b4607b3481"
+  },
+  {
+   "gz_bytes": 37843829,
+   "gz_sha256": "2a1d8e57d91fbdd41991c59340cae129ae6c97094311eecc64a3e217cdd86322",
+   "name": "sft-math-nemotron-proofs.part0085.jsonl.gz",
+   "plain_bytes": 400047886,
+   "plain_sha256": "644f033f2cc54afbb2edfe4170f26f171c1d27b8529a2862f7840213b4d2bba7"
+  },
+  {
+   "gz_bytes": 38907656,
+   "gz_sha256": "9c494af6c913926e0c968f3c1f7865b425408164102e8575677934a7dd2bb581",
+   "name": "sft-math-nemotron-proofs.part0086.jsonl.gz",
+   "plain_bytes": 400287758,
+   "plain_sha256": "0c59fdcb37f13ad46ec334978ce111a1c6528a89bb6a7dcac8d81fff8463fc48"
+  },
+  {
+   "gz_bytes": 38494467,
+   "gz_sha256": "be566f8a53e4935c488c51e5f26430a0a87b043b0344be88246821c1d6f91663",
+   "name": "sft-math-nemotron-proofs.part0087.jsonl.gz",
+   "plain_bytes": 400035164,
+   "plain_sha256": "7062023b9ea5483e773d250797acadf6d2a6a06b72e53eb69a3e2d6f7c2b0622"
+  },
+  {
+   "gz_bytes": 37926911,
+   "gz_sha256": "dd217ebbf6a33f36d1883ab0a92646acb8b58ed8ce440d8370711a6fbede79c8",
+   "name": "sft-math-nemotron-proofs.part0088.jsonl.gz",
+   "plain_bytes": 400103462,
+   "plain_sha256": "f53e3e8ea198ec5066fc7f9046a76a6b9aef59db004d01b4a0ca1904ce183c76"
+  },
+  {
+   "gz_bytes": 38661923,
+   "gz_sha256": "11a6581bf538e07de40cb5490662be6027fc4ee17ccdb862b1bf4f9e44d83aa1",
+   "name": "sft-math-nemotron-proofs.part0089.jsonl.gz",
+   "plain_bytes": 400014875,
+   "plain_sha256": "4c0610fbe7161c03570415bcd213172f0f3c7cc48645c58fdd939320d3ae7a29"
+  },
+  {
+   "gz_bytes": 37805637,
+   "gz_sha256": "3bcca06f674f0e07a1b6d1f38cc22a7347fdadacd556a436f460f8e41ff338cc",
+   "name": "sft-math-nemotron-proofs.part0090.jsonl.gz",
+   "plain_bytes": 400052607,
+   "plain_sha256": "0b933e483689c71d8c74f6cfcd643682d434821e132370904e9ebb73c182fafd"
+  },
+  {
+   "gz_bytes": 37485048,
+   "gz_sha256": "50f179d671843c379c8898cb15e84b0fd8463e5c997ed1336696f5c3e476f82f",
+   "name": "sft-math-nemotron-proofs.part0091.jsonl.gz",
+   "plain_bytes": 400171620,
+   "plain_sha256": "08297dd1745ef38eff0187dccc6bdedd64895bbe7bbccfc0f683eb3b7620fe57"
+  },
+  {
+   "gz_bytes": 37799359,
+   "gz_sha256": "65117be70382bdeb35321a9c53d24f9917efb0d5a5ddc4775f76debaceee3239",
+   "name": "sft-math-nemotron-proofs.part0092.jsonl.gz",
+   "plain_bytes": 400223880,
+   "plain_sha256": "9dcddfbcd47027ef3a1017713607e87752790d0d303217504e99477b2b5a2c0e"
+  },
+  {
+   "gz_bytes": 38689493,
+   "gz_sha256": "42cac0e8d72f43daba483c119301afda9d964b4ca530b7e30607bfa5546bdbda",
+   "name": "sft-math-nemotron-proofs.part0093.jsonl.gz",
+   "plain_bytes": 400052424,
+   "plain_sha256": "00ca10a449af347369c5f7a0ca3478908e65104ce9881ae025f36795f4047032"
+  },
+  {
+   "gz_bytes": 38852349,
+   "gz_sha256": "c88cf60f7381b9408d1784785772644a3d5365d907d4c86b03fe8afb2f54784b",
+   "name": "sft-math-nemotron-proofs.part0094.jsonl.gz",
+   "plain_bytes": 400060998,
+   "plain_sha256": "99951b944df9ac6926c730d50737f580159161e14ec7716d6c5083b6935c7823"
+  },
+  {
+   "gz_bytes": 39165605,
+   "gz_sha256": "5d7a2412933c08992aff230d4c29bfb26c1f11fa654cc6ee6884153a41f0b139",
+   "name": "sft-math-nemotron-proofs.part0095.jsonl.gz",
+   "plain_bytes": 400043429,
+   "plain_sha256": "8fa1571388b24958dc5bad02cd7fe19a7b34c7b954b0a6989c08750c43a3d957"
+  },
+  {
+   "gz_bytes": 39307772,
+   "gz_sha256": "2512a9ad0ec0e378a2829eeabf740e6d19f07ccc511ef77e0a5eb7ff087e51ba",
+   "name": "sft-math-nemotron-proofs.part0096.jsonl.gz",
+   "plain_bytes": 400000466,
+   "plain_sha256": "7db00ed8b0b26b06a8b395fc142e13a690a4c18ebbb358491c3bcab8f0591193"
+  },
+  {
+   "gz_bytes": 37967642,
+   "gz_sha256": "8bf1d09e8e9efd3f2232692afd1c46e032cb0bbfac5bcb4e1efd329f14e8d180",
+   "name": "sft-math-nemotron-proofs.part0097.jsonl.gz",
+   "plain_bytes": 400155133,
+   "plain_sha256": "295fbba85ee606e2728d585d99a32500b2e2a640eb3a3a4471afa6d0976233bc"
+  },
+  {
+   "gz_bytes": 39075293,
+   "gz_sha256": "6a02a3ff2c4db7165d9fbeff8f76f5ae7f25a88c9601ddfa8444012438034e41",
+   "name": "sft-math-nemotron-proofs.part0098.jsonl.gz",
+   "plain_bytes": 400173114,
+   "plain_sha256": "b4ea7d6759d2ea9e7cda08cf5c6405e7b3a4fa8202f3f12bd556ad60c7cf485b"
+  },
+  {
+   "gz_bytes": 38650661,
+   "gz_sha256": "7baa1e4c388bd1149177b3a9f5b3498d8e2b683f67a9b8a003fd38fe4958c2da",
+   "name": "sft-math-nemotron-proofs.part0099.jsonl.gz",
+   "plain_bytes": 400199029,
+   "plain_sha256": "ec4715c1e3f06c6ed2afa4396735ae108c8d3134837b7134f55d711542ec4490"
+  },
+  {
+   "gz_bytes": 38232966,
+   "gz_sha256": "10d2c88398267ecb5b0fde9b67b63d37fec98002ba004de65c9aa3dbed18163b",
+   "name": "sft-math-nemotron-proofs.part0100.jsonl.gz",
+   "plain_bytes": 400047909,
+   "plain_sha256": "100967ec6a896bab3a3698c7e475a8fc55cbabd188aa12e7e451526b1cd89fbe"
+  },
+  {
+   "gz_bytes": 38515242,
+   "gz_sha256": "6584722dbf4b062aa407da452ec4d964f1c413a7907729b561f6ae26ead057a5",
+   "name": "sft-math-nemotron-proofs.part0101.jsonl.gz",
+   "plain_bytes": 400199902,
+   "plain_sha256": "4b2f94752048cf14d773e76a90c3635a4c5ec5ee99eb31d029a948b750c97681"
+  },
+  {
+   "gz_bytes": 38428124,
+   "gz_sha256": "9ef96d653f0acf8adcc20ff9ad9d492e949c6a8d0f98090e227d1b7ef1a1981c",
+   "name": "sft-math-nemotron-proofs.part0102.jsonl.gz",
+   "plain_bytes": 400180329,
+   "plain_sha256": "c1150dbc9317d0d97340e7c00248564da242d515b3302fa7a9fb7833642d12f0"
+  },
+  {
+   "gz_bytes": 38571528,
+   "gz_sha256": "c11d0aad8a2f51643d93531341b8a5d2917d0d982697f46158e97e81315ead54",
+   "name": "sft-math-nemotron-proofs.part0103.jsonl.gz",
+   "plain_bytes": 400249306,
+   "plain_sha256": "12e501d555439ebf937c4933d6738d0acc9a533cd9a8af0238e51390b83cdfeb"
+  },
+  {
+   "gz_bytes": 39249317,
+   "gz_sha256": "11cebbf0b5578d770b8cba414e31e6cf9be98faede7c7cba061cb697c35f5d2b",
+   "name": "sft-math-nemotron-proofs.part0104.jsonl.gz",
+   "plain_bytes": 400069773,
+   "plain_sha256": "cf4cd90e86a056126db16e397cbf0790087766b497bd526e7c68fb47ebea59dd"
+  },
+  {
+   "gz_bytes": 38259913,
+   "gz_sha256": "b4001233c4f4a1ff38e8d8e4549efa5c8112b8d7e7282c79e22fba76e104fc3d",
+   "name": "sft-math-nemotron-proofs.part0105.jsonl.gz",
+   "plain_bytes": 400257546,
+   "plain_sha256": "926d91b48c22fdac66bdc79521b307648a8487f692b518ac82c3cb94f64281e4"
+  },
+  {
+   "gz_bytes": 38396184,
+   "gz_sha256": "6e1f8f05cfe8848528cc2445d6ffc2ef7dbaf0a9d1b98fd8015a9afc5b128615",
+   "name": "sft-math-nemotron-proofs.part0106.jsonl.gz",
+   "plain_bytes": 400147199,
+   "plain_sha256": "83511bc07b370e0b806860d93d426930b9b7783368440325096788158434f5f4"
+  },
+  {
+   "gz_bytes": 38663274,
+   "gz_sha256": "c97e82ab42a9ce9cb229fd2968810b394d0d9fe3a090193ae0c58c82f75c74e3",
+   "name": "sft-math-nemotron-proofs.part0107.jsonl.gz",
+   "plain_bytes": 400104431,
+   "plain_sha256": "a322ecfef51da21eaf4cf8676c28d49478333cabcbba67c90e236bbe513fcb42"
+  },
+  {
+   "gz_bytes": 38853477,
+   "gz_sha256": "6fb114e68be7f9ed5a5c142f3b8ff4c6951aec6e43c5367d8fdb23c18f2899a9",
+   "name": "sft-math-nemotron-proofs.part0108.jsonl.gz",
+   "plain_bytes": 400133211,
+   "plain_sha256": "71d008ae36444d29d43689955c6cfcd73014a2d07e19387a09d7d09cc69b9dbc"
+  },
+  {
+   "gz_bytes": 38821543,
+   "gz_sha256": "30dad266320f558de79bd55b2d34c471c9f60d2cf3df44ec0865dc72e4bcf7a0",
+   "name": "sft-math-nemotron-proofs.part0109.jsonl.gz",
+   "plain_bytes": 400161670,
+   "plain_sha256": "f4daf160db7dbf8a699c92292c2c3a9ff7553f66c6d3516e006ef0b575e57381"
+  },
+  {
+   "gz_bytes": 38202995,
+   "gz_sha256": "63a7e46e428c90206cf4c702c70724723df5021a5557cb14783329072067586e",
+   "name": "sft-math-nemotron-proofs.part0110.jsonl.gz",
+   "plain_bytes": 400012528,
+   "plain_sha256": "4fe19885c5f5291f1221bd3f320f002874df002d82b1329b93dc29b334970178"
+  },
+  {
+   "gz_bytes": 38918303,
+   "gz_sha256": "adc8f4defc358524734dad94d62140014fc751cd324e348f1964081de38a4355",
+   "name": "sft-math-nemotron-proofs.part0111.jsonl.gz",
+   "plain_bytes": 400111710,
+   "plain_sha256": "758a953b0e921ec20d44e1fb4ea07ff22f375fc0ca7a0cec27419d58b76c16a6"
+  },
+  {
+   "gz_bytes": 38708741,
+   "gz_sha256": "ceb6486ca934f979313d2899469fda4e1253c4126be5c7e4d0f43f6a37b8507a",
+   "name": "sft-math-nemotron-proofs.part0112.jsonl.gz",
+   "plain_bytes": 400113829,
+   "plain_sha256": "d308588e9c9038020e0855429bbd061f2a28bc8d9ef1eed435f9198bc8ccf8bb"
+  },
+  {
+   "gz_bytes": 38858946,
+   "gz_sha256": "327dcb582c09f70816fe0f75978fee0d4aa86540a8279b4f4641c1ffeda558f0",
+   "name": "sft-math-nemotron-proofs.part0113.jsonl.gz",
+   "plain_bytes": 400001381,
+   "plain_sha256": "d8af16a6dc62eec178454e0ed1a3d7c0e091fad668285c371d6d40375528aff7"
+  },
+  {
+   "gz_bytes": 38623656,
+   "gz_sha256": "79b292c63601ef1fa45ba4c740eaf8d76cdd08f5f7db6d0bc4898e491e087fca",
+   "name": "sft-math-nemotron-proofs.part0114.jsonl.gz",
+   "plain_bytes": 400120277,
+   "plain_sha256": "ab4f2934a81a5fb320f2266d66cd700c12494c9a851ff5fe5ec13964a44edf7a"
+  },
+  {
+   "gz_bytes": 38983851,
+   "gz_sha256": "369263bd52dc9aa077f7593c284bd7835fbbd38911eb3e8b02dc72b2e951ef4f",
+   "name": "sft-math-nemotron-proofs.part0115.jsonl.gz",
+   "plain_bytes": 400085327,
+   "plain_sha256": "8cc2c5ecd9a22e554cc89fa4b8fe6a7faea703c6c2c50519a8f658bed73a226d"
+  },
+  {
+   "gz_bytes": 39004513,
+   "gz_sha256": "246a2e4d9b53a7c4487ee2122e4044ce91cd589539e63ac0ec53fe5e62748018",
+   "name": "sft-math-nemotron-proofs.part0116.jsonl.gz",
+   "plain_bytes": 400148625,
+   "plain_sha256": "5b1c5b7564d9f014244cfcb4797c757c30d13c66efcda82bc315eb54d296cbce"
+  },
+  {
+   "gz_bytes": 39405682,
+   "gz_sha256": "b6f1788e786aa144031b0fe31ddee4f56bfc65e36516eb4ec94997c66ba39f7c",
+   "name": "sft-math-nemotron-proofs.part0117.jsonl.gz",
+   "plain_bytes": 400129346,
+   "plain_sha256": "6080d76c553de554f3d92b9839a0129782b7ea72305b8a165ce8ff26225de6a2"
+  },
+  {
+   "gz_bytes": 37802368,
+   "gz_sha256": "2d85c20528f940373b6f830c0083de7472e763bab33d000aeb49cf269fd53559",
+   "name": "sft-math-nemotron-proofs.part0118.jsonl.gz",
+   "plain_bytes": 400028324,
+   "plain_sha256": "16d11416b5f0f25c5393a580b2f7d2f546293b4bc369a84e7b6ff51d9e6d9425"
+  },
+  {
+   "gz_bytes": 38075049,
+   "gz_sha256": "db7702d1665fa3b2606bcbfa342e92336f7beda421c3873f7003d8f4a188db63",
+   "name": "sft-math-nemotron-proofs.part0119.jsonl.gz",
+   "plain_bytes": 400065304,
+   "plain_sha256": "92e9e040bb86b83d55704067017ff530d0c3d7d5f38fdeb473aa642967e6f052"
+  },
+  {
+   "gz_bytes": 38341467,
+   "gz_sha256": "0b87993e1c1bdf881186f963c8847544b035dac0ec881bd635bda940912b1e44",
+   "name": "sft-math-nemotron-proofs.part0120.jsonl.gz",
+   "plain_bytes": 400033239,
+   "plain_sha256": "13e98635356939c916fe474f9c145c33fadabfa603f41dc160d84dc3c4b66709"
+  },
+  {
+   "gz_bytes": 37544941,
+   "gz_sha256": "d2a066b03fa53ff7e2255a958dd3bbe09958412865213e0012e0ce82c7167be8",
+   "name": "sft-math-nemotron-proofs.part0121.jsonl.gz",
+   "plain_bytes": 400117160,
+   "plain_sha256": "fb319b1d4b3b4fccd236e55517a31c80250b0ebe4119408afb3d5a209e0ba725"
+  },
+  {
+   "gz_bytes": 38770466,
+   "gz_sha256": "25d0782436f4b9476108bc133ff5ac3494c611b054d8c8185a1e981d55645bde",
+   "name": "sft-math-nemotron-proofs.part0122.jsonl.gz",
+   "plain_bytes": 400074029,
+   "plain_sha256": "e2b4debb81302da06b74cf0f38966e07dddaf2c0530430845b78acaf45a343fe"
+  },
+  {
+   "gz_bytes": 38327455,
+   "gz_sha256": "256176466893055d06b1ea28a0460b7279e8b252ecf298a8c04434b37c4bf758",
+   "name": "sft-math-nemotron-proofs.part0123.jsonl.gz",
+   "plain_bytes": 400130131,
+   "plain_sha256": "f48e0c80cb0c09dd5487bc94d977c6c751d0416e9185f6b4ca46a02a5f43e70e"
+  },
+  {
+   "gz_bytes": 38673659,
+   "gz_sha256": "3538bad14e517c72872b624317174b6dc7dcd076267162cdde7e8e6e9abb11c6",
+   "name": "sft-math-nemotron-proofs.part0124.jsonl.gz",
+   "plain_bytes": 400081777,
+   "plain_sha256": "c2b8eb76dece3a70bfbdef6bce06b14db1c33e3f13d213006ceea8978e5d97ba"
+  },
+  {
+   "gz_bytes": 39213532,
+   "gz_sha256": "e2054597ba0a531b002c6abc0ef0df487de998d53d06542d5d649d1b954b76a5",
+   "name": "sft-math-nemotron-proofs.part0125.jsonl.gz",
+   "plain_bytes": 400144549,
+   "plain_sha256": "4e7b92727b7ead84312937d48c276672cd5461ca9818c2d12a92999673494818"
+  },
+  {
+   "gz_bytes": 37320345,
+   "gz_sha256": "644a76a579482ed222d1bd8941b67ff23f5180e1ef4ce8f9ff0c881134a7468b",
+   "name": "sft-math-nemotron-proofs.part0126.jsonl.gz",
+   "plain_bytes": 400181157,
+   "plain_sha256": "5d6ebb60b82ace419de5c4982d909999eed7f2531c36a22641decfd67f532b40"
+  },
+  {
+   "gz_bytes": 37897518,
+   "gz_sha256": "e2d02787b623e434b88cbdbbf5ca166982284653b5c000415841ac6f347d4264",
+   "name": "sft-math-nemotron-proofs.part0127.jsonl.gz",
+   "plain_bytes": 400152415,
+   "plain_sha256": "d01c1fa9ccf6e3cce87fa3844a2db1df5234afd7be6e15a3ebf62415ed3bdd0e"
+  },
+  {
+   "gz_bytes": 38603470,
+   "gz_sha256": "8527678394969337414e277119978e0428bec05365c7d6a8de191f8078dd9105",
+   "name": "sft-math-nemotron-proofs.part0128.jsonl.gz",
+   "plain_bytes": 400114772,
+   "plain_sha256": "8fd6d17ca442b32e18a41ab40449d5a68a55c57aa4196703e3deda2cb2c446a9"
+  },
+  {
+   "gz_bytes": 38359834,
+   "gz_sha256": "4c7f26cc69ad0ab84d438c4ead6bbd01cd8433d52da86cc2228cddb1d53964c4",
+   "name": "sft-math-nemotron-proofs.part0129.jsonl.gz",
+   "plain_bytes": 400103291,
+   "plain_sha256": "90a23665e3b9ace0e5a13b99873880d1f36d52a55a7d349494958059263cdaa4"
+  },
+  {
+   "gz_bytes": 37950418,
+   "gz_sha256": "e5ac323450594d128133b50a61601972cadd8cb6aeb748b15d0d9bc4f6e31f4a",
+   "name": "sft-math-nemotron-proofs.part0130.jsonl.gz",
+   "plain_bytes": 400055548,
+   "plain_sha256": "531d22760214665ac60e1647feecd4985f4e2a884eca84412833b5247b57dc9b"
+  },
+  {
+   "gz_bytes": 38729931,
+   "gz_sha256": "924d71f1e051c87b73a6a2dea059075bfc747f43d14cceb63d70d454bcb0c97e",
+   "name": "sft-math-nemotron-proofs.part0131.jsonl.gz",
+   "plain_bytes": 400256293,
+   "plain_sha256": "b7900019603ee56e5ec426cb140e14024b7a2c9decd46d81e8acf60490417a47"
+  },
+  {
+   "gz_bytes": 38460446,
+   "gz_sha256": "848ae12bb6e2ca9d33fa553df78485bc1934a3283e403a57eeb739b6ea99279d",
+   "name": "sft-math-nemotron-proofs.part0132.jsonl.gz",
+   "plain_bytes": 400134839,
+   "plain_sha256": "e19bf3a65e51c341bae43869da7ebc409ea360a0b3984b4a2145d7117d5cc974"
+  },
+  {
+   "gz_bytes": 37340257,
+   "gz_sha256": "f2aadafca9cc274a282c22af9c5558064300e5612bdc72e531ae4f22f442de75",
+   "name": "sft-math-nemotron-proofs.part0133.jsonl.gz",
+   "plain_bytes": 400068862,
+   "plain_sha256": "37e1fb66842ef5d8f21791f81d89d4a567d5278e554f9ad46e40ffd64731fbc8"
+  },
+  {
+   "gz_bytes": 37817981,
+   "gz_sha256": "0f6af22489eece6b91f2ab74b349b492271d192ff8bfbd9b207d47f16cb42ba5",
+   "name": "sft-math-nemotron-proofs.part0134.jsonl.gz",
+   "plain_bytes": 400165498,
+   "plain_sha256": "a6c8b63e6c14e9369ce758d0aeb8eb8fa63e919101f003954e20c9828ab6253b"
+  },
+  {
+   "gz_bytes": 38169682,
+   "gz_sha256": "1c2da0fae583d5aa94b230fbcba15da8ba7cf872c9612005e20141f925fcd7b8",
+   "name": "sft-math-nemotron-proofs.part0135.jsonl.gz",
+   "plain_bytes": 400037283,
+   "plain_sha256": "617742e97528d0684665ae1eedd7c60531c691b29efdbccd51f1e6344eb95f16"
+  },
+  {
+   "gz_bytes": 37489371,
+   "gz_sha256": "1b59159c5ebcb92b4c43dc2b8922f6ab0b37ba8e66ccd69c1d3f9ae5c9f92534",
+   "name": "sft-math-nemotron-proofs.part0136.jsonl.gz",
+   "plain_bytes": 400012168,
+   "plain_sha256": "93db36c5e7eb46503f33419820d3b98cbae301af004d56757e6c8b38ee027e64"
+  },
+  {
+   "gz_bytes": 38769829,
+   "gz_sha256": "e9167a31699d7bf684a09cd6e57caf4a765064d5f708f9a9a08205045fb1bbe5",
+   "name": "sft-math-nemotron-proofs.part0137.jsonl.gz",
+   "plain_bytes": 400006096,
+   "plain_sha256": "9113a691a6b5066cb0c633089d2664e24c6b6a3e365c12f39346e3bf67648003"
+  },
+  {
+   "gz_bytes": 38491031,
+   "gz_sha256": "3fd472b4a3e6c1a811d953e8e69955fefa7c8746867a8c9c48f5e87f790dfc8d",
+   "name": "sft-math-nemotron-proofs.part0138.jsonl.gz",
+   "plain_bytes": 400078241,
+   "plain_sha256": "2fbaf3653c737ba114e371cfd57bb6f32e6438ba69b149729d39a489215a58a3"
+  },
+  {
+   "gz_bytes": 38741641,
+   "gz_sha256": "209e15cd221e6ffe9cf3e49077ac11919a0345e3b834ba5b11874b9106e06dbd",
+   "name": "sft-math-nemotron-proofs.part0139.jsonl.gz",
+   "plain_bytes": 400028472,
+   "plain_sha256": "cfa75133a393560b725c1678ff4519c2133efea67f454e30c840c25c126efe69"
+  },
+  {
+   "gz_bytes": 38494368,
+   "gz_sha256": "f63a10a1a6b21740d7fef194a0ae1e40eef2f82101084e63aeb9fd7a952a0902",
+   "name": "sft-math-nemotron-proofs.part0140.jsonl.gz",
+   "plain_bytes": 400046410,
+   "plain_sha256": "cde48ba7827af6b861c5c8e561616e73f5f10c0b400e6c709f49cfbdb7b56e6e"
+  },
+  {
+   "gz_bytes": 39020720,
+   "gz_sha256": "874035e9a6aa9118773148b8005ac275baf3ab7f39c3d711d9975721d7943354",
+   "name": "sft-math-nemotron-proofs.part0141.jsonl.gz",
+   "plain_bytes": 400139987,
+   "plain_sha256": "554de43cab49bf55a07f7e9740d79dc2fb2afd1eb19a942b78f25f1a1a6a460e"
+  },
+  {
+   "gz_bytes": 38104647,
+   "gz_sha256": "35cbb491c79c9652105bd0afed8933bc7839c6b9b14ede49ff2053b102402b75",
+   "name": "sft-math-nemotron-proofs.part0142.jsonl.gz",
+   "plain_bytes": 400055787,
+   "plain_sha256": "4c4e757767379b03932aef127d224588a531ace244f84f0ffd1f08777390b25b"
+  },
+  {
+   "gz_bytes": 37636755,
+   "gz_sha256": "00d0965f7ae3c569739eb8ea306217e9cf6cd4757b0dc8a0b5acd4bfe9ced4e6",
+   "name": "sft-math-nemotron-proofs.part0143.jsonl.gz",
+   "plain_bytes": 400045168,
+   "plain_sha256": "ff6bd8b3265668b55db211fcd3733e82c3c330171f21220de7de5e05245e2b9e"
+  },
+  {
+   "gz_bytes": 37753209,
+   "gz_sha256": "f5110524b826a17273fc18910a4be494d0f559492e765410197a702303d90a44",
+   "name": "sft-math-nemotron-proofs.part0144.jsonl.gz",
+   "plain_bytes": 400121736,
+   "plain_sha256": "a4ec1f025933cebf4ca610730772dc71417599fad3fc37f5cc26da14849d2707"
+  },
+  {
+   "gz_bytes": 38737265,
+   "gz_sha256": "975dc9829198f6a9d7c68299bcac61c0be2fb8214b53e014f7d14c284750df71",
+   "name": "sft-math-nemotron-proofs.part0145.jsonl.gz",
+   "plain_bytes": 400210245,
+   "plain_sha256": "40134667e2499b341c3c1e9de0609dfc9665ebba24016de0408b42665c87d22f"
+  },
+  {
+   "gz_bytes": 39245405,
+   "gz_sha256": "e9e5d536952f09e724d1e7e357e8c9e67ebf279c0a0cd2870fec501f4d49fb8c",
+   "name": "sft-math-nemotron-proofs.part0146.jsonl.gz",
+   "plain_bytes": 400012007,
+   "plain_sha256": "21df8238b8691b34d94692eb182776bf1e0a5dbf6d84c4ed529baf5dd712427e"
+  },
+  {
+   "gz_bytes": 38820658,
+   "gz_sha256": "2689d7605abdc0488ebbc2d332cffc89ad68cb7b75b545948627fb09da8a5148",
+   "name": "sft-math-nemotron-proofs.part0147.jsonl.gz",
+   "plain_bytes": 400037300,
+   "plain_sha256": "af2bc74187478e8117e51cb291be17eea68b6f11799df853ffa1772037d3bc55"
+  },
+  {
+   "gz_bytes": 38366366,
+   "gz_sha256": "0791662b6384dc37a705ea1c3dfc2599e98158fe38230084b4116bc809e26f8d",
+   "name": "sft-math-nemotron-proofs.part0148.jsonl.gz",
+   "plain_bytes": 400228063,
+   "plain_sha256": "a6d44878f0a85903220758badaaac31295afbe5281c2cbc41a675ec501d3a168"
+  },
+  {
+   "gz_bytes": 38403916,
+   "gz_sha256": "6ab6093b537874a3dc5f2bd8a6e1d77a9db77269fb6b42380155cbeda918f2b2",
+   "name": "sft-math-nemotron-proofs.part0149.jsonl.gz",
+   "plain_bytes": 400201678,
+   "plain_sha256": "b8513a1d1f991c9a28f75e110049e57e4051c21ce044232ab04f0c502c2e25b3"
+  },
+  {
+   "gz_bytes": 37590676,
+   "gz_sha256": "e7b08146678e8758a8c0f595d64b0e138644a610f148df1719ab11c923a1ace4",
+   "name": "sft-math-nemotron-proofs.part0150.jsonl.gz",
+   "plain_bytes": 400285696,
+   "plain_sha256": "2389dbe0cf6947a1b4ead7b25d5b09cc81a8fc8c23649f1faa13c105fecae444"
+  },
+  {
+   "gz_bytes": 38192117,
+   "gz_sha256": "bda0f883358a86fa12db9f586aa0adb92c54d38362cd8e8eaf16b5fda978474c",
+   "name": "sft-math-nemotron-proofs.part0151.jsonl.gz",
+   "plain_bytes": 400158878,
+   "plain_sha256": "543989534357087b0b568fdf38bd188e7559fa5358627ed857b52e63fd94f7c1"
+  },
+  {
+   "gz_bytes": 37592200,
+   "gz_sha256": "b30f6fb2cc2f5d83027d9e281cc2e3ff8be4d17e7101e19ef443f9b732e33865",
+   "name": "sft-math-nemotron-proofs.part0152.jsonl.gz",
+   "plain_bytes": 400084064,
+   "plain_sha256": "9c39ac055c0615f0b1bb34eafa29e17bf8b97e610a87b5e54d7e4cdaea153897"
+  },
+  {
+   "gz_bytes": 38358588,
+   "gz_sha256": "8bc8f120ce1a10a6c66a3434ce63c702318841772fa301537ace947e00362a1b",
+   "name": "sft-math-nemotron-proofs.part0153.jsonl.gz",
+   "plain_bytes": 400083324,
+   "plain_sha256": "f51986c39296724233c11cac31e50145ab2969fc4d2395478761f33753c57dd5"
+  },
+  {
+   "gz_bytes": 38632956,
+   "gz_sha256": "fce62b11d081fc59bd2e9511b2bc3d81cde57f39a80fa96e22a30a05f8673444",
+   "name": "sft-math-nemotron-proofs.part0154.jsonl.gz",
+   "plain_bytes": 400155564,
+   "plain_sha256": "4cbaea34e2227d2c584fa5783924a3f8991a9b21df278a632b4e61a315f2680e"
+  },
+  {
+   "gz_bytes": 38165642,
+   "gz_sha256": "e37da615ee6a0c4e138233f1efb3aaa48e65d5fa78dfe2dc047ca5e8fe65b89e",
+   "name": "sft-math-nemotron-proofs.part0155.jsonl.gz",
+   "plain_bytes": 400070276,
+   "plain_sha256": "5b2fd303d7409d231f385bbf18497befda648b454cc87859ec86ad915fc0ad98"
+  },
+  {
+   "gz_bytes": 38962730,
+   "gz_sha256": "53278ef7b4a2fb54e71a38976e683cdb33ac4cc76a013eb574484552cc3bc8b2",
+   "name": "sft-math-nemotron-proofs.part0156.jsonl.gz",
+   "plain_bytes": 400006056,
+   "plain_sha256": "a2e69872e076517c979f6f63cc02ba4a681d84e6c77ac9c254618fc46fb9320b"
+  },
+  {
+   "gz_bytes": 38077332,
+   "gz_sha256": "305c596cead28d7c091f59df95b29d53416d44d492934cac62301b81b88ef067",
+   "name": "sft-math-nemotron-proofs.part0157.jsonl.gz",
+   "plain_bytes": 400023080,
+   "plain_sha256": "bcec4e474fd0bca27b283ae58a72473ae7fa58217a4f66c7a5350166239558fa"
+  },
+  {
+   "gz_bytes": 38223773,
+   "gz_sha256": "afe1b841f03c8a8680597240ad023f9318a961990b4e134bd65b2ecee4384ac6",
+   "name": "sft-math-nemotron-proofs.part0158.jsonl.gz",
+   "plain_bytes": 400118624,
+   "plain_sha256": "1e9f5e1de0cd565a9d4a7c0287b688b7431c2acf7aafca93754393f66632dc22"
+  },
+  {
+   "gz_bytes": 39472768,
+   "gz_sha256": "a375d990f9d2e3ebfab75756771ce994f47209a8fdf2f875260d8d84465c80ff",
+   "name": "sft-math-nemotron-proofs.part0159.jsonl.gz",
+   "plain_bytes": 400113387,
+   "plain_sha256": "07245b44d3d8a9532cec77c6c53c8eb46039b0380f8635cf265c3227e9ef3f91"
+  },
+  {
+   "gz_bytes": 38798066,
+   "gz_sha256": "de52ba90413354996b4063e81c28ca081c92f0cb060abf4655b63049c0c4b0c1",
+   "name": "sft-math-nemotron-proofs.part0160.jsonl.gz",
+   "plain_bytes": 400120521,
+   "plain_sha256": "8ecf0514c8de41f38a87b8694e2d7dbb83fda30532501599d746d9059aabbb0f"
+  },
+  {
+   "gz_bytes": 38788269,
+   "gz_sha256": "d3f52d9dc2a1fc04d482f63ae8f277feca0bebb173e2495a977e77dd9c4cd6bd",
+   "name": "sft-math-nemotron-proofs.part0161.jsonl.gz",
+   "plain_bytes": 400053798,
+   "plain_sha256": "bd86698c51e56c7ecebe01fc8e4c0ec5569c4451b74d9739d3ff9ece3cf0bb7d"
+  },
+  {
+   "gz_bytes": 37620078,
+   "gz_sha256": "def5cd890408c14823142f6d25ea122332e023cca41dae3507a42ecad30f4544",
+   "name": "sft-math-nemotron-proofs.part0162.jsonl.gz",
+   "plain_bytes": 400071162,
+   "plain_sha256": "c3feb5efd22132fc769e39fdd7855dc3dc25650be04fa2c28f86b825dcdd51fd"
+  },
+  {
+   "gz_bytes": 37914133,
+   "gz_sha256": "e45d82c1c6763f718e111f16a8a6dfbf78de3fcebd2368ce69af757c59ab84bc",
+   "name": "sft-math-nemotron-proofs.part0163.jsonl.gz",
+   "plain_bytes": 400091972,
+   "plain_sha256": "7ab9d60dd0faaeca3713c44806829cc9a4429b53282ee8d935783a15e46d9ef1"
+  },
+  {
+   "gz_bytes": 38959097,
+   "gz_sha256": "f375c81ae2b927b0c3be9471e2417b6dda6077ff788fc9e17e5056b54ab32b3b",
+   "name": "sft-math-nemotron-proofs.part0164.jsonl.gz",
+   "plain_bytes": 400062370,
+   "plain_sha256": "dd950b8d790ada8b79214759df3854dd30e49b6166400d2e9a62fdea8a276578"
+  },
+  {
+   "gz_bytes": 39023214,
+   "gz_sha256": "2a06e1e3b7a65c2680f65ed4292164153413ff88e88d28abb97274829eae1347",
+   "name": "sft-math-nemotron-proofs.part0165.jsonl.gz",
+   "plain_bytes": 400073681,
+   "plain_sha256": "153f99098e51230d909326508f3e1dc1d0d177b78d0ecb148a7b1e994ea56276"
+  },
+  {
+   "gz_bytes": 38406905,
+   "gz_sha256": "81a3ca5f7b481dc547d721c6c82da47285cd1c391b96166411d84213cc1687d9",
+   "name": "sft-math-nemotron-proofs.part0166.jsonl.gz",
+   "plain_bytes": 400011210,
+   "plain_sha256": "0540f2c04dbc33aee0d845f3ae33c2e19189eae7152bb4aad18041ee09352e3a"
+  },
+  {
+   "gz_bytes": 38380711,
+   "gz_sha256": "6f2927a4f3f3965d53535d00227cd676d741f6426a8d190eebb528ed98068a3a",
+   "name": "sft-math-nemotron-proofs.part0167.jsonl.gz",
+   "plain_bytes": 400006921,
+   "plain_sha256": "4e5d6d26aa039040aedd82ec88027229c5fa8d9da9b7e9bcf75177e069fcf61d"
+  },
+  {
+   "gz_bytes": 38570016,
+   "gz_sha256": "140ad733bc58ff78a1b429e2bf9c08fc9987b8c220969071e8fa35ebf7a41fca",
+   "name": "sft-math-nemotron-proofs.part0168.jsonl.gz",
+   "plain_bytes": 400053864,
+   "plain_sha256": "eef38e64aa43c780e042761fa20d3aced606af397f47b0d198ea5dc1234ab7ff"
+  },
+  {
+   "gz_bytes": 38884518,
+   "gz_sha256": "88e855bc3a5837a58ef17e83849cfe4a917b90ed1970b8486ac84495d0b71e50",
+   "name": "sft-math-nemotron-proofs.part0169.jsonl.gz",
+   "plain_bytes": 400188782,
+   "plain_sha256": "78d207c03bf5a39ea05f4cef920dfb1b2b04b0ac86722a14d332672e6905c4ef"
+  },
+  {
+   "gz_bytes": 38160383,
+   "gz_sha256": "ddea842665a018c41e0b86e83185ec3d6daf744d850b26288e4901daae10040b",
+   "name": "sft-math-nemotron-proofs.part0170.jsonl.gz",
+   "plain_bytes": 400012787,
+   "plain_sha256": "62ec54d496a54afe542c18dde541c63e0b546d9679db8c64324445bfc48dc9fb"
+  },
+  {
+   "gz_bytes": 38365256,
+   "gz_sha256": "623f812d9b56904ddf72724f03dbe772a58b684b50857c9b97b92f2c10c5c8d5",
+   "name": "sft-math-nemotron-proofs.part0171.jsonl.gz",
+   "plain_bytes": 400036226,
+   "plain_sha256": "130af7fc15c9d9c73c2d577836b32d602e6adf71aac918b2ae63c71f5badd963"
+  },
+  {
+   "gz_bytes": 38782734,
+   "gz_sha256": "1cb204985732c0e8678fac5d5f5684c90291cd5a6fd5154ae227b6c4e184a65f",
+   "name": "sft-math-nemotron-proofs.part0172.jsonl.gz",
+   "plain_bytes": 400038485,
+   "plain_sha256": "f64bf5b5ca5c810ae30d651fc067e03f3fd7824263f612e95bf08e30eff5d8de"
+  },
+  {
+   "gz_bytes": 38551920,
+   "gz_sha256": "469b804545c74bf11e93bfc6668902e1b0f072b64e4209a2bfce1eb640444a9a",
+   "name": "sft-math-nemotron-proofs.part0173.jsonl.gz",
+   "plain_bytes": 400122973,
+   "plain_sha256": "c6788fe6ea2bd3a0f52de5f7afc40e97d5af8b9c412be9dd012b9d9254da80fc"
+  },
+  {
+   "gz_bytes": 38808787,
+   "gz_sha256": "5bf259587a974fa49cd3235531e652bd9eb77acd7ac8d276c88f2b0938a80f6e",
+   "name": "sft-math-nemotron-proofs.part0174.jsonl.gz",
+   "plain_bytes": 400079011,
+   "plain_sha256": "e79d4475d20f0d4573717cf0acf0d4549b0f5317743556fd9721edfac09bd5f3"
+  },
+  {
+   "gz_bytes": 38281742,
+   "gz_sha256": "aa3c88b2564d568b152cd1b98164211f797cb5055f585cc0a771583fe5cccc2b",
+   "name": "sft-math-nemotron-proofs.part0175.jsonl.gz",
+   "plain_bytes": 400082608,
+   "plain_sha256": "84141de07e1c1b30a990736f073c9a55d785c6aa8130594b50a347b3eb6cf7b6"
+  },
+  {
+   "gz_bytes": 38896635,
+   "gz_sha256": "ee9e2c2e00c21dcd6e07d331b8b32ac620e630b555d0afe5a66cdd420ce8ccd1",
+   "name": "sft-math-nemotron-proofs.part0176.jsonl.gz",
+   "plain_bytes": 400027649,
+   "plain_sha256": "ef9c456406fb31a263f181f06b515989e85da0265da6aceb24b78a0fe5da8886"
+  },
+  {
+   "gz_bytes": 38310266,
+   "gz_sha256": "66ac56a9bfc25278e6090b67a52fb081c06b60f1f04c54d4bcacc44b8aa1b003",
+   "name": "sft-math-nemotron-proofs.part0177.jsonl.gz",
+   "plain_bytes": 400089879,
+   "plain_sha256": "8c5eb41d9e333f83d991799e3ed01da3b5f720e1b838c31e0c9ddbeda622b4aa"
+  },
+  {
+   "gz_bytes": 38440193,
+   "gz_sha256": "a1da3ae4a626e1af8cc0940ce79a1aa108d825dc173c4a863b81d0713602db3f",
+   "name": "sft-math-nemotron-proofs.part0178.jsonl.gz",
+   "plain_bytes": 400088456,
+   "plain_sha256": "437b38f7c47f847cca6f6ec3ad365f97b6b0b268c551178277987cce3f3415ed"
+  },
+  {
+   "gz_bytes": 37577396,
+   "gz_sha256": "5682cfe932cdad5fc6c8e185dcd47ec6fcb8f7063c7475dfead9ee3c9d94e77e",
+   "name": "sft-math-nemotron-proofs.part0179.jsonl.gz",
+   "plain_bytes": 400058313,
+   "plain_sha256": "f06ee65ffb7d3538de341ca7b362270b60944ea4f60d06e1b4d6afad8ef97f28"
+  },
+  {
+   "gz_bytes": 37801688,
+   "gz_sha256": "50bfc563a782c4e53367ff59938188078347b5c5f3c3ea20a7a10ff4a017d46d",
+   "name": "sft-math-nemotron-proofs.part0180.jsonl.gz",
+   "plain_bytes": 400177059,
+   "plain_sha256": "d6da88475a614522cdd330da8da93afb69e0ef8e4dcf5b440203e24f716aef16"
+  },
+  {
+   "gz_bytes": 39401593,
+   "gz_sha256": "817aae211b9c28519e6f5a98c2604fbcc3022cdb5cfea658fc0fab70d0be17c9",
+   "name": "sft-math-nemotron-proofs.part0181.jsonl.gz",
+   "plain_bytes": 400030022,
+   "plain_sha256": "36900144611ab13a932c703844032b17d3d40b6865804df9ec8f1709e558156a"
+  },
+  {
+   "gz_bytes": 38188623,
+   "gz_sha256": "a46079bc98f9ed0ec6713cb7ae0e6ee464248bab21f0ea5a9fadf380a7e8562b",
+   "name": "sft-math-nemotron-proofs.part0182.jsonl.gz",
+   "plain_bytes": 400034259,
+   "plain_sha256": "06bcd8f66ad5575c889b212adf8d5de381c09dc6690c6cec11367e403214938f"
+  },
+  {
+   "gz_bytes": 37825341,
+   "gz_sha256": "662430602dcc5a336d0cae85930237c41d9d3ce377508b600db32110c977b43d",
+   "name": "sft-math-nemotron-proofs.part0183.jsonl.gz",
+   "plain_bytes": 400052540,
+   "plain_sha256": "9b03a0469d22ffa40bf7faed576bf8c33d77bcefd1128a0163fc115f2365dc59"
+  },
+  {
+   "gz_bytes": 38122427,
+   "gz_sha256": "31c7fad4fb9e2e5e400ebadca136d644164b2b6cfbc7f010fa08366847f267c0",
+   "name": "sft-math-nemotron-proofs.part0184.jsonl.gz",
+   "plain_bytes": 400073915,
+   "plain_sha256": "dea4ba94b0a6665aad653bac3024cdfda5533670db518c8890aaf16f743cb0b6"
+  },
+  {
+   "gz_bytes": 37758691,
+   "gz_sha256": "c2a6627bfbaa039723de7eb329b8b53cef8af4608de67ae962b6a43b9a3cd6e1",
+   "name": "sft-math-nemotron-proofs.part0185.jsonl.gz",
+   "plain_bytes": 400066785,
+   "plain_sha256": "ff99aea57b64741fd8df35abfcdaa017a75f8a9ade11dcdbc9bb3f738debc755"
+  },
+  {
+   "gz_bytes": 38891852,
+   "gz_sha256": "cfe37c3e250b6b68d88aef219406df7ab1e1e541e3a5c905b52e1156c4b92057",
+   "name": "sft-math-nemotron-proofs.part0186.jsonl.gz",
+   "plain_bytes": 400142454,
+   "plain_sha256": "c9598eb2f737ec5ea6303e9712d8a96920aefdc9a698b62c1e0295446e96ddd8"
+  },
+  {
+   "gz_bytes": 38211498,
+   "gz_sha256": "e133ed262dc3b1caeb186b7c71ea013b659faaf4ee9d195a77bcfb08ef2d5dda",
+   "name": "sft-math-nemotron-proofs.part0187.jsonl.gz",
+   "plain_bytes": 400013061,
+   "plain_sha256": "6a49ee40ce8aaeced20bd7fd12a755b791e27fca22f2643f80772d8db8e8253e"
+  },
+  {
+   "gz_bytes": 38274030,
+   "gz_sha256": "58f502c5ee6347b6d74b9ebdab1acfac1a5f816684d941b0198c99673fc8dcf1",
+   "name": "sft-math-nemotron-proofs.part0188.jsonl.gz",
+   "plain_bytes": 400081325,
+   "plain_sha256": "a3217bb2683ab8d43f17199af0b5a1e7de94a9597397ad8c8e5f7aa83289af31"
+  },
+  {
+   "gz_bytes": 38123136,
+   "gz_sha256": "02ae47550c118929a4026a713fabac15aee0425c824d47c6456436bffc9c4fc3",
+   "name": "sft-math-nemotron-proofs.part0189.jsonl.gz",
+   "plain_bytes": 400143655,
+   "plain_sha256": "2780a6e404e08f22e7dcc891b5de56038f14636ed365f6de4b7c7ddafecb3736"
+  },
+  {
+   "gz_bytes": 39363008,
+   "gz_sha256": "646d078fca5a474a422b92fb39af17fea0d8fc54bcad591457f379cf3d524de5",
+   "name": "sft-math-nemotron-proofs.part0190.jsonl.gz",
+   "plain_bytes": 400042198,
+   "plain_sha256": "2eeffcf3cd8dbfde64fd484f7768bd27d4b34ce2f1c55a5108e092e9dbe9be5f"
+  },
+  {
+   "gz_bytes": 38493932,
+   "gz_sha256": "09f1090b00d5866c890ca9ef36394e34979acd7e106857e0953a9d0d917be26e",
+   "name": "sft-math-nemotron-proofs.part0191.jsonl.gz",
+   "plain_bytes": 400392254,
+   "plain_sha256": "d9fb79b60dcab82e5f1d5d642499fc6778a22e822226277e970b31934c4d3bde"
+  },
+  {
+   "gz_bytes": 38351725,
+   "gz_sha256": "85b3bb6916f294da3de24e96513ce0e756113e6849079bfc01dfcfaf46ec1bf6",
+   "name": "sft-math-nemotron-proofs.part0192.jsonl.gz",
+   "plain_bytes": 400168916,
+   "plain_sha256": "352446c7ebb2e3eb0bf9d54839b9061a2d93328bf7ba263b815168b7cfa0182f"
+  },
+  {
+   "gz_bytes": 38294558,
+   "gz_sha256": "67df7899dc860322fabc536974c5e4fb40607ae6f29aaa7728779b2a1789d811",
+   "name": "sft-math-nemotron-proofs.part0193.jsonl.gz",
+   "plain_bytes": 400087909,
+   "plain_sha256": "f74ba9a12623e0fb57e8ca1d9ccdd8f3b705afe37fea59918d5e087c4de43305"
+  },
+  {
+   "gz_bytes": 37728740,
+   "gz_sha256": "d64ba2c7d2cedd8382259deb4080d90d9dc17847f14c8b380f7f28feadcef385",
+   "name": "sft-math-nemotron-proofs.part0194.jsonl.gz",
+   "plain_bytes": 400084023,
+   "plain_sha256": "524e85fa408bdad6a9e2e50ec45ae318559e4aca07dfa85688fc965e61116209"
+  },
+  {
+   "gz_bytes": 38562585,
+   "gz_sha256": "24065c0d9da837fff5f97cf80df955864f72d631cb3939b449d1af1f13480133",
+   "name": "sft-math-nemotron-proofs.part0195.jsonl.gz",
+   "plain_bytes": 400031750,
+   "plain_sha256": "c07d6d054de83c2e3b812dcc089db1a188b9ece802687212f26dfdece29c6e22"
+  },
+  {
+   "gz_bytes": 37737823,
+   "gz_sha256": "baf94c33f812fe14c0bdcd516dd0c00a5d9291461b6610016d22849322a66d7e",
+   "name": "sft-math-nemotron-proofs.part0196.jsonl.gz",
+   "plain_bytes": 400155009,
+   "plain_sha256": "8c9464fffccdc0babd70ebbaa4ced6e5113c9aa91f6b21ae97c099effdb295df"
+  },
+  {
+   "gz_bytes": 37998888,
+   "gz_sha256": "4e51a79e965ddf60f8af13c68eb83e5a4edaa00ff0a5179e306a75a8a6b90896",
+   "name": "sft-math-nemotron-proofs.part0197.jsonl.gz",
+   "plain_bytes": 400044370,
+   "plain_sha256": "418fe21f6bdef498562b55d148cb2df2787914225b2c33272fd5d20f46c3c296"
+  },
+  {
+   "gz_bytes": 38002957,
+   "gz_sha256": "386c5234dd06d722f4877a314488d03a07bd72256e19cf1dfbd108f8704bf97a",
+   "name": "sft-math-nemotron-proofs.part0198.jsonl.gz",
+   "plain_bytes": 400334810,
+   "plain_sha256": "497ce4721e8cc6b5ec602198547f604ff272bdde3efc783e45ea35b94d3c67f1"
+  },
+  {
+   "gz_bytes": 38962783,
+   "gz_sha256": "6d8979f95de39197b98d2dc3ea94734e026223b60ac1b9758bf552418d087c1f",
+   "name": "sft-math-nemotron-proofs.part0199.jsonl.gz",
+   "plain_bytes": 400040576,
+   "plain_sha256": "941943b7fda0df12bd04292f20a96c5a3059446f0eb0c674d29fc3898fffa647"
+  },
+  {
+   "gz_bytes": 37780106,
+   "gz_sha256": "ee26508859289914403634ba7d77c22172eaa4ec52025847dc8a1beb8cadf7e6",
+   "name": "sft-math-nemotron-proofs.part0200.jsonl.gz",
+   "plain_bytes": 400206569,
+   "plain_sha256": "90d81bceb0d0254e9bf9d12ff69cc2bdb01a038ce0ec85fb4ddd8e37564f21bd"
+  },
+  {
+   "gz_bytes": 38550480,
+   "gz_sha256": "05dbde8da387857cf9aae40e4227bd631691755e9013f2ff9e3f29329c1b5ecd",
+   "name": "sft-math-nemotron-proofs.part0201.jsonl.gz",
+   "plain_bytes": 400133672,
+   "plain_sha256": "4682a73f01c9fb4a5072ca1bed8d1ff1334cdf8a066964ca9b1b44d0c53bf35d"
+  },
+  {
+   "gz_bytes": 38670479,
+   "gz_sha256": "c322dfe1e9f72e0aef7d1f5303045137748d8c9d6f4724c6a4c6b26f611bcf1f",
+   "name": "sft-math-nemotron-proofs.part0202.jsonl.gz",
+   "plain_bytes": 400011179,
+   "plain_sha256": "eceb17fa2f877143a05672c72826325a6d422bc4244d94df19b3b6cef0ebac72"
+  },
+  {
+   "gz_bytes": 38317253,
+   "gz_sha256": "3241daa5ffbe96b53c97a79da87500352fb4f3f38610552cdacc5a8881fb1e9e",
+   "name": "sft-math-nemotron-proofs.part0203.jsonl.gz",
+   "plain_bytes": 400113308,
+   "plain_sha256": "1a848d53400290c5b9bfdb72c21812956712dd2a0e83b0aedfecdacc1a62d153"
+  },
+  {
+   "gz_bytes": 38446968,
+   "gz_sha256": "b5dfbbc31816a7d6340cd00b8967c5bfd08992c20d3940812de54c2269a7314f",
+   "name": "sft-math-nemotron-proofs.part0204.jsonl.gz",
+   "plain_bytes": 400275375,
+   "plain_sha256": "5a221c82839d0c369151d889159ea94eb20aca9d8dac426accc6a145919415de"
+  },
+  {
+   "gz_bytes": 38102462,
+   "gz_sha256": "be4e145b1baa6f640ee4bdd8a8f71e10093be133a159bd4688fe1ca43dd37801",
+   "name": "sft-math-nemotron-proofs.part0205.jsonl.gz",
+   "plain_bytes": 400100695,
+   "plain_sha256": "549b509cdb18045e9e378165c2ae66d53e5115fec82ab3f3139ec9ca8d1c2894"
+  },
+  {
+   "gz_bytes": 37865184,
+   "gz_sha256": "f9afc1babc9242f6d63b5c018bd2240c0d17d9fac9abd663acccb0a250a1a77e",
+   "name": "sft-math-nemotron-proofs.part0206.jsonl.gz",
+   "plain_bytes": 400046796,
+   "plain_sha256": "9fea5c9c05d2e8d3bc748539991b66a47b42da4659438ed7b5304297823a0d31"
+  },
+  {
+   "gz_bytes": 38687484,
+   "gz_sha256": "f9488325eb2001984a276a2b9c26e66c9df519b1ca70c8a6fcee842f0303f70c",
+   "name": "sft-math-nemotron-proofs.part0207.jsonl.gz",
+   "plain_bytes": 400101070,
+   "plain_sha256": "03ea7962ea7b7fc7839b5d8c85fa277e4e75fbe29e181051dd0dde9449c56b11"
+  },
+  {
+   "gz_bytes": 38200282,
+   "gz_sha256": "722f1a54d8c3e55858061ed0a904cf2cbe947702cbc0b869adc4459e0b2177f0",
+   "name": "sft-math-nemotron-proofs.part0208.jsonl.gz",
+   "plain_bytes": 400041553,
+   "plain_sha256": "8f75ee6f213c828b41ac5323ef2ad41afda69c019d91c503b985377ce6734af8"
+  },
+  {
+   "gz_bytes": 38787305,
+   "gz_sha256": "f5abd144f2049c5fdca02564548020190b61f959648add66c718ad848bec084f",
+   "name": "sft-math-nemotron-proofs.part0209.jsonl.gz",
+   "plain_bytes": 400021877,
+   "plain_sha256": "cff85e49ca93371febf7b4bddb9314f186470c6a68db4fa000e0e29e146ac50e"
+  },
+  {
+   "gz_bytes": 38909788,
+   "gz_sha256": "9ebc395d5579a53b0902703a3ca4955c7d9906ff909164392debab76711d1fe1",
+   "name": "sft-math-nemotron-proofs.part0210.jsonl.gz",
+   "plain_bytes": 400133864,
+   "plain_sha256": "8e51acc7163580d58cb45bbe02e063a1cf2c661e785f2ab8a8928c21a0fda677"
+  },
+  {
+   "gz_bytes": 38593988,
+   "gz_sha256": "7f1dbe1ce673cb8249f4462d6b4257b4a0e4616e698e28d17740e1776a7b1c92",
+   "name": "sft-math-nemotron-proofs.part0211.jsonl.gz",
+   "plain_bytes": 400024695,
+   "plain_sha256": "276485f0c26280c7ad749e1becab8a81e422a62e23ebb1932b676f7425cea708"
+  },
+  {
+   "gz_bytes": 38981131,
+   "gz_sha256": "6804884fe1d0a3dba1026172965d9a24b8fc16214cd1b0964f490f2048fff34b",
+   "name": "sft-math-nemotron-proofs.part0212.jsonl.gz",
+   "plain_bytes": 400052858,
+   "plain_sha256": "bed582dbb00a83198303d23ddbe059307feb00ec1c28bf1573c929a333b8fc98"
+  },
+  {
+   "gz_bytes": 37930145,
+   "gz_sha256": "cb3f42699ff111f72ad47664c1b8230584da8341ba4bb3ca4e069c8e539ce11a",
+   "name": "sft-math-nemotron-proofs.part0213.jsonl.gz",
+   "plain_bytes": 400063473,
+   "plain_sha256": "bad8bf5cce76e0958b5754c8ff841ffd437bf5e641d8f9bd74a6ed7407194f31"
+  },
+  {
+   "gz_bytes": 37597223,
+   "gz_sha256": "280416e6e82cf81b08ce8b825db544847380dc85d5971abab1b17d573cc548b3",
+   "name": "sft-math-nemotron-proofs.part0214.jsonl.gz",
+   "plain_bytes": 400029190,
+   "plain_sha256": "45e45846b0794586962aa24d62ac8945fd51eece927fc90812c4238e2f343d16"
+  },
+  {
+   "gz_bytes": 37153923,
+   "gz_sha256": "04747bf448d9a3868ad683be0942c1b5eebf8a73a38f1189cc37deb9d190b35c",
+   "name": "sft-math-nemotron-proofs.part0215.jsonl.gz",
+   "plain_bytes": 400063705,
+   "plain_sha256": "39e4ac63641f95759a2e7b8733ed92a7513fb0522ad29be217ed279dff814bf2"
+  },
+  {
+   "gz_bytes": 38745457,
+   "gz_sha256": "31698d87d19a3c7037378d3103e8bf77449e5f6d7183bdec852bf391d3dd82b3",
+   "name": "sft-math-nemotron-proofs.part0216.jsonl.gz",
+   "plain_bytes": 400220723,
+   "plain_sha256": "9e80596dcc1ff24e987dfdf208ae92fdae1f5a2a100df94b4208e83d9c1f33f1"
+  },
+  {
+   "gz_bytes": 38780728,
+   "gz_sha256": "069231e64c78e4144f5dd3d0128d229b63da5057bd5d1540db4ccdd091584b69",
+   "name": "sft-math-nemotron-proofs.part0217.jsonl.gz",
+   "plain_bytes": 400091073,
+   "plain_sha256": "b805219d111ee377d47cffc10078468df84002ad37ea2630e303f460e2e17516"
+  },
+  {
+   "gz_bytes": 38506184,
+   "gz_sha256": "2ae2b237892230deb900ed116195f16193db7ba0d2c7abec2b7b99f73e38201b",
+   "name": "sft-math-nemotron-proofs.part0218.jsonl.gz",
+   "plain_bytes": 400130026,
+   "plain_sha256": "66d8895204bffb1f99fb0b4214e727d9cda5b6f5c733d6862c85015ea164731a"
+  },
+  {
+   "gz_bytes": 38370170,
+   "gz_sha256": "f1f9ed2e648f6ea0703c0ac2993ce5f9eaa6fc8db998caaef0faf6cf3479b095",
+   "name": "sft-math-nemotron-proofs.part0219.jsonl.gz",
+   "plain_bytes": 400178640,
+   "plain_sha256": "ab0167d3f9932440a4f5015ebbf307d21210431e626d48aaae359ca14ced4e1c"
+  },
+  {
+   "gz_bytes": 37280631,
+   "gz_sha256": "95188d7e2ad2276916ed22e239d676a3b5b68d5544902181572c7c60b5e434cf",
+   "name": "sft-math-nemotron-proofs.part0220.jsonl.gz",
+   "plain_bytes": 400304334,
+   "plain_sha256": "b7fc01f5633c0f2476c25f308ae0d895226c1bd70a02c62452d36cad7fef18ac"
+  },
+  {
+   "gz_bytes": 38341117,
+   "gz_sha256": "b1b5368420b1d7fa0ca80f858ea911abb80e545004a6c152f2bfcc9d84645e18",
+   "name": "sft-math-nemotron-proofs.part0221.jsonl.gz",
+   "plain_bytes": 400067449,
+   "plain_sha256": "c31519226f830a0b87f944ddbed25f597c18274b255d09434c3bb939e0c49e70"
+  },
+  {
+   "gz_bytes": 37908698,
+   "gz_sha256": "74984843fce218333802e8ef26b106186156419e314323eb1e04566749298454",
+   "name": "sft-math-nemotron-proofs.part0222.jsonl.gz",
+   "plain_bytes": 400107207,
+   "plain_sha256": "1d364545073fce0a079420105eae771cdb5759cb5953868da5bf97d49b423210"
+  },
+  {
+   "gz_bytes": 38451210,
+   "gz_sha256": "67c6145509fdf50489193601221259dd4807ef5a0cdf198935e80b5ddff78d8c",
+   "name": "sft-math-nemotron-proofs.part0223.jsonl.gz",
+   "plain_bytes": 400011678,
+   "plain_sha256": "a6245180c3c2aa9b50871e270e828444ecc49807fec2d4f63b7b6c746778673e"
+  },
+  {
+   "gz_bytes": 38321417,
+   "gz_sha256": "b8c5188decae8a487e5a40615fc7a02a023fb0a2b25fc5b1048270752902d28a",
+   "name": "sft-math-nemotron-proofs.part0224.jsonl.gz",
+   "plain_bytes": 400006195,
+   "plain_sha256": "71a65d890b065637b1259468b4a2e3156ccca2ce7135d83b5537e63f20d80a5b"
+  },
+  {
+   "gz_bytes": 37789012,
+   "gz_sha256": "9fd394f28ace3675fbd51d125c5d6122875684aa9ab08b8458d81fd7289c12b7",
+   "name": "sft-math-nemotron-proofs.part0225.jsonl.gz",
+   "plain_bytes": 400081840,
+   "plain_sha256": "ac1b9a1783592f471cb2ce7beaecd5748b1d1cbcfd3447a6242ab4e9752a8b59"
+  },
+  {
+   "gz_bytes": 37932349,
+   "gz_sha256": "ef1cdb58cc1e78515eb99fd73427915a86ad3d276f921b44cae6208dcd1966b1",
+   "name": "sft-math-nemotron-proofs.part0226.jsonl.gz",
+   "plain_bytes": 400362592,
+   "plain_sha256": "cbfaf8dc85ac23826269734585aedfbc9373b1be3f772a73749aabdac1202d8e"
+  },
+  {
+   "gz_bytes": 37884644,
+   "gz_sha256": "e5fa3a75deb6749e956ee4e09fd9aff15ed6029bc67e71e7c9afd3e29419a534",
+   "name": "sft-math-nemotron-proofs.part0227.jsonl.gz",
+   "plain_bytes": 400080667,
+   "plain_sha256": "fe1195648efbc277cd83790877cc898d8a50716bcd252e41076f89a59cf1d661"
+  },
+  {
+   "gz_bytes": 37735635,
+   "gz_sha256": "63c6b4859051bbe52523db899cb864fa358cf48af10d71aa481965ca385f7f7f",
+   "name": "sft-math-nemotron-proofs.part0228.jsonl.gz",
+   "plain_bytes": 400000207,
+   "plain_sha256": "e2e11cdfa85db3ab1d5ce6402859c0b471f31d52e9929d29c3daca7fe39d6893"
+  },
+  {
+   "gz_bytes": 38348060,
+   "gz_sha256": "432b3ed4649b7c72087ea3b6560522873e03a08c99273663fc95be3d80b5a4da",
+   "name": "sft-math-nemotron-proofs.part0229.jsonl.gz",
+   "plain_bytes": 400057201,
+   "plain_sha256": "8f2caf48bf4c92375b56bb12833abb7328d0170c0f76789307f666ae31086b89"
+  },
+  {
+   "gz_bytes": 38139093,
+   "gz_sha256": "c7bd14a889a1bea916a2f0ff970b425d9521371711a14ad317722e29355ca939",
+   "name": "sft-math-nemotron-proofs.part0230.jsonl.gz",
+   "plain_bytes": 400071125,
+   "plain_sha256": "535369010a7fec37aeea78196c0ff61092be245d49d22acb0c4ac6ef7b08468e"
+  },
+  {
+   "gz_bytes": 39189126,
+   "gz_sha256": "cb7dae7112f763416ca7d816eaa787efcbc9b02214865d2a3cfb32780a3c0524",
+   "name": "sft-math-nemotron-proofs.part0231.jsonl.gz",
+   "plain_bytes": 400044013,
+   "plain_sha256": "b191c59963297ddfd124557f753d44ac4465c19cbdabde4ce8f50e3a6f11482f"
+  },
+  {
+   "gz_bytes": 38159819,
+   "gz_sha256": "47e9dd61d93a0ec38c038777765bfb598af7f504c42a346f8395ecb06453737a",
+   "name": "sft-math-nemotron-proofs.part0232.jsonl.gz",
+   "plain_bytes": 400012070,
+   "plain_sha256": "a12b3df3dca63d984d725a97202c1b110c847272cbc41c96d3e081885876f56a"
+  },
+  {
+   "gz_bytes": 38593994,
+   "gz_sha256": "9bc5376e6f45702a1d5666aee3bbeaee89ec8036439df5140be38d596fba45e1",
+   "name": "sft-math-nemotron-proofs.part0233.jsonl.gz",
+   "plain_bytes": 400152230,
+   "plain_sha256": "03640bf48484201f7bb6d41b8c47e8c6c510e3d77e47512c78610b64662e59af"
+  },
+  {
+   "gz_bytes": 37885536,
+   "gz_sha256": "a1ee3011a8d50a8489aebc2c50912ad3022f29dffec94645708d354292696a2e",
+   "name": "sft-math-nemotron-proofs.part0234.jsonl.gz",
+   "plain_bytes": 400139929,
+   "plain_sha256": "f771814776cdb958a6a54b3feb84b32fbe26cd481d9e530aa950466df084e26a"
+  },
+  {
+   "gz_bytes": 38455985,
+   "gz_sha256": "5c1eb4e209f8f7e73280fc17cb341c003c753a00c9e5713583a166cdc511bb54",
+   "name": "sft-math-nemotron-proofs.part0235.jsonl.gz",
+   "plain_bytes": 400013580,
+   "plain_sha256": "76f576ec2776025d6bd76e0d39b7efe108a4ea4385a1031e730f8d632dc9d9b0"
+  },
+  {
+   "gz_bytes": 37553992,
+   "gz_sha256": "23df4acecd92b11092b5e8e7f9ee7d2c9168621969d1b1e7f103c78cbb9b23a3",
+   "name": "sft-math-nemotron-proofs.part0236.jsonl.gz",
+   "plain_bytes": 400035552,
+   "plain_sha256": "9225d04e12d0cf928e181e12c5189a64827a3e5e3c21bf31c073ad44342e21c3"
+  },
+  {
+   "gz_bytes": 37601855,
+   "gz_sha256": "1ceefe941d57ef00f636bea9edc70f2e84999738e82e4fc3cb302a93a763b0d9",
+   "name": "sft-math-nemotron-proofs.part0237.jsonl.gz",
+   "plain_bytes": 400063127,
+   "plain_sha256": "c2b172ade57ceb5ea3dda831bc69457db47029c5cbeb8dda233351655000342c"
+  },
+  {
+   "gz_bytes": 37881626,
+   "gz_sha256": "a34e07c45377f660fbfc997d8c7c3b8e4ad7f593b527a21e9354283aeda28789",
+   "name": "sft-math-nemotron-proofs.part0238.jsonl.gz",
+   "plain_bytes": 400269167,
+   "plain_sha256": "0c9e99a400e8f1cfd33eeb45fe13cb11ef4c5c0f23bc1020ab5c37dde378164f"
+  },
+  {
+   "gz_bytes": 38624644,
+   "gz_sha256": "cefe24be6c128ccedcc1c79cc0de9d918b28f55886b1eef68d0402aa9959e868",
+   "name": "sft-math-nemotron-proofs.part0239.jsonl.gz",
+   "plain_bytes": 400079242,
+   "plain_sha256": "b5f27ab988e3d7a8eeec3807c315512a4b2af6701d2e76fc122e56ed22cb92c7"
+  },
+  {
+   "gz_bytes": 37795954,
+   "gz_sha256": "f5728f534ad28050a422bda3a18173144ff41af30ea03a04d7d5fd4cfa184d79",
+   "name": "sft-math-nemotron-proofs.part0240.jsonl.gz",
+   "plain_bytes": 400065494,
+   "plain_sha256": "e33c773b05fb0eae56b02ca77e8f34a2b79a1262fe4949a26d2541b9c1b387f7"
+  },
+  {
+   "gz_bytes": 38087186,
+   "gz_sha256": "8e9e22bcb7a7e2c4e76314b8c29c1b67f5560495c6cf848ecf12a8a500878d7e",
+   "name": "sft-math-nemotron-proofs.part0241.jsonl.gz",
+   "plain_bytes": 400057172,
+   "plain_sha256": "a8c7b89bc7e0498a33f77e0c7bc5556b4f309fd9b59032b4b88ebd1c6b8faa47"
+  },
+  {
+   "gz_bytes": 38499950,
+   "gz_sha256": "9b2f28534b6113afb22758ef098d8a5b0a0c48f3a048d5d3bdd3d6bd43a4ea9a",
+   "name": "sft-math-nemotron-proofs.part0242.jsonl.gz",
+   "plain_bytes": 400028748,
+   "plain_sha256": "87cf3ea04402e7b343fc78770c16c913fb85d3a01bcdf895238b6789b0f3534f"
+  },
+  {
+   "gz_bytes": 39019984,
+   "gz_sha256": "4d9d723aecab94d8d159a045f112d9bef0f39e99978664407fa00a68ecc6c26a",
+   "name": "sft-math-nemotron-proofs.part0243.jsonl.gz",
+   "plain_bytes": 400150496,
+   "plain_sha256": "4ba9b7ca67a0c3ccfe07bc6fe1d6efefd458bb82feb9d72ca416e96ad580caed"
+  },
+  {
+   "gz_bytes": 37814003,
+   "gz_sha256": "1928d08bdc4dfb55ff1a127c11cf8361b1921b54daea17611254e10527a9d952",
+   "name": "sft-math-nemotron-proofs.part0244.jsonl.gz",
+   "plain_bytes": 400029072,
+   "plain_sha256": "a6e67bb65b981d09dd98fd72fb68697c727870ba840e1e0958983b4259f30ee6"
+  },
+  {
+   "gz_bytes": 38220226,
+   "gz_sha256": "9998ad78cc7a04c7be939529903944984c1790552ac4e9f2f5d2f9ff707c1e50",
+   "name": "sft-math-nemotron-proofs.part0245.jsonl.gz",
+   "plain_bytes": 400045552,
+   "plain_sha256": "290eb95dc8ffadc23eb257e44762b8e6dfc024a9b2e5cc31431dd33abb80e24a"
+  },
+  {
+   "gz_bytes": 38028643,
+   "gz_sha256": "6df90e756d08e68c464d193a50903d5c4632a01610fed703c820087357490008",
+   "name": "sft-math-nemotron-proofs.part0246.jsonl.gz",
+   "plain_bytes": 400102895,
+   "plain_sha256": "32a2b92fafc89cb66972083f9a5d2f196dc41aa7dec08b3485c90bae1879724b"
+  },
+  {
+   "gz_bytes": 38220812,
+   "gz_sha256": "0f4819f9af1b2c50a3a1d43c30820256e3a4d12d76e6fff5114faba53c9e0a63",
+   "name": "sft-math-nemotron-proofs.part0247.jsonl.gz",
+   "plain_bytes": 400247049,
+   "plain_sha256": "eafcd0ce9ca1ff5c701e9a4931e7d3c69e0e742ed3ee5d25a58bb11d1f631243"
+  },
+  {
+   "gz_bytes": 38063138,
+   "gz_sha256": "fb57ffbe24fffde283c502b285f283b66c6cd13eab7f683bdaf6b31fcda00057",
+   "name": "sft-math-nemotron-proofs.part0248.jsonl.gz",
+   "plain_bytes": 400127427,
+   "plain_sha256": "330cce27e8060411f052b6ed70fe1f115c2ad50e6b418d188d84ee5f18fae3fe"
+  },
+  {
+   "gz_bytes": 37919364,
+   "gz_sha256": "ce3d5fde19367c6c283b931b4b23afcae53e1b3117a8131ffdd62e60e6487ce3",
+   "name": "sft-math-nemotron-proofs.part0249.jsonl.gz",
+   "plain_bytes": 400023174,
+   "plain_sha256": "47ba590c8cfc13143e48d4da7c81ad6e6d193d9bc19cef622719df137b60ca55"
+  },
+  {
+   "gz_bytes": 38294711,
+   "gz_sha256": "877a96ba7d18347f04dd88496dea224cf400ddfba04426a1795dc8f1bae36690",
+   "name": "sft-math-nemotron-proofs.part0250.jsonl.gz",
+   "plain_bytes": 400065658,
+   "plain_sha256": "e36f492a524b411edfa70ea2cfc72c937982fb9d508cdd48ffdd81b70c599ead"
+  },
+  {
+   "gz_bytes": 38579357,
+   "gz_sha256": "bac6dcacf1d514bc453c00d05cdbf51d24a82d27f6d992469b6be5f76a35a1ec",
+   "name": "sft-math-nemotron-proofs.part0251.jsonl.gz",
+   "plain_bytes": 400116412,
+   "plain_sha256": "420e97d7acff94273d89a9478f7a024a14a7d0e6cceae046d6cb2254637b70d3"
+  },
+  {
+   "gz_bytes": 38802567,
+   "gz_sha256": "02aa9418ee421ca9684c7b887dabd49eae522d29a8d6297d91a6414873c6d5f7",
+   "name": "sft-math-nemotron-proofs.part0252.jsonl.gz",
+   "plain_bytes": 400041234,
+   "plain_sha256": "b2f600b2b0289c191242d0ec7291821e554ac9767a20f4bc62ed401fc7bcd782"
+  },
+  {
+   "gz_bytes": 38172807,
+   "gz_sha256": "425ec4788908b7f1b5ac1af83112b89f49888108eebc976140775b8f8a490fc6",
+   "name": "sft-math-nemotron-proofs.part0253.jsonl.gz",
+   "plain_bytes": 400068417,
+   "plain_sha256": "c997b0bdf0160f2b87dbfe3a0263010cb629f0313b59056abc4c35c5e1c5e0fb"
+  },
+  {
+   "gz_bytes": 37656815,
+   "gz_sha256": "b28f28ce6898e95c1def5cae40c64ba9d46e2dff94af9ee34d147a2baaa67688",
+   "name": "sft-math-nemotron-proofs.part0254.jsonl.gz",
+   "plain_bytes": 400091684,
+   "plain_sha256": "a0efcbefc6c1d904c9fcf188e073aa9a280cb59569c79dfd74ae0378905f0099"
+  },
+  {
+   "gz_bytes": 39156173,
+   "gz_sha256": "69c19d44bf00fb0d839c549f6ec2d927cb24667d9b92feebd9e3bc275750c01c",
+   "name": "sft-math-nemotron-proofs.part0255.jsonl.gz",
+   "plain_bytes": 400001437,
+   "plain_sha256": "1b2720e4285df52c59354f35036aec9bc39cbbd2e0381fb724e74a755c30ccdc"
+  },
+  {
+   "gz_bytes": 37872909,
+   "gz_sha256": "d6ba795292211d838926fd1092ce79f0d003164f30c9a731fec95967e0509e80",
+   "name": "sft-math-nemotron-proofs.part0256.jsonl.gz",
+   "plain_bytes": 400126514,
+   "plain_sha256": "69f5d85392138fe6ffed932f4ff2e5c6761f05c8310ae2f31a2504b89adb0904"
+  },
+  {
+   "gz_bytes": 38467610,
+   "gz_sha256": "965dc4264a58a8cff7e92abf83fa51b4f51694d85e75ab2f1aecfa352c9cfbf9",
+   "name": "sft-math-nemotron-proofs.part0257.jsonl.gz",
+   "plain_bytes": 400007395,
+   "plain_sha256": "f932d38fb7fe7b55d4a5ef7e9fe1cc21ad9e9ad1c88dd9498bb86322ac832488"
+  },
+  {
+   "gz_bytes": 38007729,
+   "gz_sha256": "a1838cff4ae6c6ede5373a44761563f384203e974d66552e184073033c89155d",
+   "name": "sft-math-nemotron-proofs.part0258.jsonl.gz",
+   "plain_bytes": 400053316,
+   "plain_sha256": "90cb8e5d6e4a88900347919aade197a723bdcaa7c09f0563cb037799ed08416e"
+  },
+  {
+   "gz_bytes": 37821389,
+   "gz_sha256": "7ba7453f07aee8c3438baa8b7cf94a29d8fb018930d59b76336988630ca4bf01",
+   "name": "sft-math-nemotron-proofs.part0259.jsonl.gz",
+   "plain_bytes": 400125001,
+   "plain_sha256": "92c3af74a48b3e2c5b8a47254743c7710c0a5f0d334fa8f595b0401faadf9b28"
+  },
+  {
+   "gz_bytes": 38541297,
+   "gz_sha256": "9ccc79018dd6df6b88ff272454246d2715f3d6516d63b26df7cf7dcc0e31722f",
+   "name": "sft-math-nemotron-proofs.part0260.jsonl.gz",
+   "plain_bytes": 400016075,
+   "plain_sha256": "376a509f9a3951e9e0cc1211b932e96ba12e9da14c5146983deffb02f751e2e4"
+  },
+  {
+   "gz_bytes": 38363820,
+   "gz_sha256": "bd35f255cf9f863692160a8876850b67b40056e9a93a5a45b2d658857d435930",
+   "name": "sft-math-nemotron-proofs.part0261.jsonl.gz",
+   "plain_bytes": 400065960,
+   "plain_sha256": "d38d731f73b0240c2fcd60aa9bc7cca4ccde00798be6f49531aa1e80520d3162"
+  },
+  {
+   "gz_bytes": 37968064,
+   "gz_sha256": "a93521904d33890ef712946a64c85a0f738f67daf38054e8b71831fea1b8e331",
+   "name": "sft-math-nemotron-proofs.part0262.jsonl.gz",
+   "plain_bytes": 400169946,
+   "plain_sha256": "d185bb99d2f83c157ef1d3f6bde13038e11d5eeb9bbf07570fe6bc02d85df8fc"
+  },
+  {
+   "gz_bytes": 38602982,
+   "gz_sha256": "9aebd4ab803afd2fad5f7c02a52472be760f8a687fff3d7444f757b8abe28129",
+   "name": "sft-math-nemotron-proofs.part0263.jsonl.gz",
+   "plain_bytes": 400039114,
+   "plain_sha256": "7f97a3110b531a4e5f682efc6a33dbb826c4c0bf408e9a6c375793161f2631f6"
+  },
+  {
+   "gz_bytes": 39041476,
+   "gz_sha256": "a0791f0b35b065d2ab24105ddac5b3bd1b1855d18a52a233021c446f8b961ed5",
+   "name": "sft-math-nemotron-proofs.part0264.jsonl.gz",
+   "plain_bytes": 400241550,
+   "plain_sha256": "86cc916cfdbde37fd253a0a0c36ed8d03a803c1a693b562acba6072497e3d20a"
+  },
+  {
+   "gz_bytes": 37913737,
+   "gz_sha256": "f230c8699cad81b58918b46d86906b981162bc65b27edd810e4b2e2d834d91e4",
+   "name": "sft-math-nemotron-proofs.part0265.jsonl.gz",
+   "plain_bytes": 400003314,
+   "plain_sha256": "e740b95b00c36451c8da76870d31a09da8c90d20ac374a4d793f6b281a8aafe5"
+  },
+  {
+   "gz_bytes": 37985501,
+   "gz_sha256": "30a1b98c625e61d66da0a04d6cfb225ac8276d45df79aee86b8de108557b7068",
+   "name": "sft-math-nemotron-proofs.part0266.jsonl.gz",
+   "plain_bytes": 400379631,
+   "plain_sha256": "c48d33ebfbada788abf3f80b6a07c70b9e9afc7c34ad9c425d66a969f5087b4f"
+  },
+  {
+   "gz_bytes": 38255357,
+   "gz_sha256": "4e38928a496427a4642fdcfb3724b88f1cf70299d1e69bc5d5e121347c9193cc",
+   "name": "sft-math-nemotron-proofs.part0267.jsonl.gz",
+   "plain_bytes": 400012752,
+   "plain_sha256": "4081bcc9629c55d0063c449b1646662e2d8ad9bbb6dad21bc1f5d758dcc5fec1"
+  },
+  {
+   "gz_bytes": 38141311,
+   "gz_sha256": "26bebe56e01f20d3a7768842c386c6dd4e42663e2a916528cb438afed876ba38",
+   "name": "sft-math-nemotron-proofs.part0268.jsonl.gz",
+   "plain_bytes": 400010242,
+   "plain_sha256": "56dc8f82206a85b385ea536be4fb90dc285f71275514acb197ff0ad63861d60b"
+  },
+  {
+   "gz_bytes": 38030790,
+   "gz_sha256": "6f87e6d859cd1b633f2b0ebd7841807a1f4f037c7504eced666391a62ed9950a",
+   "name": "sft-math-nemotron-proofs.part0269.jsonl.gz",
+   "plain_bytes": 400069350,
+   "plain_sha256": "f67d6089ace2dd360f586d02a37f69160db001736b9ae6870972bdfc03d2180d"
+  },
+  {
+   "gz_bytes": 38522766,
+   "gz_sha256": "6c192db18d5e432a5fdffe515e027da60b9d58322acf3cff1aaf9aad7e397903",
+   "name": "sft-math-nemotron-proofs.part0270.jsonl.gz",
+   "plain_bytes": 400067498,
+   "plain_sha256": "d379958792ac88f6f62c5d4f3c28e36fe28c40a6f52c684590870188cd65f712"
+  },
+  {
+   "gz_bytes": 38302927,
+   "gz_sha256": "7927f0c4774d0acec90d70da0a577d4d9ae721b6b58db1eafa41c6b95a5e454d",
+   "name": "sft-math-nemotron-proofs.part0271.jsonl.gz",
+   "plain_bytes": 400182243,
+   "plain_sha256": "204372ea1a4fb0ec26d703db79c5010f9633a18654b7b7907aba3ec01a283296"
+  },
+  {
+   "gz_bytes": 37857342,
+   "gz_sha256": "7c548dbdf4d6a776e234162a40dec6954d3523dae490eafa5f255ecfd3d7e6c1",
+   "name": "sft-math-nemotron-proofs.part0272.jsonl.gz",
+   "plain_bytes": 400084136,
+   "plain_sha256": "44ea17aee3cae88939ce2b5b7ecfac06d5ce33342c687fb06209aa119b52ec90"
+  },
+  {
+   "gz_bytes": 38518576,
+   "gz_sha256": "a6fd8bbfb198e71e2fb5b04b1b35e92f802e1ac9ad9d3661ad1793942d55ad70",
+   "name": "sft-math-nemotron-proofs.part0273.jsonl.gz",
+   "plain_bytes": 400086596,
+   "plain_sha256": "3238c883b2bf38c7da7385c45a2e012153cc6f44a656fd93e91affb22cb49701"
+  },
+  {
+   "gz_bytes": 38518863,
+   "gz_sha256": "d896272ccae51f1dd3e281fd4e50ba254282fa356eb8dea594fdc44d32485c57",
+   "name": "sft-math-nemotron-proofs.part0274.jsonl.gz",
+   "plain_bytes": 400072958,
+   "plain_sha256": "79d1d4043ec4648f3684f26da23a9269106d5c3bbe0c7c148c8d0435d3d92902"
+  },
+  {
+   "gz_bytes": 38975793,
+   "gz_sha256": "c9b9ae0b58cd1465958886c133219ced5492278c762d6a8de182ccb4845699c2",
+   "name": "sft-math-nemotron-proofs.part0275.jsonl.gz",
+   "plain_bytes": 400025000,
+   "plain_sha256": "b3a06ad25e3bf884a7ccf1bb6a07c0e9b1f1121a45e68d167360a7a53cdffff5"
+  },
+  {
+   "gz_bytes": 38824134,
+   "gz_sha256": "c77eee6eb5c7059d4c69ee3ec98c9b3ee87393a3daaf635b55c286b61f8c4cc4",
+   "name": "sft-math-nemotron-proofs.part0276.jsonl.gz",
+   "plain_bytes": 400190435,
+   "plain_sha256": "b680d725128101fbe84dd18203accbc8e5d9505fd0813e272425d6627262f38e"
+  },
+  {
+   "gz_bytes": 38384968,
+   "gz_sha256": "0229925614a9519a52328fb7116679d926dadeabe4ce9f3c782830c6fbc1e917",
+   "name": "sft-math-nemotron-proofs.part0277.jsonl.gz",
+   "plain_bytes": 400190945,
+   "plain_sha256": "2f4e3dfdadaa3f5248f3534c73015fa7b4674a493323b894c346b52281bdcea0"
+  },
+  {
+   "gz_bytes": 39175861,
+   "gz_sha256": "c0e8a4c5673cc0c5d2a906b3b172c80fd8fe4c06d73a411a2ee47cd409da2041",
+   "name": "sft-math-nemotron-proofs.part0278.jsonl.gz",
+   "plain_bytes": 400100604,
+   "plain_sha256": "2b17cbe47fc955d564cbea4fef0d2f37f5b2308a44ddb10bebe8fe21a70bee9a"
+  },
+  {
+   "gz_bytes": 38107255,
+   "gz_sha256": "8251f97c1aa166638c4ddb8ff1e85c52e2b09a83bc8355b183755fd043e5829f",
+   "name": "sft-math-nemotron-proofs.part0279.jsonl.gz",
+   "plain_bytes": 400026523,
+   "plain_sha256": "8ea1aea2003d4b8308a122b1d4f5435402ae3d241b4438d2f017c9c2c4d0a767"
+  },
+  {
+   "gz_bytes": 38453811,
+   "gz_sha256": "45de01df47da83aab932775cb0ea5c563614350451f524e6876f73c3639eea4e",
+   "name": "sft-math-nemotron-proofs.part0280.jsonl.gz",
+   "plain_bytes": 400005001,
+   "plain_sha256": "0c0bf38867eb7d3a366979c0c94104f24134c502d1350e0687f62543e43f8256"
+  },
+  {
+   "gz_bytes": 38885985,
+   "gz_sha256": "88a041fa98215eca7594ed421e53e722f6ac674d0e96db066bf38185919e4a42",
+   "name": "sft-math-nemotron-proofs.part0281.jsonl.gz",
+   "plain_bytes": 400041102,
+   "plain_sha256": "e501b159684ee814bd0c71f96d54d1168f144acb610b04a5671936a49dcdae73"
+  },
+  {
+   "gz_bytes": 38991038,
+   "gz_sha256": "196f5a2177a818955261c12811c4c09ab899f6aa75c8d47f2aff48a38f9d14e9",
+   "name": "sft-math-nemotron-proofs.part0282.jsonl.gz",
+   "plain_bytes": 400172806,
+   "plain_sha256": "cc46b140b4fdcbc1a49be5bd8a86b79fb6d3d6d3b3ffece776e08b992a246096"
+  },
+  {
+   "gz_bytes": 37608509,
+   "gz_sha256": "be093e60421a1f5d88498380d6ca85cebcf4166162083c584fe173b821e8e113",
+   "name": "sft-math-nemotron-proofs.part0283.jsonl.gz",
+   "plain_bytes": 400034732,
+   "plain_sha256": "64d25b520b8c6381dfbd7350c5127d50b84bf4a348f8f0779bb2f984ffb8bf02"
+  },
+  {
+   "gz_bytes": 37789867,
+   "gz_sha256": "d7ee2aa240927da581f10d96474b129a19b3e17b3e619edd3069ab676592933e",
+   "name": "sft-math-nemotron-proofs.part0284.jsonl.gz",
+   "plain_bytes": 400028193,
+   "plain_sha256": "14fc5b9605641a075792c2fc06c93b705f33544541de8258ac36e7f9d560b044"
+  },
+  {
+   "gz_bytes": 38808928,
+   "gz_sha256": "ab84461b913b20f66628cbc411b4a590cc84297ba9d5e503e6e97e26cb3dcd1c",
+   "name": "sft-math-nemotron-proofs.part0285.jsonl.gz",
+   "plain_bytes": 400136188,
+   "plain_sha256": "9c14a1c8f9b09409160671a32a5d3250cab6b28ffb2a2ca8baa11c50a070d2ce"
+  },
+  {
+   "gz_bytes": 19658543,
+   "gz_sha256": "8ce86b2dbda9b896cc249bee8078f1f1d4571a1dcfe7d84dc24cdd52b0ea12e3",
+   "name": "sft-math-nemotron-proofs.part0286.jsonl.gz",
+   "plain_bytes": 200839182,
+   "plain_sha256": "02943aa6678e5d08fff40096cbd96eb90bc66c972bec4d0c637800bd6dfaa8a6"
+  }
+ ],
+ "plain_bytes": 114628460804,
+ "rerun_content_sha256": "74e876472c176fe4f5f7ef116d2fafd4f166a103bc17a96444e23b9fb23ef5df",
+ "rerun_rows": 1353,
+ "rows_in": 1376663,
+ "rows_out": 920881,
+ "rows_per_s_convert": null,
+ "rows_scanned": 1376663,
+ "scope": "full set as selected by the adapter, source order, C3",
+ "selection": "whole lean file",
+ "set": "sft-math-nemotron-proofs",
+ "skipped": {
+  "row has no messages (statement only)": 455782
+ },
+ "source": "nvidia/Nemotron-Math-Proofs-v1",
+ "status": "converted, not decontaminated; not a pack",
+ "token_record": {
+  "basis": "full set as selected by the adapter, source order, C3; converted, not decontaminated",
+  "effort": {
+   "16k": 529257,
+   "1k": 21363,
+   "4k": 319910,
+   "64k": 50351
+  },
+  "length": {
+   "max": 80407,
+   "min": 694,
+   "p50": 9269,
+   "p95": 27182
+  },
+  "rows": 920881,
+  "sequence_tokens": 10383997134,
+  "set_id": "sft-math-nemotron-proofs",
+  "shifted_supervised_targets": 8434061917,
+  "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3"
+ },
+ "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3",
+ "tokens_per_s_convert": null
+}

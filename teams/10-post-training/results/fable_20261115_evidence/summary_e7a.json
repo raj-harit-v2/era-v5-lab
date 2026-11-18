@@ -1,0 +1,239 @@
+{
+ "algo": "objective_v1",
+ "steps": 20,
+ "k": 8,
+ "prompts_per_step": 16,
+ "max_new": 1024,
+ "sampler": "vllm",
+ "trainable_params": 1901068288,
+ "fp32_master_params": 0,
+ "tis_clip": null,
+ "router_params_frozen": [],
+ "router_checksum_before": "dense model: no router",
+ "router_checksum_after": "dense model: no router",
+ "router_unchanged": true,
+ "heldout_reward_start": 0.14713541666666666,
+ "heldout_reward_end": 0.15755208333333334,
+ "heldout_curve": [
+  [
+   0,
+   0.14713541666666666
+  ],
+  [
+   10,
+   0.15755208333333334
+  ],
+  [
+   20,
+   0.15755208333333334
+  ]
+ ],
+ "heldout_change": {
+  "problems": 96,
+  "start": 0.1471,
+  "end": 0.1576,
+  "diff": 0.0104,
+  "ci_low": -0.0208,
+  "ci_high": 0.0443,
+  "ci_excludes_zero": false,
+  "resamples": 10000
+ },
+ "groups_used_total": 229,
+ "trainable_weight_change": {
+  "share_changed": 0.09002,
+  "relative_l2": 0.04393
+ },
+ "step1_s": 56.543,
+ "mean_step_s_after_step1": 31.444,
+ "mean_times_s_after_step1": {
+  "rollout": 4.413,
+  "reward": 10.425,
+  "old_logprobs": 4.72,
+  "train": 11.877,
+  "sync": 0.008
+ },
+ "mean_rollout_tokens_per_s": 8693.9,
+ "routing_curve": [
+  {
+   "step": 0,
+   "truncated": 0.0299,
+   "mean_tokens": 564.6
+  },
+  {
+   "step": 10,
+   "truncated": 0.0013,
+   "mean_tokens": 371.4
+  },
+  {
+   "step": 20,
+   "truncated": 0.0065,
+   "mean_tokens": 371.7
+  }
+ ],
+ "vllm_sync_path": "collective_rpc",
+ "vllm_sync_check": {
+  "baseline_k3": 0.00020332145504653454,
+  "deleted_layer": "model.layers.0.mlp.gate_proj",
+  "deleted_unsynced_k3": 0.07220108155161142,
+  "deleted_synced_k3": 0.0007095384207786992,
+  "restored_k3": 0.0007138834043871611,
+  "ok": true,
+  "sync_path": "collective_rpc"
+ },
+ "gpu_name": "NVIDIA H200",
+ "seconds": 1014.1,
+ "seconds_per_step": 50.7,
+ "peak_gpu_memory_gb": 91.29,
+ "end_peak_torch_gb": 91.29,
+ "end_gpu_used_gb": 95.18,
+ "end_gpu_total_gb": 139.79,
+ "versions": {
+  "torch": "2.13.0+cu130",
+  "transformers": "5.19.0",
+  "vllm": "0.32.0"
+ },
+ "mean_mismatch_k3": 0.000325,
+ "router_trainable": false,
+ "objective": {
+  "name": "objective_v1",
+  "contract": "rl/objective_v1.md (lead, commit ff19ce2)",
+  "tr_epsilon": 0.2,
+  "reference_kl": "none (not in the contract)",
+  "steps_with_optimizer_update": 20,
+  "group_kinds_total": {
+   "all_one": 31,
+   "all_zero": 60,
+   "tied_other": 0,
+   "singleton": 0,
+   "mixed": 229
+  }
+ },
+ "saved_trainable_weights": null,
+ "deletion_tuning": {
+  "targets": "gate",
+  "masked_layers": 28,
+  "alpha_steps": 100,
+  "alpha": [
+   1000.0,
+   1000.0
+  ],
+  "lambda": 1e-05,
+  "calib_prompts": 56,
+  "wanda_prior": {
+   "eta": 0.00048828125,
+   "prior_strength": 3.0,
+   "prior_deleted": 928091,
+   "targeted": 1901068288
+  },
+  "deletion_at_init": {
+   "deleted": 3489512,
+   "targeted": 1901068288,
+   "model_weights": 7615616512,
+   "deleted_frac_of_targeted": 0.0018355532108060707,
+   "deleted_frac_of_all_weights": 0.00045820479464814734,
+   "per_layer_min": 0.0018270632475039213,
+   "per_layer_max": 0.001843765435531793
+  },
+  "official": {
+   "repo": "agentic-learning-ai-lab/deleting-weights",
+   "commit": "94f0340ebb574f95bb41d844165253a6785e215e",
+   "licence": "MIT"
+  },
+  "deletion_final": {
+   "deleted": 4211053,
+   "targeted": 1901068288,
+   "model_weights": 7615616512,
+   "deleted_frac_of_targeted": 0.0022150982300747314,
+   "deleted_frac_of_all_weights": 0.0005529497176446061,
+   "per_layer_min": 0.0012029257520285352,
+   "per_layer_max": 0.0027687927010436775
+  },
+  "alpha_final": 1000.0,
+  "optimizer_steps": 20
+ },
+ "status": "COMPLETE",
+ "state": {
+  "step": 20,
+  "file": "state.step000020.pt",
+  "bytes": 22812882079,
+  "identity_sha256": "a07150aa3ade8ffacd2e5990760039aa5dbad8bf6635279a32eb6aae0b6af1fa",
+  "saved_unix": 1794770569.8754957,
+  "write_s": 38.92
+ },
+ "resumed_from_step": null,
+ "seconds_all_invocations": 1014.1,
+ "subgroups": {
+  "aizu": {
+   "groups": 63,
+   "kept": 56,
+   "tokens": 146310,
+   "kept_tokens": 125958,
+   "rollouts": 504,
+   "passes": 234,
+   "sampled_group_share": 0.1969,
+   "kept_group_share": 0.2445,
+   "kept_token_share": 0.2318
+  },
+  "atcoder": {
+   "groups": 11,
+   "kept": 8,
+   "tokens": 27757,
+   "kept_tokens": 24689,
+   "rollouts": 88,
+   "passes": 48,
+   "sampled_group_share": 0.0344,
+   "kept_group_share": 0.0349,
+   "kept_token_share": 0.0454
+  },
+  "codechef": {
+   "groups": 72,
+   "kept": 43,
+   "tokens": 180862,
+   "kept_tokens": 103913,
+   "rollouts": 576,
+   "passes": 252,
+   "sampled_group_share": 0.225,
+   "kept_group_share": 0.1878,
+   "kept_token_share": 0.1913
+  },
+  "hackerearth": {
+   "groups": 174,
+   "kept": 122,
+   "tokens": 416055,
+   "kept_tokens": 288740,
+   "rollouts": 1392,
+   "passes": 608,
+   "sampled_group_share": 0.5437,
+   "kept_group_share": 0.5328,
+   "kept_token_share": 0.5315
+  }
+ },
+ "train_cohort": {
+  "problems": 56,
+  "k": 8,
+  "curve": [
+   [
+    0,
+    0.3482142857142857
+   ],
+   [
+    10,
+    0.4575892857142857
+   ],
+   [
+    20,
+    0.5111607142857143
+   ]
+  ],
+  "change": {
+   "problems": 56,
+   "start": 0.3482,
+   "end": 0.5112,
+   "diff": 0.1629,
+   "ci_low": 0.096,
+   "ci_high": 0.2321,
+   "ci_excludes_zero": true,
+   "resamples": 10000
+  }
+ }
+}

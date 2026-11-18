@@ -1,0 +1,501 @@
+{
+ "status": "complete",
+ "config": {
+  "results": "out/overlap",
+  "inputs": "out/tokenizer_sample_v0_clean",
+  "out": "out/dedup",
+  "cross_pack": true,
+  "pack_order": [
+   "code-go",
+   "code-js-ts",
+   "code-java",
+   "code-cpp",
+   "code-rust",
+   "code-python",
+   "en-fineweb-edu",
+   "en-dclm",
+   "en-nemotroncc-synth",
+   "en-nemotroncc",
+   "math-megamath",
+   "math-finemath",
+   "sci-finepdfs",
+   "cadj-commits",
+   "cadj-notebooks",
+   "cadj-stackexchange",
+   "ind-bn-fw2",
+   "ind-bn-sangraha-v",
+   "ind-gu-fw2",
+   "ind-hi-fw2",
+   "ind-hi-hplt",
+   "ind-hi-indiccorp",
+   "ind-hi-sangraha-s",
+   "ind-hi-sangraha-v",
+   "ind-kn-fw2",
+   "ind-kn-sangraha-s",
+   "ind-kn-sangraha-v",
+   "ind-ml-fw2",
+   "ind-mr-fw2",
+   "ind-mr-sangraha-v",
+   "ind-or-fw2",
+   "ind-sa-fw2",
+   "ind-ta-fw2",
+   "ind-ta-sangraha-s",
+   "ind-ta-sangraha-v",
+   "ind-te-fw2",
+   "ind-te-sangraha-s",
+   "ind-te-sangraha-v"
+  ],
+  "licence_usable": {},
+  "default_licence_usable": true,
+  "gold_dirs": [
+   "teams/01-data-a/gold",
+   "teams/02-data-b/gold"
+  ]
+ },
+ "overlap_run": {
+  "commit_note": "see overlap_summary.json",
+  "documents_all": 1414996,
+  "checked_sha256": {
+   "overlap_matches.csv": "ff8e4feec9f390cd78648ed0808095db1c8baf8484a5ed1a9c8a9016398d0433",
+   "overlap_docs.parquet": "4f61c80a23a9e49b4b12b2d6aaff639771d70fc2dd130f0a73d99a8449992e30"
+  }
+ },
+ "matches_used": 2729,
+ "cross_pack_matches_dropped": 0,
+ "empty_documents": 7,
+ "empty_document_matches_set_aside": 21,
+ "clusters": 1084,
+ "clusters_decided_by_rule": {
+  "0": 28,
+  "2": 21,
+  "3": 750,
+  "4": 285
+ },
+ "groups_without_survivor": 0,
+ "groups_with_several_survivors": 0,
+ "documents_all": 1414996,
+ "removed": 1345,
+ "removed_share": 0.000951,
+ "removed_by_rule": {
+  "H2": 1289,
+  "H1": 56
+ },
+ "removed_by_stage": {
+  "within_pack": 1309,
+  "cross_pack": 36
+ },
+ "heldout_removed": 0,
+ "heldout_heldout_pairs_reported": 0,
+ "url_known": true,
+ "rule_2_note": null,
+ "licence_default_used_for": [
+  "cadj-commits",
+  "cadj-notebooks",
+  "cadj-stackexchange",
+  "code-cpp",
+  "code-go",
+  "code-java",
+  "code-js-ts",
+  "code-python",
+  "code-rust",
+  "en-dclm",
+  "en-fineweb-edu",
+  "en-nemotroncc",
+  "en-nemotroncc-synth",
+  "ind-bn-fw2",
+  "ind-bn-sangraha-v",
+  "ind-gu-fw2",
+  "ind-hi-fw2",
+  "ind-hi-hplt",
+  "ind-hi-indiccorp",
+  "ind-hi-sangraha-s",
+  "ind-hi-sangraha-v",
+  "ind-kn-fw2",
+  "ind-kn-sangraha-s",
+  "ind-kn-sangraha-v",
+  "ind-ml-fw2",
+  "ind-mr-fw2",
+  "ind-mr-sangraha-v",
+  "ind-or-fw2",
+  "ind-sa-fw2",
+  "ind-ta-fw2",
+  "ind-ta-sangraha-s",
+  "ind-ta-sangraha-v",
+  "ind-te-fw2",
+  "ind-te-sangraha-s",
+  "ind-te-sangraha-v",
+  "math-finemath",
+  "math-megamath",
+  "sci-finepdfs"
+ ],
+ "harm_check": {
+  "status": "not_testable",
+  "gold_ids_in_input": 0,
+  "gold_ids_in_input_by_pack": {
+   "code-cpp": 0,
+   "code-go": 0,
+   "code-java": 0,
+   "code-js-ts": 0,
+   "code-python": 0,
+   "code-rust": 0,
+   "en-dclm": 0,
+   "en-fineweb-edu": 0,
+   "en-nemotroncc-synth": 0,
+   "en-nemotroncc": 0,
+   "math-finemath": 0,
+   "math-megamath": 0,
+   "sci-finepdfs": 0,
+   "cadj-commits": 0,
+   "ind-bn-fw2": 0,
+   "ind-bn-sangraha-v": 0,
+   "ind-gu-fw2": 0,
+   "ind-hi-fw2": 0,
+   "ind-hi-hplt": 0,
+   "ind-hi-indiccorp": 0,
+   "ind-hi-sangraha-s": 0,
+   "ind-hi-sangraha-v": 0,
+   "ind-kn-fw2": 0,
+   "ind-kn-sangraha-s": 0,
+   "ind-kn-sangraha-v": 0,
+   "ind-mr-fw2": 0,
+   "ind-mr-sangraha-v": 0,
+   "ind-sa-fw2": 0,
+   "ind-ta-sangraha-v": 0,
+   "ind-te-fw2": 0,
+   "ind-te-sangraha-s": 0,
+   "ind-te-sangraha-v": 0
+  },
+  "gold_removed": 0,
+  "gold_removed_ids": [],
+  "note": "not_testable means no gold ID is in this input, so the check tested nothing (dedup_design_v1.md, Validation): run it on the diagnosis packs"
+ },
+ "by_pack": {
+  "cadj-commits": {
+   "documents_in": 75579,
+   "removed": 904,
+   "removed_H1": 29,
+   "removed_H2": 875,
+   "removed_cross_pack": 9,
+   "documents_out": 74675
+  },
+  "cadj-notebooks": {
+   "documents_in": 15732,
+   "removed": 14,
+   "removed_H1": 0,
+   "removed_H2": 14,
+   "removed_cross_pack": 0,
+   "documents_out": 15718
+  },
+  "cadj-stackexchange": {
+   "documents_in": 41805,
+   "removed": 199,
+   "removed_H1": 0,
+   "removed_H2": 199,
+   "removed_cross_pack": 0,
+   "documents_out": 41606
+  },
+  "code-cpp": {
+   "documents_in": 55195,
+   "removed": 5,
+   "removed_H1": 2,
+   "removed_H2": 3,
+   "removed_cross_pack": 0,
+   "documents_out": 55190
+  },
+  "code-go": {
+   "documents_in": 77765,
+   "removed": 6,
+   "removed_H1": 0,
+   "removed_H2": 6,
+   "removed_cross_pack": 0,
+   "documents_out": 77759
+  },
+  "code-java": {
+   "documents_in": 85518,
+   "removed": 3,
+   "removed_H1": 0,
+   "removed_H2": 3,
+   "removed_cross_pack": 0,
+   "documents_out": 85515
+  },
+  "code-js-ts": {
+   "documents_in": 117208,
+   "removed": 0,
+   "removed_H1": 0,
+   "removed_H2": 0,
+   "removed_cross_pack": 0,
+   "documents_out": 117208
+  },
+  "code-python": {
+   "documents_in": 73305,
+   "removed": 9,
+   "removed_H1": 0,
+   "removed_H2": 9,
+   "removed_cross_pack": 0,
+   "documents_out": 73296
+  },
+  "code-rust": {
+   "documents_in": 58795,
+   "removed": 58,
+   "removed_H1": 1,
+   "removed_H2": 57,
+   "removed_cross_pack": 0,
+   "documents_out": 58737
+  },
+  "en-dclm": {
+   "documents_in": 60802,
+   "removed": 11,
+   "removed_H1": 0,
+   "removed_H2": 11,
+   "removed_cross_pack": 0,
+   "documents_out": 60791
+  },
+  "en-fineweb-edu": {
+   "documents_in": 72100,
+   "removed": 15,
+   "removed_H1": 0,
+   "removed_H2": 15,
+   "removed_cross_pack": 8,
+   "documents_out": 72085
+  },
+  "en-nemotroncc": {
+   "documents_in": 89183,
+   "removed": 19,
+   "removed_H1": 14,
+   "removed_H2": 5,
+   "removed_cross_pack": 4,
+   "documents_out": 89164
+  },
+  "en-nemotroncc-synth": {
+   "documents_in": 198877,
+   "removed": 1,
+   "removed_H1": 0,
+   "removed_H2": 1,
+   "removed_cross_pack": 0,
+   "documents_out": 198876
+  },
+  "ind-bn-fw2": {
+   "documents_in": 10809,
+   "removed": 0,
+   "removed_H1": 0,
+   "removed_H2": 0,
+   "removed_cross_pack": 0,
+   "documents_out": 10809
+  },
+  "ind-bn-sangraha-v": {
+   "documents_in": 10217,
+   "removed": 1,
+   "removed_H1": 0,
+   "removed_H2": 1,
+   "removed_cross_pack": 1,
+   "documents_out": 10216
+  },
+  "ind-gu-fw2": {
+   "documents_in": 23011,
+   "removed": 0,
+   "removed_H1": 0,
+   "removed_H2": 0,
+   "removed_cross_pack": 0,
+   "documents_out": 23011
+  },
+  "ind-hi-fw2": {
+   "documents_in": 13932,
+   "removed": 0,
+   "removed_H1": 0,
+   "removed_H2": 0,
+   "removed_cross_pack": 0,
+   "documents_out": 13932
+  },
+  "ind-hi-hplt": {
+   "documents_in": 8515,
+   "removed": 0,
+   "removed_H1": 0,
+   "removed_H2": 0,
+   "removed_cross_pack": 0,
+   "documents_out": 8515
+  },
+  "ind-hi-indiccorp": {
+   "documents_in": 110755,
+   "removed": 4,
+   "removed_H1": 2,
+   "removed_H2": 2,
+   "removed_cross_pack": 0,
+   "documents_out": 110751
+  },
+  "ind-hi-sangraha-s": {
+   "documents_in": 7542,
+   "removed": 35,
+   "removed_H1": 0,
+   "removed_H2": 35,
+   "removed_cross_pack": 0,
+   "documents_out": 7507
+  },
+  "ind-hi-sangraha-v": {
+   "documents_in": 14614,
+   "removed": 20,
+   "removed_H1": 1,
+   "removed_H2": 19,
+   "removed_cross_pack": 3,
+   "documents_out": 14594
+  },
+  "ind-kn-fw2": {
+   "documents_in": 7841,
+   "removed": 0,
+   "removed_H1": 0,
+   "removed_H2": 0,
+   "removed_cross_pack": 0,
+   "documents_out": 7841
+  },
+  "ind-kn-sangraha-s": {
+   "documents_in": 5238,
+   "removed": 0,
+   "removed_H1": 0,
+   "removed_H2": 0,
+   "removed_cross_pack": 0,
+   "documents_out": 5238
+  },
+  "ind-kn-sangraha-v": {
+   "documents_in": 8444,
+   "removed": 3,
+   "removed_H1": 1,
+   "removed_H2": 2,
+   "removed_cross_pack": 3,
+   "documents_out": 8441
+  },
+  "ind-ml-fw2": {
+   "documents_in": 19161,
+   "removed": 0,
+   "removed_H1": 0,
+   "removed_H2": 0,
+   "removed_cross_pack": 0,
+   "documents_out": 19161
+  },
+  "ind-mr-fw2": {
+   "documents_in": 11353,
+   "removed": 0,
+   "removed_H1": 0,
+   "removed_H2": 0,
+   "removed_cross_pack": 0,
+   "documents_out": 11353
+  },
+  "ind-mr-sangraha-v": {
+   "documents_in": 12299,
+   "removed": 5,
+   "removed_H1": 0,
+   "removed_H2": 5,
+   "removed_cross_pack": 5,
+   "documents_out": 12294
+  },
+  "ind-or-fw2": {
+   "documents_in": 34012,
+   "removed": 0,
+   "removed_H1": 0,
+   "removed_H2": 0,
+   "removed_cross_pack": 0,
+   "documents_out": 34012
+  },
+  "ind-sa-fw2": {
+   "documents_in": 5721,
+   "removed": 12,
+   "removed_H1": 4,
+   "removed_H2": 8,
+   "removed_cross_pack": 0,
+   "documents_out": 5709
+  },
+  "ind-ta-fw2": {
+   "documents_in": 6824,
+   "removed": 0,
+   "removed_H1": 0,
+   "removed_H2": 0,
+   "removed_cross_pack": 0,
+   "documents_out": 6824
+  },
+  "ind-ta-sangraha-s": {
+   "documents_in": 4372,
+   "removed": 1,
+   "removed_H1": 1,
+   "removed_H2": 0,
+   "removed_cross_pack": 0,
+   "documents_out": 4371
+  },
+  "ind-ta-sangraha-v": {
+   "documents_in": 6861,
+   "removed": 0,
+   "removed_H1": 0,
+   "removed_H2": 0,
+   "removed_cross_pack": 0,
+   "documents_out": 6861
+  },
+  "ind-te-fw2": {
+   "documents_in": 5763,
+   "removed": 0,
+   "removed_H1": 0,
+   "removed_H2": 0,
+   "removed_cross_pack": 0,
+   "documents_out": 5763
+  },
+  "ind-te-sangraha-s": {
+   "documents_in": 4463,
+   "removed": 0,
+   "removed_H1": 0,
+   "removed_H2": 0,
+   "removed_cross_pack": 0,
+   "documents_out": 4463
+  },
+  "ind-te-sangraha-v": {
+   "documents_in": 8678,
+   "removed": 2,
+   "removed_H1": 1,
+   "removed_H2": 1,
+   "removed_cross_pack": 2,
+   "documents_out": 8676
+  },
+  "math-finemath": {
+   "documents_in": 28830,
+   "removed": 3,
+   "removed_H1": 0,
+   "removed_H2": 3,
+   "removed_cross_pack": 0,
+   "documents_out": 28827
+  },
+  "math-megamath": {
+   "documents_in": 17803,
+   "removed": 15,
+   "removed_H1": 0,
+   "removed_H2": 15,
+   "removed_cross_pack": 1,
+   "documents_out": 17788
+  },
+  "sci-finepdfs": {
+   "documents_in": 6074,
+   "removed": 0,
+   "removed_H1": 0,
+   "removed_H2": 0,
+   "removed_cross_pack": 0,
+   "documents_out": 6074
+  }
+ },
+ "outputs": {
+  "remove_list.csv": {
+   "bytes": 103249,
+   "sha256": "4d4ea3893fa9b646f95e9c51cbe227bc304a5dc8f74ae7fd2ab4e2c6f72ed871"
+  },
+  "dedup_log.jsonl": {
+   "bytes": 590147,
+   "sha256": "192c381c817d23c2c1e840206d5d0dc86244dca525becc1be34a5afd67692923"
+  },
+  "heldout_duplicates.csv": {
+   "bytes": 63,
+   "sha256": "bda0cd4afca13791f8e5a7e615d5d26d50f096012dc0ddc6065cfedfef9ebab9"
+  },
+  "empty_documents.csv": {
+   "bytes": 522,
+   "sha256": "d55f940a87844f08ff7f7fcb07f1a1b652fec817a65df6a987a69a32f3b0efa6"
+  },
+  "dedup_groups.csv": {
+   "bytes": 236191,
+   "sha256": "76ad65d046dc4c534a2c1f9dd0bddd4f09034116e9a498a734597aa6f9cca270"
+  }
+ },
+ "seconds": 4.2
+}

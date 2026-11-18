@@ -1,0 +1,40 @@
+{
+  "state": "pass1_complete",
+  "requested_shards": 66,
+  "complete": 66,
+  "failed_final": 0,
+  "recount_mismatch_total": 0,
+  "start_utc": "2026-11-16T09:30:46+00:00",
+  "finish_utc": "2026-11-16T12:05:36+00:00",
+  "wall_seconds": 9290.0,
+  "mean_recorded_shard_seconds": 1835.3257575757575,
+  "mean_scope": "Final driver invocation per shard; includes built-in retries and SIGSTOP pauses in that invocation. For shards32,35,36,38,39,40 it excludes the earlier operator-terminated invocation. Full job wall time includes all interruptions.",
+  "sampled_peak_load_1m": 19.00732421875,
+  "sampled_peak_disk_used_gib": 64.22920227050781,
+  "sampled_min_disk_free_gib": 7.341407775878906,
+  "sample_interval_seconds": 30,
+  "min_sampled_available_memory_mib": 362.9296875,
+  "oom_affected_shards": [
+    27,
+    28,
+    36
+  ],
+  "operator_terminated_shards": [
+    32,
+    35,
+    36,
+    38,
+    39,
+    40
+  ],
+  "oom_resolution": "Reduced six drivers/18 workers to four drivers/12 workers. Preserved in-flight artifacts; existing workers resumed stale claims. All recovered.",
+  "hardware": "Civo g4c.medium,16vCPU,32GB RAM,80GB SSD,MUM1",
+  "artifact_inventory_files": 272,
+  "artifact_inventory_bytes": 33415791,
+  "aggregation_shards": 70,
+  "aggregation_checks_passed": 48,
+  "aggregation_checks": 48,
+  "packs_retained_for_shards4_to69": false,
+  "instance_state": "deleted",
+  "instance_deleted_verified_at_utc": "2026-11-16T12:14:05.733782+00:00"
+}

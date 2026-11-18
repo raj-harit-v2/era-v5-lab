@@ -457,6 +457,19 @@ def test_aya_collection_strips_zero_width_space_and_skips_empty_targets():
     assert lines == [] and manifest["skipped"] == {"empty input or target": 1}
 
 
+def test_aya_collection_reads_only_the_ten_usable_subsets_and_proposal_languages(monkeypatch):
+    names = {p.split("/")[0] for p in convert.AYA_COLLECTION_SUBSETS}
+    assert len(names) == 10
+    assert not names & set(convert.AYA_COLLECTION_EXCLUDED + convert.AYA_COLLECTION_PENDING_TSAI)
+    monkeypatch.setattr(convert, "hf_file_rows", lambda dataset, path, offset, n: iter(
+        [dict(AYA_COLLECTION, id=k + 1, language="urd" if (k == 0 and "sentiment" in path) else "tel") for k in range(n)]))
+    rows = list(convert.aya_collection_rows("CohereLabs/aya_collection", "", 0, 20))
+    assert len(rows) == 20 and rows[0]["source_key"] == "templated_bengali_news/1"
+    lines, manifest = convert.convert("sft-indic-aya-collection", rows, None, None)
+    assert manifest["rows_in"] == 19  # the one Urdu row of templated_indic_sentiment is not selected
+    assert json.loads(lines[0])["source_id"] == "templated_bengali_news/1"
+
+
 def test_convert_streams_to_a_sink_with_the_same_manifest(tmp_path):
     rows = [COMMITPACK, dict(COMMITPACK, response="x = 1\n")]
     lines, manifest = convert.convert("sft-code-commitpackft", rows, None, None)

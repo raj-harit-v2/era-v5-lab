@@ -1,0 +1,95 @@
+{
+ "checks": {
+  "checks_failed": {},
+  "checks_ok": true,
+  "effort_rows": {
+   "16k": 686,
+   "1k": 52,
+   "4k": 200,
+   "64k": 62
+  },
+  "files": [
+   {
+    "bytes": 207253426,
+    "name": "sft-code-nemotron-terminal.first1000.jsonl",
+    "sha256": "896fd58ee6512d281232a5739739de4eb500913167c6099f359cb67c2dc8e1e3"
+   }
+  ],
+  "info": {},
+  "length": {
+   "max": 35912,
+   "min": 1764,
+   "p50": 18658,
+   "p95": 26558
+  },
+  "max_len": 32768,
+  "rows": 1000,
+  "rows_over_max_len": 2,
+  "rows_with_tool_blocks": 0,
+  "shifted_supervised_targets": 12506878,
+  "tokens": 17112495,
+  "tool_call_blocks": 0,
+  "tool_call_tokens_untrained": 0,
+  "tool_result_blocks": 0,
+  "train_spans": 7832,
+  "trained_share": 0.730862,
+  "trained_tokens": 12506878,
+  "unique_ids": true
+ },
+ "checks_wall_s": 25.21,
+ "content_sha256": "896fd58ee6512d281232a5739739de4eb500913167c6099f359cb67c2dc8e1e3",
+ "convert": {
+  "cpu_sys_s": 8.962,
+  "cpu_user_s": 47.937,
+  "hub_bytes_read": 854802281,
+  "max_rss_mb": 1639.0,
+  "wall_s": 485.623
+ },
+ "decision": "TSAI reserves",
+ "deterministic_rerun": true,
+ "effort_manifest": {
+  "16k": 686,
+  "1k": 52,
+  "4k": 200,
+  "64k": 62
+ },
+ "file_bytes": 207253426,
+ "file_sha256": "896fd58ee6512d281232a5739739de4eb500913167c6099f359cb67c2dc8e1e3",
+ "generator_model": "DeepSeek-V3.2 (MIT, open weights) for both the synthetic tasks and the trajectories (paper, arXiv 2602.21193)",
+ "hub_revision": "67a3e039a1b07079c04dcf9d0d03fc5798e24fd9",
+ "input": "hub file nvidia/Nemotron-Terminal-Corpus dataset_adapters/code.parquet rows 0..999999999",
+ "licence": "cc-by-4.0 (Hub tag; commercial use permitted per tag)",
+ "rerun_content_sha256": "896fd58ee6512d281232a5739739de4eb500913167c6099f359cb67c2dc8e1e3",
+ "rerun_wall_s": 122.198,
+ "rows_in": 1000,
+ "rows_out": 1000,
+ "rows_per_s_convert": 2.06,
+ "rows_scanned": 1000,
+ "scope": "first 1000 selected rows, source order, C3",
+ "selection": "code adapter file",
+ "set": "sft-code-nemotron-terminal",
+ "skipped": {},
+ "source": "nvidia/Nemotron-Terminal-Corpus",
+ "token_record": {
+  "basis": "first 1000 selected rows, source order, C3; not the admissible kept rows",
+  "effort": {
+   "16k": 686,
+   "1k": 52,
+   "4k": 200,
+   "64k": 62
+  },
+  "length": {
+   "max": 35912,
+   "min": 1764,
+   "p50": 18658,
+   "p95": 26558
+  },
+  "rows": 1000,
+  "sequence_tokens": 17112495,
+  "set_id": "sft-code-nemotron-terminal",
+  "shifted_supervised_targets": 12506878,
+  "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3"
+ },
+ "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3",
+ "tokens_per_s_convert": 35238
+}

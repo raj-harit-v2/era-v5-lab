@@ -1,0 +1,130 @@
+{
+  "observed_at": "2026-11-15T02:50:20.452571+05:30",
+  "scope": "Observed before cache-key strengthening during the actual full Proofs completion; interpreter selected from active worker loaded-library paths, not a retroactive cache binding",
+  "legacy_checker_version": "cee869b4db22e71e848417a8d532a6dc2f171263e458b2d6ad7659344f41c4d7",
+  "checker_source_sha256": "5b0d785b68d62b8f2f66ed6b219c9ec1f02b277daf5163f329d74fedecbf65cb",
+  "renderer_source_sha256": "73438ffab11828510c8b10c09bd1f2614f680a37b654dfe91f068514bebc3c48",
+  "convert_source_sha256": "71c00be1edcfd63345ef75798544ca227dd5b4090397ab3d9a13e9ebf90edbb2",
+  "numpy": "2.5.4",
+  "tokenizers": "0.23.3",
+  "python": "3.12.16 (main, Oct 26 2026, 13:59:40) [Clang 23.1.3 ]",
+  "effective_marker_assignments": {
+    "129994": [
+      "im_start",
+      "<|im_start|>"
+    ],
+    "130773": [
+      "tool_call",
+      "<|tool_call|>"
+    ],
+    "130774": [
+      "tool_result",
+      "<|tool_result|>"
+    ],
+    "130816": [
+      "im_end",
+      "<|im_end|>"
+    ],
+    "130822": [
+      "endoftext",
+      "<|endoftext|>"
+    ],
+    "130823": [
+      "think",
+      "<|think|>"
+    ],
+    "130824": [
+      "think_end",
+      "<|/think|>"
+    ],
+    "130825": [
+      "tool_call_end",
+      "<|/tool_call|>"
+    ],
+    "130826": [
+      "tool_result_end",
+      "<|/tool_result|>"
+    ]
+  },
+  "effective_surfaces": {
+    "im_start": "<|im_start|>",
+    "tool_call": "<|tool_call|>",
+    "tool_result": "<|tool_result|>",
+    "im_end": "<|im_end|>",
+    "endoftext": "<|endoftext|>",
+    "think": "<|think|>",
+    "think_end": "<|/think|>",
+    "tool_call_end": "<|/tool_call|>",
+    "tool_result_end": "<|/tool_result|>",
+    "g10_slot_05": "<|g10_slot_05|>",
+    "g10_slot_06": "<|g10_slot_06|>",
+    "g10_slot_07": "<|g10_slot_07|>",
+    "g10_slot_08": "<|g10_slot_08|>",
+    "g10_slot_09": "<|g10_slot_09|>",
+    "g10_slot_10": "<|g10_slot_10|>",
+    "g10_slot_11": "<|g10_slot_11|>",
+    "g10_slot_12": "<|g10_slot_12|>",
+    "g10_slot_13": "<|g10_slot_13|>",
+    "g10_slot_14": "<|g10_slot_14|>",
+    "g10_slot_15": "<|g10_slot_15|>",
+    "g10_slot_16": "<|g10_slot_16|>",
+    "g10_slot_17": "<|g10_slot_17|>",
+    "g10_slot_18": "<|g10_slot_18|>",
+    "g10_slot_19": "<|g10_slot_19|>",
+    "g10_slot_20": "<|g10_slot_20|>",
+    "g10_slot_21": "<|g10_slot_21|>",
+    "g10_slot_22": "<|g10_slot_22|>",
+    "g10_slot_23": "<|g10_slot_23|>",
+    "g10_slot_24": "<|g10_slot_24|>",
+    "g10_slot_25": "<|g10_slot_25|>",
+    "g10_slot_26": "<|g10_slot_26|>",
+    "g10_slot_27": "<|g10_slot_27|>",
+    "g10_slot_28": "<|g10_slot_28|>",
+    "g10_slot_29": "<|g10_slot_29|>",
+    "g10_slot_30": "<|g10_slot_30|>",
+    "g10_slot_31": "<|g10_slot_31|>",
+    "g10_slot_32": "<|g10_slot_32|>",
+    "g10_slot_33": "<|g10_slot_33|>",
+    "g10_slot_34": "<|g10_slot_34|>",
+    "g10_slot_35": "<|g10_slot_35|>",
+    "g10_slot_36": "<|g10_slot_36|>",
+    "g10_slot_37": "<|g10_slot_37|>",
+    "g10_slot_38": "<|g10_slot_38|>",
+    "g10_slot_39": "<|g10_slot_39|>",
+    "g10_slot_40": "<|g10_slot_40|>",
+    "g10_slot_41": "<|g10_slot_41|>",
+    "g10_slot_42": "<|g10_slot_42|>",
+    "g10_slot_43": "<|g10_slot_43|>",
+    "g10_slot_44": "<|g10_slot_44|>",
+    "g10_slot_45": "<|g10_slot_45|>",
+    "g10_slot_46": "<|g10_slot_46|>",
+    "g10_slot_47": "<|g10_slot_47|>",
+    "g10_slot_48": "<|g10_slot_48|>",
+    "g10_slot_49": "<|g10_slot_49|>",
+    "g10_slot_50": "<|g10_slot_50|>",
+    "g10_slot_51": "<|g10_slot_51|>",
+    "g10_slot_52": "<|g10_slot_52|>",
+    "g10_slot_53": "<|g10_slot_53|>",
+    "g10_slot_54": "<|g10_slot_54|>",
+    "g10_slot_55": "<|g10_slot_55|>",
+    "g10_slot_56": "<|g10_slot_56|>",
+    "g10_slot_57": "<|g10_slot_57|>",
+    "g10_slot_58": "<|g10_slot_58|>",
+    "g10_slot_59": "<|g10_slot_59|>",
+    "g10_slot_60": "<|g10_slot_60|>",
+    "g10_slot_61": "<|g10_slot_61|>",
+    "g10_slot_62": "<|g10_slot_62|>",
+    "g10_slot_63": "<|g10_slot_63|>"
+  },
+  "max_len": 32768,
+  "execution_revision": "8574a9b516562ca6d5086c36ef64b276ba21871e",
+  "later_change": "Cache key broadened after this complete verified run. The full record retains the historical key; no retrospective revalidation under the new key is claimed.",
+  "part_check_execution": {
+    "overlap_monitor_tokenizer_threads": 2,
+    "final_workers": 2,
+    "tokenizer_threads_per_final_worker": 3,
+    "finalizer_configured_threads": 4,
+    "finalizer_reused_parts": 287,
+    "finalizer_uncached_parts": 0
+  }
+}

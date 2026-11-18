@@ -1,0 +1,8 @@
+$ python teams/05-architecture/harness/train_week2.py --config teams/05-architecture/configs/arms/attn3_prope_half.yaml --runtime teams/05-architecture/configs/runtime.yaml --tokenizer ./inputs/tokenizer_v0.json --byte-table ./inputs/raw_table_P32.npz --train-data ./inputs/synthetic_train.jsonl --heldout-data ./inputs/synthetic_heldout.jsonl --device cpu --seed 1240 --lr 0.001 --smoke --smoke-steps 6 --smoke-seq-len 160 --smoke-batch-size 1 --no-checkpoint --out ./out/attn-3
+exit code: 0
+wall seconds (whole command): 179.5
+training wall seconds (summary.json): 173.6
+peak memory of the run (MiB): 1269
+train CE by step: 11.989, 9.458, 8.539, 11.151, 6.377, 9.969
+held-out BPB (synthetic text): step 0 2.7719, step 6 2.0702
+non-finite values in metrics.jsonl: 0

@@ -1,0 +1,156 @@
+[
+ {
+  "args": [
+   "a a b b c",
+   2
+  ],
+  "expected": [
+   "a",
+   "b"
+  ]
+ },
+ {
+  "args": [
+   "a a b b c",
+   10
+  ],
+  "expected": [
+   "a",
+   "b",
+   "c"
+  ]
+ },
+ {
+  "args": [
+   "a a b b c",
+   0
+  ],
+  "expected": []
+ },
+ {
+  "args": [
+   "a a b b c",
+   -1
+  ],
+  "expected": []
+ },
+ {
+  "args": [
+   "One fish two fish red fish blue fish",
+   3
+  ],
+  "expected": [
+   "fish",
+   "blue",
+   "one"
+  ]
+ },
+ {
+  "args": [
+   "'hi' 'hi'",
+   1
+  ],
+  "expected": [
+   "hi"
+  ]
+ },
+ {
+  "args": [
+   "rock'n'roll rock'n'roll x",
+   2
+  ],
+  "expected": [
+   "rock'n'roll",
+   "x"
+  ]
+ },
+ {
+  "args": [
+   "it''s",
+   3
+  ],
+  "expected": [
+   "it",
+   "s"
+  ]
+ },
+ {
+  "args": [
+   "Zebra apple zebra Apple mango",
+   3
+  ],
+  "expected": [
+   "apple",
+   "zebra",
+   "mango"
+  ]
+ },
+ {
+  "args": [
+   "12 34 ... !!!",
+   4
+  ],
+  "expected": []
+ },
+ {
+  "args": [
+   "Go, go; GO. Stop",
+   2
+  ],
+  "expected": [
+   "go",
+   "stop"
+  ]
+ },
+ {
+  "args": [
+   "b a",
+   2
+  ],
+  "expected": [
+   "a",
+   "b"
+  ]
+ },
+ {
+  "args": [
+   "can't can t cant",
+   5
+  ],
+  "expected": [
+   "can",
+   "can't",
+   "cant",
+   "t"
+  ]
+ },
+ {
+  "args": [
+   "x'",
+   2
+  ],
+  "expected": [
+   "x"
+  ]
+ },
+ {
+  "args": [
+   "\u00e9 a \u00e9",
+   3
+  ],
+  "expected": [
+   "a"
+  ]
+ },
+ {
+  "args": [
+   "tie tie one two two",
+   3
+  ],
+  "expected": [
+   "tie",
+   "two",
+   "one"
+  ]
+ }
+]

@@ -1,0 +1,97 @@
+{
+ "checks": {
+  "checks_failed": {},
+  "checks_ok": true,
+  "effort_rows": {
+   "16k": 0,
+   "1k": 1000,
+   "4k": 0,
+   "64k": 0
+  },
+  "files": [
+   {
+    "bytes": 4925248,
+    "name": "sft-indic-aya-collection.first1000.jsonl",
+    "sha256": "136c4bf4652b5bcfd291bbc45673f1c89cc26c260213e247abd38073f75758c5"
+   }
+  ],
+  "info": {
+   "decode_equals_normalised_text_only": 154
+  },
+  "length": {
+   "max": 5240,
+   "min": 43,
+   "p50": 152,
+   "p95": 812
+  },
+  "max_len": 32768,
+  "rows": 1000,
+  "rows_over_max_len": 0,
+  "rows_with_tool_blocks": 0,
+  "shifted_supervised_targets": 139196,
+  "tokens": 263599,
+  "tool_call_blocks": 0,
+  "tool_call_tokens_untrained": 0,
+  "tool_result_blocks": 0,
+  "train_spans": 1000,
+  "trained_share": 0.52806,
+  "trained_tokens": 139196,
+  "unique_ids": true
+ },
+ "checks_wall_s": 1.45,
+ "content_sha256": "136c4bf4652b5bcfd291bbc45673f1c89cc26c260213e247abd38073f75758c5",
+ "convert": {
+  "cpu_sys_s": 0.846,
+  "cpu_user_s": 1.71,
+  "hub_bytes_read": 55577286,
+  "max_rss_mb": 241.2,
+  "wall_s": 60.474
+ },
+ "decision": "TSAI reserves",
+ "deterministic_rerun": true,
+ "effort_manifest": {
+  "16k": 0,
+  "1k": 1000,
+  "4k": 0,
+  "64k": 0
+ },
+ "file_bytes": 4925248,
+ "file_sha256": "136c4bf4652b5bcfd291bbc45673f1c89cc26c260213e247abd38073f75758c5",
+ "generator_model": "none (human speaker-written templates applied to human-annotated Indic NLP datasets; no model generator)",
+ "hub_revision": "09069079fad96ad9c7f8781be8c1d70471dfa768",
+ "input": "hub file CohereLabs/aya_collection  rows 0..999",
+ "licence": "apache-2.0 (Hub tag; commercial use permitted per tag)",
+ "rerun_content_sha256": "136c4bf4652b5bcfd291bbc45673f1c89cc26c260213e247abd38073f75758c5",
+ "rerun_wall_s": 39.475,
+ "rows_in": 1000,
+ "rows_out": 1000,
+ "rows_per_s_convert": 16.54,
+ "rows_scanned": 1000,
+ "scope": "first 1000 source rows (an equal share of each subset), C3",
+ "selection": "10 templated Indic subsets with permissive source licences (PR #399; hindi_headline excluded, hindi_news pending TSAI), language in ben,guj,hin,kan,mal,mar,ory,pan,tam,tel, equal share of rows from the start of each",
+ "set": "sft-indic-aya-collection",
+ "skipped": {},
+ "source": "CohereLabs/aya_collection",
+ "token_record": {
+  "basis": "first 1000 source rows (an equal share of each subset), C3; not the admissible kept rows",
+  "effort": {
+   "16k": 0,
+   "1k": 1000,
+   "4k": 0,
+   "64k": 0
+  },
+  "length": {
+   "max": 5240,
+   "min": 43,
+   "p50": 152,
+   "p95": 812
+  },
+  "rows": 1000,
+  "sequence_tokens": 263599,
+  "set_id": "sft-indic-aya-collection",
+  "shifted_supervised_targets": 139196,
+  "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3"
+ },
+ "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3",
+ "tokens_per_s_convert": 4359
+}

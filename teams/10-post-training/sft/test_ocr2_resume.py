@@ -271,6 +271,30 @@ def test_unset_paths_and_hashes_stop_the_run(tmp_path, kit):
         run(world, tmp_path / "run", shards="0:3")
 
 
+def test_a_real_admission_run_refuses_a_tokenizer_the_policy_does_not_approve(tmp_path, kit):
+    """The pinned tokenizer must also be the frozen one (p1536 since 15 Nov 2026): stop before any shard work."""
+    world = make_world(tmp_path / "w", kit)
+    manifest = world.manifest()
+    manifest.pop("test_fixture")
+    manifest["screening"].pop("fingerprints_test_only")
+    world.manifest_path.write_text(json.dumps(manifest))
+    world.policy["pack"]["approved_fingerprint_set_sha256"] = [world.toy_sha]
+    world.policy["pack"]["approved_tokenizer_sha256"] = ["e" * 64]  # some other frozen tokenizer
+    world.policy_path.write_text(json.dumps(world.policy))
+    with pytest.raises(run_ocr2.RunError, match="not the frozen tokenizer the policy approves"):
+        run(world, tmp_path / "run", mode="admission")
+    assert not (tmp_path / "run").exists()
+    world.policy["pack"]["approved_tokenizer_sha256"] = [world.tokenizer_sha]
+    world.policy_path.write_text(json.dumps(world.policy))
+    cfg = run_ocr2.load_config(world.manifest_path, world.policy_path, tmp_path / "run2", "admission")
+    assert cfg["run_id"] == f"admission-tok{world.tokenizer_sha[:8]}-{cfg['config_sha256'][:12]}"
+
+
+def test_the_run_id_names_the_tokenizer(reference):
+    world, coverage, _ = reference
+    assert coverage["run_id"] == f"diagnostic-tok{world.tokenizer_sha[:8]}-{coverage['config_sha256'][:12]}"
+
+
 def test_a_real_run_cannot_use_fault_injection(tmp_path, kit):
     world = make_world(tmp_path / "w", kit)
     manifest = world.manifest()

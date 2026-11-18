@@ -1,0 +1,2110 @@
+{
+ "conversion": {
+  "g10_base_commit": "f2f03cea55118630a01e29e8d86fc0a6ba20f606",
+  "max_sequence_tokens": 32768,
+  "max_sequence_tokens_ruling": "32768, provisional for SFT data v1 (TSAI, 14 Nov 2026)",
+  "tokenizer": {
+   "label": "Team 3 C3 frozen tokenizer, eos <|endoftext|> id 130822 (TSAI, 14 Nov 2026)",
+   "path": "tokenizer/c3.json",
+   "sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3"
+  }
+ },
+ "note": "OCR-2 pack v1 (G10, 14 Nov 2026): all 70 python shards, C3 tokenizer, max_sequence_tokens 32768. Paths are relative to the run root (layout in sft/results/ocr2_pack_v1.md). Sources are pinned to exact Hub revisions; open-r1/codeforces train is held (69,690 rows, TSAI 14 Nov).",
+ "ocr2": {
+  "config": "python",
+  "inputs": [
+   {
+    "bytes": 366930945,
+    "coverage": "full",
+    "path": "ocr2/train-00000-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "18f09c9b93a41d1b5c405e653889b4bf30e9a9bf18de3849c0986989a9c1f28f",
+    "shard_id": 0
+   },
+   {
+    "bytes": 366805860,
+    "coverage": "full",
+    "path": "ocr2/train-00001-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "21f5d72fb28af7c80b6ab4fdbcb1c8dcab98cbf0eafc2af19732bf72559a422b",
+    "shard_id": 1
+   },
+   {
+    "bytes": 364609954,
+    "coverage": "full",
+    "path": "ocr2/train-00002-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "170c6b7e5c5faf2d7ebf8dca0182d7a5e218069573098f7ec7768630528aecd7",
+    "shard_id": 2
+   },
+   {
+    "bytes": 365946586,
+    "coverage": "full",
+    "path": "ocr2/train-00003-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "8e94cc67a354c259cc00accd332dbf189ed2772930e9ceaa306618a77694b10a",
+    "shard_id": 3
+   },
+   {
+    "bytes": 366885601,
+    "coverage": "full",
+    "path": "ocr2/train-00004-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "9858a3f09093812247feb0a94dd8e5051630f9baa0b0afc5fd3f8c7230559994",
+    "shard_id": 4
+   },
+   {
+    "bytes": 366220299,
+    "coverage": "full",
+    "path": "ocr2/train-00005-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "2f7b26c7562ed766b1546100a6d7b7851982895a41528d83865a0a3d5ac1f771",
+    "shard_id": 5
+   },
+   {
+    "bytes": 366486595,
+    "coverage": "full",
+    "path": "ocr2/train-00006-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "b1021fd8748f15c3459057e1125ac3caeb41e98d07c134b00dd3e30b706d21a9",
+    "shard_id": 6
+   },
+   {
+    "bytes": 366760704,
+    "coverage": "full",
+    "path": "ocr2/train-00007-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "93b5fa54bce4532700e464b0cf4e8d4b9d06f73960b5fc3d26fa2804a501faf2",
+    "shard_id": 7
+   },
+   {
+    "bytes": 365745765,
+    "coverage": "full",
+    "path": "ocr2/train-00008-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "ec18f5d85b9cfe2298176546d62545ee631ce0e2c37b062a5ee038bb39760481",
+    "shard_id": 8
+   },
+   {
+    "bytes": 366508760,
+    "coverage": "full",
+    "path": "ocr2/train-00009-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "fecc7db6e26b5adf91eeacd0bea692945f236c3882c0c673b36c63f489d7e87a",
+    "shard_id": 9
+   },
+   {
+    "bytes": 366362950,
+    "coverage": "full",
+    "path": "ocr2/train-00010-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "399a7b93630251fe2bbe96274645cb49d55240f7f530d85920b2c8450fdd02b7",
+    "shard_id": 10
+   },
+   {
+    "bytes": 366685327,
+    "coverage": "full",
+    "path": "ocr2/train-00011-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "b2b0737e12657af3da190609abf0906201010d6cea2ba83a09954f7192f6957e",
+    "shard_id": 11
+   },
+   {
+    "bytes": 437803854,
+    "coverage": "full",
+    "path": "ocr2/train-00012-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "b999120ca52356564b9969f8c021562da78f25fcb09df964ace8663dc250fff4",
+    "shard_id": 12
+   },
+   {
+    "bytes": 570965957,
+    "coverage": "full",
+    "path": "ocr2/train-00013-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "dff8ab1b88f69f84cd3b1032f4ba245600e65947bd5c41ef76f0d798e35a697b",
+    "shard_id": 13
+   },
+   {
+    "bytes": 496722006,
+    "coverage": "full",
+    "path": "ocr2/train-00014-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "adbcda9d05d2995249e0a498a456d44a0ea1e011a12264fd7398b35efe3efdf4",
+    "shard_id": 14
+   },
+   {
+    "bytes": 395234332,
+    "coverage": "full",
+    "path": "ocr2/train-00015-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "544f2a81c711ecccf7eed4e2dce110277aaa6011d6856f815a91445a954c590d",
+    "shard_id": 15
+   },
+   {
+    "bytes": 282344205,
+    "coverage": "full",
+    "path": "ocr2/train-00016-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "a01c1323959be789e455c0c3d96677dae174dd03a25648a9bf63fbb7eee2227a",
+    "shard_id": 16
+   },
+   {
+    "bytes": 277049880,
+    "coverage": "full",
+    "path": "ocr2/train-00017-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "ad63ed8f5f96ee7ca71a1765c40d93859ccd65e3f4ad7d2a6bacb5b1f751f876",
+    "shard_id": 17
+   },
+   {
+    "bytes": 292295797,
+    "coverage": "full",
+    "path": "ocr2/train-00018-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "efcbccf8e834a2a68229fa2d88896e87f98232a933afbd23365cf9a8123f4d24",
+    "shard_id": 18
+   },
+   {
+    "bytes": 287962657,
+    "coverage": "full",
+    "path": "ocr2/train-00019-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "0d0a2dbf16312ec4af0440deb3078654a3b668e7a3030bbef4747fb185f21176",
+    "shard_id": 19
+   },
+   {
+    "bytes": 281373978,
+    "coverage": "full",
+    "path": "ocr2/train-00020-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "8c787743927471507039711dda7853203ec97ff4043b1c683650440854b04b05",
+    "shard_id": 20
+   },
+   {
+    "bytes": 288810096,
+    "coverage": "full",
+    "path": "ocr2/train-00021-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "85ffe9470887aa87d33378902ccefebd46de7bcc30a7fe74b1869dd6f378db57",
+    "shard_id": 21
+   },
+   {
+    "bytes": 316468171,
+    "coverage": "full",
+    "path": "ocr2/train-00022-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "58a9f018189cc966fffee6aa3db4ac71b64ead265dc7366534734c2a45ce3b7f",
+    "shard_id": 22
+   },
+   {
+    "bytes": 313749323,
+    "coverage": "full",
+    "path": "ocr2/train-00023-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "cd62525fbd8c856f9d10337a9d4b6f5c72f994599fb21e7483d5254ecad811d5",
+    "shard_id": 23
+   },
+   {
+    "bytes": 279771657,
+    "coverage": "full",
+    "path": "ocr2/train-00024-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "34e35f131d86bc0478058a378f9723912c6008a3c0b7c2b87b40d561939e52cc",
+    "shard_id": 24
+   },
+   {
+    "bytes": 291211177,
+    "coverage": "full",
+    "path": "ocr2/train-00025-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "552c82056de5abdad6a0825e58d2099ecd8989a922eb286a23ee462ebaee514a",
+    "shard_id": 25
+   },
+   {
+    "bytes": 327135971,
+    "coverage": "full",
+    "path": "ocr2/train-00026-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "7ea205e53da1e670052e517ca5a4fda6e240f87c8907ab18c4c57ae7a65e34d2",
+    "shard_id": 26
+   },
+   {
+    "bytes": 573042774,
+    "coverage": "full",
+    "path": "ocr2/train-00027-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "d8b7281ada69ccd3b843484b0be69e9359eefcba2d91b5119ae5743f2445ea01",
+    "shard_id": 27
+   },
+   {
+    "bytes": 571085408,
+    "coverage": "full",
+    "path": "ocr2/train-00028-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "f19c612027e1e4376acef076b6635b4c0118d27e976e133cc144d11810a54cc8",
+    "shard_id": 28
+   },
+   {
+    "bytes": 419121017,
+    "coverage": "full",
+    "path": "ocr2/train-00029-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "4324ad9f29deed8eb7a620255c9d6c77660afd3552387d381f30afa57c3595ef",
+    "shard_id": 29
+   },
+   {
+    "bytes": 512078674,
+    "coverage": "full",
+    "path": "ocr2/train-00030-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "1642ed4365236c5f97cfedfcd77a4746da8b71d55ddddca594e5d0af043a87d2",
+    "shard_id": 30
+   },
+   {
+    "bytes": 415901772,
+    "coverage": "full",
+    "path": "ocr2/train-00031-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "ca9827b8d728a0c8cb60b62ab7b0dd79eab47693dee8fe2e3227aad52d6d91c3",
+    "shard_id": 31
+   },
+   {
+    "bytes": 491280176,
+    "coverage": "full",
+    "path": "ocr2/train-00032-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "c08a4d4b09f1bd0b47f676ee614b42b1ea6218ab780178014c77709ed2068fd0",
+    "shard_id": 32
+   },
+   {
+    "bytes": 456437720,
+    "coverage": "full",
+    "path": "ocr2/train-00033-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "b4c7f5ded7e620c26f5c00aad3500520952ab6cb326119c8dc9b41ac9e883501",
+    "shard_id": 33
+   },
+   {
+    "bytes": 470260599,
+    "coverage": "full",
+    "path": "ocr2/train-00034-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "e8f7b84154a62e6a0b0a100961958a83f59f720191ea641cc1708eb7299d2264",
+    "shard_id": 34
+   },
+   {
+    "bytes": 445600212,
+    "coverage": "full",
+    "path": "ocr2/train-00035-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "f22a5fa90b113ddbaaf8215263fa04fce2448749da2cb12aecc1494d6a94e861",
+    "shard_id": 35
+   },
+   {
+    "bytes": 453684005,
+    "coverage": "full",
+    "path": "ocr2/train-00036-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "a6099aeff6ee2156940d6f50a0d3193e664f26fd199aed31b44672fa36930106",
+    "shard_id": 36
+   },
+   {
+    "bytes": 467364253,
+    "coverage": "full",
+    "path": "ocr2/train-00037-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "4faac95d152a12c0aab31729c67d8d2f3189fa584598be106ce4d4a9f3f6284a",
+    "shard_id": 37
+   },
+   {
+    "bytes": 450121904,
+    "coverage": "full",
+    "path": "ocr2/train-00038-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "f8aa8bbc3d17276a977ea9ea3c065c64c0f417cc64f20eb8d4720bcd977f29b4",
+    "shard_id": 38
+   },
+   {
+    "bytes": 464745117,
+    "coverage": "full",
+    "path": "ocr2/train-00039-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "4797613b701fa33627f38ad8b043cf200bc9d24f39e586ca5722120409eae751",
+    "shard_id": 39
+   },
+   {
+    "bytes": 472743458,
+    "coverage": "full",
+    "path": "ocr2/train-00040-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "e6c8933a509d890c720a1c2998aa19bbead1adf67668de4a40407fec94b9a99e",
+    "shard_id": 40
+   },
+   {
+    "bytes": 453345919,
+    "coverage": "full",
+    "path": "ocr2/train-00041-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "bf6b284c78736275b456303043b4a64bbe911bd3314635dc188afc37bac321b5",
+    "shard_id": 41
+   },
+   {
+    "bytes": 369126403,
+    "coverage": "full",
+    "path": "ocr2/train-00042-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "8812c77777ea23358719ccbb5bbd17d043687cf0323fb34573d78a882ba70232",
+    "shard_id": 42
+   },
+   {
+    "bytes": 487584295,
+    "coverage": "full",
+    "path": "ocr2/train-00043-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "fcec544165c8cc315849df22f33dd67bebb0d4a5152e629c29e6e0a18e00614c",
+    "shard_id": 43
+   },
+   {
+    "bytes": 460762428,
+    "coverage": "full",
+    "path": "ocr2/train-00044-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "a89f2d284cd4d71ca8c9bafcde2af2dfc7a9950e4c34f20fe55c7dfc9095f23d",
+    "shard_id": 44
+   },
+   {
+    "bytes": 482586218,
+    "coverage": "full",
+    "path": "ocr2/train-00045-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "a25f003cff028b0d9dfaa434a04e64b4d2b54486df0ef6052629c368a4b31c53",
+    "shard_id": 45
+   },
+   {
+    "bytes": 467488031,
+    "coverage": "full",
+    "path": "ocr2/train-00046-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "a0e5821ad36ead47898569dac157f92b35b2997ba86756c41fec318c61680b92",
+    "shard_id": 46
+   },
+   {
+    "bytes": 470728778,
+    "coverage": "full",
+    "path": "ocr2/train-00047-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "18c6a47cd1a4e4ba84689345e71b6066fdc8116f1ce088e484eed21891ec303d",
+    "shard_id": 47
+   },
+   {
+    "bytes": 474027930,
+    "coverage": "full",
+    "path": "ocr2/train-00048-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "62932f91c2bbfb0b657b4bd782f9e3f33ff26bfeafb11c02071de15c299c9173",
+    "shard_id": 48
+   },
+   {
+    "bytes": 422485186,
+    "coverage": "full",
+    "path": "ocr2/train-00049-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "2bab875a4a23f5441dfb1822c73ad8f9abff3ca586ef0809b69ef059975c15ba",
+    "shard_id": 49
+   },
+   {
+    "bytes": 378099902,
+    "coverage": "full",
+    "path": "ocr2/train-00050-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "5ac1c0a5bbd499b44e930e8d08d7e96a263e57e8854c342e22cbb1ee49c928d6",
+    "shard_id": 50
+   },
+   {
+    "bytes": 559308771,
+    "coverage": "full",
+    "path": "ocr2/train-00051-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "137733e4e295b04ccc9e1b6d2093de02f5a4f0af41f97ec9034469538019a73b",
+    "shard_id": 51
+   },
+   {
+    "bytes": 514006466,
+    "coverage": "full",
+    "path": "ocr2/train-00052-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "065cfae9468dd4e72ae7f99f446eb19b3cd14d46d09182f15f8e2c0da01400d8",
+    "shard_id": 52
+   },
+   {
+    "bytes": 512323969,
+    "coverage": "full",
+    "path": "ocr2/train-00053-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "b375a91842da70b6f1c1f9d48a18ea96da229ab542f173ee436a9648833bb970",
+    "shard_id": 53
+   },
+   {
+    "bytes": 511236831,
+    "coverage": "full",
+    "path": "ocr2/train-00054-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "9984b7b25f2195c9a050de9fe93fd05391bc512a19039a259e8e5bf7bf4f8311",
+    "shard_id": 54
+   },
+   {
+    "bytes": 517267397,
+    "coverage": "full",
+    "path": "ocr2/train-00055-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "850f09ca966555f07eb079fa9ae49e907027c8114af0f5e118b04a692324aff0",
+    "shard_id": 55
+   },
+   {
+    "bytes": 510856510,
+    "coverage": "full",
+    "path": "ocr2/train-00056-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "662d48a2ac399b1d485035ffb1e3eb9f6d0aae56a8289736e57b05ea0dda9f6e",
+    "shard_id": 56
+   },
+   {
+    "bytes": 516292662,
+    "coverage": "full",
+    "path": "ocr2/train-00057-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "b178839fb70485f90e234729a53001a074c810a7890ae2c03d8207a5721b67e1",
+    "shard_id": 57
+   },
+   {
+    "bytes": 515576832,
+    "coverage": "full",
+    "path": "ocr2/train-00058-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "acde2f59c1d5827085221cd40320a8ee1f478ab89a1f079f846d0fbbfa360765",
+    "shard_id": 58
+   },
+   {
+    "bytes": 511263090,
+    "coverage": "full",
+    "path": "ocr2/train-00059-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "5f30c4f6f7bd4442e10ca0b979963400f1ee76b62b60f715907f3ed0695e95bb",
+    "shard_id": 59
+   },
+   {
+    "bytes": 515407363,
+    "coverage": "full",
+    "path": "ocr2/train-00060-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "adb23ca09235e3f2b37ee1c5f12fc41afa67e294eb79fed25c57202334cb3355",
+    "shard_id": 60
+   },
+   {
+    "bytes": 509990219,
+    "coverage": "full",
+    "path": "ocr2/train-00061-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "cd4ba414babc269af5268974045a9b4d35f6a7a73b54de65ef02a29e5dd26f5f",
+    "shard_id": 61
+   },
+   {
+    "bytes": 510027443,
+    "coverage": "full",
+    "path": "ocr2/train-00062-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "4f9601890e0ec69c2d21e0bc1c1acabb29ae971515a721c63197d54179977b9f",
+    "shard_id": 62
+   },
+   {
+    "bytes": 513573377,
+    "coverage": "full",
+    "path": "ocr2/train-00063-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "561edbeb71f5633f048294a3747577ad8f61d464ed141101878d165b8fbefd7a",
+    "shard_id": 63
+   },
+   {
+    "bytes": 512919909,
+    "coverage": "full",
+    "path": "ocr2/train-00064-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "12a1cabbbc976b42cddfa9375a65b27e03b8a2fb6d0f81b3b3e41e9fab076611",
+    "shard_id": 64
+   },
+   {
+    "bytes": 509386301,
+    "coverage": "full",
+    "path": "ocr2/train-00065-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "fc5342618a49985a4e8128c8ac1eda41a1175dcb79b7f7762bd2ab53895650be",
+    "shard_id": 65
+   },
+   {
+    "bytes": 512920688,
+    "coverage": "full",
+    "path": "ocr2/train-00066-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "6a3c4c26ee1c0992fc840cc13f4a9f35d94993614883d218b7dbcfd1d59d2d3c",
+    "shard_id": 66
+   },
+   {
+    "bytes": 505138636,
+    "coverage": "full",
+    "path": "ocr2/train-00067-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "cb2152d11d7506fca827d007b806332fd63d87faa220994cb06139102b4ed402",
+    "shard_id": 67
+   },
+   {
+    "bytes": 510963560,
+    "coverage": "full",
+    "path": "ocr2/train-00068-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 20000,
+    "sha256": "12388427d8bc0be170b191b9e4a75f01233ef8f63c969adb797fc908cf8ef0e8",
+    "shard_id": 68
+   },
+   {
+    "bytes": 463881280,
+    "coverage": "full",
+    "path": "ocr2/train-00069-of-00070.parquet",
+    "row_offset": 0,
+    "rows": 18166,
+    "sha256": "77f5a4ffb4219b9bdbf732b9e7f0f8e6d0c3c0559957c4ba742059ff092fc895",
+    "shard_id": 69
+   }
+  ],
+  "repo": "nvidia/OpenCodeReasoning-2",
+  "revision": "eadf535931451525f3e5621d0f960c240bc62fd9",
+  "shards": [
+   {
+    "bytes": 366930945,
+    "hash_source": "Hub LFS oid at the pinned revision; equal to the sha256 of the local file (checked by make_shard0_manifest.py)",
+    "path": "train/python/train-00000-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "18f09c9b93a41d1b5c405e653889b4bf30e9a9bf18de3849c0986989a9c1f28f",
+    "shard_id": 0
+   },
+   {
+    "bytes": 366805860,
+    "hash_source": "Hub LFS oid at the pinned revision; equal to the sha256 of the local file (checked by make_shard0_manifest.py)",
+    "path": "train/python/train-00001-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "21f5d72fb28af7c80b6ab4fdbcb1c8dcab98cbf0eafc2af19732bf72559a422b",
+    "shard_id": 1
+   },
+   {
+    "bytes": 364609954,
+    "hash_source": "Hub LFS oid at the pinned revision; equal to the sha256 of the local file (checked by make_shard0_manifest.py)",
+    "path": "train/python/train-00002-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "170c6b7e5c5faf2d7ebf8dca0182d7a5e218069573098f7ec7768630528aecd7",
+    "shard_id": 2
+   },
+   {
+    "bytes": 365946586,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00003-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "8e94cc67a354c259cc00accd332dbf189ed2772930e9ceaa306618a77694b10a",
+    "shard_id": 3
+   },
+   {
+    "bytes": 366885601,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00004-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "9858a3f09093812247feb0a94dd8e5051630f9baa0b0afc5fd3f8c7230559994",
+    "shard_id": 4
+   },
+   {
+    "bytes": 366220299,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00005-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "2f7b26c7562ed766b1546100a6d7b7851982895a41528d83865a0a3d5ac1f771",
+    "shard_id": 5
+   },
+   {
+    "bytes": 366486595,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00006-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "b1021fd8748f15c3459057e1125ac3caeb41e98d07c134b00dd3e30b706d21a9",
+    "shard_id": 6
+   },
+   {
+    "bytes": 366760704,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00007-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "93b5fa54bce4532700e464b0cf4e8d4b9d06f73960b5fc3d26fa2804a501faf2",
+    "shard_id": 7
+   },
+   {
+    "bytes": 365745765,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00008-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "ec18f5d85b9cfe2298176546d62545ee631ce0e2c37b062a5ee038bb39760481",
+    "shard_id": 8
+   },
+   {
+    "bytes": 366508760,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00009-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "fecc7db6e26b5adf91eeacd0bea692945f236c3882c0c673b36c63f489d7e87a",
+    "shard_id": 9
+   },
+   {
+    "bytes": 366362950,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00010-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "399a7b93630251fe2bbe96274645cb49d55240f7f530d85920b2c8450fdd02b7",
+    "shard_id": 10
+   },
+   {
+    "bytes": 366685327,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00011-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "b2b0737e12657af3da190609abf0906201010d6cea2ba83a09954f7192f6957e",
+    "shard_id": 11
+   },
+   {
+    "bytes": 437803854,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00012-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "b999120ca52356564b9969f8c021562da78f25fcb09df964ace8663dc250fff4",
+    "shard_id": 12
+   },
+   {
+    "bytes": 570965957,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00013-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "dff8ab1b88f69f84cd3b1032f4ba245600e65947bd5c41ef76f0d798e35a697b",
+    "shard_id": 13
+   },
+   {
+    "bytes": 496722006,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00014-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "adbcda9d05d2995249e0a498a456d44a0ea1e011a12264fd7398b35efe3efdf4",
+    "shard_id": 14
+   },
+   {
+    "bytes": 395234332,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00015-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "544f2a81c711ecccf7eed4e2dce110277aaa6011d6856f815a91445a954c590d",
+    "shard_id": 15
+   },
+   {
+    "bytes": 282344205,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00016-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "a01c1323959be789e455c0c3d96677dae174dd03a25648a9bf63fbb7eee2227a",
+    "shard_id": 16
+   },
+   {
+    "bytes": 277049880,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00017-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "ad63ed8f5f96ee7ca71a1765c40d93859ccd65e3f4ad7d2a6bacb5b1f751f876",
+    "shard_id": 17
+   },
+   {
+    "bytes": 292295797,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00018-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "efcbccf8e834a2a68229fa2d88896e87f98232a933afbd23365cf9a8123f4d24",
+    "shard_id": 18
+   },
+   {
+    "bytes": 287962657,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00019-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "0d0a2dbf16312ec4af0440deb3078654a3b668e7a3030bbef4747fb185f21176",
+    "shard_id": 19
+   },
+   {
+    "bytes": 281373978,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00020-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "8c787743927471507039711dda7853203ec97ff4043b1c683650440854b04b05",
+    "shard_id": 20
+   },
+   {
+    "bytes": 288810096,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00021-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "85ffe9470887aa87d33378902ccefebd46de7bcc30a7fe74b1869dd6f378db57",
+    "shard_id": 21
+   },
+   {
+    "bytes": 316468171,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00022-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "58a9f018189cc966fffee6aa3db4ac71b64ead265dc7366534734c2a45ce3b7f",
+    "shard_id": 22
+   },
+   {
+    "bytes": 313749323,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00023-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "cd62525fbd8c856f9d10337a9d4b6f5c72f994599fb21e7483d5254ecad811d5",
+    "shard_id": 23
+   },
+   {
+    "bytes": 279771657,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00024-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "34e35f131d86bc0478058a378f9723912c6008a3c0b7c2b87b40d561939e52cc",
+    "shard_id": 24
+   },
+   {
+    "bytes": 291211177,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00025-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "552c82056de5abdad6a0825e58d2099ecd8989a922eb286a23ee462ebaee514a",
+    "shard_id": 25
+   },
+   {
+    "bytes": 327135971,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00026-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "7ea205e53da1e670052e517ca5a4fda6e240f87c8907ab18c4c57ae7a65e34d2",
+    "shard_id": 26
+   },
+   {
+    "bytes": 573042774,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00027-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "d8b7281ada69ccd3b843484b0be69e9359eefcba2d91b5119ae5743f2445ea01",
+    "shard_id": 27
+   },
+   {
+    "bytes": 571085408,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00028-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "f19c612027e1e4376acef076b6635b4c0118d27e976e133cc144d11810a54cc8",
+    "shard_id": 28
+   },
+   {
+    "bytes": 419121017,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00029-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "4324ad9f29deed8eb7a620255c9d6c77660afd3552387d381f30afa57c3595ef",
+    "shard_id": 29
+   },
+   {
+    "bytes": 512078674,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00030-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "1642ed4365236c5f97cfedfcd77a4746da8b71d55ddddca594e5d0af043a87d2",
+    "shard_id": 30
+   },
+   {
+    "bytes": 415901772,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00031-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "ca9827b8d728a0c8cb60b62ab7b0dd79eab47693dee8fe2e3227aad52d6d91c3",
+    "shard_id": 31
+   },
+   {
+    "bytes": 491280176,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00032-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "c08a4d4b09f1bd0b47f676ee614b42b1ea6218ab780178014c77709ed2068fd0",
+    "shard_id": 32
+   },
+   {
+    "bytes": 456437720,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00033-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "b4c7f5ded7e620c26f5c00aad3500520952ab6cb326119c8dc9b41ac9e883501",
+    "shard_id": 33
+   },
+   {
+    "bytes": 470260599,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00034-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "e8f7b84154a62e6a0b0a100961958a83f59f720191ea641cc1708eb7299d2264",
+    "shard_id": 34
+   },
+   {
+    "bytes": 445600212,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00035-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "f22a5fa90b113ddbaaf8215263fa04fce2448749da2cb12aecc1494d6a94e861",
+    "shard_id": 35
+   },
+   {
+    "bytes": 453684005,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00036-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "a6099aeff6ee2156940d6f50a0d3193e664f26fd199aed31b44672fa36930106",
+    "shard_id": 36
+   },
+   {
+    "bytes": 467364253,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00037-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "4faac95d152a12c0aab31729c67d8d2f3189fa584598be106ce4d4a9f3f6284a",
+    "shard_id": 37
+   },
+   {
+    "bytes": 450121904,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00038-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "f8aa8bbc3d17276a977ea9ea3c065c64c0f417cc64f20eb8d4720bcd977f29b4",
+    "shard_id": 38
+   },
+   {
+    "bytes": 464745117,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00039-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "4797613b701fa33627f38ad8b043cf200bc9d24f39e586ca5722120409eae751",
+    "shard_id": 39
+   },
+   {
+    "bytes": 472743458,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00040-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "e6c8933a509d890c720a1c2998aa19bbead1adf67668de4a40407fec94b9a99e",
+    "shard_id": 40
+   },
+   {
+    "bytes": 453345919,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00041-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "bf6b284c78736275b456303043b4a64bbe911bd3314635dc188afc37bac321b5",
+    "shard_id": 41
+   },
+   {
+    "bytes": 369126403,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00042-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "8812c77777ea23358719ccbb5bbd17d043687cf0323fb34573d78a882ba70232",
+    "shard_id": 42
+   },
+   {
+    "bytes": 487584295,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00043-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "fcec544165c8cc315849df22f33dd67bebb0d4a5152e629c29e6e0a18e00614c",
+    "shard_id": 43
+   },
+   {
+    "bytes": 460762428,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00044-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "a89f2d284cd4d71ca8c9bafcde2af2dfc7a9950e4c34f20fe55c7dfc9095f23d",
+    "shard_id": 44
+   },
+   {
+    "bytes": 482586218,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00045-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "a25f003cff028b0d9dfaa434a04e64b4d2b54486df0ef6052629c368a4b31c53",
+    "shard_id": 45
+   },
+   {
+    "bytes": 467488031,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00046-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "a0e5821ad36ead47898569dac157f92b35b2997ba86756c41fec318c61680b92",
+    "shard_id": 46
+   },
+   {
+    "bytes": 470728778,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00047-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "18c6a47cd1a4e4ba84689345e71b6066fdc8116f1ce088e484eed21891ec303d",
+    "shard_id": 47
+   },
+   {
+    "bytes": 474027930,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00048-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "62932f91c2bbfb0b657b4bd782f9e3f33ff26bfeafb11c02071de15c299c9173",
+    "shard_id": 48
+   },
+   {
+    "bytes": 422485186,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00049-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "2bab875a4a23f5441dfb1822c73ad8f9abff3ca586ef0809b69ef059975c15ba",
+    "shard_id": 49
+   },
+   {
+    "bytes": 378099902,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00050-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "5ac1c0a5bbd499b44e930e8d08d7e96a263e57e8854c342e22cbb1ee49c928d6",
+    "shard_id": 50
+   },
+   {
+    "bytes": 559308771,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00051-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "137733e4e295b04ccc9e1b6d2093de02f5a4f0af41f97ec9034469538019a73b",
+    "shard_id": 51
+   },
+   {
+    "bytes": 514006466,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00052-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "065cfae9468dd4e72ae7f99f446eb19b3cd14d46d09182f15f8e2c0da01400d8",
+    "shard_id": 52
+   },
+   {
+    "bytes": 512323969,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00053-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "b375a91842da70b6f1c1f9d48a18ea96da229ab542f173ee436a9648833bb970",
+    "shard_id": 53
+   },
+   {
+    "bytes": 511236831,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00054-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "9984b7b25f2195c9a050de9fe93fd05391bc512a19039a259e8e5bf7bf4f8311",
+    "shard_id": 54
+   },
+   {
+    "bytes": 517267397,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00055-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "850f09ca966555f07eb079fa9ae49e907027c8114af0f5e118b04a692324aff0",
+    "shard_id": 55
+   },
+   {
+    "bytes": 510856510,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00056-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "662d48a2ac399b1d485035ffb1e3eb9f6d0aae56a8289736e57b05ea0dda9f6e",
+    "shard_id": 56
+   },
+   {
+    "bytes": 516292662,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00057-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "b178839fb70485f90e234729a53001a074c810a7890ae2c03d8207a5721b67e1",
+    "shard_id": 57
+   },
+   {
+    "bytes": 515576832,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00058-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "acde2f59c1d5827085221cd40320a8ee1f478ab89a1f079f846d0fbbfa360765",
+    "shard_id": 58
+   },
+   {
+    "bytes": 511263090,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00059-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "5f30c4f6f7bd4442e10ca0b979963400f1ee76b62b60f715907f3ed0695e95bb",
+    "shard_id": 59
+   },
+   {
+    "bytes": 515407363,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00060-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "adb23ca09235e3f2b37ee1c5f12fc41afa67e294eb79fed25c57202334cb3355",
+    "shard_id": 60
+   },
+   {
+    "bytes": 509990219,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00061-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "cd4ba414babc269af5268974045a9b4d35f6a7a73b54de65ef02a29e5dd26f5f",
+    "shard_id": 61
+   },
+   {
+    "bytes": 510027443,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00062-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "4f9601890e0ec69c2d21e0bc1c1acabb29ae971515a721c63197d54179977b9f",
+    "shard_id": 62
+   },
+   {
+    "bytes": 513573377,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00063-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "561edbeb71f5633f048294a3747577ad8f61d464ed141101878d165b8fbefd7a",
+    "shard_id": 63
+   },
+   {
+    "bytes": 512919909,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00064-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "12a1cabbbc976b42cddfa9375a65b27e03b8a2fb6d0f81b3b3e41e9fab076611",
+    "shard_id": 64
+   },
+   {
+    "bytes": 509386301,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00065-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "fc5342618a49985a4e8128c8ac1eda41a1175dcb79b7f7762bd2ab53895650be",
+    "shard_id": 65
+   },
+   {
+    "bytes": 512920688,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00066-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "6a3c4c26ee1c0992fc840cc13f4a9f35d94993614883d218b7dbcfd1d59d2d3c",
+    "shard_id": 66
+   },
+   {
+    "bytes": 505138636,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00067-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "cb2152d11d7506fca827d007b806332fd63d87faa220994cb06139102b4ed402",
+    "shard_id": 67
+   },
+   {
+    "bytes": 510963560,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00068-of-00070.parquet",
+    "rows": 20000,
+    "sha256": "12388427d8bc0be170b191b9e4a75f01233ef8f63c969adb797fc908cf8ef0e8",
+    "shard_id": 68
+   },
+   {
+    "bytes": 463881280,
+    "hash_source": "Hub LFS oid at the pinned revision; rows from the parquet footer at that revision (footer_stats.json); both re-checked on the full file by the container that runs the shard",
+    "path": "train/python/train-00069-of-00070.parquet",
+    "rows": 18166,
+    "sha256": "77f5a4ffb4219b9bdbf732b9e7f0f8e6d0c3c0559957c4ba742059ff092fc895",
+    "shard_id": 69
+   }
+  ]
+ },
+ "pins": {
+  "apps": {
+   "data_files_last_changed": {
+    "at": "2022-06-15T14:14:30Z",
+    "commit": "16d12f4cc86ce60d6c6ada685a6f427fe7380dae"
+   },
+   "distinct_data_states_in_history": 6,
+   "head_on_2026-11-10": true,
+   "repo": "codeparrot/apps",
+   "revision": "21e74ddf8de1a21436da12e3e653065c5213e9d1"
+  },
+  "code_contests": {
+   "data_files_last_changed": {
+    "at": "2022-07-19T16:09:29Z",
+    "commit": "f9bb810c983d29434eb796a890a379b607be69f0"
+   },
+   "head_on_2026-11-10": true,
+   "hub_train_file_names_match_the_extraction_order": true,
+   "hub_train_files": [
+    {
+     "bytes": 180227735,
+     "hub_lfs_sha256": "950bfdefde1f274edf93963e7e23c93ab16034de344aa7b7c32d14145e8d5232",
+     "name": "data/train-00000-of-00039-e991a271dbfa9925.parquet"
+    },
+    {
+     "bytes": 208507780,
+     "hub_lfs_sha256": "7bcc72d98a3d97f07be90ea70bf8db834c8f29ac2c7626d7cfc657bae6f5ddd9",
+     "name": "data/train-00001-of-00039-e092fe56fda18715.parquet"
+    },
+    {
+     "bytes": 226940997,
+     "hub_lfs_sha256": "d67c9643019e632941b045f115c6bdf5925a4b32cd9f3fc991734970669b4a29",
+     "name": "data/train-00002-of-00039-9cea23812e920e41.parquet"
+    },
+    {
+     "bytes": 180680623,
+     "hub_lfs_sha256": "f4952386b2958bddb71ff6713b273b5425b1191084ef75923731b111bc20485f",
+     "name": "data/train-00003-of-00039-e3822fccad6e083a.parquet"
+    },
+    {
+     "bytes": 195299927,
+     "hub_lfs_sha256": "f28993a19d927561b30873a0adf26d5e06bc649fa2b14fc8223de8fecb0b68a9",
+     "name": "data/train-00004-of-00039-cefe355b4667b27e.parquet"
+    },
+    {
+     "bytes": 174068638,
+     "hub_lfs_sha256": "4904c25acd90c3e3882167efd2d70b371e6f8dfc996b65606435e44d58fad78c",
+     "name": "data/train-00005-of-00039-b7580d2d846c2136.parquet"
+    },
+    {
+     "bytes": 186169733,
+     "hub_lfs_sha256": "8ab765a7f8595c3f24f2f12eaac0f2d03ac626f9218abce127aa9ab898d011ff",
+     "name": "data/train-00006-of-00039-65184bb9f7d61fde.parquet"
+    },
+    {
+     "bytes": 172039390,
+     "hub_lfs_sha256": "b9587e7767286768a039a316600232f49edbcdd6f645097db865f8e2ce262304",
+     "name": "data/train-00007-of-00039-05785de21e8b8429.parquet"
+    },
+    {
+     "bytes": 199862972,
+     "hub_lfs_sha256": "fe4e8a9c029563128882a101a06d427b8c7a8fbf7f273c76e09176fbb664fc88",
+     "name": "data/train-00008-of-00039-7246e6b7423b404f.parquet"
+    },
+    {
+     "bytes": 204590259,
+     "hub_lfs_sha256": "11844dd410f284f8e4db32970bd3968db82280e2c2971f33699f61baccfa656f",
+     "name": "data/train-00009-of-00039-b8c920f6629b57b2.parquet"
+    },
+    {
+     "bytes": 178085060,
+     "hub_lfs_sha256": "0b83e96a5a9717ea60c2e6fd44bde4ac2215834e78ba3b78f04b621a9b7b5cdc",
+     "name": "data/train-00010-of-00039-6de28ba20654f69b.parquet"
+    },
+    {
+     "bytes": 164271996,
+     "hub_lfs_sha256": "facf7036a71d74cd8415dd2180deabc0d943b67219eb07b239e80af2d490dcdf",
+     "name": "data/train-00011-of-00039-5de236be5188959d.parquet"
+    },
+    {
+     "bytes": 199746101,
+     "hub_lfs_sha256": "c4ec5429c2b920173f4662b5dc9ec0db40e9f3ddf5b139bad126d49ab598c635",
+     "name": "data/train-00012-of-00039-da9476a39a1bdbb7.parquet"
+    },
+    {
+     "bytes": 197142293,
+     "hub_lfs_sha256": "a03f874674808641cf4b2a8ac1b13a9cd6a28b4ffda329bc60dd1804ec315186",
+     "name": "data/train-00013-of-00039-30b8c3829ee3b962.parquet"
+    },
+    {
+     "bytes": 211187756,
+     "hub_lfs_sha256": "429d22b44ed3134a1e345bb39e5d395900bb6f4fad1ffe32844e972914f2bc30",
+     "name": "data/train-00014-of-00039-dc3ebb07a3cba8e4.parquet"
+    },
+    {
+     "bytes": 178946180,
+     "hub_lfs_sha256": "130ef71583565d5b2887a186cb0c64578486f1c7dfdff4bcb9c1107f807b0768",
+     "name": "data/train-00015-of-00039-19ccd7331d695677.parquet"
+    },
+    {
+     "bytes": 202144829,
+     "hub_lfs_sha256": "7528a2ee39b08a78c6f9ffe16d9a18fb3e4de24e34fe2e899c795fc31acf2c76",
+     "name": "data/train-00016-of-00039-bf38b0908b322307.parquet"
+    },
+    {
+     "bytes": 169304362,
+     "hub_lfs_sha256": "895fe5a77c17f0ab4a364e01745a882b977e6da2e3580e8b171d59fcf816f971",
+     "name": "data/train-00017-of-00039-ae5533a2f822e6ef.parquet"
+    },
+    {
+     "bytes": 184831619,
+     "hub_lfs_sha256": "8a214241c33628e6a01952088046b0561bd6e2941a39ce492bb59597bc93e8f6",
+     "name": "data/train-00018-of-00039-8c793837880f5507.parquet"
+    },
+    {
+     "bytes": 190554330,
+     "hub_lfs_sha256": "bd4b85d9ec0f7b16d38c9a296c6333f15720f0a019582d223480be5c90b2a864",
+     "name": "data/train-00019-of-00039-d688fad5ee604390.parquet"
+    },
+    {
+     "bytes": 211262604,
+     "hub_lfs_sha256": "b2a03b3940b6de703c18a0b55111e7aa979e2399b29f3f96c4abca706d5830db",
+     "name": "data/train-00020-of-00039-5d59387098675b73.parquet"
+    },
+    {
+     "bytes": 181119876,
+     "hub_lfs_sha256": "444b82044438c76d6e2cf79000615349b1dd7ba165da9118924ebcb427e6febc",
+     "name": "data/train-00021-of-00039-b257bf03d6876780.parquet"
+    },
+    {
+     "bytes": 193915223,
+     "hub_lfs_sha256": "63ff8266ec628a64417d7dda7754ed0366522c4cef5217e990487f83af2b1e53",
+     "name": "data/train-00022-of-00039-1cfd39fa43c1917c.parquet"
+    },
+    {
+     "bytes": 176115120,
+     "hub_lfs_sha256": "2aa78452a6a3306536b2f000a4431c048282426a47e7197210155bedbad82c49",
+     "name": "data/train-00023-of-00039-d078bcb55e45cbf0.parquet"
+    },
+    {
+     "bytes": 180979071,
+     "hub_lfs_sha256": "c958b0997f636ea83fbf21c08adda22897dd35ca8cd1e5a97e5be16f832af28d",
+     "name": "data/train-00024-of-00039-f4e3da0e5661e6d1.parquet"
+    },
+    {
+     "bytes": 205823196,
+     "hub_lfs_sha256": "5ae9793f8d97c4448d8053475c10007215a9d819168e3f68a9af4cc2e335da84",
+     "name": "data/train-00025-of-00039-3f6ebfbaba5f4c70.parquet"
+    },
+    {
+     "bytes": 188681982,
+     "hub_lfs_sha256": "cb60563bba14228dba3addd8a5be6a998654113bd734b3c54271dfe6e30e63c7",
+     "name": "data/train-00026-of-00039-7d4898300894cbbe.parquet"
+    },
+    {
+     "bytes": 217005966,
+     "hub_lfs_sha256": "8b1464860f954fff785255b6f744aeaaba224c0e6b9ac2c74c6b832eedbbccbb",
+     "name": "data/train-00027-of-00039-f8196766547533a2.parquet"
+    },
+    {
+     "bytes": 178924886,
+     "hub_lfs_sha256": "f32b70263520ba04d01efda103d8ddbbf2f158b60931caae83d67f5d49b6dc62",
+     "name": "data/train-00028-of-00039-79a302af3c924863.parquet"
+    },
+    {
+     "bytes": 197596694,
+     "hub_lfs_sha256": "a2d76b2c01471ec07d4a724391f76123d54f66dc11fb24b531c3a056cbbfe7b0",
+     "name": "data/train-00029-of-00039-2b6615897d038115.parquet"
+    },
+    {
+     "bytes": 223399896,
+     "hub_lfs_sha256": "fe9d77f481b639e21867942ad1061f8a3b7bfb82b3357e6c7ec96da55c6373cd",
+     "name": "data/train-00030-of-00039-4135cc54050afc22.parquet"
+    },
+    {
+     "bytes": 181140154,
+     "hub_lfs_sha256": "2daeff73dc92b289ec9aeaa6f52af9e7665aae45ade8a172e5dad9a130a48fb2",
+     "name": "data/train-00031-of-00039-40309dd907c042b7.parquet"
+    },
+    {
+     "bytes": 186381035,
+     "hub_lfs_sha256": "fe24e9818595a3fa467a8986f4d341cf1cbcdb6f1d2c0900b4e995b25597f9ad",
+     "name": "data/train-00032-of-00039-7b7d2068a3d9c359.parquet"
+    },
+    {
+     "bytes": 203741870,
+     "hub_lfs_sha256": "65366660f211cfa6e18c81086348713805dd874b708b0bf2e3d0b6de2556cebf",
+     "name": "data/train-00033-of-00039-53b0f749aacff9c1.parquet"
+    },
+    {
+     "bytes": 187767858,
+     "hub_lfs_sha256": "5ea8c872ec944013b661f23203f8d4b82e46dc8dec204c32af89ba7153035171",
+     "name": "data/train-00034-of-00039-a36ff0bff7d2a76f.parquet"
+    },
+    {
+     "bytes": 151356957,
+     "hub_lfs_sha256": "4a7ed07e1f67ca32ed03a874b96dfc9f4f43be0563734b33085bf0b653c65c47",
+     "name": "data/train-00035-of-00039-d28f9be60314601f.parquet"
+    },
+    {
+     "bytes": 204394454,
+     "hub_lfs_sha256": "cb14ebff9529e89c5fd5659b7de0352858f6a514fc63e2111daed392511eafa8",
+     "name": "data/train-00036-of-00039-146e1a11c054aeab.parquet"
+    },
+    {
+     "bytes": 231402023,
+     "hub_lfs_sha256": "bc6e40d8b2de70a52056f0d25d70cac57dd77b8671fa5d1e467e330156addca0",
+     "name": "data/train-00037-of-00039-995207c374a4e6f2.parquet"
+    },
+    {
+     "bytes": 204141641,
+     "hub_lfs_sha256": "62a3f1e1a56485b7b8514d969e803a844fae89e29b985995109f860f50d042ed",
+     "name": "data/train-00038-of-00039-96a59dd6a98cd075.parquet"
+    }
+   ],
+   "local_raw_file_check": {
+    "equals_hub_lfs_of": [],
+    "file": "code_contests_train_0001.parquet",
+    "note": "the one raw parquet held locally. An empty equals_hub_lfs_of means it is not byte-identical to any train file of the pinned revision; the row-for-row content cross-check of the source entry does not depend on that. The 39 Hub hashes above are listed, not verified against local bytes.",
+    "sha256": "32a03e0c8716925c6f921057d8ac16a05b397588eee59b2315e408a2b2bf810e"
+   },
+   "not_fetched": "raw train parquet (7.5 GB): the existing statement extraction is used unchanged",
+   "pinned_revision_check": {
+    "description_mismatches": 0,
+    "description_rows_compared": 13328,
+    "file": "cc_pin_check.json",
+    "files": 39,
+    "per_file_rows_match_manifest": true,
+    "rows_at_pinned_revision": 13328,
+    "sha256": "12f35a086a06604b2fff119a699ca026d5b79212d4cece52860e7194bf1a9b57",
+    "shard0_metadata_probe": {
+     "control_difficulty_equals_cf_rating": 1303,
+     "control_difficulty_equals_difficulty_enum": 1255,
+     "control_difficulty_equals_either": 1424,
+     "control_platform_agrees": 5019,
+     "control_platform_and_difficulty_agree": 1369,
+     "difficulty_equals_cf_rating": 4742,
+     "difficulty_equals_difficulty_enum": 1643,
+     "difficulty_equals_either": 5251,
+     "distinct_ordinals": 2707,
+     "platform_agrees": 5251,
+     "platform_and_difficulty_agree": 5251,
+     "rows": 5251
+    },
+    "transport": "HTTP range reads at the pinned revision; file sha256 not verified"
+   },
+   "repo": "deepmind/code_contests",
+   "revision": "802411c3010cb00d1b05bad57ca77365a3c699d6"
+  },
+  "identity_probe": {
+   "file": "identity_probe.json",
+   "sha256": "32e58729611553fc16571610600339ff80bde49e929c5299cff099a47c53ca90",
+   "sources": {
+    "apps/test": {
+     "both_agree": 2175,
+     "control_both_agree_at_index_plus_1": 2100,
+     "control_rows": 2175,
+     "difficulty_agrees": 2175,
+     "distinct_ordinals": 1030,
+     "platform_agrees": 2175,
+     "repo": "codeparrot/apps",
+     "revision": "21e74ddf8de1a21436da12e3e653065c5213e9d1",
+     "rows": 2175,
+     "total_rows": 5000
+    },
+    "apps/train": {
+     "both_agree": 495,
+     "control_both_agree_at_index_plus_1": 482,
+     "control_rows": 495,
+     "difficulty_agrees": 495,
+     "distinct_ordinals": 206,
+     "platform_agrees": 495,
+     "repo": "codeparrot/apps",
+     "revision": "21e74ddf8de1a21436da12e3e653065c5213e9d1",
+     "rows": 495,
+     "total_rows": 5000
+    },
+    "taco/test": {
+     "both_agree": 401,
+     "control_both_agree_at_index_plus_1": 30,
+     "control_rows": 401,
+     "difficulty_agrees": 401,
+     "distinct_ordinals": 163,
+     "platform_agrees": 401,
+     "repo": "BAAI/TACO",
+     "revision": "d593ed0a2becbbc952230bb89be09189bf1056dc",
+     "rows": 401,
+     "total_rows": 1000
+    },
+    "taco/train": {
+     "both_agree": 11678,
+     "control_both_agree_at_index_plus_1": 666,
+     "control_rows": 11678,
+     "difficulty_agrees": 11678,
+     "distinct_ordinals": 5929,
+     "platform_agrees": 11678,
+     "repo": "BAAI/TACO",
+     "revision": "d593ed0a2becbbc952230bb89be09189bf1056dc",
+     "rows": 11678,
+     "total_rows": 25443
+    }
+   }
+  },
+  "note": "Exact revisions of the four source repositories, checked against the Hub API on 2026-11-10. The OCR-2 card publishes no source revision or hash, so the pin is the control.",
+  "ocr2_data_upload": {
+   "at": "2025-05-16T09:17:36Z",
+   "commit": "82298817e04a12d1ca2763fe1181e9be8a4e2757",
+   "title": "data upload"
+  },
+  "open-r1/codeforces": {
+   "data_files_last_changed": {
+    "at": "2025-05-15T12:15:12Z",
+    "commit": "8c3c3f17043122adb800bc5a39b3d55cc20d61a7"
+   },
+   "distinct_data_states_in_history": 25,
+   "head_on_2026-11-10": true,
+   "note": "today's head, recorded for reference only; train rows are held, not joined",
+   "repo": "open-r1/codeforces",
+   "revision": "fbe3f6e903ee854eec2e69e9d96d0306cde59baf",
+   "train_split_indexed": false
+  },
+  "rows_per_split_used": {
+   "apps/test": 5000,
+   "apps/train": 5000,
+   "code_contests/train": 13328,
+   "open-r1/codeforces/test": 468,
+   "taco/test": 1000,
+   "taco/train": 25443
+  },
+  "taco": {
+   "data_files_last_changed": {
+    "at": "2024-06-19T08:52:05Z",
+    "commit": "6e7429e9bcfb0e8d7aebfc719d98518f770b3985"
+   },
+   "distinct_data_states_in_history": 3,
+   "head_on_2026-11-10": true,
+   "repo": "BAAI/TACO",
+   "revision": "d593ed0a2becbbc952230bb89be09189bf1056dc"
+  }
+ },
+ "schema": "g10-ocr2-source-manifest/1",
+ "screening": {
+  "g9_commit": "b470b4c0b9078dcd113b57f91c3d66ced90ede48",
+  "set_sha256": "2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a",
+  "tool_sha256": {
+   "canary_scan.py": "322066d675e13af8bee0d05602f755f49e33da5a148bf664306ce6d6a9f908c2",
+   "decontam_check.py": "62a269a25123543b5470c4956ba1be530ea257c597bc2be2eab19201cb62df8f",
+   "fpset.py": "7f5f48d08506d619ebfadd2742e86d29ec3ea28e5fcfd729f13cd8d959689c59",
+   "lab_canary.py": "373536a777c9f16367cf6affcc2cc6243755ac23e75850a2624eadf65918ea09",
+   "normalize.py": "570dcb820ac2ae6c667b1abc5ea1d781a6795aa42a7735aa94377e756d7d70e9"
+  },
+  "tools_dir": "g9/teams/09-evaluation/decontam"
+ },
+ "sources": {
+  "apps/test": {
+   "assembly": "question",
+   "config": "all (the loader script's default)",
+   "dataset": "apps",
+   "files": [
+    {
+     "bytes": 1292436853,
+     "hash_source": "sha256 of the local file; equal to the Hub LFS oid at the pinned revision",
+     "name": "test.jsonl",
+     "path": "sources/codeparrot__apps@21e74ddf8de1/test.jsonl",
+     "rows": 5000,
+     "sha256": "5b003a65ac40feb47dd5eaec267a767a6fc435bdcfa68ff715fe869f948e760c"
+    }
+   ],
+   "identity": {
+    "evidence": [
+     "repository and loader named by the OCR-2 card at eadf5359: load_dataset(\"codeparrot/apps\", trust_remote_code=True)",
+     "revision 21e74ddf8de1a21436da12e3e653065c5213e9d1 is the head of codeparrot/apps on 2026-11-10 (Hub API)",
+     "data files of the default config last changed at 2022-06-15T14:14:30Z (commit 16d12f4cc8); OCR-2 data upload was 2025-05-16T09:17:36Z (commit 82298817e0)",
+     "every file: local sha256 equals the Hub LFS oid at the pinned revision",
+     "so any load of the default branch during the OCR-2 creation window (March 2025 - May 2025, per the card) read these exact bytes",
+     "per-row metadata probe on shard 0 (identity_probe.py): 2175/2175 rows agree on difficulty and platform with the original row at `index`; control at index+1: 2100/2175"
+    ],
+    "level": "diagnostic",
+    "missing": [
+     "the source revision the OCR-2 producer loaded (the card pulls the default branch, unpinned)",
+     "an independent per-row id that maps OCR-2 question_id (opaque)"
+    ],
+    "note": "Left at diagnostic on purpose: promoting a source to verified is a review decision for the lead, not something this helper does."
+   },
+   "kind": "jsonl",
+   "loader": {
+    "card_call": "load_dataset(\"codeparrot/apps\", trust_remote_code=True)",
+    "note": "read as text at the pinned revision to learn the row order; never run",
+    "order": "one row per line of <split>.jsonl in file order; config all filters nothing; problem_id is the line's id",
+    "script": "apps.py",
+    "script_executed": false,
+    "script_git_blob": "de9126c822657701041d427534f852c9a418dada"
+   },
+   "problem_id_field": "id",
+   "protected": true,
+   "repo": "codeparrot/apps",
+   "revision": "21e74ddf8de1a21436da12e3e653065c5213e9d1",
+   "split": "test",
+   "total_rows": 5000
+  },
+  "apps/train": {
+   "assembly": "question",
+   "config": "all (the loader script's default)",
+   "dataset": "apps",
+   "files": [
+    {
+     "bytes": 107101272,
+     "hash_source": "sha256 of the local file; equal to the Hub LFS oid at the pinned revision",
+     "name": "train.jsonl",
+     "path": "sources/codeparrot__apps@21e74ddf8de1/train.jsonl",
+     "rows": 5000,
+     "sha256": "45e82ef22ed8e7c0c04d881a21b923e9dd233157896b0b8d5b3493e887499cae"
+    }
+   ],
+   "identity": {
+    "evidence": [
+     "repository and loader named by the OCR-2 card at eadf5359: load_dataset(\"codeparrot/apps\", trust_remote_code=True)",
+     "revision 21e74ddf8de1a21436da12e3e653065c5213e9d1 is the head of codeparrot/apps on 2026-11-10 (Hub API)",
+     "data files of the default config last changed at 2022-06-15T14:14:30Z (commit 16d12f4cc8); OCR-2 data upload was 2025-05-16T09:17:36Z (commit 82298817e0)",
+     "every file: local sha256 equals the Hub LFS oid at the pinned revision",
+     "so any load of the default branch during the OCR-2 creation window (March 2025 - May 2025, per the card) read these exact bytes",
+     "per-row metadata probe on shard 0 (identity_probe.py): 495/495 rows agree on difficulty and platform with the original row at `index`; control at index+1: 482/495"
+    ],
+    "level": "pinned_revision",
+    "missing": [
+     "the source revision the OCR-2 producer loaded (the card pulls the default branch, unpinned)",
+     "an independent per-row id that maps OCR-2 question_id (opaque)"
+    ],
+    "note": "pinned_revision under the 14 Nov 2026 TSAI ruling for SFT data v1: the source repo and exact revision are recorded here and every file sha256 equals the Hub object at that revision. The producer's own load revision is still unpublished (see `missing`), so this is not called verified."
+   },
+   "kind": "jsonl",
+   "loader": {
+    "card_call": "load_dataset(\"codeparrot/apps\", trust_remote_code=True)",
+    "note": "read as text at the pinned revision to learn the row order; never run",
+    "order": "one row per line of <split>.jsonl in file order; config all filters nothing; problem_id is the line's id",
+    "script": "apps.py",
+    "script_executed": false,
+    "script_git_blob": "de9126c822657701041d427534f852c9a418dada"
+   },
+   "problem_id_field": "id",
+   "protected": false,
+   "repo": "codeparrot/apps",
+   "revision": "21e74ddf8de1a21436da12e3e653065c5213e9d1",
+   "split": "train",
+   "total_rows": 5000
+  },
+  "code_contests/train": {
+   "assembly": "description",
+   "config": "default",
+   "cross_checks": [
+    {
+     "column": "description",
+     "kind": "parquet_column",
+     "path": "cc/code_contests_train_0001.parquet",
+     "row_offset": 684,
+     "sha256": "32a03e0c8716925c6f921057d8ac16a05b397588eee59b2315e408a2b2bf810e"
+    }
+   ],
+   "dataset": "code_contests",
+   "extraction": {
+    "id_prefix": "rl-code-code-contests",
+    "path": "cc/rl-code-code-contests.jsonl",
+    "sha256": "08b7a4840bd8ab7cdd18f4cbb38515a620c7c0b316e7f0bf6d4ce9be690da396"
+   },
+   "files": [
+    {
+     "name": "train-00000-of-00039-e991a271dbfa9925",
+     "rows": 342,
+     "sha256": null
+    },
+    {
+     "name": "train-00001-of-00039-e092fe56fda18715",
+     "rows": 342,
+     "sha256": null
+    },
+    {
+     "name": "train-00002-of-00039-9cea23812e920e41",
+     "rows": 342,
+     "sha256": null
+    },
+    {
+     "name": "train-00003-of-00039-e3822fccad6e083a",
+     "rows": 342,
+     "sha256": null
+    },
+    {
+     "name": "train-00004-of-00039-cefe355b4667b27e",
+     "rows": 342,
+     "sha256": null
+    },
+    {
+     "name": "train-00005-of-00039-b7580d2d846c2136",
+     "rows": 342,
+     "sha256": null
+    },
+    {
+     "name": "train-00006-of-00039-65184bb9f7d61fde",
+     "rows": 342,
+     "sha256": null
+    },
+    {
+     "name": "train-00007-of-00039-05785de21e8b8429",
+     "rows": 342,
+     "sha256": null
+    },
+    {
+     "name": "train-00008-of-00039-7246e6b7423b404f",
+     "rows": 342,
+     "sha256": null
+    },
+    {
+     "name": "train-00009-of-00039-b8c920f6629b57b2",
+     "rows": 342,
+     "sha256": null
+    },
+    {
+     "name": "train-00010-of-00039-6de28ba20654f69b",
+     "rows": 342,
+     "sha256": null
+    },
+    {
+     "name": "train-00011-of-00039-5de236be5188959d",
+     "rows": 342,
+     "sha256": null
+    },
+    {
+     "name": "train-00012-of-00039-da9476a39a1bdbb7",
+     "rows": 342,
+     "sha256": null
+    },
+    {
+     "name": "train-00013-of-00039-30b8c3829ee3b962",
+     "rows": 342,
+     "sha256": null
+    },
+    {
+     "name": "train-00014-of-00039-dc3ebb07a3cba8e4",
+     "rows": 342,
+     "sha256": null
+    },
+    {
+     "name": "train-00015-of-00039-19ccd7331d695677",
+     "rows": 342,
+     "sha256": null
+    },
+    {
+     "name": "train-00016-of-00039-bf38b0908b322307",
+     "rows": 342,
+     "sha256": null
+    },
+    {
+     "name": "train-00017-of-00039-ae5533a2f822e6ef",
+     "rows": 342,
+     "sha256": null
+    },
+    {
+     "name": "train-00018-of-00039-8c793837880f5507",
+     "rows": 342,
+     "sha256": null
+    },
+    {
+     "name": "train-00019-of-00039-d688fad5ee604390",
+     "rows": 342,
+     "sha256": null
+    },
+    {
+     "name": "train-00020-of-00039-5d59387098675b73",
+     "rows": 342,
+     "sha256": null
+    },
+    {
+     "name": "train-00021-of-00039-b257bf03d6876780",
+     "rows": 342,
+     "sha256": null
+    },
+    {
+     "name": "train-00022-of-00039-1cfd39fa43c1917c",
+     "rows": 342,
+     "sha256": null
+    },
+    {
+     "name": "train-00023-of-00039-d078bcb55e45cbf0",
+     "rows": 342,
+     "sha256": null
+    },
+    {
+     "name": "train-00024-of-00039-f4e3da0e5661e6d1",
+     "rows": 342,
+     "sha256": null
+    },
+    {
+     "name": "train-00025-of-00039-3f6ebfbaba5f4c70",
+     "rows": 342,
+     "sha256": null
+    },
+    {
+     "name": "train-00026-of-00039-7d4898300894cbbe",
+     "rows": 342,
+     "sha256": null
+    },
+    {
+     "name": "train-00027-of-00039-f8196766547533a2",
+     "rows": 342,
+     "sha256": null
+    },
+    {
+     "name": "train-00028-of-00039-79a302af3c924863",
+     "rows": 342,
+     "sha256": null
+    },
+    {
+     "name": "train-00029-of-00039-2b6615897d038115",
+     "rows": 341,
+     "sha256": null
+    },
+    {
+     "name": "train-00030-of-00039-4135cc54050afc22",
+     "rows": 341,
+     "sha256": null
+    },
+    {
+     "name": "train-00031-of-00039-40309dd907c042b7",
+     "rows": 341,
+     "sha256": null
+    },
+    {
+     "name": "train-00032-of-00039-7b7d2068a3d9c359",
+     "rows": 341,
+     "sha256": null
+    },
+    {
+     "name": "train-00033-of-00039-53b0f749aacff9c1",
+     "rows": 341,
+     "sha256": null
+    },
+    {
+     "name": "train-00034-of-00039-a36ff0bff7d2a76f",
+     "rows": 341,
+     "sha256": null
+    },
+    {
+     "name": "train-00035-of-00039-d28f9be60314601f",
+     "rows": 341,
+     "sha256": null
+    },
+    {
+     "name": "train-00036-of-00039-146e1a11c054aeab",
+     "rows": 341,
+     "sha256": null
+    },
+    {
+     "name": "train-00037-of-00039-995207c374a4e6f2",
+     "rows": 341,
+     "sha256": null
+    },
+    {
+     "name": "train-00038-of-00039-96a59dd6a98cd075",
+     "rows": 341,
+     "sha256": null
+    }
+   ],
+   "identity": {
+    "evidence": [
+     "extraction sha256 pinned (RL report #39 input), 39 files in name order, 13,328 rows",
+     "one raw parquet (342 rows) matches the extraction segment at ordinal 684 row for row"
+    ],
+    "level": "pinned_revision",
+    "missing": [
+     "the source revision the OCR-2 producer indexed (the card pulls an unpinned snapshot)",
+     "sha256 of the 39 raw parquet files",
+     "an independent per-row id that maps OCR-2 question_id"
+    ],
+    "note": "pinned_revision under the 14 Nov 2026 TSAI ruling for SFT data v1: the source repo and exact revision are recorded here and every file sha256 equals the Hub object at that revision. The producer's own load revision is still unpublished (see `missing`), so this is not called verified."
+   },
+   "kind": "statement_extraction",
+   "protected": false,
+   "repo": "deepmind/code_contests",
+   "revision": "802411c3010cb00d1b05bad57ca77365a3c699d6",
+   "split": "train",
+   "total_rows": 13328
+  },
+  "open-r1/codeforces/test": {
+   "assembly": "codeforces",
+   "config": "default",
+   "dataset": "open-r1/codeforces",
+   "files": [
+    {
+     "bytes": 35161546,
+     "hash_source": "sha256 of the local file; equal to the Hub LFS oid at the pinned revision",
+     "name": "data/test-00000-of-00001.parquet",
+     "path": "sources/open-r1__codeforces@fbe3f6e903ee/data/test-00000-of-00001.parquet",
+     "rows": 468,
+     "sha256": "f3e241f6a111822aed1ee6800d3d3f73917ea4d10e70e264b47a7bcdba4cbf31"
+    }
+   ],
+   "identity": {
+    "evidence": [
+     "repository and loader named by the OCR-2 card at eadf5359: load_dataset(\"open-r1/codeforces\")",
+     "revision fbe3f6e903ee854eec2e69e9d96d0306cde59baf is the head of open-r1/codeforces on 2026-11-10 (Hub API)",
+     "data files of the default config last changed at 2025-05-15T12:15:12Z (commit 8c3c3f1704); OCR-2 data upload was 2025-05-16T09:17:36Z (commit 82298817e0)",
+     "every file: local sha256 equals the Hub LFS oid at the pinned revision",
+     "the default config changed 25 times between 2025-02-12 and 2025-05-15, inside the card's stated OCR-2 creation window (March 2025 - May 2025)"
+    ],
+    "level": "diagnostic",
+    "missing": [
+     "which of those data states the producer indexed: an ordinal can name another problem in an earlier state",
+     "the source revision the OCR-2 producer loaded (the card pulls the default branch, unpinned)",
+     "an independent per-row id that maps OCR-2 question_id (opaque)",
+     "statement terms: the Hub tag says cc-by-4.0, the card text says ODC-By 4.0 (conflict, not resolved here)",
+     "Team 9 confirmation for the Codeforces pool (open in ocr2_policy.json)"
+    ],
+    "note": "Left at diagnostic on purpose: promoting a source to verified is a review decision for the lead, not something this helper does."
+   },
+   "kind": "parquet",
+   "loader": {
+    "card_call": "load_dataset(\"open-r1/codeforces\")",
+    "order": "README configs: default -> data/<split>-*; parquet files in name order, rows in file order",
+    "script": null
+   },
+   "problem_id_field": "id",
+   "protected": true,
+   "repo": "open-r1/codeforces",
+   "revision": "fbe3f6e903ee854eec2e69e9d96d0306cde59baf",
+   "split": "test",
+   "total_rows": 468
+  },
+  "taco/test": {
+   "assembly": "question",
+   "config": "ALL (the loader script's default)",
+   "dataset": "taco",
+   "files": [
+    {
+     "bytes": 496140888,
+     "hash_source": "sha256 of the local file; equal to the Hub LFS oid at the pinned revision",
+     "name": "test/data-00000-of-00001.arrow",
+     "path": "sources/BAAI__TACO@d593ed0a2bec/test/data-00000-of-00001.arrow",
+     "rows": 1000,
+     "sha256": "39e312a5096f88929cbdd7324f06da41b1315d1b32f0d803dbe66dc1957c58fe"
+    }
+   ],
+   "identity": {
+    "evidence": [
+     "repository and loader named by the OCR-2 card at eadf5359: load_dataset(\"BAAI/TACO\", trust_remote_code=True)",
+     "revision d593ed0a2becbbc952230bb89be09189bf1056dc is the head of BAAI/TACO on 2026-11-10 (Hub API)",
+     "data files of the default config last changed at 2024-06-19T08:52:05Z (commit 6e7429e9bc); OCR-2 data upload was 2025-05-16T09:17:36Z (commit 82298817e0)",
+     "every file: local sha256 equals the Hub LFS oid at the pinned revision",
+     "the test file was replaced on 2024-06-19, before the OCR-2 creation window (March 2025 - May 2025, per the card)",
+     "per-row metadata probe on shard 0 (identity_probe.py): 401/401 rows agree on difficulty and platform with the original row at `index`; control at index+1: 30/401"
+    ],
+    "level": "diagnostic",
+    "missing": [
+     "the source revision the OCR-2 producer loaded (the card pulls the default branch, unpinned)",
+     "an independent per-row id that maps OCR-2 question_id (opaque)"
+    ],
+    "note": "Left at diagnostic on purpose: promoting a source to verified is a review decision for the lead, not something this helper does."
+   },
+   "kind": "arrow",
+   "loader": {
+    "card_call": "load_dataset(\"BAAI/TACO\", trust_remote_code=True)",
+    "note": "read as text at the pinned revision to learn the row order; never run",
+    "order": "files of _URLS[split] concatenated in the listed order, rows in Arrow stream order; config ALL filters nothing",
+    "script": "TACO.py",
+    "script_executed": false,
+    "script_git_blob": "d6d51da970de27f63bc8b4eb9ecefd15ee6cdbf1"
+   },
+   "problem_id_field": "url",
+   "protected": true,
+   "repo": "BAAI/TACO",
+   "revision": "d593ed0a2becbbc952230bb89be09189bf1056dc",
+   "split": "test",
+   "total_rows": 1000
+  },
+  "taco/train": {
+   "assembly": "question",
+   "config": "ALL (the loader script's default)",
+   "dataset": "taco",
+   "files": [
+    {
+     "bytes": 529629000,
+     "hash_source": "sha256 of the local file; equal to the Hub LFS oid at the pinned revision",
+     "name": "train/data-00000-of-00009.arrow",
+     "path": "sources/BAAI__TACO@d593ed0a2bec/train/data-00000-of-00009.arrow",
+     "rows": 2827,
+     "sha256": "b6d3c6c29f97e0ee4bbbe4ab577b851e7aa055905d6a935146128a0190cffa72"
+    },
+    {
+     "bytes": 612948760,
+     "hash_source": "sha256 of the local file; equal to the Hub LFS oid at the pinned revision",
+     "name": "train/data-00001-of-00009.arrow",
+     "path": "sources/BAAI__TACO@d593ed0a2bec/train/data-00001-of-00009.arrow",
+     "rows": 2827,
+     "sha256": "613f9a94291a262cffe3a5fe0c51096d5a5617f84b19c5cda832e7bc23942be2"
+    },
+    {
+     "bytes": 335200528,
+     "hash_source": "sha256 of the local file; equal to the Hub LFS oid at the pinned revision",
+     "name": "train/data-00002-of-00009.arrow",
+     "path": "sources/BAAI__TACO@d593ed0a2bec/train/data-00002-of-00009.arrow",
+     "rows": 2827,
+     "sha256": "3af79af93fbad8a1e9d0a5ac37abf5c756719ab266a4b18c2db760377ff6e9fe"
+    },
+    {
+     "bytes": 402713728,
+     "hash_source": "sha256 of the local file; equal to the Hub LFS oid at the pinned revision",
+     "name": "train/data-00003-of-00009.arrow",
+     "path": "sources/BAAI__TACO@d593ed0a2bec/train/data-00003-of-00009.arrow",
+     "rows": 2827,
+     "sha256": "629425025b6a006b220ffb3c3adf519fb99ec466308b2c943c59a4450ced733e"
+    },
+    {
+     "bytes": 417029960,
+     "hash_source": "sha256 of the local file; equal to the Hub LFS oid at the pinned revision",
+     "name": "train/data-00004-of-00009.arrow",
+     "path": "sources/BAAI__TACO@d593ed0a2bec/train/data-00004-of-00009.arrow",
+     "rows": 2827,
+     "sha256": "df8ba934fd73c9b0c928c0487cd2798ac5fd7a366e51043814ef3add1efbba64"
+    },
+    {
+     "bytes": 503103112,
+     "hash_source": "sha256 of the local file; equal to the Hub LFS oid at the pinned revision",
+     "name": "train/data-00005-of-00009.arrow",
+     "path": "sources/BAAI__TACO@d593ed0a2bec/train/data-00005-of-00009.arrow",
+     "rows": 2827,
+     "sha256": "9e680fa3a2ea09465578478f6e051841986b9fdcdc24f2fa0777018629db4d5a"
+    },
+    {
+     "bytes": 447486992,
+     "hash_source": "sha256 of the local file; equal to the Hub LFS oid at the pinned revision",
+     "name": "train/data-00006-of-00009.arrow",
+     "path": "sources/BAAI__TACO@d593ed0a2bec/train/data-00006-of-00009.arrow",
+     "rows": 2827,
+     "sha256": "7f2cc58103ab1ba44edb41109470e28787a3b68edc6deb543ba81ad8d7057fa2"
+    },
+    {
+     "bytes": 525654488,
+     "hash_source": "sha256 of the local file; equal to the Hub LFS oid at the pinned revision",
+     "name": "train/data-00007-of-00009.arrow",
+     "path": "sources/BAAI__TACO@d593ed0a2bec/train/data-00007-of-00009.arrow",
+     "rows": 2827,
+     "sha256": "016c69cedd62ecbf853a9c83cf9ae40ae745cba6da6d6e8eb39cfb63c993a4c1"
+    },
+    {
+     "bytes": 465600648,
+     "hash_source": "sha256 of the local file; equal to the Hub LFS oid at the pinned revision",
+     "name": "train/data-00008-of-00009.arrow",
+     "path": "sources/BAAI__TACO@d593ed0a2bec/train/data-00008-of-00009.arrow",
+     "rows": 2827,
+     "sha256": "7e014ee60203819c59be1c08b1dec79eb71b1127373f2baba968f0aab7aba8e9"
+    }
+   ],
+   "identity": {
+    "evidence": [
+     "repository and loader named by the OCR-2 card at eadf5359: load_dataset(\"BAAI/TACO\", trust_remote_code=True)",
+     "revision d593ed0a2becbbc952230bb89be09189bf1056dc is the head of BAAI/TACO on 2026-11-10 (Hub API)",
+     "data files of the default config last changed at 2024-06-19T08:52:05Z (commit 6e7429e9bc); OCR-2 data upload was 2025-05-16T09:17:36Z (commit 82298817e0)",
+     "every file: local sha256 equals the Hub LFS oid at the pinned revision",
+     "so any load of the default branch during the OCR-2 creation window (March 2025 - May 2025, per the card) read these exact bytes",
+     "per-row metadata probe on shard 0 (identity_probe.py): 11678/11678 rows agree on difficulty and platform with the original row at `index`; control at index+1: 666/11678"
+    ],
+    "level": "pinned_revision",
+    "missing": [
+     "the source revision the OCR-2 producer loaded (the card pulls the default branch, unpinned)",
+     "an independent per-row id that maps OCR-2 question_id (opaque)"
+    ],
+    "note": "pinned_revision under the 14 Nov 2026 TSAI ruling for SFT data v1: the source repo and exact revision are recorded here and every file sha256 equals the Hub object at that revision. The producer's own load revision is still unpublished (see `missing`), so this is not called verified."
+   },
+   "kind": "arrow",
+   "loader": {
+    "card_call": "load_dataset(\"BAAI/TACO\", trust_remote_code=True)",
+    "note": "read as text at the pinned revision to learn the row order; never run",
+    "order": "files of _URLS[split] concatenated in the listed order, rows in Arrow stream order; config ALL filters nothing",
+    "script": "TACO.py",
+    "script_executed": false,
+    "script_git_blob": "d6d51da970de27f63bc8b4eb9ecefd15ee6cdbf1"
+   },
+   "problem_id_field": "url",
+   "protected": false,
+   "repo": "BAAI/TACO",
+   "revision": "d593ed0a2becbbc952230bb89be09189bf1056dc",
+   "split": "train",
+   "total_rows": 25443
+  }
+ },
+ "unavailable_sources": {
+  "code_contests/test": {
+   "needed": "hash-only index for family hold-out (51.8 MB and 63.1 MB at the pinned revision); not fetched in this session",
+   "owner": "this work, next session"
+  },
+  "code_contests/valid": {
+   "needed": "hash-only index for family hold-out (51.8 MB and 63.1 MB at the pinned revision); not fetched in this session",
+   "owner": "this work, next session"
+  },
+  "open-r1/codeforces/train": {
+   "held_by": "make_shard0_manifest.py --hold-train",
+   "needed": "the source revision the OCR-2 producer loaded. The default config went through 25 data states between 2025-02-12 and 2025-05-15, inside the OCR-2 creation window; revision fbe3f6e903ee is only today's head, so an ordinal may name another problem",
+   "owner": "OCR-2 producer or lead ruling; Team 9 confirmation for the Codeforces pool is also open"
+  }
+ }
+}

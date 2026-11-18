@@ -1,0 +1,55 @@
+{
+ "gold_check": {
+  "instance_id": "pallets__click-1990",
+  "repo": "pallets/click",
+  "f2p": 1,
+  "p2p": 108,
+  "image_id": "sha256:d1119edee903",
+  "runs": 5,
+  "problems": [],
+  "fails_before": "5/5",
+  "passes_after": "5/5",
+  "seconds": 0.9,
+  "ok": true
+ },
+ "gold": {
+  "instance_id": "pallets__click-1990",
+  "reward": 1,
+  "failed": [],
+  "n_failed": 0,
+  "seconds": 0.6
+ },
+ "wrong": {
+  "instance_id": "pallets__click-1990",
+  "reward": 0,
+  "failed": [
+   "tests.test_options::test_missing_required_flag"
+  ],
+  "n_failed": 1,
+  "seconds": 0.6
+ },
+ "partial": {
+  "instance_id": "pallets__click-1990",
+  "reward": 0,
+  "failed": [
+   "tests.test_options::test_winstyle_options"
+  ],
+  "n_failed": 1,
+  "seconds": 0.6
+ },
+ "tamper": {
+  "instance_id": "pallets__click-1990",
+  "reward": 0,
+  "reason": "patch edits test files: ['tests/conftest.py']"
+ },
+ "rootconftest": {
+  "instance_id": "pallets__click-1990",
+  "reward": 0,
+  "reason": "patch edits test files: ['conftest.py']"
+ },
+ "srchack": {
+  "instance_id": "pallets__click-1990",
+  "reward": 0,
+  "reason": "report integrity: the sentinel test is reported as passed"
+ }
+}

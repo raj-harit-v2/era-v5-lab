@@ -1,0 +1,128 @@
+[
+ {
+  "args": [
+   "3a2b",
+   5
+  ],
+  "expected": "aaabb"
+ },
+ {
+  "args": [
+   "3a2b",
+   4
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "a",
+   9
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "3a2",
+   9
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "0a",
+   9
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "03a",
+   9
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "1a1b1c",
+   3
+  ],
+  "expected": "abc"
+ },
+ {
+  "args": [
+   "10z",
+   10
+  ],
+  "expected": "zzzzzzzzzz"
+ },
+ {
+  "args": [
+   "10z",
+   9
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "999999999999a",
+   10
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "99999999999999999999999999a",
+   1000
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "2 3-",
+   10
+  ],
+  "expected": "  ---"
+ },
+ {
+  "args": [
+   "1a12",
+   100
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "2a3b4c",
+   8
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "2a3b4c",
+   9
+  ],
+  "expected": "aabbbcccc"
+ },
+ {
+  "args": [
+   "5",
+   9
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   "1~",
+   9
+  ],
+  "expected": "~"
+ },
+ {
+  "args": [
+   "",
+   0
+  ],
+  "expected": ""
+ }
+]

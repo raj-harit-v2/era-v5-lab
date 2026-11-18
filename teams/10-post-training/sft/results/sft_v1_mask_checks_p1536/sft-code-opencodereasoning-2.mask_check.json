@@ -1,0 +1,38 @@
+{
+ "by_source": {
+  "sft-code-opencodereasoning-2": 32855
+ },
+ "command": "python sft/check_pack_rows.py --pack <shards 0-3 pack.jsonl + pack.heldout_eval_v1.jsonl> --tokenizer <p1536> --report <this file>",
+ "limit": 32768,
+ "marker_ids": {
+  "<|endoftext|>": 130822,
+  "<|im_end|>": 130816,
+  "<|im_start|>": 129994
+ },
+ "max_length": 19366,
+ "ok": true,
+ "rows": 32855,
+ "rows_with_violations_by_source": {
+  "sft-code-opencodereasoning-2": 0
+ },
+ "sampled_per_source": {
+  "sft-code-opencodereasoning-2": 20
+ },
+ "schema": "g10-ocr2-pack-row-check/1",
+ "scope": "every train and held-out row of p1536 shards 0-3 (the shards whose pack bytes were kept)",
+ "seed": 0,
+ "set": "sft-code-opencodereasoning-2",
+ "shards": [
+  0,
+  1,
+  2,
+  3
+ ],
+ "tokenizer_sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b",
+ "tokens": 212593659,
+ "trained_tokens": 197584460,
+ "trained_tokens_by_role": {
+  "assistant": 197584460
+ },
+ "violations": {}
+}

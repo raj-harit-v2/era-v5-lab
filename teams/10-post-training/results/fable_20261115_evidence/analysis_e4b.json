@@ -1,0 +1,268 @@
+{
+ "heldout": {
+  "curve": [
+   [
+    0,
+    0.1471
+   ],
+   [
+    10,
+    0.181
+   ],
+   [
+    20,
+    0.1797
+   ]
+  ],
+  "meta": {
+   "0": {
+    "pass": 0.14713541666666666,
+    "truncated": 0.0299,
+    "mean_tokens": 564.6,
+    "reasons": {
+     "no_code": 65,
+     "pass": 113,
+     "runtime_error": 248,
+     "timeout": 18,
+     "wrong_answer": 324
+    },
+    "k": 8
+   },
+   "10": {
+    "pass": 0.18098958333333334,
+    "truncated": 0.0026,
+    "mean_tokens": 363.2,
+    "reasons": {
+     "no_code": 44,
+     "pass": 139,
+     "runtime_error": 189,
+     "timeout": 33,
+     "wrong_answer": 363
+    },
+    "k": 8
+   },
+   "20": {
+    "pass": 0.1796875,
+    "truncated": 0.0039,
+    "mean_tokens": 361.9,
+    "reasons": {
+     "no_code": 48,
+     "pass": 138,
+     "runtime_error": 204,
+     "timeout": 36,
+     "wrong_answer": 342
+    },
+    "k": 8
+   }
+  },
+  "vs_step0": {
+   "10": {
+    "problems": 96,
+    "start": 0.1471,
+    "end": 0.181,
+    "diff": 0.0339,
+    "ci95": [
+     0.0052,
+     0.0638
+    ],
+    "excludes_zero": true,
+    "problems_up": 23,
+    "problems_down": 9
+   },
+   "20": {
+    "problems": 96,
+    "start": 0.1471,
+    "end": 0.1797,
+    "diff": 0.0326,
+    "ci95": [
+     0.0065,
+     0.0612
+    ],
+    "excludes_zero": true,
+    "problems_up": 20,
+    "problems_down": 11
+   }
+  },
+  "by_judge_last_step": {
+   "aizu": {
+    "problems": 49,
+    "start": 0.1148,
+    "end": 0.1403,
+    "diff": 0.0255,
+    "ci95": [
+     -0.0051,
+     0.0612
+    ],
+    "excludes_zero": false,
+    "problems_up": 10,
+    "problems_down": 4
+   },
+   "atcoder": {
+    "problems": 4,
+    "start": 0.1562,
+    "end": 0.25
+   },
+   "codechef": {
+    "problems": 9,
+    "start": 0.0694,
+    "end": 0.1111,
+    "diff": 0.0417,
+    "ci95": [
+     -0.0417,
+     0.1667
+    ],
+    "excludes_zero": false,
+    "problems_up": 1,
+    "problems_down": 1
+   },
+   "hackerearth": {
+    "problems": 34,
+    "start": 0.2132,
+    "end": 0.2463,
+    "diff": 0.0331,
+    "ci95": [
+     -0.0147,
+     0.0846
+    ],
+    "excludes_zero": false,
+    "problems_up": 8,
+    "problems_down": 6
+   }
+  },
+  "problems_zero_at_step0": 64,
+  "of_those_nonzero_at_last": 4
+ },
+ "train_cohort": {
+  "curve": [
+   [
+    0,
+    0.3482
+   ],
+   [
+    10,
+    0.4911
+   ],
+   [
+    20,
+    0.4911
+   ]
+  ],
+  "meta": {
+   "0": {
+    "pass": 0.3482142857142857,
+    "truncated": 0.0089,
+    "mean_tokens": 477.3,
+    "reasons": {
+     "no_code": 13,
+     "pass": 156,
+     "runtime_error": 92,
+     "timeout": 5,
+     "wrong_answer": 182
+    },
+    "k": 8
+   },
+   "10": {
+    "pass": 0.49107142857142855,
+    "truncated": 0.0,
+    "mean_tokens": 285.8,
+    "reasons": {
+     "no_code": 14,
+     "pass": 220,
+     "runtime_error": 62,
+     "timeout": 6,
+     "wrong_answer": 146
+    },
+    "k": 8
+   },
+   "20": {
+    "pass": 0.49107142857142855,
+    "truncated": 0.0,
+    "mean_tokens": 279.3,
+    "reasons": {
+     "no_code": 16,
+     "pass": 220,
+     "runtime_error": 71,
+     "timeout": 10,
+     "wrong_answer": 131
+    },
+    "k": 8
+   }
+  },
+  "vs_step0": {
+   "10": {
+    "problems": 56,
+    "start": 0.3482,
+    "end": 0.4911,
+    "diff": 0.1429,
+    "ci95": [
+     0.0781,
+     0.2076
+    ],
+    "excludes_zero": true,
+    "problems_up": 31,
+    "problems_down": 13
+   },
+   "20": {
+    "problems": 56,
+    "start": 0.3482,
+    "end": 0.4911,
+    "diff": 0.1429,
+    "ci95": [
+     0.0848,
+     0.2031
+    ],
+    "excludes_zero": true,
+    "problems_up": 34,
+    "problems_down": 10
+   }
+  },
+  "by_judge_last_step": {
+   "aizu": {
+    "problems": 13,
+    "start": 0.4038,
+    "end": 0.4904,
+    "diff": 0.0865,
+    "ci95": [
+     0.0,
+     0.1827
+    ],
+    "excludes_zero": false,
+    "problems_up": 8,
+    "problems_down": 3
+   },
+   "atcoder": {
+    "problems": 2,
+    "start": 0.375,
+    "end": 0.5625
+   },
+   "codechef": {
+    "problems": 13,
+    "start": 0.2788,
+    "end": 0.4712,
+    "diff": 0.1923,
+    "ci95": [
+     0.0962,
+     0.3173
+    ],
+    "excludes_zero": true,
+    "problems_up": 9,
+    "problems_down": 0
+   },
+   "hackerearth": {
+    "problems": 28,
+    "start": 0.3527,
+    "end": 0.4955,
+    "diff": 0.1429,
+    "ci95": [
+     0.0446,
+     0.2411
+    ],
+    "excludes_zero": true,
+    "problems_up": 15,
+    "problems_down": 7
+   }
+  },
+  "problems_zero_at_step0": 10,
+  "of_those_nonzero_at_last": 5
+ }
+}

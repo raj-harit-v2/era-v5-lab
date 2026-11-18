@@ -1,0 +1,49 @@
+dedup harm check on week-1 diagnosis packs, Wednesday 11 November 2026
+=====================================================================
+Why: gold IDs are only in the week-1 diagnosis packs, not in sample v0, so the harm check on the 38-pack run was not_testable.
+Packs: the 4 diagnosis packs on this machine (500 documents each). Gold: teams/01-data-a/gold (math-finemath, math-megamath, sci-finepdfs);
+cadj-commits has no gold file in this branch (run 1); run 2 adds it from main (step 6). Pipeline as in production: clean.py, then overlap.py, then dedup.py.
+Environment: Linux x86_64, Python 3.10.12, pyarrow 25.0.1, pygments 2.21.0, ftfy 6.3.1
+
+1. Input packs (SHA-256)
+  cadj-commits.parquet  ce7aba1b82f49c7ea8b96f76f4b021b5b7619240e93c63f3cab1ed4e616fd7be
+  math-finemath.parquet  99aec0d9ece5d6c7f4f13feaad87d165b4f87ca728ecff482f5b30ebd0b3764b
+  math-megamath.parquet  07cdf1aa40a57f86377474a3c940e7a23b67929acce92d263185d4184954400b
+  sci-finepdfs.parquet  5a3228b797f57234ad252fb89bf9a78c66084069540c6ac8564d062c313ea249
+
+2. clean.py (main, SHA-256 d3464bdaa394d1fb004d64ef2aee67cc65257acb8de31c4ab9dde042636b329c) via run_clean.py
+  math-finemath: 500 rows, {'keep': 310, 'fix': 177, 'drop': 13}, errors 0, 226.3 docs/s
+  math-megamath: 500 rows, {'keep': 428, 'fix': 62, 'drop': 10}, errors 0, 499.6 docs/s
+  sci-finepdfs: 500 rows, {'fix': 45, 'keep': 442, 'drop': 13}, errors 0, 119.1 docs/s
+  cadj-commits: not cleaned (clean.py has no rules for it); used raw
+
+3. overlap.py --config out/overlap_diag.json (code at PR #255 head; same overlap.py as TSAI's 5 Nov run)
+  documents 1964, H1 exact groups 0, empty documents 0, pairs at word Jaccard >= 0.50: 1, qualifying pairs: 0, 6.4 s
+  pairs at or above 0.70/0.75/0.80/0.85/0.90/0.95: [1, 0, 0, 0, 0, 0]
+
+4. Run 1: dedup.py --config out/dedup_diag.json (gold_dirs: teams/01-data-a/gold, teams/02-data-b/gold)
+  documents 1964, matches used 0, removed 0, held-out removed 0
+  harm check: pass; gold IDs in input 314 {'math-finemath': 86, 'math-megamath': 26, 'sci-finepdfs': 202}; gold removed 0
+
+5. Margin: the only pair at word Jaccard >= 0.50 in the 1,964 documents is two cadj-commits documents at 0.716,
+   below the 0.80 prose threshold. Run 1: neither is gold (no cadj-commits gold file). Run 2: both are gold, both kept.
+   No math or science gold document is in any pair at >= 0.50.
+   Gold dropped by clean.py: 0.
+
+6. Run 2: same overlap output, cadj-commits gold added from main
+  Gold file: teams/02-data-b/gold/cadj-commits_gold.csv at commit 6b09da4 (Shankar Pandala, 2026-11-02), 413 IDs,
+    SHA-256 ba4da5c2233e5ef68a906eca4293e1f076eb68b41e1e421c0c88b5861ea589ed. Not in this branch (not synced with main).
+  Steps:
+    git fetch upstream
+    mkdir -p out/gold_main
+    git show 6b09da4:teams/02-data-b/gold/cadj-commits_gold.csv > out/gold_main/cadj-commits_gold.csv
+    out/dedup_diag2.json = out/dedup_diag.json with
+      gold_dirs [teams/01-data-a/gold, teams/02-data-b/gold, out/gold_main] and out out/dedup_diag2
+    python teams/01-data-a/dedup/dedup.py --config out/dedup_diag2.json
+  documents 1964, matches used 0, removed 0, held-out removed 0
+  harm check: pass; gold IDs in input 727 {'math-finemath': 86, 'math-megamath': 26, 'sci-finepdfs': 202, 'cadj-commits': 413}; gold removed 0
+  The 0.716 pair: cadj-commits 85bf9fa289e6d8d0 and 80db5fd9be0c071b, both gold, both kept.
+  remove_list.csv SHA-256 dd97cbf75c673cc42741eac42515de34b17bae043d5f09ad29353329b5f1f9b0 (header only; same as run 1)
+
+Limits: 3 of the 13 Data A packs have gold in run 1, 4 in run 2; the packs are checked on their own (gold is not in sample v0).
+All outputs stay in out/ (git-ignored): out/diag_clean, out/overlap_diag, out/dedup_diag, out/gold_main, out/dedup_diag2.

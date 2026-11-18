@@ -1,0 +1,10 @@
+# WP5 7B switch run (pre-registered one allowed switch after 1.5B NO-GO): screen (train only) -> if GO held-out eval, time-capped objective_v1 steps, held-out eval. Pilot, not the 100-step plan.
+seed: 1234
+device: cuda
+verbose: true
+model: {kind: hf, path: "@WEIGHTS@", dtype: bfloat16, stop_at_eos: true, dense: true}
+task: {kind: stdio, tasks: "@DATA@/tasks.jsonl", train_ids: "@DATA@/train_ids.txt", heldout_ids: "@DATA@/heldout_ids.txt"}
+train: {algo: objective_v1, steps: 30, prompts_per_step: 8, k: 8, max_new: 1024, temperature: 1.0, lr: 1.0e-5,
+        ppo_epochs: 1, kl_coef: 0.0, grad_clip: 1.0, trainable: ['\.self_attn\.'], eval_every: 100, eval_k: 4,
+        sampler: vllm, vllm: {gpu_memory_utilization: 0.3, max_model_len: 2048}, micro_rows: 1, max_train_seconds: 1300,
+        reward_workers: 8, screen: {n: 64, k: 8, min_mixed: 12}, fp32_master: true}

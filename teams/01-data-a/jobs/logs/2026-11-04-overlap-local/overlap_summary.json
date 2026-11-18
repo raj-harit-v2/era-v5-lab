@@ -1,0 +1,344 @@
+{
+  "status": "complete",
+  "config": {
+    "inputs": "../erav5-lab-other-files/cleaned_samples",
+    "splits": [
+      "train",
+      "heldout"
+    ],
+    "out": "out/overlap",
+    "floor": 0.5,
+    "k": 5,
+    "block": 256,
+    "top": 20,
+    "max_output_mb": 50,
+    "expected_packs": [
+      "code-rust",
+      "en-fineweb-edu",
+      "ind-hi-hplt",
+      "ind-mr-sangraha-v",
+      "math-finemath"
+    ]
+  },
+  "normalize_id": "g1-spec-v1",
+  "key": "h1_key of h1_sha256.py: normalize.match_key, then NFKC, casefold, whitespace runs to one space",
+  "shingles": "word 5-grams of the key as 8-byte BLAKE2b digests; a key under 5 words is one shingle",
+  "inputs": {
+    "root": "../erav5-lab-other-files/cleaned_samples",
+    "checksum_verification": "deferred",
+    "parts": [
+      {
+        "part": "train/code-rust/part-00000.parquet",
+        "documents": 44581
+      },
+      {
+        "part": "train/code-rust/part-00001.parquet",
+        "documents": 15545
+      },
+      {
+        "part": "train/en-fineweb-edu/part-00000.parquet",
+        "documents": 54004
+      },
+      {
+        "part": "train/en-fineweb-edu/part-00001.parquet",
+        "documents": 17929
+      },
+      {
+        "part": "train/ind-hi-hplt/part-00000.parquet",
+        "documents": 8745
+      },
+      {
+        "part": "train/ind-mr-sangraha-v/part-00000.parquet",
+        "documents": 12172
+      },
+      {
+        "part": "train/math-finemath/part-00000.parquet",
+        "documents": 29122
+      },
+      {
+        "part": "heldout/code-rust/part-00000.parquet",
+        "documents": 612
+      },
+      {
+        "part": "heldout/en-fineweb-edu/part-00000.parquet",
+        "documents": 732
+      },
+      {
+        "part": "heldout/ind-hi-hplt/part-00000.parquet",
+        "documents": 95
+      },
+      {
+        "part": "heldout/ind-mr-sangraha-v/part-00000.parquet",
+        "documents": 127
+      },
+      {
+        "part": "heldout/math-finemath/part-00000.parquet",
+        "documents": 312
+      }
+    ]
+  },
+  "documents": {
+    "code-rust": {
+      "train": 60126,
+      "heldout": 612,
+      "all": 60738
+    },
+    "en-fineweb-edu": {
+      "train": 71933,
+      "heldout": 732,
+      "all": 72665
+    },
+    "ind-hi-hplt": {
+      "train": 8745,
+      "heldout": 95,
+      "all": 8840
+    },
+    "ind-mr-sangraha-v": {
+      "train": 12172,
+      "heldout": 127,
+      "all": 12299
+    },
+    "math-finemath": {
+      "train": 29122,
+      "heldout": 312,
+      "all": 29434
+    }
+  },
+  "documents_all": 183976,
+  "ids_used_by_2_or_more_documents": 0,
+  "h1_exact_groups": 0,
+  "documents_in_h1_exact_groups": 0,
+  "empty_documents": 0,
+  "distinct_shingles": 107935932,
+  "shingles_in_2_or_more_documents": 2750600,
+  "pairs_compared": 16923492300,
+  "pairs_sharing_a_shingle": 107507009,
+  "pairs_at_or_above": {
+    "0.70": 71,
+    "0.75": 47,
+    "0.80": 33,
+    "0.85": 19,
+    "0.90": 13,
+    "0.95": 4
+  },
+  "pairs_stored": 1330,
+  "pairs_by_pack": {
+    "0.50": {
+      "code-rust x code-rust": 1002,
+      "code-rust x en-fineweb-edu": 0,
+      "code-rust x ind-hi-hplt": 0,
+      "code-rust x ind-mr-sangraha-v": 0,
+      "code-rust x math-finemath": 0,
+      "en-fineweb-edu x en-fineweb-edu": 34,
+      "en-fineweb-edu x ind-hi-hplt": 0,
+      "en-fineweb-edu x ind-mr-sangraha-v": 0,
+      "en-fineweb-edu x math-finemath": 2,
+      "ind-hi-hplt x ind-hi-hplt": 10,
+      "ind-hi-hplt x ind-mr-sangraha-v": 0,
+      "ind-hi-hplt x math-finemath": 0,
+      "ind-mr-sangraha-v x ind-mr-sangraha-v": 4,
+      "ind-mr-sangraha-v x math-finemath": 0,
+      "math-finemath x math-finemath": 278
+    },
+    "0.70": {
+      "code-rust x code-rust": 9,
+      "code-rust x en-fineweb-edu": 0,
+      "code-rust x ind-hi-hplt": 0,
+      "code-rust x ind-mr-sangraha-v": 0,
+      "code-rust x math-finemath": 0,
+      "en-fineweb-edu x en-fineweb-edu": 10,
+      "en-fineweb-edu x ind-hi-hplt": 0,
+      "en-fineweb-edu x ind-mr-sangraha-v": 0,
+      "en-fineweb-edu x math-finemath": 2,
+      "ind-hi-hplt x ind-hi-hplt": 1,
+      "ind-hi-hplt x ind-mr-sangraha-v": 0,
+      "ind-hi-hplt x math-finemath": 0,
+      "ind-mr-sangraha-v x ind-mr-sangraha-v": 0,
+      "ind-mr-sangraha-v x math-finemath": 0,
+      "math-finemath x math-finemath": 49
+    },
+    "0.75": {
+      "code-rust x code-rust": 1,
+      "code-rust x en-fineweb-edu": 0,
+      "code-rust x ind-hi-hplt": 0,
+      "code-rust x ind-mr-sangraha-v": 0,
+      "code-rust x math-finemath": 0,
+      "en-fineweb-edu x en-fineweb-edu": 9,
+      "en-fineweb-edu x ind-hi-hplt": 0,
+      "en-fineweb-edu x ind-mr-sangraha-v": 0,
+      "en-fineweb-edu x math-finemath": 1,
+      "ind-hi-hplt x ind-hi-hplt": 1,
+      "ind-hi-hplt x ind-mr-sangraha-v": 0,
+      "ind-hi-hplt x math-finemath": 0,
+      "ind-mr-sangraha-v x ind-mr-sangraha-v": 0,
+      "ind-mr-sangraha-v x math-finemath": 0,
+      "math-finemath x math-finemath": 35
+    },
+    "0.80": {
+      "code-rust x code-rust": 0,
+      "code-rust x en-fineweb-edu": 0,
+      "code-rust x ind-hi-hplt": 0,
+      "code-rust x ind-mr-sangraha-v": 0,
+      "code-rust x math-finemath": 0,
+      "en-fineweb-edu x en-fineweb-edu": 7,
+      "en-fineweb-edu x ind-hi-hplt": 0,
+      "en-fineweb-edu x ind-mr-sangraha-v": 0,
+      "en-fineweb-edu x math-finemath": 1,
+      "ind-hi-hplt x ind-hi-hplt": 1,
+      "ind-hi-hplt x ind-mr-sangraha-v": 0,
+      "ind-hi-hplt x math-finemath": 0,
+      "ind-mr-sangraha-v x ind-mr-sangraha-v": 0,
+      "ind-mr-sangraha-v x math-finemath": 0,
+      "math-finemath x math-finemath": 24
+    },
+    "0.85": {
+      "code-rust x code-rust": 0,
+      "code-rust x en-fineweb-edu": 0,
+      "code-rust x ind-hi-hplt": 0,
+      "code-rust x ind-mr-sangraha-v": 0,
+      "code-rust x math-finemath": 0,
+      "en-fineweb-edu x en-fineweb-edu": 7,
+      "en-fineweb-edu x ind-hi-hplt": 0,
+      "en-fineweb-edu x ind-mr-sangraha-v": 0,
+      "en-fineweb-edu x math-finemath": 1,
+      "ind-hi-hplt x ind-hi-hplt": 1,
+      "ind-hi-hplt x ind-mr-sangraha-v": 0,
+      "ind-hi-hplt x math-finemath": 0,
+      "ind-mr-sangraha-v x ind-mr-sangraha-v": 0,
+      "ind-mr-sangraha-v x math-finemath": 0,
+      "math-finemath x math-finemath": 10
+    },
+    "0.90": {
+      "code-rust x code-rust": 0,
+      "code-rust x en-fineweb-edu": 0,
+      "code-rust x ind-hi-hplt": 0,
+      "code-rust x ind-mr-sangraha-v": 0,
+      "code-rust x math-finemath": 0,
+      "en-fineweb-edu x en-fineweb-edu": 7,
+      "en-fineweb-edu x ind-hi-hplt": 0,
+      "en-fineweb-edu x ind-mr-sangraha-v": 0,
+      "en-fineweb-edu x math-finemath": 1,
+      "ind-hi-hplt x ind-hi-hplt": 1,
+      "ind-hi-hplt x ind-mr-sangraha-v": 0,
+      "ind-hi-hplt x math-finemath": 0,
+      "ind-mr-sangraha-v x ind-mr-sangraha-v": 0,
+      "ind-mr-sangraha-v x math-finemath": 0,
+      "math-finemath x math-finemath": 4
+    },
+    "0.95": {
+      "code-rust x code-rust": 0,
+      "code-rust x en-fineweb-edu": 0,
+      "code-rust x ind-hi-hplt": 0,
+      "code-rust x ind-mr-sangraha-v": 0,
+      "code-rust x math-finemath": 0,
+      "en-fineweb-edu x en-fineweb-edu": 1,
+      "en-fineweb-edu x ind-hi-hplt": 0,
+      "en-fineweb-edu x ind-mr-sangraha-v": 0,
+      "en-fineweb-edu x math-finemath": 0,
+      "ind-hi-hplt x ind-hi-hplt": 1,
+      "ind-hi-hplt x ind-mr-sangraha-v": 0,
+      "ind-hi-hplt x math-finemath": 0,
+      "ind-mr-sangraha-v x ind-mr-sangraha-v": 0,
+      "ind-mr-sangraha-v x math-finemath": 0,
+      "math-finemath x math-finemath": 2
+    },
+    "1.00": {
+      "code-rust x code-rust": 0,
+      "code-rust x en-fineweb-edu": 0,
+      "code-rust x ind-hi-hplt": 0,
+      "code-rust x ind-mr-sangraha-v": 0,
+      "code-rust x math-finemath": 0,
+      "en-fineweb-edu x en-fineweb-edu": 0,
+      "en-fineweb-edu x ind-hi-hplt": 0,
+      "en-fineweb-edu x ind-mr-sangraha-v": 0,
+      "en-fineweb-edu x math-finemath": 0,
+      "ind-hi-hplt x ind-hi-hplt": 0,
+      "ind-hi-hplt x ind-mr-sangraha-v": 0,
+      "ind-hi-hplt x math-finemath": 0,
+      "ind-mr-sangraha-v x ind-mr-sangraha-v": 0,
+      "ind-mr-sangraha-v x math-finemath": 0,
+      "math-finemath x math-finemath": 0
+    },
+    "exact": {
+      "code-rust x code-rust": 0,
+      "code-rust x en-fineweb-edu": 0,
+      "code-rust x ind-hi-hplt": 0,
+      "code-rust x ind-mr-sangraha-v": 0,
+      "code-rust x math-finemath": 0,
+      "en-fineweb-edu x en-fineweb-edu": 0,
+      "en-fineweb-edu x ind-hi-hplt": 0,
+      "en-fineweb-edu x ind-mr-sangraha-v": 0,
+      "en-fineweb-edu x math-finemath": 0,
+      "ind-hi-hplt x ind-hi-hplt": 0,
+      "ind-hi-hplt x ind-mr-sangraha-v": 0,
+      "ind-hi-hplt x math-finemath": 0,
+      "ind-mr-sangraha-v x ind-mr-sangraha-v": 0,
+      "ind-mr-sangraha-v x math-finemath": 0,
+      "math-finemath x math-finemath": 0
+    }
+  },
+  "qualifying_pairs_by_rule": {
+    "H2": 372
+  },
+  "matrix_definition": "distinct documents in row source with another qualifying H1/H2 match in column source / row source documents",
+  "duplicate_rules": {
+    "prose": "word Jaccard >= 0.80; both >= 50 words",
+    "math": "word Jaccard >= 0.90; identical signed number multisets",
+    "code": "token Jaccard >= 0.85; both >= 20 nonblank lines after comment removal",
+    "mixed_domains": "both domains' rules must pass on both documents",
+    "h1": "same H1 SHA256; bypasses H2 guards",
+    "translations": "not detected"
+  },
+  "pack_domains": {
+    "code-rust": "code",
+    "en-fineweb-edu": "prose",
+    "ind-hi-hplt": "prose",
+    "ind-mr-sangraha-v": "prose",
+    "math-finemath": "math"
+  },
+  "wall_seconds": 570.8,
+  "peak_rss_mb": 2827.1,
+  "versions": {
+    "python": "3.12.12",
+    "numpy": "2.5.0",
+    "scipy": "1.18.1",
+    "pyarrow": "25.0.0",
+    "pygments": "2.21.0",
+    "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39"
+  },
+  "outputs": {
+    "overlap_pairs.csv": {
+      "bytes": 251638,
+      "sha256": "fb660b58eb73300159045e5e457e82fa68bcb7874738b7515dc9878be4239180"
+    },
+    "overlap_matrix.npz": {
+      "bytes": 533792,
+      "sha256": "09b612deab2d2b86db7aff4a245851bbd35830e9accb976051814310c141f496"
+    },
+    "overlap_docs.parquet": {
+      "bytes": 4838532,
+      "sha256": "5770d47670710ca918026686c1d9037c79c79bf2d937f51dc8e3e4cf2f1ef969"
+    },
+    "overlap_by_pack.csv": {
+      "bytes": 4860,
+      "sha256": "ba4a137d7fd288cff85b1ebbf5bc90dd9f78968ee2dc928fb10428cae1baf712"
+    },
+    "overlap_histogram.csv": {
+      "bytes": 1533,
+      "sha256": "e24f6f4ee5cf27a67ef6da5c362d301582e6d21494ca9db30d68de1cd5e7946b"
+    },
+    "overlap_matches.csv": {
+      "bytes": 25084,
+      "sha256": "224a05a9cd5f4d413a9f001d5cc7e8d041851f15008cb45dd1383aae8c310efd"
+    },
+    "overlap_matrix.csv": {
+      "bytes": 476,
+      "sha256": "190f19a21c041b872f8c36f7920fbb8ea8cedfd39ecf10ff5ae03eef518c1f6f"
+    },
+    "overlap_matrix_counts.csv": {
+      "bytes": 965,
+      "sha256": "353eb7be3a0cf6fe97889e5b2372d1a52e2a992f9a35a86edf0014afdc4f89c8"
+    }
+  },
+  "output_mb": 5.4
+}

@@ -1,0 +1,17 @@
+# E4b (15 Nov 2026, mask lr x10; PREREG_E4 amendment 3): Deletion Tuning as the RL method on the E1 cohort. Preregistration:
+# work/fable-research-2026-11-15/PREREG_E4_dt_rl.md. Same model, objective, held-out set, k, max_new, batch and
+# evaluations as E1; the only trainable tensors are the gate_proj mask logits (official GRPO settings of
+# agentic-learning-ai-lab/deleting-weights @ 94f0340: init sparsity 1/2048, alpha 1000 -> 10000, lr 3e-4, lambda 1e-5).
+# No screen: train_ids is the cohort E1 screened.
+seed: 1234
+device: cuda
+verbose: true
+model: {kind: hf, path: "@WEIGHTS@", dtype: bfloat16, stop_at_eos: true, dense: true}
+task: {kind: stdio, tasks: "@DATA@/tasks.jsonl", train_ids: "@DATA@/train_ids.txt", heldout_ids: "@DATA@/heldout_ids.txt"}
+train: {algo: objective_v1, steps: @STEPS@, prompts_per_step: 16, k: 8, max_new: 1024, temperature: 1.0, lr: 3.0e-3,
+        ppo_epochs: 1, kl_coef: 0.0, grad_clip: 1.0, eval_every: 10, eval_k: 8, cohort_eval_k: 8,
+        sampler: vllm, vllm: {gpu_memory_utilization: 0.2, max_model_len: 2048}, micro_rows: 1,
+        reward_workers: 32, reward_pool: 32,
+        dt: {targets: gate, eta: 0.00048828125, prior_strength: 3.0, alpha_start: 1000.0, alpha_end: 10000.0,
+             lambda: 1.0e-5, calib_prompts: 56, alpha_steps: 100},
+        state_dir: "@RUN@/state", state_every: 20, deadline_unix: @DEADLINE@}

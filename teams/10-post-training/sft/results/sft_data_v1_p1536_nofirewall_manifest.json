@@ -1,0 +1,1032 @@
+{
+ "budget_391": {
+  "admitted_share_by_area": {
+   "agentic": 0.0,
+   "code": 0.99823,
+   "general": 0.001096,
+   "indic": 0.000674,
+   "safety": 0.0,
+   "tool_use": 0.0
+  },
+  "anchor": "Code at its admitted size",
+  "areas": {
+   "agentic": {
+    "fill": 0.0,
+    "filled_by": "B1: swe-rebench-openhands, nemotron-terminal, nemotron-cascade-swe (TSAI reserves)",
+    "share": 0.25,
+    "shortfall_tokens": 1901123799,
+    "tokens_admitted": 0,
+    "tokens_needed_at_code_anchor": 1901123799
+   },
+   "code": {
+    "fill": 1.0,
+    "filled_by": "B1: opencodereasoning, codeforces-cots, commitpackft (TSAI reserves)",
+    "share": 0.35,
+    "shortfall_tokens": 0,
+    "tokens_admitted": 2661573319,
+    "tokens_needed_at_code_anchor": 2661573319
+   },
+   "general": {
+    "fill": 0.00549,
+    "filled_by": "B1: openthoughts3, openmathreasoning, openr1-math, nemotron-science, bespoke-stratos, glm51-phd, oasst2, proofs-v3-sft (TSAI reserves); B2: nemotron-if-v1/v2, science-v2 (held); B6: Proofs decontam",
+    "share": 0.07,
+    "shortfall_tokens": 529392460,
+    "tokens_admitted": 2922204,
+    "tokens_needed_at_code_anchor": 532314664
+   },
+   "indic": {
+    "fill": 0.001574,
+    "filled_by": "B1: aya-dataset, aya-collection 10 subsets, indic-align-oasst-t (TSAI reserves); B3: templated_hindi_news",
+    "share": 0.15,
+    "shortfall_tokens": 1138878346,
+    "tokens_admitted": 1795934,
+    "tokens_needed_at_code_anchor": 1140674280
+   },
+   "safety": {
+    "fill": 0.0,
+    "filled_by": "B7: TSAI names a safety set with chat rows, or the 0% safety / 10% general fallback",
+    "share": 0.03,
+    "shortfall_tokens": 228134856,
+    "tokens_admitted": 0,
+    "tokens_needed_at_code_anchor": 228134856
+   },
+   "tool_use": {
+    "fill": 0.0,
+    "filled_by": "B1: agentic-v1, agentic-v2 tool-calling (TSAI reserves); B2: xlam-60k (held)",
+    "share": 0.15,
+    "shortfall_tokens": 1140674280,
+    "tokens_admitted": 0,
+    "tokens_needed_at_code_anchor": 1140674280
+   }
+  },
+  "tokens_admitted_total": 2666291457,
+  "total_at_anchor": 7604495197
+ },
+ "budget_no_safety_fallback": {
+  "admitted_share_by_area": {
+   "agentic": 0.0,
+   "code": 0.99823,
+   "general": 0.001096,
+   "indic": 0.000674,
+   "safety": 0.0,
+   "tool_use": 0.0
+  },
+  "anchor": "Code at its admitted size",
+  "areas": {
+   "agentic": {
+    "fill": 0.0,
+    "filled_by": "B1: swe-rebench-openhands, nemotron-terminal, nemotron-cascade-swe (TSAI reserves)",
+    "share": 0.25,
+    "shortfall_tokens": 1901123799,
+    "tokens_admitted": 0,
+    "tokens_needed_at_code_anchor": 1901123799
+   },
+   "code": {
+    "fill": 1.0,
+    "filled_by": "B1: opencodereasoning, codeforces-cots, commitpackft (TSAI reserves)",
+    "share": 0.35,
+    "shortfall_tokens": 0,
+    "tokens_admitted": 2661573319,
+    "tokens_needed_at_code_anchor": 2661573319
+   },
+   "general": {
+    "fill": 0.003843,
+    "filled_by": "B1: openthoughts3, openmathreasoning, openr1-math, nemotron-science, bespoke-stratos, glm51-phd, oasst2, proofs-v3-sft (TSAI reserves); B2: nemotron-if-v1/v2, science-v2 (held); B6: Proofs decontam",
+    "share": 0.1,
+    "shortfall_tokens": 757527316,
+    "tokens_admitted": 2922204,
+    "tokens_needed_at_code_anchor": 760449520
+   },
+   "indic": {
+    "fill": 0.001574,
+    "filled_by": "B1: aya-dataset, aya-collection 10 subsets, indic-align-oasst-t (TSAI reserves); B3: templated_hindi_news",
+    "share": 0.15,
+    "shortfall_tokens": 1138878346,
+    "tokens_admitted": 1795934,
+    "tokens_needed_at_code_anchor": 1140674280
+   },
+   "safety": {
+    "fill": null,
+    "filled_by": "B7: TSAI names a safety set with chat rows, or the 0% safety / 10% general fallback",
+    "share": 0.0,
+    "shortfall_tokens": 0,
+    "tokens_admitted": 0,
+    "tokens_needed_at_code_anchor": 0
+   },
+   "tool_use": {
+    "fill": 0.0,
+    "filled_by": "B1: agentic-v1, agentic-v2 tool-calling (TSAI reserves); B2: xlam-60k (held)",
+    "share": 0.15,
+    "shortfall_tokens": 1140674280,
+    "tokens_admitted": 0,
+    "tokens_needed_at_code_anchor": 1140674280
+   }
+  },
+  "tokens_admitted_total": 2666291457,
+  "total_at_anchor": 7604495197
+ },
+ "context_length": {
+  "budget_by_limit": {
+   "2048": {
+    "fill_at_code_anchor_391": {
+     "agentic": 0.0,
+     "code": 1.0,
+     "general": 0.130817,
+     "indic": 0.037985,
+     "safety": 0.0,
+     "tool_use": 0.0
+    },
+    "fill_at_code_anchor_no_safety_fallback": {
+     "agentic": 0.0,
+     "code": 1.0,
+     "general": 0.091572,
+     "indic": 0.037985,
+     "safety": null,
+     "tool_use": 0.0
+    },
+    "share_391": {
+     "agentic": 0.25,
+     "code": 0.35,
+     "general": 0.07,
+     "indic": 0.15,
+     "safety": 0.03,
+     "tool_use": 0.15
+    },
+    "share_by_area": {
+     "agentic": 0.0,
+     "code": 0.959285,
+     "general": 0.025098,
+     "indic": 0.015617,
+     "safety": 0.0,
+     "tool_use": 0.0
+    },
+    "tokens_fit_total": 112275999
+   },
+   "32768": {
+    "fill_at_code_anchor_391": {
+     "agentic": 0.0,
+     "code": 1.0,
+     "general": 0.00549,
+     "indic": 0.001574,
+     "safety": 0.0,
+     "tool_use": 0.0
+    },
+    "fill_at_code_anchor_no_safety_fallback": {
+     "agentic": 0.0,
+     "code": 1.0,
+     "general": 0.003843,
+     "indic": 0.001574,
+     "safety": null,
+     "tool_use": 0.0
+    },
+    "share_391": {
+     "agentic": 0.25,
+     "code": 0.35,
+     "general": 0.07,
+     "indic": 0.15,
+     "safety": 0.03,
+     "tool_use": 0.15
+    },
+    "share_by_area": {
+     "agentic": 0.0,
+     "code": 0.99823,
+     "general": 0.001096,
+     "indic": 0.000674,
+     "safety": 0.0,
+     "tool_use": 0.0
+    },
+    "tokens_fit_total": 2666291457
+   },
+   "4096": {
+    "fill_at_code_anchor_391": {
+     "agentic": 0.0,
+     "code": 1.0,
+     "general": 0.035903,
+     "indic": 0.010383,
+     "safety": 0.0,
+     "tool_use": 0.0
+    },
+    "fill_at_code_anchor_no_safety_fallback": {
+     "agentic": 0.0,
+     "code": 1.0,
+     "general": 0.025132,
+     "indic": 0.010383,
+     "safety": null,
+     "tool_use": 0.0
+    },
+    "share_391": {
+     "agentic": 0.25,
+     "code": 0.35,
+     "general": 0.07,
+     "indic": 0.15,
+     "safety": 0.03,
+     "tool_use": 0.15
+    },
+    "share_by_area": {
+     "agentic": 0.0,
+     "code": 0.988504,
+     "general": 0.007098,
+     "indic": 0.004399,
+     "safety": 0.0,
+     "tool_use": 0.0
+    },
+    "tokens_fit_total": 406737097
+   },
+   "8192": {
+    "fill_at_code_anchor_391": {
+     "agentic": 0.0,
+     "code": 1.0,
+     "general": 0.013413,
+     "indic": 0.003847,
+     "safety": 0.0,
+     "tool_use": 0.0
+    },
+    "fill_at_code_anchor_no_safety_fallback": {
+     "agentic": 0.0,
+     "code": 1.0,
+     "general": 0.009389,
+     "indic": 0.003847,
+     "safety": null,
+     "tool_use": 0.0
+    },
+    "share_391": {
+     "agentic": 0.25,
+     "code": 0.35,
+     "general": 0.07,
+     "indic": 0.15,
+     "safety": 0.03,
+     "tool_use": 0.15
+    },
+    "share_by_area": {
+     "agentic": 0.0,
+     "code": 0.995688,
+     "general": 0.002671,
+     "indic": 0.001642,
+     "safety": 0.0,
+     "tool_use": 0.0
+    },
+    "tokens_fit_total": 1094076275
+   }
+  },
+  "by_area": {
+   "2048": {
+    "agentic": {
+     "rows": 0,
+     "rows_fit": 0,
+     "rows_fit_share": null,
+     "tokens": 0,
+     "tokens_fit": 0,
+     "tokens_fit_share": null
+    },
+    "code": {
+     "rows": 418496,
+     "rows_fit": 77944,
+     "rows_fit_share": 0.186248,
+     "tokens": 2661573319,
+     "tokens_fit": 107704700,
+     "tokens_fit_share": 0.040467
+    },
+    "general": {
+     "rows": 15007,
+     "rows_fit": 14975,
+     "rows_fit_share": 0.997868,
+     "tokens": 2922204,
+     "tokens_fit": 2817925,
+     "tokens_fit_share": 0.964315
+    },
+    "indic": {
+     "rows": 10541,
+     "rows_fit": 10526,
+     "rows_fit_share": 0.998577,
+     "tokens": 1795934,
+     "tokens_fit": 1753374,
+     "tokens_fit_share": 0.976302
+    },
+    "safety": {
+     "rows": 0,
+     "rows_fit": 0,
+     "rows_fit_share": null,
+     "tokens": 0,
+     "tokens_fit": 0,
+     "tokens_fit_share": null
+    },
+    "tool_use": {
+     "rows": 0,
+     "rows_fit": 0,
+     "rows_fit_share": null,
+     "tokens": 0,
+     "tokens_fit": 0,
+     "tokens_fit_share": null
+    }
+   },
+   "32768": {
+    "agentic": {
+     "rows": 0,
+     "rows_fit": 0,
+     "rows_fit_share": null,
+     "tokens": 0,
+     "tokens_fit": 0,
+     "tokens_fit_share": null
+    },
+    "code": {
+     "rows": 418496,
+     "rows_fit": 418496,
+     "rows_fit_share": 1.0,
+     "tokens": 2661573319,
+     "tokens_fit": 2661573319,
+     "tokens_fit_share": 1.0
+    },
+    "general": {
+     "rows": 15007,
+     "rows_fit": 15007,
+     "rows_fit_share": 1.0,
+     "tokens": 2922204,
+     "tokens_fit": 2922204,
+     "tokens_fit_share": 1.0
+    },
+    "indic": {
+     "rows": 10541,
+     "rows_fit": 10541,
+     "rows_fit_share": 1.0,
+     "tokens": 1795934,
+     "tokens_fit": 1795934,
+     "tokens_fit_share": 1.0
+    },
+    "safety": {
+     "rows": 0,
+     "rows_fit": 0,
+     "rows_fit_share": null,
+     "tokens": 0,
+     "tokens_fit": 0,
+     "tokens_fit_share": null
+    },
+    "tool_use": {
+     "rows": 0,
+     "rows_fit": 0,
+     "rows_fit_share": null,
+     "tokens": 0,
+     "tokens_fit": 0,
+     "tokens_fit_share": null
+    }
+   },
+   "4096": {
+    "agentic": {
+     "rows": 0,
+     "rows_fit": 0,
+     "rows_fit_share": null,
+     "tokens": 0,
+     "tokens_fit": 0,
+     "tokens_fit_share": null
+    },
+    "code": {
+     "rows": 418496,
+     "rows_fit": 176281,
+     "rows_fit_share": 0.421225,
+     "tokens": 2661573319,
+     "tokens_fit": 402061048,
+     "tokens_fit_share": 0.151061
+    },
+    "general": {
+     "rows": 15007,
+     "rows_fit": 15000,
+     "rows_fit_share": 0.999534,
+     "tokens": 2922204,
+     "tokens_fit": 2887014,
+     "tokens_fit_share": 0.987958
+    },
+    "indic": {
+     "rows": 10541,
+     "rows_fit": 10540,
+     "rows_fit_share": 0.999905,
+     "tokens": 1795934,
+     "tokens_fit": 1789035,
+     "tokens_fit_share": 0.996159
+    },
+    "safety": {
+     "rows": 0,
+     "rows_fit": 0,
+     "rows_fit_share": null,
+     "tokens": 0,
+     "tokens_fit": 0,
+     "tokens_fit_share": null
+    },
+    "tool_use": {
+     "rows": 0,
+     "rows_fit": 0,
+     "rows_fit_share": null,
+     "tokens": 0,
+     "tokens_fit": 0,
+     "tokens_fit_share": null
+    }
+   },
+   "8192": {
+    "agentic": {
+     "rows": 0,
+     "rows_fit": 0,
+     "rows_fit_share": null,
+     "tokens": 0,
+     "tokens_fit": 0,
+     "tokens_fit_share": null
+    },
+    "code": {
+     "rows": 418496,
+     "rows_fit": 292513,
+     "rows_fit_share": 0.698962,
+     "tokens": 2661573319,
+     "tokens_fit": 1089358137,
+     "tokens_fit_share": 0.409291
+    },
+    "general": {
+     "rows": 15007,
+     "rows_fit": 15007,
+     "rows_fit_share": 1.0,
+     "tokens": 2922204,
+     "tokens_fit": 2922204,
+     "tokens_fit_share": 1.0
+    },
+    "indic": {
+     "rows": 10541,
+     "rows_fit": 10541,
+     "rows_fit_share": 1.0,
+     "tokens": 1795934,
+     "tokens_fit": 1795934,
+     "tokens_fit_share": 1.0
+    },
+    "safety": {
+     "rows": 0,
+     "rows_fit": 0,
+     "rows_fit_share": null,
+     "tokens": 0,
+     "tokens_fit": 0,
+     "tokens_fit_share": null
+    },
+    "tool_use": {
+     "rows": 0,
+     "rows_fit": 0,
+     "rows_fit_share": null,
+     "tokens": 0,
+     "tokens_fit": 0,
+     "tokens_fit_share": null
+    }
+   }
+  },
+  "code_at_2048": {
+   "rows_fit": 77944,
+   "rows_fit_share": 0.186248,
+   "tokens_fit": 107704700,
+   "tokens_fit_share": 0.040467
+  },
+  "fit_rule": "a row fits a context of L tokens when its whole length (prompt + response + markers) is <= L; rows that do not fit are counted as lost (cutting a row removes its answer and closing <|im_end|>)",
+  "per_set": {
+   "sft-code-opencodereasoning-2": {
+    "area": "code",
+    "by_limit": {
+     "2048": {
+      "rows_fit": 77944,
+      "rows_fit_share": 0.186248,
+      "shifted_targets_fit": 88135506,
+      "tokens_fit": 107704700,
+      "tokens_fit_share": 0.040467,
+      "tokens_if_truncated": 805155196
+     },
+     "32768": {
+      "rows_fit": 418496,
+      "rows_fit_share": 1.0,
+      "shifted_targets_fit": 2489211865,
+      "tokens_fit": 2661573319,
+      "tokens_fit_share": 1.0,
+      "tokens_if_truncated": 2661573319
+     },
+     "4096": {
+      "rows_fit": 176281,
+      "rows_fit_share": 0.421225,
+      "shifted_targets_fit": 348073930,
+      "tokens_fit": 402061048,
+      "tokens_fit_share": 0.151061,
+      "tokens_if_truncated": 1394173688
+     },
+     "8192": {
+      "rows_fit": 292513,
+      "rows_fit_share": 0.698962,
+      "shifted_targets_fit": 986133494,
+      "tokens_fit": 1089358137,
+      "tokens_fit_share": 0.409291,
+      "tokens_if_truncated": 2121410873
+     }
+    },
+    "length": {
+     "max": 29846,
+     "mean": 6359.9,
+     "min": 232,
+     "p50": 5004,
+     "p90": 13638,
+     "p99": 19108
+    },
+    "rows": 418496,
+    "table": {
+     "name": "sft_v1_lengths_p1536/sft-code-opencodereasoning-2.json",
+     "sha256": "68b2e0cc7da3e3bd5afb620e7460bce6e0f78be4ebf9e515d8436ac9ac5b9eb5"
+    },
+    "tokens": 2661573319
+   },
+   "sft-dolly-15k": {
+    "area": "general",
+    "by_limit": {
+     "2048": {
+      "rows_fit": 14975,
+      "rows_fit_share": 0.997868,
+      "shifted_targets_fit": 1169363,
+      "tokens_fit": 2817925,
+      "tokens_fit_share": 0.964315,
+      "tokens_if_truncated": 2883461
+     },
+     "32768": {
+      "rows_fit": 15007,
+      "rows_fit_share": 1.0,
+      "shifted_targets_fit": 1186447,
+      "tokens_fit": 2922204,
+      "tokens_fit_share": 1.0,
+      "tokens_if_truncated": 2922204
+     },
+     "4096": {
+      "rows_fit": 15000,
+      "rows_fit_share": 0.999534,
+      "shifted_targets_fit": 1180244,
+      "tokens_fit": 2887014,
+      "tokens_fit_share": 0.987958,
+      "tokens_if_truncated": 2915686
+     },
+     "8192": {
+      "rows_fit": 15007,
+      "rows_fit_share": 1.0,
+      "shifted_targets_fit": 1186447,
+      "tokens_fit": 2922204,
+      "tokens_fit_share": 1.0,
+      "tokens_if_truncated": 2922204
+     }
+    },
+    "length": {
+     "max": 5664,
+     "mean": 194.7,
+     "min": 25,
+     "p50": 123,
+     "p90": 393,
+     "p99": 1159
+    },
+    "rows": 15007,
+    "table": {
+     "name": "sft_v1_lengths_p1536/sft-dolly-15k.json",
+     "sha256": "e4f4604cbb2e6d54bc8a4cd3d1be198035f19e4cd9d98d2e07041fd9390ae301"
+    },
+    "tokens": 2922204
+   },
+   "sft-indic-indic-align-dolly-t": {
+    "area": "indic",
+    "by_limit": {
+     "2048": {
+      "rows_fit": 10526,
+      "rows_fit_share": 0.998577,
+      "shifted_targets_fit": 1261171,
+      "tokens_fit": 1753374,
+      "tokens_fit_share": 0.976302,
+      "tokens_if_truncated": 1784094
+     },
+     "32768": {
+      "rows_fit": 10541,
+      "rows_fit_share": 1.0,
+      "shifted_targets_fit": 1296485,
+      "tokens_fit": 1795934,
+      "tokens_fit_share": 1.0,
+      "tokens_if_truncated": 1795934
+     },
+     "4096": {
+      "rows_fit": 10540,
+      "rows_fit_share": 0.999905,
+      "shifted_targets_fit": 1296117,
+      "tokens_fit": 1789035,
+      "tokens_fit_share": 0.996159,
+      "tokens_if_truncated": 1793131
+     },
+     "8192": {
+      "rows_fit": 10541,
+      "rows_fit_share": 1.0,
+      "shifted_targets_fit": 1296485,
+      "tokens_fit": 1795934,
+      "tokens_fit_share": 1.0,
+      "tokens_if_truncated": 1795934
+     }
+    },
+    "length": {
+     "max": 6899,
+     "mean": 170.4,
+     "min": 28,
+     "p50": 126,
+     "p90": 318,
+     "p99": 865
+    },
+    "rows": 10541,
+    "table": {
+     "name": "sft_v1_lengths_p1536/sft-indic-indic-align-dolly-t.json",
+     "sha256": "93b99ebe375c3209cb8c6ac791d51ef89e636a98dc90b244442aeb7f20900397"
+    },
+    "tokens": 1795934
+   }
+  }
+ },
+ "effort_tiers_ocr2": {
+  "matrix_c3_to_p1536_all_rendered": {
+   "16k->16k": 288981,
+   "16k->64k": 7,
+   "1k->1k": 45238,
+   "1k->4k": 4,
+   "4k->16k": 24,
+   "4k->4k": 195207,
+   "64k->64k": 12582
+  },
+  "other_sets": "Dolly and dolly-t: every row is 1k under both tokenizers (no trace); 0 rows change tier",
+  "report": {
+   "name": "ocr2_pack_v1_p1536_effort_tiers.json",
+   "sha256": "9aa42877ba69d01b4a23d14b57d3445e0c2cc843bea9f02171d13810e3db0519"
+  },
+  "rows_changing_tier": 35,
+  "rows_changing_tier_in_train_pack": 31,
+  "rows_checked": 542043,
+  "rule": "convert.py pick_effort: the smallest budget in 1k/4k/16k/64k (chat-format/render.py EFFORT_BUDGETS 1024/4096/16384/65536) that holds the summed tokens of the row's trace segments (convert.TRACE: think spans, tool calls, tool results with their markers); a trace over 64k skips the row",
+  "tier_totals_rendered": {
+   "c3": {
+    "16k": 288988,
+    "1k": 45242,
+    "4k": 195231,
+    "64k": 12582
+   },
+   "p1536": {
+    "16k": 289005,
+    "1k": 45238,
+    "4k": 195211,
+    "64k": 12589
+   }
+  },
+  "to_higher_tier": 35,
+  "to_lower_tier": 0
+ },
+ "in_pack": [
+  "sft-code-opencodereasoning-2",
+  "sft-dolly-15k",
+  "sft-indic-indic-align-dolly-t"
+ ],
+ "loss_mask_rule": "assistant bodies and their closing <|im_end|> are trained; system, user, tool results, role headers, <|im_start|> and the final <|endoftext|> (130822) are not",
+ "max_sequence_tokens": 32768,
+ "schema": "g10-sft-data-v1-manifest/1",
+ "scope": "BLOCKED B1 fallback: sets with an allowed licence decision plus the TSAI-admitted OCR-2 pack; no TSAI-reserves set is in scope until admitted",
+ "sets": {
+  "sft-code-opencodereasoning-2": {
+   "admission": {
+    "rows_kept": 418496,
+    "status": "admitted, pack built",
+    "tokens_kept": 2661573319,
+    "trained_tokens": 2489211865
+   },
+   "area": "code",
+   "decontam": {
+    "by_benchmark": {
+     "aime_2025": 1,
+     "codeforces": 84154,
+     "gaia": 3,
+     "heldout_g5_v1": 47,
+     "hle": 2045,
+     "livecodebench": 68053,
+     "milu": 93,
+     "mmlu": 3,
+     "swe_bench_live": 7,
+     "swe_bench_pro": 3
+    },
+    "complete": true,
+    "covers": "whole set, all 70 shards",
+    "fingerprint_set_sha256": "2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a",
+    "rows_canary": 0,
+    "rows_flagged": 115040
+   },
+   "generator": "DeepSeek-R1 (MIT) for the trained reasoning and solutions; QwQ-32B (Apache-2.0) critiques are a filter signal only, never a target (licence_table.md, ocr2_policy.json teacher)",
+   "heldout": {
+    "families": 317,
+    "fraction": 0.02,
+    "id_list_sha256": "193d589d942ec54b44c64ddf66d32af7f3a99ea842689b1275d6881f6bced7f1",
+    "rows": 8507,
+    "salt": "g10-ocr2-heldout-eval-v1"
+   },
+   "in_pack": true,
+   "job_request": "jobs/2026-11-17-ocr2-pack-v1-p1536.md",
+   "joined_sources": {
+    "apps/train": "21e74ddf8de1a21436da12e3e653065c5213e9d1",
+    "code_contests/train": "802411c3010cb00d1b05bad57ca77365a3c699d6",
+    "taco/train": "d593ed0a2becbbc952230bb89be09189bf1056dc"
+   },
+   "licence": "cc-by-4.0 (Hub tag); joined questions from TACO, APPS and code_contests train at pinned revisions",
+   "licence_decision": "allowed (TSAI admitted, 11 Nov 2026)",
+   "loss_mask": {
+    "checked": true,
+    "mask_ok": true,
+    "mask_violations": {},
+    "reports": [
+     "sft-code-opencodereasoning-2.mask_check.json"
+    ],
+    "rows_checked": 32855,
+    "scope": "check_pack_rows.py on every train and held-out row of the shards whose p1536 pack bytes were kept (see reports); every other shard by pack_admission.py's in-pipeline recompute (ids and mask equal a fresh p1536 tokenisation), its bytes deleted after the build",
+    "tokens_checked": 212593659
+   },
+   "over_length": {
+    "kept_max_len": 29846,
+    "max_sequence_tokens": 32768,
+    "rows_dropped": 0
+   },
+   "pack": {
+    "acceptance_checks": "48 of 48",
+    "manifest": {
+     "name": "ocr2_pack_v1_p1536_manifest.json",
+     "sha256": "fab395750fad3329c6b612493641f37c42792e46219a521fca74c30e21b7783b"
+    },
+    "run_id": "admission-toke6b93a93-8e4b984ba811",
+    "shards": 70
+   },
+   "revision": "eadf535931451525f3e5621d0f960c240bc62fd9",
+   "source": "nvidia/OpenCodeReasoning-2",
+   "status": "admitted; pack final as built",
+   "tokenizer_sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b",
+   "unclear_source_left_out": {
+    "keys": 14,
+    "rows": 176
+   }
+  },
+  "sft-dolly-15k": {
+   "admission": {
+    "excluded_each": {
+     "decontam": 4,
+     "heldout": 0,
+     "over_max_len": 0
+    },
+    "excluded_sha256": "f6677ae20737bc0c68dfb805a06d6d848588e2314ff90defc92992f11f6d7e23",
+    "kept_ids_sha256": "9b3b49f602270661e037ab9822e9c2a299a6a3dbc7c24558cae6360f1ed8992c",
+    "rows_excluded": 4,
+    "rows_kept": 15007,
+    "status": "admissible",
+    "summary": {
+     "folder": "sft_v1_admission_p1536",
+     "name": "sft-dolly-15k.admission.json",
+     "sha256": "1cfbe3c9c44f4b62565ef0bbc67d1c720176ed0179cb44b729a46335eb61d3de"
+    },
+    "tokens_kept": 2922204
+   },
+   "area": "general",
+   "conversion": {
+    "content_sha256": "fedf5d399bbe1095c6b93f1129b247f90472202949df7eb5ee728577db5086bc",
+    "deterministic_rerun": true,
+    "parts": 3,
+    "record": {
+     "folder": "sft_v1_records_p1536",
+     "name": "sft-dolly-15k.full.record.json",
+     "sha256": "f9519ae2405d02b01df97342d4fe9d17d9e3a53a911a27ba7394a722e19f193e"
+    },
+    "row_checks_ok": true,
+    "rows": 15011,
+    "rows_in": 15011,
+    "skipped": {},
+    "tokens": 2924760,
+    "trained_tokens": 1186875
+   },
+   "decontam": {
+    "by_benchmark": {
+     "milu": 2,
+     "mmlu": 2
+    },
+    "complete": true,
+    "covers": "whole set",
+    "fingerprint_set_sha256": "2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a",
+    "parts_uncovered": 0,
+    "records": 1,
+    "rows_canary": 0,
+    "rows_flagged": 4
+   },
+   "generator": "none (human-written by Databricks employees; no model generator)",
+   "in_pack": true,
+   "input": "hub file databricks/databricks-dolly-15k databricks-dolly-15k.jsonl rows 0..999999999999",
+   "licence": "cc-by-sa-3.0 (Hub tag; share-alike, attribution needed)",
+   "licence_decision": "allowed (CC-BY-SA, attribution needed)",
+   "loss_mask": {
+    "checked": true,
+    "mask_ok": true,
+    "mask_violations": {},
+    "report": "sft-dolly-15k.mask_check.json",
+    "rows_checked": 15011,
+    "rows_over_limit_before_admission": 0,
+    "scope": "every converted row of the set (p1536 conversion), before admission",
+    "tokens_checked": 2924760,
+    "trained_tokens_by_role": {
+     "assistant": 1186875
+    }
+   },
+   "over_length": {
+    "kept_max_len": 5664,
+    "max_sequence_tokens": 32768,
+    "rows_dropped": 0
+   },
+   "revision": "bdd27f4d94b9c1f951818a7da7fd7aeea5dbff1a",
+   "selection": "all rows",
+   "source": "databricks/databricks-dolly-15k",
+   "status": "admissible",
+   "tokenizer_sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b"
+  },
+  "sft-indic-indic-align-dolly-t": {
+   "admission": {
+    "excluded_each": {
+     "decontam": 0,
+     "heldout": 0,
+     "over_max_len": 0
+    },
+    "excluded_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "kept_ids_sha256": "84351b3bb44f3c085c7bb42334094196434f342195db1a7c27f957d0932ff9e4",
+    "rows_excluded": 0,
+    "rows_kept": 10541,
+    "status": "admissible",
+    "summary": {
+     "folder": "sft_v1_admission_p1536",
+     "name": "sft-indic-indic-align-dolly-t.admission.json",
+     "sha256": "d31e41e5ea6d80ec27d886739c6009af28fe7010c836edac2aad0d190c8b21eb"
+    },
+    "tokens_kept": 1795934
+   },
+   "area": "indic",
+   "conversion": {
+    "content_sha256": "5fbcf3ddeda3a213805229cb2a5aac63a5c2d64966be70f014a9ce1dfd2ad0e2",
+    "deterministic_rerun": true,
+    "parts": 1,
+    "record": {
+     "folder": "sft_v1_records_p1536",
+     "name": "sft-indic-indic-align-dolly-t.full.record.json",
+     "sha256": "c43680ba85a2dcde8fa739d97528adbd5e950527db1a94259947d12eb5c004a2"
+    },
+    "row_checks_ok": true,
+    "rows": 10541,
+    "rows_in": 10541,
+    "skipped": {},
+    "tokens": 1795934,
+    "trained_tokens": 1296485
+   },
+   "decontam": {
+    "by_benchmark": {},
+    "complete": true,
+    "covers": "whole set",
+    "fingerprint_set_sha256": "2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a",
+    "parts_uncovered": 0,
+    "records": 1,
+    "rows_canary": 0,
+    "rows_flagged": 0
+   },
+   "generator": "none for the text (human-written databricks-dolly-15k); translated with IndicTrans2 (MIT, open weights)",
+   "in_pack": true,
+   "input": "hub file ai4bharat/indic-align indicalign-instruct/dolly/Dolly.parquet rows 0..999999999999",
+   "licence": "cc-by-4.0 (Hub tag); source dolly cc-by-sa-3.0 (share-alike, attribution needed)",
+   "licence_decision": "allowed (CC-BY-SA, attribution needed)",
+   "loss_mask": {
+    "checked": true,
+    "mask_ok": true,
+    "mask_violations": {},
+    "report": "sft-indic-indic-align-dolly-t.mask_check.json",
+    "rows_checked": 10541,
+    "rows_over_limit_before_admission": 0,
+    "scope": "every converted row of the set (p1536 conversion), before admission",
+    "tokens_checked": 1795934,
+    "trained_tokens_by_role": {
+     "assistant": 1296485
+    }
+   },
+   "over_length": {
+    "kept_max_len": 6899,
+    "max_sequence_tokens": 32768,
+    "rows_dropped": 0
+   },
+   "revision": "032b6a9070e7f85f1a38e0506419f4590a20455a",
+   "selection": "rows whose English question has no context passage in databricks-dolly-15k; one native-script column per row by sha256(doc_id) from ben_Beng,guj_Gujr,hin_Deva,kan_Knda,mal_Mlym,mar_Deva,ory_Orya,pan_Guru,tam_Taml,tel_Telu",
+   "source": "ai4bharat/indic-align",
+   "status": "admissible",
+   "tokenizer_sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b"
+  },
+  "sft-math-nemotron-math-v2": {
+   "area": "general",
+   "decontam": {
+    "complete": false,
+    "covers": "not run at this revision"
+   },
+   "generator": "gpt-oss-120b (Apache-2.0, open weights) for all solution traces",
+   "in_pack": false,
+   "job_request": "jobs/2026-11-14-sft-v1-math-v2-full.md",
+   "licence": "cc-by-4.0, cc-by-sa-4.0 (Hub tag; share-alike, attribution needed)",
+   "licence_decision": "allowed (CC-BY-SA, attribution needed)",
+   "prefix_record": {
+    "name": "sft-math-nemotron-math-v2.record.json",
+    "row_checks_ok": true,
+    "rows": 982,
+    "rows_over_max_len": 144,
+    "scope": "first 1000 selected rows, source order, C3",
+    "sha256": "10136c2cb6570a7b67345e6cd85ea49dfcc93efe916851e1fc200eb135e09a8b",
+    "tokens": 17608723
+   },
+   "revision": "8e793210e175b6406c752a870f585f62de98c0d3",
+   "source": "nvidia/Nemotron-Math-v2",
+   "status": "full conversion pending (job request)",
+   "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3"
+  },
+  "sft-math-nemotron-proofs": {
+   "admission": {
+    "excluded_each": {
+     "decontam": 27,
+     "heldout": 0,
+     "over_max_len": 18661
+    },
+    "excluded_sha256": "74dd30718191775d05e8e06a99f5831111f011f5ce292f80e4005a2e5c09be0a",
+    "kept_ids_sha256": "d7daa10b2ae27bbd18232b1663f3f0c6e2e2f051a7fe46e3ecdc4135456f2e34",
+    "rows_excluded": 18687,
+    "rows_kept": 902194,
+    "status": "decontam_pending",
+    "summary": {
+     "folder": "sft_v1_admission",
+     "name": "sft-math-nemotron-proofs.admission.json",
+     "sha256": "1b5f760a9af2a70ead56fb54c52a1e2f00fa67cb59884db922f16a597db9bb38"
+    },
+    "tokens_kept": 9695160211
+   },
+   "area": "general",
+   "conversion": {
+    "content_sha256": "d9c9d00024268d48eda21a6e5afd1885ef1554cd866bea90216b739a1da6c1ec",
+    "deterministic_rerun": true,
+    "parts": 287,
+    "record": {
+     "folder": "sft_v1_records",
+     "name": "sft-math-nemotron-proofs.full.record.json",
+     "sha256": "8d138c5e552e63f0fe8d15552e342b8cb6fe4f21a60b183f4ef5b03cd9d074a1"
+    },
+    "row_checks_ok": true,
+    "rows": 920881,
+    "rows_in": 1376663,
+    "skipped": {
+     "row has no messages (statement only)": 455782
+    },
+    "tokens": 10383997134,
+    "trained_tokens": 8434061917
+   },
+   "decontam": {
+    "by_benchmark": {
+     "gpqa_diamond": 1,
+     "heldout_g5_v1": 3,
+     "hle": 22,
+     "livecodebench": 1
+    },
+    "complete": false,
+    "covers": "3 of 287 parts",
+    "fingerprint_set_sha256": "2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a",
+    "parts_uncovered": 284,
+    "records": 3,
+    "rows_canary": 0,
+    "rows_flagged": 27
+   },
+   "generator": "gpt-oss-120b (Apache-2.0) for statement formalisation and Goedel-Prover-V2-32B (Apache-2.0) for proofs",
+   "in_pack": false,
+   "input": "hub file nvidia/Nemotron-Math-Proofs-v1 data/lean.jsonl rows 0..999999999999",
+   "job_request": "jobs/2026-11-16-sft-v1-proofs-decontam.md",
+   "licence": "cc-by-sa-4.0 (Hub tag; share-alike, attribution needed)",
+   "licence_decision": "allowed (CC-BY-SA, attribution needed)",
+   "loss_mask": {
+    "checked": true,
+    "mask_ok": true,
+    "mask_violations": {},
+    "report": "sft-math-nemotron-proofs.mask_check.json",
+    "rows_checked": 30821,
+    "rows_over_limit_before_admission": 647,
+    "scope": "10 of 287 converted parts (part0000, 0032, 0064, 0096, 0128, 0160, 0192, 0224, 0256, 0286), before admission; over_limit rows are the over-length rows the admission drops",
+    "tokens_checked": 344976545,
+    "trained_tokens_by_role": {
+     "assistant": 280824563
+    }
+   },
+   "over_length": {
+    "kept_max_len": 32768,
+    "max_sequence_tokens": 32768,
+    "rows_dropped": 18661
+   },
+   "p1536_rebuild": "part of its pending job request: the rebuild runs with p1536 before decontam",
+   "revision": "97229c590831adfe96202f5cd071d444d535bf91",
+   "selection": "whole lean file",
+   "source": "nvidia/Nemotron-Math-Proofs-v1",
+   "status": "C3 conversion only (not rebuilt with p1536); decontam_pending; not in the pack",
+   "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3"
+  }
+ },
+ "tokenizer": {
+  "c3_record": {
+   "name": "sft_data_v1_c3_manifest.json",
+   "sha256": "ec335ce64b07e701f1e6ba857a977ec194450c1dd3f7ca183fe8ba6a902e2d07"
+  },
+  "name": "p1536",
+  "note": "every count here is p1536 (TSAI Gate 3 notice, 15 Nov 2026; instructor to G10, 16 Nov: rebuild SFT data v1 with p1536). Special tokens and ids are those of C3 (356 added, eos 130822), vocabulary 131,072. The C3 manifest stays as a record: results/sft_data_v1_c3_manifest.json. Proofs and math-v2 are listed from their C3 records and are not in the pack.",
+  "sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b"
+ }
+}

@@ -1,0 +1,38 @@
+[
+ {
+  "args": [
+   2,
+   [
+    "put a 1",
+    "put b 2",
+    "get a",
+    "put c 3",
+    "get b"
+   ]
+  ],
+  "expected": [
+   "1",
+   "-"
+  ]
+ },
+ {
+  "args": [
+   1,
+   [
+    "get a"
+   ]
+  ],
+  "expected": [
+   "-"
+  ]
+ },
+ {
+  "args": [
+   0,
+   [
+    "put a 1"
+   ]
+  ],
+  "raises": "error"
+ }
+]

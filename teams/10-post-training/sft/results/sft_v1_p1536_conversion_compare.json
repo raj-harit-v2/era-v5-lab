@@ -1,0 +1,88 @@
+{
+ "schema": "g10-sft-v1-p1536-conversion-compare/1",
+ "sets": [
+  {
+   "set": "sft-dolly-15k",
+   "rows_c3": 15011,
+   "rows_p1536": 15011,
+   "rows_compared": 15011,
+   "same_id_same_order": 15011,
+   "text_identical": 15011,
+   "train_spans_identical": 15011,
+   "effort_identical": 15011,
+   "effort_flips_c3_to_p1536": {},
+   "token_count_identical": 14462,
+   "tokens": {
+    "c3": 2923577,
+    "p1536": 2924760,
+    "ratio": 1.0004
+   },
+   "row_token_ratio_p1536_over_c3": {
+    "median": 1.0,
+    "min": 0.9901,
+    "max": 1.1154
+   },
+   "rows_over": {
+    "2048": {
+     "c3": 31,
+     "p1536": 32
+    },
+    "4096": {
+     "c3": 7,
+     "p1536": 7
+    },
+    "8192": {
+     "c3": 0,
+     "p1536": 0
+    },
+    "32768": {
+     "c3": 0,
+     "p1536": 0
+    }
+   },
+   "verdict_decontam_text_identical_for_every_id": true
+  },
+  {
+   "set": "sft-indic-indic-align-dolly-t",
+   "rows_c3": 10541,
+   "rows_p1536": 10541,
+   "rows_compared": 10541,
+   "same_id_same_order": 10541,
+   "text_identical": 10541,
+   "train_spans_identical": 10541,
+   "effort_identical": 10541,
+   "effort_flips_c3_to_p1536": {},
+   "token_count_identical": 354,
+   "tokens": {
+    "c3": 1951624,
+    "p1536": 1795934,
+    "ratio": 0.92023
+   },
+   "row_token_ratio_p1536_over_c3": {
+    "median": 0.9338,
+    "min": 0.75,
+    "max": 1.0
+   },
+   "rows_over": {
+    "2048": {
+     "c3": 16,
+     "p1536": 15
+    },
+    "4096": {
+     "c3": 1,
+     "p1536": 1
+    },
+    "8192": {
+     "c3": 0,
+     "p1536": 0
+    },
+    "32768": {
+     "c3": 0,
+     "p1536": 0
+    }
+   },
+   "verdict_decontam_text_identical_for_every_id": true
+  }
+ ],
+ "note": "row-by-row comparison of the C3 and p1536 full conversions (counts only)"
+}

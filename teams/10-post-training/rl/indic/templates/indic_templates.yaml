@@ -1,0 +1,36 @@
+# Indic RL templates. Written by people on the team only, never by a model (TSAI data rule, 3 Nov):
+# the prompts made from them become RL training text. The format is in ../generate.py; the families
+# and the status of each are in ../../indic_prompts_v0.md.
+#
+# How to add a template:
+#   1. Write the prompt in your language, with {placeholders} for the values that change.
+#      End it with the instruction to put the final answer in <answer>...</answer>, and show the format
+#      with a word, never with a number or the answer (for example <answer>संख्या</answer>).
+#   2. Give params (int ranges or pick lists), the answer as an expression, and one or two plausible
+#      wrong answers (for example the result of a common slip).
+#   3. Set author to your GitHub handle and eligibility to eval.
+#   4. Run: python teams/10-post-training/rl/indic/generate.py --templates <this file> --check
+#   5. Ask a Team 2 reader of the language to check the wording and five generated items. When they
+#      agree, put their handle in team2_reviewer and set eligibility to train.
+#
+# Example shape (the text here is a placeholder; replace it with your own sentence):
+# - id: hi_<short_name>
+#   author: <your handle>
+#   team2_reviewer: ""
+#   eligibility: eval
+#   language: hi
+#   script: Deva
+#   answer_type: integer
+#   difficulty: easy
+#   prompt: |
+#     <your sentence with {a} and {b}>
+#     अपना अंतिम उत्तर केवल अंकों में <answer> और </answer> के बीच लिखिए।
+#   params:
+#     a: {int: [20, 90]}
+#     b: {int: [1, 19]}
+#   require: [a > b]
+#   answer: a - b
+#   wrong: [a + b]
+#
+# Empty on purpose until people on the team write the templates.
+[]

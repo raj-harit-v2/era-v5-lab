@@ -1,0 +1,54 @@
+{
+ "gold_check": {
+  "instance_id": "python-humanize__humanize-41",
+  "repo": "python-humanize/humanize",
+  "f2p": 5,
+  "p2p": 135,
+  "image_id": "sha256:c9edec8f5a0f",
+  "runs": 5,
+  "problems": [],
+  "fails_before": "5/5",
+  "passes_after": "5/5",
+  "seconds": 0.5,
+  "ok": true
+ },
+ "gold": {
+  "instance_id": "python-humanize__humanize-41",
+  "reward": 1,
+  "failed": [],
+  "n_failed": 0,
+  "seconds": 0.6
+ },
+ "wrong": {
+  "instance_id": "python-humanize__humanize-41",
+  "reward": 0,
+  "failed": [
+   "tests.test_number::test_intword[test_args12--1.0 billion]",
+   "tests.test_number::test_intword[test_args17--6.0 trillion]",
+   "tests.test_number::test_intword[test_args21--1.3 quadrillion]",
+   "tests.test_number::test_intword[test_args24--8.1 decillion]",
+   "tests.test_number::test_intword[test_args7--1.0 million]"
+  ],
+  "n_failed": 5,
+  "seconds": 0.5
+ },
+ "partial": {
+  "instance_id": "python-humanize__humanize-41",
+  "reward": 0,
+  "failed": [
+   "tests.test_number::test_intword[test_args12--1.0 billion]",
+   "tests.test_number::test_intword[test_args17--6.0 trillion]",
+   "tests.test_number::test_intword[test_args21--1.3 quadrillion]",
+   "tests.test_number::test_intword[test_args24--8.1 decillion]",
+   "tests.test_number::test_intword[test_args7--1.0 million]",
+   "tests.test_number::test_intword[test_args2--100]"
+  ],
+  "n_failed": 6,
+  "seconds": 0.4
+ },
+ "tamper": {
+  "instance_id": "python-humanize__humanize-41",
+  "reward": 0,
+  "reason": "patch edits test files: ['tests/conftest.py']"
+ }
+}

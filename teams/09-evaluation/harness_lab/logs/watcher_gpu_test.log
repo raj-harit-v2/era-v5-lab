@@ -1,0 +1,185 @@
+# eval_watcher GPU test (Colab), branch g9-eval-watcher at dc45483 09-evaluation: score the dry run 1 checkpoint (--team5-run), re-pin to p1536 (week 3, task 1)
+# env: Linux-6.6.159+-x86_64-with-glibc2.39, python 3.13.16, torch 2.14.1+cu130, Tesla T4, lm_eval 0.4.13, datasets 5.1.0, tokenizers 0.23.3
+# Run on a Tesla T4: no native bf16, so the scorer ran fp32 ("lm-eval (Tesla T4, fp32)" below). The lab eval slot
+# runs bf16 on a GPU with native bf16, so these times are an upper bound for it.
+# The store is a Team 5 LanguageModel at the dry run 1 shape (exp2_muon, T2, 237M parameters) saved through Team 7's
+# Checkpointer by tests/make_lab_store.py, a few AdamW steps from random: the scores are chance, as expected.
+# "lag after commit" counts from the store's commit time, minutes before these runs; it is not a watcher delay here.
+
+# 1. A Team 5 LanguageModel at the dry run 1 shape (exp2_muon, T2), frozen p1536, 3 commits
+
+$ python teams/09-evaluation/harness_lab/tests/make_lab_store.py --arm teams/05-architecture/configs/arms/exp2_muon.yaml --tokenizer <p1536>/tokenizer.json --tokenizer-sha256 e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b --byte-table teams/04-ke2/results/tables/p1536-s0/raw_table_P32.npz --final --out <lab>/t2
+model: 237,052,416 parameters (exp2_muon.yaml, n_layer 8)
+committed step 2 (interval, loss 11.763) in 246.6 s
+committed step 4 (interval, loss 11.847) in 501.8 s
+committed step 6 (final, loss 11.253) in 637.4 s
+run folder: <lab>/t2/store/lab-store
+model config: <lab>/t2/model.json
+[exit 0, 1395.4 s wall]
+
+# 2. Tier A, the full freeze set (970 items), on the run's final commit, GPU fp32 (Tesla T4, no native bf16)
+
+$ python teams/09-evaluation/harness_lab/eval_watcher.py --run-dir <lab>/t2/store/lab-store --label tier-a --every 3 --out-dir <lab>/w/tier-a --scorer lm_eval_lab:team5 --until-final --no-load -- --device cuda --tier A --model-config <lab>/t2/model.json --tokenizer <p1536>/tokenizer.json --tokenizer-sha256 e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b --byte-table teams/04-ke2/results/tables/p1536-s0/raw_table_P32.npz --hf-home <lab>/hf --offline
+watching <lab>/t2/store/lab-store (label tier-a, every 3, scorer lm_eval_lab:team5, no load); out <lab>/w/tier-a
+step 6 (main/step_00000006-e1): scored in 98.49 s, 678.9 s after its commit, 5 record(s) -> <lab>/w/tier-a/main__step_00000006-e1.json
+step 6: 5 row(s) parsed (--no-load) as run_id lab-store:main/step_00000006-e1:tier-a:f2f54a1ab3e6 in 0.08 s
+the run committed its final checkpoint and every owned commit is done
+time: 1 checkpoint(s) scored, 98.5 s mean and 98.5 s max per checkpoint, lag after commit 678.9 s max
+done: {"parsed": 1}; exit 0
+[exit 0, 98.7 s wall]
+tier-a/main__step_00000006-e1.log: checkpoint: lab:lab-store step 6 branch main epoch 1 (main/step_00000006-e1)
+tier-a/main__step_00000006-e1.log: export ok: step 6, probe loss bits equal the saved ones
+tier-a/main__step_00000006-e1.log: lm-eval (Tesla T4, fp32): 3880 requests in 2035 forward rows, encode fallbacks 554; setup 0.9 s, task index 0.6 s, scoring 44.5 s
+tier-a/main__step_00000006-e1.log: GUARD pooled freeze-set accuracy 24.74 on 970 items, complete True, below the 22.2 floor False
+tier-a/main__step_00000006-e1.log: RESULT mmlu acc/none = 24.21 (n=570) -> <lab>/w/tier-a/main__step_00000006-e1.json
+tier-a/main__step_00000006-e1.log: RESULT milu_Hindi acc/none = 26.0 (n=100) -> <lab>/w/tier-a/main__step_00000006-e1.json
+tier-a/main__step_00000006-e1.log: RESULT milu_Telugu acc/none = 29.0 (n=100) -> <lab>/w/tier-a/main__step_00000006-e1.json
+tier-a/main__step_00000006-e1.log: RESULT milu_Tamil acc/none = 22.0 (n=100) -> <lab>/w/tier-a/main__step_00000006-e1.json
+tier-a/main__step_00000006-e1.log: RESULT milu_Bengali acc/none = 25.0 (n=100) -> <lab>/w/tier-a/main__step_00000006-e1.json
+tier-a/main__step_00000006-e1.log: TIME export 43.2 s, score 45.7 s, total 95.6 s (lm_eval_lab:team5, cuda)
+
+# 3. Tier B, the labelled diagnostics (1,500 items), on the same commit, GPU fp32 (Tesla T4, no native bf16)
+
+$ python teams/09-evaluation/harness_lab/eval_watcher.py --run-dir <lab>/t2/store/lab-store --label tier-b --every 3 --out-dir <lab>/w/tier-b --scorer lm_eval_lab:team5 --until-final --no-load -- --device cuda --tier B --model-config <lab>/t2/model.json --tokenizer <p1536>/tokenizer.json --tokenizer-sha256 e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b --byte-table teams/04-ke2/results/tables/p1536-s0/raw_table_P32.npz --hf-home <lab>/hf --offline
+watching <lab>/t2/store/lab-store (label tier-b, every 3, scorer lm_eval_lab:team5, no load); out <lab>/w/tier-b
+step 6 (main/step_00000006-e1): scored in 136.29 s, 815.5 s after its commit, 11 record(s) -> <lab>/w/tier-b/main__step_00000006-e1.json
+step 6: 11 row(s) parsed (--no-load) as run_id lab-store:main/step_00000006-e1:tier-b:f2f54a1ab3e6 in 0.03 s
+the run committed its final checkpoint and every owned commit is done
+time: 1 checkpoint(s) scored, 136.3 s mean and 136.3 s max per checkpoint, lag after commit 815.5 s max
+done: {"parsed": 1}; exit 0
+[exit 0, 136.5 s wall]
+tier-b/main__step_00000006-e1.log: checkpoint: lab:lab-store step 6 branch main epoch 1 (main/step_00000006-e1)
+tier-b/main__step_00000006-e1.log: export ok: step 6, probe loss bits equal the saved ones
+tier-b/main__step_00000006-e1.log: lm-eval (Tesla T4, fp32): 7617 requests in 4043 forward rows, encode fallbacks 155; setup 0.9 s, task index 0.5 s, scoring 73.1 s
+tier-b/main__step_00000006-e1.log: RESULT arc_challenge acc/none = 23.4 (n=500) -> <lab>/w/tier-b/main__step_00000006-e1.json
+tier-b/main__step_00000006-e1.log: RESULT arc_challenge acc_norm/none = 24.4 (n=500) -> <lab>/w/tier-b/main__step_00000006-e1.json
+tier-b/main__step_00000006-e1.log: RESULT hellaswag acc/none = 25.75 (n=400) -> <lab>/w/tier-b/main__step_00000006-e1.json
+tier-b/main__step_00000006-e1.log: RESULT hellaswag acc_norm/none = 27.75 (n=400) -> <lab>/w/tier-b/main__step_00000006-e1.json
+tier-b/main__step_00000006-e1.log: RESULT leaderboard_mmlu_pro acc/none = 9.33 (n=300) -> <lab>/w/tier-b/main__step_00000006-e1.json
+tier-b/main__step_00000006-e1.log: RESULT belebele_hin_Deva acc/none = 23.0 (n=100) -> <lab>/w/tier-b/main__step_00000006-e1.json
+tier-b/main__step_00000006-e1.log: RESULT belebele_hin_Deva acc_norm/none = 23.0 (n=100) -> <lab>/w/tier-b/main__step_00000006-e1.json
+tier-b/main__step_00000006-e1.log: RESULT belebele_tel_Telu acc/none = 16.0 (n=100) -> <lab>/w/tier-b/main__step_00000006-e1.json
+tier-b/main__step_00000006-e1.log: RESULT belebele_tel_Telu acc_norm/none = 16.0 (n=100) -> <lab>/w/tier-b/main__step_00000006-e1.json
+tier-b/main__step_00000006-e1.log: RESULT belebele_tam_Taml acc/none = 27.0 (n=100) -> <lab>/w/tier-b/main__step_00000006-e1.json
+tier-b/main__step_00000006-e1.log: RESULT belebele_tam_Taml acc_norm/none = 27.0 (n=100) -> <lab>/w/tier-b/main__step_00000006-e1.json
+tier-b/main__step_00000006-e1.log: TIME export 51.5 s, score 74.2 s, total 133.5 s (lm_eval_lab:team5, cuda)
+
+# 4. Tier A with --max-batch-tokens 32768 (default 16384)
+
+$ python teams/09-evaluation/harness_lab/eval_watcher.py --run-dir <lab>/t2/store/lab-store --label tier-a-mbt32768 --every 3 --out-dir <lab>/w/tier-a-mbt32768 --scorer lm_eval_lab:team5 --until-final --no-load -- --device cuda --tier A --model-config <lab>/t2/model.json --tokenizer <p1536>/tokenizer.json --tokenizer-sha256 e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b --byte-table teams/04-ke2/results/tables/p1536-s0/raw_table_P32.npz --hf-home <lab>/hf --offline --max-batch-tokens 32768
+watching <lab>/t2/store/lab-store (label tier-a-mbt32768, every 3, scorer lm_eval_lab:team5, no load); out <lab>/w/tier-a-mbt32768
+step 6 (main/step_00000006-e1): scored in 101.93 s, 917.6 s after its commit, 5 record(s) -> <lab>/w/tier-a-mbt32768/main__step_00000006-e1.json
+step 6: 5 row(s) parsed (--no-load) as run_id lab-store:main/step_00000006-e1:tier-a-mbt32768:f2f54a1ab3e6 in 0.05 s
+the run committed its final checkpoint and every owned commit is done
+time: 1 checkpoint(s) scored, 101.9 s mean and 101.9 s max per checkpoint, lag after commit 917.6 s max
+done: {"parsed": 1}; exit 0
+[exit 0, 102.1 s wall]
+tier-a-mbt32768/main__step_00000006-e1.log: checkpoint: lab:lab-store step 6 branch main epoch 1 (main/step_00000006-e1)
+tier-a-mbt32768/main__step_00000006-e1.log: export ok: step 6, probe loss bits equal the saved ones
+tier-a-mbt32768/main__step_00000006-e1.log: lm-eval (Tesla T4, fp32): 3880 requests in 2035 forward rows, encode fallbacks 554; setup 0.9 s, task index 0.7 s, scoring 45.3 s
+tier-a-mbt32768/main__step_00000006-e1.log: GUARD pooled freeze-set accuracy 24.74 on 970 items, complete True, below the 22.2 floor False
+tier-a-mbt32768/main__step_00000006-e1.log: RESULT mmlu acc/none = 24.21 (n=570) -> <lab>/w/tier-a-mbt32768/main__step_00000006-e1.json
+tier-a-mbt32768/main__step_00000006-e1.log: RESULT milu_Hindi acc/none = 26.0 (n=100) -> <lab>/w/tier-a-mbt32768/main__step_00000006-e1.json
+tier-a-mbt32768/main__step_00000006-e1.log: RESULT milu_Telugu acc/none = 29.0 (n=100) -> <lab>/w/tier-a-mbt32768/main__step_00000006-e1.json
+tier-a-mbt32768/main__step_00000006-e1.log: RESULT milu_Tamil acc/none = 22.0 (n=100) -> <lab>/w/tier-a-mbt32768/main__step_00000006-e1.json
+tier-a-mbt32768/main__step_00000006-e1.log: RESULT milu_Bengali acc/none = 25.0 (n=100) -> <lab>/w/tier-a-mbt32768/main__step_00000006-e1.json
+tier-a-mbt32768/main__step_00000006-e1.log: TIME export 45.2 s, score 46.7 s, total 99.1 s (lm_eval_lab:team5, cuda)
+
+# 4. Tier A with --max-batch-tokens 65536 (default 16384)
+
+$ python teams/09-evaluation/harness_lab/eval_watcher.py --run-dir <lab>/t2/store/lab-store --label tier-a-mbt65536 --every 3 --out-dir <lab>/w/tier-a-mbt65536 --scorer lm_eval_lab:team5 --until-final --no-load -- --device cuda --tier A --model-config <lab>/t2/model.json --tokenizer <p1536>/tokenizer.json --tokenizer-sha256 e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b --byte-table teams/04-ke2/results/tables/p1536-s0/raw_table_P32.npz --hf-home <lab>/hf --offline --max-batch-tokens 65536
+watching <lab>/t2/store/lab-store (label tier-a-mbt65536, every 3, scorer lm_eval_lab:team5, no load); out <lab>/w/tier-a-mbt65536
+step 6 (main/step_00000006-e1): scored in 108.59 s, 1026.4 s after its commit, 5 record(s) -> <lab>/w/tier-a-mbt65536/main__step_00000006-e1.json
+step 6: 5 row(s) parsed (--no-load) as run_id lab-store:main/step_00000006-e1:tier-a-mbt65536:f2f54a1ab3e6 in 0.04 s
+the run committed its final checkpoint and every owned commit is done
+time: 1 checkpoint(s) scored, 108.6 s mean and 108.6 s max per checkpoint, lag after commit 1026.4 s max
+done: {"parsed": 1}; exit 0
+[exit 0, 108.8 s wall]
+tier-a-mbt65536/main__step_00000006-e1.log: checkpoint: lab:lab-store step 6 branch main epoch 1 (main/step_00000006-e1)
+tier-a-mbt65536/main__step_00000006-e1.log: export ok: step 6, probe loss bits equal the saved ones
+tier-a-mbt65536/main__step_00000006-e1.log: lm-eval (Tesla T4, fp32): 3880 requests in 2035 forward rows, encode fallbacks 554; setup 0.9 s, task index 0.5 s, scoring 47.6 s
+tier-a-mbt65536/main__step_00000006-e1.log: GUARD pooled freeze-set accuracy 24.74 on 970 items, complete True, below the 22.2 floor False
+tier-a-mbt65536/main__step_00000006-e1.log: RESULT mmlu acc/none = 24.21 (n=570) -> <lab>/w/tier-a-mbt65536/main__step_00000006-e1.json
+tier-a-mbt65536/main__step_00000006-e1.log: RESULT milu_Hindi acc/none = 26.0 (n=100) -> <lab>/w/tier-a-mbt65536/main__step_00000006-e1.json
+tier-a-mbt65536/main__step_00000006-e1.log: RESULT milu_Telugu acc/none = 29.0 (n=100) -> <lab>/w/tier-a-mbt65536/main__step_00000006-e1.json
+tier-a-mbt65536/main__step_00000006-e1.log: RESULT milu_Tamil acc/none = 22.0 (n=100) -> <lab>/w/tier-a-mbt65536/main__step_00000006-e1.json
+tier-a-mbt65536/main__step_00000006-e1.log: RESULT milu_Bengali acc/none = 25.0 (n=100) -> <lab>/w/tier-a-mbt65536/main__step_00000006-e1.json
+tier-a-mbt65536/main__step_00000006-e1.log: TIME export 48.7 s, score 48.7 s, total 105.4 s (lm_eval_lab:team5, cuda)
+
+# 5. Firewall (eval_firewall.md section 3, rule 5): the lab canary in every result file and scorer log
+
+$ python teams/09-evaluation/decontam/canary_scan.py <lab>/w <lab>/w/tier-a-mbt65536/logs/main__step_00000006-e1.log <lab>/w/tier-a/logs/main__step_00000006-e1.log <lab>/w/tier-b/logs/main__step_00000006-e1.log <lab>/w/tier-a-mbt32768/logs/main__step_00000006-e1.log --lab-only
+canaries 1 from era-v5-lab
+docs 12 with_canary 0 hits 0
+[exit 0, 0.4 s wall]
+
+BUDGET Tier A 95.6 s + Tier B 133.5 s / 10 = 108.9 s per checkpoint; save interval 600 s; keeps up: True
+
+# 6. --team5-run end to end (the dry run 1 path), branch g9-eval-watcher at dc45483 09-evaluation: score the dry run 1 checkpoint (--team5-run), re-pin to p1536 (week 3, task 1), Tesla T4
+# The run folder is in train_week2.py's format (model + AdamW + RNG state), saved by a short script from a T2
+# exp2_muon model one AdamW step from random; "lag after commit" counts from summary.json's time, before the
+# HF-cache fill (2 items per task, not logged); "export" here is the checkpoint.pt load and weights-hash check.
+
+# 6a. A Team 5 run folder (manifest.json, checkpoint.pt with model + AdamW + RNG state, summary.json COMPLETED) at the dry run 1 shape (exp2_muon, T2), p1536
+
+$ python /content/make_team5_run.py <p1536>/tokenizer.json teams/04-ke2/results/tables/p1536-s0/raw_table_P32.npz e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b <lab>/dryrun1-test
+model: 237,052,416 parameters; checkpoint.pt 2.85 GB (model + AdamW state); saved in 18.2 s
+[exit 0, 34.4 s wall]
+
+# 6b. --team5-run, Tier A: the watcher waits for summary.json COMPLETED, scores once, exits
+
+$ python teams/09-evaluation/harness_lab/eval_watcher.py --team5-run <lab>/dryrun1-test --label tier-a --out-dir <lab>/w5/tier-a --scorer lm_eval_lab:team5 --no-load -- --device cuda --tier A --model-config <lab>/dryrun1-test/manifest.json --tokenizer <p1536>/tokenizer.json --tokenizer-sha256 e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b --byte-table teams/04-ke2/results/tables/p1536-s0/raw_table_P32.npz --hf-home <lab>/hf --offline
+watching <lab>/dryrun1-test (label tier-a, every 1, scorer lm_eval_lab:team5, no load); out <lab>/w5/tier-a
+step 1 (checkpoint.pt): scored in 54.98 s, 272.6 s after its commit, 5 record(s) -> <lab>/w5/tier-a/checkpoint.pt.json
+step 1: 5 row(s) parsed (--no-load) as run_id dryrun1-test:checkpoint.pt:tier-a:3d3e7ea3ea60 in 0.04 s
+the run committed its final checkpoint and every owned commit is done
+time: 1 checkpoint(s) scored, 55.0 s mean and 55.0 s max per checkpoint, lag after commit 272.6 s max
+done: {"parsed": 1}; exit 0
+[exit 0, 55.1 s wall]
+tier-a/checkpoint.pt.log: checkpoint: lab:dryrun1-test step 1 (Team 5 run folder, checkpoint.pt)
+tier-a/checkpoint.pt.log: model_revision (summary.json final_model_sha256): 3d3e7ea3ea6093419146f1c0851343c21a57105653ef4e7688b14b620237547b
+tier-a/checkpoint.pt.log: load ok: checkpoint.pt state['model'] (strict), weights hash equals summary.json final_model_sha256
+tier-a/checkpoint.pt.log: lm-eval (Tesla T4, fp32): 3880 requests in 2035 forward rows, encode fallbacks 554; setup 1.0 s, task index 0.2 s, scoring 42.9 s
+tier-a/checkpoint.pt.log: GUARD pooled freeze-set accuracy 24.74 on 970 items, complete True, below the 22.2 floor False
+tier-a/checkpoint.pt.log: RESULT mmlu acc/none = 24.21 (n=570) -> <lab>/w5/tier-a/checkpoint.pt.json
+tier-a/checkpoint.pt.log: RESULT milu_Hindi acc/none = 28.0 (n=100) -> <lab>/w5/tier-a/checkpoint.pt.json
+tier-a/checkpoint.pt.log: RESULT milu_Telugu acc/none = 27.0 (n=100) -> <lab>/w5/tier-a/checkpoint.pt.json
+tier-a/checkpoint.pt.log: RESULT milu_Tamil acc/none = 24.0 (n=100) -> <lab>/w5/tier-a/checkpoint.pt.json
+tier-a/checkpoint.pt.log: RESULT milu_Bengali acc/none = 23.0 (n=100) -> <lab>/w5/tier-a/checkpoint.pt.json
+tier-a/checkpoint.pt.log: TIME export 4.7 s, score 43.5 s, total 53.6 s (lm_eval_lab:team5, cuda)
+
+# 6b. --team5-run, Tier B: the watcher waits for summary.json COMPLETED, scores once, exits
+
+$ python teams/09-evaluation/harness_lab/eval_watcher.py --team5-run <lab>/dryrun1-test --label tier-b --out-dir <lab>/w5/tier-b --scorer lm_eval_lab:team5 --no-load -- --device cuda --tier B --model-config <lab>/dryrun1-test/manifest.json --tokenizer <p1536>/tokenizer.json --tokenizer-sha256 e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b --byte-table teams/04-ke2/results/tables/p1536-s0/raw_table_P32.npz --hf-home <lab>/hf --offline
+watching <lab>/dryrun1-test (label tier-b, every 1, scorer lm_eval_lab:team5, no load); out <lab>/w5/tier-b
+step 1 (checkpoint.pt): scored in 82.58 s, 355.4 s after its commit, 11 record(s) -> <lab>/w5/tier-b/checkpoint.pt.json
+step 1: 11 row(s) parsed (--no-load) as run_id dryrun1-test:checkpoint.pt:tier-b:3d3e7ea3ea60 in 0.02 s
+the run committed its final checkpoint and every owned commit is done
+time: 1 checkpoint(s) scored, 82.6 s mean and 82.6 s max per checkpoint, lag after commit 355.4 s max
+done: {"parsed": 1}; exit 0
+[exit 0, 82.7 s wall]
+tier-b/checkpoint.pt.log: checkpoint: lab:dryrun1-test step 1 (Team 5 run folder, checkpoint.pt)
+tier-b/checkpoint.pt.log: model_revision (summary.json final_model_sha256): 3d3e7ea3ea6093419146f1c0851343c21a57105653ef4e7688b14b620237547b
+tier-b/checkpoint.pt.log: load ok: checkpoint.pt state['model'] (strict), weights hash equals summary.json final_model_sha256
+tier-b/checkpoint.pt.log: lm-eval (Tesla T4, fp32): 7617 requests in 4043 forward rows, encode fallbacks 155; setup 0.8 s, task index 0.2 s, scoring 71.0 s
+tier-b/checkpoint.pt.log: RESULT arc_challenge acc/none = 21.0 (n=500) -> <lab>/w5/tier-b/checkpoint.pt.json
+tier-b/checkpoint.pt.log: RESULT arc_challenge acc_norm/none = 23.0 (n=500) -> <lab>/w5/tier-b/checkpoint.pt.json
+tier-b/checkpoint.pt.log: RESULT hellaswag acc/none = 26.25 (n=400) -> <lab>/w5/tier-b/checkpoint.pt.json
+tier-b/checkpoint.pt.log: RESULT hellaswag acc_norm/none = 26.25 (n=400) -> <lab>/w5/tier-b/checkpoint.pt.json
+tier-b/checkpoint.pt.log: RESULT leaderboard_mmlu_pro acc/none = 12.33 (n=300) -> <lab>/w5/tier-b/checkpoint.pt.json
+tier-b/checkpoint.pt.log: RESULT belebele_hin_Deva acc/none = 23.0 (n=100) -> <lab>/w5/tier-b/checkpoint.pt.json
+tier-b/checkpoint.pt.log: RESULT belebele_hin_Deva acc_norm/none = 23.0 (n=100) -> <lab>/w5/tier-b/checkpoint.pt.json
+tier-b/checkpoint.pt.log: RESULT belebele_tel_Telu acc/none = 16.0 (n=100) -> <lab>/w5/tier-b/checkpoint.pt.json
+tier-b/checkpoint.pt.log: RESULT belebele_tel_Telu acc_norm/none = 16.0 (n=100) -> <lab>/w5/tier-b/checkpoint.pt.json
+tier-b/checkpoint.pt.log: RESULT belebele_tam_Taml acc/none = 27.0 (n=100) -> <lab>/w5/tier-b/checkpoint.pt.json
+tier-b/checkpoint.pt.log: RESULT belebele_tam_Taml acc_norm/none = 27.0 (n=100) -> <lab>/w5/tier-b/checkpoint.pt.json
+tier-b/checkpoint.pt.log: TIME export 4.7 s, score 71.6 s, total 81.4 s (lm_eval_lab:team5, cuda)
+CHECK tier-a: 5 records, model_revision = summary.json final_model_sha256, checkpoint.path ends /checkpoint.pt, step 1, epoch null: True
+CHECK tier-b: 11 records, model_revision = summary.json final_model_sha256, checkpoint.path ends /checkpoint.pt, step 1, epoch null: True
+
+# 6c. Firewall: the lab canary in every --team5-run result file and scorer log
+
+$ python teams/09-evaluation/decontam/canary_scan.py <lab>/w5 <lab>/w5/tier-b/logs/checkpoint.pt.log <lab>/w5/tier-a/logs/checkpoint.pt.log --lab-only
+canaries 1 from era-v5-lab
+docs 6 with_canary 0 hits 0
+[exit 0, 0.4 s wall]

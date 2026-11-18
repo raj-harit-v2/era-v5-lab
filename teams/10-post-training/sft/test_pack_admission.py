@@ -282,3 +282,110 @@ def test_rejected_rows_are_counted_and_the_counts_conserve(admission, tmp_path, 
     report = pack.evaluate(manifest, "report")
     assert report["row_outcomes"]["rejected_duplicate_id"] == 1 and report["attempted"] == 4
     assert {"retained_file_not_the_scanned_clean_file", "retained_row_count_differs_from_scan_record"} <= set(report["blockers"])
+
+
+# --- pack v1 (TSAI, 14 Nov 2026): held-out split, accepted identity levels, batched row check ----------
+
+def _families_of_clean_rows(shard):
+    sidecar = {e["rendered_id"]: e for e in read_jsonl(shard / "join" / "joined.sidecar.jsonl")}
+    return [sidecar[r["id"]]["problem_family_key"] for r in read_jsonl(shard / "screen" / f"{SET_ID}.clean.jsonl")]
+
+
+def _salt_holding_one(families):
+    for n in range(10_000):
+        rule = {"pack": {"heldout_eval_v1": {"fraction": 0.2, "salt": f"test-salt-{n}"}}}
+        held = pack.heldout_selector(rule)
+        if sum(held(f) for f in set(families)) == 1:
+            return rule["pack"]["heldout_eval_v1"]
+    raise AssertionError("no salt holds exactly one family")
+
+
+@module_fixture
+def admission_heldout(tmp_path_factory, kit, admission):
+    """The admission run again, with a held-out rule that holds exactly one of the three clean families."""
+    spec = _salt_holding_one(_families_of_clean_rows(admission[2]))
+    root = tmp_path_factory.mktemp("heldout")
+    world = World(root / "w", {0: ROWS}, n_shards=1, verified=ALL_TRAIN, max_sequence_tokens=LIMIT, **kit)
+    world.policy["pack"]["heldout_eval_v1"] = spec
+    allow_everything(world)
+    with pytest.MonkeyPatch.context() as patch:
+        row = allowed_row()
+        patch.setattr(g10, "licence_row", lambda set_id, table=None: row)
+        coverage = run_ocr2.run(world.manifest_path, world.policy_path, "0", 1, root / "run", mode="admission")
+    return world, coverage, root / "run" / "shards" / "shard-00000"
+
+
+def test_heldout_rows_go_to_their_own_file_and_never_into_the_pack(admission_heldout, tmp_path, monkeypatch):
+    copy, manifest, _ = real_pack_manifest(tmp_path, admission_heldout, monkeypatch)
+    out = tmp_path / "pack.jsonl"
+    report = pack.evaluate(manifest, "training", out)
+    held_file = tmp_path / "pack.heldout_eval_v1.jsonl"
+    assert report["training_admissible"] and held_file.is_file()
+    clean = (copy / "screen" / f"{SET_ID}.clean.jsonl").read_bytes().splitlines(keepends=True)
+    train, held = out.read_bytes().splitlines(keepends=True), held_file.read_bytes().splitlines(keepends=True)
+    assert sorted(train + held) == sorted(clean) and len(held) >= 1 and len(train) >= 1  # a split, nothing lost or added
+    assert (report["row_checks_passed"], report["train_rows"], report["heldout_rows"]) == (3, len(train), len(held))
+    assert report["admitted"] == report["emitted"] == len(train)
+    assert report["pack_sha256"] == pack.si.sha256_file(out)
+    assert report["heldout_eval_v1"]["sha256"] == pack.si.sha256_file(held_file)
+    assert report["heldout_eval_v1"]["unique_families"] == 1 and report["train_pack"]["unique_families"] == 2
+    sidecar = {e["rendered_id"]: e for e in read_jsonl(copy / "join" / "joined.sidecar.jsonl")}
+    fam = lambda path: {sidecar[r["id"]]["problem_family_key"] for r in read_jsonl(path)}  # noqa: E731
+    assert not fam(out) & fam(held_file)
+    assert report["train_pack"]["tokens"] + report["heldout_eval_v1"]["tokens"] == report["passed_rows"]["tokens"]
+
+
+def test_the_runner_records_the_split_and_its_conservation(admission_heldout):
+    _, coverage, shard = admission_heldout
+    info = coverage["shards"][0]
+    assert info["state"] == "complete" and info["not_reconciled"] == []
+    p = info["counts"]["pack"]
+    assert p["row_checks_passed"] == p["train_rows"] + p["heldout_rows"] == 3 and p["heldout_rows"] == 1
+    assert coverage["totals_over_complete_shards"]["pack.heldout_rows"] == 1
+    assert not (shard / "pack" / "pack.heldout_eval_v1.jsonl").exists()  # a fixture run writes neither file
+
+
+def test_a_report_writes_no_heldout_file_and_fraction_zero_folds_back(admission_heldout, tmp_path, monkeypatch):
+    copy, manifest, policy = real_pack_manifest(tmp_path, admission_heldout, monkeypatch)
+    report = pack.evaluate(manifest, "report")
+    assert report["heldout_rows"] == 1 and report["admitted"] == 0 and report["heldout_eval_v1"]["sha256"] is None
+    assert not list(tmp_path.glob("*.heldout_eval_v1.jsonl"))
+    assert run_ocr2.reconcile({"joined": {"raw_rows": 1, "policy_excluded": 0, "malformed_or_unresolved": 0, "eligible_joined": 1},
+                               "rendered": {"converter_rejected": 0, "rendered": 1},
+                               "screened": {"rows_in": 1, "rows_removed": 0, "rows_kept": 1},
+                               "pack": {"attempted": 1, "pack_rejected": 0, "row_checks_passed": 1, "train_rows": 1,
+                                        "heldout_rows": 1}}) == ["row checks passed = train rows + held-out rows"]
+    assert pack.heldout_selector({"pack": {"heldout_eval_v1": {"fraction": 0, "salt": "x"}}}) is None
+    assert pack.heldout_selector({"pack": {}}) is None
+
+
+def test_the_heldout_rule_is_a_stable_function_of_the_family_key():
+    rule = {"pack": {"heldout_eval_v1": {"fraction": 0.02, "salt": "g10-ocr2-heldout-eval-v1"}}}
+    held = pack.heldout_selector(rule)
+    keys = [f"sha256:{n:064x}" for n in range(20_000)]
+    share = sum(map(held, keys)) / len(keys)
+    assert 0.015 < share < 0.025  # about 2%
+    assert [held(k) for k in keys[:500]] == [pack.heldout_selector(rule)(k) for k in keys[:500]]  # deterministic
+    other = pack.heldout_selector({"pack": {"heldout_eval_v1": {"fraction": 0.02, "salt": "another"}}})
+    assert [held(k) for k in keys] != [other(k) for k in keys]  # the salt matters
+
+
+def test_batched_and_per_row_checks_give_identical_bytes_and_reports(admission_heldout, tmp_path, monkeypatch):
+    copy, manifest, _ = real_pack_manifest(tmp_path, admission_heldout, monkeypatch)
+    reports = {}
+    for chunk in (1, 2, pack.ENCODE_CHUNK):
+        out = tmp_path / f"c{chunk}" / "pack.jsonl"
+        out.parent.mkdir()
+        reports[chunk] = pack.evaluate(manifest, "training", out, encode_chunk=chunk)
+        reports[chunk]["bytes"] = (out.read_bytes(), (out.parent / "pack.heldout_eval_v1.jsonl").read_bytes())
+    assert reports[1] == reports[2] == reports[pack.ENCODE_CHUNK]
+
+
+def test_a_pinned_revision_source_blocks_a_pack_unless_the_policy_accepts_it(admission, tmp_path, monkeypatch):
+    copy, manifest, policy = real_pack_manifest(tmp_path, admission, monkeypatch)
+    sidecar = copy / "join" / "joined.sidecar.jsonl"
+    lines = [dict(e, source_identity_level="pinned_revision") for e in read_jsonl(sidecar)]
+    sidecar.write_text("".join(json.dumps(e, ensure_ascii=True) + "\n" for e in lines))
+    report = pack.evaluate(manifest, "report")  # the sidecar changed after the join, and the level is not accepted
+    assert "source_identity_level_not_accepted:taco/train" in report["blockers"]
+    assert "sidecar_not_the_joined_one" in report["blockers"]

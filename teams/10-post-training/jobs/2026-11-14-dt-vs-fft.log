@@ -1,0 +1,32 @@
+{
+  "seed": 0,
+  "steps": 30,
+  "slice": "synthetic",
+  "rows": 32,
+  "methods": {
+    "dt": {
+      "steps": 30,
+      "loss_start": 0.020716763233068612,
+      "loss_end": 0.020716763419479346,
+      "base_unchanged": true,
+      "deleted_fraction": 0.0,
+      "base_changed": false
+    },
+    "lora": {
+      "steps": 30,
+      "loss_start": 0.020719432301929318,
+      "loss_end": 0.02068673708933395,
+      "base_unchanged": true,
+      "deleted_fraction": null,
+      "base_changed": false
+    },
+    "fft": {
+      "steps": 30,
+      "loss_start": 0.020719432301929318,
+      "loss_end": 0.0028443747419888855,
+      "base_unchanged": false,
+      "deleted_fraction": null,
+      "base_changed": true
+    }
+  }
+}

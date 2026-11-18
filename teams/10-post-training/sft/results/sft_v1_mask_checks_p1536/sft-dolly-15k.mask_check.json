@@ -1,0 +1,32 @@
+{
+ "by_source": {
+  "sft-dolly-15k": 15011
+ },
+ "command": "python sft/check_pack_rows.py --pack <private>/<set>.partNNNN.jsonl.gz ... --tokenizer <p1536 tokenizer.json> --report <this file>",
+ "limit": 32768,
+ "marker_ids": {
+  "<|endoftext|>": 130822,
+  "<|im_end|>": 130816,
+  "<|im_start|>": 129994
+ },
+ "max_length": 5664,
+ "ok": true,
+ "rows": 15011,
+ "rows_with_violations_by_source": {
+  "sft-dolly-15k": 0
+ },
+ "sampled_per_source": {
+  "sft-dolly-15k": 20
+ },
+ "schema": "g10-ocr2-pack-row-check/1",
+ "scope": "every converted row of the set (p1536 conversion), before admission",
+ "seed": 0,
+ "set": "sft-dolly-15k",
+ "tokenizer_sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b",
+ "tokens": 2924760,
+ "trained_tokens": 1186875,
+ "trained_tokens_by_role": {
+  "assistant": 1186875
+ },
+ "violations": {}
+}

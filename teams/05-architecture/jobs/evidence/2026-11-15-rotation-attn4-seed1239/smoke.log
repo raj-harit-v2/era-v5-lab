@@ -1,0 +1,4 @@
+$ python teams/05-architecture/harness/train_week2.py --config teams/05-architecture/configs/arms/attn4_gate.yaml --runtime teams/05-architecture/configs/runtime.yaml --tokenizer ./inputs/tokenizer_v0.json --byte-table ./inputs/raw_table_P32.npz --train-data ./inputs/synthetic_train.jsonl --heldout-data ./inputs/synthetic_heldout.jsonl --device cpu --seed 1239 --lr 0.001 --smoke --smoke-steps 6 --smoke-seq-len 160 --smoke-batch-size 1 --no-checkpoint --out ./out/attn4-gate
+exit code: 0
+wall seconds (whole command): 24.8
+peak memory of the run (MiB): 4210

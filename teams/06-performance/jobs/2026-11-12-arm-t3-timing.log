@@ -1,0 +1,17 @@
+[bench] Intel64 Family 6 Model 189 Stepping 1, GenuineIntel | fp32 | B=2 T=64 V=131072 | modes clean | level 1 | 10 steps after 2 warmup
+[bench] clean ...
+[bench] live JSONL -> D:\A1_School_ai_25\ERA_V5\era-v5-lab\out_rb_t3\out\arm_smoke_cpu.jsonl (run_id=d1634b07cbcb4139b1475d72c9415f97, node_id=DESKTOP-QFRU5OI)
+
+Intel64 Family 6 Model 189 Stepping 1, GenuineIntel | fp32 | B=2 T=64 V=131072 | commit c3efa370f9 (DIRTY) | tag arm_smoke_cpu
+step  median 121.60 ms  p10 104.57  p90 144.23  spread 32.6%   data 0.383 ms
+      1,053 tokens/s   MFU n/a   HFU n/a
+
+[bench] run JSON -> D:\A1_School_ai_25\ERA_V5\era-v5-lab\out_rb_t3\out\arm_smoke_cpu.json
+[bench] event log complete -> D:\A1_School_ai_25\ERA_V5\era-v5-lab\out_rb_t3\out\arm_smoke_cpu.jsonl
+[bench] report   -> D:\A1_School_ai_25\ERA_V5\era-v5-lab\out_rb_t3\out\arm_smoke_cpu.md
+[warn] uncommitted changes: Gate 1 numbers must come from committed code
+[warn] rule 3b: checkpoint not measured; add checkpoint to --modes
+cwd: D:\A1_School_ai_25\ERA_V5\era-v5-lab\teams\06-performance
+cmd: C:\Users\Rajh26\AppData\Local\Python\pythoncore-3.14-64\python.exe -m perfkit.bench --config D:\A1_School_ai_25\ERA_V5\era-v5-lab\teams\06-performance\configs\tiny_cpu.yaml --tag arm_smoke_cpu --modes clean --level 1 --warmup 2 --steps 10 --repeat 1 bench.out_dir=D:/A1_School_ai_25/ERA_V5/era-v5-lab/out_rb_t3/out data.source=synthetic run.device=cpu run.dtype=fp32
+note: --config ignored for --smoke-cpu; using tiny_cpu.yaml
+{"pass": true, "exit_code": 0, "tag": "arm_smoke_cpu", "config": "teams\\06-performance\\configs\\tiny_cpu.yaml", "requested_config": "teams/05-architecture/configs/arms/t3.yaml", "smoke_cpu": true, "synthetic": true, "time_utc": "2026-11-13T19:23:25.200795+00:00", "out_dir": "D:\\A1_School_ai_25\\ERA_V5\\era-v5-lab\\out_rb_t3\\out"}

@@ -1,0 +1,33 @@
+{
+ "started": "2026-11-15T14:47:26",
+ "platform": "kaggle",
+ "run_by": "SomaKorada07",
+ "repo": "https://github.com/SomaKorada07/era-v5-lab.git",
+ "branch": "g12-week3-soma",
+ "commit": "ba5fdc0ea9c399d0345ea7ff23f6791c15ac3bdc",
+ "gpu": [
+  "Tesla T4, 15360 MiB, 7.5",
+  "Tesla T4, 15360 MiB, 7.5"
+ ],
+ "tp": 2,
+ "dtype": "half",
+ "settings": {
+  "SMOKE": false,
+  "MODEL": "Qwen/Qwen3-4B-Instruct-2507",
+  "REVISION": null,
+  "LABEL": "Qwen3-4B-Instruct-2507 (stand-in)",
+  "FORMAT_HINT": "on",
+  "MAX_MODEL_LEN": 4096,
+  "MAX_TOKENS": 1024,
+  "PKGS": [
+   "vllm==0.33.0",
+   "pytest",
+   "jinja2"
+  ]
+ },
+ "packages": "{'vllm': '0.33.0', 'torch': '2.14.0', 'transformers': '5.20.2'}",
+ "model_commit": "cdbee75f17c01a7cc42f958dc650907174af0554",
+ "serve_check_exit": 0,
+ "wall_clock_s": 325,
+ "finished": "2026-11-15T14:58:33"
+}

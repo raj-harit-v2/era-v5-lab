@@ -168,3 +168,17 @@ def test_errors_and_timeouts_score_zero():
     slow = {**ADD_TASK, "time_limit_s": 1}
     assert stdio_check.score(slow, "```python\nwhile True: pass\n```")["reason"] == "timeout on a test"
     assert stdio_check.score(ADD_TASK, "no code")["reward"] == 0
+
+
+def test_statement_check_flags_example_only_statements():
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("statement_check", HERE / "statement_check.py")
+    sc = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(sc)
+    full = "You are given two integers a and b. Print their sum on one line.\n\nInput\n\n1 2\n\nOutput\n\n3"
+    assert sc.has_description(full) and sc.description_chars(full) == 64
+    assert not sc.has_description("Example\n\nInput\n\n2 3 1 3 1 0\n\n\nOutput\n\n2")  # starts with the heading
+    assert not sc.has_description("Sum\n\nExample\n\nInput\n\n1 2\n\nOutput\n\n3")      # a title is not a description
+    assert not sc.has_description("input\n1 2\noutput\n3")
+    assert sc.has_description("x" * 40) and not sc.has_description("x" * 39)

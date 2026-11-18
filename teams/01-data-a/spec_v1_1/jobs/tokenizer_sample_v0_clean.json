@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "sample": "era-v5-lab tokenizer sample v0",
+  "manifest": "teams/01-data-a/jobs/2026-11-02-tokenizer-sample-v0-clean/tokenizer_sample_v0_manifest.json",
+  "manifest_sha256": "7fd647c8d4662d17e2310efbcc20981d70656fdad2fabb7663c266a2153a1b7e",
+  "expected_parts": {
+    "train": 48,
+    "heldout": 38
+  },
+  "clean_sha256": "6a57276c0e83312b09facfba656cca28db0ef59ca851bcfbfa3ef63f16fdd1f2",
+  "input_root": "inputs/tokenizer_sample_v0",
+  "output_root": "out/tokenizer_sample_v0_clean_specv1_1",
+  "batch_size": 128,
+  "optional_f2": false,
+  "unsupported_policy": "passthrough_with_explicit_status"
+}

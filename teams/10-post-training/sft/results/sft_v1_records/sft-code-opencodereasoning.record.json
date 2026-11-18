@@ -1,0 +1,95 @@
+{
+ "checks": {
+  "checks_failed": {},
+  "checks_ok": true,
+  "effort_rows": {
+   "16k": 703,
+   "1k": 33,
+   "4k": 264,
+   "64k": 0
+  },
+  "files": [
+   {
+    "bytes": 99606434,
+    "name": "sft-code-opencodereasoning.first1000.jsonl",
+    "sha256": "60b315d2160662e119a7195556ef7a8a1961fbfe0b4a9ed1cd7f643b034f8c1a"
+   }
+  ],
+  "info": {},
+  "length": {
+   "max": 17870,
+   "min": 658,
+   "p50": 7787,
+   "p95": 15919
+  },
+  "max_len": 32768,
+  "rows": 1000,
+  "rows_over_max_len": 0,
+  "rows_with_tool_blocks": 0,
+  "shifted_supervised_targets": 7763510,
+  "tokens": 8247869,
+  "tool_call_blocks": 0,
+  "tool_call_tokens_untrained": 0,
+  "tool_result_blocks": 0,
+  "train_spans": 1000,
+  "trained_share": 0.941275,
+  "trained_tokens": 7763510,
+  "unique_ids": true
+ },
+ "checks_wall_s": 11.04,
+ "content_sha256": "60b315d2160662e119a7195556ef7a8a1961fbfe0b4a9ed1cd7f643b034f8c1a",
+ "convert": {
+  "cpu_sys_s": 2.872,
+  "cpu_user_s": 26.74,
+  "hub_bytes_read": 242454131,
+  "max_rss_mb": 564.9,
+  "wall_s": 43.027
+ },
+ "decision": "TSAI reserves",
+ "deterministic_rerun": true,
+ "effort_manifest": {
+  "16k": 703,
+  "1k": 33,
+  "4k": 264,
+  "64k": 0
+ },
+ "file_bytes": 99606434,
+ "file_sha256": "60b315d2160662e119a7195556ef7a8a1961fbfe0b4a9ed1cd7f643b034f8c1a",
+ "generator_model": "DeepSeek-R1 (MIT, open weights)",
+ "hub_revision": "20a1ca19c0d050fe9057fc08339d6b370ec1c67a",
+ "input": "hub file nvidia/OpenCodeReasoning glob:split_0/ rows 0..999999999",
+ "licence": "cc-by-4.0 (Hub tag; commercial use permitted per tag)",
+ "rerun_content_sha256": "60b315d2160662e119a7195556ef7a8a1961fbfe0b4a9ed1cd7f643b034f8c1a",
+ "rerun_wall_s": 38.736,
+ "rows_in": 1000,
+ "rows_out": 1000,
+ "rows_per_s_convert": 23.24,
+ "rows_scanned": 1000,
+ "scope": "first 1000 selected rows, source order, C3",
+ "selection": "split_0, all 30 shards (split_1 withholds the questions)",
+ "set": "sft-code-opencodereasoning",
+ "skipped": {},
+ "source": "nvidia/OpenCodeReasoning",
+ "token_record": {
+  "basis": "first 1000 selected rows, source order, C3; not the admissible kept rows",
+  "effort": {
+   "16k": 703,
+   "1k": 33,
+   "4k": 264,
+   "64k": 0
+  },
+  "length": {
+   "max": 17870,
+   "min": 658,
+   "p50": 7787,
+   "p95": 15919
+  },
+  "rows": 1000,
+  "sequence_tokens": 8247869,
+  "set_id": "sft-code-opencodereasoning",
+  "shifted_supervised_targets": 7763510,
+  "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3"
+ },
+ "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3",
+ "tokens_per_s_convert": 191691
+}

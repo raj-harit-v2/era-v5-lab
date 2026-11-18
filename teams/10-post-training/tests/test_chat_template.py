@@ -35,9 +35,11 @@ TEAM12_CANDIDATE_PATHS = [
 
 
 def _get_jinja_template():
+    """The template compiled as transformers and vLLM compile it (sandboxed, trim_blocks, lstrip_blocks, a tojson
+    with sort_keys and separators). Plain jinja2's tojson escapes HTML characters and takes no separators."""
     assert TEMPLATE_PATH.is_file()
-    env = jinja2.Environment(loader=jinja2.BaseLoader())
-    return env.from_string(TEMPLATE_PATH.read_text(encoding="utf-8"))
+    from test_chat_template_parity import _compile
+    return _compile(TEMPLATE_PATH.read_text(encoding="utf-8"))
 
 
 def test_canonical_template_and_handoff_doc_exist():

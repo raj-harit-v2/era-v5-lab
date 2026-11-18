@@ -1,0 +1,44 @@
+# Offline Task 11 canary. Stage this config's inputs before running.
+# Use a fixed, disjoint held-out subset and keep task IDs and generations private.
+seed: 1234
+device: cuda
+out_dir: out/task11-code-canary
+model:
+  kind: team5_adapter
+  adapter_config: inputs/task11/adapter.yaml
+  init_state: inputs/task11/dt_sft/model.safetensors
+  # Fill in the SHA-256 from the DT SFT export before submitting.
+  init_state_sha256: REPLACE_WITH_DT_SFT_CHECKPOINT_SHA256
+  kv_cache: true
+task:
+  kind: stdio
+  require_verifier: true
+  tasks: inputs/task11/cc.jsonl
+  train_ids: inputs/task11/canary_train_ids.txt
+  heldout_ids: inputs/task11/canary_heldout_ids.txt
+train:
+  algo: objective_v1
+  sampler: policy
+  steps: 3
+  prompts_per_step: 4
+  k: 8
+  max_new: 512
+  temperature: 1.0
+  lr: 1.0e-5
+  ppo_epochs: 1
+  kl_coef: 0.0
+  grad_clip: 1.0
+  weight_decay: 0.0
+  tr_epsilon: 0.2
+  fp32_master: true
+  autocast: bf16
+  eval_every: 3
+  eval_k: 8
+  reward_workers: 4
+  screen: {n: 16, k: 8, min_mixed: 4}
+  keep_zero:
+    path: inputs/task11/dt_sft/dt_keep_masks.bin
+    # Fill in the hashes of the binary mask and its adjacent .bin.json file.
+    sha256: REPLACE_WITH_KEEP_MASK_SHA256
+    metadata_sha256: REPLACE_WITH_KEEP_MASK_METADATA_SHA256
+    enforce: false

@@ -119,7 +119,7 @@ def test_survey_refuses_to_run_without_an_instruction_file(tmp_path):
 def _local_score(code, tests, limit=2):
     import stdio_check
     old = stdio_check.RUNNER_KIND
-    stdio_check.RUNNER_KIND = "local"
+    stdio_check.RUNNER_KIND = "local_unisolated"  # trusted fixture programs only; the isolated runner needs Linux root
     try:
         task = {"id": "t", "tests": tests, "time_limit_s": limit}
         return stdio_check.score(task, "```python\n" + code + "\n```")
@@ -171,3 +171,17 @@ def test_math500_rows_are_eval_only_records():
                                     "unique_id": "test/algebra/1.json"}])
     assert got[0]["id"] == "math500-test_algebra_1_json" and got[0]["level"] == "Level 2"
     assert "evaluation only" in got[0]["source"]
+
+
+def test_isolated_local_runner_fails_closed_without_linux_root():
+    import stdio_check
+    ok, why = stdio_check.isolation_available()
+    if ok:
+        pytest.skip("this machine can isolate (Linux root): covered by the Modal isolation probe instead")
+    old = stdio_check.RUNNER_KIND
+    stdio_check.RUNNER_KIND = "local"
+    try:
+        with pytest.raises(RuntimeError, match="refused"):
+            stdio_check.run_program("print(1)", ["\n"], 2)
+    finally:
+        stdio_check.RUNNER_KIND = old

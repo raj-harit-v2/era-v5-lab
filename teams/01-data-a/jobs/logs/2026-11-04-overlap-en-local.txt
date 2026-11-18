@@ -1,0 +1,164 @@
+12 parts found and checked against inputs/sample_v0/SHA256SUMS (2s)
+train/en-dclm/part-00000.parquet: 46245 documents (63s)
+train/en-dclm/part-00001.parquet: 15122 documents (88s)
+heldout/en-dclm/part-00000.parquet: 608 documents (88s)
+train/en-fineweb-edu/part-00000.parquet: 54004 documents (149s)
+train/en-fineweb-edu/part-00001.parquet: 17929 documents (170s)
+heldout/en-fineweb-edu/part-00000.parquet: 732 documents (170s)
+train/en-nemotroncc/part-00000.parquet: 68777 documents (232s)
+train/en-nemotroncc/part-00001.parquet: 23043 documents (252s)
+heldout/en-nemotroncc/part-00000.parquet: 954 documents (253s)
+train/en-nemotroncc-synth/part-00000.parquet: 147754 documents (308s)
+train/en-nemotroncc-synth/part-00001.parquet: 49365 documents (326s)
+heldout/en-nemotroncc-synth/part-00000.parquet: 1975 documents (327s)
+426508 documents, 208950095 distinct shingles, 4414715 of them in 2+ documents; about 439,238,761 intersection steps
+  rows 256/426508: 0s, about 67s left
+  rows 13056/426508: 1s, about 42s left
+  rows 25856/426508: 3s, about 39s left
+  rows 38656/426508: 4s, about 37s left
+  rows 51456/426508: 5s, about 35s left
+  rows 64256/426508: 6s, about 33s left
+  rows 77056/426508: 7s, about 31s left
+  rows 89856/426508: 8s, about 30s left
+  rows 102656/426508: 9s, about 28s left
+  rows 115456/426508: 10s, about 26s left
+  rows 128256/426508: 11s, about 25s left
+  rows 141056/426508: 12s, about 24s left
+  rows 153856/426508: 13s, about 22s left
+  rows 166656/426508: 13s, about 21s left
+  rows 179456/426508: 14s, about 20s left
+  rows 192256/426508: 15s, about 18s left
+  rows 205056/426508: 16s, about 17s left
+  rows 217856/426508: 16s, about 16s left
+  rows 230656/426508: 17s, about 14s left
+  rows 243456/426508: 17s, about 13s left
+  rows 256256/426508: 17s, about 12s left
+  rows 269056/426508: 18s, about 10s left
+  rows 281856/426508: 18s, about 9s left
+  rows 294656/426508: 18s, about 8s left
+  rows 307456/426508: 18s, about 7s left
+  rows 320256/426508: 19s, about 6s left
+  rows 333056/426508: 19s, about 5s left
+  rows 345856/426508: 19s, about 4s left
+  rows 358656/426508: 20s, about 4s left
+  rows 371456/426508: 20s, about 3s left
+  rows 384256/426508: 20s, about 2s left
+  rows 397056/426508: 20s, about 2s left
+  rows 409856/426508: 21s, about 1s left
+  rows 422656/426508: 21s, about 0s left
+  rows 426508/426508: 21s, about 0s left
+{
+  "normalize_id": "g1-spec-v1",
+  "key": "h1_key of h1_sha256.py: normalize.match_key, then NFKC, casefold, whitespace runs to one space",
+  "shingles": "word 5-grams of the key as 8-byte BLAKE2b digests; a key under 5 words is one shingle",
+  "documents": {
+    "en-dclm": {
+      "train": 61367,
+      "heldout": 608,
+      "all": 61975
+    },
+    "en-fineweb-edu": {
+      "train": 71933,
+      "heldout": 732,
+      "all": 72665
+    },
+    "en-nemotroncc": {
+      "train": 91820,
+      "heldout": 954,
+      "all": 92774
+    },
+    "en-nemotroncc-synth": {
+      "train": 197119,
+      "heldout": 1975,
+      "all": 199094
+    }
+  },
+  "documents_all": 426508,
+  "ids_used_by_2_or_more_documents": 0,
+  "h1_exact_groups": 9,
+  "documents_in_h1_exact_groups": 21,
+  "empty_documents": 0,
+  "distinct_shingles": 208950095,
+  "shingles_in_2_or_more_documents": 4414715,
+  "pairs_compared": 90954323778,
+  "pairs_sharing_a_shingle": 169345150,
+  "pairs_at_or_above": {
+    "0.70": 135,
+    "0.75": 90,
+    "0.80": 55,
+    "0.85": 43,
+    "0.90": 33,
+    "0.95": 25
+  },
+  "pairs_stored": 520,
+  "wall_seconds": 884.5,
+  "peak_rss_mb": 3578.2,
+  "versions": {
+    "python": "3.12.10",
+    "numpy": "2.4.3",
+    "scipy": "1.18.1",
+    "pyarrow": "23.0.1",
+    "platform": "macOS-26.4.1-arm64-arm-64bit"
+  },
+  "output_mb": 7.7
+}
+
+Pairs at Jaccard 0.80 and above:
+  en-dclm x en-dclm                             14
+  en-dclm x en-fineweb-edu                      4
+  en-dclm x en-nemotroncc                       1
+  en-dclm x en-nemotroncc-synth                 0
+  en-fineweb-edu x en-fineweb-edu               7
+  en-fineweb-edu x en-nemotroncc                5
+  en-fineweb-edu x en-nemotroncc-synth          1
+  en-nemotroncc x en-nemotroncc                 22
+  en-nemotroncc x en-nemotroncc-synth           0
+  en-nemotroncc-synth x en-nemotroncc-synth     1
+
+Pairs at Jaccard 1.00 and above:
+  en-dclm x en-dclm                             0
+  en-dclm x en-fineweb-edu                      0
+  en-dclm x en-nemotroncc                       0
+  en-dclm x en-nemotroncc-synth                 0
+  en-fineweb-edu x en-fineweb-edu               0
+  en-fineweb-edu x en-nemotroncc                0
+  en-fineweb-edu x en-nemotroncc-synth          0
+  en-nemotroncc x en-nemotroncc                 16
+  en-nemotroncc x en-nemotroncc-synth           0
+  en-nemotroncc-synth x en-nemotroncc-synth     0
+
+Pairs at exact (same H1 key):
+  en-dclm x en-dclm                             0
+  en-dclm x en-fineweb-edu                      0
+  en-dclm x en-nemotroncc                       0
+  en-dclm x en-nemotroncc-synth                 0
+  en-fineweb-edu x en-fineweb-edu               0
+  en-fineweb-edu x en-nemotroncc                0
+  en-fineweb-edu x en-nemotroncc-synth          0
+  en-nemotroncc x en-nemotroncc                 16
+  en-nemotroncc x en-nemotroncc-synth           0
+  en-nemotroncc-synth x en-nemotroncc-synth     0
+
+Top 20 pairs:
+  1.0000  exact en-nemotroncc-895ca3fc886b1823  en-nemotroncc-7db20897053bb278
+  1.0000  exact en-nemotroncc-895ca3fc886b1823  en-nemotroncc-100bc5e16fca7be3
+  1.0000  exact en-nemotroncc-416145e3741647a6  en-nemotroncc-c6402106c8212060
+  1.0000  exact en-nemotroncc-c69f3f6b214a7ea1  en-nemotroncc-8f2f4a9cec450912
+  1.0000  exact en-nemotroncc-d05aa2a15fb3c40e  en-nemotroncc-d0cb7e2ad47e8815
+  1.0000  exact en-nemotroncc-3401ccc3f35e5f38  en-nemotroncc-19fba0e995b9794f
+  1.0000  exact en-nemotroncc-3401ccc3f35e5f38  en-nemotroncc-121c2859458f09ab
+  1.0000  exact en-nemotroncc-3401ccc3f35e5f38  en-nemotroncc-7ee66c4f1536ac84
+  1.0000  exact en-nemotroncc-aa9db2dd7816c733  en-nemotroncc-cbe1b7d7f446e134
+  1.0000  exact en-nemotroncc-8c26690072755e39  en-nemotroncc-a5820200dabea2e3
+  1.0000  exact en-nemotroncc-e3ab57e22f0f0cda  en-nemotroncc-135e912e89054ffa
+  1.0000  exact en-nemotroncc-ce05160d9f5dc48a  en-nemotroncc-e948d191e4036c7b
+  1.0000  exact en-nemotroncc-7db20897053bb278  en-nemotroncc-100bc5e16fca7be3
+  1.0000  exact en-nemotroncc-19fba0e995b9794f  en-nemotroncc-121c2859458f09ab
+  1.0000  exact en-nemotroncc-19fba0e995b9794f  en-nemotroncc-7ee66c4f1536ac84
+  1.0000  exact en-nemotroncc-121c2859458f09ab  en-nemotroncc-7ee66c4f1536ac84
+  0.9930        en-nemotroncc-89a0939e84ddf12e  en-nemotroncc-977e6ca2432f2dc4
+  0.9907        en-fineweb-edu-bd01e8d9fd3a685f  en-nemotroncc-b74b0566e7c2c403
+  0.9856        en-fineweb-edu-b65fca14611c8e9d  en-nemotroncc-9fdcd946d29c9a52
+  0.9821        en-dclm-36198606ca29bd04  en-fineweb-edu-1ea28e98a1931ea8
+
+Wrote overlap_pairs.csv, overlap_matrix.npz, overlap_docs.parquet, overlap_by_pack.csv, overlap_histogram.csv and overlap_summary.json to out/overlap_en (7.7 MB)

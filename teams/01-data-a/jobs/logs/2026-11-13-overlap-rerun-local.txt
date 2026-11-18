@@ -1,0 +1,526 @@
+Base scoring pin: 5740710735ce30bfcb98f389c1c75def378853f6
+Synthetic validation only: 38 packs, 76 parts, 152 documents. Not TSAI cleaned-sample results.
+
+$ /tmp/dedup-review-venv/bin/python -c import sys,numpy,scipy,pyarrow,pygments; print(sys.version); print({m.__name__:m.__version__ for m in (numpy,scipy,pyarrow,pygments)})
+3.12.12 (main, Feb 12 2026, 00:42:14) [Clang 21.1.4 ]
+{'numpy': '2.2.6', 'scipy': '1.15.3', 'pyarrow': '19.0.1', 'pygments': '2.21.0'}
+$ /tmp/dedup-review-venv/bin/python -B -m pytest teams/01-data-a/dedup/tests -q -p no:cacheprovider
+........................................................................ [ 67%]
+..................................                                       [100%]
+106 passed in 2.32s
+
+$ python -I teams/01-data-a/dedup/overlap.py --config out/overlap_rerun_local/overlap.json
+76 cleaned parts found (input checksum verification deferred)
+train/cadj-commits/part-00000.parquet: 2 documents (0s)
+train/cadj-notebooks/part-00000.parquet: 2 documents (0s)
+train/cadj-stackexchange/part-00000.parquet: 2 documents (0s)
+train/code-cpp/part-00000.parquet: 2 documents (0s)
+train/code-go/part-00000.parquet: 2 documents (0s)
+train/code-java/part-00000.parquet: 2 documents (0s)
+train/code-js-ts/part-00000.parquet: 2 documents (0s)
+train/code-python/part-00000.parquet: 2 documents (0s)
+train/code-rust/part-00000.parquet: 2 documents (0s)
+train/en-dclm/part-00000.parquet: 2 documents (0s)
+train/en-fineweb-edu/part-00000.parquet: 2 documents (0s)
+train/en-nemotroncc/part-00000.parquet: 2 documents (0s)
+train/en-nemotroncc-synth/part-00000.parquet: 2 documents (0s)
+train/ind-bn-fw2/part-00000.parquet: 2 documents (0s)
+train/ind-bn-sangraha-v/part-00000.parquet: 2 documents (0s)
+train/ind-gu-fw2/part-00000.parquet: 2 documents (0s)
+train/ind-hi-fw2/part-00000.parquet: 2 documents (0s)
+train/ind-hi-hplt/part-00000.parquet: 2 documents (0s)
+train/ind-hi-indiccorp/part-00000.parquet: 2 documents (0s)
+train/ind-hi-sangraha-s/part-00000.parquet: 2 documents (0s)
+train/ind-hi-sangraha-v/part-00000.parquet: 2 documents (0s)
+train/ind-kn-fw2/part-00000.parquet: 2 documents (0s)
+train/ind-kn-sangraha-s/part-00000.parquet: 2 documents (0s)
+train/ind-kn-sangraha-v/part-00000.parquet: 2 documents (0s)
+train/ind-ml-fw2/part-00000.parquet: 2 documents (0s)
+train/ind-mr-fw2/part-00000.parquet: 2 documents (0s)
+train/ind-mr-sangraha-v/part-00000.parquet: 2 documents (0s)
+train/ind-or-fw2/part-00000.parquet: 2 documents (0s)
+train/ind-sa-fw2/part-00000.parquet: 2 documents (0s)
+train/ind-ta-fw2/part-00000.parquet: 2 documents (0s)
+train/ind-ta-sangraha-s/part-00000.parquet: 2 documents (0s)
+train/ind-ta-sangraha-v/part-00000.parquet: 2 documents (0s)
+train/ind-te-fw2/part-00000.parquet: 2 documents (0s)
+train/ind-te-sangraha-s/part-00000.parquet: 2 documents (0s)
+train/ind-te-sangraha-v/part-00000.parquet: 2 documents (0s)
+train/math-finemath/part-00000.parquet: 2 documents (0s)
+train/math-megamath/part-00000.parquet: 2 documents (0s)
+train/sci-finepdfs/part-00000.parquet: 2 documents (0s)
+heldout/cadj-commits/part-00000.parquet: 2 documents (0s)
+heldout/cadj-notebooks/part-00000.parquet: 2 documents (0s)
+heldout/cadj-stackexchange/part-00000.parquet: 2 documents (0s)
+heldout/code-cpp/part-00000.parquet: 2 documents (0s)
+heldout/code-go/part-00000.parquet: 2 documents (0s)
+heldout/code-java/part-00000.parquet: 2 documents (0s)
+heldout/code-js-ts/part-00000.parquet: 2 documents (0s)
+heldout/code-python/part-00000.parquet: 2 documents (0s)
+heldout/code-rust/part-00000.parquet: 2 documents (0s)
+heldout/en-dclm/part-00000.parquet: 2 documents (0s)
+heldout/en-fineweb-edu/part-00000.parquet: 2 documents (0s)
+heldout/en-nemotroncc/part-00000.parquet: 2 documents (0s)
+heldout/en-nemotroncc-synth/part-00000.parquet: 2 documents (0s)
+heldout/ind-bn-fw2/part-00000.parquet: 2 documents (0s)
+heldout/ind-bn-sangraha-v/part-00000.parquet: 2 documents (0s)
+heldout/ind-gu-fw2/part-00000.parquet: 2 documents (0s)
+heldout/ind-hi-fw2/part-00000.parquet: 2 documents (0s)
+heldout/ind-hi-hplt/part-00000.parquet: 2 documents (0s)
+heldout/ind-hi-indiccorp/part-00000.parquet: 2 documents (0s)
+heldout/ind-hi-sangraha-s/part-00000.parquet: 2 documents (0s)
+heldout/ind-hi-sangraha-v/part-00000.parquet: 2 documents (0s)
+heldout/ind-kn-fw2/part-00000.parquet: 2 documents (0s)
+heldout/ind-kn-sangraha-s/part-00000.parquet: 2 documents (0s)
+heldout/ind-kn-sangraha-v/part-00000.parquet: 2 documents (0s)
+heldout/ind-ml-fw2/part-00000.parquet: 2 documents (0s)
+heldout/ind-mr-fw2/part-00000.parquet: 2 documents (0s)
+heldout/ind-mr-sangraha-v/part-00000.parquet: 2 documents (0s)
+heldout/ind-or-fw2/part-00000.parquet: 2 documents (0s)
+heldout/ind-sa-fw2/part-00000.parquet: 2 documents (0s)
+heldout/ind-ta-fw2/part-00000.parquet: 2 documents (0s)
+heldout/ind-ta-sangraha-s/part-00000.parquet: 2 documents (0s)
+heldout/ind-ta-sangraha-v/part-00000.parquet: 2 documents (0s)
+heldout/ind-te-fw2/part-00000.parquet: 2 documents (0s)
+heldout/ind-te-sangraha-s/part-00000.parquet: 2 documents (0s)
+heldout/ind-te-sangraha-v/part-00000.parquet: 2 documents (0s)
+heldout/math-finemath/part-00000.parquet: 2 documents (0s)
+heldout/math-megamath/part-00000.parquet: 2 documents (0s)
+heldout/sci-finepdfs/part-00000.parquet: 2 documents (0s)
+152 documents, 3972 distinct shingles, 3896 of them in 2+ documents; about 34,874 intersection steps
+  rows 152/152: 0s, about 0s left
+Applying H1/H2 rules; scoring code token pairs independently of raw word scores
+{
+  "status": "complete",
+  "normalize_id": "g1-spec-v1",
+  "key": "h1_key of h1_sha256.py: normalize.match_key, then NFKC, casefold, whitespace runs to one space",
+  "shingles": "word 5-grams of the key as 8-byte BLAKE2b digests; a key under 5 words is one shingle",
+  "documents": {
+    "cadj-commits": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    },
+    "cadj-notebooks": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    },
+    "cadj-stackexchange": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    },
+    "code-cpp": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    },
+    "code-go": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    },
+    "code-java": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    },
+    "code-js-ts": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    },
+    "code-python": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    },
+    "code-rust": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    },
+    "en-dclm": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    },
+    "en-fineweb-edu": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    },
+    "en-nemotroncc": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    },
+    "en-nemotroncc-synth": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    },
+    "ind-bn-fw2": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    },
+    "ind-bn-sangraha-v": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    },
+    "ind-gu-fw2": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    },
+    "ind-hi-fw2": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    },
+    "ind-hi-hplt": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    },
+    "ind-hi-indiccorp": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    },
+    "ind-hi-sangraha-s": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    },
+    "ind-hi-sangraha-v": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    },
+    "ind-kn-fw2": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    },
+    "ind-kn-sangraha-s": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    },
+    "ind-kn-sangraha-v": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    },
+    "ind-ml-fw2": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    },
+    "ind-mr-fw2": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    },
+    "ind-mr-sangraha-v": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    },
+    "ind-or-fw2": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    },
+    "ind-sa-fw2": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    },
+    "ind-ta-fw2": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    },
+    "ind-ta-sangraha-s": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    },
+    "ind-ta-sangraha-v": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    },
+    "ind-te-fw2": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    },
+    "ind-te-sangraha-s": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    },
+    "ind-te-sangraha-v": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    },
+    "math-finemath": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    },
+    "math-megamath": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    },
+    "sci-finepdfs": {
+      "train": 2,
+      "heldout": 2,
+      "all": 4
+    }
+  },
+  "documents_all": 152,
+  "ids_used_by_2_or_more_documents": 0,
+  "h1_exact_groups": 38,
+  "documents_in_h1_exact_groups": 76,
+  "empty_documents": 0,
+  "distinct_shingles": 3972,
+  "shingles_in_2_or_more_documents": 3896,
+  "pairs_compared": 11476,
+  "pairs_sharing_a_shingle": 114,
+  "pairs_at_or_above": {
+    "0.70": 114,
+    "0.75": 114,
+    "0.80": 114,
+    "0.85": 114,
+    "0.90": 114,
+    "0.95": 114
+  },
+  "pairs_stored": 114,
+  "qualifying_pairs_by_rule": {
+    "H1": 38,
+    "H2": 72
+  },
+  "matrix_definition": "distinct documents in row source with another qualifying H1/H2 match in column source / row source documents",
+  "duplicate_rules": {
+    "prose": "word Jaccard >= 0.80; both >= 50 words",
+    "math": "word Jaccard >= 0.90; identical signed number multisets",
+    "code": "token Jaccard >= 0.85; both >= 20 nonblank lines after comment removal",
+    "mixed_domains": "both domains' rules must pass on both documents",
+    "h1": "same H1 SHA256; bypasses H2 guards",
+    "translations": "not detected"
+  },
+  "pack_domains": {
+    "cadj-commits": "prose",
+    "cadj-notebooks": "prose",
+    "cadj-stackexchange": "prose",
+    "code-cpp": "code",
+    "code-go": "code",
+    "code-java": "code",
+    "code-js-ts": "code",
+    "code-python": "code",
+    "code-rust": "code",
+    "en-dclm": "prose",
+    "en-fineweb-edu": "prose",
+    "en-nemotroncc": "prose",
+    "en-nemotroncc-synth": "prose",
+    "ind-bn-fw2": "prose",
+    "ind-bn-sangraha-v": "prose",
+    "ind-gu-fw2": "prose",
+    "ind-hi-fw2": "prose",
+    "ind-hi-hplt": "prose",
+    "ind-hi-indiccorp": "prose",
+    "ind-hi-sangraha-s": "prose",
+    "ind-hi-sangraha-v": "prose",
+    "ind-kn-fw2": "prose",
+    "ind-kn-sangraha-s": "prose",
+    "ind-kn-sangraha-v": "prose",
+    "ind-ml-fw2": "prose",
+    "ind-mr-fw2": "prose",
+    "ind-mr-sangraha-v": "prose",
+    "ind-or-fw2": "prose",
+    "ind-sa-fw2": "prose",
+    "ind-ta-fw2": "prose",
+    "ind-ta-sangraha-s": "prose",
+    "ind-ta-sangraha-v": "prose",
+    "ind-te-fw2": "prose",
+    "ind-te-sangraha-s": "prose",
+    "ind-te-sangraha-v": "prose",
+    "math-finemath": "math",
+    "math-megamath": "math",
+    "sci-finepdfs": "prose"
+  },
+  "wall_seconds": 0.5,
+  "peak_rss_mb": 143.0,
+  "versions": {
+    "python": "3.12.12",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3",
+    "pyarrow": "19.0.1",
+    "pygments": "2.21.0",
+    "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39"
+  },
+  "output_mb": 0.3
+}
+
+Pairs at Jaccard 0.80 and above:
+  cadj-commits x cadj-commits                   3
+  cadj-notebooks x cadj-notebooks               3
+  cadj-stackexchange x cadj-stackexchange       3
+  code-cpp x code-cpp                           3
+  code-go x code-go                             3
+  code-java x code-java                         3
+  code-js-ts x code-js-ts                       3
+  code-python x code-python                     3
+  code-rust x code-rust                         3
+  en-dclm x en-dclm                             3
+  en-fineweb-edu x en-fineweb-edu               3
+  en-nemotroncc x en-nemotroncc                 3
+  en-nemotroncc-synth x en-nemotroncc-synth     3
+  ind-bn-fw2 x ind-bn-fw2                       3
+  ind-bn-sangraha-v x ind-bn-sangraha-v         3
+  ind-gu-fw2 x ind-gu-fw2                       3
+  ind-hi-fw2 x ind-hi-fw2                       3
+  ind-hi-hplt x ind-hi-hplt                     3
+  ind-hi-indiccorp x ind-hi-indiccorp           3
+  ind-hi-sangraha-s x ind-hi-sangraha-s         3
+  ind-hi-sangraha-v x ind-hi-sangraha-v         3
+  ind-kn-fw2 x ind-kn-fw2                       3
+  ind-kn-sangraha-s x ind-kn-sangraha-s         3
+  ind-kn-sangraha-v x ind-kn-sangraha-v         3
+  ind-ml-fw2 x ind-ml-fw2                       3
+  ind-mr-fw2 x ind-mr-fw2                       3
+  ind-mr-sangraha-v x ind-mr-sangraha-v         3
+  ind-or-fw2 x ind-or-fw2                       3
+  ind-sa-fw2 x ind-sa-fw2                       3
+  ind-ta-fw2 x ind-ta-fw2                       3
+  ind-ta-sangraha-s x ind-ta-sangraha-s         3
+  ind-ta-sangraha-v x ind-ta-sangraha-v         3
+  ind-te-fw2 x ind-te-fw2                       3
+  ind-te-sangraha-s x ind-te-sangraha-s         3
+  ind-te-sangraha-v x ind-te-sangraha-v         3
+  math-finemath x math-finemath                 3
+  math-megamath x math-megamath                 3
+  sci-finepdfs x sci-finepdfs                   3
+
+Pairs at Jaccard 1.00 and above:
+  cadj-commits x cadj-commits                   1
+  cadj-notebooks x cadj-notebooks               1
+  cadj-stackexchange x cadj-stackexchange       1
+  code-cpp x code-cpp                           1
+  code-go x code-go                             1
+  code-java x code-java                         1
+  code-js-ts x code-js-ts                       1
+  code-python x code-python                     1
+  code-rust x code-rust                         1
+  en-dclm x en-dclm                             1
+  en-fineweb-edu x en-fineweb-edu               1
+  en-nemotroncc x en-nemotroncc                 1
+  en-nemotroncc-synth x en-nemotroncc-synth     1
+  ind-bn-fw2 x ind-bn-fw2                       1
+  ind-bn-sangraha-v x ind-bn-sangraha-v         1
+  ind-gu-fw2 x ind-gu-fw2                       1
+  ind-hi-fw2 x ind-hi-fw2                       1
+  ind-hi-hplt x ind-hi-hplt                     1
+  ind-hi-indiccorp x ind-hi-indiccorp           1
+  ind-hi-sangraha-s x ind-hi-sangraha-s         1
+  ind-hi-sangraha-v x ind-hi-sangraha-v         1
+  ind-kn-fw2 x ind-kn-fw2                       1
+  ind-kn-sangraha-s x ind-kn-sangraha-s         1
+  ind-kn-sangraha-v x ind-kn-sangraha-v         1
+  ind-ml-fw2 x ind-ml-fw2                       1
+  ind-mr-fw2 x ind-mr-fw2                       1
+  ind-mr-sangraha-v x ind-mr-sangraha-v         1
+  ind-or-fw2 x ind-or-fw2                       1
+  ind-sa-fw2 x ind-sa-fw2                       1
+  ind-ta-fw2 x ind-ta-fw2                       1
+  ind-ta-sangraha-s x ind-ta-sangraha-s         1
+  ind-ta-sangraha-v x ind-ta-sangraha-v         1
+  ind-te-fw2 x ind-te-fw2                       1
+  ind-te-sangraha-s x ind-te-sangraha-s         1
+  ind-te-sangraha-v x ind-te-sangraha-v         1
+  math-finemath x math-finemath                 1
+  math-megamath x math-megamath                 1
+  sci-finepdfs x sci-finepdfs                   1
+
+Pairs at exact (same H1 key):
+  cadj-commits x cadj-commits                   1
+  cadj-notebooks x cadj-notebooks               1
+  cadj-stackexchange x cadj-stackexchange       1
+  code-cpp x code-cpp                           1
+  code-go x code-go                             1
+  code-java x code-java                         1
+  code-js-ts x code-js-ts                       1
+  code-python x code-python                     1
+  code-rust x code-rust                         1
+  en-dclm x en-dclm                             1
+  en-fineweb-edu x en-fineweb-edu               1
+  en-nemotroncc x en-nemotroncc                 1
+  en-nemotroncc-synth x en-nemotroncc-synth     1
+  ind-bn-fw2 x ind-bn-fw2                       1
+  ind-bn-sangraha-v x ind-bn-sangraha-v         1
+  ind-gu-fw2 x ind-gu-fw2                       1
+  ind-hi-fw2 x ind-hi-fw2                       1
+  ind-hi-hplt x ind-hi-hplt                     1
+  ind-hi-indiccorp x ind-hi-indiccorp           1
+  ind-hi-sangraha-s x ind-hi-sangraha-s         1
+  ind-hi-sangraha-v x ind-hi-sangraha-v         1
+  ind-kn-fw2 x ind-kn-fw2                       1
+  ind-kn-sangraha-s x ind-kn-sangraha-s         1
+  ind-kn-sangraha-v x ind-kn-sangraha-v         1
+  ind-ml-fw2 x ind-ml-fw2                       1
+  ind-mr-fw2 x ind-mr-fw2                       1
+  ind-mr-sangraha-v x ind-mr-sangraha-v         1
+  ind-or-fw2 x ind-or-fw2                       1
+  ind-sa-fw2 x ind-sa-fw2                       1
+  ind-ta-fw2 x ind-ta-fw2                       1
+  ind-ta-sangraha-s x ind-ta-sangraha-s         1
+  ind-ta-sangraha-v x ind-ta-sangraha-v         1
+  ind-te-fw2 x ind-te-fw2                       1
+  ind-te-sangraha-s x ind-te-sangraha-s         1
+  ind-te-sangraha-v x ind-te-sangraha-v         1
+  math-finemath x math-finemath                 1
+  math-megamath x math-megamath                 1
+  sci-finepdfs x sci-finepdfs                   1
+
+Top 20 pairs:
+  1.0000  exact cadj-commits-cadj-commits-train-0  cadj-commits-cadj-commits-heldout-0
+  1.0000  exact cadj-notebooks-cadj-notebooks-train-0  cadj-notebooks-cadj-notebooks-heldout-0
+  1.0000  exact cadj-stackexchange-cadj-stackexchange-train-0  cadj-stackexchange-cadj-stackexchange-heldout-0
+  1.0000  exact code-cpp-code-cpp-train-0  code-cpp-code-cpp-heldout-0
+  1.0000  exact code-go-code-go-train-0  code-go-code-go-heldout-0
+  1.0000  exact code-java-code-java-train-0  code-java-code-java-heldout-0
+  1.0000  exact code-js-ts-code-js-ts-train-0  code-js-ts-code-js-ts-heldout-0
+  1.0000  exact code-python-code-python-train-0  code-python-code-python-heldout-0
+  1.0000  exact code-rust-code-rust-train-0  code-rust-code-rust-heldout-0
+  1.0000  exact en-dclm-en-dclm-train-0  en-dclm-en-dclm-heldout-0
+  1.0000  exact en-fineweb-edu-en-fineweb-edu-train-0  en-fineweb-edu-en-fineweb-edu-heldout-0
+  1.0000  exact en-nemotroncc-en-nemotroncc-train-0  en-nemotroncc-en-nemotroncc-heldout-0
+  1.0000  exact en-nemotroncc-synth-en-nemotroncc-synth-train-0  en-nemotroncc-synth-en-nemotroncc-synth-heldout-0
+  1.0000  exact ind-bn-fw2-ind-bn-fw2-train-0  ind-bn-fw2-ind-bn-fw2-heldout-0
+  1.0000  exact ind-bn-sangraha-v-ind-bn-sangraha-v-train-0  ind-bn-sangraha-v-ind-bn-sangraha-v-heldout-0
+  1.0000  exact ind-gu-fw2-ind-gu-fw2-train-0  ind-gu-fw2-ind-gu-fw2-heldout-0
+  1.0000  exact ind-hi-fw2-ind-hi-fw2-train-0  ind-hi-fw2-ind-hi-fw2-heldout-0
+  1.0000  exact ind-hi-hplt-ind-hi-hplt-train-0  ind-hi-hplt-ind-hi-hplt-heldout-0
+  1.0000  exact ind-hi-indiccorp-ind-hi-indiccorp-train-0  ind-hi-indiccorp-ind-hi-indiccorp-heldout-0
+  1.0000  exact ind-hi-sangraha-s-ind-hi-sangraha-s-train-0  ind-hi-sangraha-s-ind-hi-sangraha-s-heldout-0
+
+Wrote overlap_pairs.csv, overlap_matrix.npz, overlap_docs.parquet, overlap_by_pack.csv, overlap_histogram.csv, overlap_matches.csv, overlap_matrix.csv, overlap_matrix_counts.csv and overlap_summary.json to out/overlap_rerun_local/overlap (0.3 MB)
+
+$ python -I teams/01-data-a/dedup/dedup.py --config out/overlap_rerun_local/dedup.json
+152 documents, 110 matches, 38 clusters
+removed 74 (48.6842%): by rule {'H1': 38, 'H2': 36}, by stage {'within_pack': 74}
+clusters decided by priority rule: {'0': 38}
+held-out removed: 0 (must be 0); held-out <-> held-out pairs reported: 0
+empty documents: 0 listed, not removed; 0 matches between them set aside
+note: licence map not filled for 38 packs; default used
+harm check: not_testable
+wrote remove_list.csv, dedup_log.jsonl, heldout_duplicates.csv, empty_documents.csv, dedup_groups.csv and dedup_summary.json to out/overlap_rerun_local/dedup

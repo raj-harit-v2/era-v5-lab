@@ -14,8 +14,13 @@ Every input row gets exactly one primary outcome, checked in this order:
     policy_protected_split, policy_split_not_allowed, policy_row_licence,
     quality_critique_wrong, quality_judgement_unknown, quality_execution_failed, quality_execution_missing,
     invalid_index, held_source_unavailable, held_source_not_approved, held_identity_unverified,
-    index_out_of_bounds, source_question_unusable, question_mismatch, policy_protected_family,
-    eligible_joined
+    policy_unclear_source, index_out_of_bounds, source_question_unusable, question_mismatch,
+    policy_protected_family, eligible_joined
+
+`held_identity_unverified` (admission mode only) means the source's identity level is not one of the
+policy's `pack.accepted_identity_levels` (default: verified only; diagnostic never admits).
+`policy_unclear_source` is a source row listed in the policy's `unclear_source_rows`: its identity evidence
+is unclear, so under the 14 Nov 2026 ruling its OCR-2 rows stay out (both modes).
 
 so that `raw rows = policy excluded + malformed or unresolved + eligible joined` holds exactly. The outer
 `train/python` path of a shard authorises nothing: the row's own upstream split decides.
@@ -32,7 +37,7 @@ a row it skips. The sidecar fixes that position before conversion, so a hole nev
 Modes. `diagnostic` runs under a `TSAI reserves` ruling and with sources whose identity is only
 `diagnostic`; its output is for scanning and review. `admission` refuses the whole run unless the set is
 `allowed` and the teacher is approved, and holds every row whose source is not approved for training or
-not identity-verified. Exit code: 0 done, 2 bad input or manifest, 3 refused by policy.
+whose identity level the policy does not accept. Exit code: 0 done, 2 bad input or manifest, 3 refused by policy.
 """
 
 from __future__ import annotations
@@ -60,7 +65,7 @@ PLACEHOLDERS = ("", "-")
 POLICY_EXCLUDED = (
     "policy_protected_split", "policy_split_not_allowed", "policy_row_licence", "quality_critique_wrong",
     "quality_judgement_unknown", "quality_execution_failed", "quality_execution_missing",
-    "held_source_not_approved", "policy_protected_family",
+    "held_source_not_approved", "policy_protected_family", "policy_unclear_source",
 )
 UNRESOLVED = (
     "malformed_row", "duplicate_row_id", "unknown_dataset", "invalid_index", "held_source_unavailable",
@@ -69,6 +74,19 @@ UNRESOLVED = (
 ELIGIBLE = "eligible_joined"
 OUTCOMES = POLICY_EXCLUDED + UNRESOLVED + (ELIGIBLE,)
 STRING_FIELDS = ("id", "dataset", "split", "question", "r1_generation", "judgement", "license")
+
+
+DEFAULT_IDENTITY_LEVELS = ("verified",)  # a policy without pack.accepted_identity_levels admits verified sources only
+
+
+def accepted_identity_levels(policy: dict) -> tuple:
+    """Source identity levels that may supply a training row under this policy."""
+    return tuple((policy.get("pack") or {}).get("accepted_identity_levels", DEFAULT_IDENTITY_LEVELS))
+
+
+def unclear_source_keys(policy: dict) -> set:
+    """(dataset, split, ordinal) of source rows whose identity evidence is unclear: their OCR-2 rows stay out."""
+    return {(r["dataset"], r["split"], r["ordinal"]) for r in (policy.get("unclear_source_rows") or {}).get("rows", [])}
 
 
 class Refusal(Exception):
@@ -117,7 +135,25 @@ def load_policy(path) -> tuple[dict, str]:
         need(isinstance(src.get("training_approved"), bool), f"sources.{name}.training_approved must be true or false")
         for field in ("repo", "statement_licence", "attribution"):
             need(isinstance(src.get(field), str), f"sources.{name}.{field} is missing (use \"\" for unknown)")
+        need(src.get("revision") is None or (isinstance(src["revision"], str) and len(src["revision"]) == 40),
+             f"sources.{name}.revision must be a 40-character commit id when present")
     need(isinstance(policy.get("protected_family_keys", []), list), "protected_family_keys must be a list")
+    unclear = policy.get("unclear_source_rows", {"rows": []})
+    need(isinstance(unclear, dict) and isinstance(unclear.get("rows"), list), "unclear_source_rows.rows must be a list")
+    for item in unclear["rows"]:
+        need(isinstance(item, dict) and isinstance(item.get("dataset"), str) and isinstance(item.get("split"), str)
+             and isinstance(item.get("ordinal"), int) and not isinstance(item.get("ordinal"), bool),
+             "unclear_source_rows.rows: each entry needs dataset, split and an integer ordinal")
+    levels = (policy.get("pack") or {}).get("accepted_identity_levels", list(DEFAULT_IDENTITY_LEVELS))
+    need(isinstance(levels, list) and levels and all(level in si.IDENTITY_LEVELS for level in levels),
+         f"pack.accepted_identity_levels must be a non-empty list of {si.IDENTITY_LEVELS}")
+    need("diagnostic" not in levels, "pack.accepted_identity_levels: a diagnostic identity never admits a row")
+    heldout = (policy.get("pack") or {}).get("heldout_eval_v1")
+    if heldout is not None:
+        frac = heldout.get("fraction") if isinstance(heldout, dict) else None
+        need(isinstance(frac, (int, float)) and not isinstance(frac, bool) and 0 <= frac <= 0.2,
+             "pack.heldout_eval_v1.fraction must be a number in [0, 0.2]")
+        need(isinstance(heldout.get("salt"), str) and heldout["salt"], "pack.heldout_eval_v1.salt is missing")
     return policy, hashlib.sha256(raw).hexdigest()
 
 
@@ -258,8 +294,10 @@ def classify(row, ordinal_seen: set, policy: dict, index: si.SourceIndex, mode: 
     if mode == "admission":
         if not src_policy["training_approved"]:
             return "held_source_not_approved", facts
-        if source["identity_level"] != "verified":
+        if source["identity_level"] not in accepted_identity_levels(policy):
             return "held_identity_unverified", facts
+    if (row["dataset"], row["split"], ordinal) in unclear_source_keys(policy):
+        return "policy_unclear_source", facts
     try:
         resolved = index.resolve(row["dataset"], row["split"], ordinal)
     except si.OutOfBounds:
@@ -292,6 +330,10 @@ def prepare(source_manifest, policy_path, input_path, shard_id: int, out_dir, mo
     if input_sha != entry["sha256"]:
         raise si.SourceIndexError(f"{input_path.name} has sha256 {input_sha}, the manifest pins {entry['sha256']} for shard {shard_id}")
     index = si.open_or_build(source_manifest, index_path or Path(f"{source_manifest}.index.sqlite"))
+    for key, spec in manifest["sources"].items():  # a revision the policy names must be the one the manifest pins
+        named = (policy["sources"].get(spec["dataset"]) or {}).get("revision")
+        if named is not None and named != spec["revision"]:
+            raise Refusal(f"{key}: the policy names revision {named[:12]}..., the source manifest pins {spec['revision'][:12]}...")
     for (dataset, split), src in index._sources.items():
         declared = policy["sources"].get(dataset)
         if declared and split in declared["train_splits"] and src["protected"]:

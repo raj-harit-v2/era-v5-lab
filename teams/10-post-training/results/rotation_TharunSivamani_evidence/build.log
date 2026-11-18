@@ -1,0 +1,51 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.25kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.8-slim@sha256:1d52838af602b4b5a831beb13a0e4d073280665ea7be7f69ce2382f29c5a613f
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/8] FROM docker.io/library/python:3.8-slim@sha256:1d52838af602b4b5a831beb13a0e4d073280665ea7be7f69ce2382f29c5a613f
+#4 resolve docker.io/library/python:3.8-slim@sha256:1d52838af602b4b5a831beb13a0e4d073280665ea7be7f69ce2382f29c5a613f 0.0s done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 38B done
+#5 DONE 0.0s
+
+#6 [6/8] COPY requirements.lock /tmp/requirements.lock
+#6 CACHED
+
+#7 [4/8] RUN git clone --quiet https://github.com/more-itertools/more-itertools.git /repo && cd /repo     && git checkout --quiet d6e773411087fa494991d7a8ad81e6a9ad5ddd56     && git submodule update --init --recursive --quiet     && find . -name .git -prune -exec rm -rf {} +     && git init --quiet && git add -A     && git -c user.name=base -c user.email=base@localhost commit --quiet -m base
+#7 CACHED
+
+#8 [7/8] RUN uv pip install --no-deps -r /tmp/requirements.lock     && uv pip install --no-deps --exclude-newer 2020-03-29 --exclude-newer-package setuptools=2025-06-01 --exclude-newer-package wheel=2025-06-01 -e .
+#8 CACHED
+
+#9 [5/8] WORKDIR /repo
+#9 CACHED
+
+#10 [3/8] RUN pip install --no-cache-dir uv==0.13.7     && uv venv --quiet --python /usr/local/bin/python3 /venv
+#10 CACHED
+
+#11 [2/8] RUN apt-get update && apt-get install -y --no-install-recommends git ca-certificates     && rm -rf /var/lib/apt/lists/*
+#11 CACHED
+
+#12 [8/8] RUN useradd --create-home runner && chown -R runner /repo
+#12 CACHED
+
+#13 exporting to image
+#13 exporting layers done
+#13 exporting manifest sha256:5580ea379f7f304810dbd31598910d439359cbedcf01374c3d194c472c83d8aa done
+#13 exporting config sha256:092ec061bc53818b08ac31da0ac26b94dc40e5312399a53676f11ec3dc748e5a done
+#13 exporting attestation manifest sha256:2d897c51d9f8923c12a95ae4536d2adbbbe5325d2c09633c18f6671e27015ad8 done
+#13 exporting manifest list sha256:6a318a9fbe073026a35eddc76ee892ddef800f30187ec7102f0f4be713d98bbf done
+#13 naming to docker.io/g10-swe/more-itertools__more-itertools-411:v1 done
+#13 unpacking to docker.io/g10-swe/more-itertools__more-itertools-411:v1 done
+#13 DONE 0.0s

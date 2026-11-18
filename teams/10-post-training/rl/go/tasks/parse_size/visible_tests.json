@@ -1,0 +1,20 @@
+[
+ {
+  "args": [
+   "1KiB"
+  ],
+  "expected": 1024
+ },
+ {
+  "args": [
+   "2.5 MB"
+  ],
+  "expected": 2500000
+ },
+ {
+  "args": [
+   "abc"
+  ],
+  "raises": "error"
+ }
+]

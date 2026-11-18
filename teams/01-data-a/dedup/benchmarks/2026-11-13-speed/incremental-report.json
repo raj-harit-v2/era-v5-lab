@@ -1,0 +1,121 @@
+{
+  "inputs": {
+    "kind": "synthetic",
+    "per_pack": 4000,
+    "sources": [],
+    "parts": [
+      {
+        "path": "inputs/train/code-rust/part-00000.parquet",
+        "sha256": "13869bd9dff4f6d241924f7a9189200bde8a507ee2d35b097ca1818548237e3a",
+        "rows": 4000
+      },
+      {
+        "path": "inputs/train/en-dclm/part-00000.parquet",
+        "sha256": "e46baf495abc85c43c3d1b8b61c45ac3283a994d2506ae65217bc654271612e2",
+        "rows": 4000
+      },
+      {
+        "path": "inputs/train/math-finemath/part-00000.parquet",
+        "sha256": "4a509b34c9b61a566ae7f6488974ead46c999dddaaf23ea01b35d816e8ed3ea1",
+        "rows": 4000
+      }
+    ]
+  },
+  "baseline": "1d934335175c631510cd7e88e4c98aaf88d0c4d9",
+  "candidate": "working files",
+  "runs": [
+    {
+      "label": "baseline",
+      "run": 1,
+      "wall_seconds": 13.732,
+      "scoring_seconds": 12.9,
+      "peak_rss_mb": 292.6,
+      "versions": {
+        "python": "3.12.12",
+        "numpy": "2.2.6",
+        "scipy": "1.15.3",
+        "pyarrow": "19.0.1",
+        "pygments": "2.21.0",
+        "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39"
+      }
+    },
+    {
+      "label": "candidate",
+      "run": 1,
+      "wall_seconds": 13.667,
+      "scoring_seconds": 12.4,
+      "peak_rss_mb": 286.2,
+      "versions": {
+        "python": "3.12.12",
+        "numpy": "2.2.6",
+        "scipy": "1.15.3",
+        "pandas": "2.3.3",
+        "pyarrow": "19.0.1",
+        "pygments": "2.21.0",
+        "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39"
+      }
+    },
+    {
+      "label": "candidate",
+      "run": 2,
+      "wall_seconds": 13.718,
+      "scoring_seconds": 12.5,
+      "peak_rss_mb": 288.7,
+      "versions": {
+        "python": "3.12.12",
+        "numpy": "2.2.6",
+        "scipy": "1.15.3",
+        "pandas": "2.3.3",
+        "pyarrow": "19.0.1",
+        "pygments": "2.21.0",
+        "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39"
+      }
+    },
+    {
+      "label": "baseline",
+      "run": 2,
+      "wall_seconds": 13.675,
+      "scoring_seconds": 12.6,
+      "peak_rss_mb": 296.3,
+      "versions": {
+        "python": "3.12.12",
+        "numpy": "2.2.6",
+        "scipy": "1.15.3",
+        "pyarrow": "19.0.1",
+        "pygments": "2.21.0",
+        "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39"
+      }
+    }
+  ],
+  "source_sha256": {
+    "baseline": {
+      "teams/01-data-a/dedup/h1_sha256.py": "ace87252938b707e22f1dd73fec82300c4e79743962f6cb2c53f43558343ccf7",
+      "teams/01-data-a/dedup/jaccard_matrix.py": "b28691e84dad734a5576e587d31dbe18d51a2f35697f3d337994c3fd08b2e90f",
+      "teams/01-data-a/dedup/overlap.py": "91dbdcc44b6e674cb239d83a7e059a08b295dafc290eb7996d9be1bb7e57f417",
+      "teams/01-data-a/dedup/overlap_report.py": "a6196dff18d899429b767d861aba3310221eaee9317a3c816dec9d54354cb944",
+      "teams/01-data-a/dedup/overlap_rules.py": "6789cbf15f9993801c166e0e261ff10dbd6390f39f89837c82b089417adfa8c0",
+      "teams/01-data-a/spec_v1/tools/normalize.py": "b96e39af6b048cf135e5915acb13c2d5630d1a238760df494776c6783a0a6669"
+    },
+    "candidate": {
+      "teams/01-data-a/dedup/h1_sha256.py": "ace87252938b707e22f1dd73fec82300c4e79743962f6cb2c53f43558343ccf7",
+      "teams/01-data-a/dedup/jaccard_matrix.py": "03526717fe0b0ac0450d52c00bd95fb74431bca2b562e1c7ca077306bdcb4647",
+      "teams/01-data-a/dedup/overlap.py": "e12a25ffa6cfa11b2454be27454731e6a4c7fcfe7876de94abee0c13650b55df",
+      "teams/01-data-a/dedup/overlap_report.py": "a6196dff18d899429b767d861aba3310221eaee9317a3c816dec9d54354cb944",
+      "teams/01-data-a/dedup/overlap_rules.py": "063242944c5af5291e17f7b4a80d4d9398367fce3a47de8ef6ce4fa6b69dddcd",
+      "teams/01-data-a/spec_v1/tools/normalize.py": "b96e39af6b048cf135e5915acb13c2d5630d1a238760df494776c6783a0a6669"
+    }
+  },
+  "equivalence": {
+    "byte_identical": [
+      "overlap_pairs.csv",
+      "overlap_docs.parquet",
+      "overlap_by_pack.csv",
+      "overlap_histogram.csv",
+      "overlap_matrix.csv",
+      "overlap_matrix_counts.csv"
+    ],
+    "matches": "same rows",
+    "sparse_matrix": "same values",
+    "summary": "same counts/config/rules; timing, versions, hashes and hashing description excluded"
+  }
+}

@@ -1,0 +1,27 @@
+[
+ {
+  "role": "system",
+  "content": "You can call tools. When a tool has answered, reply to the user from its result and copy every value exactly as the tool wrote it: the same digits, letters, letter case and units.\nTools: [{\"description\": \"Convert an amount between two currencies.\", \"name\": \"convert_currency\", \"parameters\": {\"properties\": {\"amount\": {\"type\": \"number\"}, \"from_currency\": {\"type\": \"string\"}, \"to_currency\": {\"type\": \"string\"}}, \"required\": [\"amount\", \"from_currency\", \"to_currency\"], \"type\": \"object\"}}]"
+ },
+ {
+  "role": "user",
+  "content": "How much is 250 USD in INR?"
+ },
+ {
+  "role": "assistant",
+  "tool_calls": [
+   {
+    "name": "convert_currency",
+    "arguments": {
+     "amount": 250,
+     "from_currency": "USD",
+     "to_currency": "INR"
+    }
+   }
+  ]
+ },
+ {
+  "role": "tool",
+  "content": "{\"amount\": 250, \"from\": \"USD\", \"to\": \"INR\", \"rate\": 84.1325, \"result\": 21033.13}"
+ }
+]

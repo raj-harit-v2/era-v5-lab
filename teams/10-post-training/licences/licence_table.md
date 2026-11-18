@@ -19,15 +19,45 @@ Three stages. Sets marked `excluded` stay in the table with the reason and are n
 
 | Set | Source | Language | Licence | Decision |
 | --- | --- | --- | --- | --- |
-| code-python | bigcode/starcoderdata | Code | other (per-file permissive Stack licences; attribution required) | TSAI reserves |
-| chandassu | BodduSriPavan111/chandassu | Telugu | MIT (commercial use allowed) | TSAI reserves |
-| ind-mr-fw2 | [HuggingFaceFW/fineweb-2](https://huggingface.co/datasets/HuggingFaceFW/fineweb-2) | Marathi (mr) | ODC-By v1.0 (commercial use permitted with attribution) | TSAI reserves |
-| ind-ta-sangraha-v | [ai4bharat/sangraha](https://huggingface.co/datasets/ai4bharat/sangraha) | Tamil (ta) | CC-BY-4.0 (commercial use permitted with attribution) | TSAI reserves |
+| code-python | bigcode/starcoderdata | Code (Python) | other (per-file permissive Stack licences; attribution required) | TSAI reserves |
+| code-cpp | bigcode/starcoderdata | Code (C++) | other (per-file permissive Stack licences; attribution required) | TSAI reserves |
+| code-go | bigcode/starcoderdata | Code (Go) | other (per-file permissive Stack licences; attribution required) | TSAI reserves |
+| code-java | bigcode/starcoderdata | Code (Java) | other (per-file permissive Stack licences; attribution required) | TSAI reserves |
+| code-js-ts | bigcode/starcoderdata | Code (JavaScript / TypeScript) | other (per-file upstream licensing; attribution required) | TSAI reserves |
+| code-rust | bigcode/starcoderdata | Code (Rust) | other (per-file permissive Stack licences; attribution required) | TSAI reserves |
+| cadj-commits | [bigcode/commitpackft](https://huggingface.co/datasets/bigcode/commitpackft) | Code (Git commits) | mit (per-file upstream repository licences; attribution required) | TSAI reserves |
+| cadj-notebooks | [HuggingFaceTB/issues-kaggle-notebooks](https://huggingface.co/datasets/HuggingFaceTB/issues-kaggle-notebooks) | Code (Python notebooks) | apache-2.0 | TSAI reserves |
+| cadj-stackexchange | [bigcode/starcoder2data-extras](https://huggingface.co/datasets/bigcode/starcoder2data-extras) | Code (Q&A) | cc-by-sa-4.0 (commercial use permitted with attribution) | TSAI reserves |
+| en-dclm | [mlfoundations/dclm-baseline-1.0-parquet](https://huggingface.co/datasets/mlfoundations/dclm-baseline-1.0-parquet) | English | CC-BY-4.0 (DCLM packaging, rev `817d675276`; Common Crawl terms; card's "intended/designed for research purposes only" under Uses/Bias is a statement of intent/fitness disclaimer, not a licence term, same as Dolci; fastText filter only, no generated text) | TSAI reserves |
+| en-fineweb-edu | [HuggingFaceFW/fineweb-edu](https://huggingface.co/datasets/HuggingFaceFW/fineweb-edu) | English | ODC-By v1.0 (commercial use permitted with attribution) | TSAI reserves |
+| en-nemotroncc | [nvidia/Nemotron-CC](https://huggingface.co/datasets/nvidia/Nemotron-CC) | English | Common Crawl terms (pipeline Apache-2.0) | TSAI reserves |
+| en-nemotroncc-synth | [nvidia/Nemotron-CC](https://huggingface.co/datasets/nvidia/Nemotron-CC) | English | Common Crawl terms + permissive synthetic contribution (Mistral-NeMo-12B-Instruct, Apache-2.0; Wikipedia rewrites inherit CC-BY-SA) | TSAI reserves |
+| math-finemath | [HuggingFaceTB/finemath](https://huggingface.co/datasets/HuggingFaceTB/finemath) | English / Mathematics | ODC-By v1.0 (commercial use permitted with attribution) | TSAI reserves |
+| math-megamath | [LLM360/MegaMath](https://huggingface.co/datasets/LLM360/MegaMath) | English / Mathematics | ODC-By v1.0 (`megamath-web` subset; commercial use permitted with attribution) | TSAI reserves |
+| sci-finepdfs | [HuggingFaceFW/finepdfs](https://huggingface.co/datasets/HuggingFaceFW/finepdfs) | English / Science | ODC-By v1.0 (commercial use permitted with attribution) | TSAI reserves |
+| ind-bn-fw2 | [HuggingFaceFW/fineweb-2](https://huggingface.co/datasets/HuggingFaceFW/fineweb-2) | Bengali (bn) | ODC-By v1.0 (commercial use permitted with attribution) | TSAI reserves |
+| ind-bn-sangraha-v | [ai4bharat/sangraha](https://huggingface.co/datasets/ai4bharat/sangraha) | Bengali (bn) | CC-BY-4.0 (commercial use permitted with attribution) | TSAI reserves |
+| ind-gu-fw2 | [HuggingFaceFW/fineweb-2](https://huggingface.co/datasets/HuggingFaceFW/fineweb-2) | Gujarati (gu) | ODC-By v1.0 (commercial use permitted with attribution) | TSAI reserves |
+| ind-hi-fw2 | [HuggingFaceFW/fineweb-2](https://huggingface.co/datasets/HuggingFaceFW/fineweb-2) | Hindi (hi) | ODC-By v1.0 (commercial use permitted with attribution) | TSAI reserves |
 | ind-hi-hplt | [data.hplt-project.org/three/sorted/hin_Deva](https://data.hplt-project.org/three/sorted/hin_Deva) | Hindi (hi) | CC0-1.0 (packaging) / Web terms | TSAI reserves |
 | ind-hi-indiccorp | [ai4bharat/IndicCorpV2](https://huggingface.co/datasets/ai4bharat/IndicCorpV2) | Hindi (hi) | CC-BY-4.0 (commercial use permitted with attribution) | TSAI reserves |
+| ind-hi-sangraha-s | [ai4bharat/sangraha](https://huggingface.co/datasets/ai4bharat/sangraha) | Hindi (hi) | CC-BY-4.0 (commercial use permitted with attribution) | TSAI reserves |
+| ind-hi-sangraha-v | [ai4bharat/sangraha](https://huggingface.co/datasets/ai4bharat/sangraha) | Hindi (hi) | CC-BY-4.0 (commercial use permitted with attribution) | TSAI reserves |
 | ind-kn-fw2 | [HuggingFaceFW/fineweb-2](https://huggingface.co/datasets/HuggingFaceFW/fineweb-2) | Kannada (kn) | ODC-By v1.0 (commercial use permitted with attribution) | TSAI reserves |
-| code-go | bigcode/starcoderdata | Code (Go) | other (per-file permissive Stack licences; attribution required) | TSAI reserves |
-| code-js-ts | bigcode/starcoderdata | Code (JavaScript / TypeScript) | other (per-file upstream licensing; attribution and training-use rights require further verification) | TSAI reserves |
+| ind-kn-sangraha-s | [ai4bharat/sangraha](https://huggingface.co/datasets/ai4bharat/sangraha) | Kannada (kn) | CC-BY-4.0 (commercial use permitted with attribution) | TSAI reserves |
+| ind-kn-sangraha-v | [ai4bharat/sangraha](https://huggingface.co/datasets/ai4bharat/sangraha) | Kannada (kn) | CC-BY-4.0 (commercial use permitted with attribution) | TSAI reserves |
+| ind-ml-fw2 | [HuggingFaceFW/fineweb-2](https://huggingface.co/datasets/HuggingFaceFW/fineweb-2) | Malayalam (ml) | ODC-By v1.0 (commercial use permitted with attribution) | TSAI reserves |
+| ind-mr-fw2 | [HuggingFaceFW/fineweb-2](https://huggingface.co/datasets/HuggingFaceFW/fineweb-2) | Marathi (mr) | ODC-By v1.0 (commercial use permitted with attribution) | TSAI reserves |
+| ind-mr-sangraha-v | [ai4bharat/sangraha](https://huggingface.co/datasets/ai4bharat/sangraha) | Marathi (mr) | CC-BY-4.0 (commercial use permitted with attribution) | TSAI reserves |
+| ind-or-fw2 | [HuggingFaceFW/fineweb-2](https://huggingface.co/datasets/HuggingFaceFW/fineweb-2) | Odia (or) | ODC-By v1.0 (commercial use permitted with attribution) | TSAI reserves |
+| ind-sa-fw2 | [HuggingFaceFW/fineweb-2](https://huggingface.co/datasets/HuggingFaceFW/fineweb-2) | Sanskrit (sa) | ODC-By v1.0 (commercial use permitted with attribution) | TSAI reserves |
+| ind-ta-fw2 | [HuggingFaceFW/fineweb-2](https://huggingface.co/datasets/HuggingFaceFW/fineweb-2) | Tamil (ta) | ODC-By v1.0 (commercial use permitted with attribution) | TSAI reserves |
+| ind-ta-sangraha-s | [ai4bharat/sangraha](https://huggingface.co/datasets/ai4bharat/sangraha) | Tamil (ta) | CC-BY-4.0 (commercial use permitted with attribution) | TSAI reserves |
+| ind-ta-sangraha-v | [ai4bharat/sangraha](https://huggingface.co/datasets/ai4bharat/sangraha) | Tamil (ta) | CC-BY-4.0 (commercial use permitted with attribution) | TSAI reserves |
+| ind-te-fw2 | [HuggingFaceFW/fineweb-2](https://huggingface.co/datasets/HuggingFaceFW/fineweb-2) | Telugu (te) | ODC-By v1.0 (commercial use permitted with attribution) | TSAI reserves |
+| ind-te-sangraha-s | [ai4bharat/sangraha](https://huggingface.co/datasets/ai4bharat/sangraha) | Telugu (te) | CC-BY-4.0 (commercial use permitted with attribution) | TSAI reserves |
+| ind-te-sangraha-v | [ai4bharat/sangraha](https://huggingface.co/datasets/ai4bharat/sangraha) | Telugu (te) | CC-BY-4.0 (commercial use permitted with attribution) | TSAI reserves |
+| chandassu | BodduSriPavan111/chandassu | Telugu | MIT (commercial use allowed) | TSAI reserves |
 
 ### Stage 1: Supervised fine-tuning (SFT) instruction mixture
 
@@ -115,6 +145,14 @@ Three stages. Sets marked `excluded` stay in the table with the reason and are n
 | sft-tool-when2call | [nvidia/When2Call](https://huggingface.co/datasets/nvidia/When2Call) | English / Tool use (when to call, ask or decline) | Mixtral-8x22B (Apache-2.0) rewrites questions and answers built on APIGen (xLAM) data, which includes DeepSeek-V2-Chat rows (DeepSeek Licence); rows carry no generator field | cc-by-4.0 (Hub tag; attribution needed); `train_sft` and `train_pref` only, the test split is built from BFCL v2 Live | needs TSAI decision |
 | sft-indic-indic-instruct-hi | [ai4bharat/indic-instruct-data-v0.1](https://huggingface.co/datasets/ai4bharat/indic-instruct-data-v0.1) | Hindi (`wikihow` and `nmt-seed` subsets only) | none: `wikihow` is native Hindi wikiHow text, `nmt-seed` is human-made BPCC-Human en-hi pairs; the other subsets (Llama-2-70B in `anudesh`, closed models in `lm_sys` and `hh-rlhf`) are not part of this set | no Hub tag; per-subset licences stated in arXiv 2401.15006: `wikihow` CC-0, `nmt-seed` CC-BY-4.0 | TSAI reserves |
 | sft-indic-updesh | [microsoft/Updesh_beta](https://huggingface.co/datasets/microsoft/Updesh_beta) | 13 Indic languages incl. Odia | Qwen3-235B-A22B (Updesh-G); Llama-3.1-405B-Instruct (translation) and Llama 3.3 70B (back-translation quality check) named; reasoning part translated from Microsoft Orca sets | other: Microsoft Research License (non-commercial research use only, no redistribution) | excluded |
+| sft-indic-bpcc-human-ta | [ai4bharat/BPCC](https://huggingface.co/datasets/ai4bharat/BPCC) (`BPCC-H-Wiki` and `BPCC-H-Daily`, `eng_Latn`-`tam_Taml` pairs only) | Tamil / English (translation pairs) | none (human translators; "644K manually translated sentence pairs created as part of this work", arXiv 2305.16307); the IndicTrans2-made `BPCC-BT` part is not in this set | CC-BY-4.0 for the two human seed subsets (card LICENSE table; no Hub tag shown; gated); attribution needed | TSAI reserves |
+| sft-indic-tamil-open-instruct | [Hemanth-thunder/tamil-open-instruct-v1](https://huggingface.co/datasets/Hemanth-thunder/tamil-open-instruct-v1) | Tamil | Unknown (card says only "an amalgamation of different datasets"; no source sets, translation system or model named) | apache-2.0 (Hub tag) | excluded |
+| sft-indic-tamil-alpaca-orca | [abhinand/tamil-alpaca-orca](https://huggingface.co/datasets/abhinand/tamil-alpaca-orca) | Tamil (translated) | text-davinci-003 (OpenAI, closed) writes Alpaca; GPT-4 / GPT-3.5 (OpenAI, closed) write OpenOrca; translation system not named | gpl-3.0 (Hub tag; copyleft) | excluded |
+| sft-indic-aya-tamil | [Cognitive-Lab/Aya_Tamil](https://huggingface.co/datasets/Cognitive-Lab/Aya_Tamil) | Tamil | Same rows as the Tamil part of `CohereLabs/aya_collection`: templated subsets (none) and translated subsets (NLLB-3.3B, CC-BY-NC-4.0); card does not split them | apache-2.0 (Hub tag; gated) | excluded |
+| sft-indic-nemotron-personas-india | [nvidia/Nemotron-Personas-India](https://huggingface.co/datasets/nvidia/Nemotron-Personas-India) | English, Hindi (Devanagari and Latin); personas from all states, incl. Tamil first-language speakers, but no Tamil-script text | GPT-OSS-120B (Apache-2.0) via NeMo Data Designer; an unnamed LLM helps map broad to detailed occupations | cc-by-4.0 (Hub tag; attribution needed) | needs TSAI decision |
+| sft-reasoning-mixture-of-thoughts | [open-r1/Mixture-of-Thoughts](https://huggingface.co/datasets/open-r1/Mixture-of-Thoughts) | English / Math, Code, Science | DeepSeek-R1 (MIT, open weights); science prompts from `nvidia/Llama-Nemotron-Post-Training-Dataset` | none stated (no Hub tag, no licence text on the card) | excluded |
+| sft-science-openscience-reasoning-2 | [nvidia/OpenScienceReasoning-2](https://huggingface.co/datasets/nvidia/OpenScienceReasoning-2) | English / STEM, law, economics, humanities | DeepSeek-R1-0528 (MIT, open weights) writes new questions and all solutions; earlier questions come from `nvidia/OpenScience` (generator not stated on this card) | cc-by-4.0 (Hub tag; commercial use stated on the card) | TSAI reserves |
+
 | sft-tool-xlam-irrelevance-7.5k | [MadeAgents/xlam-irrelevance-7.5k](https://huggingface.co/datasets/MadeAgents/xlam-irrelevance-7.5k) (the data behind "MadeAgents/Hammer") | English / Tool use (irrelevance detection, 7,500 rows) | none new: 7,500 rows sampled from `Salesforce/xlam-function-calling-60k`, the correct tool removed and the answer set to `[]` (arXiv 2410.04587, §4.2); queries keep xlam-60k's Mixtral-8x22B-Instruct and DeepSeek-V2-Chat origin | cc-by-4.0 (Hub tag; attribution needed) | needs TSAI decision |
 | sft-reasoning-synthetic-1 | [PrimeIntellect/SYNTHETIC-1](https://huggingface.co/datasets/PrimeIntellect/SYNTHETIC-1) | English / Reasoning (code, math, STEM) | DeepSeek-R1 (MIT) writes the traces | apache-2.0 | TSAI reserves |
 | sft-reasoning-openthoughts-114k | [open-thoughts/OpenThoughts-114k](https://huggingface.co/datasets/open-thoughts/OpenThoughts-114k) | English / Math and code | DeepSeek-R1 (MIT) writes the traces | apache-2.0 | TSAI reserves |
@@ -162,6 +200,9 @@ Three stages. Sets marked `excluded` stay in the table with the reason and are n
 | rl-math-processbench | [Qwen/ProcessBench](https://huggingface.co/datasets/Qwen/ProcessBench) | English / Mathematics (step verification) | Not on the card; the paper (arXiv 2412.06559, Table 4) names 12 Qwen2/Qwen2.5 and Llama-3/3.1 Instruct models; step errors labelled by human experts | apache-2.0 (Hub tag); eval only, not training data (G9 evaluation probe) | excluded |
 | rl-math-deepscaler | [agentica-org/DeepScaleR-Preview-Dataset](https://huggingface.co/datasets/agentica-org/DeepScaleR-Preview-Dataset) | English / Mathematics (competition) | none for problems and solutions (human AIME 1984-2023, AMC before 2023, Omni-MATH, Still); gemini-1.5-pro-002 (Google, proprietary closed) is used in the preprocessing code as a proof-problem filter and difficulty judge; the Still rows (MATH, NuminaMath-CoT, AIME) have no stated licence and the release has no `source` column to drop them | mit (Hub tag) on the release; Still source licence unstated | excluded |
 | rl-safety-aya-redteaming | [CohereLabs/aya_redteaming](https://huggingface.co/datasets/CohereLabs/aya_redteaming) | Hindi (`aya_hin`, 915 prompts); 7 other languages not used | none: harmful prompts written by paid human annotators; prompts only, no responses | apache-2.0 (Hub tag; commercial use permitted per tag) | TSAI reserves |
+| rl-math-acereason-math | [nvidia/AceReason-Math](https://huggingface.co/datasets/nvidia/AceReason-Math) | English / Mathematics | none named; problems and answers taken from NuminaMath-1.5 and DeepScaleR-Preview, both `excluded` above; no `source` column | cc-by-4.0 (Hub tag) | excluded |
+| rl-code-verifiable-coding-problems | [PrimeIntellect/verifiable-coding-problems](https://huggingface.co/datasets/PrimeIntellect/verifiable-coding-problems) | Code (Python, JavaScript, Rust, C++) | not stated (subset of SYNTHETIC-1 task data; `source` column shows `apps`; Codeforces problem URLs) | none stated (no Hub tag, no licence text on the card) | excluded |
+
 | rl-agentic-open-agentrl-30k | [Gen-Verse/Open-AgentRL-30K](https://huggingface.co/datasets/Gen-Verse/Open-AgentRL-30K) | English / RL prompts (17K DAPO-Math, 3K MegaScience science, plus LeetCode and Skywork-OR1 data) | none for the prompts | none stated; includes 3K MegaScience rows (cc-by-nc-sa-4.0) | excluded |
 | rl-agentic-nemotron-tool-use-pivot | [nvidia/Nemotron-RL-Agentic-Conversational-Tool-Use-Pivot-v1](https://huggingface.co/datasets/nvidia/Nemotron-RL-Agentic-Conversational-Tool-Use-Pivot-v1) | English / conversational tool use (838 domains) | DeepSeek-R1-0528 (MIT), DeepSeek-V3.2 (MIT), Qwen3-235B-A22B-Thinking-2507 (Apache-2.0) and Qwen3-32B (Apache-2.0) make the data; gpt-oss-120b and Qwen3-235B-A22B-Instruct-2507 (Apache-2.0) label it | cc-by-4.0 (Hub tag; card says ready for commercial use) | TSAI reserves |
 | rl-tool-hammerbench | [MadeAgents/HammerBench](https://huggingface.co/datasets/MadeAgents/HammerBench) | English and Chinese / Tool use (mobile-app function calling, multi-turn) | Unnamed "open-source models" generate queries and dialogues from app functions and anonymized user logs (arXiv 2412.16516, §4); the paper does not name them | apache-2.0 (Hub tag); eval only, not training data | excluded |
@@ -1163,6 +1204,93 @@ Fifty-six sets in the two stage tables are `excluded` (37 in Stage 1, 19 in Stag
 - **Our opinion:** excluded on the licence alone. Recorded because it is a large Indic set with Odia, and it will be proposed again.
 - **Added by:** jssunil (Week 2 rotation, 8 Nov 2026). Card and LICENSE.md read on 8 Nov 2026; card revision re-checked on 12 Nov 2026.
 
+### `sft-indic-bpcc-human-ta` — BPCC, human-translated English-Tamil pairs
+
+- **Stage:** SFT (translation pairs, single turn)
+- **Set:** `sft-indic-bpcc-human-ta`
+- **Language:** Tamil / English. Only the `eng_Latn`-`tam_Taml` pairs of the two new human seed subsets: `BPCC-H-Wiki` (English Wikipedia sentences, 644K pairs across all 22 languages) and `BPCC-H-Daily` (everyday sentences, 139K pairs across all languages). The card gives no per-language counts; the Tamil count must be measured after download.
+- **Source:** [`ai4bharat/BPCC`](https://huggingface.co/datasets/ai4bharat/BPCC) (gated: "You need to agree to share your Hugging Face information to access this dataset"; card revision could not be read without accepting the gate); paper [arXiv 2305.16307](https://arxiv.org/abs/2305.16307) (IndicTrans2)
+- **Licence:** The card has a LICENSE table, read on 15 Nov 2026: "Newly Added Seed Corpora (BPCC-H-Wiki & BPCC-H-Daily)": CC-BY-4.0. Mined corpora and `BPCC-BT` are CC0. The card also says "We do not own any of the text from which this data has been extracted." No Hub licence tag is shown on the card page. Permissive with attribution: in under the data licence rule. A tag is not legal clearance.
+- **Generator model:** None. The paper abstract: "644K manually translated sentence pairs created as part of this work". Not in this set: `BPCC-BT` ("augmented back-translation data generated by our intermediate IndicTrans2 models"), `BPCC-Mined` (Samanantar, NLLB, Samanantar++, Comparable) and the older human parts (ILCI, NLLB seed, Massive), which carry their own upstream terms that the card does not restate.
+- **Decision:** `TSAI reserves` — human-made translations, CC-BY-4.0, no generator model. Same pattern as the Hindi `nmt-seed` (BPCC-Human) subset in `sft-indic-indic-instruct-hi`, here for Tamil.
+- **Our opinion:** use a small, capped share for Tamil translation ability, as for `nmt-seed`. It is the only Tamil SFT source we found that is human-made and commercial-clean. Translation pairs, not chat, effort `1k`.
+- **For Team 9:** IN22-Gen and IN22-Conv (the IndicTrans2 test sets) are built by the same project; check these pairs against them before use.
+- **Added by:** truesrini (Week 2 rotation, 15 Nov 2026). Hugging Face cards read on 15 Nov 2026. A tag is not legal clearance.
+
+### `sft-indic-tamil-open-instruct` — tamil-open-instruct-v1
+
+- **Stage:** SFT
+- **Set:** `sft-indic-tamil-open-instruct`
+- **Language:** Tamil (493,813 rows, one `train` split; columns `instruction`, `input`, `output`, `text`)
+- **Source:** [`Hemanth-thunder/tamil-open-instruct-v1`](https://huggingface.co/datasets/Hemanth-thunder/tamil-open-instruct-v1) (card revision `c8d0c95f58`, 7 Apr 2024)
+- **Licence:** `apache-2.0` — Hugging Face tag read on 15 Nov 2026. No licence text beyond the tag. A tag is not legal clearance.
+- **Generator model:** Unknown. The whole description is: "Open Instruct V1 is an amalgamation of different datasets which are cleaned and then collated into a singular format for training." The card names no source dataset, translation system or model.
+- **Decision:** `excluded` — data licence rule: sources that we cannot trace are out, and a set with an unknown generator is out. Tamil instruction sets of this size from early 2024 are usually machine translations of Alpaca, Dolly or OpenOrca (closed OpenAI text), but the card does not say, so this is the reason we cannot clear it.
+- **Our opinion:** excluded. Recorded because it is the largest Tamil instruction set on the Hub and will be proposed again. It can be checked again if the author lists the source sets.
+- **Added by:** truesrini (Week 2 rotation, 15 Nov 2026). Hugging Face cards read on 15 Nov 2026. A tag is not legal clearance.
+
+### `sft-indic-tamil-alpaca-orca` — tamil-alpaca-orca
+
+- **Stage:** SFT
+- **Set:** `sft-indic-tamil-alpaca-orca`
+- **Language:** Tamil, translated from English (about 145K instructions per the card's model table; one `train` split in 3 shards)
+- **Source:** [`abhinand/tamil-alpaca-orca`](https://huggingface.co/datasets/abhinand/tamil-alpaca-orca) (card revision `8f6263ea00`, 24 Nov 2023); used to train Tamil-Llama ([arXiv 2311.05845](https://arxiv.org/abs/2311.05845))
+- **Licence:** `gpl-3.0` — Hugging Face tag read on 15 Nov 2026. Copyleft licence, not one of the permissive licences in the data licence rule.
+- **Generator model:** The card: "This repository includes a Tamil-translated versions of the [Alpaca dataset] and a subset of [OpenOrca] dataset." Alpaca (`yahma/alpaca-cleaned`) was written by text-davinci-003 (OpenAI, closed). OpenOrca answers are written by GPT-4 and GPT-3.5 (OpenAI, closed). The translation system is not named.
+- **Decision:** `excluded` — data licence rule: text made by closed OpenAI models is out. The GPL-3.0 licence is a second, separate problem.
+- **Our opinion:** excluded on the generator alone. Recorded because it is widely used for Tamil models.
+- **Added by:** truesrini (Week 2 rotation, 15 Nov 2026). Hugging Face cards read on 15 Nov 2026. A tag is not legal clearance.
+
+### `sft-indic-aya-tamil` — Aya_Tamil
+
+- **Stage:** SFT
+- **Set:** `sft-indic-aya-tamil`
+- **Language:** Tamil (card size class 1M-10M rows, 2.9 GB; `split` field holds `train` or `test`)
+- **Source:** [`Cognitive-Lab/Aya_Tamil`](https://huggingface.co/datasets/Cognitive-Lab/Aya_Tamil) (gated; card revision could not be read)
+- **Licence:** `apache-2.0` — Hugging Face tag and card text read on 15 Nov 2026: "This dataset can be used for any purpose, whether academic or commercial, under the terms of the Apache 2.0 License." A tag is not legal clearance.
+- **Generator model:** The card: "This Dataset is curated from the original [Aya-Collection] dataset that was open-sourced by [Cohere]". The collection "also includes translations of instruction-style datasets into 101 languages". So the rows are the Tamil part of `CohereLabs/aya_collection`: the templated Tamil subsets (no generator, already `sft-indic-aya-collection`) mixed with the NLLB-3.3B translated subsets (already `sft-indic-aya-collection-other`, excluded). The card does not say which rows are which; each row has a `dataset_name` field.
+- **Decision:** `excluded` — the translated rows fail the rule as in `sft-indic-aya-collection-other`, and the clean rows are already covered by `sft-indic-aya-collection` from the original source.
+- **Our opinion:** excluded; use `sft-indic-aya-collection` (Tamil templated subsets) from `CohereLabs/aya_collection` directly. Recorded so that this copy is not added twice.
+- **Added by:** truesrini (Week 2 rotation, 15 Nov 2026). Hugging Face cards read on 15 Nov 2026. A tag is not legal clearance.
+
+### `sft-indic-nemotron-personas-india` — Nemotron-Personas-India
+
+- **Stage:** SFT (persona seeds for writing new SFT prompts with an allowed generator; not chat data itself)
+- **Set:** `sft-indic-nemotron-personas-india`
+- **Language:** English (`en_IN`), Hindi in Devanagari (`hi_Deva_IN`) and Hindi in Latin script (`hi_Latn_IN`), 1,000,000 records each, 7 personas per record. Personas cover all states; for example a Thoothukkudi record has first language "Tamil", but no field is written in Tamil script.
+- **Source:** [`nvidia/Nemotron-Personas-India`](https://huggingface.co/datasets/nvidia/Nemotron-Personas-India) (card revision `adefeef`, 16 Dec 2025)
+- **Licence:** `cc-by-4.0` — Hugging Face tag and card text read on 15 Nov 2026: "This dataset is licensed under the Creative Commons Attribution 4.0 International License (CC BY 4.0)." and "This dataset is ready for commercial use." Attribution needed. A tag is not legal clearance.
+- **Generator model:** GPT-OSS-120B (Apache-2.0): produced with NeMo Data Designer "along with an Apache-2.0-licensed GPT-OSS-120B model". Seeds: 2011 Census of India, parsed Indian electoral rolls (names), National Classification of Occupations-2004. One unnamed model: "The statistics for transitioning from the broad categories to detailed occupations is done with the aid of an LLM."
+- **Decision:** `needs TSAI decision` — the persona text is gpt-oss output (in), but the occupation mapping used an unnamed LLM. As with the gemini filter in `rl-math-deepscaler`, that model shaped statistics, not the released text, as far as the card says. TSAI should rule whether that is acceptable.
+- **Our opinion:** use as seeds if TSAI accepts it. It gives India-grounded variety (region, caste-neutral names, occupations) for writing Indic SFT prompts with gpt-oss; for Tamil, the seed would be the persona and the generator would write the Tamil.
+- **Added by:** truesrini (Week 2 rotation, 15 Nov 2026). Hugging Face cards read on 15 Nov 2026. A tag is not legal clearance.
+
+### `sft-reasoning-mixture-of-thoughts` — Mixture-of-Thoughts
+
+- **Stage:** SFT
+- **Set:** `sft-reasoning-mixture-of-thoughts`
+- **Language:** English / Mathematics (93,733), Code (83,070), Science (172,514); `all` config 349,317 rows, one `train` split
+- **Source:** [`open-r1/Mixture-of-Thoughts`](https://huggingface.co/datasets/open-r1/Mixture-of-Thoughts) (card revision `e55fa28006`, 26 May 2025)
+- **Licence:** None stated. The README front matter has no `license` field and the card text states no licence (read on 15 Nov 2026).
+- **Generator model:** DeepSeek-R1 (MIT, open weights): "350k verified reasoning traces distilled from DeepSeek-R1". Prompts: math from the `default` subset of `open-r1/OpenR1-Math-220k` (`sft-math-openr1-math`, TSAI reserves), code from `open-r1/codeforces-cots` (`sft-code-codeforces-cots`, TSAI reserves), science from the `science` subset of `nvidia/Llama-Nemotron-Post-Training-Dataset`, whose licence and question writers are not stated on this card.
+- **Decision:** `excluded` — data licence rule: unstated licences are out. The science prompts are also not traced.
+- **Our opinion:** excluded as released. The math and code parts are already in the table from their original sources with licences; take them from there. Can be checked again if open-r1 adds a licence.
+- **For Team 9:** the card evaluates on AIME 2024, GPQA Diamond and LiveCodeBench v4 and states no decontamination.
+- **Added by:** truesrini (Week 2 rotation, 15 Nov 2026). Hugging Face cards read on 15 Nov 2026. A tag is not legal clearance.
+
+### `sft-science-openscience-reasoning-2` — OpenScienceReasoning-2
+
+- **Stage:** SFT
+- **Set:** `sft-science-openscience-reasoning-2`
+- **Language:** English / STEM, law, economics, humanities (single-answer questions, answer in `\boxed{}`). The card says 1.6M question-answer pairs; the viewer shows about 803K rows. Columns `input`, `output`, `expected_answer`; one `train` split.
+- **Source:** [`nvidia/OpenScienceReasoning-2`](https://huggingface.co/datasets/nvidia/OpenScienceReasoning-2) (card revision `174b02c`, 31 Jul 2025)
+- **Licence:** `cc-by-4.0` — Hugging Face tag and card text read on 15 Nov 2026: "This dataset is licensed under a Creative Commons Attribution 4.0 International License" and "This dataset is ready for commercial use." Attribution needed. A tag is not legal clearance.
+- **Generator model:** DeepSeek-R1-0528 (MIT, open weights): "It includes newly generated questions produced with model DeepSeek-R1-0528, and replaces the original solutions with those generated by DeepSeek-R1-0528". The older questions come from [`nvidia/OpenScience`](https://huggingface.co/datasets/nvidia/OpenScience); this card does not say which model wrote them.
+- **Decision:** `TSAI reserves` — permissive licence; all solutions and the new questions are DeepSeek-R1-0528 output, which passes the 3 Nov generator rule. Open point: the question writer of the carried-over OpenScience rows must be read from that card before conversion.
+- **Our opinion:** use, after the OpenScience question check. It fills the science share next to `sft-science-nemotron-science-v2`, with short checkable answers.
+- **For Team 9:** the card aims at GPQA-Diamond, MMLU-Pro and HLE and states no decontamination; check against all three.
+- **Added by:** truesrini (Week 2 rotation, 15 Nov 2026). Hugging Face cards read on 15 Nov 2026. A tag is not legal clearance.
+
 ### `sft-tool-xlam-irrelevance-7.5k` — xlam-irrelevance-7.5k (Hammer)
 
 - **Stage:** SFT
@@ -1787,6 +1915,32 @@ Verifiable-answer and test-based sets for RL (math, code, SWE tasks). Each entry
 - **Our opinion:** use as Hindi safety prompts for the refusal / safety reward. Prompts only, so responses must come from the policy (RL) or an allowed generator (SFT). The prompts are harmful by design; keep them out of any general SFT mix. Small (915 rows), but human-written in Hindi with India-specific ("local") harms, which the English safety sets do not cover.
 - **For Team 9:** check it is not in the safety evaluation set; Aya red-teaming prompts are used as an eval in the paper.
 - **Added by:** jssunil (Week 2 rotation, 8 Nov 2026). Card read and Hindi file counted on 8 Nov 2026; card revision re-checked on 12 Nov 2026.
+
+### `rl-math-acereason-math` — AceReason-Math
+
+- **Stage:** RL
+- **Set:** `rl-math-acereason-math`
+- **Language:** English / Mathematics (49,585 rows, columns `problem` and `answer`, one `train` split)
+- **Source:** [`nvidia/AceReason-Math`](https://huggingface.co/datasets/nvidia/AceReason-Math) (card revision `a5cc41c5ec`, 18 Jun 2025)
+- **Licence:** `cc-by-4.0` — Hugging Face tag and card text read on 15 Nov 2026: "This dataset is licensed under the Creative Commons Attribution 4.0 International License (CC BY 4.0)". A tag is not legal clearance.
+- **Generator model:** none named on the card. Problems and answers: "49K math problems and answer sourced from NuminaMath (AI-MO/NuminaMath-1.5) and DeepScaler-Preview (agentica-org/DeepScaleR-Preview-Dataset)", filtered to drop multi-part, multiple-choice, true/false, proof and figure problems.
+- **Decision:** `excluded` — both sources are `excluded` above: `sft-math-numinamath-1.5` (GPT-4 Turbo in `orca_math`, unstated generators in `synthetic_math`) and `rl-math-deepscaler` (Still rows with no licence). The release has no `source` column, so the bad rows cannot be dropped. The CC-BY-4.0 tag on the release does not cure the upstream terms.
+- **Our opinion:** excluded as released, for the same reason as `rl-math-deepscaler`. The clean pools are already listed: `rl-math-deepmath-103k` here, and `rl-math-omni-math` and `rl-math-hendrycks` on lab main.
+- **For Team 9:** AceReason models report AIME 2024 and 2025; DeepScaleR includes AIME 1984-2023 problems.
+- **Added by:** truesrini (Week 2 rotation, 15 Nov 2026). Hugging Face cards read on 15 Nov 2026. A tag is not legal clearance.
+
+### `rl-code-verifiable-coding-problems` — verifiable-coding-problems
+
+- **Stage:** RL
+- **Set:** `rl-code-verifiable-coding-problems`
+- **Language:** Code (Python, JavaScript, Rust, C++; each problem once per language), English prompts. 144,169 rows, one `train` split; `verification_info` holds the test cases.
+- **Source:** [`PrimeIntellect/verifiable-coding-problems`](https://huggingface.co/datasets/PrimeIntellect/verifiable-coding-problems) (card revision `45220c9`, 6 Feb 2025)
+- **Licence:** None stated. The README front matter has no `license` field and the card has no licence section (read on 15 Nov 2026).
+- **Generator model:** not stated. The card says only: "This is a subset of the task data used to construct SYNTHETIC-1." The `source` column shows `apps`, and `problem_url` points to Codeforces. The card does not say who wrote the test cases or the Python gold solutions.
+- **Decision:** `excluded` — data licence rule: unstated licences are out, and a set with an unknown generator is out.
+- **Our opinion:** excluded. The human contest problems it draws on are already listed with licences: `rl-code-codeforces` and `rl-code-code-contests` here, and `rl-code-apps` and `rl-code-taco` on lab main.
+- **For Team 9:** APPS and Codeforces overlap with LiveCodeBench-style benchmarks.
+- **Added by:** truesrini (Week 2 rotation, 15 Nov 2026). Hugging Face cards read on 15 Nov 2026. A tag is not legal clearance.
 
 ### `rl-agentic-nemotron-tool-use-pivot` — Nemotron-RL-Agentic-Conversational-Tool-Use-Pivot-v1
 

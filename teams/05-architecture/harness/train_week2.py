@@ -107,6 +107,14 @@ def resolve_run_config(cfg, resolution_path, smoke):
     return apply_resolution(cfg, load(resolution_path))
 
 
+_evaluate_orig = evaluate
+
+
+def evaluate(*a, **k):  # execution-only (TSAI): release cached GPU memory before each evaluation
+    torch.cuda.empty_cache()
+    return _evaluate_orig(*a, **k)
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     for name in [
@@ -398,6 +406,8 @@ def main():
             )
             rows.append(row)
             log(row)
+            if device.type == "cuda":
+                torch.cuda.empty_cache()  # execution-only (TSAI)
         steps = cfg["run"]["steps"]
         if args.stop_after is not None:
             steps = min(steps, args.stop_after)
@@ -447,14 +457,18 @@ def main():
                 ntp_value += float(ntp.detach())
                 if mtp is not None:
                     mtp_value += float(mtp.detach())
-            for name, param in model.named_parameters():
-                if param.grad is not None and not torch.isfinite(param.grad).all():
-                    raise ValueError("Nonfinite gradient: " + name)
+            # Execution-only (TSAI): one fused finite check instead of one host sync per parameter.
+            _grads = [q.grad for q in model.parameters() if q.grad is not None]
+            if _grads and not bool(torch.isfinite(torch.stack(torch._foreach_norm(_grads))).all()):
+                for name, param in model.named_parameters():
+                    if param.grad is not None and not torch.isfinite(param.grad).all():
+                        raise ValueError("Nonfinite gradient: " + name)
+                raise ValueError("Nonfinite gradient")
             norm = torch.nn.utils.clip_grad_norm_(
                 model.parameters(), cfg["run"]["grad_clip"], error_if_nonfinite=True
             )
             optimizer.step()
-            if any(not torch.isfinite(v).all() for v in model.parameters()):
+            if not bool(torch.isfinite(torch.stack(torch._foreach_norm([q.detach() for q in model.parameters()]))).all()):
                 raise ValueError("Nonfinite parameter")
             if device.type == "cuda":
                 torch.cuda.synchronize()
@@ -493,6 +507,8 @@ def main():
                         model, val, 1, device, amp, max_batch_tokens=EVAL_BATCH_TOKENS
                     )
                 )
+                if device.type == "cuda":
+                    torch.cuda.empty_cache()  # execution-only (TSAI): free the eval cache so training does not thrash
             if cfg["optim"]["name"] == "muon":
                 row["muon_lr"] = cfg["optim"]["muon_lr"]
             rows.append(row)

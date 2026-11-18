@@ -2137,6 +2137,108 @@
       ],
       "title": "GPU memory used (gpu_memory_used)",
       "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "${ds}"
+      },
+      "description": "Team 9 eval-mini score of each lab checkpoint (eval_mini table, filled by Team 9's eval_watcher.py), one line per run and task. x is the checkpoint step, y the task's primary metric in percent (acc_norm, acc, exact_match or pass@1, as in eval_mini_v1_schema.md). Higher is better. A line that goes flat or drops while the loss still falls is a reason to look at the run. Only rows with a checkpoint step are shown, so Hugging Face reference models do not appear. If one checkpoint is scored twice, or a step repeats after a restart, the row from the latest restart (checkpoint_epoch) and then the latest load wins. The branch shows in the name when it is not main; the format and item set show when they are not bf16 and full. Pick runs and tasks with the eval run and eval task variables.",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "axisLabel": "score (%)",
+            "lineWidth": 2,
+            "showPoints": "always",
+            "spanNulls": true,
+            "pointSize": 6,
+            "axisSoftMin": 0,
+            "axisSoftMax": 100
+          },
+          "decimals": 2,
+          "unit": "percent",
+          "displayName": "${__field.labels.series}"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "step"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "short"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "custom.axisLabel",
+                "value": "checkpoint step"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 116
+      },
+      "id": 28,
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "right",
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ]
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "xField": "step"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "${ds}"
+          },
+          "editorType": "sql",
+          "format": 1,
+          "queryType": "table",
+          "rawSql": "SELECT assumeNotNull(checkpoint_step) AS step, concat(assumeNotNull(checkpoint_run), if(ifNull(checkpoint_branch, 'main') = 'main', '', concat('/', assumeNotNull(checkpoint_branch))), ' ', task, if(num_fewshot > 0, concat(' ', toString(num_fewshot), '-shot'), ''), ' ', metric, if(format = 'bf16', '', concat(' ', format)), if(item_set = 'full', '', concat(' [', substring(item_set, 1, 17), ']'))) AS series, argMax(value, (ifNull(checkpoint_epoch, 0), loaded_at)) AS value FROM eval_mini WHERE primary = 1 AND checkpoint_step IS NOT NULL AND checkpoint_run IN ($eval_run) AND task IN ($eval_task) GROUP BY step, series ORDER BY step, series",
+          "refId": "A"
+        }
+      ],
+      "title": "Eval-mini score per checkpoint (eval_mini, primary metric)",
+      "transformations": [
+        {
+          "id": "partitionByValues",
+          "options": {
+            "fields": [
+              "series"
+            ],
+            "naming": {
+              "asLabels": true
+            }
+          }
+        },
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "step",
+            "mode": "outer"
+          }
+        }
+      ],
+      "type": "trend"
     }
   ],
   "refresh": "",
@@ -2203,6 +2305,40 @@
         ],
         "query": "10,100,1000,10000",
         "type": "custom"
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": {
+          "type": "grafana-clickhouse-datasource",
+          "uid": "${ds}"
+        },
+        "definition": "SELECT DISTINCT checkpoint_run FROM eval_mini WHERE checkpoint_run IS NOT NULL ORDER BY checkpoint_run",
+        "includeAll": true,
+        "label": "eval run",
+        "multi": true,
+        "name": "eval_run",
+        "query": "SELECT DISTINCT checkpoint_run FROM eval_mini WHERE checkpoint_run IS NOT NULL ORDER BY checkpoint_run",
+        "refresh": 2,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": {
+          "type": "grafana-clickhouse-datasource",
+          "uid": "${ds}"
+        },
+        "definition": "SELECT DISTINCT task FROM eval_mini WHERE primary = 1 AND checkpoint_step IS NOT NULL AND checkpoint_run IN ($eval_run) ORDER BY task",
+        "includeAll": true,
+        "label": "eval task",
+        "multi": true,
+        "name": "eval_task",
+        "query": "SELECT DISTINCT task FROM eval_mini WHERE primary = 1 AND checkpoint_step IS NOT NULL AND checkpoint_run IN ($eval_run) ORDER BY task",
+        "refresh": 2,
+        "sort": 1,
+        "type": "query"
       }
     ]
   },

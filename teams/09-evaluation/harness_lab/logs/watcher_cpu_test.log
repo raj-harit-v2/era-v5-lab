@@ -1,0 +1,192 @@
+# CPU end-to-end test of eval_watcher.py with run_lab_ckpt.py and lm_eval_lab.py (week 3, task 1)
+# Sun 15 Nov 2026, Windows 11 laptop, CPU only. Each command with its output and wall time.
+# Edits to this log: progress-bar lines and torch's single-process checkpoint warning are left out; the
+# laptop folder is shown as <lab>, the folder of the C3 tokenizer.json as <c3>, the venv interpreter as python.
+# The model is a few steps from random, so every score is near chance; these runs test the path and the time.
+
+$ python -c <print versions>
+env: python 3.12.10 torch 2.14.1+cpu lm_eval 0.4.13 datasets 5.1.0 tokenizers 0.23.3 numpy 2.5.4 | Windows-11-10.0.26200-SP0 | CPU only, 8 logical cores
+[exit 0, 10.4 s wall]
+
+$ git log -1 "--format=branch base: %h %s" origin/main
+branch base: f03b958 docs(tokenizer): publish frozen C3 in release/ (README, verify_release.py, pinned sums) (#465)
+[exit 0, 0.2 s wall]
+
+$ python -m pytest teams/09-evaluation/harness_lab/tests -q -p no:cacheprovider
+...............................s......................                   [100%]
+============================== warnings summary ===============================
+teams/09-evaluation/harness_lab/tests/test_run_lab_ckpt_scorer.py::test_a_scorer_can_refuse_a_checkpoint
+teams/09-evaluation/harness_lab/tests/test_run_lab_ckpt_scorer.py::test_smoke_refuses_unknown_arguments_and_cuda
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+53 passed, 1 skipped, 2 warnings in 24.88s
+[exit 0, 28.4 s wall]
+
+# 1. The smoke scorer through the watcher, on Team 7's tiny store; then the same commit with main's run_lab_ckpt.py
+
+$ python teams/07-infrastructure/jobs/restore_test/restore_test.py
+PASS restore_test nproc=1 cpu: steps 101-200: loss_ntp and loss_mtp bit-equal, data ids equal
+[exit 0, 65.7 s wall]
+
+$ python teams/09-evaluation/harness_lab/eval_watcher.py --run-dir teams/07-infrastructure/jobs/restore_test/out/ckpt_store/restore-b --once --no-load
+watching .\teams\07-infrastructure\jobs\restore_test\out\ckpt_store\restore-b (label smoke, every 1, scorer smoke, no load); out .\teams\09-evaluation\harness_lab\out\watcher\restore-b.smoke.every1
+step 100 (main/step_00000100-e1): scored in 12.58 s, 31.4 s after its commit, 1 record(s) -> .\teams\09-evaluation\harness_lab\out\watcher\restore-b.smoke.every1\main__step_00000100-e1.json
+step 100: 1 row(s) parsed (--no-load) as run_id restore-b:main/step_00000100-e1:smoke:23bb50fcb41c in 0.14 s
+time: 1 checkpoint(s) scored, 12.6 s mean and 12.6 s max per checkpoint, lag after commit 31.4 s max
+done: {"parsed": 1}; exit 0
+[exit 0, 13.2 s wall]
+
+$ python teams/09-evaluation/harness_lab/eval_watcher.py --run-dir teams/07-infrastructure/jobs/restore_test/out/ckpt_store/restore-b --once --no-load
+watching .\teams\07-infrastructure\jobs\restore_test\out\ckpt_store\restore-b (label smoke, every 1, scorer smoke, no load); out .\teams\09-evaluation\harness_lab\out\watcher\restore-b.smoke.every1
+time: no checkpoint scored in this run
+done: {"parsed": 1}; exit 0
+[exit 0, 0.7 s wall]
+
+$ python <run_lab_ckpt.py of origin/main> --run-dir teams/07-infrastructure/jobs/restore_test/out/ckpt_store/restore-b --step 100 --out <lab>/e2e-log/smoke_main.json
+checkpoint: lab:restore-b step 100 branch main epoch 1 (main/step_00000100-e1)
+model_revision (sha256 of MANIFEST.json): 23bb50fcb41c8f2d53321ef3a81caa785e212ac788a3f854129af4e8f0280b1f
+export ok: step 100, probe loss bits equal the saved ones
+1 record(s)
+  ok  record count: 1 (expected 1)
+  ok  records missing a required field: 0 (expected 0)
+  ok  values outside 0-100: 0 (expected 0)
+  ok  stderr neither null nor a number >= 0: 0 (expected 0)
+  ok  duplicate keys: 0 (expected 0)
+  ok  records with an empty model_revision: 0 (expected 0)
+  ok  records with neither a seed nor greedy decoding: 0 (expected 0)
+RESULT lab_smoke_next_token acc/none = 100.0 (n=960) -> <lab>\e2e-log\smoke_main.json
+wrote <lab>\e2e-log\smoke_main.json (1,608 bytes, sha256 d152addebf9dffee)
+[exit 0, 16.2 s wall]
+
+$ python -c <sha256 of each file> <lab>\e2e-log\smoke_main.json teams/09-evaluation/harness_lab/out/watcher/restore-b.smoke.every1/main__step_00000100-e1.json
+d152addebf9dffeee9bd9430bf183963ebe5692fa8c0dcb86ecb4564234b3532  <lab>\e2e-log\smoke_main.json
+d152addebf9dffeee9bd9430bf183963ebe5692fa8c0dcb86ecb4564234b3532  teams/09-evaluation/harness_lab/out/watcher/restore-b.smoke.every1/main__step_00000100-e1.json
+IDENTICAL
+[exit 0, 0.3 s wall]
+
+# 2. A Team 5 LanguageModel (T1 shape, frozen C3 tokenizer) saved through Team 7's Checkpointer, 3 commits
+
+$ python teams/04-ke2/src/build_tables.py --tokenizer <c3>/tokenizer.json --out <lab>\e2e-log\c3_tables --pos-dims 32
+tokenizer: tokenizer.json (V=131072, sha256=15468e66457b…)
+[decode P=32] shape=(131072, 32) truncated=0 empty=0 U+FFFD rows=1465 unique rows=129977/131072 sha256=09658e368a74…
+[raw    P=32] shape=(131072, 32) truncated=0 empty=0 U+FFFD rows=13 unique rows=131072/131072 sha256=fc5e5f8ffacb…
+[exit 0, 6.7 s wall]
+
+$ python teams/09-evaluation/harness_lab/tests/make_lab_store.py --arm teams/05-architecture/configs/arms/t1.yaml --tokenizer <c3>/tokenizer.json --tokenizer-sha256 15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3 --byte-table <lab>\e2e-log\c3_tables\raw_table_P32.npz --final --out <lab>\e2e-log\t1
+model: 58,080,512 parameters (t1.yaml, n_layer 6)
+committed step 2 (interval, loss 11.937) in 63.7 s
+committed step 4 (interval, loss 11.972) in 55.4 s
+committed step 6 (final, loss 11.903) in 61.3 s
+run folder: <lab>/e2e-log/t1/store/lab-store
+model config: <lab>/e2e-log/t1/model.json
+[exit 0, 202.9 s wall]
+
+# 3. Tier A, the full freeze set (970 items), on commit 3 (the run's final one): the CPU time per checkpoint;
+#    --until-final ends the watch by itself, and a restart scores nothing again
+
+$ python teams/09-evaluation/harness_lab/eval_watcher.py --run-dir <lab>\e2e-log\t1\store\lab-store --label tier-a --every 3 --out-dir <lab>\e2e-log\w\tier-a --scorer lm_eval_lab:team5 --until-final --no-load -- --tier A --model-config <lab>\e2e-log\t1\model.json --tokenizer <c3>/tokenizer.json --tokenizer-sha256 15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3 --byte-table <lab>\e2e-log\c3_tables\raw_table_P32.npz --hf-home <lab>\hf --offline
+watching <lab>\e2e-log\t1\store\lab-store (label tier-a, every 3, scorer lm_eval_lab:team5, no load); out <lab>\e2e-log\w\tier-a
+step 6 (main/step_00000006-e1): scored in 658.84 s, 664.8 s after its commit, 5 record(s) -> <lab>\e2e-log\w\tier-a\main__step_00000006-e1.json
+step 6: 5 row(s) parsed (--no-load) as run_id lab-store:main/step_00000006-e1:tier-a:1290acd98d04 in 0.2 s
+the run committed its final checkpoint and every owned commit is done
+time: 1 checkpoint(s) scored, 658.8 s mean and 658.8 s max per checkpoint, lag after commit 664.8 s max
+done: {"parsed": 1}; exit 0
+[exit 0, 660.3 s wall]
+
+$ python teams/09-evaluation/harness_lab/eval_watcher.py --run-dir <lab>\e2e-log\t1\store\lab-store --label tier-a --every 3 --out-dir <lab>\e2e-log\w\tier-a --scorer lm_eval_lab:team5 --until-final --no-load -- --tier A --model-config <lab>\e2e-log\t1\model.json --tokenizer <c3>/tokenizer.json --tokenizer-sha256 15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3 --byte-table <lab>\e2e-log\c3_tables\raw_table_P32.npz --hf-home <lab>\hf --offline
+watching <lab>\e2e-log\t1\store\lab-store (label tier-a, every 3, scorer lm_eval_lab:team5, no load); out <lab>\e2e-log\w\tier-a
+the run committed its final checkpoint and every owned commit is done
+time: no checkpoint scored in this run
+done: {"parsed": 1}; exit 0
+[exit 0, 0.5 s wall]
+
+# 4. Tier A with --limit 2 on all 3 commits (one run_id per checkpoint), and Tier B with --limit 20 on commit 3
+
+$ python teams/09-evaluation/harness_lab/eval_watcher.py --run-dir <lab>\e2e-log\t1\store\lab-store --label tier-a-limit2 --out-dir <lab>\e2e-log\w\tier-a-limit2 --scorer lm_eval_lab:team5 --once --no-load -- --tier A --limit 2 --model-config <lab>\e2e-log\t1\model.json --tokenizer <c3>/tokenizer.json --tokenizer-sha256 15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3 --byte-table <lab>\e2e-log\c3_tables\raw_table_P32.npz --hf-home <lab>\hf --offline
+watching <lab>\e2e-log\t1\store\lab-store (label tier-a-limit2, every 1, scorer lm_eval_lab:team5, no load); out <lab>\e2e-log\w\tier-a-limit2
+step 2 (main/step_00000002-e1): scored in 78.77 s, 861.3 s after its commit, 5 record(s) -> <lab>\e2e-log\w\tier-a-limit2\main__step_00000002-e1.json
+step 2: 5 row(s) parsed (--no-load) as run_id lab-store:main/step_00000002-e1:tier-a-limit2:b1b6f33ff23d in 0.17 s
+step 4 (main/step_00000004-e1): scored in 79.03 s, 885.2 s after its commit, 5 record(s) -> <lab>\e2e-log\w\tier-a-limit2\main__step_00000004-e1.json
+step 4: 5 row(s) parsed (--no-load) as run_id lab-store:main/step_00000004-e1:tier-a-limit2:798e241c30a6 in 0.0 s
+step 6 (main/step_00000006-e1): scored in 74.39 s, 898.4 s after its commit, 5 record(s) -> <lab>\e2e-log\w\tier-a-limit2\main__step_00000006-e1.json
+step 6: 5 row(s) parsed (--no-load) as run_id lab-store:main/step_00000006-e1:tier-a-limit2:1290acd98d04 in 0.0 s
+time: 3 checkpoint(s) scored, 77.4 s mean and 79.0 s max per checkpoint, lag after commit 898.4 s max
+done: {"parsed": 3}; exit 0
+[exit 0, 232.9 s wall]
+
+$ python teams/09-evaluation/harness_lab/eval_watcher.py --run-dir <lab>\e2e-log\t1\store\lab-store --label tier-b-limit20 --every 3 --out-dir <lab>\e2e-log\w\tier-b-limit20 --scorer lm_eval_lab:team5 --once --no-load -- --tier B --limit 20 --model-config <lab>\e2e-log\t1\model.json --tokenizer <c3>/tokenizer.json --tokenizer-sha256 15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3 --byte-table <lab>\e2e-log\c3_tables\raw_table_P32.npz --hf-home <lab>\hf --offline
+watching <lab>\e2e-log\t1\store\lab-store (label tier-b-limit20, every 3, scorer lm_eval_lab:team5, no load); out <lab>\e2e-log\w\tier-b-limit20
+step 6 (main/step_00000006-e1): scored in 119.78 s, 1018.6 s after its commit, 11 record(s) -> <lab>\e2e-log\w\tier-b-limit20\main__step_00000006-e1.json
+step 6: 11 row(s) parsed (--no-load) as run_id lab-store:main/step_00000006-e1:tier-b-limit20:1290acd98d04 in 0.14 s
+time: 1 checkpoint(s) scored, 119.8 s mean and 119.8 s max per checkpoint, lag after commit 1018.6 s max
+done: {"parsed": 1}; exit 0
+[exit 0, 120.3 s wall]
+
+# 5. What one scorer process did (from its log in <out folder>/logs/)
+tier-a/main__step_00000006-e1.log: checkpoint: lab:lab-store step 6 branch main epoch 1 (main/step_00000006-e1)
+tier-a/main__step_00000006-e1.log: export ok: step 6, probe loss bits equal the saved ones
+tier-a/main__step_00000006-e1.log: lm-eval (AMD64 Family 23 Model 104 Stepping 1, AuthenticAMD, fp32): 3880 requests in 2044 forward rows, encode fallbacks 554; setup 2.3 s, task index 1.9 s, scoring 612.7 s
+tier-a/main__step_00000006-e1.log: GUARD pooled freeze-set accuracy 24.12 on 970 items, complete True, below the 22.2 floor False
+tier-a/main__step_00000006-e1.log: RESULT mmlu acc/none = 24.21 (n=570) -> <lab>\e2e-log\w\tier-a\main__step_00000006-e1.json
+tier-a/main__step_00000006-e1.log: RESULT milu_Hindi acc/none = 25.0 (n=100) -> <lab>\e2e-log\w\tier-a\main__step_00000006-e1.json
+tier-a/main__step_00000006-e1.log: RESULT milu_Telugu acc/none = 28.0 (n=100) -> <lab>\e2e-log\w\tier-a\main__step_00000006-e1.json
+tier-a/main__step_00000006-e1.log: RESULT milu_Tamil acc/none = 22.0 (n=100) -> <lab>\e2e-log\w\tier-a\main__step_00000006-e1.json
+tier-a/main__step_00000006-e1.log: RESULT milu_Bengali acc/none = 21.0 (n=100) -> <lab>\e2e-log\w\tier-a\main__step_00000006-e1.json
+tier-a/main__step_00000006-e1.log: TIME export 13.5 s, score 614.9 s, total 655.5 s (lm_eval_lab:team5, cpu)
+tier-a-limit2/main__step_00000002-e1.log: checkpoint: lab:lab-store step 2 branch main epoch 1 (main/step_00000002-e1)
+tier-a-limit2/main__step_00000002-e1.log: export ok: step 2, probe loss bits equal the saved ones
+tier-a-limit2/main__step_00000002-e1.log: lm-eval (AMD64 Family 23 Model 104 Stepping 1, AuthenticAMD, fp32): 488 requests in 143 forward rows, encode fallbacks 15; setup 2.1 s, task index 1.2 s, scoring 45.3 s
+tier-a-limit2/main__step_00000002-e1.log: GUARD pooled freeze-set accuracy 27.05 on 122 items, complete False, below the 22.2 floor False
+tier-a-limit2/main__step_00000002-e1.log: RESULT mmlu acc/none = 25.44 (n=114) -> <lab>\e2e-log\w\tier-a-limit2\main__step_00000002-e1.json
+tier-a-limit2/main__step_00000002-e1.log: RESULT milu_Hindi acc/none = 50.0 (n=2) -> <lab>\e2e-log\w\tier-a-limit2\main__step_00000002-e1.json
+tier-a-limit2/main__step_00000002-e1.log: RESULT milu_Telugu acc/none = 100.0 (n=2) -> <lab>\e2e-log\w\tier-a-limit2\main__step_00000002-e1.json
+tier-a-limit2/main__step_00000002-e1.log: RESULT milu_Tamil acc/none = 50.0 (n=2) -> <lab>\e2e-log\w\tier-a-limit2\main__step_00000002-e1.json
+tier-a-limit2/main__step_00000002-e1.log: RESULT milu_Bengali acc/none = 0.0 (n=2) -> <lab>\e2e-log\w\tier-a-limit2\main__step_00000002-e1.json
+tier-a-limit2/main__step_00000002-e1.log: TIME export 9.1 s, score 46.5 s, total 76.8 s (lm_eval_lab:team5, cpu)
+tier-a-limit2/main__step_00000004-e1.log: checkpoint: lab:lab-store step 4 branch main epoch 1 (main/step_00000004-e1)
+tier-a-limit2/main__step_00000004-e1.log: export ok: step 4, probe loss bits equal the saved ones
+tier-a-limit2/main__step_00000004-e1.log: lm-eval (AMD64 Family 23 Model 104 Stepping 1, AuthenticAMD, fp32): 488 requests in 143 forward rows, encode fallbacks 15; setup 2.0 s, task index 1.4 s, scoring 45.2 s
+tier-a-limit2/main__step_00000004-e1.log: GUARD pooled freeze-set accuracy 22.14 on 122 items, complete False, below the 22.2 floor True
+tier-a-limit2/main__step_00000004-e1.log: RESULT mmlu acc/none = 20.18 (n=114) -> <lab>\e2e-log\w\tier-a-limit2\main__step_00000004-e1.json
+tier-a-limit2/main__step_00000004-e1.log: RESULT milu_Hindi acc/none = 50.0 (n=2) -> <lab>\e2e-log\w\tier-a-limit2\main__step_00000004-e1.json
+tier-a-limit2/main__step_00000004-e1.log: RESULT milu_Telugu acc/none = 100.0 (n=2) -> <lab>\e2e-log\w\tier-a-limit2\main__step_00000004-e1.json
+tier-a-limit2/main__step_00000004-e1.log: RESULT milu_Tamil acc/none = 50.0 (n=2) -> <lab>\e2e-log\w\tier-a-limit2\main__step_00000004-e1.json
+tier-a-limit2/main__step_00000004-e1.log: RESULT milu_Bengali acc/none = 0.0 (n=2) -> <lab>\e2e-log\w\tier-a-limit2\main__step_00000004-e1.json
+tier-a-limit2/main__step_00000004-e1.log: TIME export 9.7 s, score 46.7 s, total 76.8 s (lm_eval_lab:team5, cpu)
+tier-a-limit2/main__step_00000006-e1.log: checkpoint: lab:lab-store step 6 branch main epoch 1 (main/step_00000006-e1)
+tier-a-limit2/main__step_00000006-e1.log: export ok: step 6, probe loss bits equal the saved ones
+tier-a-limit2/main__step_00000006-e1.log: lm-eval (AMD64 Family 23 Model 104 Stepping 1, AuthenticAMD, fp32): 488 requests in 143 forward rows, encode fallbacks 15; setup 2.0 s, task index 1.1 s, scoring 44.2 s
+tier-a-limit2/main__step_00000006-e1.log: GUARD pooled freeze-set accuracy 22.14 on 122 items, complete False, below the 22.2 floor True
+tier-a-limit2/main__step_00000006-e1.log: RESULT mmlu acc/none = 20.18 (n=114) -> <lab>\e2e-log\w\tier-a-limit2\main__step_00000006-e1.json
+tier-a-limit2/main__step_00000006-e1.log: RESULT milu_Hindi acc/none = 50.0 (n=2) -> <lab>\e2e-log\w\tier-a-limit2\main__step_00000006-e1.json
+tier-a-limit2/main__step_00000006-e1.log: RESULT milu_Telugu acc/none = 100.0 (n=2) -> <lab>\e2e-log\w\tier-a-limit2\main__step_00000006-e1.json
+tier-a-limit2/main__step_00000006-e1.log: RESULT milu_Tamil acc/none = 50.0 (n=2) -> <lab>\e2e-log\w\tier-a-limit2\main__step_00000006-e1.json
+tier-a-limit2/main__step_00000006-e1.log: RESULT milu_Bengali acc/none = 0.0 (n=2) -> <lab>\e2e-log\w\tier-a-limit2\main__step_00000006-e1.json
+tier-a-limit2/main__step_00000006-e1.log: TIME export 8.8 s, score 45.3 s, total 72.4 s (lm_eval_lab:team5, cpu)
+tier-b-limit20/main__step_00000006-e1.log: checkpoint: lab:lab-store step 6 branch main epoch 1 (main/step_00000006-e1)
+tier-b-limit20/main__step_00000006-e1.log: export ok: step 6, probe loss bits equal the saved ones
+tier-b-limit20/main__step_00000006-e1.log: lm-eval (AMD64 Family 23 Model 104 Stepping 1, AuthenticAMD, fp32): 598 requests in 234 forward rows, encode fallbacks 35; setup 1.9 s, task index 1.1 s, scoring 90.6 s
+tier-b-limit20/main__step_00000006-e1.log: RESULT arc_challenge acc/none = 15.0 (n=20) -> <lab>\e2e-log\w\tier-b-limit20\main__step_00000006-e1.json
+tier-b-limit20/main__step_00000006-e1.log: RESULT arc_challenge acc_norm/none = 20.0 (n=20) -> <lab>\e2e-log\w\tier-b-limit20\main__step_00000006-e1.json
+tier-b-limit20/main__step_00000006-e1.log: RESULT hellaswag acc/none = 25.0 (n=20) -> <lab>\e2e-log\w\tier-b-limit20\main__step_00000006-e1.json
+tier-b-limit20/main__step_00000006-e1.log: RESULT hellaswag acc_norm/none = 45.0 (n=20) -> <lab>\e2e-log\w\tier-b-limit20\main__step_00000006-e1.json
+tier-b-limit20/main__step_00000006-e1.log: RESULT leaderboard_mmlu_pro acc/none = 25.0 (n=20) -> <lab>\e2e-log\w\tier-b-limit20\main__step_00000006-e1.json
+tier-b-limit20/main__step_00000006-e1.log: RESULT belebele_hin_Deva acc/none = 25.0 (n=20) -> <lab>\e2e-log\w\tier-b-limit20\main__step_00000006-e1.json
+tier-b-limit20/main__step_00000006-e1.log: RESULT belebele_hin_Deva acc_norm/none = 25.0 (n=20) -> <lab>\e2e-log\w\tier-b-limit20\main__step_00000006-e1.json
+tier-b-limit20/main__step_00000006-e1.log: RESULT belebele_tel_Telu acc/none = 10.0 (n=20) -> <lab>\e2e-log\w\tier-b-limit20\main__step_00000006-e1.json
+tier-b-limit20/main__step_00000006-e1.log: RESULT belebele_tel_Telu acc_norm/none = 10.0 (n=20) -> <lab>\e2e-log\w\tier-b-limit20\main__step_00000006-e1.json
+tier-b-limit20/main__step_00000006-e1.log: RESULT belebele_tam_Taml acc/none = 30.0 (n=20) -> <lab>\e2e-log\w\tier-b-limit20\main__step_00000006-e1.json
+tier-b-limit20/main__step_00000006-e1.log: RESULT belebele_tam_Taml acc_norm/none = 30.0 (n=20) -> <lab>\e2e-log\w\tier-b-limit20\main__step_00000006-e1.json
+tier-b-limit20/main__step_00000006-e1.log: TIME export 8.2 s, score 91.8 s, total 117.6 s (lm_eval_lab:team5, cpu)
+
+# 6. Firewall (eval_firewall.md section 3, rule 5): the lab canary, then item text, in every result file and
+#    scorer log and in this log so far
+
+$ python teams/09-evaluation/decontam/canary_scan.py <lab>/e2e-log/w <every scorer log> teams/09-evaluation/harness_lab/logs/watcher_cpu_test.log --lab-only
+canaries 1 from era-v5-lab
+docs 14 with_canary 0 hits 0
+[exit 0, 1.1 s wall]
+
+$ python <item-text probe, as in #387's test: the first 5 items of 5 datasets (first 40 characters), searched in every file below <lab>/e2e-log/w and in teams/09-evaluation/harness_lab/logs/watcher_cpu_test.log; prints counts only>
+item-text probes: 25 from 5 datasets, searched in 18 files; found: 0
+[exit 0, 6.1 s wall]

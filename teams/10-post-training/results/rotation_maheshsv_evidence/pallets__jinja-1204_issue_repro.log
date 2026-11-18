@@ -1,0 +1,27 @@
+## base commit (no patch)
+StrictUndefined | {{ 'value' in data['missing_key'] }} | raised UndefinedError: 'dict object' has no attribute 'missing_key'
+StrictUndefined | {% if 'value' in data['missing_key'] %}{% endif %} | raised UndefinedError: 'dict object' has no attribute 'missing_key'
+StrictUndefined | {{ 'foo' in missing }} | raised UndefinedError: 'missing' is undefined
+Undefined | {{ 'value' in data['missing_key'] }} | rendered 'False'
+Undefined | {% if 'value' in data['missing_key'] %}{% endif %} | rendered ''
+Undefined | {{ 'foo' in missing }} | rendered 'False'
+DebugUndefined | {{ 'value' in data['missing_key'] }} | rendered 'False'
+DebugUndefined | {% if 'value' in data['missing_key'] %}{% endif %} | rendered ''
+DebugUndefined | {{ 'foo' in missing }} | rendered 'False'
+ChainableUndefined | {{ 'value' in data['missing_key'] }} | rendered 'False'
+ChainableUndefined | {% if 'value' in data['missing_key'] %}{% endif %} | rendered ''
+ChainableUndefined | {{ 'foo' in missing }} | rendered 'False'
+
+## base commit + gold.patch
+StrictUndefined | {{ 'value' in data['missing_key'] }} | raised UndefinedError: 'dict object' has no attribute 'missing_key'
+StrictUndefined | {% if 'value' in data['missing_key'] %}{% endif %} | raised UndefinedError: 'dict object' has no attribute 'missing_key'
+StrictUndefined | {{ 'foo' in missing }} | raised UndefinedError: 'missing' is undefined
+Undefined | {{ 'value' in data['missing_key'] }} | raised UndefinedError: 'dict object' has no attribute 'missing_key'
+Undefined | {% if 'value' in data['missing_key'] %}{% endif %} | raised UndefinedError: 'dict object' has no attribute 'missing_key'
+Undefined | {{ 'foo' in missing }} | raised UndefinedError: 'missing' is undefined
+DebugUndefined | {{ 'value' in data['missing_key'] }} | raised UndefinedError: 'dict object' has no attribute 'missing_key'
+DebugUndefined | {% if 'value' in data['missing_key'] %}{% endif %} | raised UndefinedError: 'dict object' has no attribute 'missing_key'
+DebugUndefined | {{ 'foo' in missing }} | raised UndefinedError: 'missing' is undefined
+ChainableUndefined | {{ 'value' in data['missing_key'] }} | raised UndefinedError: 'dict object' has no attribute 'missing_key'
+ChainableUndefined | {% if 'value' in data['missing_key'] %}{% endif %} | raised UndefinedError: 'dict object' has no attribute 'missing_key'
+ChainableUndefined | {{ 'foo' in missing }} | raised UndefinedError: 'missing' is undefined

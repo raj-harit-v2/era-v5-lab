@@ -1,0 +1,301 @@
+{
+ "dt": {
+  "seeds": 3,
+  "first_step": 0,
+  "last_step": 30,
+  "heldout_prompts": 128,
+  "start": 0.4268,
+  "end": 0.5013,
+  "per_seed_change": [
+   0.0791,
+   0.084,
+   0.0605
+  ],
+  "change": {
+   "problems": 128,
+   "start": 0.0,
+   "end": 0.0745,
+   "diff": 0.0745,
+   "ci_low": 0.0472,
+   "ci_high": 0.1022,
+   "ci_excludes_zero": true,
+   "resamples": 10000
+  },
+  "curve_mean_over_seeds": {
+   "0": 0.4268,
+   "5": 0.4525,
+   "10": 0.4671,
+   "15": 0.4925,
+   "20": 0.4919,
+   "25": 0.484,
+   "30": 0.5013
+  },
+  "mean_groups_used_of_8": 7.8222,
+  "first3_mean_groups_used": 7.778,
+  "mean_train_reward": 0.4819,
+  "mean_masked_frac": 0.0,
+  "mean_stored_update_share": 0.8163,
+  "mean_grad_nonzero_share": 0.8028,
+  "step1_stored_update_share": [
+   0.787406,
+   0.816253,
+   0.787358
+  ],
+  "step1_grad_nonzero_share": [
+   0.787406,
+   0.816253,
+   0.787368
+  ],
+  "optimizer_steps": [
+   30,
+   30,
+   30
+  ],
+  "zero_share_first_last": [
+   [
+    0.05213,
+    0.05213
+   ],
+   [
+    0.05213,
+    0.05213
+   ],
+   [
+    0.05213,
+    0.05213
+   ]
+  ],
+  "max_deleted_nonzero": 0,
+  "run_seconds": [
+   225.5,
+   219.7,
+   202.6
+  ],
+  "mean_step_s": 3.2591,
+  "keep_zero": {
+   "max_deleted_nonzero": 0,
+   "masked_entries": 6684672,
+   "deleted_at_start": 348469,
+   "deleted_share_of_masked_at_start": 0.05213,
+   "deleted_nonzero_at_start": 0,
+   "zero_share_at_start": 0.05213,
+   "enforce": false,
+   "deleted_nonzero_end": 0,
+   "deleted_zero_end": 348469,
+   "zero_share_end": 0.05213
+  }
+ },
+ "lora": {
+  "seeds": 3,
+  "first_step": 0,
+  "last_step": 30,
+  "heldout_prompts": 128,
+  "start": 0.415,
+  "end": 0.513,
+  "per_seed_change": [
+   0.082,
+   0.126,
+   0.0859
+  ],
+  "change": {
+   "problems": 128,
+   "start": 0.0,
+   "end": 0.098,
+   "diff": 0.098,
+   "ci_low": 0.0736,
+   "ci_high": 0.1224,
+   "ci_excludes_zero": true,
+   "resamples": 10000
+  },
+  "curve_mean_over_seeds": {
+   "0": 0.415,
+   "5": 0.4492,
+   "10": 0.4645,
+   "15": 0.4893,
+   "20": 0.4746,
+   "25": 0.4873,
+   "30": 0.513
+  },
+  "mean_groups_used_of_8": 7.8333,
+  "first3_mean_groups_used": 7.778,
+  "mean_train_reward": 0.4861,
+  "mean_masked_frac": 0.0,
+  "mean_stored_update_share": 0.866,
+  "mean_grad_nonzero_share": 0.849,
+  "step1_stored_update_share": [
+   0.838235,
+   0.852941,
+   0.823529
+  ],
+  "step1_grad_nonzero_share": [
+   0.838235,
+   0.852941,
+   0.823529
+  ],
+  "optimizer_steps": [
+   30,
+   30,
+   30
+  ],
+  "zero_share_first_last": [
+   [
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0
+   ]
+  ],
+  "max_deleted_nonzero": null,
+  "run_seconds": [
+   222.1,
+   219.5,
+   201.4
+  ],
+  "mean_step_s": 3.203,
+  "keep_zero": {
+   "max_deleted_nonzero": 0,
+   "masked_entries": 0,
+   "deleted_at_start": 0,
+   "deleted_share_of_masked_at_start": 0.0,
+   "deleted_nonzero_at_start": 0,
+   "zero_share_at_start": 0.0,
+   "enforce": null,
+   "deleted_nonzero_end": null,
+   "deleted_zero_end": null,
+   "zero_share_end": 0.0
+  }
+ },
+ "base": {
+  "seeds": 3,
+  "first_step": 0,
+  "last_step": 30,
+  "heldout_prompts": 128,
+  "start": 0.4147,
+  "end": 0.498,
+  "per_seed_change": [
+   0.0566,
+   0.1084,
+   0.085
+  ],
+  "change": {
+   "problems": 128,
+   "start": 0.0,
+   "end": 0.0833,
+   "diff": 0.0833,
+   "ci_low": 0.0583,
+   "ci_high": 0.109,
+   "ci_excludes_zero": true,
+   "resamples": 10000
+  },
+  "curve_mean_over_seeds": {
+   "0": 0.4147,
+   "5": 0.4486,
+   "10": 0.4544,
+   "15": 0.4762,
+   "20": 0.4717,
+   "25": 0.4867,
+   "30": 0.498
+  },
+  "mean_groups_used_of_8": 7.7667,
+  "first3_mean_groups_used": 7.556,
+  "mean_train_reward": 0.4771,
+  "mean_masked_frac": 0.0,
+  "mean_stored_update_share": 0.871,
+  "mean_grad_nonzero_share": 0.8557,
+  "step1_stored_update_share": [
+   0.852941,
+   0.852941,
+   0.838235
+  ],
+  "step1_grad_nonzero_share": [
+   0.852941,
+   0.852941,
+   0.838235
+  ],
+  "optimizer_steps": [
+   30,
+   30,
+   30
+  ],
+  "zero_share_first_last": [
+   [
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0
+   ]
+  ],
+  "max_deleted_nonzero": null,
+  "run_seconds": [
+   198.0,
+   188.8,
+   195.5
+  ],
+  "mean_step_s": 2.8536,
+  "keep_zero": {
+   "max_deleted_nonzero": 0,
+   "masked_entries": 0,
+   "deleted_at_start": 0,
+   "deleted_share_of_masked_at_start": 0.0,
+   "deleted_nonzero_at_start": 0,
+   "zero_share_at_start": 0.0,
+   "enforce": null,
+   "deleted_nonzero_end": null,
+   "deleted_zero_end": null,
+   "zero_share_end": 0.0
+  }
+ },
+ "_pairs": {
+  "dt-lora": {
+   "problems": 128,
+   "start": 0.0,
+   "end": -0.0234,
+   "diff": -0.0234,
+   "ci_low": -0.0462,
+   "ci_high": -0.0013,
+   "ci_excludes_zero": true,
+   "resamples": 10000,
+   "change_a": 0.0745,
+   "change_b": 0.098,
+   "ratio_a_over_b": 0.76
+  },
+  "dt-base": {
+   "problems": 128,
+   "start": 0.0,
+   "end": -0.0088,
+   "diff": -0.0088,
+   "ci_low": -0.0273,
+   "ci_high": 0.0088,
+   "ci_excludes_zero": false,
+   "resamples": 10000,
+   "change_a": 0.0745,
+   "change_b": 0.0833,
+   "ratio_a_over_b": 0.894
+  },
+  "lora-base": {
+   "problems": 128,
+   "start": 0.0,
+   "end": 0.0146,
+   "diff": 0.0146,
+   "ci_low": -0.0085,
+   "ci_high": 0.0378,
+   "ci_excludes_zero": false,
+   "resamples": 10000,
+   "change_a": 0.098,
+   "change_b": 0.0833,
+   "ratio_a_over_b": 1.176
+  }
+ }
+}

@@ -1,0 +1,136 @@
+{
+ "checks": {
+  "checks_failed": {},
+  "checks_ok": true,
+  "effort_rows": {
+   "16k": 0,
+   "1k": 15011,
+   "4k": 0,
+   "64k": 0
+  },
+  "files": [
+   {
+    "bytes": 5176678,
+    "name": "sft-dolly-15k.part0000.jsonl.gz",
+    "sha256": "4c2235db86d590cd0a21e5628169a4e83511c9566f9b637c47e80dd91905a42a"
+   },
+   {
+    "bytes": 5161639,
+    "name": "sft-dolly-15k.part0001.jsonl.gz",
+    "sha256": "9e8d0deefb2028948cc21d789b5e909f3e39716deefc8351f7b4304545ad5fe5"
+   },
+   {
+    "bytes": 393970,
+    "name": "sft-dolly-15k.part0002.jsonl.gz",
+    "sha256": "0952586a5f79a80e659b0bcde86249fafed438157c228d8f62a0eaac0de78aac"
+   }
+  ],
+  "info": {
+   "decode_equals_normalised_text_only": 3
+  },
+  "length": {
+   "max": 5664,
+   "min": 25,
+   "p50": 123,
+   "p95": 560
+  },
+  "max_len": 32768,
+  "rows": 15011,
+  "rows_over_max_len": 0,
+  "rows_with_tool_blocks": 0,
+  "shifted_supervised_targets": 1186875,
+  "tokens": 2924760,
+  "tool_call_blocks": 0,
+  "tool_call_tokens_untrained": 0,
+  "tool_result_blocks": 0,
+  "train_spans": 15011,
+  "trained_share": 0.405803,
+  "trained_tokens": 1186875,
+  "unique_ids": true
+ },
+ "checks_wall_s": 12.4,
+ "content_sha256": "fedf5d399bbe1095c6b93f1129b247f90472202949df7eb5ee728577db5086bc",
+ "convert": {
+  "cpu_sys_s": 0.5,
+  "cpu_user_s": 8.8,
+  "hub_bytes_read": 13085339,
+  "max_rss_mb": 138.1,
+  "threads": 2,
+  "wall_s": 14.7
+ },
+ "decision": "allowed (CC-BY-SA, attribution needed)",
+ "decontam": "not run on this output: no kept-row record exists for this set; converted, not decontaminated",
+ "deterministic_rerun": true,
+ "effort_manifest": {
+  "16k": 0,
+  "1k": 15011,
+  "4k": 0,
+  "64k": 0
+ },
+ "generator_model": "none (human-written by Databricks employees; no model generator)",
+ "gz_bytes": 10732287,
+ "gz_ratio": 3.87,
+ "heldout_ids_excluded": 0,
+ "heldout_note": "no held-out id list exists for this set at run time (WP15 lists cover OCR-2 shards only)",
+ "hub_revision": "bdd27f4d94b9c1f951818a7da7fd7aeea5dbff1a",
+ "input": "hub file databricks/databricks-dolly-15k databricks-dolly-15k.jsonl rows 0..999999999999",
+ "licence": "cc-by-sa-3.0 (Hub tag; share-alike, attribution needed)",
+ "parts": [
+  {
+   "gz_bytes": 5176678,
+   "gz_sha256": "4c2235db86d590cd0a21e5628169a4e83511c9566f9b637c47e80dd91905a42a",
+   "name": "sft-dolly-15k.part0000.jsonl.gz",
+   "plain_bytes": 20001004,
+   "plain_sha256": "53304a2c16184643cf32f6a5f82f18d5256f79ee20f92e1ca17099c00da56d33"
+  },
+  {
+   "gz_bytes": 5161639,
+   "gz_sha256": "9e8d0deefb2028948cc21d789b5e909f3e39716deefc8351f7b4304545ad5fe5",
+   "name": "sft-dolly-15k.part0001.jsonl.gz",
+   "plain_bytes": 20000737,
+   "plain_sha256": "de7b2d06a24bbeaa91d0475a4c0ad121d83079573c1cac89ff753554e2b7f84e"
+  },
+  {
+   "gz_bytes": 393970,
+   "gz_sha256": "0952586a5f79a80e659b0bcde86249fafed438157c228d8f62a0eaac0de78aac",
+   "name": "sft-dolly-15k.part0002.jsonl.gz",
+   "plain_bytes": 1531904,
+   "plain_sha256": "9506396e59c8cd788a2e997c0ae3109c36dee809d3fc6a2467ab977ce8304434"
+  }
+ ],
+ "plain_bytes": 41533645,
+ "rerun_content_sha256": "d6717e1d3f426fc93a12476ea3d0d025c92d47dd0ea985b7c5a999c949d96ded",
+ "rerun_rows": 2000,
+ "rows_in": 15011,
+ "rows_out": 15011,
+ "rows_per_s_convert": 1020.09,
+ "rows_scanned": 15011,
+ "scope": "full set as selected by the adapter, source order, p1536",
+ "selection": "all rows",
+ "set": "sft-dolly-15k",
+ "skipped": {},
+ "source": "databricks/databricks-dolly-15k",
+ "status": "converted, not decontaminated; not a pack",
+ "token_record": {
+  "basis": "full set as selected by the adapter, source order, p1536; converted, not decontaminated",
+  "effort": {
+   "16k": 0,
+   "1k": 15011,
+   "4k": 0,
+   "64k": 0
+  },
+  "length": {
+   "max": 5664,
+   "min": 25,
+   "p50": 123,
+   "p95": 560
+  },
+  "rows": 15011,
+  "sequence_tokens": 2924760,
+  "set_id": "sft-dolly-15k",
+  "shifted_supervised_targets": 1186875,
+  "tokenizer_sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b"
+ },
+ "tokenizer_sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b",
+ "tokens_per_s_convert": 198756
+}

@@ -2,7 +2,8 @@
 """Eligibility ledger and mixture feasibility check for the G10 SFT mixture (Package D3).
 
     python mix_inventory.py build --out-jsonl results/eligibility_ledger.jsonl --out-md ../docs/eligibility_ledger.md \
-        [--ocr2-runs <folder with report_0-69.json and its shard records>] [--token-records <jsonl>] [--verify]
+        [--ocr2-runs <folder with report_0-69.json and its shard records>] [--token-records <jsonl>] \
+        [--c3-records <jsonl>] [--verify]
 
 What it does
     1. Reads the four documents on the branch: licences/licence_table.md (Stage 1), sft/decontam_report.md,
@@ -413,6 +414,29 @@ def read_token_records(path: Path) -> dict[str, dict]:
             rec = json.loads(line)
             out[rec["set_id"]] = rec
     return out
+
+
+C3_REQUIRED = ("set_id", "scope", "rows", "sequence_tokens", "shifted_supervised_targets", "tokenizer_sha256", "content_sha256")
+
+
+def read_c3_records(path: Path) -> list[dict]:
+    """Optional C3 token records (WP14), one JSON object per line, one per set and scope.
+
+    Unlike `--token-records` they need not cover the decontamination-kept rows: each states its own scope (for
+    example "first 1,000 rows" or "full set, converted, not decontaminated") and is reported as that, never as a
+    pack or as the kept-row supply. Required keys: set_id, scope, rows, sequence_tokens, shifted_supervised_targets,
+    tokenizer_sha256, content_sha256. Optional: status, trained_tokens, length, effort, rows_over_max_len, max_len,
+    skipped, rows_in, hub_revision, admission, decontam, checks_ok, rows_per_s, track.
+    """
+    out = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.strip():
+            rec = json.loads(line)
+            missing = [k for k in C3_REQUIRED if k not in rec]
+            if missing:
+                raise ValueError(f"c3 record for {rec.get('set_id')!r} lacks {missing}")
+            out.append(rec)
+    return sorted(out, key=lambda r: (r["set_id"], r["scope"]))
 
 
 # --- unit records -----------------------------------------------------------------------------------------
@@ -858,7 +882,8 @@ def indic_language_cells(languages: dict[str, int]) -> list[dict]:
             for lang, n in sorted(languages.items(), key=lambda kv: (-kv[1], kv[0]))]
 
 
-def collect(repo_team: Path, ocr2_runs: Path | None, token_records_path: Path | None) -> list[dict]:
+def collect(repo_team: Path, ocr2_runs: Path | None, token_records_path: Path | None,
+            c3_records_path: Path | None = None) -> list[dict]:
     paths = {"licence": repo_team / "licences/licence_table.md", "decontam": repo_team / "sft/decontam_report.md",
              "kept_rows": repo_team / "sft/decontam_kept_rows.md", "proposal": repo_team / "sft/sft_mix_proposal.md",
              "ocr2_full_run": repo_team / "sft/results/ocr2_full_run.json"}
@@ -943,7 +968,18 @@ def collect(repo_team: Path, ocr2_runs: Path | None, token_records_path: Path | 
                                                           "OCR-2, whose pack report shows 0 admitted rows",
                 "sets_with_measured_tokens": sum(1 for u in sets if u["tokens"]["status"] == "measured"),
                 "sets_with_record_problems": sum(1 for u in sets if u["problems"])}}
-    lines = [meta] + sets + sub + langs + cap + extra + \
+    c3 = []
+    if c3_records_path is not None:
+        known = {u["set_id"]: u for u in units}
+        for rec in read_c3_records(c3_records_path):
+            if rec["set_id"] not in known:
+                contradictions.append({"kind": "c3_record_set_not_in_licence_table", "subject": rec["set_id"],
+                                       "detail": "a C3 token record names a set the licence table does not list"})
+                continue
+            c3.append({"type": "c3_token_record", **rec, "licence_decision": known[rec["set_id"]]["approval_state"]})
+        meta["counts"]["sets_with_c3_records"] = len({r["set_id"] for r in c3})
+        meta["counts"]["c3_records"] = len(c3)
+    lines = [meta] + sets + sub + langs + cap + extra + c3 + \
         [dict(type="contradiction", **c) for c in sorted(contradictions, key=lambda c: (c["kind"], c["subject"], c["detail"]))]
     return lines
 
@@ -1179,6 +1215,13 @@ def render_markdown(records: list[dict]) -> str:
              "one tokenizing pass over each set's clean file (`convert.py --tokenizer`, then `--token-records`). "
              "The clean files are local outputs of the decontamination runs and are not on the branch. The frozen "
              "tokenizer arrives on 14 Nov, so a pass now would need a rerun.")
+    c3 = [r for r in records if r["type"] == "c3_token_record"]
+    if c3:
+        d.append("**C3 token records (WP14).** "
+                 f"{c['sets_with_c3_records']} sets have C3 token records at the scope each states (section 8). Those "
+                 "records are first-rows samples or full conversions that were not decontaminated; none is a kept-row "
+                 "record, so the supply columns above still hold the scanned counts and the measured-token count of "
+                 "section 1 is unchanged.")
     blockers = ocr["pack"].get("blockers")
     d.append("**OCR-2 admission.** 0 rows are admitted. " + (
         "Blockers in the pack report (union over the 70 shards): " + ", ".join(f"`{b}`" for b in blockers) + ". "
@@ -1207,7 +1250,32 @@ def render_markdown(records: list[dict]) -> str:
       "not audit CommitPackFT row or repository licences, add the MATH-train licence row to the RL handoff, or "
       "recount section subtotals in those documents; those are separate edits.")
     w("")
-    return "\n".join(L) + "\n"
+    if c3:
+        w("## 8. C3 token records (WP14), by scope")
+        w("")
+        w("Tokenizer: C3 (`tokenizer_sha256` in each record), rendered with `chat-format/render.py`, masks per "
+          "`convert_report.md`. Each row states its own scope. `first N` rows are the first N selected rows of the set in "
+          "source order, not a sample of the whole set and not the decontamination-kept rows. `full` rows are every row the "
+          "adapter produced from the pinned source; none of them has been through the decontamination run, so they are "
+          "converted, not decontaminated, and none is a pack. A licence state of `tsai_reserves` is not an admission. "
+          "`targets` = loss-masked assistant tokens after the one-token shift; `over` = rows longer than `max_len` tokens. "
+          "OCR-2 is not in this section. Its rows, lengths and counts elsewhere in this document are computed from the legacy "
+          "`ocr2_full_run.json` inputs (tokenizer v0.1, no context limit, 0 admitted) and are not the current C3 pack "
+          "state, which is recorded in its own pack manifest.")
+        w("")
+        w("| Set | Licence state | Scope | Rows in | Rows out | Tokens | Targets | Target share | p50 / p95 / max | Over max_len | Checks |")
+        w("|---|---|---|---:|---:|---:|---:|---:|---|---:|---|")
+        for r in c3:
+            ln = r.get("length") or {}
+            share = r["shifted_supervised_targets"] / r["sequence_tokens"] if r["sequence_tokens"] else None
+            w(f"| `{r['set_id']}` | {r['licence_decision']} | {r['scope']} | {fmt(r.get('rows_in'))} | {fmt(r['rows'])} | "
+              f"{fmt(r['sequence_tokens'])} | {fmt(r['shifted_supervised_targets'])} | "
+              f"{'n/a' if share is None else format(share, '.1%')} | "
+              f"{fmt(ln.get('p50'))} / {fmt(ln.get('p95'))} / {fmt(ln.get('max'))} | {fmt(r.get('rows_over_max_len'))} | "
+              f"{'pass' if r.get('checks_ok') else 'not recorded' if r.get('checks_ok') is None else 'FAIL'} |")
+        w("")
+    w("")
+    return ("\n".join(L).rstrip() if c3 else "\n".join(L)) + "\n"
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -1217,11 +1285,12 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--team-dir", type=Path, default=here.parent, help="teams/10-post-training")
     ap.add_argument("--ocr2-runs", type=Path, help="folder holding report_0-69.json and its results/ shard records")
     ap.add_argument("--token-records", type=Path, help="JSONL of measured token records for other sets")
+    ap.add_argument("--c3-records", type=Path, help="JSONL of C3 token records with an explicit scope (see read_c3_records)")
     ap.add_argument("--out-jsonl", type=Path, default=here / "results/eligibility_ledger.jsonl")
     ap.add_argument("--out-md", type=Path, default=here.parent / "docs/eligibility_ledger.md")
     ap.add_argument("--verify", action="store_true", help="do not write; fail if the files differ from a fresh build")
     a = ap.parse_args(argv)
-    records = collect(a.team_dir, a.ocr2_runs, a.token_records)
+    records = collect(a.team_dir, a.ocr2_runs, a.token_records, a.c3_records)
     jsonl, md = dump_jsonl(records), render_markdown(records)
     if a.verify:
         ok = a.out_jsonl.read_text(encoding="utf-8") == jsonl and a.out_md.read_text(encoding="utf-8") == md

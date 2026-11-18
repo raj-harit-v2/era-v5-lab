@@ -5,12 +5,9 @@
  "ruling": {
   "set": "licences/licence_table.md, Stage 1 row of sft-code-opencodereasoning-2: allowed (TSAI admitted, 11 Nov 2026). prepare_ocr2.py and pack_admission.py read the table themselves and refuse a policy that says anything else.",
   "teacher": "TSAI data rule of 3 Nov: output of open-weight models under MIT or Apache-2.0 is in; DeepSeek-R1 is named.",
-  "open": [
-   "training pack for the OCR-2 SFT subset: the set is allowed (TSAI admitted, 11 Nov 2026), but no pack can be built until the sources below are approved and identity-verified, Team 3 approves a tokenizer and a context limit is set",
-   "per source: the producer's original revision and row order (see source manifest, identity)",
-   "Team 9 confirmation for the Codeforces pool before open-r1/codeforces rows are used",
-   "the target-quality thresholds below are a proposal for the lead and TSAI, not a ruling"
-  ]
+  "open": ["the target-quality thresholds below are the #391 rule (SFT mix v1); the policy note calls them a proposal and TSAI has not named another threshold", "open-r1/codeforces: held out of v1; the producer's revision is not established and Team 9 confirmation of the Codeforces pool is open", "max_sequence_tokens 32768 is provisional for SFT data v1", "unclear_source_rows: 14 TACO problems excluded pending a human spot check; removing an entry folds its rows back", "pack.heldout_eval_v1: 2% of problem families held out for eval_v1 task 8; fraction 0 folds them back"],
+  "pack_v1": "TSAI, 14 Nov 2026: tokenizer frozen (C3, eos id 130822); max_sequence_tokens 32768 accepted as provisional for SFT data v1; hold the 69,690 Codeforces rows out of v1; for TACO, APPS and code_contests record the source repo and revision in the manifest; any row without a clear source stays out; build by Mon 16 Nov, 11:59 PM IST.",
+  "tokenizer_p1536": "TSAI Gate 3 notice, 15 Nov 2026 (general channel): the frozen tokenizer changes from C3 to p1536, sha256 e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b; same 356 special tokens and ids as C3, eos <|endoftext|> id 130822, vocabulary 131,072; re-pin for all new work; C3 work stays valid as a record. Instructor to G10, 16 Nov 2026: rebuild SFT data v1 with p1536, rerun the render and pack steps, re-check the effort tiers, keep the C3 pack as a record."
  },
  "ocr2": {
   "repo": "nvidia/OpenCodeReasoning-2",
@@ -38,8 +35,14 @@
    "protected_splits": ["test"],
    "statement_licence": "apache-2.0",
    "attribution": "BAAI/TACO (Hub tag apache-2.0)",
-   "training_approved": false,
-   "hold_reason": "no pinned original snapshot yet, producer revision and row order not established"
+   "training_approved": true,
+   "approval": {
+    "by": "TSAI",
+    "date": "2026-11-14",
+    "basis": "source repo and revision recorded in the source manifest; rows without a clear source stay out",
+    "ref": "G10 group, Instructor, 14 Nov 2026: Decisions for the OCR-2 pack"
+   },
+   "revision": "d593ed0a2becbbc952230bb89be09189bf1056dc"
   },
   "apps": {
    "repo": "codeparrot/apps",
@@ -47,8 +50,14 @@
    "protected_splits": ["test"],
    "statement_licence": "mit",
    "attribution": "codeparrot/apps (Hub tag mit)",
-   "training_approved": false,
-   "hold_reason": "no pinned original snapshot yet, producer revision and row order not established"
+   "training_approved": true,
+   "approval": {
+    "by": "TSAI",
+    "date": "2026-11-14",
+    "basis": "source repo and revision recorded in the source manifest; rows without a clear source stay out",
+    "ref": "G10 group, Instructor, 14 Nov 2026: Decisions for the OCR-2 pack"
+   },
+   "revision": "21e74ddf8de1a21436da12e3e653065c5213e9d1"
   },
   "code_contests": {
    "repo": "deepmind/code_contests",
@@ -56,8 +65,14 @@
    "protected_splits": ["valid", "test"],
    "statement_licence": "cc-by-4.0",
    "attribution": "deepmind/code_contests (CC BY 4.0); attribution is kept even where the OCR-2 row tag says apache-2.0",
-   "training_approved": false,
-   "hold_reason": "local identity evidence is diagnostic only (producer revision not established)"
+   "training_approved": true,
+   "approval": {
+    "by": "TSAI",
+    "date": "2026-11-14",
+    "basis": "source repo and revision recorded in the source manifest; rows without a clear source stay out",
+    "ref": "G10 group, Instructor, 14 Nov 2026: Decisions for the OCR-2 pack"
+   },
+   "revision": "802411c3010cb00d1b05bad57ca77365a3c699d6"
   },
   "open-r1/codeforces": {
    "repo": "open-r1/codeforces",
@@ -66,13 +81,99 @@
    "statement_licence": "",
    "attribution": "",
    "training_approved": false,
-   "hold_reason": "statement terms not recorded here; Team 9 confirmation for the Codeforces pool is open"
+   "hold_reason": "held out of SFT data v1 by TSAI on 14 Nov 2026 (69,690 rows); producer revision not established"
   }
  },
  "protected_family_keys": [],
  "pack": {
-  "approved_tokenizer_sha256": [],
+  "approved_tokenizer_sha256": ["e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b"],
+  "approved_tokenizer_note": "Team 3 p1536, frozen by TSAI on 15 Nov 2026 (Gate 3 notice); eos <|endoftext|> id 130822; special tokens and ids identical to C3",
+  "superseded_tokenizer_sha256": {"15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3": "Team 3 C3, frozen 14 Nov 2026, superseded 15 Nov 2026. The C3 pack v1 is kept as a record (results/ocr2_pack_v1_c3_manifest.json); a new pack with C3 is refused."},
   "approved_fingerprint_set_sha256": ["2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a"],
-  "note": "No tokenizer is approved for packs until Team 3 publishes the frozen one. The fingerprint set is Team 9's full v2."
+  "max_sequence_tokens_ruling": "32768, provisional for SFT data v1 (TSAI, 14 Nov 2026)",
+  "accepted_identity_levels": ["verified", "pinned_revision"],
+  "accepted_identity_levels_note": "pinned_revision = source repo and exact revision recorded, every file sha256 equal to the Hub object at that revision, per-row probes in the source manifest; this is what the 14 Nov ruling asks for. It is not relabelled as verified, and diagnostic never admits.",
+  "heldout_eval_v1": {
+   "fraction": 0.02,
+   "salt": "g10-ocr2-heldout-eval-v1",
+   "note": "problem families whose salted sha256 falls under 2% go to a separate held-out file (eval_v1 code prompts), never into the pack"
+  },
+  "note": "The fingerprint set is Team 9's full v2."
+ },
+ "unclear_source_rows": {
+  "reason": "both identity signals (reasoning and solution similarity to the joined source row) lose to the neighbouring rows on shards 0-2: candidates for a misjoined question. Excluded under 'any row without a clear source stays out' until a human spot check clears them. Keys are the OCR-2 `index` (source ordinal).",
+  "evidence": "work note identity-losers-2026-11-14 (shards 0-2); not yet run on shards 3-69",
+  "rows": [
+   {
+    "dataset": "taco",
+    "split": "train",
+    "ordinal": 305
+   },
+   {
+    "dataset": "taco",
+    "split": "train",
+    "ordinal": 2084
+   },
+   {
+    "dataset": "taco",
+    "split": "train",
+    "ordinal": 2761
+   },
+   {
+    "dataset": "taco",
+    "split": "train",
+    "ordinal": 3895
+   },
+   {
+    "dataset": "taco",
+    "split": "train",
+    "ordinal": 4783
+   },
+   {
+    "dataset": "taco",
+    "split": "train",
+    "ordinal": 5995
+   },
+   {
+    "dataset": "taco",
+    "split": "train",
+    "ordinal": 6161
+   },
+   {
+    "dataset": "taco",
+    "split": "train",
+    "ordinal": 7545
+   },
+   {
+    "dataset": "taco",
+    "split": "train",
+    "ordinal": 8575
+   },
+   {
+    "dataset": "taco",
+    "split": "train",
+    "ordinal": 12452
+   },
+   {
+    "dataset": "taco",
+    "split": "train",
+    "ordinal": 14613
+   },
+   {
+    "dataset": "taco",
+    "split": "train",
+    "ordinal": 15139
+   },
+   {
+    "dataset": "taco",
+    "split": "train",
+    "ordinal": 18983
+   },
+   {
+    "dataset": "taco",
+    "split": "train",
+    "ordinal": 19744
+   }
+  ]
  }
 }

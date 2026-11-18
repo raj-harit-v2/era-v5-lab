@@ -18,6 +18,7 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
+import math
 import os
 import random
 import subprocess
@@ -638,7 +639,11 @@ def test_train_fixture_smoke_is_labelled(fx, tmp_path):
     out = tmp_path / "smoke"
     s = train.train(_train_cfg(_yaml(fx, tmp_path / "fixture.yaml"), out, allow_fixture_smoke=True))
     names = sorted(p.name for p in out.iterdir())
-    assert names == ["FIXTURE_SMOKE_NOT_A_RESULT", "smoke_metrics.jsonl", "smoke_summary.json"]
+    # evals.jsonl is the durable evaluation log added with resumable trainer state (c9f9b39); it carries no result
+    # label of its own, so the smoke labels below are what keeps a fixture run from reading as a result.
+    assert sorted(set(names) - {"evals.jsonl"}) == ["FIXTURE_SMOKE_NOT_A_RESULT", "smoke_metrics.jsonl",
+                                                    "smoke_summary.json"]
+    assert "metrics.jsonl" not in names and "summary.json" not in names
     assert s["status"] == "FIXTURE_SMOKE_NOT_A_RESULT" and s["team5_adapter"]["learning_report_allowed"] is False
     assert s["router_unchanged"] and s["router_params_frozen"] == ["blocks.0.moe.router.weight",
                                                                    "blocks.1.moe.router.weight"]
@@ -752,3 +757,408 @@ def test_train_fixture_reward_reaches_the_trainer(fx, tmp_path, monkeypatch):
     assert s["groups_used_total"] >= 1 and all(rec["grad_norm"] > 0 for rec in recs if rec["groups_used"])
     assert s["trainable_weight_change"]["share_changed"] > 0 and s["router_unchanged"]
     assert s["status"] == "FIXTURE_SMOKE_NOT_A_RESULT"
+
+
+# --- run_folder mode: a folder written by Team 5's own train_week2.py ------------------------------------------
+
+TINY_ARM = """# G10 test arm: Team 5's exp2_muon -> t2 chain, tiny sizes. NOT a Team 5 arm.
+inherit: exp2_muon.yaml
+intended:
+  arm: g10-test-tiny
+  instructor_expert_ffn: 32
+  max_time_min: 5
+model:
+  block_size: 32
+  n_layer: 2
+  n_head: 2
+  n_kv_head: 1
+  n_embd: 16
+  moe: {num_experts: 4, top_k: 2, num_shared: 1, dispatch: loop}
+run:
+  batch_size: 2
+  dtype: fp32
+"""
+
+
+@fixture(scope="session")
+def run_folder(fx, tmp_path_factory):
+    """Train 3 CPU steps with Team 5's unmodified train_week2.py (through capstone/g5_launch.py, which only swaps the
+    tokenizer-identity default to v0.1) on a tiny arm kept outside Team 5's tree. A real run folder, tiny model."""
+    d = tmp_path_factory.mktemp("g5_run_folder")
+    ov = d / "overlay"
+    (ov / "configs" / "arms").mkdir(parents=True)
+    (ov / "experiments").mkdir()
+    for rel in ("configs/runtime.yaml", "configs/arms/t2.yaml", "configs/arms/exp2_muon.yaml",
+                "experiments/plan_v1.md"):
+        (ov / rel).write_bytes((TEAM5 / rel).read_bytes())
+    (ov / "configs" / "arms" / "tiny.yaml").write_text(TINY_ARM)
+    docs = []
+    for i, p in enumerate(sorted(HERE.glob("*.py"))):
+        text = p.read_text(encoding="utf-8")
+        try:
+            fx.art.encode(text)
+        except ValueError:
+            continue
+        docs.append({"id": f"doc{i}", "text": text[:4000]})
+    (d / "train.jsonl").write_text("".join(json.dumps(r) + "\n" for r in docs[2:]))
+    (d / "heldout.jsonl").write_text("".join(json.dumps(r) + "\n" for r in docs[:2]))
+    out = d / "run"
+    cmd = [sys.executable, str(TEAM10 / "capstone" / "g5_launch.py"), "--g5-root", str(REPO),
+           "--tokenizer-sha256", V0_1_SHA, "--",
+           "--config", str(ov / "configs/arms/tiny.yaml"), "--runtime", str(ov / "configs/runtime.yaml"),
+           "--tokenizer", str(fx.tok), "--byte-table", str(fx.table), "--train-data", str(d / "train.jsonl"),
+           "--heldout-data", str(d / "heldout.jsonl"), "--device", "cpu", "--smoke", "--smoke-steps", "3",
+           "--out", str(out)]
+    r = subprocess.run(cmd, capture_output=True, text=True)
+    assert r.returncode == 0, r.stderr[-2000:]
+    return out
+
+
+def rf_cfg(fx, folder: Path, **kw) -> dict:
+    c = cfg_for(fx)
+    for key in ("fixture_overrides", "checkpoint"):
+        c.pop(key)
+    c["g5"].pop("arm")
+    c["g5"].pop("resolution")
+    c["mode"] = "run_folder"
+    c["probe"] = {"ids": list(fx.probe_ids)}
+    c["run_folder"] = {"path": str(folder), "origin": "g10_rehearsal",
+                       "manifest_sha256": ta.sha256_file(folder / "manifest.json"),
+                       "checkpoint_sha256": ta.sha256_file(folder / "checkpoint.pt")}
+    for path, value in kw.items():
+        node, keys = c, path.split("__")
+        for k in keys[:-1]:
+            node = node[k]
+        node[keys[-1]] = value
+    return c
+
+
+@needs_inputs
+def test_run_folder_builds_rehearsal_bundle(fx, run_folder):
+    r = ta.build(rf_cfg(fx, run_folder))
+    assert r.status == ta.REHEARSAL_READY and r.mode == "run_folder"
+    summary = json.loads((run_folder / "summary.json").read_text())
+    assert r.manifest["model_hash_g5"] == summary["final_model_sha256"]
+    assert r.manifest["run_folder"]["g5_status"] == "SMOKE_NOT_A_QUALITY_RESULT"
+    assert r.manifest["run_folder"]["g10_launch_patches"]["Artifacts.expected_tokenizer_sha"]["used"] == V0_1_SHA
+    assert r.manifest["learning_report_allowed"] is False
+    spec = json.loads((run_folder / "manifest.json").read_text())["config"]["model"]
+    assert r.bundle.spec == spec and spec["n_embd"] == 16
+    ids = torch.tensor([fx.probe_ids[:8]])
+    assert r.bundle.forward(ids, torch.ones_like(ids, dtype=torch.bool)).shape == (1, 8, 131072)
+    with pytest.raises(RuntimeError, match="refusing a learning report"):
+        ta.require_learning_ready(r)
+
+
+@needs_inputs
+def test_run_folder_refusals(fx, run_folder, tmp_path):
+    import shutil  # noqa: PLC0415
+    with pytest.raises(ta.ArtifactError, match="manifest hash mismatch"):
+        ta.build(rf_cfg(fx, run_folder, run_folder__manifest_sha256="0" * 64))
+    with pytest.raises(ta.ArtifactError, match="checkpoint hash mismatch"):
+        ta.build(rf_cfg(fx, run_folder, run_folder__checkpoint_sha256="0" * 64))
+    with pytest.raises(ta.ArtifactError, match="non-smoke AGREED_BASELINE_RUN"):
+        ta.build(rf_cfg(fx, run_folder, run_folder__origin="g5_delivery"))
+    with pytest.raises(ta.ArtifactError, match="origin must be one of"):
+        ta.build(rf_cfg(fx, run_folder, run_folder__origin="somebody"))
+    c = rf_cfg(fx, run_folder)
+    c["checkpoint"] = {"path": "x"}
+    with pytest.raises(ta.ArtifactError, match="remove 'checkpoint'"):
+        ta.build(c)
+    # summary.json says a different final model: the loaded weights are not the ones the run finished with.
+    bad = tmp_path / "bad_summary"
+    shutil.copytree(run_folder, bad)
+    s = json.loads((bad / "summary.json").read_text())
+    s["final_model_sha256"] = "f" * 64
+    (bad / "summary.json").write_text(json.dumps(s))
+    with pytest.raises(ta.ArtifactError, match="final_model_sha256"):
+        ta.build(rf_cfg(fx, bad))
+    # manifest claims different trainer source than the pinned import.
+    src = tmp_path / "bad_source"
+    shutil.copytree(run_folder, src)
+    m = json.loads((src / "manifest.json").read_text())
+    m["sources"]["model.py"] = "0" * 64
+    (src / "manifest.json").write_text(json.dumps(m))
+    with pytest.raises(ta.ArtifactError, match="different model.py"):
+        ta.build(rf_cfg(fx, src))
+    # checkpoint from another run (identity hash) is refused.
+    ident = tmp_path / "bad_identity"
+    shutil.copytree(run_folder, ident)
+    m = json.loads((ident / "manifest.json").read_text())
+    m["identity_sha256"] = "1" * 64
+    (ident / "manifest.json").write_text(json.dumps(m))
+    with pytest.raises(ta.ArtifactError, match="identity_sha256"):
+        ta.build(rf_cfg(fx, ident))
+    # run_folder keys are not read in the other modes.
+    with pytest.raises(ta.ArtifactError, match="only read in run_folder mode"):
+        ta.build(cfg_for(fx, run_folder={"path": str(run_folder)}))
+
+
+# --- CLAUDE.md G10 GRPO review, literally, on Team 5's LanguageModel (real run folder, real trainer) -------------
+# Same scripted-reward cases as test_objective_v1_trainer.py (tiny OLMoE), with the policy built by the adapter from a
+# folder Team 5's own train_week2.py wrote: real advantage function, real objective_v1 backward, real AdamW.
+
+def _run_v1_g5(monkeypatch, tmp_path, fx, run_folder, name, scripts, k=4, steps=1, ppo_epochs=1, lr=0.01,
+               bf16=False, fp32_master=False, **extra):
+    import yaml  # noqa: PLC0415
+    import train  # noqa: PLC0415
+    from test_objective_v1_trainer import _PromptSeeded, _RecAdamW, ScriptedTask  # noqa: PLC0415
+    rec = {"logprob_calls": 0, "groups": []}
+    real_lp, real_make, real_build, real_bg = (train.chunked_logprobs, train.rollout.make_sampler, train.build_model,
+                                               train.backward_objective_v1)
+
+    def lp(pol, seq, plen, micro):
+        rec["logprob_calls"] += 1
+        return real_lp(pol, seq, plen, micro)
+
+    def bg(pol, group, *a, **kw):
+        rec["groups"].append(tuple(group[0][0, :group[5]].tolist()))
+        return real_bg(pol, group, *a, **kw)
+
+    def build(mcfg, device):
+        pol, tok = real_build(mcfg, device)
+        if bf16:
+            pol.model.to(torch.bfloat16)
+        return pol, tok
+
+    monkeypatch.setattr(train, "chunked_logprobs", lp)
+    monkeypatch.setattr(train, "backward_objective_v1", bg)
+    monkeypatch.setattr(train, "build_model", build)
+    monkeypatch.setattr(train.rollout, "make_sampler", lambda *a, **kw: _PromptSeeded(real_make(*a, **kw)))
+    monkeypatch.setattr(train, "build_task", lambda tcfg, tok, seed: ScriptedTask(scripts))
+    monkeypatch.setattr(torch.optim, "AdamW", _RecAdamW)
+    _RecAdamW.made = []
+    c = rf_cfg(fx, run_folder)
+    c.pop("_base")
+    ypath = tmp_path / f"{name}_adapter.yaml"
+    ypath.write_text(yaml.safe_dump(c))
+    cfg = {"seed": 1234, "device": "cpu", "out_dir": str(tmp_path / name), "verbose": False,
+           "model": {"kind": "team5_adapter", "adapter_config": str(ypath), "allow_fixture_smoke": True},
+           "task": {"kind": "scripted"},
+           "train": {"algo": "objective_v1", "steps": steps, "prompts_per_step": len(scripts), "k": k, "max_new": 3,
+                     "temperature": 1.0, "lr": lr, "ppo_epochs": ppo_epochs, "kl_coef": 0.0, "eval_every": 100,
+                     "eval_k": 2, "sampler": "policy", "fp32_master": fp32_master, **extra}}
+    summary = train.train(cfg)
+    recs = [json.loads(x) for x in (tmp_path / name / "smoke_metrics.jsonl").read_text().splitlines()]
+    return summary, _RecAdamW.made[0], recs, rec
+
+
+@needs_inputs
+def test_g5_grpo_review_constant_singleton_mixed_through_the_real_advantage_function():
+    import grpo  # noqa: PLC0415
+    assert grpo.advantages(torch.tensor([1.0, 1.0, 1.0, 1.0]), "objective_v1") is None  # constant -> dropped
+    assert grpo.advantages(torch.tensor([0.0, 0.0, 0.0, 0.0]), "objective_v1") is None
+    assert grpo.advantages(torch.tensor([1.0]), "objective_v1") is None  # singleton -> dropped
+    a = grpo.advantages(torch.tensor([0.0, 1.0, 0.0, 1.0]), "objective_v1")
+    assert torch.isfinite(a).all() and a.tolist() == [-0.5, 0.5, -0.5, 0.5]
+
+
+@needs_inputs
+def test_g5_grpo_review_trainer_mixed_dropped_invariance_and_all_dropped(monkeypatch, tmp_path, fx, run_folder):
+    from test_rl_loop import ALL_FAIL, ALL_PASS, MIXED, MIXED_B  # noqa: PLC0415
+    # mixed group updates stored weights; constant groups never reach the backward or the denominator
+    s, opt, recs, rec = _run_v1_g5(monkeypatch, tmp_path, fx, run_folder, "m",
+                                   {ALL_PASS: [1, 1, 1, 1], ALL_FAIL: [0, 0, 0, 0], MIXED: [0, 1, 0, 1]})
+    r = recs[0]
+    assert r["groups_used"] == 1 and r["groups_dropped"] == 2 and rec["groups"] == [MIXED]
+    assert r["optimizer_stepped"] and opt.n_steps == 1 and r["tokens"] == 4 * 3 and r["masked_frac"] == 0.0
+    assert math.isfinite(r["loss"]) and r["grad_norm"] > 0 and r["stored_update_share"] > 0
+    assert s["router_unchanged"] and s["status"] == "FIXTURE_SMOKE_NOT_A_RESULT"
+    # adding a dropped group leaves the mixed groups' loss, update and AdamW moments unchanged
+    mixed = {MIXED: [0, 1, 0, 1], MIXED_B: [1, 1, 0, 0]}
+    _, o0, r0, _ = _run_v1_g5(monkeypatch, tmp_path, fx, run_folder, "d0", dict(mixed), ppo_epochs=2)
+    _, o1, r1, rec1 = _run_v1_g5(monkeypatch, tmp_path, fx, run_folder, "d1", {**mixed, ALL_PASS: [1, 1, 1, 1]},
+                                 ppo_epochs=2)
+    assert r1[0]["groups_dropped"] == 1 and ALL_PASS not in rec1["groups"] and r0[0]["tokens"] == r1[0]["tokens"]
+    assert r1[0]["loss"] == pytest.approx(r0[0]["loss"], abs=1e-7)
+    for p0, p1 in zip(o0.params(), o1.params()):
+        assert torch.allclose(p0, p1, atol=1e-7, rtol=0)
+        for key in ("exp_avg", "exp_avg_sq"):
+            assert torch.allclose(o0.state[p0][key], o1.state[p1][key], atol=1e-9, rtol=1e-5)
+    # an all-dropped batch (constant groups, then singletons) never steps the optimizer and creates no state
+    _, opt, recs, rec = _run_v1_g5(monkeypatch, tmp_path, fx, run_folder, "z",
+                                   {ALL_PASS: [1, 1, 1, 1], ALL_FAIL: [0, 0, 0, 0]}, steps=2)
+    assert not any(x["optimizer_stepped"] for x in recs) and opt.n_steps == 0 and len(opt.state) == 0
+    assert all(torch.equal(p, p0) for p, p0 in zip(opt.params(), opt.start)) and rec["logprob_calls"] == 0
+    _, opt, recs, _ = _run_v1_g5(monkeypatch, tmp_path, fx, run_folder, "z1", {MIXED: [0, 1, 0, 1]}, k=1)
+    assert recs[0]["group_kinds"]["singleton"] == 1 and opt.n_steps == 0 and len(opt.state) == 0
+
+
+@needs_inputs
+def test_g5_stalled_learning_bf16_storage_loses_the_update_fp32_master_keeps_it(monkeypatch, tmp_path, fx,
+                                                                               run_folder):
+    from test_rl_loop import MIXED  # noqa: PLC0415
+    scripts = {MIXED: [0, 1, 0, 1]}
+    # bf16-stored G5 weights only run under autocast (KE2 returns fp32 by design): train.autocast bf16. lr 1e-6 is an
+    # RL rate; at 1e-9 even fp32 storage cannot hold the step for G5 head rows of magnitude ~0.25 (ulp ~1.5e-8)
+    with pytest.raises(RuntimeError, match="lost update"):
+        _run_v1_g5(monkeypatch, tmp_path, fx, run_folder, "b0", scripts, lr=1e-6, bf16=True, autocast="bf16")
+    _, _, recs, _ = _run_v1_g5(monkeypatch, tmp_path, fx, run_folder, "b1", scripts, lr=1e-6, bf16=True,
+                               autocast="bf16", fail_on_lost_update=False)
+    assert recs[0]["grad_nonzero_share"] > 0.5 and recs[0]["stored_update_share"] < 0.01
+    s, _, recs, _ = _run_v1_g5(monkeypatch, tmp_path, fx, run_folder, "b2", scripts, lr=1e-6, bf16=True,
+                               fp32_master=True)
+    assert recs[0]["stored_update_share"] >= 0.5 * recs[0]["grad_nonzero_share"] > 0 and s["fp32_master_params"] > 0
+
+
+# --- sampling: last-position head and the KV-cached decoder (rl-loop/g5_decode.py) -----------------------------------
+
+@needs_inputs
+def test_g5_kv_decoder_matches_team5_forward_and_sampling_paths_agree(fx, run_folder):
+    import g5_decode  # noqa: PLC0415
+    r = ta.build(rf_cfg(fx, run_folder))
+    b = r.bundle
+    lm = b.model
+    long = list(fx.probe_ids) * 3
+    ids = torch.tensor([long[:20], long[1:21]])
+    assert g5_decode.parity(lm, ids, split=7) < 1e-4  # prefill 7, then 13 cached one-token steps
+    prompt = fx.probe_ids[:6]
+    # greedy: re-forward (last-position head), KV cache and Team 5's full forward pick the same tokens
+    s0, m0, _ = b.sample(prompt, 2, 8, 0.0, None)
+    b.kv_cache = True
+    s1, m1, _ = b.sample(prompt, 2, 8, 0.0, None)
+    b.kv_cache = False
+    assert torch.equal(s0, s1) and torch.equal(m0, m1)
+    seq = torch.tensor([prompt])
+    for _ in range(8):
+        nxt = lm(seq, torch.ones_like(seq, dtype=torch.bool))[:, -1].argmax(-1)
+        seq = torch.cat([seq, nxt[:, None]], 1)
+    assert torch.equal(seq[0], s0[0, :seq.shape[1]]) or bool(m0[0].logical_not().any())
+    # temperature 1 with the same generator seed draws the same completions on both paths (CPU)
+    g = torch.Generator().manual_seed(5)
+    t0, _, _ = b.sample(prompt, 3, 8, 1.0, g)
+    b.kv_cache = True
+    g = torch.Generator().manual_seed(5)
+    t1, _, _ = b.sample(prompt, 3, 8, 1.0, g)
+    b.kv_cache = False
+    assert torch.equal(t0, t1)
+
+
+@needs_inputs
+def test_g5_kv_decoder_refuses_layouts_it_does_not_reproduce():
+    import g5_decode  # noqa: PLC0415
+    import importlib.util as iu  # noqa: PLC0415
+    import numpy as np  # noqa: PLC0415
+    spec = iu.spec_from_file_location("g5_model_local_test", TEAM5 / "harness" / "week2" / "model.py")
+    g5 = iu.module_from_spec(spec)
+    spec.loader.exec_module(g5)
+    m = {"vocab_size": 8, "n_embd": 8, "n_head": 2, "n_kv_head": 1, "n_layer": 2, "rope_theta": 1e4, "norm_eps": 1e-5,
+         "mtp": False, "attn_pattern": ["G", "L"], "attn_window": 4,
+         "moe": {"num_experts": 2, "top_k": 1, "num_shared": 0, "ffn_hidden": 8, "bias": False}}
+    rows = np.zeros((8, 2), dtype=np.uint8)
+    lm = g5.LanguageModel(m, rows, np.ones(8, dtype=np.int16))
+    with pytest.raises(NotImplementedError, match="local window"):
+        g5_decode.check_supported(lm)
+
+
+@needs_inputs
+def test_run_folder_without_git_pins_every_harness_file(fx, run_folder, tmp_path):
+    """A hash-pinned copy of Team 5's harness outside git (the Kaggle bundle) builds; an unpinned file is refused."""
+    import shutil  # noqa: PLC0415
+    root = tmp_path / "nogit"
+    shutil.copytree(TEAM5 / "harness", root / "teams" / "05-architecture" / "harness",
+                    ignore=shutil.ignore_patterns("__pycache__"))
+    files = {f"harness/week2/{p.name}": ta.sha256_file(p) for p in (TEAM5 / "harness" / "week2").glob("*.py")}
+    files["harness/train_week2.py"] = ta.sha256_file(TEAM5 / "harness" / "train_week2.py")
+    c = rf_cfg(fx, run_folder)
+    c["g5"] = {"root": str(root), "commit": None, "pin": "file_hashes", "source_commit": fx.head, "files_sha256": files}
+    for m in [m for m in list(sys.modules) if m == "train_week2" or m.startswith("week2")]:
+        sys.modules.pop(m)  # the pinned-root import check refuses modules imported from the git checkout
+    sys.path[:] = [p for p in sys.path if not p.endswith("05-architecture/harness")]
+    try:
+        r = ta.build(c)
+        assert r.status == ta.REHEARSAL_READY and r.manifest["g5"]["commit"] == "nogit:" + fx.head
+        bad = dict(files)
+        bad.pop("harness/week2/data.py")
+        c["g5"]["files_sha256"] = bad
+        with pytest.raises(ta.ArtifactError, match="every harness file pinned"):
+            ta.build(c)
+    finally:
+        for m in [m for m in list(sys.modules) if m == "train_week2" or m.startswith("week2")]:
+            sys.modules.pop(m)
+        sys.path[:] = [p for p in sys.path if "nogit" not in p]
+
+
+# --- SFT driver (capstone/sft_g5.py) on the real tiny run folder ----------------------------------------------------
+
+@needs_inputs
+def test_sft_driver_runs_every_method_with_its_checks(fx, run_folder, tmp_path):
+    """Two optimizer steps per method on Team 5's model: masks, writeback, frozen weights and reload must pass."""
+    import yaml  # noqa: PLC0415
+    capstone = TEAM10 / "capstone"
+    sys.path.insert(0, str(capstone))
+    import sft_g5  # noqa: PLC0415
+    import sft_rows  # noqa: PLC0415
+    render = sft_g5.render
+    convert = sft_rows._load("g10_convert_for_capstone", TEAM10 / "sft" / "convert.py")
+    rt = sft_rows.Retok(fx.tok, fx.table)
+    rows = []
+    for i in range(12):  # test fixtures only: not training data
+        text = render.render([{"role": "user", "content": f"q{i}"}, {"role": "assistant", "content": f"a{i} b"}])
+        row, why = rt.row({"id": f"t/{i}", "text": text, "train_spans": convert.train_spans(text)})
+        assert why == "ok"
+        row["split"] = "train" if i < 8 else "eval"
+        rows.append(row)
+    tr, ev = tmp_path / "train.jsonl", tmp_path / "eval.jsonl"
+    tr.write_text("".join(json.dumps(r) + "\n" for r in rows if r["split"] == "train"))
+    ev.write_text("".join(json.dumps(r) + "\n" for r in rows if r["split"] == "eval"))
+    c = rf_cfg(fx, run_folder)
+    c.pop("_base")
+    ypath = tmp_path / "adapter.yaml"
+    ypath.write_text(yaml.safe_dump(c))
+    common = ["--adapter-config", str(ypath), "--train", str(tr), "--eval", str(ev), "--steps", "2", "--batch", "4",
+              "--device", "cpu", "--gen-limit", "2", "--gen-max-new", "4", "--drop-over-block", "--dt-calib-rows", "4"]
+    for name, extra in {"full": ["--method", "full"], "lora_markers": ["--method", "lora", "--marker-rows"],
+                        "dt": ["--method", "dt", "--dt-targets", "g5_mlp"], "markers": ["--method", "markers", "--marker-rows"]}.items():
+        rep = sft_g5.run(sft_g5.parse_args(common + extra + ["--out", str(tmp_path / name)]))
+        m = rep["mask_checks"]
+        assert m["labels_match_mask"] and m["loss_equals_manual_masked_sum"] and m["loss_invariant_to_masked_logits"]
+        assert not m["assistant_header_supervised"] and m["im_end_targets_supervised"] > 0
+        assert rep["writeback_step1"]["pass"] and rep["reload_parity"]["pass"], name
+        if name != "full":
+            assert rep["frozen_weights_unchanged"]["pass"], name
+        assert rep["after"]["generation"]["prompts"] >= 1 and math.isfinite(rep["last_loss"])
+    # DT -> RL hand-over: SFT writes the baked keep masks; the saved state has exact zeros exactly where they say
+    import keep_zero  # noqa: PLC0415
+    from safetensors.torch import load_file  # noqa: PLC0415
+    rep = sft_g5.run(sft_g5.parse_args(common + ["--method", "dt", "--dt-targets", "g5_mlp", "--dt-unseen", "keep",
+                                                 "--marker-rows", "--wd", "0", "--out", str(tmp_path / "dt_keep")]))
+    assert rep["method"]["wanda_prior"]["unseen_policy"] == "keep"
+    masks = keep_zero.load_masks(tmp_path / "dt_keep" / "dt_keep_masks.bin")
+    sd = load_file(str(tmp_path / "dt_keep" / "model.safetensors"))
+    assert len(masks) == rep["method"]["keep_masks"]["layers"] > 0
+    assert sum(int((~m).sum()) for m in masks.values()) == rep["method"]["keep_masks"]["deleted_final"]
+    for name, keep in masks.items():
+        assert bool(((sd[name] == 0) | keep).all()) and bool((sd[name][~keep] == 0).all())
+    kz = keep_zero.KeepZero([(n, torch.nn.Parameter(sd[n].clone())) for n in masks], masks)
+    assert kz.deleted_nonzero() == 0
+
+
+@needs_inputs
+def test_mismatch_probe_and_screen_ladder_run(fx, run_folder, tmp_path):
+    import yaml  # noqa: PLC0415
+    sys.path.insert(0, str(TEAM10 / "capstone"))
+    import mismatch_g5  # noqa: PLC0415
+    import screen_ladder  # noqa: PLC0415
+    c = rf_cfg(fx, run_folder)
+    c.pop("_base")
+    (tmp_path / "a.yaml").write_text(yaml.safe_dump(c))
+    ids = list(fx.probe_ids)[:6]
+    (tmp_path / "p.jsonl").write_text(json.dumps({"input_ids": ids + [1], "prompt_len": 6}) + "\n")
+    assert mismatch_g5.main(["--adapter-config", str(tmp_path / "a.yaml"), "--prompts", str(tmp_path / "p.jsonl"),
+                             "--n", "1", "--k", "2", "--max-new", "3", "--out", str(tmp_path / "m.json")]) == 0
+    m = json.loads((tmp_path / "m.json").read_text())
+    assert m["pairs"]["fp32_row_repeat_vs_fp32_row"]["outside"] == 0.0  # same forward twice: the determinism floor
+    assert m["pairs"]["fp32_batch_vs_fp32_row"]["tokens"] == 2 * 3
+    assert len(m["pairs"]["bf16_row_vs_fp32_row"]["expert_set_flips_by_layer"]) == 2
+    # screen ladder on synthetic task records and a two-task screen (fixtures, no task text)
+    tasks = [{"id": f"t{i}", "statement": "x " * (5 + 40 * i), "judge": "j" + str(i % 2), "difficulty": 0} for i in range(6)]
+    (tmp_path / "tasks.jsonl").write_text("".join(json.dumps(t) + "\n" for t in tasks))
+    (tmp_path / "pool.txt").write_text("\n".join(t["id"] for t in tasks))
+    (tmp_path / "screen.json").write_text(json.dumps({"k": 4, "per_task": [{"id": "t0", "passes": 2}, {"id": "t5", "passes": 0}]}))
+    assert screen_ladder.main(["--tasks", str(tmp_path / "tasks.jsonl"), "--pool", str(tmp_path / "pool.txt"),
+                               "--tokenizer", str(fx.tok), "--screen", f"s={tmp_path / 'screen.json'}",
+                               "--out", str(tmp_path / "l.json")]) == 0
+    s = json.loads((tmp_path / "l.json").read_text())["screens"]["s"]
+    assert s["overall"] == {"prompts": 2, "pass_rate": 0.25, "mixed_share": 0.5, "pass_at_k": 0.5, "all_pass_share": 0.0}
+    assert s["by_length"]["short"]["mixed_share"] == 1.0 and s["by_length"]["long"]["mixed_share"] == 0.0

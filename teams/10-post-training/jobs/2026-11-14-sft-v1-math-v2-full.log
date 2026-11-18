@@ -1,0 +1,26 @@
+Test log for the job request math-v2-full. Same script and options as the job, run on 14 Nov 2026 on an Apple M1 Pro
+(8 cores, 16 GB, shared with other sessions, host load average 5 to 8), reading the pinned Hub revision by streaming
+(no --local-root) and stopped at 2,000 selected rows (--max-rows 2000). The job itself reads a staged copy (--local-root hub).
+Record written at 2026-11-14 23:42:03 IST.
+
+Command:
+python teams/10-post-training/sft/sft_v1_records.py full --set sft-math-nemotron-math-v2 --tokenizer tokenizer.json --revisions-json teams/10-post-training/sft/results/sft_v1_hf_pins.json --out-dir out/full --record-dir out --budget-gb 5 --max-hub-gb 3 --threads 4 --max-rows 2000 --rerun-rows 500
+
+Last output line:
+{"set": "sft-math-nemotron-math-v2", "rows_out": 1964, "tokens": 35036596, "share": 0.993363, "over": 293, "gz_GiB": 0.07, "ok": true, "failed": {}, "rows_per_s": 27.07, "wall_s": 73.9, "deterministic": true}
+
+Record fields (out/sft-math-nemotron-math-v2.full.record.json; no row text):
+  source               nvidia/Nemotron-Math-v2 revision 8e793210e175b6406c752a870f585f62de98c0d3
+  tokenizer_sha256     15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3
+  rows scanned/in/out  2000 / 2000 / 1964
+  skipped              {"trace over the 64k effort budget": 36}
+  tokens / targets     35,036,596 / 34,804,073 (share 0.993)
+  length p50/p95/max   13800 / 47527 / 66993
+  rows over 32,768     293
+  effort 1k/4k/16k/64k 9 / 244 / 961 / 750
+  checks_ok            True (failed: {}); rows decoded to the NFC-normalised text only: 16
+  rerun of first rows  495 rows, same hash as the first lines of the output: True
+  content_sha256       63c86556055ad9fcd3ac1b2a48fcdc1a476f3af4c5f022cb87f53e0bbd5b782a
+  plain / gz bytes     398,379,156 / 74,489,110
+  convert wall         73.9 s (rows/s 27.07); user+sys CPU 105.0 s; peak RSS 869.2 MB; Hub bytes 95,675,913
+  check pass wall      40.8 s

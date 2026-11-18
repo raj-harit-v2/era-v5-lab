@@ -1,0 +1,78 @@
+Local dedup run on the returned overlap rerun artifacts (#255 overlap job, results in #469) — Monday 16 November 2026
+
+Purpose: the expected values for jobs/2026-11-14-dedup.md, required before lead approval.
+
+Code:        teams/01-data-a/dedup/dedup.py at 6cfc24ada545c7b64c33f0afb9661c3979ae3c18 (g1-dedup-design; last dedup.py change 12659f1)
+Environment: Linux, Python 3.11.17, numpy 2.2.6, scipy 1.15.3, pyarrow 19.0.1 (requirements_overlap.txt pins)
+Tests:       python -m pytest -q teams/01-data-a/dedup/tests  ->  116 passed in 2.07s
+Config:      local copy of dedup.json with results = out/overlap_rerun, inputs = "" (no cleaned parts: urls unknown,
+             rule 2 skipped), out = out/dedup_rerun; cross_pack true, same pack_order, default_licence_usable true,
+             gold_dirs teams/01-data-a/gold and teams/02-data-b/gold
+Command:     python teams/01-data-a/dedup/dedup.py --config out/dedup_rerun.json
+Wall time:   3.07 s (/usr/bin/time -v; the script reports 2.9 s); peak memory 371 MB
+
+Inputs (all 10 overlap files from TSAI; the 7 small ones from #469, the 3 large ones from TSAI's links of 16 Nov;
+every SHA-256 equals the value in the rerun's overlap_summary.json):
+  overlap_docs.parquet    4f61c80a23a9e49b4b12b2d6aaff639771d70fc2dd130f0a73d99a8449992e30
+  overlap_pairs.csv       de7dd2d3c056909cc1bba12ef7353a22a783d921b9ee20cdc57bc56883f828e4
+  overlap_matrix.npz      74f6cb30ae07eac5cb165bd9e80b2ff5175ad0954d86ae1be3a7af80e14930a5
+  overlap_matches.csv     ff8e4feec9f390cd78648ed0808095db1c8baf8484a5ed1a9c8a9016398d0433 (checked by dedup.py)
+
+Last output lines:
+  1,414,996 documents, 2,729 matches, 1,084 clusters
+  removed 1,345 (0.0951%): by rule {'H2': 1289, 'H1': 56}, by stage {'within_pack': 1309, 'cross_pack': 36}
+  clusters decided by priority rule: {'0': 28, '3': 769, '4': 287}
+  held-out removed: 0 (must be 0); held-out <-> held-out pairs reported: 0
+  empty documents: 7 listed, not removed; 21 matches between them set aside
+  note: no inputs given: url unknown, rule 2 decided nothing
+  note: licence map not filled for 38 packs; default used
+  harm check: not_testable
+  wrote remove_list.csv, dedup_log.jsonl, heldout_duplicates.csv, empty_documents.csv, dedup_groups.csv and dedup_summary.json to out/dedup_rerun
+
+Outputs:
+  remove_list.csv         c894d43de0bd092a7096815330b8e01322fb0e5835e034d9aaa256c3345ad1df  (103,150 bytes, 1,345 rows)
+  dedup_log.jsonl         b73cfdba60929ab2833d5525cb2faf323d194a42be21c8a63aa47450629d61a0  (590,147 bytes, 1,345 lines)
+  dedup_groups.csv        32d34f3bf7531c618a10f15ed45d9133a394b220cf5bd93577dc5b80d5e6c883  (236,191 bytes, 2,429 rows)
+  heldout_duplicates.csv  bda0cd4afca13791f8e5a7e615d5d26d50f096012dc0ddc6065cfedfef9ebab9  (63 bytes, header only)
+  empty_documents.csv     d55f940a87844f08ff7f7fcb07f1a1b652fec817a65df6a987a69a32f3b0efa6  (522 bytes, 7 rows)
+  dedup_summary.json      09ad369602b7b063ae200db2ddb62cbd2e6ec70b986b51aa00d5aa91fb8cdd6e  (11,932 bytes)
+
+Checks on the output:
+  - 1,345 removed, all distinct (pack_id, doc_id), all train; 0 held-out removed
+  - 64 train copies removed by rule 0 (log priority_rule 0); log rules: 939 by rule 3, 342 by rule 4
+  - no survivor is also removed; the removed rows of dedup_groups.csv equal remove_list.csv
+  - 1,084 groups, each with exactly one survivor (groups_without_survivor 0, groups_with_several_survivors 0);
+    largest group 35 documents
+  - 2,750 qualifying pairs in the overlap run = 2,729 used + 21 between the 7 empty documents (set aside)
+  - cadj-commits 895 removed (1.18%), the largest pack share; no other pack above 0.5% (ind-hi-sangraha-s 35 of 7,542)
+  - empty_documents.csv identical to the 5 Nov run (same 7 code documents)
+
+Comparison with the 5 Nov run (TSAI's overlap outputs on the 3 Nov cleaning, code with the empty-document fix;
+remove_list.csv 913e66a6...):
+  - Same total (1,345) and same 1,084 clusters; 1,343 removed documents are the same.
+  - 64 of them now sit at a different (part, row_in_part): the #244 cleaner dropped rows before them. So the 5 Nov
+    list cannot be applied to the new cleaned parts; this run's list is needed.
+  - 2 removed only on 5 Nov, 2 only now, all Indic, each explained by a text change in the #244 cleaning:
+      ind-mr-fw2 0361a4de8d78fae6 <-> ind-mr-sangraha-v 6d08c30b28683ce2: the fw2 copy grew from 193 to 208 words, so
+        rule 3 (longer) now keeps it and removes the sangraha-v copy (one swap in the same pair).
+      ind-hi-sangraha-v 609e7e2c87f1e0fc: now H2 0.86 with held-out ind-hi-indiccorp 9aad79bbbc94c273 (127 -> 128 words);
+        removed by rule 0.
+      ind-ta-sangraha-v ebb241896beb0df1: was H2 0.80 (exactly the threshold) with ind-ta-fw2 cb5465aadcb9957a; below
+        0.80 after cleaning, so no longer removed.
+  - Rule-0 removals 63 -> 64 (the indiccorp case above).
+
+For TSAI's run (with urls): the total removed (1,345), the rule-0 removals (64), 0 held-out removed,
+heldout_duplicates.csv and empty_documents.csv must match. Per-pack, per-stage and H1/H2 counts may differ where
+rule 2 changes the survivor in the 769 + 287 clusters decided here by rules 3 and 4.
+
+Re-verification (same inputs, same machine):
+  1. Repeat runs: teams/01-data-a/dedup/benchmark_dedup.py --configs out/dedup_rerun.json --baseline 7526194 --runs 3
+     --out out/bench_dedup_rerun_20261116. Three runs of the code at 6cfc24a and three of the code before the
+     PyArrow/SciPy rewrite (7526194, the approved overlap pin) alternately: all five lists (remove_list.csv,
+     dedup_log.jsonl, heldout_duplicates.csv, empty_documents.csv, dedup_groups.csv) byte-identical across all six
+     runs, with the SHA-256 values above, and every summary count the same ("ALL SAME").
+     Wall time 1.7-4.0 s / ~350 MB at 6cfc24a vs 5.2-10.7 s / ~1,010 MB at 7526194.
+  2. Independent check: a separate script (plain-Python union-find; no numpy, scipy or dedup.py code) built the groups
+     from overlap_matches.csv and overlap_docs.parquet and applied rules 0, 3 and 4 itself: 2,729 matches used, 21 set
+     aside, 1,084 groups (28 / 769 / 287 decided by rules 0 / 3 / 4), 1,345 removed, 64 by rule 0, 0 held-out removed,
+     and exactly the same set of removed (pack_id, doc_id) as remove_list.csv (0 differences either way).

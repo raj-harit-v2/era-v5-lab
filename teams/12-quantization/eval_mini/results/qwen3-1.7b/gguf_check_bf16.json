@@ -1,0 +1,17 @@
+{
+ "file": "Qwen3-1.7B-bf16.gguf",
+ "format": "bf16",
+ "architecture": "qwen3",
+ "bytes": 4069679008,
+ "n_params": 2031739904,
+ "bits_per_weight": 16.02,
+ "router_type": "none (dense model)",
+ "output_type": "BF16",
+ "output_tied_to_token_embd": false,
+ "params_by_type": {
+  "BF16": 2031616000,
+  "F32": 123904
+ },
+ "ok": true,
+ "problems": []
+}

@@ -6,7 +6,7 @@ from torch.nn import functional as F
 from torch.nn.utils.rnn import pad_sequence
 
 
-EVAL_BATCH_TOKENS = 16_384
+EVAL_BATCH_TOKENS = 4096
 # Bound the dense vocabulary projection and FP32 cross-entropy workspace.
 EVAL_HEAD_TOKENS = 512
 

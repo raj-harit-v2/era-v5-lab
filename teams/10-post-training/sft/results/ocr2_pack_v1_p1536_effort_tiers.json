@@ -1,0 +1,497 @@
+{
+ "schema": "g10-ocr2-effort-tiers-p1536/1",
+ "set": "sft-code-opencodereasoning-2",
+ "rule": "convert.py pick_effort: the smallest budget in 1k/4k/16k/64k (chat-format/render.py EFFORT_BUDGETS 1024/4096/16384/65536) that holds the summed tokens of the row's trace segments (convert.TRACE: think spans, tool calls, tool results with their markers); a trace over 64k skips the row",
+ "method": "every rendered row of all 70 shards: trace segments re-extracted from the rendered text and counted with p1536 (reproduces the row's own tier in every row) and with C3 (reproduces the C3 build's render-stage tier counts in every shard)",
+ "rows_checked": 542043,
+ "matrix_c3_to_p1536_all_rendered": {
+  "16k->16k": 288981,
+  "16k->64k": 7,
+  "1k->1k": 45238,
+  "1k->4k": 4,
+  "4k->16k": 24,
+  "4k->4k": 195207,
+  "64k->64k": 12582
+ },
+ "matrix_c3_to_p1536_train_pack": {
+  "16k->16k": 214077,
+  "16k->64k": 6,
+  "1k->1k": 35803,
+  "1k->4k": 3,
+  "4k->16k": 22,
+  "4k->4k": 161733,
+  "64k->64k": 6852
+ },
+ "rows_changing_tier": 35,
+ "to_higher_tier": 35,
+ "to_lower_tier": 0,
+ "rows_changing_tier_in_train_pack": 31,
+ "tier_totals_rendered": {
+  "c3": {
+   "1k": 45242,
+   "4k": 195231,
+   "16k": 288988,
+   "64k": 12582
+  },
+  "p1536": {
+   "1k": 45238,
+   "4k": 195211,
+   "16k": 289005,
+   "64k": 12589
+  }
+ },
+ "per_shard": {
+  "0": {
+   "rows": 10564,
+   "flips": {
+    "4k->16k": 1
+   },
+   "pack_flips": {
+    "4k->16k": 1
+   }
+  },
+  "1": {
+   "rows": 10434,
+   "flips": {
+    "4k->16k": 1
+   },
+   "pack_flips": {
+    "4k->16k": 1
+   }
+  },
+  "2": {
+   "rows": 10444,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "3": {
+   "rows": 10558,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "4": {
+   "rows": 10544,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "5": {
+   "rows": 10532,
+   "flips": {
+    "1k->4k": 1,
+    "4k->16k": 2
+   },
+   "pack_flips": {
+    "4k->16k": 2
+   }
+  },
+  "6": {
+   "rows": 10508,
+   "flips": {
+    "4k->16k": 1
+   },
+   "pack_flips": {
+    "4k->16k": 1
+   }
+  },
+  "7": {
+   "rows": 10474,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "8": {
+   "rows": 10563,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "9": {
+   "rows": 10494,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "10": {
+   "rows": 10513,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "11": {
+   "rows": 10486,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "12": {
+   "rows": 8527,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "13": {
+   "rows": 4958,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "14": {
+   "rows": 7012,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "15": {
+   "rows": 9176,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "16": {
+   "rows": 13412,
+   "flips": {
+    "1k->4k": 1,
+    "4k->16k": 1
+   },
+   "pack_flips": {
+    "1k->4k": 1,
+    "4k->16k": 1
+   }
+  },
+  "17": {
+   "rows": 14275,
+   "flips": {
+    "1k->4k": 1
+   },
+   "pack_flips": {
+    "1k->4k": 1
+   }
+  },
+  "18": {
+   "rows": 11768,
+   "flips": {
+    "4k->16k": 1
+   },
+   "pack_flips": {
+    "4k->16k": 1
+   }
+  },
+  "19": {
+   "rows": 14074,
+   "flips": {
+    "4k->16k": 1
+   },
+   "pack_flips": {}
+  },
+  "20": {
+   "rows": 12317,
+   "flips": {
+    "4k->16k": 3
+   },
+   "pack_flips": {
+    "4k->16k": 3
+   }
+  },
+  "21": {
+   "rows": 13977,
+   "flips": {
+    "4k->16k": 1
+   },
+   "pack_flips": {
+    "4k->16k": 1
+   }
+  },
+  "22": {
+   "rows": 11996,
+   "flips": {
+    "4k->16k": 1
+   },
+   "pack_flips": {
+    "4k->16k": 1
+   }
+  },
+  "23": {
+   "rows": 12087,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "24": {
+   "rows": 13422,
+   "flips": {
+    "4k->16k": 1
+   },
+   "pack_flips": {
+    "4k->16k": 1
+   }
+  },
+  "25": {
+   "rows": 12496,
+   "flips": {
+    "4k->16k": 1
+   },
+   "pack_flips": {
+    "4k->16k": 1
+   }
+  },
+  "26": {
+   "rows": 12326,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "27": {
+   "rows": 4968,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "28": {
+   "rows": 5044,
+   "flips": {
+    "4k->16k": 1
+   },
+   "pack_flips": {
+    "4k->16k": 1
+   }
+  },
+  "29": {
+   "rows": 8977,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "30": {
+   "rows": 1524,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "31": {
+   "rows": 7195,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "32": {
+   "rows": 4057,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "33": {
+   "rows": 10873,
+   "flips": {
+    "16k->64k": 1,
+    "4k->16k": 1
+   },
+   "pack_flips": {
+    "16k->64k": 1,
+    "4k->16k": 1
+   }
+  },
+  "34": {
+   "rows": 10179,
+   "flips": {
+    "16k->64k": 1
+   },
+   "pack_flips": {
+    "16k->64k": 1
+   }
+  },
+  "35": {
+   "rows": 10345,
+   "flips": {
+    "16k->64k": 1
+   },
+   "pack_flips": {
+    "16k->64k": 1
+   }
+  },
+  "36": {
+   "rows": 10040,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "37": {
+   "rows": 10764,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "38": {
+   "rows": 11071,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "39": {
+   "rows": 9831,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "40": {
+   "rows": 10563,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "41": {
+   "rows": 6749,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "42": {
+   "rows": 10257,
+   "flips": {
+    "4k->16k": 2
+   },
+   "pack_flips": {
+    "4k->16k": 2
+   }
+  },
+  "43": {
+   "rows": 9002,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "44": {
+   "rows": 9942,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "45": {
+   "rows": 9974,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "46": {
+   "rows": 9786,
+   "flips": {
+    "16k->64k": 2,
+    "1k->4k": 1,
+    "4k->16k": 1
+   },
+   "pack_flips": {
+    "16k->64k": 2,
+    "1k->4k": 1,
+    "4k->16k": 1
+   }
+  },
+  "47": {
+   "rows": 10229,
+   "flips": {
+    "16k->64k": 1
+   },
+   "pack_flips": {
+    "16k->64k": 1
+   }
+  },
+  "48": {
+   "rows": 10184,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "49": {
+   "rows": 10339,
+   "flips": {
+    "4k->16k": 1
+   },
+   "pack_flips": {
+    "4k->16k": 1
+   }
+  },
+  "50": {
+   "rows": 10176,
+   "flips": {
+    "4k->16k": 2
+   },
+   "pack_flips": {
+    "4k->16k": 1
+   }
+  },
+  "51": {
+   "rows": 3952,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "52": {
+   "rows": 1646,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "53": {
+   "rows": 1515,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "54": {
+   "rows": 1555,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "55": {
+   "rows": 1548,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "56": {
+   "rows": 1535,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "57": {
+   "rows": 1587,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "58": {
+   "rows": 1536,
+   "flips": {
+    "16k->64k": 1
+   },
+   "pack_flips": {}
+  },
+  "59": {
+   "rows": 1559,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "60": {
+   "rows": 1577,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "61": {
+   "rows": 1581,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "62": {
+   "rows": 1587,
+   "flips": {
+    "4k->16k": 1
+   },
+   "pack_flips": {
+    "4k->16k": 1
+   }
+  },
+  "63": {
+   "rows": 1595,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "64": {
+   "rows": 1543,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "65": {
+   "rows": 1588,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "66": {
+   "rows": 1576,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "67": {
+   "rows": 1584,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "68": {
+   "rows": 1536,
+   "flips": {},
+   "pack_flips": {}
+  },
+  "69": {
+   "rows": 1437,
+   "flips": {},
+   "pack_flips": {}
+  }
+ },
+ "manifest_records": "the pack rows carry the p1536 tier in their effort line and `effort` field; this file and the pack manifest's effort_at_render_stage are the p1536 counts; the C3 counts stay in ocr2_pack_v1_c3_manifest.json"
+}

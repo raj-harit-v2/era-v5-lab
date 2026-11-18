@@ -14,11 +14,22 @@ Modes (config `mode`):
               checkpoint is not there yet the result is WAITING_FOR_G5_ARTIFACT and no model is built.
     fixture   development only. May shrink the model with `fixture_overrides` and must load a checkpoint that carries
               the fixture marker. A fixture bundle can never back a learning report (`require_learning_ready`).
+    run_folder  a folder written by Team 5's `train_week2.py` (manifest.json, checkpoint.pt, summary.json). The model
+              spec is the manifest's resolved config (re-validated by G5's `validate`); the manifest's source hashes
+              must equal the pinned import; tokenizer and KE2 table must be the manifest's; the checkpoint's
+              identity hash must be the manifest's, and G5's `model_hash` of the loaded model must equal
+              summary.json's `final_model_sha256`. `run_folder.origin` says who trained it:
+                g10_rehearsal  a run G10 trained itself with G5's code (e.g. a small width on a laptop). Status
+                               REHEARSAL_READY: mechanics and relative comparisons only, never a learning report.
+                g5_delivery    a run folder from Team 5 / TSAI. Needs a non-smoke manifest (AGREED_BASELINE_RUN)
+                               and a probe expectation; status READY.
 
 Config keys (paths are relative to the config file):
     g5:            root (repo root holding teams/05-architecture), commit (40-hex), files_sha256 {relpath: sha256},
-                   arm, resolution, runtime (optional)
-    checkpoint:    path, sha256, format (g5_train_week2_pt | state_dict_safetensors)
+                   arm, resolution, runtime (optional). Without a git checkout: commit null, pin: file_hashes,
+                   source_commit (recorded only) and every harness/week2/*.py + harness/train_week2.py hashed.
+    checkpoint:    path, sha256, format (g5_train_week2_pt | state_dict_safetensors)   (real / fixture)
+    run_folder:    path, origin (g10_rehearsal | g5_delivery), manifest_sha256, checkpoint_sha256   (run_folder)
     ke2:           table, table_file_sha256, table_content_sha256, vocab_size, pos_dim
     tokenizer:     path, sha256, chat_template, chat_template_sha256
     special_tokens: pad / end_of_turn / end_of_sequence / im_start, each {token, id}; stop: [names]
@@ -50,12 +61,17 @@ if str(HERE) not in sys.path:
 READY = "READY"
 FIXTURE_READY = "FIXTURE_READY"
 WAITING = "WAITING_FOR_G5_ARTIFACT"
+REHEARSAL_READY = "REHEARSAL_READY"
+RUN_FOLDER_ORIGINS = ("g10_rehearsal", "g5_delivery")
+# Files Team 5's train_week2.py hashes into manifest["sources"] (by basename) that must equal the pinned import.
+RUN_FOLDER_SOURCE_FILES = {"train_week2.py": "harness/train_week2.py", "model.py": "harness/week2/model.py",
+                           "config.py": "harness/week2/config.py", "artifacts.py": "harness/week2/artifacts.py"}
 
 FIXTURE_MARKER_KEY = "g10_fixture"  # top-level key in a .pt dict / safetensors metadata key
 FIXTURE_MARKER_VALUE = "FIXTURE_NOT_A_G5_ARTIFACT"
 CHECKPOINT_FORMATS = ("g5_train_week2_pt", "state_dict_safetensors")
 SPECIAL_NAMES = ("pad", "end_of_turn", "end_of_sequence", "im_start")
-TOP_KEYS = {"mode", "g5", "checkpoint", "ke2", "tokenizer", "special_tokens", "trainable", "probe",
+TOP_KEYS = {"mode", "g5", "checkpoint", "run_folder", "ke2", "tokenizer", "special_tokens", "trainable", "probe",
             "fixture_overrides", "notes"}
 G5_FILES_REQUIRED = ("harness/week2/model.py", "harness/week2/config.py", "harness/week2/artifacts.py",
                      "harness/train_week2.py")
@@ -104,18 +120,27 @@ def _load_g5(g5: dict, base: Path) -> dict:
     harness = team / "harness"
     if not (harness / "week2" / "model.py").is_file():
         raise ArtifactError(f"G5 harness not found under {root}")
-    commit = _hex(_need(g5, "commit", "g5"), 40, "g5.commit")
-    head = _git(root, "rev-parse", "HEAD")
-    if head != commit:
-        raise ArtifactError(f"G5 source is at {head}, config pins {commit}")
     files = _need(g5, "files_sha256", "g5")
     missing = [f for f in G5_FILES_REQUIRED if f not in files]
     if missing:
         raise ArtifactError(f"g5.files_sha256 must pin {missing}")
-    rel = [str(Path("teams/05-architecture") / f) for f in files]
-    dirty = _git(root, "status", "--porcelain", "--", *rel)
-    if dirty:
-        raise ArtifactError(f"G5 files differ from commit {commit}: {dirty}")
+    if g5.get("commit") is None and g5.get("pin") == "file_hashes":
+        # No git checkout (e.g. a hash-pinned bundle on Kaggle): every Python file of the harness that train_week2
+        # imports must be pinned by hash; the commit it came from is recorded as `source_commit`, not verified.
+        need = sorted(f"harness/week2/{p.name}" for p in (harness / "week2").glob("*.py")) + ["harness/train_week2.py"]
+        unpinned = [f for f in need if f not in files]
+        if unpinned:
+            raise ArtifactError(f"pin: file_hashes needs every harness file pinned; missing {unpinned}")
+        commit = "nogit:" + str(g5.get("source_commit") or "unknown")
+    else:
+        commit = _hex(_need(g5, "commit", "g5"), 40, "g5.commit")
+        head = _git(root, "rev-parse", "HEAD")
+        if head != commit:
+            raise ArtifactError(f"G5 source is at {head}, config pins {commit}")
+        rel = [str(Path("teams/05-architecture") / f) for f in files]
+        dirty = _git(root, "status", "--porcelain", "--", *rel)
+        if dirty:
+            raise ArtifactError(f"G5 files differ from commit {commit}: {dirty}")
     actual = {}
     for f, want in files.items():
         p = team / f
@@ -326,6 +351,7 @@ class Bundle:
     template_path: Path
     render_mod: Any
     device: str = "cpu"
+    kv_cache: bool = False  # sample() through g5_decode (KV cache) instead of re-forwarding the whole sequence
     _template: Any = field(default=None, repr=False)
 
     # forward -------------------------------------------------------------------------------------
@@ -414,7 +440,8 @@ class Bundle:
     @torch.no_grad()
     def sample(self, prompt: list[int], k: int, max_new: int, temperature: float,
                generator: torch.Generator | None, stop_ids: list[int] | None = None):
-        """k completions of one prompt by re-forwarding the growing sequence (no KV cache, like module_policy).
+        """k completions of one prompt. Default: re-forward the growing sequence (G5 has no cache) and project only
+        the last position through the head. With `kv_cache` set: rl-loop/g5_decode.py (prefill + cached steps).
 
         Returns (seq [k, P+max_new], completion_mask [k, max_new], stop_reason per row). The stop token itself is
         kept in the mask; everything after it is masked and filled with pad. The generator must live on the
@@ -430,6 +457,10 @@ class Bundle:
                 raise ValueError("sampling with temperature > 0 needs an explicit generator")
             if torch.device(generator.device).type != torch.device(self.device).type:
                 raise ValueError(f"generator on {generator.device}, model on {self.device}")
+        if self.kv_cache:
+            import g5_decode  # noqa: PLC0415  rl-loop/g5_decode.py
+            return g5_decode.sample(self.model, list(prompt), k, max_new, temperature, generator, stop,
+                                    self.special["pad_id"], self.device)
         was = self.model.training
         self.model.eval()
         dev = self.device
@@ -440,7 +471,11 @@ class Bundle:
         stop_t = torch.tensor(stop, dtype=torch.long, device=dev)
         pad = self.special["pad_id"]
         for t in range(max_new):
-            logits = self.forward(seq, torch.ones_like(seq, dtype=torch.bool))[:, -1, :].float()
+            valid = torch.ones_like(seq, dtype=torch.bool)
+            self.check_batch(seq, valid)
+            # only the last position is sampled: project it alone through the 131,072-row head (same values as
+            # forward()[:, -1]; the full-sequence head was L times the work and memory at every step)
+            logits = self.model.head(self.model.hidden(seq, valid)[:, -1]).float()
             if temperature <= 0:
                 nxt = logits.argmax(-1)
             else:
@@ -469,7 +504,10 @@ class Bundle:
 
             @torch.no_grad()
             def sample(self, prompt, k, max_new, temperature=1.0, generator=None):
-                seq, cmask, _ = bundle.sample(prompt, k, max_new, temperature, generator)
+                # same compute dtype as training: under the trainer's bf16 autocast (train.autocast / fp32_master)
+                # the sampler must see the same numerics, or the objective_v1 ratio measures a precision gap
+                with self.autocast():
+                    seq, cmask, _ = bundle.sample(prompt, k, max_new, temperature, generator)
                 return seq, cmask
 
         return Team5Policy(self.model, lambda m, ids, mask: bundle.forward(ids, mask),
@@ -518,15 +556,17 @@ class WaitingForArtifact(RuntimeError):
         self.result = result
 
 
-def build_policy_and_codec(adapter_config, device: str = "cpu", effort: str = "4k", allow_fixture: bool = False):
+def build_policy_and_codec(adapter_config, device: str = "cpu", effort: str = "4k", allow_fixture: bool = False,
+                           kv_cache: bool = False):
     """For train.py: (Policy, G10Codec). WAITING raises WaitingForArtifact; a fixture needs allow_fixture=True."""
     result = build(adapter_config, device=device)
     if result.status == WAITING:
         raise WaitingForArtifact(result)
-    if result.status == FIXTURE_READY and not allow_fixture:
-        raise ArtifactError("adapter config is a FIXTURE; set model.allow_fixture_smoke: true for a smoke run "
-                            "(its output is never a result)")
+    if result.status in (FIXTURE_READY, REHEARSAL_READY) and not allow_fixture:
+        raise ArtifactError(f"adapter status is {result.status} (not a G5 delivery); set model.allow_fixture_smoke: "
+                            "true for a smoke or rehearsal run (its output is never a result)")
     bundle = result.require_bundle()
+    bundle.kv_cache = bool(kv_cache)
     codec = bundle.codec(effort)
     codec.adapter_result = result
     return bundle.policy(), codec
@@ -548,7 +588,8 @@ class Result:
 
 def require_learning_ready(result: Result) -> Bundle:
     """Gate for anything that writes a learning/eval report: only a READY real G5 bundle passes."""
-    if result.status != READY or result.mode != "real" or result.bundle is None:
+    if result.status != READY or result.mode not in ("real", "run_folder") or result.bundle is None or (
+            result.mode == "run_folder" and result.manifest.get("origin") != "g5_delivery"):
         raise RuntimeError(f"refusing a learning report from status={result.status} mode={result.mode}; "
                            "fixture and waiting bundles never produce learning results")
     return result.bundle
@@ -582,8 +623,12 @@ def build(config, device: str = "cpu") -> Result:
     if extra:
         raise ArtifactError(f"unknown adapter config keys {sorted(extra)}")
     mode = cfg.get("mode")
-    if mode not in ("real", "fixture"):
-        raise ArtifactError("mode must be 'real' or 'fixture'")
+    if mode not in ("real", "fixture", "run_folder"):
+        raise ArtifactError("mode must be 'real', 'fixture' or 'run_folder'")
+    if mode == "run_folder":
+        return _build_run_folder(cfg, base, device)
+    if cfg.get("run_folder"):
+        raise ArtifactError("run_folder is only read in run_folder mode")
     if mode == "real" and cfg.get("fixture_overrides"):
         raise ArtifactError("fixture_overrides are only allowed in fixture mode")
 
@@ -632,6 +677,13 @@ def build(config, device: str = "cpu") -> Result:
     if mode == "fixture" and not is_fixture_ckpt:
         raise ArtifactError("fixture mode only loads checkpoints carrying the fixture marker")
 
+    return _finish(mode, cfg, g5src, spec, tok, art, special, sd, is_fixture_ckpt, ck_extra,
+                   {"path_name": ck_path.name, "sha256": ck_sha, "format": ck["format"]}, manifest, device)
+
+
+def _finish(mode, cfg, g5src, spec, tok, art, special, sd, is_fixture_ckpt, ck_extra, ck_info, manifest, device,
+            status=None, require_probe=None):
+    """Shared tail of every mode: build G5's LanguageModel, load and check the state dict, select trainables, probe."""
     mods = g5src["mods"]
     torch_state = torch.random.get_rng_state()
     model = mods["week2.model"].LanguageModel(spec, art.bytes, art.lengths)  # init values are overwritten below
@@ -669,9 +721,9 @@ def build(config, device: str = "cpu") -> Result:
 
     inv = _inventory(model)
     manifest.update({
-        "checkpoint": {"path_name": ck_path.name, "sha256": ck_sha, "format": ck["format"],
-                       "fixture_marker": is_fixture_ckpt, **{k: v for k, v in ck_extra.items() if k != "metadata"}},
-        "ke2": art.identity() | {"table_file_sha256_config": kcfg["table_file_sha256"]},
+        "checkpoint": {**ck_info, "fixture_marker": is_fixture_ckpt,
+                       **{k: v for k, v in ck_extra.items() if k != "metadata"}},
+        "ke2": art.identity() | {"table_file_sha256_config": cfg["ke2"]["table_file_sha256"]},
         "special_tokens": special,
         "inventory": inv, "inventory_sha256": _sha_json(inv),
         "n_parameters": sum(p.numel() for p in model.parameters()),
@@ -684,7 +736,8 @@ def build(config, device: str = "cpu") -> Result:
     bundle.to(device)
 
     probe = cfg.get("probe")
-    if probe is None and mode == "real":
+    require_probe = (mode == "real") if require_probe is None else require_probe
+    if probe is None and require_probe:
         raise ArtifactError("real mode needs probe.ids and probe.expected_mean_nll supplied with the G5 checkpoint")
     if probe is not None:
         ids = torch.tensor([_need(probe, "ids", "probe")], dtype=torch.long)
@@ -697,12 +750,92 @@ def build(config, device: str = "cpu") -> Result:
             if not math.isfinite(got) or abs(got - exp) > atol:
                 raise ArtifactError(f"probe mean NLL {got:.6f} != expected {exp:.6f} (atol {atol})")
             manifest["probe"]["verified_against"] = exp
-        elif mode == "real":
+        elif require_probe:
             raise ArtifactError("real mode needs probe.expected_mean_nll")
-    status = READY if mode == "real" else FIXTURE_READY
+    if status is None:
+        status = READY if mode == "real" else FIXTURE_READY
     manifest["status"] = status
     manifest["learning_report_allowed"] = status == READY
     return Result(status, mode, [], manifest, bundle)
+
+
+def _build_run_folder(cfg: dict, base: Path, device: str) -> Result:
+    """mode run_folder: everything about the model comes from what Team 5's trainer wrote, checked against the
+    pinned G5 import, the tokenizer and the KE2 table."""
+    for key in ("checkpoint", "fixture_overrides"):
+        if cfg.get(key):
+            raise ArtifactError(f"run_folder mode takes the model from the run folder; remove '{key}'")
+    rf = _need(cfg, "run_folder", "config")
+    origin = _need(rf, "origin", "run_folder")
+    if origin not in RUN_FOLDER_ORIGINS:
+        raise ArtifactError(f"run_folder.origin must be one of {RUN_FOLDER_ORIGINS}")
+    folder = (base / _need(rf, "path", "run_folder")).resolve()
+    man_path, ck_path, sum_path = folder / "manifest.json", folder / "checkpoint.pt", folder / "summary.json"
+    for p_ in (man_path, ck_path, sum_path):
+        if not p_.is_file():
+            raise ArtifactError(f"run folder is missing {p_.name}: {folder}")
+    man_sha = sha256_file(man_path)
+    if man_sha != _hex(_need(rf, "manifest_sha256", "run_folder"), 64, "run_folder.manifest_sha256"):
+        raise ArtifactError(f"run folder manifest hash mismatch: {man_sha}")
+    ck_sha = sha256_file(ck_path)
+    if ck_sha != _hex(_need(rf, "checkpoint_sha256", "run_folder"), 64, "run_folder.checkpoint_sha256"):
+        raise ArtifactError(f"run folder checkpoint hash mismatch: {ck_sha}")
+    g5_manifest = json.loads(man_path.read_text(encoding="utf-8"))
+    summary = json.loads(sum_path.read_text(encoding="utf-8"))
+    launch_path = folder / "G10_LAUNCH.json"
+    launch = json.loads(launch_path.read_text(encoding="utf-8")) if launch_path.is_file() else None
+
+    g5src = _load_g5(_need(cfg, "g5", "config"), base)
+    sources = g5_manifest.get("sources") or {}
+    for name, rel in RUN_FOLDER_SOURCE_FILES.items():
+        want = g5src["files_sha256"].get(rel) or sha256_file(g5src["team"] / rel)
+        if sources.get(name) != want:
+            raise ArtifactError(f"run folder was trained with a different {name} ({sources.get(name)}) than the "
+                                f"pinned G5 import ({want})")
+    rcfg = copy.deepcopy(_need(g5_manifest, "config", "manifest.json"))
+    errors = g5src["mods"]["week2.config"].validate(rcfg)
+    if errors:
+        raise ArtifactError("G5 validate() rejected the run folder's config: " + "; ".join(errors))
+    spec = rcfg["model"]
+    smoke = bool(g5_manifest.get("smoke")) or g5_manifest.get("status") != "AGREED_BASELINE_RUN"
+    if origin == "g5_delivery" and smoke:
+        raise ArtifactError(f"g5_delivery needs a non-smoke AGREED_BASELINE_RUN manifest, got "
+                            f"status={g5_manifest.get('status')} smoke={g5_manifest.get('smoke')}")
+    tok = _load_tokenizer(_need(cfg, "tokenizer", "config"), base)
+    want_art = _need(g5_manifest, "artifacts", "manifest.json")
+    if want_art.get("tokenizer_sha256") != tok["sha256"]:
+        raise ArtifactError(f"run folder used tokenizer {want_art.get('tokenizer_sha256')}, config has {tok['sha256']}")
+    kcfg = _need(cfg, "ke2", "config")
+    art = _load_ke2(kcfg, base, tok, g5src)
+    if want_art.get("table_content_sha256") != art.table_content_sha:
+        raise ArtifactError("run folder used a different KE2 table content")
+    if spec["vocab_size"] != len(art.lengths) or spec["ke_max_pos"] != art.pos_dim:
+        raise ArtifactError("run folder spec disagrees with the tokenizer / KE2 table")
+    special = _special_map(_need(cfg, "special_tokens", "config"), art)
+    sd, is_fixture_ckpt, ck_extra = _read_checkpoint(ck_path, "g5_train_week2_pt")
+    if is_fixture_ckpt:
+        raise ArtifactError("run_folder mode refuses a checkpoint carrying the G10 fixture marker")
+    if ck_extra.get("identity_sha256") != g5_manifest.get("identity_sha256"):
+        raise ArtifactError("checkpoint identity_sha256 differs from the run folder manifest")
+    manifest = {
+        "adapter": "team5_adapter v1", "mode": "run_folder", "origin": origin,
+        "g5": {"commit": g5src["commit"], "files_sha256": g5src["files_sha256"],
+               "provenance": rcfg.get("provenance"), "approval": rcfg.get("approval")},
+        "run_folder": {"manifest_sha256": man_sha, "identity_sha256": g5_manifest.get("identity_sha256"),
+                       "g5_status": g5_manifest.get("status"), "smoke": g5_manifest.get("smoke"),
+                       "summary_status": summary.get("status"), "steps": summary.get("steps"),
+                       "g10_launch_patches": (launch or {}).get("patches")},
+        "model_spec": spec, "model_spec_sha256": _sha_json(spec), "fixture_overrides": None,
+        "tokenizer": {"sha256": tok["sha256"], "chat_template_sha256": tok["template_sha256"]},
+    }
+    status = READY if origin == "g5_delivery" else REHEARSAL_READY
+    result = _finish("run_folder", cfg, g5src, spec, tok, art, special, sd, False, ck_extra,
+                     {"path_name": ck_path.name, "sha256": ck_sha, "format": "g5_train_week2_pt"}, manifest, device,
+                     status=status, require_probe=origin == "g5_delivery")
+    if result.manifest["model_hash_g5"] != summary.get("final_model_sha256"):
+        raise ArtifactError("G5 model_hash of the loaded model differs from summary.json final_model_sha256")
+    result.manifest["learning_report_allowed"] = status == READY
+    return result
 
 
 # --- export / reload ----------------------------------------------------------------------------------

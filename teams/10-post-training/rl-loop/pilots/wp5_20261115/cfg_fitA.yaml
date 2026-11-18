@@ -1,0 +1,10 @@
+# WP5 fit pilot A: mixed-band screen (train only) + 2 objective_v1 steps + held-out before/after. Mechanics/fit/cost.
+seed: 1234
+device: cuda
+verbose: true
+model: {kind: hf, path: "@WEIGHTS@", dtype: bfloat16, stop_at_eos: true, dense: true}
+task: {kind: stdio, tasks: "@DATA@/tasks.jsonl", train_ids: "@DATA@/train_ids.txt", heldout_ids: "@DATA@/heldout_ids.txt"}
+train: {algo: objective_v1, steps: 2, prompts_per_step: 8, k: 8, max_new: 1024, temperature: 1.0, lr: 1.0e-5,
+        ppo_epochs: 1, kl_coef: 0.0, grad_clip: 1.0, trainable: ['\.self_attn\.'], eval_every: 100, eval_k: 4,
+        sampler: vllm, vllm: {gpu_memory_utilization: 0.35, max_model_len: 2048}, micro_rows: 2,
+        reward_workers: 8, screen: {n: 64, k: 8, min_mixed: 12}, fp32_master: true}

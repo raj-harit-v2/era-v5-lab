@@ -1,0 +1,174 @@
+{
+  "baseline": "0011cc4",
+  "candidate": "63970f0 (working tree)",
+  "configs": {
+    "dedup_gold_main": {
+      "config": "out/dedup_gold_main.json",
+      "runs": {
+        "baseline": [
+          {
+            "wall_s": 5.28,
+            "peak_mb": 1050
+          },
+          {
+            "wall_s": 2.62,
+            "peak_mb": 1044
+          },
+          {
+            "wall_s": 2.58,
+            "peak_mb": 1042
+          },
+          {
+            "wall_s": 2.34,
+            "peak_mb": 1043
+          }
+        ],
+        "candidate": [
+          {
+            "wall_s": 5.37,
+            "peak_mb": 398
+          },
+          {
+            "wall_s": 2.64,
+            "peak_mb": 401
+          },
+          {
+            "wall_s": 1.83,
+            "peak_mb": 411
+          },
+          {
+            "wall_s": 1.63,
+            "peak_mb": 388
+          }
+        ]
+      },
+      "files_same": {
+        "remove_list.csv": true,
+        "dedup_log.jsonl": true,
+        "heldout_duplicates.csv": true,
+        "empty_documents.csv": true,
+        "dedup_groups.csv": true
+      },
+      "summary_counts_same": true,
+      "sha256": {
+        "remove_list.csv": "913e66a67034cd638eb53702d528ec2e69eb1981372096837deb22fa6e438af1",
+        "dedup_log.jsonl": "e85330a11e4de3b84feb3c51150e62c0645c56e0bde3e514bf6056c4628fcfa4",
+        "heldout_duplicates.csv": "bda0cd4afca13791f8e5a7e615d5d26d50f096012dc0ddc6065cfedfef9ebab9",
+        "empty_documents.csv": "d55f940a87844f08ff7f7fcb07f1a1b652fec817a65df6a987a69a32f3b0efa6",
+        "dedup_groups.csv": "4dd19a60e5d20b1313d21f59ad832e2f074669ab6bb0c6bed4e3a43eabbf2403"
+      }
+    },
+    "dedup_diag2": {
+      "config": "out/dedup_diag2.json",
+      "runs": {
+        "baseline": [
+          {
+            "wall_s": 0.95,
+            "peak_mb": 125
+          },
+          {
+            "wall_s": 0.85,
+            "peak_mb": 125
+          },
+          {
+            "wall_s": 0.91,
+            "peak_mb": 125
+          },
+          {
+            "wall_s": 0.97,
+            "peak_mb": 125
+          }
+        ],
+        "candidate": [
+          {
+            "wall_s": 1.13,
+            "peak_mb": 147
+          },
+          {
+            "wall_s": 1.11,
+            "peak_mb": 147
+          },
+          {
+            "wall_s": 1.04,
+            "peak_mb": 147
+          },
+          {
+            "wall_s": 1.02,
+            "peak_mb": 147
+          }
+        ]
+      },
+      "files_same": {
+        "remove_list.csv": true,
+        "dedup_log.jsonl": true,
+        "heldout_duplicates.csv": true,
+        "empty_documents.csv": true,
+        "dedup_groups.csv": true
+      },
+      "summary_counts_same": true,
+      "sha256": {
+        "remove_list.csv": "dd97cbf75c673cc42741eac42515de34b17bae043d5f09ad29353329b5f1f9b0",
+        "dedup_log.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "heldout_duplicates.csv": "bda0cd4afca13791f8e5a7e615d5d26d50f096012dc0ddc6065cfedfef9ebab9",
+        "empty_documents.csv": "dd97cbf75c673cc42741eac42515de34b17bae043d5f09ad29353329b5f1f9b0",
+        "dedup_groups.csv": "62a2697742708e28b81948e433af7d75c8bf55f4aba14e003fc7cbce5f09289b"
+      }
+    },
+    "dedup_math": {
+      "config": "out/dedup_math.json",
+      "runs": {
+        "baseline": [
+          {
+            "wall_s": 0.97,
+            "peak_mb": 212
+          },
+          {
+            "wall_s": 0.96,
+            "peak_mb": 217
+          },
+          {
+            "wall_s": 1.29,
+            "peak_mb": 218
+          },
+          {
+            "wall_s": 1.29,
+            "peak_mb": 221
+          }
+        ],
+        "candidate": [
+          {
+            "wall_s": 1.06,
+            "peak_mb": 218
+          },
+          {
+            "wall_s": 1.08,
+            "peak_mb": 233
+          },
+          {
+            "wall_s": 1.55,
+            "peak_mb": 221
+          },
+          {
+            "wall_s": 1.31,
+            "peak_mb": 222
+          }
+        ]
+      },
+      "files_same": {
+        "remove_list.csv": true,
+        "dedup_log.jsonl": true,
+        "heldout_duplicates.csv": true,
+        "empty_documents.csv": true,
+        "dedup_groups.csv": true
+      },
+      "summary_counts_same": true,
+      "sha256": {
+        "remove_list.csv": "b112701aff49f4ad54e8472e75cfe5d28df2bdb884b1e58eba16ccb64faa6989",
+        "dedup_log.jsonl": "bf585b4ee31799cf962128d830ba6db42f8d5ce54064f023d20a6aab48cfc26a",
+        "heldout_duplicates.csv": "bda0cd4afca13791f8e5a7e615d5d26d50f096012dc0ddc6065cfedfef9ebab9",
+        "empty_documents.csv": "dd97cbf75c673cc42741eac42515de34b17bae043d5f09ad29353329b5f1f9b0",
+        "dedup_groups.csv": "e7056d8cebaa9d841f6a13ab18851561d6ce01054f67dd7705344e3b321c7e98"
+      }
+    }
+  }
+}

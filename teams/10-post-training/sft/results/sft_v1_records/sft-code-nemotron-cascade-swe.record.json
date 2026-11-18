@@ -1,0 +1,97 @@
+{
+ "checks": {
+  "checks_failed": {},
+  "checks_ok": true,
+  "effort_rows": {
+   "16k": 93,
+   "1k": 108,
+   "4k": 798,
+   "64k": 0
+  },
+  "files": [
+   {
+    "bytes": 68031563,
+    "name": "sft-code-nemotron-cascade-swe.first1000.jsonl",
+    "sha256": "6deeb0b40228490fff9aa5d5bcb72b5e972910057240d0d1af789cccf873351f"
+   }
+  ],
+  "info": {},
+  "length": {
+   "max": 31770,
+   "min": 913,
+   "p50": 4354,
+   "p95": 11113
+  },
+  "max_len": 32768,
+  "rows": 999,
+  "rows_over_max_len": 0,
+  "rows_with_tool_blocks": 0,
+  "shifted_supervised_targets": 2615030,
+  "tokens": 5126593,
+  "tool_call_blocks": 0,
+  "tool_call_tokens_untrained": 0,
+  "tool_result_blocks": 0,
+  "train_spans": 999,
+  "trained_share": 0.510091,
+  "trained_tokens": 2615030,
+  "unique_ids": true
+ },
+ "checks_wall_s": 7.32,
+ "content_sha256": "6deeb0b40228490fff9aa5d5bcb72b5e972910057240d0d1af789cccf873351f",
+ "convert": {
+  "cpu_sys_s": 0.686,
+  "cpu_user_s": 13.55,
+  "hub_bytes_read": 23179846,
+  "max_rss_mb": 268.5,
+  "wall_s": 7.842
+ },
+ "decision": "TSAI reserves",
+ "deterministic_rerun": true,
+ "effort_manifest": {
+  "16k": 93,
+  "1k": 108,
+  "4k": 798,
+  "64k": 0
+ },
+ "file_bytes": 68031563,
+ "file_sha256": "6deeb0b40228490fff9aa5d5bcb72b5e972910057240d0d1af789cccf873351f",
+ "generator_model": "DeepSeek-R1-0528 (MIT, open weights) writes every response (the card's `generator` field)",
+ "hub_revision": "b4ef73ff9bbcfc33d1ec7a48e53017f9ce7af7a3",
+ "input": "hub file nvidia/Nemotron-Cascade-SFT-SWE swe_localization.jsonl|swe_repair.jsonl|swe_testgen.jsonl rows 0..999999999",
+ "licence": "cc-by-4.0 (Hub tag; commercial use permitted per tag)",
+ "rerun_content_sha256": "6deeb0b40228490fff9aa5d5bcb72b5e972910057240d0d1af789cccf873351f",
+ "rerun_wall_s": 8.595,
+ "rows_in": 1000,
+ "rows_out": 999,
+ "rows_per_s_convert": 127.52,
+ "rows_scanned": 1000,
+ "scope": "first 1000 selected rows, source order, C3",
+ "selection": "all three files (localization, repair, testgen)",
+ "set": "sft-code-nemotron-cascade-swe",
+ "skipped": {
+  "content contains special token <|im_start|>": 1
+ },
+ "source": "nvidia/Nemotron-Cascade-SFT-SWE",
+ "token_record": {
+  "basis": "first 1000 selected rows, source order, C3; not the admissible kept rows",
+  "effort": {
+   "16k": 93,
+   "1k": 108,
+   "4k": 798,
+   "64k": 0
+  },
+  "length": {
+   "max": 31770,
+   "min": 913,
+   "p50": 4354,
+   "p95": 11113
+  },
+  "rows": 999,
+  "sequence_tokens": 5126593,
+  "set_id": "sft-code-nemotron-cascade-swe",
+  "shifted_supervised_targets": 2615030,
+  "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3"
+ },
+ "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3",
+ "tokens_per_s_convert": 653735
+}

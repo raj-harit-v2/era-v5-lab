@@ -1,0 +1,98 @@
+{
+ "checks": {
+  "checks_failed": {},
+  "checks_ok": true,
+  "effort_rows": {
+   "16k": 341,
+   "1k": 0,
+   "4k": 8,
+   "64k": 5
+  },
+  "files": [
+   {
+    "bytes": 58351905,
+    "name": "sft-stem-code-openthoughts3.first1000.jsonl",
+    "sha256": "25d853af27a42f010afc035685f0b3cdbdaaedc63bf031b92c4b967d9c08da8a"
+   }
+  ],
+  "info": {},
+  "length": {
+   "max": 17040,
+   "min": 2635,
+   "p50": 14311,
+   "p95": 16860
+  },
+  "max_len": 32768,
+  "rows": 354,
+  "rows_over_max_len": 0,
+  "rows_with_tool_blocks": 0,
+  "shifted_supervised_targets": 4486153,
+  "tokens": 4690899,
+  "tool_call_blocks": 0,
+  "tool_call_tokens_untrained": 0,
+  "tool_result_blocks": 0,
+  "train_spans": 354,
+  "trained_share": 0.956353,
+  "trained_tokens": 4486153,
+  "unique_ids": true
+ },
+ "checks_wall_s": 5.48,
+ "content_sha256": "25d853af27a42f010afc035685f0b3cdbdaaedc63bf031b92c4b967d9c08da8a",
+ "convert": {
+  "cpu_sys_s": 1.445,
+  "cpu_user_s": 15.931,
+  "hub_bytes_read": 58785792,
+  "max_rss_mb": 424.3,
+  "wall_s": 21.131
+ },
+ "decision": "TSAI reserves",
+ "deterministic_rerun": true,
+ "effort_manifest": {
+  "16k": 341,
+  "1k": 0,
+  "4k": 8,
+  "64k": 5
+ },
+ "file_bytes": 58351905,
+ "file_sha256": "25d853af27a42f010afc035685f0b3cdbdaaedc63bf031b92c4b967d9c08da8a",
+ "generator_model": "QwQ-32B (Apache-2.0, open weights)",
+ "hub_revision": "61bcf9d4eb38b30295efc2021227a63cc5bb34c8",
+ "input": "hub file open-thoughts/OpenThoughts3-1.2M glob:data/*.parquet rows 0..999999999",
+ "licence": "apache-2.0 (Hub tag; commercial use permitted per tag)",
+ "rerun_content_sha256": "25d853af27a42f010afc035685f0b3cdbdaaedc63bf031b92c4b967d9c08da8a",
+ "rerun_wall_s": 16.95,
+ "rows_in": 1000,
+ "rows_out": 354,
+ "rows_per_s_convert": 47.32,
+ "rows_scanned": 1000,
+ "scope": "first 1000 selected rows, source order, C3",
+ "selection": "all 120 parquet shards",
+ "set": "sft-stem-code-openthoughts3",
+ "skipped": {
+  "assistant turn is not one <think>...</think> block (reasoning not closed)": 623,
+  "content contains plain-text marker </think>; every chat marker must be one special token": 23
+ },
+ "source": "open-thoughts/OpenThoughts3-1.2M",
+ "token_record": {
+  "basis": "first 1000 selected rows, source order, C3; not the admissible kept rows",
+  "effort": {
+   "16k": 341,
+   "1k": 0,
+   "4k": 8,
+   "64k": 5
+  },
+  "length": {
+   "max": 17040,
+   "min": 2635,
+   "p50": 14311,
+   "p95": 16860
+  },
+  "rows": 354,
+  "sequence_tokens": 4690899,
+  "set_id": "sft-stem-code-openthoughts3",
+  "shifted_supervised_targets": 4486153,
+  "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3"
+ },
+ "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3",
+ "tokens_per_s_convert": 221991
+}

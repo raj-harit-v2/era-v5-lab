@@ -1,0 +1,41 @@
+[
+ {
+  "role": "system",
+  "content": "You can call tools. When a tool has answered, reply to the user from its result and copy every value exactly as the tool wrote it: the same digits, letters, letter case and units.\nTools: [{\"description\": \"How many messages wait in a queue.\", \"name\": \"get_queue_depth\", \"parameters\": {\"properties\": {\"queue\": {\"type\": \"string\"}}, \"required\": [\"queue\"], \"type\": \"object\"}}]"
+ },
+ {
+  "role": "user",
+  "content": "How many messages are waiting in the emails queue?"
+ },
+ {
+  "role": "assistant",
+  "tool_calls": [
+   {
+    "name": "get_queue_depth",
+    "arguments": {
+     "queue": "emails"
+    }
+   }
+  ]
+ },
+ {
+  "role": "tool",
+  "content": "{\"error\": \"503 Service Unavailable\", \"retry_after_s\": 1}"
+ },
+ {
+  "role": "assistant",
+  "tool_calls": [
+   {
+    "name": "get_queue_depth",
+    "arguments": {
+     "queue": "emails"
+    }
+   }
+  ],
+  "content": "The queue service was busy. I am trying once more."
+ },
+ {
+  "role": "tool",
+  "content": "{\"queue\": \"emails\", \"depth\": 4318, \"oldest_age_s\": 92}"
+ }
+]

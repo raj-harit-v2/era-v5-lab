@@ -1,0 +1,15 @@
+{"step": "adapter", "ok": true, "seconds": 2.7}
+{"step": "forgetting", "ok": true, "seconds": 49.2}
+{"step": "sampling", "ok": true, "seconds": 3.2}
+{"step": "mismatch", "ok": true, "seconds": 14.2}
+{"step": "format", "ok": true, "seconds": 14.8}
+{"step": "rl_screen", "ok": true, "seconds": 3.4}
+{"step": "sft_full", "ok": true, "seconds": 168.2}
+{"step": "sft_markers", "ok": true, "seconds": 132.3}
+{"step": "sft_lora", "ok": true, "seconds": 120.4}
+{"step": "sft_lora_markers", "ok": true, "seconds": 140.4}
+{"step": "sft_dt", "ok": true, "seconds": 124.1}
+{"ok": true, "steps": 11, "failed_steps": []}
+real 775.91
+user 593.59
+sys 336.32

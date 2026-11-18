@@ -1,0 +1,44 @@
+# G5 harness-only runtime defaults; algorithm, budgets and limits reviewed against G5 Week-2 plan. Arm-owned settings are read only from configs/arms. Unset values require agreement; smoke values are not decisions.
+contract:
+  lead_snapshot: 3a2f898b990d253d8422419f31e147ae65ec1747
+model:
+  activation: swiglu
+  position: rope
+  # Test setting TSAI accepted on 3 Nov. Not a config v1 decision.
+  rope_theta: 10000.0
+  rotary_fraction: 1.0
+  # Test setting TSAI accepted on 3 Nov. Not a config v1 decision.
+  norm_eps: 1.0e-5
+  # MTP is off, so the weight is 0. Not a config v1 decision.
+  mtp_weight: 0.0
+  moe:
+    # Bias off. The harness accepts only explicit false. Not a config v1 decision.
+    bias: false
+    bias_gamma: 0.0
+optim:
+  betas:
+  - 0.9
+  - 0.999
+  eps: 1.0e-08
+  schedule: constant
+run:
+  micro_batch_size: 1
+  eval_every_steps: 50
+  compile: false
+  flush_every_steps: 10
+approval:
+  status: pending
+  reference: null
+evaluation:
+  boundary_policy: bos_then_all_text_tokens_document_isolated
+  approved: false
+budgets:
+  T1:
+    steps: 245
+    max_time_min: 30
+  T2:
+    steps: 1221
+    max_time_min: 150
+  T3:
+    steps: 1221
+    max_time_min: 120

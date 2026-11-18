@@ -1,0 +1,24 @@
+# Local test of the p1536 OCR-2 rebuild, shard 0 of 70, 16 Nov 2026, Apple M1 Pro 8 cores 16 GB, shared host (load average 13-35)
+$ python teams/10-post-training/sft/run_ocr2.py --manifest ROOT/source_manifest.json --policy teams/10-post-training/sft/ocr2_policy.json --shards 0 --workers 1 --out-dir out/shard-00000 --mode admission
+shard  0 complete [full] raw 20000 eligible 10564 rendered 10564 flagged 2314 canary 0 kept 8250 admitted 8047 heldout 203 (pack_validated)
+{"run_id": "admission-toke6b93a93-8e4b984ba811", "accounting": {"expected_shards": 70, "requested": 1, "not_requested": 69, "complete_full_shard": 1, "complete_row_prefix_only": 0, "not_available_locally": 0, "stopped_canary": 0, "failed": 0}, "full_dataset": false, "deterministic_sha256": "728a9361f790eddbf10c75b4c56f1113146e17e4175ba78e1ec49e5e0e9fd014"}
+# wall 2357.6 s, CPU 1742.7 s, peak RSS (children) 818.8 MB; stages (s): joined 3.712, pack 191.732, rechecked 41.199, rendered 179.114, screened 1926.251
+# pack: train 8047 rows, held-out 203, train tokens 52380892, pack sha256 6ac2af45c09822d7f638a58fa008e56c5491f0a4a576004df72bf4e441bcc0a0, held-out sha256 37e1026fdc32dbc738bc94c114e61e9dbd6394bafeef8d7f92b910847e76b368, tokenizer e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b, blockers []
+# C3 control run side by side (same code, build policy 2399c8ba, C3 manifest ded9be9e): wall 2454.2 s; its pack sha256 90233af7195a265bd15db5aeea06e71558022b83faba04f1ac0866404e2ced6b = the 14 Nov build's
+# row-level comparison p1536 vs C3 (compare_shard.py): {"join_identical": true, "rendered_same_ids": true, "trained_text_identical": 10564, "effort_flips": {"4k->16k": 1}, "flagged_equal": true, "train_ids_equal": true, "heldout_ids_equal": true}
+exit=0
+
+# Evaluation firewall (step 2), 16 Nov 2026 ~23:20 IST, same laptop; the verified shard packs re-hashed against the manifest first
+$ python teams/10-post-training/sft/eval_firewall.py apply --pack out/run/shards/shard-00000/pack/pack.jsonl --sidecar out/run/shards/shard-00000/join/joined.sidecar.jsonl --families ROOT/eval_firewall_families_v1.txt --families-sha256 e8183f8ff236fc66064fcfef044ea5b9a4b6be330cdf67c0c5712315b3555cea --out out/firewalled/shard-00000/pack.firewalled.jsonl --report out/firewalled/shard-00000/firewall_report.json
+{"rows_in": 8047, "rows_removed": 360, "rows_kept": 7687, "tokens_removed": 1615713, "firewalled_pack_sha256": "227d97e37ede3b203b8f07a4d5e247c83ab1f1f202b1376ba755d435f2a25c06"}   # shard 0, 15.1 s wall
+{"rows_in": 8009, "rows_removed": 369, "rows_kept": 7640, "tokens_removed": 1607523, "firewalled_pack_sha256": "8a5c19ac8c6793ee701c983ff76a93b14d75073267d6ce8269d2ffe398aa312f"}   # shard 1, 10.93 s wall
+{"rows_in": 7974, "rows_removed": 367, "rows_kept": 7607, "tokens_removed": 1683894, "firewalled_pack_sha256": "0143f11095ac75a103f2c5d752baf758dcdcee7f275eaecc6e845dca086b698b"}   # shard 2, 10.8 s wall
+{"rows_in": 8052, "rows_removed": 371, "rows_kept": 7681, "tokens_removed": 1650555, "firewalled_pack_sha256": "c2b530f12a166cc28f35e45ddb30c36c3bf14f56d35f413ab02850dd5f738e2c"}   # shard 3, 12.49 s wall
+# predicted from the per-row stats before the run, all seven counts equal on every shard: {"0": true, "1": true, "2": true, "3": true}
+# shards 1-3: join sidecar regenerated with prepare_ocr2.prepare (14-17 s), byte-identical to the sidecar sha256 the build recorded
+exit=0
+
+# Code drift after the build (16 Nov ~23:45 IST): the week-3 merge brings chat-format/render.py from upstream main (#437; docstring + one unused constant)
+$ python teams/10-post-training/sft/convert.py --set sft-code-opencodereasoning-2 --input out/run/shards/shard-00000/join/joined.jsonl --index-base 0 --tokenizer ROOT/tokenizer/p1536.json --out rendered.jsonl
+{"set": "sft-code-opencodereasoning-2", "rows_in": 10564, "rows": 10564, "skipped": {}, "effort": {"1k": 731, "4k": 3916, "16k": 5917, "64k": 0}, "content_sha256": "dded2a3fe9321e075580a1435abd9ce308d05c857cd4bbcaa6298e4eb7ade69a"}
+# = the build's shard-0 rendered.jsonl sha256 (dded2a3f...), 197 s wall; run id at the merged code: admission-toke6b93a93-97d4e2d2e367 (only render.py's hash differs in the config)

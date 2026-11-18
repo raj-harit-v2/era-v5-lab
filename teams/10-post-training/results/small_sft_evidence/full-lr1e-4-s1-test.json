@@ -1,0 +1,74 @@
+{
+ "schema": "g10-bench-eval/1",
+ "device": "cuda",
+ "torch": "2.14.1+cu130",
+ "compute_dtype": "float32 (TF32 off)",
+ "model": "/vol/runs/full-lr1e-4-s1/model",
+ "revision": null,
+ "tokenizer_sha256": "9ca9acddb6525a194ec8ac7a87f24fbba7232a9a15ffa1af0c1224fcd888e47c",
+ "model_safetensors_sha256": "392fdcf129fd1966699bf13ca55e7386a45ab33f22d10ab0a1ff9f8356e9aea3",
+ "split_file_sha256": "8d12338297c46200c61d1c8a9119839bd9010bdb46feed90c33268fb9889677d",
+ "split": "test",
+ "target_bpb": {
+  "rows": 300,
+  "target_tokens": 359695,
+  "target_bytes": 1166384,
+  "nll_nats": 391069.4401855469,
+  "nats_per_target_token": 1.0872251217991544,
+  "bpb": 0.4837120039360207,
+  "seconds": 24.9
+ },
+ "format": {
+  "prompts": 110,
+  "valid": 85,
+  "format_validity": 0.7727272727272727,
+  "closed_im_end": 0.7727272727272727,
+  "hit_budget": 0.22727272727272727,
+  "has_think": 0.7727272727272727,
+  "valid_with_code_block": 0.7727272727272727,
+  "mean_gen_tokens": 1014.7,
+  "reasons": {
+   "no_im_end": 25,
+   "ok": 85
+  },
+  "decoding": "greedy",
+  "max_total_tokens": 2048,
+  "batch_size": 56,
+  "seconds": 321.2,
+  "gen_tokens_per_s": 347.5
+ },
+ "generations_sha256": "f77dc6c4eed0f7bc1678f94b5543443381e84f847f3fc4c98dae224f62eaf71a",
+ "forgetting": {
+  "heldout_sha256": "21c6e4b2df8dae9d69e254f4a00fc934d2a3c70f0675065a03724299d94312bb",
+  "documents": 1059,
+  "tokens": 2331761,
+  "windows": 1910,
+  "window": 2048,
+  "bpb_all": 1.1484215967657627,
+  "groups": {
+   "val/groups/english_bpb": 1.0480040999059947,
+   "val/groups/code_bpb": 0.8365142977317391,
+   "val/groups/indic_mean_bpb": 1.2237409249617353,
+   "val/three_group_bpb": 1.0360864408664898
+  },
+  "slices": {
+   "bn": 1.1625653432720122,
+   "en": 1.0480040999059947,
+   "ta": 0.9667979865489541,
+   "ml": 1.1489159454611684,
+   "code": 0.8365142977317391,
+   "mr": 1.1543482674531969,
+   "te": 1.2390529126801137,
+   "math": 1.0285136302595208,
+   "kn": 1.266769233587634,
+   "sci": 0.8788255589693917,
+   "or": 1.403127161691812,
+   "pa": 1.3320641995928109,
+   "gu": 1.3597565172446007,
+   "hi": 0.9854911742607966,
+   "as": 1.4422614327859893
+  },
+  "seconds": 110.6
+ },
+ "cuda_peak_allocated_mb": 6737.7
+}

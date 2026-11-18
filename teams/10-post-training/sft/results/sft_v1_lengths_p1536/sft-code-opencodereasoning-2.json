@@ -1,0 +1,60 @@
+{
+ "schema": "g10-sft-v1-lengths/1",
+ "set": "sft-code-opencodereasoning-2",
+ "area": "code",
+ "tokenizer_sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b",
+ "rows_read": 542043,
+ "filter": {
+  "keep_ids": false,
+  "status": "pack",
+  "exclude_families_sha256": "e8183f8ff236fc66064fcfef044ea5b9a4b6be330cdf67c0c5712315b3555cea",
+  "exclude_families": 250
+ },
+ "fit_rule": "a row fits L when its whole token count is <= L",
+ "note": "training rows of the p1536 pack after the evaluation firewall (ocr2_eval_firewall_v1.json), all 70 shards",
+ "rows": 410538,
+ "tokens": 2623855801,
+ "shifted_targets": 2453903733,
+ "by_limit": {
+  "2048": {
+   "rows_fit": 75757,
+   "rows_fit_share": 0.184531,
+   "tokens_fit": 104593933,
+   "tokens_fit_share": 0.039863,
+   "shifted_targets_fit": 85517365,
+   "tokens_if_truncated": 790225421
+  },
+  "4096": {
+   "rows_fit": 171753,
+   "rows_fit_share": 0.418361,
+   "tokens_fit": 391932487,
+   "tokens_fit_share": 0.149373,
+   "shifted_targets_fit": 339079464,
+   "tokens_if_truncated": 1369995847
+  },
+  "8192": {
+   "rows_fit": 285860,
+   "rows_fit_share": 0.696306,
+   "tokens_fit": 1066845280,
+   "tokens_fit_share": 0.406594,
+   "shifted_targets_fit": 965478205,
+   "tokens_if_truncated": 2088207456
+  },
+  "32768": {
+   "rows_fit": 410538,
+   "rows_fit_share": 1.0,
+   "tokens_fit": 2623855801,
+   "tokens_fit_share": 1.0,
+   "shifted_targets_fit": 2453903733,
+   "tokens_if_truncated": 2623855801
+  }
+ },
+ "length": {
+  "min": 232,
+  "p50": 5040,
+  "p90": 13681,
+  "p99": 19153,
+  "max": 29846,
+  "mean": 6391.3
+ }
+}

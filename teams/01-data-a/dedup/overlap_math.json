@@ -1,0 +1,18 @@
+{
+  "_comment": "Math-only local test (E1 for math): math-finemath and math-megamath, train + heldout. Put the parts under inputs/sample_v0_math/{train,heldout}/<pack>/part-*.parquet. Paths are relative to the repository root.",
+  "inputs": "inputs/sample_v0_math",
+  "splits": [
+    "train",
+    "heldout"
+  ],
+  "out": "out/overlap_math",
+  "floor": 0.5,
+  "k": 5,
+  "block": 256,
+  "top": 20,
+  "max_output_mb": 50,
+  "expected_packs": [
+    "math-finemath",
+    "math-megamath"
+  ]
+}

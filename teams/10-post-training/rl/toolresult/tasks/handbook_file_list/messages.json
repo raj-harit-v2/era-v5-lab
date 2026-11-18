@@ -1,0 +1,26 @@
+[
+ {
+  "role": "system",
+  "content": "You can call tools. When a tool has answered, reply to the user from its result and copy every value exactly as the tool wrote it: the same digits, letters, letter case and units.\nTools: [{\"description\": \"Find files whose name matches a glob pattern.\", \"name\": \"search_files\", \"parameters\": {\"properties\": {\"directory\": {\"type\": \"string\"}, \"pattern\": {\"type\": \"string\"}}, \"required\": [\"pattern\"], \"type\": \"object\"}}]"
+ },
+ {
+  "role": "user",
+  "content": "Which Markdown files are in the handbook folder?"
+ },
+ {
+  "role": "assistant",
+  "tool_calls": [
+   {
+    "name": "search_files",
+    "arguments": {
+     "pattern": "*.md",
+     "directory": "handbook"
+    }
+   }
+  ]
+ },
+ {
+  "role": "tool",
+  "content": "[\"handbook/onboarding.md\", \"handbook/leave-policy.md\", \"handbook/it/vpn-setup.md\"]"
+ }
+]

@@ -1,0 +1,25 @@
+[
+ {
+  "role": "system",
+  "content": "You can call tools. When a tool has answered, reply to the user from its result and copy every value exactly as the tool wrote it: the same digits, letters, letter case and units.\nTools: [{\"description\": \"Where a parcel is now.\", \"name\": \"track_parcel\", \"parameters\": {\"properties\": {\"parcel_id\": {\"type\": \"string\"}}, \"required\": [\"parcel_id\"], \"type\": \"object\"}}]"
+ },
+ {
+  "role": "user",
+  "content": "Which city is parcel MH-77310 in now?"
+ },
+ {
+  "role": "assistant",
+  "tool_calls": [
+   {
+    "name": "track_parcel",
+    "arguments": {
+     "parcel_id": "MH-77310"
+    }
+   }
+  ]
+ },
+ {
+  "role": "tool",
+  "content": "{\"parcel_id\": \"MH-77310\", \"status\": \"out for delivery\", \"city\": \"कर्\u200dहाड\", \"eta\": \"2026-11-17\"}"
+ }
+]

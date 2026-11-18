@@ -1,0 +1,25 @@
+[
+ {
+  "role": "system",
+  "content": "You can call tools. When a tool has answered, reply to the user from its result and copy every value exactly as the tool wrote it: the same digits, letters, letter case and units.\nTools: [{\"description\": \"Run the tests under a path.\", \"name\": \"run_tests\", \"parameters\": {\"properties\": {\"path\": {\"type\": \"string\"}}, \"required\": [\"path\"], \"type\": \"object\"}}]"
+ },
+ {
+  "role": "user",
+  "content": "Did the date tests pass? If not, which test failed?"
+ },
+ {
+  "role": "assistant",
+  "tool_calls": [
+   {
+    "name": "run_tests",
+    "arguments": {
+     "path": "tests/test_dates.py"
+    }
+   }
+  ]
+ },
+ {
+  "role": "tool",
+  "content": "collected 12 items\n\ntests/test_dates.py ...F........\n\nFAILED tests/test_dates.py::test_leap_year - AssertionError: assert 28 == 29\n1 failed, 11 passed in 0.42s"
+ }
+]

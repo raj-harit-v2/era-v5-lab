@@ -1,0 +1,45 @@
+{
+ "advantages": {
+  "constant_all_one": true,
+  "constant_all_zero": true,
+  "singleton": true,
+  "mixed": [
+   -0.5,
+   0.5,
+   -0.5,
+   0.5
+  ]
+ },
+ "mixed_batch": {
+  "groups_used": 1,
+  "groups_dropped": 2,
+  "tokens": 12,
+  "optimizer_steps": 1,
+  "loss": -0.44948330521583557,
+  "grad_norm": 4.386,
+  "stored_update_share": 0.515024,
+  "grad_nonzero_share": 0.515024,
+  "weights_changed": 21147309,
+  "deleted_nonzero": 0,
+  "zero_share": 0.014103,
+  "deleted_at_start": 348469
+ },
+ "dropped_group_invariance": {
+  "loss_diff": 3.5390257835388184e-08,
+  "max_weight_diff": 6.705522537231445e-08,
+  "max_moment_diff": 7.799826562404633e-09,
+  "params_with_state": 162,
+  "tokens": 24,
+  "lr": 0.0001,
+  "control_remove_a_kept_group_max_weight_diff": 0.00040027499198913574,
+  "control_remove_a_kept_group_max_moment_diff": 0.01057496014982462
+ },
+ "all_dropped_batch": {
+  "constant_groups_steps": 0,
+  "singleton_steps": 0,
+  "optimizer_state_entries": 0,
+  "weights_unchanged": true,
+  "logprob_calls": 0
+ },
+ "pass": true
+}

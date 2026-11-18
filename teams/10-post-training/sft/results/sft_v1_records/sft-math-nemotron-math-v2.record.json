@@ -1,0 +1,99 @@
+{
+ "checks": {
+  "checks_failed": {},
+  "checks_ok": true,
+  "effort_rows": {
+   "16k": 476,
+   "1k": 4,
+   "4k": 124,
+   "64k": 378
+  },
+  "files": [
+   {
+    "bytes": 199621647,
+    "name": "sft-math-nemotron-math-v2.first1000.jsonl",
+    "sha256": "8582fc884468ff02dacff87ef00bae62f4ed2d941d9ab7d384005e052c739096"
+   }
+  ],
+  "info": {
+   "decode_equals_normalised_text_only": 9
+  },
+  "length": {
+   "max": 66993,
+   "min": 1239,
+   "p50": 13965,
+   "p95": 46450
+  },
+  "max_len": 32768,
+  "rows": 982,
+  "rows_over_max_len": 144,
+  "rows_with_tool_blocks": 0,
+  "shifted_supervised_targets": 17492437,
+  "tokens": 17608723,
+  "tool_call_blocks": 0,
+  "tool_call_tokens_untrained": 0,
+  "tool_result_blocks": 0,
+  "train_spans": 982,
+  "trained_share": 0.993396,
+  "trained_tokens": 17492437,
+  "unique_ids": true
+ },
+ "checks_wall_s": 24.44,
+ "content_sha256": "8582fc884468ff02dacff87ef00bae62f4ed2d941d9ab7d384005e052c739096",
+ "convert": {
+  "cpu_sys_s": 5.605,
+  "cpu_user_s": 51.969,
+  "hub_bytes_read": 49538569,
+  "max_rss_mb": 902.8,
+  "wall_s": 36.476
+ },
+ "decision": "allowed (CC-BY-SA, attribution needed)",
+ "deterministic_rerun": true,
+ "effort_manifest": {
+  "16k": 476,
+  "1k": 4,
+  "4k": 124,
+  "64k": 378
+ },
+ "file_bytes": 199621647,
+ "file_sha256": "8582fc884468ff02dacff87ef00bae62f4ed2d941d9ab7d384005e052c739096",
+ "generator_model": "gpt-oss-120b (Apache-2.0, open weights) for all solution traces",
+ "hub_revision": "8e793210e175b6406c752a870f585f62de98c0d3",
+ "input": "hub file nvidia/Nemotron-Math-v2 glob:data/*.parquet rows 0..999999999",
+ "licence": "cc-by-4.0, cc-by-sa-4.0 (Hub tag; share-alike, attribution needed)",
+ "rerun_content_sha256": "8582fc884468ff02dacff87ef00bae62f4ed2d941d9ab7d384005e052c739096",
+ "rerun_wall_s": 34.195,
+ "rows_in": 1000,
+ "rows_out": 982,
+ "rows_per_s_convert": 27.42,
+ "rows_scanned": 1000,
+ "scope": "first 1000 selected rows, source order, C3",
+ "selection": "all 5 parquet files (high x3, medium, low); the jsonl copies of the same data are not read",
+ "set": "sft-math-nemotron-math-v2",
+ "skipped": {
+  "trace over the 64k effort budget": 18
+ },
+ "source": "nvidia/Nemotron-Math-v2",
+ "token_record": {
+  "basis": "first 1000 selected rows, source order, C3; not the admissible kept rows",
+  "effort": {
+   "16k": 476,
+   "1k": 4,
+   "4k": 124,
+   "64k": 378
+  },
+  "length": {
+   "max": 66993,
+   "min": 1239,
+   "p50": 13965,
+   "p95": 46450
+  },
+  "rows": 982,
+  "sequence_tokens": 17608723,
+  "set_id": "sft-math-nemotron-math-v2",
+  "shifted_supervised_targets": 17492437,
+  "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3"
+ },
+ "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3",
+ "tokens_per_s_convert": 482748
+}

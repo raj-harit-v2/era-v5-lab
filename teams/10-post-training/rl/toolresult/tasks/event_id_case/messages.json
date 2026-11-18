@@ -1,0 +1,27 @@
+[
+ {
+  "role": "system",
+  "content": "You can call tools. When a tool has answered, reply to the user from its result and copy every value exactly as the tool wrote it: the same digits, letters, letter case and units.\nTools: [{\"description\": \"Create a calendar event.\", \"name\": \"create_event\", \"parameters\": {\"properties\": {\"date\": {\"type\": \"string\"}, \"time\": {\"type\": \"string\"}, \"title\": {\"type\": \"string\"}}, \"required\": [\"title\", \"date\"], \"type\": \"object\"}}]"
+ },
+ {
+  "role": "user",
+  "content": "Book 'Design review' on 2026-12-03 at 15:30 and give me the event ID."
+ },
+ {
+  "role": "assistant",
+  "tool_calls": [
+   {
+    "name": "create_event",
+    "arguments": {
+     "title": "Design review",
+     "date": "2026-12-03",
+     "time": "15:30"
+    }
+   }
+  ]
+ },
+ {
+  "role": "tool",
+  "content": "{\"status\": \"confirmed\", \"event_id\": \"evt_7Hq2Lx\", \"start\": \"2026-12-03T15:30:00+05:30\"}"
+ }
+]

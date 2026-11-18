@@ -1,0 +1,97 @@
+{
+ "checks": {
+  "checks_failed": {},
+  "checks_ok": true,
+  "effort_rows": {
+   "16k": 0,
+   "1k": 1000,
+   "4k": 0,
+   "64k": 0
+  },
+  "files": [
+   {
+    "bytes": 3416109,
+    "name": "sft-indic-indic-align-dolly-t.first1000.jsonl",
+    "sha256": "d6b488b585aff39b56085aa3fb1eacf49b7e8543dfd6c86574a6dd0d8d75de01"
+   }
+  ],
+  "info": {
+   "decode_equals_normalised_text_only": 190
+  },
+  "length": {
+   "max": 1637,
+   "min": 37,
+   "p50": 138,
+   "p95": 490
+  },
+  "max_len": 32768,
+  "rows": 1000,
+  "rows_over_max_len": 0,
+  "rows_with_tool_blocks": 0,
+  "shifted_supervised_targets": 136104,
+  "tokens": 185131,
+  "tool_call_blocks": 0,
+  "tool_call_tokens_untrained": 0,
+  "tool_result_blocks": 0,
+  "train_spans": 1000,
+  "trained_share": 0.735177,
+  "trained_tokens": 136104,
+  "unique_ids": true
+ },
+ "checks_wall_s": 0.57,
+ "content_sha256": "d6b488b585aff39b56085aa3fb1eacf49b7e8543dfd6c86574a6dd0d8d75de01",
+ "convert": {
+  "cpu_sys_s": 0.853,
+  "cpu_user_s": 1.685,
+  "hub_bytes_read": 171092193,
+  "max_rss_mb": 322.6,
+  "wall_s": 24.975
+ },
+ "decision": "allowed (CC-BY-SA, attribution needed)",
+ "deterministic_rerun": true,
+ "effort_manifest": {
+  "16k": 0,
+  "1k": 1000,
+  "4k": 0,
+  "64k": 0
+ },
+ "file_bytes": 3416109,
+ "file_sha256": "d6b488b585aff39b56085aa3fb1eacf49b7e8543dfd6c86574a6dd0d8d75de01",
+ "generator_model": "none for the text (human-written databricks-dolly-15k); translated with IndicTrans2 (MIT, open weights)",
+ "hub_revision": "032b6a9070e7f85f1a38e0506419f4590a20455a",
+ "input": "hub file ai4bharat/indic-align indicalign-instruct/dolly/Dolly.parquet rows 0..999999999",
+ "licence": "cc-by-4.0 (Hub tag); source dolly cc-by-sa-3.0 (share-alike, attribution needed)",
+ "rerun_content_sha256": "d6b488b585aff39b56085aa3fb1eacf49b7e8543dfd6c86574a6dd0d8d75de01",
+ "rerun_wall_s": 22.725,
+ "rows_in": 1000,
+ "rows_out": 1000,
+ "rows_per_s_convert": 55.94,
+ "rows_scanned": 1397,
+ "scope": "first 1000 selected rows, source order, C3",
+ "selection": "rows whose English question has no context passage in databricks-dolly-15k; one native-script column per row by sha256(doc_id) from ben_Beng,guj_Gujr,hin_Deva,kan_Knda,mal_Mlym,mar_Deva,ory_Orya,pan_Guru,tam_Taml,tel_Telu",
+ "set": "sft-indic-indic-align-dolly-t",
+ "skipped": {},
+ "source": "ai4bharat/indic-align",
+ "token_record": {
+  "basis": "first 1000 selected rows, source order, C3; not the admissible kept rows",
+  "effort": {
+   "16k": 0,
+   "1k": 1000,
+   "4k": 0,
+   "64k": 0
+  },
+  "length": {
+   "max": 1637,
+   "min": 37,
+   "p50": 138,
+   "p95": 490
+  },
+  "rows": 1000,
+  "sequence_tokens": 185131,
+  "set_id": "sft-indic-indic-align-dolly-t",
+  "shifted_supervised_targets": 136104,
+  "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3"
+ },
+ "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3",
+ "tokens_per_s_convert": 7413
+}

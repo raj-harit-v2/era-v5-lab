@@ -1,0 +1,220 @@
+[
+ {
+  "args": [
+   2,
+   []
+  ],
+  "expected": []
+ },
+ {
+  "args": [
+   2,
+   [
+    "put a 1",
+    "get a",
+    "get a"
+   ]
+  ],
+  "expected": [
+   "1",
+   "1"
+  ]
+ },
+ {
+  "args": [
+   1,
+   [
+    "put a 1",
+    "put b 2",
+    "get a",
+    "get b"
+   ]
+  ],
+  "expected": [
+   "-",
+   "2"
+  ]
+ },
+ {
+  "args": [
+   2,
+   [
+    "put a 1",
+    "put a 2",
+    "get a"
+   ]
+  ],
+  "expected": [
+   "2"
+  ]
+ },
+ {
+  "args": [
+   2,
+   [
+    "put a 1",
+    "put b 2",
+    "put a 3",
+    "put c 4",
+    "get b",
+    "get a",
+    "get c"
+   ]
+  ],
+  "expected": [
+   "-",
+   "3",
+   "4"
+  ]
+ },
+ {
+  "args": [
+   3,
+   [
+    "put a 1",
+    "put b 2",
+    "put c 3",
+    "get a",
+    "put d 4",
+    "get b",
+    "get c",
+    "get d"
+   ]
+  ],
+  "expected": [
+   "1",
+   "-",
+   "3",
+   "4"
+  ]
+ },
+ {
+  "args": [
+   2,
+   [
+    "get x",
+    "get y"
+   ]
+  ],
+  "expected": [
+   "-",
+   "-"
+  ]
+ },
+ {
+  "args": [
+   -1,
+   []
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   2,
+   [
+    "put a"
+   ]
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   2,
+   [
+    "delete a"
+   ]
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   2,
+   [
+    "put a 1",
+    "get a b"
+   ]
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   2,
+   [
+    "put a 1 2"
+   ]
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   2,
+   [
+    "get a",
+    "bogus"
+   ]
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   2,
+   [
+    "put a 1",
+    "get a",
+    " get a"
+   ]
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   2,
+   [
+    "put  a 1"
+   ]
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   1,
+   [
+    "put a 1",
+    "put a 2",
+    "put a 3",
+    "get a"
+   ]
+  ],
+  "expected": [
+   "3"
+  ]
+ },
+ {
+  "args": [
+   2,
+   [
+    "put a "
+   ]
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   2,
+   [
+    "get "
+   ]
+  ],
+  "raises": "error"
+ },
+ {
+  "args": [
+   2,
+   [
+    "put a 1",
+    "put  2"
+   ]
+  ],
+  "raises": "error"
+ }
+]

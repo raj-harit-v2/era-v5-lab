@@ -1,0 +1,56 @@
+{
+ "started": "2026-11-16T18:15:30Z",
+ "platform": "local (macOS), scripts run directly, not the notebook",
+ "run_by": "shankarpandala",
+ "notebook_version": null,
+ "settings": {
+  "LIMIT": null,
+  "FORMATS": [
+   "bf16",
+   "Q6_K",
+   "Q5_K_M",
+   "Q4_K_M"
+  ],
+  "BASE": "bf16",
+  "MODEL": "Qwen/Qwen2.5-1.5B",
+  "REVISION": "8faed761d45a263340a0528343f099c05c9a4323",
+  "LLAMA_TAG": "b9310 (GGUF conversion and quantization, Homebrew)",
+  "LLAMA_CPP_PYTHON": "0.3.36",
+  "N_CTX": 2048
+ },
+ "python": "3.12",
+ "lm_eval": "0.4.13",
+ "hardware": "Apple M5 Pro 24GB (Metal)",
+ "seed": 42,
+ "g9_harness_sha256": "e91bd8b37975d098",
+ "formats": {
+  "bf16": {
+   "gpu_layers": -1,
+   "gguf_bytes": 3093668704,
+   "n_ctx": 2048,
+   "load_s": 0.4,
+   "wall_clock_s": 1064.9
+  },
+  "Q6_K": {
+   "gpu_layers": -1,
+   "gguf_bytes": 1329259360,
+   "n_ctx": 2048,
+   "load_s": 0.2,
+   "wall_clock_s": 688.4
+  },
+  "Q5_K_M": {
+   "gpu_layers": -1,
+   "gguf_bytes": 1181569888,
+   "n_ctx": 2048,
+   "load_s": 0.2,
+   "wall_clock_s": 744.2
+  },
+  "Q4_K_M": {
+   "gpu_layers": -1,
+   "gguf_bytes": 1042568032,
+   "n_ctx": 2048,
+   "load_s": 0.3,
+   "wall_clock_s": 634.1
+  }
+ }
+}

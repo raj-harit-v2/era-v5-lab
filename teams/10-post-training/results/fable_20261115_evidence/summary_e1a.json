@@ -1,0 +1,177 @@
+{
+ "algo": "objective_v1",
+ "steps": 60,
+ "k": 8,
+ "prompts_per_step": 16,
+ "max_new": 1024,
+ "sampler": "vllm",
+ "trainable_params": 822212608,
+ "fp32_master_params": 822212608,
+ "tis_clip": null,
+ "router_params_frozen": [],
+ "router_checksum_before": "dense model: no router",
+ "router_checksum_after": "dense model: no router",
+ "router_unchanged": true,
+ "heldout_reward_start": 0.15104166666666666,
+ "heldout_reward_end": 0.2513020833333333,
+ "heldout_curve": [
+  [
+   0,
+   0.15104166666666666
+  ],
+  [
+   10,
+   0.23828125
+  ],
+  [
+   20,
+   0.2526041666666667
+  ],
+  [
+   30,
+   0.2421875
+  ],
+  [
+   40,
+   0.2421875
+  ],
+  [
+   50,
+   0.24348958333333334
+  ],
+  [
+   60,
+   0.2513020833333333
+  ]
+ ],
+ "heldout_change": {
+  "problems": 96,
+  "start": 0.151,
+  "end": 0.2513,
+  "diff": 0.1003,
+  "ci_low": 0.0625,
+  "ci_high": 0.1407,
+  "ci_excludes_zero": true,
+  "resamples": 10000
+ },
+ "groups_used_total": 418,
+ "trainable_weight_change": {
+  "share_changed": 1.0,
+  "relative_l2": 0.001792
+ },
+ "step1_s": 92.301,
+ "mean_step_s_after_step1": 49.677,
+ "mean_times_s_after_step1": {
+  "rollout": 12.01,
+  "reward": 15.409,
+  "old_logprobs": 6.732,
+  "train": 15.508,
+  "sync": 0.018
+ },
+ "mean_rollout_tokens_per_s": 4600.8,
+ "routing_curve": [
+  {
+   "step": 50,
+   "truncated": 0.0026,
+   "mean_tokens": 537.0
+  },
+  {
+   "step": 60,
+   "truncated": 0.0052,
+   "mean_tokens": 565.7
+  }
+ ],
+ "vllm_sync_path": "collective_rpc",
+ "vllm_sync_check": {
+  "baseline_k3": 8.09134503469977e-05,
+  "zeroed_unsynced_k3": 3.6740379333496094,
+  "zeroed_synced_k3": 0.006965885404497385,
+  "restored_k3": 0.00023126330006562057,
+  "ok": true,
+  "sync_path": "collective_rpc"
+ },
+ "gpu_name": "NVIDIA A100 80GB PCIe",
+ "seconds": 1198.0,
+ "seconds_per_step": 19.97,
+ "peak_gpu_memory_gb": 58.05,
+ "end_peak_torch_gb": 58.05,
+ "end_gpu_used_gb": 59.82,
+ "end_gpu_total_gb": 79.27,
+ "versions": {
+  "torch": "2.13.0+cu130",
+  "transformers": "5.19.0",
+  "vllm": "0.32.0"
+ },
+ "mean_mismatch_k3": 0.000184,
+ "router_trainable": false,
+ "objective": {
+  "name": "objective_v1",
+  "contract": "rl/objective_v1.md (lead, commit ff19ce2)",
+  "tr_epsilon": 0.2,
+  "reference_kl": "none (not in the contract)",
+  "steps_with_optimizer_update": 60,
+  "group_kinds_total": {
+   "all_one": 495,
+   "all_zero": 47,
+   "tied_other": 0,
+   "singleton": 0,
+   "mixed": 418
+  }
+ },
+ "saved_trainable_weights": null,
+ "status": "COMPLETE",
+ "state": {
+  "step": 60,
+  "file": "state.step000060.pt",
+  "bytes": 9866823259,
+  "identity_sha256": "f0d9795794fb79dedaf41d96e03b4dc87c94a5ed5db508f8536ac509a4aaf00f",
+  "saved_unix": 1794745048.967838,
+  "write_s": 16.79
+ },
+ "resumed_from_step": 40,
+ "seconds_all_invocations": 4696.1,
+ "train_cohort": {
+  "problems": 56,
+  "k": 8,
+  "curve": [
+   [
+    0,
+    0.29910714285714285
+   ],
+   [
+    10,
+    0.6450892857142857
+   ],
+   [
+    20,
+    0.7678571428571429
+   ],
+   [
+    30,
+    0.8392857142857143
+   ],
+   [
+    40,
+    0.8839285714285714
+   ],
+   [
+    50,
+    0.9263392857142857
+   ],
+   [
+    60,
+    0.9441964285714286
+   ]
+  ],
+  "change": {
+   "problems": 56,
+   "start": 0.2991,
+   "end": 0.9442,
+   "diff": 0.6451,
+   "ci_low": 0.5737,
+   "ci_high": 0.7143,
+   "ci_excludes_zero": true,
+   "resamples": 10000
+  }
+ }
+}

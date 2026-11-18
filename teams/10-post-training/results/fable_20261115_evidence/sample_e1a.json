@@ -1,0 +1,39 @@
+{
+ "state_file": "state.step000060.pt",
+ "state_step": 60,
+ "base": {
+  "state_step": null,
+  "k": 8,
+  "sets": {
+   "heldout": {
+    "problems": 96,
+    "completions": 768,
+    "pass": 0.14453125
+   },
+   "cohort": {
+    "problems": 56,
+    "completions": 448,
+    "pass": 0.31919642857142855
+   }
+  },
+  "seconds": 292.1
+ },
+ "trained": {
+  "state_step": 60,
+  "k": 8,
+  "sets": {
+   "heldout": {
+    "problems": 96,
+    "completions": 768,
+    "pass": 0.2604166666666667
+   },
+   "cohort": {
+    "problems": 56,
+    "completions": 448,
+    "pass": 0.953125
+   }
+  },
+  "seconds": 223.6
+ },
+ "seconds": 551.0
+}

@@ -1,0 +1,33 @@
+{
+ "by_source": {
+  "sft-dolly-15k": 15011
+ },
+ "command": "python sft/check_pack_rows.py --pack <private>/<set>.partNNNN.jsonl.gz ... --tokenizer <C3 tokenizer.json> --report <this file>",
+ "limit": 32768,
+ "marker_ids": {
+  "<|endoftext|>": 130822,
+  "<|im_end|>": 130816,
+  "<|im_start|>": 129994
+ },
+ "mask_violations": {},
+ "max_length": 5664,
+ "ok": true,
+ "rows": 15011,
+ "rows_over_limit": 0,
+ "rows_with_violations_by_source": {
+  "sft-dolly-15k": 0
+ },
+ "sampled_per_source": {
+  "sft-dolly-15k": 20
+ },
+ "schema": "g10-ocr2-pack-row-check/1",
+ "scope": "every converted row of the set (3 parts), before admission",
+ "seed": 0,
+ "set": "sft-dolly-15k",
+ "tokens": 2923577,
+ "trained_tokens": 1186477,
+ "trained_tokens_by_role": {
+  "assistant": 1186477
+ },
+ "violations": {}
+}

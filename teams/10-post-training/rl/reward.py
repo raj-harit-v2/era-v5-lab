@@ -8,6 +8,12 @@ checker under its env_id, so the trainer calls one function."
 env_id is "<type>/<name>":
     code/<task_id>       rl/tasks/<task_id>, scored by rl/verifier.py (output = the model's completion)
     swe/<instance_id>    swe-envs/<instance_id>, scored by swe-envs/verify.py (output = a unified diff)
+    indic/<task_id>      rl/indic/tasks/<task_id>, scored by rl/indic/indic_verifier.py (exact answer, no container)
+    go/<task_id>         rl/go/tasks/<task_id>, scored by rl/go/go_verifier.py (output = the model's completion;
+                         docker sandbox by default, the image is built from rl/go/go.Dockerfile)
+    tool_call/<task_id>  rl/tasks/tool_call/<task_id>, exact name/arguments JSON comparison, no execution
+    toolresult/<task_id> rl/toolresult/tasks/<task_id>, scored by rl/toolresult/toolresult_verifier.py (exact
+                         tool-result text in the reply, no execution)
 
 New environment types call register("<type>", checker), where checker(name, output, **options) returns a dict
 with at least "reward" (0 or 1). An unknown env_id raises KeyError: it never scores 0 silently, because a
@@ -25,6 +31,7 @@ pool.py for why and for the measurement):
 CLI:
     python rl/reward.py --list
     python rl/reward.py --check-all [--pool]   # every reference/gold scores 1, every wrong answer scores 0
+    python rl/reward.py --check-all --type indic   # only one environment type (indic needs no docker)
 """
 from __future__ import annotations
 
@@ -32,6 +39,7 @@ import argparse
 import json
 import re
 import sys
+import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -40,6 +48,10 @@ from typing import Callable
 HERE = Path(__file__).resolve().parent
 TASKS = HERE / "tasks"
 SWE_ENVS = HERE.parent / "swe-envs"
+INDIC_TASKS = HERE / "indic" / "tasks"
+GO_TASKS = HERE / "go" / "tasks"
+TOOL_CALL_TASKS = TASKS / "tool_call"
+TOOLRESULT_TASKS = HERE / "toolresult" / "tasks"
 
 _NAME = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]*$")  # no slashes, no "..": an env_id cannot leave its folder
 _REGISTRY: dict[str, Callable[..., dict]] = {}
@@ -80,16 +92,23 @@ def reward(env_id: str, output: str, **options) -> tuple[float, dict]:
 # --- built-in checkers --------------------------------------------------------------------------
 
 _POOL_MODULE = None
+_POOL_LOCK = threading.Lock()
 
 
 def _pool():
-    """pool.py, loaded by path so reward.py works from any working directory."""
+    """pool.py, loaded by path so reward.py works from any working directory.
+
+    Thread-safe: the module is published only after it has run, so a second thread (check_all, a trainer's scorer
+    threads) never sees a half-loaded module."""
     global _POOL_MODULE
     if _POOL_MODULE is None:
-        import importlib.util  # noqa: PLC0415
-        spec = importlib.util.spec_from_file_location("g10_rl_pool", HERE / "pool.py")
-        _POOL_MODULE = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(_POOL_MODULE)
+        with _POOL_LOCK:
+            if _POOL_MODULE is None:
+                import importlib.util  # noqa: PLC0415
+                spec = importlib.util.spec_from_file_location("g10_rl_pool", HERE / "pool.py")
+                module = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(module)
+                _POOL_MODULE = module
     return _POOL_MODULE
 
 
@@ -108,13 +127,111 @@ def swe_checker(name: str, output: str, executor=None, **_) -> dict:
     return _pool().swe_verify_module().reward(env_dir, output, executor or _OPTIONS["swe_executor"])
 
 
+_INDIC_MODULE = None
+
+
+def _indic():
+    """indic/indic_verifier.py, loaded by path like pool.py."""
+    global _INDIC_MODULE
+    if _INDIC_MODULE is None:
+        import importlib.util  # noqa: PLC0415
+        spec = importlib.util.spec_from_file_location("g10_rl_indic_verifier", HERE / "indic" / "indic_verifier.py")
+        _INDIC_MODULE = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(_INDIC_MODULE)
+    return _INDIC_MODULE
+
+
+def indic_checker(name: str, output: str, **_) -> dict:
+    task_dir = INDIC_TASKS / name
+    if not (task_dir / "task.json").is_file():
+        raise KeyError(f"no indic task {name!r} in {INDIC_TASKS}")
+    return _indic().reward(task_dir, output)
+
+
+_GO_MODULE = None
+
+
+def _go():
+    """go/go_verifier.py, loaded by path like pool.py. It imports the shared verifier.py from this folder."""
+    global _GO_MODULE
+    if _GO_MODULE is None:
+        import importlib.util  # noqa: PLC0415
+        spec = importlib.util.spec_from_file_location("g10_rl_go_verifier", HERE / "go" / "go_verifier.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        _GO_MODULE = module
+    return _GO_MODULE
+
+
+def go_checker(name: str, output: str, sandbox="docker", **_) -> dict:
+    """The default is the docker sandbox: the "process" sandbox is for unit tests only (go/README.md). A missing
+    docker or image raises RuntimeError, it is never scored as 0."""
+    task_dir = GO_TASKS / name
+    if not (task_dir / "task.json").is_file():
+        raise KeyError(f"no go task {name!r} in {GO_TASKS}")
+    return _go().reward(task_dir, output, sandbox)
+
+
+_TOOL_CALL_MODULE = None
+
+
+def _tool_call():
+    """Load the data-only tool-call verifier from any working directory."""
+    global _TOOL_CALL_MODULE
+    if _TOOL_CALL_MODULE is None:
+        import importlib.util  # noqa: PLC0415
+        spec = importlib.util.spec_from_file_location("g10_rl_tool_call_verifier", HERE / "tool_call_verifier.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        _TOOL_CALL_MODULE = module
+    return _TOOL_CALL_MODULE
+
+
+def tool_call_checker(name: str, output: str, **_) -> dict:
+    task_dir = TOOL_CALL_TASKS / name
+    if not (task_dir / "task.json").is_file():
+        raise KeyError(f"no tool-call task {name!r} in {TOOL_CALL_TASKS}")
+    return _tool_call().reward(task_dir, output)
+
+
+_TOOLRESULT_MODULE = None
+
+
+def _toolresult():
+    """toolresult/toolresult_verifier.py, loaded by path like pool.py."""
+    global _TOOLRESULT_MODULE
+    if _TOOLRESULT_MODULE is None:
+        import importlib.util  # noqa: PLC0415
+        spec = importlib.util.spec_from_file_location("g10_rl_toolresult_verifier",
+                                                      HERE / "toolresult" / "toolresult_verifier.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        _TOOLRESULT_MODULE = module
+    return _TOOLRESULT_MODULE
+
+
+def toolresult_checker(name: str, output: str, **_) -> dict:
+    task_dir = TOOLRESULT_TASKS / name
+    if not (task_dir / "task.json").is_file():
+        raise KeyError(f"no tool-result task {name!r} in {TOOLRESULT_TASKS}")
+    return _toolresult().reward(task_dir, output)
+
+
 register("code", code_checker)
 register("swe", swe_checker)
+register("indic", indic_checker)
+register("go", go_checker)
+register("tool_call", tool_call_checker)
+register("toolresult", toolresult_checker)
 
 
 def list_envs() -> list[str]:
     ids = [f"code/{p.parent.name}" for p in sorted(TASKS.glob("*/task.json"))]
     ids += [f"swe/{p.parent.name}" for p in sorted(SWE_ENVS.glob("*/env.json"))]
+    ids += [f"indic/{p.parent.name}" for p in sorted(INDIC_TASKS.glob("*/task.json"))]
+    ids += [f"go/{p.parent.name}" for p in sorted(GO_TASKS.glob("*/task.json"))]
+    ids += [f"tool_call/{p.parent.name}" for p in sorted(TOOL_CALL_TASKS.glob("*/task.json"))]
+    ids += [f"toolresult/{p.parent.name}" for p in sorted(TOOLRESULT_TASKS.glob("*/task.json"))]
     return ids
 
 
@@ -134,6 +251,21 @@ def known_outputs(env_id: str) -> tuple[str, str]:
         return good, bad
     if env_type == "swe":
         return (SWE_ENVS / name / "gold.patch").read_text(encoding="utf-8"), NOOP_PATCH
+    if env_type == "indic":
+        return _indic().known_outputs(INDIC_TASKS / name)
+    if env_type == "tool_call":
+        return _tool_call().known_outputs(TOOL_CALL_TASKS / name)
+    if env_type == "toolresult":
+        return _toolresult().known_outputs(TOOLRESULT_TASKS / name)
+    if env_type == "go":
+        meta = json.loads((GO_TASKS / name / "task.json").read_text(encoding="utf-8"))
+        ref = (GO_TASKS / name / "reference.go").read_text(encoding="utf-8")
+        # bad: the reference's own signature with a body that panics, so it compiles and fails the tests
+        sig = re.search(rf"^func {meta['entry_point']}\(.*\{{$", ref, re.MULTILINE)
+        if sig is None:
+            raise ValueError(f"go/{name}: reference.go has no one-line signature for {meta['entry_point']}")
+        bad = f"```go\npackage main\n\n{sig.group(0)}\n\tpanic(\"stub\")\n}}\n```"
+        return f"```go\n{ref}\n```", bad
     raise KeyError(f"no known outputs for {env_type!r}")
 
 
@@ -158,19 +290,23 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--check-all", action="store_true")
     ap.add_argument("--pool", action="store_true", help="use the warm code pool from pool.py")
     ap.add_argument("--workers", type=int, default=4)
+    ap.add_argument("--type", help="check only this environment type, for example indic")
     args = ap.parse_args(argv)
     if args.list:
         print("\n".join(list_envs()))
         return 0
     if args.check_all:
+        ids = [i for i in list_envs() if i.split("/", 1)[0] == args.type] if args.type else None
+        if args.type and not ids:
+            ap.error(f"no environments of type {args.type!r}")
         if args.pool:
             pool = _pool()
             with pool.CodePool(workers=args.workers) as cp:
                 configure(code_runner=cp.runner)
-                rows = check_all(args.workers)
+                rows = check_all(args.workers, ids)
             configure()
         else:
-            rows = check_all(args.workers)
+            rows = check_all(args.workers, ids)
         for r in rows:
             print(json.dumps(r))
         bad = [r for r in rows if not r["ok"]]

@@ -1,0 +1,32 @@
+== 1 aggregate (37 build checks + C3 comparison + effort tiers)
+{"out": "ocr2_pack_v1_p1536_manifest.json", "bytes": 86191, "sha256": "fab395750fad3329c6b612493641f37c42792e46219a521fca74c30e21b7783b", "checks_passed": 48, "checks": 48, "train_rows": 418496, "heldout_rows": 8507, "train_tokens": 2661573319, "max_len": 29846, "tier_changes": 35, "effort_report_sha256": "9aa42877ba69d01b4a23d14b57d3445e0c2cc843bea9f02171d13810e3db0519"}
+== 2 OCR-2 context-length table (training rows of all 70 shards, from the per-row stats)
+sft-code-opencodereasoning-2: 418496 rows, 2,661,573,319 tokens; fit 2048: 18.6% rows / 4.0% tokens, 4096: 42.1% rows / 15.1% tokens, 8192: 69.9% rows / 40.9% tokens, 32768: 100.0% rows / 100.0% tokens
+== 3 loss-mask check on the kept p1536 packs (shards 0-3, train + held-out)
+{"ok": true, "rows": 32855, "max_length": 19366, "violations": {}, "trained_tokens_by_role": {"assistant": 197584460}}
+real 108.46
+user 90.16
+sys 4.91
+== 4 pack-level comparison with the C3 packs of 14 Nov (shards 0-3)
+== 5 held-out handoff against the p1536 manifest
+held-out rows 8507 families 317 by source {'apps/train': 2550, 'code_contests/train': 1225, 'taco/train': 4732} not held under rule 0 -> OK
+== 6 SFT data v1 manifest (p1536)
+in pack: sft-code-opencodereasoning-2, sft-dolly-15k, sft-indic-indic-align-dolly-t; admitted tokens 2,666,291,457
+  code      share 35% admitted  2,661,573,319 need  2,661,573,319 fill 100.00%
+  agentic   share 25% admitted              0 need  1,901,123,799 fill 0.00%
+  tool_use  share 15% admitted              0 need  1,140,674,280 fill 0.00%
+  indic     share 15% admitted      1,795,934 need  1,140,674,280 fill 0.16%
+  general   share 7% admitted      2,922,204 need    532,314,664 fill 0.55%
+  safety    share 3% admitted              0 need    228,134,856 fill 0.00%
+code at 2,048 tokens: 18.6% of rows, 4.0% of tokens fit
+== 7 reports and job request
+wrote ocr2_pack_v1_p1536.md, sft_data_v1_p1536.md, jobs/2026-11-17-ocr2-pack-v1-p1536.md, PR_BODY.md, AXIOM_UPDATE.md
+== 8 C3 records unchanged
+C3 records: 40 of 40 unchanged
+== 9 SFT tests on the final files, local pr-guard, added-line scrub
+991 passed, 2 skipped in 91.58s (0:01:31)
+guard_local: pass 46 files
+scrub: clean (8249 added lines)
+== 10 PR body and Axiom note with the final numbers
+wrote ocr2_pack_v1_p1536.md, sft_data_v1_p1536.md, jobs/2026-11-17-ocr2-pack-v1-p1536.md, PR_BODY.md, AXIOM_UPDATE.md
+FINALIZE_OK

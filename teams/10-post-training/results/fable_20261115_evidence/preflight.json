@@ -1,0 +1,82 @@
+{
+ "isolation": {
+  "isolation_available": [
+   true,
+   "ok"
+  ],
+  "uid": 0,
+  "euid": 0,
+  "platform": "linux",
+  "valid_reference": {
+   "task_id": "probe",
+   "reward": 1,
+   "passed": 1,
+   "total": 1,
+   "reason": "all tests passed"
+  },
+  "wrong_solution": {
+   "task_id": "probe",
+   "reward": 0,
+   "passed": 0,
+   "total": 1,
+   "reason": "wrong answer on a test"
+  },
+  "read_expected_file": {
+   "task_id": "probe",
+   "reward": 0,
+   "passed": 0,
+   "total": 1,
+   "reason": "error on a test"
+  },
+  "probe": {
+   "uid": 61004,
+   "euid": 61004,
+   "gid": 61004,
+   "groups": [],
+   "cwd": "/tmp/g10sbx/r61004-fbf77551b20d",
+   "read_fake_answers": "denied: PermissionError",
+   "list_secret_dir": "denied: PermissionError",
+   "list_vol_runs": "denied: PermissionError",
+   "read_parent_environ": "denied: PermissionError",
+   "read_parent_mem_maps": "denied: PermissionError",
+   "read_pid1_environ": "denied: PermissionError",
+   "list_parent_fds": "denied: PermissionError",
+   "list_sandbox_base": "denied: PermissionError",
+   "read_root_home": "denied: PermissionError",
+   "read_team_code": "denied: PermissionError",
+   "setuid_0": "denied: PermissionError",
+   "kill_parent": "denied: PermissionError",
+   "write_tmp_outside": "ALLOWED: 1",
+   "network_connect": "denied: OSError"
+  },
+  "probe_wrote_tmp_visible_to_root": true,
+  "cross_run_a": [
+   {
+    "status": "ok",
+    "stdout": "a\n"
+   }
+  ],
+  "cross_run_b": {
+   "glob": [],
+   "ls": "denied: PermissionError"
+  },
+  "sandbox_uid_processes_left": 0
+ },
+ "task": {
+  "train": 192,
+  "heldout": 96,
+  "max_prompt_tokens": 797,
+  "eos": 151645,
+  "empty_completion_reward": 0.0,
+  "reasons_after_one_score": {
+   "no_code": 1
+  }
+ },
+ "perms": {
+  "/vol/runs": "0o700",
+  "/vol/runs/_preflight": "0o700",
+  "/vol/runs/_preflight/data": "0o700",
+  "/vol/runs/_preflight/data/tasks.jsonl": "0o600"
+ },
+ "seconds": 24.0
+}

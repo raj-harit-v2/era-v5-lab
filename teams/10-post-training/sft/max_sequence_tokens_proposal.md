@@ -1,8 +1,10 @@
 # OCR-2 pack — proposed `max_sequence_tokens = 32768`
 
-**Owner:** Anirudh Narla (G10, f20201351h-maker)
+**Owner:** f20201351h-maker (G10)
 **For:** TSAI signature at Gate 2 (Sat 14 Nov 2026), per TSAI's request of 12 Nov 2026.
-**Status:** proposal only. No pack is built and no SFT number is reported until TSAI signs this and the frozen C3 tokenizer is usable by Team 10.
+**Status (14 Nov 2026):** accepted by TSAI as provisional for SFT data v1 (G10 group, decisions for the OCR-2 pack). The pack v1 is built at 32768 with the C3 tokenizer: no row is over the limit; the longest is 29,829 C3 tokens (`results/ocr2_pack_v1.md`). The measurements below are the original proposal's, on the v0.1 tokenizer.
+
+**Original status:** proposal only. No pack is built and no SFT number is reported until TSAI signs this and the frozen C3 tokenizer is usable by Team 10.
 
 ## Proposal
 

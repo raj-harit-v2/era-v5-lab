@@ -1,0 +1,35 @@
+{
+ "by_source": {
+  "sft-math-nemotron-proofs": 30821
+ },
+ "command": "python sft/check_pack_rows.py --pack <private>/<set>.partNNNN.jsonl.gz ... --tokenizer <C3 tokenizer.json> --report <this file>",
+ "limit": 32768,
+ "marker_ids": {
+  "<|endoftext|>": 130822,
+  "<|im_end|>": 130816,
+  "<|im_start|>": 129994
+ },
+ "mask_violations": {},
+ "max_length": 55487,
+ "ok": false,
+ "rows": 30821,
+ "rows_over_limit": 647,
+ "rows_with_violations_by_source": {
+  "sft-math-nemotron-proofs": 647
+ },
+ "sampled_per_source": {
+  "sft-math-nemotron-proofs": 20
+ },
+ "schema": "g10-ocr2-pack-row-check/1",
+ "scope": "10 of 287 converted parts (part0000, 0032, 0064, 0096, 0128, 0160, 0192, 0224, 0256, 0286), before admission; over_limit rows are the over-length rows the admission drops",
+ "seed": 0,
+ "set": "sft-math-nemotron-proofs",
+ "tokens": 344976545,
+ "trained_tokens": 280824563,
+ "trained_tokens_by_role": {
+  "assistant": 280824563
+ },
+ "violations": {
+  "over_limit": 647
+ }
+}

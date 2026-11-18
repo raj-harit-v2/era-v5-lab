@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import os
 import shutil
 import subprocess
 from pathlib import Path
@@ -36,6 +37,8 @@ def _has_image(image: str) -> bool:
     return subprocess.run(["docker", "image", "inspect", image], capture_output=True).returncode == 0
 
 
+needs_go_image = pytest.mark.skipif(
+    not _has_image(os.environ.get("G10_GO_IMAGE", "g10-go-rl:1")), reason="docker or the g10-go-rl:1 image is missing")
 needs_code_image = pytest.mark.skipif(not _has_image(pool.CODE_IMAGE), reason="docker or python:3.12-slim missing")
 SWE_ENV = "python-validators__validators-191"
 needs_swe_image = pytest.mark.skipif(not _has_image(f"g10-swe/{SWE_ENV}:v1"), reason="SWE env image missing")
@@ -104,9 +107,53 @@ def test_list_envs_covers_every_shipped_task_and_env():
     ids = reward.list_envs()
     assert len([i for i in ids if i.startswith("code/")]) == len(list((HERE / "tasks").glob("*/task.json")))
     assert len([i for i in ids if i.startswith("swe/")]) == len(list((HERE.parent / "swe-envs").glob("*/env.json")))
+    assert len([i for i in ids if i.startswith("indic/")]) == len(list((HERE / "indic" / "tasks").glob("*/task.json")))
+    assert len([i for i in ids if i.startswith("go/")]) == len(list((HERE / "go" / "tasks").glob("*/task.json")))
     for i in ids:
         good, bad = reward.known_outputs(i)
         assert good and bad and good != bad
+
+
+def test_indic_envs_score_the_known_good_one_and_the_known_bad_zero_without_docker():
+    ids = [i for i in reward.list_envs() if i.startswith("indic/")]
+    assert ids
+    rows = reward.check_all(workers=2, ids=ids)
+    assert len(rows) == 2 * len(ids) and all(r["ok"] for r in rows), [r for r in rows if not r["ok"]]
+    with pytest.raises(KeyError):
+        reward.reward("indic/no_such_task", "<answer>1</answer>")
+
+
+def test_go_is_registered_and_an_unknown_go_task_is_a_key_error():
+    assert "go" in reward._REGISTRY
+    assert [i for i in reward.list_envs() if i.startswith("go/")]
+    with pytest.raises(KeyError):
+        reward.reward("go/no_such_task", "```go\npackage main\n```")
+    with pytest.raises(KeyError):
+        reward.reward("go/../x", "x")
+
+
+def test_go_checker_passes_the_sandbox_through_and_defaults_to_docker(monkeypatch):
+    seen = []
+    monkeypatch.setattr(reward._go(), "reward", lambda task_dir, out, sandbox: seen.append(sandbox) or {"reward": 1})
+    name = next(i for i in reward.list_envs() if i.startswith("go/"))
+    assert reward.reward(name, "x")[0] == 1.0
+    runner = lambda work, t: None  # noqa: E731
+    reward.reward(name, "x", sandbox=runner)
+    assert seen == ["docker", runner]
+
+
+def test_go_known_bad_output_has_the_reference_signature_and_no_reference_body():
+    for env_id in [i for i in reward.list_envs() if i.startswith("go/")]:
+        good, bad = reward.known_outputs(env_id)
+        assert bad.startswith("```go\npackage main\n\nfunc ") and 'panic("stub")' in bad
+        assert bad.count("\n") < 10 < good.count("\n")
+
+
+@needs_go_image
+def test_go_envs_score_the_known_good_one_and_the_known_bad_zero_in_docker():
+    ids = [i for i in reward.list_envs() if i.startswith("go/")]
+    rows = reward.check_all(workers=4, ids=ids)
+    assert len(rows) == 2 * len(ids) and all(r["ok"] for r in rows), [r for r in rows if not r["ok"]]
 
 
 def test_swe_integrity_checks_hold_with_any_executor(monkeypatch):
@@ -267,3 +314,23 @@ def test_pool_does_not_follow_a_replaced_slot_folder(monkeypatch, tmp_path):
         worker.close()
     assert err == "result file is not a regular file or is too large"
     assert not (work / "results.json").exists()
+
+
+def test_pool_module_loads_once_and_whole_when_many_threads_ask_at_once():
+    import threading  # noqa: PLC0415
+
+    fresh = _load("g10_rl_reward_threads", HERE / "reward.py")  # its _POOL_MODULE is still None
+    start, got = threading.Barrier(16), []
+
+    def ask():
+        start.wait()
+        m = fresh._pool()
+        got.append((m, callable(getattr(m, "verifier_module", None))))  # what this thread sees when it gets it
+
+    threads = [threading.Thread(target=ask) for _ in range(16)]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+    assert len(got) == 16 and len({id(m) for m, _ in got}) == 1
+    assert all(whole for _, whole in got)  # no thread was handed a half-run module

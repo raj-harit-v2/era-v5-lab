@@ -1,0 +1,41 @@
+{
+ "decontam": {
+  "by_benchmark": {},
+  "complete": true,
+  "covers": "whole set",
+  "fingerprint_set_sha256": "2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a",
+  "parts_uncovered": 0,
+  "records": 1,
+  "rows_canary": 0,
+  "rows_flagged": 0
+ },
+ "excluded_each": {
+  "decontam": 0,
+  "heldout": 0,
+  "over_max_len": 0
+ },
+ "excluded_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+ "heldout_lists": [],
+ "kept_ids_sha256": "84351b3bb44f3c085c7bb42334094196434f342195db1a7c27f957d0932ff9e4",
+ "kept_max_len": 7379,
+ "licence_decision": "allowed (CC-BY-SA, attribution needed)",
+ "max_len": 32768,
+ "parts": 1,
+ "parts_from_stored_check": 0,
+ "parts_read": 1,
+ "private_outputs_note": "kept_ids.txt and excluded.jsonl hold row ids: private, not in Git",
+ "record": {
+  "content_sha256": "cf963f4a41759afacc2a5cc78b327b074c4f62048c7a9a81e3885aabb44a248b",
+  "name": "sft-indic-indic-align-dolly-t.full.record.json",
+  "sha256": "173eaaa4eccde2303e102a34fb531c58d4086f527cf31591331b2745fd63e5f8",
+  "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3"
+ },
+ "rows_excluded": 0,
+ "rows_in": 10541,
+ "rows_kept": 10541,
+ "schema": "g10-sft-v1-admission/1",
+ "set": "sft-indic-indic-align-dolly-t",
+ "status": "admissible",
+ "tokens_in": 1951624,
+ "tokens_kept": 1951624
+}

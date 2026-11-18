@@ -150,6 +150,11 @@ class World:
         self.policy = json.loads((HERE / "ocr2_policy.json").read_text(encoding="utf-8"))
         self.policy["pack"] = {"approved_tokenizer_sha256": [self.tokenizer_sha] if self.tokenizer_sha else [],
                                "approved_fingerprint_set_sha256": [self.toy_sha]}
+        for src in self.policy["sources"].values():  # a fixture world starts unapproved, whatever the real policy says;
+            src.pop("revision", None)                # allow_everything() approves. Real revisions never match REVISION.
+            src.pop("approval", None)
+            src["training_approved"] = False
+        self.policy["unclear_source_rows"] = {"rows": []}
         for key, value in (policy or {}).items():
             self.policy[key] = value
         self.write()

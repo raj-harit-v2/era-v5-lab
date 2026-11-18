@@ -1,0 +1,33 @@
+{
+ "by_source": {
+  "sft-indic-indic-align-dolly-t": 10541
+ },
+ "command": "python sft/check_pack_rows.py --pack <private>/<set>.partNNNN.jsonl.gz ... --tokenizer <C3 tokenizer.json> --report <this file>",
+ "limit": 32768,
+ "marker_ids": {
+  "<|endoftext|>": 130822,
+  "<|im_end|>": 130816,
+  "<|im_start|>": 129994
+ },
+ "mask_violations": {},
+ "max_length": 7379,
+ "ok": true,
+ "rows": 10541,
+ "rows_over_limit": 0,
+ "rows_with_violations_by_source": {
+  "sft-indic-indic-align-dolly-t": 0
+ },
+ "sampled_per_source": {
+  "sft-indic-indic-align-dolly-t": 20
+ },
+ "schema": "g10-ocr2-pack-row-check/1",
+ "scope": "every converted row of the set (1 part), before admission",
+ "seed": 0,
+ "set": "sft-indic-indic-align-dolly-t",
+ "tokens": 1951624,
+ "trained_tokens": 1425682,
+ "trained_tokens_by_role": {
+  "assistant": 1425682
+ },
+ "violations": {}
+}

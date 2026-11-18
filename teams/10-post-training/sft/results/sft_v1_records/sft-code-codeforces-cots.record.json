@@ -1,0 +1,97 @@
+{
+ "checks": {
+  "checks_failed": {},
+  "checks_ok": true,
+  "effort_rows": {
+   "16k": 541,
+   "1k": 30,
+   "4k": 222,
+   "64k": 179
+  },
+  "files": [
+   {
+    "bytes": 125185448,
+    "name": "sft-code-codeforces-cots.first1000.jsonl",
+    "sha256": "309aa0c2b2d61858c6f7bda7c5d979716cf4d14eacba1684b9e88280b88be3f8"
+   }
+  ],
+  "info": {},
+  "length": {
+   "max": 24819,
+   "min": 788,
+   "p50": 9579,
+   "p95": 21791
+  },
+  "max_len": 32768,
+  "rows": 972,
+  "rows_over_max_len": 0,
+  "rows_with_tool_blocks": 0,
+  "shifted_supervised_targets": 9662289,
+  "tokens": 10376249,
+  "tool_call_blocks": 0,
+  "tool_call_tokens_untrained": 0,
+  "tool_result_blocks": 0,
+  "train_spans": 972,
+  "trained_share": 0.931193,
+  "trained_tokens": 9662289,
+  "unique_ids": true
+ },
+ "checks_wall_s": 14.6,
+ "content_sha256": "309aa0c2b2d61858c6f7bda7c5d979716cf4d14eacba1684b9e88280b88be3f8",
+ "convert": {
+  "cpu_sys_s": 2.349,
+  "cpu_user_s": 31.987,
+  "hub_bytes_read": 67272920,
+  "max_rss_mb": 610.0,
+  "wall_s": 28.522
+ },
+ "decision": "TSAI reserves",
+ "deterministic_rerun": true,
+ "effort_manifest": {
+  "16k": 541,
+  "1k": 30,
+  "4k": 222,
+  "64k": 179
+ },
+ "file_bytes": 125185448,
+ "file_sha256": "309aa0c2b2d61858c6f7bda7c5d979716cf4d14eacba1684b9e88280b88be3f8",
+ "generator_model": "DeepSeek-R1 (MIT, open weights)",
+ "hub_revision": "39ac85c150806230473c70ad72c31f6232fe3f41",
+ "input": "hub file open-r1/codeforces-cots glob:solutions/ rows 0..999999999",
+ "licence": "cc-by-4.0 (Hub tag; commercial use permitted per tag)",
+ "rerun_content_sha256": "309aa0c2b2d61858c6f7bda7c5d979716cf4d14eacba1684b9e88280b88be3f8",
+ "rerun_wall_s": 27.285,
+ "rows_in": 1000,
+ "rows_out": 972,
+ "rows_per_s_convert": 35.06,
+ "rows_scanned": 1000,
+ "scope": "first 1000 selected rows, source order, C3",
+ "selection": "solutions config",
+ "set": "sft-code-codeforces-cots",
+ "skipped": {
+  "generation did not finish (finish_reason != stop)": 28
+ },
+ "source": "open-r1/codeforces-cots",
+ "token_record": {
+  "basis": "first 1000 selected rows, source order, C3; not the admissible kept rows",
+  "effort": {
+   "16k": 541,
+   "1k": 30,
+   "4k": 222,
+   "64k": 179
+  },
+  "length": {
+   "max": 24819,
+   "min": 788,
+   "p50": 9579,
+   "p95": 21791
+  },
+  "rows": 972,
+  "sequence_tokens": 10376249,
+  "set_id": "sft-code-codeforces-cots",
+  "shifted_supervised_targets": 9662289,
+  "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3"
+ },
+ "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3",
+ "tokens_per_s_convert": 363798
+}

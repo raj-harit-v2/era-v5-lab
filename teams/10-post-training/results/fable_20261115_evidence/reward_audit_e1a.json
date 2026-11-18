@@ -1,0 +1,44 @@
+{
+ "fetch": {
+  "tasks_with_a_pass": 56,
+  "files": 31,
+  "kept_prefix_mismatch": 0,
+  "no_hidden_tests": 0,
+  "hidden_tests": 4480,
+  "file_sha_mismatch": 0,
+  "seconds": 98.9
+ },
+ "audit": {
+  "reward1_completions_audited": 162,
+  "tasks_audited": 56,
+  "hidden_tests_per_task_median": 80,
+  "verdict_on_hidden_tests": {
+   "pass": 157,
+   "runtime_error": 3,
+   "wrong_answer": 2
+  },
+  "false_positive_share": 0.0309,
+  "false_positive_share_excluding_timeouts": 0.0309,
+  "by_judge": {
+   "hackerearth": {
+    "pass": 84,
+    "wrong_answer": 2
+   },
+   "codechef": {
+    "pass": 35
+   },
+   "aizu": {
+    "pass": 34,
+    "runtime_error": 2
+   },
+   "atcoder": {
+    "runtime_error": 1,
+    "pass": 4
+   }
+  },
+  "tasks_where_every_pass_fails_hidden": 3,
+  "tasks_where_some_pass_fails_hidden": 2,
+  "tasks_where_no_pass_fails_hidden": 51,
+  "seconds": 57.4
+ }
+}

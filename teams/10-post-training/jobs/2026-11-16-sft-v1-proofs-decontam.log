@@ -1,0 +1,12 @@
+# Local test of the Proofs decontamination step (2 of 287 parts), 15 Nov 2026, Apple M1 Pro 8 cores 16 GB, shared host
+$ python teams/10-post-training/sft/sft_v1_decontam_parts.py --record teams/10-post-training/sft/results/sft_v1_records/sft-math-nemotron-proofs.full.record.json --parts-dir <private>/full/sft-math-nemotron-proofs --out-dir out/decontam --workers 2 --parts sft-math-nemotron-proofs.part0000.jsonl.gz sft-math-nemotron-proofs.part0286.jsonl.gz
+# host: Apple M1 Pro 8 cores 16 GB, shared (load average 61.06 89.58 82.40), 2026-11-15 20:43 IST
+{"part": "sft-math-nemotron-proofs.part0286.jsonl.gz", "status": "ok", "rows": 1652, "flagged": 5, "canary": 0, "wall_s": 201.7}
+{"part": "sft-math-nemotron-proofs.part0000.jsonl.gz", "status": "ok", "rows": 3264, "flagged": 6, "canary": 0, "wall_s": 371.0}
+sft-math-nemotron-proofs: parts 2 of 287 in this run, new 2, reused 0, rows 4916, flagged 11, canary 0, failed 0
+      371.18 real       505.99 user         5.87 sys
+          1007861760  maximum resident set size
+exit=0
+# Earlier single-part probe with decontam_run.py directly on part0100: rows 3347 flagged 16 (hle 15, livecodebench 1) canary 0 kept 3331, recheck on clean file 0 flagged; 499.28 s wall, 365.82 s user, 0.86 GB max RSS
+# Admission index after the 3 checked parts: python teams/10-post-training/sft/sft_v1_admit.py --record ... --partials ... --decontam-record <3 records> ...
+sft-math-nemotron-proofs: rows 920881 kept 902194 (decontam 27, heldout 0, over 32768 18661) tokens kept 9695160211 status decontam_pending decontam 3 of 287 parts

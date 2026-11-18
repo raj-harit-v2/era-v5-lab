@@ -1,6 +1,6 @@
 """Tests for shard_writer.py on made-up docs (English, Hindi, Malayalam, Tamil, code). They use the baseline
-BrahmicTokenizer-131K that G6 pins (fetched once by G6's tokenizer.py) with --any-tokenizer, since C3's tokenizer.json is not
-in the repo; with C3 the same checks run on the real file.
+BrahmicTokenizer-131K that G6 pins (fetched once by G6's tokenizer.py) with --any-tokenizer, since p1536's tokenizer.json is not
+in the repo; with p1536 the same checks run on the real file.
 
   python -m pytest teams/01-data-a/shards/test_shard_writer.py
 """
@@ -99,7 +99,7 @@ def test_the_round_trip_compares_with_the_normalized_text(tmp_path):
 
 
 def test_any_tokenizer_but_c3_is_refused(tmp_path):
-    with pytest.raises(SystemExit, match="not the frozen C3"):
+    with pytest.raises(SystemExit, match="not the frozen p1536"):
         write(tmp_path, DOCS)
 
 
@@ -109,4 +109,4 @@ def test_a_run_without_f2_is_refused(tmp_path):
 
 
 def test_the_c3_pin_matches_g3s_release():
-    assert sw.C3_SHA256.startswith("15468e66") and sw.EOS_ID == 130822 and sys.modules["dataio.loader"].HEADER_BYTES == 1024
+    assert sw.TOKENIZER_SHA256.startswith("e6b93a93") and sw.EOS_ID == 130822 and sys.modules["dataio.loader"].HEADER_BYTES == 1024

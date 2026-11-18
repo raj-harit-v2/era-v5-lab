@@ -1,0 +1,36 @@
+Sat Nov 14 04:27:04 PM UTC 2026
+ff19ce24833d7a201fc5bbf8fda6663437c30c02
+Linux tharunsiva 7.0.0-38-generic #38~24.04.4-Ubuntu SMP PREEMPT_DYNAMIC Mon Sep 14 16:37:11 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+Python 3.12.3
+Client: Docker Engine - Community
+ Version:           29.8.1
+ API version:       1.56
+ Go version:        go1.26.8
+ Git commit:        4a63305
+ Built:             Tue Sep 15 16:26:01 2026
+ OS/Arch:           linux/amd64
+ Context:           default
+
+Server: Docker Engine - Community
+ Engine:
+  Version:          29.8.1
+  API version:      1.56 (minimum version 1.40)
+  Go version:       go1.26.8
+  Git commit:       464cd50
+  Built:            Tue Sep 15 16:26:01 2026
+  OS/Arch:          linux/amd64
+  Experimental:     false
+ containerd:
+  Version:          v2.3.5
+  GitCommit:        1294c24a7da8e5a793ed378161673abe94118892
+ runc:
+  Version:          1.5.1
+  GitCommit:        v1.5.1-0-g8f2685a4
+ docker-init:
+  Version:          0.19.0
+  GitCommit:        de40ad0
+cd8c0feff4d06bcdd6915c8b4973ac79868202babbc213684af56f9ba3209925  swe-envs/more-itertools__more-itertools-411/env.json
+012d6aa847a34b13ef2e8bfedf812a747953a76c30310621ad0c478e6a53e2f0  swe-envs/more-itertools__more-itertools-411/Dockerfile
+6008a12c1bb0e08f8094435e3ab5004e352e144d8acc578bafe90ffbffd67b0b  swe-envs/more-itertools__more-itertools-411/requirements.lock
+7a601bb87c5983722aa7f44fc0d1fb96ff035940dd4c1a4f9c6e47bf0355fd18  swe-envs/more-itertools__more-itertools-411/gold.patch
+2b59dfb7499551e7bbe98aaa04a6f948a795a7d80310af34fcf2f2b49a0d8dad  swe-envs/more-itertools__more-itertools-411/test.patch

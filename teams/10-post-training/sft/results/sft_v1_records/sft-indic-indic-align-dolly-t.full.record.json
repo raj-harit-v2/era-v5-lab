@@ -1,0 +1,112 @@
+{
+ "checks": {
+  "checks_failed": {},
+  "checks_ok": true,
+  "effort_rows": {
+   "16k": 0,
+   "1k": 10541,
+   "4k": 0,
+   "64k": 0
+  },
+  "files": [
+   {
+    "bytes": 8341699,
+    "name": "sft-indic-indic-align-dolly-t.part0000.jsonl.gz",
+    "sha256": "6cd313d21bd978818326131f2b8e3672a1c8d72a7a98b48de229c9ebe2195631"
+   }
+  ],
+  "info": {
+   "decode_equals_normalised_text_only": 1826
+  },
+  "length": {
+   "max": 7379,
+   "min": 28,
+   "p50": 136,
+   "p95": 472
+  },
+  "max_len": 32768,
+  "rows": 10541,
+  "rows_over_max_len": 0,
+  "rows_with_tool_blocks": 0,
+  "shifted_supervised_targets": 1425682,
+  "tokens": 1951624,
+  "tool_call_blocks": 0,
+  "tool_call_tokens_untrained": 0,
+  "tool_result_blocks": 0,
+  "train_spans": 10541,
+  "trained_share": 0.730511,
+  "trained_tokens": 1425682,
+  "unique_ids": true
+ },
+ "checks_wall_s": 3.4,
+ "content_sha256": "cf963f4a41759afacc2a5cc78b327b074c4f62048c7a9a81e3885aabb44a248b",
+ "convert": {
+  "cpu_sys_s": 1.3,
+  "cpu_user_s": 7.1,
+  "hub_bytes_read": 171092193,
+  "max_rss_mb": 616.0,
+  "threads": 4,
+  "wall_s": 40.2
+ },
+ "decision": "allowed (CC-BY-SA, attribution needed)",
+ "decontam": "not run on this output: no kept-row record exists for this set; converted, not decontaminated",
+ "deterministic_rerun": true,
+ "effort_manifest": {
+  "16k": 0,
+  "1k": 10541,
+  "4k": 0,
+  "64k": 0
+ },
+ "generator_model": "none for the text (human-written databricks-dolly-15k); translated with IndicTrans2 (MIT, open weights)",
+ "gz_bytes": 8341699,
+ "gz_ratio": 4.32,
+ "heldout_ids_excluded": 0,
+ "heldout_note": "no held-out id list exists for this set at run time (WP15 lists cover OCR-2 shards only)",
+ "hub_revision": "032b6a9070e7f85f1a38e0506419f4590a20455a",
+ "input": "hub file ai4bharat/indic-align indicalign-instruct/dolly/Dolly.parquet rows 0..999999999999",
+ "licence": "cc-by-4.0 (Hub tag); source dolly cc-by-sa-3.0 (share-alike, attribution needed)",
+ "parts": [
+  {
+   "gz_bytes": 8341699,
+   "gz_sha256": "6cd313d21bd978818326131f2b8e3672a1c8d72a7a98b48de229c9ebe2195631",
+   "name": "sft-indic-indic-align-dolly-t.part0000.jsonl.gz",
+   "plain_bytes": 36067987,
+   "plain_sha256": "cf963f4a41759afacc2a5cc78b327b074c4f62048c7a9a81e3885aabb44a248b"
+  }
+ ],
+ "plain_bytes": 36067987,
+ "rerun_content_sha256": "a9f36766fe83d0311c7d2ea4a4aa0357bcba7d3176578ccb5c68062e0fbd97ef",
+ "rerun_rows": 2000,
+ "rows_in": 10541,
+ "rows_out": 10541,
+ "rows_per_s_convert": 373.6,
+ "rows_scanned": 15011,
+ "scope": "full set as selected by the adapter, source order, C3",
+ "selection": "rows whose English question has no context passage in databricks-dolly-15k; one native-script column per row by sha256(doc_id) from ben_Beng,guj_Gujr,hin_Deva,kan_Knda,mal_Mlym,mar_Deva,ory_Orya,pan_Guru,tam_Taml,tel_Telu",
+ "set": "sft-indic-indic-align-dolly-t",
+ "skipped": {},
+ "source": "ai4bharat/indic-align",
+ "status": "allowed by licence table; converted, not decontaminated; not a pack",
+ "token_record": {
+  "basis": "full set as selected by the adapter, source order, C3; converted, not decontaminated",
+  "effort": {
+   "16k": 0,
+   "1k": 10541,
+   "4k": 0,
+   "64k": 0
+  },
+  "length": {
+   "max": 7379,
+   "min": 28,
+   "p50": 136,
+   "p95": 472
+  },
+  "rows": 10541,
+  "sequence_tokens": 1951624,
+  "set_id": "sft-indic-indic-align-dolly-t",
+  "shifted_supervised_targets": 1425682,
+  "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3"
+ },
+ "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3",
+ "tokens_per_s_convert": 48572
+}

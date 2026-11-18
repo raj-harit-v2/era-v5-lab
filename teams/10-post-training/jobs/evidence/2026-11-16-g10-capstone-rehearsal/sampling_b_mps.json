@@ -1,0 +1,41 @@
+{
+ "device": "mps",
+ "prompt_len": 128,
+ "k": 8,
+ "max_new": 128,
+ "model_spec": {
+  "n_layer": 4,
+  "n_embd": 128,
+  "n_head": 4,
+  "n_kv_head": 2,
+  "block_size": 256
+ },
+ "experts": {
+  "bias": false,
+  "bias_gamma": 0.0,
+  "num_experts": 16,
+  "top_k": 2,
+  "num_shared": 1,
+  "dispatch": "loop",
+  "ffn_hidden": 256
+ },
+ "torch": "2.14.1",
+ "paths": {
+  "before": {
+   "seconds": 117.353,
+   "new_tokens_per_s": 8.7,
+   "speedup_vs_before": 1.0
+  },
+  "head": {
+   "seconds": 6.253,
+   "new_tokens_per_s": 163.8,
+   "speedup_vs_before": 18.77
+  },
+  "kv": {
+   "seconds": 3.959,
+   "new_tokens_per_s": 258.6,
+   "speedup_vs_before": 29.64
+  }
+ },
+ "identical_tokens": true
+}

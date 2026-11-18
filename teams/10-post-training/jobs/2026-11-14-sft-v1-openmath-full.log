@@ -1,0 +1,26 @@
+Test log for the job request openmath-full. Same script and options as the job, run on 14 Nov 2026 on an Apple M1 Pro
+(8 cores, 16 GB, shared with other sessions, host load average 5 to 8), reading the pinned Hub revision by streaming
+(no --local-root) and stopped at 2,000 selected rows (--max-rows 2000). The job itself reads a staged copy (--local-root hub).
+Record written at 2026-11-14 23:51:01 IST.
+
+Command:
+python teams/10-post-training/sft/sft_v1_records.py full --set sft-rl-math-openmathreasoning --tokenizer tokenizer.json --revisions-json teams/10-post-training/sft/results/sft_v1_hf_pins.json --out-dir out/full --record-dir out --budget-gb 5 --max-hub-gb 3 --threads 4 --max-rows 2000 --rerun-rows 500
+
+Last output line:
+{"set": "sft-rl-math-openmathreasoning", "rows_out": 2000, "tokens": 15124236, "share": 0.987743, "over": 0, "gz_GiB": 0.03, "ok": true, "failed": {}, "rows_per_s": 58.98, "wall_s": 33.9, "deterministic": true}
+
+Record fields (out/sft-rl-math-openmathreasoning.full.record.json; no row text):
+  source               nvidia/OpenMathReasoning revision d3d08664755704f422af97d43a7ff0ded4bd95df
+  tokenizer_sha256     15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3
+  rows scanned/in/out  2000 / 2000 / 2000
+  skipped              {}
+  tokens / targets     15,124,236 / 14,938,851 (share 0.988)
+  length p50/p95/max   6841 / 15308 / 18443
+  rows over 32,768     0
+  effort 1k/4k/16k/64k 79 / 617 / 1302 / 2
+  checks_ok            True (failed: {}); rows decoded to the NFC-normalised text only: 1
+  rerun of first rows  500 rows, same hash as the first lines of the output: True
+  content_sha256       db7dfbf05b720a4f3fdab2eb96805035e4bb8d530e18644033b897361607aa97
+  plain / gz bytes     170,766,429 / 28,768,520
+  convert wall         33.9 s (rows/s 58.98); user+sys CPU 41.8 s; peak RSS 462.8 MB; Hub bytes 33,619,968
+  check pass wall      17.0 s

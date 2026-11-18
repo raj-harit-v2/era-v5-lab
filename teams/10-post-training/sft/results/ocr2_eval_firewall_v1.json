@@ -1,0 +1,856 @@
+{
+ "applied_after": {
+  "manifest": "ocr2_pack_v1_p1536_manifest.json",
+  "note": "the per-shard pack sha256 values of that manifest stay the verified input of this step",
+  "run_id": "admission-toke6b93a93-8e4b984ba811"
+ },
+ "applied_locally": {
+  "0": {
+   "families_removed": 192,
+   "firewalled_pack_bytes": 608603588,
+   "firewalled_pack_sha256": "227d97e37ede3b203b8f07a4d5e247c83ab1f1f202b1376ba755d435f2a25c06",
+   "pack_sha256_in": "6ac2af45c09822d7f638a58fa008e56c5491f0a4a576004df72bf4e441bcc0a0",
+   "rows_kept": 7687,
+   "rows_removed": 360,
+   "shifted_targets_kept": 47199033,
+   "shifted_targets_removed": 1509209,
+   "tokens_kept": 50765179,
+   "tokens_removed": 1615713
+  },
+  "1": {
+   "families_removed": 191,
+   "firewalled_pack_bytes": 604823777,
+   "firewalled_pack_sha256": "8a5c19ac8c6793ee701c983ff76a93b14d75073267d6ce8269d2ffe398aa312f",
+   "pack_sha256_in": "529bca416ae5d4012237f9a29280adb413beaa472a20aa46082701ffa26b71a6",
+   "rows_kept": 7640,
+   "rows_removed": 369,
+   "shifted_targets_kept": 46896581,
+   "shifted_targets_removed": 1501943,
+   "tokens_kept": 50454737,
+   "tokens_removed": 1607523
+  },
+  "2": {
+   "families_removed": 192,
+   "firewalled_pack_bytes": 594146724,
+   "firewalled_pack_sha256": "0143f11095ac75a103f2c5d752baf758dcdcee7f275eaecc6e845dca086b698b",
+   "pack_sha256_in": "e9f86d15219c44174e78f3f5ecced346db981d98357e02d918d5f2a3f999d218",
+   "rows_kept": 7607,
+   "rows_removed": 367,
+   "shifted_targets_kept": 46041672,
+   "shifted_targets_removed": 1574092,
+   "tokens_kept": 49562853,
+   "tokens_removed": 1683894
+  },
+  "3": {
+   "families_removed": 197,
+   "firewalled_pack_bytes": 605885024,
+   "firewalled_pack_sha256": "c2b530f12a166cc28f35e45ddb30c36c3bf14f56d35f413ab02850dd5f738e2c",
+   "pack_sha256_in": "8e0fe9d5fa0aa8759532ca0d16c37c35143799196ba808ac5ec49f259d31a6ee",
+   "rows_kept": 7681,
+   "rows_removed": 371,
+   "shifted_targets_kept": 46954023,
+   "shifted_targets_removed": 1540474,
+   "tokens_kept": 50536725,
+   "tokens_removed": 1650555
+  }
+ },
+ "checks": {
+  "every_shard_predicted": true,
+  "heldout_split_untouched": true,
+  "shard0.input_is_the_verified_pack": true,
+  "shard0.predicted_equals_actual": true,
+  "shard1.input_is_the_verified_pack": true,
+  "shard1.predicted_equals_actual": true,
+  "shard2.input_is_the_verified_pack": true,
+  "shard2.predicted_equals_actual": true,
+  "shard3.input_is_the_verified_pack": true,
+  "shard3.predicted_equals_actual": true,
+  "totals.rows_reconcile_with_the_pack_manifest": true,
+  "totals.targets_reconcile_with_the_pack_manifest": true,
+  "totals.tokens_reconcile_with_the_pack_manifest": true
+ },
+ "families": {
+  "count": 250,
+  "in_pack": 250,
+  "list": "private (names evaluation problems); sent to TSAI with the job request",
+  "not_in_pack": 0,
+  "sha256": "e8183f8ff236fc66064fcfef044ea5b9a4b6be330cdf67c0c5712315b3555cea"
+ },
+ "predicted_by_shard": {
+  "0": {
+   "families_removed": 192,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 7687,
+   "rows_removed": 360,
+   "shifted_targets_kept": 47199033,
+   "shifted_targets_removed": 1509209,
+   "tokens_kept": 50765179,
+   "tokens_removed": 1615713
+  },
+  "1": {
+   "families_removed": 191,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 7640,
+   "rows_removed": 369,
+   "shifted_targets_kept": 46896581,
+   "shifted_targets_removed": 1501943,
+   "tokens_kept": 50454737,
+   "tokens_removed": 1607523
+  },
+  "10": {
+   "families_removed": 190,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 7663,
+   "rows_removed": 354,
+   "shifted_targets_kept": 46850032,
+   "shifted_targets_removed": 1440996,
+   "tokens_kept": 50407796,
+   "tokens_removed": 1545564
+  },
+  "11": {
+   "families_removed": 199,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 7671,
+   "rows_removed": 375,
+   "shifted_targets_kept": 46888541,
+   "shifted_targets_removed": 1617626,
+   "tokens_kept": 50453715,
+   "tokens_removed": 1729863
+  },
+  "12": {
+   "families_removed": 176,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 6439,
+   "rows_removed": 252,
+   "shifted_targets_kept": 46242557,
+   "shifted_targets_removed": 1052415,
+   "tokens_kept": 49337306,
+   "tokens_removed": 1128760
+  },
+  "13": {
+   "families_removed": 8,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 4163,
+   "rows_removed": 91,
+   "shifted_targets_kept": 45363216,
+   "shifted_targets_removed": 515165,
+   "tokens_kept": 47594564,
+   "tokens_removed": 548218
+  },
+  "14": {
+   "families_removed": 131,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 5486,
+   "rows_removed": 190,
+   "shifted_targets_kept": 46135627,
+   "shifted_targets_removed": 900051,
+   "tokens_kept": 48873576,
+   "tokens_removed": 958737
+  },
+  "15": {
+   "families_removed": 141,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 7427,
+   "rows_removed": 157,
+   "shifted_targets_kept": 43575582,
+   "shifted_targets_removed": 664636,
+   "tokens_kept": 46627321,
+   "tokens_removed": 710741
+  },
+  "16": {
+   "families_removed": 16,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 10516,
+   "rows_removed": 26,
+   "shifted_targets_kept": 47345939,
+   "shifted_targets_removed": 126914,
+   "tokens_kept": 51127640,
+   "tokens_removed": 134458
+  },
+  "17": {
+   "families_removed": 19,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 11678,
+   "rows_removed": 22,
+   "shifted_targets_kept": 51195036,
+   "shifted_targets_removed": 144727,
+   "tokens_kept": 55258878,
+   "tokens_removed": 152391
+  },
+  "18": {
+   "families_removed": 16,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 9388,
+   "rows_removed": 22,
+   "shifted_targets_kept": 41792678,
+   "shifted_targets_removed": 107911,
+   "tokens_kept": 45124640,
+   "tokens_removed": 114494
+  },
+  "19": {
+   "families_removed": 15,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 11033,
+   "rows_removed": 22,
+   "shifted_targets_kept": 50772397,
+   "shifted_targets_removed": 110496,
+   "tokens_kept": 54764099,
+   "tokens_removed": 116691
+  },
+  "2": {
+   "families_removed": 192,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 7607,
+   "rows_removed": 367,
+   "shifted_targets_kept": 46041672,
+   "shifted_targets_removed": 1574092,
+   "tokens_kept": 49562853,
+   "tokens_removed": 1683894
+  },
+  "20": {
+   "families_removed": 15,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 10263,
+   "rows_removed": 16,
+   "shifted_targets_kept": 43550441,
+   "shifted_targets_removed": 70505,
+   "tokens_kept": 47012634,
+   "tokens_removed": 75371
+  },
+  "21": {
+   "families_removed": 16,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 10805,
+   "rows_removed": 29,
+   "shifted_targets_kept": 48940156,
+   "shifted_targets_removed": 133093,
+   "tokens_kept": 52873888,
+   "tokens_removed": 142480
+  },
+  "22": {
+   "families_removed": 146,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 9267,
+   "rows_removed": 146,
+   "shifted_targets_kept": 45885125,
+   "shifted_targets_removed": 582016,
+   "tokens_kept": 49487243,
+   "tokens_removed": 624721
+  },
+  "23": {
+   "families_removed": 154,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 9500,
+   "rows_removed": 154,
+   "shifted_targets_kept": 46222599,
+   "shifted_targets_removed": 644130,
+   "tokens_kept": 49860582,
+   "tokens_removed": 690366
+  },
+  "24": {
+   "families_removed": 16,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 11127,
+   "rows_removed": 17,
+   "shifted_targets_kept": 48240029,
+   "shifted_targets_removed": 94936,
+   "tokens_kept": 52055354,
+   "tokens_removed": 99901
+  },
+  "25": {
+   "families_removed": 17,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 9829,
+   "rows_removed": 25,
+   "shifted_targets_kept": 43974960,
+   "shifted_targets_removed": 116403,
+   "tokens_kept": 47483585,
+   "tokens_removed": 124362
+  },
+  "26": {
+   "families_removed": 20,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 9796,
+   "rows_removed": 32,
+   "shifted_targets_kept": 47443124,
+   "shifted_targets_removed": 167956,
+   "tokens_kept": 51035981,
+   "tokens_removed": 176818
+  },
+  "27": {
+   "families_removed": 8,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 4171,
+   "rows_removed": 80,
+   "shifted_targets_kept": 45616204,
+   "shifted_targets_removed": 457587,
+   "tokens_kept": 47839391,
+   "tokens_removed": 483604
+  },
+  "28": {
+   "families_removed": 8,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 4234,
+   "rows_removed": 86,
+   "shifted_targets_kept": 46184231,
+   "shifted_targets_removed": 522809,
+   "tokens_kept": 48425486,
+   "tokens_removed": 552722
+  },
+  "29": {
+   "families_removed": 184,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 6702,
+   "rows_removed": 291,
+   "shifted_targets_kept": 45887417,
+   "shifted_targets_removed": 1282067,
+   "tokens_kept": 49068517,
+   "tokens_removed": 1369215
+  },
+  "3": {
+   "families_removed": 197,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 7681,
+   "rows_removed": 371,
+   "shifted_targets_kept": 46954023,
+   "shifted_targets_removed": 1540474,
+   "tokens_kept": 50536725,
+   "tokens_removed": 1650555
+  },
+  "30": {
+   "families_removed": 0,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 783,
+   "rows_removed": 0,
+   "shifted_targets_kept": 6019633,
+   "shifted_targets_removed": 0,
+   "tokens_kept": 6370536,
+   "tokens_removed": 0
+  },
+  "31": {
+   "families_removed": 178,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 5171,
+   "rows_removed": 218,
+   "shifted_targets_kept": 31902012,
+   "shifted_targets_removed": 846346,
+   "tokens_kept": 34294622,
+   "tokens_removed": 910097
+  },
+  "32": {
+   "families_removed": 49,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 2814,
+   "rows_removed": 49,
+   "shifted_targets_kept": 17563113,
+   "shifted_targets_removed": 235616,
+   "tokens_kept": 18741632,
+   "tokens_removed": 250829
+  },
+  "33": {
+   "families_removed": 11,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 8640,
+   "rows_removed": 19,
+   "shifted_targets_kept": 50478539,
+   "shifted_targets_removed": 180078,
+   "tokens_kept": 53692398,
+   "tokens_removed": 187845
+  },
+  "34": {
+   "families_removed": 12,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 7983,
+   "rows_removed": 19,
+   "shifted_targets_kept": 48760866,
+   "shifted_targets_removed": 208879,
+   "tokens_kept": 51804828,
+   "tokens_removed": 216703
+  },
+  "35": {
+   "families_removed": 107,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 7707,
+   "rows_removed": 112,
+   "shifted_targets_kept": 49497499,
+   "shifted_targets_removed": 516867,
+   "tokens_kept": 52699210,
+   "tokens_removed": 552153
+  },
+  "36": {
+   "families_removed": 168,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 7573,
+   "rows_removed": 169,
+   "shifted_targets_kept": 47738290,
+   "shifted_targets_removed": 690978,
+   "tokens_kept": 50909825,
+   "tokens_removed": 740692
+  },
+  "37": {
+   "families_removed": 11,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 8274,
+   "rows_removed": 19,
+   "shifted_targets_kept": 50198495,
+   "shifted_targets_removed": 178718,
+   "tokens_kept": 53382302,
+   "tokens_removed": 186286
+  },
+  "38": {
+   "families_removed": 13,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 8846,
+   "rows_removed": 19,
+   "shifted_targets_kept": 51245497,
+   "shifted_targets_removed": 169646,
+   "tokens_kept": 54526877,
+   "tokens_removed": 177427
+  },
+  "39": {
+   "families_removed": 9,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 7844,
+   "rows_removed": 14,
+   "shifted_targets_kept": 47237878,
+   "shifted_targets_removed": 116662,
+   "tokens_kept": 50187377,
+   "tokens_removed": 121807
+  },
+  "4": {
+   "families_removed": 190,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 7735,
+   "rows_removed": 364,
+   "shifted_targets_kept": 47601993,
+   "shifted_targets_removed": 1465791,
+   "tokens_kept": 51206848,
+   "tokens_removed": 1571116
+  },
+  "40": {
+   "families_removed": 9,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 8169,
+   "rows_removed": 19,
+   "shifted_targets_kept": 49819993,
+   "shifted_targets_removed": 183095,
+   "tokens_kept": 52935360,
+   "tokens_removed": 189643
+  },
+  "41": {
+   "families_removed": 177,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 4718,
+   "rows_removed": 178,
+   "shifted_targets_kept": 31128294,
+   "shifted_targets_removed": 753904,
+   "tokens_kept": 33302383,
+   "tokens_removed": 808378
+  },
+  "42": {
+   "families_removed": 193,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 7501,
+   "rows_removed": 355,
+   "shifted_targets_kept": 46059030,
+   "shifted_targets_removed": 1491064,
+   "tokens_kept": 49550413,
+   "tokens_removed": 1595086
+  },
+  "43": {
+   "families_removed": 13,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 7283,
+   "rows_removed": 24,
+   "shifted_targets_kept": 43582586,
+   "shifted_targets_removed": 283036,
+   "tokens_kept": 46293743,
+   "tokens_removed": 293723
+  },
+  "44": {
+   "families_removed": 14,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 7909,
+   "rows_removed": 20,
+   "shifted_targets_kept": 46917876,
+   "shifted_targets_removed": 178680,
+   "tokens_kept": 49882226,
+   "tokens_removed": 187350
+  },
+  "45": {
+   "families_removed": 11,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 7835,
+   "rows_removed": 24,
+   "shifted_targets_kept": 49548454,
+   "shifted_targets_removed": 233273,
+   "tokens_kept": 52559311,
+   "tokens_removed": 243861
+  },
+  "46": {
+   "families_removed": 13,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 8018,
+   "rows_removed": 22,
+   "shifted_targets_kept": 46933820,
+   "shifted_targets_removed": 207327,
+   "tokens_kept": 49869050,
+   "tokens_removed": 217166
+  },
+  "47": {
+   "families_removed": 12,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 8320,
+   "rows_removed": 23,
+   "shifted_targets_kept": 48652404,
+   "shifted_targets_removed": 207969,
+   "tokens_kept": 51718715,
+   "tokens_removed": 217552
+  },
+  "48": {
+   "families_removed": 13,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 7893,
+   "rows_removed": 23,
+   "shifted_targets_kept": 49285360,
+   "shifted_targets_removed": 227359,
+   "tokens_kept": 52327639,
+   "tokens_removed": 236346
+  },
+  "49": {
+   "families_removed": 181,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 7828,
+   "rows_removed": 183,
+   "shifted_targets_kept": 48014422,
+   "shifted_targets_removed": 761490,
+   "tokens_kept": 51332619,
+   "tokens_removed": 816996
+  },
+  "5": {
+   "families_removed": 196,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 7698,
+   "rows_removed": 368,
+   "shifted_targets_kept": 47168169,
+   "shifted_targets_removed": 1566010,
+   "tokens_kept": 50748200,
+   "tokens_removed": 1677815
+  },
+  "50": {
+   "families_removed": 187,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 7455,
+   "rows_removed": 355,
+   "shifted_targets_kept": 47053005,
+   "shifted_targets_removed": 1408873,
+   "tokens_kept": 50539990,
+   "tokens_removed": 1514903
+  },
+  "51": {
+   "families_removed": 8,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 3161,
+   "rows_removed": 63,
+   "shifted_targets_kept": 34116163,
+   "shifted_targets_removed": 370535,
+   "tokens_kept": 35785120,
+   "tokens_removed": 390839
+  },
+  "52": {
+   "families_removed": 0,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 884,
+   "rows_removed": 0,
+   "shifted_targets_kept": 6831854,
+   "shifted_targets_removed": 0,
+   "tokens_kept": 7244326,
+   "tokens_removed": 0
+  },
+  "53": {
+   "families_removed": 0,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 799,
+   "rows_removed": 0,
+   "shifted_targets_kept": 6186443,
+   "shifted_targets_removed": 0,
+   "tokens_kept": 6544243,
+   "tokens_removed": 0
+  },
+  "54": {
+   "families_removed": 0,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 809,
+   "rows_removed": 0,
+   "shifted_targets_kept": 6190872,
+   "shifted_targets_removed": 0,
+   "tokens_kept": 6551101,
+   "tokens_removed": 0
+  },
+  "55": {
+   "families_removed": 0,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 794,
+   "rows_removed": 0,
+   "shifted_targets_kept": 6239636,
+   "shifted_targets_removed": 0,
+   "tokens_kept": 6606514,
+   "tokens_removed": 0
+  },
+  "56": {
+   "families_removed": 0,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 818,
+   "rows_removed": 0,
+   "shifted_targets_kept": 6152222,
+   "shifted_targets_removed": 0,
+   "tokens_kept": 6511421,
+   "tokens_removed": 0
+  },
+  "57": {
+   "families_removed": 0,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 843,
+   "rows_removed": 0,
+   "shifted_targets_kept": 6443993,
+   "shifted_targets_removed": 0,
+   "tokens_kept": 6819907,
+   "tokens_removed": 0
+  },
+  "58": {
+   "families_removed": 0,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 804,
+   "rows_removed": 0,
+   "shifted_targets_kept": 6112964,
+   "shifted_targets_removed": 0,
+   "tokens_kept": 6467584,
+   "tokens_removed": 0
+  },
+  "59": {
+   "families_removed": 0,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 822,
+   "rows_removed": 0,
+   "shifted_targets_kept": 5896095,
+   "shifted_targets_removed": 0,
+   "tokens_kept": 6260254,
+   "tokens_removed": 0
+  },
+  "6": {
+   "families_removed": 192,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 7702,
+   "rows_removed": 361,
+   "shifted_targets_kept": 47425872,
+   "shifted_targets_removed": 1478282,
+   "tokens_kept": 51009844,
+   "tokens_removed": 1586139
+  },
+  "60": {
+   "families_removed": 0,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 847,
+   "rows_removed": 0,
+   "shifted_targets_kept": 6628910,
+   "shifted_targets_removed": 0,
+   "tokens_kept": 7013726,
+   "tokens_removed": 0
+  },
+  "61": {
+   "families_removed": 0,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 828,
+   "rows_removed": 0,
+   "shifted_targets_kept": 6074698,
+   "shifted_targets_removed": 0,
+   "tokens_kept": 6435057,
+   "tokens_removed": 0
+  },
+  "62": {
+   "families_removed": 0,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 845,
+   "rows_removed": 0,
+   "shifted_targets_kept": 6406946,
+   "shifted_targets_removed": 0,
+   "tokens_kept": 6787854,
+   "tokens_removed": 0
+  },
+  "63": {
+   "families_removed": 0,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 856,
+   "rows_removed": 0,
+   "shifted_targets_kept": 6663240,
+   "shifted_targets_removed": 0,
+   "tokens_kept": 7048902,
+   "tokens_removed": 0
+  },
+  "64": {
+   "families_removed": 0,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 825,
+   "rows_removed": 0,
+   "shifted_targets_kept": 6428038,
+   "shifted_targets_removed": 0,
+   "tokens_kept": 6802150,
+   "tokens_removed": 0
+  },
+  "65": {
+   "families_removed": 0,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 846,
+   "rows_removed": 0,
+   "shifted_targets_kept": 6662514,
+   "shifted_targets_removed": 0,
+   "tokens_kept": 7049547,
+   "tokens_removed": 0
+  },
+  "66": {
+   "families_removed": 0,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 832,
+   "rows_removed": 0,
+   "shifted_targets_kept": 6409402,
+   "shifted_targets_removed": 0,
+   "tokens_kept": 6785708,
+   "tokens_removed": 0
+  },
+  "67": {
+   "families_removed": 0,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 827,
+   "rows_removed": 0,
+   "shifted_targets_kept": 5958738,
+   "shifted_targets_removed": 0,
+   "tokens_kept": 6324742,
+   "tokens_removed": 0
+  },
+  "68": {
+   "families_removed": 0,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 816,
+   "rows_removed": 0,
+   "shifted_targets_kept": 6242225,
+   "shifted_targets_removed": 0,
+   "tokens_kept": 6610178,
+   "tokens_removed": 0
+  },
+  "69": {
+   "families_removed": 0,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 769,
+   "rows_removed": 0,
+   "shifted_targets_kept": 5990458,
+   "shifted_targets_removed": 0,
+   "tokens_kept": 6333859,
+   "tokens_removed": 0
+  },
+  "7": {
+   "families_removed": 191,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 7639,
+   "rows_removed": 358,
+   "shifted_targets_kept": 46903610,
+   "shifted_targets_removed": 1472007,
+   "tokens_kept": 50461673,
+   "tokens_removed": 1576592
+  },
+  "8": {
+   "families_removed": 195,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 7721,
+   "rows_removed": 363,
+   "shifted_targets_kept": 47201727,
+   "shifted_targets_removed": 1516353,
+   "tokens_kept": 50783570,
+   "tokens_removed": 1624352
+  },
+  "9": {
+   "families_removed": 193,
+   "heldout_rows_in_list": 0,
+   "rows_kept": 7681,
+   "rows_removed": 363,
+   "shifted_targets_kept": 47132685,
+   "shifted_targets_removed": 1481137,
+   "tokens_kept": 50710727,
+   "tokens_removed": 1588660
+  }
+ },
+ "rule": "drop every training row whose problem family key is in the list; the held-out file and every other row are unchanged; the firewalled pack is an ordered byte subsequence of the verified pack",
+ "ruling": "G10 lead, 16 Nov 2026: problems used to evaluate RL or effort (the RL held-out set and the 30 effort-suite code prompts) are dropped from SFT training; the SFT held-out split (heldout_eval_v1) stays out of the RL training pool; the SFT and RL training pools may overlap. RL held-out set for v1 = the 15 Nov run's 96 problems plus the 160 planned for E10 (a G10 choice the lead can narrow to the 96).",
+ "schema": "g10-ocr2-eval-firewall/1",
+ "set": "sft-code-opencodereasoning-2",
+ "sets": {
+  "_matching": {
+   "possible_tier": "included in the applied list (an evaluation problem left in training is the costlier error); the confirmed-only variant is sized under variants",
+   "source": "sft/cross_stage_overlap.py (PR 106): exact key, normalised text, or 13-word shingles >= 0.65 of the RL statement = confirmed; 0.20-0.65 = possible"
+  },
+  "effort_suite_code": {
+   "pack_families_confirmed": 26,
+   "pack_families_possible": 0,
+   "pack_rows": 827,
+   "pack_tokens": 4529215,
+   "rl_tasks_listed": 30,
+   "rl_tasks_matched_confirmed": 26,
+   "rl_tasks_matched_possible_only": 0,
+   "what": "effort suite, code prompts (eval/effort_manifest.json)"
+  },
+  "heldout_e10_planned": {
+   "pack_families_confirmed": 142,
+   "pack_families_possible": 3,
+   "pack_rows": 4956,
+   "pack_tokens": 21356315,
+   "rl_tasks_listed": 160,
+   "rl_tasks_matched_confirmed": 133,
+   "rl_tasks_matched_possible_only": 3,
+   "what": "RL held-out, planned E10 (recipe study)"
+  },
+  "heldout_e1_15nov": {
+   "pack_families_confirmed": 81,
+   "pack_families_possible": 0,
+   "pack_rows": 2259,
+   "pack_tokens": 12225172,
+   "rl_tasks_listed": 96,
+   "rl_tasks_matched_confirmed": 78,
+   "rl_tasks_matched_possible_only": 0,
+   "what": "RL held-out, 15 Nov run (E1)"
+  }
+ },
+ "totals": {
+  "after": {
+   "rows": 410538,
+   "shifted_targets": 2453903733,
+   "tokens": 2623855801
+  },
+  "before": {
+   "rows": 418496,
+   "shifted_targets": 2489211865,
+   "tokens": 2661573319
+  },
+  "heldout_rows_in_list": 0,
+  "removed": {
+   "rows": 7958,
+   "shifted_targets": 35308132,
+   "tokens": 37717518
+  },
+  "token_share_removed": 0.014171
+ },
+ "variants": {
+  "e1_heldout_plus_effort_only": {
+   "families": 106,
+   "families_in_pack": 106,
+   "families_sha256": "77af02e05165d0afbd8801e46c0589164250ecabcf358616d8e49cef59852b89",
+   "removed_rows_removed": 3048,
+   "removed_tokens_removed": 16702769
+  },
+  "union_confirmed_only": {
+   "families": 247,
+   "families_in_pack": 247,
+   "families_sha256": "323fa3aec0befb86f24d5bb44a4967522c6c4681c0a7fd04dc8d642cb3e1705f",
+   "removed_rows_removed": 7877,
+   "removed_tokens_removed": 37254643
+  }
+ }
+}

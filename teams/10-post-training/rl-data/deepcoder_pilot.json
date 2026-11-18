@@ -1,0 +1,94 @@
+{
+  "dataset": "agentica-org/DeepCoder-Preview-Dataset",
+  "revision": "780aeec7b7716e34f0b9e02bb624fc6ad8384725",
+  "shard": "primeintellect/train-00000-of-00005.parquet",
+  "shard_sha256": "a1efc9d5e9eb6a9977576b08e5349758c8b139131ea5d13ef5c390f2a21db538",
+  "fingerprint_set_sha256": "2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a",
+  "candidate_sha256": "cb8115048fa0a83503e5be5e71c46d957e55792e55d4d1164759cc0f0ccd613b",
+  "candidates_screened": 17,
+  "flagged": 3,
+  "canary": 0,
+  "clean": 14,
+  "clean_sha256": "e86a8d7f5a843cbbce4eca90d6da7bc554c728251396ebc67000c20c51513fe1",
+  "skipped_after_scoring": [
+    {
+      "id": "deepcoder/primeintellect/train-00000-of-00005/0",
+      "reason": "wrong answer on a test"
+    },
+    {
+      "id": "deepcoder/primeintellect/train-00000-of-00005/5",
+      "reason": "wrong answer on a test"
+    },
+    {
+      "id": "deepcoder/primeintellect/train-00000-of-00005/18",
+      "reason": "wrong answer on a test"
+    },
+    {
+      "id": "deepcoder/primeintellect/train-00000-of-00005/19",
+      "reason": "wrong answer on a test"
+    }
+  ],
+  "verified_tasks": [
+    {
+      "id": "deepcoder/primeintellect/train-00000-of-00005/4",
+      "correct": 1,
+      "wrong": 0,
+      "tests": 19
+    },
+    {
+      "id": "deepcoder/primeintellect/train-00000-of-00005/7",
+      "correct": 1,
+      "wrong": 0,
+      "tests": 19
+    },
+    {
+      "id": "deepcoder/primeintellect/train-00000-of-00005/8",
+      "correct": 1,
+      "wrong": 0,
+      "tests": 19
+    },
+    {
+      "id": "deepcoder/primeintellect/train-00000-of-00005/10",
+      "correct": 1,
+      "wrong": 0,
+      "tests": 19
+    },
+    {
+      "id": "deepcoder/primeintellect/train-00000-of-00005/11",
+      "correct": 1,
+      "wrong": 0,
+      "tests": 19
+    },
+    {
+      "id": "deepcoder/primeintellect/train-00000-of-00005/13",
+      "correct": 1,
+      "wrong": 0,
+      "tests": 18
+    },
+    {
+      "id": "deepcoder/primeintellect/train-00000-of-00005/14",
+      "correct": 1,
+      "wrong": 0,
+      "tests": 18
+    },
+    {
+      "id": "deepcoder/primeintellect/train-00000-of-00005/15",
+      "correct": 1,
+      "wrong": 0,
+      "tests": 18
+    },
+    {
+      "id": "deepcoder/primeintellect/train-00000-of-00005/16",
+      "correct": 1,
+      "wrong": 0,
+      "tests": 18
+    },
+    {
+      "id": "deepcoder/primeintellect/train-00000-of-00005/17",
+      "correct": 1,
+      "wrong": 0,
+      "tests": 18
+    }
+  ],
+  "pack_sha256": "af4b8300c1ef9494cadd89974a3d671842545ed5140b5e270cb769ea351a4015"
+}

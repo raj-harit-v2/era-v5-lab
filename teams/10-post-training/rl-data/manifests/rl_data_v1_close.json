@@ -1,0 +1,145 @@
+{
+ "flags": {
+  "effort_suite": {
+   "also_statement_less": 0,
+   "applied": true,
+   "code_by_judge": {
+    "aizu": 8,
+    "atcoder": 7,
+    "codechef": 7,
+    "hackerearth": 8
+   },
+   "ids_sha256": "a2056926e79835ad686c79995dd026db96b478d8b2e03b178e8d5818859132ab",
+   "listed": 55,
+   "listed_not_in_v1": 0,
+   "present_in_code": 30,
+   "present_in_math": 25,
+   "reverse": "only if the effort suite is retired or re-drawn",
+   "rule": "task id in eval/effort_manifest.json training_exclusion.task_ids"
+  },
+  "python2_only": {
+   "applied": false,
+   "apply": "--drop-python2",
+   "basis": "11 Nov build: the codechef and hackerearth rows have only language-1 (Python 2) human solutions, 0 Python 3; the correct-answer check converts them with lib2to3",
+   "by_judge": {
+    "codechef": 489,
+    "hackerearth": 1056
+   },
+   "decision": "lead: keep in v1 close pool (3,577 tasks; Python 3 candidate completions checked against I/O pairs); TSAI can reverse with --drop-python2",
+   "ids_sha256": "a92c5c5f50baa176ab51b67689cf362d3460f832de5b246a093b926373f10956",
+   "in_pool_after_other_flags": 1519,
+   "outcome_drop": {
+    "by_judge": {
+     "aizu": 1860,
+     "atcoder": 198
+    },
+    "code_pool_tasks": 2058
+   },
+   "outcome_keep": {
+    "code_pool_tasks": 3577
+   },
+   "rule": "judge in ['codechef', 'hackerearth']",
+   "tasks": 1545
+  },
+  "rl_heldout_v1": {
+   "applied": true,
+   "by_judge": {
+    "aizu": 73,
+    "atcoder": 5,
+    "codechef": 53,
+    "hackerearth": 124
+   },
+   "definition": "the 15 Nov run's 96 held-out problems plus the 160 planned for E10 (union, 255 tasks)",
+   "ids_sha256": "0e2c6f7835d98fdef72b76320604e020e3803ad650d88fcc64885843bdc09163",
+   "in_close_pool": 252,
+   "listed": 255,
+   "outside_close_pool": 3,
+   "reverse": "a different held-out definition (for example the 96 only) is a different list file",
+   "rule": "task id in the official RL held-out list (evaluation only; also out of SFT training)"
+  },
+  "sft_heldout": {
+   "also_rl_heldout": 8,
+   "applied": true,
+   "ids_sha256": "105103bebd0ba77f93d76536f7d8924e34edf16fd3121c60711199e82c0cf160",
+   "in_close_pool": 82,
+   "listed": 82,
+   "rule": "pool task whose problem is in the SFT held-out split heldout_eval_v1 (sft/cross_stage_overlap.py, confirmed + possible tiers)"
+  },
+  "statement_less": {
+   "applied": true,
+   "by_judge": {
+    "aizu": 102,
+    "atcoder": 3,
+    "codechef": 1,
+    "hackerearth": 10
+   },
+   "evidence": "results/verifier_data_note_20261115.md (R6); the five flagged tasks in E1's screen were all-fail",
+   "ids_sha256": "77ebf22a54ff7697e208e91a14e1866cd42a82d1cd71a67182a7c3aab5cf6c15",
+   "reverse": "--keep-statement-less (a ruling that the flagged prompts stay, after a human look at the private list)",
+   "rule": "statement_check.has_description(statement, min_chars=40) is False",
+   "tasks": 116
+  }
+ },
+ "inputs": {
+  "cc_sha256": "91ee99512f0411aea2de4ca5eaf10b87b2d8f785ca73747bf8deb45dd6ea9be0",
+  "effort_manifest": {
+   "sha256": "fb8c09a4940b800c50de5ea7eaf51eb40afd62740a1919b08282f72910e97f8b",
+   "suite": "g10-effort-dev-v1"
+  },
+  "math_sha256": "630c6dae44cd60ce8a35a6ce66ee391843a964e0dac8fab3b3e7eb5c7489a65c"
+ },
+ "note": "pool flags only: the v1 files are unchanged; ids are private (sha256 of the sorted list here)",
+ "parts": {
+  "code": {
+   "by_judge_v1": {
+    "aizu": 1970,
+    "atcoder": 208,
+    "codechef": 489,
+    "hackerearth": 1056
+   },
+   "pool_by_judge": {
+    "aizu": 1860,
+    "atcoder": 198,
+    "codechef": 481,
+    "hackerearth": 1038
+   },
+   "pool_ids_sha256": "4ad35ee70378729e5a979e33efac537a41cf35e535c29ee3da620565c5abb2fe",
+   "pool_tasks": 3577,
+   "removed_by_applied_flags": 146,
+   "rows_v1": 3723,
+   "set": "rl-code-code-contests-noncf",
+   "status": "allowed for RL by TSAI (6 Nov, train split only)",
+   "train_pool_by_judge": {
+    "aizu": 1753,
+    "atcoder": 189,
+    "codechef": 413,
+    "hackerearth": 896
+   },
+   "train_pool_ids_sha256": "94332706d5e55c2b78bdc244309c31ad8b57815482407318bb9725ec61eb065b",
+   "train_pool_note": "close pool minus the RL held-out set and the SFT held-out matches",
+   "train_pool_tasks": 3251
+  },
+  "heldout": {
+   "by_judge": {
+    "aizu": 73,
+    "atcoder": 5,
+    "codechef": 53,
+    "hackerearth": 124
+   },
+   "ids_sha256": "0e2c6f7835d98fdef72b76320604e020e3803ad650d88fcc64885843bdc09163",
+   "set": "rl-code-code-contests-noncf",
+   "status": "RL evaluation set v1: never in RL or SFT training",
+   "tasks": 255
+  },
+  "math": {
+   "effort_suite_removed": 25,
+   "reserved_ids_sha256": "0128453e968597a31f309d4c97959f6b17cdc775488af88ec2a4f0fed58bcc36",
+   "reserved_tasks": 7209,
+   "reverse": "a TSAI admission (with a licence-table row) adds this part to the pool as is",
+   "rows_v1": 7234,
+   "set": "rl-math-hendrycks-math-train",
+   "status": "reserved: separate part, not in the RL pool until TSAI admits Hendrycks MATH for RL"
+  }
+ },
+ "schema": "g10-rl-data-v1-close/1"
+}

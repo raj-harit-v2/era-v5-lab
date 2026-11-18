@@ -1,0 +1,475 @@
+{
+ "budget_391": {
+  "admitted_share_by_area": {
+   "agentic": 0.0,
+   "code": 0.998172,
+   "general": 0.001096,
+   "indic": 0.000732,
+   "safety": 0.0,
+   "tool_use": 0.0
+  },
+  "anchor": "Code at its admitted size",
+  "areas": {
+   "agentic": {
+    "fill": 0.0,
+    "filled_by": "B1: swe-rebench-openhands, nemotron-terminal, nemotron-cascade-swe (TSAI reserves)",
+    "share": 0.25,
+    "shortfall_tokens": 1900735665,
+    "tokens_admitted": 0,
+    "tokens_needed_at_code_anchor": 1900735665
+   },
+   "code": {
+    "fill": 1.0,
+    "filled_by": "B1: opencodereasoning, codeforces-cots, commitpackft (TSAI reserves)",
+    "share": 0.35,
+    "shortfall_tokens": 0,
+    "tokens_admitted": 2661029931,
+    "tokens_needed_at_code_anchor": 2661029931
+   },
+   "general": {
+    "fill": 0.005489,
+    "filled_by": "B1: openthoughts3, openmathreasoning, openr1-math, nemotron-science, bespoke-stratos, glm51-phd, oasst2, proofs-v3-sft (TSAI reserves); B2: nemotron-if-v1/v2, science-v2 (held); B6: Proofs decontam",
+    "share": 0.07,
+    "shortfall_tokens": 529284963,
+    "tokens_admitted": 2921023,
+    "tokens_needed_at_code_anchor": 532205986
+   },
+   "indic": {
+    "fill": 0.001711,
+    "filled_by": "B1: aya-dataset, aya-collection 10 subsets, indic-align-oasst-t (TSAI reserves); B3: templated_hindi_news",
+    "share": 0.15,
+    "shortfall_tokens": 1138489775,
+    "tokens_admitted": 1951624,
+    "tokens_needed_at_code_anchor": 1140441399
+   },
+   "safety": {
+    "fill": 0.0,
+    "filled_by": "B7: TSAI names a safety set with chat rows, or the 0% safety / 10% general fallback",
+    "share": 0.03,
+    "shortfall_tokens": 228088280,
+    "tokens_admitted": 0,
+    "tokens_needed_at_code_anchor": 228088280
+   },
+   "tool_use": {
+    "fill": 0.0,
+    "filled_by": "B1: agentic-v1, agentic-v2 tool-calling (TSAI reserves); B2: xlam-60k (held)",
+    "share": 0.15,
+    "shortfall_tokens": 1140441399,
+    "tokens_admitted": 0,
+    "tokens_needed_at_code_anchor": 1140441399
+   }
+  },
+  "tokens_admitted_total": 2665902578,
+  "total_at_anchor": 7602942660
+ },
+ "budget_no_safety_fallback": {
+  "admitted_share_by_area": {
+   "agentic": 0.0,
+   "code": 0.998172,
+   "general": 0.001096,
+   "indic": 0.000732,
+   "safety": 0.0,
+   "tool_use": 0.0
+  },
+  "anchor": "Code at its admitted size",
+  "areas": {
+   "agentic": {
+    "fill": 0.0,
+    "filled_by": "B1: swe-rebench-openhands, nemotron-terminal, nemotron-cascade-swe (TSAI reserves)",
+    "share": 0.25,
+    "shortfall_tokens": 1900735665,
+    "tokens_admitted": 0,
+    "tokens_needed_at_code_anchor": 1900735665
+   },
+   "code": {
+    "fill": 1.0,
+    "filled_by": "B1: opencodereasoning, codeforces-cots, commitpackft (TSAI reserves)",
+    "share": 0.35,
+    "shortfall_tokens": 0,
+    "tokens_admitted": 2661029931,
+    "tokens_needed_at_code_anchor": 2661029931
+   },
+   "general": {
+    "fill": 0.003842,
+    "filled_by": "B1: openthoughts3, openmathreasoning, openr1-math, nemotron-science, bespoke-stratos, glm51-phd, oasst2, proofs-v3-sft (TSAI reserves); B2: nemotron-if-v1/v2, science-v2 (held); B6: Proofs decontam",
+    "share": 0.1,
+    "shortfall_tokens": 757373243,
+    "tokens_admitted": 2921023,
+    "tokens_needed_at_code_anchor": 760294266
+   },
+   "indic": {
+    "fill": 0.001711,
+    "filled_by": "B1: aya-dataset, aya-collection 10 subsets, indic-align-oasst-t (TSAI reserves); B3: templated_hindi_news",
+    "share": 0.15,
+    "shortfall_tokens": 1138489775,
+    "tokens_admitted": 1951624,
+    "tokens_needed_at_code_anchor": 1140441399
+   },
+   "safety": {
+    "fill": null,
+    "filled_by": "B7: TSAI names a safety set with chat rows, or the 0% safety / 10% general fallback",
+    "share": 0.0,
+    "shortfall_tokens": 0,
+    "tokens_admitted": 0,
+    "tokens_needed_at_code_anchor": 0
+   },
+   "tool_use": {
+    "fill": 0.0,
+    "filled_by": "B1: agentic-v1, agentic-v2 tool-calling (TSAI reserves); B2: xlam-60k (held)",
+    "share": 0.15,
+    "shortfall_tokens": 1140441399,
+    "tokens_admitted": 0,
+    "tokens_needed_at_code_anchor": 1140441399
+   }
+  },
+  "tokens_admitted_total": 2665902578,
+  "total_at_anchor": 7602942660
+ },
+ "in_pack": [
+  "sft-code-opencodereasoning-2",
+  "sft-dolly-15k",
+  "sft-indic-indic-align-dolly-t"
+ ],
+ "loss_mask_rule": "assistant bodies and their closing <|im_end|> are trained; system, user, tool results, role headers, <|im_start|> and the final <|endoftext|> (130822) are not",
+ "max_sequence_tokens": 32768,
+ "schema": "g10-sft-data-v1-manifest/1",
+ "scope": "BLOCKED B1 fallback: sets with an allowed licence decision plus the TSAI-admitted OCR-2 pack; no TSAI-reserves set is in scope until admitted",
+ "sets": {
+  "sft-code-opencodereasoning-2": {
+   "admission": {
+    "rows_kept": 418496,
+    "status": "admitted, pack built",
+    "tokens_kept": 2661029931,
+    "trained_tokens": 2488857211
+   },
+   "area": "code",
+   "decontam": {
+    "by_benchmark": {
+     "aime_2025": 1,
+     "codeforces": 84154,
+     "gaia": 3,
+     "heldout_g5_v1": 47,
+     "hle": 2045,
+     "livecodebench": 68053,
+     "milu": 93,
+     "mmlu": 3,
+     "swe_bench_live": 7,
+     "swe_bench_pro": 3
+    },
+    "complete": true,
+    "covers": "whole set, all 70 shards",
+    "fingerprint_set_sha256": "2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a",
+    "rows_canary": 0,
+    "rows_flagged": 115040
+   },
+   "generator": "DeepSeek-R1 (MIT) for the trained reasoning and solutions; QwQ-32B (Apache-2.0) critiques are a filter signal only, never a target (licence_table.md, ocr2_policy.json teacher)",
+   "heldout": {
+    "families": 317,
+    "fraction": 0.02,
+    "id_list_sha256": "193d589d942ec54b44c64ddf66d32af7f3a99ea842689b1275d6881f6bced7f1",
+    "rows": 8507,
+    "salt": "g10-ocr2-heldout-eval-v1"
+   },
+   "in_pack": true,
+   "job_request": "jobs/2026-11-16-ocr2-pack-v1.md",
+   "joined_sources": {
+    "apps/train": "21e74ddf8de1a21436da12e3e653065c5213e9d1",
+    "code_contests/train": "802411c3010cb00d1b05bad57ca77365a3c699d6",
+    "taco/train": "d593ed0a2becbbc952230bb89be09189bf1056dc"
+   },
+   "licence": "cc-by-4.0 (Hub tag); joined questions from TACO, APPS and code_contests train at pinned revisions",
+   "licence_decision": "allowed (TSAI admitted, 11 Nov 2026)",
+   "loss_mask": {
+    "checked": true,
+    "mask_ok": true,
+    "mask_violations": {},
+    "report": "ocr2_pack_v1.md, Checks (14 Nov build)",
+    "rows_checked": 32855,
+    "scope": "check_pack_rows.py on every train and held-out row of shards 0-3; shards 4-69 only by pack_admission.py's in-pipeline recompute (ids and mask equal a fresh tokenisation), because their bytes were deleted in the containers",
+    "tokens_checked": 212547311
+   },
+   "over_length": {
+    "kept_max_len": 29829,
+    "max_sequence_tokens": 32768,
+    "rows_dropped": 0
+   },
+   "pack": {
+    "acceptance_checks": "37 of 37",
+    "manifest": {
+     "name": "ocr2_pack_v1_manifest.json",
+     "sha256": "c15a54a1109cbc1d6944e1e99b0957495c272ea8a8617a08ee9a6c5aa717b414"
+    },
+    "run_id": "admission-7107d5b9dc9c",
+    "shards": 70
+   },
+   "revision": "eadf535931451525f3e5621d0f960c240bc62fd9",
+   "source": "nvidia/OpenCodeReasoning-2",
+   "status": "admitted; pack final as built",
+   "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3",
+   "unclear_source_left_out": {
+    "keys": 14,
+    "rows": 176
+   }
+  },
+  "sft-dolly-15k": {
+   "admission": {
+    "excluded_each": {
+     "decontam": 4,
+     "heldout": 0,
+     "over_max_len": 0
+    },
+    "excluded_sha256": "f6677ae20737bc0c68dfb805a06d6d848588e2314ff90defc92992f11f6d7e23",
+    "kept_ids_sha256": "9b3b49f602270661e037ab9822e9c2a299a6a3dbc7c24558cae6360f1ed8992c",
+    "rows_excluded": 4,
+    "rows_kept": 15007,
+    "status": "admissible",
+    "summary": {
+     "name": "sft-dolly-15k.admission.json",
+     "sha256": "6148927487344fa704de76b63257f31179273c3b4a6104afb77bb439d8584049"
+    },
+    "tokens_kept": 2921023
+   },
+   "area": "general",
+   "conversion": {
+    "content_sha256": "87790ad28099267fcd3d25b1126ed106551ead2f01da330c2efa1c6bebd273b6",
+    "deterministic_rerun": true,
+    "parts": 3,
+    "record": {
+     "name": "sft-dolly-15k.full.record.json",
+     "sha256": "72dfcd0dbff6a98e48ba697e424da2eccc5352298cf0e3e33deb5b3fefee6491"
+    },
+    "row_checks_ok": true,
+    "rows": 15011,
+    "rows_in": 15011,
+    "skipped": {},
+    "tokens": 2923577,
+    "trained_tokens": 1186477
+   },
+   "decontam": {
+    "by_benchmark": {
+     "milu": 2,
+     "mmlu": 2
+    },
+    "complete": true,
+    "covers": "whole set",
+    "fingerprint_set_sha256": "2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a",
+    "parts_uncovered": 0,
+    "records": 1,
+    "rows_canary": 0,
+    "rows_flagged": 4
+   },
+   "generator": "none (human-written by Databricks employees; no model generator)",
+   "in_pack": true,
+   "input": "hub file databricks/databricks-dolly-15k databricks-dolly-15k.jsonl rows 0..999999999999",
+   "licence": "cc-by-sa-3.0 (Hub tag; share-alike, attribution needed)",
+   "licence_decision": "allowed (CC-BY-SA, attribution needed)",
+   "loss_mask": {
+    "checked": true,
+    "mask_ok": true,
+    "mask_violations": {},
+    "report": "sft-dolly-15k.mask_check.json",
+    "rows_checked": 15011,
+    "rows_over_limit_before_admission": 0,
+    "scope": "every converted row of the set (3 parts), before admission",
+    "tokens_checked": 2923577,
+    "trained_tokens_by_role": {
+     "assistant": 1186477
+    }
+   },
+   "over_length": {
+    "kept_max_len": 5664,
+    "max_sequence_tokens": 32768,
+    "rows_dropped": 0
+   },
+   "revision": "bdd27f4d94b9c1f951818a7da7fd7aeea5dbff1a",
+   "selection": "all rows",
+   "source": "databricks/databricks-dolly-15k",
+   "status": "admissible",
+   "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3"
+  },
+  "sft-indic-indic-align-dolly-t": {
+   "admission": {
+    "excluded_each": {
+     "decontam": 0,
+     "heldout": 0,
+     "over_max_len": 0
+    },
+    "excluded_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "kept_ids_sha256": "84351b3bb44f3c085c7bb42334094196434f342195db1a7c27f957d0932ff9e4",
+    "rows_excluded": 0,
+    "rows_kept": 10541,
+    "status": "admissible",
+    "summary": {
+     "name": "sft-indic-indic-align-dolly-t.admission.json",
+     "sha256": "3f10e672ae076f0884e14f4aac907313a1a8bb384025be83c86d4437bdfd4789"
+    },
+    "tokens_kept": 1951624
+   },
+   "area": "indic",
+   "conversion": {
+    "content_sha256": "cf963f4a41759afacc2a5cc78b327b074c4f62048c7a9a81e3885aabb44a248b",
+    "deterministic_rerun": true,
+    "parts": 1,
+    "record": {
+     "name": "sft-indic-indic-align-dolly-t.full.record.json",
+     "sha256": "173eaaa4eccde2303e102a34fb531c58d4086f527cf31591331b2745fd63e5f8"
+    },
+    "row_checks_ok": true,
+    "rows": 10541,
+    "rows_in": 10541,
+    "skipped": {},
+    "tokens": 1951624,
+    "trained_tokens": 1425682
+   },
+   "decontam": {
+    "by_benchmark": {},
+    "complete": true,
+    "covers": "whole set",
+    "fingerprint_set_sha256": "2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a",
+    "parts_uncovered": 0,
+    "records": 1,
+    "rows_canary": 0,
+    "rows_flagged": 0
+   },
+   "generator": "none for the text (human-written databricks-dolly-15k); translated with IndicTrans2 (MIT, open weights)",
+   "in_pack": true,
+   "input": "hub file ai4bharat/indic-align indicalign-instruct/dolly/Dolly.parquet rows 0..999999999999",
+   "licence": "cc-by-4.0 (Hub tag); source dolly cc-by-sa-3.0 (share-alike, attribution needed)",
+   "licence_decision": "allowed (CC-BY-SA, attribution needed)",
+   "loss_mask": {
+    "checked": true,
+    "mask_ok": true,
+    "mask_violations": {},
+    "report": "sft-indic-indic-align-dolly-t.mask_check.json",
+    "rows_checked": 10541,
+    "rows_over_limit_before_admission": 0,
+    "scope": "every converted row of the set (1 part), before admission",
+    "tokens_checked": 1951624,
+    "trained_tokens_by_role": {
+     "assistant": 1425682
+    }
+   },
+   "over_length": {
+    "kept_max_len": 7379,
+    "max_sequence_tokens": 32768,
+    "rows_dropped": 0
+   },
+   "revision": "032b6a9070e7f85f1a38e0506419f4590a20455a",
+   "selection": "rows whose English question has no context passage in databricks-dolly-15k; one native-script column per row by sha256(doc_id) from ben_Beng,guj_Gujr,hin_Deva,kan_Knda,mal_Mlym,mar_Deva,ory_Orya,pan_Guru,tam_Taml,tel_Telu",
+   "source": "ai4bharat/indic-align",
+   "status": "admissible",
+   "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3"
+  },
+  "sft-math-nemotron-math-v2": {
+   "area": "general",
+   "decontam": {
+    "complete": false,
+    "covers": "not run at this revision"
+   },
+   "generator": "gpt-oss-120b (Apache-2.0, open weights) for all solution traces",
+   "in_pack": false,
+   "job_request": "jobs/2026-11-14-sft-v1-math-v2-full.md",
+   "licence": "cc-by-4.0, cc-by-sa-4.0 (Hub tag; share-alike, attribution needed)",
+   "licence_decision": "allowed (CC-BY-SA, attribution needed)",
+   "prefix_record": {
+    "name": "sft-math-nemotron-math-v2.record.json",
+    "row_checks_ok": true,
+    "rows": 982,
+    "rows_over_max_len": 144,
+    "scope": "first 1000 selected rows, source order, C3",
+    "sha256": "10136c2cb6570a7b67345e6cd85ea49dfcc93efe916851e1fc200eb135e09a8b",
+    "tokens": 17608723
+   },
+   "revision": "8e793210e175b6406c752a870f585f62de98c0d3",
+   "source": "nvidia/Nemotron-Math-v2",
+   "status": "full conversion pending (job request)",
+   "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3"
+  },
+  "sft-math-nemotron-proofs": {
+   "admission": {
+    "excluded_each": {
+     "decontam": 27,
+     "heldout": 0,
+     "over_max_len": 18661
+    },
+    "excluded_sha256": "74dd30718191775d05e8e06a99f5831111f011f5ce292f80e4005a2e5c09be0a",
+    "kept_ids_sha256": "d7daa10b2ae27bbd18232b1663f3f0c6e2e2f051a7fe46e3ecdc4135456f2e34",
+    "rows_excluded": 18687,
+    "rows_kept": 902194,
+    "status": "decontam_pending",
+    "summary": {
+     "name": "sft-math-nemotron-proofs.admission.json",
+     "sha256": "1b5f760a9af2a70ead56fb54c52a1e2f00fa67cb59884db922f16a597db9bb38"
+    },
+    "tokens_kept": 9695160211
+   },
+   "area": "general",
+   "conversion": {
+    "content_sha256": "d9c9d00024268d48eda21a6e5afd1885ef1554cd866bea90216b739a1da6c1ec",
+    "deterministic_rerun": true,
+    "parts": 287,
+    "record": {
+     "name": "sft-math-nemotron-proofs.full.record.json",
+     "sha256": "8d138c5e552e63f0fe8d15552e342b8cb6fe4f21a60b183f4ef5b03cd9d074a1"
+    },
+    "row_checks_ok": true,
+    "rows": 920881,
+    "rows_in": 1376663,
+    "skipped": {
+     "row has no messages (statement only)": 455782
+    },
+    "tokens": 10383997134,
+    "trained_tokens": 8434061917
+   },
+   "decontam": {
+    "by_benchmark": {
+     "gpqa_diamond": 1,
+     "heldout_g5_v1": 3,
+     "hle": 22,
+     "livecodebench": 1
+    },
+    "complete": false,
+    "covers": "3 of 287 parts",
+    "fingerprint_set_sha256": "2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a",
+    "parts_uncovered": 284,
+    "records": 3,
+    "rows_canary": 0,
+    "rows_flagged": 27
+   },
+   "generator": "gpt-oss-120b (Apache-2.0) for statement formalisation and Goedel-Prover-V2-32B (Apache-2.0) for proofs",
+   "in_pack": false,
+   "input": "hub file nvidia/Nemotron-Math-Proofs-v1 data/lean.jsonl rows 0..999999999999",
+   "job_request": "jobs/2026-11-16-sft-v1-proofs-decontam.md",
+   "licence": "cc-by-sa-4.0 (Hub tag; share-alike, attribution needed)",
+   "licence_decision": "allowed (CC-BY-SA, attribution needed)",
+   "loss_mask": {
+    "checked": true,
+    "mask_ok": true,
+    "mask_violations": {},
+    "report": "sft-math-nemotron-proofs.mask_check.json",
+    "rows_checked": 30821,
+    "rows_over_limit_before_admission": 647,
+    "scope": "10 of 287 converted parts (part0000, 0032, 0064, 0096, 0128, 0160, 0192, 0224, 0256, 0286), before admission; over_limit rows are the over-length rows the admission drops",
+    "tokens_checked": 344976545,
+    "trained_tokens_by_role": {
+     "assistant": 280824563
+    }
+   },
+   "over_length": {
+    "kept_max_len": 32768,
+    "max_sequence_tokens": 32768,
+    "rows_dropped": 18661
+   },
+   "revision": "97229c590831adfe96202f5cd071d444d535bf91",
+   "selection": "whole lean file",
+   "source": "nvidia/Nemotron-Math-Proofs-v1",
+   "status": "decontam_pending",
+   "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3"
+  }
+ },
+ "tokenizer": {
+  "name": "C3",
+  "note": "every count here is C3. TSAI's Gate 3 notice (15 Nov 2026) moved new work to p1536 (sha256 e6b93a93...; same special ids, eos 130822, same vocabulary size). Transfer measured on Dolly, dolly-t, OCR-2 shards 0-3 and 10 Proofs parts: results/sft_v1_p1536_transfer.json",
+  "sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3"
+ }
+}

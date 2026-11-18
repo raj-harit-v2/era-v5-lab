@@ -1,0 +1,42 @@
+{
+  "status": "passed",
+  "files_hashed": 8,
+  "output_bytes_including_summary": 5667852,
+  "documents": 183976,
+  "parts": 12,
+  "raw_pairs": 1330,
+  "qualifying_pairs": 372,
+  "qualifying_pairs_by_pack": {
+    "code-rust x code-rust": 360,
+    "en-fineweb-edu x en-fineweb-edu": 7,
+    "en-fineweb-edu x math-finemath": 1,
+    "ind-hi-hplt x ind-hi-hplt": 1,
+    "math-finemath x math-finemath": 3
+  },
+  "qualifying_pairs_by_stage": {
+    "within_pack": 371,
+    "cross_pack": 1
+  },
+  "diagonal_document_counts": {
+    "code-rust": 57,
+    "en-fineweb-edu": 14,
+    "ind-hi-hplt": 2,
+    "ind-mr-sangraha-v": 0,
+    "math-finemath": 6
+  },
+  "checks": [
+    "8 recorded artifact hashes and byte sizes",
+    "document identity, inventory and per-part/per-split counts",
+    "raw pair scores against symmetric NPZ and pack-level threshold counts",
+    "histogram pair population",
+    "H2 score thresholds and available prose length metadata",
+    "match uniqueness, provenance and stages",
+    "25 matrix numerators, denominators and fractions"
+  ],
+  "transcript_matches_summary": true,
+  "transcript_sha256": "7773418744ada7ca7419af2d6710fa061a3c9e70bdd44f16d836874f92dc8967",
+  "reconstructed_matrix_csvs": "byte-identical",
+  "full_overlap_rerun": false,
+  "input_note": "Unmodified sample-v0 Parquet copied into cleaner-compatible layout; no cleaning applied",
+  "verification_note": "Artifact consistency checks; H2 detection, code line guards, and math number guards were not rerun against corpus text"
+}

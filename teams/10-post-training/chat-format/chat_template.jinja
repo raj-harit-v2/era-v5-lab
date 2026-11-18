@@ -1,6 +1,17 @@
+{#- G10 ChatML v0 (chat_format_v0.md). Renders byte-for-byte what chat-format/render.py renders, with tool schemas in
+    the first system turn as sft/convert.py writes them. Meant for the transformers / vLLM template environment, whose
+    tojson takes sort_keys and separators. Tests: tests/test_chat_template_parity.py. -#}
 {%- set effort_val = effort | default('4k') -%}
+{%- set ns = namespace(fns=[], tools='') -%}
+{%- if tools -%}
+    {#- "Tools:" and a JSON array of the function schemas, unwrapped from {"type": "function", "function": {...}} -#}
+    {%- for t in tools -%}
+        {%- set ns.fns = ns.fns + [t.function if (t.function is defined and t.function is mapping) else t] -%}
+    {%- endfor -%}
+    {%- set ns.tools = '\n\nTools:\n' + (ns.fns | tojson(sort_keys=True)) -%}
+{%- endif -%}
 {%- if messages[0]['role'] != 'system' -%}
-    {{- '<|im_start|>system\nReasoning effort: ' + effort_val + '<|im_end|>\n' -}}
+    {{- '<|im_start|>system\nReasoning effort: ' + effort_val + ns.tools + '<|im_end|>\n' -}}
 {%- endif -%}
 {%- for message in messages -%}
     {%- if loop.first and message['role'] == 'system' -%}
@@ -8,7 +19,7 @@
         {%- if message['content'] -%}
             {{- '\n\n' + message['content'] -}}
         {%- endif -%}
-        {{- '<|im_end|>\n' -}}
+        {{- ns.tools + '<|im_end|>\n' -}}
     {%- elif message['role'] == 'system' -%}
         {{- '<|im_start|>system\n' + message['content'] + '<|im_end|>\n' -}}
     {%- elif message['role'] == 'user' -%}
@@ -18,12 +29,26 @@
         {%- if message.get('think') -%}
             {{- '<|think|>\n' + message['think'] + '\n<|/think|>\n' -}}
         {%- endif -%}
-        {%- for call in message.get('tool_calls', []) -%}
+        {%- for call in message.get('tool_calls') or [] -%}
             {{- '<|tool_call|>\n' -}}
             {%- if call is string -%}
                 {{- call -}}
             {%- else -%}
-                {{- call | tojson -}}
+                {#- G10 shape {"arguments", "name", "id"?} or OpenAI shape {"id", "type", "function": {...}};
+                    both become render.py's _call_json: sorted keys, compact, "id" only when it is a string -#}
+                {%- set fn = call.function if (call.function is defined and call.function is mapping) else call -%}
+                {%- set args = fn.arguments if (fn.arguments is defined and fn.arguments is not none) else {} -%}
+                {%- set has_id = call.id is defined and call.id is string -%}
+                {%- if args is string -%}
+                    {#- arguments still a JSON string (vLLM parses them before rendering; plain transformers does
+                        not): splice the JSON text in as given, so it is not encoded twice -#}
+                    {{- '{"arguments":' + args + (',"id":' + (call.id | tojson) if has_id else '')
+                        + ',"name":' + (fn.name | tojson) + '}' -}}
+                {%- elif has_id -%}
+                    {{- {'arguments': args, 'id': call.id, 'name': fn.name} | tojson(separators=(',', ':'), sort_keys=True) -}}
+                {%- else -%}
+                    {{- {'arguments': args, 'name': fn.name} | tojson(separators=(',', ':'), sort_keys=True) -}}
+                {%- endif -%}
             {%- endif -%}
             {{- '\n<|/tool_call|>\n' -}}
         {%- endfor -%}

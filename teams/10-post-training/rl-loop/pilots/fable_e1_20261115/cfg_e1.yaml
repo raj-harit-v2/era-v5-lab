@@ -1,0 +1,13 @@
+# E1 (15 Nov 2026): code-RL learning run with durable state. Preregistration:
+# work/fable-research-2026-11-15/PREREG_E1_code_rl.md. Screen 192 train prompts -> mixed cohort; held-out 96 x 8 and
+# train cohort x 8 at step 0, every 10 steps and at the end; state saved before every evaluation.
+seed: 1234
+device: cuda
+verbose: true
+model: {kind: hf, path: "@WEIGHTS@", dtype: bfloat16, stop_at_eos: true, dense: true}
+task: {kind: stdio, tasks: "@DATA@/tasks.jsonl", train_ids: "@DATA@/train_ids.txt", heldout_ids: "@DATA@/heldout_ids.txt"}
+train: {algo: objective_v1, steps: @STEPS@, prompts_per_step: 16, k: 8, max_new: 1024, temperature: 1.0, lr: 1.0e-5,
+        ppo_epochs: 1, kl_coef: 0.0, grad_clip: 1.0, trainable: ['\.self_attn\.'], eval_every: 10, eval_k: 8,
+        cohort_eval_k: 8, sampler: vllm, vllm: {gpu_memory_utilization: 0.3, max_model_len: 2048}, micro_rows: 1,
+        reward_workers: 32, reward_pool: 32, screen: {n: 192, k: 8, min_mixed: 24, save_completions: "@RUN@/screen_completions.jsonl"},
+        fp32_master: true, state_dir: "@RUN@/state", state_every: 10, deadline_unix: @DEADLINE@}

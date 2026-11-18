@@ -1,0 +1,271 @@
+{
+ "algo": "objective_v1",
+ "steps": 60,
+ "k": 8,
+ "prompts_per_step": 16,
+ "max_new": 1024,
+ "sampler": "vllm",
+ "trainable_params": 1901068288,
+ "fp32_master_params": 0,
+ "tis_clip": null,
+ "router_params_frozen": [],
+ "router_checksum_before": "dense model: no router",
+ "router_checksum_after": "dense model: no router",
+ "router_unchanged": true,
+ "heldout_reward_start": 0.14713541666666666,
+ "heldout_reward_end": 0.16666666666666666,
+ "heldout_curve": [
+  [
+   0,
+   0.14713541666666666
+  ],
+  [
+   10,
+   0.14192708333333334
+  ],
+  [
+   20,
+   0.15364583333333334
+  ],
+  [
+   30,
+   0.15494791666666666
+  ],
+  [
+   40,
+   0.14583333333333334
+  ],
+  [
+   50,
+   0.16276041666666666
+  ],
+  [
+   60,
+   0.16666666666666666
+  ]
+ ],
+ "heldout_change": {
+  "problems": 96,
+  "start": 0.1471,
+  "end": 0.1667,
+  "diff": 0.0195,
+  "ci_low": -0.0078,
+  "ci_high": 0.0482,
+  "ci_excludes_zero": false,
+  "resamples": 10000
+ },
+ "groups_used_total": 703,
+ "trainable_weight_change": {
+  "share_changed": 0.08801,
+  "relative_l2": 0.006216
+ },
+ "step1_s": 52.793,
+ "mean_step_s_after_step1": 30.997,
+ "mean_times_s_after_step1": {
+  "rollout": 4.73,
+  "reward": 9.477,
+  "old_logprobs": 4.802,
+  "train": 11.982,
+  "sync": 0.005
+ },
+ "mean_rollout_tokens_per_s": 8727.8,
+ "routing_curve": [
+  {
+   "step": 40,
+   "truncated": 0.0039,
+   "mean_tokens": 392.3
+  },
+  {
+   "step": 50,
+   "truncated": 0.0,
+   "mean_tokens": 389.5
+  },
+  {
+   "step": 60,
+   "truncated": 0.0104,
+   "mean_tokens": 397.7
+  }
+ ],
+ "vllm_sync_path": "collective_rpc",
+ "vllm_sync_check": {
+  "baseline_k3": 0.0003551831323420629,
+  "deleted_layer": "model.layers.0.mlp.gate_proj",
+  "deleted_unsynced_k3": 0.015487952623516321,
+  "deleted_synced_k3": 0.0002787333360174671,
+  "restored_k3": 0.0005609978397842497,
+  "ok": true,
+  "sync_path": "collective_rpc"
+ },
+ "gpu_name": "NVIDIA H200",
+ "seconds": 1303.5,
+ "seconds_per_step": 21.73,
+ "peak_gpu_memory_gb": 89.52,
+ "end_peak_torch_gb": 89.52,
+ "end_gpu_used_gb": 92.62,
+ "end_gpu_total_gb": 139.79,
+ "versions": {
+  "torch": "2.13.0+cu130",
+  "transformers": "5.19.0",
+  "vllm": "0.32.0"
+ },
+ "mean_mismatch_k3": 0.000339,
+ "router_trainable": false,
+ "objective": {
+  "name": "objective_v1",
+  "contract": "rl/objective_v1.md (lead, commit ff19ce2)",
+  "tr_epsilon": 0.2,
+  "reference_kl": "none (not in the contract)",
+  "steps_with_optimizer_update": 60,
+  "group_kinds_total": {
+   "all_one": 57,
+   "all_zero": 200,
+   "tied_other": 0,
+   "singleton": 0,
+   "mixed": 703
+  }
+ },
+ "saved_trainable_weights": null,
+ "deletion_tuning": {
+  "targets": "gate",
+  "masked_layers": 28,
+  "alpha_steps": 100,
+  "alpha": [
+   1000.0,
+   10000.0
+  ],
+  "lambda": 1e-05,
+  "calib_prompts": 56,
+  "wanda_prior": {
+   "eta": 0.00048828125,
+   "prior_strength": 3.0,
+   "prior_deleted": 928091,
+   "targeted": 1901068288
+  },
+  "deletion_at_init": {
+   "deleted": 3489512,
+   "targeted": 1901068288,
+   "model_weights": 7615616512,
+   "deleted_frac_of_targeted": 0.0018355532108060707,
+   "deleted_frac_of_all_weights": 0.00045820479464814734,
+   "per_layer_min": 0.0018270632475039213,
+   "per_layer_max": 0.001843765435531793
+  },
+  "official": {
+   "repo": "agentic-learning-ai-lab/deleting-weights",
+   "commit": "94f0340ebb574f95bb41d844165253a6785e215e",
+   "licence": "MIT"
+  },
+  "deletion_final": {
+   "deleted": 3065793,
+   "targeted": 1901068288,
+   "model_weights": 7615616512,
+   "deleted_frac_of_targeted": 0.0016126685292432799,
+   "deleted_frac_of_all_weights": 0.0004025666202032627,
+   "per_layer_min": 0.0012793227972671332,
+   "per_layer_max": 0.001765144377601653
+  },
+  "alpha_final": 6400.0,
+  "optimizer_steps": 60
+ },
+ "status": "COMPLETE",
+ "state": {
+  "step": 60,
+  "file": "state.step000060.pt",
+  "bytes": 22812882271,
+  "identity_sha256": "574a70b62c63eb86674cdf0f6ecfaad67fb850d3a2ed6518234f3b04e4371fe8",
+  "saved_unix": 1794751542.7897832,
+  "write_s": 29.01
+ },
+ "resumed_from_step": 30,
+ "seconds_all_invocations": 2528.0,
+ "subgroups": {
+  "aizu": {
+   "groups": 213,
+   "kept": 181,
+   "tokens": 533610,
+   "kept_tokens": 439902,
+   "rollouts": 1704,
+   "passes": 675,
+   "sampled_group_share": 0.2219,
+   "kept_group_share": 0.2575,
+   "kept_token_share": 0.2535
+  },
+  "atcoder": {
+   "groups": 33,
+   "kept": 21,
+   "tokens": 93057,
+   "kept_tokens": 58092,
+   "rollouts": 264,
+   "passes": 110,
+   "sampled_group_share": 0.0344,
+   "kept_group_share": 0.0299,
+   "kept_token_share": 0.0335
+  },
+  "codechef": {
+   "groups": 235,
+   "kept": 136,
+   "tokens": 619233,
+   "kept_tokens": 337172,
+   "rollouts": 1880,
+   "passes": 748,
+   "sampled_group_share": 0.2448,
+   "kept_group_share": 0.1935,
+   "kept_token_share": 0.1943
+  },
+  "hackerearth": {
+   "groups": 479,
+   "kept": 365,
+   "tokens": 1215040,
+   "kept_tokens": 899993,
+   "rollouts": 3832,
+   "passes": 1496,
+   "sampled_group_share": 0.499,
+   "kept_group_share": 0.5192,
+   "kept_token_share": 0.5187
+  }
+ },
+ "train_cohort": {
+  "problems": 56,
+  "k": 8,
+  "curve": [
+   [
+    0,
+    0.3482142857142857
+   ],
+   [
+    10,
+    0.3705357142857143
+   ],
+   [
+    20,
+    0.41294642857142855
+   ],
+   [
+    30,
+    0.39732142857142855
+   ],
+   [
+    40,
+    0.40625
+   ],
+   [
+    50,
+    0.4017857142857143
+   ],
+   [
+    60,
+    0.39732142857142855
+   ]
+  ],
+  "change": {
+   "problems": 56,
+   "start": 0.3482,
+   "end": 0.3973,
+   "diff": 0.0491,
+   "ci_low": -0.0201,
+   "ci_high": 0.1184,
+   "ci_excludes_zero": false,
+   "resamples": 10000
+  }
+ }
+}

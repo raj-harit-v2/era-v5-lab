@@ -1,0 +1,95 @@
+{
+ "checks": {
+  "checks_failed": {},
+  "checks_ok": true,
+  "effort_rows": {
+   "16k": 304,
+   "1k": 108,
+   "4k": 569,
+   "64k": 19
+  },
+  "files": [
+   {
+    "bytes": 53939842,
+    "name": "sft-bespoke-stratos-17k.first1000.jsonl",
+    "sha256": "09b8b314e4efc1c21658e14c4b06a85adfa8f8e373adef30fe782e90b800f468"
+   }
+  ],
+  "info": {},
+  "length": {
+   "max": 24262,
+   "min": 496,
+   "p50": 3184,
+   "p95": 13435
+  },
+  "max_len": 32768,
+  "rows": 1000,
+  "rows_over_max_len": 0,
+  "rows_with_tool_blocks": 0,
+  "shifted_supervised_targets": 4514158,
+  "tokens": 4686212,
+  "tool_call_blocks": 0,
+  "tool_call_tokens_untrained": 0,
+  "tool_result_blocks": 0,
+  "train_spans": 1000,
+  "trained_share": 0.963285,
+  "trained_tokens": 4514158,
+  "unique_ids": true
+ },
+ "checks_wall_s": 6.14,
+ "content_sha256": "09b8b314e4efc1c21658e14c4b06a85adfa8f8e373adef30fe782e90b800f468",
+ "convert": {
+  "cpu_sys_s": 0.949,
+  "cpu_user_s": 13.194,
+  "hub_bytes_read": 33619968,
+  "max_rss_mb": 393.5,
+  "wall_s": 12.556
+ },
+ "decision": "TSAI reserves",
+ "deterministic_rerun": true,
+ "effort_manifest": {
+  "16k": 304,
+  "1k": 108,
+  "4k": 569,
+  "64k": 19
+ },
+ "file_bytes": 53939842,
+ "file_sha256": "09b8b314e4efc1c21658e14c4b06a85adfa8f8e373adef30fe782e90b800f468",
+ "generator_model": "DeepSeek-R1 (MIT, open weights)",
+ "hub_revision": "9e9adba943911a9fc44dffcb30aaa18dc96ae6df",
+ "input": "hub file bespokelabs/Bespoke-Stratos-17k data/train-00000-of-00001.parquet rows 0..999999999",
+ "licence": "apache-2.0 (Hub tag; commercial use permitted per tag)",
+ "rerun_content_sha256": "09b8b314e4efc1c21658e14c4b06a85adfa8f8e373adef30fe782e90b800f468",
+ "rerun_wall_s": 11.93,
+ "rows_in": 1000,
+ "rows_out": 1000,
+ "rows_per_s_convert": 79.64,
+ "rows_scanned": 1000,
+ "scope": "first 1000 selected rows, source order, C3",
+ "selection": "all rows",
+ "set": "sft-bespoke-stratos-17k",
+ "skipped": {},
+ "source": "bespokelabs/Bespoke-Stratos-17k",
+ "token_record": {
+  "basis": "first 1000 selected rows, source order, C3; not the admissible kept rows",
+  "effort": {
+   "16k": 304,
+   "1k": 108,
+   "4k": 569,
+   "64k": 19
+  },
+  "length": {
+   "max": 24262,
+   "min": 496,
+   "p50": 3184,
+   "p95": 13435
+  },
+  "rows": 1000,
+  "sequence_tokens": 4686212,
+  "set_id": "sft-bespoke-stratos-17k",
+  "shifted_supervised_targets": 4514158,
+  "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3"
+ },
+ "tokenizer_sha256": "15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3",
+ "tokens_per_s_convert": 373225
+}

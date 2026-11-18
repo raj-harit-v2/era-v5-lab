@@ -1,0 +1,15 @@
+[health_baseline] start 2026-11-04T12:59:44Z host=pop-os gpus=0 (given) mode=full runs=5 out=./era-v5-lab/out
+[health_baseline] health run 1/5 (mode full)
+[health_baseline] health run 2/5 (mode full)
+[health_baseline] health run 3/5 (mode full)
+[health_baseline] health run 4/5 (mode full)
+[health_baseline] health run 5/5 (mode full)
+[health_baseline] xid_scan.py
+[health_baseline] allreduce_test.py: 2 ranks, largest message 16 MB
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+[health_baseline] summarize_baseline.py
+[health_baseline] Team 08 validator
+[health_baseline] DONE: all expectations met, validator PASS. Results in ./era-v5-lab/out

@@ -1,0 +1,57 @@
+{
+ "failing_completions": 1374,
+ "sampled": 400,
+ "kinds": {
+  "wrong_answer": 193,
+  "ok_first_test": 45,
+  "SyntaxError:other": 39,
+  "no_code": 36,
+  "TypeError": 14,
+  "NameError:other": 13,
+  "IndexError": 13,
+  "ValueError:int()": 9,
+  "timeout": 7,
+  "IndentationError": 6,
+  "ValueError:unpack": 5,
+  "ModuleNotFoundError": 5,
+  "EOFError": 3,
+  "AttributeError": 3,
+  "RecursionError": 3,
+  "FileNotFoundError": 2,
+  "exit_137": 2,
+  "KeyError": 2
+ },
+ "by_judge": {
+  "aizu": {
+   "wrong_answer": 85,
+   "ok_first_test": 30,
+   "no_code": 18,
+   "SyntaxError:other": 16,
+   "IndexError": 10,
+   "TypeError": 8
+  },
+  "atcoder": {
+   "wrong_answer": 13,
+   "no_code": 6,
+   "SyntaxError:other": 2,
+   "IndentationError": 1,
+   "ok_first_test": 1
+  },
+  "codechef": {
+   "wrong_answer": 29,
+   "SyntaxError:other": 8,
+   "no_code": 4,
+   "ok_first_test": 4,
+   "NameError:other": 1,
+   "ValueError:unpack": 1
+  },
+  "hackerearth": {
+   "wrong_answer": 66,
+   "SyntaxError:other": 13,
+   "ok_first_test": 10,
+   "no_code": 8,
+   "NameError:other": 7,
+   "TypeError": 5
+  }
+ }
+}
