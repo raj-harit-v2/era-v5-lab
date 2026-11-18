@@ -302,7 +302,7 @@ class GpuSampler:
     def _selected_rows(self):
         """Rows for the benchmark's CUDA device, preserving the original per-run summary scope."""
         if self.target_pci_bus_id:
-            matched = [r for r in self.rows if r.get("pci.bus_id", "").upper() == self.target_pci_bus_id.upper()]
+            matched = [r for r in self.rows if (r.get("pci.bus_id") or "").upper() == self.target_pci_bus_id.upper()]
             if matched:
                 return matched
         return [r for r in self.rows if r.get("index") == self.target_index]
