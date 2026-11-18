@@ -36,17 +36,44 @@ Fill after TSAI posts the #496 logs. Multi-GPU later: same wrapper with `--nproc
 | per_step_ms | _awaiting_ | |
 | payload_mb_per_call | _awaiting_ | |
 
-## 3. Full-size checkpoint
+## 3. Checkpoint — small-width TSAI job #485
 
-`--modes checkpoint` → split stall vs write.
+**Owner:** Siva  
+**Scope:** Small-width synthetic MoE; not full-width Dry Run 1.  
+**Evidence:** TSAI instructor update, 17 Nov 2026; job [#485](https://github.com/theschoolofai/era-v5-lab/pull/485) and class [checkpoint_dryrun1.md](https://github.com/theschoolofai/era-v5-lab/blob/main/teams/06-performance/results/checkpoint_dryrun1.md) (merged PR #557).  
 
-| metric | value | source SHA |
-| :--- | :--- | :--- |
-| save_ms | _awaiting_ | |
-| to_cpu_ms | | |
-| write_ms | | |
-| size_mb | | |
-| write_mb_per_s | | |
+
+| Metric | TSAI-reported result |
+| :--- | :--- |
+| Timing repeats | 10 |
+| Optimizer-state coverage | Complete |
+| GPU-to-CPU copy share | 8% |
+| File-write share | 92% |
+| `save_ms` | Unavailable |
+| `to_cpu_ms` | Unavailable |
+| `write_ms` | Unavailable |
+| `size_mb` | Unavailable |
+| `write_mb_per_s` | Unavailable |
+
+**Execution GPU / Git SHA:** Unavailable (TSAI did not report either).  
+**Evidence source:** Class checkpoint results PR #557; tip PR #83.  
+
+The 8% and 92% figures are **shares of checkpoint save time**,
+not absolute timings. File writing dominated the measured save.
+
+TSAI retained absolute timing and GPU details. No execution SHA
+or checkpoint size was supplied in the instructor's update.
+
+Earlier CPU smoke and Kaggle measurements are not substituted
+for TSAI GPU results. These findings must not be interpreted
+as a full-width checkpoint measurement.
+
+Profile job #486 did not measure checkpoint or communication
+time (Rule 3b); checkpoint results here come from job #485.
+
+References:
+- https://github.com/theschoolofai/era-v5-lab/pull/485
+- https://github.com/theschoolofai/era-v5-lab/pull/557
 
 ## 4. Per-rank step time + slow ranks
 
