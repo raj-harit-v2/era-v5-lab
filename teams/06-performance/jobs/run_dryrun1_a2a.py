@@ -101,6 +101,18 @@ def run_job(out: Path, *, smoke_cpu: bool, nproc: int) -> int:
 
     # TSAI GPU run: torchrun with nproc GPUs, base.yaml + config_v1 overrides.
     config = PERF_ROOT / "configs" / "base.yaml"
+    import torch
+    visible = torch.cuda.device_count()
+    if nproc < 1 or nproc > visible:
+        # torchrun would start ranks that share or lack a GPU (#496 asked for --nproc 2 on a 1-GPU machine).
+        msg = f"--nproc {nproc} needs {nproc} visible GPUs, found {visible}; not launching"
+        print(msg, file=sys.stderr)
+        out.mkdir(parents=True, exist_ok=True)
+        s = _summary(passed=False, exit_code=2, tag=TAG, smoke_cpu=False, out=out,
+                     nproc=nproc, visible_gpus=visible, error=msg)
+        (out / "result.json").write_text(json.dumps(s, indent=2) + "\n", encoding="utf-8")
+        print(json.dumps(s))
+        return 2
     args = [
         "torchrun", f"--nproc_per_node={nproc}",
         "-m", "perfkit.bench",

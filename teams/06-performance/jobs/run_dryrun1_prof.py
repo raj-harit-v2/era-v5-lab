@@ -73,6 +73,7 @@ def _load_g5_overrides(cfg_path: Path) -> Tuple[List[str], Dict[str, object]]:
 
     applied: Dict[str, object] = {}
     overrides: List[str] = []
+    unmapped: List[str] = []
     has_moe = False
 
     for item in raw["settings"]:
@@ -98,6 +99,8 @@ def _load_g5_overrides(cfg_path: Path) -> Tuple[List[str], Dict[str, object]]:
                 overrides.append("model.mtp=false")
             elif str(val).lower() == "mtp":
                 overrides.append("model.mtp=true")
+            else:
+                unmapped.append(f"{key}={val}")
             continue
 
         if key.startswith("moe."):
@@ -106,6 +109,13 @@ def _load_g5_overrides(cfg_path: Path) -> Tuple[List[str], Dict[str, object]]:
         target_key = G5_TO_BASE_KEY.get(key)
         if target_key:
             overrides.append(f"{target_key}={val}")
+        else:
+            unmapped.append(f"{key}={val}")
+
+    if unmapped:
+        # A filled-in G5 value must reach the model or stop the job; never time a different model silently.
+        raise ValueError(f"{cfg_path}: G5 settings with no base.yaml mapping (add them to G5_TO_BASE_KEY): "
+                         + ", ".join(unmapped))
 
     if has_moe:
         overrides.insert(0, "model.ffn=moe")
