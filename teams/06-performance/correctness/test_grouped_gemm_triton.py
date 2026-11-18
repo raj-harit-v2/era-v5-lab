@@ -246,6 +246,58 @@ def test_invalid_boundaries_rejected_before_launch(device, bad):
         gg.ExpertSegments(offsets, 5)
 
 
+def test_device_and_bias_guards(device):
+    _cuda(device)
+    x = torch.randn(5, 3, device=device)
+    w = torch.randn(2, 7, 3, device=device)
+    offsets = _offsets([2, 3], device)
+    with pytest.raises(ValueError, match="same device"):
+        gg.grouped_linear(x, w.cpu(), offsets)
+    with pytest.raises(ValueError, match="same device"):
+        gg.grouped_linear(x, w, offsets.cpu())
+    with pytest.raises(ValueError, match="bias must"):
+        gg.grouped_linear(x, w, offsets, torch.zeros(2, 7))
+    with pytest.raises(ValueError, match="bias must"):
+        gg.grouped_linear(x, w, offsets, torch.zeros(2, 7, device=device, dtype=torch.float64))
+
+
+def test_zero_expert_segments_rejected(device):
+    _cuda(device)
+    with pytest.raises(ValueError, match="at least one expert"):
+        gg.ExpertSegments(torch.tensor([0], device=device), 0)
+
+
+def test_unchecked_offsets_and_prepared_segments_match(device):
+    _cuda(device)
+    counts = [2, 0, 3]
+    offsets = _offsets(counts, device)
+    x = torch.randn(5, 17, device=device, requires_grad=True)
+    w = torch.randn(3, 9, 17, device=device, requires_grad=True)
+    bias = torch.randn(3, 9, device=device, requires_grad=True)
+    segments = gg.ExpertSegments(offsets, 5, validate_offsets=False)
+    checked = gg.grouped_linear(x, w, offsets, bias)
+    raw = gg.grouped_linear(x, w, offsets, bias, validate_offsets=False)
+    prepared = gg.grouped_linear(x, w, segments, bias)
+    assert torch.equal(checked, raw) and torch.equal(checked, prepared)
+    cot = torch.randn_like(checked)
+    expected = torch.autograd.grad(checked, (x, w, bias), cot)
+    for out in (raw, prepared):
+        got = torch.autograd.grad(out, (x, w, bias), cot)
+        for a, b in zip(got, expected):
+            assert torch.equal(a, b)
+
+
+def test_validate_offsets_false_skips_validation(device, monkeypatch):
+    _cuda(device)
+    def no_validation(*args):
+        raise AssertionError("validate_offsets=False must skip boundary validation")
+    monkeypatch.setattr(gg, "_validate_offsets", no_validation)
+    offsets = _offsets([2, 3], device)
+    gg.grouped_linear(torch.zeros(5, 3, device=device), torch.zeros(2, 7, 3, device=device),
+                      offsets, validate_offsets=False)
+    gg.ExpertSegments(offsets, 5, validate_offsets=False)
+
+
 def test_segment_shape_mismatch_and_index_dtypes(device):
     _cuda(device)
     x = torch.randn(5, 3, device=device)

@@ -14,9 +14,9 @@ import torch.nn.functional as F
 
 from models.config import ModelConfig
 from models.gpt import GPT, IGNORE_INDEX
-from models.linear_ce import (linear_cross_entropy_fused, linear_cross_entropy_cce,
-                              linear_cross_entropy_liger)
-from correctness.framework import Case, PAIRS, check, pair, pairs_in, scaled
+from models.linear_ce import (linear_cross_entropy_cached, linear_cross_entropy_fused,
+                              linear_cross_entropy_cce, linear_cross_entropy_liger)
+from correctness.framework import Case, PAIRS, check, pair, pairs_in, rel_err, scaled
 
 VOCAB = 97
 BLOCK = 16
@@ -27,6 +27,16 @@ def _models(device, chunks, ce_impl="chunked", mtp=False):
     torch.manual_seed(0)
     plain = GPT(ModelConfig(**cfg, ce_impl="torch", mtp=mtp)).to(device).train()
     candidate = GPT(ModelConfig(**cfg, ce_impl=ce_impl, ce_chunks=chunks, mtp=mtp)).to(device).train()
+    candidate.load_state_dict(plain.state_dict())
+    return plain, candidate
+
+
+def _padded_models(device, ce_impl, mode, mtp):
+    cfg = dict(vocab_size=VOCAB, block_size=BLOCK, n_layer=1, n_head=2, n_embd=32,
+               vocab_pad_multiple=128, vocab_pad_mode=mode)
+    torch.manual_seed(0)
+    plain = GPT(ModelConfig(**cfg, ce_impl="torch", mtp=mtp)).to(device).train()
+    candidate = GPT(ModelConfig(**cfg, ce_impl=ce_impl, mtp=mtp)).to(device).train()
     candidate.load_state_dict(plain.state_dict())
     return plain, candidate
 
@@ -93,6 +103,14 @@ def _require_official_device(device, impl):
     pytest.importorskip("triton")
     if impl == "triton_cce" and torch.cuda.get_device_capability(device)[0] < 8:
         pytest.skip("official Apple CCE requires compute capability >= 8")
+
+
+def _official(impl, x, weight, targets, *, bias=None):
+    if impl == "triton_liger":
+        return linear_cross_entropy_liger(x, weight, targets, bias=bias, ignore_index=-100)
+    if impl == "triton_cce":
+        return linear_cross_entropy_cce(x, weight, targets, bias=bias, ignore_index=-100)
+    raise ValueError(f"unknown official CE implementation {impl!r}")
 
 
 @pair("ce.fused", tol=1e-5, grad_tol=1e-4)
@@ -225,6 +243,111 @@ def test_official_impls_all_targets_ignored(device, impl):
     loss.backward()
     assert all(p.grad is not None and torch.isfinite(p.grad).all() and not p.grad.any()
                for p in model.parameters() if p.requires_grad)
+
+
+@pytest.mark.parametrize("impl", ["triton_liger", "triton_cce"])
+@pytest.mark.parametrize("vocab,hidden", [(257, 65), (131072, 64)])
+def test_official_impls_large_vocab_and_hidden_tiles(device, impl, vocab, hidden):
+    _require_official_device(device, impl)
+    torch.manual_seed(149)
+    x = torch.randn(3, hidden, device=device, requires_grad=True)
+    weight = (torch.randn(vocab, hidden, device=device) * 0.02).requires_grad_()
+    targets = torch.tensor([0, vocab - 1, -100], device=device)
+    xr, wr = (t.detach().double().requires_grad_() for t in (x, weight))
+    reference = F.cross_entropy(F.linear(xr, wr), targets, ignore_index=-100)
+    actual = _official(impl, x, weight, targets)
+    assert rel_err(actual, reference) < 1e-5
+    for got, want in zip(torch.autograd.grad(actual, (x, weight)),
+                         torch.autograd.grad(reference, (xr, wr))):
+        assert rel_err(got, want) < 1e-4
+
+
+@pytest.mark.parametrize("impl", ["triton_liger", "triton_cce"])
+@pytest.mark.parametrize("dtype", [torch.float32, torch.bfloat16, torch.float16],
+                         ids=["fp32", "bf16", "fp16"])
+def test_official_impls_bias_and_low_precision(device, impl, dtype):
+    _require_official_device(device, impl)
+    if dtype == torch.bfloat16 and not torch.cuda.is_bf16_supported():
+        pytest.skip("CUDA device does not support bf16")
+    torch.manual_seed(151)
+    x = torch.randn(5, 33, device=device, dtype=dtype, requires_grad=True)
+    weight = torch.randn(97, 33, device=device, dtype=dtype, requires_grad=True)
+    bias = torch.randn(97, device=device, requires_grad=True)
+    targets = torch.tensor([2, -100, 21, -100, 0], device=device)
+    xr, wr, br = (t.detach().double().requires_grad_() for t in (x, weight, bias))
+    reference = F.cross_entropy(F.linear(xr, wr, br), targets, ignore_index=-100)
+    actual = _official(impl, x, weight, targets, bias=bias)
+    loss_tol, grad_tol = {
+        torch.float32: (1e-5, 1e-4),
+        torch.bfloat16: (1e-2, 3e-2),
+        torch.float16: (5e-3, 5e-3),
+    }[dtype]
+    assert rel_err(actual, reference) < loss_tol
+    for got, want in zip(torch.autograd.grad(actual, (x, weight, bias)),
+                         torch.autograd.grad(reference, (xr, wr, br))):
+        assert rel_err(got, want) < grad_tol
+
+
+@pytest.mark.parametrize("impl", ["triton_liger", "triton_cce"])
+@pytest.mark.parametrize("mode", ["slice", "mask"])
+@pytest.mark.parametrize("mtp", [False, True], ids=["ntp", "mtp"])
+def test_official_impls_with_padded_vocab(device, impl, mode, mtp):
+    _require_official_device(device, impl)
+    plain, candidate = _padded_models(device, impl, mode, mtp)
+    idx, targets = _data(device, 2, BLOCK, masked=((0, 1), (1, 7)))
+    plain.zero_grad(set_to_none=True)
+    candidate.zero_grad(set_to_none=True)
+    logits, reference = plain(idx, targets)
+    assert logits is not None and reference is not None
+    actual = candidate(idx, targets)[1]
+    assert rel_err(actual, reference) < 1e-5
+    reference.backward()
+    actual.backward()
+    ref_grads = _grads(plain)
+    got_grads = _grads(candidate)
+    assert ref_grads.keys() == got_grads.keys()
+    for name, grad in ref_grads.items():
+        assert rel_err(got_grads[name], grad) < 1e-4, name
+    assert candidate.head.weight.grad[VOCAB:].abs().max() == 0
+    if mtp:
+        assert candidate.mtp_head.weight.grad[VOCAB:].abs().max() == 0
+
+
+def test_official_impls_reject_cpu_without_fallback():
+    x = torch.randn(3, 7)
+    weight = torch.randn(23, 7)
+    targets = torch.tensor([1, 2, 3])
+    for fn in (linear_cross_entropy_liger, linear_cross_entropy_cce):
+        with pytest.raises(ValueError, match="requires CUDA"):
+            fn(x, weight, targets)
+
+
+@pytest.mark.parametrize("impl", ["triton_liger", "triton_cce"])
+def test_official_impls_reject_out_of_vocabulary_targets(device, impl):
+    _require_official_device(device, impl)
+    x = torch.randn(2, 7, device=device)
+    weight = torch.randn(23, 7, device=device)
+    for bad in (-1, 23):
+        with pytest.raises(ValueError, match="outside vocabulary"):
+            _official(impl, x, weight, torch.tensor([1, bad], device=device))
+
+
+def test_portable_ce_rejects_invalid_chunking_and_inputs():
+    x = torch.randn(2, 3)
+    weight = torch.randn(5, 3)
+    targets = torch.tensor([1, 2])
+    with pytest.raises(ValueError, match="chunks must be positive"):
+        linear_cross_entropy_fused(x, weight, targets, chunks=0)
+    with pytest.raises(ValueError, match="token_chunk must be positive"):
+        linear_cross_entropy_cached(x, weight, targets, token_chunk=0)
+    with pytest.raises(ValueError, match="expects x"):
+        linear_cross_entropy_cached(x.flatten(), weight, targets)
+    with pytest.raises(ValueError, match="hidden sizes differ"):
+        linear_cross_entropy_cached(x, torch.randn(5, 4), targets)
+    with pytest.raises(TypeError, match="targets must"):
+        linear_cross_entropy_cached(x, weight, targets.float())
+    with pytest.raises(ValueError, match="target count"):
+        linear_cross_entropy_cached(x, weight, torch.tensor([1]))
 
 
 @pytest.mark.parametrize("device", _available_test_devices(), ids=lambda d: d.type)

@@ -182,6 +182,40 @@ def test_route_map_reuses_inverse_and_skips_repeat_validation(device, monkeypatc
         torch.testing.assert_close(a, b, atol=3e-5, rtol=3e-5)
 
 
+def test_device_and_dtype_guards(device):
+    _cuda(device)
+    x = torch.randn(3, 17, device=device)
+    order = _order(3, 2, device)
+    gates = torch.rand(3, 2, device=device)
+    with pytest.raises(ValueError, match="same device"):
+        md.pack_tokens(x, order.cpu(), 2)
+    with pytest.raises(ValueError, match="same device"):
+        md.combine_tokens(torch.randn(6, 17, device=device), gates.cpu(), order)
+    with pytest.raises(ValueError, match="gates must"):
+        md.combine_tokens(torch.randn(6, 17, device=device),
+                          torch.ones(3, 2, device=device, dtype=torch.float64), order)
+    with pytest.raises(ValueError, match="fp16, bf16 or fp32"):
+        md.combine_tokens(torch.randn(6, 17, device=device, dtype=torch.float64), gates, order)
+
+
+def test_route_map_validate_indices_false_skips_validation(device, monkeypatch):
+    _cuda(device)
+    def no_validation(*args):
+        raise AssertionError("validate_indices=False must skip permutation validation")
+    monkeypatch.setattr(md, "_validate_permutation", no_validation)
+    order = _order(5, 2, device)
+    routes = md.RouteMap(order, top_k=2, validate_indices=False)
+    x = torch.randn(5, 33, device=device, requires_grad=True)
+    gates = torch.rand(5, 2, device=device, requires_grad=True)
+    packed = md.pack_tokens(x, routes, 2)
+    got = md.combine_tokens(packed, gates, routes)
+    ref = _combine_ref(_pack_ref(x, order, 2), gates, order)
+    torch.testing.assert_close(got, ref)
+    for a, b in zip(torch.autograd.grad(got.sum(), (x, gates)),
+                    torch.autograd.grad(ref.sum(), (x, gates))):
+        torch.testing.assert_close(a, b, atol=3e-5, rtol=3e-5)
+
+
 @parametrize("field", ["order", "inverse"])
 def test_route_map_rejects_mutation_on_reuse_and_backward(device, field):
     _cuda(device)
