@@ -275,10 +275,19 @@ def liger_cross_entropy_kernel(
 
 
 MAX_FUSED_SIZE = 65536 // 2
+MIN_TOKEN_CHUNK = 512
+MAX_LOGITS_BYTES = 256 << 20
 
 
 def _is_hip():
     return torch.version.hip is not None
+
+
+def _token_chunk_size(BT, H, V, element_size):
+    natural = triton.next_power_of_2(triton.cdiv(BT, triton.cdiv(V, H)))
+    memory_cap = max(1, MAX_LOGITS_BYTES // (V * element_size))
+    memory_cap = 1 << (memory_cap.bit_length() - 1)
+    return max(1, min(BT, max(natural, MIN_TOKEN_CHUNK), memory_cap))
 
 
 def _linear_cross_entropy_forward(_input, weight, target, bias, ignore_index):
@@ -286,8 +295,7 @@ def _linear_cross_entropy_forward(_input, weight, target, bias, ignore_index):
     V = weight.shape[0]
     BLOCK_SIZE = min(MAX_FUSED_SIZE, triton.next_power_of_2(V))
 
-    inc_factor = triton.cdiv(V, H)
-    chunk_size = triton.next_power_of_2(triton.cdiv(BT, inc_factor))
+    chunk_size = _token_chunk_size(BT, H, V, _input.element_size())
     num_chunks = triton.cdiv(BT, chunk_size)
 
     grad_weight = torch.zeros_like(weight) if weight.requires_grad else None

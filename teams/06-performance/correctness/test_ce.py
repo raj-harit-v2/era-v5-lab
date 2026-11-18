@@ -262,6 +262,35 @@ def test_official_impls_large_vocab_and_hidden_tiles(device, impl, vocab, hidden
         assert rel_err(got, want) < 1e-4
 
 
+def test_liger_chunk_size_heuristic_scales_and_caps_memory():
+    pytest.importorskip("triton")
+    from kernels.triton_liger import _token_chunk_size
+
+    assert _token_chunk_size(4096, 256, 131072, 2) == 512
+    assert _token_chunk_size(16384, 8192, 131072, 2) == 1024
+    assert _token_chunk_size(16384, 8192, 131072, 4) == 512
+    assert _token_chunk_size(16384, 8192, 1_000_000, 2) == 128
+    assert _token_chunk_size(511, 256, 131072, 2) == 511
+
+
+@pytest.mark.parametrize("tokens", [511, 512, 513, 1025])
+def test_liger_512_minimum_chunk_crosses_boundaries(device, tokens):
+    _require_official_device(device, "triton_liger")
+    torch.manual_seed(153)
+    vocab, hidden = 257, 7
+    x = torch.randn(tokens, hidden, device=device, requires_grad=True)
+    weight = (torch.randn(vocab, hidden, device=device) * 0.02).requires_grad_()
+    targets = torch.randint(0, vocab, (tokens,), device=device)
+    targets[::17] = -100
+    xr, wr = (t.detach().double().requires_grad_() for t in (x, weight))
+    reference = F.cross_entropy(F.linear(xr, wr), targets, ignore_index=-100)
+    actual = _official("triton_liger", x, weight, targets)
+    assert rel_err(actual, reference) < 1e-5
+    for got, want in zip(torch.autograd.grad(actual, (x, weight)),
+                         torch.autograd.grad(reference, (xr, wr))):
+        assert rel_err(got, want) < 1e-4
+
+
 @pytest.mark.parametrize("impl", ["triton_liger", "triton_cce"])
 @pytest.mark.parametrize("dtype", [torch.float32, torch.bfloat16, torch.float16],
                          ids=["fp32", "bf16", "fp16"])
