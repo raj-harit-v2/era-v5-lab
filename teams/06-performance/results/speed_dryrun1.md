@@ -40,20 +40,23 @@ Fill after TSAI posts the #496 logs. Multi-GPU later: same wrapper with `--nproc
 
 **Owner:** Siva  
 **Scope:** Small-width synthetic MoE; not full-width Dry Run 1.  
-**Evidence:** TSAI instructor update, 17 Nov 2026; class PRs #485 and #557.  
-**Execution GPU / SHA:** Unavailable (not reported by TSAI).
+**Evidence:** TSAI instructor update, 17 Nov 2026; job [#485](https://github.com/theschoolofai/era-v5-lab/pull/485) and class [checkpoint_dryrun1.md](https://github.com/theschoolofai/era-v5-lab/blob/main/teams/06-performance/results/checkpoint_dryrun1.md) (merged PR #557).  
 
-| Metric | TSAI-reported result | Execution GPU / SHA |
-| :--- | :--- | :--- |
-| Timing repeats | 10 | unavailable / unavailable |
-| Optimizer-state coverage | Complete | unavailable / unavailable |
-| GPU-to-CPU copy share | 8% | unavailable / unavailable |
-| File-write share | 92% | unavailable / unavailable |
-| `save_ms` | Unavailable | unavailable / unavailable |
-| `to_cpu_ms` | Unavailable | unavailable / unavailable |
-| `write_ms` | Unavailable | unavailable / unavailable |
-| `size_mb` | Unavailable | unavailable / unavailable |
-| `write_mb_per_s` | Unavailable | unavailable / unavailable |
+
+| Metric | TSAI-reported result |
+| :--- | :--- |
+| Timing repeats | 10 |
+| Optimizer-state coverage | Complete |
+| GPU-to-CPU copy share | 8% |
+| File-write share | 92% |
+| `save_ms` | Unavailable |
+| `to_cpu_ms` | Unavailable |
+| `write_ms` | Unavailable |
+| `size_mb` | Unavailable |
+| `write_mb_per_s` | Unavailable |
+
+**Execution GPU / Git SHA:** Unavailable (TSAI did not report either).  
+**Evidence source:** Class checkpoint results PR #557; tip PR #83.  
 
 The 8% and 92% figures are **shares of checkpoint save time**,
 not absolute timings. File writing dominated the measured save.
