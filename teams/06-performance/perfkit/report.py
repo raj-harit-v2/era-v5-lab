@@ -33,12 +33,6 @@ COMPARE_CONFIG = [
 IMPL_SWITCHES = [
     ("model", "moe", "dispatch"),
     ("model", "ce_impl"),
-    ("model", "ce_triton_backward"),
-    ("model", "ce_triton_chunk"),
-    ("model", "ce_triton_vocab_chunk"),
-    ("model", "ce_triton_scratch_mb"),
-    ("model", "ce_triton_grad_precision"),
-    ("model", "ce_triton_validate_targets"),
     ("model", "ln_impl"),
     ("model", "rev_impl"),  # two_pass vs one_pass: same update, different backward
     ("model", "vocab_pad_mode"),      # slice vs mask of the padded columns (B2)

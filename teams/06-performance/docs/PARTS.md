@@ -64,7 +64,7 @@ Bottlenecks below are from the v0 traces (`results/slowest5_v0.md`, A100, `base.
 | Switch | Values (default first) | Kind |
 |---|---|---|
 | `model.moe.dispatch` | `loop` \| `sorted` \| `grouped` | implementation |
-| `model.ce_impl` | `torch` \| `chunked` \| `fused` \| `fused_cached` \| `fused_liger` \| `fused_cce` | implementation (`docs/LINEAR_CE.md`) |
+| `model.ce_impl` | `torch` \| `chunked` \| `fused` \| `triton_liger` \| `triton_cce` | implementation (`docs/LINEAR_CE.md`) |
 | `model.rev_impl` | `two_pass` \| `one_pass` | implementation (same update, different backward) |
 | `optim.muon_impl` | `batched` \| `loop` | implementation |
 | `optim.adamw_impl` | `foreach` \| `loop` | implementation (`polar_muon_adamw` only) |

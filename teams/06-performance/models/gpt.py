@@ -16,9 +16,9 @@
     Init (NanoGPT): normal(0, 0.02), biases zero, residual projections normal(0, 0.02 / sqrt(2 * n_layer)).
   * mtp: a second untied head on the same ln_f output predicts token t+2; loss = ntp + mtp, model.loss_parts
     holds both, detached.
-  * ce_impl: "torch" materialises the logits; the others bound memory (docs/LINEAR_CE.md; "triton_ce" is the
-    in-repo Triton kernel, kernels/linear_ce_fused.py) and return logits=None
-    when targets are given. Every path averages over non-ignored targets.
+  * ce_impl: "torch" materialises the logits; "chunked" and "fused" bound memory, and "triton_liger" /
+    "triton_cce" use the vendored official Triton kernels (docs/LINEAR_CE.md). Memory-bounded modes return
+    logits=None when targets are given. Every path averages over non-ignored targets.
 
 Timing markers (roofline and report read these names; keep them):
   region("embed", 2), region("stack", 1), region(f"block{i}", 2), region(f"block{i}.ln1" / ".ln2", 3),
@@ -38,9 +38,8 @@ import torch.nn.functional as F
 
 from models.config import ModelConfig
 from kernels.layer_norm import TritonLayerNorm
-from models.linear_ce import (linear_cross_entropy_fused, linear_cross_entropy_cached,
-                              linear_cross_entropy_cce, linear_cross_entropy_liger)
-from kernels.linear_ce_fused import linear_cross_entropy_fused_triton
+from models.linear_ce import (linear_cross_entropy_fused, linear_cross_entropy_cce,
+                              linear_cross_entropy_liger)
 from perfkit.regions import mark, region
 
 
@@ -49,8 +48,7 @@ _SDPA_GQA = tuple(int(v) for v in torch.__version__.split(".")[:2]) >= (2, 5)
 
 IGNORE_INDEX = -100              # a target with this value is left out of the loss and of its divisor (loss masks)
 # never build the full [B*T, V] logits, so forward returns logits=None with targets
-MEMORY_BOUNDED_CE_IMPLS = ("chunked", "fused", "fused_cached", "fused_liger", "fused_cce",
-                           "triton_ce")
+MEMORY_BOUNDED_CE_IMPLS = ("chunked", "fused", "triton_liger", "triton_cce")
 
 
 def _init_linear(lin: nn.Linear, std: float = 0.02):
@@ -365,35 +363,20 @@ class GPT(nn.Module):
         V = self.cfg.vocab_size
         weight = head.weight if head.weight.shape[0] == V else head.weight[:V]
         bias = head.bias if head.bias is None or head.bias.shape[0] == V else head.bias[:V]   # heads are bias=False today
-        if self.cfg.ce_impl == "triton_ce":
-            return linear_cross_entropy_fused_triton(x.reshape(-1, x.shape[-1]), weight,
-                                                      y.reshape(-1), bias=bias,
-                                                      ignore_index=IGNORE_INDEX,
-                                                      backward_impl=self.cfg.ce_triton_backward,
-                                                      token_chunk=self.cfg.ce_triton_chunk,
-                                                      vocab_chunk=self.cfg.ce_triton_vocab_chunk,
-                                                      scratch_mb=self.cfg.ce_triton_scratch_mb,
-                                                      grad_precision=self.cfg.ce_triton_grad_precision,
-                                                      validate_targets=self.cfg.ce_triton_validate_targets)
         if self.cfg.ce_impl == "fused":
             return linear_cross_entropy_fused(
                 x, weight, y, bias=bias,
                 chunks=self.cfg.ce_chunks, ignore_index=IGNORE_INDEX,
             )
-        if self.cfg.ce_impl == "fused_cached":
-            return linear_cross_entropy_cached(
-                x, weight, y, bias=bias,
-                token_chunk=self.cfg.ce_token_chunk, ignore_index=IGNORE_INDEX,
-            )
-        if self.cfg.ce_impl == "fused_liger":
+        if self.cfg.ce_impl == "triton_liger":
             return linear_cross_entropy_liger(
                 x, weight, y, bias=bias,
-                token_chunk=self.cfg.ce_token_chunk, ignore_index=IGNORE_INDEX,
+                ignore_index=IGNORE_INDEX,
             )
-        if self.cfg.ce_impl == "fused_cce":
+        if self.cfg.ce_impl == "triton_cce":
             return linear_cross_entropy_cce(
                 x, weight, y, bias=bias,
-                vocab_chunk=self.cfg.ce_vocab_chunk, ignore_index=IGNORE_INDEX,
+                ignore_index=IGNORE_INDEX,
             )
         return self._chunked_ce(head, x, y)
 

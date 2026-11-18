@@ -1,3 +1,5 @@
+# Official sources: https://github.com/linkedin/Liger-Kernel
+#                  https://github.com/apple/ml-cross-entropy
 """Cross-entropy implementations against the plain path and a CE definition.
 
 GPT(ce_impl="chunked" or "fused") must match ce_impl="torch" for masked targets and MTP. Chunked loss tiles
@@ -12,8 +14,8 @@ import torch.nn.functional as F
 
 from models.config import ModelConfig
 from models.gpt import GPT, IGNORE_INDEX
-from models.linear_ce import (linear_cross_entropy_fused, linear_cross_entropy_cached,
-                              linear_cross_entropy_cce, linear_cross_entropy_liger)
+from models.linear_ce import (linear_cross_entropy_fused, linear_cross_entropy_cce,
+                              linear_cross_entropy_liger)
 from correctness.framework import Case, PAIRS, check, pair, pairs_in, scaled
 
 VOCAB = 97
@@ -24,8 +26,7 @@ def _models(device, chunks, ce_impl="chunked", mtp=False):
     cfg = dict(vocab_size=VOCAB, block_size=BLOCK, n_layer=1, n_head=2, n_embd=32)
     torch.manual_seed(0)
     plain = GPT(ModelConfig(**cfg, ce_impl="torch", mtp=mtp)).to(device).train()
-    candidate = GPT(ModelConfig(**cfg, ce_impl=ce_impl, ce_chunks=chunks, ce_vocab_chunk=13,
-                                ce_token_chunk=5, mtp=mtp)).to(device).train()
+    candidate = GPT(ModelConfig(**cfg, ce_impl=ce_impl, ce_chunks=chunks, mtp=mtp)).to(device).train()
     candidate.load_state_dict(plain.state_dict())
     return plain, candidate
 
@@ -63,6 +64,7 @@ def _same(a, b, what):
 
 
 def _linear_ce_pair(device, impl, dtype=torch.float32):
+    _require_official_device(device, impl)
     torch.manual_seed(140)
     x = torch.randn(5, 7, device=device, dtype=dtype, requires_grad=True)
     weight = torch.randn(23, 7, device=device, dtype=dtype, requires_grad=True)
@@ -74,13 +76,23 @@ def _linear_ce_pair(device, impl, dtype=torch.float32):
     def fast(x, w, y):
         if impl == "fused":
             return linear_cross_entropy_fused(x, w, y, chunks=3, ignore_index=-100)
-        if impl == "fused_cce":
-            return linear_cross_entropy_cce(x, w, y, vocab_chunk=8, ignore_index=-100)
-        if impl == "fused_liger":
-            return linear_cross_entropy_liger(x, w, y, token_chunk=2, ignore_index=-100)
-        return linear_cross_entropy_cached(x, w, y, token_chunk=2, ignore_index=-100)
+        if impl == "triton_cce":
+            return linear_cross_entropy_cce(x, w, y, ignore_index=-100)
+        if impl == "triton_liger":
+            return linear_cross_entropy_liger(x, w, y, ignore_index=-100)
+        raise ValueError(f"unknown CE implementation {impl!r}")
 
     return Case(ref=reference, fast=fast, inputs=[x, weight, targets])
+
+
+def _require_official_device(device, impl):
+    if impl not in ("triton_liger", "triton_cce"):
+        return
+    if device.type != "cuda":
+        pytest.skip("official CE kernels require CUDA")
+    pytest.importorskip("triton")
+    if impl == "triton_cce" and torch.cuda.get_device_capability(device)[0] < 8:
+        pytest.skip("official Apple CCE requires compute capability >= 8")
 
 
 @pair("ce.fused", tol=1e-5, grad_tol=1e-4)
@@ -94,34 +106,25 @@ def _fused_bf16_pair(device):
     return _linear_ce_pair(device, "fused", torch.bfloat16)
 
 
-@pair("ce.fused_cached", tol=1e-5, grad_tol=1e-4)
-def _fused_cached_pair(device):
-    return _linear_ce_pair(device, "fused_cached")
+@pair("ce.triton_liger", tol=1e-5, grad_tol=1e-4)
+def _triton_liger_pair(device):
+    return _linear_ce_pair(device, "triton_liger")
 
 
-@pair("ce.fused_cached.bf16", dtype=torch.bfloat16)
-def _fused_cached_bf16_pair(device):
-    return _linear_ce_pair(device, "fused_cached", torch.bfloat16)
+@pair("ce.triton_liger.bf16", dtype=torch.bfloat16)
+def _triton_liger_bf16_pair(device):
+    return _linear_ce_pair(device, "triton_liger", torch.bfloat16)
 
 
-@pair("ce.fused_liger", tol=1e-5, grad_tol=1e-4)
-def _fused_liger_pair(device):
-    return _linear_ce_pair(device, "fused_liger")
+# Apple uses lock-based reductions; repeatability is numerical, not bitwise.
+@pair("ce.triton_cce", tol=1e-5, grad_tol=1e-4, deterministic=False)
+def _triton_cce_pair(device):
+    return _linear_ce_pair(device, "triton_cce")
 
 
-@pair("ce.fused_liger.bf16", dtype=torch.bfloat16)
-def _fused_liger_bf16_pair(device):
-    return _linear_ce_pair(device, "fused_liger", torch.bfloat16)
-
-
-@pair("ce.fused_cce", tol=1e-5, grad_tol=1e-4)
-def _fused_cce_pair(device):
-    return _linear_ce_pair(device, "fused_cce")
-
-
-@pair("ce.fused_cce.bf16", dtype=torch.bfloat16)
-def _fused_cce_bf16_pair(device):
-    return _linear_ce_pair(device, "fused_cce", torch.bfloat16)
+@pair("ce.triton_cce.bf16", dtype=torch.bfloat16, deterministic=False)
+def _triton_cce_bf16_pair(device):
+    return _linear_ce_pair(device, "triton_cce", torch.bfloat16)
 
 
 MASKS = {
@@ -194,24 +197,11 @@ def test_fused_matches_plain_loss_and_all_gradients(device, mtp, mask):
         _same(gf[name], gp[name], f"fused gradient of {name} ({device}, mtp={mtp}, mask={mask})")
 
 
-@pytest.mark.parametrize("device", _available_test_devices(), ids=lambda d: d.type)
-@pytest.mark.parametrize("mask", ["none", "scattered", "one_row", "one_left"])
-@pytest.mark.parametrize("mtp", [False, True], ids=["ntp", "mtp"])
-def test_fused_cached_matches_plain_loss_and_all_gradients(device, mask, mtp):
-    plain, cached = _models(device, chunks=4, ce_impl="fused_cached", mtp=mtp)
-    idx, y = _data(device, 2, 16, masked=MASKS[mask])
-    lp, gp = _loss_and_grads(plain, idx, y)
-    lc, gc = _loss_and_grads(cached, idx, y)
-    _same(lc, lp, f"fused_cached loss ({device}, mask={mask}, mtp={mtp})")
-    assert gp.keys() == gc.keys()
-    for name in gp:
-        _same(gc[name], gp[name], f"fused_cached gradient of {name} ({device}, mask={mask}, mtp={mtp})")
-
-
-@pytest.mark.parametrize("impl", ["fused_liger", "fused_cce"])
+@pytest.mark.parametrize("impl", ["triton_liger", "triton_cce"])
 @pytest.mark.parametrize("mask", MASKS)
 @pytest.mark.parametrize("mtp", [False, True])
-def test_source_inspired_impls_match_plain_loss_and_all_gradients(device, impl, mask, mtp):
+def test_official_impls_match_plain_loss_and_all_gradients(device, impl, mask, mtp):
+    _require_official_device(device, impl)
     plain, candidate = _models(device, chunks=4, ce_impl=impl, mtp=mtp)
     idx, y = _data(device, 2, 16, MASKS[mask])
     lp, gp = _loss_and_grads(plain, idx, y)
@@ -222,38 +212,10 @@ def test_source_inspired_impls_match_plain_loss_and_all_gradients(device, impl, 
         _same(gc[name], gp[name], f"{impl} gradient of {name} ({device}, mask={mask}, mtp={mtp})")
 
 
+@pytest.mark.parametrize("impl", ["triton_liger", "triton_cce"])
 @pytest.mark.parametrize("device", _available_test_devices(), ids=lambda d: d.type)
-@pytest.mark.parametrize("n, token_chunk", [(11, 4), (5, 8), (17, 6), (7, 1)])
-def test_fused_cached_token_chunks_need_not_divide_token_count(device, n, token_chunk):
-    torch.manual_seed(29)
-    x = torch.randn(n, 9, device=device, requires_grad=True)
-    weight = torch.randn(31, 9, device=device, requires_grad=True)
-    targets = torch.randint(0, 31, (n,), device=device)
-    targets[1::4] = IGNORE_INDEX
-    expected = F.cross_entropy(F.linear(x, weight), targets, ignore_index=IGNORE_INDEX)
-    actual = linear_cross_entropy_cached(x, weight, targets, token_chunk=token_chunk,
-                                         ignore_index=IGNORE_INDEX)
-    expected_grads = torch.autograd.grad(expected, (x, weight))
-    actual_grads = torch.autograd.grad(actual, (x, weight))
-    _same(actual, expected, f"cached token chunk loss n={n}, chunk={token_chunk} ({device})")
-    for name, got, want in zip(("x", "weight"), actual_grads, expected_grads):
-        _same(got, want, f"cached token chunk {name} gradient n={n}, chunk={token_chunk} ({device})")
-
-
-@pytest.mark.parametrize("device", _available_test_devices(), ids=lambda d: d.type)
-def test_fused_cached_all_targets_ignored_has_zero_loss_and_gradients(device):
-    x = torch.randn(5, 9, device=device, requires_grad=True)
-    weight = torch.randn(31, 9, device=device, requires_grad=True)
-    targets = torch.full((5,), IGNORE_INDEX, device=device)
-    loss = linear_cross_entropy_cached(x, weight, targets, token_chunk=2, ignore_index=IGNORE_INDEX)
-    grads = torch.autograd.grad(loss, (x, weight))
-    assert loss.item() == 0.0
-    assert all(torch.isfinite(g).all() and not g.any() for g in grads)
-
-
-@pytest.mark.parametrize("impl", ["fused_liger", "fused_cce"])
-@pytest.mark.parametrize("device", _available_test_devices(), ids=lambda d: d.type)
-def test_source_inspired_impls_all_targets_ignored(device, impl):
+def test_official_impls_all_targets_ignored(device, impl):
+    _require_official_device(device, impl)
     _, model = _models(device, chunks=4, ce_impl=impl)
     idx, _ = _data(device, 2, 16)
     targets = torch.full((2, 16), IGNORE_INDEX, device=device)
@@ -295,25 +257,6 @@ def test_fused_linear_cross_entropy_supports_a_bias(device):
     _same(actual, reference, f"biased fused CE ({device})")
     for name, got, expected in zip(("x", "weight", "bias"), actual_grads, reference_grads):
         _same(got, expected, f"biased fused CE gradient {name} ({device})")
-
-
-@pytest.mark.parametrize("device", _available_test_devices(), ids=lambda d: d.type)
-@pytest.mark.parametrize("vocab_chunk", [1, 2, 4, 8, 16, 32, 64, 128])
-def test_fused_cce_power_of_two_vocab_chunks(device, vocab_chunk):
-    """Power-of-two tiles must match CE even when the final tile is partial or oversized."""
-    torch.manual_seed(9)
-    x = torch.randn(5, 11, device=device, requires_grad=True)
-    weight = torch.randn(37, 11, device=device, requires_grad=True)
-    targets = torch.tensor([0, 7, 19, 36, -100], device=device)
-
-    reference = F.cross_entropy(F.linear(x, weight), targets, ignore_index=-100)
-    actual = linear_cross_entropy_cce(x, weight, targets, vocab_chunk=vocab_chunk)
-    reference_grads = torch.autograd.grad(reference, (x, weight))
-    actual_grads = torch.autograd.grad(actual, (x, weight))
-
-    _same(actual, reference, f"fused CE loss ({device}, vocab_chunk={vocab_chunk})")
-    for name, got, expected in zip(("x", "weight"), actual_grads, reference_grads):
-        _same(got, expected, f"fused CE gradient {name} ({device}, vocab_chunk={vocab_chunk})")
 
 
 @pytest.mark.parametrize("device", _available_test_devices(), ids=lambda d: d.type)
@@ -416,7 +359,7 @@ def test_fused_pair_rejects_one_percent_error(device):
 
 
 @pytest.mark.parametrize("device", _available_test_devices(), ids=lambda d: d.type)
-def test_fused_cached_gradients_respect_loss_scaling_and_repeated_backward(device):
+def test_fused_gradients_respect_loss_scaling_and_repeated_backward(device):
     torch.manual_seed(43)
     x = torch.randn(11, 9, device=device, requires_grad=True)
     w = torch.randn(31, 9, device=device, requires_grad=True)
