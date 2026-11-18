@@ -69,8 +69,8 @@ GPU / SHA: _unavailable (TSAI held device details; run SHA not reported)_. Job f
 | backward of the block gradients | 17.7% |
 | Muon Newton-Schulz update | 5.3% |
 | backward of the head and loss | 5.2% |
-| MoE grouped dispatch, recompute pass | 2.3% |
-| MoE grouped dispatch, forward pass | 2.3% |
+| MoE dispatch (`sorted` path; profiler region named `dispatch.grouped`), recompute pass | 2.3% |
+| MoE dispatch (`sorted` path; profiler region named `dispatch.grouped`), forward pass | 2.3% |
 
 Caveats from TSAI's report:
 
