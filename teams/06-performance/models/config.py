@@ -16,8 +16,7 @@ from pathlib import Path
 import yaml
 
 MOE_KEYS = {"num_experts", "top_k", "num_shared", "bias_gamma", "dispatch", "ffn_hidden", "router_impl"}   # SparseMoE keyword arguments
-CE_IMPLS = ("torch", "chunked", "fused", "fused_cached", "fused_liger", "fused_cce",
-            "triton_ce", "fused_triton")
+CE_IMPLS = ("torch", "chunked", "fused", "triton_liger", "triton_cce", "fused_triton")
 ATTN_IMPLS = ("sdpa", "eager", "triton")
 ACTIVATIONS = ("gelu", "swiglu")
 REV_IMPLS = ("two_pass", "one_pass")
@@ -67,17 +66,9 @@ class ModelConfig:
     reversible: bool = False         # True: midpoint reversible stack
     rev_h: float = 1.0               # midpoint step size
     rev_impl: str = "two_pass"       # two_pass (invert + recompute) | one_pass (single f in backward)
-    ce_impl: str = "torch"           # torch | chunked | fused | fused_cached | fused_liger | fused_cce | triton_ce
+    ce_impl: str = "torch"           # torch | chunked | fused | triton_liger | triton_cce
                                      # | fused_triton (kernels/linear_ce_cublas.py: cuBLAS matmuls + Triton softmax grad)
     ce_chunks: int = 8                # number of token chunks for chunked / fused / fused_triton
-    ce_vocab_chunk: int = 4096        # vocabulary tile size for fused_cce
-    ce_token_chunk: int = 16           # token tile size for fused_cached / fused_liger
-    ce_triton_backward: str = "auto"  # auto | vocab | chunked | recompute (slow comparison)
-    ce_triton_chunk: int = 128          # max token rows in Triton backward scratch
-    ce_triton_vocab_chunk: int = 4096   # max classes per vocabulary-streamed derivative tile
-    ce_triton_scratch_mb: int = 64      # MiB cap for derivative or forward-statistics scratch
-    ce_triton_grad_precision: str = "auto"  # auto: fp32 products for fp16, bf16 products for bf16 | fp32
-    ce_triton_validate_targets: bool = False  # debug bounds check; synchronizes GPU
     mtp: bool = False                # True: second untied head predicts token t+2 (G5 config_v0); loss = ntp + mtp
 
     def __post_init__(self):
@@ -109,17 +100,7 @@ class ModelConfig:
                 "position=rope needs model.rope_theta (e.g. model.rope_theta=10000); null is for learned only")
             assert self.rope_theta > 0, "rope_theta must be > 0"
         assert self.ce_impl in CE_IMPLS, f"ce_impl={self.ce_impl!r} not in {CE_IMPLS}"
-        assert self.ce_triton_backward in ("auto", "vocab", "chunked", "recompute"), "invalid ce_triton_backward"
-        assert type(self.ce_triton_chunk) is int and self.ce_triton_chunk > 0, \
-            "ce_triton_chunk must be a positive integer"
-        assert type(self.ce_triton_vocab_chunk) is int and self.ce_triton_vocab_chunk > 0, \
-            "ce_triton_vocab_chunk must be a positive integer"
-        assert type(self.ce_triton_scratch_mb) is int and self.ce_triton_scratch_mb > 0, \
-            "ce_triton_scratch_mb must be a positive integer"
-        assert self.ce_triton_grad_precision in ("auto", "fp32"), "invalid ce_triton_grad_precision"
-        assert type(self.ce_triton_validate_targets) is bool, "ce_triton_validate_targets must be boolean"
-        assert self.ce_chunks > 0 and self.ce_vocab_chunk > 0 and self.ce_token_chunk > 0, \
-            "cross-entropy chunk sizes must be positive"
+        assert self.ce_chunks > 0, "cross-entropy chunk size must be positive"
         unknown = sorted(set(self.moe) - MOE_KEYS)
         assert not unknown, f"unknown moe keys {unknown}; known: {sorted(MOE_KEYS)}"
         hidden = self.moe.get("ffn_hidden")

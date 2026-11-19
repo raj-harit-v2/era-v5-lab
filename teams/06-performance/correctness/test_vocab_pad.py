@@ -48,9 +48,8 @@ def test_bad_multiple_rejected(bad):
         _cfg(vocab_pad_multiple=bad)
 
 
-MEMORY_BOUNDED = ["chunked", "fused", "fused_cached", "fused_liger", "fused_cce"]
-CE_KW = {"chunked": dict(ce_chunks=3), "fused": dict(ce_chunks=3), "fused_cached": dict(ce_token_chunk=5),
-         "fused_liger": dict(ce_token_chunk=5), "fused_cce": dict(ce_vocab_chunk=16)}
+MEMORY_BOUNDED = ["chunked", "fused"]
+CE_KW = {"chunked": dict(ce_chunks=3), "fused": dict(ce_chunks=3)}
 
 
 def _check_equal(kw, mode):
@@ -106,9 +105,8 @@ def test_fused_slices_a_head_bias():
     _, padded = _pair(ce_impl="fused")
     padded.head.bias = torch.nn.Parameter(torch.zeros(128))
     x, y = torch.randn(6, D), torch.randint(0, V, (6,))
-    for ce in ("fused", "fused_cached", "fused_liger", "fused_cce"):
-        padded.cfg.ce_impl = ce
-        padded._head_ce(padded.head, x, y).backward()
+    padded.cfg.ce_impl = "fused"
+    padded._head_ce(padded.head, x, y).backward()
 
 
 def test_accounting_ignores_padding_for_model_work(mode):

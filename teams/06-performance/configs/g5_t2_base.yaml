@@ -1,0 +1,78 @@
+# Team 5 T2 shape with the reference torch implementations on every switch.
+# Source: teams/05-architecture/configs/arms/t2.yaml plus decisions.md and runtime.yaml.
+# T2 is 8 layers, d_model 512, 8 query heads, 2 KV heads, context 2048, 16 routed
+# experts plus 1 shared, top-2, expert hidden 768, batch 8, bf16.
+# The arm says mlp_ratio: null because 768 is not an integer ratio of 512; the
+# merged config expresses the width directly as moe.ffn_hidden. Team 5's
+# HARNESS_WEEK2.md maps its ke1 arm value to Team 6's ke2 raw G4 table, with a
+# dense untied output head; that is what this file uses.
+#
+# ce_impl=torch is the strict reference. At T2 it materialises [B*T, V] fp32
+# logits; if the benchmark host cannot fit it, override model.ce_impl=chunked
+# and record that the CE comparison is no longer torch-vs-triton.
+#
+# This file is the strict reference half of the pair. configs/g5_t2_triton.yaml
+# inherits it and changes only implementation switches. Do not add Triton
+# defaults here: the merged base.yaml may enable them.
+inherit: base.yaml
+
+model:
+  vocab_size: 131072
+  block_size: 2048
+  n_layer: 8
+  n_head: 8
+  n_kv_head: 2
+  n_embd: 512
+  norm: rmsnorm
+  norm_eps: 1.0e-5
+  ln_impl: torch_ln
+  attn_impl: eager
+  position: rope
+  rope_impl: torch
+  rope_theta: 10000.0
+  activation: swiglu
+  swiglu_impl: torch
+  embedding: ke2
+  tie_embeddings: false
+  ke_max_pos: 32
+  ke_mode: dynamic
+  ffn: moe
+  moe:
+    num_experts: 16
+    top_k: 2
+    num_shared: 1
+    bias_gamma: 0.0
+    dispatch: loop
+    ffn_hidden: 768
+    router_impl: torch
+  reversible: false
+  rev_impl: two_pass
+  ce_impl: torch
+  mtp: false
+
+optim:
+  name: muon
+  muon_impl: batched
+  lr: 0.001
+  muon_lr: 0.01
+  weight_decay: 0.0
+  schedule: constant
+  warmup_steps: 0
+  min_lr_ratio: 0.1
+
+run:
+  device: cuda
+  dtype: bf16
+  batch_size: 8
+  seed: 1234
+  compile: false
+  grad_clip: 1.0
+
+data:
+  source: fineweb10b
+
+bench:
+  modes: [clean, layer]
+  warmup: 10
+  steps: 100
+  level: 3
