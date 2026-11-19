@@ -32,96 +32,14 @@ import subprocess
 import sys
 import time
 from pathlib import Path
-from typing import Dict, List, Tuple
-
-import yaml
+from typing import List, Tuple
 
 PERF_DIR = Path(__file__).resolve().parents[1]
 REPO_ROOT = PERF_DIR.parents[1]
 DEFAULT_G5_CONFIG = REPO_ROOT / "teams" / "05-architecture" / "configs" / "config_v1.yaml"
 
-# Explicit mapping from G5 config_v1.yaml `settings:` keys to G6 configs/base.yaml keys
-G5_TO_BASE_KEY = {
-    "run.seed": "run.seed",
-    "run.grad_clip": "run.grad_clip",
-    "optim.name": "optim.name",
-    "optim.lr": "optim.lr",
-    "tokenizer.vocab_size": "model.vocab_size",
-    "embedding.pos_dim": "model.ke_max_pos",
-    "attention.impl": "model.attn_impl",
-    "moe.n_expert": "model.moe.num_experts",
-    "moe.n_shared": "model.moe.num_shared",
-    "moe.top_k": "model.moe.top_k",
-    "model.n_layer": "model.n_layer",
-    "model.d_model": "model.n_embd",
-    "model.n_head": "model.n_head",
-    "model.d_ff": "model.moe.ffn_hidden",
-    "data.seq_len": "model.block_size",
-    "precision": "run.dtype",
-}
-
-
-def _load_g5_overrides(cfg_path: Path) -> Tuple[List[str], Dict[str, object]]:
-    """Translate G5's `settings: [{key, value, ...}]` YAML into valid configs/base.yaml CLI overrides.
-
-    If `cfg_path` is already a standard perfkit config dict (with `model:`/`run:`),
-    returns an empty override list so perfkit can load `cfg_path` directly.
-    """
-    raw = yaml.safe_load(cfg_path.read_text(encoding="utf-8")) or {}
-    if "settings" not in raw or not isinstance(raw["settings"], list):
-        return [], {}
-
-    applied: Dict[str, object] = {}
-    overrides: List[str] = []
-    unmapped: List[str] = []
-    has_moe = False
-
-    for item in raw["settings"]:
-        if not isinstance(item, dict):
-            continue
-        key = item.get("key")
-        val = item.get("value")
-        if not key or val is None:
-            # Open full-width dimensions (null in Gate-2 config_v1.yaml) fall back
-            # to base.yaml small-width defaults until G5/G7 lock full-width dims.
-            continue
-        applied[key] = val
-
-        if key == "tokenizer.name":
-            # Verified by dataio.loader against BrahmicTokenizer-131K; not a base.yaml key
-            continue
-        if key == "embedding.type":
-            mapped_val = "ke2" if str(val).lower() in ("kronecker", "ke2") else val
-            overrides.append(f"model.embedding={mapped_val}")
-            continue
-        if key == "loss.train_on":
-            if str(val).lower() == "ntp":
-                overrides.append("model.mtp=false")
-            elif str(val).lower() == "mtp":
-                overrides.append("model.mtp=true")
-            else:
-                unmapped.append(f"{key}={val}")
-            continue
-
-        if key.startswith("moe."):
-            has_moe = True
-
-        target_key = G5_TO_BASE_KEY.get(key)
-        if target_key:
-            overrides.append(f"{target_key}={val}")
-        else:
-            unmapped.append(f"{key}={val}")
-
-    if unmapped:
-        # A filled-in G5 value must reach the model or stop the job; never time a different model silently.
-        raise ValueError(f"{cfg_path}: G5 settings with no base.yaml mapping (add them to G5_TO_BASE_KEY): "
-                         + ", ".join(unmapped))
-
-    if has_moe:
-        overrides.insert(0, "model.ffn=moe")
-        overrides.append("model.moe.dispatch=sorted")
-
-    return overrides, applied
+sys.path.insert(0, str(Path(__file__).resolve().parent))   # jobs/ is not a package
+from g5_config import load_g5_overrides  # noqa: E402  (one mapping for prof and nsys)
 
 
 def _run_bench(cmd: List[str]) -> Tuple[int, str, float]:
@@ -171,7 +89,7 @@ def main() -> int:
         candidate = (REPO_ROOT / cfg_path).resolve()
         cfg_path = candidate if candidate.exists() else (PERF_DIR / cfg_path).resolve()
 
-    g5_overrides, g5_applied = _load_g5_overrides(cfg_path)
+    g5_overrides, g5_applied = load_g5_overrides(cfg_path)
 
     if args.smoke_cpu:
         base_cfg = "configs/tiny_cpu.yaml"

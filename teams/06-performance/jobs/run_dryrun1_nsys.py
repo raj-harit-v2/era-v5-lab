@@ -41,68 +41,19 @@ import sys
 import time
 from pathlib import Path
 
-import yaml
-
 PERF_DIR = Path(__file__).resolve().parents[1]
 REPO_ROOT = PERF_DIR.parents[1]
 DEFAULT_G5_CONFIG = REPO_ROOT / "teams" / "05-architecture" / "configs" / "config_v1.yaml"
 CONFIG_PIN = "aec75af"   # G5 Gate 2 signed config_v1.yaml (#447)
 
 # Same mapping as run_dryrun1_prof.py (class #486), so both jobs profile the same model.
-G5_TO_BASE_KEY = {
-    "run.seed": "run.seed",
-    "run.grad_clip": "run.grad_clip",
-    "optim.name": "optim.name",
-    "optim.lr": "optim.lr",
-    "tokenizer.vocab_size": "model.vocab_size",
-    "embedding.pos_dim": "model.ke_max_pos",
-    "attention.impl": "model.attn_impl",
-    "moe.n_expert": "model.moe.num_experts",
-    "moe.n_shared": "model.moe.num_shared",
-    "moe.top_k": "model.moe.top_k",
-    "model.n_layer": "model.n_layer",
-    "model.d_model": "model.n_embd",
-    "model.n_head": "model.n_head",
-    "model.d_ff": "model.moe.ffn_hidden",
-    "data.seq_len": "model.block_size",
-    "precision": "run.dtype",
-}
+sys.path.insert(0, str(Path(__file__).resolve().parent))   # jobs/ is not a package
+from g5_config import load_g5_overrides  # noqa: E402  (one mapping for prof and nsys)
 
 # nsys stats report names. Newer nsys names the NVTX report nvtx_sum, older ones nvtx_pushpop_sum.
 REPORTS = ["cuda_gpu_kern_sum", "nvtx_sum", "cuda_gpu_mem_time_sum", "cuda_gpu_mem_size_sum", "cuda_api_sum"]
 REPORT_FALLBACK = {"nvtx_sum": "nvtx_pushpop_sum"}
 NSYS_EXIT_MISSING = 3
-
-
-def load_g5_overrides(cfg_path: Path):
-    """G5 `settings: [{key, value}]` -> base.yaml overrides (null values keep base.yaml's small width).
-    A plain perfkit config (with model:/run:) gives no overrides: it is loaded as it is."""
-    raw = yaml.safe_load(cfg_path.read_text(encoding="utf-8")) or {}
-    if not isinstance(raw.get("settings"), list):
-        return [], {}
-    applied, overrides, has_moe = {}, [], False
-    for item in raw["settings"]:
-        if not isinstance(item, dict):
-            continue
-        key, val = item.get("key"), item.get("value")
-        if not key or val is None:
-            continue
-        applied[key] = val
-        if key == "tokenizer.name":
-            continue
-        if key == "embedding.type":
-            overrides.append(f"model.embedding={'ke2' if str(val).lower() in ('kronecker', 'ke2') else val}")
-            continue
-        if key == "loss.train_on":
-            overrides.append(f"model.mtp={'true' if str(val).lower() == 'mtp' else 'false'}")
-            continue
-        has_moe = has_moe or key.startswith("moe.")
-        if key in G5_TO_BASE_KEY:
-            overrides.append(f"{G5_TO_BASE_KEY[key]}={val}")
-    if has_moe:
-        overrides.insert(0, "model.ffn=moe")
-        overrides.append("model.moe.dispatch=sorted")
-    return overrides, applied
 
 
 def resolve_config(arg: str) -> Path:

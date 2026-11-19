@@ -150,7 +150,7 @@ def test_d8_zero_steps_is_refused_cleanly(fake_bench):
 def _prof_resolved_config():
     from models.config import load_config
     prof = _job("run_dryrun1_prof")
-    overrides, _ = prof._load_g5_overrides(G5_CONFIG_V1)
+    overrides, _ = prof.load_g5_overrides(G5_CONFIG_V1)
     return overrides, load_config(ROOT / "configs" / "base.yaml", overrides + ["data.source=synthetic"])
 
 
@@ -182,7 +182,7 @@ def test_d11_unmapped_g5_setting_is_not_silently_dropped(tmp_path):
                    "  - {key: model.activation, value: swiglu}\n")
     prof = _job("run_dryrun1_prof")
     try:
-        overrides, applied = prof._load_g5_overrides(cfg)
+        overrides, applied = prof.load_g5_overrides(cfg)
     except (ValueError, KeyError, SystemExit):
         return                                                # refusing an unknown key is a fix
     assert any("n_kv_head" in o for o in overrides) and any("activation" in o for o in overrides)
@@ -191,7 +191,7 @@ def test_d11_unmapped_g5_setting_is_not_silently_dropped(tmp_path):
 def test_d11_signed_g5_config_v1_still_maps():
     """The fix must not reject today's signed config_v1: every non-null key there has a mapping."""
     prof = _job("run_dryrun1_prof")
-    overrides, applied = prof._load_g5_overrides(prof.DEFAULT_G5_CONFIG)
+    overrides, applied = prof.load_g5_overrides(prof.DEFAULT_G5_CONFIG)
     assert "model.moe.top_k=2" in overrides and "model.embedding=ke2" in overrides
 
 
