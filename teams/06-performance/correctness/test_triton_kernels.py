@@ -288,7 +288,9 @@ def _qkv(device, dtype, B, H, KV, T, hd, seed=23):
 
 
 @pytest.mark.parametrize("dtype", [torch.float32, torch.bfloat16])
-@pytest.mark.parametrize("H,KV,hd", [(8, 8, 32), (8, 2, 32), (4, 1, 64), (2, 2, 16), (2, 1, 8)])
+# hd 96 and 128: head-dim width 128, so bf16 takes the 32-row block that hd <= 64 never uses
+@pytest.mark.parametrize("H,KV,hd", [(8, 8, 32), (8, 2, 32), (4, 1, 64), (2, 2, 16), (2, 1, 8), (4, 4, 96),
+                                     (8, 2, 128)])
 @pytest.mark.parametrize("T", [1, 17, 64, 100, 256])
 def test_attention_matches_eager(device, dtype, H, KV, hd, T):
     _cuda(device)
@@ -307,6 +309,12 @@ def test_attention_matches_eager(device, dtype, H, KV, hd, T):
     outs[0].backward(dy)
     outs[1].backward(dy)
     torch.testing.assert_close(leaves[0].grad, leaves[1].grad, **_tol(dtype))
+
+
+@pytest.mark.parametrize("hd", [64, 128])
+def test_attention_matches_eager_at_t2_block_size(device, hd):
+    """T = 2048, the G5 T2 block size: 32-64 key blocks per row, the longest online-softmax loop in use."""
+    test_attention_matches_eager(device, torch.bfloat16, 8, 2, hd, 2048)
 
 
 def test_attention_backward_repeats_bitwise(device):
