@@ -394,7 +394,7 @@ class GPT(nn.Module):
         weight = head.weight if head.weight.shape[0] == V else head.weight[:V]
         bias = head.bias if head.bias is None or head.bias.shape[0] == V else head.bias[:V]   # heads are bias=False today
         if self.cfg.ce_impl == "fused_triton":           # ce_impl=fused without CUDA or Triton
-            return linear_cross_entropy_cublas(x, head.weight, y, bias=head.bias, chunks=self.cfg.ce_chunks,
+            return linear_cross_entropy_cublas(x, weight, y, bias=bias, chunks=self.cfg.ce_chunks,
                                                ignore_index=IGNORE_INDEX)
         if self.cfg.ce_impl == "fused":
             return linear_cross_entropy_fused(

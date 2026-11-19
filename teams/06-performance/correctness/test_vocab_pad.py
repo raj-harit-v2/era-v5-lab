@@ -48,8 +48,8 @@ def test_bad_multiple_rejected(bad):
         _cfg(vocab_pad_multiple=bad)
 
 
-MEMORY_BOUNDED = ["chunked", "fused"]
-CE_KW = {"chunked": dict(ce_chunks=3), "fused": dict(ce_chunks=3)}
+MEMORY_BOUNDED = ["chunked", "fused", "fused_triton"]    # fused_triton: on CPU its ce_impl=fused fallback, same slice
+CE_KW = {"chunked": dict(ce_chunks=3), "fused": dict(ce_chunks=3), "fused_triton": dict(ce_chunks=3)}
 
 
 def _check_equal(kw, mode):
@@ -165,3 +165,21 @@ def test_mask_under_autocast_bf16():
 def test_bad_mode_rejected():
     with pytest.raises(AssertionError, match="vocab_pad_mode"):
         _cfg(vocab_pad_mode="zeros")
+
+
+def test_fused_triton_cuda_keeps_padding_out_of_the_loss():
+    """The CUDA kernel path, not the CPU fallback: _head_ce must hand it the first vocab_size rows."""
+    if not torch.cuda.is_available():
+        pytest.skip("needs CUDA")
+    from kernels.linear_ce_cublas import supported
+    if not supported(torch.zeros(1, device="cuda"), torch.zeros(1, device="cuda")):
+        pytest.skip("needs Triton")
+    plain, padded = _pair("slice", ce_impl="fused_triton", ce_chunks=3)
+    plain, padded = plain.cuda(), padded.cuda()
+    idx = torch.randint(0, V, (2, 8), device="cuda")
+    tgt = torch.randint(0, V, (2, 8), device="cuda")
+    _, lossp = plain(idx, tgt)
+    _, lossd = padded(idx, tgt)
+    torch.testing.assert_close(lossd, lossp)
+    lossd.backward()
+    assert padded.head.weight.grad[V:].abs().max() == 0
