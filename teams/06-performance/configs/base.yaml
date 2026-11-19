@@ -28,20 +28,20 @@ model:                  # fields of models.config.ModelConfig, nothing else
   n_embd: 256
   norm: layernorm       # layernorm | rmsnorm (G5 form; a model change: G5 decides)
   norm_eps: 1.0e-5      # eps of either norm
-  ln_impl: triton_ln    # torch_ln | triton_ln (CUDA/Triton): backend of model.norm
-  attn_impl: triton     # sdpa | eager (explicit softmax, G5 config_v0: two seeds match) | triton (deterministic flash)
+  ln_impl: torch_ln     # torch_ln | triton_ln (CUDA/Triton): backend of model.norm
+  attn_impl: eager      # sdpa | eager (explicit softmax, G5 config_v0: two seeds match) | triton (deterministic flash)
   position: learned     # learned (position table) | rope (rotary q and k, full head dim)
-  rope_impl: triton     # torch | triton (one kernel each way; position: rope only)
+  rope_impl: torch      # torch | triton (one kernel each way; position: rope only)
   rope_theta: null      # RoPE base; required with position: rope (no default: G5 to confirm), ignored by learned
   mlp_ratio: 4
   activation: gelu      # gelu | swiglu (SiLU(gate) * up, 3 matrices, no biases): dense MLP and every expert
-  swiglu_impl: triton   # torch | triton (SiLU(gate) * up in one kernel; activation: swiglu only)
+  swiglu_impl: torch    # torch | triton (SiLU(gate) * up in one kernel; activation: swiglu only)
   embedding: ke2        # table | ke1 | ke2 (G4 raw table, teams/04-ke2)
   tie_embeddings: false # null: tie iff embedding=table; true: require table; false: never tie
   ke_max_pos: 32
   ke_mode: dynamic      # dynamic | cached
   ffn: mlp              # mlp | moe
-  moe: {num_experts: 8, top_k: 2, num_shared: 1, bias_gamma: 0.01, dispatch: loop, ffn_hidden: null, router_impl: triton}
+  moe: {num_experts: 8, top_k: 2, num_shared: 1, bias_gamma: 0.01, dispatch: loop, ffn_hidden: null, router_impl: torch}
   reversible: true
   rev_h: 1.0
   rev_impl: two_pass    # two_pass (invert + recompute) | one_pass (single f in backward)
