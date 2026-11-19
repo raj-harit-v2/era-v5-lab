@@ -81,10 +81,9 @@ def test_c1_hand_counted_ledger_model_and_hardware_flops():   # [GUARD]
         ({"reversible": True, "rev_impl": "two_pass"}, 2 * 1664),   # invert + recompute = 2 extra stack forwards
         ({"reversible": True, "rev_impl": "one_pass"}, 1 * 1664),   # one_pass reuses the inversion: 1 extra forward
         ({"ce_impl": "chunked"}, 2 * HEAD_W),                        # chunked CE recomputes the head matmul: 2*128
-        ({"ce_impl": "fused_cce"}, 2 * HEAD_W),                      # same for the fused_cce path
         ({"ce_impl": "fused"}, 0),                                   # caches gradients in forward: no recompute
-        ({"ce_impl": "fused_cached"}, 0),                            # same, with fixed token tiles
-        ({"ce_impl": "fused_liger"}, 0),                             # same
+        ({"ce_impl": "triton_liger"}, 0),                            # official Liger caches chunk gradients
+        ({"ce_impl": "triton_cce"}, 2 * HEAD_W),                     # official Apple CCE recomputes logit tiles
     ],
 )
 def test_c1_hardware_flops_add_only_the_recompute_that_really_runs(overrides, extra_hw):   # [GUARD]

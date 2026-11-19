@@ -33,13 +33,11 @@ COMPARE_CONFIG = [
 IMPL_SWITCHES = [
     ("model", "moe", "dispatch"),
     ("model", "ce_impl"),
-    ("model", "ce_triton_backward"),
-    ("model", "ce_triton_chunk"),
-    ("model", "ce_triton_vocab_chunk"),
-    ("model", "ce_triton_scratch_mb"),
-    ("model", "ce_triton_grad_precision"),
-    ("model", "ce_triton_validate_targets"),
     ("model", "ln_impl"),
+    ("model", "attn_impl"),          # sdpa | eager | triton: the same causal softmax attention
+    ("model", "rope_impl"),
+    ("model", "swiglu_impl"),
+    ("model", "moe", "router_impl"),
     ("model", "rev_impl"),  # two_pass vs one_pass: same update, different backward
     ("model", "vocab_pad_mode"),      # slice vs mask of the padded columns (B2)
     ("model", "vocab_pad_multiple"),  # head rows rounded up (B2): same loss, padded logits sliced off

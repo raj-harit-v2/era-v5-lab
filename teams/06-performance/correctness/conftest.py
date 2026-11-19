@@ -135,14 +135,12 @@ def _test_needs(item):
     if file == "test_model.py" and fn == "test_mtp_loss_parts":
         return [("model.mtp", True)]
     if file == "test_ce.py":
-        if fn == "test_source_inspired_impls_match_plain_loss_and_all_gradients":
+        if fn == "test_official_impls_match_plain_loss_and_all_gradients":
             return []
-        if fn.startswith("test_fused_liger"):
-            return [("model.ce_impl", "fused_liger")]
-        if fn.startswith("test_fused_cce"):
-            return [("model.ce_impl", "fused_cce")]
-        if fn.startswith("test_fused_cached"):
-            return [("model.ce_impl", "fused_cached")]
+        if fn.startswith("test_triton_liger"):
+            return [("model.ce_impl", "triton_liger")]
+        if fn.startswith("test_triton_cce"):
+            return [("model.ce_impl", "triton_cce")]
         return [("model.ce_impl", "fused" if fn.startswith("test_fused") else "chunked")]
     if file == "test_optimizer.py":
         if "polar" in fn:
@@ -167,6 +165,8 @@ def _value(key):
     cfg, mcfg = _config()
     if key == "attention":
         return _attn_kind(mcfg.n_head, mcfg.n_kv_head)
+    if key == "model.attn_impl" and mcfg.attn_impl == "triton":
+        return "eager"                   # the Triton kernel's reference and fallback: run the eager tests
     if key.startswith("model."):
         node = mcfg.to_dict()
         for k in key.split(".")[1:]:

@@ -14,7 +14,7 @@ model_flops_per_token = 6 * N_active + 12 * L * d * T
 
 hw_flops_per_token    = model_flops_per_token
                       + 2 forwards of the stack when reversible (invert + recompute)
-                      + 2 * head again when ce_impl=chunked or fused_cce (they recompute the head)
+                      + 2 * head again when ce_impl=chunked or triton_cce (they recompute the head)
                       + optimizer FLOPs per step (Muon Newton-Schulz) / tokens per step
 ```
 

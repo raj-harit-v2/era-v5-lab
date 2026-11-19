@@ -1,0 +1,13 @@
+# Triton implementation of the same Team 5 T2 model as g5_t2_base.yaml.
+# Only implementation switches differ; model shape, optimizer, data, batch and
+# seed are inherited unchanged from the reference YAML.
+inherit: g5_t2_base.yaml
+
+model:
+  ln_impl: triton_ln
+  attn_impl: triton
+  rope_impl: triton
+  swiglu_impl: triton
+  ce_impl: triton_cce
+  moe:
+    router_impl: triton

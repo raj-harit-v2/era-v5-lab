@@ -28,17 +28,26 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+from kernels.router import route as triton_route, supported as triton_route_supported
+from kernels.swiglu import swiglu as triton_swiglu
 from perfkit.regions import region
 
 
 ACTIVATIONS = ("gelu", "swiglu")
+IMPLS = ("torch", "triton")                 # swiglu_impl, router_impl
+
+
+def _silu_mul_torch(g, u):
+    return F.silu(g) * u
 
 
 class ExpertMLP(nn.Module):
-    def __init__(self, dim, hidden, std=0.02, proj_std=0.02, activation="gelu"):
+    def __init__(self, dim, hidden, std=0.02, proj_std=0.02, activation="gelu", swiglu_impl="torch"):
         super().__init__()
         assert activation in ACTIVATIONS, f"activation {activation!r} not in {ACTIVATIONS}"
+        assert swiglu_impl in IMPLS, f"swiglu_impl {swiglu_impl!r} not in {IMPLS}"
         self.swiglu = activation == "swiglu"
+        self.silu_mul = triton_swiglu if swiglu_impl == "triton" else _silu_mul_torch
         bias = not self.swiglu
         self.c_fc = nn.Linear(dim, hidden, bias=bias)      # gelu: input projection; swiglu: the "up" branch
         self.c_proj = nn.Linear(hidden, dim, bias=bias)
@@ -53,7 +62,7 @@ class ExpertMLP(nn.Module):
 
     def forward(self, x):
         if self.swiglu:
-            return self.c_proj(F.silu(self.c_gate(x)) * self.c_fc(x))
+            return self.c_proj(self.silu_mul(self.c_gate(x), self.c_fc(x)))
         return self.c_proj(F.gelu(self.c_fc(x)))
 
 
@@ -84,7 +93,7 @@ def _batched_experts(moe, buf, region_name):
                          torch.stack([e.c_fc.weight for e in moe.experts])], dim=1).to(buf.dtype)
         with region(region_name, 3):
             gate, up = torch.bmm(buf, w13.transpose(1, 2)).chunk(2, dim=-1)
-            return torch.bmm(F.silu(gate) * up, w2.transpose(1, 2))
+            return torch.bmm(moe.silu_mul(gate, up), w2.transpose(1, 2))
     w1 = torch.stack([e.c_fc.weight for e in moe.experts]).to(buf.dtype)     # [E, hidden, dim]
     b1 = torch.stack([e.c_fc.bias for e in moe.experts]).to(buf.dtype)
     b2 = torch.stack([e.c_proj.bias for e in moe.experts]).to(buf.dtype)
@@ -181,9 +190,10 @@ def replay_routing(moe, topk_idx):
 class SparseMoE(nn.Module):
     def __init__(self, dim, num_experts=8, top_k=2, expert_hidden=None, num_shared=0,
                  bias_gamma=0.01, dispatch="loop", name="moe", router_init_std=0.02, proj_std=0.02,
-                 activation="gelu"):
+                 activation="gelu", swiglu_impl="torch", router_impl="torch"):
         super().__init__()
         assert dispatch in DISPATCH, f"dispatch {dispatch!r} not in {list(DISPATCH)}"
+        assert router_impl in IMPLS, f"router_impl {router_impl!r} not in {IMPLS}"
         assert 0 < top_k <= num_experts
         self.dim, self.num_experts, self.top_k = dim, num_experts, top_k
         self.expert_hidden = expert_hidden or 4 * dim
@@ -193,7 +203,9 @@ class SparseMoE(nn.Module):
         nn.init.zeros_(self.router.bias)
         self.register_buffer("router_bias", torch.zeros(num_experts))
         self.activation, self.swiglu = activation, activation == "swiglu"
-        expert = dict(proj_std=proj_std, activation=activation)
+        self.silu_mul = triton_swiglu if swiglu_impl == "triton" else _silu_mul_torch    # the batched experts
+        self.router_impl = router_impl
+        expert = dict(proj_std=proj_std, activation=activation, swiglu_impl=swiglu_impl)
         self.experts = nn.ModuleList(ExpertMLP(dim, self.expert_hidden, **expert) for _ in range(num_experts))
         self.shared = nn.ModuleList(ExpertMLP(dim, self.expert_hidden, **expert) for _ in range(num_shared))
         self._counts = self._record = self._forced = None
@@ -204,17 +216,22 @@ class SparseMoE(nn.Module):
         with region(f"{self.name}.router", 3):
             with torch.autocast(device_type=x.device.type, enabled=False):    # the router always runs in fp32
                 logits = self.router(x.to(self.router.weight.dtype))
-            scores = F.softmax(logits, dim=-1)
-            if self._forced is not None:
-                topk_idx = self._forced.long()
+            fused = (self.router_impl == "triton" and self._forced is None
+                     and triton_route_supported(logits, self.router_bias, self.top_k))
+            if fused:                        # softmax, bias, top-k and gates in one kernel (kernels/router.py)
+                topk_idx, gates = triton_route(logits, self.router_bias, self.top_k)
             else:
-                # router_bias steers which experts are chosen; the gates below use the plain scores
-                topk_idx = torch.topk(scores + self.router_bias, self.top_k, dim=1).indices
+                scores = F.softmax(logits, dim=-1)
+                if self._forced is not None:
+                    topk_idx = self._forced.long()
+                else:
+                    # router_bias steers which experts are chosen; the gates below use the plain scores
+                    topk_idx = torch.topk(scores + self.router_bias, self.top_k, dim=1).indices
+                gates = torch.gather(scores, 1, topk_idx)
+                gates = gates / gates.sum(dim=1, keepdim=True)
             if self._record is not None:
                 # uint8: the reversible stack keeps every layer's routing until backward
                 self._record.append(topk_idx.to(torch.uint8 if self.num_experts <= 256 else torch.int32))
-            gates = torch.gather(scores, 1, topk_idx)
-            gates = gates / gates.sum(dim=1, keepdim=True)
         with region(f"{self.name}.dispatch", 3):
             out, counts = DISPATCH[self.dispatch](self, x, topk_idx, gates)
         with region(f"{self.name}.shared", 3):

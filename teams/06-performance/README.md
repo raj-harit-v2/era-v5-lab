@@ -26,11 +26,11 @@ model is a new YAML file in `configs/`, not new code.
 `model.embedding=table model.reversible=false optim.name=adamw`. Every switch and the region it changes is in
 [`docs/PARTS.md`](docs/PARTS.md); the `ce_impl` variants are in [`docs/LINEAR_CE.md`](docs/LINEAR_CE.md).
 
-`model.ce_impl=triton_ce` selects the in-repo Triton CE reduction kernel. Existing `torch`, `chunked`, `fused`, `fused_cached`, `fused_liger`, and `fused_cce` values remain available for comparison; the last two are PyTorch references inspired by upstream algorithms. See [`docs/LINEAR_CE.md`](docs/LINEAR_CE.md) for A100/H100 correctness checks and matched benchmark commands.
-
-For `triton_ce`, `model.ce_triton_backward=auto` chooses vocabulary or token streaming to accumulate the smaller gradient. Vocabulary streaming writes each weight-gradient slice once. `ce_triton_scratch_mb=64` caps derivative and forward-statistics scratch separately; token/vocabulary chunk limits control the launch/memory tradeoff. FP16 gradient products stay fp32 and mean/loss scaling happens after accumulation. The earlier `chunked` and `recompute` paths remain selectable. Debug target validation is explicit because it synchronizes the GPU. See the CE docs for precision controls, isolated kernel regions, and server timing commands; no speedup is established yet.
+`model.ce_impl` selects `torch`, `chunked`, `fused`, `triton_liger`, or `triton_cce`. `chunked` and `fused` are the portable memory-bounded paths; `triton_liger` and `triton_cce` select the vendored official Liger and Apple Cut Cross-Entropy Triton kernels (CUDA only). See [`docs/LINEAR_CE.md`](docs/LINEAR_CE.md) for correctness checks and matched benchmark commands.
 
 `model.ln_impl=torch_ln|triton_ln` selects PyTorch LayerNorm (default) or the in-repo Triton version for both pre-LN block norms and `ln_f`. The Triton module falls back to PyTorch for unsupported inputs; `meta.layer_norm` and printed notes identify each resolved backend. Its deterministic backward scratch is bounded by GPU SM count and skips frozen parameter gradients. Level-3 timing records `fwd:blockN.ln1`, `fwd:blockN.ln2`, `fwd:head+loss.ln_f`, and the eager backward stages `bwd:ln.triton.rows` / `bwd:ln.triton.params`. See [`docs/LAYER_NORM.md`](docs/LAYER_NORM.md) for correctness and benchmark commands.
+
+More Triton switches, each off by default with the torch code as the reference: `model.norm=rmsnorm` (G5's RMSNorm; with `ln_impl=triton_ln` one kernel that also does LN2's residual add), `model.swiglu_impl`, `model.rope_impl`, `model.attn_impl=triton` (flash attention with a deterministic backward) and `model.moe.router_impl`. See [`docs/TRITON_KERNELS.md`](docs/TRITON_KERNELS.md).
 
 ## Folder layout
 
