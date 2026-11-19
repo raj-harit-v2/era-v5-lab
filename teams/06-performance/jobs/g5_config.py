@@ -10,10 +10,14 @@ reversible default; both stay as they are until G5/CAP confirm the dry-run-1 con
 """
 from __future__ import annotations
 
+import sys
 from pathlib import Path
 from typing import Dict, List, Tuple
 
 import yaml
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))   # teams/06-performance, for dataio (stdlib only)
+from dataio.tokenizer import NAME as TOKENIZER_NAME, SHA256 as TOKENIZER_SHA256  # noqa: E402
 
 # G5 config_v1.yaml `settings:` key -> G6 configs/base.yaml key
 G5_TO_BASE_KEY = {
@@ -35,9 +39,9 @@ G5_TO_BASE_KEY = {
     "precision": "run.dtype",
 }
 
-# The only tokenizer perfkit loads: dataio/tokenizer.py pins its file (revision + SHA256) and its 131,072-id vocab,
-# and perfkit/bench.py records this name in every run. A different name in config_v1 cannot be honoured.
-TOKENIZER_NAME = "BrahmicTokenizer-131K"
+# TOKENIZER_NAME is the tokenizer perfkit actually loads, read from dataio/tokenizer.py (which pins its file by
+# revision + SHA256 and checks its 131,072-id vocab; perfkit/bench.py records the same name in every run). A different
+# name in config_v1 cannot be honoured, so it stops the job. Re-pinning dataio/tokenizer.py moves this check with it.
 
 
 def load_g5_overrides(cfg_path: Path) -> Tuple[List[str], Dict[str, object]]:
@@ -66,7 +70,7 @@ def load_g5_overrides(cfg_path: Path) -> Tuple[List[str], Dict[str, object]]:
 
         if key == "tokenizer.name":
             if str(val) != TOKENIZER_NAME:
-                unmapped.append(f"{key}={val} (perfkit loads only {TOKENIZER_NAME})")
+                unmapped.append(f"{key}={val} (perfkit loads only {TOKENIZER_NAME}, sha256 {TOKENIZER_SHA256[:12]}…)")
             continue
         if key == "embedding.type":
             overrides.append(f"model.embedding={'ke2' if str(val).lower() in ('kronecker', 'ke2') else val}")

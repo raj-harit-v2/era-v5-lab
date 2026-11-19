@@ -106,3 +106,14 @@ def test_plain_perfkit_config_gives_no_overrides(tmp_path):
     cfg = tmp_path / "arm.yaml"
     cfg.write_text("model:\n  n_layer: 2\nrun:\n  seed: 1\n")
     assert g5_config.load_g5_overrides(cfg) == ([], {})
+
+
+def test_tokenizer_name_is_the_one_dataio_pins():
+    """One source of truth: the check accepts exactly the tokenizer dataio/tokenizer.py loads, and bench.py records it.
+    A re-pin (p1536) then changes the loader, this check and the run record together."""
+    from dataio import tokenizer
+    assert g5_config.TOKENIZER_NAME == tokenizer.NAME
+    assert g5_config.TOKENIZER_SHA256 == tokenizer.SHA256
+    bench_src = (ROOT / "perfkit" / "bench.py").read_text()
+    assert '"name": TOKENIZER_NAME' in bench_src and f'"{tokenizer.NAME}"' not in bench_src
+

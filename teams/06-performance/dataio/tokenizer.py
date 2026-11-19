@@ -11,11 +11,13 @@ import json
 from pathlib import Path
 from urllib.request import urlopen
 
+NAME = "BrahmicTokenizer-131K"      # tokenizer v0. The one place perfkit names its tokenizer: jobs/g5_config.py and
+                                    # perfkit/bench.py read it from here, so a re-pin (e.g. p1536) changes all three.
 REVISION = "7dfcf398172c825c6689ad578e8b484ca5f57bc9"
 SHA256 = "01d968a7970b029c071b29f060abf6104b66168dedf2ff3b1a0290a545739fff"
 URL = f"https://raw.githubusercontent.com/theschoolofai/BrahmicTokenizer-131K/{REVISION}/tokenizer.json"
 VOCAB_SIZE = 131072
-DEFAULT_PATH = "~/.cache/era-perf/BrahmicTokenizer-131K/tokenizer.json"
+DEFAULT_PATH = f"~/.cache/era-perf/{NAME}/tokenizer.json"
 
 
 class BrahmicTokenizer:

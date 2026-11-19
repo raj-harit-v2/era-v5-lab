@@ -44,7 +44,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from dataio.loader import Loader  # noqa: E402
-from dataio.tokenizer import REVISION as TOKENIZER_REVISION, SHA256 as TOKENIZER_SHA256, VOCAB_SIZE as BRAHMIC_VOCAB  # noqa: E402
+from dataio.tokenizer import (NAME as TOKENIZER_NAME, REVISION as TOKENIZER_REVISION,  # noqa: E402
+                             SHA256 as TOKENIZER_SHA256, VOCAB_SIZE as BRAHMIC_VOCAB)
 from models.config import load_config, model_config  # noqa: E402
 from kernels.layer_norm import layer_norm_backend_report  # noqa: E402
 from models.gpt import GPT  # noqa: E402
@@ -559,7 +560,7 @@ def run_metadata(s: Setup, config_file: str, overrides: list, tag: str,
         "dtype": s.dtype, "dtype_requested": s.cfg["run"]["dtype"], "notes": list(s.notes),
         "batch_size": s.loader.B, "seq_len": s.loader.T, "tokens_per_step": s.loader.B * s.loader.T,
         "vocab_size": s.mcfg.vocab_size, "data_source": s.cfg["data"]["source"],
-        "tokenizer": {"name": "BrahmicTokenizer-131K", "revision": TOKENIZER_REVISION, "sha256": TOKENIZER_SHA256,
+        "tokenizer": {"name": TOKENIZER_NAME, "revision": TOKENIZER_REVISION, "sha256": TOKENIZER_SHA256,
                       "vocab_size": s.loader.vocab_size},
         "lr_schedule": s.cfg["optim"]["schedule"],
         "layer_norm": {"requested": s.mcfg.ln_impl, "modules": layer_norm_backend_report(s.core)},
