@@ -1,0 +1,65 @@
+{
+ "benchmarks": {
+  "arc_challenge": {
+   "after": 0.274,
+   "at_limit": false,
+   "before": 0.272,
+   "delta": 0.0020000000000000018,
+   "metric": "acc_norm",
+   "n_items": 500,
+   "no_stderr": false,
+   "significant_drop": false,
+   "stderr_combined": 0.028204094417012708
+  },
+  "hellaswag": {
+   "after": 0.4375,
+   "at_limit": false,
+   "before": 0.4325,
+   "delta": 0.0050000000000000044,
+   "metric": "acc_norm",
+   "n_items": 400,
+   "no_stderr": false,
+   "significant_drop": false,
+   "stderr_combined": 0.035098768623660334
+  }
+ },
+ "bpb": {
+  "after": 1.1364582934208138,
+  "at_limit": false,
+  "before": 1.0981069047976242,
+  "delta": 0.03835138862318965,
+  "groups": {
+   "val/groups/code_bpb": {
+    "after": 0.8035154809059103,
+    "before": 0.7551613871012757,
+    "delta": 0.048354093804634624
+   },
+   "val/groups/english_bpb": {
+    "after": 1.039997229708902,
+    "before": 0.9952369277319574,
+    "delta": 0.04476030197694458
+   },
+   "val/groups/indic_mean_bpb": {
+    "after": 1.2137901333787904,
+    "before": 1.181461275731519,
+    "delta": 0.032328857647271336
+   },
+   "val/three_group_bpb": {
+    "after": 1.0191009479978674,
+    "before": 0.9772865301882506,
+    "delta": 0.04181441780961681
+   }
+  },
+  "heldout_sha256": "21c6e4b2df8dae9d69e254f4a00fc934d2a3c70f0675065a03724299d94312bb",
+  "limit": 0.05,
+  "rose_too_much": false
+ },
+ "forgetting": false,
+ "limits": {
+  "at_limit_margin": 0.01,
+  "max_bpb_rise": 0.05,
+  "min_drop": 0.01,
+  "sigmas": 2.0
+ },
+ "reasons": []
+}

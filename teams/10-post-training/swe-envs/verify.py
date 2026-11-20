@@ -37,6 +37,7 @@ import argparse
 import json
 import os
 import posixpath
+import random
 import re
 import shlex
 import subprocess
@@ -176,6 +177,33 @@ def is_test_path(path: str) -> bool:
     )
 
 
+_RUNNER_NAMES = {"pytest.py", "pytest", "_pytest", "pluggy", "py.py", "sitecustomize.py", "usercustomize.py"}
+_STDLIB = frozenset(getattr(sys, "stdlib_module_names", ()))
+
+
+def shadows_runner(path: str) -> bool:
+    """True for a top-level path that would replace what pytest or Python imports first. test_cmd is `python -m
+    pytest` run in /repo, which puts the working directory first on sys.path, so a top-level pytest.py, _pytest/,
+    pluggy/, sitecustomize.py, a *.pth file or a module named like a standard-library module runs in the test
+    process before the real one (job W, 18 Nov 2026). Hidden-test files are refused by is_test_path already."""
+    top, _, rest = path.removeprefix("./").partition("/")
+    if path.endswith(".pth") or top in _RUNNER_NAMES:
+        return True
+    name = top[:-3] if (not rest and top.endswith(".py")) else (top if rest else "")
+    return bool(name) and name in _STDLIB
+
+
+# Not refused (a real fix may mention any of these) but recorded in the reward's "flags": read a sample of
+# high-reward patches that carry one each RL run.
+_FLAG_PATTERNS = ("_pytest", "TestReport", "pluggy", "sys.modules", "gc.get_objects", "inspect", "/proc/", "atexit",
+                  "os._exit")
+
+
+def patch_flags(patch: str) -> list[str]:
+    added = "\n".join(l[1:] for l in patch.splitlines() if l.startswith("+") and not l.startswith("+++"))
+    return [f for f in _FLAG_PATTERNS if f in added]
+
+
 def split_patch(patch: str) -> tuple[str, str]:
     """Split a unified diff into (gold, test) parts by file."""
     gold, test = [], []
@@ -239,8 +267,34 @@ def sentinel(env: dict, token: str) -> dict:
         return {"name": name, "file": posixpath.join(folder, f"z{token}_test.go"),
                 "pkg_from": go_tests[0] if go_tests else "",
                 "lines": ['import "testing"', f'func {name}(t *testing.T) {{ t.Fatal("check") }}']}
-    name = f"test_{token}"
-    return {"name": name, "file": f"test_{token}.py", "lines": [f"def {name}():", "    assert 0 == 1"]}
+    return _python_sentinel(env, token)
+
+
+_SENTINEL_WORDS = ["regression", "roundtrip", "edge_case", "empty", "unicode", "nested", "issue", "again", "simple", "variant"]
+
+
+def _python_sentinel(env: dict, token: str) -> dict:
+    """Python sentinel, made to look like one more hidden test (job W, 18 Nov 2026: P1/P1b forged pytest's reports and
+    spared the old sentinel, which was easy to find: a `test_<12 hex>` name in its own untracked file named on the
+    command line). Its name is the first FAIL_TO_PASS name plus two words, its body has the shape of a small
+    assertion with random ints, and it is appended to the file of that FAIL_TO_PASS test, which the test command
+    already runs. Random from the token only, so run_side and check_report derive the same one."""
+    rnd = random.Random(token)
+    first = env["FAIL_TO_PASS"][0] if env.get("FAIL_TO_PASS") else ""
+    classname, _, test = first.partition("::")
+    test = test.split("::")[-1].split("[")[0] or "test"
+    taken = {t.split("::")[-1].split("[")[0] for t in env.get("FAIL_TO_PASS", []) + env.get("PASS_TO_PASS", [])}
+    candidates = (f"{test}_{rnd.choice(_SENTINEL_WORDS)}_{rnd.choice(_SENTINEL_WORDS)}" for _ in range(200))
+    name = next((n for n in candidates if n not in taken), f"{test}_{token}")
+    # the file that holds the test: its dotted path is the junit classname or a prefix of it (class-based tests)
+    py_files = [f for f in env.get("test_files", []) if f.endswith(".py")]
+    holder = next((f for f in py_files if classname == f[:-3].replace("/", ".") or classname.startswith(f[:-3].replace("/", ".") + ".")), "")
+    a, b = rnd.randrange(10, 10 ** 6), rnd.randrange(10, 10 ** 6)
+    lines = ["", "", f"def {name}():", f"    expected = {a}", f"    assert {b if b != a else a + 1} == expected"]
+    if holder:
+        return {"name": name, "file": holder, "lines": lines, "append": True}
+    # no test file found for the id: fall back to a file of its own (easier to find, but still a failing test)
+    return {"name": f"test_{token}", "file": f"test_{token}.py", "lines": ["def " + f"test_{token}():", "    assert 0 == 1"]}
 
 
 def check_report(results: dict[str, bool], sent: dict, exit_code: int | None, summary: str,
@@ -266,7 +320,23 @@ def check_report(results: dict[str, bool], sent: dict, exit_code: int | None, su
 
 # --- running one side in Docker -------------------------------------------------------------
 
-def container_script(env: dict, with_candidate: bool, token: str = "0" * 12) -> str:
+def apply_test_patch(test_patch: str | None, token: str) -> list[str]:
+    """Script lines that apply the hidden test patch: from the script text when given, else from the /patches mount."""
+    if test_patch is None:
+        return [f"if ! git apply --whitespace=nowarn /patches/test.patch; then echo {TEST_PATCH_FAIL}; exit 0; fi"]
+    eof = f"G10_TEST_PATCH_EOF_{token}"
+    body = test_patch[:-1] if test_patch.endswith("\n") else test_patch  # the heredoc adds the final newline back
+    return [f"cat > /tmp/.g10tp <<'{eof}'", body, eof,
+            f"if ! git apply --whitespace=nowarn /tmp/.g10tp; then echo {TEST_PATCH_FAIL}; exit 0; fi; rm -f /tmp/.g10tp"]
+
+
+def container_script(env: dict, with_candidate: bool, token: str = "0" * 12, test_patch: str | None = None) -> str:
+    """The bash script for one run. The executor must feed it to `bash -s` on stdin (a script passed with `-c` is
+    readable in /proc/1/cmdline, and the sentinel's name and file are in it).
+
+    test_patch: the text of test.patch, delivered inside the script (heredoc to a temp file, applied, removed before
+    the tests run) so the candidate cannot diff the clean upstream patch against the files on disk to find the
+    sentinel. None keeps the old behaviour, a read-only /patches/test.patch mount."""
     restore = " ".join(shlex.quote(f) for f in env["test_files"])
     report = f"/tmp/g10_{token}.out"
     sent = sentinel(env, token)
@@ -274,10 +344,15 @@ def container_script(env: dict, with_candidate: bool, token: str = "0" * 12) -> 
     if env.get("language", "python") == "go":
         write_sentinel = (f"pkg=$(sed -n 's/^package \\([A-Za-z0-9_]*\\).*/\\1/p' {shlex.quote(sent['pkg_from'])} "
                           f"| head -1); {{ echo \"package $pkg\"; {body} }} > {shlex.quote(sent['file'])}")
-        run = f"{env['test_cmd']} > {report} 2>/tmp/g10_test.log"
+        run = f"{env['test_cmd']} > {report} 2>/tmp/g10_test.log < /dev/null"
     else:
-        write_sentinel = f"{{ {body} }} > {shlex.quote(sent['file'])}"
-        run = f"{env['test_cmd']} {shlex.quote(sent['file'])} --junitxml={report} > /tmp/g10_test.log 2>&1"
+        if sent.get("append"):  # appended to the file of the first FAIL_TO_PASS test, which test_cmd already runs
+            write_sentinel = f"{{ {body} }} >> {shlex.quote(sent['file'])}"
+            run = f"{env['test_cmd']} --junitxml={report} > /tmp/g10_test.log 2>&1 < /dev/null"
+        else:
+            write_sentinel = f"{{ {body} }} > {shlex.quote(sent['file'])}"
+            run = (f"{env['test_cmd']} {shlex.quote(sent['file'])} --junitxml={report} "
+                   "> /tmp/g10_test.log 2>&1 < /dev/null")
     lines = [
         "cd /repo",
         f"if ! git apply --whitespace=nowarn /patches/candidate.patch; then echo {APPLY_FAIL}; exit 0; fi"
@@ -286,7 +361,7 @@ def container_script(env: dict, with_candidate: bool, token: str = "0" * 12) -> 
         f"for f in {restore}; do if git cat-file -e HEAD:\"$f\" 2>/dev/null; then git checkout -q HEAD -- \"$f\"; "
         "else rm -f \"$f\"; fi; done",
         # ... then apply the upstream test change and add the sentinel test.
-        f"if ! git apply --whitespace=nowarn /patches/test.patch; then echo {TEST_PATCH_FAIL}; exit 0; fi",
+        *apply_test_patch(test_patch, token),
         write_sentinel,
         f"timeout {int(env.get('timeout_s', 300))} {run}; echo \"@@G10_EXIT $?@@\"",
         f"echo {REPORT_START}; cat {report} 2>/dev/null; echo {REPORT_END}",
@@ -304,8 +379,10 @@ def image_ref(env: dict) -> str:
 def docker_run(env: dict, script: str, files: dict[str, bytes], timeout_s: float) -> tuple[str, str]:
     """Default executor: a fresh `docker run --rm` per run, with `files` mounted read-only at /patches.
 
-    An executor takes (env, script, files, timeout_s), runs `script` with bash in the env image with `files` at
-    /patches, and returns (stdout, stderr). It raises TimeoutError on timeout. rl/pool.py provides a pooled one.
+    An executor takes (env, script, files, timeout_s), runs `script` with `bash -s` in the env image (the script on
+    STDIN, never as a `bash -c` argument: an argument sits in /proc/1/cmdline, where the candidate could read the
+    sentinel) with `files` at /patches, and returns (stdout, stderr). It raises TimeoutError on timeout. Any other
+    executor (a pooled `docker exec`, for example) must also use `docker exec -i ... bash -s` and feed the script on stdin.
     """
     with tempfile.TemporaryDirectory(prefix="g10swe-") as tmp:
         pdir = Path(tmp)
@@ -316,9 +393,10 @@ def docker_run(env: dict, script: str, files: dict[str, bytes], timeout_s: float
         name = f"g10swe-{uuid.uuid4().hex[:12]}"
         cmd = ["docker", "run", "--rm", "--name", name, *DOCKER_LIMITS,
                *(["--platform", PLATFORM] if PLATFORM else []),
-               "-v", f"{pdir}:/patches:ro", image_ref(env), "bash", "-c", script]
+               "-i", "-v", f"{pdir}:/patches:ro", image_ref(env), "bash", "-s"]
         try:
-            proc = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout_s)
+            proc = subprocess.run(cmd, input=script, capture_output=True, text=True, encoding="utf-8", errors="replace",
+                                  timeout=timeout_s)
         except subprocess.TimeoutExpired:
             subprocess.run(["docker", "kill", name], capture_output=True)
             raise TimeoutError
@@ -328,13 +406,14 @@ def docker_run(env: dict, script: str, files: dict[str, bytes], timeout_s: float
 def run_side(env_dir: Path, env: dict, candidate: str | None, executor=None) -> dict:
     """Run the hidden tests once on base (+ candidate). Returns {"results": {...}} or {"error": ...}."""
     token = uuid.uuid4().hex[:12]
-    files = {"test.patch": (env_dir / "test.patch").read_bytes()}
+    test_patch = (env_dir / "test.patch").read_bytes().decode("utf-8")  # bytes: no CRLF change; in the script, not /patches
+    files = {}
     if candidate is not None:
         files["candidate.patch"] = candidate.encode("utf-8")
     start = time.monotonic()
     try:
-        stdout, stderr = (executor or docker_run)(env, container_script(env, candidate is not None, token), files,
-                                                  int(env.get("timeout_s", 300)) + 60)
+        stdout, stderr = (executor or docker_run)(env, container_script(env, candidate is not None, token, test_patch),
+                                                  files, int(env.get("timeout_s", 300)) + 60)
     except TimeoutError:
         return {"error": "timeout"}
     seconds = time.monotonic() - start
@@ -368,14 +447,20 @@ def load_env(env_dir: Path) -> dict:
     return json.loads((env_dir / "env.json").read_text(encoding="utf-8"))
 
 
+def _docker_build(args: list[str]) -> subprocess.CompletedProcess:
+    """Run `docker build` with `--progress=plain`, retrying without it on legacy builders that reject `--progress`."""
+    proc = subprocess.run(["docker", "build", "--progress=plain", *args], capture_output=True, text=True)
+    if proc.returncode != 0 and "unknown flag: --progress" in (proc.stderr or ""):
+        proc = subprocess.run(["docker", "build", *args], capture_output=True, text=True)
+    return proc
+
+
 def ensure_image(env_dir: Path, env: dict) -> str:
     """Build the env image if it is not present. Returns the image id."""
     ref = image_ref(env)
     have = subprocess.run(["docker", "image", "inspect", "-f", "{{.Id}}", ref], capture_output=True, text=True)
     if have.returncode != 0:
-        build = subprocess.run(["docker", "build", "--progress=plain",
-                                *(["--platform", PLATFORM] if PLATFORM else []), "-t", ref, str(env_dir)],
-                               capture_output=True, text=True)
+        build = _docker_build([*(["--platform", PLATFORM] if PLATFORM else []), "-t", ref, str(env_dir)])
         if build.returncode != 0:
             raise RuntimeError(f"docker build failed for {ref}:\n{build.stderr[-2000:]}")
         have = subprocess.run(["docker", "image", "inspect", "-f", "{{.Id}}", ref],
@@ -395,14 +480,22 @@ def reward(env_dir: Path, candidate: str, executor=None) -> dict:
     touched = sorted(p for p in paths if is_test_path(p) or p in env["test_files"])
     if touched:
         return {"instance_id": env["instance_id"], "reward": 0, "reason": f"patch edits test files: {touched}"}
+    if env.get("language", "python") != "go":
+        shadow = sorted(p for p in paths if shadows_runner(p))
+        if shadow:
+            return {"instance_id": env["instance_id"], "reward": 0, "reason": f"patch shadows the test runner: {shadow}"}
+    flags = patch_flags(candidate)
     ensure_image(env_dir, env)
     side = run_side(env_dir, env, candidate, executor)
     if "error" in side:
         return {"instance_id": env["instance_id"], "reward": 0, "reason": side["error"]}
     wanted = env["FAIL_TO_PASS"] + env["PASS_TO_PASS"]
     failed = [t for t in wanted if not side["results"].get(t, False)]
-    return {"instance_id": env["instance_id"], "reward": int(not failed), "failed": failed[:20],
-            "n_failed": len(failed), "seconds": side["seconds"]}
+    out = {"instance_id": env["instance_id"], "reward": int(not failed), "failed": failed[:20],
+           "n_failed": len(failed), "seconds": side["seconds"]}
+    if flags:
+        out["flags"] = flags  # not a refusal: see patch_flags
+    return out
 
 
 def gold_check(env_dir: Path, runs: int = 5) -> dict:

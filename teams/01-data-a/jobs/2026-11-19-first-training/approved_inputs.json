@@ -1,0 +1,959 @@
+{
+  "name": "first-training-input-scope",
+  "status": "final_source_scope_and_split_contract",
+  "approval_basis": "Assumption until TSAI says otherwise: the 38 unique sample-v0 pack IDs are the allowed training-source universe; pull additional raw Parquets of the same source/subsets, with the same pack and train/heldout layout.",
+  "tsai_manifest_approval": "not_recorded_in_this_file",
+  "baseline_commit": "1135778201b442f56a9c3273bbf612233149cf51",
+  "sample_reference": {
+    "file": "teams/01-data-a/jobs/2026-11-02-tokenizer-sample-v0-clean/tokenizer_sample_v0_manifest.json",
+    "sha256": "7fd647c8d4662d17e2310efbcc20981d70656fdad2fabb7663c266a2153a1b7e",
+    "unique_packs": 38,
+    "source_labels": 14,
+    "parts": 86,
+    "parts_by_split": {
+      "train": 48,
+      "heldout": 38
+    },
+    "usage": "Source universe only; sample part counts, hashes and rows do not describe the expanded training input."
+  },
+  "dedup_policy": {
+    "file": "teams/01-data-a/dedup/dedup.json",
+    "sha256": "4ad067c0acb2a60c1b375a7bb414e4025d00a99d63138b8495f5fbf564f89af3",
+    "default_licence_usable": false,
+    "admissible_packs": 38,
+    "excluded_sample_packs": [],
+    "unlisted_packs": "reject"
+  },
+  "layout": "<input_root>/<train|heldout>/<pack_id>/part-<number>.parquet",
+  "part_selection": "All staged Parquet files under the listed packs and splits; freeze exact files and hashes before cleaning.",
+  "splits": {
+    "train": {
+      "minimum_parts_per_pack": 1,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    "heldout": {
+      "minimum_parts_per_pack": 1,
+      "expected": "not_sharded"
+    }
+  },
+  "required_columns": [
+    "doc_id",
+    "text",
+    "pack_id",
+    "lang_label"
+  ],
+  "row_validation": "The cleaner/preflight must check pack_id values, text values and unique doc_id within each part. The inventory builder checks column presence, footer row counts and file hashes.",
+  "packs": [
+    {
+      "pack_id": "code-go",
+      "group": "code",
+      "lang_label": "code",
+      "source": "bigcode/starcoderdata",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 1,
+      "input_globs": {
+        "train": "train/code-go/part-*.parquet",
+        "heldout": "heldout/code-go/part-*.parquet"
+      },
+      "license": "other (per-file permissive Stack licences; attribution required)",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [
+        {
+          "requirement": "Preserve and verify per-file upstream licensing and attribution; the pack-level true value does not license every upstream file.",
+          "authority": "main Stage 0 licence rows"
+        }
+      ],
+      "language": "go",
+      "script": "Latn",
+      "domain": "code",
+      "lane": "code"
+    },
+    {
+      "pack_id": "code-js-ts",
+      "group": "code",
+      "lang_label": "code",
+      "source": "bigcode/starcoderdata",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 2,
+      "input_globs": {
+        "train": "train/code-js-ts/part-*.parquet",
+        "heldout": "heldout/code-js-ts/part-*.parquet"
+      },
+      "license": "other (per-file upstream licensing; attribution required)",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [
+        {
+          "requirement": "Preserve and verify per-file upstream licensing and attribution; the pack-level true value does not license every upstream file.",
+          "authority": "main Stage 0 licence rows"
+        }
+      ],
+      "language": "js-ts",
+      "script": "Latn",
+      "domain": "code",
+      "lane": "code"
+    },
+    {
+      "pack_id": "code-java",
+      "group": "code",
+      "lang_label": "code",
+      "source": "bigcode/starcoderdata",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 3,
+      "input_globs": {
+        "train": "train/code-java/part-*.parquet",
+        "heldout": "heldout/code-java/part-*.parquet"
+      },
+      "license": "other (per-file permissive Stack licences; attribution required)",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [
+        {
+          "requirement": "Preserve and verify per-file upstream licensing and attribution; the pack-level true value does not license every upstream file.",
+          "authority": "main Stage 0 licence rows"
+        }
+      ],
+      "language": "java",
+      "script": "Latn",
+      "domain": "code",
+      "lane": "code"
+    },
+    {
+      "pack_id": "code-cpp",
+      "group": "code",
+      "lang_label": "code",
+      "source": "bigcode/starcoderdata",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 4,
+      "input_globs": {
+        "train": "train/code-cpp/part-*.parquet",
+        "heldout": "heldout/code-cpp/part-*.parquet"
+      },
+      "license": "other (per-file permissive Stack licences; attribution required)",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [
+        {
+          "requirement": "Preserve and verify per-file upstream licensing and attribution; the pack-level true value does not license every upstream file.",
+          "authority": "main Stage 0 licence rows"
+        }
+      ],
+      "language": "cpp",
+      "script": "Latn",
+      "domain": "code",
+      "lane": "code"
+    },
+    {
+      "pack_id": "code-rust",
+      "group": "code",
+      "lang_label": "code",
+      "source": "bigcode/starcoderdata",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 5,
+      "input_globs": {
+        "train": "train/code-rust/part-*.parquet",
+        "heldout": "heldout/code-rust/part-*.parquet"
+      },
+      "license": "other (per-file permissive Stack licences; attribution required)",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [
+        {
+          "requirement": "Preserve and verify per-file upstream licensing and attribution; the pack-level true value does not license every upstream file.",
+          "authority": "main Stage 0 licence rows"
+        }
+      ],
+      "language": "rust",
+      "script": "Latn",
+      "domain": "code",
+      "lane": "code"
+    },
+    {
+      "pack_id": "code-python",
+      "group": "code",
+      "lang_label": "code",
+      "source": "bigcode/starcoderdata",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 6,
+      "input_globs": {
+        "train": "train/code-python/part-*.parquet",
+        "heldout": "heldout/code-python/part-*.parquet"
+      },
+      "license": "other (per-file permissive Stack licences; attribution required)",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [
+        {
+          "requirement": "Preserve and verify per-file upstream licensing and attribution; the pack-level true value does not license every upstream file.",
+          "authority": "main Stage 0 licence rows"
+        }
+      ],
+      "language": "python",
+      "script": "Latn",
+      "domain": "code",
+      "lane": "code"
+    },
+    {
+      "pack_id": "en-fineweb-edu",
+      "group": "en",
+      "lang_label": "en",
+      "source": "HuggingFaceFW/fineweb-edu",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 7,
+      "input_globs": {
+        "train": "train/en-fineweb-edu/part-*.parquet",
+        "heldout": "heldout/en-fineweb-edu/part-*.parquet"
+      },
+      "license": "ODC-By v1.0 (commercial use permitted with attribution)",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [],
+      "language": "en",
+      "script": "Latn",
+      "domain": "english",
+      "lane": "english"
+    },
+    {
+      "pack_id": "en-dclm",
+      "group": "en",
+      "lang_label": "en",
+      "source": "mlfoundations/dclm-baseline-1.0-parquet",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 8,
+      "input_globs": {
+        "train": "train/en-dclm/part-*.parquet",
+        "heldout": "heldout/en-dclm/part-*.parquet"
+      },
+      "license": "CC-BY-4.0 (DCLM packaging, rev `817d675276`; Common Crawl terms; card's \"intended/designed for research purposes only\" under Uses/Bias is a statement of intent/fitness disclaimer, not a licence term, same as Dolci; fastText filter only, no generated text)",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [],
+      "language": "en",
+      "script": "Latn",
+      "domain": "english",
+      "lane": "english"
+    },
+    {
+      "pack_id": "en-nemotroncc-synth",
+      "group": "en",
+      "lang_label": "en",
+      "source": "nvidia/Nemotron-CC (v1, data.commoncrawl.org contrib/Nemotron)",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 9,
+      "input_globs": {
+        "train": "train/en-nemotroncc-synth/part-*.parquet",
+        "heldout": "heldout/en-nemotroncc-synth/part-*.parquet"
+      },
+      "license": "Common Crawl terms + permissive synthetic contribution (Mistral-NeMo-12B-Instruct, Apache-2.0; Wikipedia rewrites inherit CC-BY-SA)",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [
+        {
+          "requirement": "Pin v1 and exact real/synthetic subsets; preserve synthetic-generator and Wikipedia attribution details.",
+          "authority": "sample source labels; main Stage 0 licence rows; PR #626 draft licence note"
+        }
+      ],
+      "language": "en",
+      "script": "Latn",
+      "domain": "english",
+      "lane": "english"
+    },
+    {
+      "pack_id": "en-nemotroncc",
+      "group": "en",
+      "lang_label": "en",
+      "source": "nvidia/Nemotron-CC (v1, data.commoncrawl.org contrib/Nemotron)",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 10,
+      "input_globs": {
+        "train": "train/en-nemotroncc/part-*.parquet",
+        "heldout": "heldout/en-nemotroncc/part-*.parquet"
+      },
+      "license": "Common Crawl terms (pipeline Apache-2.0)",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [
+        {
+          "requirement": "Pin v1 and exact real/synthetic subsets; preserve synthetic-generator and Wikipedia attribution details.",
+          "authority": "sample source labels; main Stage 0 licence rows; PR #626 draft licence note"
+        }
+      ],
+      "language": "en",
+      "script": "Latn",
+      "domain": "english",
+      "lane": "english"
+    },
+    {
+      "pack_id": "math-megamath",
+      "group": "math",
+      "lang_label": "en",
+      "source": "LLM360/MegaMath",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 11,
+      "input_globs": {
+        "train": "train/math-megamath/part-*.parquet",
+        "heldout": "heldout/math-megamath/part-*.parquet"
+      },
+      "license": "ODC-By v1.0 (`megamath-web` subset; commercial use permitted with attribution)",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [
+        {
+          "requirement": "Use the megamath-web subset; the dataset name alone is too broad.",
+          "authority": "main Stage 0 licence row"
+        }
+      ],
+      "language": "en",
+      "script": "Latn",
+      "domain": "math",
+      "lane": "math"
+    },
+    {
+      "pack_id": "math-finemath",
+      "group": "math",
+      "lang_label": "en",
+      "source": "HuggingFaceTB/finemath",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 12,
+      "input_globs": {
+        "train": "train/math-finemath/part-*.parquet",
+        "heldout": "heldout/math-finemath/part-*.parquet"
+      },
+      "license": "ODC-By v1.0 (commercial use permitted with attribution)",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [],
+      "language": "en",
+      "script": "Latn",
+      "domain": "math",
+      "lane": "math"
+    },
+    {
+      "pack_id": "sci-finepdfs",
+      "group": "sci",
+      "lang_label": "en",
+      "source": "HuggingFaceFW/finepdfs",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 13,
+      "input_globs": {
+        "train": "train/sci-finepdfs/part-*.parquet",
+        "heldout": "heldout/sci-finepdfs/part-*.parquet"
+      },
+      "license": "ODC-By v1.0 (commercial use permitted with attribution)",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [],
+      "language": "en",
+      "script": "Latn",
+      "domain": "sci",
+      "lane": "science"
+    },
+    {
+      "pack_id": "cadj-commits",
+      "group": "cadj",
+      "lang_label": "code",
+      "source": "bigcode/commitpackft",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 14,
+      "input_globs": {
+        "train": "train/cadj-commits/part-*.parquet",
+        "heldout": "heldout/cadj-commits/part-*.parquet"
+      },
+      "license": "mit (per-file upstream repository licences; attribution required)",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [
+        {
+          "requirement": "Preserve repository/commit/notebook/post identifiers and attribution in the raw fetch metadata.",
+          "authority": "main Stage 0 licence rows; PR #626 draft licence note"
+        }
+      ],
+      "language": "code",
+      "script": "Latn",
+      "domain": "code-adjacent",
+      "lane": "code-adjacent"
+    },
+    {
+      "pack_id": "cadj-notebooks",
+      "group": "cadj",
+      "lang_label": "code",
+      "source": "HuggingFaceTB/issues-kaggle-notebooks",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 15,
+      "input_globs": {
+        "train": "train/cadj-notebooks/part-*.parquet",
+        "heldout": "heldout/cadj-notebooks/part-*.parquet"
+      },
+      "license": "apache-2.0",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [
+        {
+          "requirement": "Preserve repository/commit/notebook/post identifiers and attribution in the raw fetch metadata.",
+          "authority": "main Stage 0 licence rows; PR #626 draft licence note"
+        },
+        {
+          "requirement": "Pin and verify Kaggle config rather than issues config.",
+          "authority": "PR #626 draft licence_status_before_scale_v1.md; main Data B model-card source description"
+        }
+      ],
+      "language": "code",
+      "script": "Latn",
+      "domain": "code-adjacent",
+      "lane": "code-adjacent"
+    },
+    {
+      "pack_id": "cadj-stackexchange",
+      "group": "cadj",
+      "lang_label": "en",
+      "source": "bigcode/starcoder2data-extras",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 16,
+      "input_globs": {
+        "train": "train/cadj-stackexchange/part-*.parquet",
+        "heldout": "heldout/cadj-stackexchange/part-*.parquet"
+      },
+      "license": "cc-by-sa-4.0 (commercial use permitted with attribution)",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [
+        {
+          "requirement": "Preserve repository/commit/notebook/post identifiers and attribution in the raw fetch metadata.",
+          "authority": "main Stage 0 licence rows; PR #626 draft licence note"
+        },
+        {
+          "requirement": "Pin and verify the stackoverflow subset.",
+          "authority": "PR #626 draft licence_status_before_scale_v1.md"
+        }
+      ],
+      "language": "en",
+      "script": "Latn",
+      "domain": "code-adjacent",
+      "lane": "code-adjacent"
+    },
+    {
+      "pack_id": "ind-bn-fw2",
+      "group": "ind",
+      "lang_label": "bn",
+      "source": "HuggingFaceFW/fineweb-2",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 17,
+      "input_globs": {
+        "train": "train/ind-bn-fw2/part-*.parquet",
+        "heldout": "heldout/ind-bn-fw2/part-*.parquet"
+      },
+      "license": "ODC-By v1.0 (commercial use permitted with attribution)",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [],
+      "language": "bn",
+      "script": "Beng",
+      "domain": "indic",
+      "lane": "indic"
+    },
+    {
+      "pack_id": "ind-bn-sangraha-v",
+      "group": "ind",
+      "lang_label": "bn",
+      "source": "ai4bharat/sangraha",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 18,
+      "input_globs": {
+        "train": "train/ind-bn-sangraha-v/part-*.parquet",
+        "heldout": "heldout/ind-bn-sangraha-v/part-*.parquet"
+      },
+      "license": "CC-BY-4.0 (commercial use permitted with attribution)",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [],
+      "language": "bn",
+      "script": "Beng",
+      "domain": "indic",
+      "lane": "indic"
+    },
+    {
+      "pack_id": "ind-gu-fw2",
+      "group": "ind",
+      "lang_label": "gu",
+      "source": "HuggingFaceFW/fineweb-2",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 19,
+      "input_globs": {
+        "train": "train/ind-gu-fw2/part-*.parquet",
+        "heldout": "heldout/ind-gu-fw2/part-*.parquet"
+      },
+      "license": "ODC-By v1.0 (commercial use permitted with attribution)",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [],
+      "language": "gu",
+      "script": "Gujr",
+      "domain": "indic",
+      "lane": "indic"
+    },
+    {
+      "pack_id": "ind-hi-fw2",
+      "group": "ind",
+      "lang_label": "hi",
+      "source": "HuggingFaceFW/fineweb-2",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 20,
+      "input_globs": {
+        "train": "train/ind-hi-fw2/part-*.parquet",
+        "heldout": "heldout/ind-hi-fw2/part-*.parquet"
+      },
+      "license": "ODC-By v1.0 (commercial use permitted with attribution)",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [],
+      "language": "hi",
+      "script": "Deva",
+      "domain": "indic",
+      "lane": "indic"
+    },
+    {
+      "pack_id": "ind-hi-hplt",
+      "group": "ind",
+      "lang_label": "hi",
+      "source": "HPLT 3.0 (data.hplt-project.org/three/sorted; HF HPLT/HPLT3.0 is README-only)",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 21,
+      "input_globs": {
+        "train": "train/ind-hi-hplt/part-*.parquet",
+        "heldout": "heldout/ind-hi-hplt/part-*.parquet"
+      },
+      "license": "CC0-1.0 (packaging) / Web terms",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [],
+      "language": "hi",
+      "script": "Deva",
+      "domain": "indic",
+      "lane": "indic"
+    },
+    {
+      "pack_id": "ind-hi-indiccorp",
+      "group": "ind",
+      "lang_label": "hi",
+      "source": "ai4bharat/IndicCorpV2",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 22,
+      "input_globs": {
+        "train": "train/ind-hi-indiccorp/part-*.parquet",
+        "heldout": "heldout/ind-hi-indiccorp/part-*.parquet"
+      },
+      "license": "CC-BY-4.0 (commercial use permitted with attribution)",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [],
+      "language": "hi",
+      "script": "Deva",
+      "domain": "indic",
+      "lane": "indic"
+    },
+    {
+      "pack_id": "ind-hi-sangraha-s",
+      "group": "ind",
+      "lang_label": "hi",
+      "source": "ai4bharat/sangraha",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 23,
+      "input_globs": {
+        "train": "train/ind-hi-sangraha-s/part-*.parquet",
+        "heldout": "heldout/ind-hi-sangraha-s/part-*.parquet"
+      },
+      "license": "CC-BY-4.0 (commercial use permitted with attribution)",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [
+        {
+          "requirement": "Keep source eligibility separate from the proposed translated-text mixture exclusion; the current 38-pack scope is unchanged.",
+          "authority": "main Data B native_indic_share_v1.md is a proposal; current dedup map remains true"
+        }
+      ],
+      "language": "hi",
+      "script": "Deva",
+      "domain": "indic",
+      "lane": "indic"
+    },
+    {
+      "pack_id": "ind-hi-sangraha-v",
+      "group": "ind",
+      "lang_label": "hi",
+      "source": "ai4bharat/sangraha",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 24,
+      "input_globs": {
+        "train": "train/ind-hi-sangraha-v/part-*.parquet",
+        "heldout": "heldout/ind-hi-sangraha-v/part-*.parquet"
+      },
+      "license": "CC-BY-4.0 (commercial use permitted with attribution)",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [],
+      "language": "hi",
+      "script": "Deva",
+      "domain": "indic",
+      "lane": "indic"
+    },
+    {
+      "pack_id": "ind-kn-fw2",
+      "group": "ind",
+      "lang_label": "kn",
+      "source": "HuggingFaceFW/fineweb-2",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 25,
+      "input_globs": {
+        "train": "train/ind-kn-fw2/part-*.parquet",
+        "heldout": "heldout/ind-kn-fw2/part-*.parquet"
+      },
+      "license": "ODC-By v1.0 (commercial use permitted with attribution)",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [],
+      "language": "kn",
+      "script": "Knda",
+      "domain": "indic",
+      "lane": "indic"
+    },
+    {
+      "pack_id": "ind-kn-sangraha-s",
+      "group": "ind",
+      "lang_label": "kn",
+      "source": "ai4bharat/sangraha",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 26,
+      "input_globs": {
+        "train": "train/ind-kn-sangraha-s/part-*.parquet",
+        "heldout": "heldout/ind-kn-sangraha-s/part-*.parquet"
+      },
+      "license": "CC-BY-4.0 (commercial use permitted with attribution)",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [
+        {
+          "requirement": "Keep source eligibility separate from the proposed translated-text mixture exclusion; the current 38-pack scope is unchanged.",
+          "authority": "main Data B native_indic_share_v1.md is a proposal; current dedup map remains true"
+        }
+      ],
+      "language": "kn",
+      "script": "Knda",
+      "domain": "indic",
+      "lane": "indic"
+    },
+    {
+      "pack_id": "ind-kn-sangraha-v",
+      "group": "ind",
+      "lang_label": "kn",
+      "source": "ai4bharat/sangraha",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 27,
+      "input_globs": {
+        "train": "train/ind-kn-sangraha-v/part-*.parquet",
+        "heldout": "heldout/ind-kn-sangraha-v/part-*.parquet"
+      },
+      "license": "CC-BY-4.0 (commercial use permitted with attribution)",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [],
+      "language": "kn",
+      "script": "Knda",
+      "domain": "indic",
+      "lane": "indic"
+    },
+    {
+      "pack_id": "ind-ml-fw2",
+      "group": "ind",
+      "lang_label": "ml",
+      "source": "HuggingFaceFW/fineweb-2",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 28,
+      "input_globs": {
+        "train": "train/ind-ml-fw2/part-*.parquet",
+        "heldout": "heldout/ind-ml-fw2/part-*.parquet"
+      },
+      "license": "ODC-By v1.0 (commercial use permitted with attribution)",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [],
+      "language": "ml",
+      "script": "Mlym",
+      "domain": "indic",
+      "lane": "indic"
+    },
+    {
+      "pack_id": "ind-mr-fw2",
+      "group": "ind",
+      "lang_label": "mr",
+      "source": "HuggingFaceFW/fineweb-2",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 29,
+      "input_globs": {
+        "train": "train/ind-mr-fw2/part-*.parquet",
+        "heldout": "heldout/ind-mr-fw2/part-*.parquet"
+      },
+      "license": "ODC-By v1.0 (commercial use permitted with attribution)",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [],
+      "language": "mr",
+      "script": "Deva",
+      "domain": "indic",
+      "lane": "indic"
+    },
+    {
+      "pack_id": "ind-mr-sangraha-v",
+      "group": "ind",
+      "lang_label": "mr",
+      "source": "ai4bharat/sangraha",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 30,
+      "input_globs": {
+        "train": "train/ind-mr-sangraha-v/part-*.parquet",
+        "heldout": "heldout/ind-mr-sangraha-v/part-*.parquet"
+      },
+      "license": "CC-BY-4.0 (commercial use permitted with attribution)",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [],
+      "language": "mr",
+      "script": "Deva",
+      "domain": "indic",
+      "lane": "indic"
+    },
+    {
+      "pack_id": "ind-or-fw2",
+      "group": "ind",
+      "lang_label": "or",
+      "source": "HuggingFaceFW/fineweb-2",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 31,
+      "input_globs": {
+        "train": "train/ind-or-fw2/part-*.parquet",
+        "heldout": "heldout/ind-or-fw2/part-*.parquet"
+      },
+      "license": "ODC-By v1.0 (commercial use permitted with attribution)",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [],
+      "language": "or",
+      "script": "Orya",
+      "domain": "indic",
+      "lane": "indic"
+    },
+    {
+      "pack_id": "ind-sa-fw2",
+      "group": "ind",
+      "lang_label": "sa",
+      "source": "HuggingFaceFW/fineweb-2",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 32,
+      "input_globs": {
+        "train": "train/ind-sa-fw2/part-*.parquet",
+        "heldout": "heldout/ind-sa-fw2/part-*.parquet"
+      },
+      "license": "ODC-By v1.0 (commercial use permitted with attribution)",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [],
+      "language": "sa",
+      "script": "Deva",
+      "domain": "indic",
+      "lane": "indic"
+    },
+    {
+      "pack_id": "ind-ta-fw2",
+      "group": "ind",
+      "lang_label": "ta",
+      "source": "HuggingFaceFW/fineweb-2",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 33,
+      "input_globs": {
+        "train": "train/ind-ta-fw2/part-*.parquet",
+        "heldout": "heldout/ind-ta-fw2/part-*.parquet"
+      },
+      "license": "ODC-By v1.0 (commercial use permitted with attribution)",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [],
+      "language": "ta",
+      "script": "Taml",
+      "domain": "indic",
+      "lane": "indic"
+    },
+    {
+      "pack_id": "ind-ta-sangraha-s",
+      "group": "ind",
+      "lang_label": "ta",
+      "source": "ai4bharat/sangraha",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 34,
+      "input_globs": {
+        "train": "train/ind-ta-sangraha-s/part-*.parquet",
+        "heldout": "heldout/ind-ta-sangraha-s/part-*.parquet"
+      },
+      "license": "CC-BY-4.0 (commercial use permitted with attribution)",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [
+        {
+          "requirement": "Keep source eligibility separate from the proposed translated-text mixture exclusion; the current 38-pack scope is unchanged.",
+          "authority": "main Data B native_indic_share_v1.md is a proposal; current dedup map remains true"
+        }
+      ],
+      "language": "ta",
+      "script": "Taml",
+      "domain": "indic",
+      "lane": "indic"
+    },
+    {
+      "pack_id": "ind-ta-sangraha-v",
+      "group": "ind",
+      "lang_label": "ta",
+      "source": "ai4bharat/sangraha",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 35,
+      "input_globs": {
+        "train": "train/ind-ta-sangraha-v/part-*.parquet",
+        "heldout": "heldout/ind-ta-sangraha-v/part-*.parquet"
+      },
+      "license": "CC-BY-4.0 (commercial use permitted with attribution)",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [],
+      "language": "ta",
+      "script": "Taml",
+      "domain": "indic",
+      "lane": "indic"
+    },
+    {
+      "pack_id": "ind-te-fw2",
+      "group": "ind",
+      "lang_label": "te",
+      "source": "HuggingFaceFW/fineweb-2",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 36,
+      "input_globs": {
+        "train": "train/ind-te-fw2/part-*.parquet",
+        "heldout": "heldout/ind-te-fw2/part-*.parquet"
+      },
+      "license": "ODC-By v1.0 (commercial use permitted with attribution)",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [],
+      "language": "te",
+      "script": "Telu",
+      "domain": "indic",
+      "lane": "indic"
+    },
+    {
+      "pack_id": "ind-te-sangraha-s",
+      "group": "ind",
+      "lang_label": "te",
+      "source": "ai4bharat/sangraha",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 37,
+      "input_globs": {
+        "train": "train/ind-te-sangraha-s/part-*.parquet",
+        "heldout": "heldout/ind-te-sangraha-s/part-*.parquet"
+      },
+      "license": "CC-BY-4.0 (commercial use permitted with attribution)",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [
+        {
+          "requirement": "Keep source eligibility separate from the proposed translated-text mixture exclusion; the current 38-pack scope is unchanged.",
+          "authority": "main Data B native_indic_share_v1.md is a proposal; current dedup map remains true"
+        }
+      ],
+      "language": "te",
+      "script": "Telu",
+      "domain": "indic",
+      "lane": "indic"
+    },
+    {
+      "pack_id": "ind-te-sangraha-v",
+      "group": "ind",
+      "lang_label": "te",
+      "source": "ai4bharat/sangraha",
+      "source_revision": null,
+      "licence_usable": true,
+      "pack_order_rank": 38,
+      "input_globs": {
+        "train": "train/ind-te-sangraha-v/part-*.parquet",
+        "heldout": "heldout/ind-te-sangraha-v/part-*.parquet"
+      },
+      "license": "CC-BY-4.0 (commercial use permitted with attribution)",
+      "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)",
+      "subset_requirements": [],
+      "language": "te",
+      "script": "Telu",
+      "domain": "indic",
+      "lane": "indic"
+    }
+  ],
+  "allowed_train_packs": [
+    "code-go",
+    "code-js-ts",
+    "code-java",
+    "code-cpp",
+    "code-rust",
+    "code-python",
+    "en-fineweb-edu",
+    "en-dclm",
+    "en-nemotroncc-synth",
+    "en-nemotroncc",
+    "math-megamath",
+    "math-finemath",
+    "sci-finepdfs",
+    "cadj-commits",
+    "cadj-notebooks",
+    "cadj-stackexchange",
+    "ind-bn-fw2",
+    "ind-bn-sangraha-v",
+    "ind-gu-fw2",
+    "ind-hi-fw2",
+    "ind-hi-hplt",
+    "ind-hi-indiccorp",
+    "ind-hi-sangraha-s",
+    "ind-hi-sangraha-v",
+    "ind-kn-fw2",
+    "ind-kn-sangraha-s",
+    "ind-kn-sangraha-v",
+    "ind-ml-fw2",
+    "ind-mr-fw2",
+    "ind-mr-sangraha-v",
+    "ind-or-fw2",
+    "ind-sa-fw2",
+    "ind-ta-fw2",
+    "ind-ta-sangraha-s",
+    "ind-ta-sangraha-v",
+    "ind-te-fw2",
+    "ind-te-sangraha-s",
+    "ind-te-sangraha-v"
+  ],
+  "input_filename_regex": "part-[0-9]+\\.parquet",
+  "split_policy": {
+    "process_splits": [
+      "train",
+      "heldout"
+    ],
+    "shard_splits": [
+      "train"
+    ],
+    "heldout_shard_status": "not_sharded",
+    "dedup_heldout_policy": "compare and retain; no heldout removals",
+    "f2_heldout_policy": "process with the same fingerprint set; hits may be removed and must be accounted in the ledger"
+  },
+  "source_policy": {
+    "repository": "theschoolofai/era-v5-lab",
+    "commit": "ecb9a27d367189a9bfd58a37dba28e44dfcb500a",
+    "file": "teams/10-post-training/licences/licence_table.md",
+    "git_blob_sha": "0a3b501e48a7c145b0d290d09fecdf9d503ec649"
+  }
+}

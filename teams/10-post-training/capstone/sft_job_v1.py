@@ -30,7 +30,7 @@ Steps (each writes out/<step>.json; summary.json last; exit 1 if any step failed
               prompts both screens reached (same ids, same order), and the base on the same ids
 With --deadline-minutes the job ends by itself at that wall-clock time: an arm still running is killed, its weights
 are removed, and summary.json names the step that stopped. Outputs are aggregates only: each arm's weights and generations are deleted after its reload check (day_one_probe
-run_sft_arm), the rows at exit. Network: none. Writes only to --out. Resumable state is not saved (see the request).
+run_sft_arm), the rows at exit. Network: none. Writes only to --out (and, if given, --keep-weights-dir: one arm's weights). Resumable state is not saved (see the request).
 """
 from __future__ import annotations
 
@@ -127,7 +127,8 @@ def decide(a2: dict, a4: dict) -> dict:
                     f"'RL signal' needs >= {MIXED_MIN} mixed groups"}
 
 
-def sft_cmd(a, cfg: Path, rows: Path, dev: Path, arm_out: Path, steps: int, no_before: bool) -> list[str]:
+def sft_cmd(a, cfg: Path, rows: Path, dev: Path, arm_out: Path, steps: int, no_before: bool,
+            keep_run_id: str | None = None) -> list[str]:
     method = (["--method", "full", "--lr", str(a.lr)] if a.method == "full" else
               ["--method", "lora", "--lr", str(a.lr), "--marker-rows", "--wd", "0", "--marker-lr", str(a.marker_lr)])
     return [sys.executable, str(HERE / "sft_g5.py"), "--adapter-config", str(cfg), "--train", str(rows),
@@ -139,7 +140,9 @@ def sft_cmd(a, cfg: Path, rows: Path, dev: Path, arm_out: Path, steps: int, no_b
             *(["--rl-tasks", str(a.rl_tasks), "--rl-ids", str(a.rl_ids), "--rl-max-new", str(a.rl_max_new),
                "--rl-limit", str(a.rl_limit), "--rl-k", str(a.rl_k),
                "--rl-seconds", str(a.rl_seconds)] if a.rl_tasks and a.rl_ids else []),
-            *(["--no-before"] if no_before else []), "--out", str(arm_out)]
+            *(["--no-before"] if no_before else []),
+            *(["--keep-weights-dir", str(a.keep_weights_dir), "--keep-run-id", keep_run_id] if keep_run_id else []),
+            "--out", str(arm_out)]
 
 
 def run_arm(out: Path, arm: str, cmd: list[str], timeout: float | None = None) -> dict:
@@ -200,6 +203,9 @@ def run(a, out: Path) -> int:
     def left() -> float | None:
         return None if t_end is None else t_end - time.monotonic()
 
+    def keep_id(arm: str) -> str | None:
+        return f"g10-sft-{arm}" if a.keep_weights_dir and a.keep_arm == arm else None
+
     results = {"pins": probe.step(out, "pins", lambda: {**probe.check_pins(a.run_folder, a.tokenizer, a.byte_table),
                                                         **check_run_and_inputs(a), **check_g5_sources(a)})}
     if not results["pins"]["ok"]:
@@ -218,12 +224,12 @@ def run(a, out: Path) -> int:
         return probe.finish(out, results)
     dev = inp / "dev.jsonl"
     results["sft_a2"] = probe.step(out, "sft_a2", lambda: run_arm(
-        out, "a2", sft_cmd(a, cfg, inp / "a2_train.jsonl", dev, out / "sft_a2", a.steps, False), left()))
+        out, "a2", sft_cmd(a, cfg, inp / "a2_train.jsonl", dev, out / "sft_a2", a.steps, False, keep_id("a2")), left()))
     a2 = results["sft_a2"]
     steps_a4 = a2.get("steps_completed") or a.steps
     before = a2.get("before") if a2["ok"] else None
     results["sft_a4"] = probe.step(out, "sft_a4", lambda: run_arm(
-        out, "a4", sft_cmd(a, cfg, inp / "a4_train.jsonl", dev, out / "sft_a4", steps_a4, before is not None), left()))
+        out, "a4", sft_cmd(a, cfg, inp / "a4_train.jsonl", dev, out / "sft_a4", steps_a4, before is not None, keep_id("a4")), left()))
 
     def compare():
         reps = {arm: json.loads((out / f"sft_{arm}" / "sft_report.json").read_text())
@@ -281,8 +287,15 @@ def parse_args(argv=None):
     ap.add_argument("--no-git", action="store_true")
     ap.add_argument("--origin", default="g10_rehearsal", choices=("g10_rehearsal", "g5_delivery"))
     ap.add_argument("--device", default="cuda")
+    ap.add_argument("--keep-weights-dir", type=Path,
+                    help="default off: also keep ONE arm's final plain weights as a Team 7 run folder <dir>/g10-sft-<arm> "
+                         "(readable by Team 9's run_lab_ckpt.py --run-dir); everything else is deleted as before")
+    ap.add_argument("--keep-arm", choices=("a2", "a4"), help="the arm --keep-weights-dir keeps (required with it)")
     ap.add_argument("--out", type=Path, required=True)
-    return ap.parse_args(argv)
+    a = ap.parse_args(argv)
+    if bool(a.keep_weights_dir) != bool(a.keep_arm):
+        ap.error("--keep-weights-dir and --keep-arm go together: name the one arm whose weights leave the job")
+    return a
 
 
 def main(argv=None) -> int:

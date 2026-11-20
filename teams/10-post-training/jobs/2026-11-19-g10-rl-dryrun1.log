@@ -1,0 +1,171 @@
+# CPU test log: G10 first RL job, same script as this request (capstone/rl_job_v1.py), 18 Nov 2026
+# Source: clean `git archive befee1dc teams/10-post-training` (not a working tree). Hardware: Apple M1 Pro, 16 GB, CPU only. Verifier runner: docker.
+# Stand-in run folder: context 2,048 (as dry run 1), width 64, 2 layers, 16+1 experts top-2, 10,611,008 parameters, trained on the
+# p1536 tokenizer (the stand-in of #587's log, retrained on current main G5 code). Mechanics only, not a quality run. A rehearsal adapter
+# needs --origin g10_rehearsal --allow-fixture-smoke here; the real command uses --origin g5_delivery and neither flag.
+# Tokenizer e6b93a93...25a64b; table content 21072027...5168a. RL pool: cc.jsonl 91ee9951...9be0; train pool cd1aa76e...; held-out pool 935857bb...
+# Five cases (the same script; reduced settings shown per case; local paths shown as <...>):
+#  A  real scorer, SFT rebuild of A4 (4 steps), 64-prompt screen, 3 updates planned: --sft-arm a4 --sft-steps 4 --rate-probe-prompts 3 --rate-probe-seconds 5 --max-new 64 --screen-n 64 --heldout-n 8 --eval-k 2 --prompts-per-step 4 --updates 3 --reward-pool 4
+#  B  DRY RUN ONLY stand-in reward (a seeded coin p=0.4 replaces every reward, to force a cycle the untrained stand-in cannot reach), same command run twice with --max-steps-this-call 2: pause at update 2, resume to 3
+#  C  wrong G10_STDIO_SECRET_PATHS (a path that does not exist)
+#  D  --force-not-enough-time: the screen-only branch
+#  E  raw checkpoint (--sft-arm none), no decode rate given: the job measures it (rate step), then the screen-only branch
+# Common: G10_STDIO_RUNNER=docker G10_STDIO_SECRET_PATHS=<POOL>/out/v1/cc.jsonl python teams/10-post-training/capstone/rl_job_v1.py --g5-root <G5 checkout> --run-folder <stand-in run folder> --tokenizer <p1536 tokenizer.json> --byte-table <p1536 raw_table_P32.npz> --rl-tasks <POOL>/out/v1/cc.jsonl --train-pool <POOL>/pool/rl-code-v1-train.pool.jsonl --heldout-pool <POOL>/pool/rl-code-v1-heldout.pool.jsonl --no-git --device cpu --seed 1 --out <out> ...
+export: git archive befee1dc teams/10-post-training
+script sha256: rl_job_v1 1532877080962d77111e61f67c3db75098c4d985684e28764100f8f33fd6a089 test_rl_job_v1 d7ef4eb6f37f1691bf5491bcd5512eb0370ad337fb273f7e6c3a16f350ca6609
+
+
+# ---- case A: real scorer + SFT rebuild + screen (stops: NO_GO_MIXED_BAND) ----
+
+{"runner": "docker", "env": {"python": "3.12.16", "platform": "macOS-15.8.1-arm64-arm-64bit", "runner": "docker", "torch": "2.14.1"}}
+{"step": "env", "ok": true, "seconds": 0.7}
+{"step": "guard", "ok": true, "seconds": 1.0}
+{"pins": {"tokenizer_sha256": ["e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b", "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b"], "table_content_sha256": ["21072027b19ef6f05d57ead7a2fc9fb4c52129e491186bf38d0ba079e8d5168a", ...}
+{"step": "pins", "ok": true, "seconds": 0.1}
+{"pool_counts": {"train_pool_file": 3251, "removed_free": 18, "removed_effort": 0, "trained_pool": 3233, "heldout_pool_file": 255, "heldout_subset": 8, "easy_ids": 48, "easy_in_trained_pool": 39, "easy_not_in_trained_pool": 9, "easy_in_heldout_pool_file": 8, "overlap_trained_free": 0, "overlap_trained_effort": 0, "overlap_trained_heldout": 0, "heldout_subset_free": 0, "heldout_subset_effort": 0}}
+{"step": "pool", "ok": true, "seconds": 0.0}
+{"step": "tricks", "ok": true, "seconds": 177.5}
+{"sft_rebuild": {"steps": 4, "stopped_early": null, "train_seconds": 3.8, "format_validity": 0.0, "closed_im_end": 0.0, "hit_budget": 1.0, "mean_gen_tokens": 16.0, "rl_prompts": 3, "rl_pass_rate": 0.0, "rl_mixed_groups": 0, "rl_code_fence_share": 0.0, "rl_runs_share": 0.0, "rl_skipped_too_long": 0}, "sft_587_reference": null}
+{"step": "sft", "ok": true, "seconds": 90.0}
+  time table: fixed (guard, pins, tricks, model load): 179.3 s
+  time table: SFT rebuild of one arm: 90.0 s
+  time table: screen 64 prompts: 113.1 s
+  time table: 3 updates (4 prompts x 8 samples each): 69.2 s
+  time table: 2 evaluations (8 prompts x 2): 7.1 s
+{"plan": {"decode_seconds_per_prompt": 1.27, "rate_basis": "measured", "screen": {"n": 64, "fits": null, "basis": "fixed by --screen-n"}, "time_left": {"remaining_s": 1530.7, "needed_s": 185.8, "ok": true}}}
+{"step": "plan", "ok": true, "seconds": 0.0}
+{"screen": {"n": 64, "k": 8, "min_mixed": 4, "mixed": 0, "all_pass": 0, "all_fail": 64, "pass_rate": 0.0, "histogram": {"0": 64, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7": 0, "8": 0}, "sampled_tokens": 32764, "rollout_s": 84.26, "score_s": 0.13, "reasons": {"no_code": 512}, "reward_workers": 4, "truncated": 0.998, "mean_tokens": 64.0}}
+{"step": "rl", "ok": true, "seconds": 91.7}
+{"ok": true, "steps": 8, "failed_steps": []}
+real 361.55
+user 243.86
+sys 106.60
+exit=0
+# screen_survey.json: {"problems": 64, "k": 8, "pass_rate": {"n": 64, "mean": 0.0, "ci_low": 0.0, "ci_high": 0.0}, "mixed": 0, "failure_mix_samples": {"no_code": 512}, "cut_off_share": 0.998}
+# guard.json: {"runner": "docker", "known_answer": {"pass": 1, "wrong": 0}, "secret_read_attack": {"reward": 0, "reason": "error on a test"}, "guard_seconds": 1.02, "model_loaded": false}
+# tricks.json (no-skill programs, full reward counts): {"screen_candidates": {"prints_nothing": 0, "echo_stdin": 0, "zero": 0, "one": 0, "minus_one": 0, "YES": 0, "NO": 0, "Yes": 0, "No": 0}, "heldout_subset": {"prints_nothing": 0, "echo_stdin": 0, "zero": 0, "one": 0, "minus_one": 0, "YES": 0, "NO": 0, "Yes": 0, "No": 0}}
+# sft.json: rebuild_report {"steps": 4, "stopped_early": null, "train_seconds": 3.8, "format_validity": 0.0, "closed_im_end": 0.0, "hit_budget": 1.0, "mean_gen_tokens": 16.0, "rl_prompts": 3, "rl_pass_rate": 0.0, "rl_mixed_groups": 0, "rl_code_fence_share": 0.0, "rl_runs_share": 0.0, "rl_skipped_too_long": 0}; decode_seconds_per_prompt 1.2666666666666666
+# job end: out/_work and out/rl_state removed (NO_GO)
+
+# ---- case B: forced full cycle, pause and resume (stand-in reward, not a result) ----
+
+== invocation 1
+{"runner": "docker", "env": {"python": "3.12.16", "platform": "macOS-15.8.1-arm64-arm-64bit", "runner": "docker", "torch": "2.14.1"}}
+{"step": "env", "ok": true, "seconds": 0.8}
+{"step": "guard", "ok": true, "seconds": 1.1}
+{"pins": {"tokenizer_sha256": ["e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b", "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b"], "table_content_sha256": ["21072027b19ef6f05d57ead7a2fc9fb4c52129e491186bf38d0ba079e8d5168a", ...}
+{"step": "pins", "ok": true, "seconds": 0.1}
+{"pool_counts": {"train_pool_file": 3251, "removed_free": 18, "removed_effort": 0, "trained_pool": 3233, "heldout_pool_file": 255, "heldout_subset": 6, "easy_ids": 48, "easy_in_trained_pool": 39, "easy_not_in_trained_pool": 9, "easy_in_heldout_pool_file": 8, "overlap_trained_free": 0, "overlap_trained_effort": 0, "overlap_trained_heldout": 0, "heldout_subset_free": 0, "heldout_subset_effort": 0}}
+{"step": "pool", "ok": true, "seconds": 0.0}
+{"step": "tricks", "ok": true, "seconds": 20.2}
+  time table: fixed (guard, pins, tricks, model load): 22.3 s
+  time table: SFT rebuild of one arm: 0.0 s
+  time table: screen 16 prompts: 24.0 s
+  time table: 3 updates (4 prompts x 8 samples each): 66.0 s
+  time table: 2 evaluations (6 prompts x 2): 4.5 s
+{"plan": {"decode_seconds_per_prompt": 1.0, "rate_basis": "measured", "screen": {"n": 16, "fits": null, "basis": "fixed by --screen-n"}, "time_left": {"remaining_s": 1777.7, "needed_s": 92.2, "ok": true}}}
+{"step": "plan", "ok": true, "seconds": 0.0}
+{"screen": {"n": 16, "k": 8, "min_mixed": 4, "mixed": 16, "all_pass": 0, "all_fail": 0, "pass_rate": 0.3516, "histogram": {"0": 0, "1": 2, "2": 5, "3": 5, "4": 2, "5": 2, "6": 0, "7": 0, "8": 0}, "sampled_tokens": 6144, "rollout_s": 15.5, "score_s": 0.0, "reasons": {}, "reward_workers": 4, "truncated": 1.0, "mean_tokens": 48.0}}
+{"state_saved": {"step": 0, "file": "state.step000000.pt", "bytes": 42501633, "identity_sha256": "d8ce75f0e42c43bd51762eb40e56c6f08217275a5dcc957d66c3d55b926164e6", "saved_unix": 1795007602.704591, "write_s": 0.06}}
+{"step": 0, "heldout_reward": 0.5833333333333334, "truncated": 1.0, "mean_tokens": 48.0}
+{"step": 1, "train_reward": 0.46875, "groups_used": 4, "group_kinds": {"all_one": 0, "all_zero": 0, "tied_other": 0, "singleton": 0, "mixed": 4}, "optimizer_stepped": true, "stored_update_share": 1.0}
+{"step": 2, "train_reward": 0.4375, "groups_used": 4, "group_kinds": {"all_one": 0, "all_zero": 0, "tied_other": 0, "singleton": 0, "mixed": 4}, "optimizer_stepped": true, "stored_update_share": 0.999879}
+{"paused": "deadline or max_steps_this_call reached before step 3"}
+{}
+{"step": "rl", "ok": true, "seconds": 41.7}
+{"ok": true, "steps": 7, "failed_steps": []}
+real 64.52
+user 48.84
+sys 16.19
+exit=0
+== invocation 2
+{"runner": "docker", "env": {"python": "3.12.16", "platform": "macOS-15.8.1-arm64-arm-64bit", "runner": "docker", "torch": "2.14.1"}}
+{"step": "env", "ok": true, "seconds": 0.7}
+{"step": "guard", "ok": true, "seconds": 1.1}
+{"pins": {"tokenizer_sha256": ["e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b", "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b"], "table_content_sha256": ["21072027b19ef6f05d57ead7a2fc9fb4c52129e491186bf38d0ba079e8d5168a", ...}
+{"step": "pins", "ok": true, "seconds": 0.1}
+{"pool_counts": {"train_pool_file": 3251, "removed_free": 18, "removed_effort": 0, "trained_pool": 3233, "heldout_pool_file": 255, "heldout_subset": 6, "easy_ids": 48, "easy_in_trained_pool": 39, "easy_not_in_trained_pool": 9, "easy_in_heldout_pool_file": 8, "overlap_trained_free": 0, "overlap_trained_effort": 0, "overlap_trained_heldout": 0, "heldout_subset_free": 0, "heldout_subset_effort": 0}}
+{"step": "pool", "ok": true, "seconds": 0.0}
+{"step": "tricks", "ok": true, "seconds": 20.0}
+  time table: fixed (guard, pins, tricks, model load): 22.0 s
+  time table: SFT rebuild of one arm: 0.0 s
+  time table: screen 16 prompts: 24.0 s
+  time table: 3 updates (4 prompts x 8 samples each): 66.0 s
+  time table: 2 evaluations (6 prompts x 2): 4.5 s
+{"plan": {"decode_seconds_per_prompt": 1.0, "rate_basis": "measured", "screen": {"n": 16, "fits": null, "basis": "fixed by --screen-n"}, "time_left": {"remaining_s": 1778.0, "needed_s": 92.2, "ok": true}}}
+{"step": "plan", "ok": true, "seconds": 0.0}
+{"step": 2}
+{}
+{"step": 3, "train_reward": 0.4375, "groups_used": 4, "group_kinds": {"all_one": 0, "all_zero": 0, "tied_other": 0, "singleton": 0, "mixed": 4}, "optimizer_stepped": true, "stored_update_share": 0.999723}
+{"step": "rl", "ok": true, "seconds": 18.4}
+{"ok": true, "steps": 7, "failed_steps": []}
+real 41.00
+user 22.48
+sys 8.55
+exit=0
+exit=0
+# report.json: {"status": "FIXTURE_SMOKE_NOT_A_RESULT", "heldout_change": {"problems": 6, "start": 0.5833, "end": 0.5, "diff": -0.0833, "ci_low": -0.3333, "ci_high": 0.1667, "ci_excludes_zero": false, "resamples": 10000}, "literal_sample": [{"step": 0, "eval_index": 0, "samples": 12, "pass": 7, "literal": 0, "literal_by": {}, "literal_share_of_passes": 0.0}, {"step": 3, "eval_index": 1, "samples": 12, "pass": 6, "literal": 0, "literal_by": {}, "literal_share_of_passes": 0.0}], "time_split_s_per_step": {"rollout": 3.846, "reward": 0.001, "old_logprobs": 1.099, "train": 3.276, "sync": 0.0}, "optimizer_steps": 3, "group_kinds_total": {"all_one": 0, "all_zero": 0, "tied_other": 0, "singleton": 0, "mixed": 12}, "decision": {"rl_helps": false, "ci_low_above_zero": false, "wrong_answers_not_up": true, "literal_share_not_up": true, "reading": "the RL path runs on the real checkpoint; no measurable gain at this budget (or a clause failed: see parts)"}}
+# note: reward seconds 0.001 are the stand-in's; the real scorer ran only in cases A, D, E (nothing to run on an untrained model)
+
+# ---- case C: wrong secret path ----
+
+{"runner": "docker", "env": {"python": "3.12.16", "platform": "macOS-15.8.1-arm64-arm-64bit", "runner": "docker", "torch": "2.14.1"}}
+{"step": "env", "ok": true, "seconds": 0.7}
+{"step": "guard", "ok": false, "seconds": 0.0}
+{"guard": "refused", "model_loaded": false, "seconds": 0.0, "error": "RuntimeError: guard refused: G10_STDIO_SECRET_PATHS names a path that does not exist: <...>/work/does-not-exist/cc.jsonl"}
+{"ok": false, "steps": 2, "failed_steps": ["guard"]}
+real 0.90
+user 0.72
+sys 0.09
+exit=1
+
+# ---- case D: not enough time, screen only ----
+
+{"runner": "docker", "env": {"python": "3.12.16", "platform": "macOS-15.8.1-arm64-arm-64bit", "runner": "docker", "torch": "2.14.1"}}
+{"step": "env", "ok": true, "seconds": 0.8}
+{"step": "guard", "ok": true, "seconds": 0.9}
+{"pins": {"tokenizer_sha256": ["e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b", "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b"], "table_content_sha256": ["21072027b19ef6f05d57ead7a2fc9fb4c52129e491186bf38d0ba079e8d5168a", ...}
+{"step": "pins", "ok": true, "seconds": 0.1}
+{"pool_counts": {"train_pool_file": 3251, "removed_free": 18, "removed_effort": 0, "trained_pool": 3233, "heldout_pool_file": 255, "heldout_subset": 6, "easy_ids": 48, "easy_in_trained_pool": 39, "easy_not_in_trained_pool": 9, "easy_in_heldout_pool_file": 8, "overlap_trained_free": 0, "overlap_trained_effort": 0, "overlap_trained_heldout": 0, "heldout_subset_free": 0, "heldout_subset_effort": 0}}
+{"step": "pool", "ok": true, "seconds": 0.0}
+{"step": "tricks", "ok": true, "seconds": 29.2}
+  time table: fixed (guard, pins, tricks, model load): 31.2 s
+  time table: SFT rebuild of one arm: 0.0 s
+  time table: screen 16 prompts: 24.0 s
+  time table: 10 updates (16 prompts x 8 samples each): 400.0 s
+  time table: 2 evaluations (6 prompts x 4): 9.0 s
+{"plan": {"decode_seconds_per_prompt": 1.0, "rate_basis": "measured", "screen": {"n": 16, "fits": null, "basis": "fixed by --screen-n"}, "time_left": {"remaining_s": 5068.8, "needed_s": 148.5, "ok": true}}}
+{"step": "plan", "ok": true, "seconds": 0.0}
+{"step": "rl", "ok": true, "seconds": 17.6}
+{"ok": true, "steps": 7, "failed_steps": []}
+real 49.02
+user 20.76
+sys 6.03
+exit=0
+# screen_survey.json: {"problems": 16, "k": 8, "pass_rate": {"n": 16, "mean": 0.0, "ci_low": 0.0, "ci_high": 0.0}, "mixed": 0, "failure_mix_samples": {"no code block": 128}}
+
+# ---- case E: raw checkpoint, decode rate measured ----
+
+{"runner": "docker", "env": {"python": "3.12.16", "platform": "macOS-15.8.1-arm64-arm-64bit", "runner": "docker", "torch": "2.14.1"}}
+{"step": "env", "ok": true, "seconds": 0.7}
+{"step": "guard", "ok": true, "seconds": 1.0}
+{"pins": {"tokenizer_sha256": ["e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b", "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b"], "table_content_sha256": ["21072027b19ef6f05d57ead7a2fc9fb4c52129e491186bf38d0ba079e8d5168a", ...}
+{"step": "pins", "ok": true, "seconds": 0.1}
+{"pool_counts": {"train_pool_file": 3251, "removed_free": 18, "removed_effort": 0, "trained_pool": 3233, "heldout_pool_file": 255, "heldout_subset": 6, "easy_ids": 48, "easy_in_trained_pool": 39, "easy_not_in_trained_pool": 9, "easy_in_heldout_pool_file": 8, "overlap_trained_free": 0, "overlap_trained_effort": 0, "overlap_trained_heldout": 0, "heldout_subset_free": 0, "heldout_subset_effort": 0}}
+{"step": "pool", "ok": true, "seconds": 0.0}
+{"step": "tricks", "ok": true, "seconds": 21.4}
+{"step": "rate", "ok": true, "seconds": 3.3}
+  time table: fixed (guard, pins, tricks, model load): 26.6 s
+  time table: SFT rebuild of one arm: 0.0 s
+  time table: screen 16 prompts: 24.8 s
+  time table: 10 updates (16 prompts x 8 samples each): 408.0 s
+  time table: 2 evaluations (6 prompts x 4): 9.3 s
+{"plan": {"decode_seconds_per_prompt": 1.05, "rate_basis": "measured", "screen": {"n": 16, "fits": null, "basis": "fixed by --screen-n"}, "time_left": {"remaining_s": 5073.4, "needed_s": 151.8, "ok": true}}}
+{"step": "plan", "ok": true, "seconds": 0.0}
+{"step": "rl", "ok": true, "seconds": 17.2}
+{"ok": true, "steps": 8, "failed_steps": []}
+real 44.03
+user 22.86
+sys 5.89
+exit=0
+# screen_survey.json: {"problems": 16, "k": 8, "pass_rate": {"n": 16, "mean": 0.0, "ci_low": 0.0, "ci_high": 0.0}, "mixed": 0, "failure_mix_samples": {"no code block": 128}}

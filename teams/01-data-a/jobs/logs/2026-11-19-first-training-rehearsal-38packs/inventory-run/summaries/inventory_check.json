@@ -1,0 +1,93 @@
+{
+  "run_id": "first-training-v1-rehearsal",
+  "checked_after": "reconcile",
+  "tool": "inventory_check.py",
+  "code_sha256": "f21d3c4e6d21d6aefd27bc4b7a87ebb4b1fd93904565fd5eb3426645a9110a89",
+  "inventory": {
+    "file": "out/rehearsal-inputs/expected_inventory.json",
+    "sha256": "82f5ccfc234b42f61d70a21a2422a939527874a2dcab9056f6c278843e05a3d1",
+    "input_manifest_sha256": "575fdde2ed9e11a78eb9fe759a5108696b47431c504452e1d3f86ca410ae3417",
+    "packs": 38,
+    "parts": 86,
+    "expected": {
+      "all_left_out|empty|written": 48,
+      "not_sharded": 38
+    }
+  },
+  "ledger": {
+    "folder": "out/pipeline/first-training-v1-rehearsal/ledger",
+    "clean_mode": "B",
+    "parts": 86,
+    "packs": 38,
+    "rows": 1444766
+  },
+  "shards": {
+    "folder": "out/pipeline/first-training-v1-rehearsal/shards",
+    "parts": 86,
+    "statuses": {
+      "not_sharded": 38,
+      "written": 48
+    }
+  },
+  "differences": {
+    "input_manifest_sha256": [],
+    "ledger_parts_missing": [],
+    "ledger_parts_unlisted": [],
+    "ledger_packs_missing": [],
+    "ledger_packs_unlisted": [],
+    "raw_sha256": [],
+    "raw_rows": [],
+    "shard_parts_missing": [],
+    "shard_parts_unlisted": [],
+    "status": [],
+    "pack": []
+  },
+  "checks": [
+    {
+      "check": "inventory: made from the input manifest the clean job read",
+      "ok": true,
+      "detail": "clean job manifest_sha256 575fdde2ed9e\u2026, inventory input_manifest_sha256 575fdde2ed9e\u2026"
+    },
+    {
+      "check": "inventory: the ledger accounts for every raw document (mode B)",
+      "ok": true,
+      "detail": "ledger clean_mode 'B'"
+    },
+    {
+      "check": "inventory: the ledger holds exactly the listed parts",
+      "ok": true,
+      "detail": "all 86 listed parts, and no other"
+    },
+    {
+      "check": "inventory: every listed pack is in the ledger, and no other pack has kept documents",
+      "ok": true,
+      "detail": "all 38 listed packs, and no other"
+    },
+    {
+      "check": "inventory: each part's raw file is the listed one (sha256)",
+      "ok": true,
+      "detail": "0 of 86 part(s) differ"
+    },
+    {
+      "check": "inventory: each part's raw rows are the listed ones",
+      "ok": true,
+      "detail": "0 of 86 part(s) differ"
+    },
+    {
+      "check": "inventory: the shard summary holds exactly the listed parts",
+      "ok": true,
+      "detail": "all 86 listed parts, and no other"
+    },
+    {
+      "check": "inventory: every part ended in a listed status",
+      "ok": true,
+      "detail": "0 of 86 part(s) differ"
+    },
+    {
+      "check": "inventory: every part is of its listed pack",
+      "ok": true,
+      "detail": "0 of 86 part(s) differ"
+    }
+  ],
+  "ok": true
+}

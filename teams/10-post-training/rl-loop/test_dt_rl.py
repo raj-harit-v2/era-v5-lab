@@ -43,6 +43,7 @@ def test_dt_trains_only_mask_logits_and_reports_deletions(tmp_path):
     d = s["deletion_tuning"]
     assert d["masked_layers"] > 0 and d["optimizer_steps"] == s["objective"]["steps_with_optimizer_update"]
     assert d["wanda_prior"]["prior_deleted"] > 0
+    assert 0.0 <= d["band_at_init"]["band_share"] <= d["band_at_init"]["live_share"] <= 1.0
     assert 0 < d["deletion_final"]["deleted_frac_of_targeted"] < 1
     st = final_state(tmp_path / "run")
     assert st["trainable"] and all(n.endswith(".gate") for n in st["trainable"])  # nothing but logits is trainable
@@ -203,3 +204,11 @@ def test_soft_hard_outside_share_equals_trust_region_mask_when_the_sampler_is_ha
     assert recs and all(r["ratio_source"] == "old_lp" for r in recs)
     assert all(r["sh_outside_frac"] == r["masked_frac"] for r in recs)
     assert any(r["masked_frac"] > 0.1 for r in recs)
+
+
+def test_dt_default_alpha_matches_paper_repo_100_to_1000(tmp_path):
+    cfg = cfg_dt(tmp_path / "run", 1)
+    cfg["train"]["dt"] = {"targets": "attn", "eta": 0.05, "calib_prompts": 8, "alpha_steps": 4}
+    s = train.train(cfg)
+    assert s["deletion_tuning"]["alpha"] == [100.0, 1000.0]
+    assert 0.0 <= s["deletion_tuning"]["band_at_init"]["band_share"] <= 1.0

@@ -1,0 +1,136 @@
+{
+  "checked_on": "2026-11-17",
+  "repository_commit": "23d7902a39c7cc78e1e3c19f25aeaee7a5355697",
+  "viewer_commit": "5d93aed30f19430b79664f7574a080a3b36c24a1",
+  "viewer_sha256": "1ab4f7af21192c62250a396b26da50fb83724c9d19a93e57423c6f5b5c87671c",
+  "clean_py_sha256": "22d818c72c9f30bf338de344a0fcda230e2d1de30a1aaec5d92bc525bae99179",
+  "tokenizer_sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b",
+  "summary": {
+    "recorded_sample_documents": 800,
+    "sample_shards": 40,
+    "sample_viewer_candidate_documents": 104,
+    "sample_viewer_candidate_document_counts_by_code": {
+      "A5": 41,
+      "A6": 23,
+      "B1": 4,
+      "B2": 21,
+      "B3": 1,
+      "B4": 20,
+      "B5": 2
+    },
+    "sample_scoped_rule_trigger_documents": 0,
+    "sample_rule_errors": 0,
+    "manual_example_documents": 2,
+    "sample_source_found": 775,
+    "sample_source_normalized_equal": 747,
+    "sample_source_different": 28,
+    "sample_source_missing": 25,
+    "source_differences_matching_after_bundle_cleaner": 19,
+    "source_differences_still_unresolved": 9,
+    "sample_exact_duplicate_groups_within_pack": 0
+  },
+  "f2": {
+    "scope": "full fingerprint set, 802 checked sample/example documents only",
+    "documents": 802,
+    "flagged": 0,
+    "set_sha256": "2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a",
+    "command": "python teams/09-evaluation/decontam/decontam_check.py <private samples_for_f2.parquet>",
+    "checker_sha256": "62a269a25123543b5470c4956ba1be530ea257c597bc2be2eab19201cb62df8f"
+  },
+  "manual_review": {
+    "reported_by": "patilvijay23",
+    "reported_scope": "20 documents per pack, pre-sharding vs decoded, using side-by-side viewer",
+    "viewer_url": "https://github.com/patilvijay23/era-v5-lab/tree/g1-web-viewer-pre-post/diagnosis/tools",
+    "saved_doc_ids": [
+      "57cf3b033b416567",
+      "2a103ec1a48ec07f"
+    ],
+    "clarification": "Only the Bengali A5-looking example was reported as a concern; its decoded text equals the frozen-tokenizer normalized source.",
+    "complete_20_document_selection_saved": false
+  },
+  "interpretation": "Viewer highlights are candidates, not confirmed diseases. A5 nukta forms can be intentional frozen-tokenizer output. Current v1 rule reapplication is not exhaustive disease diagnosis.",
+  "scope_note": "Earlier 800 recorded samples plus two saved manual examples; not the newly recorded Marathi 20-document sample.",
+  "examples": [
+    {
+      "shard_id": "ind-te-sangraha-s-train-000000",
+      "pack_id": "ind-te-sangraha-s",
+      "doc_id": "1fdaae51d07345cf",
+      "shard_document_index": 2757,
+      "input_part": "ind-te-sangraha-s_part-00000_clean.parquet",
+      "input_row": 2757,
+      "manual_example": false,
+      "decoded_utf8_sha256": "1fdaae51d07345cf65024fa499ab3fdc3b5ffade7fc29d929866bab66e45fe0d",
+      "source_found": true,
+      "viewer_candidates": [
+        {
+          "code": "B3",
+          "start": 38,
+          "end": 43
+        }
+      ],
+      "rule_triggers": [],
+      "rule_errors": [],
+      "source_text_equal": true,
+      "source_tokenizer_normalized_equal": true,
+      "source_viewer_candidate_counts": {
+        "B3": 1
+      },
+      "source_utf8_sha256": "1fdaae51d07345cf65024fa499ab3fdc3b5ffade7fc29d929866bab66e45fe0d",
+      "whole_cleaner_action": "keep",
+      "whole_cleaner_text_changed": false
+    },
+    {
+      "shard_id": "ind-mr-sangraha-v-train-000000",
+      "pack_id": "ind-mr-sangraha-v",
+      "doc_id": "57cf3b033b416567",
+      "shard_document_index": 55,
+      "input_part": "ind-mr-sangraha-v_part-00000_clean.parquet",
+      "input_row": 55,
+      "manual_example": true,
+      "decoded_utf8_sha256": "018a0b15dc73b105d0afe82f4a4be32411d7623cd6db9ba10eb2885af1146afe",
+      "source_found": true,
+      "viewer_candidates": [
+        {
+          "code": "A5",
+          "start": 195,
+          "end": 201
+        }
+      ],
+      "rule_triggers": [
+        {
+          "rule_id": "DB-A5-006",
+          "code": "A5",
+          "action": "fix",
+          "text_changed": true
+        }
+      ],
+      "rule_errors": [],
+      "source_text_equal": false,
+      "source_tokenizer_normalized_equal": true,
+      "source_viewer_candidate_counts": {},
+      "source_utf8_sha256": "57cf3b033b416567de9feed6310c963b4effa1756c0626580e3a72718b2a15a9",
+      "whole_cleaner_action": "fix",
+      "whole_cleaner_text_changed": true
+    },
+    {
+      "shard_id": "ind-mr-sangraha-v-train-000000",
+      "pack_id": "ind-mr-sangraha-v",
+      "doc_id": "2a103ec1a48ec07f",
+      "shard_document_index": 59,
+      "input_part": "ind-mr-sangraha-v_part-00000_clean.parquet",
+      "input_row": 59,
+      "manual_example": true,
+      "decoded_utf8_sha256": "2b85cf86c2026a99ed0bd37ef4fe1d3b6519a35d732817a180ba56e7acaf0eb2",
+      "source_found": true,
+      "viewer_candidates": [],
+      "rule_triggers": [],
+      "rule_errors": [],
+      "source_text_equal": true,
+      "source_tokenizer_normalized_equal": true,
+      "source_viewer_candidate_counts": {},
+      "source_utf8_sha256": "2b85cf86c2026a99ed0bd37ef4fe1d3b6519a35d732817a180ba56e7acaf0eb2",
+      "whole_cleaner_action": "keep",
+      "whole_cleaner_text_changed": false
+    }
+  ]
+}

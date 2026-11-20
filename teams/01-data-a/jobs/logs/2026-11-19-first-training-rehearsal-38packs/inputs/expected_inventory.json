@@ -1,0 +1,927 @@
+{
+  "_status": "materialized_from_staged_raw_inputs",
+  "_approval": "Source scope authorized by user assumption; no TSAI manifest approval recorded here.",
+  "input_manifest_sha256": "575fdde2ed9e11a78eb9fe759a5108696b47431c504452e1d3f86ca410ae3417",
+  "packs": [
+    "code-go",
+    "code-js-ts",
+    "code-java",
+    "code-cpp",
+    "code-rust",
+    "code-python",
+    "en-fineweb-edu",
+    "en-dclm",
+    "en-nemotroncc-synth",
+    "en-nemotroncc",
+    "math-megamath",
+    "math-finemath",
+    "sci-finepdfs",
+    "cadj-commits",
+    "cadj-notebooks",
+    "cadj-stackexchange",
+    "ind-bn-fw2",
+    "ind-bn-sangraha-v",
+    "ind-gu-fw2",
+    "ind-hi-fw2",
+    "ind-hi-hplt",
+    "ind-hi-indiccorp",
+    "ind-hi-sangraha-s",
+    "ind-hi-sangraha-v",
+    "ind-kn-fw2",
+    "ind-kn-sangraha-s",
+    "ind-kn-sangraha-v",
+    "ind-ml-fw2",
+    "ind-mr-fw2",
+    "ind-mr-sangraha-v",
+    "ind-or-fw2",
+    "ind-sa-fw2",
+    "ind-ta-fw2",
+    "ind-ta-sangraha-s",
+    "ind-ta-sangraha-v",
+    "ind-te-fw2",
+    "ind-te-sangraha-s",
+    "ind-te-sangraha-v"
+  ],
+  "parts": [
+    {
+      "part": "heldout/cadj-commits/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "cadj-commits",
+      "raw_sha256": "d348562970bac1d6234e54bbbc4a1c3973865a676cc69ace8718bf1f6c2760dc",
+      "raw_rows": 826,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "heldout/cadj-notebooks/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "cadj-notebooks",
+      "raw_sha256": "b837a991cecf754667fd19d002f6fa8bd0b336782ce25f4c6306d079f02b3f5a",
+      "raw_rows": 169,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "heldout/cadj-stackexchange/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "cadj-stackexchange",
+      "raw_sha256": "0fddecede001859988619051842b74f1fb72af9638e27a38e06daa6f9b3f9fd5",
+      "raw_rows": 409,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "heldout/code-cpp/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "code-cpp",
+      "raw_sha256": "25bf9442a84771d1a54a4bde4981859f30f434d434f1aaaece82807bb0724f01",
+      "raw_rows": 613,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "heldout/code-go/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "code-go",
+      "raw_sha256": "be4917c1049d1e1a22286d2822c96c47f688bcf2bb9bdafba9511ae350728745",
+      "raw_rows": 872,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "heldout/code-java/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "code-java",
+      "raw_sha256": "c50e6accad04341e291e188738ec368134142b2c06118a358940491837e218c4",
+      "raw_rows": 847,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "heldout/code-js-ts/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "code-js-ts",
+      "raw_sha256": "cad9e205b551282cb8a55999cef0fdc36455f59446e58b1eacd0c45f577de77e",
+      "raw_rows": 1234,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "heldout/code-python/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "code-python",
+      "raw_sha256": "6ebf57ef84a2963e45b74c10df397206ca47aaf278dd35d6464f9792f548da2e",
+      "raw_rows": 718,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "heldout/code-rust/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "code-rust",
+      "raw_sha256": "7879813e212722e3540dde0340c2f9d3dbe2e74112a6121c9c36ad81bf9669ec",
+      "raw_rows": 612,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "heldout/en-dclm/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "en-dclm",
+      "raw_sha256": "60d0741e754b70dffab4398ca617b37a408121b2f60fed95f8cf871996aacc36",
+      "raw_rows": 608,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "heldout/en-fineweb-edu/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "en-fineweb-edu",
+      "raw_sha256": "727ee3f5ee0ef235fdd5839e516130e3b3fbb4a95345bfc827175f69ecd2647a",
+      "raw_rows": 732,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "heldout/en-nemotroncc/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "en-nemotroncc",
+      "raw_sha256": "76653abac4785a2a7b14931142af29f64d3d621e8ea0c26c8d729a82b29f7845",
+      "raw_rows": 954,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "heldout/en-nemotroncc-synth/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "en-nemotroncc-synth",
+      "raw_sha256": "3fcbb50614d90f680168e0c95479e364e995a6ebbbdfc56df90746b58c38aff8",
+      "raw_rows": 1975,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "heldout/ind-bn-fw2/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "ind-bn-fw2",
+      "raw_sha256": "dcaa8dabd3ea88c672d2acf20ac49779d00c9c938f07a1c8f7d203221493c35c",
+      "raw_rows": 112,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "heldout/ind-bn-sangraha-v/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "ind-bn-sangraha-v",
+      "raw_sha256": "e6745f0059d965c9426ef9530161c0a1d0d8c53c79336656bc16e4e9f1090ad0",
+      "raw_rows": 102,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "heldout/ind-gu-fw2/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "ind-gu-fw2",
+      "raw_sha256": "928f0d5f4ec290f6196197247b26fc62ee100949d1d409a2b744295d9968c349",
+      "raw_rows": 239,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "heldout/ind-hi-fw2/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "ind-hi-fw2",
+      "raw_sha256": "149346eb3cda65d2fa47891fb5f277e1755445d9e46bfac8c7840d677347d732",
+      "raw_rows": 132,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "heldout/ind-hi-hplt/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "ind-hi-hplt",
+      "raw_sha256": "251efe0c09e08f7f2a062a314fee86ac3e023cf6ba233c9946a62b1028846c38",
+      "raw_rows": 95,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "heldout/ind-hi-indiccorp/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "ind-hi-indiccorp",
+      "raw_sha256": "91588fb9b28290aa7183ae83974cabed441e4da8370ba024f181914b377c2c4f",
+      "raw_rows": 1094,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "heldout/ind-hi-sangraha-s/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "ind-hi-sangraha-s",
+      "raw_sha256": "b7609dd83ef724f2a56b97e0cd5cd8b0d686b4f58f63010c9a70848d57b97ea1",
+      "raw_rows": 88,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "heldout/ind-hi-sangraha-v/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "ind-hi-sangraha-v",
+      "raw_sha256": "6c2c8796889990fb042b437d980bb2b30888f8d21d8bec35fb96abcee4df49a6",
+      "raw_rows": 122,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "heldout/ind-kn-fw2/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "ind-kn-fw2",
+      "raw_sha256": "806511e48a1fb03ae6a69af53d190806850ae6efd1f88dbc704466424c1b0a27",
+      "raw_rows": 82,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "heldout/ind-kn-sangraha-s/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "ind-kn-sangraha-s",
+      "raw_sha256": "aafbe26613276f8855956e3d15368baf16f85c8e9aecca674bd4f7f62910a28e",
+      "raw_rows": 53,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "heldout/ind-kn-sangraha-v/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "ind-kn-sangraha-v",
+      "raw_sha256": "b044fe4c156b356eb730a81a659c3a14fdcf143c7bdedb2c732dce72cb29d268",
+      "raw_rows": 89,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "heldout/ind-ml-fw2/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "ind-ml-fw2",
+      "raw_sha256": "10bfc53418bcdff95eef834cc657fe12b722d6f5ffc7cae71004d57dc7fec5f1",
+      "raw_rows": 185,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "heldout/ind-mr-fw2/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "ind-mr-fw2",
+      "raw_sha256": "7a031852f76d48bae8ff7d115ab1d27a939605aec0c891fd6c7ef2d2aa764948",
+      "raw_rows": 95,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "heldout/ind-mr-sangraha-v/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "ind-mr-sangraha-v",
+      "raw_sha256": "9ab16d0b5f775cf907b27729ea7eb00ebec827e7fff41d4ecd1c6616ec9b94e3",
+      "raw_rows": 127,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "heldout/ind-or-fw2/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "ind-or-fw2",
+      "raw_sha256": "6e6503a92b93304009ba029c9e4027457848597a214e85160335351f49a8e78a",
+      "raw_rows": 328,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "heldout/ind-sa-fw2/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "ind-sa-fw2",
+      "raw_sha256": "eaa16f46dbc391efe6f172545c000c64794b9d505b97069b6c41e11f06f19d8d",
+      "raw_rows": 55,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "heldout/ind-ta-fw2/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "ind-ta-fw2",
+      "raw_sha256": "a5b66882de196db04f84cf70768d4756138643ae44f3bffdfd344556c256bc51",
+      "raw_rows": 58,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "heldout/ind-ta-sangraha-s/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "ind-ta-sangraha-s",
+      "raw_sha256": "b8653a36bcbd237e4c7bc78bf713245dc982058166e62aa416b2ebbefd1db34c",
+      "raw_rows": 36,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "heldout/ind-ta-sangraha-v/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "ind-ta-sangraha-v",
+      "raw_sha256": "2679b256560a14239f428cb161c219eec6e7d1f8a82111a3351f125e5a5bc270",
+      "raw_rows": 65,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "heldout/ind-te-fw2/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "ind-te-fw2",
+      "raw_sha256": "b739477aa9bd2ccf2148086342ce67e9e0f08803b519e92af19e94e711314be2",
+      "raw_rows": 59,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "heldout/ind-te-sangraha-s/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "ind-te-sangraha-s",
+      "raw_sha256": "c05ed17b031d1fbae24927464ffac8e02d40ffa2c338e54f476a43327aa37a85",
+      "raw_rows": 47,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "heldout/ind-te-sangraha-v/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "ind-te-sangraha-v",
+      "raw_sha256": "d2bd9afc4c0ac84f048e013c7115c7a635ef495e372a4c97af488774371bf159",
+      "raw_rows": 83,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "heldout/math-finemath/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "math-finemath",
+      "raw_sha256": "63e6eab00769eeb6805bd4eccdada9f4bc61ebe8d0cd23654cb6da95e0a290e4",
+      "raw_rows": 312,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "heldout/math-megamath/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "math-megamath",
+      "raw_sha256": "294a31a67392329a1fcf6f01da95fec064c7f1d63ad93449cdd7d2c90c223872",
+      "raw_rows": 169,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "heldout/sci-finepdfs/part-00000.parquet",
+      "split": "heldout",
+      "pack_id": "sci-finepdfs",
+      "raw_sha256": "88566b9a129599950dc2f6eacf89908abac238e0541988f06c5e2bb808164ad6",
+      "raw_rows": 63,
+      "expected": "not_sharded"
+    },
+    {
+      "part": "train/cadj-commits/part-00000.parquet",
+      "split": "train",
+      "pack_id": "cadj-commits",
+      "raw_sha256": "d2d2b3bfa92e8e8c1915118546e7c2fcc8fd0735eadf7ddd516921f07b5e0f9c",
+      "raw_rows": 74753,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/cadj-notebooks/part-00000.parquet",
+      "split": "train",
+      "pack_id": "cadj-notebooks",
+      "raw_sha256": "736aded769d6ba112639bfc2def11f32c6d339257ae597e0b699526552c1f333",
+      "raw_rows": 15563,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/cadj-stackexchange/part-00000.parquet",
+      "split": "train",
+      "pack_id": "cadj-stackexchange",
+      "raw_sha256": "f313932bc7a3206edf0e4fdf5a3c0836f106ea97fecccfabdbee961ccc556de4",
+      "raw_rows": 41396,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/code-cpp/part-00000.parquet",
+      "split": "train",
+      "pack_id": "code-cpp",
+      "raw_sha256": "5d638fd78dc7a661e1f287199984de8d4e1c7fee5e9ce21dfa5b5fb97a00a971",
+      "raw_rows": 41116,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/code-cpp/part-00001.parquet",
+      "split": "train",
+      "pack_id": "code-cpp",
+      "raw_sha256": "0a4ff1232dcf7f4af2f79476294063714a029054b553690bb8e84da3d88608f2",
+      "raw_rows": 14429,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/code-go/part-00000.parquet",
+      "split": "train",
+      "pack_id": "code-go",
+      "raw_sha256": "6b7b52e854df0456e3a9867b32f5217b54995faa30dbd6b8b94e23eab6db8eb1",
+      "raw_rows": 61393,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/code-go/part-00001.parquet",
+      "split": "train",
+      "pack_id": "code-go",
+      "raw_sha256": "40aedd68c4ec949eb825edc68896ae4518cf6c3283027d9ba1430ee66ee247fc",
+      "raw_rows": 21874,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/code-java/part-00000.parquet",
+      "split": "train",
+      "pack_id": "code-java",
+      "raw_sha256": "e4dca53d3b6931a4277ff794881fa437e62db04074ed4efca833775ac97f097b",
+      "raw_rows": 62834,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/code-java/part-00001.parquet",
+      "split": "train",
+      "pack_id": "code-java",
+      "raw_sha256": "278439aa70bd41a18f167de9adc3ca552309f52e635640adf6bf9e999d1266c3",
+      "raw_rows": 22379,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/code-js-ts/part-00000.parquet",
+      "split": "train",
+      "pack_id": "code-js-ts",
+      "raw_sha256": "185694a65f72630cbbd56c98a2b8728e872b2da9dab5ebb26c39b0722ef42653",
+      "raw_rows": 89960,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/code-js-ts/part-00001.parquet",
+      "split": "train",
+      "pack_id": "code-js-ts",
+      "raw_sha256": "36fea017a45e62fef38d0431f316ed5fd6afdde57db111817af6883f8f3f1f35",
+      "raw_rows": 31978,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/code-python/part-00000.parquet",
+      "split": "train",
+      "pack_id": "code-python",
+      "raw_sha256": "8d9575b43cfb9cf3647e63e91d026eb8ed40f3981b698da33b83d09e6326641d",
+      "raw_rows": 55143,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/code-python/part-00001.parquet",
+      "split": "train",
+      "pack_id": "code-python",
+      "raw_sha256": "985831590bc02ebddc0276223e1f022fde0e7c2e809fb7d97e74492bb6f5aa16",
+      "raw_rows": 19800,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/code-rust/part-00000.parquet",
+      "split": "train",
+      "pack_id": "code-rust",
+      "raw_sha256": "f1632a12383e1efb9eee68bf8b57566291ea64801146cf144dfba9c363f32e21",
+      "raw_rows": 44581,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/code-rust/part-00001.parquet",
+      "split": "train",
+      "pack_id": "code-rust",
+      "raw_sha256": "9dab607bd3c9464536bed594b77b5cd8edef6e731c5320f0c50d1017ebf59513",
+      "raw_rows": 15545,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/en-dclm/part-00000.parquet",
+      "split": "train",
+      "pack_id": "en-dclm",
+      "raw_sha256": "67b305d60aa0f4091612f6fefe0c7aee867872943017c5ebb598293c19dfeb88",
+      "raw_rows": 46245,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/en-dclm/part-00001.parquet",
+      "split": "train",
+      "pack_id": "en-dclm",
+      "raw_sha256": "0dec2d4fc09db2950d6f619810b6d2abf6d854b5d44d402c646cce2b74bd96a6",
+      "raw_rows": 15122,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/en-fineweb-edu/part-00000.parquet",
+      "split": "train",
+      "pack_id": "en-fineweb-edu",
+      "raw_sha256": "53cbbf7a77b84e46108836c889e6cb83e6fcdc048c316fbf699586a7fef1dbe2",
+      "raw_rows": 54004,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/en-fineweb-edu/part-00001.parquet",
+      "split": "train",
+      "pack_id": "en-fineweb-edu",
+      "raw_sha256": "bdd5d5b4f7aa8ec00e17865b5ebe13344728569aa7ffff7f37ba942b6fe42229",
+      "raw_rows": 17929,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/en-nemotroncc/part-00000.parquet",
+      "split": "train",
+      "pack_id": "en-nemotroncc",
+      "raw_sha256": "19d641f52f5fc9c884da2fc4b4df1bc0327d73e327c12abb8efe0201c1668fda",
+      "raw_rows": 68777,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/en-nemotroncc/part-00001.parquet",
+      "split": "train",
+      "pack_id": "en-nemotroncc",
+      "raw_sha256": "afba6a19de409e5208b3eb690ed360ad90aebb5c4cfd7f2bd389b468d2066202",
+      "raw_rows": 23043,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/en-nemotroncc-synth/part-00000.parquet",
+      "split": "train",
+      "pack_id": "en-nemotroncc-synth",
+      "raw_sha256": "a601748f22e32bfb839bdb76e8e645f3beae510460857eb206fbdf3ce53a2427",
+      "raw_rows": 147754,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/en-nemotroncc-synth/part-00001.parquet",
+      "split": "train",
+      "pack_id": "en-nemotroncc-synth",
+      "raw_sha256": "03a9efeb92e210dcb5b32d350cdee60fa032d21ea9454cefc913b0785f55ae9f",
+      "raw_rows": 49365,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/ind-bn-fw2/part-00000.parquet",
+      "split": "train",
+      "pack_id": "ind-bn-fw2",
+      "raw_sha256": "fda2605fd302c5bee7ad3c780e11460a7ccdfc60d4a1467854c1dee974d633e9",
+      "raw_rows": 11205,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/ind-bn-sangraha-v/part-00000.parquet",
+      "split": "train",
+      "pack_id": "ind-bn-sangraha-v",
+      "raw_sha256": "84a59d8676186cdd4676e65cd8d00ce5dde23a3abb76be66c1d9389a163194ed",
+      "raw_rows": 10328,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/ind-gu-fw2/part-00000.parquet",
+      "split": "train",
+      "pack_id": "ind-gu-fw2",
+      "raw_sha256": "c6acc68da0a785c7704821414230474f05ebb40824f0fd30cc19cdcd29b5000f",
+      "raw_rows": 23118,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/ind-hi-fw2/part-00000.parquet",
+      "split": "train",
+      "pack_id": "ind-hi-fw2",
+      "raw_sha256": "28f77743e293573f70554bdc8f3d3b29764f5e5154ed53ee4fb61c951604c4e3",
+      "raw_rows": 14261,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/ind-hi-hplt/part-00000.parquet",
+      "split": "train",
+      "pack_id": "ind-hi-hplt",
+      "raw_sha256": "77c3d8297b9d472c0d4138998d61e3f5f167df2cf69810790701e9f078ec6afc",
+      "raw_rows": 8745,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/ind-hi-indiccorp/part-00000.parquet",
+      "split": "train",
+      "pack_id": "ind-hi-indiccorp",
+      "raw_sha256": "43666b10ed3aef16a065c357630fd2dd8e253712e605580355b007e17e388030",
+      "raw_rows": 110836,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/ind-hi-sangraha-s/part-00000.parquet",
+      "split": "train",
+      "pack_id": "ind-hi-sangraha-s",
+      "raw_sha256": "d55c8005f7f030d676bef8e76f22f723e2f63ccbd46f5df2efb0d7ea42bbc256",
+      "raw_rows": 8280,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/ind-hi-sangraha-v/part-00000.parquet",
+      "split": "train",
+      "pack_id": "ind-hi-sangraha-v",
+      "raw_sha256": "26adb8a93f68d316e49f233cf5258852dc5a390ba61bb2297b6e0cc0be047551",
+      "raw_rows": 14709,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/ind-kn-fw2/part-00000.parquet",
+      "split": "train",
+      "pack_id": "ind-kn-fw2",
+      "raw_sha256": "0afbb42297d99031143f722aca4a6dd6929eec5b31e4b518494a2913d1a73811",
+      "raw_rows": 7834,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/ind-kn-sangraha-s/part-00000.parquet",
+      "split": "train",
+      "pack_id": "ind-kn-sangraha-s",
+      "raw_sha256": "4008c98bbcb089bd1968df1ef8fa8d6d66e5cd592252ff8581cd143d2703d757",
+      "raw_rows": 5191,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/ind-kn-sangraha-v/part-00000.parquet",
+      "split": "train",
+      "pack_id": "ind-kn-sangraha-v",
+      "raw_sha256": "f142558db1b861c59fca75e6242a7cb890aa6d095967c2b2e90d31b72b7a585b",
+      "raw_rows": 8551,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/ind-ml-fw2/part-00000.parquet",
+      "split": "train",
+      "pack_id": "ind-ml-fw2",
+      "raw_sha256": "ad1c7c7021864d45eeaa9f6524467c35db853c5be0593067d9b52b98914bdfe6",
+      "raw_rows": 18976,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/ind-mr-fw2/part-00000.parquet",
+      "split": "train",
+      "pack_id": "ind-mr-fw2",
+      "raw_sha256": "b015d9fa295b12b93b3d14e5c249a67e05ddf7c73d9f37051d84f7a69350105c",
+      "raw_rows": 11460,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/ind-mr-sangraha-v/part-00000.parquet",
+      "split": "train",
+      "pack_id": "ind-mr-sangraha-v",
+      "raw_sha256": "85f3fe3355206939f4b483da0e7e0187aa3738067951a78ffcccfb097237b7cc",
+      "raw_rows": 12172,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/ind-or-fw2/part-00000.parquet",
+      "split": "train",
+      "pack_id": "ind-or-fw2",
+      "raw_sha256": "e5a9d06de192e38871bb3bde349d9544990a6f6abac8c4ea299c40fc627b77eb",
+      "raw_rows": 33684,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/ind-sa-fw2/part-00000.parquet",
+      "split": "train",
+      "pack_id": "ind-sa-fw2",
+      "raw_sha256": "1238fde5e67f36130972e3aa0df015450d6352e979dcbc0a852f9133fb17e0ee",
+      "raw_rows": 5908,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/ind-ta-fw2/part-00000.parquet",
+      "split": "train",
+      "pack_id": "ind-ta-fw2",
+      "raw_sha256": "1eb97539bd7f328e3f6c54d9b297216e3934cc473566c10659d9537437f2af74",
+      "raw_rows": 6766,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/ind-ta-sangraha-s/part-00000.parquet",
+      "split": "train",
+      "pack_id": "ind-ta-sangraha-s",
+      "raw_sha256": "dc0fa0cc9791dcf163aa58272c1075ef2317fbd7e157daabd5bd8de42e6f938b",
+      "raw_rows": 4336,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/ind-ta-sangraha-v/part-00000.parquet",
+      "split": "train",
+      "pack_id": "ind-ta-sangraha-v",
+      "raw_sha256": "3774dd4f98e7834b3510261dfbd24950e8b052dc25636b642b7830d02d1b724b",
+      "raw_rows": 6796,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/ind-te-fw2/part-00000.parquet",
+      "split": "train",
+      "pack_id": "ind-te-fw2",
+      "raw_sha256": "194f080c14dec33a3a7312bdc147c86c51450b995086189aa092a92ef4316165",
+      "raw_rows": 5997,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/ind-te-sangraha-s/part-00000.parquet",
+      "split": "train",
+      "pack_id": "ind-te-sangraha-s",
+      "raw_sha256": "878ece52c5dff94686df2ff296e6556bb6234aa5b413c56574360dd5f7a70c7f",
+      "raw_rows": 4782,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/ind-te-sangraha-v/part-00000.parquet",
+      "split": "train",
+      "pack_id": "ind-te-sangraha-v",
+      "raw_sha256": "5e10f6717de94d516fb6dbc45372d4b620fbe0bb7970dec13ff8c10b429ab6f9",
+      "raw_rows": 8609,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/math-finemath/part-00000.parquet",
+      "split": "train",
+      "pack_id": "math-finemath",
+      "raw_sha256": "a5dbb4da6d0c2e890901aecb10b5c2bd71378d8e66e5975adc0d7d98592f51b2",
+      "raw_rows": 29122,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/math-megamath/part-00000.parquet",
+      "split": "train",
+      "pack_id": "math-megamath",
+      "raw_sha256": "e8c53baf0e1c842d303199b93cc36768199edbc64a142925df890915c4cb7d91",
+      "raw_rows": 17647,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    },
+    {
+      "part": "train/sci-finepdfs/part-00000.parquet",
+      "split": "train",
+      "pack_id": "sci-finepdfs",
+      "raw_sha256": "87dd59b9268bf5784e8f60e40a829ccfb6c6b62d28e6c88ddb4770782af0eb69",
+      "raw_rows": 6011,
+      "expected": [
+        "written",
+        "empty",
+        "all_left_out"
+      ]
+    }
+  ]
+}

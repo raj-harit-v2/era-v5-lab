@@ -1,0 +1,650 @@
+{
+  "tool": "reconcile_shards.py",
+  "code_sha256": "d70ec460a89e96d1390509b6ccc9e6813d632873998e8abfb5303548fd0a88e8",
+  "inputs": {
+    "ledger_files": {
+      "heldout/cadj-commits.parquet": "4e351cf9836ecb431243046b53c15e25940beaf8a2d5ce407f12116c0ca6867a",
+      "heldout/cadj-notebooks.parquet": "c8491329c029b4ee96fb3f40454bace453c12ce205541f966af1bd6d77303d52",
+      "heldout/cadj-stackexchange.parquet": "46968954466825c802957451cc3a34033c38137c50c9f38ded5982812dd45151",
+      "heldout/code-cpp.parquet": "093d7829dd5f770bb2ed99c6b24655190b192d8c6cb23320a97e97e9a6b9716d",
+      "heldout/code-go.parquet": "70ff748038104ee47627afc6e39aa272f16ce39e70bd5d17e79f25e85eef0074",
+      "heldout/code-java.parquet": "b159fa67640d04fab69f09b2ddba94192e30e91fc72724067222750a7ec4b35b",
+      "heldout/code-js-ts.parquet": "47a712977f8de90347c9275d43f47cb2e40e4f224ea3350a7a9644b7646f2d57",
+      "heldout/code-python.parquet": "d55dc4666926e224741a107f03b3d562d35c20615dd2dc083a908e767e01aba1",
+      "heldout/code-rust.parquet": "c9f6f3eac04fe90598e50eb0edb7e95e98227838d515aee518ea67e974c07b02",
+      "heldout/en-dclm.parquet": "55db614cda6f7db8a9a84f0273d1c57e761ae6404a0e3723425b614aa67d1c02",
+      "heldout/en-fineweb-edu.parquet": "564e094dca6e120376c9bcd6ec4467aba1189be92514f7d285bc25d3c52b4892",
+      "heldout/en-nemotroncc-synth.parquet": "77e04e99c62e828562e7de18762c66250023d511f441859e34c7c49b337a813a",
+      "heldout/en-nemotroncc.parquet": "1d02fa8290c5336b11482d677d101c5d5d7bebf7a0e75e993982ea1438c5cbfc",
+      "heldout/ind-bn-fw2.parquet": "affbeeedd675c96487a1e144668bae2672dcbb8123b03800d6e3e4a5cd4083ef",
+      "heldout/ind-bn-sangraha-v.parquet": "cdde9bdc67f132dcbcdb47272bd27040d315deeb8a7c91027980b70c9665776e",
+      "heldout/ind-gu-fw2.parquet": "e80611808ba2a4aae88b4c17193c8a9a8ed4221b311a138fe525a2b6144342b6",
+      "heldout/ind-hi-fw2.parquet": "60c33920c6ca9ac015407c51cd5ee9c1507951f8ae3ea400b7a7d99ad7dd48af",
+      "heldout/ind-hi-hplt.parquet": "974b3be40adcd48d46596cbe4eb203384f6f1c93024554e4c3903356c130f781",
+      "heldout/ind-hi-indiccorp.parquet": "58c489a4582981a9305b67fef2bcaa9084715e5afa4ed45caa20f1453fe64420",
+      "heldout/ind-hi-sangraha-s.parquet": "2bb16c2d72aab52bc0677e6728f9142c7298b9e2a8ce4bb4054e50426251ed0f",
+      "heldout/ind-hi-sangraha-v.parquet": "6332a55759b79e74123b3f959cdc16b18031b62711fa090b21dac0cecdb92109",
+      "heldout/ind-kn-fw2.parquet": "8c2f8d4d11874234de6ace7585a8cf1bc52a7684907c1b2a70abed5a015a1d2a",
+      "heldout/ind-kn-sangraha-s.parquet": "69bea76b76ee2ab7633e402a27a09052cd1179c2f28c387331cc108e64b2e680",
+      "heldout/ind-kn-sangraha-v.parquet": "9077e25296b5a4734f269766a0c5c32b36136230c583088a70304a1b99ce2c75",
+      "heldout/ind-ml-fw2.parquet": "4c07ad47bed46511a26e561eef6d72447f9dc90c5b2da6fae85c4779b5694e49",
+      "heldout/ind-mr-fw2.parquet": "17dd95480d0ba77258eb671060b64cb35c3b635065161d647930d32c2e9169bc",
+      "heldout/ind-mr-sangraha-v.parquet": "721d74d2f66fa6f18afbf54b64a17ab8f0b94ee7442157c9bfb6272487d4b7f4",
+      "heldout/ind-or-fw2.parquet": "8821b33516635f729c3ca40b07a3832c8316c4a79b7328ed030c2d5b3b15651b",
+      "heldout/ind-sa-fw2.parquet": "f750fb2f11975a2b9c2a74c0f1d97af8ea0f4ca74ec0f96025b59d99c03a59f7",
+      "heldout/ind-ta-fw2.parquet": "427d4b8f67b9f8702a07efdef5c15575e34985ada6fcd2f1f253ef03fd8b98cd",
+      "heldout/ind-ta-sangraha-s.parquet": "1eba7109611c3b8432a072d6ce68cf5416aa35a3b7b5138ae3a2923a3333f389",
+      "heldout/ind-ta-sangraha-v.parquet": "583e2f26f5ccacb8eb0808ac40ae4cb3752bb67e0e740a69d600fb7816f3a4b6",
+      "heldout/ind-te-fw2.parquet": "849f63eb085c9cc62f35c094d12296bcfa57b34c4a92e709142603685a033762",
+      "heldout/ind-te-sangraha-s.parquet": "a132d481e4d5769f454088bd19ea8fdee3f445f6a51b7fdce4f45da882ada617",
+      "heldout/ind-te-sangraha-v.parquet": "489d66ff0b9f95b258bfc5942d6e1e8875bcdfe8cb208b52b934ad2cbd651803",
+      "heldout/math-finemath.parquet": "086d3e712795de9dcec5539bcfcfb488309f273537bf9c245ca81e8cb8c25d6d",
+      "heldout/math-megamath.parquet": "3141fa877e2b4b09da02b6fd3e76ab7f0d5a5122959f0956141627f0c5dd6b45",
+      "heldout/sci-finepdfs.parquet": "ee8f746f057f4b25068a40d0ce143e2a6b4a6cdbbe3a409e04882a6980c45746",
+      "train/cadj-commits.parquet": "b5ad670cb6765f0822879674a56268085619ef7e2d37f150f039f997fad3afc2",
+      "train/cadj-notebooks.parquet": "5314c234abf9383caca9889041ca79b725f6a4d2baa2090a7662be837c222696",
+      "train/cadj-stackexchange.parquet": "20c357149137bab4c6f5b571836ee0481cac49e8f2ed1eebb741552a93e99b0e",
+      "train/code-cpp.parquet": "5ee51e5ab3fc88d70f836674a95a5fa64a4cd656a1b930c621cc75edf01c403d",
+      "train/code-go.parquet": "7b4083ff2dd7797f010bc32f6167b1a0725dea6747d0495969149f3b4d0f30b4",
+      "train/code-java.parquet": "1e9f7c90a98fb3d3fd8efee3d3206e43b83651dba3d8463eb1380a7529feaa7f",
+      "train/code-js-ts.parquet": "1c9e159331b2546e694c4512d42b0315947dadf5acaa37a4d0bb28ae434b901a",
+      "train/code-python.parquet": "24e07a03ff7f414bced44b3d5f303754717d7ef5cacce6a257c08e83e9c25b8c",
+      "train/code-rust.parquet": "f0c8fe387d43d224c5ee28810f974eecaa4a5aec891d26d6913fa952dfa83eea",
+      "train/en-dclm.parquet": "7d22f0aadbebdf5e6fbd527639baf5a5b1ac527b377248158d074dfe0b519afe",
+      "train/en-fineweb-edu.parquet": "fc374a75ee827d4245c7b3b65c2a1474a97acc8e4789c8f53ea425c8c2b9129c",
+      "train/en-nemotroncc-synth.parquet": "509ba1d4b3ab9e4303d29e1ac9c9cae01ae709d55d5465e0cbef051ce6ddf181",
+      "train/en-nemotroncc.parquet": "0d71eceb08fb408cb7e1effc63a288290bebc582dcce8515058576004ef155c2",
+      "train/ind-bn-fw2.parquet": "9f4309679729c84b872530b4914b7f62a98168615ab22fe8e0e3911c45eedce7",
+      "train/ind-bn-sangraha-v.parquet": "ab667a0a3d2bcea9d24d15e165f0fc52a927296a154434caa3c406ea02403882",
+      "train/ind-gu-fw2.parquet": "606262bdd8de84d1f1475af925f842fb906fcb52a6d25a058cb69657233c45ad",
+      "train/ind-hi-fw2.parquet": "808574e2ec9cd7189519700f089fe2563b43548b99bfb4704d724d20373c648b",
+      "train/ind-hi-hplt.parquet": "9eb772feb465aeaf8c577bee8bdf777e38fd14ab3b49cf591ef5a7d143b51b47",
+      "train/ind-hi-indiccorp.parquet": "f41554470bb9566cc73fd8e903d817e64967ba01d60c34b43dade533d24e058e",
+      "train/ind-hi-sangraha-s.parquet": "b81efddd93e43a80a8aa6d7598dde21e484a2e198ee27e8168de163297f90ce4",
+      "train/ind-hi-sangraha-v.parquet": "42ccadf9eaa0d26964dfc16d597ce410a06a338a5a9d2bfc93b5167a410e5d0e",
+      "train/ind-kn-fw2.parquet": "e1c1fce3f2033d8168ce5a59d8e8866771742b15e84c12c696e926af4a431b05",
+      "train/ind-kn-sangraha-s.parquet": "fd39c6389ff41c96fe36d7c695605dbb2368e79ceca22963b61dace0d984b835",
+      "train/ind-kn-sangraha-v.parquet": "97f7a98191366cc23b83f789eae1968a0d7176cd9f709e9799da3321c75d3b4a",
+      "train/ind-ml-fw2.parquet": "ff0a3e96fc7e94731458002241b61abc00ef36b11062d08dc2777ef8e8915b3d",
+      "train/ind-mr-fw2.parquet": "da05c1ba71ca8d2587c37c17ada0680c50a4e8968df0cc95027ac4f47a01e021",
+      "train/ind-mr-sangraha-v.parquet": "1dcf61a204b4811959d06d76118ea85ee25c4a4d8580c28ff0d87403755f3ee2",
+      "train/ind-or-fw2.parquet": "f27f8e9365f787f9fc8b6eea242c0f9e9eb3dec8e710322c0603dc35ca8f3065",
+      "train/ind-sa-fw2.parquet": "3fba670f21cf8bc23ff16f3feecdbd31bfc4186497f6df26cf6c789f36e16b89",
+      "train/ind-ta-fw2.parquet": "60c0641940957efd9b59f98a50dcba6472d2fd990d96e4bd4364a899abf57e27",
+      "train/ind-ta-sangraha-s.parquet": "5826c296effbec84ae9c2b8aee660a9068c1af3a8e5a3874ca7d8b175d5db68a",
+      "train/ind-ta-sangraha-v.parquet": "2e2fca5c95a25014b8bcd02afbd7146ba4952e20ce0dec4ab9bfaa9b46cea5c8",
+      "train/ind-te-fw2.parquet": "6e10104c1ed9dad8d9a8e69d6702e6280a0aeca425a9599509cabca388bf0cb2",
+      "train/ind-te-sangraha-s.parquet": "0548fc16d26981f43f088f65a829e179be81c9b63898365287844b7f0e0e3d58",
+      "train/ind-te-sangraha-v.parquet": "f6484d45c311bd33632c619ae3b8ec2fdafe1379006e1c60be7d1ae68ee92c0b",
+      "train/math-finemath.parquet": "ea980e47d7b7a1c5d3808c0d8c8651254a0a1dde38de3730446c66684c1eae1b",
+      "train/math-megamath.parquet": "6cbc9c1cda536019b3294f5195b76a6590e87cd75201dccbfbcd49343925edec",
+      "train/sci-finepdfs.parquet": "64440111d259c2e8f4ab3bfd5a592a591f365a7cadecf628a4b849f385ed883f"
+    },
+    "shard_files": {
+      "shards_summary.json": "ad0e63306601ddd15c4634733b63c0e2757039745baf1ca3b4a2edbe13dbd131",
+      "cadj-commits-train-000000.docs.parquet": "b9aaf144a4bd0316c3ac5f3df4b165bb9a1abfebd225c0f278b41db2295dc096",
+      "cadj-commits-train-000000.json": "2499981fbc10fdac80fecd66af702dac9073effadadb845dbb2c4aef3a6ba150",
+      "cadj-commits-train-000000.quality_report.json": "7690c172c1e9a2699e81278253a48078e651af2af5eddb28b09fd7dbd871c378",
+      "cadj-notebooks-train-000000.docs.parquet": "2f1e9b637e3004dadfdbf775e8d32ba8bf3fb415f696bd4d73385ab1689cc74a",
+      "cadj-notebooks-train-000000.json": "e3a58b9a5bc97c163efd8fef29ccb51aa212c209ced7bdd3ca149be70c69435d",
+      "cadj-notebooks-train-000000.quality_report.json": "afbee1c0b2e0081e15d703574a3f2507e67f3909770ce8c7a81d34dcac87eccb",
+      "cadj-stackexchange-train-000000.docs.parquet": "03a3a49fa3a05c6bbc6fe74aeaa85b5b7f90a07d9eaa6e857561e2600f33d165",
+      "cadj-stackexchange-train-000000.json": "b3f8a4ab15d90ab1a442b85f8b7e7408006defb94c0666ef6708ffcd5d4ca5df",
+      "cadj-stackexchange-train-000000.quality_report.json": "84dfdc5b7253679e6ce4acda4c33d5a4f6685860c8061d4b449107e5d2c52d10",
+      "code-cpp-train-000000.docs.parquet": "01d299da4b7199a226fb70d1ef5f0645eaab2ab6bc506c1ff5f0b62b3f3c541d",
+      "code-cpp-train-000000.json": "a0a961210b92d61201bbb397ab1167bad073fda9970a29ce2b4f782970aac8f4",
+      "code-cpp-train-000000.quality_report.json": "6ec88cef005261be130faf3605e9e45a2f0a4a33ff22ef48f40148f9b7f0b82c",
+      "code-cpp-train-000001.docs.parquet": "1c83d70de254e5c0fb480fb727b30530008f6c04f1472ae09a548011f27073fd",
+      "code-cpp-train-000001.json": "c8e28fddf58e4cdd65589e7129b64740f373cb2abbb8edb4bb4f0d7c737aa03f",
+      "code-cpp-train-000001.quality_report.json": "e101fbca186bf3f7bc7d3741551d2a943d3bdb8b7e2c76acab90b516f7838313",
+      "code-go-train-000000.docs.parquet": "462c3b72169d02ab07d2514a719cc03cc6b3af77af73892962b834b3d7ba6e7d",
+      "code-go-train-000000.json": "85b13f5df7e828b977ff56ffafd5877b80f7fe18f159cfca139818f89826ac00",
+      "code-go-train-000000.quality_report.json": "01bb0191584e2f31a22caed4ac35f0dce0839fe20c95658758b34aaf4c4c8c0d",
+      "code-go-train-000001.docs.parquet": "83ecdaedc371fc2fb3b48635529308b6a4b734debba6d9d93fba6610e96f35a2",
+      "code-go-train-000001.json": "ecc9ad064ede51390a617a547b91683c87b4beff66171e30a5265cacc64bc5a5",
+      "code-go-train-000001.quality_report.json": "0a3c00e35030c58dbaa792670c0c08c1f722e124ec1f86fb5e49cee71b1ae06e",
+      "code-java-train-000000.docs.parquet": "68e9ed5d464d3d4171bdbc54bcd073bbf8a7c0a30f6a29e5f0c4bfa68aa68058",
+      "code-java-train-000000.json": "9ac910ba527e2d35df755071482673a1a83f655c78e670e52f729370a2acf086",
+      "code-java-train-000000.quality_report.json": "8c5c6a4a913c2ba5901f015c445edb7d4932f496f142b51aec718e6aa61f6a36",
+      "code-java-train-000001.docs.parquet": "aa393f73aae39f50c71d2b14c22e2be7ac566c8c13e92f633545d7c654cfb307",
+      "code-java-train-000001.json": "f31d4d830f667724dccb66665aa47d3bcc84f8a1aa973585206e4e8873057271",
+      "code-java-train-000001.quality_report.json": "842c0437cbcaf3b76f08b841572fc4fdf1b189160f89cf8c1038302a774c1642",
+      "code-js-ts-train-000000.docs.parquet": "01f36f5dfa4752616381082605f6dd2a94ca3ae4a178b8bd8a23e4efffd07c23",
+      "code-js-ts-train-000000.json": "ed243648fb73f9d7366eeb278c85df3372b34a62da3fba4ddb6bd85280a0126b",
+      "code-js-ts-train-000000.quality_report.json": "94e4beee5b7bfff0c8016f44f2aeeacc5873240ab3a43e76a9b614053f23b117",
+      "code-js-ts-train-000001.docs.parquet": "600df9ea445d2461a45ae34fee0034de7d4925c758c7f956df1e33e4d96670fc",
+      "code-js-ts-train-000001.json": "20194f112ed00d04423402e36bb9bc7861a5666156bd89e3748fef5369704cdd",
+      "code-js-ts-train-000001.quality_report.json": "d94167a44ee88c543382de006dfaec689458fe484312a5e590a2eb698af5414e",
+      "code-python-train-000000.docs.parquet": "28d7bcf9b1134f05d4cff34122142880476fc42a9a1e39e805c72133998b6ce4",
+      "code-python-train-000000.json": "285bd0e6bff0c00cb4181bc6af68d72420622c76bbfa647b7d00174a93b7844c",
+      "code-python-train-000000.quality_report.json": "74a13035e55f80fd99875486420cb73df2f9089a3d3a99859da050953ee75e4e",
+      "code-python-train-000001.docs.parquet": "3127d51b5a4e188e46bdb8c3d75b58f689c26cb9160208b0896e9eee5a8d536e",
+      "code-python-train-000001.json": "a15cc1d1b1c58fdb701c2c8407160e5382c5bc60e62b1089b0f5ba49155959a4",
+      "code-python-train-000001.quality_report.json": "3d81a625cb91a86fd054f64e014d9af523463e3cd32326c5d62979b224ec05da",
+      "code-rust-train-000000.docs.parquet": "07b078721b5d37b8b2aa8f22da324014a81380e529e2335e73b1b974a482ed8b",
+      "code-rust-train-000000.json": "31de327221041d42ab96c1c811ca9f8756bb1e70e66ec2c4ed580d4ce1e8dbb8",
+      "code-rust-train-000000.quality_report.json": "8d6fd1f23beffb3f39d1c5d6dcc420a986e437996b984cf077b6635f5728b294",
+      "code-rust-train-000001.docs.parquet": "0e6cb607e66aa8b5d47e52809182b8416f918c5f635ff789f004ade58ec4aeda",
+      "code-rust-train-000001.json": "bf12da3c35970932ae184d19a69cef28ed1d837170457e8f7f69dff8e43a0f6a",
+      "code-rust-train-000001.quality_report.json": "3d0500fa7c108af3d01aae58ddd01bfa6daf9d303f6bff6d58ef2a45624fcca6",
+      "en-dclm-train-000000.docs.parquet": "f3f4851f05ead8b4c5e176f77a591cbb3fecc0ebee7703834e4b482a73aeba5b",
+      "en-dclm-train-000000.json": "cfa48a8bd782beed2b461262176a40cf5ac6778002d0700738394753d50525e3",
+      "en-dclm-train-000000.quality_report.json": "f7c002d75086cb8daa42ab01da73e112d6e1fd8b9f44f4d730915b7a83c1ebe0",
+      "en-dclm-train-000001.docs.parquet": "00601e2f058cf063ed83f8ba8ea5257708f4c11260d0bd0b51624435d2b9e51a",
+      "en-dclm-train-000001.json": "c701f2a8bef2bc0a0625d2e1c80e6d090650c1bf8e0722b8cc67c7fca4fb43ce",
+      "en-dclm-train-000001.quality_report.json": "7a11f12a14d2d1646366519eefaf3bf6aa39373b823ab46169e8204935f3a922",
+      "en-fineweb-edu-train-000000.docs.parquet": "d532d63ef6c7f28d28b5c05f44a64c504137d2c05a68fea3e5788b58b939016d",
+      "en-fineweb-edu-train-000000.json": "7344a15a89063d37814d51045105014e4434ccfa97bc6736f6e45e07cdf2543b",
+      "en-fineweb-edu-train-000000.quality_report.json": "6525fa0442f787391626352e7efafff7f101aa67db7aa5d041c0a00da57bc4d7",
+      "en-fineweb-edu-train-000001.docs.parquet": "ad0572302ff683c57e3b971c2a807ccb4cfe0350b2039e2b645ce84342a11079",
+      "en-fineweb-edu-train-000001.json": "abaff1f0fc7de2bb4e9e2e3476c695c2541c7f6e6a37f5dbf93797d620479229",
+      "en-fineweb-edu-train-000001.quality_report.json": "58ce9f3cbde14776769949bf32588c0b23377dfc50646b800f285c71e85af128",
+      "en-nemotroncc-synth-train-000000.docs.parquet": "9f5091ce9d6e9db37458846387530cdfc3ad545740cdb2b6a50ca22a63f9044b",
+      "en-nemotroncc-synth-train-000000.json": "8248e767c769aba40ea8f0cecdde636d9eca18c99fa8af81bd861005cc6a247d",
+      "en-nemotroncc-synth-train-000000.quality_report.json": "a820bf9020df6d67b1c693a55a2eb697f921cf7bf523b00344971b9d7053995d",
+      "en-nemotroncc-synth-train-000001.docs.parquet": "2f35b4834e5dfba4a6f9bbcb7b5e0e45bf5b44b8da636369267240a512321a6f",
+      "en-nemotroncc-synth-train-000001.json": "f1cbc4d400e154a0412a53ff1296853cfc76767bdcf740ba539081e5c663495c",
+      "en-nemotroncc-synth-train-000001.quality_report.json": "730e0ce77bac30d8b3202cf1383709d75780f5dc7dc96468ece52dffd4813e54",
+      "en-nemotroncc-train-000000.docs.parquet": "7469d5799a4ef3789165d3e8861ed54eb9fbb7d9890c766562be0a0b9cfe5b87",
+      "en-nemotroncc-train-000000.json": "cc0826f1fd0cc68142ec290cfa6854fd4d88757e6bcfcc42a39ba903c9ab555b",
+      "en-nemotroncc-train-000000.quality_report.json": "02309e11115ea5fbb980b40deec8d769973f3353576d44c152dfdcba44e0f6de",
+      "en-nemotroncc-train-000001.docs.parquet": "a88f82a08b233505f5c671223bc08120aadf7222c0d650f56de373dc419996e0",
+      "en-nemotroncc-train-000001.json": "1aa21439ce614371942b7c092adcb8a6ad8e9ac6eded64d8794174280d68b4f8",
+      "en-nemotroncc-train-000001.quality_report.json": "0e6711a43331516616b35e7c4d4d476f241f4bee64396a0c65fc21f3375926a3",
+      "ind-bn-fw2-train-000000.docs.parquet": "119e5b83eb11399e192cb98f1cfad7f8bd3394a0d24a104debaf1554e7270ef6",
+      "ind-bn-fw2-train-000000.json": "c35315ff394aab6365ee0159d15dbb8e19b0d67efa7dd72d157e04b9afc8493c",
+      "ind-bn-fw2-train-000000.quality_report.json": "a46c6079c53e4ffbcb572fe559f5f0bdc6d8de3f54a7dba48df51e3052cd4752",
+      "ind-bn-sangraha-v-train-000000.docs.parquet": "e9998c978e23c71c10be83a91fb15af99c2fa732cfc6993b506fce7a1ebb51f0",
+      "ind-bn-sangraha-v-train-000000.json": "1f3257e2c997833f1439fdb009284a5d36b2b084b0a4409941907d2c91f8c500",
+      "ind-bn-sangraha-v-train-000000.quality_report.json": "f5b09524d8c9c0cca53bd6ed2b213dfda49e49c13aff3d9f10e509ae82b63bc8",
+      "ind-gu-fw2-train-000000.docs.parquet": "148549465af2dd606031117085df0dd7e862453c9fc74155fa3d62f1d7be5c1d",
+      "ind-gu-fw2-train-000000.json": "a695478bec4af69bee5321c86f818f04d8e16d7ced4fa05785b5133ffc1be0df",
+      "ind-gu-fw2-train-000000.quality_report.json": "bed1a845a1b5d9eaa3b5b71f2401b6d64421f448270c4a106578d47fb103d57a",
+      "ind-hi-fw2-train-000000.docs.parquet": "21af5048a5a2428f6246c3fd2084b3b02828d5bc40f8ce9e922965c6811c3c87",
+      "ind-hi-fw2-train-000000.json": "417d30d076b8d3f5d172ba4608ef48c2b8b952e5470f5f3afe863a1b7181676b",
+      "ind-hi-fw2-train-000000.quality_report.json": "4e23c21cb69c4b757ca36e10face3b379f1f4a16c02430d868710d4697cb0fb9",
+      "ind-hi-hplt-train-000000.docs.parquet": "e6ce3849d5a0ac67c3488b7a9094b6cd022ed07d1eafeee0981c73701ae642d3",
+      "ind-hi-hplt-train-000000.json": "8b9830f117de3285c2746f69f9aab50f7aa72b91d9cebcc3074d4cb0ee306150",
+      "ind-hi-hplt-train-000000.quality_report.json": "b415d501c980a7d5c9afcc9f78e6db95ec655f863f999e397c40c8e018092d28",
+      "ind-hi-indiccorp-train-000000.docs.parquet": "fed3b78bb8c08617739f975e578fb72285ce535a656cc52197bbc28d05b6166a",
+      "ind-hi-indiccorp-train-000000.json": "b06eb9a21abbaced328596c763a8b52eb2db72e06b04c56664f015a0eaa6b92f",
+      "ind-hi-indiccorp-train-000000.quality_report.json": "717b6408d2fe2cf099c2d95ec5541fec0b77ecb9d7b7406c0b38b6a540870b0e",
+      "ind-hi-sangraha-s-train-000000.docs.parquet": "7fec1ce07463ce80b7a1e04a3ee3acc41ddca1f276fedf5933a361b1d8b9fd4b",
+      "ind-hi-sangraha-s-train-000000.json": "5c4bc2c6f5aee93b3ba646916160663e1c2601c753c695322b98be4c8eee1a98",
+      "ind-hi-sangraha-s-train-000000.quality_report.json": "b21e30aa5eaa70eddab3304f09b4145be7c476cf9e0876800fa083f065df0371",
+      "ind-hi-sangraha-v-train-000000.docs.parquet": "5c1da4d62e68751ae556b9591d1418eee23d318940ff2d9d331cf63577045667",
+      "ind-hi-sangraha-v-train-000000.json": "68794c07546206bc0dd9718be52412e11f749466f37c36bee0d910e483a12942",
+      "ind-hi-sangraha-v-train-000000.quality_report.json": "8669d279d860f3813f7eda0d603807b16db84f67aaa7e3437d29242cf12ba4d6",
+      "ind-kn-fw2-train-000000.docs.parquet": "ed8647fbe6002b2aa97b9197bcd96f90b300bee45b907bec6750e49b7f0167e0",
+      "ind-kn-fw2-train-000000.json": "cfda7d33ea4e40fef59f59f87a3715b2c903802a7bded0549fd13ba8e92a2177",
+      "ind-kn-fw2-train-000000.quality_report.json": "1702e02078860815123c260701baf0a7a8f270fd920a9f9d7d0a148606482f8c",
+      "ind-kn-sangraha-s-train-000000.docs.parquet": "e44a2c65e8140cdd040c3a9ead0005d97230e8078492faf527325d48e3908a07",
+      "ind-kn-sangraha-s-train-000000.json": "28ac10cd8a595e4502cce0ae1f5c3c2d3a359593d9df9c47ea0901bd62508413",
+      "ind-kn-sangraha-s-train-000000.quality_report.json": "34d0482fa6f442cd18a0b5a0337c8cb401899401f0f4f8c06072905957423af8",
+      "ind-kn-sangraha-v-train-000000.docs.parquet": "c0bb80f97840dc933ce77ec7b9456e44b3146a74f1d5578a00946d7f9c2773c3",
+      "ind-kn-sangraha-v-train-000000.json": "e7b36337399751c9f16259d5f62be1d7f243aeb31d81988fe0f853820a5e88ab",
+      "ind-kn-sangraha-v-train-000000.quality_report.json": "9f9f518ef0ffbdcd6ce442ea70ff9eb3731179de294363ced076379fce5b2eda",
+      "ind-ml-fw2-train-000000.docs.parquet": "f7d228fa874d9933479e6e46ef165f8d7e7a4881bc973c5c26e4c2e501d918ff",
+      "ind-ml-fw2-train-000000.json": "73c4a69579946daca51c5dc81fc49a0b8814747394365ca912a1cb0ff2721075",
+      "ind-ml-fw2-train-000000.quality_report.json": "915f8e787c4c0ed09e23a1f3b04008be3ff58ca05f5e6c54aee2fc2bd5114591",
+      "ind-mr-fw2-train-000000.docs.parquet": "e8bafdfa3461419848e8b8ce8d03c747f8c20f7b3002733d638b15acbfc13c6e",
+      "ind-mr-fw2-train-000000.json": "844344dd7c0ffdf1a34a3c58dffacf11fcf18413412152d18c50aeee5f42f840",
+      "ind-mr-fw2-train-000000.quality_report.json": "f89bbb69291f420f8d88c7843b35e3061f4efdf74aa8864e97311c2142cd3dd7",
+      "ind-mr-sangraha-v-train-000000.docs.parquet": "c13a8cda15bbaa4352bada90273564049852893538fa3df3d5e15dd79c6194e5",
+      "ind-mr-sangraha-v-train-000000.json": "63eab312c1ea9de02cfc1554139760f83a8e80ceeaa0bab2d42966e895e85a69",
+      "ind-mr-sangraha-v-train-000000.quality_report.json": "6a0dd6450acd2e7cea165a6fc5f154fc2a51eb24dcf732bfe10170cf4c7cc305",
+      "ind-or-fw2-train-000000.docs.parquet": "a8ee90bfb46c5842ebefcd709f771cfee2b8c00409b24f1d859903842e4d3fae",
+      "ind-or-fw2-train-000000.json": "e01f42aaf2074bc8475e453542224a66556a3dcbaec79077e0b5fe9d8427f090",
+      "ind-or-fw2-train-000000.quality_report.json": "e714df615061be580b19899453ea3f7f5c1a5e36862a58d9095213c54c7c0c10",
+      "ind-sa-fw2-train-000000.docs.parquet": "3848bc1865c61e55af9c2ef47136dda86daf93c215bf17ec6025ab6f2d35a87e",
+      "ind-sa-fw2-train-000000.json": "b0ebd3e2f15c4ec282c6c72084eff3d225d11f66ea0d2958d6e4eaa38574116e",
+      "ind-sa-fw2-train-000000.quality_report.json": "ac448a995696e9a7ac65b9615c8b985c85516b88169a75faa79763169a4ed0c9",
+      "ind-ta-fw2-train-000000.docs.parquet": "c9b90189fe752787bd9dfcf8566cc6afa650a5f2da63d64966fb715eec54ce96",
+      "ind-ta-fw2-train-000000.json": "692017912cc6a400ebe667dc8acb77ae1c0063fb6f49e65096e5c1dd9c82f86b",
+      "ind-ta-fw2-train-000000.quality_report.json": "6e6eeb50898f291326663c3aa4fe9509477dd445e4db52af63a15ae5b62b96a4",
+      "ind-ta-sangraha-s-train-000000.docs.parquet": "1fcc6a5752fd2130b49421d937a0eb02c1bc341c61b5cf79bfbe770857ff72ed",
+      "ind-ta-sangraha-s-train-000000.json": "7b2259f3a68aa641c2ae67931841b9881e1764caf232a89a8645db2395758090",
+      "ind-ta-sangraha-s-train-000000.quality_report.json": "cd42661c8fccac92b3e6bd8312c23524ba9444ffb65420a717188bcd55e92a99",
+      "ind-ta-sangraha-v-train-000000.docs.parquet": "e398fa0ade53f7c24e31897d1f7c92670997bc50a22f4f5e9630c210a6dd0f68",
+      "ind-ta-sangraha-v-train-000000.json": "4d9a08219645ec57ae453af8c561c763bbcc69e2ae5f5b7f30aa06a073a0daee",
+      "ind-ta-sangraha-v-train-000000.quality_report.json": "fa33dbded8b70aac46183f4fe07e51d72ee95306590391a11d77b30bd4f767a9",
+      "ind-te-fw2-train-000000.docs.parquet": "bb2ffdbdbdcd50b20e684c33b9bc589dd509e4890d5029639ed8b32979759027",
+      "ind-te-fw2-train-000000.json": "52f1574ccf57d2054ee3eb853f57e4c84b007647ad2fc34bc5ad45406ecb0677",
+      "ind-te-fw2-train-000000.quality_report.json": "7120641b6ea4087362de967795be675f7f05d418583fb8250140275d20496016",
+      "ind-te-sangraha-s-train-000000.docs.parquet": "8b0e72e7a0ae3a7a4a723655a9ff05a0358e4f8df918a4a1484bdb498d2b4794",
+      "ind-te-sangraha-s-train-000000.json": "849d601287c22ccb229df9acdef3f1efbe1ef8a74ee894d5189aa43a6618be15",
+      "ind-te-sangraha-s-train-000000.quality_report.json": "ac0f154e3a6558dd1c3a3dbf1653cf515a528205a61f810665167331a23a9ef7",
+      "ind-te-sangraha-v-train-000000.docs.parquet": "94e630f2299c9ad3eebb96d3479045dd8cc746741707d53e38f3812dd5c72814",
+      "ind-te-sangraha-v-train-000000.json": "a93ad91c2d39331ad8fe60ce0bcec5fd13532ce962b23154632340da991fd3b8",
+      "ind-te-sangraha-v-train-000000.quality_report.json": "6fce7d8c9d89bae1d7f6a81574c38577daa59989ef6ffbd997debadff5856ab0",
+      "math-finemath-train-000000.docs.parquet": "1dc0a0f29910ddb66b7b691fa5d3469fb6779f574286740739fa7753cd456746",
+      "math-finemath-train-000000.json": "ccedba3d7784657deeb87f2b052d51a9d7bc90fc0235d2d3db58a8202da49210",
+      "math-finemath-train-000000.quality_report.json": "0c7a5d4794a4a91fa7494830c20f97ae35c0b1ce7460cef80e962808e3fc578a",
+      "math-megamath-train-000000.docs.parquet": "2f9b1390e63cbaf247e5158b849e14fa3ea248cbce28556faa5c396559f92bfe",
+      "math-megamath-train-000000.json": "f6431fb33b185a5c3247f2478961b79a8030a7b4e50b10f874e7c4ad7a63ec63",
+      "math-megamath-train-000000.quality_report.json": "5572b202bcd79d5021ffa609d7fdafbbae98c285d152a64e1a40a5edc70031bb",
+      "sci-finepdfs-train-000000.docs.parquet": "5be501a58efaf0e39cd3081f3904da794aa9eb61588675f82e704771a9d9aa15",
+      "sci-finepdfs-train-000000.json": "4d37e5cb95936c75096a1a8ec7ddd895829b8796ab8c726d262c07bb4d161082",
+      "sci-finepdfs-train-000000.quality_report.json": "3eb19f3b1c5b15ee9106e6f3a5f162c1265e5959397cdc88e8f6f91ce8d31b84"
+    }
+  },
+  "packs": [
+    "cadj-commits",
+    "cadj-notebooks",
+    "cadj-stackexchange",
+    "code-cpp",
+    "code-go",
+    "code-java",
+    "code-js-ts",
+    "code-python",
+    "code-rust",
+    "en-dclm",
+    "en-fineweb-edu",
+    "en-nemotroncc",
+    "en-nemotroncc-synth",
+    "ind-bn-fw2",
+    "ind-bn-sangraha-v",
+    "ind-gu-fw2",
+    "ind-hi-fw2",
+    "ind-hi-hplt",
+    "ind-hi-indiccorp",
+    "ind-hi-sangraha-s",
+    "ind-hi-sangraha-v",
+    "ind-kn-fw2",
+    "ind-kn-sangraha-s",
+    "ind-kn-sangraha-v",
+    "ind-ml-fw2",
+    "ind-mr-fw2",
+    "ind-mr-sangraha-v",
+    "ind-or-fw2",
+    "ind-sa-fw2",
+    "ind-ta-fw2",
+    "ind-ta-sangraha-s",
+    "ind-ta-sangraha-v",
+    "ind-te-fw2",
+    "ind-te-sangraha-s",
+    "ind-te-sangraha-v",
+    "math-finemath",
+    "math-megamath",
+    "sci-finepdfs"
+  ],
+  "ledger_rows": 1444766,
+  "kept": 1407358,
+  "in_shards": 1385709,
+  "totals": {
+    "in_shard": 1385709,
+    "left_out:empty": 4,
+    "left_out:secret": 7562,
+    "left_out:special": 9,
+    "not_sharded": 14074
+  },
+  "by_pack": {
+    "cadj-commits": {
+      "heldout": {
+        "not_sharded": 826
+      },
+      "train": {
+        "in_shard": 69524,
+        "left_out:secret": 4311
+      }
+    },
+    "cadj-notebooks": {
+      "heldout": {
+        "not_sharded": 168
+      },
+      "train": {
+        "in_shard": 15482,
+        "left_out:secret": 1,
+        "left_out:special": 1
+      }
+    },
+    "cadj-stackexchange": {
+      "heldout": {
+        "not_sharded": 408
+      },
+      "train": {
+        "in_shard": 41091,
+        "left_out:secret": 45
+      }
+    },
+    "code-cpp": {
+      "heldout": {
+        "not_sharded": 606
+      },
+      "train": {
+        "in_shard": 54495,
+        "left_out:empty": 1,
+        "left_out:secret": 10
+      }
+    },
+    "code-go": {
+      "heldout": {
+        "not_sharded": 808
+      },
+      "train": {
+        "in_shard": 76795,
+        "left_out:secret": 58
+      }
+    },
+    "code-java": {
+      "heldout": {
+        "not_sharded": 839
+      },
+      "train": {
+        "in_shard": 84646,
+        "left_out:empty": 1,
+        "left_out:secret": 12
+      }
+    },
+    "code-js-ts": {
+      "heldout": {
+        "not_sharded": 1142
+      },
+      "train": {
+        "in_shard": 115949,
+        "left_out:empty": 2,
+        "left_out:secret": 36
+      }
+    },
+    "code-python": {
+      "heldout": {
+        "not_sharded": 700
+      },
+      "train": {
+        "in_shard": 72328,
+        "left_out:secret": 39,
+        "left_out:special": 8
+      }
+    },
+    "code-rust": {
+      "heldout": {
+        "not_sharded": 595
+      },
+      "train": {
+        "in_shard": 58086,
+        "left_out:secret": 20
+      }
+    },
+    "en-dclm": {
+      "heldout": {
+        "not_sharded": 590
+      },
+      "train": {
+        "in_shard": 59756,
+        "left_out:secret": 408
+      }
+    },
+    "en-fineweb-edu": {
+      "heldout": {
+        "not_sharded": 726
+      },
+      "train": {
+        "in_shard": 71154,
+        "left_out:secret": 121
+      }
+    },
+    "en-nemotroncc": {
+      "heldout": {
+        "not_sharded": 914
+      },
+      "train": {
+        "in_shard": 87177,
+        "left_out:secret": 1029
+      }
+    },
+    "en-nemotroncc-synth": {
+      "heldout": {
+        "not_sharded": 1969
+      },
+      "train": {
+        "in_shard": 195779,
+        "left_out:secret": 1078
+      }
+    },
+    "ind-bn-fw2": {
+      "heldout": {
+        "not_sharded": 105
+      },
+      "train": {
+        "in_shard": 10704
+      }
+    },
+    "ind-bn-sangraha-v": {
+      "heldout": {
+        "not_sharded": 101
+      },
+      "train": {
+        "in_shard": 10111,
+        "left_out:secret": 4
+      }
+    },
+    "ind-gu-fw2": {
+      "heldout": {
+        "not_sharded": 237
+      },
+      "train": {
+        "in_shard": 22689
+      }
+    },
+    "ind-hi-fw2": {
+      "heldout": {
+        "not_sharded": 131
+      },
+      "train": {
+        "in_shard": 13773
+      }
+    },
+    "ind-hi-hplt": {
+      "heldout": {
+        "not_sharded": 92
+      },
+      "train": {
+        "in_shard": 8386,
+        "left_out:secret": 32
+      }
+    },
+    "ind-hi-indiccorp": {
+      "heldout": {
+        "not_sharded": 1080
+      },
+      "train": {
+        "in_shard": 109664,
+        "left_out:secret": 6
+      }
+    },
+    "ind-hi-sangraha-s": {
+      "heldout": {
+        "not_sharded": 75
+      },
+      "train": {
+        "in_shard": 7432
+      }
+    },
+    "ind-hi-sangraha-v": {
+      "heldout": {
+        "not_sharded": 121
+      },
+      "train": {
+        "in_shard": 14463,
+        "left_out:secret": 6
+      }
+    },
+    "ind-kn-fw2": {
+      "heldout": {
+        "not_sharded": 81
+      },
+      "train": {
+        "in_shard": 7735
+      }
+    },
+    "ind-kn-sangraha-s": {
+      "heldout": {
+        "not_sharded": 53
+      },
+      "train": {
+        "in_shard": 5185
+      }
+    },
+    "ind-kn-sangraha-v": {
+      "heldout": {
+        "not_sharded": 87
+      },
+      "train": {
+        "in_shard": 8351,
+        "left_out:secret": 3
+      }
+    },
+    "ind-ml-fw2": {
+      "heldout": {
+        "not_sharded": 184
+      },
+      "train": {
+        "in_shard": 18822
+      }
+    },
+    "ind-mr-fw2": {
+      "heldout": {
+        "not_sharded": 94
+      },
+      "train": {
+        "in_shard": 11250
+      }
+    },
+    "ind-mr-sangraha-v": {
+      "heldout": {
+        "not_sharded": 127
+      },
+      "train": {
+        "in_shard": 12159,
+        "left_out:secret": 7
+      }
+    },
+    "ind-or-fw2": {
+      "heldout": {
+        "not_sharded": 328
+      },
+      "train": {
+        "in_shard": 33683
+      }
+    },
+    "ind-sa-fw2": {
+      "heldout": {
+        "not_sharded": 54
+      },
+      "train": {
+        "in_shard": 5655
+      }
+    },
+    "ind-ta-fw2": {
+      "heldout": {
+        "not_sharded": 58
+      },
+      "train": {
+        "in_shard": 6760
+      }
+    },
+    "ind-ta-sangraha-s": {
+      "heldout": {
+        "not_sharded": 36
+      },
+      "train": {
+        "in_shard": 4334,
+        "left_out:secret": 1
+      }
+    },
+    "ind-ta-sangraha-v": {
+      "heldout": {
+        "not_sharded": 65
+      },
+      "train": {
+        "in_shard": 6795,
+        "left_out:secret": 1
+      }
+    },
+    "ind-te-fw2": {
+      "heldout": {
+        "not_sharded": 56
+      },
+      "train": {
+        "in_shard": 5670
+      }
+    },
+    "ind-te-sangraha-s": {
+      "heldout": {
+        "not_sharded": 44
+      },
+      "train": {
+        "in_shard": 4419
+      }
+    },
+    "ind-te-sangraha-v": {
+      "heldout": {
+        "not_sharded": 83
+      },
+      "train": {
+        "in_shard": 8591,
+        "left_out:secret": 1
+      }
+    },
+    "math-finemath": {
+      "heldout": {
+        "not_sharded": 280
+      },
+      "train": {
+        "in_shard": 26160,
+        "left_out:secret": 122
+      }
+    },
+    "math-megamath": {
+      "heldout": {
+        "not_sharded": 151
+      },
+      "train": {
+        "in_shard": 14827,
+        "left_out:secret": 208
+      }
+    },
+    "sci-finepdfs": {
+      "heldout": {
+        "not_sharded": 60
+      },
+      "train": {
+        "in_shard": 5829,
+        "left_out:secret": 3
+      }
+    }
+  },
+  "checks": [
+    {
+      "check": "every document in a shard is a kept document at its ledger position",
+      "ok": true,
+      "detail": "0 shard row(s) at no kept ledger position, 0 with another doc_id"
+    },
+    {
+      "check": "no document is in two shards",
+      "ok": true,
+      "detail": "0 position(s) in more than one shard"
+    },
+    {
+      "check": "every document the writer left out is a kept document of that part, and none is also in a shard",
+      "ok": true,
+      "detail": "0 left-out doc_id(s) not kept there, 0 both left out and in a shard"
+    },
+    {
+      "check": "each shard manifest's doc_count = its docs.parquet rows",
+      "ok": true,
+      "detail": "0 shard(s) differ, e.g. "
+    },
+    {
+      "check": "every kept document of a selected pack is in a shard or left out for a stated reason",
+      "ok": true,
+      "detail": "all accounted"
+    },
+    {
+      "check": "every selected pack holds kept documents in the ledger",
+      "ok": true,
+      "detail": "all present"
+    }
+  ],
+  "ok": true
+}

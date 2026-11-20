@@ -1,0 +1,17 @@
+code-go-train-000000: 48 PASS, 0 FAIL, 0 NOT CHECKED
+Traceback (most recent call last):
+  File "/workspace/era-v5-lab/out/rehearsal/check_shard_pr60.py", line 454, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/workspace/era-v5-lab/out/rehearsal/check_shard_pr60.py", line 427, in main
+    rows = run_checks(a.folder, sid, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/era-v5-lab/out/rehearsal/check_shard_pr60.py", line 169, in run_checks
+    idx = np.load(ip, allow_pickle=False)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/venv/lib/python3.12/site-packages/numpy/lib/_npyio_impl.py", line 483, in load
+    return format.read_array(fid, allow_pickle=allow_pickle,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/venv/lib/python3.12/site-packages/numpy/lib/_format_impl.py", line 874, in read_array
+    raise ValueError(
+ValueError: Failed to read all data for array. Expected (1030,) = 1030 elements, could only read 1029 elements. (file seems not fully written?)

@@ -1,0 +1,17 @@
+{
+ "recorded_command": "python -m pytest -p no:cacheprovider -o addopts= -q tests/test_ipv4.py",
+ "expected_tests": [
+  "tests.test_ipv4::test_returns_failed_validation_on_invalid_ipv4_address[0127.0.0.1]",
+  "tests.test_ipv4::test_returns_failed_validation_on_invalid_ipv4_address[127.0.0.abc]",
+  "tests.test_ipv4::test_returns_failed_validation_on_invalid_ipv4_address[1278.0.0.1]",
+  "tests.test_ipv4::test_returns_failed_validation_on_invalid_ipv4_address[900.200.100.75]",
+  "tests.test_ipv4::test_returns_failed_validation_on_invalid_ipv4_address[abc.0.0.1]",
+  "tests.test_ipv4::test_returns_true_on_valid_ipv4_address[12.12.12.12]",
+  "tests.test_ipv4::test_returns_true_on_valid_ipv4_address[123.5.77.88]",
+  "tests.test_ipv4::test_returns_true_on_valid_ipv4_address[127.0.0.1]"
+ ],
+ "must_fail": [
+  "tests.test_ipv4::test_returns_failed_validation_on_invalid_ipv4_address[0127.0.0.1]"
+ ],
+ "note": "hidden: never put this folder in a prompt"
+}

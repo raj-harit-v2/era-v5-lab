@@ -95,6 +95,17 @@ def _records(report: dict, label: str) -> dict[str, dict]:
             raise ReportError(f"{label}: task {task} appears twice in eval_mini.records")
         if not _num(r.get("value")):
             raise ReportError(f"{label}: task {task} has no numeric value")
+        if not (0.0 <= r["value"] <= 1.0):
+            raise ReportError(
+                f"{label}: task {task} value {r['value']} is outside [0, 1] "
+                "(pass fractions 0..1, not points 0..100)"
+            )
+        se = r.get("stderr")
+        if se is not None and (not _num(se) or not (0.0 <= se <= 1.0)):
+            raise ReportError(
+                f"{label}: task {task} stderr {se} is outside [0, 1] "
+                "(pass fractions 0..1, not points 0..100)"
+            )
         out[task] = r
     missing = [t for t in TASKS if t not in out]
     if missing:

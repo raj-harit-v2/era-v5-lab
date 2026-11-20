@@ -1,0 +1,270 @@
+{
+  "_note": "Settings of lang_label_check.py. v1 was fixed before the labelled set was scored (lead, 16 Nov). v2 (17 Nov) changes four things after reviewing the v1 flags, listed in _v2_changes; no threshold was tuned on the labelled set. Paths are relative to this file.",
+  "_v2_changes": [
+    "labels outside the check's languages (Bodo, Kashmiri, Dogri ...) are no evidence on their own: IndicLID gives them to plain Hindi news lines; the marker words decide",
+    "a document under min_letters_to_flag (100) letters where IndicLID disagrees is 'short_disagree', not 'uncertain'; min_letters stays 20, so every document is still judged",
+    "Sanskrit endings (visarga, final halant-m) removed from the Sanskrit markers: Hindi horoscope lines and Wikipedia table markup use them",
+    "repeated paragraphs count once (in lang_id.py)",
+    "sa_Beng (Sanskrit in Bengali script) added; IndicLID has no class for it and calls it Assamese, so Assamese and sa_Beng form one marker group (both write the letter ra U+09F0)"
+  ],
+  "packs": {
+    "ind-hi-fw2": "hi",
+    "ind-hi-hplt": "hi",
+    "ind-hi-indiccorp": "hi",
+    "ind-hi-sangraha-s": "hi",
+    "ind-hi-sangraha-v": "hi",
+    "ind-mr-fw2": "mr",
+    "ind-mr-sangraha-v": "mr",
+    "ind-sa-fw2": "sa",
+    "ind-bn-fw2": "bn",
+    "ind-bn-sangraha-v": "bn"
+  },
+  "lang_script": {
+    "hi": "Devanagari",
+    "mr": "Devanagari",
+    "sa": "Devanagari",
+    "ne": "Devanagari",
+    "kok": "Devanagari",
+    "bn": "Bengali",
+    "as": "Bengali",
+    "sa_Beng": "Bengali"
+  },
+  "lid_model": "../romanised/indiclid/models/indiclid-ftn/model_baseline_roman.bin",
+  "lid_label_to_lang": {
+    "hin_Deva": "hi",
+    "mai_Deva": "hi",
+    "mar_Deva": "mr",
+    "san_Deva": "sa",
+    "nep_Deva": "ne",
+    "kok_Deva": "kok",
+    "ben_Beng": "bn",
+    "asm_Beng": "as"
+  },
+  "_lid_note": "mai_Deva counts as Hindi: IndicLID-FTN labels plain Hindi as Maithili, and Hindi vs its close dialects is out of scope (lead, 16 Nov). Labels not listed (doi, brx, mni, eng, other ...) show as other:<label> and are no evidence on their own: the document is 'agree' when the marker words say the pack's language, else 'uncertain'; never 'mislabelled'.",
+  "min_letters": 20,
+  "min_paragraph_letters": 20,
+  "min_vote_share": 0.6,
+  "marker_min_hits": 3,
+  "marker_min_ratio": 2.0,
+  "markers": {
+    "hi": {
+      "words": [
+        "है",
+        "हैं",
+        "था",
+        "थी",
+        "थे",
+        "और",
+        "में",
+        "नहीं",
+        "यह",
+        "वह",
+        "लिए",
+        "गया",
+        "गई",
+        "रहा",
+        "रही",
+        "किया",
+        "करने",
+        "होता",
+        "होती",
+        "साथ",
+        "बहुत",
+        "कहा",
+        "अपने",
+        "उनके",
+        "इसके",
+        "जाता",
+        "जाती",
+        "सकते"
+      ]
+    },
+    "mr": {
+      "words": [
+        "आहे",
+        "आहेत",
+        "आणि",
+        "मध्ये",
+        "नाही",
+        "केले",
+        "झाले",
+        "आपल्या",
+        "म्हणून",
+        "साठी",
+        "तसेच",
+        "किंवा",
+        "यांनी",
+        "त्यांनी",
+        "असे",
+        "आता",
+        "पण",
+        "करण्यात",
+        "येते",
+        "त्या",
+        "होणार",
+        "आली",
+        "आला"
+      ],
+      "suffixes": [
+        "च्या"
+      ],
+      "letters": [
+        "ळ"
+      ]
+    },
+    "sa": {
+      "words": [
+        "अस्ति",
+        "सन्ति",
+        "एव",
+        "अपि",
+        "इति",
+        "अत्र",
+        "तत्र",
+        "यत्र",
+        "सः",
+        "तत्",
+        "यत्",
+        "अहम्",
+        "भवति",
+        "कृत्वा",
+        "च",
+        "तु",
+        "वा",
+        "एतत्",
+        "किम्",
+        "अस्य",
+        "तस्य"
+      ]
+    },
+    "ne": {
+      "words": [
+        "छ",
+        "छन्",
+        "गर्न",
+        "गरेको",
+        "भएको",
+        "हुन्छ",
+        "थियो",
+        "गरी",
+        "भने",
+        "पनि",
+        "लागि",
+        "रहेको",
+        "गर्ने",
+        "हुने",
+        "छैन",
+        "गरेका",
+        "भएका"
+      ]
+    },
+    "kok": {
+      "words": [
+        "आसा",
+        "आसात",
+        "जाल्यार",
+        "म्हळ्यार",
+        "करपाक",
+        "जावन",
+        "हांणी",
+        "तांणी",
+        "आनी"
+      ]
+    },
+    "bn": {
+      "words": [
+        "এবং",
+        "থেকে",
+        "জন্য",
+        "ছিল",
+        "করেন",
+        "তিনি",
+        "কিন্তু",
+        "আমরা",
+        "তাদের",
+        "হয়েছে",
+        "করতে",
+        "এর",
+        "সঙ্গে"
+      ]
+    },
+    "as": {
+      "words": [
+        "আৰু",
+        "কৰা",
+        "তেওঁ",
+        "পৰা",
+        "বাবে",
+        "কৰি",
+        "আছিল",
+        "নহয়",
+        "হৈছে",
+        "কৰে",
+        "যি",
+        "লগত"
+      ],
+      "letters": [
+        "ৰ",
+        "ৱ"
+      ]
+    },
+    "sa_Beng": {
+      "words": [
+        "ইতি",
+        "চ",
+        "অপি",
+        "এব",
+        "তু",
+        "অস্তি",
+        "সন্তি",
+        "যত্র",
+        "তত্র",
+        "সঃ",
+        "তৎ",
+        "যৎ",
+        "অহম্",
+        "ভবতি",
+        "কৃত্বা",
+        "উবাচ",
+        "চৈব",
+        "নমঃ",
+        "ত্বম্",
+        "মম"
+      ],
+      "letters": [
+        "ঽ"
+      ]
+    }
+  },
+  "max_docs_per_pack": 0,
+  "seed": 1234,
+  "drop_threshold": 0.2,
+  "drop_rates_csv": "audit_v1.csv",
+  "diag_packs_dir": "../romanised/packs",
+  "submissions_dir": "../../../diagnosis/submissions",
+  "gold_dir": "../gold",
+  "min_letters_to_flag": 100,
+  "marker_groups": [
+    [
+      "as",
+      "sa_Beng"
+    ]
+  ],
+  "same_script_min_share": 0.9,
+  "_same_script_note": "A reader's D1 document counts as same-script when at least same_script_min_share of its letters are in the pack's script (a rule, so it re-runs on any labels).",
+  "distinguishing_letters": {
+    "Devanagari": {
+      "ळ": "mr",
+      "ऽ": "sa",
+      "॑": "vedic_accent",
+      "॒": "vedic_accent"
+    },
+    "Bengali": {
+      "ৰ": "as",
+      "ৱ": "as",
+      "র": "bn",
+      "ঽ": "sa"
+    }
+  },
+  "_distinguishing_note": "Letters counted in every document and written to the sign_letters column (lang:count). They are evidence for readers, not a verdict; Bengali র and Assamese ৰ are the two forms of ra."
+}

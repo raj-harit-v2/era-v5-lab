@@ -114,6 +114,7 @@ def preflight(tasks_text: str, train_ids: str, heldout_ids: str) -> dict:
     for name, text in (("tasks.jsonl", tasks_text), ("train_ids.txt", train_ids), ("heldout_ids.txt", heldout_ids)):
         _write_private(data / name, text)
     os.environ["G10_STDIO_RUNNER"] = "local"
+    os.environ["G10_STDIO_SECRET_PATHS"] = str(data / "tasks.jsonl")  # stdio_check.preflight_isolation checks it
     sys.path.insert(0, f"{REMOTE}/rl-loop")
     import train  # noqa: PLC0415
     from transformers import AutoTokenizer  # noqa: PLC0415
@@ -138,7 +139,8 @@ def _pilot_body(gpu: str, config_text: str, tasks_text: str, train_ids: str, hel
         _write_private(data / name, text)
     cfg = config_text.replace("@WEIGHTS@", WEIGHTS).replace("@DATA@", str(data))
     (run / "config.yaml").write_text(cfg)
-    env = {**os.environ, "G10_STDIO_RUNNER": "local", "HF_HUB_OFFLINE": "1", "TRANSFORMERS_OFFLINE": "1",
+    env = {**os.environ, "G10_STDIO_RUNNER": "local", "G10_STDIO_SECRET_PATHS": str(data / "tasks.jsonl"),
+           "HF_HUB_OFFLINE": "1", "TRANSFORMERS_OFFLINE": "1",
            "TMPDIR": "/root/tmp"}
     rc = "not started"
     with open(run / "stdout.log", "w") as log:

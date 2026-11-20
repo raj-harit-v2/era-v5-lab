@@ -1,0 +1,81 @@
+$ /workspace/venv/bin/python -I /workspace/era-v5-lab/teams/01-data-a/pipeline/f2_pool.py --inputs /workspace/era-v5-lab/out/pipeline/rehearsal-38pack/deduped/heldout --out /workspace/era-v5-lab/out/pipeline/rehearsal-38pack/final/heldout --workers 30 --script /workspace/era-v5-lab/teams/01-data-a/spec_v1/run_f2.py
+part-00000.parquet: 94/94 dropped=0 errors=0
+part-00000.parquet: 82/82 dropped=1 errors=0
+f2_pool [1/38] ind-mr-fw2/part-00000.parquet: 94 rows, kept 94, dropped 0, errors 0
+f2_pool [2/38] ind-kn-fw2/part-00000.parquet: 82 rows, kept 81, dropped 1, errors 0
+part-00000.parquet: 36/36 dropped=0 errors=0
+f2_pool [3/38] ind-ta-sangraha-s/part-00000.parquet: 36 rows, kept 36, dropped 0, errors 0
+part-00000.parquet: 83/83 dropped=0 errors=0
+f2_pool [4/38] ind-te-sangraha-v/part-00000.parquet: 83 rows, kept 83, dropped 0, errors 0
+part-00000.parquet: 87/87 dropped=0 errors=0
+f2_pool [5/38] ind-kn-sangraha-v/part-00000.parquet: 87 rows, kept 87, dropped 0, errors 0
+part-00000.parquet: 75/75 dropped=0 errors=0
+f2_pool [6/38] ind-hi-sangraha-s/part-00000.parquet: 75 rows, kept 75, dropped 0, errors 0
+part-00000.parquet: 105/105 dropped=0 errors=0
+part-00000.parquet: 57/57 dropped=1 errors=0
+f2_pool [7/38] ind-bn-fw2/part-00000.parquet: 105 rows, kept 105, dropped 0, errors 0
+f2_pool [8/38] ind-te-fw2/part-00000.parquet: 57 rows, kept 56, dropped 1, errors 0
+part-00000.parquet: 127/127 dropped=0 errors=0
+part-00000.parquet: 1000/1080 dropped=0 errors=0
+part-00000.parquet: 101/101 dropped=0 errors=0
+part-00000.parquet: 121/121 dropped=0 errors=0
+f2_pool [9/38] ind-mr-sangraha-v/part-00000.parquet: 127 rows, kept 127, dropped 0, errors 0
+f2_pool [10/38] ind-bn-sangraha-v/part-00000.parquet: 101 rows, kept 101, dropped 0, errors 0
+f2_pool [11/38] ind-hi-sangraha-v/part-00000.parquet: 121 rows, kept 121, dropped 0, errors 0
+part-00000.parquet: 53/53 dropped=0 errors=0
+part-00000.parquet: 1080/1080 dropped=0 errors=0
+part-00000.parquet: 131/131 dropped=0 errors=0
+f2_pool [12/38] ind-kn-sangraha-s/part-00000.parquet: 53 rows, kept 53, dropped 0, errors 0
+part-00000.parquet: 54/54 dropped=0 errors=0
+f2_pool [13/38] ind-hi-indiccorp/part-00000.parquet: 1080 rows, kept 1080, dropped 0, errors 0
+part-00000.parquet: 185/185 dropped=1 errors=0
+f2_pool [14/38] ind-hi-fw2/part-00000.parquet: 131 rows, kept 131, dropped 0, errors 0
+part-00000.parquet: 65/65 dropped=0 errors=0
+f2_pool [15/38] ind-sa-fw2/part-00000.parquet: 54 rows, kept 54, dropped 0, errors 0
+f2_pool [16/38] ind-ml-fw2/part-00000.parquet: 185 rows, kept 184, dropped 1, errors 0
+part-00000.parquet: 92/92 dropped=0 errors=0
+f2_pool [17/38] ind-ta-sangraha-v/part-00000.parquet: 65 rows, kept 65, dropped 0, errors 0
+part-00000.parquet: 44/44 dropped=0 errors=0
+part-00000.parquet: 58/58 dropped=0 errors=0
+f2_pool [18/38] ind-te-sangraha-s/part-00000.parquet: 44 rows, kept 44, dropped 0, errors 0
+f2_pool [19/38] ind-hi-hplt/part-00000.parquet: 92 rows, kept 92, dropped 0, errors 0
+f2_pool [20/38] ind-ta-fw2/part-00000.parquet: 58 rows, kept 58, dropped 0, errors 0
+part-00000.parquet: 328/328 dropped=0 errors=0
+part-00000.parquet: 238/238 dropped=1 errors=0
+f2_pool [21/38] ind-or-fw2/part-00000.parquet: 328 rows, kept 328, dropped 0, errors 0
+f2_pool [22/38] ind-gu-fw2/part-00000.parquet: 238 rows, kept 237, dropped 1, errors 0
+part-00000.parquet: 60/60 dropped=0 errors=0
+f2_pool [23/38] sci-finepdfs/part-00000.parquet: 60 rows, kept 60, dropped 0, errors 0
+part-00000.parquet: 152/152 dropped=1 errors=0
+f2_pool [24/38] math-megamath/part-00000.parquet: 152 rows, kept 151, dropped 1, errors 0
+part-00000.parquet: 826/826 dropped=0 errors=0
+f2_pool [25/38] cadj-commits/part-00000.parquet: 826 rows, kept 826, dropped 0, errors 0
+part-00000.parquet: 169/169 dropped=1 errors=0
+f2_pool [26/38] cadj-notebooks/part-00000.parquet: 169 rows, kept 168, dropped 1, errors 0
+part-00000.parquet: 280/280 dropped=0 errors=0
+f2_pool [27/38] math-finemath/part-00000.parquet: 280 rows, kept 280, dropped 0, errors 0
+part-00000.parquet: 409/409 dropped=1 errors=0
+f2_pool [28/38] cadj-stackexchange/part-00000.parquet: 409 rows, kept 408, dropped 1, errors 0
+part-00000.parquet: 1000/1970 dropped=0 errors=0
+part-00000.parquet: 1000/1145 dropped=3 errors=0
+part-00000.parquet: 839/839 dropped=0 errors=0
+f2_pool [29/38] code-java/part-00000.parquet: 839 rows, kept 839, dropped 0, errors 0
+part-00000.parquet: 1145/1145 dropped=3 errors=0
+f2_pool [30/38] code-js-ts/part-00000.parquet: 1145 rows, kept 1142, dropped 3, errors 0
+part-00000.parquet: 810/810 dropped=2 errors=0
+f2_pool [31/38] code-go/part-00000.parquet: 810 rows, kept 808, dropped 2, errors 0
+part-00000.parquet: 701/701 dropped=1 errors=0
+f2_pool [32/38] code-python/part-00000.parquet: 701 rows, kept 700, dropped 1, errors 0
+part-00000.parquet: 595/595 dropped=0 errors=0
+f2_pool [33/38] code-rust/part-00000.parquet: 595 rows, kept 595, dropped 0, errors 0
+part-00000.parquet: 607/607 dropped=1 errors=0
+f2_pool [34/38] code-cpp/part-00000.parquet: 607 rows, kept 606, dropped 1, errors 0
+part-00000.parquet: 590/590 dropped=0 errors=0
+part-00000.parquet: 726/726 dropped=0 errors=0
+f2_pool [35/38] en-dclm/part-00000.parquet: 590 rows, kept 590, dropped 0, errors 0
+f2_pool [36/38] en-fineweb-edu/part-00000.parquet: 726 rows, kept 726, dropped 0, errors 0
+part-00000.parquet: 915/915 dropped=1 errors=0
+f2_pool [37/38] en-nemotroncc/part-00000.parquet: 915 rows, kept 914, dropped 1, errors 0
+part-00000.parquet: 1970/1970 dropped=1 errors=0
+f2_pool [38/38] en-nemotroncc-synth/part-00000.parquet: 1970 rows, kept 1969, dropped 1, errors 0
+{"set_sha256": "2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a", "run_f2_py_sha256": "1651b3725357b2a2b684fda6a047cc5697c1331d1b43bb242712f422403af040", "files": 38, "rows": 14090, "kept": 14074, "dropped_by_f2": 16, "errors": 0, "pool": {"workers": 30, "start_method": "fork", "parts": 38, "set_load_seconds": 10.5, "wall_seconds": 28.4, "docs_per_second": 496.1, "f2_pool_py_sha256": "b3d41a5f844ea573a35a826a0f313e006a91c883031a9448b7a328dd275d81e8"}}

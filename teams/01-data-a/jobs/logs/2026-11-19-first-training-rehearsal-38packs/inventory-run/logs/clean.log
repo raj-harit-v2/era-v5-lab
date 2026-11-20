@@ -1,0 +1,89 @@
+$ /workspace/venv/bin/python -I /workspace/era-v5-lab/teams/01-data-a/pipeline/clean_job.py --config /workspace/era-v5-lab/out/pipeline/first-training-v1-rehearsal/cfg/clean.json
+{"clean_sha256": "6a57276c0e83312b09facfba656cca28db0ef59ca851bcfbfa3ef63f16fdd1f2", "event": "start", "kept_parts": 0, "manifest_parts": 86, "resumed": false, "runner_sha256": "1baeaf05309c1d8545eb828e2d0bb70b1fc849c1ed9d67e77da0698660834892", "sample_rows": 1444766, "scope": "full manifest", "selected_parts": 86}
+{"actions": {"keep": 826}, "errors": 0, "input_rows": 826, "output_rows": 826, "part": "heldout/cadj-commits/part-00000.parquet", "seconds": 3.993, "status": "unsupported_passthrough"}
+{"actions": {"keep": 169}, "errors": 0, "input_rows": 169, "output_rows": 169, "part": "heldout/cadj-notebooks/part-00000.parquet", "seconds": 0.06, "status": "unsupported_passthrough"}
+{"actions": {"keep": 409}, "errors": 0, "input_rows": 409, "output_rows": 409, "part": "heldout/cadj-stackexchange/part-00000.parquet", "seconds": 0.146, "status": "unsupported_passthrough"}
+{"actions": {"drop": 6, "fix": 430, "keep": 177}, "errors": 0, "input_rows": 613, "output_rows": 607, "part": "heldout/code-cpp/part-00000.parquet", "seconds": 0.491, "status": "cleaned"}
+{"actions": {"drop": 62, "fix": 478, "keep": 332}, "errors": 0, "input_rows": 872, "output_rows": 810, "part": "heldout/code-go/part-00000.parquet", "seconds": 1.29, "status": "cleaned"}
+{"actions": {"drop": 8, "fix": 598, "keep": 241}, "errors": 0, "input_rows": 847, "output_rows": 839, "part": "heldout/code-java/part-00000.parquet", "seconds": 0.72, "status": "cleaned"}
+{"actions": {"drop": 89, "fix": 638, "keep": 507}, "errors": 0, "input_rows": 1234, "output_rows": 1145, "part": "heldout/code-js-ts/part-00000.parquet", "seconds": 0.574, "status": "cleaned"}
+{"actions": {"drop": 17, "fix": 413, "keep": 288}, "errors": 0, "input_rows": 718, "output_rows": 701, "part": "heldout/code-python/part-00000.parquet", "seconds": 0.44, "status": "cleaned"}
+{"actions": {"drop": 17, "fix": 324, "keep": 271}, "errors": 0, "input_rows": 612, "output_rows": 595, "part": "heldout/code-rust/part-00000.parquet", "seconds": 0.411, "status": "cleaned"}
+{"actions": {"drop": 18, "fix": 73, "keep": 517}, "errors": 0, "input_rows": 608, "output_rows": 590, "part": "heldout/en-dclm/part-00000.parquet", "seconds": 1.575, "status": "cleaned"}
+{"actions": {"drop": 6, "fix": 12, "keep": 714}, "errors": 0, "input_rows": 732, "output_rows": 726, "part": "heldout/en-fineweb-edu/part-00000.parquet", "seconds": 1.23, "status": "cleaned"}
+{"actions": {"drop": 39, "fix": 146, "keep": 769}, "errors": 0, "input_rows": 954, "output_rows": 915, "part": "heldout/en-nemotroncc/part-00000.parquet", "seconds": 1.657, "status": "cleaned"}
+{"actions": {"drop": 5, "fix": 66, "keep": 1904}, "errors": 0, "input_rows": 1975, "output_rows": 1970, "part": "heldout/en-nemotroncc-synth/part-00000.parquet", "seconds": 1.013, "status": "cleaned"}
+{"actions": {"drop": 7, "fix": 21, "keep": 84}, "errors": 0, "input_rows": 112, "output_rows": 105, "part": "heldout/ind-bn-fw2/part-00000.parquet", "seconds": 0.261, "status": "cleaned"}
+{"actions": {"drop": 1, "fix": 8, "keep": 93}, "errors": 0, "input_rows": 102, "output_rows": 101, "part": "heldout/ind-bn-sangraha-v/part-00000.parquet", "seconds": 0.214, "status": "cleaned"}
+{"actions": {"drop": 1, "fix": 55, "keep": 183}, "errors": 0, "input_rows": 239, "output_rows": 238, "part": "heldout/ind-gu-fw2/part-00000.parquet", "seconds": 0.339, "status": "cleaned"}
+{"actions": {"drop": 1, "fix": 3, "keep": 128}, "errors": 0, "input_rows": 132, "output_rows": 131, "part": "heldout/ind-hi-fw2/part-00000.parquet", "seconds": 0.346, "status": "cleaned"}
+{"actions": {"drop": 3, "fix": 9, "keep": 83}, "errors": 0, "input_rows": 95, "output_rows": 92, "part": "heldout/ind-hi-hplt/part-00000.parquet", "seconds": 0.312, "status": "cleaned"}
+{"actions": {"drop": 14, "fix": 13, "keep": 1067}, "errors": 0, "input_rows": 1094, "output_rows": 1080, "part": "heldout/ind-hi-indiccorp/part-00000.parquet", "seconds": 0.404, "status": "cleaned"}
+{"actions": {"drop": 13, "fix": 20, "keep": 55}, "errors": 0, "input_rows": 88, "output_rows": 75, "part": "heldout/ind-hi-sangraha-s/part-00000.parquet", "seconds": 0.308, "status": "cleaned"}
+{"actions": {"drop": 1, "fix": 7, "keep": 114}, "errors": 0, "input_rows": 122, "output_rows": 121, "part": "heldout/ind-hi-sangraha-v/part-00000.parquet", "seconds": 0.237, "status": "cleaned"}
+{"actions": {"fix": 3, "keep": 79}, "errors": 0, "input_rows": 82, "output_rows": 82, "part": "heldout/ind-kn-fw2/part-00000.parquet", "seconds": 0.189, "status": "cleaned"}
+{"actions": {"fix": 18, "keep": 35}, "errors": 0, "input_rows": 53, "output_rows": 53, "part": "heldout/ind-kn-sangraha-s/part-00000.parquet", "seconds": 0.166, "status": "cleaned"}
+{"actions": {"drop": 2, "fix": 16, "keep": 71}, "errors": 0, "input_rows": 89, "output_rows": 87, "part": "heldout/ind-kn-sangraha-v/part-00000.parquet", "seconds": 0.204, "status": "cleaned"}
+{"actions": {"keep": 185}, "errors": 0, "input_rows": 185, "output_rows": 185, "part": "heldout/ind-ml-fw2/part-00000.parquet", "seconds": 0.1, "status": "unsupported_passthrough"}
+{"actions": {"drop": 1, "fix": 15, "keep": 79}, "errors": 0, "input_rows": 95, "output_rows": 94, "part": "heldout/ind-mr-fw2/part-00000.parquet", "seconds": 0.187, "status": "cleaned"}
+{"actions": {"fix": 60, "keep": 67}, "errors": 0, "input_rows": 127, "output_rows": 127, "part": "heldout/ind-mr-sangraha-v/part-00000.parquet", "seconds": 0.191, "status": "cleaned"}
+{"actions": {"keep": 328}, "errors": 0, "input_rows": 328, "output_rows": 328, "part": "heldout/ind-or-fw2/part-00000.parquet", "seconds": 0.104, "status": "unsupported_passthrough"}
+{"actions": {"drop": 1, "fix": 21, "keep": 33}, "errors": 0, "input_rows": 55, "output_rows": 54, "part": "heldout/ind-sa-fw2/part-00000.parquet", "seconds": 0.402, "status": "cleaned"}
+{"actions": {"keep": 58}, "errors": 0, "input_rows": 58, "output_rows": 58, "part": "heldout/ind-ta-fw2/part-00000.parquet", "seconds": 0.034, "status": "unsupported_passthrough"}
+{"actions": {"keep": 36}, "errors": 0, "input_rows": 36, "output_rows": 36, "part": "heldout/ind-ta-sangraha-s/part-00000.parquet", "seconds": 0.067, "status": "unsupported_passthrough"}
+{"actions": {"fix": 14, "keep": 51}, "errors": 0, "input_rows": 65, "output_rows": 65, "part": "heldout/ind-ta-sangraha-v/part-00000.parquet", "seconds": 0.166, "status": "cleaned"}
+{"actions": {"drop": 2, "fix": 8, "keep": 49}, "errors": 0, "input_rows": 59, "output_rows": 57, "part": "heldout/ind-te-fw2/part-00000.parquet", "seconds": 0.208, "status": "cleaned"}
+{"actions": {"drop": 3, "fix": 1, "keep": 43}, "errors": 0, "input_rows": 47, "output_rows": 44, "part": "heldout/ind-te-sangraha-s/part-00000.parquet", "seconds": 0.219, "status": "cleaned"}
+{"actions": {"fix": 47, "keep": 36}, "errors": 0, "input_rows": 83, "output_rows": 83, "part": "heldout/ind-te-sangraha-v/part-00000.parquet", "seconds": 0.154, "status": "cleaned"}
+{"actions": {"drop": 32, "fix": 89, "keep": 191}, "errors": 0, "input_rows": 312, "output_rows": 280, "part": "heldout/math-finemath/part-00000.parquet", "seconds": 1.294, "status": "cleaned"}
+{"actions": {"drop": 17, "fix": 22, "keep": 130}, "errors": 0, "input_rows": 169, "output_rows": 152, "part": "heldout/math-megamath/part-00000.parquet", "seconds": 0.646, "status": "cleaned"}
+{"actions": {"drop": 3, "fix": 12, "keep": 48}, "errors": 0, "input_rows": 63, "output_rows": 60, "part": "heldout/sci-finepdfs/part-00000.parquet", "seconds": 0.295, "status": "cleaned"}
+{"actions": {"keep": 74753}, "errors": 0, "input_rows": 74753, "output_rows": 74753, "part": "train/cadj-commits/part-00000.parquet", "seconds": 5.03, "status": "unsupported_passthrough"}
+{"actions": {"keep": 15563}, "errors": 0, "input_rows": 15563, "output_rows": 15563, "part": "train/cadj-notebooks/part-00000.parquet", "seconds": 2.505, "status": "unsupported_passthrough"}
+{"actions": {"keep": 41396}, "errors": 0, "input_rows": 41396, "output_rows": 41396, "part": "train/cadj-stackexchange/part-00000.parquet", "seconds": 3.768, "status": "unsupported_passthrough"}
+{"actions": {"drop": 698, "fix": 28025, "keep": 12393}, "errors": 0, "input_rows": 41116, "output_rows": 40418, "part": "train/code-cpp/part-00000.parquet", "seconds": 28.572, "status": "cleaned"}
+{"actions": {"drop": 259, "fix": 9828, "keep": 4342}, "errors": 0, "input_rows": 14429, "output_rows": 14170, "part": "train/code-cpp/part-00001.parquet", "seconds": 9.978, "status": "cleaned"}
+{"actions": {"drop": 4691, "fix": 33319, "keep": 23383}, "errors": 0, "input_rows": 61393, "output_rows": 56702, "part": "train/code-go/part-00000.parquet", "seconds": 87.232, "status": "cleaned"}
+{"actions": {"drop": 1621, "fix": 11779, "keep": 8474}, "errors": 0, "input_rows": 21874, "output_rows": 20253, "part": "train/code-go/part-00001.parquet", "seconds": 31.128, "status": "cleaned"}
+{"actions": {"drop": 391, "fix": 44225, "keep": 18218}, "errors": 0, "input_rows": 62834, "output_rows": 62443, "part": "train/code-java/part-00000.parquet", "seconds": 49.542, "status": "cleaned"}
+{"actions": {"drop": 143, "fix": 15840, "keep": 6396}, "errors": 0, "input_rows": 22379, "output_rows": 22236, "part": "train/code-java/part-00001.parquet", "seconds": 17.73, "status": "cleaned"}
+{"actions": {"drop": 4365, "fix": 47058, "keep": 38537}, "errors": 0, "input_rows": 89960, "output_rows": 85595, "part": "train/code-js-ts/part-00000.parquet", "seconds": 33.685, "status": "cleaned"}
+{"actions": {"drop": 1510, "fix": 16794, "keep": 13674}, "errors": 0, "input_rows": 31978, "output_rows": 30468, "part": "train/code-js-ts/part-00001.parquet", "seconds": 11.984, "status": "cleaned"}
+{"actions": {"drop": 1724, "fix": 31115, "keep": 22304}, "errors": 0, "input_rows": 55143, "output_rows": 53419, "part": "train/code-python/part-00000.parquet", "seconds": 25.077, "status": "cleaned"}
+{"actions": {"drop": 615, "fix": 11225, "keep": 7960}, "errors": 0, "input_rows": 19800, "output_rows": 19185, "part": "train/code-python/part-00001.parquet", "seconds": 8.912, "status": "cleaned"}
+{"actions": {"drop": 1426, "fix": 23834, "keep": 19321}, "errors": 0, "input_rows": 44581, "output_rows": 43155, "part": "train/code-rust/part-00000.parquet", "seconds": 20.648, "status": "cleaned"}
+{"actions": {"drop": 500, "fix": 8308, "keep": 6737}, "errors": 0, "input_rows": 15545, "output_rows": 15045, "part": "train/code-rust/part-00001.parquet", "seconds": 7.388, "status": "cleaned"}
+{"actions": {"drop": 876, "fix": 6305, "keep": 39064}, "errors": 0, "input_rows": 46245, "output_rows": 45369, "part": "train/en-dclm/part-00000.parquet", "seconds": 85.718, "status": "cleaned"}
+{"actions": {"drop": 279, "fix": 2096, "keep": 12747}, "errors": 0, "input_rows": 15122, "output_rows": 14843, "part": "train/en-dclm/part-00001.parquet", "seconds": 29.034, "status": "cleaned"}
+{"actions": {"drop": 406, "fix": 1022, "keep": 52576}, "errors": 0, "input_rows": 54004, "output_rows": 53598, "part": "train/en-fineweb-edu/part-00000.parquet", "seconds": 84.423, "status": "cleaned"}
+{"actions": {"drop": 153, "fix": 361, "keep": 17415}, "errors": 0, "input_rows": 17929, "output_rows": 17776, "part": "train/en-fineweb-edu/part-00001.parquet", "seconds": 27.992, "status": "cleaned"}
+{"actions": {"drop": 2703, "fix": 10503, "keep": 55571}, "errors": 0, "input_rows": 68777, "output_rows": 66074, "part": "train/en-nemotroncc/part-00000.parquet", "seconds": 94.167, "status": "cleaned"}
+{"actions": {"drop": 849, "fix": 3584, "keep": 18610}, "errors": 0, "input_rows": 23043, "output_rows": 22194, "part": "train/en-nemotroncc/part-00001.parquet", "seconds": 31.603, "status": "cleaned"}
+{"actions": {"drop": 160, "fix": 5880, "keep": 141714}, "errors": 0, "input_rows": 147754, "output_rows": 147594, "part": "train/en-nemotroncc-synth/part-00000.parquet", "seconds": 71.628, "status": "cleaned"}
+{"actions": {"drop": 58, "fix": 2036, "keep": 47271}, "errors": 0, "input_rows": 49365, "output_rows": 49307, "part": "train/en-nemotroncc-synth/part-00001.parquet", "seconds": 23.962, "status": "cleaned"}
+{"actions": {"drop": 501, "fix": 1863, "keep": 8841}, "errors": 0, "input_rows": 11205, "output_rows": 10704, "part": "train/ind-bn-fw2/part-00000.parquet", "seconds": 14.387, "status": "cleaned"}
+{"actions": {"drop": 212, "fix": 1064, "keep": 9052}, "errors": 0, "input_rows": 10328, "output_rows": 10116, "part": "train/ind-bn-sangraha-v/part-00000.parquet", "seconds": 12.675, "status": "cleaned"}
+{"actions": {"drop": 345, "fix": 4839, "keep": 17934}, "errors": 0, "input_rows": 23118, "output_rows": 22773, "part": "train/ind-gu-fw2/part-00000.parquet", "seconds": 21.408, "status": "cleaned"}
+{"actions": {"drop": 460, "fix": 916, "keep": 12885}, "errors": 0, "input_rows": 14261, "output_rows": 13801, "part": "train/ind-hi-fw2/part-00000.parquet", "seconds": 29.899, "status": "cleaned"}
+{"actions": {"drop": 322, "fix": 1328, "keep": 7095}, "errors": 0, "input_rows": 8745, "output_rows": 8423, "part": "train/ind-hi-hplt/part-00000.parquet", "seconds": 21.377, "status": "cleaned"}
+{"actions": {"drop": 1161, "fix": 969, "keep": 108706}, "errors": 0, "input_rows": 110836, "output_rows": 109675, "part": "train/ind-hi-indiccorp/part-00000.parquet", "seconds": 34.009, "status": "cleaned"}
+{"actions": {"drop": 813, "fix": 1642, "keep": 5825}, "errors": 0, "input_rows": 8280, "output_rows": 7467, "part": "train/ind-hi-sangraha-s/part-00000.parquet", "seconds": 28.621, "status": "cleaned"}
+{"actions": {"drop": 216, "fix": 938, "keep": 13555}, "errors": 0, "input_rows": 14709, "output_rows": 14493, "part": "train/ind-hi-sangraha-v/part-00000.parquet", "seconds": 26.096, "status": "cleaned"}
+{"actions": {"drop": 75, "fix": 238, "keep": 7521}, "errors": 0, "input_rows": 7834, "output_rows": 7759, "part": "train/ind-kn-fw2/part-00000.parquet", "seconds": 13.172, "status": "cleaned"}
+{"actions": {"drop": 6, "fix": 1426, "keep": 3759}, "errors": 0, "input_rows": 5191, "output_rows": 5185, "part": "train/ind-kn-sangraha-s/part-00000.parquet", "seconds": 12.48, "status": "cleaned"}
+{"actions": {"drop": 194, "fix": 1541, "keep": 6816}, "errors": 0, "input_rows": 8551, "output_rows": 8357, "part": "train/ind-kn-sangraha-v/part-00000.parquet", "seconds": 16.955, "status": "cleaned"}
+{"actions": {"keep": 18976}, "errors": 0, "input_rows": 18976, "output_rows": 18976, "part": "train/ind-ml-fw2/part-00000.parquet", "seconds": 2.596, "status": "unsupported_passthrough"}
+{"actions": {"drop": 201, "fix": 1663, "keep": 9596}, "errors": 0, "input_rows": 11460, "output_rows": 11259, "part": "train/ind-mr-fw2/part-00000.parquet", "seconds": 11.153, "status": "cleaned"}
+{"actions": {"fix": 6510, "keep": 5662}, "errors": 0, "input_rows": 12172, "output_rows": 12172, "part": "train/ind-mr-sangraha-v/part-00000.parquet", "seconds": 8.779, "status": "cleaned"}
+{"actions": {"keep": 33684}, "errors": 0, "input_rows": 33684, "output_rows": 33684, "part": "train/ind-or-fw2/part-00000.parquet", "seconds": 3.544, "status": "unsupported_passthrough"}
+{"actions": {"drop": 241, "fix": 2641, "keep": 3026}, "errors": 0, "input_rows": 5908, "output_rows": 5667, "part": "train/ind-sa-fw2/part-00000.parquet", "seconds": 36.031, "status": "cleaned"}
+{"actions": {"keep": 6766}, "errors": 0, "input_rows": 6766, "output_rows": 6766, "part": "train/ind-ta-fw2/part-00000.parquet", "seconds": 0.945, "status": "unsupported_passthrough"}
+{"actions": {"keep": 4336}, "errors": 0, "input_rows": 4336, "output_rows": 4336, "part": "train/ind-ta-sangraha-s/part-00000.parquet", "seconds": 0.788, "status": "unsupported_passthrough"}
+{"actions": {"fix": 1397, "keep": 5399}, "errors": 0, "input_rows": 6796, "output_rows": 6796, "part": "train/ind-ta-sangraha-v/part-00000.parquet", "seconds": 3.669, "status": "cleaned"}
+{"actions": {"drop": 291, "fix": 1163, "keep": 4543}, "errors": 0, "input_rows": 5997, "output_rows": 5706, "part": "train/ind-te-fw2/part-00000.parquet", "seconds": 22.546, "status": "cleaned"}
+{"actions": {"drop": 363, "fix": 132, "keep": 4287}, "errors": 0, "input_rows": 4782, "output_rows": 4419, "part": "train/ind-te-sangraha-s/part-00000.parquet", "seconds": 38.869, "status": "cleaned"}
+{"actions": {"drop": 14, "fix": 4669, "keep": 3926}, "errors": 0, "input_rows": 8609, "output_rows": 8595, "part": "train/ind-te-sangraha-v/part-00000.parquet", "seconds": 12.026, "status": "cleaned"}
+{"actions": {"drop": 2609, "fix": 8246, "keep": 18267}, "errors": 0, "input_rows": 29122, "output_rows": 26513, "part": "train/math-finemath/part-00000.parquet", "seconds": 116.76, "status": "cleaned"}
+{"actions": {"drop": 2550, "fix": 2052, "keep": 13045}, "errors": 0, "input_rows": 17647, "output_rows": 15097, "part": "train/math-megamath/part-00000.parquet", "seconds": 65.068, "status": "cleaned"}
+{"actions": {"drop": 166, "fix": 1062, "keep": 4783}, "errors": 0, "input_rows": 6011, "output_rows": 5845, "part": "train/sci-finepdfs/part-00000.parquet", "seconds": 61.175, "status": "cleaned"}
+{"actions": {"drop": 34536, "fix": 363076, "keep": 1047154}, "completed_parts": 86, "errors": 0, "event": "complete", "input_rows": 1444766, "output_rows": 1410230, "peak_rss_mib": 418.633, "wall_seconds": 1430.704}

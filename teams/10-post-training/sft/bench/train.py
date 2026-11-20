@@ -193,6 +193,23 @@ class LoRALinear(nn.Module):
     def merged_weight(self) -> torch.Tensor:
         return self.base.weight + self.scale * (self.lora_B @ self.lora_A)
 
+    # There is no dropout on the adapter input. The effective weight below cannot express one, so a future change that
+    # adds it must not leave the property silently bypassing it (the check in `weight` fails loudly instead).
+    dropout = 0.0
+
+    @property
+    def weight(self) -> torch.Tensor:
+        """The weight this layer applies: W + scale * B A, kept in the autograd graph (lora_A and lora_B get gradient
+        through it; W stays frozen). Code that reads a layer's weight instead of calling it (G5's fused MoE path since
+        #521 stacks `e.gate.weight` of every routed expert) therefore sees the adapter. `forward` is unchanged, so a
+        layer that is called as a module gives the same bits as before; this property is read only by such code and is
+        not a registered parameter, so state_dict keys and merge_lora are unchanged. Bias is not part of it (the fused
+        path ignores expert bias, as for every layer)."""
+        if self.dropout:
+            raise ValueError("LoRALinear.weight cannot represent adapter dropout (lora dropout "
+                             f"{self.dropout} > 0): call the module instead of reading its weight")
+        return self.merged_weight()
+
 
 LORA_TARGETS = ("q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj")
 
@@ -418,6 +435,7 @@ def train(args) -> dict:
         method_info["wanda_prior"]["calibration_seconds"] = round(time.perf_counter() - t_cal, 2)
         method_info["wanda_prior"]["calibration_tokens"] = int(sum(int(b.attention_mask.sum()) for b in cbatches))
         method_info["deletion_at_init"] = dtmask.deletion_stats(model)
+        method_info["band_at_init"] = dtmask.band_stats(model)
         del scores
     frozen_before = frozen_sha256(model, marker_ids) if args.method != "full" else None
     if args.grad_checkpointing:

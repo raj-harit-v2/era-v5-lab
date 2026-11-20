@@ -1,0 +1,371 @@
+{
+  "scope": "Earlier 800 recorded samples compared with the available cleaned-data-v0 baseline; excludes the fresh Marathi sample and manual examples.",
+  "status": "PARTIAL",
+  "limitation": "The available baseline job summary lacks a cleaner-hash pin. These records do not establish decoder regressions; obtain exact pre-sharding inputs to reconcile them.",
+  "unresolved_difference_count": 9,
+  "missing_id_count": 25,
+  "unresolved_differences": [
+    {
+      "shard_id": "ind-bn-sangraha-v-train-000000",
+      "pack_id": "ind-bn-sangraha-v",
+      "doc_id": "0dbea4091c5185e2",
+      "shard_document_index": 4842,
+      "input_part": "ind-bn-sangraha-v_part-00000_clean.parquet",
+      "input_row": 4844,
+      "decoded_utf8_sha256": "1d0e3f2a77655bebf9a1ca2bdbb10dfd69c3d55de8101315215a86bc12b9a0f7",
+      "source_utf8_sha256": "145f9174d2362996c16c68b9670d8580fc16c2e01153e98840fa866ac0fdc4bd",
+      "reclean_action": "keep",
+      "reclean_then_tokenizer_equal": false,
+      "source_chars": 4238,
+      "decoded_chars": 4170,
+      "whitespace_only": false
+    },
+    {
+      "shard_id": "ind-bn-sangraha-v-train-000000",
+      "pack_id": "ind-bn-sangraha-v",
+      "doc_id": "bff5922cebfbf0a7",
+      "shard_document_index": 7811,
+      "input_part": "ind-bn-sangraha-v_part-00000_clean.parquet",
+      "input_row": 7814,
+      "decoded_utf8_sha256": "443671117c0768c98f28b2255a01617787eeaf2601a7863229b89b729cad7722",
+      "source_utf8_sha256": "9d19e3cb0b675a0193aa3af6752cd3f3b4eedc334ab7ee89e155c3b3bf7db26b",
+      "reclean_action": "keep",
+      "reclean_then_tokenizer_equal": false,
+      "source_chars": 3260,
+      "decoded_chars": 3160,
+      "whitespace_only": false
+    },
+    {
+      "shard_id": "ind-bn-sangraha-v-train-000000",
+      "pack_id": "ind-bn-sangraha-v",
+      "doc_id": "447de05787724f0e",
+      "shard_document_index": 9837,
+      "input_part": "ind-bn-sangraha-v_part-00000_clean.parquet",
+      "input_row": 9840,
+      "decoded_utf8_sha256": "9ba7b550d8bce778692a5f065ceaa0ee7a815f1f6ff938a5e4a48689610ab83e",
+      "source_utf8_sha256": "3fb394883602224d3ebb00cc4555e481ccce5ba02f5761da617bac4fc1243439",
+      "reclean_action": "keep",
+      "reclean_then_tokenizer_equal": false,
+      "source_chars": 19326,
+      "decoded_chars": 19084,
+      "whitespace_only": false
+    },
+    {
+      "shard_id": "ind-kn-fw2-train-000000",
+      "pack_id": "ind-kn-fw2",
+      "doc_id": "a34d2289dd1d84c5",
+      "shard_document_index": 6565,
+      "input_part": "ind-kn-fw2_part-00000_clean.parquet",
+      "input_row": 6565,
+      "decoded_utf8_sha256": "a34d2289dd1d84c5b20ebc48ec080bc9ed07413a85a1c2eb3b207ffccb3d467b",
+      "source_utf8_sha256": "20944696b01fa351a460f7807e5657c1bb32f4cdd6f25e84ee95212ad61059b4",
+      "reclean_action": "keep",
+      "reclean_then_tokenizer_equal": false,
+      "source_chars": 5191,
+      "decoded_chars": 5492,
+      "whitespace_only": false
+    },
+    {
+      "shard_id": "ind-mr-fw2-train-000000",
+      "pack_id": "ind-mr-fw2",
+      "doc_id": "3732e78b7ad89ce8",
+      "shard_document_index": 3809,
+      "input_part": "ind-mr-fw2_part-00000_clean.parquet",
+      "input_row": 3809,
+      "decoded_utf8_sha256": "3732e78b7ad89ce84a207669f5886f2288bf715473169cf1ca7e1b28944e8db8",
+      "source_utf8_sha256": "230cbe45017de91c605de6d41578ef442a44a4a84b729575af502d24cebc5045",
+      "reclean_action": "keep",
+      "reclean_then_tokenizer_equal": false,
+      "source_chars": 1228,
+      "decoded_chars": 1401,
+      "whitespace_only": false
+    },
+    {
+      "shard_id": "ind-mr-fw2-train-000000",
+      "pack_id": "ind-mr-fw2",
+      "doc_id": "9885bd77d7d83d5a",
+      "shard_document_index": 7054,
+      "input_part": "ind-mr-fw2_part-00000_clean.parquet",
+      "input_row": 7054,
+      "decoded_utf8_sha256": "9885bd77d7d83d5a584ab1f94d010a8025f3ebe1c18fa5bff51483cde58a4254",
+      "source_utf8_sha256": "69724f729776e1c564c8888bf0f8337667f58881732ea9ef11c838e5efecdcda",
+      "reclean_action": "keep",
+      "reclean_then_tokenizer_equal": false,
+      "source_chars": 1905,
+      "decoded_chars": 1917,
+      "whitespace_only": false
+    },
+    {
+      "shard_id": "ind-te-sangraha-s-train-000000",
+      "pack_id": "ind-te-sangraha-s",
+      "doc_id": "22ec48b0180a4516",
+      "shard_document_index": 80,
+      "input_part": "ind-te-sangraha-s_part-00000_clean.parquet",
+      "input_row": 80,
+      "decoded_utf8_sha256": "22ec48b0180a4516971f7c0d52ef4e580c784192af694133821d628bd424006d",
+      "source_utf8_sha256": "be079c07dc35a5016d4d3953aa3b59d16b2da8e61b0a3ef2e03fba02f0defa58",
+      "reclean_action": "keep",
+      "reclean_then_tokenizer_equal": false,
+      "source_chars": 26256,
+      "decoded_chars": 26261,
+      "whitespace_only": false
+    },
+    {
+      "shard_id": "ind-te-sangraha-s-train-000000",
+      "pack_id": "ind-te-sangraha-s",
+      "doc_id": "df685d2f01690fe2",
+      "shard_document_index": 1842,
+      "input_part": "ind-te-sangraha-s_part-00000_clean.parquet",
+      "input_row": 1842,
+      "decoded_utf8_sha256": "df685d2f01690fe291ce98006450814d5594234cc4861f4fd88686222908035c",
+      "source_utf8_sha256": "bdfb79f0adb6f5da32001433df384d31eb8744f8d8869c0b9528a6996a03c171",
+      "reclean_action": "keep",
+      "reclean_then_tokenizer_equal": false,
+      "source_chars": 794,
+      "decoded_chars": 794,
+      "whitespace_only": false
+    },
+    {
+      "shard_id": "ind-te-sangraha-s-train-000000",
+      "pack_id": "ind-te-sangraha-s",
+      "doc_id": "24a7fe128fa7fcb8",
+      "shard_document_index": 2319,
+      "input_part": "ind-te-sangraha-s_part-00000_clean.parquet",
+      "input_row": 2319,
+      "decoded_utf8_sha256": "24a7fe128fa7fcb8254848a54e62f0038356dbef80956cdde402288382364b38",
+      "source_utf8_sha256": "c3f964a555f0cce1d831a4cf2de551917b7a8efae06a43b3acd495293f6a109a",
+      "reclean_action": "keep",
+      "reclean_then_tokenizer_equal": false,
+      "source_chars": 5372,
+      "decoded_chars": 5372,
+      "whitespace_only": false
+    }
+  ],
+  "missing_ids": [
+    {
+      "shard_id": "ind-ta-sangraha-v-train-000000",
+      "pack_id": "ind-ta-sangraha-v",
+      "doc_id": "cd6a80f616a4a04b",
+      "shard_document_index": 111,
+      "input_part": "ind-ta-sangraha-v_part-00000_clean.parquet",
+      "input_row": 112,
+      "decoded_utf8_sha256": "cd6a80f616a4a04b48ec49fe9ccb974dce3bcf11a5119f8dc37daacf902a3db9"
+    },
+    {
+      "shard_id": "ind-ta-sangraha-v-train-000000",
+      "pack_id": "ind-ta-sangraha-v",
+      "doc_id": "9de52b6bbcb3017b",
+      "shard_document_index": 482,
+      "input_part": "ind-ta-sangraha-v_part-00000_clean.parquet",
+      "input_row": 483,
+      "decoded_utf8_sha256": "bea813c6ace2e71d1c15424d020b2f22cbb1751760db46a1cefa9824159717ba"
+    },
+    {
+      "shard_id": "ind-ta-sangraha-v-train-000000",
+      "pack_id": "ind-ta-sangraha-v",
+      "doc_id": "8188dbb604842402",
+      "shard_document_index": 581,
+      "input_part": "ind-ta-sangraha-v_part-00000_clean.parquet",
+      "input_row": 582,
+      "decoded_utf8_sha256": "8188dbb6048424026962cbaa5464723d9e9e1268e49e969c2599b963496aa3f9"
+    },
+    {
+      "shard_id": "ind-ta-sangraha-v-train-000000",
+      "pack_id": "ind-ta-sangraha-v",
+      "doc_id": "10f2c6dc05332816",
+      "shard_document_index": 1006,
+      "input_part": "ind-ta-sangraha-v_part-00000_clean.parquet",
+      "input_row": 1007,
+      "decoded_utf8_sha256": "10f2c6dc053328165954987ed597085ba4431e679d581bb1500862e68ae2e042"
+    },
+    {
+      "shard_id": "ind-ta-sangraha-v-train-000000",
+      "pack_id": "ind-ta-sangraha-v",
+      "doc_id": "e60e852e67c79143",
+      "shard_document_index": 1304,
+      "input_part": "ind-ta-sangraha-v_part-00000_clean.parquet",
+      "input_row": 1305,
+      "decoded_utf8_sha256": "e60e852e67c79143d5242dce3cf935aae108e84a2b1bc3dd137d0a58990280b3"
+    },
+    {
+      "shard_id": "ind-ta-sangraha-v-train-000000",
+      "pack_id": "ind-ta-sangraha-v",
+      "doc_id": "8ccbbbbcf5accf00",
+      "shard_document_index": 1313,
+      "input_part": "ind-ta-sangraha-v_part-00000_clean.parquet",
+      "input_row": 1314,
+      "decoded_utf8_sha256": "8ccbbbbcf5accf001b85cb2174ba1a6cca1a1b4bd216da79e54eb0e102a76dbd"
+    },
+    {
+      "shard_id": "ind-ta-sangraha-v-train-000000",
+      "pack_id": "ind-ta-sangraha-v",
+      "doc_id": "e44d7f05edbdfc66",
+      "shard_document_index": 1354,
+      "input_part": "ind-ta-sangraha-v_part-00000_clean.parquet",
+      "input_row": 1355,
+      "decoded_utf8_sha256": "e44d7f05edbdfc66ff953086d695e66fb11757c0a267d20eb57ed47eb37ed3fb"
+    },
+    {
+      "shard_id": "ind-ta-sangraha-v-train-000000",
+      "pack_id": "ind-ta-sangraha-v",
+      "doc_id": "7352535a6827c195",
+      "shard_document_index": 1473,
+      "input_part": "ind-ta-sangraha-v_part-00000_clean.parquet",
+      "input_row": 1474,
+      "decoded_utf8_sha256": "7352535a6827c195a0a1322dd1bfd6784c7b79adf14913655dedc5e5aad74fc4"
+    },
+    {
+      "shard_id": "ind-ta-sangraha-v-train-000000",
+      "pack_id": "ind-ta-sangraha-v",
+      "doc_id": "84f8b0bd8481b643",
+      "shard_document_index": 1647,
+      "input_part": "ind-ta-sangraha-v_part-00000_clean.parquet",
+      "input_row": 1648,
+      "decoded_utf8_sha256": "84f8b0bd8481b6434d214002cc5ed2312e936ddaaff6ab45460c683643459fed"
+    },
+    {
+      "shard_id": "ind-ta-sangraha-v-train-000000",
+      "pack_id": "ind-ta-sangraha-v",
+      "doc_id": "cc42ebc20d8ba1c2",
+      "shard_document_index": 2370,
+      "input_part": "ind-ta-sangraha-v_part-00000_clean.parquet",
+      "input_row": 2371,
+      "decoded_utf8_sha256": "30826feceebba607dd6912dcaebbcf0f4ed7c8bbce9de272ddac97bfa2fdbcbd"
+    },
+    {
+      "shard_id": "ind-ta-sangraha-v-train-000000",
+      "pack_id": "ind-ta-sangraha-v",
+      "doc_id": "2431bca9699aabba",
+      "shard_document_index": 2448,
+      "input_part": "ind-ta-sangraha-v_part-00000_clean.parquet",
+      "input_row": 2449,
+      "decoded_utf8_sha256": "2431bca9699aabbada1f5c8a926b55fc3eda4d71247261237a27fc74b88f7f8b"
+    },
+    {
+      "shard_id": "ind-ta-sangraha-v-train-000000",
+      "pack_id": "ind-ta-sangraha-v",
+      "doc_id": "78be8e6d486ce4fd",
+      "shard_document_index": 2663,
+      "input_part": "ind-ta-sangraha-v_part-00000_clean.parquet",
+      "input_row": 2664,
+      "decoded_utf8_sha256": "78be8e6d486ce4fdc232d513240868e2032236769ec9e0705143556a9041a802"
+    },
+    {
+      "shard_id": "ind-ta-sangraha-v-train-000000",
+      "pack_id": "ind-ta-sangraha-v",
+      "doc_id": "76abf55638b55c8b",
+      "shard_document_index": 3173,
+      "input_part": "ind-ta-sangraha-v_part-00000_clean.parquet",
+      "input_row": 3174,
+      "decoded_utf8_sha256": "76abf55638b55c8be15b18ab7096a6ff94a4ba0be91e44f1075d4d16a16050fa"
+    },
+    {
+      "shard_id": "ind-ta-sangraha-v-train-000000",
+      "pack_id": "ind-ta-sangraha-v",
+      "doc_id": "b6d535c2821e4f55",
+      "shard_document_index": 3631,
+      "input_part": "ind-ta-sangraha-v_part-00000_clean.parquet",
+      "input_row": 3632,
+      "decoded_utf8_sha256": "b6d535c2821e4f55393ff130b758ca000c6841e4eae43c943720cb160289b011"
+    },
+    {
+      "shard_id": "ind-ta-sangraha-v-train-000000",
+      "pack_id": "ind-ta-sangraha-v",
+      "doc_id": "a01d2418e44839b3",
+      "shard_document_index": 4573,
+      "input_part": "ind-ta-sangraha-v_part-00000_clean.parquet",
+      "input_row": 4574,
+      "decoded_utf8_sha256": "a01d2418e44839b3e6e071f506c1bece00a1b69323932efd6b3a1301f50f659d"
+    },
+    {
+      "shard_id": "ind-ta-sangraha-v-train-000000",
+      "pack_id": "ind-ta-sangraha-v",
+      "doc_id": "ea106b36fa0e48a8",
+      "shard_document_index": 4618,
+      "input_part": "ind-ta-sangraha-v_part-00000_clean.parquet",
+      "input_row": 4619,
+      "decoded_utf8_sha256": "d3606638a03b687d24e849eb55dba47c3a0eb501bcdeb5c52ae98b35bc114f54"
+    },
+    {
+      "shard_id": "ind-ta-sangraha-v-train-000000",
+      "pack_id": "ind-ta-sangraha-v",
+      "doc_id": "99a9dbe04116a544",
+      "shard_document_index": 5062,
+      "input_part": "ind-ta-sangraha-v_part-00000_clean.parquet",
+      "input_row": 5063,
+      "decoded_utf8_sha256": "99a9dbe04116a5442990dfb106bb64b3629edc0f2ff4357c6c51ab6982b51b3e"
+    },
+    {
+      "shard_id": "ind-ta-sangraha-v-train-000000",
+      "pack_id": "ind-ta-sangraha-v",
+      "doc_id": "0fbe3f086d09d0d4",
+      "shard_document_index": 5330,
+      "input_part": "ind-ta-sangraha-v_part-00000_clean.parquet",
+      "input_row": 5331,
+      "decoded_utf8_sha256": "0fbe3f086d09d0d42ecc025ac78fbc487b7be0e5161eec0ca6b565cdb129c7b1"
+    },
+    {
+      "shard_id": "ind-ta-sangraha-v-train-000000",
+      "pack_id": "ind-ta-sangraha-v",
+      "doc_id": "11c955992b920ede",
+      "shard_document_index": 5527,
+      "input_part": "ind-ta-sangraha-v_part-00000_clean.parquet",
+      "input_row": 5528,
+      "decoded_utf8_sha256": "11c955992b920edea0228154ee0725c2d35dd4a99173e8ad6e41f4fb5e159e92"
+    },
+    {
+      "shard_id": "ind-ta-sangraha-v-train-000000",
+      "pack_id": "ind-ta-sangraha-v",
+      "doc_id": "38c5fed09fbb4fc5",
+      "shard_document_index": 6651,
+      "input_part": "ind-ta-sangraha-v_part-00000_clean.parquet",
+      "input_row": 6652,
+      "decoded_utf8_sha256": "38c5fed09fbb4fc576d0c4481e8b6e4a621c91efdb67562cd8464e91f7c72c0d"
+    },
+    {
+      "shard_id": "ind-te-fw2-train-000000",
+      "pack_id": "ind-te-fw2",
+      "doc_id": "f57f6adee41bc150",
+      "shard_document_index": 791,
+      "input_part": "ind-te-fw2_part-00000_clean.parquet",
+      "input_row": 791,
+      "decoded_utf8_sha256": "f57f6adee41bc150f2a375f7676908658c86d2b556ba7a5662c129b5ffce17fd"
+    },
+    {
+      "shard_id": "ind-te-fw2-train-000000",
+      "pack_id": "ind-te-fw2",
+      "doc_id": "b7d21beff8f4c564",
+      "shard_document_index": 1096,
+      "input_part": "ind-te-fw2_part-00000_clean.parquet",
+      "input_row": 1096,
+      "decoded_utf8_sha256": "b7d21beff8f4c564e7defbfc339dd6bf4b470990b3b7a453d56db1923b50ae00"
+    },
+    {
+      "shard_id": "ind-te-fw2-train-000000",
+      "pack_id": "ind-te-fw2",
+      "doc_id": "f58a63875cecfa85",
+      "shard_document_index": 5285,
+      "input_part": "ind-te-fw2_part-00000_clean.parquet",
+      "input_row": 5285,
+      "decoded_utf8_sha256": "f58a63875cecfa85943adb00cc7b3bed03241c225ed30275037447feb73d901e"
+    },
+    {
+      "shard_id": "ind-te-sangraha-v-train-000000",
+      "pack_id": "ind-te-sangraha-v",
+      "doc_id": "311a2fd7627e1466",
+      "shard_document_index": 2326,
+      "input_part": "ind-te-sangraha-v_part-00000_clean.parquet",
+      "input_row": 2326,
+      "decoded_utf8_sha256": "311a2fd7627e1466b3b3872f808edaa990aba03f86cd81818f15175e2920525a"
+    },
+    {
+      "shard_id": "ind-te-sangraha-v-train-000000",
+      "pack_id": "ind-te-sangraha-v",
+      "doc_id": "e401c0dc0ce4d719",
+      "shard_document_index": 2410,
+      "input_part": "ind-te-sangraha-v_part-00000_clean.parquet",
+      "input_row": 2410,
+      "decoded_utf8_sha256": "e401c0dc0ce4d719c10aea7f4efd9d3f9b849aa04d81abf90f82501a62b83c3c"
+    }
+  ]
+}

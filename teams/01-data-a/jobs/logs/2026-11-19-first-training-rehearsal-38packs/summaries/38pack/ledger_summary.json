@@ -1,0 +1,1627 @@
+{
+  "tool": "ledger.py",
+  "code_sha256": "4021460974d0d0c3228409cf89096750f31dfe2c6321141f0dc9f370233b6fe1",
+  "clean_mode": "B",
+  "inputs": {
+    "raw": {
+      "path": "/root/raw38",
+      "files": [
+        {
+          "part": "train/cadj-commits/part-00000.parquet",
+          "file": "train/cadj-commits/part-00000.parquet",
+          "sha256": "d2d2b3bfa92e8e8c1915118546e7c2fcc8fd0735eadf7ddd516921f07b5e0f9c"
+        },
+        {
+          "part": "train/cadj-notebooks/part-00000.parquet",
+          "file": "train/cadj-notebooks/part-00000.parquet",
+          "sha256": "736aded769d6ba112639bfc2def11f32c6d339257ae597e0b699526552c1f333"
+        },
+        {
+          "part": "train/cadj-stackexchange/part-00000.parquet",
+          "file": "train/cadj-stackexchange/part-00000.parquet",
+          "sha256": "f313932bc7a3206edf0e4fdf5a3c0836f106ea97fecccfabdbee961ccc556de4"
+        },
+        {
+          "part": "train/code-cpp/part-00000.parquet",
+          "file": "train/code-cpp/part-00000.parquet",
+          "sha256": "5d638fd78dc7a661e1f287199984de8d4e1c7fee5e9ce21dfa5b5fb97a00a971"
+        },
+        {
+          "part": "train/code-cpp/part-00001.parquet",
+          "file": "train/code-cpp/part-00001.parquet",
+          "sha256": "0a4ff1232dcf7f4af2f79476294063714a029054b553690bb8e84da3d88608f2"
+        },
+        {
+          "part": "train/code-go/part-00000.parquet",
+          "file": "train/code-go/part-00000.parquet",
+          "sha256": "6b7b52e854df0456e3a9867b32f5217b54995faa30dbd6b8b94e23eab6db8eb1"
+        },
+        {
+          "part": "train/code-go/part-00001.parquet",
+          "file": "train/code-go/part-00001.parquet",
+          "sha256": "40aedd68c4ec949eb825edc68896ae4518cf6c3283027d9ba1430ee66ee247fc"
+        },
+        {
+          "part": "train/code-java/part-00000.parquet",
+          "file": "train/code-java/part-00000.parquet",
+          "sha256": "e4dca53d3b6931a4277ff794881fa437e62db04074ed4efca833775ac97f097b"
+        },
+        {
+          "part": "train/code-java/part-00001.parquet",
+          "file": "train/code-java/part-00001.parquet",
+          "sha256": "278439aa70bd41a18f167de9adc3ca552309f52e635640adf6bf9e999d1266c3"
+        },
+        {
+          "part": "train/code-js-ts/part-00000.parquet",
+          "file": "train/code-js-ts/part-00000.parquet",
+          "sha256": "185694a65f72630cbbd56c98a2b8728e872b2da9dab5ebb26c39b0722ef42653"
+        },
+        {
+          "part": "train/code-js-ts/part-00001.parquet",
+          "file": "train/code-js-ts/part-00001.parquet",
+          "sha256": "36fea017a45e62fef38d0431f316ed5fd6afdde57db111817af6883f8f3f1f35"
+        },
+        {
+          "part": "train/code-python/part-00000.parquet",
+          "file": "train/code-python/part-00000.parquet",
+          "sha256": "8d9575b43cfb9cf3647e63e91d026eb8ed40f3981b698da33b83d09e6326641d"
+        },
+        {
+          "part": "train/code-python/part-00001.parquet",
+          "file": "train/code-python/part-00001.parquet",
+          "sha256": "985831590bc02ebddc0276223e1f022fde0e7c2e809fb7d97e74492bb6f5aa16"
+        },
+        {
+          "part": "train/code-rust/part-00000.parquet",
+          "file": "train/code-rust/part-00000.parquet",
+          "sha256": "f1632a12383e1efb9eee68bf8b57566291ea64801146cf144dfba9c363f32e21"
+        },
+        {
+          "part": "train/code-rust/part-00001.parquet",
+          "file": "train/code-rust/part-00001.parquet",
+          "sha256": "9dab607bd3c9464536bed594b77b5cd8edef6e731c5320f0c50d1017ebf59513"
+        },
+        {
+          "part": "train/en-dclm/part-00000.parquet",
+          "file": "train/en-dclm/part-00000.parquet",
+          "sha256": "67b305d60aa0f4091612f6fefe0c7aee867872943017c5ebb598293c19dfeb88"
+        },
+        {
+          "part": "train/en-dclm/part-00001.parquet",
+          "file": "train/en-dclm/part-00001.parquet",
+          "sha256": "0dec2d4fc09db2950d6f619810b6d2abf6d854b5d44d402c646cce2b74bd96a6"
+        },
+        {
+          "part": "train/en-fineweb-edu/part-00000.parquet",
+          "file": "train/en-fineweb-edu/part-00000.parquet",
+          "sha256": "53cbbf7a77b84e46108836c889e6cb83e6fcdc048c316fbf699586a7fef1dbe2"
+        },
+        {
+          "part": "train/en-fineweb-edu/part-00001.parquet",
+          "file": "train/en-fineweb-edu/part-00001.parquet",
+          "sha256": "bdd5d5b4f7aa8ec00e17865b5ebe13344728569aa7ffff7f37ba942b6fe42229"
+        },
+        {
+          "part": "train/en-nemotroncc/part-00000.parquet",
+          "file": "train/en-nemotroncc/part-00000.parquet",
+          "sha256": "19d641f52f5fc9c884da2fc4b4df1bc0327d73e327c12abb8efe0201c1668fda"
+        },
+        {
+          "part": "train/en-nemotroncc/part-00001.parquet",
+          "file": "train/en-nemotroncc/part-00001.parquet",
+          "sha256": "afba6a19de409e5208b3eb690ed360ad90aebb5c4cfd7f2bd389b468d2066202"
+        },
+        {
+          "part": "train/en-nemotroncc-synth/part-00000.parquet",
+          "file": "train/en-nemotroncc-synth/part-00000.parquet",
+          "sha256": "a601748f22e32bfb839bdb76e8e645f3beae510460857eb206fbdf3ce53a2427"
+        },
+        {
+          "part": "train/en-nemotroncc-synth/part-00001.parquet",
+          "file": "train/en-nemotroncc-synth/part-00001.parquet",
+          "sha256": "03a9efeb92e210dcb5b32d350cdee60fa032d21ea9454cefc913b0785f55ae9f"
+        },
+        {
+          "part": "train/ind-bn-fw2/part-00000.parquet",
+          "file": "train/ind-bn-fw2/part-00000.parquet",
+          "sha256": "fda2605fd302c5bee7ad3c780e11460a7ccdfc60d4a1467854c1dee974d633e9"
+        },
+        {
+          "part": "train/ind-bn-sangraha-v/part-00000.parquet",
+          "file": "train/ind-bn-sangraha-v/part-00000.parquet",
+          "sha256": "84a59d8676186cdd4676e65cd8d00ce5dde23a3abb76be66c1d9389a163194ed"
+        },
+        {
+          "part": "train/ind-gu-fw2/part-00000.parquet",
+          "file": "train/ind-gu-fw2/part-00000.parquet",
+          "sha256": "c6acc68da0a785c7704821414230474f05ebb40824f0fd30cc19cdcd29b5000f"
+        },
+        {
+          "part": "train/ind-hi-fw2/part-00000.parquet",
+          "file": "train/ind-hi-fw2/part-00000.parquet",
+          "sha256": "28f77743e293573f70554bdc8f3d3b29764f5e5154ed53ee4fb61c951604c4e3"
+        },
+        {
+          "part": "train/ind-hi-hplt/part-00000.parquet",
+          "file": "train/ind-hi-hplt/part-00000.parquet",
+          "sha256": "77c3d8297b9d472c0d4138998d61e3f5f167df2cf69810790701e9f078ec6afc"
+        },
+        {
+          "part": "train/ind-hi-indiccorp/part-00000.parquet",
+          "file": "train/ind-hi-indiccorp/part-00000.parquet",
+          "sha256": "43666b10ed3aef16a065c357630fd2dd8e253712e605580355b007e17e388030"
+        },
+        {
+          "part": "train/ind-hi-sangraha-s/part-00000.parquet",
+          "file": "train/ind-hi-sangraha-s/part-00000.parquet",
+          "sha256": "d55c8005f7f030d676bef8e76f22f723e2f63ccbd46f5df2efb0d7ea42bbc256"
+        },
+        {
+          "part": "train/ind-hi-sangraha-v/part-00000.parquet",
+          "file": "train/ind-hi-sangraha-v/part-00000.parquet",
+          "sha256": "26adb8a93f68d316e49f233cf5258852dc5a390ba61bb2297b6e0cc0be047551"
+        },
+        {
+          "part": "train/ind-kn-fw2/part-00000.parquet",
+          "file": "train/ind-kn-fw2/part-00000.parquet",
+          "sha256": "0afbb42297d99031143f722aca4a6dd6929eec5b31e4b518494a2913d1a73811"
+        },
+        {
+          "part": "train/ind-kn-sangraha-s/part-00000.parquet",
+          "file": "train/ind-kn-sangraha-s/part-00000.parquet",
+          "sha256": "4008c98bbcb089bd1968df1ef8fa8d6d66e5cd592252ff8581cd143d2703d757"
+        },
+        {
+          "part": "train/ind-kn-sangraha-v/part-00000.parquet",
+          "file": "train/ind-kn-sangraha-v/part-00000.parquet",
+          "sha256": "f142558db1b861c59fca75e6242a7cb890aa6d095967c2b2e90d31b72b7a585b"
+        },
+        {
+          "part": "train/ind-ml-fw2/part-00000.parquet",
+          "file": "train/ind-ml-fw2/part-00000.parquet",
+          "sha256": "ad1c7c7021864d45eeaa9f6524467c35db853c5be0593067d9b52b98914bdfe6"
+        },
+        {
+          "part": "train/ind-mr-fw2/part-00000.parquet",
+          "file": "train/ind-mr-fw2/part-00000.parquet",
+          "sha256": "b015d9fa295b12b93b3d14e5c249a67e05ddf7c73d9f37051d84f7a69350105c"
+        },
+        {
+          "part": "train/ind-mr-sangraha-v/part-00000.parquet",
+          "file": "train/ind-mr-sangraha-v/part-00000.parquet",
+          "sha256": "85f3fe3355206939f4b483da0e7e0187aa3738067951a78ffcccfb097237b7cc"
+        },
+        {
+          "part": "train/ind-or-fw2/part-00000.parquet",
+          "file": "train/ind-or-fw2/part-00000.parquet",
+          "sha256": "e5a9d06de192e38871bb3bde349d9544990a6f6abac8c4ea299c40fc627b77eb"
+        },
+        {
+          "part": "train/ind-sa-fw2/part-00000.parquet",
+          "file": "train/ind-sa-fw2/part-00000.parquet",
+          "sha256": "1238fde5e67f36130972e3aa0df015450d6352e979dcbc0a852f9133fb17e0ee"
+        },
+        {
+          "part": "train/ind-ta-fw2/part-00000.parquet",
+          "file": "train/ind-ta-fw2/part-00000.parquet",
+          "sha256": "1eb97539bd7f328e3f6c54d9b297216e3934cc473566c10659d9537437f2af74"
+        },
+        {
+          "part": "train/ind-ta-sangraha-s/part-00000.parquet",
+          "file": "train/ind-ta-sangraha-s/part-00000.parquet",
+          "sha256": "dc0fa0cc9791dcf163aa58272c1075ef2317fbd7e157daabd5bd8de42e6f938b"
+        },
+        {
+          "part": "train/ind-ta-sangraha-v/part-00000.parquet",
+          "file": "train/ind-ta-sangraha-v/part-00000.parquet",
+          "sha256": "3774dd4f98e7834b3510261dfbd24950e8b052dc25636b642b7830d02d1b724b"
+        },
+        {
+          "part": "train/ind-te-fw2/part-00000.parquet",
+          "file": "train/ind-te-fw2/part-00000.parquet",
+          "sha256": "194f080c14dec33a3a7312bdc147c86c51450b995086189aa092a92ef4316165"
+        },
+        {
+          "part": "train/ind-te-sangraha-s/part-00000.parquet",
+          "file": "train/ind-te-sangraha-s/part-00000.parquet",
+          "sha256": "878ece52c5dff94686df2ff296e6556bb6234aa5b413c56574360dd5f7a70c7f"
+        },
+        {
+          "part": "train/ind-te-sangraha-v/part-00000.parquet",
+          "file": "train/ind-te-sangraha-v/part-00000.parquet",
+          "sha256": "5e10f6717de94d516fb6dbc45372d4b620fbe0bb7970dec13ff8c10b429ab6f9"
+        },
+        {
+          "part": "train/math-finemath/part-00000.parquet",
+          "file": "train/math-finemath/part-00000.parquet",
+          "sha256": "a5dbb4da6d0c2e890901aecb10b5c2bd71378d8e66e5975adc0d7d98592f51b2"
+        },
+        {
+          "part": "train/math-megamath/part-00000.parquet",
+          "file": "train/math-megamath/part-00000.parquet",
+          "sha256": "e8c53baf0e1c842d303199b93cc36768199edbc64a142925df890915c4cb7d91"
+        },
+        {
+          "part": "train/sci-finepdfs/part-00000.parquet",
+          "file": "train/sci-finepdfs/part-00000.parquet",
+          "sha256": "87dd59b9268bf5784e8f60e40a829ccfb6c6b62d28e6c88ddb4770782af0eb69"
+        },
+        {
+          "part": "heldout/cadj-commits/part-00000.parquet",
+          "file": "heldout/cadj-commits/part-00000.parquet",
+          "sha256": "d348562970bac1d6234e54bbbc4a1c3973865a676cc69ace8718bf1f6c2760dc"
+        },
+        {
+          "part": "heldout/cadj-notebooks/part-00000.parquet",
+          "file": "heldout/cadj-notebooks/part-00000.parquet",
+          "sha256": "b837a991cecf754667fd19d002f6fa8bd0b336782ce25f4c6306d079f02b3f5a"
+        },
+        {
+          "part": "heldout/cadj-stackexchange/part-00000.parquet",
+          "file": "heldout/cadj-stackexchange/part-00000.parquet",
+          "sha256": "0fddecede001859988619051842b74f1fb72af9638e27a38e06daa6f9b3f9fd5"
+        },
+        {
+          "part": "heldout/code-cpp/part-00000.parquet",
+          "file": "heldout/code-cpp/part-00000.parquet",
+          "sha256": "25bf9442a84771d1a54a4bde4981859f30f434d434f1aaaece82807bb0724f01"
+        },
+        {
+          "part": "heldout/code-go/part-00000.parquet",
+          "file": "heldout/code-go/part-00000.parquet",
+          "sha256": "be4917c1049d1e1a22286d2822c96c47f688bcf2bb9bdafba9511ae350728745"
+        },
+        {
+          "part": "heldout/code-java/part-00000.parquet",
+          "file": "heldout/code-java/part-00000.parquet",
+          "sha256": "c50e6accad04341e291e188738ec368134142b2c06118a358940491837e218c4"
+        },
+        {
+          "part": "heldout/code-js-ts/part-00000.parquet",
+          "file": "heldout/code-js-ts/part-00000.parquet",
+          "sha256": "cad9e205b551282cb8a55999cef0fdc36455f59446e58b1eacd0c45f577de77e"
+        },
+        {
+          "part": "heldout/code-python/part-00000.parquet",
+          "file": "heldout/code-python/part-00000.parquet",
+          "sha256": "6ebf57ef84a2963e45b74c10df397206ca47aaf278dd35d6464f9792f548da2e"
+        },
+        {
+          "part": "heldout/code-rust/part-00000.parquet",
+          "file": "heldout/code-rust/part-00000.parquet",
+          "sha256": "7879813e212722e3540dde0340c2f9d3dbe2e74112a6121c9c36ad81bf9669ec"
+        },
+        {
+          "part": "heldout/en-dclm/part-00000.parquet",
+          "file": "heldout/en-dclm/part-00000.parquet",
+          "sha256": "60d0741e754b70dffab4398ca617b37a408121b2f60fed95f8cf871996aacc36"
+        },
+        {
+          "part": "heldout/en-fineweb-edu/part-00000.parquet",
+          "file": "heldout/en-fineweb-edu/part-00000.parquet",
+          "sha256": "727ee3f5ee0ef235fdd5839e516130e3b3fbb4a95345bfc827175f69ecd2647a"
+        },
+        {
+          "part": "heldout/en-nemotroncc/part-00000.parquet",
+          "file": "heldout/en-nemotroncc/part-00000.parquet",
+          "sha256": "76653abac4785a2a7b14931142af29f64d3d621e8ea0c26c8d729a82b29f7845"
+        },
+        {
+          "part": "heldout/en-nemotroncc-synth/part-00000.parquet",
+          "file": "heldout/en-nemotroncc-synth/part-00000.parquet",
+          "sha256": "3fcbb50614d90f680168e0c95479e364e995a6ebbbdfc56df90746b58c38aff8"
+        },
+        {
+          "part": "heldout/ind-bn-fw2/part-00000.parquet",
+          "file": "heldout/ind-bn-fw2/part-00000.parquet",
+          "sha256": "dcaa8dabd3ea88c672d2acf20ac49779d00c9c938f07a1c8f7d203221493c35c"
+        },
+        {
+          "part": "heldout/ind-bn-sangraha-v/part-00000.parquet",
+          "file": "heldout/ind-bn-sangraha-v/part-00000.parquet",
+          "sha256": "e6745f0059d965c9426ef9530161c0a1d0d8c53c79336656bc16e4e9f1090ad0"
+        },
+        {
+          "part": "heldout/ind-gu-fw2/part-00000.parquet",
+          "file": "heldout/ind-gu-fw2/part-00000.parquet",
+          "sha256": "928f0d5f4ec290f6196197247b26fc62ee100949d1d409a2b744295d9968c349"
+        },
+        {
+          "part": "heldout/ind-hi-fw2/part-00000.parquet",
+          "file": "heldout/ind-hi-fw2/part-00000.parquet",
+          "sha256": "149346eb3cda65d2fa47891fb5f277e1755445d9e46bfac8c7840d677347d732"
+        },
+        {
+          "part": "heldout/ind-hi-hplt/part-00000.parquet",
+          "file": "heldout/ind-hi-hplt/part-00000.parquet",
+          "sha256": "251efe0c09e08f7f2a062a314fee86ac3e023cf6ba233c9946a62b1028846c38"
+        },
+        {
+          "part": "heldout/ind-hi-indiccorp/part-00000.parquet",
+          "file": "heldout/ind-hi-indiccorp/part-00000.parquet",
+          "sha256": "91588fb9b28290aa7183ae83974cabed441e4da8370ba024f181914b377c2c4f"
+        },
+        {
+          "part": "heldout/ind-hi-sangraha-s/part-00000.parquet",
+          "file": "heldout/ind-hi-sangraha-s/part-00000.parquet",
+          "sha256": "b7609dd83ef724f2a56b97e0cd5cd8b0d686b4f58f63010c9a70848d57b97ea1"
+        },
+        {
+          "part": "heldout/ind-hi-sangraha-v/part-00000.parquet",
+          "file": "heldout/ind-hi-sangraha-v/part-00000.parquet",
+          "sha256": "6c2c8796889990fb042b437d980bb2b30888f8d21d8bec35fb96abcee4df49a6"
+        },
+        {
+          "part": "heldout/ind-kn-fw2/part-00000.parquet",
+          "file": "heldout/ind-kn-fw2/part-00000.parquet",
+          "sha256": "806511e48a1fb03ae6a69af53d190806850ae6efd1f88dbc704466424c1b0a27"
+        },
+        {
+          "part": "heldout/ind-kn-sangraha-s/part-00000.parquet",
+          "file": "heldout/ind-kn-sangraha-s/part-00000.parquet",
+          "sha256": "aafbe26613276f8855956e3d15368baf16f85c8e9aecca674bd4f7f62910a28e"
+        },
+        {
+          "part": "heldout/ind-kn-sangraha-v/part-00000.parquet",
+          "file": "heldout/ind-kn-sangraha-v/part-00000.parquet",
+          "sha256": "b044fe4c156b356eb730a81a659c3a14fdcf143c7bdedb2c732dce72cb29d268"
+        },
+        {
+          "part": "heldout/ind-ml-fw2/part-00000.parquet",
+          "file": "heldout/ind-ml-fw2/part-00000.parquet",
+          "sha256": "10bfc53418bcdff95eef834cc657fe12b722d6f5ffc7cae71004d57dc7fec5f1"
+        },
+        {
+          "part": "heldout/ind-mr-fw2/part-00000.parquet",
+          "file": "heldout/ind-mr-fw2/part-00000.parquet",
+          "sha256": "7a031852f76d48bae8ff7d115ab1d27a939605aec0c891fd6c7ef2d2aa764948"
+        },
+        {
+          "part": "heldout/ind-mr-sangraha-v/part-00000.parquet",
+          "file": "heldout/ind-mr-sangraha-v/part-00000.parquet",
+          "sha256": "9ab16d0b5f775cf907b27729ea7eb00ebec827e7fff41d4ecd1c6616ec9b94e3"
+        },
+        {
+          "part": "heldout/ind-or-fw2/part-00000.parquet",
+          "file": "heldout/ind-or-fw2/part-00000.parquet",
+          "sha256": "6e6503a92b93304009ba029c9e4027457848597a214e85160335351f49a8e78a"
+        },
+        {
+          "part": "heldout/ind-sa-fw2/part-00000.parquet",
+          "file": "heldout/ind-sa-fw2/part-00000.parquet",
+          "sha256": "eaa16f46dbc391efe6f172545c000c64794b9d505b97069b6c41e11f06f19d8d"
+        },
+        {
+          "part": "heldout/ind-ta-fw2/part-00000.parquet",
+          "file": "heldout/ind-ta-fw2/part-00000.parquet",
+          "sha256": "a5b66882de196db04f84cf70768d4756138643ae44f3bffdfd344556c256bc51"
+        },
+        {
+          "part": "heldout/ind-ta-sangraha-s/part-00000.parquet",
+          "file": "heldout/ind-ta-sangraha-s/part-00000.parquet",
+          "sha256": "b8653a36bcbd237e4c7bc78bf713245dc982058166e62aa416b2ebbefd1db34c"
+        },
+        {
+          "part": "heldout/ind-ta-sangraha-v/part-00000.parquet",
+          "file": "heldout/ind-ta-sangraha-v/part-00000.parquet",
+          "sha256": "2679b256560a14239f428cb161c219eec6e7d1f8a82111a3351f125e5a5bc270"
+        },
+        {
+          "part": "heldout/ind-te-fw2/part-00000.parquet",
+          "file": "heldout/ind-te-fw2/part-00000.parquet",
+          "sha256": "b739477aa9bd2ccf2148086342ce67e9e0f08803b519e92af19e94e711314be2"
+        },
+        {
+          "part": "heldout/ind-te-sangraha-s/part-00000.parquet",
+          "file": "heldout/ind-te-sangraha-s/part-00000.parquet",
+          "sha256": "c05ed17b031d1fbae24927464ffac8e02d40ffa2c338e54f476a43327aa37a85"
+        },
+        {
+          "part": "heldout/ind-te-sangraha-v/part-00000.parquet",
+          "file": "heldout/ind-te-sangraha-v/part-00000.parquet",
+          "sha256": "d2bd9afc4c0ac84f048e013c7115c7a635ef495e372a4c97af488774371bf159"
+        },
+        {
+          "part": "heldout/math-finemath/part-00000.parquet",
+          "file": "heldout/math-finemath/part-00000.parquet",
+          "sha256": "63e6eab00769eeb6805bd4eccdada9f4bc61ebe8d0cd23654cb6da95e0a290e4"
+        },
+        {
+          "part": "heldout/math-megamath/part-00000.parquet",
+          "file": "heldout/math-megamath/part-00000.parquet",
+          "sha256": "294a31a67392329a1fcf6f01da95fec064c7f1d63ad93449cdd7d2c90c223872"
+        },
+        {
+          "part": "heldout/sci-finepdfs/part-00000.parquet",
+          "file": "heldout/sci-finepdfs/part-00000.parquet",
+          "sha256": "88566b9a129599950dc2f6eacf89908abac238e0541988f06c5e2bb808164ad6"
+        }
+      ]
+    },
+    "remove_list": {
+      "path": "/workspace/era-v5-lab/out/pipeline/rehearsal-38pack/dedup/remove_list.csv",
+      "sha256": "fbd697c55c21b4e0a26d80d933458b772dcc8c2da7473d304636d2ee5a5f2161",
+      "rows": 1339
+    },
+    "groups": {
+      "path": "/workspace/era-v5-lab/out/pipeline/rehearsal-38pack/dedup/dedup_groups.csv",
+      "sha256": "3af9b092517dfcc271fbc5b8a7ebc3d0dce0f19d9b6bdc8a5a48c1deb85f7729",
+      "rows": 2422,
+      "removed_rows": 1339
+    },
+    "log": {
+      "path": "/workspace/era-v5-lab/out/pipeline/rehearsal-38pack/dedup/dedup_log.jsonl",
+      "sha256": "0af3e0a16e83c6e9cfe90cd2ce217f40c21db13245516a4087096e090ac6fbbb",
+      "rows": 1339
+    },
+    "set_sha256": "2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a"
+  },
+  "parts": 86,
+  "totals": {
+    "rows": 1444766,
+    "rows_cleaned": 1410230,
+    "kept": 1407358,
+    "dropped_by_clean": 34536,
+    "removed_by_dedup": 1339,
+    "dropped_by_f2": 1533,
+    "f2_error": 0,
+    "clean_fix_by_text": 363076
+  },
+  "survivors_dropped_by_f2": {
+    "total": 1,
+    "by_pack": {
+      "code-go": 1
+    }
+  },
+  "clean_reports": {
+    "parts": 86,
+    "input_rows": 1444766,
+    "drop": 34536,
+    "fix": 363076,
+    "keep": 1047154
+  },
+  "by_pack": {
+    "cadj-commits": {
+      "train": {
+        "rows": 74753,
+        "rows_cleaned": 74753,
+        "kept": 73835,
+        "dropped_by_clean": 0,
+        "removed_by_dedup": 904,
+        "dropped_by_f2": 14,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 826,
+        "rows_cleaned": 826,
+        "kept": 826,
+        "dropped_by_clean": 0,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "f2_error": 0
+      }
+    },
+    "cadj-notebooks": {
+      "train": {
+        "rows": 15563,
+        "rows_cleaned": 15563,
+        "kept": 15484,
+        "dropped_by_clean": 0,
+        "removed_by_dedup": 14,
+        "dropped_by_f2": 65,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 169,
+        "rows_cleaned": 169,
+        "kept": 168,
+        "dropped_by_clean": 0,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 1,
+        "f2_error": 0
+      }
+    },
+    "cadj-stackexchange": {
+      "train": {
+        "rows": 41396,
+        "rows_cleaned": 41396,
+        "kept": 41136,
+        "dropped_by_clean": 0,
+        "removed_by_dedup": 199,
+        "dropped_by_f2": 61,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 409,
+        "rows_cleaned": 409,
+        "kept": 408,
+        "dropped_by_clean": 0,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 1,
+        "f2_error": 0
+      }
+    },
+    "code-cpp": {
+      "train": {
+        "rows": 55545,
+        "rows_cleaned": 54588,
+        "kept": 54506,
+        "dropped_by_clean": 957,
+        "removed_by_dedup": 5,
+        "dropped_by_f2": 77,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 613,
+        "rows_cleaned": 607,
+        "kept": 606,
+        "dropped_by_clean": 6,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 1,
+        "f2_error": 0
+      }
+    },
+    "code-go": {
+      "train": {
+        "rows": 83267,
+        "rows_cleaned": 76955,
+        "kept": 76853,
+        "dropped_by_clean": 6312,
+        "removed_by_dedup": 6,
+        "dropped_by_f2": 96,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 872,
+        "rows_cleaned": 810,
+        "kept": 808,
+        "dropped_by_clean": 62,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 2,
+        "f2_error": 0
+      }
+    },
+    "code-java": {
+      "train": {
+        "rows": 85213,
+        "rows_cleaned": 84679,
+        "kept": 84659,
+        "dropped_by_clean": 534,
+        "removed_by_dedup": 3,
+        "dropped_by_f2": 17,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 847,
+        "rows_cleaned": 839,
+        "kept": 839,
+        "dropped_by_clean": 8,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "f2_error": 0
+      }
+    },
+    "code-js-ts": {
+      "train": {
+        "rows": 121938,
+        "rows_cleaned": 116063,
+        "kept": 115987,
+        "dropped_by_clean": 5875,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 76,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 1234,
+        "rows_cleaned": 1145,
+        "kept": 1142,
+        "dropped_by_clean": 89,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 3,
+        "f2_error": 0
+      }
+    },
+    "code-python": {
+      "train": {
+        "rows": 74943,
+        "rows_cleaned": 72604,
+        "kept": 72375,
+        "dropped_by_clean": 2339,
+        "removed_by_dedup": 9,
+        "dropped_by_f2": 220,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 718,
+        "rows_cleaned": 701,
+        "kept": 700,
+        "dropped_by_clean": 17,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 1,
+        "f2_error": 0
+      }
+    },
+    "code-rust": {
+      "train": {
+        "rows": 60126,
+        "rows_cleaned": 58200,
+        "kept": 58106,
+        "dropped_by_clean": 1926,
+        "removed_by_dedup": 58,
+        "dropped_by_f2": 36,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 612,
+        "rows_cleaned": 595,
+        "kept": 595,
+        "dropped_by_clean": 17,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "f2_error": 0
+      }
+    },
+    "en-dclm": {
+      "train": {
+        "rows": 61367,
+        "rows_cleaned": 60212,
+        "kept": 60164,
+        "dropped_by_clean": 1155,
+        "removed_by_dedup": 11,
+        "dropped_by_f2": 37,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 608,
+        "rows_cleaned": 590,
+        "kept": 590,
+        "dropped_by_clean": 18,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "f2_error": 0
+      }
+    },
+    "en-fineweb-edu": {
+      "train": {
+        "rows": 71933,
+        "rows_cleaned": 71374,
+        "kept": 71275,
+        "dropped_by_clean": 559,
+        "removed_by_dedup": 15,
+        "dropped_by_f2": 84,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 732,
+        "rows_cleaned": 726,
+        "kept": 726,
+        "dropped_by_clean": 6,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "f2_error": 0
+      }
+    },
+    "en-nemotroncc": {
+      "train": {
+        "rows": 91820,
+        "rows_cleaned": 88268,
+        "kept": 88206,
+        "dropped_by_clean": 3552,
+        "removed_by_dedup": 19,
+        "dropped_by_f2": 43,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 954,
+        "rows_cleaned": 915,
+        "kept": 914,
+        "dropped_by_clean": 39,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 1,
+        "f2_error": 0
+      }
+    },
+    "en-nemotroncc-synth": {
+      "train": {
+        "rows": 197119,
+        "rows_cleaned": 196901,
+        "kept": 196857,
+        "dropped_by_clean": 218,
+        "removed_by_dedup": 1,
+        "dropped_by_f2": 43,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 1975,
+        "rows_cleaned": 1970,
+        "kept": 1969,
+        "dropped_by_clean": 5,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 1,
+        "f2_error": 0
+      }
+    },
+    "ind-bn-fw2": {
+      "train": {
+        "rows": 11205,
+        "rows_cleaned": 10704,
+        "kept": 10704,
+        "dropped_by_clean": 501,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 112,
+        "rows_cleaned": 105,
+        "kept": 105,
+        "dropped_by_clean": 7,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "f2_error": 0
+      }
+    },
+    "ind-bn-sangraha-v": {
+      "train": {
+        "rows": 10328,
+        "rows_cleaned": 10116,
+        "kept": 10115,
+        "dropped_by_clean": 212,
+        "removed_by_dedup": 1,
+        "dropped_by_f2": 0,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 102,
+        "rows_cleaned": 101,
+        "kept": 101,
+        "dropped_by_clean": 1,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "f2_error": 0
+      }
+    },
+    "ind-gu-fw2": {
+      "train": {
+        "rows": 23118,
+        "rows_cleaned": 22773,
+        "kept": 22689,
+        "dropped_by_clean": 345,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 84,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 239,
+        "rows_cleaned": 238,
+        "kept": 237,
+        "dropped_by_clean": 1,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 1,
+        "f2_error": 0
+      }
+    },
+    "ind-hi-fw2": {
+      "train": {
+        "rows": 14261,
+        "rows_cleaned": 13801,
+        "kept": 13773,
+        "dropped_by_clean": 460,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 28,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 132,
+        "rows_cleaned": 131,
+        "kept": 131,
+        "dropped_by_clean": 1,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "f2_error": 0
+      }
+    },
+    "ind-hi-hplt": {
+      "train": {
+        "rows": 8745,
+        "rows_cleaned": 8423,
+        "kept": 8418,
+        "dropped_by_clean": 322,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 5,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 95,
+        "rows_cleaned": 92,
+        "kept": 92,
+        "dropped_by_clean": 3,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "f2_error": 0
+      }
+    },
+    "ind-hi-indiccorp": {
+      "train": {
+        "rows": 110836,
+        "rows_cleaned": 109675,
+        "kept": 109670,
+        "dropped_by_clean": 1161,
+        "removed_by_dedup": 4,
+        "dropped_by_f2": 1,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 1094,
+        "rows_cleaned": 1080,
+        "kept": 1080,
+        "dropped_by_clean": 14,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "f2_error": 0
+      }
+    },
+    "ind-hi-sangraha-s": {
+      "train": {
+        "rows": 8280,
+        "rows_cleaned": 7467,
+        "kept": 7432,
+        "dropped_by_clean": 813,
+        "removed_by_dedup": 35,
+        "dropped_by_f2": 0,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 88,
+        "rows_cleaned": 75,
+        "kept": 75,
+        "dropped_by_clean": 13,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "f2_error": 0
+      }
+    },
+    "ind-hi-sangraha-v": {
+      "train": {
+        "rows": 14709,
+        "rows_cleaned": 14493,
+        "kept": 14469,
+        "dropped_by_clean": 216,
+        "removed_by_dedup": 20,
+        "dropped_by_f2": 4,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 122,
+        "rows_cleaned": 121,
+        "kept": 121,
+        "dropped_by_clean": 1,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "f2_error": 0
+      }
+    },
+    "ind-kn-fw2": {
+      "train": {
+        "rows": 7834,
+        "rows_cleaned": 7759,
+        "kept": 7735,
+        "dropped_by_clean": 75,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 24,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 82,
+        "rows_cleaned": 82,
+        "kept": 81,
+        "dropped_by_clean": 0,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 1,
+        "f2_error": 0
+      }
+    },
+    "ind-kn-sangraha-s": {
+      "train": {
+        "rows": 5191,
+        "rows_cleaned": 5185,
+        "kept": 5185,
+        "dropped_by_clean": 6,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 53,
+        "rows_cleaned": 53,
+        "kept": 53,
+        "dropped_by_clean": 0,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "f2_error": 0
+      }
+    },
+    "ind-kn-sangraha-v": {
+      "train": {
+        "rows": 8551,
+        "rows_cleaned": 8357,
+        "kept": 8354,
+        "dropped_by_clean": 194,
+        "removed_by_dedup": 3,
+        "dropped_by_f2": 0,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 89,
+        "rows_cleaned": 87,
+        "kept": 87,
+        "dropped_by_clean": 2,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "f2_error": 0
+      }
+    },
+    "ind-ml-fw2": {
+      "train": {
+        "rows": 18976,
+        "rows_cleaned": 18976,
+        "kept": 18822,
+        "dropped_by_clean": 0,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 154,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 185,
+        "rows_cleaned": 185,
+        "kept": 184,
+        "dropped_by_clean": 0,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 1,
+        "f2_error": 0
+      }
+    },
+    "ind-mr-fw2": {
+      "train": {
+        "rows": 11460,
+        "rows_cleaned": 11259,
+        "kept": 11250,
+        "dropped_by_clean": 201,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 9,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 95,
+        "rows_cleaned": 94,
+        "kept": 94,
+        "dropped_by_clean": 1,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "f2_error": 0
+      }
+    },
+    "ind-mr-sangraha-v": {
+      "train": {
+        "rows": 12172,
+        "rows_cleaned": 12172,
+        "kept": 12166,
+        "dropped_by_clean": 0,
+        "removed_by_dedup": 5,
+        "dropped_by_f2": 1,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 127,
+        "rows_cleaned": 127,
+        "kept": 127,
+        "dropped_by_clean": 0,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "f2_error": 0
+      }
+    },
+    "ind-or-fw2": {
+      "train": {
+        "rows": 33684,
+        "rows_cleaned": 33684,
+        "kept": 33683,
+        "dropped_by_clean": 0,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 1,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 328,
+        "rows_cleaned": 328,
+        "kept": 328,
+        "dropped_by_clean": 0,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "f2_error": 0
+      }
+    },
+    "ind-sa-fw2": {
+      "train": {
+        "rows": 5908,
+        "rows_cleaned": 5667,
+        "kept": 5655,
+        "dropped_by_clean": 241,
+        "removed_by_dedup": 12,
+        "dropped_by_f2": 0,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 55,
+        "rows_cleaned": 54,
+        "kept": 54,
+        "dropped_by_clean": 1,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "f2_error": 0
+      }
+    },
+    "ind-ta-fw2": {
+      "train": {
+        "rows": 6766,
+        "rows_cleaned": 6766,
+        "kept": 6760,
+        "dropped_by_clean": 0,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 6,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 58,
+        "rows_cleaned": 58,
+        "kept": 58,
+        "dropped_by_clean": 0,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "f2_error": 0
+      }
+    },
+    "ind-ta-sangraha-s": {
+      "train": {
+        "rows": 4336,
+        "rows_cleaned": 4336,
+        "kept": 4335,
+        "dropped_by_clean": 0,
+        "removed_by_dedup": 1,
+        "dropped_by_f2": 0,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 36,
+        "rows_cleaned": 36,
+        "kept": 36,
+        "dropped_by_clean": 0,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "f2_error": 0
+      }
+    },
+    "ind-ta-sangraha-v": {
+      "train": {
+        "rows": 6796,
+        "rows_cleaned": 6796,
+        "kept": 6796,
+        "dropped_by_clean": 0,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 65,
+        "rows_cleaned": 65,
+        "kept": 65,
+        "dropped_by_clean": 0,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "f2_error": 0
+      }
+    },
+    "ind-te-fw2": {
+      "train": {
+        "rows": 5997,
+        "rows_cleaned": 5706,
+        "kept": 5670,
+        "dropped_by_clean": 291,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 36,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 59,
+        "rows_cleaned": 57,
+        "kept": 56,
+        "dropped_by_clean": 2,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 1,
+        "f2_error": 0
+      }
+    },
+    "ind-te-sangraha-s": {
+      "train": {
+        "rows": 4782,
+        "rows_cleaned": 4419,
+        "kept": 4419,
+        "dropped_by_clean": 363,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 47,
+        "rows_cleaned": 44,
+        "kept": 44,
+        "dropped_by_clean": 3,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "f2_error": 0
+      }
+    },
+    "ind-te-sangraha-v": {
+      "train": {
+        "rows": 8609,
+        "rows_cleaned": 8595,
+        "kept": 8592,
+        "dropped_by_clean": 14,
+        "removed_by_dedup": 2,
+        "dropped_by_f2": 1,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 83,
+        "rows_cleaned": 83,
+        "kept": 83,
+        "dropped_by_clean": 0,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "f2_error": 0
+      }
+    },
+    "math-finemath": {
+      "train": {
+        "rows": 29122,
+        "rows_cleaned": 26513,
+        "kept": 26282,
+        "dropped_by_clean": 2609,
+        "removed_by_dedup": 3,
+        "dropped_by_f2": 228,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 312,
+        "rows_cleaned": 280,
+        "kept": 280,
+        "dropped_by_clean": 32,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "f2_error": 0
+      }
+    },
+    "math-megamath": {
+      "train": {
+        "rows": 17647,
+        "rows_cleaned": 15097,
+        "kept": 15035,
+        "dropped_by_clean": 2550,
+        "removed_by_dedup": 9,
+        "dropped_by_f2": 53,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 169,
+        "rows_cleaned": 152,
+        "kept": 151,
+        "dropped_by_clean": 17,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 1,
+        "f2_error": 0
+      }
+    },
+    "sci-finepdfs": {
+      "train": {
+        "rows": 6011,
+        "rows_cleaned": 5845,
+        "kept": 5832,
+        "dropped_by_clean": 166,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 13,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 63,
+        "rows_cleaned": 60,
+        "kept": 60,
+        "dropped_by_clean": 3,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "f2_error": 0
+      }
+    }
+  },
+  "files": [
+    {
+      "file": "heldout/cadj-commits.parquet",
+      "rows": 826,
+      "sha256": "4e351cf9836ecb431243046b53c15e25940beaf8a2d5ce407f12116c0ca6867a"
+    },
+    {
+      "file": "heldout/cadj-notebooks.parquet",
+      "rows": 169,
+      "sha256": "c8491329c029b4ee96fb3f40454bace453c12ce205541f966af1bd6d77303d52"
+    },
+    {
+      "file": "heldout/cadj-stackexchange.parquet",
+      "rows": 409,
+      "sha256": "46968954466825c802957451cc3a34033c38137c50c9f38ded5982812dd45151"
+    },
+    {
+      "file": "heldout/code-cpp.parquet",
+      "rows": 613,
+      "sha256": "093d7829dd5f770bb2ed99c6b24655190b192d8c6cb23320a97e97e9a6b9716d"
+    },
+    {
+      "file": "heldout/code-go.parquet",
+      "rows": 872,
+      "sha256": "70ff748038104ee47627afc6e39aa272f16ce39e70bd5d17e79f25e85eef0074"
+    },
+    {
+      "file": "heldout/code-java.parquet",
+      "rows": 847,
+      "sha256": "b159fa67640d04fab69f09b2ddba94192e30e91fc72724067222750a7ec4b35b"
+    },
+    {
+      "file": "heldout/code-js-ts.parquet",
+      "rows": 1234,
+      "sha256": "47a712977f8de90347c9275d43f47cb2e40e4f224ea3350a7a9644b7646f2d57"
+    },
+    {
+      "file": "heldout/code-python.parquet",
+      "rows": 718,
+      "sha256": "d55dc4666926e224741a107f03b3d562d35c20615dd2dc083a908e767e01aba1"
+    },
+    {
+      "file": "heldout/code-rust.parquet",
+      "rows": 612,
+      "sha256": "c9f6f3eac04fe90598e50eb0edb7e95e98227838d515aee518ea67e974c07b02"
+    },
+    {
+      "file": "heldout/en-dclm.parquet",
+      "rows": 608,
+      "sha256": "55db614cda6f7db8a9a84f0273d1c57e761ae6404a0e3723425b614aa67d1c02"
+    },
+    {
+      "file": "heldout/en-fineweb-edu.parquet",
+      "rows": 732,
+      "sha256": "564e094dca6e120376c9bcd6ec4467aba1189be92514f7d285bc25d3c52b4892"
+    },
+    {
+      "file": "heldout/en-nemotroncc.parquet",
+      "rows": 954,
+      "sha256": "1d02fa8290c5336b11482d677d101c5d5d7bebf7a0e75e993982ea1438c5cbfc"
+    },
+    {
+      "file": "heldout/en-nemotroncc-synth.parquet",
+      "rows": 1975,
+      "sha256": "77e04e99c62e828562e7de18762c66250023d511f441859e34c7c49b337a813a"
+    },
+    {
+      "file": "heldout/ind-bn-fw2.parquet",
+      "rows": 112,
+      "sha256": "affbeeedd675c96487a1e144668bae2672dcbb8123b03800d6e3e4a5cd4083ef"
+    },
+    {
+      "file": "heldout/ind-bn-sangraha-v.parquet",
+      "rows": 102,
+      "sha256": "cdde9bdc67f132dcbcdb47272bd27040d315deeb8a7c91027980b70c9665776e"
+    },
+    {
+      "file": "heldout/ind-gu-fw2.parquet",
+      "rows": 239,
+      "sha256": "e80611808ba2a4aae88b4c17193c8a9a8ed4221b311a138fe525a2b6144342b6"
+    },
+    {
+      "file": "heldout/ind-hi-fw2.parquet",
+      "rows": 132,
+      "sha256": "60c33920c6ca9ac015407c51cd5ee9c1507951f8ae3ea400b7a7d99ad7dd48af"
+    },
+    {
+      "file": "heldout/ind-hi-hplt.parquet",
+      "rows": 95,
+      "sha256": "974b3be40adcd48d46596cbe4eb203384f6f1c93024554e4c3903356c130f781"
+    },
+    {
+      "file": "heldout/ind-hi-indiccorp.parquet",
+      "rows": 1094,
+      "sha256": "58c489a4582981a9305b67fef2bcaa9084715e5afa4ed45caa20f1453fe64420"
+    },
+    {
+      "file": "heldout/ind-hi-sangraha-s.parquet",
+      "rows": 88,
+      "sha256": "2bb16c2d72aab52bc0677e6728f9142c7298b9e2a8ce4bb4054e50426251ed0f"
+    },
+    {
+      "file": "heldout/ind-hi-sangraha-v.parquet",
+      "rows": 122,
+      "sha256": "6332a55759b79e74123b3f959cdc16b18031b62711fa090b21dac0cecdb92109"
+    },
+    {
+      "file": "heldout/ind-kn-fw2.parquet",
+      "rows": 82,
+      "sha256": "8c2f8d4d11874234de6ace7585a8cf1bc52a7684907c1b2a70abed5a015a1d2a"
+    },
+    {
+      "file": "heldout/ind-kn-sangraha-s.parquet",
+      "rows": 53,
+      "sha256": "69bea76b76ee2ab7633e402a27a09052cd1179c2f28c387331cc108e64b2e680"
+    },
+    {
+      "file": "heldout/ind-kn-sangraha-v.parquet",
+      "rows": 89,
+      "sha256": "9077e25296b5a4734f269766a0c5c32b36136230c583088a70304a1b99ce2c75"
+    },
+    {
+      "file": "heldout/ind-ml-fw2.parquet",
+      "rows": 185,
+      "sha256": "4c07ad47bed46511a26e561eef6d72447f9dc90c5b2da6fae85c4779b5694e49"
+    },
+    {
+      "file": "heldout/ind-mr-fw2.parquet",
+      "rows": 95,
+      "sha256": "17dd95480d0ba77258eb671060b64cb35c3b635065161d647930d32c2e9169bc"
+    },
+    {
+      "file": "heldout/ind-mr-sangraha-v.parquet",
+      "rows": 127,
+      "sha256": "721d74d2f66fa6f18afbf54b64a17ab8f0b94ee7442157c9bfb6272487d4b7f4"
+    },
+    {
+      "file": "heldout/ind-or-fw2.parquet",
+      "rows": 328,
+      "sha256": "8821b33516635f729c3ca40b07a3832c8316c4a79b7328ed030c2d5b3b15651b"
+    },
+    {
+      "file": "heldout/ind-sa-fw2.parquet",
+      "rows": 55,
+      "sha256": "f750fb2f11975a2b9c2a74c0f1d97af8ea0f4ca74ec0f96025b59d99c03a59f7"
+    },
+    {
+      "file": "heldout/ind-ta-fw2.parquet",
+      "rows": 58,
+      "sha256": "427d4b8f67b9f8702a07efdef5c15575e34985ada6fcd2f1f253ef03fd8b98cd"
+    },
+    {
+      "file": "heldout/ind-ta-sangraha-s.parquet",
+      "rows": 36,
+      "sha256": "1eba7109611c3b8432a072d6ce68cf5416aa35a3b7b5138ae3a2923a3333f389"
+    },
+    {
+      "file": "heldout/ind-ta-sangraha-v.parquet",
+      "rows": 65,
+      "sha256": "583e2f26f5ccacb8eb0808ac40ae4cb3752bb67e0e740a69d600fb7816f3a4b6"
+    },
+    {
+      "file": "heldout/ind-te-fw2.parquet",
+      "rows": 59,
+      "sha256": "849f63eb085c9cc62f35c094d12296bcfa57b34c4a92e709142603685a033762"
+    },
+    {
+      "file": "heldout/ind-te-sangraha-s.parquet",
+      "rows": 47,
+      "sha256": "a132d481e4d5769f454088bd19ea8fdee3f445f6a51b7fdce4f45da882ada617"
+    },
+    {
+      "file": "heldout/ind-te-sangraha-v.parquet",
+      "rows": 83,
+      "sha256": "489d66ff0b9f95b258bfc5942d6e1e8875bcdfe8cb208b52b934ad2cbd651803"
+    },
+    {
+      "file": "heldout/math-finemath.parquet",
+      "rows": 312,
+      "sha256": "086d3e712795de9dcec5539bcfcfb488309f273537bf9c245ca81e8cb8c25d6d"
+    },
+    {
+      "file": "heldout/math-megamath.parquet",
+      "rows": 169,
+      "sha256": "3141fa877e2b4b09da02b6fd3e76ab7f0d5a5122959f0956141627f0c5dd6b45"
+    },
+    {
+      "file": "heldout/sci-finepdfs.parquet",
+      "rows": 63,
+      "sha256": "ee8f746f057f4b25068a40d0ce143e2a6b4a6cdbbe3a409e04882a6980c45746"
+    },
+    {
+      "file": "train/cadj-commits.parquet",
+      "rows": 74753,
+      "sha256": "b5ad670cb6765f0822879674a56268085619ef7e2d37f150f039f997fad3afc2"
+    },
+    {
+      "file": "train/cadj-notebooks.parquet",
+      "rows": 15563,
+      "sha256": "5314c234abf9383caca9889041ca79b725f6a4d2baa2090a7662be837c222696"
+    },
+    {
+      "file": "train/cadj-stackexchange.parquet",
+      "rows": 41396,
+      "sha256": "20c357149137bab4c6f5b571836ee0481cac49e8f2ed1eebb741552a93e99b0e"
+    },
+    {
+      "file": "train/code-cpp.parquet",
+      "rows": 55545,
+      "sha256": "5ee51e5ab3fc88d70f836674a95a5fa64a4cd656a1b930c621cc75edf01c403d"
+    },
+    {
+      "file": "train/code-go.parquet",
+      "rows": 83267,
+      "sha256": "7b4083ff2dd7797f010bc32f6167b1a0725dea6747d0495969149f3b4d0f30b4"
+    },
+    {
+      "file": "train/code-java.parquet",
+      "rows": 85213,
+      "sha256": "1e9f7c90a98fb3d3fd8efee3d3206e43b83651dba3d8463eb1380a7529feaa7f"
+    },
+    {
+      "file": "train/code-js-ts.parquet",
+      "rows": 121938,
+      "sha256": "1c9e159331b2546e694c4512d42b0315947dadf5acaa37a4d0bb28ae434b901a"
+    },
+    {
+      "file": "train/code-python.parquet",
+      "rows": 74943,
+      "sha256": "24e07a03ff7f414bced44b3d5f303754717d7ef5cacce6a257c08e83e9c25b8c"
+    },
+    {
+      "file": "train/code-rust.parquet",
+      "rows": 60126,
+      "sha256": "f0c8fe387d43d224c5ee28810f974eecaa4a5aec891d26d6913fa952dfa83eea"
+    },
+    {
+      "file": "train/en-dclm.parquet",
+      "rows": 61367,
+      "sha256": "7d22f0aadbebdf5e6fbd527639baf5a5b1ac527b377248158d074dfe0b519afe"
+    },
+    {
+      "file": "train/en-fineweb-edu.parquet",
+      "rows": 71933,
+      "sha256": "fc374a75ee827d4245c7b3b65c2a1474a97acc8e4789c8f53ea425c8c2b9129c"
+    },
+    {
+      "file": "train/en-nemotroncc.parquet",
+      "rows": 91820,
+      "sha256": "0d71eceb08fb408cb7e1effc63a288290bebc582dcce8515058576004ef155c2"
+    },
+    {
+      "file": "train/en-nemotroncc-synth.parquet",
+      "rows": 197119,
+      "sha256": "509ba1d4b3ab9e4303d29e1ac9c9cae01ae709d55d5465e0cbef051ce6ddf181"
+    },
+    {
+      "file": "train/ind-bn-fw2.parquet",
+      "rows": 11205,
+      "sha256": "9f4309679729c84b872530b4914b7f62a98168615ab22fe8e0e3911c45eedce7"
+    },
+    {
+      "file": "train/ind-bn-sangraha-v.parquet",
+      "rows": 10328,
+      "sha256": "ab667a0a3d2bcea9d24d15e165f0fc52a927296a154434caa3c406ea02403882"
+    },
+    {
+      "file": "train/ind-gu-fw2.parquet",
+      "rows": 23118,
+      "sha256": "606262bdd8de84d1f1475af925f842fb906fcb52a6d25a058cb69657233c45ad"
+    },
+    {
+      "file": "train/ind-hi-fw2.parquet",
+      "rows": 14261,
+      "sha256": "808574e2ec9cd7189519700f089fe2563b43548b99bfb4704d724d20373c648b"
+    },
+    {
+      "file": "train/ind-hi-hplt.parquet",
+      "rows": 8745,
+      "sha256": "9eb772feb465aeaf8c577bee8bdf777e38fd14ab3b49cf591ef5a7d143b51b47"
+    },
+    {
+      "file": "train/ind-hi-indiccorp.parquet",
+      "rows": 110836,
+      "sha256": "f41554470bb9566cc73fd8e903d817e64967ba01d60c34b43dade533d24e058e"
+    },
+    {
+      "file": "train/ind-hi-sangraha-s.parquet",
+      "rows": 8280,
+      "sha256": "b81efddd93e43a80a8aa6d7598dde21e484a2e198ee27e8168de163297f90ce4"
+    },
+    {
+      "file": "train/ind-hi-sangraha-v.parquet",
+      "rows": 14709,
+      "sha256": "42ccadf9eaa0d26964dfc16d597ce410a06a338a5a9d2bfc93b5167a410e5d0e"
+    },
+    {
+      "file": "train/ind-kn-fw2.parquet",
+      "rows": 7834,
+      "sha256": "e1c1fce3f2033d8168ce5a59d8e8866771742b15e84c12c696e926af4a431b05"
+    },
+    {
+      "file": "train/ind-kn-sangraha-s.parquet",
+      "rows": 5191,
+      "sha256": "fd39c6389ff41c96fe36d7c695605dbb2368e79ceca22963b61dace0d984b835"
+    },
+    {
+      "file": "train/ind-kn-sangraha-v.parquet",
+      "rows": 8551,
+      "sha256": "97f7a98191366cc23b83f789eae1968a0d7176cd9f709e9799da3321c75d3b4a"
+    },
+    {
+      "file": "train/ind-ml-fw2.parquet",
+      "rows": 18976,
+      "sha256": "ff0a3e96fc7e94731458002241b61abc00ef36b11062d08dc2777ef8e8915b3d"
+    },
+    {
+      "file": "train/ind-mr-fw2.parquet",
+      "rows": 11460,
+      "sha256": "da05c1ba71ca8d2587c37c17ada0680c50a4e8968df0cc95027ac4f47a01e021"
+    },
+    {
+      "file": "train/ind-mr-sangraha-v.parquet",
+      "rows": 12172,
+      "sha256": "1dcf61a204b4811959d06d76118ea85ee25c4a4d8580c28ff0d87403755f3ee2"
+    },
+    {
+      "file": "train/ind-or-fw2.parquet",
+      "rows": 33684,
+      "sha256": "f27f8e9365f787f9fc8b6eea242c0f9e9eb3dec8e710322c0603dc35ca8f3065"
+    },
+    {
+      "file": "train/ind-sa-fw2.parquet",
+      "rows": 5908,
+      "sha256": "3fba670f21cf8bc23ff16f3feecdbd31bfc4186497f6df26cf6c789f36e16b89"
+    },
+    {
+      "file": "train/ind-ta-fw2.parquet",
+      "rows": 6766,
+      "sha256": "60c0641940957efd9b59f98a50dcba6472d2fd990d96e4bd4364a899abf57e27"
+    },
+    {
+      "file": "train/ind-ta-sangraha-s.parquet",
+      "rows": 4336,
+      "sha256": "5826c296effbec84ae9c2b8aee660a9068c1af3a8e5a3874ca7d8b175d5db68a"
+    },
+    {
+      "file": "train/ind-ta-sangraha-v.parquet",
+      "rows": 6796,
+      "sha256": "2e2fca5c95a25014b8bcd02afbd7146ba4952e20ce0dec4ab9bfaa9b46cea5c8"
+    },
+    {
+      "file": "train/ind-te-fw2.parquet",
+      "rows": 5997,
+      "sha256": "6e10104c1ed9dad8d9a8e69d6702e6280a0aeca425a9599509cabca388bf0cb2"
+    },
+    {
+      "file": "train/ind-te-sangraha-s.parquet",
+      "rows": 4782,
+      "sha256": "0548fc16d26981f43f088f65a829e179be81c9b63898365287844b7f0e0e3d58"
+    },
+    {
+      "file": "train/ind-te-sangraha-v.parquet",
+      "rows": 8609,
+      "sha256": "f6484d45c311bd33632c619ae3b8ec2fdafe1379006e1c60be7d1ae68ee92c0b"
+    },
+    {
+      "file": "train/math-finemath.parquet",
+      "rows": 29122,
+      "sha256": "ea980e47d7b7a1c5d3808c0d8c8651254a0a1dde38de3730446c66684c1eae1b"
+    },
+    {
+      "file": "train/math-megamath.parquet",
+      "rows": 17647,
+      "sha256": "6cbc9c1cda536019b3294f5195b76a6590e87cd75201dccbfbcd49343925edec"
+    },
+    {
+      "file": "train/sci-finepdfs.parquet",
+      "rows": 6011,
+      "sha256": "64440111d259c2e8f4ab3bfd5a592a591f365a7cadecf628a4b849f385ed883f"
+    }
+  ]
+}

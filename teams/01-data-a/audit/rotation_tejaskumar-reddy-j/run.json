@@ -1,0 +1,33 @@
+{
+  "scope": "Data A sample-v0 integrity audit and 20-document decode; not training admission or G9 clearance",
+  "repository_commit": "6614178d2bf0d1ae526e8f0cf67498cc523f456c",
+  "checker_sha256": "196c20ff70f7bdd6551a4a54dd3df1d6c5647e4d510a32276cd64bae24f6f007",
+  "tokenizer_sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b",
+  "special_token_count": 356,
+  "environment": {
+    "python": "3.12.7",
+    "numpy": "1.26.4",
+    "pyarrow": "21.0.0",
+    "tokenizers": "0.20.3"
+  },
+  "shards": [
+    {
+      "shard_id": "code-go-train-000001",
+      "counts": {
+        "PASS": 57,
+        "FAIL": 1,
+        "NOT CHECKED": 0
+      },
+      "wall_seconds": 4.153
+    },
+    {
+      "shard_id": "sci-finepdfs-train-000000",
+      "counts": {
+        "PASS": 57,
+        "FAIL": 1,
+        "NOT CHECKED": 0
+      },
+      "wall_seconds": 4.011
+    }
+  ]
+}

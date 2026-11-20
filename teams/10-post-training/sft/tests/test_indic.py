@@ -61,10 +61,7 @@ def test_set_covers_ten_scripts_and_three_kinds():
 def test_every_row_says_who_wrote_it_and_whether_a_native_speaker_reviewed_it():
     for r in INDIC:
         assert r["source"].startswith("original:") and "evaluation-only" in r["source"]
-        if r["lang"] in {"hi", "mr", "te", "kn"}:
-            assert r["review"] == "wording reviewed by a native speaker", r["id"]
-        else:
-            assert r["review"] == "wording not reviewed by a native speaker", r["id"]
+        assert r["review"] == "wording reviewed by a native speaker", r["id"]
 
 
 def test_every_prompt_renders_and_parses_back():
@@ -327,3 +324,9 @@ def test_chillu_folding_makes_the_old_and_new_spelling_the_same_text():
     assert scorers._holds(scorers._plain("ഇതാണ് " + old), new)
     assert scorers._holds(scorers._plain("ഇതാണ് " + new), old)
     assert not scorers._holds(scorers._plain("ഇതാണ് അവൾ"), new)
+
+
+def test_odia_script_prompt_has_no_final_danda():
+    # the native reviewer's correction: the Odia script prompt ends without the danda
+    prompt = next(r for r in INDIC if r["id"] == "in-scr-or")["messages"][-1]["content"]
+    assert prompt == "ବର୍ଷା ଋତୁ ବିଷୟରେ ଦୁଇଟି ବାକ୍ୟ ଲେଖ"

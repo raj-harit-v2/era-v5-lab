@@ -1,0 +1,309 @@
+{
+ "_note": "REHEARSAL ONLY (sourav-dhar, 19 Nov): the repo pack table; licence fields copied from the job's approved_inputs.json; lanes from the domain using the six lane names of #47 (code, code-adjacent, english, indic, math, science). Not the job's approved pack table.",
+ "packs": {
+  "cadj-commits": {
+   "language": "code",
+   "script": "Latn",
+   "domain": "code-adjacent",
+   "lane": "code-adjacent",
+   "license": "mit (per-file upstream repository licences; attribution required)",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  },
+  "cadj-notebooks": {
+   "language": "code",
+   "script": "Latn",
+   "domain": "code-adjacent",
+   "lane": "code-adjacent",
+   "license": "apache-2.0",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  },
+  "cadj-stackexchange": {
+   "language": "en",
+   "script": "Latn",
+   "domain": "code-adjacent",
+   "lane": "code-adjacent",
+   "license": "cc-by-sa-4.0 (commercial use permitted with attribution)",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  },
+  "code-cpp": {
+   "language": "cpp",
+   "script": "Latn",
+   "domain": "code",
+   "lane": "code",
+   "license": "other (per-file permissive Stack licences; attribution required)",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  },
+  "code-go": {
+   "language": "go",
+   "script": "Latn",
+   "domain": "code",
+   "lane": "code",
+   "license": "other (per-file permissive Stack licences; attribution required)",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  },
+  "code-java": {
+   "language": "java",
+   "script": "Latn",
+   "domain": "code",
+   "lane": "code",
+   "license": "other (per-file permissive Stack licences; attribution required)",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  },
+  "code-js-ts": {
+   "language": "js-ts",
+   "script": "Latn",
+   "domain": "code",
+   "lane": "code",
+   "license": "other (per-file upstream licensing; attribution required)",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  },
+  "code-python": {
+   "language": "python",
+   "script": "Latn",
+   "domain": "code",
+   "lane": "code",
+   "license": "other (per-file permissive Stack licences; attribution required)",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  },
+  "code-rust": {
+   "language": "rust",
+   "script": "Latn",
+   "domain": "code",
+   "lane": "code",
+   "license": "other (per-file permissive Stack licences; attribution required)",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  },
+  "en-dclm": {
+   "language": "en",
+   "script": "Latn",
+   "domain": "english",
+   "lane": "english",
+   "license": "CC-BY-4.0 (DCLM packaging, rev `817d675276`; Common Crawl terms; card's \"intended/designed for research purposes only\" under Uses/Bias is a statement of intent/fitness disclaimer, not a licence term, same as Dolci; fastText filter only, no generated text)",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  },
+  "en-fineweb-edu": {
+   "language": "en",
+   "script": "Latn",
+   "domain": "english",
+   "lane": "english",
+   "license": "ODC-By v1.0 (commercial use permitted with attribution)",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  },
+  "en-nemotroncc": {
+   "language": "en",
+   "script": "Latn",
+   "domain": "english",
+   "lane": "english",
+   "license": "Common Crawl terms (pipeline Apache-2.0)",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  },
+  "en-nemotroncc-synth": {
+   "language": "en",
+   "script": "Latn",
+   "domain": "english",
+   "lane": "english",
+   "license": "Common Crawl terms + permissive synthetic contribution (Mistral-NeMo-12B-Instruct, Apache-2.0; Wikipedia rewrites inherit CC-BY-SA)",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  },
+  "ind-bn-fw2": {
+   "language": "bn",
+   "script": "Beng",
+   "domain": "indic",
+   "lane": "indic",
+   "license": "ODC-By v1.0 (commercial use permitted with attribution)",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  },
+  "ind-bn-sangraha-v": {
+   "language": "bn",
+   "script": "Beng",
+   "domain": "indic",
+   "lane": "indic",
+   "license": "CC-BY-4.0 (commercial use permitted with attribution)",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  },
+  "ind-gu-fw2": {
+   "language": "gu",
+   "script": "Gujr",
+   "domain": "indic",
+   "lane": "indic",
+   "license": "ODC-By v1.0 (commercial use permitted with attribution)",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  },
+  "ind-hi-fw2": {
+   "language": "hi",
+   "script": "Deva",
+   "domain": "indic",
+   "lane": "indic",
+   "license": "ODC-By v1.0 (commercial use permitted with attribution)",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  },
+  "ind-hi-hplt": {
+   "language": "hi",
+   "script": "Deva",
+   "domain": "indic",
+   "lane": "indic",
+   "license": "CC0-1.0 (packaging) / Web terms",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  },
+  "ind-hi-indiccorp": {
+   "language": "hi",
+   "script": "Deva",
+   "domain": "indic",
+   "lane": "indic",
+   "license": "CC-BY-4.0 (commercial use permitted with attribution)",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  },
+  "ind-hi-sangraha-s": {
+   "language": "hi",
+   "script": "Deva",
+   "domain": "indic",
+   "lane": "indic",
+   "license": "CC-BY-4.0 (commercial use permitted with attribution)",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  },
+  "ind-hi-sangraha-v": {
+   "language": "hi",
+   "script": "Deva",
+   "domain": "indic",
+   "lane": "indic",
+   "license": "CC-BY-4.0 (commercial use permitted with attribution)",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  },
+  "ind-kn-fw2": {
+   "language": "kn",
+   "script": "Knda",
+   "domain": "indic",
+   "lane": "indic",
+   "license": "ODC-By v1.0 (commercial use permitted with attribution)",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  },
+  "ind-kn-sangraha-s": {
+   "language": "kn",
+   "script": "Knda",
+   "domain": "indic",
+   "lane": "indic",
+   "license": "CC-BY-4.0 (commercial use permitted with attribution)",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  },
+  "ind-kn-sangraha-v": {
+   "language": "kn",
+   "script": "Knda",
+   "domain": "indic",
+   "lane": "indic",
+   "license": "CC-BY-4.0 (commercial use permitted with attribution)",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  },
+  "ind-ml-fw2": {
+   "language": "ml",
+   "script": "Mlym",
+   "domain": "indic",
+   "lane": "indic",
+   "license": "ODC-By v1.0 (commercial use permitted with attribution)",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  },
+  "ind-mr-fw2": {
+   "language": "mr",
+   "script": "Deva",
+   "domain": "indic",
+   "lane": "indic",
+   "license": "ODC-By v1.0 (commercial use permitted with attribution)",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  },
+  "ind-mr-sangraha-v": {
+   "language": "mr",
+   "script": "Deva",
+   "domain": "indic",
+   "lane": "indic",
+   "license": "CC-BY-4.0 (commercial use permitted with attribution)",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  },
+  "ind-or-fw2": {
+   "language": "or",
+   "script": "Orya",
+   "domain": "indic",
+   "lane": "indic",
+   "license": "ODC-By v1.0 (commercial use permitted with attribution)",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  },
+  "ind-sa-fw2": {
+   "language": "sa",
+   "script": "Deva",
+   "domain": "indic",
+   "lane": "indic",
+   "license": "ODC-By v1.0 (commercial use permitted with attribution)",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  },
+  "ind-ta-fw2": {
+   "language": "ta",
+   "script": "Taml",
+   "domain": "indic",
+   "lane": "indic",
+   "license": "ODC-By v1.0 (commercial use permitted with attribution)",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  },
+  "ind-ta-sangraha-s": {
+   "language": "ta",
+   "script": "Taml",
+   "domain": "indic",
+   "lane": "indic",
+   "license": "CC-BY-4.0 (commercial use permitted with attribution)",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  },
+  "ind-ta-sangraha-v": {
+   "language": "ta",
+   "script": "Taml",
+   "domain": "indic",
+   "lane": "indic",
+   "license": "CC-BY-4.0 (commercial use permitted with attribution)",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  },
+  "ind-te-fw2": {
+   "language": "te",
+   "script": "Telu",
+   "domain": "indic",
+   "lane": "indic",
+   "license": "ODC-By v1.0 (commercial use permitted with attribution)",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  },
+  "ind-te-sangraha-s": {
+   "language": "te",
+   "script": "Telu",
+   "domain": "indic",
+   "lane": "indic",
+   "license": "CC-BY-4.0 (commercial use permitted with attribution)",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  },
+  "ind-te-sangraha-v": {
+   "language": "te",
+   "script": "Telu",
+   "domain": "indic",
+   "lane": "indic",
+   "license": "CC-BY-4.0 (commercial use permitted with attribution)",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  },
+  "math-finemath": {
+   "language": "en",
+   "script": "Latn",
+   "domain": "math",
+   "lane": "math",
+   "license": "ODC-By v1.0 (commercial use permitted with attribution)",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  },
+  "math-megamath": {
+   "language": "en",
+   "script": "Latn",
+   "domain": "math",
+   "lane": "math",
+   "license": "ODC-By v1.0 (`megamath-web` subset; commercial use permitted with attribution)",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  },
+  "sci-finepdfs": {
+   "language": "en",
+   "script": "Latn",
+   "domain": "sci",
+   "lane": "science",
+   "license": "ODC-By v1.0 (commercial use permitted with attribution)",
+   "license_source": "teams/10-post-training/licences/licence_table.md@ecb9a27d367189a9bfd58a37dba28e44dfcb500a (Stage 0)"
+  }
+ }
+}

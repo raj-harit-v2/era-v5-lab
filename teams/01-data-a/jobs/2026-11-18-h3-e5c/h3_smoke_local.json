@@ -1,0 +1,44 @@
+{
+  "_comment": "Local smoke run of the E5c config (jobs/2026-11-18-h3-e5c/h3.json), not a measurement: the same packs, pairs and thresholds, at most 200 documents per pack, on CPU, on the local 5 Nov cleaned sample v0 (../tokenizer_sample_v0_clean/tokenizer_sample_v0_clean) and ../models/LaBSE. It checks the config end to end and gives stage rates for the estimate in h3_summary.json. Paths are relative to the repository root.",
+  "inputs": "../tokenizer_sample_v0_clean/tokenizer_sample_v0_clean",
+  "out": "out/h3_e5c_smoke",
+  "cache": "out/h3_e5c_smoke_cache",
+  "model_path": "../models/LaBSE",
+  "device": "cpu",
+  "precision": "auto",
+  "packs": {
+    "ind-sa-fw2": "sa",
+    "ind-hi-*": "hi",
+    "ind-or-fw2": "or",
+    "en-fineweb-edu": "en",
+    "en-dclm": "en",
+    "en-nemotroncc": "en"
+  },
+  "pairs": [
+    [
+      "sa",
+      "en"
+    ],
+    [
+      "sa",
+      "hi"
+    ],
+    [
+      "hi",
+      "en"
+    ],
+    [
+      "or",
+      "en"
+    ]
+  ],
+  "sentence_threshold": {
+    "sa-en": 0.55,
+    "sa-hi": 0.55
+  },
+  "coverage_threshold": 0.6,
+  "report_floor": 0.3,
+  "max_docs_per_pack": 200,
+  "max_minutes": 30,
+  "max_output_mb": 50
+}

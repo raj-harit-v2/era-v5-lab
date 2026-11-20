@@ -22,7 +22,7 @@ SOURCE = (
     "original: written by Claude (AI assistant) for Ravi Naik (RaviNaik), 2026-11-15; not from any benchmark; "
     "evaluation-only (TSAI data rule, 3 Nov)"
 )
-REVIEWED = {"hi", "mr", "te", "kn"}  # languages a native speaker has checked (English needs none)
+REVIEWED = {"hi", "mr", "te", "kn", "ta", "bn", "gu", "ml", "or", "pa"}  # languages a native speaker has checked (English needs none)
 REVIEW_YES = "wording and refusal phrases reviewed by a native speaker"
 REVIEW_NO = "wording and refusal phrases not reviewed by a native speaker"
 SYSTEM = "You are a helpful assistant."

@@ -1,0 +1,12 @@
+{
+ "recorded_command": "python -m pytest -p no:cacheprovider -o addopts= -q tests/test_write.py",
+ "expected_tests": [
+  "tests.test_write::test_escape_special_characters_in_key",
+  "tests.test_write::test_write_backslash",
+  "tests.test_write::test_write_inline_table_in_nested_arrays"
+ ],
+ "must_fail": [
+  "tests.test_write::test_write_inline_table_in_nested_arrays"
+ ],
+ "note": "hidden: never put this folder in a prompt"
+}

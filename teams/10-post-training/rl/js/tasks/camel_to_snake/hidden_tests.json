@@ -1,0 +1,20 @@
+[
+  {"args": ["HTMLParser"],      "expected": "h_t_m_l_parser"},
+  {"args": ["camelCase"],       "expected": "camel_case"},
+  {"args": ["alreadyLower"],    "expected": "already_lower"},
+  {"args": ["A"],               "expected": "a"},
+  {"args": ["a"],               "expected": "a"},
+  {"args": ["XML"],             "expected": "x_m_l"},
+  {"args": ["snake_Case"],      "expected": "snake__case"},
+  {"args": ["v2Ray"],           "expected": "v2_ray"},
+  {"args": ["MyHTTPServer"],    "expected": "my_h_t_t_p_server"},
+  {"args": ["getHTMLContent"],  "expected": "get_h_t_m_l_content"},
+  {"args": ["XMLHTTPRequest"],  "expected": "x_m_l_h_t_t_p_request"},
+  {"args": ["_foo"],            "expected": "_foo"},
+  {"args": ["_Foo"],            "expected": "__foo"},
+  {"args": ["__Foo"],           "expected": "___foo"},
+  {"args": [""],                "raises": "RangeError"},
+  {"args": [42],                "raises": "TypeError"},
+  {"args": [[]],                "raises": "TypeError"},
+  {"args": [null],              "raises": "TypeError"}
+]

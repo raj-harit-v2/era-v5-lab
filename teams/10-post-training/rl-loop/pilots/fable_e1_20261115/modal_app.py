@@ -116,6 +116,7 @@ def preflight(tasks_text: str, train_ids: str, heldout_ids: str) -> dict:
     for name, text in (("tasks.jsonl", tasks_text), ("train_ids.txt", train_ids), ("heldout_ids.txt", heldout_ids)):
         _write_private(data / name, text)
     os.environ["G10_STDIO_RUNNER"] = "local"
+    os.environ["G10_STDIO_SECRET_PATHS"] = str(data / "tasks.jsonl")  # stdio_check.preflight_isolation checks it
     sys.path.insert(0, f"{REMOTE}/rl-loop")
     import train  # noqa: PLC0415
     from transformers import AutoTokenizer  # noqa: PLC0415
@@ -163,7 +164,8 @@ def _call_body(config_text, tasks_text, train_ids, heldout_ids, run_id, steps, b
     cfg = (config_text.replace("@WEIGHTS@", weights_path("7b")).replace("@DATA@", str(data))
            .replace("@RUN@", str(run)).replace("@STEPS@", str(steps)).replace("@DEADLINE@", repr(t0 + budget_s)))
     (run / "config.yaml").write_text(cfg)
-    env = {**os.environ, "G10_STDIO_RUNNER": "local", "HF_HUB_OFFLINE": "1", "TRANSFORMERS_OFFLINE": "1",
+    env = {**os.environ, "G10_STDIO_RUNNER": "local", "G10_STDIO_SECRET_PATHS": str(data / "tasks.jsonl"),
+           "HF_HUB_OFFLINE": "1", "TRANSFORMERS_OFFLINE": "1",
            "TMPDIR": "/root/tmp"}
     stop = threading.Event()
 
@@ -211,6 +213,7 @@ def rescore_fn(run_id: str, limit: int, workers: int, early_exit: bool, use_pool
     t0 = time.time()
     run, data = _protected_run_dirs(run_id)
     os.environ["G10_STDIO_RUNNER"] = "local"
+    os.environ["G10_STDIO_SECRET_PATHS"] = str(data / "tasks.jsonl")  # stdio_check.preflight_isolation checks it
     os.environ["G10_STDIO_EARLY_EXIT"] = "1" if early_exit else "0"
     import hashlib  # noqa: PLC0415
     import importlib.util  # noqa: PLC0415
@@ -463,7 +466,8 @@ def sample_fn(run_id: str, cohort_ids: str, k: int) -> dict:
     aud.mkdir(exist_ok=True)
     os.chmod(aud, 0o700)
     _write_private(aud / "cohort_ids.txt", cohort_ids)
-    env = {**os.environ, "G10_STDIO_RUNNER": "local", "HF_HUB_OFFLINE": "1", "TRANSFORMERS_OFFLINE": "1",
+    env = {**os.environ, "G10_STDIO_RUNNER": "local", "G10_STDIO_SECRET_PATHS": str(data / "tasks.jsonl"),
+           "HF_HUB_OFFLINE": "1", "TRANSFORMERS_OFFLINE": "1",
            "TMPDIR": "/root/tmp"}
     latest = json.loads((run / "state" / "LATEST.json").read_text())
     out = {"state_file": latest["file"], "state_step": latest["step"]}

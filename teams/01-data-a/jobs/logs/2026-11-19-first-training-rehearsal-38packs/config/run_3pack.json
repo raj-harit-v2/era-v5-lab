@@ -1,0 +1,51 @@
+{
+ "_comment": "REHEARSAL on Runpod (Linux, Python 3.12, pinned env): 3 local packs of sample-v0 raw, real frozen p1536, tokens 2^20 to force rollover. Not a production run.",
+ "run_id": "rehearsal-3pack",
+ "out": "out/pipeline",
+ "intermediates": "keep",
+ "stages": {
+  "clean": {
+   "mode": "run",
+   "settings": "teams/01-data-a/pipeline/clean.json",
+   "input": "/workspace/data/tokenizer_sample_v0_raw",
+   "manifest_sha256": "7fd647c8d4662d17e2310efbcc20981d70656fdad2fabb7663c266a2153a1b7e",
+   "expected_parts": {
+    "train": 48,
+    "heldout": 38
+   },
+   "only": [
+    "heldout/code-go/part-00000.parquet",
+    "train/code-go/part-00000.parquet",
+    "train/code-go/part-00001.parquet",
+    "train/ind-bn-fw2/part-00000.parquet",
+    "train/ind-bn-sangraha-v/part-00000.parquet"
+   ],
+   "manifest": "teams/01-data-a/jobs/2026-11-02-tokenizer-sample-v0-clean/tokenizer_sample_v0_manifest.json"
+  },
+  "overlap": {
+   "mode": "run",
+   "settings": "teams/01-data-a/dedup/overlap.json"
+  },
+  "dedup": {
+   "mode": "run",
+   "settings": "teams/01-data-a/dedup/dedup.json"
+  },
+  "apply": {
+   "link": true
+  },
+  "f2": {
+   "pool": true,
+   "workers": 24
+  },
+  "ledger": {
+   "raw": "/workspace/data/tokenizer_sample_v0_raw"
+  },
+  "shards": {
+   "tokenizer": "/workspace/data/tokenizers/p1536-sample-v0/tokenizer.json",
+   "dataset_version": "rehearsal-p1536",
+   "tokens": 1048576,
+   "pack_table": "out/rehearsal/pack_table.json"
+  },
+  "reconcile": {}
+ }
+}

@@ -1,0 +1,753 @@
+{
+  "checked_on": "2026-11-17",
+  "scope": "G1 core task 6: 20 documents per downloaded sample-v0 shard; manifest count, hash and recorded source checks",
+  "shards": 41,
+  "packs": 31,
+  "decoded": 820,
+  "passed": 820,
+  "tokenizer_sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b",
+  "limitations": [
+    "Exact upstream source verification is partial: 9 unresolved baseline differences and 25 missing IDs in the previous 800-document comparison.",
+    "The processing record has dedup: null; this is not training-admission or full-shard contamination clearance."
+  ],
+  "inventory": [
+    {
+      "shard_id": "code-cpp-train-000000",
+      "pack_id": "code-cpp",
+      "source_parts": [
+        "code-cpp_part-00000_clean.parquet"
+      ],
+      "doc_count": 40355,
+      "token_count": 66915318,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "ac5d75eb0c7fc44289df6639bcb4c7245e2bcbb23beebbf4f317e9d89116ad02",
+      "recorded_inputs_sha256": "a869fe1d3f8cef678620c8e621d5dff4ec4bebebda34c10ff4f17eed01b0873d",
+      "evidence": "code-cpp-train-000000.decode.json"
+    },
+    {
+      "shard_id": "code-cpp-train-000001",
+      "pack_id": "code-cpp",
+      "source_parts": [
+        "code-cpp_part-00001_clean.parquet"
+      ],
+      "doc_count": 14145,
+      "token_count": 23634925,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "bf87f4c79f48168a8149a6e43695f6a785a21b49d10895f8b55ae1e1c0a334d1",
+      "recorded_inputs_sha256": "b4a03d322d6fcd2a0df910394dfa38e39443512188c1ea5bae5c253ce6312179",
+      "evidence": "code-cpp-train-000001.decode.json"
+    },
+    {
+      "shard_id": "code-go-train-000000",
+      "pack_id": "code-go",
+      "source_parts": [
+        "code-go_part-00000_clean.parquet"
+      ],
+      "doc_count": 56588,
+      "token_count": 56698571,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "b8d8807552c5d5a86aad6bfb8c43f1153b2524cdd3255a34d47a71b71e8b0f5d",
+      "recorded_inputs_sha256": "54535d09f5464af00c153e6588fb1770c11515dd72459904c62f0a35b2c16cc4",
+      "evidence": "code-go-train-000000.decode.json"
+    },
+    {
+      "shard_id": "code-go-train-000001",
+      "pack_id": "code-go",
+      "source_parts": [
+        "code-go_part-00001_clean.parquet"
+      ],
+      "doc_count": 20213,
+      "token_count": 20255694,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "32905229e516b346b9ea84ebec696d6e8ce26085cc24f718c1b13949d19b0626",
+      "recorded_inputs_sha256": "92137788b61fbd3d0f56b38d11ae29cd524a86ada5bccdd5782423e2494902a6",
+      "evidence": "code-go-train-000001.decode.json"
+    },
+    {
+      "shard_id": "code-java-train-000000",
+      "pack_id": "code-java",
+      "source_parts": [
+        "code-java_part-00000_clean.parquet"
+      ],
+      "doc_count": 62421,
+      "token_count": 56003499,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "be5e714f712d236fe16eced0cc1125fcc5b7a572c6692404303d0cf0c3751f72",
+      "recorded_inputs_sha256": "1ed4ae8989aece29bb56d3dd577baa5008bf0e4fddcbbd36f805b0bd88f948fb",
+      "evidence": "code-java-train-000000.decode.json"
+    },
+    {
+      "shard_id": "code-java-train-000001",
+      "pack_id": "code-java",
+      "source_parts": [
+        "code-java_part-00001_clean.parquet"
+      ],
+      "doc_count": 22228,
+      "token_count": 19878065,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "1b9963b6aba1bacac505417d332155253ec21480db1a009ce338d5be203db931",
+      "recorded_inputs_sha256": "023d17ac1cf55df1609b6703c58623272bc05518c4d97b7d844227c485d234ac",
+      "evidence": "code-java-train-000001.decode.json"
+    },
+    {
+      "shard_id": "code-js-ts-train-000000",
+      "pack_id": "code-js-ts",
+      "source_parts": [
+        "code-js-ts_part-00000_clean.parquet"
+      ],
+      "doc_count": 85508,
+      "token_count": 58203242,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "274f108533057d769e67e09f91a29127bcb75bb52e2afca9760e3e90cf2caefc",
+      "recorded_inputs_sha256": "933f1ad9ca63f1e0bc2e3cca17fe5e62b1e5affcf335715185e73cae8f6b14f0",
+      "evidence": "code-js-ts-train-000000.decode.json"
+    },
+    {
+      "shard_id": "code-js-ts-train-000001",
+      "pack_id": "code-js-ts",
+      "source_parts": [
+        "code-js-ts_part-00001_clean.parquet"
+      ],
+      "doc_count": 30441,
+      "token_count": 20653602,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "3a568d5858bc3cf63bda5ba608fd44fe52e31c019588f668da969f8e78ca7782",
+      "recorded_inputs_sha256": "c9616163fb96c24c5de39ce404a47aca2101f7db586c323e023133fd17685d24",
+      "evidence": "code-js-ts-train-000001.decode.json"
+    },
+    {
+      "shard_id": "code-python-train-000000",
+      "pack_id": "code-python",
+      "source_parts": [
+        "code-python_part-00000_clean.parquet"
+      ],
+      "doc_count": 53221,
+      "token_count": 60537332,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "00cb92e4224b2ffc50da4a115fe0502bc1f17f9751b4678b3e18dd2aadf995fc",
+      "recorded_inputs_sha256": "f8c914a808d9917ddab9e06304bd8648661471546d7b4880f5f63d32e81927b1",
+      "evidence": "code-python-train-000000.decode.json"
+    },
+    {
+      "shard_id": "code-python-train-000001",
+      "pack_id": "code-python",
+      "source_parts": [
+        "code-python_part-00001_clean.parquet"
+      ],
+      "doc_count": 19116,
+      "token_count": 21509045,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "1f4ade8496d60fdffcac7bd7260a7b62d0347d7227fc90162e484e672da54c71",
+      "recorded_inputs_sha256": "6412dbccaf463cf465aadcfa13481313746a80d97cccbb902bf7b58b3604d08a",
+      "evidence": "code-python-train-000001.decode.json"
+    },
+    {
+      "shard_id": "code-rust-train-000000",
+      "pack_id": "code-rust",
+      "source_parts": [
+        "code-rust_part-00000_clean.parquet"
+      ],
+      "doc_count": 43116,
+      "token_count": 59530999,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "e8c9cbb7bf03a6d56ec82d721a44798acb8882b8d98aa42d14728be936aefc73",
+      "recorded_inputs_sha256": "a551868b406d2a70c377b2f80f4c23140195e7a61a42293bdf6d76808582c257",
+      "evidence": "code-rust-train-000000.decode.json"
+    },
+    {
+      "shard_id": "code-rust-train-000001",
+      "pack_id": "code-rust",
+      "source_parts": [
+        "code-rust_part-00001_clean.parquet"
+      ],
+      "doc_count": 15028,
+      "token_count": 21040035,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "d23a19f51cfb5ffcf7f826a69affa5a8f5099e4969c5dd0a44c2e1b919918294",
+      "recorded_inputs_sha256": "2c0a395a7bfa174bc0b1a42f044944eea1e32dafae347de28f2a7a1188f88627",
+      "evidence": "code-rust-train-000001.decode.json"
+    },
+    {
+      "shard_id": "en-dclm-train-000000",
+      "pack_id": "en-dclm",
+      "source_parts": [
+        "en-dclm_part-00000_clean.parquet"
+      ],
+      "doc_count": 45032,
+      "token_count": 53960422,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "aea60298ee0c7eed31b498c49f709d7f2fb96d01896388d8af2ec28a9240331a",
+      "recorded_inputs_sha256": "affe0901e66460326cbb1bfb6b33252e904c440c897a5c11dce51a6d03b958ce",
+      "evidence": "en-dclm-train-000000.decode.json"
+    },
+    {
+      "shard_id": "en-dclm-train-000001",
+      "pack_id": "en-dclm",
+      "source_parts": [
+        "en-dclm_part-00001_clean.parquet"
+      ],
+      "doc_count": 14735,
+      "token_count": 17781210,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "7b66b835062e555738da2201546d42202030af538d8e529294c84efe41f8732e",
+      "recorded_inputs_sha256": "24a6cf45cfbfda3b444500cf03ea0737ab775cea2a55baa187129ee7b73fb975",
+      "evidence": "en-dclm-train-000001.decode.json"
+    },
+    {
+      "shard_id": "en-fineweb-edu-train-000000",
+      "pack_id": "en-fineweb-edu",
+      "source_parts": [
+        "en-fineweb-edu_part-00000_clean.parquet"
+      ],
+      "doc_count": 53444,
+      "token_count": 52995687,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "dede0aae38e08c48588955bb560acb9fc5901261262d93a4c1ffb317bb2f2be0",
+      "recorded_inputs_sha256": "8bce7f723e33ece491534a2f4ebc7e50773772181a43bd54ca6d8fa2de6d1d30",
+      "evidence": "en-fineweb-edu-train-000000.decode.json"
+    },
+    {
+      "shard_id": "en-fineweb-edu-train-000001",
+      "pack_id": "en-fineweb-edu",
+      "source_parts": [
+        "en-fineweb-edu_part-00001_clean.parquet"
+      ],
+      "doc_count": 17725,
+      "token_count": 17662417,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "b63116c6810d7873b7d604101b44ae1c879c7af7c9f2dde06aff26dabdd6552f",
+      "recorded_inputs_sha256": "6891c2558302656607824dd66a0a046ea26a98fff3640478109f0706ca610fea",
+      "evidence": "en-fineweb-edu-train-000001.decode.json"
+    },
+    {
+      "shard_id": "en-nemotroncc-synth-train-000000",
+      "pack_id": "en-nemotroncc-synth",
+      "source_parts": [
+        "en-nemotroncc-synth_part-00000_clean.parquet"
+      ],
+      "doc_count": 146778,
+      "token_count": 50712366,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "3b356a648e0ac5a4752f373f773d4e92838a8b67b2d2bfec6d7256aafee40468",
+      "recorded_inputs_sha256": "4a4fc70424a8414691fe2ef84febbc0e48f239253bb6e49b0cf80301501899fc",
+      "evidence": "en-nemotroncc-synth-train-000000.decode.json"
+    },
+    {
+      "shard_id": "en-nemotroncc-synth-train-000001",
+      "pack_id": "en-nemotroncc-synth",
+      "source_parts": [
+        "en-nemotroncc-synth_part-00001_clean.parquet"
+      ],
+      "doc_count": 49008,
+      "token_count": 16961507,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "9ac291ce5ec22efbcc40c14aa2500907d56cd8239ebd732c9386aaa7ea1d70d7",
+      "recorded_inputs_sha256": "7b25953da3f0da55ac22f4154530fe1c53e9dfc92e7635446cea3df02bbe96df",
+      "evidence": "en-nemotroncc-synth-train-000001.decode.json"
+    },
+    {
+      "shard_id": "en-nemotroncc-train-000000",
+      "pack_id": "en-nemotroncc",
+      "source_parts": [
+        "en-nemotroncc_part-00000_clean.parquet"
+      ],
+      "doc_count": 65284,
+      "token_count": 50343044,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "9b8ac78faa958bb36e117489d17615a5e6a58e532654ba8cbf965b9d6146dffb",
+      "recorded_inputs_sha256": "51e92318713fbdf846317cc74cba23db7136185c72aa737eb162fed449f69bbf",
+      "evidence": "en-nemotroncc-train-000000.decode.json"
+    },
+    {
+      "shard_id": "en-nemotroncc-train-000001",
+      "pack_id": "en-nemotroncc",
+      "source_parts": [
+        "en-nemotroncc_part-00001_clean.parquet"
+      ],
+      "doc_count": 21912,
+      "token_count": 16778602,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "2c61e1348f462310c4b0a858d686c0ed1f830947acf75867ca87de7ccf0a247f",
+      "recorded_inputs_sha256": "8b29b528e99139f5ec8240d69728d1e40ea5dcc43e2edf1ef2bf68a277c00a7b",
+      "evidence": "en-nemotroncc-train-000001.decode.json"
+    },
+    {
+      "shard_id": "ind-bn-fw2-train-000000",
+      "pack_id": "ind-bn-fw2",
+      "source_parts": [
+        "ind-bn-fw2_part-00000_clean.parquet"
+      ],
+      "doc_count": 10704,
+      "token_count": 7127920,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "9837209aaf98ce78bfcbe3126590781a871718e21cdd710775443e5ee31d6caa",
+      "recorded_inputs_sha256": "4cac2f3875db85e519df15e5b1643f6d22fcc7005a94cf3370c6db0ee2f0b1e6",
+      "evidence": "ind-bn-fw2-train-000000.decode.json"
+    },
+    {
+      "shard_id": "ind-bn-sangraha-v-train-000000",
+      "pack_id": "ind-bn-sangraha-v",
+      "source_parts": [
+        "ind-bn-sangraha-v_part-00000_clean.parquet"
+      ],
+      "doc_count": 10112,
+      "token_count": 8014810,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "f8f1d8ebd45ec05ad95e93a5f8add41fa8a52ff79b94caa6071805d6e18fb545",
+      "recorded_inputs_sha256": "6d66098dd4b17514f506044752b829e6562f9046223b96e05cad7cb30ec86a5f",
+      "evidence": "ind-bn-sangraha-v-train-000000.decode.json"
+    },
+    {
+      "shard_id": "ind-gu-fw2-train-000000",
+      "pack_id": "ind-gu-fw2",
+      "source_parts": [
+        "ind-gu-fw2_part-00000_clean.parquet"
+      ],
+      "doc_count": 22689,
+      "token_count": 16066252,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "0b6953b4a9712c4340d2f4794ac4d40382bf977177a50befa14ccb076783bc5d",
+      "recorded_inputs_sha256": "9f0325d74ab06f66a48b8e41b6e524367a894c03c6c8ea14575d37ff25c14c7c",
+      "evidence": "ind-gu-fw2-train-000000.decode.json"
+    },
+    {
+      "shard_id": "ind-hi-fw2-train-000000",
+      "pack_id": "ind-hi-fw2",
+      "source_parts": [
+        "ind-hi-fw2_part-00000_clean.parquet"
+      ],
+      "doc_count": 13773,
+      "token_count": 8988818,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "44b6e81ee0e3cb2a3ce09e33acc2f67c66e9f2525a3763b123f0fdb1c3af541f",
+      "recorded_inputs_sha256": "5277dbdd9509402530f72b7a829e101f5df25cb6ff46715e9cc2351b18917f8c",
+      "evidence": "ind-hi-fw2-train-000000.decode.json"
+    },
+    {
+      "shard_id": "ind-hi-hplt-train-000000",
+      "pack_id": "ind-hi-hplt",
+      "source_parts": [
+        "ind-hi-hplt_part-00000_clean.parquet"
+      ],
+      "doc_count": 8386,
+      "token_count": 8090716,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "55be2ff53e9352d46da5670f62601ebab500431c8096e485d8f3df6e58ec38b8",
+      "recorded_inputs_sha256": "64f19c60d1d62194a3d907ac51a87bbc78f5f3b59fbaeb134082add312e3628f",
+      "evidence": "ind-hi-hplt-train-000000.decode.json"
+    },
+    {
+      "shard_id": "ind-hi-indiccorp-train-000000",
+      "pack_id": "ind-hi-indiccorp",
+      "source_parts": [
+        "ind-hi-indiccorp_part-00000_clean.parquet"
+      ],
+      "doc_count": 109668,
+      "token_count": 9343359,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "a607399e7860ea5e4e72ddae069e4889c96c3195f8adc0c3b43cc95db847f00e",
+      "recorded_inputs_sha256": "270970be1d33b436fc04edb247f81a8593deb077b1ed85a18ca600fb6bdc19b9",
+      "evidence": "ind-hi-indiccorp-train-000000.decode.json"
+    },
+    {
+      "shard_id": "ind-hi-sangraha-s-train-000000",
+      "pack_id": "ind-hi-sangraha-s",
+      "source_parts": [
+        "ind-hi-sangraha-s_part-00000_clean.parquet"
+      ],
+      "doc_count": 7467,
+      "token_count": 5988971,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "0c87141000efd28fa86ea53ca42f59af9bb7c93f859d57f67448df32d1d25125",
+      "recorded_inputs_sha256": "b2a20dc141f2f6ac99d3ac8cb18fb3d2f5b0be04a0bbb9713a3b2375628b5f1a",
+      "evidence": "ind-hi-sangraha-s-train-000000.decode.json"
+    },
+    {
+      "shard_id": "ind-hi-sangraha-v-train-000000",
+      "pack_id": "ind-hi-sangraha-v",
+      "source_parts": [
+        "ind-hi-sangraha-v_part-00000_clean.parquet"
+      ],
+      "doc_count": 14483,
+      "token_count": 9254413,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "f9d5256ef7a0765f13b7dd891eb435851f45abaeb5247994e459b00997d74513",
+      "recorded_inputs_sha256": "4afb9f8beb3e871d580f9cc64fe3e8fc1bfee1335cc58635fcbdf993ebde6396",
+      "evidence": "ind-hi-sangraha-v-train-000000.decode.json"
+    },
+    {
+      "shard_id": "ind-kn-fw2-train-000000",
+      "pack_id": "ind-kn-fw2",
+      "source_parts": [
+        "ind-kn-fw2_part-00000_clean.parquet"
+      ],
+      "doc_count": 7735,
+      "token_count": 4737714,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "c683d5be3aaf7223ca56ebdf609277abfe840ae81e064130af09588cac19a890",
+      "recorded_inputs_sha256": "1b9e750bbf032bb312356ed62695fa3fa49ead738cf34900198a3a34841acd74",
+      "evidence": "ind-kn-fw2-train-000000.decode.json"
+    },
+    {
+      "shard_id": "ind-kn-sangraha-s-train-000000",
+      "pack_id": "ind-kn-sangraha-s",
+      "source_parts": [
+        "ind-kn-sangraha-s_part-00000_clean.parquet"
+      ],
+      "doc_count": 5185,
+      "token_count": 5217346,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "86690a17b8ad4134c038652ed89a86f9e6665c85da256fc7d8f7bfe14d061520",
+      "recorded_inputs_sha256": "2460a445811e5eddf929d9af4385b4eadf11453177c94956f62136538ae3cc84",
+      "evidence": "ind-kn-sangraha-s-train-000000.decode.json"
+    },
+    {
+      "shard_id": "ind-kn-sangraha-v-train-000000",
+      "pack_id": "ind-kn-sangraha-v",
+      "source_parts": [
+        "ind-kn-sangraha-v_part-00000_clean.parquet"
+      ],
+      "doc_count": 8354,
+      "token_count": 4761130,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "1b80a32aafec5cb7607e8fc3d4c04270c802ce8370d7fdcb7341474b4286c33b",
+      "recorded_inputs_sha256": "bfbabc7890f228e31464bcfafdc9b0a54e948d8a441ffc4fdfd0153622411236",
+      "evidence": "ind-kn-sangraha-v-train-000000.decode.json"
+    },
+    {
+      "shard_id": "ind-mr-fw2-train-000000",
+      "pack_id": "ind-mr-fw2",
+      "source_parts": [
+        "ind-mr-fw2_part-00000_clean.parquet"
+      ],
+      "doc_count": 11250,
+      "token_count": 7146419,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "d6f0701b8fd7d4fe3851eb9f6a8fc975498bad25977a79d676d705fbcf2d4551",
+      "recorded_inputs_sha256": "0d117138d29b3c760e5232b1674d36c6e38b2b62057a64878f08daaa43b2bbde",
+      "evidence": "ind-mr-fw2-train-000000.decode.json"
+    },
+    {
+      "shard_id": "ind-mr-sangraha-v-train-000000",
+      "pack_id": "ind-mr-sangraha-v",
+      "source_parts": [
+        "ind-mr-sangraha-v_part-00000_clean.parquet"
+      ],
+      "doc_count": 12164,
+      "token_count": 7259040,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "87263aebcdb167d54bd84d223ed37553ab34a31e09532546829f5b64e6e82548",
+      "recorded_inputs_sha256": "36946e0d8b1d9c1b4035252284729e00e5178e50df4f3b94b1827dfe9a0b22fd",
+      "evidence": "ind-mr-sangraha-v-train-000000.decode.json"
+    },
+    {
+      "shard_id": "ind-sa-fw2-train-000000",
+      "pack_id": "ind-sa-fw2",
+      "source_parts": [
+        "ind-sa-fw2_part-00000_clean.parquet"
+      ],
+      "doc_count": 5667,
+      "token_count": 13940676,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "813d8070a9a8dac7e297520956317d7cc5c3b9ce7cf288f6ccf62e8d27c7466f",
+      "recorded_inputs_sha256": "22d36f050bb1607d6eb166b80deabe19518226dddcaa3259820cc269e3878a2a",
+      "evidence": "ind-sa-fw2-train-000000.decode.json"
+    },
+    {
+      "shard_id": "ind-ta-sangraha-v-train-000000",
+      "pack_id": "ind-ta-sangraha-v",
+      "source_parts": [
+        "ind-ta-sangraha-v_part-00000_clean.parquet"
+      ],
+      "doc_count": 6795,
+      "token_count": 4497005,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "102e55601de11d559b854ba6bb74e72d8827df285ac5a264f52ec4bc9a4a7a4e",
+      "recorded_inputs_sha256": "d43051a2cf407b5e9c8a83b16934bc2c7c1ff145d09bf9400ebe442b21dfbf63",
+      "evidence": "ind-ta-sangraha-v-train-000000.decode.json"
+    },
+    {
+      "shard_id": "ind-te-fw2-train-000000",
+      "pack_id": "ind-te-fw2",
+      "source_parts": [
+        "ind-te-fw2_part-00000_clean.parquet"
+      ],
+      "doc_count": 5670,
+      "token_count": 4758086,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "148a1b336f3d5e670b9d30fc38253ed819d3624a3d480593cd7c2dcec9d931bb",
+      "recorded_inputs_sha256": "1c1fcc9ebb70c523f94664c24f96f9185b884e3c5b0e7023cc7428b502bdb4bb",
+      "evidence": "ind-te-fw2-train-000000.decode.json"
+    },
+    {
+      "shard_id": "ind-te-sangraha-s-train-000000",
+      "pack_id": "ind-te-sangraha-s",
+      "source_parts": [
+        "ind-te-sangraha-s_part-00000_clean.parquet"
+      ],
+      "doc_count": 4419,
+      "token_count": 4781160,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "eb3376088c992207e72f71dc6fa0b2bc154949316a6bb53151692703f87f803f",
+      "recorded_inputs_sha256": "63657334c377b697c589ef443c4324eaa7a6a44b19a2b7c9ee2af0da81d78edc",
+      "evidence": "ind-te-sangraha-s-train-000000.decode.json"
+    },
+    {
+      "shard_id": "ind-te-sangraha-v-train-000000",
+      "pack_id": "ind-te-sangraha-v",
+      "source_parts": [
+        "ind-te-sangraha-v_part-00000_clean.parquet"
+      ],
+      "doc_count": 8593,
+      "token_count": 5326404,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "cb5341b9e879c028b0638db98c0174df527a52749d3983a1f5340d4cf28a0549",
+      "recorded_inputs_sha256": "4c5087cfb4a3ec7905db75fb303d5f7d1c63e0310270efa30599505e64ffdd67",
+      "evidence": "ind-te-sangraha-v-train-000000.decode.json"
+    },
+    {
+      "shard_id": "math-finemath-train-000000",
+      "pack_id": "math-finemath",
+      "source_parts": [
+        "math-finemath_part-00000_clean.parquet"
+      ],
+      "doc_count": 28088,
+      "token_count": 38582010,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "2e18384cbeb96254f99ac302f8f53c1a6dddd6bdd68d75fdd754808f7ac5e206",
+      "recorded_inputs_sha256": "3fda381c9862bbd8790d0cc56aaec45f32c3051e63e49996c7f78171acaf6344",
+      "evidence": "math-finemath-train-000000.decode.json"
+    },
+    {
+      "shard_id": "math-megamath-train-000000",
+      "pack_id": "math-megamath",
+      "source_parts": [
+        "math-megamath_part-00000_clean.parquet"
+      ],
+      "doc_count": 17232,
+      "token_count": 33979879,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "ccdae49682b19c7f724620406911d02c157eb94b14463b9eb2463e27b0318214",
+      "recorded_inputs_sha256": "752f0c08643ec74337151a59ff29a07267de033a3fbaf099fb7b8b1f7b7bb71c",
+      "evidence": "math-megamath-train-000000.decode.json"
+    },
+    {
+      "shard_id": "sci-finepdfs-train-000000",
+      "pack_id": "sci-finepdfs",
+      "source_parts": [
+        "sci-finepdfs_part-00000_clean.parquet"
+      ],
+      "doc_count": 5993,
+      "token_count": 39470275,
+      "decoded": 20,
+      "passed": 20,
+      "count_check": "PASS",
+      "artifact_hash_check": "PASS",
+      "source_metadata_check": "PASS",
+      "upstream_source_verification": "PARTIAL; see report limits",
+      "manifest_sha256": "659ff75ecb86c4625e445d3211c316a1322083336158deb0de4163b447dda21f",
+      "recorded_inputs_sha256": "7946375dcc79b375197ad3146713155a18371bb908f169d07ef497948f09c1b3",
+      "evidence": "sci-finepdfs-train-000000.decode.json"
+    }
+  ]
+}

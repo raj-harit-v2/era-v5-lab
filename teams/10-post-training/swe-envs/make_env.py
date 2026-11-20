@@ -145,8 +145,7 @@ def platform_args() -> list[str]:
 
 
 def build(tag: str, context: Path) -> None:
-    proc = subprocess.run(["docker", "build", "--progress=plain", *platform_args(), "-t", tag, str(context)],
-                          capture_output=True, text=True)
+    proc = verify._docker_build([*platform_args(), "-t", tag, str(context)])
     if proc.returncode != 0:
         raise SystemExit(f"docker build failed for {tag}:\n{proc.stderr[-3000:]}")
 

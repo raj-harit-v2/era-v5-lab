@@ -388,6 +388,7 @@ def test_dt_run_trains_logits_only_and_saves_the_hard_mask(tiny_setup):
     m = rep["method"]
     assert m["masked_layers"] == 6 and m["trainable"] == 2 * (3 * 64 * 32)
     assert m["deletion_at_init"]["deleted"] > 0 and 0 < m["deletion_final"]["deleted_frac_of_targeted"] < 1
+    assert 0.0 <= m["band_at_init"]["band_share"] <= m["band_at_init"]["live_share"] <= 1.0
     assert m["alpha_final"] == 1000.0
     assert all("reg" in r for r in rep["log"])
     base = load_file(str(tiny_setup / "base" / "model.safetensors"))

@@ -13,6 +13,7 @@ def main(team: str, secret_dir: str) -> dict:
     sd = Path(secret_dir); sd.mkdir(parents=True, exist_ok=True)
     os.chmod("/vol/runs", 0o700); os.chmod(sd.parent, 0o700); os.chmod(sd, 0o700)  # as run_pilot does
     fake = sd / "tasks.jsonl"; fake.write_text("FAKE-EXPECTED-42\n"); os.chmod(fake, 0o600)
+    os.environ["G10_STDIO_SECRET_PATHS"] = str(fake)  # stdio_check.preflight_isolation checks a sandbox uid cannot read it
     task = {"id": "probe", "time_limit_s": 4, "tests": [{"input": "1 2\n", "output": "3\n"}]}
     sc_ = lambda code: sc.score(task, f"```python\n{code}\n```")
     res["valid_reference"] = sc_("a, b = map(int, input().split())\nprint(a + b)")

@@ -175,9 +175,33 @@ def test_container_script_restores_test_files_before_applying_hidden_tests():
     apply_candidate = script.index("/patches/candidate.patch")
     restore = script.index("git checkout -q HEAD --")
     apply_tests = script.index("/patches/test.patch")
-    sentinel = script.index("> test_abc123.py")
+    sentinel = script.index(">> tests/test_core.py")  # appended to the file of the first FAIL_TO_PASS test
     assert apply_candidate < restore < apply_tests < sentinel
-    assert "timeout 60 python -m pytest -q tests/test_core.py test_abc123.py --junitxml=/tmp/g10_abc123.out" in script
+    assert "timeout 60 python -m pytest -q tests/test_core.py --junitxml=/tmp/g10_abc123.out" in script
+    assert "test_abc123" not in script  # no sentinel file of its own on the command line
+
+
+def test_container_script_delivers_the_test_patch_inside_the_script_and_removes_it_before_the_tests():
+    script = verify.container_script(ENV, with_candidate=True, token="abc123", test_patch="diff --git a/x b/x\n+hidden\n")
+    assert "/patches/test.patch" not in script
+    put, apply_, rm, tests = (script.index(m) for m in ("cat > /tmp/.g10tp", "git apply --whitespace=nowarn /tmp/.g10tp",
+                                                          "rm -f /tmp/.g10tp", "timeout 60"))
+    assert put < apply_ < rm < tests and "+hidden" in script
+
+
+def test_the_sentinel_is_named_and_placed_like_a_hidden_test():
+    """Job W, P1/P1b: a forger spared the old sentinel by its `test_<12 hex>` name or its own untracked file."""
+    sent = verify.sentinel(ENV, "abc123")
+    assert sent["name"].startswith("test_add_") and sent["file"] == "tests/test_core.py" and sent["append"]
+    assert verify.sentinel(ENV, "abc123") == sent  # run_side and check_report derive the same one from the token
+    taken = {"test_add", "test_import"}
+    assert sent["name"] not in taken and "abc123" not in "".join(sent["lines"]) + sent["name"] + sent["file"]
+
+
+def test_the_sentinel_file_is_found_for_a_class_based_test_id():
+    env = {**ENV, "test_files": ["pkg/tests/test_x.py"], "FAIL_TO_PASS": ["pkg.tests.test_x.TestThing::test_it[a b]"],
+           "PASS_TO_PASS": []}
+    assert verify.sentinel(env, "abc123")["file"] == "pkg/tests/test_x.py"
 
 
 def test_container_script_adds_a_go_sentinel_in_the_test_package():
@@ -191,10 +215,42 @@ def test_container_script_without_candidate_skips_candidate_apply():
     assert "candidate.patch" not in verify.container_script(ENV, with_candidate=False)
 
 
+@parametrize("path", ["pytest.py", "pytest/__init__.py", "_pytest/runner.py", "pluggy/_hooks.py", "py.py",
+                                  "sitecustomize.py", "usercustomize.py", "evil.pth", "sub/evil.pth", "json.py",
+                                  "os.py", "re/__init__.py", "logging/handlers.py", "./pytest.py"])
+def test_paths_that_shadow_the_test_runner_are_refused(path):
+    assert verify.shadows_runner(path)
+
+
+@parametrize("path", ["pkg/core.py", "tomlkit/__init__.py", "src/pytest.py", "semver.py", "docs/json.py",
+                                  "setup.py", "README.md", "click/core.py"])
+def test_ordinary_source_paths_are_not_refused(path):
+    assert not verify.shadows_runner(path)
+
+
+def test_no_gold_patch_is_refused_as_shadowing_the_runner_and_every_python_sentinel_lands_in_a_run_test_file():
+    for d in sorted(HERE.glob("*/env.json")):
+        env = json.loads(d.read_text(encoding="utf-8"))
+        gold = (d.parent / "gold.patch").read_text(encoding="utf-8")
+        if env.get("language", "python") == "go":
+            continue
+        assert not [p for p in verify.patch_paths(gold) if verify.shadows_runner(p)], d.parent.name
+        sent = verify.sentinel(env, "abc123")
+        assert sent.get("append"), (d.parent.name, "no test file found for the first FAIL_TO_PASS id")
+        assert sent["file"] in env["test_cmd"] or sent["file"].rsplit("/", 1)[0] in env["test_cmd"], d.parent.name
+
+
+def test_patch_flags_name_suspicious_code_without_refusing_it():
+    patch = "diff --git a/m.py b/m.py\n--- a/m.py\n+++ b/m.py\n@@ -1 +1,2 @@\n x\n+import _pytest.runner\n"
+    assert verify.patch_flags(patch) == ["_pytest"]
+    assert verify.patch_flags("diff --git a/m.py b/m.py\n--- a/m.py\n+++ b/m.py\n@@ -1 +1,2 @@\n x\n+y = 1\n") == []
+
+
 # --- report integrity (PR #27 review, point 1) -------------------------------------------------
 
 SENT = verify.sentinel(ENV, "abc123")
-HONEST = {"tests.test_core::test_add": True, "tests.test_core::test_import": True, "test_abc123::test_abc123": False}
+HONEST = {"tests.test_core::test_add": True, "tests.test_core::test_import": True,
+          f"tests.test_core::{SENT['name']}": False}
 
 
 def test_check_report_accepts_an_honest_run():
@@ -202,8 +258,8 @@ def test_check_report_accepts_an_honest_run():
 
 
 @pytest.mark.parametrize("results,exit_code,summary,problem", [
-    ({k: True for k in HONEST if "abc123" not in k}, 1, "1 failed, 2 passed in 0.1s", "missing"),  # forged file
-    ({**HONEST, "test_abc123::test_abc123": True}, 1, "3 passed in 0.1s", "reported as passed"),  # flipped all
+    ({k: True for k in HONEST if SENT["name"] not in k}, 1, "1 failed, 2 passed in 0.1s", "missing"),  # forged file
+    ({**HONEST, f"tests.test_core::{SENT['name']}": True}, 1, "3 passed in 0.1s", "reported as passed"),  # flipped all
     (HONEST, 0, "1 failed, 2 passed in 0.1s", "exit code 0"),                                     # os._exit(0)
     (HONEST, 1, "2 failed, 1 passed in 0.1s", "pytest printed 1"),                              # flipped one
     (HONEST, 1, "", "no pytest summary"),
@@ -232,9 +288,10 @@ def test_run_side_rejects_the_junit_file_rewritten_by_an_atexit_hook(env_dir, mo
 
 def test_run_side_drops_the_sentinel_from_honest_results(env_dir, monkeypatch):
     monkeypatch.setattr(verify.uuid, "uuid4", lambda: type("U", (), {"hex": "abc123" + "0" * 26})())
+    sent_name = verify.sentinel(ENV, "abc123000000")["name"]
     junit = ('<testsuites><testsuite><testcase classname="tests.test_core" name="test_add"/>'
              '<testcase classname="tests.test_core" name="test_import"/>'
-             '<testcase classname="test_abc123000000" name="test_abc123000000"><failure message="x"/></testcase>'
+             f'<testcase classname="tests.test_core" name="{sent_name}"><failure message="x"/></testcase>'
              '</testsuite></testsuites>')
 
     class Proc:
@@ -541,3 +598,35 @@ def test_flagged_envs_match_the_review():
                if json.loads((d / "env.json").read_text(encoding="utf-8"))["quality_verdict"] == "keep-flagged"}
     assert flagged == {"python-poetry__tomlkit-221", "python-poetry__tomlkit-236", "python-validators__validators-191",
                        "scrapy__w3lib-136", "scrapy__w3lib-196"}
+
+
+def test_docker_build_retries_without_progress_on_legacy_builder(monkeypatch):
+    calls = []
+
+    def fake_run(cmd, **kwargs):
+        calls.append(cmd)
+        if "--progress=plain" in cmd:
+            return verify.subprocess.CompletedProcess(cmd, 125, "", "unknown flag: --progress\n")
+        return verify.subprocess.CompletedProcess(cmd, 0, "Successfully built abc123\n", "")
+
+    monkeypatch.setattr(verify.subprocess, "run", fake_run)
+    proc = verify._docker_build(["-t", "g10-swe/test:v1", "/tmp/ctx"])
+    assert proc.returncode == 0
+    assert calls == [
+        ["docker", "build", "--progress=plain", "-t", "g10-swe/test:v1", "/tmp/ctx"],
+        ["docker", "build", "-t", "g10-swe/test:v1", "/tmp/ctx"],
+    ]
+
+
+def test_docker_build_does_not_retry_on_real_build_error(monkeypatch):
+    calls = []
+
+    def fake_run(cmd, **kwargs):
+        calls.append(cmd)
+        return verify.subprocess.CompletedProcess(cmd, 1, "", "failed to solve: syntax error\n")
+
+    monkeypatch.setattr(verify.subprocess, "run", fake_run)
+    proc = verify._docker_build(["-t", "g10-swe/test:v1", "/tmp/ctx"])
+    assert proc.returncode == 1
+    assert len(calls) == 1
+

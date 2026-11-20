@@ -7,15 +7,15 @@ One shard from code-go, written with the C3 tokenizer: 271 docs, 262,032 tokens,
   repo (8 MB).
 - Tokenizer sample: CAP-1 packs, `code-go/Part_2/part-00001.parquet`, sha256
   `40aedd68c4ec949eb825edc68896ae4518cf6c3283027d9ba1430ee66ee247fc` (21,874 docs).
-- Cleaned with `spec_v1/run_clean.py --f2` at `cc6f4c8` (`g1-specv1`): `clean.py` `22d818c7…`, F2 set v2 `2826a3b8…`. 20,225
-  docs kept, 1,621 dropped by `clean.py`, 28 by F2. The shard takes the first 271 that fit in 262,144 tokens.
+- Pipeline run: clean, overlap, dedup, apply and F2 (`../../pipeline/README.md`): `clean.py` `22d818c7…`, F2 set v2 `2826a3b8…`.
+  The shard takes the first 271 docs of the part that fit in 262,144 tokens.
 
 **Commands** (from the repo root)
 
 ```bash
-python teams/01-data-a/spec_v1/run_clean.py --pack <cap1>/code-go/Part_2/part-00001.parquet --pack-id code-go --out <out> --f2
-python teams/01-data-a/shards/shard_writer.py --clean <out>/code-go_part-00001_clean.parquet \
-  --summary <out>/code-go_part-00001_summary.json --tokenizer <c3>/tokenizer.json \
+python -I teams/01-data-a/pipeline/run_pipeline.py --config <pipeline.json>      # writes <run>/final/ and <run>/pipeline_manifest.json
+python -I teams/01-data-a/shards/shard_writer.py --input <run>/final/train/code-go/part-NNNNN.parquet \
+  --manifest <run>/pipeline_manifest.json --tokenizer <c3>/tokenizer.json \
   --language go --script Latn --lane code --tokens 262144 --out teams/01-data-a/shards/sample
 ```
 
@@ -31,5 +31,6 @@ python teams/01-data-a/shards/shard_writer.py --clean <out>/code-go_part-00001_c
 | `code-go-train-000000.dump.md` | yes | `bfd2e8bea7d866e221295699c625fd3591b1008a2a9ddc17250681f861175045` |
 | `cleaning_pipeline.json` | yes | `35611a83cfa6d6b510a43b07c5d356c4f6d5d908bbb7d4f3c8b9f05856046589` |
 
-The commands above make the `.bin` and `.docs.parquet` again; check them against these hashes (also in the manifest as
-`payload_sha256` and `sample_metadata_sha256`). `.dump.md` shows what both hold.
+The hashes above are those of the files in this folder, which were written before the shard writer read the pipeline's output
+(from `run_clean.py --f2`, so `cleaning_pipeline.json` has `"dedup": null`). The commands above write a shard from a pipeline
+run, so the hashes differ until this sample is regenerated. `.dump.md` shows what the `.bin` and `.docs.parquet` hold.

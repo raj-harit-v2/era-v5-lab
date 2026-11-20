@@ -1,0 +1,49 @@
+{
+  "_comment": "Scenario 3, step c: resume again. No 'to', so the run goes on to the last configured stage (shards).",
+  "run_id": "trial-steps",
+  "out": "out/pipeline",
+  "from": "survivor_loss",
+  "stages": {
+    "clean": {
+      "mode": "run",
+      "settings": "teams/01-data-a/pipeline/clean.json",
+      "input": "inputs/local_trial",
+      "manifest_sha256": "7fd647c8d4662d17e2310efbcc20981d70656fdad2fabb7663c266a2153a1b7e",
+      "expected_parts": {
+        "train": 48,
+        "heldout": 38
+      },
+      "only": [
+        "heldout/code-go/part-00000.parquet",
+        "heldout/code-rust/part-00000.parquet",
+        "heldout/en-dclm/part-00000.parquet",
+        "heldout/ind-hi-sangraha-v/part-00000.parquet",
+        "heldout/ind-ta-fw2/part-00000.parquet",
+        "train/code-rust/part-00001.parquet"
+      ]
+    },
+    "overlap": {
+      "mode": "run",
+      "settings": "teams/01-data-a/dedup/overlap.json"
+    },
+    "dedup": {
+      "mode": "run",
+      "settings": "teams/01-data-a/dedup/dedup.json"
+    },
+    "apply": {
+      "link": true
+    },
+    "f2": {
+      "script": "teams/01-data-a/spec_v1/run_f2.py",
+      "workers": 2
+    },
+    "shards": {
+      "tokenizer": "inputs/local_trial/tokenizer.json",
+      "any_tokenizer": true,
+      "tokens": 262144,
+      "packs": [
+        "code-rust"
+      ]
+    }
+  }
+}

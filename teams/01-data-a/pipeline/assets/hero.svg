@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="340" viewBox="0 0 1200 340" role="img" aria-labelledby="t d">
+<title id="t">Data A Pipeline</title>
+<desc id="d">Raw training Parquet in, token shards out, every document accounted for. Nine stages: clean, overlap and dedup (TSAI jobs, adopted or run), apply, f2, survivor loss and ledger (always run), shards and reconcile (run when configured; the production job configures both). The expected inventory is checked before the shard stage and after reconcile.</desc>
+<style>
+text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif}
+.mono{font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.14em}
+.h1{font-size:24px;font-weight:600}
+.sub{font-size:14.5px}
+.b{font-weight:600}
+.rise{animation:rise .9s cubic-bezier(.2,.8,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.fade{animation:fade 1s ease both}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.grow{transform-box:fill-box;transform-origin:left center;animation:grow 1.2s cubic-bezier(.2,.8,.2,1) both}
+@keyframes grow{from{transform:scaleX(0)}to{transform:none}}
+.pulse{transform-box:fill-box;transform-origin:center;animation:pulse 2.4s ease-out infinite}
+@keyframes pulse{0%{opacity:.7;transform:scale(1)}70%,100%{opacity:0;transform:scale(2.1)}}
+.d1{animation-delay:0.12s}.d2{animation-delay:0.24s}.d3{animation-delay:0.36s}.d4{animation-delay:0.48s}.d5{animation-delay:0.60s}.d6{animation-delay:0.72s}.d7{animation-delay:0.84s}.d8{animation-delay:0.96s}.d9{animation-delay:1.08s}.d10{animation-delay:1.20s}.d11{animation-delay:1.32s}.d12{animation-delay:1.44s}.d13{animation-delay:1.56s}.d14{animation-delay:1.68s}.d15{animation-delay:1.80s}.d16{animation-delay:1.92s}.d17{animation-delay:2.04s}.d18{animation-delay:2.16s}.d19{animation-delay:2.28s}.d20{animation-delay:2.40s}.d21{animation-delay:2.52s}.d22{animation-delay:2.64s}.d23{animation-delay:2.76s}.d24{animation-delay:2.88s}.bg{fill:#ffffff;stroke:#d1d9e0}.panel{fill:#f6f8fa;stroke:#d1d9e0}.edge{stroke:#d1d9e0}.edgef{fill:#d1d9e0}.bgf{fill:#ffffff}.ink{fill:#1f2328}.mute{fill:#59636e}.faint{fill:#818b98}.inks{stroke:#1f2328}.mutes{stroke:#59636e}.teal{fill:#0f7b6c}.teal-s{stroke:#0f7b6c}.teal-t{fill:#e1f5f0}.teal-c{fill:#e1f5f0;stroke:#0f7b6c}.violet{fill:#8250df}.violet-s{stroke:#8250df}.violet-t{fill:#f1ebfd}.violet-c{fill:#f1ebfd;stroke:#8250df}.amber{fill:#9a6700}.amber-s{stroke:#9a6700}.amber-t{fill:#fdf3dc}.amber-c{fill:#fdf3dc;stroke:#9a6700}.red{fill:#cf222e}.red-s{stroke:#cf222e}.red-t{fill:#ffebe9}.red-c{fill:#ffebe9;stroke:#cf222e}.green{fill:#1a7f37}.green-s{stroke:#1a7f37}.green-t{fill:#dcf7e3}.green-c{fill:#dcf7e3;stroke:#1a7f37}.blue{fill:#0969da}.blue-s{stroke:#0969da}.blue-t{fill:#ddf0ff}.blue-c{fill:#ddf0ff;stroke:#0969da}.gray{fill:#6e7781}.gray-s{stroke:#6e7781}.gray-t{fill:#eef1f4}.gray-c{fill:#eef1f4;stroke:#6e7781}@media (prefers-color-scheme:dark){.bg{fill:#0d1117;stroke:#30363d}.panel{fill:#161b22;stroke:#30363d}.edge{stroke:#30363d}.edgef{fill:#30363d}.bgf{fill:#0d1117}.ink{fill:#e6edf3}.mute{fill:#9198a1}.faint{fill:#6e7681}.inks{stroke:#e6edf3}.mutes{stroke:#9198a1}.teal{fill:#3cc2a8}.teal-s{stroke:#3cc2a8}.teal-t{fill:#0d2a26}.teal-c{fill:#0d2a26;stroke:#3cc2a8}.violet{fill:#b392f0}.violet-s{stroke:#b392f0}.violet-t{fill:#221a38}.violet-c{fill:#221a38;stroke:#b392f0}.amber{fill:#d9a53a}.amber-s{stroke:#d9a53a}.amber-t{fill:#2b2111}.amber-c{fill:#2b2111;stroke:#d9a53a}.red{fill:#ff7b72}.red-s{stroke:#ff7b72}.red-t{fill:#3a1619}.red-c{fill:#3a1619;stroke:#ff7b72}.green{fill:#3fb950}.green-s{stroke:#3fb950}.green-t{fill:#10281a}.green-c{fill:#10281a;stroke:#3fb950}.blue{fill:#58a6ff}.blue-s{stroke:#58a6ff}.blue-t{fill:#0c2440}.blue-c{fill:#0c2440;stroke:#58a6ff}.gray{fill:#8b949e}.gray-s{stroke:#8b949e}.gray-t{fill:#1c2128}.gray-c{fill:#1c2128;stroke:#8b949e}}.n0{animation:ping 8.0s linear -0.26s infinite}.n1{animation:ping 8.0s linear 0.69s infinite}.n2{animation:ping 8.0s linear 1.63s infinite}.n3{animation:ping 8.0s linear 2.58s infinite}.n4{animation:ping 8.0s linear 3.52s infinite}.n5{animation:ping 8.0s linear 4.46s infinite}.n6{animation:ping 8.0s linear 5.41s infinite}.n7{animation:ping 8.0s linear 6.35s infinite}.n8{animation:ping 8.0s linear 7.30s infinite}@keyframes ping{0%,12%,100%{transform:none}6%{transform:scale(1.55)}}.comet{animation:comet 8.0s linear infinite}@keyframes comet{0%{transform:translateX(0);opacity:0}4%{opacity:1}96%{opacity:1}100%{transform:translateX(1080px);opacity:0}}@media (prefers-reduced-motion:reduce){*{animation:none!important}.motion{display:none}}</style>
+<rect class="bg" x=".5" y=".5" width="1199" height="339" rx="14"/>
+<defs><filter id="haze" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="60"/></filter><clipPath id="frame"><rect x="1" y="1" width="1198" height="338" rx="14"/></clipPath></defs>
+<g clip-path="url(#frame)"><g opacity=".13" filter="url(#haze)"><ellipse class="teal" cx="150" cy="30" rx="300" ry="110"/><ellipse class="violet" cx="640" cy="350" rx="340" ry="90"/><ellipse class="amber" cx="1130" cy="40" rx="240" ry="100"/></g></g>
+<g class="rise"><text x="64" y="70" class="eyebrow mute">ERA V5  ·  G1 DATA A  ·  PIPELINE  ·  PR #46</text></g>
+<g class="rise d1"><text x="60" y="132" class="ink b" font-size="56">Data A Pipeline</text></g>
+<g class="rise d2"><text x="64" y="170" class="mute" font-size="19">Raw training Parquet in, token shards out.</text></g>
+<g class="rise d3"><text x="64" y="196" class="mute" font-size="19">Every document accounted for at every stage, or the run stops.</text></g>
+<g class="rise d4"><g transform="translate(872 78)"><text x="0" y="0" class="mono mute" font-size="13">in<tspan x="92" class="ink">raw parts + input manifest</tspan></text><text x="0" y="24" class="mono mute" font-size="13">out<tspan x="92" class="ink">p1536 token shards</tspan></text><text x="0" y="48" class="mono mute" font-size="13">record<tspan x="92" class="ink">ledger · manifest</tspan></text><text x="0" y="72" class="mono mute" font-size="13">gate<tspan x="92" class="ink">expected inventory</tspan></text><text x="0" y="96" class="mono mute" font-size="13">rehearsal<tspan x="92" class="ink">40 of 40 checks</tspan></text></g></g>
+<g class="fade d5"><path d="M60.0 232v-8H375.0v8" fill="none" class="teal-s" stroke-width="1.4" opacity=".8"/><text x="217.5" y="216" class="teal mono" font-size="12" text-anchor="middle">TSAI jobs · adopt or run</text></g>
+<g class="fade d5"><path d="M442.5 232v-8H885.0v8" fill="none" class="violet-s" stroke-width="1.4" opacity=".8"/><text x="663.75" y="216" class="violet mono" font-size="12" text-anchor="middle">run_pipeline.py · always run</text></g>
+<g class="fade d5"><path d="M952.5 232v-8H1140.0v8" fill="none" class="amber-s" stroke-width="1.4" opacity=".8"/><text x="1046.25" y="216" class="amber mono" font-size="12" text-anchor="middle">configured · in the job</text></g>
+<path d="M90.0 262H1110.0" class="edge" stroke-width="2"/>
+<path d="M1110.0 262H1160.0" class="edge" stroke-width="2" stroke-dasharray="3 3"/>
+<rect x="913.75" y="257" width="10" height="10" transform="rotate(45 918.75 262)" class="blue"/>
+<rect x="1155.0" y="257" width="10" height="10" transform="rotate(45 1160.0 262)" class="blue"/>
+<text x="918.75" y="292" class="blue mono" font-size="11" text-anchor="middle">inventory</text>
+<circle cx="90.0" cy="262" r="7" class="bgf teal-s n0" stroke-width="2.2" style="transform-box:fill-box;transform-origin:center"/>
+<circle cx="90.0" cy="262" r="2.6" class="teal"/>
+<text x="90.0" y="292" class="ink" font-size="14" text-anchor="middle">clean</text>
+<circle cx="217.5" cy="262" r="7" class="bgf teal-s n1" stroke-width="2.2" style="transform-box:fill-box;transform-origin:center"/>
+<circle cx="217.5" cy="262" r="2.6" class="teal"/>
+<text x="217.5" y="292" class="ink" font-size="14" text-anchor="middle">overlap</text>
+<circle cx="345.0" cy="262" r="7" class="bgf teal-s n2" stroke-width="2.2" style="transform-box:fill-box;transform-origin:center"/>
+<circle cx="345.0" cy="262" r="2.6" class="teal"/>
+<text x="345.0" y="292" class="ink" font-size="14" text-anchor="middle">dedup</text>
+<circle cx="472.5" cy="262" r="7" class="bgf violet-s n3" stroke-width="2.2" style="transform-box:fill-box;transform-origin:center"/>
+<circle cx="472.5" cy="262" r="2.6" class="violet"/>
+<text x="472.5" y="292" class="ink" font-size="14" text-anchor="middle">apply</text>
+<circle cx="600.0" cy="262" r="7" class="bgf violet-s n4" stroke-width="2.2" style="transform-box:fill-box;transform-origin:center"/>
+<circle cx="600.0" cy="262" r="2.6" class="violet"/>
+<text x="600.0" y="292" class="ink" font-size="14" text-anchor="middle">f2</text>
+<circle cx="727.5" cy="262" r="7" class="bgf violet-s n5" stroke-width="2.2" style="transform-box:fill-box;transform-origin:center"/>
+<circle cx="727.5" cy="262" r="2.6" class="violet"/>
+<text x="727.5" y="292" class="ink" font-size="14" text-anchor="middle">survivor loss</text>
+<circle cx="855.0" cy="262" r="7" class="bgf violet-s n6" stroke-width="2.2" style="transform-box:fill-box;transform-origin:center"/>
+<circle cx="855.0" cy="262" r="2.6" class="violet"/>
+<text x="855.0" y="292" class="ink" font-size="14" text-anchor="middle">ledger</text>
+<circle cx="982.5" cy="262" r="7" class="bgf amber-s n7" stroke-width="2.2" style="transform-box:fill-box;transform-origin:center"/>
+<circle cx="982.5" cy="262" r="2.6" class="amber"/>
+<text x="982.5" y="292" class="ink" font-size="14" text-anchor="middle">shards</text>
+<circle cx="1110.0" cy="262" r="7" class="bgf amber-s n8" stroke-width="2.2" style="transform-box:fill-box;transform-origin:center"/>
+<circle cx="1110.0" cy="262" r="2.6" class="amber"/>
+<text x="1110.0" y="292" class="ink" font-size="14" text-anchor="middle">reconcile</text>
+<g class="motion"><g class="comet"><circle cx="60" cy="262" r="11" class="blue" opacity=".18"/><circle cx="60" cy="262" r="3.2" class="blue"/></g></g>
+</svg>

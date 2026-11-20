@@ -1,0 +1,14 @@
+{
+ "recorded_command": "python -m pytest -p no:cacheprovider -o addopts= -q tests/test_timeutils.py",
+ "expected_tests": [
+  "tests.test_timeutils::test_daterange_infinite",
+  "tests.test_timeutils::test_daterange_with_same_start_stop",
+  "tests.test_timeutils::test_daterange_years",
+  "tests.test_timeutils::test_daterange_years_step",
+  "tests.test_timeutils::test_float_total_seconds"
+ ],
+ "must_fail": [
+  "tests.test_timeutils::test_daterange_with_same_start_stop"
+ ],
+ "note": "hidden: never put this folder in a prompt"
+}

@@ -22,7 +22,7 @@ SOURCE = (
     "original: written by Claude (AI assistant) for Ravi Naik (RaviNaik), 2026-11-15; not from any benchmark; "
     "evaluation-only (TSAI data rule, 3 Nov)"
 )
-REVIEWED = {"hi", "mr", "te", "kn"}  # languages a native speaker has checked
+REVIEWED = {"hi", "mr", "te", "kn", "ta", "bn", "gu", "ml", "or", "pa"}  # languages a native speaker has checked
 REVIEW_YES = "wording reviewed by a native speaker"
 REVIEW_NO = "wording not reviewed by a native speaker"
 SYSTEM = "You are a helpful assistant. Answer briefly."
@@ -90,7 +90,7 @@ ROWS = [
     script("in-scr-bn", "bn", "বর্ষাকাল সম্পর্কে দুটি বাক্য লেখো।"),
     script("in-scr-gu", "gu", "ચોમાસા વિશે બે વાક્યો લખો."),
     script("in-scr-ml", "ml", "മഴക്കാലത്തെക്കുറിച്ച് രണ്ട് വാക്യങ്ങൾ എഴുതുക."),
-    script("in-scr-or", "or", "ବର୍ଷା ଋତୁ ବିଷୟରେ ଦୁଇଟି ବାକ୍ୟ ଲେଖ।"),
+    script("in-scr-or", "or", "ବର୍ଷା ଋତୁ ବିଷୟରେ ଦୁଇଟି ବାକ୍ୟ ଲେଖ"),
     script("in-scr-pa", "pa", "ਬਰਸਾਤ ਦੇ ਮੌਸਮ ਬਾਰੇ ਦੋ ਵਾਕ ਲਿਖੋ।"),
     script("in-scr-en-hi", "hi", "Write two sentences about the sea in Hindi, in the Devanagari script."),
     script("in-scr-en-ta", "ta", "Write two sentences about the sea in Tamil, in the Tamil script."),

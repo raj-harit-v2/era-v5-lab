@@ -301,6 +301,18 @@ def test_group_with_no_usable_copy_has_no_survivor(repo):
     assert s["groups_without_survivor"] == 1
 
 
+def test_unusable_train_singletons_are_removed_but_heldout_is_preserved(repo):
+    make_run(repo, [("train-only", "code-js-ts", "train", 50),
+                    ("heldout-only", "code-js-ts", "heldout", 50),
+                    ("usable", "en-a", "train", 50)], [])
+    s, log = run(repo, licence_usable={"code-js-ts": False})
+    assert set(log) == {"train-only"}
+    assert log["train-only"]["rule"] == "licence" and log["train-only"]["priority_rule"] == 1
+    assert s["heldout_removed"] == 0 and s["by_pack"]["code-js-ts"]["documents_out"] == 1
+    assert s["clusters"] == 1 and s["groups_without_survivor"] == 1 and s["removed"] == 1
+    assert groups(repo)["G000001"] == {"survivor": set(), "removed": {"train-only"}, "size": 1, "rule": 1}
+
+
 def test_heldout_only_group_is_listed_with_no_removal(repo):
     make_run(repo, [("h1", "en-a", "heldout", 100), ("h2", "en-a", "heldout", 100)], [(0, 1, "H1", 1.0, "")])
     s, log = run(repo)

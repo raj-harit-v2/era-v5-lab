@@ -1,0 +1,219 @@
+{
+  "scope": "Core task 6: decode 20 documents per assigned p1536 sample-v0 shard",
+  "tokenizer_sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b",
+  "sampling": "20 document indices drawn without replacement by numpy default_rng(SEED + int(sha256(shard_id)[:8], 16)), excluding #541's indices i * (doc_count - 1) // 19 for i=0..19; sorted",
+  "environment": {
+    "python": "3.12.7",
+    "numpy": "1.26.4",
+    "pyarrow": "21.0.0",
+    "tokenizers": "0.20.3"
+  },
+  "repository_commit": "55460a23e263e48e098988dfd8176a78800fc842",
+  "shards": [
+    {
+      "shard_id": "code-cpp-train-000000",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "code-cpp-train-000001",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "code-go-train-000000",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "code-go-train-000001",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "code-java-train-000000",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "code-java-train-000001",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "code-js-ts-train-000000",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "code-js-ts-train-000001",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "code-python-train-000000",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "code-python-train-000001",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "code-rust-train-000000",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "code-rust-train-000001",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "en-dclm-train-000000",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "en-dclm-train-000001",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "en-fineweb-edu-train-000000",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "en-fineweb-edu-train-000001",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "en-nemotroncc-synth-train-000000",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "en-nemotroncc-synth-train-000001",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "en-nemotroncc-train-000000",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "en-nemotroncc-train-000001",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "ind-bn-fw2-train-000000",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "ind-bn-sangraha-v-train-000000",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "ind-gu-fw2-train-000000",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "ind-hi-fw2-train-000000",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "ind-hi-hplt-train-000000",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "ind-hi-indiccorp-train-000000",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "ind-hi-sangraha-s-train-000000",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "ind-hi-sangraha-v-train-000000",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "ind-kn-fw2-train-000000",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "ind-kn-sangraha-s-train-000000",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "ind-kn-sangraha-v-train-000000",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "ind-mr-fw2-train-000000",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "ind-mr-sangraha-v-train-000000",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "ind-sa-fw2-train-000000",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "ind-ta-sangraha-v-train-000000",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "ind-te-fw2-train-000000",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "ind-te-sangraha-s-train-000000",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "ind-te-sangraha-v-train-000000",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "math-finemath-train-000000",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "math-megamath-train-000000",
+      "decoded": 20,
+      "passed": 20
+    },
+    {
+      "shard_id": "sci-finepdfs-train-000000",
+      "decoded": 20,
+      "passed": 20
+    }
+  ]
+}

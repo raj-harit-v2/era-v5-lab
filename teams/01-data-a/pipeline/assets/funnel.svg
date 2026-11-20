@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-labelledby="t d">
+<title id="t">The count chain, measured</title>
+<desc id="d">Rehearsal from raw on code-go, 3 parts of tokenizer sample v0. Train: 83,267 raw, 76,955 after the cleaner (minus 6,312), 76,949 after dedup (minus 6), 76,853 after F2 (minus 96), 76,795 in 2 shards and 58 left out as secret-like. Held-out: 872, 810, 810, 808, not sharded. Reconcile: 77,661 kept = 76,795 in shards + 58 left out + 808 not sharded. 40 of 40 checks passed.</desc>
+<style>
+text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif}
+.mono{font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.14em}
+.h1{font-size:24px;font-weight:600}
+.sub{font-size:14.5px}
+.b{font-weight:600}
+.rise{animation:rise .9s cubic-bezier(.2,.8,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.fade{animation:fade 1s ease both}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.grow{transform-box:fill-box;transform-origin:left center;animation:grow 1.2s cubic-bezier(.2,.8,.2,1) both}
+@keyframes grow{from{transform:scaleX(0)}to{transform:none}}
+.pulse{transform-box:fill-box;transform-origin:center;animation:pulse 2.4s ease-out infinite}
+@keyframes pulse{0%{opacity:.7;transform:scale(1)}70%,100%{opacity:0;transform:scale(2.1)}}
+.d1{animation-delay:0.12s}.d2{animation-delay:0.24s}.d3{animation-delay:0.36s}.d4{animation-delay:0.48s}.d5{animation-delay:0.60s}.d6{animation-delay:0.72s}.d7{animation-delay:0.84s}.d8{animation-delay:0.96s}.d9{animation-delay:1.08s}.d10{animation-delay:1.20s}.d11{animation-delay:1.32s}.d12{animation-delay:1.44s}.d13{animation-delay:1.56s}.d14{animation-delay:1.68s}.d15{animation-delay:1.80s}.d16{animation-delay:1.92s}.d17{animation-delay:2.04s}.d18{animation-delay:2.16s}.d19{animation-delay:2.28s}.d20{animation-delay:2.40s}.d21{animation-delay:2.52s}.d22{animation-delay:2.64s}.d23{animation-delay:2.76s}.d24{animation-delay:2.88s}.bg{fill:#ffffff;stroke:#d1d9e0}.panel{fill:#f6f8fa;stroke:#d1d9e0}.edge{stroke:#d1d9e0}.edgef{fill:#d1d9e0}.bgf{fill:#ffffff}.ink{fill:#1f2328}.mute{fill:#59636e}.faint{fill:#818b98}.inks{stroke:#1f2328}.mutes{stroke:#59636e}.teal{fill:#0f7b6c}.teal-s{stroke:#0f7b6c}.teal-t{fill:#e1f5f0}.teal-c{fill:#e1f5f0;stroke:#0f7b6c}.violet{fill:#8250df}.violet-s{stroke:#8250df}.violet-t{fill:#f1ebfd}.violet-c{fill:#f1ebfd;stroke:#8250df}.amber{fill:#9a6700}.amber-s{stroke:#9a6700}.amber-t{fill:#fdf3dc}.amber-c{fill:#fdf3dc;stroke:#9a6700}.red{fill:#cf222e}.red-s{stroke:#cf222e}.red-t{fill:#ffebe9}.red-c{fill:#ffebe9;stroke:#cf222e}.green{fill:#1a7f37}.green-s{stroke:#1a7f37}.green-t{fill:#dcf7e3}.green-c{fill:#dcf7e3;stroke:#1a7f37}.blue{fill:#0969da}.blue-s{stroke:#0969da}.blue-t{fill:#ddf0ff}.blue-c{fill:#ddf0ff;stroke:#0969da}.gray{fill:#6e7781}.gray-s{stroke:#6e7781}.gray-t{fill:#eef1f4}.gray-c{fill:#eef1f4;stroke:#6e7781}@media (prefers-color-scheme:dark){.bg{fill:#0d1117;stroke:#30363d}.panel{fill:#161b22;stroke:#30363d}.edge{stroke:#30363d}.edgef{fill:#30363d}.bgf{fill:#0d1117}.ink{fill:#e6edf3}.mute{fill:#9198a1}.faint{fill:#6e7681}.inks{stroke:#e6edf3}.mutes{stroke:#9198a1}.teal{fill:#3cc2a8}.teal-s{stroke:#3cc2a8}.teal-t{fill:#0d2a26}.teal-c{fill:#0d2a26;stroke:#3cc2a8}.violet{fill:#b392f0}.violet-s{stroke:#b392f0}.violet-t{fill:#221a38}.violet-c{fill:#221a38;stroke:#b392f0}.amber{fill:#d9a53a}.amber-s{stroke:#d9a53a}.amber-t{fill:#2b2111}.amber-c{fill:#2b2111;stroke:#d9a53a}.red{fill:#ff7b72}.red-s{stroke:#ff7b72}.red-t{fill:#3a1619}.red-c{fill:#3a1619;stroke:#ff7b72}.green{fill:#3fb950}.green-s{stroke:#3fb950}.green-t{fill:#10281a}.green-c{fill:#10281a;stroke:#3fb950}.blue{fill:#58a6ff}.blue-s{stroke:#58a6ff}.blue-t{fill:#0c2440}.blue-c{fill:#0c2440;stroke:#58a6ff}.gray{fill:#8b949e}.gray-s{stroke:#8b949e}.gray-t{fill:#1c2128}.gray-c{fill:#1c2128;stroke:#8b949e}}@media (prefers-reduced-motion:reduce){*{animation:none!important}.motion{display:none}}</style>
+<rect class="bg" x=".5" y=".5" width="1199" height="519" rx="14"/>
+<g class="rise"><text x="40" y="48" class="eyebrow mute">THE COUNT CHAIN · MEASURED</text></g><g class="rise d1"><text x="40" y="82" class="h1 ink">Every document accounted for: the rehearsal from raw</text></g><g class="rise d2"><text x="40" y="108" class="sub mute">code-go, 3 parts of tokenizer sample v0 (2 train, 1 held-out) · runner bd09924 · real dedup · p1536 via any_tokenizer (test shards) · 40 of 40 checks</text></g>
+<text x="176" y="136" class="eyebrow mute" font-size="11">TRAIN</text><text x="634" y="136" class="eyebrow mute" font-size="11">HELD-OUT</text>
+<g class="rise d2"><text x="40" y="171" class="ink" font-size="13.5">raw</text></g>
+<rect x="176" y="154" width="330" height="24" rx="5" class="panel" stroke-width="1"/>
+<g class="grow" style="animation-delay:0.30s"><rect x="176" y="154" width="330.0" height="24" rx="5" class="gray" opacity=".85"/></g>
+<g class="fade" style="animation-delay:0.90s"><text x="186" y="171" class="bgf b mono" font-size="13">83,267</text></g>
+<g class="fade" style="animation-delay:1.00s"><text x="634" y="171" class="mono ink" font-size="13">872</text></g>
+<g class="rise d3"><text x="40" y="217" class="ink" font-size="13.5">cleaned</text></g>
+<rect x="176" y="200" width="330" height="24" rx="5" class="panel" stroke-width="1"/>
+<g class="grow" style="animation-delay:0.55s"><rect x="176" y="200" width="305.0" height="24" rx="5" class="teal" opacity=".85"/></g>
+<g class="fade" style="animation-delay:1.15s"><text x="186" y="217" class="bgf b mono" font-size="13">76,955</text><text x="516" y="217" class="teal mono" font-size="12">−6,312 cleaner</text></g>
+<g class="fade" style="animation-delay:1.25s"><text x="634" y="217" class="mono ink" font-size="13">810</text></g>
+<g class="rise d4"><text x="40" y="263" class="ink" font-size="13.5">deduplicated</text></g>
+<rect x="176" y="246" width="330" height="24" rx="5" class="panel" stroke-width="1"/>
+<g class="grow" style="animation-delay:0.80s"><rect x="176" y="246" width="305.0" height="24" rx="5" class="violet" opacity=".85"/></g>
+<g class="fade" style="animation-delay:1.40s"><text x="186" y="263" class="bgf b mono" font-size="13">76,949</text><text x="516" y="263" class="violet mono" font-size="12">−6 dedup</text></g>
+<g class="fade" style="animation-delay:1.50s"><text x="634" y="263" class="mono ink" font-size="13">810</text></g>
+<g class="rise d5"><text x="40" y="309" class="ink" font-size="13.5">final (after F2)</text></g>
+<rect x="176" y="292" width="330" height="24" rx="5" class="panel" stroke-width="1"/>
+<g class="grow" style="animation-delay:1.05s"><rect x="176" y="292" width="304.6" height="24" rx="5" class="violet" opacity=".85"/></g>
+<g class="fade" style="animation-delay:1.65s"><text x="186" y="309" class="bgf b mono" font-size="13">76,853</text><text x="516" y="309" class="violet mono" font-size="12">−96 F2</text></g>
+<g class="fade" style="animation-delay:1.75s"><text x="634" y="309" class="mono ink" font-size="13">808</text></g>
+<g class="rise d6"><text x="40" y="355" class="ink" font-size="13.5">in shards</text></g>
+<rect x="176" y="338" width="330" height="24" rx="5" class="panel" stroke-width="1"/>
+<g class="grow" style="animation-delay:1.30s"><rect x="176" y="338" width="304.4" height="24" rx="5" class="amber" opacity=".85"/></g>
+<g class="fade" style="animation-delay:1.90s"><text x="186" y="355" class="bgf b mono" font-size="13">76,795</text><text x="516" y="355" class="amber mono" font-size="12">−58 left out</text></g>
+<g class="fade" style="animation-delay:2.00s"><text x="634" y="355" class="blue b" font-size="13">not sharded</text></g>
+<text x="634" y="384" class="mono faint" font-size="11.5">−62 · 0 · −2</text>
+<rect x="790" y="128" width="370" height="288" rx="12" class="panel" stroke-width="1.2"/>
+<text x="810" y="156" class="eyebrow mute" font-size="11">CHECKED BY THE RUN</text>
+<g class="rise" style="animation-delay:0.60s"><circle cx="818" cy="182" r="8" class="green-c" stroke-width="1.2"/><path d="M814 182l3 3 5-6" fill="none" class="green-s" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><text x="836" y="187" class="ink" font-size="13">overlap read every cleaned row</text></g>
+<g class="rise" style="animation-delay:0.78s"><circle cx="818" cy="210" r="8" class="green-c" stroke-width="1.2"/><path d="M814 210l3 3 5-6" fill="none" class="green-s" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><text x="836" y="215" class="ink" font-size="13">dedup used this overlap run (sha256)</text></g>
+<g class="rise" style="animation-delay:0.96s"><circle cx="818" cy="238" r="8" class="green-c" stroke-width="1.2"/><path d="M814 238l3 3 5-6" fill="none" class="green-s" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><text x="836" y="243" class="ink" font-size="13">apply removed the remove list</text></g>
+<g class="rise" style="animation-delay:1.14s"><circle cx="818" cy="266" r="8" class="green-c" stroke-width="1.2"/><path d="M814 266l3 3 5-6" fill="none" class="green-s" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><text x="836" y="271" class="ink" font-size="13">F2 read what apply wrote · no errors</text></g>
+<g class="rise" style="animation-delay:1.32s"><circle cx="818" cy="294" r="8" class="green-c" stroke-width="1.2"/><path d="M814 294l3 3 5-6" fill="none" class="green-s" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><text x="836" y="299" class="ink" font-size="13">ledger = every stage, per pack</text></g>
+<g class="rise" style="animation-delay:1.50s"><circle cx="818" cy="322" r="8" class="green-c" stroke-width="1.2"/><path d="M814 322l3 3 5-6" fill="none" class="green-s" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><text x="836" y="327" class="ink" font-size="13">shards: none failed or skipped</text></g>
+<g class="rise" style="animation-delay:1.68s"><circle cx="818" cy="350" r="8" class="green-c" stroke-width="1.2"/><path d="M814 350l3 3 5-6" fill="none" class="green-s" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><text x="836" y="355" class="ink" font-size="13">reconcile: every kept doc placed</text></g>
+<g class="rise" style="animation-delay:1.86s"><circle cx="818" cy="378" r="8" class="green-c" stroke-width="1.2"/><path d="M814 378l3 3 5-6" fill="none" class="green-s" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><text x="836" y="383" class="mono ink" font-size="12.5">77,661 = 76,795 + 58 + 808</text></g>
+<text x="836" y="406" class="faint" font-size="11.5">kept = in shards + left out + not sharded</text>
+<text x="40" y="468" class="mute" font-size="12.5">Train shards: 2 (56,584 docs / 56,692,090 tokens and 20,211 docs / 20,253,926 tokens), 0 truncated. Decoded: 76,784 of 76,795 byte-identical</text>
+<text x="40" y="488" class="mute" font-size="12.5">to the source text, the other 11 equal to the tokenizer-normalized source. The 58 left out were secret-like (pr-guard's patterns).</text>
+</svg>

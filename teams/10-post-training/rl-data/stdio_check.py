@@ -21,12 +21,14 @@ import subprocess
 import sys
 import tempfile
 import uuid
+from functools import lru_cache
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 IMAGE = os.environ.get("G10_RL_IMAGE", "python:3.12-slim")
 MAX_TESTS = 20            # per task, for speed; the first ones are the public examples
 MAX_OUTPUT_CHARS = 65536  # per test
+OUTPUTS_MAX_BYTES = 10_000_000  # = the fsize ulimit: a real outputs.json can never be larger
 
 _spec = importlib.util.spec_from_file_location("g10_rl_verifier_for_stdio", HERE.parent / "rl" / "verifier.py")
 _verifier = importlib.util.module_from_spec(_spec)
@@ -67,7 +69,13 @@ DOCKER_FLAGS = ["--network=none", "--read-only", "--cap-drop", "ALL", "--securit
 #           program to forge; after each program (and after any timeout) every process of that uid is killed. The expected outputs stay in
 #           this process and in files the caller keeps root-only (0600 under 0700 folders): the program cannot
 #           read them, other runs' folders, or this process's memory. Anything else refuses to run (fail closed).
-#           Network is not handled here: the caller must block it (the Modal function sets block_network=True).
+#           uid isolation protects only files whose mode excludes "other", so the caller must name every file or
+#           folder holding expected outputs in G10_STDIO_SECRET_PATHS (os.pathsep-separated) and make them unreachable
+#           for other uids (0600 under 0700 folders, or chmod 0700 /kaggle where the task file is a read-only mount);
+#           preflight_isolation() proves it with a probe as a sandbox uid and refuses to score otherwise; a named path
+#           must exist, and a named folder must not be enterable by other uids. The same
+#           preflight probes the network: sandboxed programs get a seccomp filter that allows AF_UNIX sockets only, and
+#           scoring refuses if a sandbox uid can still open an IP connection (Modal: block_network=True also holds).
 #   local_unisolated  the old plain-subprocess runner, kept only for tests on trusted programs; never for rewards.
 RUNNER_KIND = os.environ.get("G10_STDIO_RUNNER", "docker")
 SANDBOX_UID_BASE, SANDBOX_UID_SPAN = 61000, 4000
@@ -133,11 +141,69 @@ def isolation_available() -> tuple[bool, str]:
     return True, "ok"
 
 
+# seccomp: a sandboxed program may open AF_UNIX sockets only. A public answer source (the code-contest test sets)
+# would otherwise be one HTTP request away on a machine with internet on (Kaggle).
+_AUDIT_ARCH = {"x86_64": (0xC000003E, 41, True), "aarch64": (0xC00000B7, 198, False)}  # (AUDIT_ARCH, socket nr, x32)
+_NR_IO_URING_SETUP = 425  # io_uring can open sockets without calling socket(); same number on both arches
+_SECCOMP_ALLOW, _SECCOMP_EPERM, _SECCOMP_KILL = 0x7FFF0000, 0x00050001, 0x80000000
+
+
+@lru_cache(maxsize=None)
+def _socket_filter() -> bytes | None:
+    """BPF program: socket() only for AF_UNIX; io_uring_setup and x32 syscalls denied (EPERM); another arch killed.
+    None on an architecture this code does not know; the preflight's network probe then decides."""
+    import platform  # noqa: PLC0415
+    import struct  # noqa: PLC0415
+    spec = _AUDIT_ARCH.get(platform.machine())
+    if spec is None:
+        return None
+    arch, nr_socket, x32 = spec
+    LD, JEQ, JGE, RET = 0x20, 0x15, 0x35, 0x06  # BPF_LD|W|ABS, BPF_JMP|JEQ|K, BPF_JMP|JGE|K, BPF_RET|K
+    # (label, code, true-label, false-label, k); a missing label means "the next instruction"
+    prog = [("start", LD, None, None, 4),  # seccomp_data.arch
+            (None, JEQ, None, "kill", arch),
+            (None, LD, None, None, 0)]  # seccomp_data.nr
+    if x32:
+        prog.append((None, JGE, "deny", None, 0x40000000))
+    prog += [(None, JEQ, "af", None, nr_socket),
+             (None, JEQ, "deny", None, _NR_IO_URING_SETUP),
+             (None, RET, None, None, _SECCOMP_ALLOW),
+             ("af", LD, None, None, 16),  # seccomp_data.args[0], the domain (low word, little-endian)
+             (None, JEQ, "allow", "deny", 1),  # AF_UNIX
+             ("allow", RET, None, None, _SECCOMP_ALLOW),
+             ("deny", RET, None, None, _SECCOMP_EPERM),
+             ("kill", RET, None, None, _SECCOMP_KILL)]
+    pos = {name: i for i, (name, *_rest) in enumerate(prog) if name}
+    return b"".join(struct.pack("HBBI", code, 0 if jt is None else pos[jt] - i - 1,
+                                0 if jf is None else pos[jf] - i - 1, k)
+                    for i, (_name, code, jt, jf, k) in enumerate(prog))
+
+
+@lru_cache(maxsize=None)
+def _seccomp_fprog():
+    """(sock_fprog, buffer) for prctl(PR_SET_SECCOMP), built once in the parent so the fork child only calls prctl."""
+    import ctypes  # noqa: PLC0415
+    prog = _socket_filter()
+    if prog is None:
+        return None
+
+    class Fprog(ctypes.Structure):
+        _fields_ = [("len", ctypes.c_ushort), ("filter", ctypes.c_void_p)]
+    buf = ctypes.create_string_buffer(prog, len(prog))
+    return Fprog(len(prog) // 8, ctypes.addressof(buf)), buf
+
+
 def _sandbox_preexec():  # in the child, after the uid/gid switch done by subprocess (user=, group=, extra_groups=[])
     import ctypes  # noqa: PLC0415
     import resource  # noqa: PLC0415
-    if ctypes.CDLL(None, use_errno=True).prctl(38, 1, 0, 0, 0) != 0:  # PR_SET_NO_NEW_PRIVS
+    libc = ctypes.CDLL(None, use_errno=True)
+    if libc.prctl(38, 1, 0, 0, 0) != 0:  # PR_SET_NO_NEW_PRIVS
         os._exit(97)
+    fp = _seccomp_fprog()
+    if fp is not None:
+        # if the kernel refuses the filter the program still runs: the preflight's network probe has already
+        # established, with this same preexec, whether a sandbox uid can reach the network
+        libc.prctl(22, 2, ctypes.byref(fp[0]), 0, 0)  # PR_SET_SECCOMP, SECCOMP_MODE_FILTER
     resource.setrlimit(resource.RLIMIT_AS, (LOCAL_MEMORY_BYTES, LOCAL_MEMORY_BYTES))
     resource.setrlimit(resource.RLIMIT_FSIZE, (LOCAL_FILE_BYTES, LOCAL_FILE_BYTES))
     resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
@@ -150,11 +216,50 @@ def _kill_uid(uid: int) -> None:
                    group=uid, extra_groups=[], capture_output=True, timeout=10, env={})
 
 
+_PREFLIGHT_OK = []
+
+
+def preflight_isolation() -> None:
+    """Fail closed unless a sandbox uid provably cannot read any file named in G10_STDIO_SECRET_PATHS (every file or
+    folder that holds expected outputs, os.pathsep-separated). uid isolation protects only files whose mode excludes
+    "other"; a world-readable task file (a read-only Kaggle input, a default-umask copy) is readable by the program."""
+    if _PREFLIGHT_OK:
+        return
+    paths = [p for p in os.environ.get("G10_STDIO_SECRET_PATHS", "").split(os.pathsep) if p]
+    if not paths:
+        raise RuntimeError("G10_STDIO_RUNNER=local refused: set G10_STDIO_SECRET_PATHS to every file holding expected outputs")
+    for p in paths:  # a typo must not read as "unreadable": exists() follows symlinks, so a dangling link refuses too
+        if not os.path.exists(p):
+            raise RuntimeError(f"G10_STDIO_RUNNER=local refused: G10_STDIO_SECRET_PATHS names a path that does not exist: {p}")
+    _seccomp_fprog()  # build once in the parent: the forked sandbox start-up then only installs it
+    uid = _next_uid()
+    # a file must not be readable; a folder must be neither listable nor enterable (a 0711 folder hides its names but
+    # a file with a known name inside it can still be opened)
+    probe = ("import os,sys\nfor p in sys.argv[1:]:\n    try:\n        if os.path.isdir(p):\n            os.listdir(p); print(p); break\n"
+             "        open(p,'rb').read(1); print(p); break\n    except OSError: pass\n"
+             "    if os.path.isdir(p):\n        try:\n            os.chdir(p); print(p); break\n        except OSError: pass\n")
+    r = subprocess.run([sys.executable, "-S", "-c", probe, *paths], user=uid, group=uid, extra_groups=[],
+                       capture_output=True, text=True, timeout=30, env={}, cwd="/")
+    if r.stdout.strip():
+        raise RuntimeError(f"G10_STDIO_RUNNER=local refused: a sandbox uid can read {r.stdout.strip()}")
+    # network: the same sandbox start-up (seccomp included) must not let a program open an IP connection
+    net = ("import socket\ntry:\n    socket.create_connection(('1.1.1.1', 53), timeout=2).close(); print('REACHED')\n"
+           "except OSError as e:\n    print('BLOCKED', type(e).__name__)\n")
+    n = subprocess.run([sys.executable, "-S", "-c", net], user=uid, group=uid, extra_groups=[], capture_output=True,
+                       text=True, timeout=30, env={}, cwd="/", preexec_fn=_sandbox_preexec)
+    if not n.stdout.startswith("BLOCKED"):  # REACHED, or the probe did not run: fail closed
+        raise RuntimeError("G10_STDIO_RUNNER=local refused: a sandbox uid can open a network connection "
+                           f"(probe said {n.stdout.strip() or n.stderr.strip()[-80:]!r}); run with internet off or "
+                           "on a kernel that accepts a seccomp filter")
+    _PREFLIGHT_OK.append(True)
+
+
 def run_isolated(code: str, inputs: list[str], time_limit_s: float,
                  expected: list[str] | None = None) -> list[dict] | str:
     ok, why = isolation_available()
     if not ok:
         raise RuntimeError(f"G10_STDIO_RUNNER=local refused: {why}; use docker")
+    preflight_isolation()
     SANDBOX_BASE.mkdir(mode=0o711, exist_ok=True)
     st = SANDBOX_BASE.stat()
     if st.st_uid != 0 or (st.st_mode & 0o777) != 0o711:
@@ -218,7 +323,7 @@ def run_program(code: str, inputs: list[str], time_limit_s: float,
             if rc != 0:
                 return f"runner exited with {rc}"
             try:
-                results = json.loads((w / "outputs.json").read_text(encoding="utf-8"))
+                results = json.loads(_verifier.read_result_bytes(w / "outputs.json", limit=OUTPUTS_MAX_BYTES).decode("utf-8"))
             except (OSError, ValueError):
                 return "no readable output file"
             if not isinstance(results, list) or not all(isinstance(r, dict) for r in results):
@@ -235,7 +340,7 @@ def run_program(code: str, inputs: list[str], time_limit_s: float,
         if proc.returncode != 0:
             return f"runner exited with {proc.returncode}"
         try:
-            results = json.loads((w / "outputs.json").read_text(encoding="utf-8"))
+            results = json.loads(_verifier.read_result_bytes(w / "outputs.json", limit=OUTPUTS_MAX_BYTES).decode("utf-8"))
         except (OSError, ValueError):
             return "no readable output file"
     if not isinstance(results, list) or not all(isinstance(r, dict) for r in results):

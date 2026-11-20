@@ -1,0 +1,96 @@
+Loading weights:   0%|          | 0/391 [00:00<?, ?it/s]Loading weights: 100%|##########| 391/391 [00:00<00:00, 6755.89it/s]
+21 of 86 parts hold a configured pack: en-dclm, en-fineweb-edu, en-nemotroncc, ind-hi-fw2, ind-hi-hplt, ind-hi-indiccorp, ind-hi-sangraha-s, ind-hi-sangraha-v, ind-sa-fw2
+train/en-dclm/part-00000.parquet: 50 documents encoded or cached (31s)
+train/en-dclm/part-00001.parquet: not read, its packs have max_docs_per_pack documents
+train/en-fineweb-edu/part-00000.parquet: 50 documents encoded or cached (38s)
+train/en-fineweb-edu/part-00001.parquet: not read, its packs have max_docs_per_pack documents
+train/en-nemotroncc/part-00000.parquet: 50 documents encoded or cached (44s)
+train/en-nemotroncc/part-00001.parquet: not read, its packs have max_docs_per_pack documents
+train/ind-hi-fw2/part-00000.parquet: 50 documents encoded or cached (48s)
+train/ind-hi-hplt/part-00000.parquet: 50 documents encoded or cached (52s)
+train/ind-hi-indiccorp/part-00000.parquet: 50 documents encoded or cached (53s)
+train/ind-hi-sangraha-s/part-00000.parquet: 50 documents encoded or cached (57s)
+train/ind-hi-sangraha-v/part-00000.parquet: 50 documents encoded or cached (62s)
+train/ind-sa-fw2/part-00000.parquet: 50 documents encoded or cached (66s)
+heldout/en-dclm/part-00000.parquet: not read, its packs have max_docs_per_pack documents
+heldout/en-fineweb-edu/part-00000.parquet: not read, its packs have max_docs_per_pack documents
+heldout/en-nemotroncc/part-00000.parquet: not read, its packs have max_docs_per_pack documents
+heldout/ind-hi-fw2/part-00000.parquet: not read, its packs have max_docs_per_pack documents
+heldout/ind-hi-hplt/part-00000.parquet: not read, its packs have max_docs_per_pack documents
+heldout/ind-hi-indiccorp/part-00000.parquet: not read, its packs have max_docs_per_pack documents
+heldout/ind-hi-sangraha-s/part-00000.parquet: not read, its packs have max_docs_per_pack documents
+heldout/ind-hi-sangraha-v/part-00000.parquet: not read, its packs have max_docs_per_pack documents
+heldout/ind-sa-fw2/part-00000.parquet: not read, its packs have max_docs_per_pack documents
+retrieve sa-en: 50 x 150 documents, 0 candidates (66s)
+retrieve sa-hi: 50 x 250 documents, 2 candidates (66s)
+verify: 1 pairs (88s)
+{
+  "documents_compared": 450,
+  "url": {
+    "groups_with_2_or_more": 0,
+    "groups_over_url_group_max": 0,
+    "pairs": 0
+  },
+  "retrieved": {
+    "sa-en": {
+      "documents_a": 50,
+      "documents_b": 150,
+      "pairs_in_top_k": 530,
+      "kept": 0
+    },
+    "sa-hi": {
+      "documents_a": 50,
+      "documents_b": 250,
+      "pairs_in_top_k": 821,
+      "kept": 2
+    }
+  },
+  "candidates": 2,
+  "verified": 1,
+  "qualifying": 0,
+  "qualifying_heldout_train": 0,
+  "qualifying_by_language_pair": {},
+  "stages_seconds": {
+    "load_model": 16.216,
+    "read": 48.881,
+    "cache": 0.975,
+    "url": 0.007,
+    "retrieve": 0.077,
+    "verify_read": 0.026,
+    "verify": 21.37
+  },
+  "rates": {
+    "heads_per_second": null,
+    "sentences_per_second": 1.5
+  },
+  "estimate_all_documents": {
+    "documents_encoded": {
+      "en": 150,
+      "hi": 250,
+      "sa": 50
+    },
+    "documents_full": {
+      "en": 217552,
+      "hi": 91153,
+      "sa": 5694
+    },
+    "seconds": {
+      "load_model": 16.2,
+      "read": 161.3,
+      "encode": null,
+      "retrieve": 6767.1,
+      "verify": 2436.5
+    },
+    "minutes_total": 156.4,
+    "every_stage_measured": false,
+    "suggested_max_time_minutes": 235,
+    "basis": "this run's rates; read scales with rows, encode with documents, retrieve with the product of the two languages' documents, verify with the smaller language's documents (at most max_verify)"
+  },
+  "wall_seconds": 87.7,
+  "peak_rss_mb": null
+}
+
+Wrote h3_docs.parquet, h3_candidates.csv, h3_matches.csv, h3_by_pack.csv, h3_histogram.csv and h3_summary.json to out\h3_bge_m3_smoke
+........................................................................ [ 88%]
+.........                                                                [100%]
+81 passed in 11.45s

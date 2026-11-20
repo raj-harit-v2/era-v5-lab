@@ -247,7 +247,9 @@ def test_embedded_pack_ids_group_parts_and_canonicalize_pack_pairs(tmp_path, mon
     }
     assert len(pairs) == 6
     assert summary["ids_used_by_2_or_more_documents"] == 1
-    assert summary["inputs"]["checksum_verification"] == "deferred"
+    assert summary["inputs"]["checksum_verification"] == "sha256"
+    assert all(p["sha256"] == hashlib.sha256((out.parents[1] / summary["inputs"]["root"] / p["part"]).read_bytes()).hexdigest()
+               for p in summary["inputs"]["parts"])
     docs = pq.read_table(out / "overlap_docs.parquet").to_pylist()
     assert len({(d["split"], d["part"], d["row_in_part"]) for d in docs}) == 4
     assert all(d["doc_id"] == "shared" for d in docs)

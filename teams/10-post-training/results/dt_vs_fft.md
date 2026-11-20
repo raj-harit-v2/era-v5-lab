@@ -34,6 +34,8 @@
 | `SmolLM2-1.7B` | instruct | LoRA (`r=4`) | 0.3409 | 8 | 0 / — | +0.0190 | — |
 | `SmolLM2-1.7B` | instruct | Deletion Tuning (pure) | 0.3556 | 0 | 0 / — | **+0.0054** | 1.22% / 0.29% |
 
+*Drift column caveat (18 Nov): the rows are not at equal task fit (Full FT reaches 0.4836, DT 0.5321 at 135M), and drift grows with fit. At matched fit on `SmolLM2-135M` a full fine-tune drifts less than DT, see section 7. The 1.7B rows have not been rechecked at matched fit.*
+
 *Additional `1.7B` base run (`dt_sft_surrogate.md` R7): LoRA + marker rows gave `0.3483` test bpb, `81/110` valid replies, `15/100` (`14/69`) exec, `+0.0381` held-out drift.*
 
 ---
@@ -57,7 +59,7 @@ From `results/dt_sft_surrogate.md` §R10 (tied head, 5 marker rows trainable in 
 Deletion Tuning freezes the pre-trained base weight $W \in \mathbb{R}^{d_{\text{out}} \times d_{\text{in}}}$ and trains only one real-valued logit $G_{ij}$ per weight parameter:
 - **Training Forward Pass:** The effective weight is:
   $$W_{\text{eff}}(t) = W \odot \sigma\left(\alpha(t) \cdot G\right)$$
-  where $\alpha(t)$ sharpens linearly from $\alpha(0) = 10^3$ to $\alpha(T) = 10^4$.
+  where $\alpha(t)$ sharpens linearly from $\alpha(0) = 100$ to $\alpha(T) = 1000$ in the main SFT port (`dt/mask.py`, matching the paper repo; note that `sft/deletion_tuning.py` and the `cfg_e4_dt.yaml` RL pilots used `10^3 -> 10^4`, tracked in the 17 Nov port check).
 - **Inference / Evaluation Forward Pass:** The effective weight is pruned with a deterministic hard mask:
   $$W_{\text{eval}} = W \odot \mathbf{1}\left[G > 0\right]$$
 - **Initialization via Wanda Importance:**
@@ -71,7 +73,7 @@ Deletion Tuning freezes the pre-trained base weight $W \in \mathbb{R}^{d_{\text{
 
 ## 4. Multi-Layer & Deletion-Fraction Matrix: Task Gain vs Catastrophic Forgetting
 
-Evaluated via `teams/10-post-training/sft/dt_vs_fft.py --sweep --table` across three layer targets (**MLP gate only**, **all MLP**, and **attention**) and three target deletion fractions ($p \in \{0.20, 0.50, 0.80\}$) for 30 equal steps with learning rate $\eta = 0.2$:
+Evaluated via `teams/10-post-training/sft/dt_vs_fft.py --sweep --table` across three layer targets (**MLP gate only**, **all MLP**, and **attention**) and three target deletion fractions ($p \in \{0.20, 0.50, 0.80\}$) for 30 equal steps with learning rate $\eta = 0.2$, sharpness $\alpha$ 100 to 1000 (the reference SFT setting; earlier versions of this table used 1e3 to 1e4, which saturated the sigmoid so that no mask bit moved, see `results/dt_toy_sharpness_check_20261117.md`). One seed (0), a 4x4 toy, task loss on the toy's own training set. At this setting only some cells move: the three MLP-gate cells changed 5 hard-mask bits in total, all other DT cells changed none, so their rows are still the prior-only numbers:
 - **Task Gain:** $\Delta \mathcal{L}_{\text{task}} = \mathcal{L}_{\text{task}, 0} - \mathcal{L}_{\text{task}, 30}$ (positive indicates improved adaptation).
 - **Catastrophic Forgetting:** $\Delta \mathcal{L}_{\text{base}} = \mathcal{L}_{\text{base}, 30} - \mathcal{L}_{\text{base}, 0}$ on pre-trained distribution samples (positive indicates catastrophic loss of pre-trained knowledge).
 
@@ -79,19 +81,19 @@ Evaluated via `teams/10-post-training/sft/dt_vs_fft.py --sweep --table` across t
 |---|---|---:|---:|---:|---:|---:|---:|:---:|
 | **MLP gate only** | Full Fine-Tuning | - | 0.00 | 0.013317 | 0.002525 | **+0.010792** | **+0.005483** | **yes** |
 | **MLP gate only** | LoRA (rank 1) | - | 0.00 | 0.013317 | 0.013313 | +0.000004 | +0.000000 | no |
-| **MLP gate only** | Deletion Tuning | 0.20 | 0.19 | 0.013294 | 0.013294 | +0.000000 | **+0.000000** | **no** |
-| **MLP gate only** | Deletion Tuning | 0.50 | 0.50 | 0.017511 | 0.017511 | +0.000000 | **+0.000000** | **no** |
-| **MLP gate only** | Deletion Tuning | 0.80 | 0.81 | 0.014594 | 0.014594 | +0.000000 | **+0.000000** | **no** |
+| **MLP gate only** | Deletion Tuning | 0.20 | 0.31 | 0.013294 | 0.007691 | +0.005603 | +0.003684 | no |
+| **MLP gate only** | Deletion Tuning | 0.50 | 0.62 | 0.017511 | 0.011382 | +0.006130 | +0.004111 | no |
+| **MLP gate only** | Deletion Tuning | 0.80 | 0.75 | 0.014594 | 0.011038 | +0.003556 | -0.002551 | no |
 | **all MLP** | Full Fine-Tuning | - | 0.00 | 0.000322 | 0.000305 | **+0.000017** | +0.000000 | **yes** |
 | **all MLP** | LoRA (rank 1) | - | 0.00 | 0.000322 | 0.000322 | +0.000000 | +0.000000 | no |
-| **all MLP** | Deletion Tuning | 0.20 | 0.19 | 0.000327 | 0.000327 | +0.000000 | **+0.000000** | **no** |
-| **all MLP** | Deletion Tuning | 0.50 | 0.50 | 0.000298 | 0.000298 | +0.000000 | **+0.000000** | **no** |
-| **all MLP** | Deletion Tuning | 0.80 | 0.81 | 0.000479 | 0.000479 | +0.000000 | **+0.000000** | **no** |
+| **all MLP** | Deletion Tuning | 0.20 | 0.19 | 0.000327 | 0.000327 | +0.000000 | +0.000000 | no |
+| **all MLP** | Deletion Tuning | 0.50 | 0.50 | 0.000298 | 0.000298 | +0.000000 | +0.000000 | no |
+| **all MLP** | Deletion Tuning | 0.80 | 0.81 | 0.000479 | 0.000479 | +0.000000 | +0.000000 | no |
 | **attention** | Full Fine-Tuning | - | 0.00 | 0.001567 | 0.001112 | **+0.000455** | **+0.000031** | **yes** |
 | **attention** | LoRA (rank 1) | - | 0.00 | 0.001567 | 0.001566 | +0.000001 | +0.000000 | no |
-| **attention** | Deletion Tuning | 0.20 | 0.19 | 0.001673 | 0.001673 | +0.000000 | **+0.000000** | **no** |
-| **attention** | Deletion Tuning | 0.50 | 0.50 | 0.002662 | 0.002662 | +0.000000 | **+0.000000** | **no** |
-| **attention** | Deletion Tuning | 0.80 | 0.81 | 0.004399 | 0.004399 | +0.000000 | **+0.000000** | **no** |
+| **attention** | Deletion Tuning | 0.20 | 0.19 | 0.001673 | 0.001673 | +0.000000 | +0.000000 | no |
+| **attention** | Deletion Tuning | 0.50 | 0.50 | 0.002662 | 0.002662 | +0.000000 | +0.000000 | no |
+| **attention** | Deletion Tuning | 0.80 | 0.81 | 0.004399 | 0.004399 | +0.000000 | +0.000000 | no |
 
 ---
 
@@ -99,7 +101,7 @@ Evaluated via `teams/10-post-training/sft/dt_vs_fft.py --sweep --table` across t
 
 1. **Forgetting vs Capability Trade-off:**
    - Pure Deletion Tuning keeps held-out forgetting far lower than Full FT (`+0.0163` vs `+0.0746` at 1.7B base, $0.22\times$), and reaches `0.949×` the task cross-entropy of LoRA at 1.7B base (`0.3698` vs `0.3500`).
-   - On the synthetic multi-layer matrix, base weights remain completely unchanged, resulting in **$0.000000$ drift** on base loss distributions.
+   - On the synthetic multi-layer matrix the base weights stay frozen in every DT cell. Drift on the base loss distribution is $0.000000$ in the six all-MLP and attention cells (their masks did not move at sharpness 100 to 1000, seed 0) and `+0.0037`, `+0.0041`, `-0.0026` in the three MLP-gate cells, where the hard mask changed 5 bits. One seed, 4x4 toy.
 2. **The Chat Format Gap & Hybrid Solution:**
    - Pure DT on a base model produces $0/110$ valid chat replies because pruning alone cannot invent representations for new chat-delimiter tokens (`<|im_start|>`, `<|im_end|>`, etc.).
    - Full FT learns format quickly (81–93 valid replies).
@@ -109,7 +111,8 @@ Evaluated via `teams/10-post-training/sft/dt_vs_fft.py --sweep --table` across t
    - **SwiGLU MLP Blocks ($W_{\text{gate}}, W_{\text{up}}, W_{\text{down}}$):** Exhibit greater redundancy; $p = 0.50$ deletion maintains step 0 loss at $0.000298$, slightly lower than the unpruned baseline ($0.000322$), corroborating the finding that Wanda pruning acts as an implicit inductive regularizer. Expanding from `gate_proj` to all MLP lowers test bpb (`0.5287 -> 0.5048`) at the cost of ~45% more forgetting (`+0.0295 -> +0.0426`).
 4. **Wanda Initialization Quantile:**
    - Sweeping the initial Wanda quantile $\eta$ from `1/8192` to `1/256` barely changes final deletion (`3.17% -> 3.50%`) or task metrics; training gradient updates determine final sparsity.
-5. **Capstone Caveat:**
+5. **Learning-rate check (18 Nov, one seed):** the pure-DT arm above uses lr `2e-3`; the official script uses `5e-4`. Re-run at `5e-4` (same data, steps, alpha, seed; Mac fp32, CPU evaluation): test bpb `0.5484` (worse than `2e-3`'s `0.5323`, still above LoRA `0.5283` and Full FT `0.4836`), held-out drift `+0.0207` (below `2e-3`'s `+0.0287`). Raw drift moves with fit along lr, and the task ordering is unchanged. Whether DT forgets less than Full FT at equal fit is a separate question, answered in section 7. Details and checks: `results/dt_lr_check_20261118.md`.
+6. **Capstone Caveat:**
    - All surrogate runs above are on dense `SmolLM2` with `AdamW`, not the capstone MoE with `Muon` / `KE2`. See `jobs/2026-11-19-dt-vs-fft-1.7b.md` for the TSAI reproduction request (`1.7B` base row).
 
 ---
@@ -130,3 +133,30 @@ Execute single-seed update-rule smoke check:
 ```bash
 python teams/10-post-training/sft/dt_vs_fft.py --steps 30 --seed 0
 ```
+
+---
+
+## 7. Matched-fit control (18 Nov)
+
+Question: the table above compares DT and Full FT at different task fit (DT 0.5321, Full FT 0.4836 test bpb), and drift grows with fit. At the same fit, who drifts less? `SmolLM2-135M`, same `slice-v1` data, one seed, T4 fp32. Each arm is a complete short run (own warmup and cosine) aimed at DT 2e-3's test bpb `0.5322` (tolerance 0.004). Drift = held-out v1 bpb minus base `1.0981`.
+
+| Arm | Steps | Test bpb | Held-out drift |
+| --- | ---: | ---: | ---: |
+| Full FT | 51 | 0.5712 | +0.0110 |
+| Full FT | 72 | 0.5531 | +0.0132 |
+| Full FT | **107** | **0.5342** | **+0.0166** |
+| LoRA r=4 | 184 | 0.5597 | +0.0255 |
+| LoRA r=4 | 260 | 0.5443 | +0.0298 |
+| DT 2e-3 (reference, not retrained on the T4) | 400 | 0.5322 | +0.0283 |
+
+Gaps (arm drift minus DT drift, at DT's fit):
+- **Full FT: -0.0113** (the 107-step run, adjusted for its 0.002 bpb offset; Reading B from the 400-step trajectory: -0.0073). Full FT drifts less than DT; 11 of 15 held-out slices agree, 4 go the other way (math, as, sci, code; the last two by under 0.001).
+- **LoRA: +0.0066**, mid-run reading only (the 400-step trajectory interpolated at DT's fit, +0.0349 against DT +0.0283). No complete LoRA run landed within 0.004 of the target (both sit above it), so this is not confirmed.
+
+Summary: At equal task fit, DT does not forget less than full fine-tuning. On SmolLM2-135M (one seed), a full fine-tune stopped at DT 2e-3's test bpb (0.534 against 0.532) drifts +0.017 on the held-out set, DT drifts +0.028; the lower raw drift of DT in the table above comes from DT fitting the task less (full FT 0.4836 / +0.051). Against LoRA at matched fit the gap is small and in DT's favour (+0.007 on a mid-run read-out, not confirmed by a complete short LoRA run). So DT is not shown to improve retention at a given fit; at 1.7B the gap was larger and has not been rechecked at matched fit.
+
+Limits:
+- Fit was matched by a shorter full fine-tune (107 steps against DT's 400). A full-length fine-tune at a lower learning rate was not tried.
+- One seed, 135M dense model. The DT reference rows were not retrained on the T4 (they come from the lr check: mean of the saved A10 model and the Mac retrain, 0.5322 / +0.0283). Nothing was measured on the MoE or at 1.7B.
+
+Sharpness settings after the 19 Nov merge (note added by PR 114, 19 Nov; the sentence in section 3 stays as the lead wrote it): the lead's commit 537e4167 sets the `rl-loop/train.py` fallback to alpha 100 -> 1000, so the main SFT port, the rl-loop fallback and (since this PR's earlier commit b994bb82) the toy `sft/deletion_tuning.py` all use 100 -> 1000. The section 3 remark that `sft/deletion_tuning.py` "used" 1e3 -> 1e4 describes the file before this PR. Nothing in sections 1, 2, 5 or 7 depends on those constants: they come from `dt/mask.py` runs (already 100 -> 1000) and from the toy sweep, which was re-run at 100 -> 1000 in section 4. The `cfg_e4_dt.yaml` RL pilots were run at 1e3 -> 1e4 and were not re-run here.

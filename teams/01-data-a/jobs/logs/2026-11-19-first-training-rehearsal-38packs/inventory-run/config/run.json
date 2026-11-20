@@ -1,0 +1,44 @@
+{
+ "run_id": "first-training-v1-rehearsal",
+ "out": "out/pipeline",
+ "inventory": "out/rehearsal-inputs/expected_inventory.json",
+ "intermediates": "keep",
+ "stages": {
+  "clean": {
+   "mode": "run",
+   "settings": "teams/01-data-a/pipeline/clean.json",
+   "input": "/root/raw38",
+   "manifest": "out/rehearsal-inputs/input_manifest.json",
+   "manifest_sha256": "575fdde2ed9e11a78eb9fe759a5108696b47431c504452e1d3f86ca410ae3417",
+   "expected_parts": {
+    "train": 48,
+    "heldout": 38
+   }
+  },
+  "overlap": {
+   "mode": "run",
+   "settings": "teams/01-data-a/dedup/overlap.json"
+  },
+  "h3": {
+   "mode": "run",
+   "settings": "teams/01-data-a/jobs/2026-11-19-first-training/h3.json"
+  },
+  "dedup": {
+   "mode": "run",
+   "settings": "teams/01-data-a/dedup/dedup.json"
+  },
+  "f2": {
+   "pool": true,
+   "workers": 30
+  },
+  "ledger": {
+   "raw": "/root/raw38"
+  },
+  "shards": {
+   "tokenizer": "/workspace/data/tokenizers/p1536-sample-v0/tokenizer.json",
+   "dataset_version": "first-training-v1",
+   "pack_table": "out/rehearsal/pack_table_job_shaped.json"
+  },
+  "reconcile": {}
+ }
+}

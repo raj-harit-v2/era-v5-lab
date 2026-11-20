@@ -16,8 +16,8 @@ THE RULES (source_priority_v1.md), applied in order to each cluster
 =====================================================================
   0  Held-out first   dedup never removes a held-out document. In a cluster with held-out copies, every held-out copy
                       survives and every train copy is removed. Held-out <-> held-out matches are reported, not removed.
-  1  Licence          a copy whose pack has an unusable licence never survives. If no train copy is usable, every train
-                      copy is removed. The pack -> usable map is in the config (from G10's licence table).
+  1  Licence          a train copy whose pack has an unusable licence is removed, even when it has no duplicate match.
+                      Held-out copies remain. The pack -> usable map is in the config (from G10's licence table).
   2  Provenance       prefer a copy with a non-empty url. Needs the cleaned parts ("inputs" in the config); without them
                       the url is unknown and this rule decides nothing. It changes which copy survives, never how many.
   3  Completeness     prefer the longer copy (more words in its H1 key; overlap_docs.parquet "words").
@@ -150,7 +150,7 @@ def read_matches(results, cross_pack):
     return out, dropped
 
 
-def read_docs(results, rows, gold_dirs):
+def read_docs(results, rows, gold_dirs, licence_usable=None, default_licence_usable=True):
     """Run-local row -> document fields for the matched rows, documents per pack, the gold IDs (read for the packs in
     the run) with how many of them are in it, and every document with no shingles (empty).
 
@@ -174,6 +174,10 @@ def read_docs(results, rows, gold_dirs):
         raise Fatal(f"{len(missing)} matched rows are not in overlap_docs.parquet, e.g. {sorted(missing)[:3]}")
     counts = pc.value_counts(t["pack"])
     per_pack = dict(zip(counts.field("values").to_pylist(), counts.field("counts").to_pylist()))
+    unusable_packs = [p for p in per_pack if not (licence_usable or {}).get(p, default_licence_usable)]
+    unusable_train = (t.filter(pc.and_(pc.equal(t["split"], "train"),
+                                     pc.is_in(t["pack"], value_set=pa.array(unusable_packs, type=pa.string())))).to_pylist()
+                      if unusable_packs else [])
     gold = read_gold(gold_dirs, per_pack)
     present = {p: 0 for p in gold}
     all_gold = sorted({d for ids in gold.values() for d in ids})
@@ -182,7 +186,7 @@ def read_docs(results, rows, gold_dirs):
         for p, d in {(p, d) for p, d in zip(hits["pack"].to_pylist(), hits["doc_id"].to_pylist())}:
             if d in gold.get(p, ()):
                 present[p] += 1
-    return docs, per_pack, gold, present, empty
+    return docs, per_pack, gold, present, empty, unusable_train
 
 
 def read_urls(inputs, docs):
@@ -304,7 +308,8 @@ def run(cfg):
     summary_in, checked = check_results(results)
     matches, dropped_cross = read_matches(results, cfg["cross_pack"])
     rows = {x for a, b, *_ in matches for x in (a, b)}
-    docs, per_pack, gold, present, empty = read_docs(results, rows, cfg["gold_dirs"])
+    docs, per_pack, gold, present, empty, unusable_train = read_docs(
+        results, rows, cfg["gold_dirs"], cfg["licence_usable"], cfg["default_licence_usable"])
     empty_rows = {d["row"] for d in empty}
     n_matches = len(matches)
     matches = [m for m in matches if m[0] not in empty_rows and m[1] not in empty_rows]   # not duplicates: set aside
@@ -385,6 +390,25 @@ def run(cfg):
             gone.add(r)
         member = [(g, size, rule, "removed" if role == "survivor" and r in gone else role, r)
                   for g, size, rule, role, r in member]
+
+    already_removed = set(removed)
+    for d in sorted(unusable_train, key=lambda item: item["row"]):
+        if d["row"] in already_removed:
+            continue
+        docs[d["row"]] = d
+        group_id = f"G{sum(decided.values()) + 1:06d}"
+        member.append((group_id, 1, 1, "removed", d["row"]))
+        decided[1] += 1
+        no_survivor += 1
+        log.append({
+            "removed_pack_id": d["pack"], "removed_split": "train", "removed_part": d["part"],
+            "removed_row_in_part": d["row_in_part"], "removed_id": d["doc_id"],
+            "kept_pack_id": None, "kept_split": None, "kept_part": None,
+            "kept_row_in_part": None, "kept_id": None,
+            "rule": "licence", "similarity": None, "priority_rule": 1,
+            "stage": "licence", "direct": False,
+        })
+        removed.append(d["row"])
 
     held_pairs = [(a, b, rule, score) for (a, b), (rule, score) in sorted(best_pair.items())
                   if docs[a]["split"] == "heldout" and docs[b]["split"] == "heldout"]

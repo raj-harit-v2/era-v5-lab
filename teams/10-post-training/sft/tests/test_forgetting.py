@@ -264,3 +264,21 @@ def test_with_a_tiny_stderr_the_bar_is_the_absolute_floor():
     assert r["significant_drop"] and r["at_limit"]        # 0.015 is 0.005 above the 0.01 floor
     a["eval_mini"]["records"][0]["value"] = 0.375
     assert not fg.compare(b, a)["benchmarks"]["arc_challenge"]["at_limit"]   # 0.025 is 0.015 above it
+
+
+@parametrize("which", ["before", "after"])
+@parametrize("field,bad", [("value", 44.0), ("value", -0.01), ("stderr", 2.22), ("stderr", -0.01)])
+def test_points_and_out_of_range_eval_mini_values_are_refused(which, field, bad):
+    b, a = report(), report()
+    target = b if which == "before" else a
+    target["eval_mini"]["records"][0][field] = bad
+    with pytest.raises(fg.ReportError, match=r"outside \[0, 1\]"):
+        fg.compare(b, a)
+
+
+def test_boundary_fraction_values_zero_and_one_are_accepted():
+    b, a = report(arc=1.0, hella=0.0), report(arc=1.0, hella=0.0)
+    for rep in (b, a):
+        rep["eval_mini"]["records"][0]["stderr"] = 0.0
+    assert fg.compare(b, a)["forgetting"] is False
+

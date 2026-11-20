@@ -1,0 +1,35 @@
+{
+  "_comment": "Scenario 4: adopt. The clean stage is a folder from another run (here step 3's), not run again; overlap and dedup run on it. This is how a dedup job starts from a clean folder TSAI returned: put that folder in 'output'.",
+  "run_id": "trial-adopt",
+  "out": "out/pipeline",
+  "to": "dedup",
+  "stages": {
+    "clean": {
+      "mode": "adopt",
+      "output": "out/pipeline/trial-steps/clean"
+    },
+    "overlap": {
+      "mode": "run",
+      "settings": "teams/01-data-a/dedup/overlap.json"
+    },
+    "dedup": {
+      "mode": "run",
+      "settings": "teams/01-data-a/dedup/dedup.json"
+    },
+    "apply": {
+      "link": true
+    },
+    "f2": {
+      "script": "teams/01-data-a/spec_v1/run_f2.py",
+      "workers": 2
+    },
+    "shards": {
+      "tokenizer": "inputs/local_trial/tokenizer.json",
+      "any_tokenizer": true,
+      "tokens": 262144,
+      "packs": [
+        "code-rust"
+      ]
+    }
+  }
+}

@@ -1,0 +1,144 @@
+{
+  "tool": "ledger.py",
+  "code_sha256": "4021460974d0d0c3228409cf89096750f31dfe2c6321141f0dc9f370233b6fe1",
+  "clean_mode": "B",
+  "inputs": {
+    "raw": {
+      "path": "/workspace/data/tokenizer_sample_v0_raw",
+      "files": [
+        {
+          "part": "train/code-go/part-00000.parquet",
+          "file": "train/code-go/part-00000.parquet",
+          "sha256": "6b7b52e854df0456e3a9867b32f5217b54995faa30dbd6b8b94e23eab6db8eb1"
+        },
+        {
+          "part": "train/code-go/part-00001.parquet",
+          "file": "train/code-go/part-00001.parquet",
+          "sha256": "40aedd68c4ec949eb825edc68896ae4518cf6c3283027d9ba1430ee66ee247fc"
+        },
+        {
+          "part": "train/ind-bn-fw2/part-00000.parquet",
+          "file": "train/ind-bn-fw2/part-00000.parquet",
+          "sha256": "fda2605fd302c5bee7ad3c780e11460a7ccdfc60d4a1467854c1dee974d633e9"
+        },
+        {
+          "part": "train/ind-bn-sangraha-v/part-00000.parquet",
+          "file": "train/ind-bn-sangraha-v/part-00000.parquet",
+          "sha256": "84a59d8676186cdd4676e65cd8d00ce5dde23a3abb76be66c1d9389a163194ed"
+        },
+        {
+          "part": "heldout/code-go/part-00000.parquet",
+          "file": "heldout/code-go/part-00000.parquet",
+          "sha256": "be4917c1049d1e1a22286d2822c96c47f688bcf2bb9bdafba9511ae350728745"
+        }
+      ]
+    },
+    "remove_list": {
+      "path": "/workspace/era-v5-lab/out/pipeline/rehearsal-3pack/dedup/remove_list.csv",
+      "sha256": "e79e9d1b28f940647e6ffb880024277ba38ac041c0423109246bffc595e1b3f0",
+      "rows": 7
+    },
+    "groups": {
+      "path": "/workspace/era-v5-lab/out/pipeline/rehearsal-3pack/dedup/dedup_groups.csv",
+      "sha256": "504347679543b8c5aa19a62c93c054198193f36d611faf467e94af0fe22509d1",
+      "rows": 14,
+      "removed_rows": 7
+    },
+    "log": {
+      "path": "/workspace/era-v5-lab/out/pipeline/rehearsal-3pack/dedup/dedup_log.jsonl",
+      "sha256": "559caec7ac127fb7e10506e348dbef1adb71848640314837f2c917f43fe59179",
+      "rows": 7
+    },
+    "set_sha256": "2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a"
+  },
+  "parts": 5,
+  "totals": {
+    "rows": 105672,
+    "rows_cleaned": 98585,
+    "kept": 98480,
+    "dropped_by_clean": 7087,
+    "removed_by_dedup": 7,
+    "dropped_by_f2": 98,
+    "f2_error": 0,
+    "clean_fix_by_text": 48503
+  },
+  "survivors_dropped_by_f2": {
+    "total": 1,
+    "by_pack": {
+      "code-go": 1
+    }
+  },
+  "clean_reports": {
+    "parts": 5,
+    "input_rows": 105672,
+    "drop": 7087,
+    "fix": 48503,
+    "keep": 50082
+  },
+  "by_pack": {
+    "code-go": {
+      "train": {
+        "rows": 83267,
+        "rows_cleaned": 76955,
+        "kept": 76853,
+        "dropped_by_clean": 6312,
+        "removed_by_dedup": 6,
+        "dropped_by_f2": 96,
+        "f2_error": 0
+      },
+      "heldout": {
+        "rows": 872,
+        "rows_cleaned": 810,
+        "kept": 808,
+        "dropped_by_clean": 62,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 2,
+        "f2_error": 0
+      }
+    },
+    "ind-bn-fw2": {
+      "train": {
+        "rows": 11205,
+        "rows_cleaned": 10704,
+        "kept": 10704,
+        "dropped_by_clean": 501,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "f2_error": 0
+      }
+    },
+    "ind-bn-sangraha-v": {
+      "train": {
+        "rows": 10328,
+        "rows_cleaned": 10116,
+        "kept": 10115,
+        "dropped_by_clean": 212,
+        "removed_by_dedup": 1,
+        "dropped_by_f2": 0,
+        "f2_error": 0
+      }
+    }
+  },
+  "files": [
+    {
+      "file": "heldout/code-go.parquet",
+      "rows": 872,
+      "sha256": "70ff748038104ee47627afc6e39aa272f16ce39e70bd5d17e79f25e85eef0074"
+    },
+    {
+      "file": "train/code-go.parquet",
+      "rows": 83267,
+      "sha256": "baeb18e57878b1275f594af599414bb7b668a3729f952d47f1fb75febe2cbd0d"
+    },
+    {
+      "file": "train/ind-bn-fw2.parquet",
+      "rows": 11205,
+      "sha256": "c8fef2afd42a05ef0a7c54c71783a5a7022f2d4fc98973e5cf95546c05b897ad"
+    },
+    {
+      "file": "train/ind-bn-sangraha-v.parquet",
+      "rows": 10328,
+      "sha256": "27b9f4de14c2a9d06fdf6938d64549f2220e1132aebecb0efb4a4318f4121c1a"
+    }
+  ]
+}

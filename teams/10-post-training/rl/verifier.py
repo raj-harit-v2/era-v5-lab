@@ -114,7 +114,7 @@ def _case_ok(result: dict, case: dict) -> bool:
     return bool(result.get("ok")) and _same(result.get("value"), case["expected"])
 
 
-def read_result_bytes(name: str | Path, dir_fd: int | None = None) -> bytes:
+def read_result_bytes(name: str | Path, dir_fd: int | None = None, limit: int = MAX_RESULT_BYTES) -> bytes:
     """Bytes of the results file that the candidate's container wrote. The container can leave anything at this path
     (a symlink to a host file, a pipe, a huge file) and can still be running, so the file is opened without following a
     symlink (O_NOFOLLOW, without blocking on a pipe), must be a regular file, and at most MAX_RESULT_BYTES are read.
@@ -124,15 +124,15 @@ def read_result_bytes(name: str | Path, dir_fd: int | None = None) -> bytes:
     try:
         if not stat.S_ISREG(os.fstat(fd).st_mode):
             raise ValueError("result file is not a regular file")
-        data = os.read(fd, MAX_RESULT_BYTES + 1)
-        while len(data) <= MAX_RESULT_BYTES:
-            more = os.read(fd, MAX_RESULT_BYTES + 1 - len(data))
+        data = os.read(fd, limit + 1)
+        while len(data) <= limit:
+            more = os.read(fd, limit + 1 - len(data))
             if not more:
                 break
             data += more
     finally:
         os.close(fd)
-    if len(data) > MAX_RESULT_BYTES:
+    if len(data) > limit:
         raise ValueError("result file is too large")
     return data
 

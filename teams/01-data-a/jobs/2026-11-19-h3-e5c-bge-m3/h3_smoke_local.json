@@ -1,0 +1,33 @@
+{
+  "_comment": "Local smoke run of jobs/2026-11-19-h3-e5c-bge-m3/h3.json: the same settings on the local cleaned sample, 50 documents per pack, on CPU.",
+  "inputs": "../tokenizer_sample_v0_clean/tokenizer_sample_v0_clean",
+  "out": "out/h3_bge_m3_smoke",
+  "cache": "out/h3_cache_bge_m3_smoke",
+  "model_path": "../models/bge-m3",
+  "device": "cpu",
+  "precision": "auto",
+  "packs": {
+    "ind-sa-fw2": "sa",
+    "ind-hi-*": "hi",
+    "en-fineweb-edu": "en",
+    "en-dclm": "en",
+    "en-nemotroncc": "en"
+  },
+  "pairs": [
+    [
+      "sa",
+      "en"
+    ],
+    [
+      "sa",
+      "hi"
+    ]
+  ],
+  "sentence_threshold": 0.7,
+  "doc_floor": 0.55,
+  "coverage_threshold": 0.6,
+  "report_floor": 0.3,
+  "max_minutes": 60,
+  "max_output_mb": 50,
+  "max_docs_per_pack": 50
+}

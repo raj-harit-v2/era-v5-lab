@@ -1,0 +1,52 @@
+=== A. rollover: the main run's shards
+not_sharded   heldout/code-go/part-00000.parquet: 0 shards, docs None, tokens None
+written       train/code-go/part-00000.parquet: 55 shards, docs 56584, tokens 56692090
+written       train/code-go/part-00001.parquet: 20 shards, docs 20211, tokens 20253926
+written       train/ind-bn-fw2/part-00000.parquet: 7 shards, docs 10704, tokens 7127920
+written       train/ind-bn-sangraha-v/part-00000.parquet: 8 shards, docs 10111, tokens 8014527
+A check_shard exit=0
+ind-bn-sangraha-v-train-000006: 48 PASS, 0 FAIL, 0 NOT CHECKED
+ind-bn-sangraha-v-train-000007: 48 PASS, 0 FAIL, 0 NOT CHECKED
+map (shards_summary.json): 211 PASS, 0 FAIL, 1 NOT CHECKED
+NOT CHECKED  run: run_shards verified the folder                                                                    expected=True  observed=None
+90 shard(s): {'PASS': 4531, 'FAIL': 0, 'NOT CHECKED': 1}
+A verify_shards exit=0
+verify_shards: 0 problem(s) in out/pipeline/rehearsal-3pack/shards
+=== B. interrupted shard stage, then rerun
+B killed run 1 (kill -9) with 3 .bin files on disk
+B run 1 exit=137
+B run 2 (rerun) exit=0
+not_sharded heldout/code-go/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+written  train/code-go/part-00000.parquet: 55 shard(s), 56584 docs, 56692090 tokens
+written  train/code-go/part-00001.parquet: 20 shard(s), 20211 docs, 20253926 tokens
+written  train/ind-bn-fw2/part-00000.parquet: 7 shard(s), 10704 docs, 7127920 tokens
+written  train/ind-bn-sangraha-v/part-00000.parquet: 8 shard(s), 10111 docs, 8014527 tokens
+{"written": 4, "empty": 0, "all_left_out": 0, "failed": 0, "skipped": 0, "not_sharded": 1, "truncated": 0, "shards": 90}
+B verify_shards exit=0
+verify_shards: 0 problem(s) in out/drills/B_int
+B same shard files as the main run: True 270 270
+B token/index/docs files that differ from the uninterrupted run: none
+B leftovers (.partial/.tmp/.lock): none
+=== C. damaged shards
+C1: flipped one byte in code-go-train-000000.bin at 2095746
+C2: cut 8 bytes off code-go-train-000001.idx.npy
+C3: deleted code-go-train-000002.docs.parquet
+C1 verify_shards exit=1 :: code-go-train-000000: code-go-train-000000.bin: sha256 1a1231d18742…, the manifest says 6c4b4b11fa7e…
+code-go-train-000000: code-go-train-000000.bin: a token id of 131072 or more
+C1 check_shard exit=1 :: code-go-train-000000: 45 PASS, 3 FAIL, 0 NOT CHECKED
+FAIL         payload_sha256 (code-go-train-000000.bin)                         expected=6c4b4b11fa7e9f92  observed=1a1231d1874266cb
+C2 verify_shards exit=1 :: code-go-train-000001: code-go-train-000001.idx.npy: sha256 1dc2feb96f15…, the manifest says 96e57523c81b…
+code-go-train-000001: code-go-train-000001.idx.npy cannot be read (ValueError)
+C2 check_shard exit=1 :: code-go-train-000000: 48 PASS, 0 FAIL, 0 NOT CHECKED
+    raise ValueError(
+C3 verify_shards exit=1 :: code-go-train-000002: code-go-train-000002.docs.parquet is missing
+verify_shards: 1 problem(s) in out/drills/C3
+C3 check_shard exit=0 :: code-go-train-000000: 48 PASS, 0 FAIL, 0 NOT CHECKED
+code-go-train-000001: 48 PASS, 0 FAIL, 0 NOT CHECKED
+=== D. every document left out (token limit below every document)
+D run exit=0
+all_left_out train/ind-bn-sangraha-v/part-00000.parquet: 0 shard(s), 0 docs, 0 tokens
+{"written": 0, "empty": 0, "all_left_out": 1, "failed": 0, "skipped": 0, "not_sharded": 0, "truncated": 0, "shards": 0}
+D all_left_out train/ind-bn-sangraha-v/part-00000.parquet rows_read 10115 left_out {'secret': 4, 'empty': 0, 'special': 0, 'roundtrip': 0, 'oversize': 10111}
+D .bin files written: 0
+DRILLS_DONE

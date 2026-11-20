@@ -29,6 +29,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -98,7 +99,8 @@ def run_sft_arm(out: Path, arm: str, cmd: list[str], timeout: float | None = Non
         rep = json.loads((arm_out / "sft_report.json").read_text())
         keep = ("method", "train_seconds", "stopped_early", "mask_checks", "writeback_step1",
                 "frozen_weights_unchanged", "reload_parity", "first_loss", "last_loss")
-        return {**{k: rep.get(k) for k in keep}, "before": rep["before"], "after": rep["after"]}
+        kept = {"kept_weights": rep["kept_weights"]} if rep.get("kept_weights") else {}  # only when --keep-weights-dir was given
+        return {**{k: rep.get(k) for k in keep}, "before": rep["before"], "after": rep["after"], **kept}
     finally:
         # A process-level kill still requires the job runner's cleanup; finally covers ordinary failures.
         (arm_out / "generations.jsonl").unlink(missing_ok=True)
@@ -108,6 +110,9 @@ def run_sft_arm(out: Path, arm: str, cmd: list[str], timeout: float | None = Non
 def finish(out: Path, results: dict) -> int:
     failed = [name for name, result in results.items() if not result["ok"]]
     summary = {"ok": not failed, "steps": len(results), "failed_steps": failed}
+    kept = {n: r["kept_weights"] for n, r in results.items() if r.get("kept_weights")}
+    if kept:  # only when --keep-weights-dir was given: where the run folder is, its manifest sha256 and the saved step
+        summary["kept_weights"] = kept
     (out / "summary.json").write_text(json.dumps(summary, indent=1))
     print(json.dumps(summary), flush=True)
     return int(bool(failed))
@@ -129,6 +134,11 @@ def rl_screen_bundle(bundle, tasks: Path, ids: Path, k: int, max_new: int, devic
     spec = importlib.util.spec_from_file_location("g10_stdio_check", TEAM10 / "rl-data" / "stdio_check.py")
     sc = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(sc)
+    # two sft_g5 processes (one per GPU) share a machine: each needs its own sandbox uid slice, because a uid's
+    # cleanup kills every process of that uid (GPU 0 -> 61000+1000, GPU 1 -> 62000+1000)
+    gpu = os.environ.get("CUDA_VISIBLE_DEVICES", "")
+    if gpu.isdigit() and int(gpu) < 4:
+        sc.set_uid_range(61000 + 1000 * int(gpu), 1000)
     kv = bundle.kv_cache
     bundle.kv_cache = True
     codec = bundle.codec()

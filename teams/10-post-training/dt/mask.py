@@ -59,7 +59,14 @@ def target_match(full: str, targets: Iterable[str]) -> bool:
 
 
 class MaskedLinear(nn.Module):
-    """y = x (W * m)^T + b with W, b frozen. m = sigmoid(alpha G) in training mode, 1[G > 0] in eval mode."""
+    """y = x (W * m)^T + b with W, b frozen. m = sigmoid(alpha G) in training mode, 1[G > 0] in eval mode.
+
+    `.weight` is the EFFECTIVE weight W * m (a property, recomputed on every read; raw W while `unmasked`), and
+    `forward` is F.linear(x, self.weight, self.bias). Code that reads a layer's weight instead of calling it (G5's
+    fused MoE path since #521 stacks `e.gate.weight` of every routed expert) therefore sees the mask, and the mask
+    logits get gradient through it. The frozen pretrained tensor is still the registered parameter named `weight`
+    (so parameters(), named_parameters(), state_dict(), load_state_dict() and every old checkpoint are unchanged) and
+    is read as `base_weight`. Do not assign `layer.weight = ...` (no setter); change `layer.base_weight` in place."""
 
     def __init__(self, base: nn.Linear, alpha_start: float, alpha_end: float, total_steps: int,
                  generator: torch.Generator):
@@ -67,14 +74,14 @@ class MaskedLinear(nn.Module):
         if alpha_start <= 0 or alpha_end <= 0 or total_steps <= 0:
             raise ValueError("alpha_start, alpha_end and total_steps must be positive")
         self.in_features, self.out_features = base.in_features, base.out_features
-        self.weight = base.weight
-        self.weight.requires_grad_(False)
+        self._parameters["weight"] = base.weight  # registered as `weight`; the class property below shadows reads
+        base.weight.requires_grad_(False)
         self.bias = base.bias
         if self.bias is not None:
             self.bias.requires_grad_(False)
-        g = torch.empty(self.weight.shape, dtype=torch.float32)
+        g = torch.empty(self.base_weight.shape, dtype=torch.float32)
         g.normal_(0.0, 0.01, generator=generator)
-        self.gate = nn.Parameter(g.to(self.weight.device))  # FP32 logits, one per weight
+        self.gate = nn.Parameter(g.to(self.base_weight.device))  # FP32 logits, one per weight
         self.alpha_start, self.alpha_end, self.total_steps = float(alpha_start), float(alpha_end), int(total_steps)
         self.current_step = 0
         self.unmasked = False  # True only during Wanda calibration (the official `sparse = False`)
@@ -96,11 +103,21 @@ class MaskedLinear(nn.Module):
     def mask(self) -> torch.Tensor:
         return self.soft_mask() if self.training else self.hard_mask()
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
+    @property
+    def base_weight(self) -> torch.Tensor:
+        """The frozen pretrained W (the registered parameter `weight`)."""
+        return self._parameters["weight"]
+
+    @property
+    def weight(self) -> torch.Tensor:
+        """The weight this layer applies: W * m (m from mask(): soft in training mode, hard in eval mode), or the raw
+        frozen W while `unmasked` is set for Wanda calibration. The only place the effective weight is computed."""
         if self.unmasked:
-            return F.linear(x, self.weight, self.bias)
-        w = self.weight * self.mask().to(self.weight.dtype)
-        return F.linear(x, w, self.bias)
+            return self.base_weight
+        return self.base_weight * self.mask().to(self.base_weight.dtype)
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        return F.linear(x, self.weight, self.bias)
 
     def extra_repr(self) -> str:
         return f"in_features={self.in_features}, out_features={self.out_features}, bias={self.bias is not None}"
@@ -141,7 +158,7 @@ def regulariser(model: nn.Module) -> torch.Tensor:
     """sum over masked layers of ||W * soft_mask||^2 (FP32), the term the loss subtracts with weight lambda_t."""
     total = None
     for _, m in masked_layers(model):
-        t = (m.weight.detach().float() * m.soft_mask()).pow(2).sum()
+        t = (m.base_weight.detach().float() * m.soft_mask()).pow(2).sum()
         total = t if total is None else total + t
     return total
 
@@ -151,16 +168,33 @@ def lambda_at(step: int, total_steps: int, lam: float) -> float:
     return lam * (1.0 - step / total_steps)
 
 
+def fused_moe_layers(model: nn.Module) -> list[tuple[str, nn.Module]]:
+    """MoE modules (attributes `router`, `experts` ModuleList, `topk`, forward(x, valid)) that hold masked experts.
+    G5's MoE.forward since #521 reads the experts' weights and never calls them, so a forward hook on an expert
+    layer cannot see its input there; the hook goes on the MoE module instead (see wanda_scores)."""
+    return [(n, m) for n, m in model.named_modules()
+            if hasattr(m, "router") and hasattr(m, "topk") and isinstance(getattr(m, "experts", None), nn.ModuleList)
+            and any(isinstance(c, MaskedLinear) for c in m.experts.modules())]
+
+
 @_no_grad()
 def wanda_scores(model: nn.Module, batches: Iterable[dict], device) -> dict[str, torch.Tensor]:
-    """|W_ij| * ||X_j||_2 per masked layer, with the masks switched off (official compute_wanda_scores)."""
+    """|W_ij| * ||X_j||_2 per masked layer, with the masks switched off (official compute_wanda_scores).
+
+    Routed experts of a fused MoE (never called as modules): after the MoE runs, every masked expert that no hook saw
+    during that call is run on exactly the rows MoE.forward would route to it (router softmax, top-k, padding rows
+    excluded: the old per-expert loop's gathered rows), so the same per-layer hooks record its inputs, including the
+    hidden input of `down`, computed with the unmasked weights. A MoE that still calls its experts (the old loop)
+    triggers no extra call, so nothing is counted twice; an expert with no routed row gets no score, as before."""
     layers = dict(masked_layers(model))
     norms: dict[str, torch.Tensor] = {}
     hooks = []
+    called: set[int] = set()  # id() of the masked layers whose forward hook fired since the current MoE began
     for name, m in layers.items():
         m.unmasked = True
 
         def hook(mod, inp, _out, name=name):
+            called.add(id(mod))
             x = inp[0].detach().float()
             mask = _CALIB_STATE.get("attn_mask")
             # count real tokens only. A [B, T, d] input drops its padding positions; so does a flattened [B*T, d]
@@ -177,6 +211,29 @@ def wanda_scores(model: nn.Module, batches: Iterable[dict], device) -> dict[str,
             sq = x.pow(2).reshape(-1, x.shape[-1]).sum(0)
             norms[name] = sq if name not in norms else norms[name] + sq
         hooks.append(m.register_forward_hook(hook))
+
+    def moe_pre(mod, args, kwargs):
+        called.clear()
+
+    def moe_post(mod, args, kwargs, _out):
+        x = args[0] if args else kwargs["x"]
+        valid = args[1] if len(args) > 1 else kwargs["valid"]
+        flat = x.detach().reshape(-1, x.shape[-1])
+        active = valid.reshape(-1).bool()
+        with torch.autocast(device_type=x.device.type, enabled=False):
+            scores = F.linear(flat.float(), mod.router.weight.float()).softmax(-1)
+        choice = scores.topk(mod.topk, dim=-1).indices
+        for e, expert in enumerate(mod.experts):
+            parts = [c for c in expert.modules() if isinstance(c, MaskedLinear)]
+            if not parts or any(id(c) in called for c in parts):
+                continue  # not masked, or the MoE called it itself (old loop)
+            rows = ((choice == e) & active[:, None]).any(-1).nonzero().flatten()
+            if rows.numel():
+                expert(flat[rows])
+
+    for _, moe in fused_moe_layers(model):
+        hooks.append(moe.register_forward_pre_hook(moe_pre, with_kwargs=True))
+        hooks.append(moe.register_forward_hook(moe_post, with_kwargs=True))
     was_training = model.training
     model.eval()
     try:
@@ -191,7 +248,7 @@ def wanda_scores(model: nn.Module, batches: Iterable[dict], device) -> dict[str,
         for m in layers.values():
             m.unmasked = False
         model.train(was_training)
-    return {n: layers[n].weight.detach().float().abs() * norms[n].sqrt().unsqueeze(0) for n in norms}
+    return {n: layers[n].base_weight.detach().float().abs() * norms[n].sqrt().unsqueeze(0) for n in norms}
 
 
 _CALIB_STATE: dict = {}
@@ -306,8 +363,8 @@ def bake(model: nn.Module) -> dict[str, torch.Tensor]:
                 full = f"{parent_name}.{child_name}" if parent_name else child_name
                 keep = child.gate > 0
                 lin = nn.Linear(child.in_features, child.out_features, bias=child.bias is not None,
-                                device=child.weight.device, dtype=child.weight.dtype)
-                lin.weight.copy_(child.weight * keep.to(child.weight.dtype))
+                                device=child.base_weight.device, dtype=child.base_weight.dtype)
+                lin.weight.copy_(child.base_weight * keep.to(child.base_weight.dtype))
                 if child.bias is not None:
                     lin.bias.copy_(child.bias)
                 lin.requires_grad_(False)

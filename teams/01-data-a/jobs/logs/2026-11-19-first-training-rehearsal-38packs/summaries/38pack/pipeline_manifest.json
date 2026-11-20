@@ -1,0 +1,2463 @@
+{
+  "tool": "run_pipeline.py",
+  "run_id": "rehearsal-38pack",
+  "config": {
+    "_comment": "REHEARSAL on Runpod (Linux, Python 3.12.3, the job's pinned env, A100 + 32 vCPU): all 86 raw parts of tokenizer sample v0 (38 packs, sha256 = the tracked manifest), the frozen p1536, H3 report-only with the job's h3.json, shards at the default 2^26 tokens. Rehearsal pack table (placeholder lanes/licences). Not a production run: no inventory.",
+    "run_id": "rehearsal-38pack",
+    "out": "out/pipeline",
+    "intermediates": "keep",
+    "stages": {
+      "clean": {
+        "mode": "run",
+        "settings": "teams/01-data-a/pipeline/clean.json",
+        "input": "/root/raw38",
+        "manifest_sha256": "7fd647c8d4662d17e2310efbcc20981d70656fdad2fabb7663c266a2153a1b7e",
+        "expected_parts": {
+          "train": 48,
+          "heldout": 38
+        },
+        "manifest": "teams/01-data-a/jobs/2026-11-02-tokenizer-sample-v0-clean/tokenizer_sample_v0_manifest.json"
+      },
+      "overlap": {
+        "mode": "run",
+        "settings": "teams/01-data-a/dedup/overlap.json"
+      },
+      "h3": {
+        "mode": "run",
+        "settings": "teams/01-data-a/jobs/2026-11-19-first-training/h3.json"
+      },
+      "dedup": {
+        "mode": "run",
+        "settings": "teams/01-data-a/dedup/dedup.json"
+      },
+      "apply": {
+        "link": true
+      },
+      "f2": {
+        "pool": true,
+        "workers": 30
+      },
+      "ledger": {
+        "raw": "/root/raw38"
+      },
+      "shards": {
+        "tokenizer": "/workspace/data/tokenizers/p1536-sample-v0/tokenizer.json",
+        "dataset_version": "rehearsal-p1536",
+        "pack_table": "out/rehearsal/pack_table.json"
+      },
+      "reconcile": {}
+    }
+  },
+  "code_sha256": "74e5f66a99343de453c4ddc3ccd507dd81e00c2765999cefa98529436af089ff",
+  "git_commit": "4dd2802f39bc64d09e200ab971816dfe163ef3cc",
+  "python": "3.12.3",
+  "pyarrow": "23.0.1",
+  "stages": [
+    {
+      "stage": "clean",
+      "mode": "run",
+      "command": [
+        "teams/01-data-a/pipeline/clean_job.py",
+        "--config",
+        "/workspace/era-v5-lab/out/pipeline/rehearsal-38pack/cfg/clean.json"
+      ],
+      "code_sha256": "1baeaf05309c1d8545eb828e2d0bb70b1fc849c1ed9d67e77da0698660834892",
+      "output": "out/pipeline/rehearsal-38pack/clean",
+      "counts": {
+        "rows": 1410230,
+        "by_split": {
+          "train": 1396140,
+          "heldout": 14090
+        },
+        "by_part": {
+          "train/cadj-commits/part-00000.parquet": 74753,
+          "train/cadj-notebooks/part-00000.parquet": 15563,
+          "train/cadj-stackexchange/part-00000.parquet": 41396,
+          "train/code-cpp/part-00000.parquet": 40418,
+          "train/code-cpp/part-00001.parquet": 14170,
+          "train/code-go/part-00000.parquet": 56702,
+          "train/code-go/part-00001.parquet": 20253,
+          "train/code-java/part-00000.parquet": 62443,
+          "train/code-java/part-00001.parquet": 22236,
+          "train/code-js-ts/part-00000.parquet": 85595,
+          "train/code-js-ts/part-00001.parquet": 30468,
+          "train/code-python/part-00000.parquet": 53419,
+          "train/code-python/part-00001.parquet": 19185,
+          "train/code-rust/part-00000.parquet": 43155,
+          "train/code-rust/part-00001.parquet": 15045,
+          "train/en-dclm/part-00000.parquet": 45369,
+          "train/en-dclm/part-00001.parquet": 14843,
+          "train/en-fineweb-edu/part-00000.parquet": 53598,
+          "train/en-fineweb-edu/part-00001.parquet": 17776,
+          "train/en-nemotroncc/part-00000.parquet": 66074,
+          "train/en-nemotroncc/part-00001.parquet": 22194,
+          "train/en-nemotroncc-synth/part-00000.parquet": 147594,
+          "train/en-nemotroncc-synth/part-00001.parquet": 49307,
+          "train/ind-bn-fw2/part-00000.parquet": 10704,
+          "train/ind-bn-sangraha-v/part-00000.parquet": 10116,
+          "train/ind-gu-fw2/part-00000.parquet": 22773,
+          "train/ind-hi-fw2/part-00000.parquet": 13801,
+          "train/ind-hi-hplt/part-00000.parquet": 8423,
+          "train/ind-hi-indiccorp/part-00000.parquet": 109675,
+          "train/ind-hi-sangraha-s/part-00000.parquet": 7467,
+          "train/ind-hi-sangraha-v/part-00000.parquet": 14493,
+          "train/ind-kn-fw2/part-00000.parquet": 7759,
+          "train/ind-kn-sangraha-s/part-00000.parquet": 5185,
+          "train/ind-kn-sangraha-v/part-00000.parquet": 8357,
+          "train/ind-ml-fw2/part-00000.parquet": 18976,
+          "train/ind-mr-fw2/part-00000.parquet": 11259,
+          "train/ind-mr-sangraha-v/part-00000.parquet": 12172,
+          "train/ind-or-fw2/part-00000.parquet": 33684,
+          "train/ind-sa-fw2/part-00000.parquet": 5667,
+          "train/ind-ta-fw2/part-00000.parquet": 6766,
+          "train/ind-ta-sangraha-s/part-00000.parquet": 4336,
+          "train/ind-ta-sangraha-v/part-00000.parquet": 6796,
+          "train/ind-te-fw2/part-00000.parquet": 5706,
+          "train/ind-te-sangraha-s/part-00000.parquet": 4419,
+          "train/ind-te-sangraha-v/part-00000.parquet": 8595,
+          "train/math-finemath/part-00000.parquet": 26513,
+          "train/math-megamath/part-00000.parquet": 15097,
+          "train/sci-finepdfs/part-00000.parquet": 5845,
+          "heldout/cadj-commits/part-00000.parquet": 826,
+          "heldout/cadj-notebooks/part-00000.parquet": 169,
+          "heldout/cadj-stackexchange/part-00000.parquet": 409,
+          "heldout/code-cpp/part-00000.parquet": 607,
+          "heldout/code-go/part-00000.parquet": 810,
+          "heldout/code-java/part-00000.parquet": 839,
+          "heldout/code-js-ts/part-00000.parquet": 1145,
+          "heldout/code-python/part-00000.parquet": 701,
+          "heldout/code-rust/part-00000.parquet": 595,
+          "heldout/en-dclm/part-00000.parquet": 590,
+          "heldout/en-fineweb-edu/part-00000.parquet": 726,
+          "heldout/en-nemotroncc/part-00000.parquet": 915,
+          "heldout/en-nemotroncc-synth/part-00000.parquet": 1970,
+          "heldout/ind-bn-fw2/part-00000.parquet": 105,
+          "heldout/ind-bn-sangraha-v/part-00000.parquet": 101,
+          "heldout/ind-gu-fw2/part-00000.parquet": 238,
+          "heldout/ind-hi-fw2/part-00000.parquet": 131,
+          "heldout/ind-hi-hplt/part-00000.parquet": 92,
+          "heldout/ind-hi-indiccorp/part-00000.parquet": 1080,
+          "heldout/ind-hi-sangraha-s/part-00000.parquet": 75,
+          "heldout/ind-hi-sangraha-v/part-00000.parquet": 121,
+          "heldout/ind-kn-fw2/part-00000.parquet": 82,
+          "heldout/ind-kn-sangraha-s/part-00000.parquet": 53,
+          "heldout/ind-kn-sangraha-v/part-00000.parquet": 87,
+          "heldout/ind-ml-fw2/part-00000.parquet": 185,
+          "heldout/ind-mr-fw2/part-00000.parquet": 94,
+          "heldout/ind-mr-sangraha-v/part-00000.parquet": 127,
+          "heldout/ind-or-fw2/part-00000.parquet": 328,
+          "heldout/ind-sa-fw2/part-00000.parquet": 54,
+          "heldout/ind-ta-fw2/part-00000.parquet": 58,
+          "heldout/ind-ta-sangraha-s/part-00000.parquet": 36,
+          "heldout/ind-ta-sangraha-v/part-00000.parquet": 65,
+          "heldout/ind-te-fw2/part-00000.parquet": 57,
+          "heldout/ind-te-sangraha-s/part-00000.parquet": 44,
+          "heldout/ind-te-sangraha-v/part-00000.parquet": 83,
+          "heldout/math-finemath/part-00000.parquet": 280,
+          "heldout/math-megamath/part-00000.parquet": 152,
+          "heldout/sci-finepdfs/part-00000.parquet": 60
+        }
+      },
+      "tools_sha256": {
+        "teams/01-data-a/spec_v1_1/clean.py": "6a57276c0e83312b09facfba656cca28db0ef59ca851bcfbfa3ef63f16fdd1f2",
+        "teams/01-data-a/pipeline/clean_manifest.py": "1ac9cd0aea3f4e9b5318278a805be8965147530871c03e3a7d94a1fa675c9e41"
+      },
+      "job_summary_checked": true,
+      "settings": "teams/01-data-a/pipeline/clean.json",
+      "settings_sha256": "c45d78de61d76fce40d49f4c43e1cccdf203a02dc865ce436ce18f7699a03b48",
+      "config": "cfg/clean.json",
+      "config_sha256": "48b4ebf047eda2ee6f870732cbd8f46e68ecb2e9e325cad3ef765a85e66fa76e",
+      "digest": "47b7c86e7e74d5adc5e539a01335487138a45a07ad7cd936e0d330956bd018f6",
+      "files": 176,
+      "checks": [
+        {
+          "check": "clean: the job reported no errors",
+          "ok": true,
+          "detail": "job_summary.json: 0 error(s)"
+        },
+        {
+          "check": "clean: the job cleaned the parts the run expects, each with a report",
+          "ok": true,
+          "detail": "job_summary.json: completed_parts 86, expected_parts 86, 86 part report(s) for 86 part(s); the run expects 86"
+        },
+        {
+          "check": "clean: the job read this run's input manifest",
+          "ok": true,
+          "detail": "job_summary.json manifest_sha256 7fd647c8d466\u2026, stages.clean.manifest_sha256 7fd647c8d466\u2026"
+        },
+        {
+          "check": "clean: input rows = output rows + dropped, and the output rows are those on disk",
+          "ok": true,
+          "detail": "job_summary.json input_rows 1444766, output_rows 1410230, dropped 34536; its part reports add up to 1410230; the Parquet footers to 1410230"
+        },
+        {
+          "check": "clean: the parts on disk are the parts the job reports, with their rows",
+          "ok": true,
+          "detail": "0 reported but not on disk (e.g. []), 0 on disk but not reported (e.g. []), 0 with other rows (e.g. [])"
+        },
+        {
+          "check": "clean: each part's sha256 is the one the job recorded",
+          "ok": true,
+          "detail": "0 of 86 part(s) differ from job_summary.json, e.g. []"
+        }
+      ],
+      "seconds": 1433.2
+    },
+    {
+      "stage": "overlap",
+      "mode": "run",
+      "command": [
+        "teams/01-data-a/dedup/overlap.py",
+        "--config",
+        "/workspace/era-v5-lab/out/pipeline/rehearsal-38pack/cfg/overlap.json"
+      ],
+      "code_sha256": "62bfaa9ec935125618c2b739746b8e96aecbfe9b25d14a8e01ec308fae0e15f9",
+      "output": "out/pipeline/rehearsal-38pack/overlap",
+      "counts": {
+        "documents_all": 1410230,
+        "parts": 86,
+        "files_sha256": {
+          "overlap_matches.csv": "b2eabd2e3c3c2f22f0ff4369ee5edd5ee36789bd60a5c35987873fc4c87e17e0",
+          "overlap_docs.parquet": "f8d8c88bcb91ac0f9613bd62d3374373e21f6df76a03def1e296c53877a744de"
+        }
+      },
+      "settings": "teams/01-data-a/dedup/overlap.json",
+      "settings_sha256": "cb023fb87648ad77cd04c5691e21830ba4873373dd00cd6662c1da15b7ae5090",
+      "config": "cfg/overlap.json",
+      "config_sha256": "d4a224302e1d619005661300cadd3b2d3f2b595c063e058f9dcd4f4362628ac7",
+      "digest": "720b47aeb9f1a537fc96ddffbfc95377101e11e55a1819031fd7a118265f9ae3",
+      "files": 9,
+      "checks": [
+        {
+          "check": "overlap finished",
+          "ok": true,
+          "detail": "status 'complete'"
+        },
+        {
+          "check": "overlap read every cleaned row",
+          "ok": true,
+          "detail": "overlap documents_all 1410230, cleaned rows 1410230"
+        },
+        {
+          "check": "overlap read these cleaned parts",
+          "ok": true,
+          "detail": "0 part(s) differ in name or row count, e.g. "
+        },
+        {
+          "check": "overlap read these cleaned bytes",
+          "ok": true,
+          "detail": "0 part(s) differ or have no input sha256, e.g. []"
+        },
+        {
+          "check": "overlap_matches.csv matches overlap's summary",
+          "ok": true,
+          "detail": "b2eabd2e3c3c\u2026 vs b2eabd2e3c3c\u2026"
+        },
+        {
+          "check": "overlap_docs.parquet matches overlap's summary",
+          "ok": true,
+          "detail": "f8d8c88bcb91\u2026 vs f8d8c88bcb91\u2026"
+        }
+      ],
+      "seconds": 5035.6
+    },
+    {
+      "stage": "h3",
+      "mode": "run",
+      "command": [
+        "teams/01-data-a/dedup/h3.py",
+        "--config",
+        "/workspace/era-v5-lab/out/pipeline/rehearsal-38pack/cfg/h3.json"
+      ],
+      "code_sha256": "c9c04172f48e06b141a022813fdaf15412f28ed872f64cba40da738ee22e774b",
+      "output": "out/pipeline/rehearsal-38pack/h3",
+      "counts": {
+        "matches": 0,
+        "matches_sha256": "016a67b1d66802e35c60fab919afe732316a01abcbdece0ada8baad283f07eda"
+      },
+      "settings": "teams/01-data-a/jobs/2026-11-19-first-training/h3.json",
+      "settings_sha256": "3d80feda05eade5e26b298a5ad4bc3bb25aff79d41a35457f243dc5160f66831",
+      "config": "cfg/h3.json",
+      "config_sha256": "645899ff03a1d71716b3cefbe078a4d6434e5745fe657d00b968aacc10a3143b",
+      "digest": "e3f00e50133422b6e47923fe5d4db4250e9be4f785a9f575ed26a9e71c6c2aff",
+      "files": 6,
+      "checks": [
+        {
+          "check": "H3 finished",
+          "ok": true,
+          "detail": "status 'complete'"
+        },
+        {
+          "check": "H3 matches match its summary",
+          "ok": true,
+          "detail": "summary 016a67b1d668\u2026, file 016a67b1d668\u2026"
+        },
+        {
+          "check": "H3 match count matches its summary",
+          "ok": true,
+          "detail": "summary 0, file 0"
+        },
+        {
+          "check": "H3 read this run's cleaned folder",
+          "ok": true,
+          "detail": "H3 inputs 'out/pipeline/rehearsal-38pack/clean'"
+        }
+      ],
+      "seconds": 244.2
+    },
+    {
+      "stage": "dedup",
+      "mode": "run",
+      "command": [
+        "teams/01-data-a/dedup/dedup.py",
+        "--config",
+        "/workspace/era-v5-lab/out/pipeline/rehearsal-38pack/cfg/dedup.json"
+      ],
+      "code_sha256": "50d07671564d99ee9867424c2b61c8ed2a1d426ddc4f5bac640dc04b89668681",
+      "output": "out/pipeline/rehearsal-38pack/dedup",
+      "counts": {
+        "remove_list_rows": 1339,
+        "removed": 1339,
+        "heldout_removed": 0,
+        "groups": 1083
+      },
+      "settings": "teams/01-data-a/dedup/dedup.json",
+      "settings_sha256": "4ad067c0acb2a60c1b375a7bb414e4025d00a99d63138b8495f5fbf564f89af3",
+      "config": "cfg/dedup.json",
+      "config_sha256": "5ea484ee8964fde5a9c793365f7575b8c360a2d8891ff0be7d53c9100238648a",
+      "digest": "b1552ffcd1b2145b1de49dcd3755799d4ac44191b944fa109149ec69626dc426",
+      "files": 7,
+      "checks": [
+        {
+          "check": "dedup finished",
+          "ok": true,
+          "detail": "status 'complete'"
+        },
+        {
+          "check": "dedup used this overlap run",
+          "ok": true,
+          "detail": "dedup checked [('overlap_docs.parquet', 'f8d8c88bcb91'), ('overlap_matches.csv', 'b2eabd2e3c3c')], the adopted overlap has [('overlap_docs.parquet', 'f8d8c88bcb91'), ('overlap_matches.csv', 'b2eabd2e3c3c')]"
+        },
+        {
+          "check": "dedup saw overlap's documents",
+          "ok": true,
+          "detail": "dedup documents_all 1410230, overlap 1410230"
+        },
+        {
+          "check": "dedup used this run's H3 matches",
+          "ok": true,
+          "detail": "H3 summary {'matches': 0, 'matches_sha256': '016a67b1d66802e35c60fab919afe732316a01abcbdece0ada8baad283f07eda'}, dedup H3 {'matches': {'path': 'out/pipeline/rehearsal-38pack/h3/h3_matches.csv', 'sha256': '016a67b1d66802e35c60fab919afe732316a01abcbdece0ada8baad283f07eda', 'pairs': 0}, 'remove': False, 'parallel_packs': [], 'outcomes': {'removed': 0, 'would_remove': 0, 'reported_train_train': 0, 'reported_heldout_heldout': 0, 'same_group': 0, 'parallel_pack': 0}, 'removed': 0, 'groups_survivor_removed': 0}"
+        },
+        {
+          "check": "dedup summary matches its remove list",
+          "ok": true,
+          "detail": "summary removed 1339, remove_list.csv rows 1339"
+        },
+        {
+          "check": "dedup removed no held-out doc",
+          "ok": true,
+          "detail": "heldout_removed 0 (rule 0)"
+        }
+      ],
+      "seconds": 13.6
+    },
+    {
+      "stage": "apply",
+      "mode": "run",
+      "command": [
+        "teams/01-data-a/pipeline/apply_dedup.py"
+      ],
+      "code_sha256": "92c56f91def61985095ff27f5190b03546164e7856cb654c5fad258204361573",
+      "output": "deduped",
+      "counts": {
+        "rows": 1410230,
+        "removed": 1339,
+        "kept": 1408891,
+        "kept_by_split": {
+          "train": 1394801,
+          "heldout": 14090
+        }
+      },
+      "digest": "01d815dc437c777f33493deed3f205e2326e5599224e32a17485dfdf9506eaea",
+      "files": 87,
+      "checks": [
+        {
+          "check": "apply read every cleaned row",
+          "ok": true,
+          "detail": "apply rows 1410230, cleaned rows 1410230"
+        },
+        {
+          "check": "apply removed the remove list",
+          "ok": true,
+          "detail": "apply removed 1339, remove list 1339"
+        }
+      ],
+      "seconds": 23.2
+    },
+    {
+      "stage": "f2",
+      "mode": "run",
+      "command": [
+        "teams/01-data-a/spec_v1/run_f2.py",
+        "--inputs",
+        "<run>/deduped/<split>[/<pack>]",
+        "--out",
+        "<run>/final/<split>[/<pack>]"
+      ],
+      "code_sha256": "1651b3725357b2a2b684fda6a047cc5697c1331d1b43bb242712f422403af040",
+      "output": "final",
+      "set_sha256": "2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a",
+      "pool": true,
+      "pool_code_sha256": "b3d41a5f844ea573a35a826a0f313e006a91c883031a9448b7a328dd275d81e8",
+      "workers": 30,
+      "units": 2,
+      "wall_seconds": 719.3,
+      "counts": {
+        "rows": 1408891,
+        "kept": 1407358,
+        "dropped_by_f2": 1533,
+        "errors": 0,
+        "by_split": {
+          "train": {
+            "rows": 1394801,
+            "kept": 1393284,
+            "dropped_by_f2": 1517,
+            "errors": 0
+          },
+          "heldout": {
+            "rows": 14090,
+            "kept": 14074,
+            "dropped_by_f2": 16,
+            "errors": 0
+          }
+        }
+      },
+      "digest": "8fc59864f8880e014e91cd8e0209dd2532a11bc21748fd9b5db6292db64d2f5a",
+      "files": 174,
+      "checks": [
+        {
+          "check": "F2 reported no errors on train",
+          "ok": true,
+          "detail": "0 docs raised during the check, exit code 0; see f2_train.log"
+        },
+        {
+          "check": "F2 reported no errors on heldout",
+          "ok": true,
+          "detail": "0 docs raised during the check, exit code 0; see f2_heldout.log"
+        },
+        {
+          "check": "F2 read every deduplicated row of train",
+          "ok": true,
+          "detail": "F2 rows 1394801, apply kept 1394801"
+        },
+        {
+          "check": "F2 read what apply wrote in train",
+          "ok": true,
+          "detail": "0 part(s) without a matching F2 report, e.g. "
+        },
+        {
+          "check": "F2 read every deduplicated row of heldout",
+          "ok": true,
+          "detail": "F2 rows 14090, apply kept 14090"
+        },
+        {
+          "check": "F2 read what apply wrote in heldout",
+          "ok": true,
+          "detail": "0 part(s) without a matching F2 report, e.g. "
+        },
+        {
+          "check": "F2 used one fingerprint set",
+          "ok": true,
+          "detail": "set_sha256 values ['2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a']"
+        },
+        {
+          "check": "F2 counts add up",
+          "ok": true,
+          "detail": "{'rows': 1408891, 'kept': 1407358, 'dropped_by_f2': 1533, 'errors': 0}"
+        }
+      ],
+      "seconds": 721.5
+    },
+    {
+      "stage": "survivor_loss",
+      "mode": "run",
+      "command": [
+        "teams/01-data-a/pipeline/survivor_loss.py"
+      ],
+      "code_sha256": "32063e100e56f4e5380bbfdb9ded2afcdf9d8b69b2b4040aa5d0e09a918a38ba",
+      "output": "report",
+      "counts": {
+        "total": 1083,
+        "with_survivor": 1083,
+        "without_survivor": 0,
+        "with_several_survivors": 0,
+        "lost": 1,
+        "partly_hit": 0,
+        "untouched": 1082,
+        "survivors_dropped_by_f2": 1
+      },
+      "digest": "adea22f1e0236ede0c887a6bbc672598c4966fba4c2d13a6c43077cd774ebdb6",
+      "files": 2,
+      "checks": [
+        {
+          "check": "dedup's summary counts its groups",
+          "ok": true,
+          "detail": "dedup_summary.json gives {'clusters': 1083, 'groups_without_survivor': 0, 'groups_with_several_survivors': 0}"
+        },
+        {
+          "check": "survivor loss saw every dedup group",
+          "ok": true,
+          "detail": "dedup_groups.csv 1083 group(s), dedup_summary.json clusters 1083"
+        },
+        {
+          "check": "survivor loss's groups without a survivor = dedup's",
+          "ok": true,
+          "detail": "dedup_groups.csv 0, dedup_summary.json 0"
+        },
+        {
+          "check": "survivor loss's groups with several survivors = dedup's",
+          "ok": true,
+          "detail": "dedup_groups.csv 0, dedup_summary.json 0"
+        }
+      ],
+      "seconds": 1.6
+    },
+    {
+      "stage": "ledger",
+      "mode": "run",
+      "command": [
+        "teams/01-data-a/pipeline/ledger.py"
+      ],
+      "code_sha256": "4021460974d0d0c3228409cf89096750f31dfe2c6321141f0dc9f370233b6fe1",
+      "output": "ledger",
+      "clean_mode": "B",
+      "counts": {
+        "rows": 1444766,
+        "rows_cleaned": 1410230,
+        "kept": 1407358,
+        "dropped_by_clean": 34536,
+        "removed_by_dedup": 1339,
+        "dropped_by_f2": 1533,
+        "f2_error": 0,
+        "clean_fix_by_text": 363076
+      },
+      "by_pack": {
+        "cadj-commits": {
+          "train": {
+            "raw": 74753,
+            "dropped_by_clean": 0,
+            "cleaned": 74753,
+            "removed_by_dedup": 904,
+            "dropped_by_f2": 14,
+            "final": 73835
+          },
+          "heldout": {
+            "raw": 826,
+            "dropped_by_clean": 0,
+            "cleaned": 826,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 0,
+            "final": 826
+          }
+        },
+        "cadj-notebooks": {
+          "train": {
+            "raw": 15563,
+            "dropped_by_clean": 0,
+            "cleaned": 15563,
+            "removed_by_dedup": 14,
+            "dropped_by_f2": 65,
+            "final": 15484
+          },
+          "heldout": {
+            "raw": 169,
+            "dropped_by_clean": 0,
+            "cleaned": 169,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 1,
+            "final": 168
+          }
+        },
+        "cadj-stackexchange": {
+          "train": {
+            "raw": 41396,
+            "dropped_by_clean": 0,
+            "cleaned": 41396,
+            "removed_by_dedup": 199,
+            "dropped_by_f2": 61,
+            "final": 41136
+          },
+          "heldout": {
+            "raw": 409,
+            "dropped_by_clean": 0,
+            "cleaned": 409,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 1,
+            "final": 408
+          }
+        },
+        "code-cpp": {
+          "train": {
+            "raw": 55545,
+            "dropped_by_clean": 957,
+            "cleaned": 54588,
+            "removed_by_dedup": 5,
+            "dropped_by_f2": 77,
+            "final": 54506
+          },
+          "heldout": {
+            "raw": 613,
+            "dropped_by_clean": 6,
+            "cleaned": 607,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 1,
+            "final": 606
+          }
+        },
+        "code-go": {
+          "train": {
+            "raw": 83267,
+            "dropped_by_clean": 6312,
+            "cleaned": 76955,
+            "removed_by_dedup": 6,
+            "dropped_by_f2": 96,
+            "final": 76853
+          },
+          "heldout": {
+            "raw": 872,
+            "dropped_by_clean": 62,
+            "cleaned": 810,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 2,
+            "final": 808
+          }
+        },
+        "code-java": {
+          "train": {
+            "raw": 85213,
+            "dropped_by_clean": 534,
+            "cleaned": 84679,
+            "removed_by_dedup": 3,
+            "dropped_by_f2": 17,
+            "final": 84659
+          },
+          "heldout": {
+            "raw": 847,
+            "dropped_by_clean": 8,
+            "cleaned": 839,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 0,
+            "final": 839
+          }
+        },
+        "code-js-ts": {
+          "train": {
+            "raw": 121938,
+            "dropped_by_clean": 5875,
+            "cleaned": 116063,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 76,
+            "final": 115987
+          },
+          "heldout": {
+            "raw": 1234,
+            "dropped_by_clean": 89,
+            "cleaned": 1145,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 3,
+            "final": 1142
+          }
+        },
+        "code-python": {
+          "train": {
+            "raw": 74943,
+            "dropped_by_clean": 2339,
+            "cleaned": 72604,
+            "removed_by_dedup": 9,
+            "dropped_by_f2": 220,
+            "final": 72375
+          },
+          "heldout": {
+            "raw": 718,
+            "dropped_by_clean": 17,
+            "cleaned": 701,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 1,
+            "final": 700
+          }
+        },
+        "code-rust": {
+          "train": {
+            "raw": 60126,
+            "dropped_by_clean": 1926,
+            "cleaned": 58200,
+            "removed_by_dedup": 58,
+            "dropped_by_f2": 36,
+            "final": 58106
+          },
+          "heldout": {
+            "raw": 612,
+            "dropped_by_clean": 17,
+            "cleaned": 595,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 0,
+            "final": 595
+          }
+        },
+        "en-dclm": {
+          "train": {
+            "raw": 61367,
+            "dropped_by_clean": 1155,
+            "cleaned": 60212,
+            "removed_by_dedup": 11,
+            "dropped_by_f2": 37,
+            "final": 60164
+          },
+          "heldout": {
+            "raw": 608,
+            "dropped_by_clean": 18,
+            "cleaned": 590,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 0,
+            "final": 590
+          }
+        },
+        "en-fineweb-edu": {
+          "train": {
+            "raw": 71933,
+            "dropped_by_clean": 559,
+            "cleaned": 71374,
+            "removed_by_dedup": 15,
+            "dropped_by_f2": 84,
+            "final": 71275
+          },
+          "heldout": {
+            "raw": 732,
+            "dropped_by_clean": 6,
+            "cleaned": 726,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 0,
+            "final": 726
+          }
+        },
+        "en-nemotroncc": {
+          "train": {
+            "raw": 91820,
+            "dropped_by_clean": 3552,
+            "cleaned": 88268,
+            "removed_by_dedup": 19,
+            "dropped_by_f2": 43,
+            "final": 88206
+          },
+          "heldout": {
+            "raw": 954,
+            "dropped_by_clean": 39,
+            "cleaned": 915,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 1,
+            "final": 914
+          }
+        },
+        "en-nemotroncc-synth": {
+          "train": {
+            "raw": 197119,
+            "dropped_by_clean": 218,
+            "cleaned": 196901,
+            "removed_by_dedup": 1,
+            "dropped_by_f2": 43,
+            "final": 196857
+          },
+          "heldout": {
+            "raw": 1975,
+            "dropped_by_clean": 5,
+            "cleaned": 1970,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 1,
+            "final": 1969
+          }
+        },
+        "ind-bn-fw2": {
+          "train": {
+            "raw": 11205,
+            "dropped_by_clean": 501,
+            "cleaned": 10704,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 0,
+            "final": 10704
+          },
+          "heldout": {
+            "raw": 112,
+            "dropped_by_clean": 7,
+            "cleaned": 105,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 0,
+            "final": 105
+          }
+        },
+        "ind-bn-sangraha-v": {
+          "train": {
+            "raw": 10328,
+            "dropped_by_clean": 212,
+            "cleaned": 10116,
+            "removed_by_dedup": 1,
+            "dropped_by_f2": 0,
+            "final": 10115
+          },
+          "heldout": {
+            "raw": 102,
+            "dropped_by_clean": 1,
+            "cleaned": 101,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 0,
+            "final": 101
+          }
+        },
+        "ind-gu-fw2": {
+          "train": {
+            "raw": 23118,
+            "dropped_by_clean": 345,
+            "cleaned": 22773,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 84,
+            "final": 22689
+          },
+          "heldout": {
+            "raw": 239,
+            "dropped_by_clean": 1,
+            "cleaned": 238,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 1,
+            "final": 237
+          }
+        },
+        "ind-hi-fw2": {
+          "train": {
+            "raw": 14261,
+            "dropped_by_clean": 460,
+            "cleaned": 13801,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 28,
+            "final": 13773
+          },
+          "heldout": {
+            "raw": 132,
+            "dropped_by_clean": 1,
+            "cleaned": 131,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 0,
+            "final": 131
+          }
+        },
+        "ind-hi-hplt": {
+          "train": {
+            "raw": 8745,
+            "dropped_by_clean": 322,
+            "cleaned": 8423,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 5,
+            "final": 8418
+          },
+          "heldout": {
+            "raw": 95,
+            "dropped_by_clean": 3,
+            "cleaned": 92,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 0,
+            "final": 92
+          }
+        },
+        "ind-hi-indiccorp": {
+          "train": {
+            "raw": 110836,
+            "dropped_by_clean": 1161,
+            "cleaned": 109675,
+            "removed_by_dedup": 4,
+            "dropped_by_f2": 1,
+            "final": 109670
+          },
+          "heldout": {
+            "raw": 1094,
+            "dropped_by_clean": 14,
+            "cleaned": 1080,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 0,
+            "final": 1080
+          }
+        },
+        "ind-hi-sangraha-s": {
+          "train": {
+            "raw": 8280,
+            "dropped_by_clean": 813,
+            "cleaned": 7467,
+            "removed_by_dedup": 35,
+            "dropped_by_f2": 0,
+            "final": 7432
+          },
+          "heldout": {
+            "raw": 88,
+            "dropped_by_clean": 13,
+            "cleaned": 75,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 0,
+            "final": 75
+          }
+        },
+        "ind-hi-sangraha-v": {
+          "train": {
+            "raw": 14709,
+            "dropped_by_clean": 216,
+            "cleaned": 14493,
+            "removed_by_dedup": 20,
+            "dropped_by_f2": 4,
+            "final": 14469
+          },
+          "heldout": {
+            "raw": 122,
+            "dropped_by_clean": 1,
+            "cleaned": 121,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 0,
+            "final": 121
+          }
+        },
+        "ind-kn-fw2": {
+          "train": {
+            "raw": 7834,
+            "dropped_by_clean": 75,
+            "cleaned": 7759,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 24,
+            "final": 7735
+          },
+          "heldout": {
+            "raw": 82,
+            "dropped_by_clean": 0,
+            "cleaned": 82,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 1,
+            "final": 81
+          }
+        },
+        "ind-kn-sangraha-s": {
+          "train": {
+            "raw": 5191,
+            "dropped_by_clean": 6,
+            "cleaned": 5185,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 0,
+            "final": 5185
+          },
+          "heldout": {
+            "raw": 53,
+            "dropped_by_clean": 0,
+            "cleaned": 53,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 0,
+            "final": 53
+          }
+        },
+        "ind-kn-sangraha-v": {
+          "train": {
+            "raw": 8551,
+            "dropped_by_clean": 194,
+            "cleaned": 8357,
+            "removed_by_dedup": 3,
+            "dropped_by_f2": 0,
+            "final": 8354
+          },
+          "heldout": {
+            "raw": 89,
+            "dropped_by_clean": 2,
+            "cleaned": 87,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 0,
+            "final": 87
+          }
+        },
+        "ind-ml-fw2": {
+          "train": {
+            "raw": 18976,
+            "dropped_by_clean": 0,
+            "cleaned": 18976,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 154,
+            "final": 18822
+          },
+          "heldout": {
+            "raw": 185,
+            "dropped_by_clean": 0,
+            "cleaned": 185,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 1,
+            "final": 184
+          }
+        },
+        "ind-mr-fw2": {
+          "train": {
+            "raw": 11460,
+            "dropped_by_clean": 201,
+            "cleaned": 11259,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 9,
+            "final": 11250
+          },
+          "heldout": {
+            "raw": 95,
+            "dropped_by_clean": 1,
+            "cleaned": 94,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 0,
+            "final": 94
+          }
+        },
+        "ind-mr-sangraha-v": {
+          "train": {
+            "raw": 12172,
+            "dropped_by_clean": 0,
+            "cleaned": 12172,
+            "removed_by_dedup": 5,
+            "dropped_by_f2": 1,
+            "final": 12166
+          },
+          "heldout": {
+            "raw": 127,
+            "dropped_by_clean": 0,
+            "cleaned": 127,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 0,
+            "final": 127
+          }
+        },
+        "ind-or-fw2": {
+          "train": {
+            "raw": 33684,
+            "dropped_by_clean": 0,
+            "cleaned": 33684,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 1,
+            "final": 33683
+          },
+          "heldout": {
+            "raw": 328,
+            "dropped_by_clean": 0,
+            "cleaned": 328,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 0,
+            "final": 328
+          }
+        },
+        "ind-sa-fw2": {
+          "train": {
+            "raw": 5908,
+            "dropped_by_clean": 241,
+            "cleaned": 5667,
+            "removed_by_dedup": 12,
+            "dropped_by_f2": 0,
+            "final": 5655
+          },
+          "heldout": {
+            "raw": 55,
+            "dropped_by_clean": 1,
+            "cleaned": 54,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 0,
+            "final": 54
+          }
+        },
+        "ind-ta-fw2": {
+          "train": {
+            "raw": 6766,
+            "dropped_by_clean": 0,
+            "cleaned": 6766,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 6,
+            "final": 6760
+          },
+          "heldout": {
+            "raw": 58,
+            "dropped_by_clean": 0,
+            "cleaned": 58,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 0,
+            "final": 58
+          }
+        },
+        "ind-ta-sangraha-s": {
+          "train": {
+            "raw": 4336,
+            "dropped_by_clean": 0,
+            "cleaned": 4336,
+            "removed_by_dedup": 1,
+            "dropped_by_f2": 0,
+            "final": 4335
+          },
+          "heldout": {
+            "raw": 36,
+            "dropped_by_clean": 0,
+            "cleaned": 36,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 0,
+            "final": 36
+          }
+        },
+        "ind-ta-sangraha-v": {
+          "train": {
+            "raw": 6796,
+            "dropped_by_clean": 0,
+            "cleaned": 6796,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 0,
+            "final": 6796
+          },
+          "heldout": {
+            "raw": 65,
+            "dropped_by_clean": 0,
+            "cleaned": 65,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 0,
+            "final": 65
+          }
+        },
+        "ind-te-fw2": {
+          "train": {
+            "raw": 5997,
+            "dropped_by_clean": 291,
+            "cleaned": 5706,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 36,
+            "final": 5670
+          },
+          "heldout": {
+            "raw": 59,
+            "dropped_by_clean": 2,
+            "cleaned": 57,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 1,
+            "final": 56
+          }
+        },
+        "ind-te-sangraha-s": {
+          "train": {
+            "raw": 4782,
+            "dropped_by_clean": 363,
+            "cleaned": 4419,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 0,
+            "final": 4419
+          },
+          "heldout": {
+            "raw": 47,
+            "dropped_by_clean": 3,
+            "cleaned": 44,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 0,
+            "final": 44
+          }
+        },
+        "ind-te-sangraha-v": {
+          "train": {
+            "raw": 8609,
+            "dropped_by_clean": 14,
+            "cleaned": 8595,
+            "removed_by_dedup": 2,
+            "dropped_by_f2": 1,
+            "final": 8592
+          },
+          "heldout": {
+            "raw": 83,
+            "dropped_by_clean": 0,
+            "cleaned": 83,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 0,
+            "final": 83
+          }
+        },
+        "math-finemath": {
+          "train": {
+            "raw": 29122,
+            "dropped_by_clean": 2609,
+            "cleaned": 26513,
+            "removed_by_dedup": 3,
+            "dropped_by_f2": 228,
+            "final": 26282
+          },
+          "heldout": {
+            "raw": 312,
+            "dropped_by_clean": 32,
+            "cleaned": 280,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 0,
+            "final": 280
+          }
+        },
+        "math-megamath": {
+          "train": {
+            "raw": 17647,
+            "dropped_by_clean": 2550,
+            "cleaned": 15097,
+            "removed_by_dedup": 9,
+            "dropped_by_f2": 53,
+            "final": 15035
+          },
+          "heldout": {
+            "raw": 169,
+            "dropped_by_clean": 17,
+            "cleaned": 152,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 1,
+            "final": 151
+          }
+        },
+        "sci-finepdfs": {
+          "train": {
+            "raw": 6011,
+            "dropped_by_clean": 166,
+            "cleaned": 5845,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 13,
+            "final": 5832
+          },
+          "heldout": {
+            "raw": 63,
+            "dropped_by_clean": 3,
+            "cleaned": 60,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 0,
+            "final": 60
+          }
+        }
+      },
+      "digest": "129d0922a36bc140718420b9852ba4a26346a3005979f43f02f1fe4b4b100d6e",
+      "files": 78,
+      "checks": [
+        {
+          "check": "ledger holds every cleaned row",
+          "ok": true,
+          "detail": "ledger 1410230, cleaned rows 1410230"
+        },
+        {
+          "check": "ledger removed_by_dedup = apply's removed",
+          "ok": true,
+          "detail": "ledger 1339, apply 1339"
+        },
+        {
+          "check": "ledger dropped_by_f2 = F2's",
+          "ok": true,
+          "detail": "ledger 1533, F2 1533"
+        },
+        {
+          "check": "ledger f2_error = F2's errors",
+          "ok": true,
+          "detail": "ledger 0, F2 0"
+        },
+        {
+          "check": "ledger kept = F2's kept",
+          "ok": true,
+          "detail": "ledger 1407358, F2 1407358"
+        },
+        {
+          "check": "ledger used F2's fingerprint set",
+          "ok": true,
+          "detail": "2826a3b88321\u2026 vs 2826a3b88321\u2026"
+        },
+        {
+          "check": "ledger per pack = apply per pack",
+          "ok": true,
+          "detail": "0 pack/split(s) differ in cleaned rows or removed, e.g. "
+        },
+        {
+          "check": "every per-pack row adds up",
+          "ok": true,
+          "detail": "0 pack/split(s) where raw - clean != cleaned or cleaned - dedup - f2 - errors != final, e.g. "
+        },
+        {
+          "check": "per-pack table adds up to the stages' counts",
+          "ok": true,
+          "detail": "table {'cleaned': 1410230, 'removed_by_dedup': 1339, 'dropped_by_f2': 1533, 'final': 1407358}, stages {'cleaned': 1410230, 'removed_by_dedup': 1339, 'dropped_by_f2': 1533, 'final': 1407358}"
+        },
+        {
+          "check": "ledger's survivors dropped by F2 = survivor loss's",
+          "ok": true,
+          "detail": "ledger 1, survivor_loss_summary.json 1"
+        },
+        {
+          "check": "ledger's survivors dropped by F2 per pack = survivor loss's",
+          "ok": true,
+          "detail": "0 pack(s) differ, e.g. "
+        }
+      ],
+      "seconds": 97.4
+    },
+    {
+      "stage": "shards",
+      "mode": "run",
+      "command": [
+        "teams/01-data-a/shards/run_shards.py",
+        "--input",
+        "<run>/final",
+        "--manifest",
+        "<run>/pipeline_manifest.json",
+        "--out",
+        "<out>",
+        "--no-verify"
+      ],
+      "code_sha256": "ec8dcf597f7b4f441d149a3e3563678b0edd6386ec564311238fb52bbcc14033",
+      "output": "shards",
+      "cleaning_pipeline_sha256": "4c09226ce77dc5af6af4de03b54ffd0f4c4f96c56b7b4de5fb035539d47806ab",
+      "counts": {
+        "written": 48,
+        "empty": 0,
+        "all_left_out": 0,
+        "failed": 0,
+        "skipped": 0,
+        "not_sharded": 38,
+        "truncated": 0,
+        "shards": 48,
+        "parts": 86
+      },
+      "digest": "776acee2e0956183c8cbf8c0b68ca951ddc9d7c04a9f03678b94a4d0095721ca",
+      "files": 290,
+      "checks": [
+        {
+          "check": "shards: no part failed or was skipped",
+          "ok": true,
+          "detail": "{'written': 48, 'empty': 0, 'all_left_out': 0, 'failed': 0, 'skipped': 0, 'not_sharded': 38, 'truncated': 0, 'shards': 48}; first: ; see logs/shards.log"
+        },
+        {
+          "check": "shards: run_shards.py exited 0",
+          "ok": true,
+          "detail": "exit code 0: written  train/ind-te-sangraha-v/part-00000.parquet: 1 shard(s), 8591 docs, 5312512 tokens | written  train/math-finemath/part-00000.parquet: 1 shard(s), 26160 docs, 32579110 tokens | written  train/math-megamath/part-00000.parquet: 1 shard(s), 14827 docs, 20779736 tokens | written  train/sci-finepdfs/part-00000.parquet: 1 shard(s), 5829 docs, 39330261 tokens | {\"written\": 48, \"empty\": 0, \"all_left_out\": 0, \"failed\": 0, \"skipped\": 0, \"not_sharded\": 38, \"truncated\": 0, \"shards\": 48}"
+        },
+        {
+          "check": "shards: at least one shard written",
+          "ok": true,
+          "detail": "{'written': 48, 'empty': 0, 'all_left_out': 0, 'failed': 0, 'skipped': 0, 'not_sharded': 38, 'truncated': 0, 'shards': 48}"
+        },
+        {
+          "check": "shards: no part was cut short (every row of a written part was read into its shards)",
+          "ok": true,
+          "detail": "0 part(s) cut short, e.g. []: the writer rolls over into more shards, so rows it never read point to a writer fault; reconcile reports them as not_reached"
+        },
+        {
+          "check": "shards: the summary is this run's, made with this run's cleaning_pipeline.json",
+          "ok": true,
+          "detail": "summary run_id rehearsal-38pack, cleaning_pipeline_sha256 4c09226ce77d\u2026"
+        },
+        {
+          "check": "shards: the shard files on disk verify (files, sha256, format, counts, pack table, first and last document)",
+          "ok": true,
+          "detail": "0 problem(s), the first 0: "
+        }
+      ],
+      "seconds": 1725.1
+    },
+    {
+      "stage": "reconcile",
+      "mode": "run",
+      "command": [
+        "teams/01-data-a/pipeline/reconcile_shards.py"
+      ],
+      "code_sha256": "d70ec460a89e96d1390509b6ccc9e6813d632873998e8abfb5303548fd0a88e8",
+      "output": "reconcile",
+      "counts": {
+        "kept": 1407358,
+        "in_shards": 1385709,
+        "in_shard": 1385709,
+        "left_out:empty": 4,
+        "left_out:secret": 7562,
+        "left_out:special": 9,
+        "not_sharded": 14074
+      },
+      "digest": "503c1028ef17984c40c2534ad1ed0ff181d3b17dc430c163c6582757856cc531",
+      "files": 2,
+      "checks": [
+        {
+          "check": "reconcile: every document in a shard is a kept document at its ledger position",
+          "ok": true,
+          "detail": "0 shard row(s) at no kept ledger position, 0 with another doc_id"
+        },
+        {
+          "check": "reconcile: no document is in two shards",
+          "ok": true,
+          "detail": "0 position(s) in more than one shard"
+        },
+        {
+          "check": "reconcile: every document the writer left out is a kept document of that part, and none is also in a shard",
+          "ok": true,
+          "detail": "0 left-out doc_id(s) not kept there, 0 both left out and in a shard"
+        },
+        {
+          "check": "reconcile: each shard manifest's doc_count = its docs.parquet rows",
+          "ok": true,
+          "detail": "0 shard(s) differ, e.g. "
+        },
+        {
+          "check": "reconcile: every kept document of a selected pack is in a shard or left out for a stated reason",
+          "ok": true,
+          "detail": "all accounted"
+        },
+        {
+          "check": "reconcile: every selected pack holds kept documents in the ledger",
+          "ok": true,
+          "detail": "all present"
+        }
+      ],
+      "seconds": 18.3
+    }
+  ],
+  "checks": [
+    {
+      "check": "clean: the job reported no errors",
+      "ok": true,
+      "detail": "job_summary.json: 0 error(s)",
+      "stage": "clean"
+    },
+    {
+      "check": "clean: the job cleaned the parts the run expects, each with a report",
+      "ok": true,
+      "detail": "job_summary.json: completed_parts 86, expected_parts 86, 86 part report(s) for 86 part(s); the run expects 86",
+      "stage": "clean"
+    },
+    {
+      "check": "clean: the job read this run's input manifest",
+      "ok": true,
+      "detail": "job_summary.json manifest_sha256 7fd647c8d466\u2026, stages.clean.manifest_sha256 7fd647c8d466\u2026",
+      "stage": "clean"
+    },
+    {
+      "check": "clean: input rows = output rows + dropped, and the output rows are those on disk",
+      "ok": true,
+      "detail": "job_summary.json input_rows 1444766, output_rows 1410230, dropped 34536; its part reports add up to 1410230; the Parquet footers to 1410230",
+      "stage": "clean"
+    },
+    {
+      "check": "clean: the parts on disk are the parts the job reports, with their rows",
+      "ok": true,
+      "detail": "0 reported but not on disk (e.g. []), 0 on disk but not reported (e.g. []), 0 with other rows (e.g. [])",
+      "stage": "clean"
+    },
+    {
+      "check": "clean: each part's sha256 is the one the job recorded",
+      "ok": true,
+      "detail": "0 of 86 part(s) differ from job_summary.json, e.g. []",
+      "stage": "clean"
+    },
+    {
+      "check": "overlap finished",
+      "ok": true,
+      "detail": "status 'complete'",
+      "stage": "overlap"
+    },
+    {
+      "check": "overlap read every cleaned row",
+      "ok": true,
+      "detail": "overlap documents_all 1410230, cleaned rows 1410230",
+      "stage": "overlap"
+    },
+    {
+      "check": "overlap read these cleaned parts",
+      "ok": true,
+      "detail": "0 part(s) differ in name or row count, e.g. ",
+      "stage": "overlap"
+    },
+    {
+      "check": "overlap read these cleaned bytes",
+      "ok": true,
+      "detail": "0 part(s) differ or have no input sha256, e.g. []",
+      "stage": "overlap"
+    },
+    {
+      "check": "overlap_matches.csv matches overlap's summary",
+      "ok": true,
+      "detail": "b2eabd2e3c3c\u2026 vs b2eabd2e3c3c\u2026",
+      "stage": "overlap"
+    },
+    {
+      "check": "overlap_docs.parquet matches overlap's summary",
+      "ok": true,
+      "detail": "f8d8c88bcb91\u2026 vs f8d8c88bcb91\u2026",
+      "stage": "overlap"
+    },
+    {
+      "check": "H3 finished",
+      "ok": true,
+      "detail": "status 'complete'",
+      "stage": "h3"
+    },
+    {
+      "check": "H3 matches match its summary",
+      "ok": true,
+      "detail": "summary 016a67b1d668\u2026, file 016a67b1d668\u2026",
+      "stage": "h3"
+    },
+    {
+      "check": "H3 match count matches its summary",
+      "ok": true,
+      "detail": "summary 0, file 0",
+      "stage": "h3"
+    },
+    {
+      "check": "H3 read this run's cleaned folder",
+      "ok": true,
+      "detail": "H3 inputs 'out/pipeline/rehearsal-38pack/clean'",
+      "stage": "h3"
+    },
+    {
+      "check": "dedup finished",
+      "ok": true,
+      "detail": "status 'complete'",
+      "stage": "dedup"
+    },
+    {
+      "check": "dedup used this overlap run",
+      "ok": true,
+      "detail": "dedup checked [('overlap_docs.parquet', 'f8d8c88bcb91'), ('overlap_matches.csv', 'b2eabd2e3c3c')], the adopted overlap has [('overlap_docs.parquet', 'f8d8c88bcb91'), ('overlap_matches.csv', 'b2eabd2e3c3c')]",
+      "stage": "dedup"
+    },
+    {
+      "check": "dedup saw overlap's documents",
+      "ok": true,
+      "detail": "dedup documents_all 1410230, overlap 1410230",
+      "stage": "dedup"
+    },
+    {
+      "check": "dedup used this run's H3 matches",
+      "ok": true,
+      "detail": "H3 summary {'matches': 0, 'matches_sha256': '016a67b1d66802e35c60fab919afe732316a01abcbdece0ada8baad283f07eda'}, dedup H3 {'matches': {'path': 'out/pipeline/rehearsal-38pack/h3/h3_matches.csv', 'sha256': '016a67b1d66802e35c60fab919afe732316a01abcbdece0ada8baad283f07eda', 'pairs': 0}, 'remove': False, 'parallel_packs': [], 'outcomes': {'removed': 0, 'would_remove': 0, 'reported_train_train': 0, 'reported_heldout_heldout': 0, 'same_group': 0, 'parallel_pack': 0}, 'removed': 0, 'groups_survivor_removed': 0}",
+      "stage": "dedup"
+    },
+    {
+      "check": "dedup summary matches its remove list",
+      "ok": true,
+      "detail": "summary removed 1339, remove_list.csv rows 1339",
+      "stage": "dedup"
+    },
+    {
+      "check": "dedup removed no held-out doc",
+      "ok": true,
+      "detail": "heldout_removed 0 (rule 0)",
+      "stage": "dedup"
+    },
+    {
+      "check": "apply read every cleaned row",
+      "ok": true,
+      "detail": "apply rows 1410230, cleaned rows 1410230",
+      "stage": "apply"
+    },
+    {
+      "check": "apply removed the remove list",
+      "ok": true,
+      "detail": "apply removed 1339, remove list 1339",
+      "stage": "apply"
+    },
+    {
+      "check": "F2 reported no errors on train",
+      "ok": true,
+      "detail": "0 docs raised during the check, exit code 0; see f2_train.log",
+      "stage": "f2"
+    },
+    {
+      "check": "F2 reported no errors on heldout",
+      "ok": true,
+      "detail": "0 docs raised during the check, exit code 0; see f2_heldout.log",
+      "stage": "f2"
+    },
+    {
+      "check": "F2 read every deduplicated row of train",
+      "ok": true,
+      "detail": "F2 rows 1394801, apply kept 1394801",
+      "stage": "f2"
+    },
+    {
+      "check": "F2 read what apply wrote in train",
+      "ok": true,
+      "detail": "0 part(s) without a matching F2 report, e.g. ",
+      "stage": "f2"
+    },
+    {
+      "check": "F2 read every deduplicated row of heldout",
+      "ok": true,
+      "detail": "F2 rows 14090, apply kept 14090",
+      "stage": "f2"
+    },
+    {
+      "check": "F2 read what apply wrote in heldout",
+      "ok": true,
+      "detail": "0 part(s) without a matching F2 report, e.g. ",
+      "stage": "f2"
+    },
+    {
+      "check": "F2 used one fingerprint set",
+      "ok": true,
+      "detail": "set_sha256 values ['2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a']",
+      "stage": "f2"
+    },
+    {
+      "check": "F2 counts add up",
+      "ok": true,
+      "detail": "{'rows': 1408891, 'kept': 1407358, 'dropped_by_f2': 1533, 'errors': 0}",
+      "stage": "f2"
+    },
+    {
+      "check": "dedup's summary counts its groups",
+      "ok": true,
+      "detail": "dedup_summary.json gives {'clusters': 1083, 'groups_without_survivor': 0, 'groups_with_several_survivors': 0}",
+      "stage": "survivor_loss"
+    },
+    {
+      "check": "survivor loss saw every dedup group",
+      "ok": true,
+      "detail": "dedup_groups.csv 1083 group(s), dedup_summary.json clusters 1083",
+      "stage": "survivor_loss"
+    },
+    {
+      "check": "survivor loss's groups without a survivor = dedup's",
+      "ok": true,
+      "detail": "dedup_groups.csv 0, dedup_summary.json 0",
+      "stage": "survivor_loss"
+    },
+    {
+      "check": "survivor loss's groups with several survivors = dedup's",
+      "ok": true,
+      "detail": "dedup_groups.csv 0, dedup_summary.json 0",
+      "stage": "survivor_loss"
+    },
+    {
+      "check": "ledger holds every cleaned row",
+      "ok": true,
+      "detail": "ledger 1410230, cleaned rows 1410230",
+      "stage": "ledger"
+    },
+    {
+      "check": "ledger removed_by_dedup = apply's removed",
+      "ok": true,
+      "detail": "ledger 1339, apply 1339",
+      "stage": "ledger"
+    },
+    {
+      "check": "ledger dropped_by_f2 = F2's",
+      "ok": true,
+      "detail": "ledger 1533, F2 1533",
+      "stage": "ledger"
+    },
+    {
+      "check": "ledger f2_error = F2's errors",
+      "ok": true,
+      "detail": "ledger 0, F2 0",
+      "stage": "ledger"
+    },
+    {
+      "check": "ledger kept = F2's kept",
+      "ok": true,
+      "detail": "ledger 1407358, F2 1407358",
+      "stage": "ledger"
+    },
+    {
+      "check": "ledger used F2's fingerprint set",
+      "ok": true,
+      "detail": "2826a3b88321\u2026 vs 2826a3b88321\u2026",
+      "stage": "ledger"
+    },
+    {
+      "check": "ledger per pack = apply per pack",
+      "ok": true,
+      "detail": "0 pack/split(s) differ in cleaned rows or removed, e.g. ",
+      "stage": "ledger"
+    },
+    {
+      "check": "every per-pack row adds up",
+      "ok": true,
+      "detail": "0 pack/split(s) where raw - clean != cleaned or cleaned - dedup - f2 - errors != final, e.g. ",
+      "stage": "ledger"
+    },
+    {
+      "check": "per-pack table adds up to the stages' counts",
+      "ok": true,
+      "detail": "table {'cleaned': 1410230, 'removed_by_dedup': 1339, 'dropped_by_f2': 1533, 'final': 1407358}, stages {'cleaned': 1410230, 'removed_by_dedup': 1339, 'dropped_by_f2': 1533, 'final': 1407358}",
+      "stage": "ledger"
+    },
+    {
+      "check": "ledger's survivors dropped by F2 = survivor loss's",
+      "ok": true,
+      "detail": "ledger 1, survivor_loss_summary.json 1",
+      "stage": "ledger"
+    },
+    {
+      "check": "ledger's survivors dropped by F2 per pack = survivor loss's",
+      "ok": true,
+      "detail": "0 pack(s) differ, e.g. ",
+      "stage": "ledger"
+    },
+    {
+      "check": "shards: no part failed or was skipped",
+      "ok": true,
+      "detail": "{'written': 48, 'empty': 0, 'all_left_out': 0, 'failed': 0, 'skipped': 0, 'not_sharded': 38, 'truncated': 0, 'shards': 48}; first: ; see logs/shards.log",
+      "stage": "shards"
+    },
+    {
+      "check": "shards: run_shards.py exited 0",
+      "ok": true,
+      "detail": "exit code 0: written  train/ind-te-sangraha-v/part-00000.parquet: 1 shard(s), 8591 docs, 5312512 tokens | written  train/math-finemath/part-00000.parquet: 1 shard(s), 26160 docs, 32579110 tokens | written  train/math-megamath/part-00000.parquet: 1 shard(s), 14827 docs, 20779736 tokens | written  train/sci-finepdfs/part-00000.parquet: 1 shard(s), 5829 docs, 39330261 tokens | {\"written\": 48, \"empty\": 0, \"all_left_out\": 0, \"failed\": 0, \"skipped\": 0, \"not_sharded\": 38, \"truncated\": 0, \"shards\": 48}",
+      "stage": "shards"
+    },
+    {
+      "check": "shards: at least one shard written",
+      "ok": true,
+      "detail": "{'written': 48, 'empty': 0, 'all_left_out': 0, 'failed': 0, 'skipped': 0, 'not_sharded': 38, 'truncated': 0, 'shards': 48}",
+      "stage": "shards"
+    },
+    {
+      "check": "shards: no part was cut short (every row of a written part was read into its shards)",
+      "ok": true,
+      "detail": "0 part(s) cut short, e.g. []: the writer rolls over into more shards, so rows it never read point to a writer fault; reconcile reports them as not_reached",
+      "stage": "shards"
+    },
+    {
+      "check": "shards: the summary is this run's, made with this run's cleaning_pipeline.json",
+      "ok": true,
+      "detail": "summary run_id rehearsal-38pack, cleaning_pipeline_sha256 4c09226ce77d\u2026",
+      "stage": "shards"
+    },
+    {
+      "check": "shards: the shard files on disk verify (files, sha256, format, counts, pack table, first and last document)",
+      "ok": true,
+      "detail": "0 problem(s), the first 0: ",
+      "stage": "shards"
+    },
+    {
+      "check": "reconcile: every document in a shard is a kept document at its ledger position",
+      "ok": true,
+      "detail": "0 shard row(s) at no kept ledger position, 0 with another doc_id",
+      "stage": "reconcile"
+    },
+    {
+      "check": "reconcile: no document is in two shards",
+      "ok": true,
+      "detail": "0 position(s) in more than one shard",
+      "stage": "reconcile"
+    },
+    {
+      "check": "reconcile: every document the writer left out is a kept document of that part, and none is also in a shard",
+      "ok": true,
+      "detail": "0 left-out doc_id(s) not kept there, 0 both left out and in a shard",
+      "stage": "reconcile"
+    },
+    {
+      "check": "reconcile: each shard manifest's doc_count = its docs.parquet rows",
+      "ok": true,
+      "detail": "0 shard(s) differ, e.g. ",
+      "stage": "reconcile"
+    },
+    {
+      "check": "reconcile: every kept document of a selected pack is in a shard or left out for a stated reason",
+      "ok": true,
+      "detail": "all accounted",
+      "stage": "reconcile"
+    },
+    {
+      "check": "reconcile: every selected pack holds kept documents in the ledger",
+      "ok": true,
+      "detail": "all present",
+      "stage": "reconcile"
+    }
+  ],
+  "totals": {
+    "raw": 1444766,
+    "dropped_by_clean": 34536,
+    "cleaned": 1410230,
+    "removed_by_dedup": 1339,
+    "dropped_by_f2": 1533,
+    "final": 1407358,
+    "shards_written": 48
+  },
+  "intermediates": {
+    "mode": "keep"
+  },
+  "by_pack": {
+    "cadj-commits": {
+      "train": {
+        "raw": 74753,
+        "dropped_by_clean": 0,
+        "cleaned": 74753,
+        "removed_by_dedup": 904,
+        "dropped_by_f2": 14,
+        "final": 73835
+      },
+      "heldout": {
+        "raw": 826,
+        "dropped_by_clean": 0,
+        "cleaned": 826,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "final": 826
+      }
+    },
+    "cadj-notebooks": {
+      "train": {
+        "raw": 15563,
+        "dropped_by_clean": 0,
+        "cleaned": 15563,
+        "removed_by_dedup": 14,
+        "dropped_by_f2": 65,
+        "final": 15484
+      },
+      "heldout": {
+        "raw": 169,
+        "dropped_by_clean": 0,
+        "cleaned": 169,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 1,
+        "final": 168
+      }
+    },
+    "cadj-stackexchange": {
+      "train": {
+        "raw": 41396,
+        "dropped_by_clean": 0,
+        "cleaned": 41396,
+        "removed_by_dedup": 199,
+        "dropped_by_f2": 61,
+        "final": 41136
+      },
+      "heldout": {
+        "raw": 409,
+        "dropped_by_clean": 0,
+        "cleaned": 409,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 1,
+        "final": 408
+      }
+    },
+    "code-cpp": {
+      "train": {
+        "raw": 55545,
+        "dropped_by_clean": 957,
+        "cleaned": 54588,
+        "removed_by_dedup": 5,
+        "dropped_by_f2": 77,
+        "final": 54506
+      },
+      "heldout": {
+        "raw": 613,
+        "dropped_by_clean": 6,
+        "cleaned": 607,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 1,
+        "final": 606
+      }
+    },
+    "code-go": {
+      "train": {
+        "raw": 83267,
+        "dropped_by_clean": 6312,
+        "cleaned": 76955,
+        "removed_by_dedup": 6,
+        "dropped_by_f2": 96,
+        "final": 76853
+      },
+      "heldout": {
+        "raw": 872,
+        "dropped_by_clean": 62,
+        "cleaned": 810,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 2,
+        "final": 808
+      }
+    },
+    "code-java": {
+      "train": {
+        "raw": 85213,
+        "dropped_by_clean": 534,
+        "cleaned": 84679,
+        "removed_by_dedup": 3,
+        "dropped_by_f2": 17,
+        "final": 84659
+      },
+      "heldout": {
+        "raw": 847,
+        "dropped_by_clean": 8,
+        "cleaned": 839,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "final": 839
+      }
+    },
+    "code-js-ts": {
+      "train": {
+        "raw": 121938,
+        "dropped_by_clean": 5875,
+        "cleaned": 116063,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 76,
+        "final": 115987
+      },
+      "heldout": {
+        "raw": 1234,
+        "dropped_by_clean": 89,
+        "cleaned": 1145,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 3,
+        "final": 1142
+      }
+    },
+    "code-python": {
+      "train": {
+        "raw": 74943,
+        "dropped_by_clean": 2339,
+        "cleaned": 72604,
+        "removed_by_dedup": 9,
+        "dropped_by_f2": 220,
+        "final": 72375
+      },
+      "heldout": {
+        "raw": 718,
+        "dropped_by_clean": 17,
+        "cleaned": 701,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 1,
+        "final": 700
+      }
+    },
+    "code-rust": {
+      "train": {
+        "raw": 60126,
+        "dropped_by_clean": 1926,
+        "cleaned": 58200,
+        "removed_by_dedup": 58,
+        "dropped_by_f2": 36,
+        "final": 58106
+      },
+      "heldout": {
+        "raw": 612,
+        "dropped_by_clean": 17,
+        "cleaned": 595,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "final": 595
+      }
+    },
+    "en-dclm": {
+      "train": {
+        "raw": 61367,
+        "dropped_by_clean": 1155,
+        "cleaned": 60212,
+        "removed_by_dedup": 11,
+        "dropped_by_f2": 37,
+        "final": 60164
+      },
+      "heldout": {
+        "raw": 608,
+        "dropped_by_clean": 18,
+        "cleaned": 590,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "final": 590
+      }
+    },
+    "en-fineweb-edu": {
+      "train": {
+        "raw": 71933,
+        "dropped_by_clean": 559,
+        "cleaned": 71374,
+        "removed_by_dedup": 15,
+        "dropped_by_f2": 84,
+        "final": 71275
+      },
+      "heldout": {
+        "raw": 732,
+        "dropped_by_clean": 6,
+        "cleaned": 726,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "final": 726
+      }
+    },
+    "en-nemotroncc": {
+      "train": {
+        "raw": 91820,
+        "dropped_by_clean": 3552,
+        "cleaned": 88268,
+        "removed_by_dedup": 19,
+        "dropped_by_f2": 43,
+        "final": 88206
+      },
+      "heldout": {
+        "raw": 954,
+        "dropped_by_clean": 39,
+        "cleaned": 915,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 1,
+        "final": 914
+      }
+    },
+    "en-nemotroncc-synth": {
+      "train": {
+        "raw": 197119,
+        "dropped_by_clean": 218,
+        "cleaned": 196901,
+        "removed_by_dedup": 1,
+        "dropped_by_f2": 43,
+        "final": 196857
+      },
+      "heldout": {
+        "raw": 1975,
+        "dropped_by_clean": 5,
+        "cleaned": 1970,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 1,
+        "final": 1969
+      }
+    },
+    "ind-bn-fw2": {
+      "train": {
+        "raw": 11205,
+        "dropped_by_clean": 501,
+        "cleaned": 10704,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "final": 10704
+      },
+      "heldout": {
+        "raw": 112,
+        "dropped_by_clean": 7,
+        "cleaned": 105,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "final": 105
+      }
+    },
+    "ind-bn-sangraha-v": {
+      "train": {
+        "raw": 10328,
+        "dropped_by_clean": 212,
+        "cleaned": 10116,
+        "removed_by_dedup": 1,
+        "dropped_by_f2": 0,
+        "final": 10115
+      },
+      "heldout": {
+        "raw": 102,
+        "dropped_by_clean": 1,
+        "cleaned": 101,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "final": 101
+      }
+    },
+    "ind-gu-fw2": {
+      "train": {
+        "raw": 23118,
+        "dropped_by_clean": 345,
+        "cleaned": 22773,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 84,
+        "final": 22689
+      },
+      "heldout": {
+        "raw": 239,
+        "dropped_by_clean": 1,
+        "cleaned": 238,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 1,
+        "final": 237
+      }
+    },
+    "ind-hi-fw2": {
+      "train": {
+        "raw": 14261,
+        "dropped_by_clean": 460,
+        "cleaned": 13801,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 28,
+        "final": 13773
+      },
+      "heldout": {
+        "raw": 132,
+        "dropped_by_clean": 1,
+        "cleaned": 131,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "final": 131
+      }
+    },
+    "ind-hi-hplt": {
+      "train": {
+        "raw": 8745,
+        "dropped_by_clean": 322,
+        "cleaned": 8423,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 5,
+        "final": 8418
+      },
+      "heldout": {
+        "raw": 95,
+        "dropped_by_clean": 3,
+        "cleaned": 92,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "final": 92
+      }
+    },
+    "ind-hi-indiccorp": {
+      "train": {
+        "raw": 110836,
+        "dropped_by_clean": 1161,
+        "cleaned": 109675,
+        "removed_by_dedup": 4,
+        "dropped_by_f2": 1,
+        "final": 109670
+      },
+      "heldout": {
+        "raw": 1094,
+        "dropped_by_clean": 14,
+        "cleaned": 1080,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "final": 1080
+      }
+    },
+    "ind-hi-sangraha-s": {
+      "train": {
+        "raw": 8280,
+        "dropped_by_clean": 813,
+        "cleaned": 7467,
+        "removed_by_dedup": 35,
+        "dropped_by_f2": 0,
+        "final": 7432
+      },
+      "heldout": {
+        "raw": 88,
+        "dropped_by_clean": 13,
+        "cleaned": 75,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "final": 75
+      }
+    },
+    "ind-hi-sangraha-v": {
+      "train": {
+        "raw": 14709,
+        "dropped_by_clean": 216,
+        "cleaned": 14493,
+        "removed_by_dedup": 20,
+        "dropped_by_f2": 4,
+        "final": 14469
+      },
+      "heldout": {
+        "raw": 122,
+        "dropped_by_clean": 1,
+        "cleaned": 121,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "final": 121
+      }
+    },
+    "ind-kn-fw2": {
+      "train": {
+        "raw": 7834,
+        "dropped_by_clean": 75,
+        "cleaned": 7759,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 24,
+        "final": 7735
+      },
+      "heldout": {
+        "raw": 82,
+        "dropped_by_clean": 0,
+        "cleaned": 82,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 1,
+        "final": 81
+      }
+    },
+    "ind-kn-sangraha-s": {
+      "train": {
+        "raw": 5191,
+        "dropped_by_clean": 6,
+        "cleaned": 5185,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "final": 5185
+      },
+      "heldout": {
+        "raw": 53,
+        "dropped_by_clean": 0,
+        "cleaned": 53,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "final": 53
+      }
+    },
+    "ind-kn-sangraha-v": {
+      "train": {
+        "raw": 8551,
+        "dropped_by_clean": 194,
+        "cleaned": 8357,
+        "removed_by_dedup": 3,
+        "dropped_by_f2": 0,
+        "final": 8354
+      },
+      "heldout": {
+        "raw": 89,
+        "dropped_by_clean": 2,
+        "cleaned": 87,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "final": 87
+      }
+    },
+    "ind-ml-fw2": {
+      "train": {
+        "raw": 18976,
+        "dropped_by_clean": 0,
+        "cleaned": 18976,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 154,
+        "final": 18822
+      },
+      "heldout": {
+        "raw": 185,
+        "dropped_by_clean": 0,
+        "cleaned": 185,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 1,
+        "final": 184
+      }
+    },
+    "ind-mr-fw2": {
+      "train": {
+        "raw": 11460,
+        "dropped_by_clean": 201,
+        "cleaned": 11259,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 9,
+        "final": 11250
+      },
+      "heldout": {
+        "raw": 95,
+        "dropped_by_clean": 1,
+        "cleaned": 94,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "final": 94
+      }
+    },
+    "ind-mr-sangraha-v": {
+      "train": {
+        "raw": 12172,
+        "dropped_by_clean": 0,
+        "cleaned": 12172,
+        "removed_by_dedup": 5,
+        "dropped_by_f2": 1,
+        "final": 12166
+      },
+      "heldout": {
+        "raw": 127,
+        "dropped_by_clean": 0,
+        "cleaned": 127,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "final": 127
+      }
+    },
+    "ind-or-fw2": {
+      "train": {
+        "raw": 33684,
+        "dropped_by_clean": 0,
+        "cleaned": 33684,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 1,
+        "final": 33683
+      },
+      "heldout": {
+        "raw": 328,
+        "dropped_by_clean": 0,
+        "cleaned": 328,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "final": 328
+      }
+    },
+    "ind-sa-fw2": {
+      "train": {
+        "raw": 5908,
+        "dropped_by_clean": 241,
+        "cleaned": 5667,
+        "removed_by_dedup": 12,
+        "dropped_by_f2": 0,
+        "final": 5655
+      },
+      "heldout": {
+        "raw": 55,
+        "dropped_by_clean": 1,
+        "cleaned": 54,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "final": 54
+      }
+    },
+    "ind-ta-fw2": {
+      "train": {
+        "raw": 6766,
+        "dropped_by_clean": 0,
+        "cleaned": 6766,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 6,
+        "final": 6760
+      },
+      "heldout": {
+        "raw": 58,
+        "dropped_by_clean": 0,
+        "cleaned": 58,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "final": 58
+      }
+    },
+    "ind-ta-sangraha-s": {
+      "train": {
+        "raw": 4336,
+        "dropped_by_clean": 0,
+        "cleaned": 4336,
+        "removed_by_dedup": 1,
+        "dropped_by_f2": 0,
+        "final": 4335
+      },
+      "heldout": {
+        "raw": 36,
+        "dropped_by_clean": 0,
+        "cleaned": 36,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "final": 36
+      }
+    },
+    "ind-ta-sangraha-v": {
+      "train": {
+        "raw": 6796,
+        "dropped_by_clean": 0,
+        "cleaned": 6796,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "final": 6796
+      },
+      "heldout": {
+        "raw": 65,
+        "dropped_by_clean": 0,
+        "cleaned": 65,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "final": 65
+      }
+    },
+    "ind-te-fw2": {
+      "train": {
+        "raw": 5997,
+        "dropped_by_clean": 291,
+        "cleaned": 5706,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 36,
+        "final": 5670
+      },
+      "heldout": {
+        "raw": 59,
+        "dropped_by_clean": 2,
+        "cleaned": 57,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 1,
+        "final": 56
+      }
+    },
+    "ind-te-sangraha-s": {
+      "train": {
+        "raw": 4782,
+        "dropped_by_clean": 363,
+        "cleaned": 4419,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "final": 4419
+      },
+      "heldout": {
+        "raw": 47,
+        "dropped_by_clean": 3,
+        "cleaned": 44,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "final": 44
+      }
+    },
+    "ind-te-sangraha-v": {
+      "train": {
+        "raw": 8609,
+        "dropped_by_clean": 14,
+        "cleaned": 8595,
+        "removed_by_dedup": 2,
+        "dropped_by_f2": 1,
+        "final": 8592
+      },
+      "heldout": {
+        "raw": 83,
+        "dropped_by_clean": 0,
+        "cleaned": 83,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "final": 83
+      }
+    },
+    "math-finemath": {
+      "train": {
+        "raw": 29122,
+        "dropped_by_clean": 2609,
+        "cleaned": 26513,
+        "removed_by_dedup": 3,
+        "dropped_by_f2": 228,
+        "final": 26282
+      },
+      "heldout": {
+        "raw": 312,
+        "dropped_by_clean": 32,
+        "cleaned": 280,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "final": 280
+      }
+    },
+    "math-megamath": {
+      "train": {
+        "raw": 17647,
+        "dropped_by_clean": 2550,
+        "cleaned": 15097,
+        "removed_by_dedup": 9,
+        "dropped_by_f2": 53,
+        "final": 15035
+      },
+      "heldout": {
+        "raw": 169,
+        "dropped_by_clean": 17,
+        "cleaned": 152,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 1,
+        "final": 151
+      }
+    },
+    "sci-finepdfs": {
+      "train": {
+        "raw": 6011,
+        "dropped_by_clean": 166,
+        "cleaned": 5845,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 13,
+        "final": 5832
+      },
+      "heldout": {
+        "raw": 63,
+        "dropped_by_clean": 3,
+        "cleaned": 60,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "final": 60
+      }
+    }
+  },
+  "inventory": null
+}

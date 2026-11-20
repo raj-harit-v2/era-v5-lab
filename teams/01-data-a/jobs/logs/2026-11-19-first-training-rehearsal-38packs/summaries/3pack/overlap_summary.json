@@ -1,0 +1,223 @@
+{
+  "status": "complete",
+  "config": {
+    "inputs": "out/pipeline/rehearsal-3pack/clean",
+    "splits": [
+      "train",
+      "heldout"
+    ],
+    "out": "out/pipeline/rehearsal-3pack/overlap",
+    "floor": 0.5,
+    "k": 5,
+    "block": 256,
+    "top": 20,
+    "max_output_mb": 50,
+    "expected_packs": []
+  },
+  "normalize_id": "g1-spec-v1",
+  "key": "h1_key of h1_sha256.py: normalize.match_key, then NFKC, casefold, whitespace runs to one space",
+  "shingles": "word 5-grams of the key as 64-bit hashes (gram_hashes: pandas SipHash per word, combined per window); a key under 5 words is one shingle",
+  "inputs": {
+    "root": "out/pipeline/rehearsal-3pack/clean",
+    "checksum_verification": "sha256",
+    "parts": [
+      {
+        "part": "train/code-go/part-00000.parquet",
+        "documents": 56702,
+        "sha256": "c54f8a6b673b7a45aa3e6f3fe7cc68589c62ba1fac37271496fd81867a27ead6"
+      },
+      {
+        "part": "train/code-go/part-00001.parquet",
+        "documents": 20253,
+        "sha256": "b003f01f57f4366fe311a23bb8b9dcb0a7a048d085396154fa9ec663f19772a4"
+      },
+      {
+        "part": "train/ind-bn-fw2/part-00000.parquet",
+        "documents": 10704,
+        "sha256": "b3c7c4874f8f1609d1c4fd9a7d266f1999daa22c60ab9940539c30b2fe9e2664"
+      },
+      {
+        "part": "train/ind-bn-sangraha-v/part-00000.parquet",
+        "documents": 10116,
+        "sha256": "bd3a003e5a2da29ceb820b3b58b80fae205c38748a2b4f9d1ab66d5a3fb608ca"
+      },
+      {
+        "part": "heldout/code-go/part-00000.parquet",
+        "documents": 810,
+        "sha256": "01e3d046f774f7b50623e9a1a3734e919c6332e03c7d9c95de69aa4c66570d88"
+      }
+    ]
+  },
+  "documents": {
+    "code-go": {
+      "train": 76955,
+      "heldout": 810,
+      "all": 77765
+    },
+    "ind-bn-fw2": {
+      "train": 10704,
+      "heldout": 0,
+      "all": 10704
+    },
+    "ind-bn-sangraha-v": {
+      "train": 10116,
+      "heldout": 0,
+      "all": 10116
+    }
+  },
+  "documents_all": 98585,
+  "ids_used_by_2_or_more_documents": 0,
+  "h1_exact_groups": 0,
+  "documents_in_h1_exact_groups": 0,
+  "empty_documents": 0,
+  "distinct_shingles": 29644284,
+  "shingles_in_2_or_more_documents": 625047,
+  "pairs_compared": 4859451820,
+  "pairs_sharing_a_shingle": 663597414,
+  "pairs_at_or_above": {
+    "0.70": 18,
+    "0.75": 13,
+    "0.80": 9,
+    "0.85": 7,
+    "0.90": 4,
+    "0.95": 1
+  },
+  "pairs_stored": 85,
+  "pairs_by_pack": {
+    "0.50": {
+      "code-go x code-go": 79,
+      "code-go x ind-bn-fw2": 0,
+      "code-go x ind-bn-sangraha-v": 0,
+      "ind-bn-fw2 x ind-bn-fw2": 3,
+      "ind-bn-fw2 x ind-bn-sangraha-v": 3,
+      "ind-bn-sangraha-v x ind-bn-sangraha-v": 0
+    },
+    "0.70": {
+      "code-go x code-go": 15,
+      "code-go x ind-bn-fw2": 0,
+      "code-go x ind-bn-sangraha-v": 0,
+      "ind-bn-fw2 x ind-bn-fw2": 0,
+      "ind-bn-fw2 x ind-bn-sangraha-v": 3,
+      "ind-bn-sangraha-v x ind-bn-sangraha-v": 0
+    },
+    "0.75": {
+      "code-go x code-go": 10,
+      "code-go x ind-bn-fw2": 0,
+      "code-go x ind-bn-sangraha-v": 0,
+      "ind-bn-fw2 x ind-bn-fw2": 0,
+      "ind-bn-fw2 x ind-bn-sangraha-v": 3,
+      "ind-bn-sangraha-v x ind-bn-sangraha-v": 0
+    },
+    "0.80": {
+      "code-go x code-go": 8,
+      "code-go x ind-bn-fw2": 0,
+      "code-go x ind-bn-sangraha-v": 0,
+      "ind-bn-fw2 x ind-bn-fw2": 0,
+      "ind-bn-fw2 x ind-bn-sangraha-v": 1,
+      "ind-bn-sangraha-v x ind-bn-sangraha-v": 0
+    },
+    "0.85": {
+      "code-go x code-go": 6,
+      "code-go x ind-bn-fw2": 0,
+      "code-go x ind-bn-sangraha-v": 0,
+      "ind-bn-fw2 x ind-bn-fw2": 0,
+      "ind-bn-fw2 x ind-bn-sangraha-v": 1,
+      "ind-bn-sangraha-v x ind-bn-sangraha-v": 0
+    },
+    "0.90": {
+      "code-go x code-go": 4,
+      "code-go x ind-bn-fw2": 0,
+      "code-go x ind-bn-sangraha-v": 0,
+      "ind-bn-fw2 x ind-bn-fw2": 0,
+      "ind-bn-fw2 x ind-bn-sangraha-v": 0,
+      "ind-bn-sangraha-v x ind-bn-sangraha-v": 0
+    },
+    "0.95": {
+      "code-go x code-go": 1,
+      "code-go x ind-bn-fw2": 0,
+      "code-go x ind-bn-sangraha-v": 0,
+      "ind-bn-fw2 x ind-bn-fw2": 0,
+      "ind-bn-fw2 x ind-bn-sangraha-v": 0,
+      "ind-bn-sangraha-v x ind-bn-sangraha-v": 0
+    },
+    "1.00": {
+      "code-go x code-go": 0,
+      "code-go x ind-bn-fw2": 0,
+      "code-go x ind-bn-sangraha-v": 0,
+      "ind-bn-fw2 x ind-bn-fw2": 0,
+      "ind-bn-fw2 x ind-bn-sangraha-v": 0,
+      "ind-bn-sangraha-v x ind-bn-sangraha-v": 0
+    },
+    "exact": {
+      "code-go x code-go": 0,
+      "code-go x ind-bn-fw2": 0,
+      "code-go x ind-bn-sangraha-v": 0,
+      "ind-bn-fw2 x ind-bn-fw2": 0,
+      "ind-bn-fw2 x ind-bn-sangraha-v": 0,
+      "ind-bn-sangraha-v x ind-bn-sangraha-v": 0
+    }
+  },
+  "qualifying_pairs_by_rule": {
+    "H2": 7
+  },
+  "matrix_definition": "distinct documents in row source with another qualifying H1/H2 match in column source / row source documents",
+  "duplicate_rules": {
+    "prose": "word Jaccard >= 0.80; both >= 50 words",
+    "math": "word Jaccard >= 0.90; identical signed number multisets",
+    "code": "token Jaccard >= 0.85; both >= 20 nonblank lines after comment removal",
+    "mixed_domains": "both domains' rules must pass on both documents",
+    "h1": "same H1 SHA256; bypasses H2 guards",
+    "translations": "not detected"
+  },
+  "pack_domains": {
+    "code-go": "code",
+    "ind-bn-fw2": "prose",
+    "ind-bn-sangraha-v": "prose"
+  },
+  "wall_seconds": 512.6,
+  "peak_rss_mb": 2196.3,
+  "versions": {
+    "python": "3.12.3",
+    "numpy": "2.4.3",
+    "scipy": "1.15.3",
+    "pandas": "2.3.3",
+    "pyarrow": "23.0.1",
+    "pygments": "2.21.0",
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.39"
+  },
+  "outputs": {
+    "overlap_pairs.csv": {
+      "bytes": 14793,
+      "sha256": "da41cdf65c089b36e6b55fe7c2994461090ae77b7d1394f140e5cb23b32f201d"
+    },
+    "overlap_matrix.npz": {
+      "bytes": 277541,
+      "sha256": "8d31d583a1ffcd27522c1ca069750e2b93e612404aa7d1d9f25d5ab3343a6b24"
+    },
+    "overlap_docs.parquet": {
+      "bytes": 2720784,
+      "sha256": "85644e388845cf615a8ef2236dec4dc3507bb8377d41f5946d3a20fca1c6a58d"
+    },
+    "overlap_by_pack.csv": {
+      "bytes": 1800,
+      "sha256": "0371d5cddb079be83933b6756c3533ec762d9287a3f6a1be04d19226515c2acc"
+    },
+    "overlap_histogram.csv": {
+      "bytes": 1469,
+      "sha256": "ea69d8b1ef1bf1ab48268f7c25c731fab92a8e76c4d605dbef14eb27a34294a5"
+    },
+    "overlap_matches.csv": {
+      "bytes": 493,
+      "sha256": "69bab944aad10a4272674e9c1be59db25eacb5e798ea2834e3a868a68ad0de36"
+    },
+    "overlap_matrix.csv": {
+      "bytes": 202,
+      "sha256": "e66f2b5305699102ceb154be3817cd93181fc1268fcbd2b81a7e04ba0a96c6bc"
+    },
+    "overlap_matrix_counts.csv": {
+      "bytes": 357,
+      "sha256": "a726bd0a5b6756dfc0e17eaf59aa1aa56256d42dbfe595817346af965bf2e377"
+    }
+  },
+  "output_mb": 2.9
+}

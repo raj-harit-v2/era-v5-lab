@@ -1,0 +1,638 @@
+{
+  "shard_id": "sci-finepdfs-train-000000",
+  "manifest": {
+    "schema_version": "shard-v1",
+    "dataset_version": "sample",
+    "shard_id": "sci-finepdfs-train-000000",
+    "format": "brahmic_u32_v2+doc_index",
+    "token_dtype": "uint32",
+    "payload_uri": "sci-finepdfs-train-000000.bin",
+    "payload_sha256": "e95a44b141ec04314968a54bc44e48183861fd4591197c862553a9f6d2968585",
+    "payload_bytes": 157882124,
+    "index_uri": "sci-finepdfs-train-000000.idx.npy",
+    "index_sha256": "7a290cbf1835fda071697c040d341a7db4fe06ac7597970bc5b0a36c90c29e3d",
+    "doc_count": 5993,
+    "token_count": 39470275,
+    "eos_token_id": 130822,
+    "tokenizer_sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b",
+    "pack_id": "sci-finepdfs",
+    "language": "en",
+    "script": "Latn",
+    "domain": "sci",
+    "capability_lane": "science",
+    "split": "train",
+    "inputs_sha256": "7946375dcc79b375197ad3146713155a18371bb908f169d07ef497948f09c1b3",
+    "cleaning_pipeline_sha256": "35611a83cfa6d6b510a43b07c5d356c4f6d5d908bbb7d4f3c8b9f05856046589",
+    "decontam_set_sha256": "2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a",
+    "sample_metadata_uri": "sci-finepdfs-train-000000.docs.parquet",
+    "sample_metadata_sha256": "5cab0da0405d6e903caabfaa0d9b04d6bc32cc7d79a8d363ec1c7cb1a2af891b",
+    "quality_report_uri": "sci-finepdfs-train-000000.quality_report.json",
+    "quality_report_sha256": "f655095bf5872eecf092595b8941df82b7ffb8b4a77c0696ce05c52d452df5cc",
+    "created_by": "0064f81d57ef47e22d8fa5f42d96c99089a98ce4"
+  },
+  "artifact_sha256": {
+    "sci-finepdfs-train-000000.json": "659ff75ecb86c4625e445d3211c316a1322083336158deb0de4163b447dda21f",
+    "sci-finepdfs-train-000000.bin": "e95a44b141ec04314968a54bc44e48183861fd4591197c862553a9f6d2968585",
+    "sci-finepdfs-train-000000.idx.npy": "7a290cbf1835fda071697c040d341a7db4fe06ac7597970bc5b0a36c90c29e3d",
+    "sci-finepdfs-train-000000.docs.parquet": "5cab0da0405d6e903caabfaa0d9b04d6bc32cc7d79a8d363ec1c7cb1a2af891b",
+    "sci-finepdfs-train-000000.quality_report.json": "f655095bf5872eecf092595b8941df82b7ffb8b4a77c0696ce05c52d452df5cc",
+    "cleaning_pipeline.json": "35611a83cfa6d6b510a43b07c5d356c4f6d5d908bbb7d4f3c8b9f05856046589"
+  },
+  "checks": [
+    {
+      "check": "manifest file sha256 (recorded)",
+      "status": "PASS",
+      "expected": "",
+      "observed": "659ff75ecb86c4625e445d3211c316a1322083336158deb0de4163b447dda21f"
+    },
+    {
+      "check": "all template fields present",
+      "status": "PASS",
+      "expected": "none missing",
+      "observed": "none missing"
+    },
+    {
+      "check": "no fields outside the template",
+      "status": "PASS",
+      "expected": "none extra",
+      "observed": "none extra"
+    },
+    {
+      "check": "no empty or placeholder values",
+      "status": "PASS",
+      "expected": "none",
+      "observed": "none"
+    },
+    {
+      "check": "schema_version",
+      "status": "PASS",
+      "expected": "shard-v1",
+      "observed": "shard-v1"
+    },
+    {
+      "check": "format",
+      "status": "PASS",
+      "expected": "brahmic_u32_v2+doc_index",
+      "observed": "brahmic_u32_v2+doc_index"
+    },
+    {
+      "check": "token_dtype",
+      "status": "PASS",
+      "expected": "uint32",
+      "observed": "uint32"
+    },
+    {
+      "check": "eos_token_id",
+      "status": "PASS",
+      "expected": "130822",
+      "observed": "130822"
+    },
+    {
+      "check": "tokenizer_sha256 is p1536",
+      "status": "PASS",
+      "expected": "e6b93a93a60520d7",
+      "observed": "e6b93a93a60520d7"
+    },
+    {
+      "check": "decontam_set_sha256 is F2 v2",
+      "status": "PASS",
+      "expected": "2826a3b883210c65",
+      "observed": "2826a3b883210c65"
+    },
+    {
+      "check": "split is train or validation",
+      "status": "PASS",
+      "expected": "train|validation",
+      "observed": "train"
+    },
+    {
+      "check": "shard_id = <pack_id>-<split>-<6 digits>",
+      "status": "PASS",
+      "expected": "sci-finepdfs-train-NNNNNN",
+      "observed": "sci-finepdfs-train-000000"
+    },
+    {
+      "check": "created_by is a full git commit hash",
+      "status": "PASS",
+      "expected": "40 hex characters",
+      "observed": "0064f81d57ef"
+    },
+    {
+      "check": "payload_bytes = 1024 + 4 x token_count",
+      "status": "PASS",
+      "expected": "157882124",
+      "observed": "157882124"
+    },
+    {
+      "check": "payload_sha256 (sci-finepdfs-train-000000.bin)",
+      "status": "PASS",
+      "expected": "e95a44b141ec0431",
+      "observed": "e95a44b141ec0431"
+    },
+    {
+      "check": "index_sha256 (sci-finepdfs-train-000000.idx.npy)",
+      "status": "PASS",
+      "expected": "7a290cbf1835fda0",
+      "observed": "7a290cbf1835fda0"
+    },
+    {
+      "check": "sample_metadata_sha256 (sci-finepdfs-train-000000.docs.parquet)",
+      "status": "PASS",
+      "expected": "5cab0da0405d6e90",
+      "observed": "5cab0da0405d6e90"
+    },
+    {
+      "check": "quality_report_sha256 (sci-finepdfs-train-000000.quality_report.json)",
+      "status": "PASS",
+      "expected": "f655095bf5872eec",
+      "observed": "f655095bf5872eec"
+    },
+    {
+      "check": "cleaning_pipeline_sha256",
+      "status": "PASS",
+      "expected": "35611a83cfa6d6b5",
+      "observed": "35611a83cfa6d6b5"
+    },
+    {
+      "check": "cleaning_pipeline F2 set = manifest decontam set",
+      "status": "PASS",
+      "expected": "2826a3b883210c65",
+      "observed": "2826a3b883210c65"
+    },
+    {
+      "check": "cleaning_pipeline records a dedup version",
+      "status": "FAIL",
+      "expected": "a dedup version",
+      "observed": "None"
+    },
+    {
+      "check": "cleaning_pipeline clean.py = clean.py in this checkout",
+      "status": "PASS",
+      "expected": "22d818c72c9f30bf",
+      "observed": "22d818c72c9f30bf"
+    },
+    {
+      "check": "index dtype int64",
+      "status": "PASS",
+      "expected": "int64",
+      "observed": "int64"
+    },
+    {
+      "check": "index length = doc_count + 1",
+      "status": "PASS",
+      "expected": "5994",
+      "observed": "5994"
+    },
+    {
+      "check": "index starts at 0",
+      "status": "PASS",
+      "expected": "0",
+      "observed": "0"
+    },
+    {
+      "check": "index ends at token_count",
+      "status": "PASS",
+      "expected": "39470275",
+      "observed": "39470275"
+    },
+    {
+      "check": "every document has >= 2 tokens (text + EOS)",
+      "status": "PASS",
+      "expected": ">= 2",
+      "observed": "15"
+    },
+    {
+      "check": "document lengths sum to token_count",
+      "status": "PASS",
+      "expected": "39470275",
+      "observed": "39470275"
+    },
+    {
+      "check": "shard within 2^26 tokens, or one document",
+      "status": "PASS",
+      "expected": "<= 67108864",
+      "observed": "39470275"
+    },
+    {
+      "check": "quality report shard_id",
+      "status": "PASS",
+      "expected": "sci-finepdfs-train-000000",
+      "observed": "sci-finepdfs-train-000000"
+    },
+    {
+      "check": "quality report docs_in_shard = doc_count",
+      "status": "PASS",
+      "expected": "5993",
+      "observed": "5993"
+    },
+    {
+      "check": "rows_read = docs_in_shard + left out",
+      "status": "PASS",
+      "expected": "5997",
+      "observed": "5997"
+    },
+    {
+      "check": "left_out counts = left_out_docs lists",
+      "status": "PASS",
+      "expected": "{'secret': 4, 'empty': 0, 'special': 0, 'roundtrip': 0}",
+      "observed": "{'secret': 4, 'empty': 0, 'special': 0, 'roundtrip': 0}"
+    },
+    {
+      "check": ".bin size = payload_bytes",
+      "status": "PASS",
+      "expected": "157882124",
+      "observed": "157882124"
+    },
+    {
+      "check": ".bin header magic",
+      "status": "PASS",
+      "expected": "20261025",
+      "observed": "20261025"
+    },
+    {
+      "check": ".bin header version",
+      "status": "PASS",
+      "expected": "2",
+      "observed": "2"
+    },
+    {
+      "check": ".bin header token count",
+      "status": "PASS",
+      "expected": "39470275",
+      "observed": "39470275"
+    },
+    {
+      "check": ".bin header rest is zeros",
+      "status": "PASS",
+      "expected": "zeros",
+      "observed": "zeros"
+    },
+    {
+      "check": "tokens after the header = token_count",
+      "status": "PASS",
+      "expected": "39470275",
+      "observed": "39470275"
+    },
+    {
+      "check": "every id < vocab 131072",
+      "status": "PASS",
+      "expected": "< 131072",
+      "observed": "130822"
+    },
+    {
+      "check": "every document ends with EOS",
+      "status": "PASS",
+      "expected": "5993",
+      "observed": "5993"
+    },
+    {
+      "check": "no special id >= 130725 inside a document",
+      "status": "PASS",
+      "expected": "0",
+      "observed": "0"
+    },
+    {
+      "check": "none of the 9 special ids below 130725 inside a document",
+      "status": "PASS",
+      "expected": "0",
+      "observed": "0"
+    },
+    {
+      "check": "docs.parquet rows = doc_count",
+      "status": "PASS",
+      "expected": "5993",
+      "observed": "5993"
+    },
+    {
+      "check": "docs.parquet doc_ids unique",
+      "status": "PASS",
+      "expected": "5993",
+      "observed": "5993"
+    },
+    {
+      "check": "docs.parquet n_tokens = index lengths",
+      "status": "PASS",
+      "expected": "equal",
+      "observed": "equal"
+    },
+    {
+      "check": "assigned pack and sample/train scope",
+      "status": "PASS",
+      "expected": "sci-finepdfs, train, sample",
+      "observed": "sci-finepdfs, train, sample"
+    },
+    {
+      "check": "metadata required columns",
+      "status": "PASS",
+      "expected": "all six metadata columns",
+      "observed": "['doc_id', 'input_part', 'input_row', 'lang_label', 'n_chars', 'n_tokens']"
+    },
+    {
+      "check": "metadata source part belongs to assigned pack",
+      "status": "PASS",
+      "expected": "sci-finepdfs",
+      "observed": "['sci-finepdfs_part-00000_clean.parquet']"
+    },
+    {
+      "check": "metadata source rows ordered, unique and within rows_read",
+      "status": "PASS",
+      "expected": "strictly increasing in [0, rows_read)",
+      "observed": "0..5996, 5993 rows"
+    },
+    {
+      "check": "metadata source-row gaps equal excluded count",
+      "status": "PASS",
+      "expected": "4",
+      "observed": "4"
+    },
+    {
+      "check": "excluded IDs unique and absent from kept metadata",
+      "status": "PASS",
+      "expected": "unique, disjoint",
+      "observed": "4 excluded; intersection 0"
+    },
+    {
+      "check": "metadata character counts positive",
+      "status": "PASS",
+      "expected": "all > 0",
+      "observed": "68"
+    },
+    {
+      "check": "writer commit in audited main history",
+      "status": "PASS",
+      "expected": "ancestor of audited main",
+      "observed": "0064f81d57ef47e22d8fa5f42d96c99089a98ce4"
+    },
+    {
+      "check": "decode 20 documents: each ends with EOS 130822",
+      "status": "PASS",
+      "expected": "20",
+      "observed": "20"
+    },
+    {
+      "check": "decode: no U+FFFD replacement characters",
+      "status": "PASS",
+      "expected": "0",
+      "observed": "0"
+    },
+    {
+      "check": "decode: re-encoding the decoded text gives the same IDs",
+      "status": "PASS",
+      "expected": "20",
+      "observed": "20"
+    },
+    {
+      "check": "decode: decoded length equals metadata n_chars",
+      "status": "PASS",
+      "expected": "20",
+      "observed": "20"
+    }
+  ],
+  "counts": {
+    "PASS": 57,
+    "FAIL": 1,
+    "NOT CHECKED": 0
+  },
+  "quality_counts": {
+    "rows_read": 5997,
+    "docs_in_shard": 5993,
+    "left_out": {
+      "secret": 4,
+      "empty": 0,
+      "special": 0,
+      "roundtrip": 0
+    }
+  },
+  "input_parts": [
+    "sci-finepdfs_part-00000_clean.parquet"
+  ],
+  "input_rows": [
+    0,
+    5996
+  ],
+  "min_document_tokens": 15,
+  "max_document_tokens": 1122846,
+  "decoded_documents": [
+    {
+      "position": 0,
+      "doc_id": "d338e390710c19bf",
+      "n_tokens": 14446,
+      "ends_with_eos": true,
+      "replacement_chars": 0,
+      "decoded_chars": 43631,
+      "n_chars": 43631,
+      "reencode_matches": true,
+      "decoded_sha256": "d338e390710c19bf9e78508610d86daebfa4013a7b60028c007fce80ba66b073"
+    },
+    {
+      "position": 315,
+      "doc_id": "230268920a423637",
+      "n_tokens": 1075,
+      "ends_with_eos": true,
+      "replacement_chars": 0,
+      "decoded_chars": 5279,
+      "n_chars": 5279,
+      "reencode_matches": true,
+      "decoded_sha256": "230268920a423637cb761aacd30087046df03afdd1a5a1711c57d12b4b16354e"
+    },
+    {
+      "position": 631,
+      "doc_id": "32b8eb4ebd344616",
+      "n_tokens": 141,
+      "ends_with_eos": true,
+      "replacement_chars": 0,
+      "decoded_chars": 500,
+      "n_chars": 500,
+      "reencode_matches": true,
+      "decoded_sha256": "32b8eb4ebd344616753e48a73b32eead92bb2785767e8bca3976949b3c0d9c45"
+    },
+    {
+      "position": 946,
+      "doc_id": "698fd308497a2e4d",
+      "n_tokens": 1290,
+      "ends_with_eos": true,
+      "replacement_chars": 0,
+      "decoded_chars": 5288,
+      "n_chars": 5288,
+      "reencode_matches": true,
+      "decoded_sha256": "698fd308497a2e4dbbd201f885f279b5a308cb9f7bdd3dc057ab161b609c6dbe"
+    },
+    {
+      "position": 1261,
+      "doc_id": "7cc9c18e7ae80034",
+      "n_tokens": 967,
+      "ends_with_eos": true,
+      "replacement_chars": 0,
+      "decoded_chars": 4623,
+      "n_chars": 4623,
+      "reencode_matches": true,
+      "decoded_sha256": "7cc9c18e7ae800341d358d49be46ceaa8e26cb42acdc42d42c39d87d9f875045"
+    },
+    {
+      "position": 1577,
+      "doc_id": "26fc7fce552ccefa",
+      "n_tokens": 5547,
+      "ends_with_eos": true,
+      "replacement_chars": 0,
+      "decoded_chars": 26289,
+      "n_chars": 26289,
+      "reencode_matches": true,
+      "decoded_sha256": "26fc7fce552ccefa080b008f583f2908c219276552db97eabbed2ea5b36fc5bf"
+    },
+    {
+      "position": 1892,
+      "doc_id": "27d01e0c886929dc",
+      "n_tokens": 372,
+      "ends_with_eos": true,
+      "replacement_chars": 0,
+      "decoded_chars": 1893,
+      "n_chars": 1893,
+      "reencode_matches": true,
+      "decoded_sha256": "27d01e0c886929dcc845604bdc1701a659d407f4972c2adf78a5b5b5cc653419"
+    },
+    {
+      "position": 2208,
+      "doc_id": "0746ecf4ff061804",
+      "n_tokens": 2337,
+      "ends_with_eos": true,
+      "replacement_chars": 0,
+      "decoded_chars": 12860,
+      "n_chars": 12860,
+      "reencode_matches": true,
+      "decoded_sha256": "0746ecf4ff06180451c8d30f0a5dcd046b3c9ae271da3be43c5629dc81ef5c97"
+    },
+    {
+      "position": 2523,
+      "doc_id": "43651d2ec7c3d19e",
+      "n_tokens": 1204,
+      "ends_with_eos": true,
+      "replacement_chars": 0,
+      "decoded_chars": 5609,
+      "n_chars": 5609,
+      "reencode_matches": true,
+      "decoded_sha256": "43651d2ec7c3d19e1ad6cfeb117f2a1929b1c01121de07d0335c9b24059dbf24"
+    },
+    {
+      "position": 2838,
+      "doc_id": "8efde4da8fc2dac0",
+      "n_tokens": 1479,
+      "ends_with_eos": true,
+      "replacement_chars": 0,
+      "decoded_chars": 6651,
+      "n_chars": 6651,
+      "reencode_matches": true,
+      "decoded_sha256": "8efde4da8fc2dac0d4e4342ec3453adf432e00dbc81dc46786dd74c0c5ccadb1"
+    },
+    {
+      "position": 3154,
+      "doc_id": "ce8079ab66af6fdc",
+      "n_tokens": 1858,
+      "ends_with_eos": true,
+      "replacement_chars": 0,
+      "decoded_chars": 7306,
+      "n_chars": 7306,
+      "reencode_matches": true,
+      "decoded_sha256": "ce8079ab66af6fdc3d8557857b5b907038be2a4760ec2ff532b6f95b9ac2a380"
+    },
+    {
+      "position": 3469,
+      "doc_id": "8d011bceed146eef",
+      "n_tokens": 399,
+      "ends_with_eos": true,
+      "replacement_chars": 0,
+      "decoded_chars": 1737,
+      "n_chars": 1737,
+      "reencode_matches": true,
+      "decoded_sha256": "8d011bceed146eefe4f3d0f0a2a1efb3f18468323cd42d556c8de4916e4ca07f"
+    },
+    {
+      "position": 3784,
+      "doc_id": "734b82f219eb14c3",
+      "n_tokens": 684,
+      "ends_with_eos": true,
+      "replacement_chars": 0,
+      "decoded_chars": 3499,
+      "n_chars": 3499,
+      "reencode_matches": true,
+      "decoded_sha256": "734b82f219eb14c3f86c00df00f726608d45efe184e874634d6f5268e862f43d"
+    },
+    {
+      "position": 4100,
+      "doc_id": "415f52ff1d720a08",
+      "n_tokens": 59,
+      "ends_with_eos": true,
+      "replacement_chars": 0,
+      "decoded_chars": 207,
+      "n_chars": 207,
+      "reencode_matches": true,
+      "decoded_sha256": "415f52ff1d720a08a702258d062e88216bc8ac0cb722bc57f8a03490a543e0bf"
+    },
+    {
+      "position": 4415,
+      "doc_id": "f7c7554c7faef772",
+      "n_tokens": 2269,
+      "ends_with_eos": true,
+      "replacement_chars": 0,
+      "decoded_chars": 10594,
+      "n_chars": 10594,
+      "reencode_matches": true,
+      "decoded_sha256": "f7c7554c7faef772269451f96524be7dab62852e33b62ee695837a40ed48898c"
+    },
+    {
+      "position": 4731,
+      "doc_id": "e76f73917e9052e4",
+      "n_tokens": 15911,
+      "ends_with_eos": true,
+      "replacement_chars": 0,
+      "decoded_chars": 82717,
+      "n_chars": 82717,
+      "reencode_matches": true,
+      "decoded_sha256": "e76f73917e9052e427013f9757fd401c6464a4b2d8daeff56a6a416c745593ac"
+    },
+    {
+      "position": 5046,
+      "doc_id": "9b3d84d1025d5dab",
+      "n_tokens": 3125,
+      "ends_with_eos": true,
+      "replacement_chars": 0,
+      "decoded_chars": 7880,
+      "n_chars": 7880,
+      "reencode_matches": true,
+      "decoded_sha256": "9b3d84d1025d5dabdb28e28947d876ca13e01088907b2d83ebde67bc9872f1ca"
+    },
+    {
+      "position": 5361,
+      "doc_id": "5528be7c6bba9b68",
+      "n_tokens": 806,
+      "ends_with_eos": true,
+      "replacement_chars": 0,
+      "decoded_chars": 3283,
+      "n_chars": 3283,
+      "reencode_matches": true,
+      "decoded_sha256": "5528be7c6bba9b680c1fdb0841a8847187a6996dd5fe67cc1e85d1848433e6de"
+    },
+    {
+      "position": 5677,
+      "doc_id": "5cfe1a55d83cd2a8",
+      "n_tokens": 1537,
+      "ends_with_eos": true,
+      "replacement_chars": 0,
+      "decoded_chars": 7679,
+      "n_chars": 7679,
+      "reencode_matches": true,
+      "decoded_sha256": "5cfe1a55d83cd2a8853b228b950c0a8ed903031ed4dfb84f7f1d96f9a6aef900"
+    },
+    {
+      "position": 5992,
+      "doc_id": "2f9b5ed347b194e6",
+      "n_tokens": 63,
+      "ends_with_eos": true,
+      "replacement_chars": 0,
+      "decoded_chars": 261,
+      "n_chars": 261,
+      "reencode_matches": true,
+      "decoded_sha256": "2f9b5ed347b194e61fbbc2d6fe9eca7b437b3c99ce05d26fb0dea49f975a3835"
+    }
+  ],
+  "wall_seconds": 4.011
+}

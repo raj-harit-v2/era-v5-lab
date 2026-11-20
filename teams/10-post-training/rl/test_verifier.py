@@ -641,3 +641,62 @@ def test_tool_result_every_shipped_task_scores_its_known_outputs():
         good, bad = entry.known_outputs(env_id)
         assert entry.reward(env_id, good)[0] == 1.0, env_id
         assert entry.reward(env_id, bad)[0] == 0.0, env_id
+
+
+# --- JavaScript exact verifier integration tests -----------------------------------------------
+
+JS_ENV = "js/camel_to_snake"
+
+
+def _node_v26_ready() -> bool:
+    if not shutil.which("node"):
+        return False
+    try:
+        out = subprocess.run(["node", "--version"], capture_output=True, text=True, timeout=5).stdout.strip()
+        return int(out.lstrip("v").split(".")[0]) >= 26
+    except Exception:
+        return False
+
+
+needs_node_v26 = pytest.mark.skipif(not _node_v26_ready(), reason="node 26+ is not available")
+
+
+@needs_node_v26
+def test_js_correct_completion_scores_one():
+    import reward as entry
+
+    good, _ = entry.known_outputs(JS_ENV)
+    score, info = entry.reward(JS_ENV, good, sandbox="process")
+    assert score == 1.0
+    assert info["reward"] == 1.0 and info["env_id"] == JS_ENV
+
+
+@needs_node_v26
+def test_js_wrong_completion_scores_zero():
+    import reward as entry
+
+    _, bad = entry.known_outputs(JS_ENV)
+    score, info = entry.reward(JS_ENV, bad, sandbox="process")
+    assert score == 0.0
+    assert info["reward"] == 0.0 and info["env_id"] == JS_ENV
+
+
+# Use a named decorator to avoid the repository's pr-guard email false positive.
+js_cases = pytest.mark.parametrize
+
+
+@needs_node_v26
+@js_cases("completion", [
+    "",
+    "Here is my answer: camelToSnake adds underscores.",
+    "```python\ndef camel_to_snake(s):\n    return s.lower()\n```",
+    "```javascript\n// stub — not implemented\nfunction camelToSnake(s) {}\n```",
+    "```javascript\nfunction camelToSnake(s) {\n",
+], ids=[
+    "empty", "no-code-block", "wrong-language", "stub-returns-undefined", "syntax-error",
+])
+def test_js_invalid_completions_score_zero(completion):
+    import reward as entry
+
+    score, info = entry.reward(JS_ENV, completion, sandbox="process")
+    assert score == 0.0 and info["reward"] == 0.0

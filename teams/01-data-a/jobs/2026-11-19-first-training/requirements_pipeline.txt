@@ -1,0 +1,14 @@
+# One Python 3.12 environment for clean, overlap, H3, F2, shards and reconciliation.
+# Shared versions agree with spec_v1/requirements.txt and dedup/requirements_h3.txt.
+numpy==2.4.3
+pyarrow==23.0.1
+scipy==1.15.3
+pandas==2.3.3
+pygments==2.21.0
+ftfy==6.3.1
+tree-sitter==0.26.0
+tree-sitter-language-pack==1.22.1
+torch==2.13.0
+sentence-transformers==6.3.0
+transformers==5.23.0
+tokenizers==0.23.3

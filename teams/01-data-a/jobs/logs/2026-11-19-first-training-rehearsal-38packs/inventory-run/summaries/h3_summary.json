@@ -1,0 +1,228 @@
+{
+  "status": "complete",
+  "config": {
+    "inputs": "out/pipeline/first-training-v1-rehearsal/clean",
+    "out": "out/pipeline/first-training-v1-rehearsal/h3",
+    "cache": "out/pipeline/first-training-v1-rehearsal/h3_cache",
+    "packs": {
+      "ind-sa-fw2": "sa",
+      "ind-hi-fw2": "hi",
+      "en-fineweb-edu": "en"
+    },
+    "pairs": [
+      [
+        "sa",
+        "en"
+      ],
+      [
+        "sa",
+        "hi"
+      ],
+      [
+        "hi",
+        "en"
+      ]
+    ],
+    "model_path": "../models/LaBSE",
+    "device": "auto",
+    "precision": "auto",
+    "batch_size": 64,
+    "max_seq_length": 128,
+    "min_chars": 200,
+    "min_sentences": 3,
+    "sentence_min_chars": 20,
+    "head_sentences": 4,
+    "max_sentences": 16,
+    "top_k": 3,
+    "doc_floor": 0.5,
+    "mutual": true,
+    "max_length_ratio": 4.0,
+    "sentence_threshold": 0.7,
+    "coverage_threshold": 0.6,
+    "report_floor": 0.3,
+    "max_verify": 10000,
+    "url_group_max": 20,
+    "block": 512,
+    "pair_batch": 1024,
+    "max_docs_per_pack": 0,
+    "max_minutes": 180,
+    "max_output_mb": 50,
+    "sync_debug": false
+  },
+  "device": "cuda",
+  "precision": "fp16",
+  "model": {
+    "path": "../models/LaBSE",
+    "name": "LaBSE",
+    "device": "cuda",
+    "dtype": "torch.float16",
+    "max_seq_length": 128,
+    "dim": 768,
+    "config_sha256": "b6bd83d561db8d2ccb7f44dafcd945e39bea16dc2819072ffb10adb45608b029",
+    "weights": {
+      "2_Dense/model.safetensors": {
+        "bytes": 2362528,
+        "sha256": "f866c945fa2147ce4940c8ead0b4b20af4217e0f4664bd35f41c2a0967c4fe77"
+      },
+      "model.safetensors": {
+        "bytes": 1883734344,
+        "sha256": "77d8e1f2dbab6eb5d3c261ce9d3dbf1e3c69e02938c95f934f94f42c22dfa31f"
+      }
+    },
+    "sentence_transformers": "6.3.0"
+  },
+  "inputs": {
+    "root": "out/pipeline/first-training-v1-rehearsal/clean",
+    "parts_found": 86,
+    "parts_selected": 7,
+    "parts": [
+      "train/en-fineweb-edu/part-00000.parquet",
+      "train/en-fineweb-edu/part-00001.parquet",
+      "train/ind-hi-fw2/part-00000.parquet",
+      "train/ind-sa-fw2/part-00000.parquet",
+      "heldout/en-fineweb-edu/part-00000.parquet",
+      "heldout/ind-hi-fw2/part-00000.parquet",
+      "heldout/ind-sa-fw2/part-00000.parquet"
+    ]
+  },
+  "documents": {
+    "en-fineweb-edu": {
+      "lang": "en",
+      "rows_in_parts": 72100,
+      "read": 72100,
+      "too_short": 2,
+      "encoded": 72098
+    },
+    "ind-hi-fw2": {
+      "lang": "hi",
+      "rows_in_parts": 13932,
+      "read": 13932,
+      "too_short": 164,
+      "encoded": 13768
+    },
+    "ind-sa-fw2": {
+      "lang": "sa",
+      "rows_in_parts": 5721,
+      "read": 5721,
+      "too_short": 28,
+      "encoded": 5693
+    }
+  },
+  "documents_compared": 91559,
+  "url": {
+    "groups_with_2_or_more": 34,
+    "groups_over_url_group_max": 0,
+    "pairs": 0
+  },
+  "retrieved": {
+    "sa-en": {
+      "documents_a": 5693,
+      "documents_b": 72098,
+      "pairs_in_top_k": 228976,
+      "kept": 1853
+    },
+    "sa-hi": {
+      "documents_a": 5693,
+      "documents_b": 13768,
+      "pairs_in_top_k": 55815,
+      "kept": 2035
+    },
+    "hi-en": {
+      "documents_a": 13768,
+      "documents_b": 72098,
+      "pairs_in_top_k": 246839,
+      "kept": 8422
+    }
+  },
+  "candidates": 12310,
+  "rejected_length_ratio": 2967,
+  "not_verified_over_max_verify": 0,
+  "verified": 9343,
+  "listed": 1,
+  "qualifying": 0,
+  "qualifying_heldout_train": 0,
+  "qualifying_by_language_pair": {},
+  "rule": {
+    "h3": "aligned sentences / sentences of the shorter document >= 0.6; a sentence pair aligns when each is the other's best match with cosine >= the language pair's sentence threshold",
+    "sentence_threshold": {
+      "sa-en": 0.7,
+      "sa-hi": 0.7,
+      "hi-en": 0.7
+    },
+    "thresholds": "provisional: set by E5's sweep and hand review"
+  },
+  "counts": {
+    "rows_scanned": 91753,
+    "encoded_heads": 91559,
+    "encoded_sentences": 169289
+  },
+  "stages_seconds": {
+    "load_model": 71.806,
+    "read": 34.953,
+    "cache": 0.335,
+    "encode": 28.661,
+    "url": 0.026,
+    "retrieve": 0.522,
+    "verify_read": 2.184,
+    "verify": 35.708
+  },
+  "rates": {
+    "heads_per_second": 3194.6,
+    "sentences_per_second": 4740.9
+  },
+  "estimate_all_documents": {
+    "documents_encoded": {
+      "en": 72098,
+      "hi": 13768,
+      "sa": 5693
+    },
+    "documents_full": {
+      "en": 72098,
+      "hi": 13768,
+      "sa": 5693
+    },
+    "seconds": {
+      "load_model": 71.8,
+      "read": 35.0,
+      "encode": 28.7,
+      "retrieve": 0.5,
+      "verify": 37.9
+    },
+    "minutes_total": 2.9,
+    "every_stage_measured": true,
+    "suggested_max_time_minutes": 5,
+    "basis": "this run's rates; read scales with rows, encode with documents, retrieve with the product of the two languages' documents, verify with the smaller language's documents (at most max_verify)"
+  },
+  "wall_seconds": 176.0,
+  "peak_rss_mb": 2970.3,
+  "versions": {
+    "python": "3.12.3",
+    "numpy": "2.4.3",
+    "pyarrow": "23.0.1",
+    "torch": "2.13.0+cu130",
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.39"
+  },
+  "outputs": {
+    "h3_docs.parquet": {
+      "bytes": 2495839,
+      "sha256": "203617300f3deb56546f7de795c7b034c6504748008a591166679454ac9ea5dd"
+    },
+    "h3_candidates.csv": {
+      "bytes": 443,
+      "sha256": "0ae5a61aa5be4d9a95fde87c5c4ae5d96894cce1fa9bfe6c80425fddde03b9a8"
+    },
+    "h3_matches.csv": {
+      "bytes": 145,
+      "sha256": "016a67b1d66802e35c60fab919afe732316a01abcbdece0ada8baad283f07eda"
+    },
+    "h3_by_pack.csv": {
+      "bytes": 203,
+      "sha256": "83e68f8ee4479d665feafeb6c88453444a39a60bb581246e4bdf11fcbe6279e7"
+    },
+    "h3_histogram.csv": {
+      "bytes": 2019,
+      "sha256": "94eb5d1bdf3f8d4c09e64a4b185b04e2b2b904c07f542f80cd8837433a4c70d5"
+    }
+  },
+  "output_mb": 2.38
+}

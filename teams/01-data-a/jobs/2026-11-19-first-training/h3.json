@@ -1,0 +1,13 @@
+{
+  "_comment": "H3 translation measurement on cleaned parts. Report only; model must be staged locally in the TSAI job. Thresholds are provisional from h3_design_v1.md. No document is removed by H3.",
+  "model_path": "../models/LaBSE",
+  "device": "auto",
+  "packs": {
+    "ind-sa-fw2": "sa",
+    "ind-hi-fw2": "hi",
+    "en-fineweb-edu": "en"
+  },
+  "pairs": [["sa", "en"], ["sa", "hi"], ["hi", "en"]],
+  "max_docs_per_pack": 0,
+  "max_minutes": 180
+}

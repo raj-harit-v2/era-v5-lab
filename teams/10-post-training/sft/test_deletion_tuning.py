@@ -23,10 +23,10 @@ dt = _load("g10_deletion_tuning_under_test", "deletion_tuning.py")
 compare_mod = _load("g10_dt_vs_fft_under_test", "dt_vs_fft.py")
 
 
-def test_sharpness_ramps_from_1e3_to_1e4():
-    assert dt.sharpness(0, 100) == 1e3
-    assert dt.sharpness(100, 100) == 1e4
-    assert dt.sharpness(50, 100) == 5.5e3
+def test_sharpness_ramps_from_100_to_1000():
+    assert dt.sharpness(0, 100) == 100.0
+    assert dt.sharpness(100, 100) == 1000.0
+    assert dt.sharpness(50, 100) == 550.0
 
 
 def test_soft_mask_is_one_half_at_zero_and_hard_mask_drops_zero():

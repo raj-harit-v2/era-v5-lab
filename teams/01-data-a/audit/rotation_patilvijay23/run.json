@@ -1,0 +1,33 @@
+{
+  "scope": "Data A sample-v0 integrity audit; not training admission or G9 clearance",
+  "repository_commit": "23d7902a39c7cc78e1e3c19f25aeaee7a5355697",
+  "checker_commit": "f0716023f972fabdb55885c76399dd8d51747633",
+  "checker_sha256": "b3b47f445439755a9d39616301e1a74cb08de02582c9cf5f82e499873cc7eb40",
+  "tokenizer_sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b",
+  "special_token_count": 356,
+  "environment": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "pyarrow": "26.0.1"
+  },
+  "shards": [
+    {
+      "shard_id": "en-dclm-train-000000",
+      "counts": {
+        "PASS": 53,
+        "FAIL": 1,
+        "NOT CHECKED": 0
+      },
+      "wall_seconds": 3.863
+    },
+    {
+      "shard_id": "math-megamath-train-000000",
+      "counts": {
+        "PASS": 53,
+        "FAIL": 1,
+        "NOT CHECKED": 0
+      },
+      "wall_seconds": 2.082
+    }
+  ]
+}

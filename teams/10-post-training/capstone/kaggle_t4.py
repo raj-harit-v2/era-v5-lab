@@ -27,7 +27,7 @@ What runs (each GPU is one process; Team 5's trainer is single-process, so the t
   then two G10 SFT arms on the T2 stand-in (full fine-tune; GPU 0 Dolly SFT half, GPU 1 OCR-2 rows <= 2,048 tokens),
   each with a greedy format screen and, if the bundle carries the RL task file and easiest-rung ids, a k=8 RL screen
   before and after SFT (stdio_check: docker is absent on Kaggle, so set G10_STDIO_RUNNER=local; it isolates by uid,
-  which needs root, and Kaggle runs as root).
+  which needs root, and Kaggle runs as root; main() sets G10_STDIO_SECRET_PATHS and closes /kaggle to other uids).
 
 Expected time (ESTIMATE, not measured on a T4): T2 ~1,000 tokens/s fp32 -> ~5.5 h for 20M tokens; T1 ~3x faster.
 Kaggle's session cap is 12 h; `--max-hours` bounds each training. `--dry-run` runs the same pipeline at tiny size on
@@ -228,6 +228,12 @@ def main() -> int:
         env = {**os.environ, **({} if a.dry_run else {"CUDA_VISIBLE_DEVICES": gpu})}
         if rl and not shutil.which("docker"):
             env["G10_STDIO_RUNNER"] = "local"  # stdio_check's uid-isolated runner (needs root; Kaggle runs as root)
+            # uid isolation protects only files whose mode excludes "other". The expected outputs are in the task
+            # file, a read-only input mount that cannot be chmodded, so close the folders above it instead (root
+            # still reads); stdio_check.preflight_isolation refuses to score unless a sandbox uid cannot read it.
+            env["G10_STDIO_SECRET_PATHS"] = str(b / "sft/rl_tasks.jsonl")
+            if Path("/kaggle").is_dir():
+                os.chmod("/kaggle", 0o700)
         procs.append(subprocess.Popen(cmd, stdout=f, stderr=subprocess.STDOUT, env=env))
         if a.dry_run:
             procs[-1].wait()

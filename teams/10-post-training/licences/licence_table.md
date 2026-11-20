@@ -213,6 +213,15 @@ Three stages. Sets marked `excluded` stay in the table with the reason and are n
 | rl-code-taco | [BAAI/TACO](https://huggingface.co/datasets/BAAI/TACO) (train split; HackerRank and LeetCode rows left out) | English / Code (Python) | none (contest problems and verified Python solutions; no model generator named) | apache-2.0 (Hub tag; card also names MIT and CC-BY-4.0 on parts; HackerRank licence unknown on the card) | TSAI reserves |
 | rl-math-omni-math | [KbsdJames/Omni-MATH](https://huggingface.co/datasets/KbsdJames/Omni-MATH) | English / Mathematics (Olympiad) | none for problems and solutions (human contest and AoPS text); GPT-4o (OpenAI, closed) only writes some difficulty scores and the domain labels | apache-2.0 (Hub tag) | needs TSAI decision |
 
+### Models used by the data pipeline (not training data)
+
+These models run inside a data job and are never trained on, fine-tuned or used to write text. Data A's H3 step (`teams/01-data-a/dedup/h3_design_v1.md`) uses them to find the same content in two languages. Their output is vectors and scores, never text, so nothing they produce enters a training mix. The weights are staged outside the repository and never committed; the repository records only their SHA-256. TSAI ([#625](https://github.com/theschoolofai/era-v5-lab/pull/625), 19 Nov 2026): G10 gives the formal licence sign-off.
+
+| Set | Source | Used for | Licence | Decision |
+| --- | --- | --- | --- | --- |
+| model-labse | [sentence-transformers/LaBSE](https://huggingface.co/sentence-transformers/LaBSE) | Data A H3 (`h3.py`): finds translations, Indic ↔ English and Sanskrit ↔ Hindi | apache-2.0 (Hub tag, rev `836121a053`; Google's original LaBSE on Kaggle: Apache 2.0) | allowed (G10 sign-off) |
+| model-bge-m3 | [BAAI/bge-m3](https://huggingface.co/BAAI/bge-m3) | Data A H3: second encoder checked for Sanskrit (E5a′); in no job yet | mit (Hub tag, rev `5617a9f61b`; FlagEmbedding code: MIT) | allowed (G10 sign-off) |
+
 ---
 
 ## Dataset sections by G10 Core Team member (12)
@@ -2042,6 +2051,33 @@ Verifiable-answer and test-based sets for RL (math, code, SWE tasks). Each entry
 - **Our opinion:** use for RL only if Team 9 does not report Omni-MATH. If it is an eval, do not train on any row. There is no train split to keep.
 - **For Team 9:** if this set is approved for training, Omni-MATH cannot also be a reported benchmark. The difficulty and domain columns stay out either way.
 - **Added by:** SreekanthZipsy (Week 10 rotation 13 Nov 2026). Card and paper read on 14 Nov 2026. A tag is not legal clearance.
+
+## Models used by the data pipeline
+
+### `model-labse` — LaBSE
+
+- **Model:** `model-labse`
+- **Stage:** data pipeline (Data A dedup, H3). Not training data.
+- **Source:** [sentence-transformers/LaBSE](https://huggingface.co/sentence-transformers/LaBSE), revision `836121a0533e5664b21c7aacc5d22951f2b8b25b`. It is a PyTorch port of Google's LaBSE ([kaggle.com/models/google/labse](https://www.kaggle.com/models/google/labse), formerly `tfhub.dev/google/LaBSE`).
+- **Licence:** `apache-2.0` (Hub tag). Google's Kaggle page for the original model: Apache 2.0. Both read on 20 Nov 2026.
+- **Weights used:** `model.safetensors` SHA-256 `deaceb20157886981bdedad1da11f39687e2343e978abc10e909939fb95d40c5`; `2_Dense/model.safetensors` `f866c945fa2147ce4940c8ead0b4b20af4217e0f4664bd35f41c2a0967c4fe77`. Each run of `h3.py` records them in its `h3_summary.json`.
+- **What it does:** `teams/01-data-a/dedup/h3.py` encodes each document's first sentences and then its sentences, to find the same content in two languages. Its outputs are cosines and coverage scores (`h3_*.csv`), never text. With `h3.remove: true` (only after E5c and the harm check pass, TSAI [#625](https://github.com/theschoolofai/era-v5-lab/pull/625)), it decides which train documents are removed as translations of held-out documents. It adds nothing to the data.
+- **Generator model:** none. It writes no text.
+- **Redistribution:** none. TSAI stages the weights at `../models/LaBSE`, outside the repository.
+- **Decision:** `allowed (G10 sign-off)`
+- **Added by:** Aneesha Das (aneeshads), Data A, 20 Nov 2026. A tag is not legal clearance.
+
+### `model-bge-m3` — BGE-M3
+
+- **Model:** `model-bge-m3`
+- **Stage:** data pipeline (Data A dedup, H3). Not training data.
+- **Source:** [BAAI/bge-m3](https://huggingface.co/BAAI/bge-m3), revision `5617a9f61b028005a4858fdac845db406aefb181`. Code: [FlagOpen/FlagEmbedding](https://github.com/FlagOpen/FlagEmbedding).
+- **Licence:** `mit` (Hub tag). FlagEmbedding's `LICENSE`: MIT. Both read on 20 Nov 2026.
+- **What it does:** the second encoder in E5a′ (`teams/01-data-a/dedup/h3_bge_m3_check_results_v1.md`): on FLORES-200 it finds Sanskrit translations that LaBSE misses at the same threshold. TSAI ([#625](https://github.com/theschoolofai/era-v5-lab/pull/625)) asked for this comparison before a Sanskrit encoder is chosen. It is in no job yet. If chosen, it would run in `h3.py` in LaBSE's place, with the same outputs (scores, never text).
+- **Generator model:** none. It writes no text.
+- **Redistribution:** none. The weights would be staged outside the repository, as LaBSE's are.
+- **Decision:** `allowed (G10 sign-off)`
+- **Added by:** Aneesha Das (aneeshads), Data A, 20 Nov 2026. A tag is not legal clearance.
 
 ## Strategy v0
 

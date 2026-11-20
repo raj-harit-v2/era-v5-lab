@@ -1,0 +1,88 @@
+$ /workspace/venv/bin/python -I /workspace/era-v5-lab/teams/01-data-a/shards/run_shards.py --input /workspace/era-v5-lab/out/pipeline/first-training-v1-rehearsal/final --manifest /workspace/era-v5-lab/out/pipeline/first-training-v1-rehearsal/pipeline_manifest.json --tokenizer /workspace/data/tokenizers/p1536-sample-v0/tokenizer.json --out /workspace/era-v5-lab/out/pipeline/first-training-v1-rehearsal/shards --pack-table /workspace/era-v5-lab/out/rehearsal/pack_table_job_shaped.json --dataset-version first-training-v1 --no-verify
+not_sharded heldout/cadj-commits/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+not_sharded heldout/cadj-notebooks/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+not_sharded heldout/cadj-stackexchange/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+not_sharded heldout/code-cpp/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+not_sharded heldout/code-go/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+not_sharded heldout/code-java/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+not_sharded heldout/code-js-ts/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+not_sharded heldout/code-python/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+not_sharded heldout/code-rust/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+not_sharded heldout/en-dclm/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+not_sharded heldout/en-fineweb-edu/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+not_sharded heldout/en-nemotroncc/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+not_sharded heldout/en-nemotroncc-synth/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+not_sharded heldout/ind-bn-fw2/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+not_sharded heldout/ind-bn-sangraha-v/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+not_sharded heldout/ind-gu-fw2/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+not_sharded heldout/ind-hi-fw2/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+not_sharded heldout/ind-hi-hplt/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+not_sharded heldout/ind-hi-indiccorp/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+not_sharded heldout/ind-hi-sangraha-s/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+not_sharded heldout/ind-hi-sangraha-v/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+not_sharded heldout/ind-kn-fw2/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+not_sharded heldout/ind-kn-sangraha-s/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+not_sharded heldout/ind-kn-sangraha-v/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+not_sharded heldout/ind-ml-fw2/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+not_sharded heldout/ind-mr-fw2/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+not_sharded heldout/ind-mr-sangraha-v/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+not_sharded heldout/ind-or-fw2/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+not_sharded heldout/ind-sa-fw2/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+not_sharded heldout/ind-ta-fw2/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+not_sharded heldout/ind-ta-sangraha-s/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+not_sharded heldout/ind-ta-sangraha-v/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+not_sharded heldout/ind-te-fw2/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+not_sharded heldout/ind-te-sangraha-s/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+not_sharded heldout/ind-te-sangraha-v/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+not_sharded heldout/math-finemath/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+not_sharded heldout/math-megamath/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+not_sharded heldout/sci-finepdfs/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+written  train/cadj-commits/part-00000.parquet: 1 shard(s), 69524 docs, 31256675 tokens
+written  train/cadj-notebooks/part-00000.parquet: 1 shard(s), 15482 docs, 37130664 tokens
+written  train/cadj-stackexchange/part-00000.parquet: 1 shard(s), 41091 docs, 36295685 tokens
+written  train/code-cpp/part-00000.parquet: 1 shard(s), 40350 docs, 66908856 tokens
+written  train/code-cpp/part-00001.parquet: 1 shard(s), 14145 docs, 23634925 tokens
+written  train/code-go/part-00000.parquet: 1 shard(s), 56584 docs, 56692090 tokens
+written  train/code-go/part-00001.parquet: 1 shard(s), 20211 docs, 20253926 tokens
+written  train/code-java/part-00000.parquet: 1 shard(s), 62418 docs, 56001155 tokens
+written  train/code-java/part-00001.parquet: 1 shard(s), 22228 docs, 19878065 tokens
+written  train/code-js-ts/part-00000.parquet: 1 shard(s), 85508 docs, 58203242 tokens
+written  train/code-js-ts/part-00001.parquet: 1 shard(s), 30441 docs, 20653602 tokens
+written  train/code-python/part-00000.parquet: 1 shard(s), 53213 docs, 60532900 tokens
+written  train/code-python/part-00001.parquet: 1 shard(s), 19115 docs, 21508221 tokens
+written  train/code-rust/part-00000.parquet: 1 shard(s), 43075 docs, 59496542 tokens
+written  train/code-rust/part-00001.parquet: 1 shard(s), 15011 docs, 21028039 tokens
+written  train/en-dclm/part-00000.parquet: 1 shard(s), 45024 docs, 53957447 tokens
+written  train/en-dclm/part-00001.parquet: 1 shard(s), 14732 docs, 17780896 tokens
+written  train/en-fineweb-edu/part-00000.parquet: 1 shard(s), 53434 docs, 52988064 tokens
+written  train/en-fineweb-edu/part-00001.parquet: 1 shard(s), 17720 docs, 17654114 tokens
+written  train/en-nemotroncc/part-00000.parquet: 1 shard(s), 65275 docs, 50344795 tokens
+written  train/en-nemotroncc/part-00001.parquet: 1 shard(s), 21902 docs, 16779955 tokens
+written  train/en-nemotroncc-synth/part-00000.parquet: 1 shard(s), 146773 docs, 50710276 tokens
+written  train/en-nemotroncc-synth/part-00001.parquet: 1 shard(s), 49006 docs, 16960879 tokens
+written  train/ind-bn-fw2/part-00000.parquet: 1 shard(s), 10704 docs, 7127920 tokens
+written  train/ind-bn-sangraha-v/part-00000.parquet: 1 shard(s), 10111 docs, 8014527 tokens
+written  train/ind-gu-fw2/part-00000.parquet: 1 shard(s), 22689 docs, 16066252 tokens
+written  train/ind-hi-fw2/part-00000.parquet: 1 shard(s), 13773 docs, 8988818 tokens
+written  train/ind-hi-hplt/part-00000.parquet: 1 shard(s), 8386 docs, 8090716 tokens
+written  train/ind-hi-indiccorp/part-00000.parquet: 1 shard(s), 109664 docs, 9342997 tokens
+written  train/ind-hi-sangraha-s/part-00000.parquet: 1 shard(s), 7432 docs, 5985300 tokens
+written  train/ind-hi-sangraha-v/part-00000.parquet: 1 shard(s), 14463 docs, 9238621 tokens
+written  train/ind-kn-fw2/part-00000.parquet: 1 shard(s), 7735 docs, 4737714 tokens
+written  train/ind-kn-sangraha-s/part-00000.parquet: 1 shard(s), 5185 docs, 5217346 tokens
+written  train/ind-kn-sangraha-v/part-00000.parquet: 1 shard(s), 8351 docs, 4760323 tokens
+written  train/ind-ml-fw2/part-00000.parquet: 1 shard(s), 18822 docs, 13560007 tokens
+written  train/ind-mr-fw2/part-00000.parquet: 1 shard(s), 11250 docs, 7146419 tokens
+written  train/ind-mr-sangraha-v/part-00000.parquet: 1 shard(s), 12159 docs, 7255524 tokens
+written  train/ind-or-fw2/part-00000.parquet: 1 shard(s), 33683 docs, 15326730 tokens
+written  train/ind-sa-fw2/part-00000.parquet: 1 shard(s), 5655 docs, 13933876 tokens
+written  train/ind-ta-fw2/part-00000.parquet: 1 shard(s), 6760 docs, 4369657 tokens
+written  train/ind-ta-sangraha-s/part-00000.parquet: 1 shard(s), 4334 docs, 4658285 tokens
+written  train/ind-ta-sangraha-v/part-00000.parquet: 1 shard(s), 6795 docs, 4497005 tokens
+written  train/ind-te-fw2/part-00000.parquet: 1 shard(s), 5670 docs, 4758086 tokens
+written  train/ind-te-sangraha-s/part-00000.parquet: 1 shard(s), 4419 docs, 4781160 tokens
+written  train/ind-te-sangraha-v/part-00000.parquet: 1 shard(s), 8591 docs, 5312512 tokens
+written  train/math-finemath/part-00000.parquet: 1 shard(s), 26160 docs, 32579110 tokens
+written  train/math-megamath/part-00000.parquet: 1 shard(s), 14827 docs, 20779736 tokens
+written  train/sci-finepdfs/part-00000.parquet: 1 shard(s), 5829 docs, 39330261 tokens
+{"written": 48, "empty": 0, "all_left_out": 0, "failed": 0, "skipped": 0, "not_sharded": 38, "truncated": 0, "shards": 48}

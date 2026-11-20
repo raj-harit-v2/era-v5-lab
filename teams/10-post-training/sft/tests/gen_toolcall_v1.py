@@ -162,9 +162,9 @@ ROWS = [
 ]
 
 
-# Rows with Indic text carry `review`: hi and kn are reviewed by a native speaker, ta is not yet.
+# Rows with Indic text carry `review`: hi, kn and ta are reviewed by a native speaker.
 INDIC_REVIEW = {
-    "tc-indic-01": True, "tc-indic-02": True, "tc-none-04": True, "tc-indic-04": True, "tc-indic-03": False,
+    "tc-indic-01": True, "tc-indic-02": True, "tc-none-04": True, "tc-indic-04": True, "tc-indic-03": True,
 }
 for _r in ROWS:
     if _r["id"] in INDIC_REVIEW:

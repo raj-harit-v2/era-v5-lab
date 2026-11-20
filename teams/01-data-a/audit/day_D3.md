@@ -126,3 +126,94 @@ To find out which rule removed a doc, run the current `clean.py` on it. Rules th
 | ind-te-sangraha-v / Part_1 | `40df311496a357ed` | fix |
 | ind-te-sangraha-v / Part_1 | `57ca091d4d08cebc` | fix |
 | math-finemath / Part_1 | `3a8ffc03c53f9182` | fix |
+
+---
+
+## Supplement: Gujarati FW2 and Marathi Sangraha-v
+
+Week 3, D3 (17 Nov 2026). Reviewer: `patilvijay23`.
+
+This supplements the earlier audit above with the reviewer's manual findings for two packs previously awaiting language review. It records 10 documents per pack. Marathi FW2 is outside this report and remains pending.
+
+### Inputs and method
+
+- Raw input: the local tokenizer sample supplied for this audit.
+- Output under review: decoded text from the corresponding frozen-p1536 tokenizer_samplev0 shards, compared with raw text by `doc_id` in the side-by-side viewer.
+- Shards: `ind-gu-fw2-train-000000` and `ind-mr-sangraha-v-train-000000`.
+- Disease definitions: [DISEASES.md](../../../diagnosis/DISEASES.md).
+
+The tables transcribe the reviewer's observations. This report does not claim an independent rerun of decoding, hashes or cleaner rules. Input file hashes, decoded-output paths, viewer revision and sample-selection method were not recorded in the supplied notes and should accompany the final audit evidence. Offsets and occurrence counts are as reported in the viewer; their coordinate basis has not been independently checked.
+
+The older `tokenizer_sample_v0_clean` copy must not be substituted for shard-decoded output: [#576](https://github.com/theschoolofai/era-v5-lab/pull/576) found visarga damage in that older copy which was absent from the p1536 shards.
+
+### Summary
+
+| Pack | Reviewed | Unchanged | Valid changes | Residual issues | No issue reported |
+|---|---:|---:|---:|---:|---:|
+| `ind-gu-fw2` | 10 | 10 | 0 | 5 | 5 |
+| `ind-mr-sangraha-v` | 10 | 5 | 5 | 2 | 8 |
+| **Total** | **20** | **15** | **5** | **7** | **13** |
+
+No harmful transformation was reported in these 20 documents. This is a small manual sample, not a whole-pack quality estimate or a spec v1.1 acceptance test.
+
+| Residual disease | Affected documents | Interpretation |
+|---|---:|---|
+| A6: wrong or mixed script | 4 | Reviewer-reported character issues; exact characters/code points still need to be attached. |
+| C1: boilerplate | 3 | Two Gujarati documents and one Marathi document retain boilerplate. |
+| C5: keyword lists / SEO spam | 1 | One Gujarati document is dominated by keyword and promotional material. |
+
+Disease counts overlap: `94ecf8811dedff0b` has A6 and C1; `588e25b8563af4bc` has C5 and C1. There are seven distinct affected documents.
+
+### Gujarati: `ind-gu-fw2`
+
+All 10 reviewed documents were unchanged. Five have residual issues. `fix` below means the retained output needs attention; the proposed remedy for the SEO-dominated document is a drop, subject to rule review.
+
+| doc_id | Observed output | Audit verdict | Diseases | Evidence / note |
+|---|---|---|---|---|
+| `94ecf8811dedff0b` | Unchanged | fix | A6;C1 | A6 at offset 4381, 4 occurrences; C1 at offset 4312. Exact character and boilerplate evidence pending. |
+| `c9ef612450630b40` | Unchanged | No issue reported | — | No residual issue reported. |
+| `674541ca413a06f3` | Unchanged | No issue reported | — | No residual issue reported. |
+| `ae2dbded43e8fc7c` | Unchanged | fix | C1 | Boilerplate at offset 87; exact evidence pending. |
+| `875e98e15c7a6db0` | Unchanged | fix | A6 | Character issue at offset 298; exact character/code point pending. |
+| `a1ffd8e51cf1f02a` | Unchanged | fix | A6 | Character issue at offset 364, 5 occurrences; exact character/code point pending. |
+| `c533c8a92da1f0ae` | Unchanged | No issue reported | — | No residual issue reported. |
+| `588e25b8563af4bc` | Unchanged | fix; recommend drop | C5;C1 | Repeated VIP full-form search phrases, a tag list and website/social promotion dominate the document. |
+| `815625e34d4899a8` | Unchanged | No issue reported | — | No residual issue reported. |
+| `c52f5264a10f060e` | Unchanged | No issue reported | — | No residual issue reported. |
+
+#### SEO-dominated document: `588e25b8563af4bc`
+
+- **C5:** the section headed “Tags for VIP Full Form” repeats variants of the same search query rather than adding substantive content.
+- **C1:** the website-description section and “Also Visit our Socials” are promotional boilerplate.
+- **Proposed action:** drop if a reviewed document-quality rule supports it. There is a short meaningful definition of VIP, but the reviewer judges the document's overall value too low relative to its SEO and promotional content. Removing boilerplate and retaining that definition is an alternative to assess during rule review.
+- **Not established:** A6. Ordinary English words and the acronym VIP alongside Gujarati are not sufficient evidence of wrong-script characters.
+
+### Marathi: `ind-mr-sangraha-v`
+
+Five documents changed and the reviewer judged all five changes correct. Of the five unchanged documents, two retain issues.
+
+| doc_id | Observed output | Audit verdict | Diseases | Evidence / note |
+|---|---|---|---|---|
+| `44d74a34615c8985` | Unchanged | No issue reported | — | No residual issue reported. |
+| `6b962bed444a10cb` | Unchanged | fix | C1 | Offset 1319: `टॅग्स :प्रीती झिंटाPreity Zintaशेअर :`; retained tag/share boilerplate. |
+| `81e9021dbd5618f9` | Unchanged | No issue reported | — | No residual issue reported. |
+| `a793b8e393ed7376` | Changed correctly | Acceptable change | — | `करणाºया` → `करणाऱ्या`. |
+| `04c57e4e65e9e936` | Changed correctly | Acceptable changes | — | Two variations of the preceding character correction; exact pairs not supplied. |
+| `54600ee0f4bd755f` | Unchanged | fix | A6 | Character issue at offset 222, 16 occurrences; exact character/code point pending. |
+| `9d32f5191f18cdbd` | Changed correctly | Acceptable change | — | `प्रमाणीकरण ासह` → `प्रमाणीकरणासह`. |
+| `165d1cfbae9b6acb` | Changed correctly | Acceptable change | — | `येणाºया` → `येणाऱ्या`. |
+| `a5db82fda38c6c8c` | Unchanged | No issue reported | — | No residual issue reported. |
+| `9782478013baa7a1` | Changed correctly | Acceptable change | — | `दुसºयाच` → `दुसऱ्याच`. |
+
+These are observations of the final decoded text. Without intermediate evidence, the report does not attribute each valid transformation specifically to cleaning or tokenizer normalization.
+
+### Follow-up
+
+1. Attach the input identities and viewer revision, confirm the displayed output is the decoded p1536 shard text, and export the corresponding label CSVs for consolidation with Narasimha. Do not overwrite existing labels.
+2. For the four reported A6 documents, record the exact characters, code points/hex and context. Confirm each is a wrong-script character rather than legitimate mixed-language content before proposing a replacement.
+3. For C1, attach the Gujarati snippets and confirm the Marathi tag/share block boundaries. Propose narrowly scoped removal that preserves article text.
+4. Review the C5/C1 document's drop recommendation against the frozen spec. A sample-v0 residual finding alone does not prove a spec v1.1 implementation defect or authorize a new rule.
+5. Reproduce confirmed findings with the current cleaner and map them to an existing rule or a proposed future-spec change. Any new medicine needs the language gold-set harm test before adoption; no medicine or harm test is supplied here.
+6. Complete the separate 10-document `ind-mr-fw2` audit and arrange the required second-reader review of 10% of the documents (2 of these 20).
+
+This report includes no document payloads, signed download links or local decoded artifacts. The short snippets above provide evidence for the reported findings.

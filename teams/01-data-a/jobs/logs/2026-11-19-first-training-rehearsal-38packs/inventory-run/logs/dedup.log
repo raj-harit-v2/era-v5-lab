@@ -1,0 +1,9 @@
+$ /workspace/venv/bin/python -I /workspace/era-v5-lab/teams/01-data-a/dedup/dedup.py --config /workspace/era-v5-lab/out/pipeline/first-training-v1-rehearsal/cfg/dedup.json
+1,410,230 documents, 2,711 matches, 1,083 clusters
+removed 1,339 (0.0949%): by rule {'H2': 1284, 'H1': 55}, by stage {'within_pack': 1303, 'cross_pack': 36}
+clusters decided by priority rule: {'0': 28, '2': 21, '3': 749, '4': 285}
+held-out removed: 0 (must be 0); held-out <-> held-out pairs reported: 0
+empty documents: 7 listed, not removed; 21 matches between them set aside
+h3: 0 matches, 0 removed (remove: False); outcomes {'removed': 0, 'would_remove': 0, 'already_removed': 0, 'reported_indirect': 0, 'reported_train_train': 0, 'reported_heldout_heldout': 0, 'same_group': 0, 'parallel_pack': 0}
+harm check: not_testable
+wrote remove_list.csv, dedup_log.jsonl, heldout_duplicates.csv, empty_documents.csv, dedup_groups.csv and dedup_summary.json to out/pipeline/first-training-v1-rehearsal/dedup

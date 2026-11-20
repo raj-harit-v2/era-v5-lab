@@ -38,7 +38,7 @@ folders must exist. An empty split folder is allowed; the summary reports actual
 one science, 22 Indic, and three code-adjacent packs. Missing or unexpected packs fail before pair scoring.
 This checks pack presence, not that every expected part is present: the returned part inventory must also be reviewed.
 For a different approved population, update this list explicitly; `[]` disables the inventory check without filtering inputs.
-Input checksum verification remains deferred. Raw sample-v0 hashes do not describe cleaned Parquet bytes.
+The summary records the SHA-256 of every cleaned input part. Raw sample-v0 hashes do not describe cleaned Parquet bytes.
 
 A document occurrence is identified by its run-local matrix row and `(pack, split, part, row_in_part)`.
 `doc_id` is carried through unchanged. Display IDs `<pack_id>-<doc_id>` may repeat and are never used to collapse

@@ -9,7 +9,7 @@ Documents are never changed, and no text is written out: IDs, scores and counts 
 
 Pack identity comes exclusively from each row's pack_id column, never from a filename or directory.
 All parts with the same pack_id form one logical pack, across both splits. Reports outside the split
-folders are ignored. Input checksum verification is deferred; no manifest or SHA256SUMS is required.
+folders are ignored. Every cleaned input part's SHA-256 is recorded in overlap_summary.json.
 
 HOW TO RUN IT
 =============
@@ -161,7 +161,8 @@ def main():
     t0 = time.time()
     inputs, out, splits = REPO / cfg["inputs"], REPO / cfg["out"], cfg["splits"]
     parts = find_parts(inputs, splits)
-    print(f"{len(parts)} cleaned parts found (input checksum verification deferred)", flush=True)
+    print(f"{len(parts)} cleaned parts found", flush=True)
+    part_sha256 = [sha256_file(path) for _, _, path in parts]
 
     # 1. Combine every part of every pack: one row per document, with its H1 hash and its set of shingles.
     # docs[i] = (pack, split, part, row_in_part, doc_id, words, shingles, sha256)
@@ -314,9 +315,9 @@ def main():
         "normalize_id": NORMALIZE_ID,
         "key": "h1_key of h1_sha256.py: normalize.match_key, then NFKC, casefold, whitespace runs to one space",
         "shingles": f"word {cfg['k']}-grams of the key as 64-bit hashes (gram_hashes: pandas SipHash per word, combined per window); a key under {cfg['k']} words is one shingle",
-        "inputs": {"root": cfg["inputs"], "checksum_verification": "deferred",
-                   "parts": [{"part": f"{sp}/{pt}", "documents": n}
-                             for (sp, pt, _), n in zip(parts, part_docs)]},
+        "inputs": {"root": cfg["inputs"], "checksum_verification": "sha256",
+                   "parts": [{"part": f"{sp}/{pt}", "documents": n, "sha256": digest}
+                             for (sp, pt, _), n, digest in zip(parts, part_docs, part_sha256)]},
         "documents": {p: {**{sp: per_split[(p, sp)] for sp in splits}, "all": sum(per_split[(p, sp)] for sp in splits)}
                       for p in packs},
         "documents_all": N,

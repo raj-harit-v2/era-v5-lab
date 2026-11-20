@@ -1,0 +1,67 @@
+{
+ "benchmarks": {
+  "arc_challenge": {
+   "after": 0.284,
+   "at_limit": false,
+   "before": 0.272,
+   "delta": 0.011999999999999955,
+   "metric": "acc_norm",
+   "n_items": 500,
+   "no_stderr": false,
+   "significant_drop": false,
+   "stderr_combined": 0.028360688590276316
+  },
+  "hellaswag": {
+   "after": 0.435,
+   "at_limit": false,
+   "before": 0.4325,
+   "delta": 0.0025000000000000022,
+   "metric": "acc_norm",
+   "n_items": 400,
+   "no_stderr": false,
+   "significant_drop": false,
+   "stderr_combined": 0.035087386433258205
+  }
+ },
+ "bpb": {
+  "after": 1.1487836369223405,
+  "at_limit": true,
+  "before": 1.0981069047976242,
+  "delta": 0.05067673212471635,
+  "groups": {
+   "val/groups/code_bpb": {
+    "after": 0.8369054910153375,
+    "before": 0.7551613871012757,
+    "delta": 0.08174410391406184
+   },
+   "val/groups/english_bpb": {
+    "after": 1.0479136833237048,
+    "before": 0.9952369277319574,
+    "delta": 0.05267675559174745
+   },
+   "val/groups/indic_mean_bpb": {
+    "after": 1.2242746908955118,
+    "before": 1.181461275731519,
+    "delta": 0.04281341516399273
+   },
+   "val/three_group_bpb": {
+    "after": 1.0363646217448512,
+    "before": 0.9772865301882506,
+    "delta": 0.0590780915566006
+   }
+  },
+  "heldout_sha256": "21c6e4b2df8dae9d69e254f4a00fc934d2a3c70f0675065a03724299d94312bb",
+  "limit": 0.05,
+  "rose_too_much": true
+ },
+ "forgetting": true,
+ "limits": {
+  "at_limit_margin": 0.01,
+  "max_bpb_rise": 0.05,
+  "min_drop": 0.01,
+  "sigmas": 2.0
+ },
+ "reasons": [
+  "held-out bits per byte rose by +0.0507 (limit 0.05)"
+ ]
+}

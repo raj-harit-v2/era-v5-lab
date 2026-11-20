@@ -1,0 +1,730 @@
+{
+  "run_id": "rehearsal-3pack",
+  "settings": {
+    "tokens": 1048576,
+    "dataset_version": "rehearsal-p1536",
+    "tokenizer_sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b"
+  },
+  "cleaning_pipeline_sha256": "4a1b35251494794d9a2bc6306416fb99e65e59f4bbf1b58d2f5602d37e4a0f4f",
+  "parts": {
+    "heldout/code-go/part-00000.parquet": {
+      "pack_id": "code-go",
+      "status": "not_sharded",
+      "reason": "heldout is not sharded (held-out data: G3 and G9 decide)"
+    },
+    "train/code-go/part-00000.parquet": {
+      "pack_id": "code-go",
+      "status": "written",
+      "shards": [
+        {
+          "shard_id": "code-go-train-000000",
+          "docs": 1104,
+          "tokens": 1047617,
+          "first_row": 0,
+          "rows_read": 1106
+        },
+        {
+          "shard_id": "code-go-train-000001",
+          "docs": 1029,
+          "tokens": 1047890,
+          "first_row": 1106,
+          "rows_read": 2135
+        },
+        {
+          "shard_id": "code-go-train-000002",
+          "docs": 1059,
+          "tokens": 1048127,
+          "first_row": 2135,
+          "rows_read": 3195
+        },
+        {
+          "shard_id": "code-go-train-000003",
+          "docs": 1072,
+          "tokens": 1047778,
+          "first_row": 3195,
+          "rows_read": 4268
+        },
+        {
+          "shard_id": "code-go-train-000004",
+          "docs": 997,
+          "tokens": 1048494,
+          "first_row": 4268,
+          "rows_read": 5266
+        },
+        {
+          "shard_id": "code-go-train-000005",
+          "docs": 1058,
+          "tokens": 1047286,
+          "first_row": 5266,
+          "rows_read": 6324
+        },
+        {
+          "shard_id": "code-go-train-000006",
+          "docs": 1081,
+          "tokens": 1045048,
+          "first_row": 6324,
+          "rows_read": 7406
+        },
+        {
+          "shard_id": "code-go-train-000007",
+          "docs": 1118,
+          "tokens": 1046823,
+          "first_row": 7406,
+          "rows_read": 8525
+        },
+        {
+          "shard_id": "code-go-train-000008",
+          "docs": 1041,
+          "tokens": 1047010,
+          "first_row": 8525,
+          "rows_read": 9569
+        },
+        {
+          "shard_id": "code-go-train-000009",
+          "docs": 1041,
+          "tokens": 1047170,
+          "first_row": 9569,
+          "rows_read": 10610
+        },
+        {
+          "shard_id": "code-go-train-000010",
+          "docs": 1044,
+          "tokens": 1047410,
+          "first_row": 10610,
+          "rows_read": 11658
+        },
+        {
+          "shard_id": "code-go-train-000011",
+          "docs": 1076,
+          "tokens": 1043224,
+          "first_row": 11658,
+          "rows_read": 12735
+        },
+        {
+          "shard_id": "code-go-train-000012",
+          "docs": 948,
+          "tokens": 1048118,
+          "first_row": 12735,
+          "rows_read": 13684
+        },
+        {
+          "shard_id": "code-go-train-000013",
+          "docs": 1064,
+          "tokens": 1048492,
+          "first_row": 13684,
+          "rows_read": 14749
+        },
+        {
+          "shard_id": "code-go-train-000014",
+          "docs": 1077,
+          "tokens": 1046106,
+          "first_row": 14749,
+          "rows_read": 15826
+        },
+        {
+          "shard_id": "code-go-train-000015",
+          "docs": 1037,
+          "tokens": 1048453,
+          "first_row": 15826,
+          "rows_read": 16863
+        },
+        {
+          "shard_id": "code-go-train-000016",
+          "docs": 1003,
+          "tokens": 1048214,
+          "first_row": 16863,
+          "rows_read": 17867
+        },
+        {
+          "shard_id": "code-go-train-000017",
+          "docs": 951,
+          "tokens": 1048274,
+          "first_row": 17867,
+          "rows_read": 18819
+        },
+        {
+          "shard_id": "code-go-train-000018",
+          "docs": 1089,
+          "tokens": 1048510,
+          "first_row": 18819,
+          "rows_read": 19908
+        },
+        {
+          "shard_id": "code-go-train-000019",
+          "docs": 1082,
+          "tokens": 1048072,
+          "first_row": 19908,
+          "rows_read": 20990
+        },
+        {
+          "shard_id": "code-go-train-000020",
+          "docs": 1136,
+          "tokens": 1048376,
+          "first_row": 20990,
+          "rows_read": 22126
+        },
+        {
+          "shard_id": "code-go-train-000021",
+          "docs": 985,
+          "tokens": 1046363,
+          "first_row": 22126,
+          "rows_read": 23112
+        },
+        {
+          "shard_id": "code-go-train-000022",
+          "docs": 992,
+          "tokens": 1046721,
+          "first_row": 23112,
+          "rows_read": 24104
+        },
+        {
+          "shard_id": "code-go-train-000023",
+          "docs": 1027,
+          "tokens": 1048207,
+          "first_row": 24104,
+          "rows_read": 25131
+        },
+        {
+          "shard_id": "code-go-train-000024",
+          "docs": 1004,
+          "tokens": 1033357,
+          "first_row": 25131,
+          "rows_read": 26136
+        },
+        {
+          "shard_id": "code-go-train-000025",
+          "docs": 964,
+          "tokens": 1047573,
+          "first_row": 26136,
+          "rows_read": 27101
+        },
+        {
+          "shard_id": "code-go-train-000026",
+          "docs": 997,
+          "tokens": 1046002,
+          "first_row": 27101,
+          "rows_read": 28099
+        },
+        {
+          "shard_id": "code-go-train-000027",
+          "docs": 1006,
+          "tokens": 1047649,
+          "first_row": 28099,
+          "rows_read": 29106
+        },
+        {
+          "shard_id": "code-go-train-000028",
+          "docs": 1026,
+          "tokens": 1048570,
+          "first_row": 29106,
+          "rows_read": 30133
+        },
+        {
+          "shard_id": "code-go-train-000029",
+          "docs": 1088,
+          "tokens": 1044656,
+          "first_row": 30133,
+          "rows_read": 31222
+        },
+        {
+          "shard_id": "code-go-train-000030",
+          "docs": 946,
+          "tokens": 1045497,
+          "first_row": 31222,
+          "rows_read": 32169
+        },
+        {
+          "shard_id": "code-go-train-000031",
+          "docs": 1018,
+          "tokens": 1046806,
+          "first_row": 32169,
+          "rows_read": 33187
+        },
+        {
+          "shard_id": "code-go-train-000032",
+          "docs": 1108,
+          "tokens": 1041374,
+          "first_row": 33187,
+          "rows_read": 34295
+        },
+        {
+          "shard_id": "code-go-train-000033",
+          "docs": 1098,
+          "tokens": 1047262,
+          "first_row": 34295,
+          "rows_read": 35393
+        },
+        {
+          "shard_id": "code-go-train-000034",
+          "docs": 1039,
+          "tokens": 1048334,
+          "first_row": 35393,
+          "rows_read": 36433
+        },
+        {
+          "shard_id": "code-go-train-000035",
+          "docs": 928,
+          "tokens": 1048176,
+          "first_row": 36433,
+          "rows_read": 37361
+        },
+        {
+          "shard_id": "code-go-train-000036",
+          "docs": 1086,
+          "tokens": 1039060,
+          "first_row": 37361,
+          "rows_read": 38447
+        },
+        {
+          "shard_id": "code-go-train-000037",
+          "docs": 988,
+          "tokens": 1048082,
+          "first_row": 38447,
+          "rows_read": 39435
+        },
+        {
+          "shard_id": "code-go-train-000038",
+          "docs": 1059,
+          "tokens": 1048464,
+          "first_row": 39435,
+          "rows_read": 40495
+        },
+        {
+          "shard_id": "code-go-train-000039",
+          "docs": 1025,
+          "tokens": 1048188,
+          "first_row": 40495,
+          "rows_read": 41521
+        },
+        {
+          "shard_id": "code-go-train-000040",
+          "docs": 1165,
+          "tokens": 1039437,
+          "first_row": 41521,
+          "rows_read": 42689
+        },
+        {
+          "shard_id": "code-go-train-000041",
+          "docs": 1173,
+          "tokens": 1047547,
+          "first_row": 42689,
+          "rows_read": 43863
+        },
+        {
+          "shard_id": "code-go-train-000042",
+          "docs": 947,
+          "tokens": 1046185,
+          "first_row": 43863,
+          "rows_read": 44811
+        },
+        {
+          "shard_id": "code-go-train-000043",
+          "docs": 1122,
+          "tokens": 1046800,
+          "first_row": 44811,
+          "rows_read": 45933
+        },
+        {
+          "shard_id": "code-go-train-000044",
+          "docs": 1004,
+          "tokens": 1048337,
+          "first_row": 45933,
+          "rows_read": 46937
+        },
+        {
+          "shard_id": "code-go-train-000045",
+          "docs": 1064,
+          "tokens": 1047628,
+          "first_row": 46937,
+          "rows_read": 48003
+        },
+        {
+          "shard_id": "code-go-train-000046",
+          "docs": 1086,
+          "tokens": 1048230,
+          "first_row": 48003,
+          "rows_read": 49089
+        },
+        {
+          "shard_id": "code-go-train-000047",
+          "docs": 1130,
+          "tokens": 1046307,
+          "first_row": 49089,
+          "rows_read": 50220
+        },
+        {
+          "shard_id": "code-go-train-000048",
+          "docs": 1091,
+          "tokens": 1048247,
+          "first_row": 50220,
+          "rows_read": 51311
+        },
+        {
+          "shard_id": "code-go-train-000049",
+          "docs": 931,
+          "tokens": 1042956,
+          "first_row": 51311,
+          "rows_read": 52243
+        },
+        {
+          "shard_id": "code-go-train-000050",
+          "docs": 1016,
+          "tokens": 1043181,
+          "first_row": 52243,
+          "rows_read": 53261
+        },
+        {
+          "shard_id": "code-go-train-000051",
+          "docs": 1113,
+          "tokens": 1044988,
+          "first_row": 53261,
+          "rows_read": 54375
+        },
+        {
+          "shard_id": "code-go-train-000052",
+          "docs": 946,
+          "tokens": 1047909,
+          "first_row": 54375,
+          "rows_read": 55323
+        },
+        {
+          "shard_id": "code-go-train-000053",
+          "docs": 1098,
+          "tokens": 1046606,
+          "first_row": 55323,
+          "rows_read": 56423
+        },
+        {
+          "shard_id": "code-go-train-000054",
+          "docs": 207,
+          "tokens": 180899,
+          "first_row": 56423,
+          "rows_read": 56630
+        }
+      ],
+      "docs": 56584,
+      "tokens": 56692090,
+      "rows_read": 56630,
+      "rows_in_part": 56630,
+      "truncated": false,
+      "left_out": {
+        "secret": 46,
+        "empty": 0,
+        "special": 0,
+        "roundtrip": 0,
+        "oversize": 0
+      }
+    },
+    "train/code-go/part-00001.parquet": {
+      "pack_id": "code-go",
+      "status": "written",
+      "shards": [
+        {
+          "shard_id": "code-go-train-000055",
+          "docs": 1037,
+          "tokens": 1048045,
+          "first_row": 0,
+          "rows_read": 1038
+        },
+        {
+          "shard_id": "code-go-train-000056",
+          "docs": 1022,
+          "tokens": 1048297,
+          "first_row": 1038,
+          "rows_read": 2061
+        },
+        {
+          "shard_id": "code-go-train-000057",
+          "docs": 1019,
+          "tokens": 1048250,
+          "first_row": 2061,
+          "rows_read": 3081
+        },
+        {
+          "shard_id": "code-go-train-000058",
+          "docs": 998,
+          "tokens": 1048528,
+          "first_row": 3081,
+          "rows_read": 4080
+        },
+        {
+          "shard_id": "code-go-train-000059",
+          "docs": 991,
+          "tokens": 1047598,
+          "first_row": 4080,
+          "rows_read": 5072
+        },
+        {
+          "shard_id": "code-go-train-000060",
+          "docs": 1185,
+          "tokens": 1048000,
+          "first_row": 5072,
+          "rows_read": 6257
+        },
+        {
+          "shard_id": "code-go-train-000061",
+          "docs": 1007,
+          "tokens": 1048348,
+          "first_row": 6257,
+          "rows_read": 7264
+        },
+        {
+          "shard_id": "code-go-train-000062",
+          "docs": 926,
+          "tokens": 1048505,
+          "first_row": 7264,
+          "rows_read": 8190
+        },
+        {
+          "shard_id": "code-go-train-000063",
+          "docs": 1057,
+          "tokens": 1047740,
+          "first_row": 8190,
+          "rows_read": 9247
+        },
+        {
+          "shard_id": "code-go-train-000064",
+          "docs": 1143,
+          "tokens": 1048249,
+          "first_row": 9247,
+          "rows_read": 10390
+        },
+        {
+          "shard_id": "code-go-train-000065",
+          "docs": 1082,
+          "tokens": 1039298,
+          "first_row": 10390,
+          "rows_read": 11472
+        },
+        {
+          "shard_id": "code-go-train-000066",
+          "docs": 1021,
+          "tokens": 1046936,
+          "first_row": 11472,
+          "rows_read": 12494
+        },
+        {
+          "shard_id": "code-go-train-000067",
+          "docs": 1004,
+          "tokens": 1045840,
+          "first_row": 12494,
+          "rows_read": 13500
+        },
+        {
+          "shard_id": "code-go-train-000068",
+          "docs": 1091,
+          "tokens": 1047462,
+          "first_row": 13500,
+          "rows_read": 14591
+        },
+        {
+          "shard_id": "code-go-train-000069",
+          "docs": 1067,
+          "tokens": 1047014,
+          "first_row": 14591,
+          "rows_read": 15658
+        },
+        {
+          "shard_id": "code-go-train-000070",
+          "docs": 1066,
+          "tokens": 1047312,
+          "first_row": 15658,
+          "rows_read": 16724
+        },
+        {
+          "shard_id": "code-go-train-000071",
+          "docs": 1052,
+          "tokens": 1048261,
+          "first_row": 16724,
+          "rows_read": 17777
+        },
+        {
+          "shard_id": "code-go-train-000072",
+          "docs": 1022,
+          "tokens": 1047958,
+          "first_row": 17777,
+          "rows_read": 18799
+        },
+        {
+          "shard_id": "code-go-train-000073",
+          "docs": 1081,
+          "tokens": 1047158,
+          "first_row": 18799,
+          "rows_read": 19883
+        },
+        {
+          "shard_id": "code-go-train-000074",
+          "docs": 340,
+          "tokens": 355127,
+          "first_row": 19883,
+          "rows_read": 20223
+        }
+      ],
+      "docs": 20211,
+      "tokens": 20253926,
+      "rows_read": 20223,
+      "rows_in_part": 20223,
+      "truncated": false,
+      "left_out": {
+        "secret": 12,
+        "empty": 0,
+        "special": 0,
+        "roundtrip": 0,
+        "oversize": 0
+      }
+    },
+    "train/ind-bn-fw2/part-00000.parquet": {
+      "pack_id": "ind-bn-fw2",
+      "status": "written",
+      "shards": [
+        {
+          "shard_id": "ind-bn-fw2-train-000000",
+          "docs": 1614,
+          "tokens": 1047898,
+          "first_row": 0,
+          "rows_read": 1614
+        },
+        {
+          "shard_id": "ind-bn-fw2-train-000001",
+          "docs": 1462,
+          "tokens": 1047956,
+          "first_row": 1614,
+          "rows_read": 3076
+        },
+        {
+          "shard_id": "ind-bn-fw2-train-000002",
+          "docs": 1567,
+          "tokens": 1048001,
+          "first_row": 3076,
+          "rows_read": 4643
+        },
+        {
+          "shard_id": "ind-bn-fw2-train-000003",
+          "docs": 1520,
+          "tokens": 1048397,
+          "first_row": 4643,
+          "rows_read": 6163
+        },
+        {
+          "shard_id": "ind-bn-fw2-train-000004",
+          "docs": 1574,
+          "tokens": 1047664,
+          "first_row": 6163,
+          "rows_read": 7737
+        },
+        {
+          "shard_id": "ind-bn-fw2-train-000005",
+          "docs": 1628,
+          "tokens": 1046458,
+          "first_row": 7737,
+          "rows_read": 9365
+        },
+        {
+          "shard_id": "ind-bn-fw2-train-000006",
+          "docs": 1339,
+          "tokens": 841546,
+          "first_row": 9365,
+          "rows_read": 10704
+        }
+      ],
+      "docs": 10704,
+      "tokens": 7127920,
+      "rows_read": 10704,
+      "rows_in_part": 10704,
+      "truncated": false,
+      "left_out": {
+        "secret": 0,
+        "empty": 0,
+        "special": 0,
+        "roundtrip": 0,
+        "oversize": 0
+      }
+    },
+    "train/ind-bn-sangraha-v/part-00000.parquet": {
+      "pack_id": "ind-bn-sangraha-v",
+      "status": "written",
+      "shards": [
+        {
+          "shard_id": "ind-bn-sangraha-v-train-000000",
+          "docs": 1321,
+          "tokens": 1048527,
+          "first_row": 0,
+          "rows_read": 1321
+        },
+        {
+          "shard_id": "ind-bn-sangraha-v-train-000001",
+          "docs": 1307,
+          "tokens": 1047739,
+          "first_row": 1321,
+          "rows_read": 2629
+        },
+        {
+          "shard_id": "ind-bn-sangraha-v-train-000002",
+          "docs": 1389,
+          "tokens": 1048243,
+          "first_row": 2629,
+          "rows_read": 4019
+        },
+        {
+          "shard_id": "ind-bn-sangraha-v-train-000003",
+          "docs": 1384,
+          "tokens": 1048364,
+          "first_row": 4019,
+          "rows_read": 5403
+        },
+        {
+          "shard_id": "ind-bn-sangraha-v-train-000004",
+          "docs": 1328,
+          "tokens": 1048321,
+          "first_row": 5403,
+          "rows_read": 6731
+        },
+        {
+          "shard_id": "ind-bn-sangraha-v-train-000005",
+          "docs": 1316,
+          "tokens": 1047972,
+          "first_row": 6731,
+          "rows_read": 8048
+        },
+        {
+          "shard_id": "ind-bn-sangraha-v-train-000006",
+          "docs": 1254,
+          "tokens": 1042484,
+          "first_row": 8048,
+          "rows_read": 9302
+        },
+        {
+          "shard_id": "ind-bn-sangraha-v-train-000007",
+          "docs": 812,
+          "tokens": 682877,
+          "first_row": 9302,
+          "rows_read": 10115
+        }
+      ],
+      "docs": 10111,
+      "tokens": 8014527,
+      "rows_read": 10115,
+      "rows_in_part": 10115,
+      "truncated": false,
+      "left_out": {
+        "secret": 4,
+        "empty": 0,
+        "special": 0,
+        "roundtrip": 0,
+        "oversize": 0
+      }
+    }
+  },
+  "counts": {
+    "written": 4,
+    "empty": 0,
+    "all_left_out": 0,
+    "failed": 0,
+    "skipped": 0,
+    "not_sharded": 1,
+    "truncated": 0,
+    "shards": 90
+  },
+  "verified": null,
+  "problems": []
+}

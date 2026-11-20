@@ -1,12 +1,16 @@
 # Shard format v1 (draft)
 
 How the cleaned packs become token shards for training. Agreed with G3 (tokenizer, answers below); open with G7
-(infrastructure). The manifest template is `shard_manifest_v1.template.json`; `shard_writer.py` writes one shard from one
-cleaned part and checks it; `test_shard_writer.py` tests it.
+(infrastructure). The manifest template is `shard_manifest_v1.template.json`. `shard_writer.py` writes one shard from one
+part of the pipeline's final folder (clean, dedup, then F2: `pipeline/README.md`) and checks it; `provenance.py` checks that
+part's chain back to the raw sample first; `run_shards.py` runs the writer on every part of a final folder, with each pack's
+language, script, domain and lane from `pack_table.json`; `tests/` tests all of them.
 
 **Sample:** `sample/` holds `code-go-train-000000` (271 docs, 262,032 tokens), written with the C3 tokenizer from the CAP-1
 tokenizer sample, with every file below except the `.bin` and `.docs.parquet`, which pr-guard refuses in a PR.
-`sample/README.md` gives the inputs, the commands that make them, and the sha256 of every file.
+`sample/README.md` gives the inputs, the commands that make them, and the sha256 of every file. The sample predates the
+pipeline hand-off below: it was made from `run_clean.py --f2` output (F2 before dedup), so its `cleaning_pipeline.json`
+has `"dedup": null` and its `inputs_sha256` uses the older line format. It is regenerated from a pipeline run for the release.
 
 ## Files of one shard
 
@@ -51,6 +55,89 @@ A document is left out, counted, and listed by doc_id in the shard's quality rep
 | it encodes to no tokens | nothing to train on |
 | an email-like or secret-like string | pr-guard's patterns; personal data stays out |
 
+## Where a shard's input comes from
+
+A shard is made from one part of the pipeline's final folder, in the order TSAI set: clean, dedup, then F2.
+
+```
+<run>/pipeline_manifest.json                       run_pipeline.py's record of the run
+<run>/cleaning_pipeline.json                       the processing behind the run's shards (the pipeline's shard stage writes it)
+<run>/final/<split>/<pack>/<part>.parquet          what F2 kept (the shard writer's --input)
+<run>/final/<split>/<pack>/<part>.parquet.f2.json  F2's report for the part
+<run>/deduped/apply_dedup_summary.json             what apply removed, with the sha256 of every part it read and wrote
+```
+
+The writer's `--input` is a part under `final/`, and `--manifest` is the run's `pipeline_manifest.json`. The folder layout
+is the pipeline's, not the writer's: apply, dedup and F2 all name a part by its split and its path under the split
+(`<pack>/<part>.parquet`), so the writer finds the part's records by the same two names. The `<split>` folder gives the
+shard's split.
+
+`provenance.py` checks the chain before anything is written, one sha256 per link, and stops naming the link that broke:
+
+| Link | Must match |
+|---|---|
+| the part, as it is now | `output_sha256` in its `.f2.json` |
+| the `.f2.json` | `input_sha256` = what apply wrote for that part; no errors; the fingerprint set of the manifest |
+| apply | the `remove_list.csv` on disk (its sha256), and the rows it removed from the part |
+| dedup | every removed doc has a removed member in `dedup_groups.csv` (group and rule) |
+| the clean job | `job_summary.json` in clean's output folder: the cleaned part's `output_sha256`, then the raw part's `input_sha256` and the `clean_sha256` |
+
+A clean output folder with no `job_summary.json` stops the writer: the raw part's sha256 is recorded nowhere else.
+
+What the writer records from it:
+
+| Where | What |
+|---|---|
+| `cleaning_pipeline.json` | written by the pipeline's shard stage next to the manifest (`provenance.py --write-record` does the same by hand); the writer checks it against the manifest and the stage outputs and copies it into `--out`, byte for byte, so the sha256 in the manifest is the run's. It holds `clean_py_sha256`, `f2_set_sha256` and `dedup`: the remove list (`remove_list_sha256`, `remove_list_rows`), the overlap run it used (`overlap`: the sha256 of `overlap_matches.csv` and `overlap_docs.parquet`, `k`, `floor`, the script's `code_sha256`), dedup's `settings` (`cross_pack`, `pack_order`, `licence_usable`, `default_licence_usable`) and dedup's own `code_sha256`. The two code hashes are null while overlap or dedup was adopted instead of run by the pipeline; paths, timings and `gold_dirs` are left out. It describes the processing, not the run log (no link to `pipeline_manifest.json`, which is rewritten after every stage), so every shard made from the same processing has the same file; an `--out` holding one from other processing (another `clean.py`, F2 set, remove list, overlap run or dedup setting) is refused |
+| `inputs_sha256` | the sha256 of the line `<raw part sha256> <split>/<pack>/<part>.parquet` |
+| `<shard_id>.quality_report.json`, `upstream` | the pipeline `run_id`; the part's counts (cleaned, removed by dedup, dropped by F2, final); the doc_ids dedup removed, with their group and rule; the doc_ids F2 dropped, with benchmark item IDs and offsets. The whole input part, whether or not all its rows fit in the shard. Never text |
+
+`domain` is `--domain`, else clean.py's family of the pack (code, english, math, sci, indic); a pack clean.py does not list needs `--domain`.
+
+**Held-out parts are not sharded yet.** The pipeline keeps `heldout/` apart (dedup never removes from it), and this format
+has `train` and `validation` only. Whether a held-out part becomes `validation` is for G3 and G9 to say; the writer refuses it until then.
+
+## Sharding a whole run
+
+`run_pipeline.py` runs this as its last stage when `stages.shards` is in its config (`pipeline/README.md`): it writes
+`<run>/cleaning_pipeline.json`, runs `run_shards.py` on `final/`, records the stage in `pipeline_manifest.json` and rewrites
+the manifest, like every stage; a part that failed or was skipped stops the run. By hand:
+
+`run_shards.py --input <run>/final --manifest <run>/pipeline_manifest.json --tokenizer <tokenizer.json> --out <dir>` hands every
+`<split>/<pack>/<part>.parquet` of the final folder to the writer, except parts in a `heldout`, `validation` or `val` folder:
+those are reported as `not_sharded`, which is not an error (the writer refuses a non-train part as well).
+
+- **Pack metadata:** `pack_table.json` has a `language`, `script`, `domain` and `lane` for each of the 38 week-2 packs. A pack
+  that is not in it, or has a null field, is skipped, not guessed: a manifest never changes. `language` is the programming
+  language for `code-*` packs and the pack's `lang_label` otherwise; `lane` is one of the six capability lanes (next item), in every pack table (`pack_table.py` refuses any other value).
+- **Capability lanes** (`capability_lane`; names accepted by TSAI, 16 Nov 2026, job request PR #47): `code` (6 packs: the `code-*` packs), `code-adjacent` (3: `cadj-*`), `english` (4: `en-*`), `indic` (22: `ind-*`), `math` (2: `math-*`) and `science` (1: `sci-finepdfs`). A pack has exactly one lane. The values are `LANES` in `pack_table.py`.
+- **Rollover and shard id:** `<pack>-<split>-<number>`. The writer fills a shard up to `--tokens` (default 2^26), then
+  writes it and opens the next number with the doc that did not fit, until every row of the part is read. A doc is never
+  split; one that alone is longer than `--tokens` is left out as `oversize`. Numbers run on across a pack's parts in part
+  order, so without a rollover `part-00001.parquet` is still `<pack>-train-000001`. The files are written flat in `--out`.
+- **No document to write:** a part with no rows (dedup or F2 removed them all) is `empty`; one whose every row the writer
+  left out is `all_left_out`, with the doc_ids per reason in its summary entry (`left_out_docs`). Neither gets a shard, so
+  there is never a zero-token shard.
+- **Restart:** each shard's manifest is written last (to `.tmp`, then renamed) and the summary is saved before the first shard and after every part.
+  The same command run again into the same `--out` keeps every part already done whose shards have the sha256 their
+  manifests give, removes what a stopped run left of the next one (its pack's files from that number on, and `.tmp`), and
+  writes the rest. Other settings (`--tokens`, `--dataset-version`, tokenizer) are refused, as is an `--out` holding shards
+  but no summary. A part that fails is recorded and the run goes on; the exit code is 1 unless every part was written,
+  `empty`, `all_left_out` or `not_sharded`.
+- **`shards_summary.json`:** per part, `status` (written, empty, all_left_out, failed, skipped, not_sharded); for a written part `shards`, the
+  part-to-shards map (each `shard_id` with its docs, tokens and the rows `first_row`..`rows_read`-1 of the part it holds), the
+  docs and tokens summed, `rows_read` of `rows_in_part`, `truncated` (rows never read: a writer fault, which reconcile fails
+  as `not_reached`) and the docs left out per reason. Each shard's quality report lists the docs left out in its rows. A second run into the same `--out` (with `--pack`) adds to the
+  summary; one made for another `run_id` is refused. The summary also records the `run_id` and the sha256 of `cleaning_pipeline.json`.
+- **Verification:** when the parts are done, `run_shards.py` checks the shards in `--out` against their files with
+  `verify_shards.py`, not only what it just wrote: the five files and `cleaning_pipeline.json` exist with the manifest's sha256;
+  the `.bin` header and size, the index, the special ids and the metadata agree with the manifest; `language`, `script`, `domain`
+  and `capability_lane` are the pack's row in `pack_table.json`; the tokenizer and F2 set are the run's; and the first and last
+  document of each shard, read from the final part, encode to the tokens in the `.bin` and decode to their normalized text. A shard
+  that fails makes its part `failed` (with the reason); a problem that belongs to no part goes to `problems`; the summary's
+  `verified` is true, false, or null when there was no shard. `python teams/01-data-a/shards/verify_shards.py --out <dir> --manifest
+  <run>/pipeline_manifest.json --tokenizer <tokenizer.json>` runs the same checks by hand.
+
 ## Manifest fields
 
 | Field | Meaning |
@@ -64,9 +151,10 @@ A document is left out, counted, and listed by doc_id in the shard's quality rep
 | `doc_count`, `token_count` | documents and tokens in the shard, EOS included |
 | `eos_token_id` | 130,822 |
 | `tokenizer_sha256` | sha256 of the `tokenizer.json` bytes that made the IDs (p1536: `e6b93a93…`) |
-| `pack_id`, `language`, `script`, `domain`, `capability_lane`, `split` | what is in the shard. `split` is `train` or `validation` only: test and benchmark data are never sharded (eval firewall, G9 #269) |
-| `inputs_sha256` | sha256 of the sorted lines `<input_sha256> <part>` of the input parts `run_clean.py` read (from its summaries) |
-| `cleaning_pipeline_sha256` | sha256 of `cleaning_pipeline.json`: the `clean.py` sha256, the F2 fingerprint set and the dedup version |
+| `pack_id`, `language`, `script`, `domain`, `capability_lane`, `split` | what is in the shard. `split` is `train` or `validation` only: test and benchmark data are never sharded (eval firewall, G9 #269). It is taken from the input's folder, and only `train` is written for now |
+| `license`, `license_source` | the pack's licence and where that licence is recorded, placed after `capability_lane`. Both come from the pack table the run is given (`run_shards.py --pack-table`, a job's `pack_metadata.json`), together or not at all: a table without them gives a manifest without them, and a pack whose licence is null there is not sharded |
+| `inputs_sha256` | sha256 of the line `<raw part sha256> <split>/<pack>/<part>.parquet`: the raw sample part the shard's documents came from (from the clean job's `job_summary.json`) |
+| `cleaning_pipeline_sha256` | sha256 of `cleaning_pipeline.json`: the `clean.py` sha256, the F2 fingerprint set, the dedup remove list and the pipeline run |
 | `decontam_set_sha256` | the G9 fingerprint set F2 checked against (v2 today). A new set means rechecking every shard with an older one |
 | `sample_metadata_*`, `quality_report_*` | links to what is kept outside the manifest, with hashes |
 | `created_by` | the git commit of the shard writer |
@@ -118,6 +206,6 @@ corpus-v1/
 
 ## Not done yet
 
-- Several shards per part, and the release's `SHA256SUMS` and `admission.jsonl`.
+- What a held-out part becomes (G3, G9).
+- The release's `SHA256SUMS` and `admission.jsonl`, and the release folder layout (`<pack>/<split>/`; shards are written flat for now).
 - The loader and its run of `ckpt/loader_contract.py`.
-- The `capability_lane` values: from the training plan.

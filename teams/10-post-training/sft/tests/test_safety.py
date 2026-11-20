@@ -73,12 +73,10 @@ def test_set_has_both_sides_in_english_and_indic():
 def test_every_row_says_who_wrote_it_and_whether_a_native_speaker_reviewed_it():
     for r in SAFETY:
         assert r["source"].startswith("original:") and "evaluation-only" in r["source"]
-        if r["lang"] in {"hi", "mr", "te", "kn"}:
-            assert r["review"] == "wording and refusal phrases reviewed by a native speaker", r["id"]
-        elif r["lang"] == "en":
+        if r["lang"] == "en":
             assert r["review"] == "English", r["id"]
         else:
-            assert r["review"] == "wording and refusal phrases not reviewed by a native speaker", r["id"]
+            assert r["review"] == "wording and refusal phrases reviewed by a native speaker", r["id"]
 
 
 def test_behaviour_matches_kind():

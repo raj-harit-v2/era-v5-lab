@@ -1,0 +1,388 @@
+{
+  "shard_id": "en-dclm-train-000000",
+  "manifest": {
+    "schema_version": "shard-v1",
+    "dataset_version": "sample",
+    "shard_id": "en-dclm-train-000000",
+    "format": "brahmic_u32_v2+doc_index",
+    "token_dtype": "uint32",
+    "payload_uri": "en-dclm-train-000000.bin",
+    "payload_sha256": "1fccdcc4c15bb22ea564c8d3f1850582abd8b60e6c504386ee84308f6ee074de",
+    "payload_bytes": 215842712,
+    "index_uri": "en-dclm-train-000000.idx.npy",
+    "index_sha256": "2cb4f8478781d20a73c43db1dbf5426ec85a7784f1fd3e4cbb60d443bfd6891d",
+    "doc_count": 45032,
+    "token_count": 53960422,
+    "eos_token_id": 130822,
+    "tokenizer_sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b",
+    "pack_id": "en-dclm",
+    "language": "en",
+    "script": "Latn",
+    "domain": "english",
+    "capability_lane": "general_language",
+    "split": "train",
+    "inputs_sha256": "affe0901e66460326cbb1bfb6b33252e904c440c897a5c11dce51a6d03b958ce",
+    "cleaning_pipeline_sha256": "35611a83cfa6d6b510a43b07c5d356c4f6d5d908bbb7d4f3c8b9f05856046589",
+    "decontam_set_sha256": "2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a",
+    "sample_metadata_uri": "en-dclm-train-000000.docs.parquet",
+    "sample_metadata_sha256": "3193a184ca4f89a3ef8d13ababaaa576d034fe767fed85269bd0322f5bb15bf7",
+    "quality_report_uri": "en-dclm-train-000000.quality_report.json",
+    "quality_report_sha256": "ce3729e776105cd4ab4c82496d8913fa4aef794eb8e52342e5c6d3807faa9dea",
+    "created_by": "0064f81d57ef47e22d8fa5f42d96c99089a98ce4"
+  },
+  "artifact_sha256": {
+    "en-dclm-train-000000.json": "aea60298ee0c7eed31b498c49f709d7f2fb96d01896388d8af2ec28a9240331a",
+    "en-dclm-train-000000.bin": "1fccdcc4c15bb22ea564c8d3f1850582abd8b60e6c504386ee84308f6ee074de",
+    "en-dclm-train-000000.idx.npy": "2cb4f8478781d20a73c43db1dbf5426ec85a7784f1fd3e4cbb60d443bfd6891d",
+    "en-dclm-train-000000.docs.parquet": "3193a184ca4f89a3ef8d13ababaaa576d034fe767fed85269bd0322f5bb15bf7",
+    "en-dclm-train-000000.quality_report.json": "ce3729e776105cd4ab4c82496d8913fa4aef794eb8e52342e5c6d3807faa9dea",
+    "cleaning_pipeline.json": "35611a83cfa6d6b510a43b07c5d356c4f6d5d908bbb7d4f3c8b9f05856046589"
+  },
+  "checks": [
+    {
+      "check": "manifest file sha256 (recorded)",
+      "status": "PASS",
+      "expected": "",
+      "observed": "aea60298ee0c7eed31b498c49f709d7f2fb96d01896388d8af2ec28a9240331a"
+    },
+    {
+      "check": "all template fields present",
+      "status": "PASS",
+      "expected": "none missing",
+      "observed": "none missing"
+    },
+    {
+      "check": "no fields outside the template",
+      "status": "PASS",
+      "expected": "none extra",
+      "observed": "none extra"
+    },
+    {
+      "check": "no empty or placeholder values",
+      "status": "PASS",
+      "expected": "none",
+      "observed": "none"
+    },
+    {
+      "check": "schema_version",
+      "status": "PASS",
+      "expected": "shard-v1",
+      "observed": "shard-v1"
+    },
+    {
+      "check": "format",
+      "status": "PASS",
+      "expected": "brahmic_u32_v2+doc_index",
+      "observed": "brahmic_u32_v2+doc_index"
+    },
+    {
+      "check": "token_dtype",
+      "status": "PASS",
+      "expected": "uint32",
+      "observed": "uint32"
+    },
+    {
+      "check": "eos_token_id",
+      "status": "PASS",
+      "expected": "130822",
+      "observed": "130822"
+    },
+    {
+      "check": "tokenizer_sha256 is p1536",
+      "status": "PASS",
+      "expected": "e6b93a93a60520d7",
+      "observed": "e6b93a93a60520d7"
+    },
+    {
+      "check": "decontam_set_sha256 is F2 v2",
+      "status": "PASS",
+      "expected": "2826a3b883210c65",
+      "observed": "2826a3b883210c65"
+    },
+    {
+      "check": "split is train or validation",
+      "status": "PASS",
+      "expected": "train|validation",
+      "observed": "train"
+    },
+    {
+      "check": "shard_id = <pack_id>-<split>-<6 digits>",
+      "status": "PASS",
+      "expected": "en-dclm-train-NNNNNN",
+      "observed": "en-dclm-train-000000"
+    },
+    {
+      "check": "created_by is a full git commit hash",
+      "status": "PASS",
+      "expected": "40 hex characters",
+      "observed": "0064f81d57ef"
+    },
+    {
+      "check": "payload_bytes = 1024 + 4 x token_count",
+      "status": "PASS",
+      "expected": "215842712",
+      "observed": "215842712"
+    },
+    {
+      "check": "payload_sha256 (en-dclm-train-000000.bin)",
+      "status": "PASS",
+      "expected": "1fccdcc4c15bb22e",
+      "observed": "1fccdcc4c15bb22e"
+    },
+    {
+      "check": "index_sha256 (en-dclm-train-000000.idx.npy)",
+      "status": "PASS",
+      "expected": "2cb4f8478781d20a",
+      "observed": "2cb4f8478781d20a"
+    },
+    {
+      "check": "sample_metadata_sha256 (en-dclm-train-000000.docs.parquet)",
+      "status": "PASS",
+      "expected": "3193a184ca4f89a3",
+      "observed": "3193a184ca4f89a3"
+    },
+    {
+      "check": "quality_report_sha256 (en-dclm-train-000000.quality_report.json)",
+      "status": "PASS",
+      "expected": "ce3729e776105cd4",
+      "observed": "ce3729e776105cd4"
+    },
+    {
+      "check": "cleaning_pipeline_sha256",
+      "status": "PASS",
+      "expected": "35611a83cfa6d6b5",
+      "observed": "35611a83cfa6d6b5"
+    },
+    {
+      "check": "cleaning_pipeline F2 set = manifest decontam set",
+      "status": "PASS",
+      "expected": "2826a3b883210c65",
+      "observed": "2826a3b883210c65"
+    },
+    {
+      "check": "cleaning_pipeline records a dedup version",
+      "status": "FAIL",
+      "expected": "a dedup version",
+      "observed": "None"
+    },
+    {
+      "check": "cleaning_pipeline clean.py = clean.py in this checkout",
+      "status": "PASS",
+      "expected": "22d818c72c9f30bf",
+      "observed": "22d818c72c9f30bf"
+    },
+    {
+      "check": "index dtype int64",
+      "status": "PASS",
+      "expected": "int64",
+      "observed": "int64"
+    },
+    {
+      "check": "index length = doc_count + 1",
+      "status": "PASS",
+      "expected": "45033",
+      "observed": "45033"
+    },
+    {
+      "check": "index starts at 0",
+      "status": "PASS",
+      "expected": "0",
+      "observed": "0"
+    },
+    {
+      "check": "index ends at token_count",
+      "status": "PASS",
+      "expected": "53960422",
+      "observed": "53960422"
+    },
+    {
+      "check": "every document has >= 2 tokens (text + EOS)",
+      "status": "PASS",
+      "expected": ">= 2",
+      "observed": "25"
+    },
+    {
+      "check": "document lengths sum to token_count",
+      "status": "PASS",
+      "expected": "53960422",
+      "observed": "53960422"
+    },
+    {
+      "check": "shard within 2^26 tokens, or one document",
+      "status": "PASS",
+      "expected": "<= 67108864",
+      "observed": "53960422"
+    },
+    {
+      "check": "quality report shard_id",
+      "status": "PASS",
+      "expected": "en-dclm-train-000000",
+      "observed": "en-dclm-train-000000"
+    },
+    {
+      "check": "quality report docs_in_shard = doc_count",
+      "status": "PASS",
+      "expected": "45032",
+      "observed": "45032"
+    },
+    {
+      "check": "rows_read = docs_in_shard + left out",
+      "status": "PASS",
+      "expected": "45336",
+      "observed": "45336"
+    },
+    {
+      "check": "left_out counts = left_out_docs lists",
+      "status": "PASS",
+      "expected": "{'secret': 304, 'empty': 0, 'special': 0, 'roundtrip': 0}",
+      "observed": "{'secret': 304, 'empty': 0, 'special': 0, 'roundtrip': 0}"
+    },
+    {
+      "check": ".bin size = payload_bytes",
+      "status": "PASS",
+      "expected": "215842712",
+      "observed": "215842712"
+    },
+    {
+      "check": ".bin header magic",
+      "status": "PASS",
+      "expected": "20261025",
+      "observed": "20261025"
+    },
+    {
+      "check": ".bin header version",
+      "status": "PASS",
+      "expected": "2",
+      "observed": "2"
+    },
+    {
+      "check": ".bin header token count",
+      "status": "PASS",
+      "expected": "53960422",
+      "observed": "53960422"
+    },
+    {
+      "check": ".bin header rest is zeros",
+      "status": "PASS",
+      "expected": "zeros",
+      "observed": "zeros"
+    },
+    {
+      "check": "tokens after the header = token_count",
+      "status": "PASS",
+      "expected": "53960422",
+      "observed": "53960422"
+    },
+    {
+      "check": "every id < vocab 131072",
+      "status": "PASS",
+      "expected": "< 131072",
+      "observed": "130822"
+    },
+    {
+      "check": "every document ends with EOS",
+      "status": "PASS",
+      "expected": "45032",
+      "observed": "45032"
+    },
+    {
+      "check": "no special id >= 130725 inside a document",
+      "status": "PASS",
+      "expected": "0",
+      "observed": "0"
+    },
+    {
+      "check": "none of the 9 special ids below 130725 inside a document",
+      "status": "PASS",
+      "expected": "0",
+      "observed": "0"
+    },
+    {
+      "check": "docs.parquet rows = doc_count",
+      "status": "PASS",
+      "expected": "45032",
+      "observed": "45032"
+    },
+    {
+      "check": "docs.parquet doc_ids unique",
+      "status": "PASS",
+      "expected": "45032",
+      "observed": "45032"
+    },
+    {
+      "check": "docs.parquet n_tokens = index lengths",
+      "status": "PASS",
+      "expected": "equal",
+      "observed": "equal"
+    },
+    {
+      "check": "assigned pack and sample/train scope",
+      "status": "PASS",
+      "expected": "en-dclm, train, sample",
+      "observed": "en-dclm, train, sample"
+    },
+    {
+      "check": "metadata required columns",
+      "status": "PASS",
+      "expected": "all six metadata columns",
+      "observed": "['doc_id', 'input_part', 'input_row', 'lang_label', 'n_chars', 'n_tokens']"
+    },
+    {
+      "check": "metadata source part belongs to assigned pack",
+      "status": "PASS",
+      "expected": "en-dclm",
+      "observed": "['en-dclm_part-00000_clean.parquet']"
+    },
+    {
+      "check": "metadata source rows ordered, unique and within rows_read",
+      "status": "PASS",
+      "expected": "strictly increasing in [0, rows_read)",
+      "observed": "0..45335, 45032 rows"
+    },
+    {
+      "check": "metadata source-row gaps equal excluded count",
+      "status": "PASS",
+      "expected": "304",
+      "observed": "304"
+    },
+    {
+      "check": "excluded IDs unique and absent from kept metadata",
+      "status": "PASS",
+      "expected": "unique, disjoint",
+      "observed": "304 excluded; intersection 0"
+    },
+    {
+      "check": "metadata character counts positive",
+      "status": "PASS",
+      "expected": "all > 0",
+      "observed": "102"
+    },
+    {
+      "check": "writer commit in audited main history",
+      "status": "PASS",
+      "expected": "ancestor of audited main",
+      "observed": "0064f81d57ef47e22d8fa5f42d96c99089a98ce4"
+    }
+  ],
+  "counts": {
+    "PASS": 53,
+    "FAIL": 1,
+    "NOT CHECKED": 0
+  },
+  "quality_counts": {
+    "rows_read": 45336,
+    "docs_in_shard": 45032,
+    "left_out": {
+      "secret": 304,
+      "empty": 0,
+      "special": 0,
+      "roundtrip": 0
+    }
+  },
+  "input_parts": [
+    "en-dclm_part-00000_clean.parquet"
+  ],
+  "min_document_tokens": 25,
+  "max_document_tokens": 102670,
+  "wall_seconds": 3.863
+}

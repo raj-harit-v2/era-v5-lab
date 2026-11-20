@@ -1,0 +1,6 @@
+not_sharded heldout/code-go/part-00000.parquet: heldout is not sharded (held-out data: G3 and G9 decide)
+written  train/code-go/part-00000.parquet: 55 shard(s), 56584 docs, 56692090 tokens
+written  train/code-go/part-00001.parquet: 20 shard(s), 20211 docs, 20253926 tokens
+written  train/ind-bn-fw2/part-00000.parquet: 7 shard(s), 10704 docs, 7127920 tokens
+written  train/ind-bn-sangraha-v/part-00000.parquet: 8 shard(s), 10111 docs, 8014527 tokens
+{"written": 4, "empty": 0, "all_left_out": 0, "failed": 0, "skipped": 0, "not_sharded": 1, "truncated": 0, "shards": 90}

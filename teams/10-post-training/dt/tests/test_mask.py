@@ -283,3 +283,164 @@ def test_unseen_layers_policy_in_wanda_prior():
     assert torch.equal(out["keep"][1][seen], out["official"][1][seen])
     with pytest.raises(ValueError, match="unseen"):
         dtmask.apply_wanda_prior(build(), scores, 0.05, 3.0, unseen="drop")
+
+
+# --- G5 fused expert path (#521): the mask must reach it, calibration must see routed rows ------------------------
+
+G5_IDS = torch.tensor([[3, 7, 9, 11, 13, 5, 6, 8], [4, 10, 12, 1, 2, 3, 0, 0]])
+G5_VALID = torch.tensor([[True] * 8, [True] * 6 + [False] * 2])
+G5_TARGETS = dtmask.TARGET_SETS["g5_mlp"] + dtmask.TARGET_SETS["g5_attn"]
+
+
+def old_loop_moe_forward(self, x, valid):
+    """The MoE.forward of 380376c8 (parent of #521): every routed expert is CALLED on its routed rows."""
+    import torch.nn.functional as F  # noqa: PLC0415
+    shape = x.shape
+    flat = x.reshape(-1, shape[-1])
+    active = valid.reshape(-1)
+    scores = F.linear(flat.float(), self.router.weight.float()).softmax(-1)
+    gates, choice = scores.topk(self.topk, dim=-1)
+    gates = gates / gates.sum(-1, keepdim=True)
+    output = torch.zeros_like(flat)
+    for e, expert in enumerate(self.experts):
+        selected = (choice == e) & active[:, None]
+        rows = selected.any(-1).nonzero().flatten()
+        if rows.numel():
+            weight = (gates[rows] * selected[rows]).sum(-1, keepdim=True)
+            values = expert(flat[rows]) * weight.to(flat.dtype)
+            output = output + torch.zeros_like(flat).index_copy(0, rows, values)
+    for expert in self.shared:
+        output = output + expert(flat) * active[:, None]
+    return output.reshape(shape)
+
+
+def g5_dt(seed=0, spread=0.5):
+    """tiny_g5 with DT on routed + shared experts and attention, random logits so about half the weights are deleted."""
+    lm = tiny_g5()
+    dtmask.convert(lm, G5_TARGETS, alpha_start=10.0, alpha_end=100.0, total_steps=10)
+    gen = torch.Generator().manual_seed(seed)
+    with torch.no_grad():
+        for _, layer in dtmask.masked_layers(lm):
+            layer.gate.copy_(torch.randn(layer.gate.shape, generator=gen) * spread)
+    return lm
+
+
+def routed_layers(lm):
+    return [(n, m) for n, m in dtmask.masked_layers(lm) if ".moe.experts." in n]
+
+
+def test_g5_routed_expert_mask_reaches_forward_and_gets_gradient():
+    lm = g5_dt().eval()
+    with torch.no_grad():
+        full = lm(G5_IDS, G5_VALID)
+        for _, layer in routed_layers(lm):
+            layer.gate.fill_(-1.0)  # hard-delete every routed-expert weight
+        gone = lm(G5_IDS, G5_VALID)
+    assert float((full - gone).abs().max()) > 1e-3  # was exactly 0.0 before the wrapper presented its masked weight
+    lm = g5_dt().train()
+    lm(G5_IDS, G5_VALID).square().mean().backward()
+    layers = routed_layers(lm)
+    assert len(layers) == 2 * 4 * 3
+    with_grad = [n for n, layer in layers if layer.gate.grad is not None and float(layer.gate.grad.abs().sum()) > 0]
+    assert with_grad  # every expert any token was routed to gets a non-zero gradient on its mask logits
+    assert all(layer.base_weight.grad is None for _, layer in layers)  # the frozen weights still get none
+
+
+@_parametrize("train_mode", [False, True])
+def test_g5_fused_path_equals_old_per_expert_loop_with_module_calls(train_mode, monkeypatch):
+    TOL = 1e-5  # fp32 on CPU; the fused einsum and the loop sum the same terms in a different order
+    lm = g5_dt(seed=1).train(train_mode)
+    with torch.no_grad():
+        fused = lm(G5_IDS, G5_VALID)
+        monkeypatch.setattr(type(lm.blocks[0].moe), "forward", old_loop_moe_forward)
+        loop = lm(G5_IDS, G5_VALID)
+    diff = float((fused - loop).abs().max())
+    print(f"max |fused - old loop| = {diff:.3e} (train_mode={train_mode})")
+    assert diff < TOL
+    # and the masks matter in that comparison: the unmasked model differs from both
+    for _, layer in dtmask.masked_layers(lm):
+        layer.unmasked = True
+    with torch.no_grad():
+        assert float((lm(G5_IDS, G5_VALID) - loop).abs().max()) > 100 * TOL
+
+
+def test_plain_g5_model_output_is_untouched_by_the_wrapper_code():
+    a = tiny_g5()
+    with torch.no_grad():
+        want = a(G5_IDS, G5_VALID)
+    other = g5_dt()
+    dtmask.wanda_scores(type("W", (torch.nn.Module,), {
+        "__init__": lambda s, lm: (torch.nn.Module.__init__(s), setattr(s, "lm", lm))[0],
+        "forward": lambda s, input_ids, attention_mask: s.lm(input_ids, attention_mask.bool())})(other),
+        [{"input_ids": G5_IDS, "attention_mask": G5_VALID.long()}], "cpu")
+    dtmask.bake(other)
+    with torch.no_grad():
+        assert torch.equal(tiny_g5()(G5_IDS, G5_VALID), want)  # same seed, bit identical, nothing patched globally
+        assert torch.equal(a(G5_IDS, G5_VALID), want)
+
+
+def test_wanda_scores_dense_model_equal_plain_hook_reference():
+    """Dense (Hugging Face style) Wanda scores equal |W| * ||X|| computed by plain hooks on the unconverted model."""
+    batches = [{"input_ids": IDS, "attention_mask": torch.ones_like(IDS)}]
+    ref_model = tiny(seed=2)
+    sq = {}
+    mods = {n: m for n, m in ref_model.named_modules() if n.endswith(("gate_proj", "up_proj", "down_proj"))}
+    hooks = [m.register_forward_hook(lambda mod, inp, out, n=n: sq.__setitem__(
+        n, inp[0].detach().float().pow(2).reshape(-1, inp[0].shape[-1]).sum(0))) for n, m in mods.items()]
+    with torch.no_grad():
+        ref_model.eval()(input_ids=IDS, attention_mask=torch.ones_like(IDS))
+    for h in hooks:
+        h.remove()
+    want = {n: mods[n].weight.detach().float().abs() * sq[n].sqrt().unsqueeze(0) for n in mods}
+    m = tiny(seed=2)
+    dtmask.convert(m, dtmask.TARGET_SETS["mlp"], total_steps=10)
+    got = dtmask.wanda_scores(m, batches, "cpu")
+    assert set(got) == set(want) and all(torch.equal(got[n], want[n]) for n in want)
+
+
+def test_g5_wanda_matches_the_old_loop_scores_exactly(monkeypatch):
+    class Wrap(torch.nn.Module):
+        def __init__(self, lm):
+            super().__init__()
+            self.lm = lm
+
+        def forward(self, input_ids, attention_mask):
+            return self.lm(input_ids, attention_mask.bool())
+
+    batch = [{"input_ids": G5_IDS, "attention_mask": G5_VALID.long()}]
+    lm = g5_dt()
+    fused = dtmask.wanda_scores(Wrap(lm), batch, "cpu")
+    monkeypatch.setattr(type(lm.blocks[0].moe), "forward", old_loop_moe_forward)
+    loop = dtmask.wanda_scores(Wrap(lm), batch, "cpu")
+    assert set(fused) == set(loop) and any(".moe.experts." in n and n.endswith(".down") for n in fused)
+    # block 0 sees identical inputs on both paths: the same rows, the same hidden activations, bit for bit. Later
+    # blocks inherit the 1e-7 summation-order difference of block 0's output (measured: <= 4e-7 relative).
+    for n in fused:
+        if ".blocks.0." in n:
+            assert torch.equal(fused[n], loop[n]), n
+        else:
+            assert torch.allclose(fused[n], loop[n], rtol=1e-5, atol=1e-6), n
+
+
+def test_g5_bake_equals_masked_eval_logits():
+    lm = g5_dt(seed=3).eval()
+    with torch.no_grad():
+        want = lm(G5_IDS, G5_VALID)
+    masks = dtmask.bake(lm)
+    assert not dtmask.masked_layers(lm) and sum(".moe.experts." in k for k in masks) == 2 * 4 * 3
+    with torch.no_grad():
+        assert torch.equal(lm(G5_IDS, G5_VALID), want)
+
+
+def test_masked_linear_checkpoint_keys_and_old_checkpoint_loads():
+    lm = g5_dt(seed=4)
+    sd = lm.state_dict()
+    plain = tiny_g5().state_dict()
+    assert set(plain) <= set(sd) and not any("base_weight" in k for k in sd)  # same weight keys as the plain model
+    assert any(k.endswith(".gate") and ".moe.experts." in k for k in sd) and "blocks.0.moe.experts.0.gate.gate" in sd
+    other = tiny_g5()
+    dtmask.convert(other, G5_TARGETS, alpha_start=10.0, alpha_end=100.0, total_steps=10)
+    assert other.load_state_dict(sd, strict=True) is not None
+    other.eval(); lm.eval()
+    with torch.no_grad():
+        assert torch.equal(other(G5_IDS, G5_VALID), lm(G5_IDS, G5_VALID))

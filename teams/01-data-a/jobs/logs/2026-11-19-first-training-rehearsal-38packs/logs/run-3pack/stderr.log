@@ -1,0 +1,15 @@
+clean: {"rows": 98585, "by_split": {"train": 97775, "heldout": 810}}
+overlap: {"documents_all": 98585, "parts": 5, "files_sha256": {"overlap_matches.csv": "69bab944aad10a4272674e9c1be59db25eacb5e798ea2834e3a868a68ad0de36", "overlap_docs.parquet": "85644e388845cf615a8ef2236dec4dc3507bb8377d41f5946d3a20fca1c6a58d"}}
+dedup: {"remove_list_rows": 7, "removed": 7, "heldout_removed": 0, "groups": 7}
+apply: {"rows": 98585, "removed": 7, "kept": 98578, "kept_by_split": {"train": 97768, "heldout": 810}}
+f2: {"rows": 98578, "kept": 98480, "dropped_by_f2": 98, "errors": 0, "by_split": {"train": {"rows": 97768, "kept": 97672, "dropped_by_f2": 96, "errors": 0}, "heldout": {"rows": 810, "kept": 808, "dropped_by_f2": 2, "errors": 0}}}
+survivor_loss: {"total": 7, "with_survivor": 7, "without_survivor": 0, "with_several_survivors": 0, "lost": 1, "partly_hit": 0, "untouched": 6, "survivors_dropped_by_f2": 1}
+ledger: {"rows": 105672, "rows_cleaned": 98585, "kept": 98480, "dropped_by_clean": 7087, "removed_by_dedup": 7, "dropped_by_f2": 98, "f2_error": 0, "clean_fix_by_text": 48503}
+shards: {"written": 4, "empty": 0, "all_left_out": 0, "failed": 0, "skipped": 0, "not_sharded": 1, "truncated": 0, "shards": 90, "parts": 5}
+reconcile: {"kept": 98480, "in_shards": 97610, "in_shard": 97610, "left_out:secret": 62, "not_sharded": 808}
+pack               split        raw  -clean  cleaned  -dedup  -f2   final
+code-go            train     83,267   6,312   76,955       6   96  76,853
+code-go            heldout      872      62      810       0    2     808
+ind-bn-fw2         train     11,205     501   10,704       0    0  10,704
+ind-bn-sangraha-v  train     10,328     212   10,116       1    0  10,115
+total                       105,672   7,087   98,585       7   98  98,480

@@ -380,6 +380,7 @@ def run(args) -> dict:
                                                               unseen=args.dt_unseen)
         method_info["wanda_layers_without_tokens"] = len(dtmask.masked_layers(wrapper)) - len(scores)
         method_info["deletion_at_init"] = dtmask.deletion_stats(lm)
+        method_info["band_at_init"] = dtmask.band_stats(lm)
     report["method"] = method_info
     frozen_before = bench.frozen_sha256(lm, marker_ids if marker_param is not None else None) \
         if args.method != "full" else None
@@ -487,6 +488,34 @@ def run(args) -> dict:
     with torch.no_grad():
         diff = float((fresh(probe_ids, v) - lm(probe_ids, v)).abs().max())
     report["reload_parity"] = {"state_sha256": sha, "logits_max_abs_diff": diff, "pass": diff == 0.0}
+    if args.team7_ckpt_remote:
+        def _t7_probe(m):
+            with torch.no_grad():
+                logits = m(probe_ids, v).float()
+                return torch.nn.functional.cross_entropy(logits[:, :-1].reshape(-1, logits.size(-1)),
+                                                         probe_ids[:, 1:].reshape(-1))
+
+        t7_local = args.team7_local_root or (out / "_team7_local")
+        t7_export = args.team7_export_path or (out / "team7_exported_model.safetensors")
+        t7_run_id = args.team7_run_id or out.name
+        report["team7_checkpoint"] = save_and_export_team7(
+            lm,
+            opt,
+            model_factory=lambda: type(lm)(bundle.spec, bundle.artifacts.bytes, bundle.artifacts.lengths).to(device).eval(),
+            probe_fn=_t7_probe,
+            step=len(log),
+            tokens=sum(r["targets"] for r in log),
+            run_id=t7_run_id,
+            local_root=t7_local,
+            remote_root=args.team7_ckpt_remote,
+            export_path=t7_export,
+            seed=args.seed,
+            reason=f"sft_{args.method}",
+        )
+    if args.keep_weights_dir:  # default off: save this arm's plain weights as a Team 7 run folder for Team 9's reader
+        import keep_weights  # noqa: PLC0415
+        report["kept_weights"] = keep_weights.save_run_folder(lm, args.keep_weights_dir, args.keep_run_id, step=len(log),
+                                                              probe_fn=keep_weights.team5_probe)
     report["log"] = log
     report["first_loss"], report["last_loss"] = log[0]["loss"], log[-1]["loss"]
     (out / "sft_report.json").write_text(json.dumps(report, indent=1, default=str), encoding="utf-8")
@@ -496,6 +525,92 @@ def run(args) -> dict:
             for x in recs:
                 f.write(json.dumps({"when": when, **x}) + "\n")
     return report
+
+
+class _SftLoaderState:
+    """Minimal loader state for Team 7 Checkpointer.save on single-process G10 SFT runs."""
+
+    def __init__(self, step: int, rows_seen: int):
+        self._step = int(step)
+        self._rows_seen = int(rows_seen)
+
+    def state_dict(self) -> dict:
+        return {"step": self._step, "rows_seen": self._rows_seen}
+
+    def next_batch_id(self) -> int:
+        return self._step
+
+
+def _load_team7_ckpt():
+    """Load teams/07-infrastructure/ckpt/ckpt.py from the repo root without touching Team 7 files."""
+    ckpt_file = TEAM10.parent / "07-infrastructure" / "ckpt" / "ckpt.py"
+    if not ckpt_file.is_file():
+        raise FileNotFoundError(f"Team 7 checkpointer not found at {ckpt_file}")
+    return _load("g10_team7_ckpt", ckpt_file)
+
+
+def _optim_matches_model(lm: nn.Module, optim) -> bool:
+    if optim is None:
+        return False
+    model_ids = {id(p) for p in lm.parameters()}
+    opt_ids = {id(p) for g in optim.param_groups for p in g["params"]}
+    return bool(opt_ids) and opt_ids.issubset(model_ids)
+
+
+def save_and_export_team7(
+    lm: nn.Module,
+    optim,
+    *,
+    model_factory,
+    probe_fn,
+    step: int,
+    tokens: int,
+    run_id: str,
+    local_root: Path,
+    remote_root: str | Path,
+    export_path: Path,
+    seed: int = 1,
+    reason: str = "sft_final",
+    code_paths: tuple[str, ...] = (),
+) -> dict:
+    """Commit a single-process G10 SFT checkpoint through Team 7 Checkpointer and export verified safetensors."""
+    ckpt = _load_team7_ckpt()
+    save_opt = optim if _optim_matches_model(lm, optim) else torch.optim.SGD(lm.parameters(), lr=0.0)
+    local_root = Path(local_root)
+    local_root.mkdir(parents=True, exist_ok=True)
+    export_path = Path(export_path)
+    export_path.parent.mkdir(parents=True, exist_ok=True)
+    ck = ckpt.Checkpointer(
+        run_id=run_id,
+        local_root=str(local_root),
+        remote_root=str(remote_root),
+        seed=seed,
+        verify_mode="full",
+        code_paths=code_paths or (str(Path(__file__).resolve()),),
+    )
+    loader = _SftLoaderState(step=step, rows_seen=tokens)
+    saved = ck.save(step=step, model=lm, optim=save_opt, loader=loader, probe_fn=probe_fn,
+                    tokens=tokens, reason=reason)
+    if not saved:
+        raise RuntimeError("Team 7 Checkpointer.save skipped saving (insufficient disk headroom)")
+    if not ck.wait():
+        raise RuntimeError(f"Team 7 Checkpointer upload/commit failed for run_id={run_id} step={step}")
+    exp = ckpt.export_safetensors(
+        remote_run=ck.remote_url,
+        model_factory=model_factory,
+        probe_fn=probe_fn,
+        out_path=str(export_path),
+        step=step,
+    )
+    return {
+        "run_id": run_id,
+        "step": exp["step"],
+        "remote_url": ck.remote_url,
+        "export_path": str(export_path),
+        "export_sha256": hashlib.sha256(export_path.read_bytes()).hexdigest(),
+        "probe_bits": exp["probe_bits"],
+        "used_live_optim": save_opt is optim,
+    }
 
 
 def parse_args(argv=None):
@@ -543,6 +658,14 @@ def parse_args(argv=None):
     p.add_argument("--device", default="cpu")
     p.add_argument("--seed", type=int, default=1)
     p.add_argument("--log-every", type=int, default=20)
+    p.add_argument("--team7-ckpt-remote", type=str, default=None,
+                   help="optional Team 7 Checkpointer remote root (dir or s3://...); saves DCP checkpoint and exports verified safetensors")
+    p.add_argument("--team7-run-id", type=str, default=None, help="run_id for Team 7 Checkpointer (default: --out folder name)")
+    p.add_argument("--team7-local-root", type=Path, default=None, help="local staging dir for Team 7 Checkpointer")
+    p.add_argument("--team7-export-path", type=Path, default=None, help="output path for Team 7 export_safetensors")
+    p.add_argument("--keep-weights-dir", type=Path,
+                   help="default off: also save the final plain weights as a Team 7 run folder <dir>/<keep-run-id>")
+    p.add_argument("--keep-run-id", default="g10-sft", help="run id (folder name) of the kept weights")
     p.add_argument("--out", type=Path, required=True)
     return p.parse_args(argv)
 

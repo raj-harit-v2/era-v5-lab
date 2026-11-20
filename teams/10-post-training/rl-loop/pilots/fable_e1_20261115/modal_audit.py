@@ -112,6 +112,8 @@ def run_audit(run_id: str, source: str = "screen_completions.jsonl", hidden_name
     import score_pool
 
     run = Path("/vol/runs") / run_id
+    # the hidden tests and the task file hold expected outputs: stdio_check.preflight_isolation checks both folders
+    os.environ["G10_STDIO_SECRET_PATHS"] = os.pathsep.join([str(run / "audit"), str(run / "data")])
     hidden = {}
     for line in (run / "audit" / hidden_name).read_text().splitlines():
         t = json.loads(line)

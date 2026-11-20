@@ -1,6 +1,6 @@
 # Licence table
 
-`licence_table.md` is the one shared G10 file for the SFT and RL datasets we considered. It has three stages: foundation data (Stage 0), supervised fine-tuning (Stage 1) and preference optimization and RLVR (Stage 2). Each set has one summary row (set, source, language, licence and decision, plus the generator model in Stages 1 and 2). Most sets also have a detail entry with the licence read on a stated date, the generator model, the decision and an opinion.
+`licence_table.md` is the one shared G10 file for the SFT and RL datasets we considered. It has three stages: foundation data (Stage 0), supervised fine-tuning (Stage 1) and preference optimization and RLVR (Stage 2). Each set has one summary row (set, source, language, licence and decision, plus the generator model in Stages 1 and 2). Most sets also have a detail entry with the licence read on a stated date, the generator model, the decision and an opinion. A fourth table, "Models used by the data pipeline", lists models that run in a data job but are not training data (Data A's H3 encoders); G10 gives their licence sign-off (TSAI, [#625](https://github.com/theschoolofai/era-v5-lab/pull/625), 19 Nov 2026).
 
 Decisions used in the table:
 

@@ -1,0 +1,88 @@
+clean: {"rows": 1410230, "by_split": {"train": 1396140, "heldout": 14090}}
+overlap: {"documents_all": 1410230, "parts": 86, "files_sha256": {"overlap_matches.csv": "b2eabd2e3c3c2f22f0ff4369ee5edd5ee36789bd60a5c35987873fc4c87e17e0", "overlap_docs.parquet": "f8d8c88bcb91ac0f9613bd62d3374373e21f6df76a03def1e296c53877a744de"}}
+h3: {"matches": 0, "matches_sha256": "016a67b1d66802e35c60fab919afe732316a01abcbdece0ada8baad283f07eda"}
+dedup: {"remove_list_rows": 1339, "removed": 1339, "heldout_removed": 0, "groups": 1083}
+apply: {"rows": 1410230, "removed": 1339, "kept": 1408891, "kept_by_split": {"train": 1394801, "heldout": 14090}}
+f2: {"rows": 1408891, "kept": 1407358, "dropped_by_f2": 1533, "errors": 0, "by_split": {"train": {"rows": 1394801, "kept": 1393284, "dropped_by_f2": 1517, "errors": 0}, "heldout": {"rows": 14090, "kept": 14074, "dropped_by_f2": 16, "errors": 0}}}
+survivor_loss: {"total": 1083, "with_survivor": 1083, "without_survivor": 0, "with_several_survivors": 0, "lost": 1, "partly_hit": 0, "untouched": 1082, "survivors_dropped_by_f2": 1}
+ledger: {"rows": 1444766, "rows_cleaned": 1410230, "kept": 1407358, "dropped_by_clean": 34536, "removed_by_dedup": 1339, "dropped_by_f2": 1533, "f2_error": 0, "clean_fix_by_text": 363076}
+shards: {"written": 48, "empty": 0, "all_left_out": 0, "failed": 0, "skipped": 0, "not_sharded": 38, "truncated": 0, "shards": 48, "parts": 86}
+reconcile: {"kept": 1407358, "in_shards": 1385709, "in_shard": 1385709, "left_out:empty": 4, "left_out:secret": 7562, "left_out:special": 9, "not_sharded": 14074}
+pack                 split          raw  -clean    cleaned  -dedup    -f2      final
+cadj-commits         train       74,753       0     74,753     904     14     73,835
+cadj-commits         heldout        826       0        826       0      0        826
+cadj-notebooks       train       15,563       0     15,563      14     65     15,484
+cadj-notebooks       heldout        169       0        169       0      1        168
+cadj-stackexchange   train       41,396       0     41,396     199     61     41,136
+cadj-stackexchange   heldout        409       0        409       0      1        408
+code-cpp             train       55,545     957     54,588       5     77     54,506
+code-cpp             heldout        613       6        607       0      1        606
+code-go              train       83,267   6,312     76,955       6     96     76,853
+code-go              heldout        872      62        810       0      2        808
+code-java            train       85,213     534     84,679       3     17     84,659
+code-java            heldout        847       8        839       0      0        839
+code-js-ts           train      121,938   5,875    116,063       0     76    115,987
+code-js-ts           heldout      1,234      89      1,145       0      3      1,142
+code-python          train       74,943   2,339     72,604       9    220     72,375
+code-python          heldout        718      17        701       0      1        700
+code-rust            train       60,126   1,926     58,200      58     36     58,106
+code-rust            heldout        612      17        595       0      0        595
+en-dclm              train       61,367   1,155     60,212      11     37     60,164
+en-dclm              heldout        608      18        590       0      0        590
+en-fineweb-edu       train       71,933     559     71,374      15     84     71,275
+en-fineweb-edu       heldout        732       6        726       0      0        726
+en-nemotroncc        train       91,820   3,552     88,268      19     43     88,206
+en-nemotroncc        heldout        954      39        915       0      1        914
+en-nemotroncc-synth  train      197,119     218    196,901       1     43    196,857
+en-nemotroncc-synth  heldout      1,975       5      1,970       0      1      1,969
+ind-bn-fw2           train       11,205     501     10,704       0      0     10,704
+ind-bn-fw2           heldout        112       7        105       0      0        105
+ind-bn-sangraha-v    train       10,328     212     10,116       1      0     10,115
+ind-bn-sangraha-v    heldout        102       1        101       0      0        101
+ind-gu-fw2           train       23,118     345     22,773       0     84     22,689
+ind-gu-fw2           heldout        239       1        238       0      1        237
+ind-hi-fw2           train       14,261     460     13,801       0     28     13,773
+ind-hi-fw2           heldout        132       1        131       0      0        131
+ind-hi-hplt          train        8,745     322      8,423       0      5      8,418
+ind-hi-hplt          heldout         95       3         92       0      0         92
+ind-hi-indiccorp     train      110,836   1,161    109,675       4      1    109,670
+ind-hi-indiccorp     heldout      1,094      14      1,080       0      0      1,080
+ind-hi-sangraha-s    train        8,280     813      7,467      35      0      7,432
+ind-hi-sangraha-s    heldout         88      13         75       0      0         75
+ind-hi-sangraha-v    train       14,709     216     14,493      20      4     14,469
+ind-hi-sangraha-v    heldout        122       1        121       0      0        121
+ind-kn-fw2           train        7,834      75      7,759       0     24      7,735
+ind-kn-fw2           heldout         82       0         82       0      1         81
+ind-kn-sangraha-s    train        5,191       6      5,185       0      0      5,185
+ind-kn-sangraha-s    heldout         53       0         53       0      0         53
+ind-kn-sangraha-v    train        8,551     194      8,357       3      0      8,354
+ind-kn-sangraha-v    heldout         89       2         87       0      0         87
+ind-ml-fw2           train       18,976       0     18,976       0    154     18,822
+ind-ml-fw2           heldout        185       0        185       0      1        184
+ind-mr-fw2           train       11,460     201     11,259       0      9     11,250
+ind-mr-fw2           heldout         95       1         94       0      0         94
+ind-mr-sangraha-v    train       12,172       0     12,172       5      1     12,166
+ind-mr-sangraha-v    heldout        127       0        127       0      0        127
+ind-or-fw2           train       33,684       0     33,684       0      1     33,683
+ind-or-fw2           heldout        328       0        328       0      0        328
+ind-sa-fw2           train        5,908     241      5,667      12      0      5,655
+ind-sa-fw2           heldout         55       1         54       0      0         54
+ind-ta-fw2           train        6,766       0      6,766       0      6      6,760
+ind-ta-fw2           heldout         58       0         58       0      0         58
+ind-ta-sangraha-s    train        4,336       0      4,336       1      0      4,335
+ind-ta-sangraha-s    heldout         36       0         36       0      0         36
+ind-ta-sangraha-v    train        6,796       0      6,796       0      0      6,796
+ind-ta-sangraha-v    heldout         65       0         65       0      0         65
+ind-te-fw2           train        5,997     291      5,706       0     36      5,670
+ind-te-fw2           heldout         59       2         57       0      1         56
+ind-te-sangraha-s    train        4,782     363      4,419       0      0      4,419
+ind-te-sangraha-s    heldout         47       3         44       0      0         44
+ind-te-sangraha-v    train        8,609      14      8,595       2      1      8,592
+ind-te-sangraha-v    heldout         83       0         83       0      0         83
+math-finemath        train       29,122   2,609     26,513       3    228     26,282
+math-finemath        heldout        312      32        280       0      0        280
+math-megamath        train       17,647   2,550     15,097       9     53     15,035
+math-megamath        heldout        169      17        152       0      1        151
+sci-finepdfs         train        6,011     166      5,845       0     13      5,832
+sci-finepdfs         heldout         63       3         60       0      0         60
+total                         1,444,766  34,536  1,410,230   1,339  1,533  1,407,358

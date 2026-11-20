@@ -1,0 +1,88 @@
+$ /workspace/venv/bin/python -I /workspace/era-v5-lab/teams/01-data-a/dedup/h3.py --config /workspace/era-v5-lab/out/pipeline/first-training-v1-rehearsal/cfg/h3.json
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights:  36%|███▌      | 72/199 [00:00<00:00, 718.30it/s]Loading weights:  75%|███████▌  | 150/199 [00:00<00:00, 746.05it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 707.27it/s]
+7 of 86 parts hold a configured pack: en-fineweb-edu, ind-hi-fw2, ind-sa-fw2
+train/en-fineweb-edu/part-00000.parquet: 53596 documents encoded or cached (115s)
+train/en-fineweb-edu/part-00001.parquet: 17776 documents encoded or cached (125s)
+train/ind-hi-fw2/part-00000.parquet: 13639 documents encoded or cached (132s)
+train/ind-sa-fw2/part-00000.parquet: 5639 documents encoded or cached (136s)
+heldout/en-fineweb-edu/part-00000.parquet: 726 documents encoded or cached (137s)
+heldout/ind-hi-fw2/part-00000.parquet: 129 documents encoded or cached (137s)
+heldout/ind-sa-fw2/part-00000.parquet: 54 documents encoded or cached (137s)
+retrieve sa-en: 5693 x 72098 documents, 1853 candidates (137s)
+retrieve sa-hi: 5693 x 13768 documents, 2035 candidates (137s)
+retrieve hi-en: 13768 x 72098 documents, 8422 candidates (138s)
+verify: 9343 pairs (176s)
+{
+  "documents_compared": 91559,
+  "url": {
+    "groups_with_2_or_more": 34,
+    "groups_over_url_group_max": 0,
+    "pairs": 0
+  },
+  "retrieved": {
+    "sa-en": {
+      "documents_a": 5693,
+      "documents_b": 72098,
+      "pairs_in_top_k": 228976,
+      "kept": 1853
+    },
+    "sa-hi": {
+      "documents_a": 5693,
+      "documents_b": 13768,
+      "pairs_in_top_k": 55815,
+      "kept": 2035
+    },
+    "hi-en": {
+      "documents_a": 13768,
+      "documents_b": 72098,
+      "pairs_in_top_k": 246839,
+      "kept": 8422
+    }
+  },
+  "candidates": 12310,
+  "verified": 9343,
+  "qualifying": 0,
+  "qualifying_heldout_train": 0,
+  "qualifying_by_language_pair": {},
+  "stages_seconds": {
+    "load_model": 71.806,
+    "read": 34.953,
+    "cache": 0.335,
+    "encode": 28.661,
+    "url": 0.026,
+    "retrieve": 0.522,
+    "verify_read": 2.184,
+    "verify": 35.708
+  },
+  "rates": {
+    "heads_per_second": 3194.6,
+    "sentences_per_second": 4740.9
+  },
+  "estimate_all_documents": {
+    "documents_encoded": {
+      "en": 72098,
+      "hi": 13768,
+      "sa": 5693
+    },
+    "documents_full": {
+      "en": 72098,
+      "hi": 13768,
+      "sa": 5693
+    },
+    "seconds": {
+      "load_model": 71.8,
+      "read": 35.0,
+      "encode": 28.7,
+      "retrieve": 0.5,
+      "verify": 37.9
+    },
+    "minutes_total": 2.9,
+    "every_stage_measured": true,
+    "suggested_max_time_minutes": 5,
+    "basis": "this run's rates; read scales with rows, encode with documents, retrieve with the product of the two languages' documents, verify with the smaller language's documents (at most max_verify)"
+  },
+  "wall_seconds": 176.0,
+  "peak_rss_mb": 2970.3
+}
+
+Wrote h3_docs.parquet, h3_candidates.csv, h3_matches.csv, h3_by_pack.csv, h3_histogram.csv and h3_summary.json to out/pipeline/first-training-v1-rehearsal/h3

@@ -34,6 +34,14 @@ def gpu_state():
         state = {"gpu": name, "sm_clock_mhz": int(sm), "temp_c": int(temp), "mem_used_mib": int(used), "mem_total_mib": int(total)}
     except Exception as e:
         state = {"error": repr(e)}
+    if platform.system() == "Darwin":  # Apple Silicon: no nvidia-smi; record the chip and whether MPS is in use
+        try:
+            chip = subprocess.run(["sysctl", "-n", "machdep.cpu.brand_string"], capture_output=True, text=True, timeout=10).stdout.strip()
+            import torch
+            state = {"gpu": f"{chip} (MPS)" if torch.backends.mps.is_available() else chip,
+                     "mem_total_mib": int(subprocess.run(["sysctl", "-n", "hw.memsize"], capture_output=True, text=True, timeout=10).stdout) // 2**20}
+        except Exception as e:
+            state = {"error": repr(e)}
     if platform.system() == "Windows":
         try:
             ps = ("(Get-CimInstance -Namespace root/wmi -ClassName BatteryStatus | Select-Object -First 1).PowerOnline;"
@@ -155,6 +163,9 @@ def main():
     model_args += f",max_length={m['max_length']}"  # same context limit (and so the same truncation) as the anchor runs
     if a.model.startswith("gemma-2"):
         model_args += ",attn_implementation=eager"  # gemma-2 logit soft-capping needs eager attention; the anchor run used it
+    import torch
+    device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
+    model_args += f",device={device}"  # lm-eval's default is cuda; on Apple Silicon this picks MPS instead of the CPU
 
     samples, fewshot_by_task = None, {}
     if a.samples_file:

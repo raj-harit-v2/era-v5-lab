@@ -1,0 +1,23 @@
+{
+  "_comment": "E5a' on the sample: E5c's Sanskrit pairs with a second encoder, BGE-M3 (TSAI, #625, 19 Nov: 'run E5a' with a second encoder ... then E5d's blind threshold sweep'). Request: jobs/2026-11-19-h3-e5c-bge-m3.md. Report-only: h3.py removes nothing. Same inputs, packs and coverage settings as E5c (jobs/2026-11-18-h3-e5c/h3.json), so the two encoders' pairs can be compared document by document. Sentence threshold 0.7 (on FLORES, BGE-M3 qualifies 82% of sa-en and 95% of sa-hi translated blocks at 0.7); doc_floor 0.55 because BGE-M3 scores unrelated text higher than LaBSE (best wrong match median 0.57 against 0.41); the local smoke run at 0.6 kept no candidate. Provisional until E5d. Paths are relative to the repository root.",
+  "inputs": "out/tokenizer_sample_v0_clean",
+  "out": "out/h3_bge_m3",
+  "cache": "out/h3_cache_bge_m3",
+  "model_path": "../models/bge-m3",
+  "device": "cuda",
+  "precision": "auto",
+  "packs": {
+    "ind-sa-fw2": "sa",
+    "ind-hi-*": "hi",
+    "en-fineweb-edu": "en",
+    "en-dclm": "en",
+    "en-nemotroncc": "en"
+  },
+  "pairs": [["sa", "en"], ["sa", "hi"]],
+  "sentence_threshold": 0.7,
+  "doc_floor": 0.55,
+  "coverage_threshold": 0.6,
+  "report_floor": 0.3,
+  "max_minutes": 170,
+  "max_output_mb": 50
+}

@@ -1,0 +1,190 @@
+{
+  "status": "complete",
+  "config": {
+    "results": "out/pipeline/rehearsal-3pack/overlap",
+    "inputs": "out/pipeline/rehearsal-3pack/clean",
+    "out": "out/pipeline/rehearsal-3pack/dedup",
+    "cross_pack": true,
+    "pack_order": [
+      "code-go",
+      "code-js-ts",
+      "code-java",
+      "code-cpp",
+      "code-rust",
+      "code-python",
+      "en-fineweb-edu",
+      "en-dclm",
+      "en-nemotroncc-synth",
+      "en-nemotroncc",
+      "math-megamath",
+      "math-finemath",
+      "sci-finepdfs",
+      "cadj-commits",
+      "cadj-notebooks",
+      "cadj-stackexchange",
+      "ind-bn-fw2",
+      "ind-bn-sangraha-v",
+      "ind-gu-fw2",
+      "ind-hi-fw2",
+      "ind-hi-hplt",
+      "ind-hi-indiccorp",
+      "ind-hi-sangraha-s",
+      "ind-hi-sangraha-v",
+      "ind-kn-fw2",
+      "ind-kn-sangraha-s",
+      "ind-kn-sangraha-v",
+      "ind-ml-fw2",
+      "ind-mr-fw2",
+      "ind-mr-sangraha-v",
+      "ind-or-fw2",
+      "ind-sa-fw2",
+      "ind-ta-fw2",
+      "ind-ta-sangraha-s",
+      "ind-ta-sangraha-v",
+      "ind-te-fw2",
+      "ind-te-sangraha-s",
+      "ind-te-sangraha-v"
+    ],
+    "licence_usable": {
+      "code-go": true,
+      "code-js-ts": true,
+      "code-java": true,
+      "code-cpp": true,
+      "code-rust": true,
+      "code-python": true,
+      "en-fineweb-edu": true,
+      "en-dclm": true,
+      "en-nemotroncc-synth": true,
+      "en-nemotroncc": true,
+      "math-megamath": true,
+      "math-finemath": true,
+      "sci-finepdfs": true,
+      "cadj-commits": true,
+      "cadj-notebooks": true,
+      "cadj-stackexchange": true,
+      "ind-bn-fw2": true,
+      "ind-bn-sangraha-v": true,
+      "ind-gu-fw2": true,
+      "ind-hi-fw2": true,
+      "ind-hi-hplt": true,
+      "ind-hi-indiccorp": true,
+      "ind-hi-sangraha-s": true,
+      "ind-hi-sangraha-v": true,
+      "ind-kn-fw2": true,
+      "ind-kn-sangraha-s": true,
+      "ind-kn-sangraha-v": true,
+      "ind-ml-fw2": true,
+      "ind-mr-fw2": true,
+      "ind-mr-sangraha-v": true,
+      "ind-or-fw2": true,
+      "ind-sa-fw2": true,
+      "ind-ta-fw2": true,
+      "ind-ta-sangraha-s": true,
+      "ind-ta-sangraha-v": true,
+      "ind-te-fw2": true,
+      "ind-te-sangraha-s": true,
+      "ind-te-sangraha-v": true
+    },
+    "default_licence_usable": false,
+    "gold_dirs": [
+      "teams/01-data-a/gold",
+      "teams/02-data-b/gold"
+    ]
+  },
+  "overlap_run": {
+    "commit_note": "see overlap_summary.json",
+    "documents_all": 98585,
+    "checked_sha256": {
+      "overlap_matches.csv": "69bab944aad10a4272674e9c1be59db25eacb5e798ea2834e3a868a68ad0de36",
+      "overlap_docs.parquet": "85644e388845cf615a8ef2236dec4dc3507bb8377d41f5946d3a20fca1c6a58d"
+    }
+  },
+  "matches_used": 7,
+  "cross_pack_matches_dropped": 0,
+  "empty_documents": 0,
+  "empty_document_matches_set_aside": 0,
+  "clusters": 7,
+  "clusters_decided_by_rule": {
+    "2": 1,
+    "3": 5,
+    "4": 1
+  },
+  "groups_without_survivor": 0,
+  "groups_with_several_survivors": 0,
+  "documents_all": 98585,
+  "removed": 7,
+  "removed_share": 7.1e-05,
+  "removed_by_rule": {
+    "H2": 7
+  },
+  "removed_by_stage": {
+    "within_pack": 6,
+    "cross_pack": 1
+  },
+  "heldout_removed": 0,
+  "heldout_heldout_pairs_reported": 0,
+  "url_known": true,
+  "rule_2_note": null,
+  "licence_default_used_for": [],
+  "harm_check": {
+    "status": "not_testable",
+    "gold_ids_in_input": 0,
+    "gold_ids_in_input_by_pack": {
+      "code-go": 0,
+      "ind-bn-fw2": 0,
+      "ind-bn-sangraha-v": 0
+    },
+    "gold_removed": 0,
+    "gold_removed_ids": [],
+    "note": "not_testable means no gold ID is in this input, so the check tested nothing (dedup_design_v1.md, Validation): run it on the diagnosis packs"
+  },
+  "by_pack": {
+    "code-go": {
+      "documents_in": 77765,
+      "removed": 6,
+      "removed_H1": 0,
+      "removed_H2": 6,
+      "removed_cross_pack": 0,
+      "documents_out": 77759
+    },
+    "ind-bn-fw2": {
+      "documents_in": 10704,
+      "removed": 0,
+      "removed_H1": 0,
+      "removed_H2": 0,
+      "removed_cross_pack": 0,
+      "documents_out": 10704
+    },
+    "ind-bn-sangraha-v": {
+      "documents_in": 10116,
+      "removed": 1,
+      "removed_H1": 0,
+      "removed_H2": 1,
+      "removed_cross_pack": 1,
+      "documents_out": 10115
+    }
+  },
+  "outputs": {
+    "remove_list.csv": {
+      "bytes": 512,
+      "sha256": "e79e9d1b28f940647e6ffb880024277ba38ac041c0423109246bffc595e1b3f0"
+    },
+    "dedup_log.jsonl": {
+      "bytes": 2922,
+      "sha256": "559caec7ac127fb7e10506e348dbef1adb71848640314837f2c917f43fe59179"
+    },
+    "heldout_duplicates.csv": {
+      "bytes": 63,
+      "sha256": "bda0cd4afca13791f8e5a7e615d5d26d50f096012dc0ddc6065cfedfef9ebab9"
+    },
+    "empty_documents.csv": {
+      "bytes": 39,
+      "sha256": "dd97cbf75c673cc42741eac42515de34b17bae043d5f09ad29353329b5f1f9b0"
+    },
+    "dedup_groups.csv": {
+      "bytes": 1297,
+      "sha256": "504347679543b8c5aa19a62c93c054198193f36d611faf467e94af0fe22509d1"
+    }
+  },
+  "seconds": 9.1
+}

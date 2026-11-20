@@ -1,0 +1,64 @@
+{
+  "_comment": "Generic run config for run_pipeline.py: nothing here is specific to one run. Paths are relative to the repository root. Everything that defines a run is a key in this file, and the command is only --config <file>: for a job, copy this file to jobs/<date>-<name>/run.json and edit the copy. run_id names the run and its folders (out/pipeline/<run_id>/). The clean stage also names the input set (input folder, manifest_sha256, expected_parts); a new input set means new values here. Each of clean, overlap and dedup runs from a settings file (settings only, no paths; the runner fills the paths into <run>/cfg/<stage>.json), or is adopted: {\"mode\": \"adopt\", \"output\": \"<folder TSAI returned>\"}. Optional keys: \"to\" (stop after this stage, only the stages up to it are checked), \"from\" (resume at this stage), stages.clean.only (a list of sample parts, for trials). 'run_pipeline.py --config <file> --plan' prints every folder and command and runs nothing.",
+  "run_id": "sample-v0",
+  "out": "out/pipeline",
+  "_to": "optional: clean, overlap, h3 (when configured), dedup, apply, f2, survivor_loss, ledger, shards or reconcile",
+  "hash_cache": true,
+  "_hash_cache": "true: every sha256 computed once, kept in <run>/cache/sha256.json (a resumed run hashes nothing again); false: hash everything again, for an audit",
+  "_from": "optional: resume at this stage; the earlier stages must be recorded in the manifest",
+  "intermediates": "keep",
+  "_intermediates": "keep: every stage's Parquet stays on disk (the cleaner audit reads the parts before and after clean.py). drop: once reconcile has passed, the run deletes, from deduped/ and final/, the Parquet of every part whose kept documents are all in shards or left out by the shard writer for a stated reason; held-out parts, parts of packs the shard stage was not asked for and the cleaned folder stay, as do reports, summaries, the ledger, the manifest and the shards. drop needs stages.shards and stages.reconcile, and the run cannot be resumed afterwards",
+  "_inventory": "optional: set \"inventory\" to an expected-inventory JSON made from the approved input manifest: input_manifest_sha256, packs, and per part: part, raw_sha256, raw_rows and expected (the status its shards must end in: written, not_sharded, or a list of acceptable statuses); split and pack_id may be given and must be those in the part's name. Any other key in the file is refused. The run then stops, before the shard stage, when the ledger lacks a listed part, holds one that is not listed, a part has another raw file or row count, a listed pack is missing, a pack that is not listed has kept documents, or the clean job read another input manifest; and after reconcile, when shards_summary.json lacks a listed part, holds one that is not listed, or a part has another status. The report is <run>/inventory_check.json. A run with an inventory needs stages.ledger.raw, stages.shards and stages.reconcile, must end at reconcile (no earlier \"to\"), and stages.shards.packs, if given, must be the inventory's packs. Without the key nothing of this is checked (--plan says \"inventory: none\"). After a job: inventory_check.py --inventory <file> --ledger <run>/ledger --shards <run>/shards --cleaned <cleaned>",
+  "stages": {
+    "clean": {
+      "mode": "run",
+      "settings": "teams/01-data-a/pipeline/clean.json",
+      "input": "inputs/tokenizer_sample_v0",
+      "manifest_sha256": "7fd647c8d4662d17e2310efbcc20981d70656fdad2fabb7663c266a2153a1b7e",
+      "expected_parts": {
+        "train": 48,
+        "heldout": 38
+      },
+      "_manifest": "the input set's description. Default: sample_manifest.json in the input folder (TSAI ships it with the sample); set 'manifest' to use another file. manifest_sha256 pins it; --plan checks it (with expected_parts) and so does the clean job when it starts",
+      "_only": [
+        "train/code-go/part-00000.parquet"
+      ],
+      "_only_note": "rename to 'only' to run the clean job on these parts only"
+    },
+    "overlap": {
+      "mode": "run",
+      "settings": "teams/01-data-a/dedup/overlap.json"
+    },
+    "_h3_example": {
+      "mode": "run",
+      "settings": "teams/01-data-a/jobs/2026-11-19-first-training/h3.json",
+      "_note": "rename to h3 to run report-only H3 after overlap; stage the offline LaBSE model named in h3.json"
+    },
+    "dedup": {
+      "mode": "run",
+      "settings": "teams/01-data-a/dedup/dedup.json"
+    },
+    "f2": {
+      "script": "teams/01-data-a/spec_v1/run_f2.py",
+      "pool": true,
+      "workers": 16,
+      "_pool": "true: f2_pool.py loads G9's set (1.1 GB) once per split and shares the parts out to 'workers' processes; on Linux they share the loaded set, so set workers to the cores. false: one run_f2.py per pack folder, each loading the set (workers x 1.1 GB)"
+    },
+    "apply": {
+      "link": true,
+      "_link": "hard-link untouched parts instead of copying them (same file system)",
+      "workers": 4,
+      "_workers": "parts checked and written at once (one row group in memory each)"
+    },
+    "ledger": {
+      "_raw": "optional, and required with \"inventory\": the raw parts the cleaner read (<raw>/<split>/<pack>/part-*.parquet). Set \"raw\" for mode B (keep / fix / drop per document); without it the ledger is mode C (clean_action unknown)"
+    },
+    "_shards_example": {
+      "tokenizer": "<frozen p1536 tokenizer.json>",
+      "packs": [
+        "code-go"
+      ],
+      "_note": "rename to 'shards' to add the shard stage after the ledger; 'packs' limits it to packs with a lane in shards/pack_table.json. With \"inventory\" the packs must be all the inventory's packs (or the key left out), so the pack table (stages.shards.pack_table) must hold a full row for every one of them: a pack with an empty field is skipped, and that stops the run at the shard stage"
+    }
+  }
+}

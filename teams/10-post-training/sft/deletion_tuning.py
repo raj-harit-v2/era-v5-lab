@@ -7,7 +7,10 @@ and the SFT regularizer in section 4 of the paper.
 
 A target weight W stays frozen. One logit G per weight is the only trained value.
 During training the layer uses W * sigmoid(alpha(t) * G). At evaluation it uses
-W * 1[G > 0]. alpha rises linearly from 1e3 to 1e4. The SFT loss adds
+W * 1[G > 0]. alpha rises linearly from 100 to 1000, the SFT setting in the
+repository's scripts/train_sft.sh (--sharpness_start 100 --sharpness_end 1000). At 1e3 to 1e4
+with logits near +-0.03, alpha * G is 30 or more, the sigmoid is saturated and no hard-mask
+bit moves (results/dt_toy_sharpness_check_20261117.md). The SFT loss adds
 -lambda * ||W * mask||^2 with lambda 1e-5.
 """
 from __future__ import annotations
@@ -15,8 +18,8 @@ from __future__ import annotations
 import math
 import random
 
-SHARPNESS_START = 1e3
-SHARPNESS_END = 1e4
+SHARPNESS_START = 100.0
+SHARPNESS_END = 1000.0
 LAMBDA_SFT = 1e-5
 ETA = 1 / 2048
 WANDA_MEAN = 0.03

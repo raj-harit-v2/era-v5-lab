@@ -1,0 +1,115 @@
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights:   1%|          | 1/199 [00:00<00:23,  8.41it/s]Loading weights:  12%|#1        | 23/199 [00:00<00:01, 121.46it/s]Loading weights:  24%|##4       | 48/199 [00:00<00:00, 170.64it/s]Loading weights:  33%|###3      | 66/199 [00:00<00:00, 141.08it/s]Loading weights: 100%|##########| 199/199 [00:00<00:00, 348.69it/s]
+23 of 86 parts hold a configured pack: en-dclm, en-fineweb-edu, en-nemotroncc, ind-hi-fw2, ind-hi-hplt, ind-hi-indiccorp, ind-hi-sangraha-s, ind-hi-sangraha-v, ind-or-fw2, ind-sa-fw2
+train/en-dclm/part-00000.parquet: 200 documents encoded or cached (48s)
+train/en-dclm/part-00001.parquet: not read, its packs have max_docs_per_pack documents
+train/en-fineweb-edu/part-00000.parquet: 200 documents encoded or cached (105s)
+train/en-fineweb-edu/part-00001.parquet: not read, its packs have max_docs_per_pack documents
+train/en-nemotroncc/part-00000.parquet: 200 documents encoded or cached (159s)
+train/en-nemotroncc/part-00001.parquet: not read, its packs have max_docs_per_pack documents
+train/ind-hi-fw2/part-00000.parquet: 200 documents encoded or cached (218s)
+train/ind-hi-hplt/part-00000.parquet: 200 documents encoded or cached (276s)
+train/ind-hi-indiccorp/part-00000.parquet: 200 documents encoded or cached (325s)
+train/ind-hi-sangraha-s/part-00000.parquet: 200 documents encoded or cached (384s)
+train/ind-hi-sangraha-v/part-00000.parquet: 200 documents encoded or cached (444s)
+train/ind-or-fw2/part-00000.parquet: 200 documents encoded or cached (499s)
+train/ind-sa-fw2/part-00000.parquet: 200 documents encoded or cached (554s)
+heldout/en-dclm/part-00000.parquet: not read, its packs have max_docs_per_pack documents
+heldout/en-fineweb-edu/part-00000.parquet: not read, its packs have max_docs_per_pack documents
+heldout/en-nemotroncc/part-00000.parquet: not read, its packs have max_docs_per_pack documents
+heldout/ind-hi-fw2/part-00000.parquet: not read, its packs have max_docs_per_pack documents
+heldout/ind-hi-hplt/part-00000.parquet: not read, its packs have max_docs_per_pack documents
+heldout/ind-hi-indiccorp/part-00000.parquet: not read, its packs have max_docs_per_pack documents
+heldout/ind-hi-sangraha-s/part-00000.parquet: not read, its packs have max_docs_per_pack documents
+heldout/ind-hi-sangraha-v/part-00000.parquet: not read, its packs have max_docs_per_pack documents
+heldout/ind-or-fw2/part-00000.parquet: not read, its packs have max_docs_per_pack documents
+heldout/ind-sa-fw2/part-00000.parquet: not read, its packs have max_docs_per_pack documents
+retrieve sa-en: 200 x 600 documents, 5 candidates (554s)
+retrieve sa-hi: 200 x 1000 documents, 36 candidates (554s)
+retrieve hi-en: 1000 x 600 documents, 78 candidates (554s)
+retrieve or-en: 200 x 600 documents, 11 candidates (554s)
+verify: 93 pairs (732s)
+{
+  "documents_compared": 2000,
+  "url": {
+    "groups_with_2_or_more": 0,
+    "groups_over_url_group_max": 0,
+    "pairs": 0
+  },
+  "retrieved": {
+    "sa-en": {
+      "documents_a": 200,
+      "documents_b": 600,
+      "pairs_in_top_k": 2141,
+      "kept": 5
+    },
+    "sa-hi": {
+      "documents_a": 200,
+      "documents_b": 1000,
+      "pairs_in_top_k": 3384,
+      "kept": 36
+    },
+    "hi-en": {
+      "documents_a": 1000,
+      "documents_b": 600,
+      "pairs_in_top_k": 4134,
+      "kept": 78
+    },
+    "or-en": {
+      "documents_a": 200,
+      "documents_b": 600,
+      "pairs_in_top_k": 2068,
+      "kept": 11
+    }
+  },
+  "candidates": 130,
+  "verified": 93,
+  "qualifying": 0,
+  "qualifying_heldout_train": 0,
+  "qualifying_by_language_pair": {},
+  "stages_seconds": {
+    "load_model": 17.329,
+    "read": 41.532,
+    "cache": 0.846,
+    "encode": 493.785,
+    "url": 0.019,
+    "retrieve": 0.082,
+    "verify_read": 0.152,
+    "verify": 177.809
+  },
+  "rates": {
+    "heads_per_second": 4.1,
+    "sentences_per_second": 11.3
+  },
+  "estimate_all_documents": {
+    "documents_encoded": {
+      "en": 600,
+      "hi": 1000,
+      "or": 200,
+      "sa": 200
+    },
+    "documents_full": {
+      "en": 217552,
+      "hi": 91153,
+      "or": 33630,
+      "sa": 5694
+    },
+    "seconds": {
+      "load_model": 17.3,
+      "read": 130.8,
+      "encode": 85925.6,
+      "retrieve": 2279.0,
+      "verify": 19135.6
+    },
+    "minutes_total": 1791.5,
+    "every_stage_measured": true,
+    "suggested_max_time_minutes": 2688,
+    "basis": "this run's rates; read scales with rows, encode with documents, retrieve with the product of the two languages' documents, verify with the smaller language's documents (at most max_verify)"
+  },
+  "wall_seconds": 731.8,
+  "peak_rss_mb": null
+}
+
+Wrote h3_docs.parquet, h3_candidates.csv, h3_matches.csv, h3_by_pack.csv, h3_histogram.csv and h3_summary.json to out\h3_e5c_smoke
+........................................................................ [ 88%]
+.........                                                                [100%]
+81 passed in 4.85s

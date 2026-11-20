@@ -1,0 +1,1030 @@
+{
+  "tool": "run_pipeline.py",
+  "run_id": "rehearsal-3pack",
+  "config": {
+    "_comment": "REHEARSAL on Runpod (Linux, Python 3.12, pinned env): 3 local packs of sample-v0 raw, real frozen p1536, tokens 2^20 to force rollover. Not a production run.",
+    "run_id": "rehearsal-3pack",
+    "out": "out/pipeline",
+    "intermediates": "keep",
+    "stages": {
+      "clean": {
+        "mode": "run",
+        "settings": "teams/01-data-a/pipeline/clean.json",
+        "input": "/workspace/data/tokenizer_sample_v0_raw",
+        "manifest_sha256": "7fd647c8d4662d17e2310efbcc20981d70656fdad2fabb7663c266a2153a1b7e",
+        "expected_parts": {
+          "train": 48,
+          "heldout": 38
+        },
+        "only": [
+          "heldout/code-go/part-00000.parquet",
+          "train/code-go/part-00000.parquet",
+          "train/code-go/part-00001.parquet",
+          "train/ind-bn-fw2/part-00000.parquet",
+          "train/ind-bn-sangraha-v/part-00000.parquet"
+        ],
+        "manifest": "teams/01-data-a/jobs/2026-11-02-tokenizer-sample-v0-clean/tokenizer_sample_v0_manifest.json"
+      },
+      "overlap": {
+        "mode": "run",
+        "settings": "teams/01-data-a/dedup/overlap.json"
+      },
+      "dedup": {
+        "mode": "run",
+        "settings": "teams/01-data-a/dedup/dedup.json"
+      },
+      "apply": {
+        "link": true
+      },
+      "f2": {
+        "pool": true,
+        "workers": 24
+      },
+      "ledger": {
+        "raw": "/workspace/data/tokenizer_sample_v0_raw"
+      },
+      "shards": {
+        "tokenizer": "/workspace/data/tokenizers/p1536-sample-v0/tokenizer.json",
+        "dataset_version": "rehearsal-p1536",
+        "tokens": 1048576,
+        "pack_table": "out/rehearsal/pack_table.json"
+      },
+      "reconcile": {}
+    }
+  },
+  "code_sha256": "74e5f66a99343de453c4ddc3ccd507dd81e00c2765999cefa98529436af089ff",
+  "git_commit": "4dd2802f39bc64d09e200ab971816dfe163ef3cc",
+  "python": "3.12.3",
+  "pyarrow": "23.0.1",
+  "stages": [
+    {
+      "stage": "clean",
+      "mode": "run",
+      "command": [
+        "teams/01-data-a/pipeline/clean_job.py",
+        "--config",
+        "/workspace/era-v5-lab/out/pipeline/rehearsal-3pack/cfg/clean.json",
+        "--only",
+        "heldout/code-go/part-00000.parquet",
+        "--only",
+        "train/code-go/part-00000.parquet",
+        "--only",
+        "train/code-go/part-00001.parquet",
+        "--only",
+        "train/ind-bn-fw2/part-00000.parquet",
+        "--only",
+        "train/ind-bn-sangraha-v/part-00000.parquet"
+      ],
+      "code_sha256": "1baeaf05309c1d8545eb828e2d0bb70b1fc849c1ed9d67e77da0698660834892",
+      "output": "out/pipeline/rehearsal-3pack/clean",
+      "counts": {
+        "rows": 98585,
+        "by_split": {
+          "train": 97775,
+          "heldout": 810
+        },
+        "by_part": {
+          "train/code-go/part-00000.parquet": 56702,
+          "train/code-go/part-00001.parquet": 20253,
+          "train/ind-bn-fw2/part-00000.parquet": 10704,
+          "train/ind-bn-sangraha-v/part-00000.parquet": 10116,
+          "heldout/code-go/part-00000.parquet": 810
+        }
+      },
+      "tools_sha256": {
+        "teams/01-data-a/spec_v1_1/clean.py": "6a57276c0e83312b09facfba656cca28db0ef59ca851bcfbfa3ef63f16fdd1f2",
+        "teams/01-data-a/pipeline/clean_manifest.py": "1ac9cd0aea3f4e9b5318278a805be8965147530871c03e3a7d94a1fa675c9e41"
+      },
+      "job_summary_checked": true,
+      "only": [
+        "heldout/code-go/part-00000.parquet",
+        "train/code-go/part-00000.parquet",
+        "train/code-go/part-00001.parquet",
+        "train/ind-bn-fw2/part-00000.parquet",
+        "train/ind-bn-sangraha-v/part-00000.parquet"
+      ],
+      "settings": "teams/01-data-a/pipeline/clean.json",
+      "settings_sha256": "c45d78de61d76fce40d49f4c43e1cccdf203a02dc865ce436ce18f7699a03b48",
+      "config": "cfg/clean.json",
+      "config_sha256": "2ceb2c88c330c48f7e5e6298df924cb523574bd8606d0ccac4c495d8cbd084a3",
+      "digest": "fd23147aa32d40fda92da02114169cb9fa99db55270e6b0cee006dcb94fbbf5d",
+      "files": 14,
+      "checks": [
+        {
+          "check": "clean: the job reported no errors",
+          "ok": true,
+          "detail": "job_summary.json: 0 error(s)"
+        },
+        {
+          "check": "clean: the job cleaned the parts the run expects, each with a report",
+          "ok": true,
+          "detail": "job_summary.json: completed_parts 5, expected_parts 86, 5 part report(s) for 5 part(s); the run expects 5"
+        },
+        {
+          "check": "clean: the job read this run's input manifest",
+          "ok": true,
+          "detail": "job_summary.json manifest_sha256 7fd647c8d466\u2026, stages.clean.manifest_sha256 7fd647c8d466\u2026"
+        },
+        {
+          "check": "clean: input rows = output rows + dropped, and the output rows are those on disk",
+          "ok": true,
+          "detail": "job_summary.json input_rows 105672, output_rows 98585, dropped 7087; its part reports add up to 98585; the Parquet footers to 98585"
+        },
+        {
+          "check": "clean: the parts on disk are the parts the job reports, with their rows",
+          "ok": true,
+          "detail": "0 reported but not on disk (e.g. []), 0 on disk but not reported (e.g. []), 0 with other rows (e.g. [])"
+        },
+        {
+          "check": "clean: each part's sha256 is the one the job recorded",
+          "ok": true,
+          "detail": "0 of 5 part(s) differ from job_summary.json, e.g. []"
+        }
+      ],
+      "seconds": 156.0
+    },
+    {
+      "stage": "overlap",
+      "mode": "run",
+      "command": [
+        "teams/01-data-a/dedup/overlap.py",
+        "--config",
+        "/workspace/era-v5-lab/out/pipeline/rehearsal-3pack/cfg/overlap.json"
+      ],
+      "code_sha256": "62bfaa9ec935125618c2b739746b8e96aecbfe9b25d14a8e01ec308fae0e15f9",
+      "output": "out/pipeline/rehearsal-3pack/overlap",
+      "counts": {
+        "documents_all": 98585,
+        "parts": 5,
+        "files_sha256": {
+          "overlap_matches.csv": "69bab944aad10a4272674e9c1be59db25eacb5e798ea2834e3a868a68ad0de36",
+          "overlap_docs.parquet": "85644e388845cf615a8ef2236dec4dc3507bb8377d41f5946d3a20fca1c6a58d"
+        }
+      },
+      "settings": "teams/01-data-a/dedup/overlap.json",
+      "settings_sha256": "cb023fb87648ad77cd04c5691e21830ba4873373dd00cd6662c1da15b7ae5090",
+      "config": "cfg/overlap.json",
+      "config_sha256": "a9ad92f390b73086cf6e80fa91a42380036a85a5808c7805378f57675093f740",
+      "digest": "96c5521f7377b34988032887d031f92c1534fe6a2912940133ceeb543974269b",
+      "files": 9,
+      "checks": [
+        {
+          "check": "overlap finished",
+          "ok": true,
+          "detail": "status 'complete'"
+        },
+        {
+          "check": "overlap read every cleaned row",
+          "ok": true,
+          "detail": "overlap documents_all 98585, cleaned rows 98585"
+        },
+        {
+          "check": "overlap read these cleaned parts",
+          "ok": true,
+          "detail": "0 part(s) differ in name or row count, e.g. "
+        },
+        {
+          "check": "overlap read these cleaned bytes",
+          "ok": true,
+          "detail": "0 part(s) differ or have no input sha256, e.g. []"
+        },
+        {
+          "check": "overlap_matches.csv matches overlap's summary",
+          "ok": true,
+          "detail": "69bab944aad1\u2026 vs 69bab944aad1\u2026"
+        },
+        {
+          "check": "overlap_docs.parquet matches overlap's summary",
+          "ok": true,
+          "detail": "85644e388845\u2026 vs 85644e388845\u2026"
+        }
+      ],
+      "seconds": 520.8
+    },
+    {
+      "stage": "dedup",
+      "mode": "run",
+      "command": [
+        "teams/01-data-a/dedup/dedup.py",
+        "--config",
+        "/workspace/era-v5-lab/out/pipeline/rehearsal-3pack/cfg/dedup.json"
+      ],
+      "code_sha256": "50d07671564d99ee9867424c2b61c8ed2a1d426ddc4f5bac640dc04b89668681",
+      "output": "out/pipeline/rehearsal-3pack/dedup",
+      "counts": {
+        "remove_list_rows": 7,
+        "removed": 7,
+        "heldout_removed": 0,
+        "groups": 7
+      },
+      "settings": "teams/01-data-a/dedup/dedup.json",
+      "settings_sha256": "4ad067c0acb2a60c1b375a7bb414e4025d00a99d63138b8495f5fbf564f89af3",
+      "config": "cfg/dedup.json",
+      "config_sha256": "d8af5e03bfcf89fed1961ff1d757af06fda2ef9346ec84324c56b6b22c6e7593",
+      "digest": "a47fe214b56045adc4c90023e5d4e5b5f18686b93bcaba8ab59cbee764faf649",
+      "files": 6,
+      "checks": [
+        {
+          "check": "dedup finished",
+          "ok": true,
+          "detail": "status 'complete'"
+        },
+        {
+          "check": "dedup used this overlap run",
+          "ok": true,
+          "detail": "dedup checked [('overlap_docs.parquet', '85644e388845'), ('overlap_matches.csv', '69bab944aad1')], the adopted overlap has [('overlap_docs.parquet', '85644e388845'), ('overlap_matches.csv', '69bab944aad1')]"
+        },
+        {
+          "check": "dedup saw overlap's documents",
+          "ok": true,
+          "detail": "dedup documents_all 98585, overlap 98585"
+        },
+        {
+          "check": "dedup summary matches its remove list",
+          "ok": true,
+          "detail": "summary removed 7, remove_list.csv rows 7"
+        },
+        {
+          "check": "dedup removed no held-out doc",
+          "ok": true,
+          "detail": "heldout_removed 0 (rule 0)"
+        }
+      ],
+      "seconds": 9.8
+    },
+    {
+      "stage": "apply",
+      "mode": "run",
+      "command": [
+        "teams/01-data-a/pipeline/apply_dedup.py"
+      ],
+      "code_sha256": "92c56f91def61985095ff27f5190b03546164e7856cb654c5fad258204361573",
+      "output": "deduped",
+      "counts": {
+        "rows": 98585,
+        "removed": 7,
+        "kept": 98578,
+        "kept_by_split": {
+          "train": 97768,
+          "heldout": 810
+        }
+      },
+      "digest": "5327045841f43a8fba10cdb1c8442fabc528252653f7c1ed3ecb08475743fcab",
+      "files": 6,
+      "checks": [
+        {
+          "check": "apply read every cleaned row",
+          "ok": true,
+          "detail": "apply rows 98585, cleaned rows 98585"
+        },
+        {
+          "check": "apply removed the remove list",
+          "ok": true,
+          "detail": "apply removed 7, remove list 7"
+        }
+      ],
+      "seconds": 7.6
+    },
+    {
+      "stage": "f2",
+      "mode": "run",
+      "command": [
+        "teams/01-data-a/spec_v1/run_f2.py",
+        "--inputs",
+        "<run>/deduped/<split>[/<pack>]",
+        "--out",
+        "<run>/final/<split>[/<pack>]"
+      ],
+      "code_sha256": "1651b3725357b2a2b684fda6a047cc5697c1331d1b43bb242712f422403af040",
+      "output": "final",
+      "set_sha256": "2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a",
+      "pool": true,
+      "pool_code_sha256": "b3d41a5f844ea573a35a826a0f313e006a91c883031a9448b7a328dd275d81e8",
+      "workers": 24,
+      "units": 2,
+      "wall_seconds": 396.4,
+      "counts": {
+        "rows": 98578,
+        "kept": 98480,
+        "dropped_by_f2": 98,
+        "errors": 0,
+        "by_split": {
+          "train": {
+            "rows": 97768,
+            "kept": 97672,
+            "dropped_by_f2": 96,
+            "errors": 0
+          },
+          "heldout": {
+            "rows": 810,
+            "kept": 808,
+            "dropped_by_f2": 2,
+            "errors": 0
+          }
+        }
+      },
+      "digest": "1f291a1ac7f42b912570e02b4c51ea7e640cede656ee41275f965fc2fd1d8c80",
+      "files": 12,
+      "checks": [
+        {
+          "check": "F2 reported no errors on train",
+          "ok": true,
+          "detail": "0 docs raised during the check, exit code 0; see f2_train.log"
+        },
+        {
+          "check": "F2 reported no errors on heldout",
+          "ok": true,
+          "detail": "0 docs raised during the check, exit code 0; see f2_heldout.log"
+        },
+        {
+          "check": "F2 read every deduplicated row of train",
+          "ok": true,
+          "detail": "F2 rows 97768, apply kept 97768"
+        },
+        {
+          "check": "F2 read what apply wrote in train",
+          "ok": true,
+          "detail": "0 part(s) without a matching F2 report, e.g. "
+        },
+        {
+          "check": "F2 read every deduplicated row of heldout",
+          "ok": true,
+          "detail": "F2 rows 810, apply kept 810"
+        },
+        {
+          "check": "F2 read what apply wrote in heldout",
+          "ok": true,
+          "detail": "0 part(s) without a matching F2 report, e.g. "
+        },
+        {
+          "check": "F2 used one fingerprint set",
+          "ok": true,
+          "detail": "set_sha256 values ['2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a']"
+        },
+        {
+          "check": "F2 counts add up",
+          "ok": true,
+          "detail": "{'rows': 98578, 'kept': 98480, 'dropped_by_f2': 98, 'errors': 0}"
+        }
+      ],
+      "seconds": 396.6
+    },
+    {
+      "stage": "survivor_loss",
+      "mode": "run",
+      "command": [
+        "teams/01-data-a/pipeline/survivor_loss.py"
+      ],
+      "code_sha256": "32063e100e56f4e5380bbfdb9ded2afcdf9d8b69b2b4040aa5d0e09a918a38ba",
+      "output": "report",
+      "counts": {
+        "total": 7,
+        "with_survivor": 7,
+        "without_survivor": 0,
+        "with_several_survivors": 0,
+        "lost": 1,
+        "partly_hit": 0,
+        "untouched": 6,
+        "survivors_dropped_by_f2": 1
+      },
+      "digest": "bdbc58e32741dd55de60eeb50582ac3dc6202744fd08b480fd8fe39356d66786",
+      "files": 2,
+      "checks": [
+        {
+          "check": "dedup's summary counts its groups",
+          "ok": true,
+          "detail": "dedup_summary.json gives {'clusters': 7, 'groups_without_survivor': 0, 'groups_with_several_survivors': 0}"
+        },
+        {
+          "check": "survivor loss saw every dedup group",
+          "ok": true,
+          "detail": "dedup_groups.csv 7 group(s), dedup_summary.json clusters 7"
+        },
+        {
+          "check": "survivor loss's groups without a survivor = dedup's",
+          "ok": true,
+          "detail": "dedup_groups.csv 0, dedup_summary.json 0"
+        },
+        {
+          "check": "survivor loss's groups with several survivors = dedup's",
+          "ok": true,
+          "detail": "dedup_groups.csv 0, dedup_summary.json 0"
+        }
+      ],
+      "seconds": 0.3
+    },
+    {
+      "stage": "ledger",
+      "mode": "run",
+      "command": [
+        "teams/01-data-a/pipeline/ledger.py"
+      ],
+      "code_sha256": "4021460974d0d0c3228409cf89096750f31dfe2c6321141f0dc9f370233b6fe1",
+      "output": "ledger",
+      "clean_mode": "B",
+      "counts": {
+        "rows": 105672,
+        "rows_cleaned": 98585,
+        "kept": 98480,
+        "dropped_by_clean": 7087,
+        "removed_by_dedup": 7,
+        "dropped_by_f2": 98,
+        "f2_error": 0,
+        "clean_fix_by_text": 48503
+      },
+      "by_pack": {
+        "code-go": {
+          "train": {
+            "raw": 83267,
+            "dropped_by_clean": 6312,
+            "cleaned": 76955,
+            "removed_by_dedup": 6,
+            "dropped_by_f2": 96,
+            "final": 76853
+          },
+          "heldout": {
+            "raw": 872,
+            "dropped_by_clean": 62,
+            "cleaned": 810,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 2,
+            "final": 808
+          }
+        },
+        "ind-bn-fw2": {
+          "train": {
+            "raw": 11205,
+            "dropped_by_clean": 501,
+            "cleaned": 10704,
+            "removed_by_dedup": 0,
+            "dropped_by_f2": 0,
+            "final": 10704
+          }
+        },
+        "ind-bn-sangraha-v": {
+          "train": {
+            "raw": 10328,
+            "dropped_by_clean": 212,
+            "cleaned": 10116,
+            "removed_by_dedup": 1,
+            "dropped_by_f2": 0,
+            "final": 10115
+          }
+        }
+      },
+      "digest": "7c801fe563fe6feac6158ce335c6f2482d96213e5a7c1d2e477f49478a56bd22",
+      "files": 6,
+      "checks": [
+        {
+          "check": "ledger holds every cleaned row",
+          "ok": true,
+          "detail": "ledger 98585, cleaned rows 98585"
+        },
+        {
+          "check": "ledger removed_by_dedup = apply's removed",
+          "ok": true,
+          "detail": "ledger 7, apply 7"
+        },
+        {
+          "check": "ledger dropped_by_f2 = F2's",
+          "ok": true,
+          "detail": "ledger 98, F2 98"
+        },
+        {
+          "check": "ledger f2_error = F2's errors",
+          "ok": true,
+          "detail": "ledger 0, F2 0"
+        },
+        {
+          "check": "ledger kept = F2's kept",
+          "ok": true,
+          "detail": "ledger 98480, F2 98480"
+        },
+        {
+          "check": "ledger used F2's fingerprint set",
+          "ok": true,
+          "detail": "2826a3b88321\u2026 vs 2826a3b88321\u2026"
+        },
+        {
+          "check": "ledger per pack = apply per pack",
+          "ok": true,
+          "detail": "0 pack/split(s) differ in cleaned rows or removed, e.g. "
+        },
+        {
+          "check": "every per-pack row adds up",
+          "ok": true,
+          "detail": "0 pack/split(s) where raw - clean != cleaned or cleaned - dedup - f2 - errors != final, e.g. "
+        },
+        {
+          "check": "per-pack table adds up to the stages' counts",
+          "ok": true,
+          "detail": "table {'cleaned': 98585, 'removed_by_dedup': 7, 'dropped_by_f2': 98, 'final': 98480}, stages {'cleaned': 98585, 'removed_by_dedup': 7, 'dropped_by_f2': 98, 'final': 98480}"
+        },
+        {
+          "check": "ledger's survivors dropped by F2 = survivor loss's",
+          "ok": true,
+          "detail": "ledger 1, survivor_loss_summary.json 1"
+        },
+        {
+          "check": "ledger's survivors dropped by F2 per pack = survivor loss's",
+          "ok": true,
+          "detail": "0 pack(s) differ, e.g. "
+        }
+      ],
+      "seconds": 7.0
+    },
+    {
+      "stage": "shards",
+      "mode": "run",
+      "command": [
+        "teams/01-data-a/shards/run_shards.py",
+        "--input",
+        "<run>/final",
+        "--manifest",
+        "<run>/pipeline_manifest.json",
+        "--out",
+        "<out>",
+        "--no-verify"
+      ],
+      "code_sha256": "ec8dcf597f7b4f441d149a3e3563678b0edd6386ec564311238fb52bbcc14033",
+      "output": "shards",
+      "cleaning_pipeline_sha256": "4a1b35251494794d9a2bc6306416fb99e65e59f4bbf1b58d2f5602d37e4a0f4f",
+      "counts": {
+        "written": 4,
+        "empty": 0,
+        "all_left_out": 0,
+        "failed": 0,
+        "skipped": 0,
+        "not_sharded": 1,
+        "truncated": 0,
+        "shards": 90,
+        "parts": 5
+      },
+      "digest": "a36a93597313c556c16f6a71f3b3b665ecdb00f6578307fbab99509c64a0dd29",
+      "files": 542,
+      "checks": [
+        {
+          "check": "shards: no part failed or was skipped",
+          "ok": true,
+          "detail": "{'written': 4, 'empty': 0, 'all_left_out': 0, 'failed': 0, 'skipped': 0, 'not_sharded': 1, 'truncated': 0, 'shards': 90}; first: ; see logs/shards.log"
+        },
+        {
+          "check": "shards: run_shards.py exited 0",
+          "ok": true,
+          "detail": "exit code 0: written  train/code-go/part-00000.parquet: 55 shard(s), 56584 docs, 56692090 tokens | written  train/code-go/part-00001.parquet: 20 shard(s), 20211 docs, 20253926 tokens | written  train/ind-bn-fw2/part-00000.parquet: 7 shard(s), 10704 docs, 7127920 tokens | written  train/ind-bn-sangraha-v/part-00000.parquet: 8 shard(s), 10111 docs, 8014527 tokens | {\"written\": 4, \"empty\": 0, \"all_left_out\": 0, \"failed\": 0, \"skipped\": 0, \"not_sharded\": 1, \"truncated\": 0, \"shards\": 90}"
+        },
+        {
+          "check": "shards: at least one shard written",
+          "ok": true,
+          "detail": "{'written': 4, 'empty': 0, 'all_left_out': 0, 'failed': 0, 'skipped': 0, 'not_sharded': 1, 'truncated': 0, 'shards': 90}"
+        },
+        {
+          "check": "shards: no part was cut short (every row of a written part was read into its shards)",
+          "ok": true,
+          "detail": "0 part(s) cut short, e.g. []: the writer rolls over into more shards, so rows it never read point to a writer fault; reconcile reports them as not_reached"
+        },
+        {
+          "check": "shards: the summary is this run's, made with this run's cleaning_pipeline.json",
+          "ok": true,
+          "detail": "summary run_id rehearsal-3pack, cleaning_pipeline_sha256 4a1b35251494\u2026"
+        },
+        {
+          "check": "shards: the shard files on disk verify (files, sha256, format, counts, pack table, first and last document)",
+          "ok": true,
+          "detail": "0 problem(s), the first 0: "
+        }
+      ],
+      "seconds": 198.0
+    },
+    {
+      "stage": "reconcile",
+      "mode": "run",
+      "command": [
+        "teams/01-data-a/pipeline/reconcile_shards.py"
+      ],
+      "code_sha256": "d70ec460a89e96d1390509b6ccc9e6813d632873998e8abfb5303548fd0a88e8",
+      "output": "reconcile",
+      "counts": {
+        "kept": 98480,
+        "in_shards": 97610,
+        "in_shard": 97610,
+        "left_out:secret": 62,
+        "not_sharded": 808
+      },
+      "digest": "d06d92c84131b577caeb01e4cfe5dcdbac26f1f961e6c7d9ff01bdae46df9ad9",
+      "files": 2,
+      "checks": [
+        {
+          "check": "reconcile: every document in a shard is a kept document at its ledger position",
+          "ok": true,
+          "detail": "0 shard row(s) at no kept ledger position, 0 with another doc_id"
+        },
+        {
+          "check": "reconcile: no document is in two shards",
+          "ok": true,
+          "detail": "0 position(s) in more than one shard"
+        },
+        {
+          "check": "reconcile: every document the writer left out is a kept document of that part, and none is also in a shard",
+          "ok": true,
+          "detail": "0 left-out doc_id(s) not kept there, 0 both left out and in a shard"
+        },
+        {
+          "check": "reconcile: each shard manifest's doc_count = its docs.parquet rows",
+          "ok": true,
+          "detail": "0 shard(s) differ, e.g. "
+        },
+        {
+          "check": "reconcile: every kept document of a selected pack is in a shard or left out for a stated reason",
+          "ok": true,
+          "detail": "all accounted"
+        },
+        {
+          "check": "reconcile: every selected pack holds kept documents in the ledger",
+          "ok": true,
+          "detail": "all present"
+        }
+      ],
+      "seconds": 4.4
+    }
+  ],
+  "checks": [
+    {
+      "check": "clean: the job reported no errors",
+      "ok": true,
+      "detail": "job_summary.json: 0 error(s)",
+      "stage": "clean"
+    },
+    {
+      "check": "clean: the job cleaned the parts the run expects, each with a report",
+      "ok": true,
+      "detail": "job_summary.json: completed_parts 5, expected_parts 86, 5 part report(s) for 5 part(s); the run expects 5",
+      "stage": "clean"
+    },
+    {
+      "check": "clean: the job read this run's input manifest",
+      "ok": true,
+      "detail": "job_summary.json manifest_sha256 7fd647c8d466\u2026, stages.clean.manifest_sha256 7fd647c8d466\u2026",
+      "stage": "clean"
+    },
+    {
+      "check": "clean: input rows = output rows + dropped, and the output rows are those on disk",
+      "ok": true,
+      "detail": "job_summary.json input_rows 105672, output_rows 98585, dropped 7087; its part reports add up to 98585; the Parquet footers to 98585",
+      "stage": "clean"
+    },
+    {
+      "check": "clean: the parts on disk are the parts the job reports, with their rows",
+      "ok": true,
+      "detail": "0 reported but not on disk (e.g. []), 0 on disk but not reported (e.g. []), 0 with other rows (e.g. [])",
+      "stage": "clean"
+    },
+    {
+      "check": "clean: each part's sha256 is the one the job recorded",
+      "ok": true,
+      "detail": "0 of 5 part(s) differ from job_summary.json, e.g. []",
+      "stage": "clean"
+    },
+    {
+      "check": "overlap finished",
+      "ok": true,
+      "detail": "status 'complete'",
+      "stage": "overlap"
+    },
+    {
+      "check": "overlap read every cleaned row",
+      "ok": true,
+      "detail": "overlap documents_all 98585, cleaned rows 98585",
+      "stage": "overlap"
+    },
+    {
+      "check": "overlap read these cleaned parts",
+      "ok": true,
+      "detail": "0 part(s) differ in name or row count, e.g. ",
+      "stage": "overlap"
+    },
+    {
+      "check": "overlap read these cleaned bytes",
+      "ok": true,
+      "detail": "0 part(s) differ or have no input sha256, e.g. []",
+      "stage": "overlap"
+    },
+    {
+      "check": "overlap_matches.csv matches overlap's summary",
+      "ok": true,
+      "detail": "69bab944aad1\u2026 vs 69bab944aad1\u2026",
+      "stage": "overlap"
+    },
+    {
+      "check": "overlap_docs.parquet matches overlap's summary",
+      "ok": true,
+      "detail": "85644e388845\u2026 vs 85644e388845\u2026",
+      "stage": "overlap"
+    },
+    {
+      "check": "dedup finished",
+      "ok": true,
+      "detail": "status 'complete'",
+      "stage": "dedup"
+    },
+    {
+      "check": "dedup used this overlap run",
+      "ok": true,
+      "detail": "dedup checked [('overlap_docs.parquet', '85644e388845'), ('overlap_matches.csv', '69bab944aad1')], the adopted overlap has [('overlap_docs.parquet', '85644e388845'), ('overlap_matches.csv', '69bab944aad1')]",
+      "stage": "dedup"
+    },
+    {
+      "check": "dedup saw overlap's documents",
+      "ok": true,
+      "detail": "dedup documents_all 98585, overlap 98585",
+      "stage": "dedup"
+    },
+    {
+      "check": "dedup summary matches its remove list",
+      "ok": true,
+      "detail": "summary removed 7, remove_list.csv rows 7",
+      "stage": "dedup"
+    },
+    {
+      "check": "dedup removed no held-out doc",
+      "ok": true,
+      "detail": "heldout_removed 0 (rule 0)",
+      "stage": "dedup"
+    },
+    {
+      "check": "apply read every cleaned row",
+      "ok": true,
+      "detail": "apply rows 98585, cleaned rows 98585",
+      "stage": "apply"
+    },
+    {
+      "check": "apply removed the remove list",
+      "ok": true,
+      "detail": "apply removed 7, remove list 7",
+      "stage": "apply"
+    },
+    {
+      "check": "F2 reported no errors on train",
+      "ok": true,
+      "detail": "0 docs raised during the check, exit code 0; see f2_train.log",
+      "stage": "f2"
+    },
+    {
+      "check": "F2 reported no errors on heldout",
+      "ok": true,
+      "detail": "0 docs raised during the check, exit code 0; see f2_heldout.log",
+      "stage": "f2"
+    },
+    {
+      "check": "F2 read every deduplicated row of train",
+      "ok": true,
+      "detail": "F2 rows 97768, apply kept 97768",
+      "stage": "f2"
+    },
+    {
+      "check": "F2 read what apply wrote in train",
+      "ok": true,
+      "detail": "0 part(s) without a matching F2 report, e.g. ",
+      "stage": "f2"
+    },
+    {
+      "check": "F2 read every deduplicated row of heldout",
+      "ok": true,
+      "detail": "F2 rows 810, apply kept 810",
+      "stage": "f2"
+    },
+    {
+      "check": "F2 read what apply wrote in heldout",
+      "ok": true,
+      "detail": "0 part(s) without a matching F2 report, e.g. ",
+      "stage": "f2"
+    },
+    {
+      "check": "F2 used one fingerprint set",
+      "ok": true,
+      "detail": "set_sha256 values ['2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a']",
+      "stage": "f2"
+    },
+    {
+      "check": "F2 counts add up",
+      "ok": true,
+      "detail": "{'rows': 98578, 'kept': 98480, 'dropped_by_f2': 98, 'errors': 0}",
+      "stage": "f2"
+    },
+    {
+      "check": "dedup's summary counts its groups",
+      "ok": true,
+      "detail": "dedup_summary.json gives {'clusters': 7, 'groups_without_survivor': 0, 'groups_with_several_survivors': 0}",
+      "stage": "survivor_loss"
+    },
+    {
+      "check": "survivor loss saw every dedup group",
+      "ok": true,
+      "detail": "dedup_groups.csv 7 group(s), dedup_summary.json clusters 7",
+      "stage": "survivor_loss"
+    },
+    {
+      "check": "survivor loss's groups without a survivor = dedup's",
+      "ok": true,
+      "detail": "dedup_groups.csv 0, dedup_summary.json 0",
+      "stage": "survivor_loss"
+    },
+    {
+      "check": "survivor loss's groups with several survivors = dedup's",
+      "ok": true,
+      "detail": "dedup_groups.csv 0, dedup_summary.json 0",
+      "stage": "survivor_loss"
+    },
+    {
+      "check": "ledger holds every cleaned row",
+      "ok": true,
+      "detail": "ledger 98585, cleaned rows 98585",
+      "stage": "ledger"
+    },
+    {
+      "check": "ledger removed_by_dedup = apply's removed",
+      "ok": true,
+      "detail": "ledger 7, apply 7",
+      "stage": "ledger"
+    },
+    {
+      "check": "ledger dropped_by_f2 = F2's",
+      "ok": true,
+      "detail": "ledger 98, F2 98",
+      "stage": "ledger"
+    },
+    {
+      "check": "ledger f2_error = F2's errors",
+      "ok": true,
+      "detail": "ledger 0, F2 0",
+      "stage": "ledger"
+    },
+    {
+      "check": "ledger kept = F2's kept",
+      "ok": true,
+      "detail": "ledger 98480, F2 98480",
+      "stage": "ledger"
+    },
+    {
+      "check": "ledger used F2's fingerprint set",
+      "ok": true,
+      "detail": "2826a3b88321\u2026 vs 2826a3b88321\u2026",
+      "stage": "ledger"
+    },
+    {
+      "check": "ledger per pack = apply per pack",
+      "ok": true,
+      "detail": "0 pack/split(s) differ in cleaned rows or removed, e.g. ",
+      "stage": "ledger"
+    },
+    {
+      "check": "every per-pack row adds up",
+      "ok": true,
+      "detail": "0 pack/split(s) where raw - clean != cleaned or cleaned - dedup - f2 - errors != final, e.g. ",
+      "stage": "ledger"
+    },
+    {
+      "check": "per-pack table adds up to the stages' counts",
+      "ok": true,
+      "detail": "table {'cleaned': 98585, 'removed_by_dedup': 7, 'dropped_by_f2': 98, 'final': 98480}, stages {'cleaned': 98585, 'removed_by_dedup': 7, 'dropped_by_f2': 98, 'final': 98480}",
+      "stage": "ledger"
+    },
+    {
+      "check": "ledger's survivors dropped by F2 = survivor loss's",
+      "ok": true,
+      "detail": "ledger 1, survivor_loss_summary.json 1",
+      "stage": "ledger"
+    },
+    {
+      "check": "ledger's survivors dropped by F2 per pack = survivor loss's",
+      "ok": true,
+      "detail": "0 pack(s) differ, e.g. ",
+      "stage": "ledger"
+    },
+    {
+      "check": "shards: no part failed or was skipped",
+      "ok": true,
+      "detail": "{'written': 4, 'empty': 0, 'all_left_out': 0, 'failed': 0, 'skipped': 0, 'not_sharded': 1, 'truncated': 0, 'shards': 90}; first: ; see logs/shards.log",
+      "stage": "shards"
+    },
+    {
+      "check": "shards: run_shards.py exited 0",
+      "ok": true,
+      "detail": "exit code 0: written  train/code-go/part-00000.parquet: 55 shard(s), 56584 docs, 56692090 tokens | written  train/code-go/part-00001.parquet: 20 shard(s), 20211 docs, 20253926 tokens | written  train/ind-bn-fw2/part-00000.parquet: 7 shard(s), 10704 docs, 7127920 tokens | written  train/ind-bn-sangraha-v/part-00000.parquet: 8 shard(s), 10111 docs, 8014527 tokens | {\"written\": 4, \"empty\": 0, \"all_left_out\": 0, \"failed\": 0, \"skipped\": 0, \"not_sharded\": 1, \"truncated\": 0, \"shards\": 90}",
+      "stage": "shards"
+    },
+    {
+      "check": "shards: at least one shard written",
+      "ok": true,
+      "detail": "{'written': 4, 'empty': 0, 'all_left_out': 0, 'failed': 0, 'skipped': 0, 'not_sharded': 1, 'truncated': 0, 'shards': 90}",
+      "stage": "shards"
+    },
+    {
+      "check": "shards: no part was cut short (every row of a written part was read into its shards)",
+      "ok": true,
+      "detail": "0 part(s) cut short, e.g. []: the writer rolls over into more shards, so rows it never read point to a writer fault; reconcile reports them as not_reached",
+      "stage": "shards"
+    },
+    {
+      "check": "shards: the summary is this run's, made with this run's cleaning_pipeline.json",
+      "ok": true,
+      "detail": "summary run_id rehearsal-3pack, cleaning_pipeline_sha256 4a1b35251494\u2026",
+      "stage": "shards"
+    },
+    {
+      "check": "shards: the shard files on disk verify (files, sha256, format, counts, pack table, first and last document)",
+      "ok": true,
+      "detail": "0 problem(s), the first 0: ",
+      "stage": "shards"
+    },
+    {
+      "check": "reconcile: every document in a shard is a kept document at its ledger position",
+      "ok": true,
+      "detail": "0 shard row(s) at no kept ledger position, 0 with another doc_id",
+      "stage": "reconcile"
+    },
+    {
+      "check": "reconcile: no document is in two shards",
+      "ok": true,
+      "detail": "0 position(s) in more than one shard",
+      "stage": "reconcile"
+    },
+    {
+      "check": "reconcile: every document the writer left out is a kept document of that part, and none is also in a shard",
+      "ok": true,
+      "detail": "0 left-out doc_id(s) not kept there, 0 both left out and in a shard",
+      "stage": "reconcile"
+    },
+    {
+      "check": "reconcile: each shard manifest's doc_count = its docs.parquet rows",
+      "ok": true,
+      "detail": "0 shard(s) differ, e.g. ",
+      "stage": "reconcile"
+    },
+    {
+      "check": "reconcile: every kept document of a selected pack is in a shard or left out for a stated reason",
+      "ok": true,
+      "detail": "all accounted",
+      "stage": "reconcile"
+    },
+    {
+      "check": "reconcile: every selected pack holds kept documents in the ledger",
+      "ok": true,
+      "detail": "all present",
+      "stage": "reconcile"
+    }
+  ],
+  "totals": {
+    "raw": 105672,
+    "dropped_by_clean": 7087,
+    "cleaned": 98585,
+    "removed_by_dedup": 7,
+    "dropped_by_f2": 98,
+    "final": 98480,
+    "shards_written": 4
+  },
+  "intermediates": {
+    "mode": "keep"
+  },
+  "by_pack": {
+    "code-go": {
+      "train": {
+        "raw": 83267,
+        "dropped_by_clean": 6312,
+        "cleaned": 76955,
+        "removed_by_dedup": 6,
+        "dropped_by_f2": 96,
+        "final": 76853
+      },
+      "heldout": {
+        "raw": 872,
+        "dropped_by_clean": 62,
+        "cleaned": 810,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 2,
+        "final": 808
+      }
+    },
+    "ind-bn-fw2": {
+      "train": {
+        "raw": 11205,
+        "dropped_by_clean": 501,
+        "cleaned": 10704,
+        "removed_by_dedup": 0,
+        "dropped_by_f2": 0,
+        "final": 10704
+      }
+    },
+    "ind-bn-sangraha-v": {
+      "train": {
+        "raw": 10328,
+        "dropped_by_clean": 212,
+        "cleaned": 10116,
+        "removed_by_dedup": 1,
+        "dropped_by_f2": 0,
+        "final": 10115
+      }
+    }
+  },
+  "inventory": null
+}

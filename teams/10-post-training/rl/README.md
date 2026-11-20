@@ -73,9 +73,21 @@ The Go verifier, its runner, the Docker image and the Go tasks are in [`go/`](go
 
 Indic short-answer tasks are in [`indic/`](indic/README.md): an Indic prompt, and one checkable answer in `<answer>...</answer>` (an integer in any script's digits, a word in the task's script, or a choice label). `indic/indic_verifier.py` checks the answer exactly after normalising it. It runs no code, so it needs no container. `reward.py` registers it as `indic/<task_id>`, and `python rl/reward.py --check-all --type indic` runs without docker.
 
+Agentic tasks (one pytest command or one patch, run in a SWE env image) are in [`agentic/`](agentic/README.md). `reward.py` registers them as `agentic/<task_id>`; `python rl/reward.py --check-all --type agentic` needs docker.
+
+Math tasks (an exact boxed answer from the RL data v1 math pool, pinned by SHA-256) are in [`math_pool/`](math_pool/README.md). `reward.py` registers them as `math_pool/<task_id>`; they need the pool (`G10_MATH_POOL`) and `math-verify==0.9.0`. TSAI has not ruled on MATH for RL.
+
+There are two math env types on purpose: `math_pool` (this set) checks one boxed answer against a record pinned in the RL data v1 pool, so it scales to thousands of problems but needs the pool; `math` (the owner's `rl/math`, a separate PR) holds small self-contained tasks with their answers in the repository and an `<answer>` tag.
+
+JavaScript and TypeScript tasks (Exercism exercises, hidden jest tests, docker image `g10-jsts-rl:1`) are in [`jsts/`](jsts/README.md). `reward.py` registers them as `js/<task_id>` and `ts/<task_id>`; `python rl/reward.py --check-all --type js` (or `ts`) needs docker and the image.
+
 ## Tool-result tasks
 
 Tool-result tasks are in [`toolresult/`](toolresult/README.md): a transcript that ends with a tool result, and a reply that must report the tool's values exactly (no rounding, retyping or new tool call). `toolresult/toolresult_verifier.py` checks the reply for the required values as whole values and refuses listed wrong values. It runs no code, so it needs no container. `reward.py` registers it as `toolresult/<task_id>`, and `python rl/reward.py --check-all --type toolresult` runs without docker.
+
+## JavaScript tasks
+
+The JavaScript verifier, its runner, the Docker image and the JavaScript tasks are in [`js/`](js/README.md). They use `verifier.py` from this folder via `js_verifier.py`. `reward.py` registers them as `js/<task_id>` with the docker sandbox by default (the `process` sandbox is for unit tests), and `python rl/reward.py --check-all --type js` checks them (needs the `g10-js-rl:1` image). Node.js 26 or later is required.
 
 ## Files in this folder
 
@@ -84,8 +96,12 @@ Tool-result tasks are in [`toolresult/`](toolresult/README.md): a transcript tha
 | `verifier.py`, `_sandbox_child.py`, `test_verifier.py` | The verifier: binary reward for one task, expected answers kept outside the sandbox. |
 | `tasks/` | The original coding tasks (see "Writing a task"). |
 | `reward.py`, `test_reward.py` | The one `reward(env_id, output)` entry point for code, SWE, Indic and Go environments. |
+| `jsts/` | The JavaScript and TypeScript verifier set: hidden jest tests in a docker image, Exercism tasks, tests. |
+| `math_pool/` | The pool-pinned math verifier set: boxed exact answer, pins into the RL data v1 math pool, tests. |
+| `agentic/` | The agentic verifier set: command and patch checks, its tasks and tests. |
 | `indic/` | The Indic verifier set: exact-answer reward, its tasks and tests, and the template generator. |
 | `toolresult/` | The tool-result verifier set: exact tool-result text in the reply, its ten tasks and tests. |
+| `js/` | The JavaScript verifier set: Node.js 26, sandboxed execution, its tasks and tests. |
 | `indic_prompts_v0.md` | Indic prompt families with checkable answers, who writes them, the Team 2 check and the status. |
 | `objective_v1.py`, `objective_v1.md`, `test_objective_v1.py` | Session 18 objective: group advantage, equal-reward drop, trust-region mask. |
 | `small_rl.py`, `test_small_rl.py` | Local RL loop on one code task. The result is `results/small_rl.md`. |

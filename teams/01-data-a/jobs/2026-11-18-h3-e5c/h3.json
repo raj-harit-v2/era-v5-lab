@@ -1,0 +1,23 @@
+{
+  "_comment": "E5c, the H3 measurement job (h3_design_v1.md; request jobs/2026-11-18-h3-e5c.md). Report-only: h3.py removes nothing. Inputs are the #244 cleaned sample v0, staged as for the overlap rerun (jobs/2026-11-12-overlap-rerun.md), so dedup.py can find every H3 document in that run's overlap_docs.parquet. Scope: prose packs, Indic <-> English and Sanskrit <-> Hindi (h3_design_v1.md, 'Scope', proposed; TSAI's ruling on scope is asked on #610). Sentence thresholds: 0.7 (default), 0.55 for the two Sanskrit pairs (FLORES check: at 0.7 LaBSE qualifies only 19-29% of Sanskrit translations); provisional until E5d. Paths are relative to the repository root.",
+  "inputs": "out/tokenizer_sample_v0_clean",
+  "out": "out/h3",
+  "cache": "out/h3_cache",
+  "model_path": "../models/LaBSE",
+  "device": "cuda",
+  "precision": "auto",
+  "packs": {
+    "ind-sa-fw2": "sa",
+    "ind-hi-*": "hi",
+    "ind-or-fw2": "or",
+    "en-fineweb-edu": "en",
+    "en-dclm": "en",
+    "en-nemotroncc": "en"
+  },
+  "pairs": [["sa", "en"], ["sa", "hi"], ["hi", "en"], ["or", "en"]],
+  "sentence_threshold": {"sa-en": 0.55, "sa-hi": 0.55},
+  "coverage_threshold": 0.6,
+  "report_floor": 0.3,
+  "max_minutes": 110,
+  "max_output_mb": 50
+}

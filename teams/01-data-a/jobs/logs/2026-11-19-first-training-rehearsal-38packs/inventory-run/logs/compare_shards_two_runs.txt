@@ -1,0 +1,4 @@
+# Shards of the two 38-pack runs compared (out/pipeline/rehearsal-38pack vs out/pipeline/first-training-v1-rehearsal)
+.bin, .idx.npy and .docs.parquet files byte-identical: 144 of 144
+48 manifests compared; fields that differ (in how many): {'license': 48, 'dataset_version': 48, 'quality_report_sha256': 48, 'capability_lane': 36, 'cleaning_pipeline_sha256': 48, 'created_by': 48, 'license_source': 48}
+quality reports, fields that differ: {'upstream.run_id': 48}
