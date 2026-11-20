@@ -52,7 +52,7 @@ model:
 
 optim:
   name: muon
-  muon_impl: batched
+  muon_impl: loop
   lr: 0.001
   muon_lr: 0.01
   weight_decay: 0.0
@@ -69,10 +69,10 @@ run:
   grad_clip: 1.0
 
 data:
-  source: fineweb10b
+  source: synthetic
 
 bench:
-  modes: [clean, layer]
+  modes: [clean, layer, trace]
   warmup: 10
   steps: 100
   level: 3
