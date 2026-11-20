@@ -2,7 +2,8 @@
 
 **Status:** done for B=8: torch.profiler + layer profile (repeat 2, PASS) and Nsight Systems, both on the dry run 1 model.  
 **Sources:** G6 runs on one Modal A100 (20 Nov 2026) and the lab's dry run 1 evidence (class #620). Nothing else.  
-**Rule:** every number cites **GPU name + git SHA**. Member-GPU runs give shares and counts only; step time comes from the lab run. Traces → [gist](https://gist.github.com/vaibh27/e4e60f177d4fe675ba0444054928d341) (not under `results/`).
+**Rule:** every number cites **GPU name + git SHA**. Member-GPU runs give shares and counts only; step time comes from the lab run. Traces → [gist](https://gist.github.com/vaibh27/e4e60f177d4fe675ba0444054928d341) (not under `results/`).  
+**TSAI lab column:** to be filled from the lab's dry run 1 profile when it is shared; #620 has no profile, so those cells are _pending_.
 
 | Field | Value |
 | :--- | :--- |
@@ -41,13 +42,13 @@ Dry run 1 full run, RTX 3090, steps 11–1221 (`teams/05-architecture/jobs/evide
 
 The two tools saw different routing, because the router collapses on synthetic data:
 
-| | perfkit runs (torch.profiler + layer pass) | Nsight |
-| :--- | :--- | :--- |
-| measured after | about 200 training steps (10 warmup + 100 clean steps + the layer pass) | 5 warmup steps |
-| expert slots with tokens (8 layers × 16 experts = 128) | 18 per step (`aten::nonzero` / `index_add_` calls in the trace) | 128 per step |
-| Muon Newton-Schulz calls per step | 102 | 432 |
-| host syncs per step | 147 (128 `tok.any()` + 18 `nonzero` + 1) | 256 (2 per slot) |
-| kernels per step | 7,949 | about 30,300 |
+| | G6 perfkit runs (torch.profiler + layer pass) | G6 Nsight | TSAI lab |
+| :--- | :--- | :--- | :--- |
+| measured after | about 200 training steps (10 warmup + 100 clean steps + the layer pass) | 5 warmup steps | _pending_ |
+| expert slots with tokens (8 layers × 16 experts = 128) | 18 per step (`aten::nonzero` / `index_add_` calls in the trace) | 128 per step | _pending_ |
+| Muon Newton-Schulz calls per step | 102 | 432 | _pending_ |
+| host syncs per step | 147 (128 `tok.any()` + 18 `nonzero` + 1) | 256 (2 per slot) | _pending_ |
+| kernels per step | 7,949 | about 30,300 | _pending_ |
 
 - Why: synthetic data has nothing to learn (loss stays at about 11.9), `bias_gamma=0` adds no load balancing, so a few experts take every token. The loop dispatch skips experts with no tokens, and Muon skips weights with no gradient.
 - Effect: the perfkit shares (MoE dispatch 6%, Muon 12.5% of the layer pass, and the step breakdown) **understate the MoE and Muon cost** of a run with tokens spread over the experts. The Nsight section is the closer view of balanced routing.
@@ -57,56 +58,63 @@ The two tools saw different routing, because the router collapses on synthetic d
 
 ### Step breakdown (share of the clean step; run 1, run 2 in brackets)
 
-| part | share |
-| :--- | ---: |
-| `fwd` | 35.6% (35.7%) |
-| `fwd:stack` (8 blocks) | 24.4% (24.5%) |
-| `fwd:head+loss` | 10.5% (10.6%) |
-| `bwd` | 45.7% (46.0%) |
-| `bwd:stack` (8 blocks) | 32.8% (32.9%) |
-| `bwd:head+loss` | 12.4% (12.5%) |
-| `opt` | 18.4% (18.0%) |
-| `opt:opt.muon` | 17.7% (17.4%) |
+| part | G6 (Modal A100) | TSAI lab |
+| :--- | ---: | ---: |
+| `fwd` | 35.6% (35.7%) | _pending_ |
+| `fwd:stack` (8 blocks) | 24.4% (24.5%) | _pending_ |
+| `fwd:head+loss` | 10.5% (10.6%) | _pending_ |
+| `bwd` | 45.7% (46.0%) | _pending_ |
+| `bwd:stack` (8 blocks) | 32.8% (32.9%) | _pending_ |
+| `bwd:head+loss` | 12.4% (12.5%) | _pending_ |
+| `opt` | 18.4% (18.0%) | _pending_ |
+| `opt:opt.muon` | 17.7% (17.4%) | _pending_ |
 
 Inside the blocks (layer pass, summed over the 8 layers; information only, not gated):
 
-| region | share |
-| :--- | ---: |
-| `fwd:block*.attn.sdpa` (eager attention: masked softmax in fp32) | 14.5% (14.5%) |
-| `opt:opt.muon.ns` (Newton-Schulz, loop path) | 12.7% (12.5%) |
-| `fwd:block*.moe.dispatch` (of which the 16 expert calls 5.4%) | 6.0% (6.1%) |
-| `fwd:block*.attn.qkv` | 1.1% |
-| `fwd:block*.moe.shared` | 1.0% |
-| `fwd:embed.ke` | 0.7% |
-| `fwd:block*.moe.router` | 0.3% |
+| region | G6 (Modal A100) | TSAI lab |
+| :--- | ---: | ---: |
+| `fwd:block*.attn.sdpa` (eager attention: masked softmax in fp32) | 14.5% (14.5%) | _pending_ |
+| `opt:opt.muon.ns` (Newton-Schulz, loop path) | 12.7% (12.5%) | _pending_ |
+| `fwd:block*.moe.dispatch` (of which the 16 expert calls 5.4%) | 6.0% (6.1%) | _pending_ |
+| `fwd:block*.attn.qkv` | 1.1% | _pending_ |
+| `fwd:block*.moe.shared` | 1.0% | _pending_ |
+| `fwd:embed.ke` | 0.7% | _pending_ |
+| `fwd:block*.moe.router` | 0.3% | _pending_ |
 
 ### Top ops (share of GPU kernel time)
 
-| rank | kernel | share | calls / step | note |
-| ---: | :--- | ---: | ---: | :--- |
-| 1 | `direct_copy_kernel` (elementwise copy) | 11.5% | 321 | dtype / layout copies |
-| 2 | `bfloat16_copy_kernel` | 7.9% | 336 | fp32 → bf16 casts |
-| 3 | `masked_fill_kernel` | 6.3% | 16 | causal mask in eager attention (8 layers, fwd + bwd) |
-| 4 | `cunn_SoftMaxBackward` (log-softmax) | 6.3% | 1 | full-vocab loss, fp32 |
-| 5 | `cunn_SoftMaxForward` (log-softmax) | 6.2% | 1 | full-vocab loss, fp32 |
-| 6 | fp32 `MulFunctor` | 5.3% | 110 | |
-| 7 | `cunn_SoftMaxBackwardSmem` | 4.5% | 8 | attention softmax backward |
-| 8 | Memcpy DtoD | 3.3% | 33 | |
-| 9 | `softmax_warp_forward` (fp32) | 3.2% | 8 | attention softmax forward |
-| 10 | bf16 GEMMs (top four, `ampere_bf16_s16816gemm_*`) | 10.3% | 19 | |
+| rank | kernel | G6 share | G6 calls / step | TSAI lab share | TSAI lab calls / step | note |
+| ---: | :--- | ---: | ---: | ---: | ---: | :--- |
+| 1 | `direct_copy_kernel` (elementwise copy) | 11.5% | 321 | _pending_ | _pending_ | dtype / layout copies |
+| 2 | `bfloat16_copy_kernel` | 7.9% | 336 | _pending_ | _pending_ | fp32 → bf16 casts |
+| 3 | `masked_fill_kernel` | 6.3% | 16 | _pending_ | _pending_ | causal mask in eager attention (8 layers, fwd + bwd) |
+| 4 | `cunn_SoftMaxBackward` (log-softmax) | 6.3% | 1 | _pending_ | _pending_ | full-vocab loss, fp32 |
+| 5 | `cunn_SoftMaxForward` (log-softmax) | 6.2% | 1 | _pending_ | _pending_ | full-vocab loss, fp32 |
+| 6 | fp32 `MulFunctor` | 5.3% | 110 | _pending_ | _pending_ | |
+| 7 | `cunn_SoftMaxBackwardSmem` | 4.5% | 8 | _pending_ | _pending_ | attention softmax backward |
+| 8 | Memcpy DtoD | 3.3% | 33 | _pending_ | _pending_ | |
+| 9 | `softmax_warp_forward` (fp32) | 3.2% | 8 | _pending_ | _pending_ | attention softmax forward |
+| 10 | bf16 GEMMs (top four, `ampere_bf16_s16816gemm_*`) | 10.3% | 19 | _pending_ | _pending_ | |
 
-- GPU busy 74.8% (76.9%) of the traced step; 7,949 kernels per step.
+| metric | G6 (Modal A100) | TSAI lab |
+| :--- | ---: | ---: |
+| GPU busy, share of the traced step | 74.8% (76.9%) | _pending_ |
+| kernels per step (torch.profiler) | 7,949 | _pending_ |
+| host syncs per step (sync-debug mode) | 147 | _pending_ |
+| kernel launches per step (Nsight) | about 30,100 | _pending_ |
+| host syncs per step (Nsight `cudaStreamSynchronize`) | 256 | _pending_ |
+
 - Host syncs (sync-debug mode): 147 per step, at `models/moe.py:79` (128, `if not tok.any()`) and `models/moe.py:81` (18, `nonzero`, one per expert slot with tokens): the loop dispatch. Nsight counts 256 with every expert active (see Routing state).
 
 ### Slowest parts (layer + part traces)
 
-| rank | part | share of step | part trace |
-| ---: | :--- | ---: | :--- |
-| 1 | `bwd:block*` | 20.2% (20.7%) | `1_bwd_block4.json` |
-| 2 | `fwd:block*.attn.sdpa` | 8.9% (9.1%) | `2_fwd_block4.attn.sdpa.json` |
-| 3 | `opt:opt.muon.ns` | 7.8% (7.8%) | `3_opt_opt.muon.ns.json` |
-| 4 | `bwd:head+loss` | 7.6% (7.9%) | `4_bwd_head+loss.json` |
-| 5 | `fwd:block*.moe.dispatch` | 3.7% (3.8%) | `5_fwd_block4.moe.dispatch.json` |
+| rank | part | G6 share of step | TSAI lab share of step | part trace |
+| ---: | :--- | ---: | ---: | :--- |
+| 1 | `bwd:block*` | 20.2% (20.7%) | _pending_ | `1_bwd_block4.json` |
+| 2 | `fwd:block*.attn.sdpa` | 8.9% (9.1%) | _pending_ | `2_fwd_block4.attn.sdpa.json` |
+| 3 | `opt:opt.muon.ns` | 7.8% (7.8%) | _pending_ | `3_opt_opt.muon.ns.json` |
+| 4 | `bwd:head+loss` | 7.6% (7.9%) | _pending_ | `4_bwd_head+loss.json` |
+| 5 | `fwd:block*.moe.dispatch` | 3.7% (3.8%) | _pending_ | `5_fwd_block4.moe.dispatch.json` |
 
 ## Nsight Systems (B=8)
 
@@ -116,31 +124,31 @@ Shares and counts from the 3 traced steps. Tracing adds overhead on every launch
 
 GPU kernel time is 66% of the traced wall time (rough GPU-busy share; torch.profiler, without Nsight's launch overhead, gives 75–77%). 134 kernel types, about 30,300 launches per step.
 
-| group | share | launches / step |
-| :--- | ---: | ---: |
-| GEMMs (cuBLAS, bf16) | 28.4% | ~7,830 |
-| other elementwise (mul, add, scalar ops) | 26.6% | ~16,150 |
-| copy / cast (`direct_copy`, `bfloat16_copy`) | 17.0% | ~2,710 |
-| log-softmax fwd + bwd (loss, fp32) | 9.8% | 2 |
-| softmax (attention, router) | 6.0% | 32 |
-| `masked_fill` (attention mask) | 4.9% | 16 |
-| reductions / norms | 2.6% | ~1,250 |
-| index / gather / scatter | 1.8% | ~1,060 |
-| fills | 1.7% | ~290 |
-| cub sort / select (`nonzero`, sort) | 1.1% | ~1,010 |
+| group | G6 share | G6 launches / step | TSAI lab share | TSAI lab launches / step |
+| :--- | ---: | ---: | ---: | ---: |
+| GEMMs (cuBLAS, bf16) | 28.4% | ~7,830 | _pending_ | _pending_ |
+| other elementwise (mul, add, scalar ops) | 26.6% | ~16,150 | _pending_ | _pending_ |
+| copy / cast (`direct_copy`, `bfloat16_copy`) | 17.0% | ~2,710 | _pending_ | _pending_ |
+| log-softmax fwd + bwd (loss, fp32) | 9.8% | 2 | _pending_ | _pending_ |
+| softmax (attention, router) | 6.0% | 32 | _pending_ | _pending_ |
+| `masked_fill` (attention mask) | 4.9% | 16 | _pending_ | _pending_ |
+| reductions / norms | 2.6% | ~1,250 | _pending_ | _pending_ |
+| index / gather / scatter | 1.8% | ~1,060 | _pending_ | _pending_ |
+| fills | 1.7% | ~290 | _pending_ | _pending_ |
+| cub sort / select (`nonzero`, sort) | 1.1% | ~1,010 | _pending_ | _pending_ |
 
 Top single kernels: `direct_copy` 9.9% (1,311 calls), `bfloat16_copy` 6.6% (1,326), log-softmax backward 4.9% (1), `masked_fill` 4.9% (16), log-softmax forward 4.8% (1), fp32 mul 4.2% (220), bf16 scalar mul 3.7% (6,480 calls), the 64×64 bf16 GEMM 3.7% (2,218 calls).
 
 ### NVTX regions (host time inside each region, share of a traced step)
 
-| region | share | calls / step |
-| :--- | ---: | ---: |
-| `opt` | 43.7% | 1 |
-| `opt:opt.muon` | 42.8% | 1 |
-| `opt:opt.muon.ns` | 38.3% | 432 |
-| `bwd` | 34.2% | 1 |
-| `fwd` | 21.6% | 1 |
-| `fwd:block*.moe.dispatch` (8 blocks) | 19.1% | 8 |
+| region | G6 share | G6 calls / step | TSAI lab share | TSAI lab calls / step |
+| :--- | ---: | ---: | ---: | ---: |
+| `opt` | 43.7% | 1 | _pending_ | _pending_ |
+| `opt:opt.muon` | 42.8% | 1 | _pending_ | _pending_ |
+| `opt:opt.muon.ns` | 38.3% | 432 | _pending_ | _pending_ |
+| `bwd` | 34.2% | 1 | _pending_ | _pending_ |
+| `fwd` | 21.6% | 1 | _pending_ | _pending_ |
+| `fwd:block*.moe.dispatch` (8 blocks) | 19.1% | 8 | _pending_ | _pending_ |
 
 - NVTX time is CPU time, not GPU time. On the host, Muon's loop path is the largest region: 432 Newton-Schulz calls per step, each a chain of small kernels.
 - In every block, `moe.dispatch.expert0` holds about half of the dispatch range: the first `tok.any()` waits for the queued GPU work.

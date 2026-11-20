@@ -2,7 +2,8 @@
 
 **Status:** §1–4 and §6 filled; §1 loop dispatch only (the sorted / grouped A/B is in `kernels_dryrun2.md`).  
 **Sources:** G6 runs on Modal A100s (20 Nov 2026) and the lab's dry run 1 evidence (class #620). Nothing else.  
-**Rule:** GPU + SHA per table. Member-GPU runs give shares, counts and sizes only; step time comes from the lab run. `mfu_method=g6-v1` until CAP flips.
+**Rule:** GPU + SHA per table. Member-GPU runs give shares, counts and sizes only; step time comes from the lab run. `mfu_method=g6-v1` until CAP flips.  
+**TSAI lab column:** to be filled from the lab's dry run 1 profile when it is shared; #620 has no profile, so those cells are _pending_.
 
 | Field | Value |
 | :--- | :--- |
@@ -18,15 +19,15 @@
 
 Method: perfkit layer pass, level 3, sum of `fwd:block*.moe.dispatch` over the 8 layers; `model.moe.dispatch=loop` (the dry run 1 setting). Two runs in separate processes (`--repeat 2`, PASS); run 2 in brackets.
 
-| metric | value | source |
-| :--- | ---: | :--- |
-| `moe.dispatch`, share of the layer pass | 6.0% (6.1%) | `repeatbatch8` |
-| of which the 16 expert calls (`moe.dispatch.expert*`) | 5.4% (5.4%) | `repeatbatch8` |
-| `moe.router`, share of the layer pass | 0.3% | `repeatbatch8` |
-| `moe.shared` (shared expert), share of the layer pass | 1.0% | `repeatbatch8` |
-| `fwd:block*.moe.dispatch` rank among the slowest parts | 5th, 3.7% (3.8%) of the step | `repeatbatch8` |
-| host syncs per step from the dispatch (Nsight `cudaStreamSynchronize`) | 256 | `nsys-b8` |
-| host time inside `moe.dispatch` (Nsight NVTX, share of a traced step) | 19.1% | `nsys-b8` |
+| metric | G6 (Modal A100) | TSAI lab | source |
+| :--- | ---: | ---: | :--- |
+| `moe.dispatch`, share of the layer pass | 6.0% (6.1%) | _pending_ | `repeatbatch8` |
+| of which the 16 expert calls (`moe.dispatch.expert*`) | 5.4% (5.4%) | _pending_ | `repeatbatch8` |
+| `moe.router`, share of the layer pass | 0.3% | _pending_ | `repeatbatch8` |
+| `moe.shared` (shared expert), share of the layer pass | 1.0% | _pending_ | `repeatbatch8` |
+| `fwd:block*.moe.dispatch` rank among the slowest parts | 5th, 3.7% (3.8%) of the step | _pending_ | `repeatbatch8` |
+| host syncs per step from the dispatch (Nsight `cudaStreamSynchronize`) | 256 | _pending_ | `nsys-b8` |
+| host time inside `moe.dispatch` (Nsight NVTX, share of a traced step) | 19.1% | _pending_ | `nsys-b8` |
 
 - Routing state: the perfkit rows above were measured with a collapsed router (18 of 128 expert slots with tokens, synthetic data; `profile_dryrun1.md`, Routing state), so the GPU shares understate the dispatch cost; the Nsight rows (256 syncs, 19.1%) had all 128 slots active.
 - The GPU cost is small; the host cost is not. `dispatch_loop` reads two values back to the host per expert per layer (`tok.any()` and `nonzero`, `models/moe.py:79`, `:81`): 8 layers × 16 experts × 2 = 256 syncs per step with every expert active. Each one stops the CPU until the GPU queue drains, so the first expert of every block (`expert0`) holds about half of that block's dispatch range in Nsight.
@@ -36,14 +37,14 @@ Method: perfkit layer pass, level 3, sum of `fwd:block*.moe.dispatch` over the 8
 
 Dry run 1 ran on one GPU, so it had no all-to-all. This is a forecast for a multi-GPU run of the same model: perfkit `--modes comm` under `torchrun`, 2 ranks on 2 A100-SXM4-80GB in one container, NCCL, isolated all-to-all (no overlap with compute).
 
-| metric | value | source |
-| :--- | :--- | :--- |
-| world size / backend | 2 / NCCL | `a2a` |
-| calls per step | 32 (4 per layer × 8 layers) | `a2a` |
-| payload per call | 64 MiB (B × T × top-2 × d × 4 bytes: fp32 payload, an upper bound for a bf16 run) | `a2a` |
-| all-to-all per step, share of the clean step (rank 0, same container) | 1.7% | `a2a` |
-| per-call spread (p10..p90, 30 timed calls) | 15% | `a2a` |
-| slowest rank against the median call | 0.6% above | `a2a` |
+| metric | G6 (Modal A100) | TSAI lab | source |
+| :--- | :--- | :--- | :--- |
+| world size / backend | 2 / NCCL | n/a: dry run 1 ran on 1 GPU | `a2a` |
+| calls per step | 32 (4 per layer × 8 layers) | n/a | `a2a` |
+| payload per call | 64 MiB (B × T × top-2 × d × 4 bytes: fp32 payload, an upper bound for a bf16 run) | n/a | `a2a` |
+| all-to-all per step, share of the clean step (rank 0, same container) | 1.7% | n/a | `a2a` |
+| per-call spread (p10..p90, 30 timed calls) | 15% | n/a | `a2a` |
+| slowest rank against the median call | 0.6% above | n/a | `a2a` |
 
 - The all-to-all is a small part of the step for this model on 2 GPUs in one node, even counted with no overlap and an fp32 payload.
 - Not covered: more than 2 ranks, more than one node (no inter-node network), other payload sizes (one point, no α-β fit), and the link type: `nvidia-smi topo -m` fails inside the Modal sandbox, so NVLink against PCIe is not reported.
@@ -52,14 +53,14 @@ Dry run 1 ran on one GPU, so it had no all-to-all. This is a forecast for a mult
 
 Full-size save of the dry run 1 model: model weights, every optimizer's state and the scaler. 10 timed saves after one warm save that is not counted. Timed in two parts: GPU → CPU copy into pinned buffers, then serialise + write + fsync. Written to the container's local disk (512 GB overlay), not to a network volume.
 
-| metric | value | source |
-| :--- | :--- | :--- |
-| checkpoint size | 2,081 MiB | `ckpt` |
-| GPU → CPU copy, share of the save | 6.5% | `ckpt` |
-| serialise + write + fsync, share of the save | 93.6% | `ckpt` |
-| save time in clean steps (same container) | 2.2 steps | `ckpt` |
-| write rate to the container disk | 1,554 MiB/s | `ckpt` |
-| save spread (p10..p90, 10 saves) | 4.9% | `ckpt` |
+| metric | G6 (Modal A100) | TSAI lab | source |
+| :--- | :--- | :--- | :--- |
+| checkpoint size | 2,081 MiB | _pending_ | `ckpt` |
+| GPU → CPU copy, share of the save | 6.5% | _pending_ | `ckpt` |
+| serialise + write + fsync, share of the save | 93.6% | _pending_ | `ckpt` |
+| save time in clean steps (same container) | 2.2 steps | _pending_ | `ckpt` |
+| write rate to the container disk | 1,554 MiB/s | _pending_ | `ckpt` |
+| save spread (p10..p90, 10 saves) | 4.9% | _pending_ | `ckpt` |
 
 - Size check: 2,081 MiB is the full fp32 training state: 237.06 M weights (904 MiB) + Muon momentum on 165.7 M matrix parameters (632 MiB) + AdamW's two moments on 71.3 M parameters (544 MiB).
 - The disk write is the cost (94%); the GPU copy is not. At one save every 1,000 steps the save is about 0.2% of training time.
@@ -93,12 +94,12 @@ What one rank already shows: the step is host-heavy (256 host syncs from the loo
 
 ## 5. MoE analysis
 
-| part of the MoE path | GPU-side share | host-side cost | source |
-| :--- | :--- | :--- | :--- |
-| dispatch (loop over 16 experts) | 6.0% of the layer pass | 256 syncs per step, 19.1% of host time | §1 |
-| router + shared expert | 1.3% of the layer pass | small | §1 |
-| all-to-all (forecast, 2 GPUs) | 1.7% of the step | n/a | §2 |
-| checkpoint | 2.2 steps per save | disk write 94% of the save | §3 |
+| part of the MoE path | G6 GPU-side share | G6 host-side cost | TSAI lab | source |
+| :--- | :--- | :--- | :--- | :--- |
+| dispatch (loop over 16 experts) | 6.0% of the layer pass | 256 syncs per step, 19.1% of host time | _pending_ | §1 |
+| router + shared expert | 1.3% of the layer pass | small | _pending_ | §1 |
+| all-to-all (forecast, 2 GPUs) | 1.7% of the step | n/a | n/a (1 GPU) | §2 |
+| checkpoint | 2.2 steps per save | disk write 94% of the save | _pending_ | §3 |
 
 1. **Loop dispatch syncs:** the largest MoE cost is on the host, not the GPU. Candidate: `model.moe.dispatch=grouped` (fixed capacity, no host sync) or `sorted` (one sync per call); measured in `kernels_dryrun2.md`.
 2. **All-to-all:** small at 2 GPUs in one node; worth re-measuring at the main run's rank count and across nodes before it is ruled out.
