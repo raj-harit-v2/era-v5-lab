@@ -1,0 +1,85 @@
+{
+  "result": "PASS",
+  "tokenizer_sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b",
+  "tokenizers": "0.22.2",
+  "python": "3.9.6",
+  "platform": "macOS-27.2.1-arm64-arm-64bit",
+  "commit": "1bba5698a147f36dc483294c67eaa45077ba217b",
+  "seed": 4,
+  "per_domain": 1000,
+  "source_check": false,
+  "wall_s": 0.7,
+  "domains": {
+    "indic": {
+      "shards": 5,
+      "docs": 153777,
+      "sampled": 1000,
+      "tokens": 256921,
+      "eos": 1000,
+      "ids": 1000,
+      "normal": 1000,
+      "source": 0,
+      "source_missing": 0,
+      "fffd_docs": 1
+    }
+  },
+  "shards": [
+    {
+      "shard_id": "ind-hi-fw2-train-000000",
+      "domain": "indic",
+      "payload_sha256": "e64b18601f2ffc82cfeaca78c864cead9aab62b0747adf62c38a1d891613a13b",
+      "doc_count": 13773,
+      "token_count": 8988818,
+      "sampled": 93,
+      "fail": 0,
+      "writer_left_out_roundtrip": 0,
+      "writer_rows_read": 13773
+    },
+    {
+      "shard_id": "ind-hi-hplt-train-000000",
+      "domain": "indic",
+      "payload_sha256": "e7e357d21beceacab190959591e68e9b00e24729fd098b87be0a28c4cdf95d46",
+      "doc_count": 8386,
+      "token_count": 8090716,
+      "sampled": 59,
+      "fail": 0,
+      "writer_left_out_roundtrip": 0,
+      "writer_rows_read": 8418
+    },
+    {
+      "shard_id": "ind-hi-indiccorp-train-000000",
+      "domain": "indic",
+      "payload_sha256": "6be0f58e567a0f8a45eb2891aeadacbeb43d570e988355c5f15efa576f0764db",
+      "doc_count": 109668,
+      "token_count": 9343359,
+      "sampled": 709,
+      "fail": 0,
+      "writer_left_out_roundtrip": 0,
+      "writer_rows_read": 109674
+    },
+    {
+      "shard_id": "ind-hi-sangraha-s-train-000000",
+      "domain": "indic",
+      "payload_sha256": "4b92b39b427566809d1653f1b81b35b274c2a6c7de99c3b4f8a9d5b017bb5561",
+      "doc_count": 7467,
+      "token_count": 5988971,
+      "sampled": 49,
+      "fail": 0,
+      "writer_left_out_roundtrip": 0,
+      "writer_rows_read": 7467
+    },
+    {
+      "shard_id": "ind-hi-sangraha-v-train-000000",
+      "domain": "indic",
+      "payload_sha256": "78aca29173b76840de617be0b1335b9417a340adce7b0b0564b23e195b919ab1",
+      "doc_count": 14483,
+      "token_count": 9254413,
+      "sampled": 90,
+      "fail": 0,
+      "writer_left_out_roundtrip": 0,
+      "writer_rows_read": 14489
+    }
+  ],
+  "skipped_shards": [],
+  "failures": []
+}

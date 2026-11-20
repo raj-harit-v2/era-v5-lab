@@ -1,0 +1,88 @@
+W1117 21:19:27.268000 94469 site-packages/torch/distributed/elastic/multiprocessing/redirects.py:35] NOTE: Redirects are currently not supported in MacOs.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 6251.76it/s]
+7 of 86 parts hold a configured pack: en-fineweb-edu, ind-hi-fw2, ind-sa-fw2
+heldout/en-fineweb-edu/Heldout/part-00000.parquet: 732 documents encoded or cached (34s)
+train/en-fineweb-edu/Part_1/part-00000.parquet: 1268 documents encoded or cached (70s)
+train/en-fineweb-edu/Part_2/part-00001.parquet: not read, its packs have max_docs_per_pack documents
+heldout/ind-hi-fw2/Heldout/part-00000.parquet: 130 documents encoded or cached (73s)
+train/ind-hi-fw2/Part_1/part-00000.parquet: 1870 documents encoded or cached (119s)
+heldout/ind-sa-fw2/Heldout/part-00000.parquet: 55 documents encoded or cached (120s)
+train/ind-sa-fw2/Part_1/part-00000.parquet: 1945 documents encoded or cached (179s)
+retrieve sa-en: 2000 x 2000 documents, 65 candidates (179s)
+retrieve sa-hi: 2000 x 2000 documents, 524 candidates (179s)
+retrieve hi-en: 2000 x 2000 documents, 313 candidates (179s)
+verify: 738 pairs (305s)
+{
+  "documents_compared": 6000,
+  "url": {
+    "groups_with_2_or_more": 2,
+    "groups_over_url_group_max": 0,
+    "pairs": 0
+  },
+  "retrieved": {
+    "sa-en": {
+      "documents_a": 2000,
+      "documents_b": 2000,
+      "pairs_in_top_k": 10896,
+      "kept": 65
+    },
+    "sa-hi": {
+      "documents_a": 2000,
+      "documents_b": 2000,
+      "pairs_in_top_k": 11186,
+      "kept": 524
+    },
+    "hi-en": {
+      "documents_a": 2000,
+      "documents_b": 2000,
+      "pairs_in_top_k": 10724,
+      "kept": 313
+    }
+  },
+  "candidates": 902,
+  "verified": 738,
+  "qualifying": 0,
+  "qualifying_heldout_train": 0,
+  "qualifying_by_language_pair": {},
+  "stages_seconds": {
+    "load_model": 11.481,
+    "read": 8.573,
+    "cache": 0.134,
+    "encode": 158.329,
+    "url": 0.007,
+    "retrieve": 0.132,
+    "verify_read": 0.292,
+    "verify": 125.966
+  },
+  "rates": {
+    "heads_per_second": 37.9,
+    "sentences_per_second": 108.0
+  },
+  "estimate_all_documents": {
+    "documents_encoded": {
+      "en": 2000,
+      "hi": 2000,
+      "sa": 2000
+    },
+    "documents_full": {
+      "en": 72665,
+      "hi": 14220,
+      "sa": 5956
+    },
+    "seconds": {
+      "load_model": 11.5,
+      "read": 21.3,
+      "encode": 2449.9,
+      "retrieve": 17.1,
+      "verify": 549.9
+    },
+    "minutes_total": 50.8,
+    "every_stage_measured": true,
+    "suggested_max_time_minutes": 77,
+    "basis": "this run's rates; read scales with rows, encode with documents, retrieve with the product of the two languages' documents, verify with the smaller language's documents (at most max_verify)"
+  },
+  "wall_seconds": 305.0,
+  "peak_rss_mb": 845.2
+}
+
+Wrote h3_docs.parquet, h3_candidates.csv, h3_matches.csv, h3_by_pack.csv, h3_histogram.csv and h3_summary.json to out/h3_local

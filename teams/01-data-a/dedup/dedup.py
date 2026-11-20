@@ -41,6 +41,8 @@ CONFIG (JSON; keys starting with "_" are comments)
   licence_usable   {pack_id: true/false}; packs not listed use default_licence_usable
   default_licence_usable   true or false; the summary records which packs used the default (default true)
   gold_dirs        folders with <pack_id>_gold.csv files, for the harm check               (default [])
+  h3               optional, H3 translations (h3_join.py): {"matches": h3_matches.csv from h3.py, "remove": false,
+                   "parallel_packs": [...]}. Absent: no H3, and every output is as without this key
 
 WHAT IT WRITES (in out)
 =======================
@@ -55,6 +57,7 @@ WHAT IT WRITES (in out)
                            (survivor or removed), pack_id, split, part, row_in_part, doc_id. A group can have several
                            survivors (every held-out copy, rule 0) or none (no usable licence, rule 1). For the F2 step
                            after dedup: it counts and lists the groups whose survivor F2 removes (TSAI, 12 Nov)
+  h3_pairs.csv             with "h3" only: every H3 match with the H1/H2 group of each side and its outcome (h3_join.py)
   dedup_summary.json       per pack: documents in, removed by H1 / H2 / cross-pack, documents out; totals; how often
                            each rule decided; empty documents and the matches set aside for them; the harm check; the
                            config; each output's size and sha256
@@ -64,10 +67,12 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 sys.dont_write_bytecode = True
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import h3_join  # noqa: E402
 
 REPO = Path(__file__).resolve().parents[3]   # teams/01-data-a/dedup/dedup.py -> the repository root
 DEFAULTS = {"results": None, "inputs": "", "out": "out/dedup", "cross_pack": True, "pack_order": None,
-            "licence_usable": {}, "default_licence_usable": True, "gold_dirs": []}
+            "licence_usable": {}, "default_licence_usable": True, "gold_dirs": [], "h3": None}
 NEEDED = ("overlap_summary.json", "overlap_matches.csv", "overlap_docs.parquet")
 
 
@@ -99,6 +104,10 @@ def load_config(path):
         raise Fatal("default_licence_usable and cross_pack must be true or false")
     if not isinstance(cfg["gold_dirs"], list):
         raise Fatal("gold_dirs must be a list of folders")
+    if cfg["h3"] is None:
+        del cfg["h3"]   # no H3: the config, and so the summary, read as before
+    else:
+        cfg["h3"] = h3_join.check_config(cfg["h3"], Fatal)
     return cfg
 
 
@@ -308,6 +317,13 @@ def run(cfg):
     defaulted = sorted(p for p in packs if p not in cfg["licence_usable"])
     usable = lambda p: cfg["licence_usable"].get(p, cfg["default_licence_usable"])
     urls = read_urls(REPO / cfg["inputs"] if cfg["inputs"] else None, docs)
+    h3 = cfg.get("h3")
+    if h3:   # H3 documents join docs after rule 2's urls are read: they are never in an H1/H2 group's decision
+        h3_path = REPO / h3["matches"]
+        h3_matches = h3_join.read_matches(h3_path, Fatal)
+        h3_docs = h3_join.lookup(results, h3_matches, Fatal)
+        for d in h3_docs.values():
+            docs.setdefault(d["row"], d)
 
     # strongest direct match of each pair, for the log
     best_pair = {}
@@ -323,6 +339,7 @@ def run(cfg):
 
     removed, log, decided, member = [], [], Counter(), []   # member: (group_id, group_size, rule, role, row)
     no_survivor = several_survivors = 0
+    groups = {}   # row -> (group_id, train survivors, held-out survivors), for H3
     for i, cl in enumerate(sorted(clusters(matches), key=lambda g: g[0]), 1):   # by lowest row: same group_id every run
         keep, drop, rule, ref = decide(cl, docs, rank, usable, urls)
         decided[rule] += 1
@@ -330,6 +347,9 @@ def run(cfg):
         several_survivors += len(keep) > 1
         member += [(f"G{i:06d}", len(cl), rule, "survivor", r) for r in keep]
         member += [(f"G{i:06d}", len(cl), rule, "removed", r) for r in drop]
+        g = (f"G{i:06d}", [r for r in keep if docs[r]["split"] != "heldout"], [r for r in keep if docs[r]["split"] == "heldout"])
+        for r in cl:
+            groups[r] = g
         for r in drop:
             d = docs[r]
             if ref is not None:
@@ -348,6 +368,23 @@ def run(cfg):
                 "direct": direct is not None,
             })
             removed.append(r)
+
+    if h3:   # H3 after every H1/H2 survivor is chosen: rule 0 only (h3_join.py)
+        h3_pairs, h3_removals = h3_join.join(h3_matches, h3_docs, groups, h3["parallel_packs"], h3["remove"])
+        gone = set()
+        for r, ref_row, cov in h3_removals:
+            d, ref = docs[r], docs[ref_row]
+            log.append({
+                "removed_pack_id": d["pack"], "removed_split": d["split"], "removed_part": d["part"],
+                "removed_row_in_part": d["row_in_part"], "removed_id": d["doc_id"],
+                "kept_pack_id": ref["pack"], "kept_split": ref["split"], "kept_part": ref["part"],
+                "kept_row_in_part": ref["row_in_part"], "kept_id": ref["doc_id"],
+                "rule": "H3", "similarity": round(cov, 6), "priority_rule": 0, "stage": "cross_language", "direct": True,
+            })
+            removed.append(r)
+            gone.add(r)
+        member = [(g, size, rule, "removed" if role == "survivor" and r in gone else role, r)
+                  for g, size, rule, role, r in member]
 
     held_pairs = [(a, b, rule, score) for (a, b), (rule, score) in sorted(best_pair.items())
                   if docs[a]["split"] == "heldout" and docs[b]["split"] == "heldout"]
@@ -383,6 +420,8 @@ def run(cfg):
         for g, size, rule, role, r in member:
             d = docs[r]
             w.writerow([g, size, rule, role, d["pack"], d["split"], d["part"], d["row_in_part"], d["doc_id"]])
+    if h3:
+        h3_join.write_pairs(out / "h3_pairs.csv", h3_pairs)
 
     by_pack = {p: Counter() for p in packs}
     for e in log:
@@ -395,10 +434,14 @@ def run(cfg):
                "removed_H1": by_pack[p]["removed_H1"], "removed_H2": by_pack[p]["removed_H2"],
                "removed_cross_pack": by_pack[p]["removed_cross_pack"],
                "documents_out": per_pack[p] - by_pack[p]["removed"]} for p in packs}
+    if h3:
+        for p in packs:
+            per[p] = {**{k: v for k, v in per[p].items() if k != "documents_out"}, "removed_H3": by_pack[p]["removed_H3"],
+                      "documents_out": per[p]["documents_out"]}
     harm = harm_check(cfg["gold_dirs"], gold, present, {(e["removed_pack_id"], e["removed_id"]) for e in log})
     files = {f: {"bytes": (out / f).stat().st_size, "sha256": sha256_file(out / f)}
              for f in ("remove_list.csv", "dedup_log.jsonl", "heldout_duplicates.csv", "empty_documents.csv",
-                       "dedup_groups.csv")}
+                       "dedup_groups.csv") + (("h3_pairs.csv",) if h3 else ())}
     summary = {
         "status": "complete",
         "config": cfg,
@@ -422,6 +465,13 @@ def run(cfg):
         "url_known": urls is not None,
         "rule_2_note": None if urls is not None else "no inputs given: url unknown, rule 2 decided nothing",
         "licence_default_used_for": defaulted,
+        **({"h3": {"matches": {"path": h3["matches"], "sha256": sha256_file(h3_path), "pairs": len(h3_matches)},
+                   "remove": h3["remove"], "parallel_packs": h3["parallel_packs"],
+                   "outcomes": {o: sum(p["outcome"] == o for p in h3_pairs) for o in h3_join.OUTCOMES},
+                   "removed": len(h3_removals),
+                   "train_docs_targeted": len({p["target"] for p in h3_pairs if p["target"] is not None}),
+                   "groups_survivor_removed": len({groups[r][0] for r, _, _ in h3_removals if r in groups})}}
+           if h3 else {}),
         "harm_check": harm,
         "by_pack": per,
         "outputs": files,
@@ -451,6 +501,9 @@ def main(argv=None):
         print(f"note: {s['rule_2_note']}")
     if s["licence_default_used_for"]:
         print(f"note: licence map not filled for {len(s['licence_default_used_for'])} packs; default used")
+    if "h3" in s:
+        h = s["h3"]
+        print(f"h3: {h['matches']['pairs']:,} matches, {h['removed']:,} removed (remove: {h['remove']}); outcomes {h['outcomes']}")
     print(f"harm check: {s['harm_check']['status']}")
     print(f"wrote remove_list.csv, dedup_log.jsonl, heldout_duplicates.csv, empty_documents.csv, dedup_groups.csv and "
           f"dedup_summary.json to "

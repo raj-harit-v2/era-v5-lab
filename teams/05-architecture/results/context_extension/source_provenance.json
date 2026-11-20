@@ -1,0 +1,31 @@
+{
+  "primary_notebook_sha256": "298d8303f6ad3d4b379af9b32198d62516a32f893afc858d6e698bdd4e3adcf0",
+  "replay_notebook_sha256": "749bed645ec07debc9390a71f3e418bb1ec30b861a3c8cd1810f595692ee757d",
+  "replay_environment_marimo": "0.25.2",
+  "replay_header_addition": "marimo>=0.25.2",
+  "original_replay_receipt_hash_field": "notebook_sha256 identifies the primary source",
+  "method": "The exact original executed source is preserved in Git commit 9539c7be6263b3fe429a5096dac8c77ed1428f63 and the complete supporting archive. The current Jupyter notebook explains the assignment and experiment, retains the executable selection/scoring logic, and was executed end-to-end in a fresh GPU kernel after the readability update. Original run/replay hashes remain historical identifiers.",
+  "experiment_id": "exploratory_wikitext_pilot",
+  "historical_source_git_commit": "9539c7be6263b3fe429a5096dac8c77ed1428f63",
+  "historical_source_git_path": "teams/05-architecture/notebooks/context_extension.py",
+  "current_jupyter": {
+    "path": "notebooks/context_extension.ipynb",
+    "source_code_sha256": "d37e78f3cf178dd440002a476dd5795da0158f81575b044e87c043bbdfa4c670",
+    "gpu_execution": "fresh isolated Jupyter kernel; all code cells completed; outputs saved",
+    "local_validation": [
+      "nbformat schema",
+      "all code cells compile",
+      "selection and tail-scoring ASTs unchanged after excluding docstrings",
+      "original recorded snapshot unchanged",
+      "fresh run output/receipt and fixture hash checks",
+      "no presentation-framework references"
+    ],
+    "preserved_function_ast_sha256": {
+      "select_documents": "1a5995efad1d997d95191f19826c84f57c5e6ea28a15d02f9ffbf672e711e54d",
+      "score_tail": "d8dc692d9a09c63c4a6111c0ac1ff0bac1ad6732298bd91de909bcc22e1f6bf3"
+    },
+    "execution_receipt": "results/context_extension/readability_rerun.json",
+    "finished_at_utc": "2026-11-18T07:27:09.670544+00:00",
+    "ast_comparison_excludes_docstrings": true
+  }
+}

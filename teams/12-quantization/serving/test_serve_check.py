@@ -138,3 +138,32 @@ def test_format_hint_teaches_tool_calls_only_with_tools():
     with_tools = sc.build_body(ROWS["tool-01"], TOOLS, args, "m")["messages"][0]["content"]
     assert "<|think|>" in no_tools and "<|tool_call|>" not in no_tools
     assert "<|tool_call|>" in with_tools and "get_weather" in with_tools
+
+
+# ------------------------------------------------------------------------------ the chat template copy
+
+G12_TEMPLATE = HERE.parent / "tokenizer" / "chat_template.jinja"
+G10_TEMPLATE = HERE.parents[1] / "10-post-training" / "chat-format" / "chat_template.jinja"
+
+
+def test_default_template_is_the_g12_copy_and_renders_tools():
+    import test_g10_parsers as tp
+    assert sc.DEFAULT_TEMPLATE == G12_TEMPLATE and G12_TEMPLATE.is_file()
+    out = tp._render([{"role": "user", "content": "q"}], add_generation_prompt=True,
+                     tools=[{"type": "function", "function": TOOLS["get_weather"]["function"]}])
+    assert "\n\nTools:\n[{" in out and '"name": "get_weather"' in out
+
+
+def test_schemas_go_into_the_system_message_only_for_a_template_that_hides_tools():
+    merged = G12_TEMPLATE.read_text(encoding="utf-8")
+    first_g10_template = "{{ messages }}"                      # never mentions tools
+    assert sc.tools_in_system("auto", merged) is False
+    assert sc.tools_in_system("auto", first_g10_template) is True
+    assert sc.tools_in_system("on", merged) is True and sc.tools_in_system("off", first_g10_template) is False
+
+
+def test_g12_copy_equals_g10_master_once_g10_has_it():
+    if "\n\nTools:\n" not in G10_TEMPLATE.read_text(encoding="utf-8"):
+        import pytest
+        pytest.skip("this branch's G10 template is the pre-parity one; the copy follows lab main")
+    assert G12_TEMPLATE.read_text(encoding="utf-8") == G10_TEMPLATE.read_text(encoding="utf-8")

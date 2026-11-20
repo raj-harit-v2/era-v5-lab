@@ -1,0 +1,400 @@
+{
+  "tokenizer": {
+    "name": "p1536",
+    "sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b",
+    "vocab_size": 131072
+  },
+  "pos_dim": 32,
+  "output_dim": 8192,
+  "hashes": {
+    "raw_table_sha256": "21072027b19ef6f05d57ead7a2fc9fb4c52129e491186bf38d0ba079e8d5168a",
+    "codes_sha256": "0bc1aa3cca5ce4af56f1280d14ea3cbe1378260aa5100a502f9b7d44f9565a26",
+    "matrix_sha256": "0f96a38a959e6716d810d73bab85ad2181c1cdcd759eb4fdf2dc09796bcdfa78",
+    "matrix_sha256_matches_recorded": true,
+    "row_hashes_sha256": "1b166c37e1eaff2975580364f9ea4875f9e884d4aff0c4442f3e3e0da3164719",
+    "row_hashes_sha256_matches_recorded": true
+  },
+  "A_identical_bytes_and_length": {
+    "n_unique_rows": 131072,
+    "n_colliding_tokens": 0
+  },
+  "B_high_equals_low": {
+    "lengths_checked": "1..32",
+    "lengths_with_high_equal_low": [],
+    "lengths_in_vocab_with_high_equal_low": [],
+    "lengths_with_high_not_above_low": [],
+    "L0_high_equals_low": true,
+    "L0_tokens_in_vocab": false
+  },
+  "C_identical_value_pairs_across_lengths": {
+    "lengths_checked": "1..32",
+    "n_distinct_pairs": 32,
+    "identical_length_pairs": []
+  },
+  "row_hashes": {
+    "n_rows": 131072,
+    "n_distinct_row_hashes": 131072,
+    "n_duplicate_rows": 0,
+    "duplicate_ids": []
+  },
+  "special_tokens": {
+    "n_special": 356,
+    "special_ids_source": "archived C3-s0 tokenizer.json (15468e66\u20262ddc3) added_tokens with special: true; Team 3's release note (teams/03-tokenizer/release/README.md) says p1536's 356 added_tokens are byte-for-byte the same",
+    "required_ids": {
+      "36": {
+        "content": "<|end_of_text|>",
+        "special": true,
+        "row_sha256": "ce8bf4ce5df37241f15cfdd67c2748d958ce9f3752addce5e0652c68c80c09ae"
+      },
+      "130822": {
+        "content": "<|endoftext|>",
+        "special": true,
+        "row_sha256": "ecd8651f74160098866c5cea9f4686f7af9b8e8c132333d6f70632507040f845"
+      }
+    },
+    "required_ids_present": true,
+    "required_ids_distinct": true,
+    "eos": {
+      "id": 130822,
+      "content": "<|endoftext|>",
+      "matches_tokenizer": true
+    },
+    "n_special_token_collisions": 0,
+    "colliding_special_ids": [],
+    "rows_not_matching_added_tokens": []
+  },
+  "per_length": [
+    {
+      "L": 0,
+      "n_tokens": 0,
+      "high_bf16": 0.0,
+      "high_bits": "0x0000",
+      "low_bf16": 0.0,
+      "low_bits": "0x0000",
+      "high_equals_low": true,
+      "f64_rounded_matches": false
+    },
+    {
+      "L": 1,
+      "n_tokens": 256,
+      "high_bf16": 90.5,
+      "high_bits": "0x42b5",
+      "low_bf16": -0.01104736328125,
+      "low_bits": "0xbc35",
+      "high_equals_low": false,
+      "f64_rounded_matches": true
+    },
+    {
+      "L": 2,
+      "n_tokens": 3712,
+      "high_bf16": 64.0,
+      "high_bits": "0x4280",
+      "low_bf16": -0.015625,
+      "low_bits": "0xbc80",
+      "high_equals_low": false,
+      "f64_rounded_matches": true
+    },
+    {
+      "L": 3,
+      "n_tokens": 12025,
+      "high_bf16": 52.25,
+      "high_bits": "0x4251",
+      "low_bf16": -0.0191650390625,
+      "low_bits": "0xbc9d",
+      "high_equals_low": false,
+      "f64_rounded_matches": true
+    },
+    {
+      "L": 4,
+      "n_tokens": 15786,
+      "high_bf16": 45.25,
+      "high_bits": "0x4235",
+      "low_bf16": -0.0220947265625,
+      "low_bits": "0xbcb5",
+      "high_equals_low": false,
+      "f64_rounded_matches": true
+    },
+    {
+      "L": 5,
+      "n_tokens": 15061,
+      "high_bf16": 40.5,
+      "high_bits": "0x4222",
+      "low_bf16": -0.024658203125,
+      "low_bits": "0xbcca",
+      "high_equals_low": false,
+      "f64_rounded_matches": true
+    },
+    {
+      "L": 6,
+      "n_tokens": 16800,
+      "high_bf16": 37.0,
+      "high_bits": "0x4214",
+      "low_bf16": -0.027099609375,
+      "low_bits": "0xbcde",
+      "high_equals_low": false,
+      "f64_rounded_matches": true
+    },
+    {
+      "L": 7,
+      "n_tokens": 13523,
+      "high_bf16": 34.25,
+      "high_bits": "0x4209",
+      "low_bf16": -0.029296875,
+      "low_bits": "0xbcf0",
+      "high_equals_low": false,
+      "f64_rounded_matches": true
+    },
+    {
+      "L": 8,
+      "n_tokens": 8153,
+      "high_bf16": 32.0,
+      "high_bits": "0x4200",
+      "low_bf16": -0.03125,
+      "low_bits": "0xbd00",
+      "high_equals_low": false,
+      "f64_rounded_matches": true
+    },
+    {
+      "L": 9,
+      "n_tokens": 10577,
+      "high_bf16": 30.125,
+      "high_bits": "0x41f1",
+      "low_bf16": -0.033203125,
+      "low_bits": "0xbd08",
+      "high_equals_low": false,
+      "f64_rounded_matches": true
+    },
+    {
+      "L": 10,
+      "n_tokens": 9463,
+      "high_bf16": 28.625,
+      "high_bits": "0x41e5",
+      "low_bf16": -0.034912109375,
+      "low_bits": "0xbd0f",
+      "high_equals_low": false,
+      "f64_rounded_matches": true
+    },
+    {
+      "L": 11,
+      "n_tokens": 2650,
+      "high_bf16": 27.25,
+      "high_bits": "0x41da",
+      "low_bf16": -0.03662109375,
+      "low_bits": "0xbd16",
+      "high_equals_low": false,
+      "f64_rounded_matches": true
+    },
+    {
+      "L": 12,
+      "n_tokens": 4455,
+      "high_bf16": 26.125,
+      "high_bits": "0x41d1",
+      "low_bf16": -0.038330078125,
+      "low_bits": "0xbd1d",
+      "high_equals_low": false,
+      "f64_rounded_matches": true
+    },
+    {
+      "L": 13,
+      "n_tokens": 5413,
+      "high_bf16": 25.125,
+      "high_bits": "0x41c9",
+      "low_bf16": -0.039794921875,
+      "low_bits": "0xbd23",
+      "high_equals_low": false,
+      "f64_rounded_matches": true
+    },
+    {
+      "L": 14,
+      "n_tokens": 432,
+      "high_bf16": 24.125,
+      "high_bits": "0x41c1",
+      "low_bf16": -0.041259765625,
+      "low_bits": "0xbd29",
+      "high_equals_low": false,
+      "f64_rounded_matches": true
+    },
+    {
+      "L": 15,
+      "n_tokens": 1606,
+      "high_bf16": 23.375,
+      "high_bits": "0x41bb",
+      "low_bf16": -0.042724609375,
+      "low_bits": "0xbd2f",
+      "high_equals_low": false,
+      "f64_rounded_matches": true
+    },
+    {
+      "L": 16,
+      "n_tokens": 4086,
+      "high_bf16": 22.625,
+      "high_bits": "0x41b5",
+      "low_bf16": -0.044189453125,
+      "low_bits": "0xbd35",
+      "high_equals_low": false,
+      "f64_rounded_matches": true
+    },
+    {
+      "L": 17,
+      "n_tokens": 41,
+      "high_bf16": 21.875,
+      "high_bits": "0x41af",
+      "low_bf16": -0.045654296875,
+      "low_bits": "0xbd3b",
+      "high_equals_low": false,
+      "f64_rounded_matches": true
+    },
+    {
+      "L": 18,
+      "n_tokens": 778,
+      "high_bf16": 21.25,
+      "high_bits": "0x41aa",
+      "low_bf16": -0.046875,
+      "low_bits": "0xbd40",
+      "high_equals_low": false,
+      "f64_rounded_matches": true
+    },
+    {
+      "L": 19,
+      "n_tokens": 2531,
+      "high_bf16": 20.75,
+      "high_bits": "0x41a6",
+      "low_bf16": -0.048095703125,
+      "low_bits": "0xbd45",
+      "high_equals_low": false,
+      "f64_rounded_matches": true
+    },
+    {
+      "L": 20,
+      "n_tokens": 5,
+      "high_bf16": 20.25,
+      "high_bits": "0x41a2",
+      "low_bf16": -0.049560546875,
+      "low_bits": "0xbd4b",
+      "high_equals_low": false,
+      "f64_rounded_matches": true
+    },
+    {
+      "L": 21,
+      "n_tokens": 415,
+      "high_bf16": 19.75,
+      "high_bits": "0x419e",
+      "low_bf16": -0.05078125,
+      "low_bits": "0xbd50",
+      "high_equals_low": false,
+      "f64_rounded_matches": true
+    },
+    {
+      "L": 22,
+      "n_tokens": 1434,
+      "high_bf16": 19.25,
+      "high_bits": "0x419a",
+      "low_bf16": -0.052001953125,
+      "low_bits": "0xbd55",
+      "high_equals_low": false,
+      "f64_rounded_matches": true
+    },
+    {
+      "L": 23,
+      "n_tokens": 4,
+      "high_bf16": 18.875,
+      "high_bits": "0x4197",
+      "low_bf16": -0.052978515625,
+      "low_bits": "0xbd59",
+      "high_equals_low": false,
+      "f64_rounded_matches": true
+    },
+    {
+      "L": 24,
+      "n_tokens": 234,
+      "high_bf16": 18.5,
+      "high_bits": "0x4194",
+      "low_bf16": -0.05419921875,
+      "low_bits": "0xbd5e",
+      "high_equals_low": false,
+      "f64_rounded_matches": true
+    },
+    {
+      "L": 25,
+      "n_tokens": 808,
+      "high_bf16": 18.125,
+      "high_bits": "0x4191",
+      "low_bf16": -0.055419921875,
+      "low_bits": "0xbd63",
+      "high_equals_low": false,
+      "f64_rounded_matches": true
+    },
+    {
+      "L": 26,
+      "n_tokens": 4,
+      "high_bf16": 17.75,
+      "high_bits": "0x418e",
+      "low_bf16": -0.056396484375,
+      "low_bits": "0xbd67",
+      "high_equals_low": false,
+      "f64_rounded_matches": true
+    },
+    {
+      "L": 27,
+      "n_tokens": 118,
+      "high_bf16": 17.375,
+      "high_bits": "0x418b",
+      "low_bf16": -0.0576171875,
+      "low_bits": "0xbd6c",
+      "high_equals_low": false,
+      "f64_rounded_matches": true
+    },
+    {
+      "L": 28,
+      "n_tokens": 420,
+      "high_bf16": 17.125,
+      "high_bits": "0x4189",
+      "low_bf16": -0.05859375,
+      "low_bits": "0xbd70",
+      "high_equals_low": false,
+      "f64_rounded_matches": true
+    },
+    {
+      "L": 29,
+      "n_tokens": 2,
+      "high_bf16": 16.75,
+      "high_bits": "0x4186",
+      "low_bf16": -0.0595703125,
+      "low_bits": "0xbd74",
+      "high_equals_low": false,
+      "f64_rounded_matches": true
+    },
+    {
+      "L": 30,
+      "n_tokens": 75,
+      "high_bf16": 16.5,
+      "high_bits": "0x4184",
+      "low_bf16": -0.060546875,
+      "low_bits": "0xbd78",
+      "high_equals_low": false,
+      "f64_rounded_matches": true
+    },
+    {
+      "L": 31,
+      "n_tokens": 195,
+      "high_bf16": 16.25,
+      "high_bits": "0x4182",
+      "low_bf16": -0.0615234375,
+      "low_bits": "0xbd7c",
+      "high_equals_low": false,
+      "f64_rounded_matches": true
+    },
+    {
+      "L": 32,
+      "n_tokens": 10,
+      "high_bf16": 15.9375,
+      "high_bits": "0x417f",
+      "low_bf16": -0.0625,
+      "low_bits": "0xbd80",
+      "high_equals_low": false,
+      "f64_rounded_matches": true
+    }
+  ],
+  "failures": [],
+  "passed": true
+}

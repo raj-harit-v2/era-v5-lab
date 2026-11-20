@@ -1,0 +1,100 @@
+doc_id,read,verdict,diseases,evidence,hex,note
+460946923038182c,full,fix,C3,formula missing after at offset 515; 'the simplest case is for which' at offset 579; lone . after at offset 987,,forum math as images; formulas lost
+7bab2c7545440898,full,fix,A3;C1,Symbol-font angle sign shown as _ x15 at offset 34|'COPYRIGHT ©' at offset 995,35 U+00D0 LATIN CAPITAL LETTER ETH (15x),_ should be _ (Symbol font)
+8622837cebb735a5,full,fix,C1;C2,'A community for students.' at offset 0; 'spread the word about OpenStudy' at offset 2028|anonymous / 4 years ago x10 at offset 73,,
+12ae76c04c7b6526,full,clean,,,,
+72455a4f14eb2a6f,full,fix,C3,formula images as URLs at offset 10,,
+4c137fb033605595,full,clean,,,,MathOverflow question
+1b38e860fde9fd90,full,clean,,,,
+668d83aaaaa18526,full,clean,,,,LaTeX is well formed
+5cfdf4275ffc959c,full,fix,C1,'**Related articles:**' at offset 3947,,
+75ebc60d6a95e06d,full,fix,C1,'Posted by **Anna**' at offset 0; 'More Related Questions' at offset 1070,,homework Q&A page
+65e110a4a880bd63,full,fix,F1,personal email at offset 8302,,author contact on personal site
+3bcb23aff54b0439,full,drop,C5,'On this page you can read or download' at offset 52,,PDF download spam
+efa89c02d29575a0,full,drop,C3,formulas lost; only connecting words left at offset 0,,404 chars
+993502ab0ec86524,full,clean,,,,raw BibTeX entry
+0259920ac13c0130,full,fix,F1;C1,newsgroup poster email at offset 3361|'No luck finding an answer?' at offset 10632,,
+4ca1db4974721e1e,full,drop,C5;C3,'The markov-models tag has no usage guidance.' at offset 0|excerpts cut at offset 7019,,tag listing page
+6540814b33490819,full,fix,C3,'There are inhabitants denoted by' at offset 187,,symbol dropped
+eddfbc14caf35d51,full,fix,C1,'Posted by **Pam**' at offset 0; 'More Related Questions' at offset 1141,,
+2e61693556dc2d86,full,drop,C5,'Related Immaculata Tutors' at offset 124,,tutor link directory
+76bee55c143333ce,full,clean,,,,1922 paper abstract
+d08c32b57300f041,full,fix,C3,"'to calculate the L2-norm of ,' at offset 9261",,inline formulas lost
+8db36841f79f3ff4,full,fix,C1,'Posted by **Matthew**' at offset 0; 'More Related Questions' at offset 1252,,
+5f8ae47ba49a1d7e,full,fix,C3;C1,'defined on by .' at offset 108|'Printable Vie' at offset 207,,
+ad18b06314d46d08,full,fix,C1,'Home ¥ About' at offset 225,,
+8b0152398709373f,full,fix,C1,'Copyright © 2001-2004 The IEEE' at offset 31; '[ Main Index' at offset 2419,,NaN is content not B4
+9e31af5fdee47462,full,fix,C1,'SELL TEXTBOOKS' at offset 145; 'Get a quote' at offset 161,,empty ISBN fields
+0a366bb37bf70203,full,drop,C5,'KLUEDO RSS Feed' at offset 0,,RSS feed text glued
+624ef2b2eb1b444f,full,fix,B5,bold markers split across lines x43 at offset 22,,broken markdown
+17c814b9c6225aac,full,clean,,,,
+90a369ffdba59965,full,fix,C2,'T E A' at offset 338,,seminar schedule
+7157f7e1df7ef9f6,full,fix,C1,'Privacy and Cookies Policy' at offset 1216,,
+98ca5e2dc9ecb19f,full,fix,C1;C3,'Recent Posts' at offset 1; 'Blogroll' at offset 25|'Continue reading' at offset 1088,,
+e3937988e6cb78bc,full,fix,C1,'Read the eBook' at offset 1979,,homework Q; spaces lost e.g. whosetemperature
+69a7867343eb42f2,full,clean,,,,
+ee142c92b50802e7,full,fix,C1,'Posted by **Meredith**' at offset 0; 'More Related Questions' at offset 1618,,
+c43ba3c4820607e8,full,fix,C1,'Click on the image to go to the demos' at offset 22,,broken table markup
+e3f28a8b4731cbec,full,fix,C1,'Printable View' at offset 108,,
+81e8c7011c6590a4,full,fix,C1,'Posted by **Anonymous**' at offset 0; 'More Related Questions' at offset 1406,,
+f93322ed21db9093,full,clean,,,,Haskell API docs
+ce47423635716605,full,clean,,,,library catalogue record
+e1822f95ec0e1075,full,fix,F1;C1,partial email at offset 118|'More information about the NumPy-Discussion' at offset 2296,,
+8c26e3833ee3f831,full,clean,,,,
+128fa294a525f0cf,full,drop,C3,formulas lost at offset 0,,257 chars
+f9db93ad10dd6f22,full,drop,C5,'On this page you can read or download' at offset 86,,PDF download spam
+c6d261013f95b459,full,clean,,,,problem teasers
+35581981021e39bb,full,clean,,,,syllabus
+22dff80b7a7331f6,full,drop,C3;C1,'which is greater: |' at offset 81|'Advertisement' at offset 168,,functions missing
+63797f4a8bd2acaf,full,fix,B4,'{{{{{{ ¯ }}' at offset 21697,,wiki template residue
+294aa2555e877d8d,full,clean,,,,
+45c8e653daa9c939,full,fix,C1,'Email us your mathematics link' at offset 1571,,
+fc2f6ac4eeb1b3a1,full,clean,,,,
+7d517ce8e4ae722c,full,fix,C1,'You are here' at offset 0; 'Primary tabs' at offset 57,,LaTeX fine
+4899178b24eb3841,full,fix,C1;C2,'A community for students.' at offset 0; 'spread the word about OpenStudy' at offset 2397|anonymous / 3 years ago x11 at offset 73,,
+1ba78b627ee97abe,full,clean,,,,lesson plan
+32bc2a5ade2f1bb1,full,clean,,,,NAG docs; LaTeX fine
+5f03b81c7ab05b84,full,clean,,,,
+c72eacf78149f0d2,full,clean,,,,MATLAB code in forum
+500248680df88172,full,fix,C1,'Discussion forum:' at offset 2044,,
+3a69ee20216375d4,full,fix,C1;C3,'Follow Math Help Forum on Face' at offset 170; 'View Tag Cloud' at offset 375|'So it's ?' at offset 331,,
+9ee062b9e4f005eb,full,drop,C4,scraped Q&A snippets joined at offset 15,,unrelated to URL
+93361b639968f824,full,clean,,,,MDN exercise page
+5b3e99dc9785c3bf,full,fix,C3,transform table lost; only arrows left at offset 1270,,
+a15c08e23789c300,full,drop,C1,'Join the conversation' at offset 25,,forum chrome only
+6e64248a29992f77,full,fix,C1,'## 0 Comments:' at offset 1429,,
+9f71e4b18a121262,full,fix,B4,'undefined' at offset 4480,,
+bc7906e3ada53d42,full,drop,C5,"'math tutor, math coach' at offset 374",,bookmark tag spam
+52eb6eb19fab4918,full,drop,C5,'Download Link:' at offset 159,,pirated ebook spam
+8e3ba8b60b9269a5,full,clean,,,,README; URL does not match content
+0b4b3bc759ea8296,full,drop,D4,spun text at offset 89,,
+0e12fd4f708f37db,full,drop,C5,'simplify expression calculator' at offset 3950,,software testimonials + keywords
+90b3488529b50f3d,full,drop,C5,'From inside the book' at offset 179,,Google Books keyword cloud
+144e6152d39c0540,full,drop,C5,'Jaw-crusher Construction' at offset 0,,crusher SEO text
+e9aadbfa87beae3c,full,fix,C1,'1 | initial version |' at offset 0; 'Creative Commons Attribution Share Alike' at offset 2750,,"<a,b> is Sage syntax"
+eb7319d7034a8a14,full,drop,C5,'Kel84 manual muscle' at offset 12866,,manual download keywords
+52fa137b69b5cb63,full,clean,,,,
+936db6527964c7a3,full,drop,C1,'## Unit Converter' at offset 0,,templated converter page
+3a9fde65c4441498,full,clean,,,,URL does not match content
+90fd040ae4a8550e,full,fix,C1,'- #1' at offset 0,,superscript split ^{m}
+ecd7c3ed15fd1929,full,fix,C1,'## Leave A Comment' at offset 1817,,
+05a46b502243ab20,full,drop,C1,'All In One Unit Converter' at offset 37,,templated converter page
+8b7ff42d657eb7e2,full,fix,C1,'**Contents**show' at offset 0,,
+d63662162411f585,full,drop,C4,unrelated listing joined at offset 8306,,steel doc + DVD listing
+51d21b46e8287ca5,full,clean,,,,code generator matrix
+467e17df111bf395,full,drop,C1,'# Is 4639 a prime number?' at offset 0,,templated number page
+1d23b802d72b6a0d,full,fix,F1;C1,personal email at offset 97|'[Date Prev][Date Next]' at offset 0,,Statalist post
+7a412f1309fd858c,full,clean,,,,R vignette
+a994f771acd65bb1,full,clean,,,,
+af3ecae3612eb1f2,full,drop,C5,'Math Fighter 2' at offset 0,,link menu
+28e6147102a34c3d,full,drop,C1,'Next unlived' at offset 77,,templated birthday calculator
+e27d83990d9f5885,full,fix,B2;C1,'</a>' at offset 2915|'Retrieved from' at offset 3320,,templated GCF page
+e3e461fc4c5e24ac,full,clean,,,,
+d3805a01920d8d3f,full,fix,C1,'Accessing this course requires a login.' at offset 640,,
+92f427c19757b627,full,clean,,,,
+4ce0561a1abe2ad9,full,clean,,,,R docs
+46dd8d97a303a128,full,clean,,,,course ad
+4ce2fdf9c80a56ae,full,fix,F1;C2,commenter emails x58 at offset 7223|LikeLike x536 at offset 3221,,184k blog with comments
+b7ddfaef07e1d714,full,drop,C4,scraped mill pages joined at offset 4,,business phone not F1
+b6547887c35a516b,full,drop,C4,scraped snippets joined at offset 4,,
+d740063adfe10cc6,full,clean,,,,exam question; not a known LLM benchmark

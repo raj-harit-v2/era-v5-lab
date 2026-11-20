@@ -1,7 +1,7 @@
 {
  "label": "Qwen3-4B-Instruct-2507 (stand-in)",
  "model": "/kaggle/tmp/models/Qwen3-4B-Instruct-2507",
- "finished": "2026-11-15 14:58 UTC",
+ "finished": "2026-11-18 07:00 UTC",
  "gpu": "Tesla T4, 15360 MiB, 7.5; Tesla T4, 15360 MiB, 7.5",
  "versions": {
   "python": "3.12.3",
@@ -12,14 +12,14 @@
  "platform": "Linux-6.18.55+-x86_64-with-glibc2.39",
  "gate": {
   "http_ok": "100/100",
-  "fields_ok": "98/100",
+  "fields_ok": "100/100",
   "pass": true,
-  "model_breaks": 2,
+  "model_breaks": 0,
   "parser_faults": 0,
   "reasoning": "25/25",
-  "tool_calls": "28/30",
+  "tool_calls": "29/30",
   "no_tool": "20/20",
-  "stream_agree": "19/20",
+  "stream_agree": "18/20",
   "native": "0/100"
  },
  "per_category": {
@@ -31,9 +31,9 @@
    "answer_ok": "-",
    "has_reasoning": "25/25",
    "tool_calls": "0/25",
-   "p50_s": 8.31,
-   "p95_s": 34.02,
-   "mean_completion_tokens": 465
+   "p50_s": 8.05,
+   "p95_s": 32.65,
+   "mean_completion_tokens": 461
   },
   "reason": {
    "n": 25,
@@ -43,21 +43,21 @@
    "answer_ok": "25/25",
    "has_reasoning": "25/25",
    "tool_calls": "0/25",
-   "p50_s": 4.11,
-   "p95_s": 5.71,
+   "p50_s": 4.04,
+   "p95_s": 5.78,
    "mean_completion_tokens": 134
   },
   "tool": {
    "n": 30,
    "http_ok": "30/30",
    "fields_ok": "30/30",
-   "behaviour_ok": "28/30",
+   "behaviour_ok": "29/30",
    "answer_ok": "-",
    "has_reasoning": "30/30",
-   "tool_calls": "28/30",
-   "p50_s": 2.96,
-   "p95_s": 4.25,
-   "mean_completion_tokens": 88
+   "tool_calls": "29/30",
+   "p50_s": 2.97,
+   "p95_s": 3.72,
+   "mean_completion_tokens": 90
   },
   "tool_result": {
    "n": 10,
@@ -67,37 +67,37 @@
    "answer_ok": "7/8",
    "has_reasoning": "0/10",
    "tool_calls": "0/10",
-   "p50_s": 0.94,
-   "p95_s": 2.46,
+   "p50_s": 0.9,
+   "p95_s": 2.35,
    "mean_completion_tokens": 26
   },
   "no_tool": {
    "n": 10,
    "http_ok": "10/10",
-   "fields_ok": "8/10",
+   "fields_ok": "10/10",
    "behaviour_ok": "10/10",
    "answer_ok": "-",
-   "has_reasoning": "2/10",
+   "has_reasoning": "3/10",
    "tool_calls": "0/10",
-   "p50_s": 1.39,
-   "p95_s": 24.64,
-   "mean_completion_tokens": 148
+   "p50_s": 1.44,
+   "p95_s": 26.18,
+   "mean_completion_tokens": 133
   }
  },
  "timing": {
-  "startup_s": 165,
-  "prompts_wall_s": 96.9,
-  "stream_wall_s": 41.7,
-  "replay_wall_s": 7.3,
-  "total_wall_s": 312,
-  "completion_tokens": 19333,
-  "tokens_per_s": 199.5,
-  "gpu_hours": 0.173,
+  "startup_s": 175,
+  "prompts_wall_s": 96.5,
+  "stream_wall_s": 44.0,
+  "replay_wall_s": 0.0,
+  "total_wall_s": 316,
+  "completion_tokens": 19166,
+  "tokens_per_s": 198.6,
+  "gpu_hours": 0.176,
   "cost_usd": 0.0
  },
  "settings": {
-  "chat_template": "teams/10-post-training/chat-format/chat_template.jinja",
-  "chat_template_sha256": "1b9c0eded4c3308128660d30c2f34ecf05d78e9d40440227ff45e209cf47902d",
+  "chat_template": "teams/12-quantization/tokenizer/chat_template.jinja",
+  "chat_template_sha256": "b00137fe4d86b288d45878b0cc94b3a7c178e1e4755de09662cc3d2fe44b22fc",
   "parsers": "teams/12-quantization/serving/g10_parsers.py",
   "parsers_sha256": "2940f0378de92b93c81659919a9d383992ee46fdaba903475fb201e64e82193a",
   "prompts": "teams/12-quantization/serving/prompts_v1.jsonl",
@@ -107,7 +107,7 @@
   "max_tokens": 1024,
   "concurrency": 8,
   "format_hint": "on",
-  "tools_in_system": true,
+  "tools_in_system": false,
   "n_gpus": 2,
   "usd_per_gpu_hour": 0.0
  },
@@ -124,7 +124,7 @@
   "--seed",
   "0",
   "--chat-template",
-  "/kaggle/tmp/era-v5-lab/teams/10-post-training/chat-format/chat_template.jinja",
+  "/kaggle/tmp/era-v5-lab/teams/12-quantization/tokenizer/chat_template.jinja",
   "--reasoning-parser-plugin",
   "/kaggle/tmp/era-v5-lab/teams/12-quantization/serving/g10_parsers.py",
   "--reasoning-parser",
@@ -140,6 +140,11 @@
  ],
  "command": "serve_check.py --model /kaggle/tmp/models/Qwen3-4B-Instruct-2507 --label Qwen3-4B-Instruct-2507 (stand-in) --out /kaggle/working/serve_check_out --format-hint on --max-tokens 1024 --n-gpus 2 --usd-per-gpu-hour 0.0 --vllm-arg=--dtype=half --vllm-arg=--max-model-len=4096 --vllm-arg=--tensor-parallel-size=2",
  "failures": [
+  {
+   "id": "chat-01",
+   "lang": "en",
+   "what": "stream differs"
+  },
   {
    "id": "chat-02",
    "lang": "en",
@@ -171,24 +176,9 @@
    "what": "empty content (finish length)"
   },
   {
-   "id": "tool-29",
+   "id": "tool-15",
    "lang": "en",
-   "what": "expected get_time, got no call"
-  },
-  {
-   "id": "tool-30",
-   "lang": "te",
-   "what": "expected get_time, got no call"
-  },
-  {
-   "id": "no_tool-04",
-   "lang": "en",
-   "what": "marker in a field (model broke the G10 layout: think block after the answer): `<|/think|>` `<|think|>`"
-  },
-  {
-   "id": "no_tool-10",
-   "lang": "te",
-   "what": "marker in a field (model broke the G10 layout: think block after the answer): `<|/think|>` `<|think|>`"
+   "what": "expected search_web, got no call"
   }
  ]
 }

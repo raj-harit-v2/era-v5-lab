@@ -1,0 +1,12 @@
+{
+  "_comment": "Local timed run of h3.py on the raw sample v0 (Cap1-packs, not cleaned): Sanskrit and one Hindi pack against one English pack, at most 2,000 documents per pack, to measure each stage and extrapolate to all their documents (estimate_all_documents in h3_summary.json). Paths are relative to the era-v5-lab repository root: ../Cap1-packs holds <pack>/Part_N/ and <pack>/Heldout/, ../models/LaBSE the encoder in sentence-transformers format. Thresholds are the provisional defaults of h3.py.",
+  "inputs": "../Cap1-packs",
+  "out": "out/h3_local",
+  "cache": "out/h3_cache",
+  "model_path": "../models/LaBSE",
+  "device": "auto",
+  "packs": {"ind-sa-fw2": "sa", "ind-hi-fw2": "hi", "en-fineweb-edu": "en"},
+  "pairs": [["sa", "en"], ["sa", "hi"], ["hi", "en"]],
+  "max_docs_per_pack": 2000,
+  "max_minutes": 30
+}

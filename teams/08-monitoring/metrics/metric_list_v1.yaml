@@ -236,41 +236,42 @@ metrics:
 - name: reward_per_env
   unit: reward
   cadence: Every RL training step, per active verifier or rubric environment
-  source: Proposed for G10 RL trainer, one dict mapping env_name to mean_reward per step in metrics.jsonl.
-    clickhouse/load_jsonl.py flattens each key as reward_per_env.<env_name>.
+  source: Not produced yet; requested from G10 RL trainer as one dict mapping env_name to mean_reward per step in
+    metrics.jsonl. clickhouse/load_jsonl.py flattens each key as reward_per_env.<env_name>.
   notes: Mean verifier or rubric reward across all rollouts sampled from each environment on the step.
     Keeping environments separate prevents easy tasks from hiding regressions on harder ones.
-# Fraction of prompt groups where the policy solves the task, and whether groups stay in the informative band.
-- name: solved_share
+# Fraction of rollouts passing the verifier on the step (0/1 rewards make mean reward equal to solved share).
+- name: train_reward
   unit: fraction
   cadence: Every RL training step
-  source: Proposed for G10 RL trainer, one scalar in [0, 1] per step in metrics.jsonl.
-  notes: Share of rollouts (or prompt groups, once G10 confirms the denominator) that pass the verifier on the step.
-    Group-relative RL drops uniform groups (all pass or all fail), so tracking solved_share shows when the prompt
-    mix becomes too easy or too hard.
+  source: G10 teams/10-post-training/rl-loop/train.py, one scalar in [0, 1] per step in its JSONL log.
+  notes: Mean verifier reward across rollouts on the step. With 0/1 verifiable rewards this equals the per-rollout
+    solved share. Group-relative RL skips uniform prompt groups (where all answers pass or all fail); G10's
+    groups_used and groups_dropped fields track how many prompt groups remain informative.
 # Early warning of policy collapse or instability during RL updates.
 - name: entropy
   unit: nats
   cadence: Every RL training step
-  source: Proposed for G10 RL trainer, mean token-level predictive Shannon entropy over generated rollout tokens.
+  source: Not produced yet; requested from G10 RL trainer as mean token-level predictive Shannon entropy over
+    generated rollout tokens.
   notes: Average -sum_v p(v) ln p(v) in nats across unmasked rollout tokens on the step. Even without an explicit
     entropy bonus in the RL loss, a sudden drop towards zero indicates premature mode collapse and a sudden jump
     indicates an unstable update.
-# Share or count of rollout tokens excluded by loss / trust-region masking on the step.
-- name: masked_tokens
-  unit: tokens (or fraction; G10 to confirm)
-  cadence: Every RL training step
-  source: Proposed for G10 RL trainer, written per step in metrics.jsonl.
-  notes: Rollout tokens zeroed out before the policy gradient — environment / tool-result spans plus tokens clipped
-    by the trust-region probability mask when |p_theta - p_mu| exceeds the step cap. A sharp rise in trust-region
-    masking means the trainer has drifted too far from the rollout writer.
-# Detects numerical / precision drift between the rollout server (vLLM) and the trainer on the same tokens.
-- name: train_inference_mismatch
-  unit: probability
-  cadence: Every RL training step
-  source: metrics_logger/metrics_writer.py train_inference_mismatch(p_train, p_infer), or passed directly by G10's
-    RL trainer from the initial p_theta vs p_mu probabilities on newly generated rollouts.
-  notes: Maximum absolute token-probability difference max_i |p_train_i - p_infer_i| between the training engine
-    and the inference rollout engine (vLLM) on identical weights or fresh rollouts. Non-trivial mismatch (for
-    example from mismatched BF16/FP8 formats or parser differences) makes fresh rollouts look off-policy and can
-    break RL runs.
+# KL-style k3 estimator of numerical / off-policy drift between the vLLM rollout sampler and the trainer.
+- name: mismatch_k3
+  unit: nats
+  cadence: Every RL training step (when rollouts come from vLLM)
+  source: G10 teams/10-post-training/rl-loop/train.py and rl-loop/grpo.py (mismatch(), group-then-batch mean).
+  notes: Non-negative k3 KL divergence estimator (r - 1 - log r, where r = pi_train / pi_vllm). Token mean within each
+    prompt group, then the mean over groups, so each group counts equally whatever its length. Only written when
+    rollouts come from vLLM. With other samplers the field is missing (not 0). Measured only on prompt groups used for
+    training. Groups where all answers pass or all fail are skipped.
+# Mean absolute log-probability ratio between the trainer and the vLLM rollout sampler.
+- name: mismatch_abs_logratio
+  unit: nats
+  cadence: Every RL training step (when rollouts come from vLLM)
+  source: G10 teams/10-post-training/rl-loop/train.py and rl-loop/grpo.py (mismatch(), group-then-batch mean).
+  notes: Absolute log-ratio |log pi_train - log pi_vllm| in nats, detecting BF16/FP8 kernel or parser mismatches between
+    serving and training. Token mean within each prompt group, then the mean over groups, so each group counts equally
+    whatever its length. Only written when rollouts come from vLLM. With other samplers the field is missing (not 0).
+    Measured only on prompt groups used for training. Groups where all answers pass or all fail are skipped.

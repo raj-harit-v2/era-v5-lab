@@ -56,7 +56,7 @@ A document is left out, counted, and listed by doc_id in the shard's quality rep
 | Field | Meaning |
 |---|---|
 | `schema_version` | the manifest layout, `shard-v1` |
-| `dataset_version` | the corpus release this shard belongs to |
+| `dataset_version` | the corpus release this shard belongs to: `shard_writer.py --dataset-version` (e.g. `sample`, `corpus-v1`), required; `test` only for `--any-tokenizer` runs |
 | `shard_id` | `<pack_id>-<split>-<6 digits>`, unique within the release |
 | `format`, `token_dtype` | how to read the `.bin` |
 | `payload_uri`, `payload_sha256`, `payload_bytes` | the `.bin`: where, its hash, its size |

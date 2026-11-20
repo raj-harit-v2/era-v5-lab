@@ -100,7 +100,16 @@ def test_the_round_trip_compares_with_the_normalized_text(tmp_path):
 
 def test_any_tokenizer_but_c3_is_refused(tmp_path):
     with pytest.raises(SystemExit, match="not the frozen p1536"):
+        write(tmp_path, DOCS, "--dataset-version", "sample")
+
+
+def test_dataset_version_is_required_and_test_runs_stay_test(tmp_path):
+    with pytest.raises(SystemExit, match="--dataset-version is required"):
         write(tmp_path, DOCS)
+    with pytest.raises(SystemExit, match="only for --any-tokenizer"):
+        write(tmp_path, DOCS, "--dataset-version", "test")
+    with pytest.raises(SystemExit, match="leave out --dataset-version"):
+        write(tmp_path, DOCS, "--any-tokenizer", "--dataset-version", "corpus-v1")
 
 
 def test_a_run_without_f2_is_refused(tmp_path):

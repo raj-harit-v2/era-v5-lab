@@ -207,7 +207,18 @@ def build_window_cache(path, artifacts, seq_len, cache_dir, require_ids=False,
         if progress:
             progress({"stage": "verifying numeric payloads", **summary})
         _load_window_cache(temporary, identity, artifacts)
-        temporary.rename(destination)
+        try:
+            temporary.rename(destination)
+        except OSError:
+            # Another job built the same key and published first. The key binds
+            # identical inputs, so verify the published cache fully and reuse it
+            # instead of failing; this job's temporary copy is discarded.
+            if not destination.is_dir():
+                raise
+            _load_window_cache(destination, identity, artifacts)
+            if progress:
+                progress({"stage": "verified concurrently published cache", "cache_key": key})
+            return destination
     if progress:
         progress({"stage": "complete", "cache_key": key, **summary})
     return destination
@@ -249,11 +260,22 @@ def read_texts(path, require_ids=False, records=False):
 class DocumentWindows:
     def __init__(self, path, artifacts, seq_len, require_ids=False, sources_path=None):
         cache_dir = os.environ.get("G5_DOCUMENT_CACHE_DIR")
+        normalized = getattr(artifacts, "normalize_input", False)
+        if cache_dir is not None and normalized:
+            raise ValueError("Unset G5_DOCUMENT_CACHE_DIR for a normalizing tokenizer release (frozen C3 or p1536)")
         if cache_dir is not None:
-            key, identity = _cache_identity(path, artifacts, seq_len, require_ids, sources_path)
             if not cache_dir:
                 raise ValueError("G5_DOCUMENT_CACHE_DIR must name a cache directory")
-            self.__dict__.update(_load_window_cache(Path(cache_dir) / key, identity, artifacts))
+            key, identity = _cache_identity(path, artifacts, seq_len, require_ids, sources_path)
+            directory = Path(cache_dir) / key
+            if not directory.exists():
+                # First run for this file, tokenizer and seq_len: encode once with the
+                # same Artifacts.encode as the uncached path, verify, then publish.
+                # A changed file/tokenizer/seq_len has a new key, so it never reuses
+                # an old cache. Later runs only load the verified token ids.
+                build_window_cache(path, artifacts, seq_len, cache_dir,
+                                   require_ids=require_ids, sources_path=sources_path)
+            self.__dict__.update(_load_window_cache(directory, identity, artifacts))
             return
         self.windows = []
         self.raw_bytes = 0
@@ -272,6 +294,9 @@ class DocumentWindows:
         )
         self.window_slices = []
         self.slice_raw_bytes = {}
+        if normalized:
+            self.encoded_bytes = 0
+            self.slice_encoded_bytes = {}
         for doc, slice_name in zip(records, slices):
             text = doc['text']
             if slice_name is not None:
@@ -281,6 +306,13 @@ class DocumentWindows:
             self.document_count += 1
             self.document_hashes.add(hashlib.sha256(text.encode("utf8")).hexdigest())
             ids = artifacts.encode(text)
+            if normalized:
+                normalized_size = len(artifacts.tokenizer.normalizer.normalize_str(text).encode("utf8"))
+                self.encoded_bytes += normalized_size
+                if slice_name is not None:
+                    self.slice_encoded_bytes[slice_name] = (
+                        self.slice_encoded_bytes.get(slice_name, 0) + normalized_size
+                    )
             self.raw_bytes += len(text.encode("utf8"))
             self.tokens += len(ids)
             for start in range(0, len(ids), seq_len):
@@ -292,7 +324,8 @@ class DocumentWindows:
                 self.window_slices.append(slice_name)
         if not self.windows or not self.raw_bytes:
             raise ValueError("Empty/zero-byte dataset")
-        if sum(sum(x[2]) for x in self.windows) != self.raw_bytes:
+        expected = self.encoded_bytes if normalized else self.raw_bytes
+        if sum(sum(x[2]) for x in self.windows) != expected:
             raise ValueError("Byte conservation failed")
 
     def batch(self, indices, device):

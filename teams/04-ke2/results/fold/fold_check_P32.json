@@ -1,0 +1,87 @@
+{
+  "pass": true,
+  "inputs": {
+    "table_content_sha256": "21072027b19ef6f05d57ead7a2fc9fb4c52129e491186bf38d0ba079e8d5168a",
+    "table": "results\\tables\\p1536-s0\\raw_table_P32.npz",
+    "tokenizer_sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b",
+    "projection": "random normal(0, 1/sqrt(8192)), seed 0",
+    "pos_dim": 32
+  },
+  "environment": {
+    "python": "3.12.6",
+    "torch": "2.5.1+cu121",
+    "numpy": "2.2.6",
+    "platform": "Windows",
+    "device": "cpu"
+  },
+  "tolerances": {
+    "fp32_fold_max_rel": 1e-05,
+    "bf16_storage_max_rel": 0.00390625,
+    "lookup_rows_differ": 0
+  },
+  "result": {
+    "vocab": 131072,
+    "width": 512,
+    "fold_seconds_cpu": 4.2,
+    "folded_finite": true,
+    "lookup_vs_trainer": {
+      "batches": 8,
+      "tokens": 16384,
+      "rows_differ": 0
+    },
+    "fp32_fold_vs_f64": {
+      "max_abs": 1.356947042729928e-06,
+      "max_rel_to_row_max": 3.8260950066339715e-07,
+      "worst_id": 74846,
+      "worst_id_length": 24
+    },
+    "bf16_storage_vs_f64": {
+      "max_rel_to_row_max": 0.0038748842101047273,
+      "median_rel_to_row_max": 0.002333102554178781,
+      "worst_id": 58299,
+      "bf16_unit_roundoff": 0.00390625
+    },
+    "row_max_abs": {
+      "min": 2.1549854250518408,
+      "median": 3.2192047053455006,
+      "max": 5.3725621316670065
+    },
+    "special_tokens": {
+      "count": 356,
+      "all_finite": true,
+      "all_nonzero": true,
+      "roles": {
+        "id 36 (no role)": {
+          "id": 36,
+          "length": 15,
+          "row_max_abs": 3.5700125694274902
+        },
+        "bos": {
+          "id": 130725,
+          "length": 17,
+          "row_max_abs": 3.708214044570923
+        },
+        "pad": {
+          "id": 130726,
+          "length": 7,
+          "row_max_abs": 4.281692981719971
+        },
+        "unk": {
+          "id": 130727,
+          "length": 7,
+          "row_max_abs": 4.497382164001465
+        },
+        "eos": {
+          "id": 130822,
+          "length": 13,
+          "row_max_abs": 3.243061065673828
+        }
+      }
+    },
+    "parameters": {
+      "projection_trained": 4194304,
+      "folded_table": 67108864,
+      "folded_table_bf16_bytes": 134217728
+    }
+  }
+}

@@ -4,7 +4,7 @@ import argparse
 from pathlib import Path
 import json
 from week2.config import load, load_runtime, validate
-from week2.artifacts import Artifacts
+from week2.artifacts import Artifacts, TOKENIZER_RELEASES
 from train_week2 import apply_resolution
 
 
@@ -16,6 +16,7 @@ def main():
     p.add_argument("--lr", type=float)
     p.add_argument("--tokenizer", type=Path)
     p.add_argument("--byte-table", type=Path)
+    p.add_argument("--tokenizer-release", choices=sorted(TOKENIZER_RELEASES), default="v0")
     a = p.parse_args()
     try:
         cfg = load_runtime(a.config, a.runtime)
@@ -50,7 +51,11 @@ def main():
         if bool(a.tokenizer) != bool(a.byte_table):
             raise ValueError("Provide tokenizer AND byte table")
         if a.tokenizer:
-            artifacts = Artifacts(a.tokenizer, a.byte_table)
+            artifacts = Artifacts(
+                a.tokenizer,
+                a.byte_table,
+                expected_tokenizer_sha=TOKENIZER_RELEASES[a.tokenizer_release],
+            )
             if (
                 len(artifacts.lengths) != m["vocab_size"]
                 or artifacts.pos_dim != m["ke_max_pos"]

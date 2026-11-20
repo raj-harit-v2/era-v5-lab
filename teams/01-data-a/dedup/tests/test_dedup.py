@@ -324,3 +324,13 @@ def test_gold_id_counts_once_per_pack_and_only_in_its_own_pack(repo):
     assert s["harm_check"]["gold_ids_in_input_by_pack"] == {"en-a": 1}
     assert s["harm_check"]["gold_ids_in_input"] == 1
 
+
+
+def test_shipped_config_lists_every_pack_licence():
+    """dedup.json, as committed: every pack it ranks has an explicit licence entry from G10's table, and a pack missing
+    from the map is unusable (default false), so a new pack cannot be treated as usable by accident."""
+    cfg = json.loads((Path(__file__).resolve().parents[1] / "dedup.json").read_text(encoding="utf-8"))
+    assert cfg["default_licence_usable"] is False
+    assert set(cfg["licence_usable"]) == set(cfg["pack_order"])
+    assert len(cfg["pack_order"]) == len(set(cfg["pack_order"])) == 38
+    assert all(v is True for v in cfg["licence_usable"].values())   # G10, #524: all 38 sample packs "TSAI reserves"

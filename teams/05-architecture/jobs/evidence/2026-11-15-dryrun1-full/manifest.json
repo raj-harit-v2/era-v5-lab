@@ -1,0 +1,178 @@
+{
+  "config": {
+    "intended": {
+      "arm": "exp2-muon",
+      "official_step_time": false,
+      "instructor_expert_ffn": 768,
+      "loaded_expert_ffn": null,
+      "mlp_ratio": null,
+      "activation_intended": "SwiGLU",
+      "position_intended": "RoPE",
+      "tied_embeddings_intended": true,
+      "comparison_final": false,
+      "profile": "T2",
+      "lead_intent": {
+        "arm": "exp2-muon",
+        "official_step_time": false,
+        "instructor_expert_ffn": 768,
+        "loaded_expert_ffn": null,
+        "mlp_ratio": null,
+        "activation_intended": "SwiGLU",
+        "position_intended": "RoPE",
+        "tied_embeddings_intended": true,
+        "comparison_final": false
+      }
+    },
+    "model": {
+      "activation": "swiglu",
+      "position": "rope",
+      "rope_theta": 10000.0,
+      "rotary_fraction": 1.0,
+      "norm_eps": 1e-05,
+      "mtp_weight": 0.0,
+      "moe": {
+        "bias": false,
+        "bias_gamma": 0.0,
+        "num_experts": 16,
+        "top_k": 2,
+        "num_shared": 1,
+        "dispatch": "loop",
+        "ffn_hidden": 768
+      },
+      "embedding": "ke1",
+      "attn_impl": "eager",
+      "mtp": false,
+      "reversible": false,
+      "ce_impl": "torch",
+      "vocab_size": 131072,
+      "block_size": 2048,
+      "n_layer": 8,
+      "n_head": 8,
+      "n_kv_head": 2,
+      "n_embd": 512,
+      "ke_max_pos": 32
+    },
+    "optim": {
+      "betas": [
+        0.9,
+        0.999
+      ],
+      "eps": 1e-08,
+      "schedule": "constant",
+      "name": "muon",
+      "lr": 0.001,
+      "weight_decay": 0.0,
+      "muon_lr": 0.01
+    },
+    "run": {
+      "micro_batch_size": 1,
+      "eval_every_steps": 611,
+      "compile": false,
+      "flush_every_steps": 10,
+      "steps": 1221,
+      "max_time_min": 90,
+      "seed": 1234,
+      "batch_size": 8,
+      "grad_clip": 1.0,
+      "dtype": "bf16"
+    },
+    "approval": {
+      "status": "agreed",
+      "reference": "TSAI 2026-11-05: PR #310 EXP-1 job request; runtime.yaml test settings accepted 2026-11-03"
+    },
+    "evaluation": {
+      "boundary_policy": "bos_then_all_text_tokens_document_isolated",
+      "approved": true
+    },
+    "provenance": {
+      "arm_sources": [
+        {
+          "path": "configs/arms/exp2_muon.yaml",
+          "sha256": "22c0e8e9ea1503330d170c6b0a669366ed1de312701e56908a4d48b7592c375f"
+        },
+        {
+          "path": "configs/arms/t2.yaml",
+          "sha256": "a7e2974f45534be119054238d194507a06750eac061bbe47516d3235dd76edf2"
+        }
+      ],
+      "runtime_sha256": "573da7c2904f201fae93bd301ce9fa7c2965f028448381a5faafeb3747757ebe",
+      "plan_sha256": "b9edabe7696d5e33ed1e885bcba02d5cb2db61724007306e63966c8d11a3f0c5",
+      "plan_hash_normalization": "UTF-8 with LF newlines",
+      "lead_snapshot": "3a2f898b990d253d8422419f31e147ae65ec1747",
+      "expert_width_source": "intended.instructor_expert_ffn",
+      "lead_explicit_choices": {
+        "model.reversible": false,
+        "model.mtp": false
+      },
+      "g6_inheritance": "not loaded; explicit G5 declarations only"
+    }
+  },
+  "artifacts": {
+    "tokenizer_sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b",
+    "table_file_sha256": "e19a6cae8a6e9e5f74c47748f459df4b156bb61b8cec2af485b439c7132a39b0",
+    "table_content_sha256": "21072027b19ef6f05d57ead7a2fc9fb4c52129e491186bf38d0ba079e8d5168a",
+    "vocab_size": 131072,
+    "pos_dim": 32,
+    "bos_id": 130725,
+    "pad_id": 130726
+  },
+  "train_sha256": "267c33bfd29be0ac54e0188af1c777435bef11cd2f187224c39fd5fff6a3ce47",
+  "heldout_sha256": "21c6e4b2df8dae9d69e254f4a00fc934d2a3c70f0675065a03724299d94312bb",
+  "heldout_sources_sha256": "95585a25bdccb077130432d49b6427c5ff5f756d5b43b9c7033803326f65e0d6",
+  "heldout_checksum_sha256": "ccd5a16b83cdc6b5caa7e3dea53895f9795e2853118028926aeccee65f94ba10",
+  "sources": {
+    "train_week2.py": "728d4d6329e8105321e3594f2f05d8c31777220e0a16916d21751ab161384940",
+    "optim.py": "e7dcf458e45d04f13d16ba7d3171cec5949215966b36735f200cf9fbc6ba7b7d",
+    "__init__.py": "efb6f85c6ea25364a24baddf112017ba5522f0006376f91f78ff3ea4c472a8a4",
+    "config.py": "4f4236524d1af2bec10e1f6455d63621a30f5863c87a362d64d5288cdeb55b77",
+    "data.py": "55d086c8374684d735d82ee5e950ae0d92330017ccf58c2860e735352196686f",
+    "optim_orig_loop.py": "7db330dab81b7e7259ebed97f103a3c4dd2e004b66a346c537a812b8276b5e5d",
+    "scoring.py": "009f0b9a16c15f46603265e73085003ab985211ae2e944fe01cf4bd81b4803c7",
+    "model.py": "9d3826793f5e32439fb7d2f67f5e91e14ce7a6bc0b2c03851f833031884a7fb2",
+    "evaluation.py": "126620af86fe02b96c0932fca95dcaf8696b995d58d4530eb240fea34580ce6e",
+    "artifacts.py": "af9131608fd99821710e2d5ca28702e43607f7c1791876a602a707f4b60bd5df",
+    "model_orig.py": "0dd834590a728da14d0104a3b1caabdd95c011b2a6583bbd640b9cd6a1738e7e"
+  },
+  "device": "cuda",
+  "torch": "2.14.1+cu130",
+  "smoke": false,
+  "bpb_policy": "original UTF-8 bytes, with C3 tokenizer normalization",
+  "identity_sha256": "3a72b64052cfa807258ec06afb21349622d9222ee8412f5d5c080ef52da716be",
+  "baseline_commit": "3a2f898b990d253d8422419f31e147ae65ec1747",
+  "parameters": 237052416,
+  "optimizer": {
+    "name": "muon",
+    "source": "teams/06-performance/models/optim.py@0968eb8 (loop path)",
+    "muon_lr": 0.01,
+    "adamw_lr": 0.001,
+    "momentum": 0.95,
+    "nesterov": true,
+    "ns_steps": 5,
+    "ns_coefficients": [
+      3.4445,
+      -4.775,
+      2.0315
+    ],
+    "muon_parameters": 165740544,
+    "adamw_parameters": 71311872
+  },
+  "gpu": "NVIDIA GeForce RTX 3090",
+  "status": "AGREED_BASELINE_RUN",
+  "heldout_provenance": {
+    "heldout_file": "data/heldout_v1.jsonl",
+    "heldout_sha256": "21c6e4b2df8dae9d69e254f4a00fc934d2a3c70f0675065a03724299d94312bb",
+    "fingerprint_set_id": "11e290a44d1467875fdf8bebc55eab21f0a6367f411aab98a4a027a546fd372e",
+    "fingerprint_set_version": "v1",
+    "scope": "full",
+    "matches": 0,
+    "docs_checked": 1059,
+    "checker": "teams/09-evaluation/decontam/decontam_check.py --id-field id --text-field text (full fingerprint set, no --tags/--benchmarks)",
+    "checker_output": "heldout_decontam_v1.txt",
+    "checked_on": "2026-11-02",
+    "status": "FINAL"
+  },
+  "g8_external_writer": false,
+  "token_budget_note": "Input positions include right padding; scored tokens/bytes reported separately",
+  "train_documents": 12000,
+  "heldout_documents": 1059
+}

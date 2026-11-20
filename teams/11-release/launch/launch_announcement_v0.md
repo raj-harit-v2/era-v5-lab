@@ -14,7 +14,7 @@ serving. TSAI approves each decision before the lab acts on it.
 ## The teams
 
 - **Data A** cleans the training text, removes duplicates and packs the text into files for training.
-- **Data B** reads the text in Indian languages and code with native readers, and proposes how much of each kind
+- **Data B** reads Indian-language and code-adjacent text with native readers, and proposes how much of each kind
   goes into training.
 - **Tokenizer** builds the tokenizer, which splits text into the pieces that the model reads.
 - **KE2** tests its embedding method on the lab's tokenizer.
@@ -55,7 +55,7 @@ How to fill it:
 | Part | Source | Lead OK |
 |---|---|---|
 | Goal of the lab, and what the lab does | `updates/2026-10-31_week1.md`, `model_card/model_card_outline.md`, `report/report_outline.md` | TSAI: no |
-| Data A | `updates/2026-10-31_week1.md`, `updates/week2.md`, `updates/gate2.md` | no |
+| Data A | `updates/2026-10-31_week1.md`, `updates/week2.md`, `updates/gate2.md`. Files for training (shards): [#358](https://github.com/theschoolofai/era-v5-lab/pull/358), [#373](https://github.com/theschoolofai/era-v5-lab/pull/373), and the Data A text on [#460](https://github.com/theschoolofai/era-v5-lab/pull/460#issuecomment-6962086936) | no |
 | Data B | `updates/2026-10-31_week1.md`, `updates/gate2.md` | no |
 | Tokenizer | `model_card/model_card_outline.md` (Tokenizer row) | no |
 | KE2 | `updates/gate2.md` (short forms) | no |
@@ -73,7 +73,7 @@ How to fill it:
 - [ ] Every number in the text has TSAI approval
 - [ ] The text names teams only, and no person
 - [ ] Nothing from the internal list in `public_internal.md`
-- [ ] No `[waiting for TSAI]` left in the text
+- [ ] No `waiting for` placeholder left in the text
 - [ ] A team member commented on this pull request
 - [ ] TSAI approved on: [DD Mon YYYY]
 - [ ] Merged after TSAI approved

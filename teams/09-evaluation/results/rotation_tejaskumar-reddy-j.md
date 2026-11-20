@@ -30,3 +30,28 @@ done
 ```
 
 All exit codes were 0. Environment: Python 3.12.7, tokenizers 0.20.3, pyarrow 21.0.0, numpy 1.26.4. The decoded `.text.parquet` files hold document text and stay local; nothing here contains item text, document text or download links.
+
+## Task 2 shards — 18 Nov
+
+Four shards from the task 2 split (Team 9 lead post, 18 Nov 2026). Same chain and table as R1:
+`decode_shard.py` (p1536) → `decontam_check.py` (fingerprints v2, full set) → `canary_scan.py`.
+Repo commit `17fd544`. Tokenizer: frozen p1536, sha256 `e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b`.
+Fingerprint set: v2, `set_sha256 2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a`, scope `full set`.
+
+| shard_id | payload_sha256 | docs scanned | flagged | canary hits | set_sha256 |
+|---|---|---:|---:|---:|---|
+| `code-cpp-train-000001` | `161b269499bf813885d0b68fac55c8b31afa546ddee698a76d28f3bbb356d5cb` | 14,145 | 0 | 0 | `2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a` |
+| `en-dclm-train-000001` | `2b6e1f71836f08242e4d9f5c3ef9cf217617a125eb516849886360347b321f7b` | 14,735 | 0 | 0 | `2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a` |
+| `ind-hi-fw2-train-000000` | `e64b18601f2ffc82cfeaca78c864cead9aab62b0747adf62c38a1d891613a13b` | 13,773 | 0 | 0 | `2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a` |
+| `ind-te-fw2-train-000000` | `5a70a65df7d07063e942df6c9079217fc370cd7042230bfeeba7ed494f2721ed` | 5,670 | 0 | 0 | `2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a` |
+
+Decode details:
+
+| shard_id | tokens | tokenizer (decoder label) | split | dataset_version |
+|---|---:|---|---|---|
+| `code-cpp-train-000001` | 23,634,925 | `p1536 e6b93a93a605` | train | sample |
+| `en-dclm-train-000001` | 17,781,210 | `p1536 e6b93a93a605` | train | sample |
+| `ind-hi-fw2-train-000000` | 8,988,818 | `p1536 e6b93a93a605` | train | sample |
+| `ind-te-fw2-train-000000` | 4,758,086 | `p1536 e6b93a93a605` | train | sample |
+
+**No hits:** all four returned `flagged 0 (0.00%) by benchmark {}` with the full v2 set, and 0 canary hits (4 canaries: era-v5-lab, gpqa_diamond, hle, terminal_bench_2). No benchmark item ID, doc_id or offset to report. All exit codes 0. Decoded `.text.parquet` files stay local and are not committed.

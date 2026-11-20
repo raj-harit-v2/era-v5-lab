@@ -1,0 +1,412 @@
+{
+ "ids_path": {
+  "eng_Latn": {
+   "lines": 1000,
+   "tokens": 30644,
+   "text_differs": [],
+   "model_ran_on_ids": true
+  },
+  "hin_Deva": {
+   "lines": 1000,
+   "tokens": 73289,
+   "text_differs": [],
+   "model_ran_on_ids": true
+  },
+  "mar_Deva": {
+   "lines": 1000,
+   "tokens": 79893,
+   "text_differs": [],
+   "model_ran_on_ids": true
+  },
+  "ben_Beng": {
+   "lines": 1000,
+   "tokens": 80279,
+   "text_differs": [],
+   "model_ran_on_ids": true
+  },
+  "asm_Beng": {
+   "lines": 1000,
+   "tokens": 72238,
+   "text_differs": [],
+   "model_ran_on_ids": true
+  },
+  "tam_Taml": {
+   "lines": 1000,
+   "tokens": 54480,
+   "text_differs": [],
+   "model_ran_on_ids": true
+  },
+  "tel_Telu": {
+   "lines": 1000,
+   "tokens": 69461,
+   "text_differs": [],
+   "model_ran_on_ids": true
+  },
+  "kan_Knda": {
+   "lines": 1000,
+   "tokens": 53638,
+   "text_differs": [],
+   "model_ran_on_ids": true
+  },
+  "mal_Mlym": {
+   "lines": 1000,
+   "tokens": 65076,
+   "text_differs": [],
+   "model_ran_on_ids": true
+  },
+  "guj_Gujr": {
+   "lines": 1000,
+   "tokens": 72580,
+   "text_differs": [],
+   "model_ran_on_ids": true
+  },
+  "pan_Guru": {
+   "lines": 1000,
+   "tokens": 82877,
+   "text_differs": [],
+   "model_ran_on_ids": true
+  },
+  "ory_Orya": {
+   "lines": 1000,
+   "tokens": 72989,
+   "text_differs": [],
+   "model_ran_on_ids": true
+  },
+  "fra_Latn": {
+   "lines": 1000,
+   "tokens": 42640,
+   "text_differs": [],
+   "model_ran_on_ids": true
+  },
+  "deu_Latn": {
+   "lines": 1000,
+   "tokens": 45678,
+   "text_differs": [],
+   "model_ran_on_ids": true
+  },
+  "vie_Latn": {
+   "lines": 1000,
+   "tokens": 69993,
+   "text_differs": [],
+   "model_ran_on_ids": true
+  },
+  "ell_Grek": {
+   "lines": 1000,
+   "tokens": 173785,
+   "text_differs": [],
+   "model_ran_on_ids": true
+  },
+  "rus_Cyrl": {
+   "lines": 1000,
+   "tokens": 60240,
+   "text_differs": [],
+   "model_ran_on_ids": true
+  },
+  "zwj_zwnj": {
+   "lines": 1100,
+   "tokens": 150970,
+   "text_differs": [],
+   "model_ran_on_ids": true
+  },
+  "nfd_indic": {
+   "lines": 1100,
+   "tokens": 90902,
+   "text_differs": [],
+   "model_ran_on_ids": true
+  },
+  "old_chillu_ml": {
+   "lines": 100,
+   "tokens": 6839,
+   "text_differs": [],
+   "model_ran_on_ids": true
+  },
+  "code_py_lines": {
+   "lines": 1000,
+   "tokens": 9911,
+   "text_differs": [],
+   "model_ran_on_ids": true
+  },
+  "code_py_files": {
+   "lines": 100,
+   "tokens": 115641,
+   "text_differs": [],
+   "model_ran_on_ids": true
+  }
+ },
+ "vocab": {
+  "ids": 131072,
+  "bad": []
+ },
+ "server": {
+  "lines": 440,
+  "text_differs": 0,
+  "prompt_ids": 13,
+  "tokens_evaluated": 13,
+  "completion_ok": true
+ },
+ "plain_text": {
+  "cadj-commits": {
+   "docs": 74753,
+   "normalizer_changes": 6,
+   "sample": 300,
+   "sample_ids_differ": 0,
+   "sample_tokens_hf": 133645,
+   "sample_tokens_llama": 133645,
+   "docs_with_non_ascii_capital": 298,
+   "split_differs": 18
+  },
+  "cadj-notebooks": {
+   "docs": 15563,
+   "normalizer_changes": 13,
+   "sample": 300,
+   "sample_ids_differ": 1,
+   "sample_tokens_hf": 642504,
+   "sample_tokens_llama": 642505,
+   "docs_with_non_ascii_capital": 1038,
+   "split_differs": 158
+  },
+  "cadj-stackexchange": {
+   "docs": 41396,
+   "normalizer_changes": 16,
+   "sample": 300,
+   "sample_ids_differ": 0,
+   "sample_tokens_hf": 237831,
+   "sample_tokens_llama": 237831,
+   "docs_with_non_ascii_capital": 903,
+   "split_differs": 120
+  },
+  "ind-bn-fw2": {
+   "docs": 11205,
+   "normalizer_changes": 11204,
+   "sample": 300,
+   "sample_ids_differ": 300,
+   "sample_tokens_hf": 211107,
+   "sample_tokens_llama": 222900,
+   "docs_with_non_ascii_capital": 155,
+   "split_differs": 40
+  },
+  "ind-bn-sangraha-v": {
+   "docs": 10328,
+   "normalizer_changes": 10322,
+   "sample": 300,
+   "sample_ids_differ": 300,
+   "sample_tokens_hf": 296631,
+   "sample_tokens_llama": 308871,
+   "docs_with_non_ascii_capital": 163,
+   "split_differs": 42
+  },
+  "ind-gu-fw2": {
+   "docs": 23118,
+   "normalizer_changes": 3,
+   "sample": 300,
+   "sample_ids_differ": 0,
+   "sample_tokens_hf": 213154,
+   "sample_tokens_llama": 213154,
+   "docs_with_non_ascii_capital": 120,
+   "split_differs": 9
+  },
+  "ind-hi-fw2": {
+   "docs": 14261,
+   "normalizer_changes": 1,
+   "sample": 300,
+   "sample_ids_differ": 0,
+   "sample_tokens_hf": 201051,
+   "sample_tokens_llama": 201051,
+   "docs_with_non_ascii_capital": 97,
+   "split_differs": 14
+  },
+  "ind-hi-hplt": {
+   "docs": 8745,
+   "normalizer_changes": 3,
+   "sample": 300,
+   "sample_ids_differ": 0,
+   "sample_tokens_hf": 250465,
+   "sample_tokens_llama": 250465,
+   "docs_with_non_ascii_capital": 87,
+   "split_differs": 15
+  },
+  "ind-hi-indiccorp": {
+   "docs": 110836,
+   "normalizer_changes": 16232,
+   "sample": 300,
+   "sample_ids_differ": 47,
+   "sample_tokens_hf": 24596,
+   "sample_tokens_llama": 24664,
+   "docs_with_non_ascii_capital": 78,
+   "split_differs": 21
+  },
+  "ind-hi-sangraha-s": {
+   "docs": 8280,
+   "normalizer_changes": 3,
+   "sample": 300,
+   "sample_ids_differ": 0,
+   "sample_tokens_hf": 399188,
+   "sample_tokens_llama": 399188,
+   "docs_with_non_ascii_capital": 811,
+   "split_differs": 7
+  },
+  "ind-hi-sangraha-v": {
+   "docs": 14709,
+   "normalizer_changes": 187,
+   "sample": 300,
+   "sample_ids_differ": 6,
+   "sample_tokens_hf": 197832,
+   "sample_tokens_llama": 197835,
+   "docs_with_non_ascii_capital": 105,
+   "split_differs": 19
+  },
+  "ind-kn-fw2": {
+   "docs": 7834,
+   "normalizer_changes": 0,
+   "sample": 300,
+   "sample_ids_differ": 0,
+   "sample_tokens_hf": 194339,
+   "sample_tokens_llama": 194339,
+   "docs_with_non_ascii_capital": 103,
+   "split_differs": 34
+  },
+  "ind-kn-sangraha-s": {
+   "docs": 5191,
+   "normalizer_changes": 0,
+   "sample": 300,
+   "sample_ids_differ": 0,
+   "sample_tokens_hf": 294317,
+   "sample_tokens_llama": 294317,
+   "docs_with_non_ascii_capital": 242,
+   "split_differs": 1
+  },
+  "ind-kn-sangraha-v": {
+   "docs": 8551,
+   "normalizer_changes": 4,
+   "sample": 300,
+   "sample_ids_differ": 0,
+   "sample_tokens_hf": 170037,
+   "sample_tokens_llama": 170037,
+   "docs_with_non_ascii_capital": 82,
+   "split_differs": 23
+  },
+  "ind-ml-fw2": {
+   "docs": 18976,
+   "normalizer_changes": 2,
+   "sample": 300,
+   "sample_ids_differ": 0,
+   "sample_tokens_hf": 199455,
+   "sample_tokens_llama": 199455,
+   "docs_with_non_ascii_capital": 61,
+   "split_differs": 4
+  },
+  "ind-mr-fw2": {
+   "docs": 11460,
+   "normalizer_changes": 1,
+   "sample": 300,
+   "sample_ids_differ": 0,
+   "sample_tokens_hf": 183637,
+   "sample_tokens_llama": 183637,
+   "docs_with_non_ascii_capital": 47,
+   "split_differs": 4
+  },
+  "ind-mr-sangraha-v": {
+   "docs": 12172,
+   "normalizer_changes": 5178,
+   "sample": 300,
+   "sample_ids_differ": 130,
+   "sample_tokens_hf": 223985,
+   "sample_tokens_llama": 224677,
+   "docs_with_non_ascii_capital": 56,
+   "split_differs": 7
+  },
+  "ind-or-fw2": {
+   "docs": 33684,
+   "normalizer_changes": 35,
+   "sample": 300,
+   "sample_ids_differ": 1,
+   "sample_tokens_hf": 142696,
+   "sample_tokens_llama": 142696,
+   "docs_with_non_ascii_capital": 59,
+   "split_differs": 11
+  },
+  "ind-sa-fw2": {
+   "docs": 5908,
+   "normalizer_changes": 13,
+   "sample": 300,
+   "sample_ids_differ": 0,
+   "sample_tokens_hf": 662254,
+   "sample_tokens_llama": 662254,
+   "docs_with_non_ascii_capital": 193,
+   "split_differs": 5
+  },
+  "ind-ta-fw2": {
+   "docs": 6766,
+   "normalizer_changes": 1,
+   "sample": 300,
+   "sample_ids_differ": 1,
+   "sample_tokens_hf": 193069,
+   "sample_tokens_llama": 193069,
+   "docs_with_non_ascii_capital": 28,
+   "split_differs": 3
+  },
+  "ind-ta-sangraha-s": {
+   "docs": 4336,
+   "normalizer_changes": 0,
+   "sample": 300,
+   "sample_ids_differ": 0,
+   "sample_tokens_hf": 328070,
+   "sample_tokens_llama": 328070,
+   "docs_with_non_ascii_capital": 321,
+   "split_differs": 1
+  },
+  "ind-ta-sangraha-v": {
+   "docs": 6796,
+   "normalizer_changes": 15,
+   "sample": 300,
+   "sample_ids_differ": 1,
+   "sample_tokens_hf": 197781,
+   "sample_tokens_llama": 197781,
+   "docs_with_non_ascii_capital": 69,
+   "split_differs": 13
+  },
+  "ind-te-fw2": {
+   "docs": 5997,
+   "normalizer_changes": 3,
+   "sample": 300,
+   "sample_ids_differ": 0,
+   "sample_tokens_hf": 259082,
+   "sample_tokens_llama": 259082,
+   "docs_with_non_ascii_capital": 48,
+   "split_differs": 7
+  },
+  "ind-te-sangraha-s": {
+   "docs": 4782,
+   "normalizer_changes": 0,
+   "sample": 300,
+   "sample_ids_differ": 0,
+   "sample_tokens_hf": 340888,
+   "sample_tokens_llama": 340888,
+   "docs_with_non_ascii_capital": 287,
+   "split_differs": 5
+  },
+  "ind-te-sangraha-v": {
+   "docs": 8609,
+   "normalizer_changes": 8,
+   "sample": 300,
+   "sample_ids_differ": 0,
+   "sample_tokens_hf": 195809,
+   "sample_tokens_llama": 195809,
+   "docs_with_non_ascii_capital": 82,
+   "split_differs": 10
+  }
+ },
+ "info": {
+  "date": "2026-11-18",
+  "machine": "arm64 Darwin",
+  "pre": "granite-embed-multi-97m",
+  "tokenizer_sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b",
+  "gguf_sha256": "dfd63b8a5deb395ebae7526f9faab84ad2ea5ccb7d2d21b7d16472a5d0308c63",
+  "python": "3.12.11",
+  "llama_cpp_python": "0.3.36",
+  "tokenizers": "0.22.2",
+  "server_build": "b1-620d222",
+  "seconds": 79.0,
+  "pass": true
+ }
+}

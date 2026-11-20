@@ -123,33 +123,38 @@ def evaluate(
                 totals['nats'].append(nats)
                 totals['bytes'] += size
                 totals['tokens'] += count
-        if byte_count != dataset.raw_bytes:
+        if byte_count != getattr(dataset, "encoded_bytes", dataset.raw_bytes):
             raise ValueError("Heldout denominator failed byte conservation")
         total = math.fsum(values)
         result = {
             "val/nll_nats": total,
-            "val/utf8_bytes": byte_count,
+            "val/utf8_bytes": dataset.raw_bytes,
             "val/scored_tokens": token_count,
-            "val/bpb": total / math.log(2) / byte_count,
+            "val/bpb": total / math.log(2) / dataset.raw_bytes,
             "val/perplexity": math.exp(total / token_count),
         }
+        if hasattr(dataset, "encoded_bytes"):
+            result["val/encoded_utf8_bytes"] = byte_count
         if by_slice:
             from .scoring import group_metrics
 
             bpbs = {}
             for name, totals in sorted(by_slice.items()):
                 if (
-                    totals['bytes'] != dataset.slice_raw_bytes[name]
+                    totals['bytes'] != getattr(
+                        dataset, "slice_encoded_bytes", dataset.slice_raw_bytes
+                    )[name]
                     or totals['bytes'] <= 0
                 ):
                     raise ValueError('Slice byte conservation failed')
                 nats = math.fsum(totals['nats'])
-                bpbs[name] = nats / math.log(2) / totals['bytes']
+                original_size = dataset.slice_raw_bytes[name]
+                bpbs[name] = nats / math.log(2) / original_size
                 result.update(
                     {
                         f'val/slices/{name}/bpb': bpbs[name],
                         f'val/slices/{name}/nll_nats': nats,
-                        f'val/slices/{name}/utf8_bytes': totals['bytes'],
+                        f'val/slices/{name}/utf8_bytes': original_size,
                         f'val/slices/{name}/scored_tokens': totals['tokens'],
                     }
                 )

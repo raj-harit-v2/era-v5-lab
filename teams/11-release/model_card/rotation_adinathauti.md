@@ -14,9 +14,9 @@ Because the section text is empty, this review checks the outline row and its su
 
 | Claim | Evidence | On main? |
 |---|---|---|
-| The run saves checkpoints | `teams/07-infrastructure/docs/checkpoint_design_v0.md` sections 5 and 7 (save protocol and triggers); merged in #418, updated in #510 | Yes |
-| The run restores from a checkpoint | `teams/07-infrastructure/docs/runbook.md` sections 3 and 6 (restore steps); merged in #380, updated in #510 | Yes |
-| The run restarts after a crash | `teams/07-infrastructure/docs/runbook.md` section 1 (exit codes and actions, crash requeue path); `teams/07-infrastructure/docs/checkpoint_design_v0.md` section 7 (trigger table, exit code contract) | Yes |
+| The run saves checkpoints | `teams/07-infrastructure/docs/checkpoint_design_v0.md` sections 5 and 7 (save protocol and triggers); on main since #338 | Yes |
+| The run restores from a checkpoint | `teams/07-infrastructure/docs/runbook.md` sections 3 and 6 (restore steps); merged in #347, updated in #510 | Yes |
+| The run restarts after a crash | `teams/07-infrastructure/docs/runbook.md` sections 1 and 4 (exit codes and actions, crash requeue path, restart after a stop or a kill); `teams/07-infrastructure/docs/checkpoint_design_v0.md` section 7 (trigger table, exit code contract) | Yes |
 | Checkpoint interval set from measured times | `teams/07-infrastructure/docs/checkpoint_interval.md`; merged in #463 | Yes |
 | Lead OK for Infrastructure | No public evidence | Not on GitHub |
 

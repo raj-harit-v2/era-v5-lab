@@ -20,7 +20,7 @@
         "type": "grafana-clickhouse-datasource",
         "uid": "${ds}"
       },
-      "description": "Average next-token prediction loss across training steps. Lower values indicate better prediction on training text. Final public text to be confirmed by Team 11 Release and TSAI at Gate 3.",
+      "description": "This panel shows the next-token loss on training text at each training step, where a lower value means better predictions on that text.",
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -98,7 +98,7 @@
         "type": "grafana-clickhouse-datasource",
         "uid": "${ds}"
       },
-      "description": "Smoothed next-token prediction loss averaged over fixed step buckets from ClickHouse rollups. Final public text to be confirmed by Team 11 Release and TSAI at Gate 3.",
+      "description": "This panel shows the next-token training loss averaged over groups of consecutive training steps, so the trend is easier to see.",
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -176,7 +176,7 @@
         "type": "grafana-clickhouse-datasource",
         "uid": "${ds}"
       },
-      "description": "Prediction loss measured on held-out text that the model does not train on, compared alongside training loss. Final public text to be confirmed by Team 11 Release and TSAI at Gate 3.",
+      "description": "This panel shows the next-token loss on held-out text, which is set aside from training, next to the training loss.",
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -303,7 +303,7 @@
         "type": "grafana-clickhouse-datasource",
         "uid": "${ds}"
       },
-      "description": "Held-out prediction loss normalized per UTF-8 byte rather than per token, allowing fair comparison across tokenizers and scripts. Final public text to be confirmed by Team 11 Release and TSAI at Gate 3.",
+      "description": "This panel shows held-out loss in bits per byte of text, so readers can compare runs with different tokenizers on the same validation text.",
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -421,7 +421,7 @@
         "type": "grafana-clickhouse-datasource",
         "uid": "${ds}"
       },
-      "description": "Optimizer learning rate applied at each training step across warmup, steady state, and decay phases. Final public text to be confirmed by Team 11 Release and TSAI at Gate 3.",
+      "description": "This panel shows how the learning rate, which helps set the size of each model update, changes from one training step to the next.",
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -499,7 +499,7 @@
         "type": "grafana-clickhouse-datasource",
         "uid": "${ds}"
       },
-      "description": "Tokenization compactness across overall text and individual language slices. Final public text to be confirmed by Team 11 Release and TSAI at Gate 3.",
+      "description": "This panel shows how many tokens the tokenizer makes from each byte of text, for all text together and for each language.",
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -602,7 +602,7 @@
         "type": "grafana-clickhouse-datasource",
         "uid": "${ds}"
       },
-      "description": "Ratio of the busiest routed expert to the average routed expert in the Mixture-of-Experts layers, showing whether experts share work evenly. Final public text to be confirmed by Team 11 Release and TSAI at Gate 3.",
+      "description": "This panel shows how evenly the model spreads tokens across its routed experts, comparing the busiest expert with the average in the least balanced layer.",
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -781,8 +781,8 @@
     "from": "now-30d",
     "to": "now"
   },
-  "timezone": "utc",
-  "title": "ERA V5 \u2014 Public Training Progress (v1)",
+  "timezone": "Asia/Kolkata",
+  "title": "ERA V5: Public Training Progress (v1)",
   "uid": "era-v5-public-v1",
   "version": 1,
   "description": "Read-only public dashboard candidate built by Team 08 Monitoring. Panel selection and final public text are subject to TSAI Gate 3 approval and Team 11 Release review."

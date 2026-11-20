@@ -1,5 +1,7 @@
 import hashlib, json, math, sys, tempfile, unittest
 from pathlib import Path
+import os
+from types import SimpleNamespace
 from contextlib import nullcontext
 import torch
 from unittest.mock import patch
@@ -49,6 +51,68 @@ class SliceTests(unittest.TestCase):
             ds.raw_bytes,
         )
         self.assertEqual(r, evaluate(UniformModel(), ds, 1, 'cpu', nullcontext))
+
+    def test_normalizing_release_bpb_uses_original_bytes(self):
+        decomposed = "য়"
+        composed = "য়"
+
+        def normalize(text):
+            return text.replace(decomposed, composed)
+
+        class NormalizingByteFixture(ByteFixture):
+            normalize_input = True
+            tokenizer = SimpleNamespace(normalizer=SimpleNamespace(normalize_str=normalize))
+
+            def encode(self, text):
+                return super().encode(normalize(text))
+
+        class BatchedUniformModel(UniformModel):
+            def hidden(self, x, valid):
+                return x.unsqueeze(-1)
+
+            def head(self, hidden):
+                return hidden.new_zeros((len(hidden), 258), dtype=torch.float32)
+
+        document, source = next(
+            (document, source)
+            for document, source in zip(self.docs, self.rows)
+            if source["slice"] == "bn"
+        )
+        document["text"] = decomposed
+        source["text_sha256"] = hashlib.sha256(decomposed.encode("utf-8")).hexdigest()
+        self.text.write_text(
+            "".join(json.dumps(document) + "\n" for document in self.docs),
+            encoding="utf-8",
+        )
+        self.save()
+
+        original_bytes = sum(len(doc["text"].encode("utf-8")) for doc in self.docs)
+        encoded_bytes = sum(len(normalize(doc["text"]).encode("utf-8")) for doc in self.docs)
+        self.assertGreater(original_bytes, encoded_bytes)
+        with patch.dict(os.environ):
+            os.environ.pop("G5_DOCUMENT_CACHE_DIR", None)
+            dataset = DocumentWindows(
+                self.text, NormalizingByteFixture(), 7, True, self.sources
+            )
+
+        for budget in (None, 24):
+            with self.subTest(max_batch_tokens=budget):
+                result = evaluate(
+                    BatchedUniformModel(), dataset, 1, "cpu", nullcontext,
+                    max_batch_tokens=budget,
+                )
+                self.assertEqual(result["val/utf8_bytes"], original_bytes)
+                self.assertEqual(result["val/encoded_utf8_bytes"], encoded_bytes)
+                self.assertEqual(result["val/scored_tokens"], encoded_bytes)
+                self.assertAlmostEqual(
+                    result["val/bpb"], math.log2(258) * encoded_bytes / original_bytes,
+                    places=6,
+                )
+                self.assertEqual(result["val/slices/bn/utf8_bytes"], 6)
+                self.assertEqual(result["val/slices/bn/scored_tokens"], 3)
+                self.assertAlmostEqual(
+                    result["val/slices/bn/bpb"], math.log2(258) / 2, places=6,
+                )
 
     def test_batched_eval_matches_reference_and_projects_only_scored_tokens(self):
         ds = DocumentWindows(self.text, ByteFixture(), 7, True, self.sources)

@@ -10,9 +10,10 @@ in directly. `make_writer` returns an object with the trainer's interface that p
         python train_week2.py ... --out runs/r1 --logger-factory g5_adapter:make_writer
 
 G8 rows go to `<out>/g8/metrics.jsonl`. G5's own `<out>/metrics.jsonl` is left alone (its JsonWriter opens it
-with "w", so the two must not share a file). Load the G8 file into ClickHouse with the run name:
+with "w", so the two must not share a file). The adapter reads `run_id` from the trainer's manifest
+and writes it in every G8 row. ClickHouse can use the embedded ID directly:
 
-    python teams/08-monitoring/clickhouse/load_jsonl.py runs/r1/g8/metrics.jsonl --run-id r1
+    python teams/08-monitoring/clickhouse/load_jsonl.py runs/r1/g8/metrics.jsonl
 
 What happens to G5's row:
 - `loss_ntp`, `loss_mtp`, `tokens_per_second` are written as they are; `gpu_alloc_gb` becomes `gpu_alloc_gib`.
@@ -26,7 +27,8 @@ What happens to G5's row:
   field is noticed.
 """
 
-import os
+import json
+from pathlib import Path
 
 from metrics_writer import FLUSH_EVERY, MetricsWriter
 
@@ -53,8 +55,8 @@ def _tokens_per_byte(row):
 class G5Writer:
     """The trainer's writer interface (write(row) / flush() / close()) over a MetricsWriter."""
 
-    def __init__(self, path, flush_every=FLUSH_EVERY):
-        self.writer = MetricsWriter(path, flush_every=flush_every)
+    def __init__(self, path, flush_every=FLUSH_EVERY, *, run_id=None):
+        self.writer = MetricsWriter(path, flush_every=flush_every, run_id=run_id)
         self.path = path
 
     def write(self, row):
@@ -76,4 +78,7 @@ class G5Writer:
 
 def make_writer(out_dir):
     """Factory for train_week2.py's --logger-factory: rows go to <out_dir>/g8/metrics.jsonl."""
-    return G5Writer(os.path.join(os.fspath(out_dir), "g8", "metrics.jsonl"))
+    out = Path(out_dir)
+    manifest = out / "manifest.json"
+    run_id = json.loads(manifest.read_text(encoding="utf-8")).get("run_id") if manifest.is_file() else None
+    return G5Writer(out / "g8" / "metrics.jsonl", run_id=run_id)

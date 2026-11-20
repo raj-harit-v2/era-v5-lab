@@ -1,0 +1,17 @@
+{
+  "model": "Qwen/Qwen2.5-7B-Instruct",
+  "format": "bnb_4bit",
+  "bits_per_weight": 4.55,
+  "model_size_gb": 5.24,
+  "device": "NVIDIA Tesla T4 (15360 MiB)",
+  "vram_peak_gb": 8.48,
+  "vram_peak_percent": 55.2,
+  "platform": "Google Colab Linux x86_64",
+  "runtime": "Python 3.10, PyTorch 2.4.0+cu121, transformers 4.49.0, bitsandbytes 0.45.2, lm_eval 0.4.13",
+  "batch_sizes": {
+    "multiple_choice": 8,
+    "generation_gsm8k": 4
+  },
+  "eval_time_seconds": 2450,
+  "tokens_per_second": 42.5
+}

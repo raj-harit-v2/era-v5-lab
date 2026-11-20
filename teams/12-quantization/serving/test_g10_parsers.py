@@ -2,7 +2,7 @@
 
     python -m pytest teams/12-quantization/serving/test_g10_parsers.py -q
 
-  * template round trip: render an assistant turn with G10's own chat_template.jinja (as transformers does: sandboxed
+  * template round trip: render an assistant turn with G10's chat_template.jinja (our copy) (as transformers does: sandboxed
     jinja2, trim_blocks, lstrip_blocks, tojson without ASCII escapes), parse the generated part back, and get the
     reasoning, the tool calls and the content that went in. Needs jinja2.
   * streaming: every way of cutting an output into deltas (one char, random chunks) gives the same fields as the
@@ -26,7 +26,7 @@ sys.path.insert(0, str(HERE))
 import g10_parsers as g  # noqa: E402
 
 REPO = HERE.parents[2]
-TEMPLATE = REPO / "teams" / "10-post-training" / "chat-format" / "chat_template.jinja"
+TEMPLATE = REPO / "teams" / "12-quantization" / "tokenizer" / "chat_template.jinja"     # G10's, copied unchanged
 
 
 # ------------------------------------------------------------------------------ template rendering (as transformers)

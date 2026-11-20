@@ -1,0 +1,82 @@
+{
+  "executed_at_utc": "2026-11-17T21:50:08.066045+00:00",
+  "model_id": "HuggingFaceTB/SmolLM-135M",
+  "model_revision": "1d461723eec654e65efdc40cf49301c89c0c92f4",
+  "corpus": "G5 heldout_v1, approved benchmark-free text",
+  "input_sha256": "21c6e4b2df8dae9d69e254f4a00fc934d2a3c70f0675065a03724299d94312bb",
+  "selection": "First three complete records >=4096 tokens in c4-val/owm-test/pes2o-val source order; no packing, repetition or outcome-based selection",
+  "documents": [
+    {
+      "id": "owm-test-000008",
+      "text_sha256": "4abf8a8955b725f6b7586309de60adf1291888eac787ba7430a96040a6c437e6",
+      "tokens_sha256": "7ee68e4f382e2d59733568b2b005a9b127929ea454bc7b867376b714972834c1"
+    },
+    {
+      "id": "owm-test-000029",
+      "text_sha256": "516115f00c4ff97d3d84cf3290f9f6a303eb5f5318b2b54f35ee0af1b9d35615",
+      "tokens_sha256": "765dd6ba4ba3a35a6967adc5d16d460bced606ee67e7c12a386152827fff54e9"
+    },
+    {
+      "id": "owm-test-000036",
+      "text_sha256": "283da9a591f0876d17fe4f8dfb4cb5c725b85123fdb2fb0daab3f2e44aa5bac4",
+      "tokens_sha256": "119bfa9bea7afad190310705ae719e0fd0a1d20a4527d1a4759f5319c4b900f9"
+    }
+  ],
+  "attention_backend": "eager",
+  "dtype": "bfloat16",
+  "scored_targets": "same final 512 IDs per document in all four arms",
+  "max_input_length": 4096,
+  "weights": "identical, fixed",
+  "no_training": true,
+  "full_vocabulary_head": true,
+  "checks": {
+    "input_hash": true,
+    "three_complete_documents": true,
+    "identical_targets": true,
+    "identical_weights": true,
+    "finite_all_four": true
+  },
+  "source_sha256": "41a8b4b0870d465071fa6cb09e332e5e214e99d8790f46934fe40a3e8e9f3e00",
+  "environment": {
+    "python": "3.13.11",
+    "torch": "2.11.0+cu130",
+    "transformers": "5.14.1",
+    "cuda": "13.0",
+    "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition"
+  },
+  "scope": "Self-run small-model subset, not a TSAI-returned run or full heldout_v1 score; no speed benchmark",
+  "summary": [
+    {
+      "Run": "A",
+      "Method": "Original RoPE",
+      "Context": 2048,
+      "NLL": 1.6740928093592327,
+      "Perplexity": 5.333954040317257,
+      "scored_tokens": 1536
+    },
+    {
+      "Run": "B",
+      "Method": "Original RoPE",
+      "Context": 4096,
+      "NLL": 7.125009218851726,
+      "Perplexity": 1242.6596228969995,
+      "scored_tokens": 1536
+    },
+    {
+      "Run": "C",
+      "Method": "YaRN x2",
+      "Context": 4096,
+      "NLL": 1.6963175535202026,
+      "Perplexity": 5.453826942399631,
+      "scored_tokens": 1536
+    },
+    {
+      "Run": "D",
+      "Method": "YaRN x2",
+      "Context": 2048,
+      "NLL": 1.6951537132263184,
+      "Perplexity": 5.447483251086033,
+      "scored_tokens": 1536
+    }
+  ]
+}

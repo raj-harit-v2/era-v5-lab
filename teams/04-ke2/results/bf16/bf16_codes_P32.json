@@ -1,0 +1,66 @@
+{
+  "format": "ke2-bf16-codes-v1",
+  "tokenizer": {
+    "name": "p1536",
+    "sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b",
+    "vocab_size": 131072,
+    "eos": {
+      "id": 130822,
+      "content": "<|endoftext|>"
+    },
+    "release": "teams/03-tokenizer/release/ (tokenizer.json is not in the repo: over 5 MB)"
+  },
+  "raw_table": {
+    "kind": "raw",
+    "pos_dim": 32,
+    "shape": [
+      131072,
+      32
+    ],
+    "n_truncated": 0,
+    "n_empty_rows": 0,
+    "sha256": "21072027b19ef6f05d57ead7a2fc9fb4c52129e491186bf38d0ba079e8d5168a",
+    "file": "teams/04-ke2/results/tables/p1536-s0/raw_table_P32.npz",
+    "bytes": 841990,
+    "committed": true,
+    "check": "python teams/04-ke2/src/verify_frozen_table.py [PATH]"
+  },
+  "codec": {
+    "char_dim": 256,
+    "pos_dim": 32,
+    "output_dim": 8192,
+    "source": "kronecker_embeddings.codec.kronecker_codec (float32) then .to(torch.bfloat16)",
+    "upstream_commit": "d07cb543f03d7a72a7c35bc68cfb795bcb02e1ec",
+    "torch": "2.14.1"
+  },
+  "compact": {
+    "file": "bf16_codes_P32.npz",
+    "arrays": {
+      "high_bits": [
+        33
+      ],
+      "low_bits": [
+        33
+      ]
+    },
+    "dtype": "uint16 bit patterns of bfloat16, indexed by byte length L",
+    "sha256": "0bc1aa3cca5ce4af56f1280d14ea3cbe1378260aa5100a502f9b7d44f9565a26",
+    "hash_rule": "sha256('ke2-bf16-codes-v1|P|char_dim|tokenizer_sha256|raw_table_sha256|' + high_bits + low_bits, uint16 LE)"
+  },
+  "matrix": {
+    "shape": [
+      131072,
+      8192
+    ],
+    "dtype": "bfloat16",
+    "bytes": 2147483648,
+    "committed": false,
+    "layout": "row t: low[L_t] everywhere, high[L_t] at index byte * P + position for position < L_t",
+    "sha256": "0f96a38a959e6716d810d73bab85ad2181c1cdcd759eb4fdf2dc09796bcdfa78",
+    "hash_rule": "sha256 of the row-major little-endian bf16 bytes, no header",
+    "row_hashes_sha256": "1b166c37e1eaff2975580364f9ea4875f9e884d4aff0c4442f3e3e0da3164719",
+    "row_hashes_rule": "sha256 of the (V, 32) array of per-row sha256 digests, in id order",
+    "file": "materialized/bf16_matrix_P32.npy (uint16 bits; python teams/04-ke2/src/build_bf16_codes.py --materialize; git-ignored)"
+  },
+  "verified": "every row of the codec's bf16 output equals the row rebuilt from the compact codes, bit for bit"
+}

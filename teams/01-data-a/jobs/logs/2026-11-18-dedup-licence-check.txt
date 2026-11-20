@@ -1,0 +1,33 @@
+Licence map check (item 6): dedup.json with G10's licence table, on the overlap rerun's returned files — Wednesday 18 November 2026
+
+Change:   dedup.json: licence_usable lists all 38 sample packs as true (G10's licence_table.md on main, 'Stage 0: Foundation data',
+          #524, 17 Nov: every pack 'TSAI reserves'); default_licence_usable true -> false.
+Code:     teams/01-data-a/dedup/dedup.py on main at 17fd544 (unchanged; dedup.py as merged in #255 and #610)
+Inputs:   the overlap rerun's returned overlap_summary.json, overlap_matches.csv, overlap_docs.parquet (#469; TSAI's links of 16 Nov)
+            overlap_matches.csv  ff8e4feec9f390cd78648ed0808095db1c8baf8484a5ed1a9c8a9016398d0433
+            overlap_docs.parquet 4f61c80a23a9e49b4b12b2d6aaff639771d70fc2dd130f0a73d99a8449992e30
+          no cleaned parts (inputs ""): urls unknown, rule 2 decides nothing, as in logs/2026-11-16-dedup-local.txt
+Configs:  old = this dedup.json with licence_usable {} and default_licence_usable true (the config TSAI ran for #547);
+          new = this dedup.json. Both with results = out/overlap_rerun, inputs = "".
+
+Output SHA-256 (old = new for every file):
+  remove_list.csv          c894d43de0bd092a7096815330b8e01322fb0e5835e034d9aaa256c3345ad1df
+  dedup_log.jsonl          b73cfdba60929ab2833d5525cb2faf323d194a42be21c8a63aa47450629d61a0
+  dedup_groups.csv         32d34f3bf7531c618a10f15ed45d9133a394b220cf5bd93577dc5b80d5e6c883
+  heldout_duplicates.csv   bda0cd4afca13791f8e5a7e615d5d26d50f096012dc0ddc6065cfedfef9ebab9
+  empty_documents.csv      d55f940a87844f08ff7f7fcb07f1a1b652fec817a65df6a987a69a32f3b0efa6
+
+dedup_summary.json: removed 1345 -> 1345; heldout_removed 0 -> 0; licence_default_used_for 38 packs -> 0; config differs only in the licence keys
+
+Console (new):
+  1,414,996 documents, 2,729 matches, 1,084 clusters
+  removed 1,345 (0.0951%): by rule {'H2': 1289, 'H1': 56}, by stage {'within_pack': 1309, 'cross_pack': 36}
+  clusters decided by priority rule: {'0': 28, '3': 769, '4': 287}
+  held-out removed: 0 (must be 0); held-out <-> held-out pairs reported: 0
+  empty documents: 7 listed, not removed; 21 matches between them set aside
+  note: no inputs given: url unknown, rule 2 decided nothing
+  harm check: not_testable
+  wrote remove_list.csv, dedup_log.jsonl, heldout_duplicates.csv, empty_documents.csv, dedup_groups.csv and dedup_summary.json to out/dedup_new
+
+Tests: python -m pytest -q teams/01-data-a/dedup/tests (without the three torch-based h3 test files)  ->  137 passed in 2.22s
+       including test_shipped_config_lists_every_pack_licence (new): every pack in pack_order has a licence entry; default false

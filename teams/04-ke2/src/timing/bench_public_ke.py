@@ -1,12 +1,11 @@
-"""Time the public KE input path and exact code decoder on the frozen tokenizer.
+"""Microbenchmark only Team 6's ``model.tok(x)`` call on the frozen tokenizer.
 
-This uses Team 6's StepTimer and model implementation with Team 4's SHA-checked
-raw table. ``embedding=ke2`` in that model is a fast projection of the public
-V1 byte code. The CPU float64 reference decoder operates on *unprojected*
-codes; it is a separate inference operation, not part of a training step.
+This is an isolated eval/no-grad operation timed with Team 6's StepTimer. It is
+not the Level-3 ``embed.ke`` measurement inside a complete training step; use
+the G6 layer/trace harness for that question.
 
 Run from the lab repository root:
-    python teams/04-ke2/src/timing/bench_public_ke.py --device cpu --out /tmp/public_ke_timing.json
+    python teams/04-ke2/src/timing/bench_public_ke.py --device cpu --out /tmp/model_tok_microbench.json
 """
 
 from __future__ import annotations
@@ -15,6 +14,7 @@ import argparse
 import hashlib
 import json
 import platform
+import subprocess
 import sys
 import time
 from pathlib import Path
@@ -27,15 +27,32 @@ LAB = TEAM.parents[1]
 sys.path.insert(0, str(TEAM / "src"))
 sys.path.insert(0, str(LAB / "teams" / "06-performance"))
 
-from decode_ref import CodeTable, decode  # noqa: E402
-from ke2.codec import encode_f64  # noqa: E402
 from ke2.config import FROZEN_TABLES_DIR, FROZEN_TOKENIZER_SHA256  # noqa: E402
 from ke2.tables import ByteTable  # noqa: E402
 from models.config import ModelConfig  # noqa: E402
 from models.gpt import GPT  # noqa: E402
+from perfkit.metrics import git_state  # noqa: E402
 from perfkit.timer import StepTimer, stats, sync  # noqa: E402
 
 FROZEN_TABLE_SHA256 = "21072027b19ef6f05d57ead7a2fc9fb4c52129e491186bf38d0ba079e8d5168a"
+
+
+def relevant_sources_dirty() -> bool | None:
+    """Whether the benchmark, embedding code, timer, or pinned table differs from HEAD."""
+    paths = (
+        "teams/04-ke2/src",
+        "teams/04-ke2/results/tables/p1536-s0/raw_table_P32.npz",
+        "teams/06-performance/models",
+        "teams/06-performance/perfkit",
+    )
+    try:
+        result = subprocess.run(
+            ["git", "status", "--porcelain", "--untracked-files=all", "--", *paths],
+            cwd=LAB, capture_output=True, text=True, timeout=10, check=True,
+        )
+    except (OSError, subprocess.SubprocessError):
+        return None
+    return bool(result.stdout.strip())
 
 
 def measure(fn, device: torch.device, warmup: int, steps: int) -> dict:
@@ -61,15 +78,15 @@ def measure(fn, device: torch.device, warmup: int, steps: int) -> dict:
 
 
 def run(args: argparse.Namespace) -> dict:
-    """Build the verified p1536 workload, check it, then time each operation.
+    """Build the verified p1536 workload, check it, and time only ``model.tok(x)``.
 
     Args:
         args: Parsed device, workload, repeat-count and thread-count options.
     Returns:
-        Serializable provenance and timing statistics.
+        Serializable provenance and the isolated input-embedding timing.
     """
-    if min(args.batch_size, args.seq_len, args.decode_queries, args.steps) < 1 or args.warmup < 0:
-        raise ValueError("batch size, sequence length, decode queries and steps must be positive")
+    if min(args.batch_size, args.seq_len, args.steps, args.threads) < 1 or args.warmup < 0:
+        raise ValueError("batch size, sequence length, steps and threads must be positive")
     torch.set_num_threads(args.threads)
     torch.manual_seed(0)
     device = torch.device(args.device)
@@ -77,6 +94,10 @@ def run(args: argparse.Namespace) -> dict:
         raise RuntimeError("CUDA requested but unavailable")
     if device.type == "mps" and not torch.backends.mps.is_available():
         raise RuntimeError("MPS requested but unavailable")
+    commit_sha, _ = git_state()
+    dirty = relevant_sources_dirty()
+    if device.type == "cuda" and (commit_sha is None or dirty is not False):
+        raise RuntimeError("CUDA timing requires a clean Git checkout with a commit SHA")
 
     table = ByteTable.load(
         FROZEN_TABLES_DIR / "raw_table_P32.npz", tokenizer_sha256=FROZEN_TOKENIZER_SHA256
@@ -100,74 +121,29 @@ def run(args: argparse.Namespace) -> dict:
         0, table.vocab_size, size=args.batch_size * args.seq_len, dtype=np.int64
     )
     x = torch.from_numpy(original_ids.reshape(args.batch_size, args.seq_len)).to(device)
-    y = (x + 1) % table.vocab_size
-    h = torch.randn(args.batch_size, args.seq_len, cfg.n_embd, device=device)
-
     model.eval()
     with torch.no_grad():
         emb = model.tok(x)
-        logits = model.head(h)
-        chosen = logits.argmax(dim=-1)
         assert emb.shape == (*x.shape, cfg.n_embd)
-        assert logits.shape == (*x.shape, table.vocab_size)
-        assert chosen.shape == x.shape
         input_ms = measure(lambda: model.tok(x), device, args.warmup, args.steps)
-        head_ms = measure(lambda: model.head(h), device, args.warmup, args.steps)
-        select_ms = measure(lambda: logits.argmax(dim=-1), device, args.warmup, args.steps)
-
-    model.train()
-    opt = torch.optim.AdamW(model.parameters(), lr=1e-4)
-
-    def train_step() -> None:
-        opt.zero_grad(set_to_none=True)
-        _, loss = model(x, y)
-        assert loss is not None
-        loss.backward()
-        opt.step()
-
-    train_step()  # correctness and optimizer-state initialization outside timing
-    full_ms = measure(train_step, device, args.warmup, args.steps)
-
-    reference_timings = {}
-    if not args.skip_cpu_reference:
-        code_table = CodeTable.from_byte_table(table)
-        ids = np.random.default_rng(1).integers(0, table.vocab_size, size=args.decode_queries, dtype=np.int64)
-        byte_rows = table.bytes[ids]
-        lengths = table.lengths[ids]
-        vectors = encode_f64(byte_rows, lengths, table.pos_dim)
-        got = decode(vectors, code_table)
-        if not np.array_equal(got.token_ids, ids):
-            raise AssertionError("public exact decoder did not recover the sampled IDs")
-        cpu = torch.device("cpu")
-        reference_timings = {
-            "reference_code_encode_cpu_float64": measure(
-                lambda: encode_f64(byte_rows, lengths, table.pos_dim), cpu, args.warmup, args.steps
-            ),
-            "reference_code_decode_cpu_float64": measure(
-                lambda: decode(vectors, code_table), cpu, args.warmup, args.steps
-            ),
-        }
 
     return {
-        "contract": "public V1 code, Team 6 embedding=ke2 implementation; reference decode is separate",
+        "contract": "isolated model.tok(x) microbenchmark in eval/no-grad; not a Level-3 region measurement",
         "tokenizer_sha256": FROZEN_TOKENIZER_SHA256,
         "table_sha256": table_hash,
-        "device": str(device), "platform": platform.platform(), "torch": torch.__version__,
+        "device": str(device),
+        "gpu_name": torch.cuda.get_device_name(device) if device.type == "cuda" else None,
+        "commit_sha": commit_sha,
+        "dirty": dirty,
+        "platform": platform.platform(), "torch": torch.__version__,
         "threads": torch.get_num_threads(), "batch_size": args.batch_size,
-        "sequence_length": args.seq_len, "decode_queries": args.decode_queries,
+        "sequence_length": args.seq_len,
         "id_sampling": "uniform token IDs, NumPy default_rng seed 0",
         "input_ids_sha256": hashlib.sha256(original_ids.astype("<i8").tobytes()).hexdigest(),
         "input_token_length_min": int(table.lengths[original_ids].min()),
         "input_token_length_max": int(table.lengths[original_ids].max()),
-        "cpu_reference_skipped": args.skip_cpu_reference,
-        "warmup": args.warmup, "steps": args.steps,
-        "timings_ms": {
-            "training_input_embedding_forward": input_ms,
-            "training_output_head_forward": head_ms,
-            "output_token_argmax": select_ms,
-            "complete_training_step": full_ms,
-            **reference_timings,
-        },
+        "shape_check_calls": 1, "warmup": args.warmup, "steps": args.steps,
+        "timings_ms": {"model.tok(x)_eval_no_grad": input_ms},
     }
 
 
@@ -177,12 +153,9 @@ def main() -> None:
     parser.add_argument("--device", default="cpu", choices=("cpu", "cuda", "mps"))
     parser.add_argument("--batch-size", type=int, default=1)
     parser.add_argument("--seq-len", type=int, default=8)
-    parser.add_argument("--decode-queries", type=int, default=4)
     parser.add_argument("--warmup", type=int, default=1)
     parser.add_argument("--steps", type=int, default=3)
     parser.add_argument("--threads", type=int, default=4)
-    parser.add_argument("--skip-cpu-reference", action="store_true",
-                        help="CUDA timing job: omit the separate, already measured CPU reference decoder")
     parser.add_argument("--out", type=Path)
     args = parser.parse_args()
     started = time.perf_counter()
@@ -191,9 +164,10 @@ def main() -> None:
     if args.out:
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
-    check = ("CPU reference skipped" if args.skip_cpu_reference
-             else f"decoded {args.decode_queries}/{args.decode_queries} sampled IDs")
-    print(f"p1536 table {report['table_sha256']} {check}")
+    print(f"gpu_name: {report['gpu_name'] or 'not applicable'}")
+    print(f"commit_sha: {report['commit_sha'] or 'unavailable'}")
+    print(f"dirty: {report['dirty']}")
+    print(f"p1536 table {report['table_sha256']}")
     for name, values in report["timings_ms"].items():
         print(f"{name}: median {values['median']:.3f} ms (n={values['n']})")
     print(f"wall_seconds: {report['wall_seconds']:.3f}")

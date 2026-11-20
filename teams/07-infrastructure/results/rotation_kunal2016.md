@@ -3,33 +3,50 @@
 **Run:** dry run 1 (Team 05 job request, PR #475, merged 16 Nov)  |  **Run ID:** `dryrun1-1234` (output folder in the request)
 **Setup:** exp2_muon at T2 size, muon_lr 0.01, seed 1234, tokenizer p1536 (sha256 `e6b93a93...a64b`), TSAI text bundle, 1 GPU, bf16, one process
 **Run by:** TSAI. Result posted as a comment on PR #475 (16 Nov 2026)
-**Logs read:** TSAI's result comment on PR #475. **The per-step logs (`metrics.jsonl`, `losses.txt`, `summary.json`) were not available**: the evidence folder holds only the 3-step smoke run (checked on main at `dfdb6a6`, 18 Nov).
+**Logs read:** full-run evidence in `teams/05-architecture/jobs/evidence/2026-11-15-dryrun1-full/` (PR #620, commit
+`d005c9b`): `metrics.jsonl` (1,221 training rows), `losses.txt` (1,221 lines), `summary.json`. Also TSAI's result comment on #475.
 **Steps assigned:** 611 to 915. R1 is an offline review of the logs, split by step range.
-**R1 is therefore written from TSAI's whole-run summary.** The per-step checks for steps 611 to 915 could not be run.
+**Method:** a small local script of mine (`r1_check.py`, not in the repo) for continuity, loss, gradient norm and
+throughput, plus Team 08's `alarms.py --jsonl` with its default rules (the official check).
 
 ---
 
-## 1. Shift summary (R1, due Wed 18 Nov)
+## 1. Shift summary (R1): steps 611 to 915
 
-For steps 611 to 915, check step continuity, loss spikes, gradient norm and throughput, and run Team 08's alarms
-offline (`alarms.py --jsonl`). None of these could be done: the evidence folder
-`teams/05-architecture/jobs/evidence/2026-11-15-dryrun1/` holds only the 3-step smoke run (checked on main at
-`dfdb6a6`, 18 Nov). The values below are TSAI's whole-run summary. If the per-step logs are released later, the
-checks for 611 to 915 can be added in a follow-up.
+| Check | Result |
+|---|---|
+| Step continuity | **PASS.** 305 of 305 steps present, each exactly once; none missing, none repeated |
+| NaN / inf | **PASS.** None in `loss`, `loss_ntp`, `loss_mtp` or `gradient_norm` |
+| Loss (`loss_ntp`) | 6.2643 at step 611, 6.0153 at step 915; median 5.9486. Mean of steps 611–630: 6.0033; of 896–915: 5.8792. Per-step range 4.6065 to 7.6421 (batch-to-batch noise) |
+| Loss spikes | **None.** No step above 1.5 × the median of the previous 50 steps (largest ratio 1.265) |
+| Gradient norm | Median 0.8231 (min 0.5245, max 4.9868). Clipping applied on 57 of 305 steps. Two single-step jumps above 3 × the trailing median: step 618 (2.660) and step 841 (4.987) |
+| Throughput | Median 8,679 tokens/s (min 7,270, max 9,823); median step time 1,887.9 ms; no slow steps (none above 1.5 × median) |
+| Team 08 alarms (`alarms.py --jsonl`, default rules) | **1 in range:** step 841, `spike_score` on `gradient_norm`, severity page: 4.987, 8.3 σ above the trailing 839-step mean of 1.096 |
+| `losses.txt` against `metrics.jsonl` | **PASS.** All 305 lines in range equal `train/ce_loss` |
 
-| Item | Value | Source |
-|---|---|---|
-| Steps completed | 1,221 of 1,221. Status COMPLETED | TSAI comment |
-| Final train cross-entropy | 4.8906 | TSAI comment |
-| Final gradient norm | 0.7037 | TSAI comment |
-| NaN or inf in the loss | none | TSAI comment |
-| Held-out val/bpb | 1.5159 (English 1.9844, code 1.8901, Indic mean 1.3289, three-group 1.7345) | TSAI comment |
-| Same arm with old tokenizer v0, seed 1234 | 1.6443 (change −0.1284) | TSAI comment |
-| Checkpoints written | 1, at the last step (about 2.2 GB), kept by TSAI | TSAI comment; job request open item 3 |
-| Tokens per second, step time, wall time | **not available** | per-step logs not released |
-| Loss curve, spikes | **not available** | per-step logs not released |
-| Alerts | none reported | Team 08 has `alarms_dryrun1.md` (#494); no alert posted |
-| Overall | finished cleanly by the summary; the per-step curve could not be checked | |
+**The step 841 alarm.** It was one step. Gradient clipping was applied at that step, the loss did not rise (5.3447,
+lower than the 6.5765 of step 840), and the gradient norm was back to normal at step 842 (0.8232) and after. The
+learning rate was unchanged (0.001). So it is a transient gradient spike, absorbed by clipping, with no effect on
+training. It is the kind the `spike_score` rule exists to catch, and it fired as designed.
+
+**Whole run, for context.** `alarms.py` on all 1,221 steps gives 3 alarms, all `spike_score` on `gradient_norm`: steps
+468 and 505 (in the 306–610 range) and 841 (this range). Run time 2,480.9 s (`summary.json`).
+
+**Not checked.** MoE routing health: the rows carry no `expert_load`, so the `moe_routing` rule cannot run. The spike
+limits of 1.5× (loss) and 3× (gradient norm) are my script's own; Team 08's alarms are the official check.
+
+Commands, from the repo root (the second one reproduces the official alarm check):
+
+```bash
+E=teams/05-architecture/jobs/evidence/2026-11-15-dryrun1-full
+python r1_check.py --metrics $E/metrics.jsonl --losses $E/losses.txt --start 611 --end 915 \
+  --alarms teams/08-monitoring/alarms/alarms.py --out r1_611_915.json
+python -I teams/08-monitoring/alarms/alarms.py --jsonl $E/metrics.jsonl
+```
+
+TSAI's whole-run summary (#475): 1,221 of 1,221 steps, COMPLETED; final train cross-entropy 4.8906; final gradient
+norm 0.7037; held-out val/bpb 1.5159 (English 1.9844, code 1.8901, Indic mean 1.3289, three-group 1.7345); one
+checkpoint at the last step (about 2.2 GB).
 
 ---
 
@@ -41,7 +58,8 @@ No failures reported. TSAI reports the run COMPLETED, 1,221 of 1,221 steps, with
 |---|---|---|---|---|---|---|
 | — | — | — | — | none reported | TSAI comment, PR #475 | — |
 
-Step continuity (none missing, none repeated) could not be checked without `metrics.jsonl`.
+Step continuity in 611–915 is checked in §1: every step once, so no unlogged restart. The one alarm (step 841) was a
+transient gradient spike, not a failure: training went on with no stop.
 
 ---
 
@@ -72,15 +90,13 @@ Team 07's Checkpointer. The COMPLETE-only restart after a kill is shown by `resu
 - [x] The run ended: 1,221 of 1,221 steps, COMPLETED (TSAI)
 - [x] No NaN or inf in the loss (TSAI)
 - [x] No restart during the run, so no restart from a non-COMPLETE checkpoint
-- [ ] No step lost or repeated in dry run 1: **not checkable**, per-step logs not released (the restore drill's job B has every step 1 to 1,221)
+- [x] No step lost or repeated in 611–915: every step once in `metrics.jsonl` (PR #620)
 - [x] COMPLETE-only restarts: shown by `results/restart_cpu.txt` and `results/restart_node.txt` (dry run 1 had none)
 - [x] Restore drill: jobs A and B bit-equal to dry run 1 on all 1,221 steps, same final model (`restore_dryrun1.md`, PR #573)
 
 ## 5. Gaps and questions for the team
 
-1. **Per-step logs.** TSAI returned a summary, not `metrics.jsonl` / `losses.txt`. Without them R1 has no tokens per
-   second, step time or loss curve, and the "no lost steps" check cannot be done. Team 05 also needs them for
-   `dryrun1_loss.md`. Ask TSAI to return them to `teams/05-architecture/jobs/evidence/2026-11-15-dryrun1/`.
+1. **Per-step logs.** Resolved: TSAI published the full run in PR #620 (`2026-11-15-dryrun1-full/`); §1 uses it.
 2. **COMPLETE checkpoint.** The final checkpoint is the trainer's own `checkpoint.pt`, with no `MANIFEST.json` and no
    `commits.jsonl`, so it is not COMPLETE by queue rules v1.1 (R4). **Resolved:** dry run 1 had
    zero restarts and did not use the Checkpointer; the COMPLETE-only restart evidence stays `results/restart_cpu.txt`

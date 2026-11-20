@@ -346,6 +346,23 @@ definitions (a perfect square, the distance between two points) that two LiveCod
 
 Runs of numbers only (`1 2 3 ... 13`) and of single letters (`a b c ...`) are also not written.
 
+## Contest-id check (Codeforces pools, `contest_id_check.py`)
+
+The n-gram check finds copied text, not a reworded problem. Div. 1 and Div. 2 of one Codeforces round have
+neighbouring contest ids, so a reworded copy of a benchmark problem sits in a contest next to a benchmark contest.
+`contest_id_check.py` lists the pool rows whose contest is a benchmark contest (distance 0), the next round (1), or
+within `--window` ids (default 3). It reads ids only and prints ids and counts only.
+
+```
+python teams/09-evaluation/decontam/contest_id_check.py --benchmark <open-r1/codeforces test parquet> --pool rows.jsonl \
+    --out report.json --drop drop_ids.txt
+```
+
+The benchmark has 468 problems in 64 contests (ids 1993 to 2067). The contest id of a pool row is its `contest_id`
+field, or the number in its `id` (`1990/A`, `cf_1990_B`, `1990A`). Rows without a readable contest id are counted in
+the report. A hit is a reason to look, not proof of copying: ids next to each other are different problems unless the
+round was split into Div. 1 and Div. 2.
+
 ## Add a benchmark
 
 1. Add a table to `benchmarks.toml`: source, pinned `revision`, `files` with `sha256`, and the

@@ -156,7 +156,7 @@ No outside tokenizer passes the bar: every one that beats C3 on Indic (Gemma-4, 
 | Check | Result | Source |
 |---|---|---|
 | Round trip, held-out text, 38 packs, 13,154 docs | 0 failures (normalizer changed 406 docs, expected) | #305, Riya |
-| Round trip on the returned token shards, 1,000 docs per domain | TODO: Task 4, `results/roundtrip_shards.md` | Riya |
+| Round trip on the returned token shards, 1,000 docs per domain | 1,000 docs, 1 domains, 5 shards: 0 failures (ids, EOS, normal form) | Task 4, `results/roundtrip_shards.md` |
 | Encode speed, 1 CPU core, 1 GB per domain | TODO: Task 3, `results/speed_v1.md` | |
 | Speed vs BrahmicTokenizer-131K | TODO: rotation R1/R2 files | rotation members |
 

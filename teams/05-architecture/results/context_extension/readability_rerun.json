@@ -1,0 +1,310 @@
+{
+  "scope": "exploratory_wikitext_pilot_readability_rerun",
+  "status": "passed",
+  "started_at_utc": "2026-11-18T07:26:46.259518+00:00",
+  "finished_at_utc": "2026-11-18T07:27:09.670544+00:00",
+  "source_code_sha256": "d37e78f3cf178dd440002a476dd5795da0158f81575b044e87c043bbdfa4c670",
+  "executed_notebook_sha256": "7bfb48f41623875414b4091f3a4895f6ab14fa8a419bdc7f121b13242f254d3c",
+  "code_cells_executed": 16,
+  "error_outputs": 0,
+  "hardware": {
+    "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "vram_gib": 94.97,
+    "visible_vcpus": 20,
+    "visible_ram_gib": 160.0,
+    "python": "3.13.11",
+    "torch": "2.11.0+cu130",
+    "transformers": "5.14.1",
+    "cuda": "13.0"
+  },
+  "versions": {
+    "torch": "2.11.0",
+    "transformers": "5.14.1",
+    "datasets": "5.0.0",
+    "huggingface-hub": "1.33.0",
+    "pandas": "3.0.6",
+    "altair": "6.3.0",
+    "vl-convert-python": "1.9.0.post1"
+  },
+  "model_id": "HuggingFaceTB/SmolLM-135M",
+  "model_revision": "1d461723eec654e65efdc40cf49301c89c0c92f4",
+  "dataset_id": "Salesforce/wikitext",
+  "dataset_revision": "b08601e04326c79dfdd32d625aee71d232d685c3",
+  "attention_backend": "sdpa",
+  "dtype": "torch.bfloat16",
+  "checks": [
+    {
+      "Check": "Identical pretrained weights",
+      "Outcome": "PASS",
+      "Detail": "134,515,008 parameters per model"
+    },
+    {
+      "Check": "Identical scored targets",
+      "Outcome": "PASS",
+      "Detail": "3 \u00d7 512 target IDs in every condition"
+    },
+    {
+      "Check": "YaRN uses original 2K reference",
+      "Outcome": "PASS",
+      "Detail": "Frequency-ramp bounds 8 and 21, extension factor 2"
+    },
+    {
+      "Check": "Configured YaRN rotary amplitude",
+      "Outcome": "PASS",
+      "Detail": "Rotary amplitude factor 1.06931472"
+    },
+    {
+      "Check": "Tail projection and next-token shift",
+      "Outcome": "PASS",
+      "Detail": "Max loss difference 0"
+    },
+    {
+      "Check": "SDPA versus eager numerical drift",
+      "Outcome": "PASS",
+      "Detail": "Max per-article mean NLL difference 0.002087 nats/token; BF16 screen <0.02"
+    },
+    {
+      "Check": "All four real input lengths scored",
+      "Outcome": "PASS",
+      "Detail": "12 article-condition rows, 1,536 scored tokens per condition"
+    }
+  ],
+  "summary": [
+    {
+      "Run": "A",
+      "Method": "Original RoPE",
+      "Context": "2048",
+      "NLL": "2.470164140065511",
+      "scored_tokens": "1536",
+      "Perplexity": "11.824387548115759"
+    },
+    {
+      "Run": "B",
+      "Method": "Original RoPE",
+      "Context": "4096",
+      "NLL": "6.693264325459798",
+      "scored_tokens": "1536",
+      "Perplexity": "806.9521117731332"
+    },
+    {
+      "Run": "C",
+      "Method": "YaRN \u00d72",
+      "Context": "4096",
+      "NLL": "2.482160210609436",
+      "scored_tokens": "1536",
+      "Perplexity": "11.967087946022243"
+    },
+    {
+      "Run": "D",
+      "Method": "YaRN \u00d72",
+      "Context": "2048",
+      "NLL": "2.47035547097524",
+      "scored_tokens": "1536",
+      "Perplexity": "11.826650135386865"
+    }
+  ],
+  "document_results": [
+    {
+      "Run": "A",
+      "Method": "Original RoPE",
+      "Context": "2048",
+      "Document": "Du Fu",
+      "NLL": "3.041055202484131",
+      "Perplexity": "20.92731414227592",
+      "Scored tokens": "512"
+    },
+    {
+      "Run": "A",
+      "Method": "Original RoPE",
+      "Context": "2048",
+      "Document": "Ise @-@ class battleship",
+      "NLL": "1.6162919998168945",
+      "Perplexity": "5.03438815198805",
+      "Scored tokens": "512"
+    },
+    {
+      "Run": "A",
+      "Method": "Original RoPE",
+      "Context": "2048",
+      "Document": "Second Battle of Naktong Bulge",
+      "NLL": "2.753145217895508",
+      "Perplexity": "15.691908822655272",
+      "Scored tokens": "512"
+    },
+    {
+      "Run": "B",
+      "Method": "Original RoPE",
+      "Context": "4096",
+      "Document": "Du Fu",
+      "NLL": "7.197661399841309",
+      "Perplexity": "1336.302031250096",
+      "Scored tokens": "512"
+    },
+    {
+      "Run": "B",
+      "Method": "Original RoPE",
+      "Context": "4096",
+      "Document": "Ise @-@ class battleship",
+      "NLL": "6.197983741760254",
+      "Perplexity": "491.7565326918829",
+      "Scored tokens": "512"
+    },
+    {
+      "Run": "B",
+      "Method": "Original RoPE",
+      "Context": "4096",
+      "Document": "Second Battle of Naktong Bulge",
+      "NLL": "6.684147834777832",
+      "Perplexity": "799.6289717532603",
+      "Scored tokens": "512"
+    },
+    {
+      "Run": "C",
+      "Method": "YaRN \u00d72",
+      "Context": "4096",
+      "Document": "Du Fu",
+      "NLL": "3.0801939964294434",
+      "Perplexity": "21.762623858033354",
+      "Scored tokens": "512"
+    },
+    {
+      "Run": "C",
+      "Method": "YaRN \u00d72",
+      "Context": "4096",
+      "Document": "Ise @-@ class battleship",
+      "NLL": "1.6172562837600708",
+      "Perplexity": "5.0392450729958504",
+      "Scored tokens": "512"
+    },
+    {
+      "Run": "C",
+      "Method": "YaRN \u00d72",
+      "Context": "4096",
+      "Document": "Second Battle of Naktong Bulge",
+      "NLL": "2.749030351638794",
+      "Perplexity": "15.627471383182044",
+      "Scored tokens": "512"
+    },
+    {
+      "Run": "D",
+      "Method": "YaRN \u00d72",
+      "Context": "2048",
+      "Document": "Du Fu",
+      "NLL": "3.0462145805358887",
+      "Perplexity": "21.035565081173758",
+      "Scored tokens": "512"
+    },
+    {
+      "Run": "D",
+      "Method": "YaRN \u00d72",
+      "Context": "2048",
+      "Document": "Ise @-@ class battleship",
+      "NLL": "1.6206988096237183",
+      "Perplexity": "5.056622698794199",
+      "Scored tokens": "512"
+    },
+    {
+      "Run": "D",
+      "Method": "YaRN \u00d72",
+      "Context": "2048",
+      "Document": "Second Battle of Naktong Bulge",
+      "NLL": "2.7441530227661133",
+      "Perplexity": "15.551436639750873",
+      "Scored tokens": "512"
+    }
+  ],
+  "fp32_sensitivity": [
+    {
+      "Run": "A",
+      "Method": "Original RoPE",
+      "Context": 2048,
+      "NLL": 2.468911568323771,
+      "Perplexity": 11.809585926391389
+    },
+    {
+      "Run": "B",
+      "Method": "Original RoPE",
+      "Context": 4096,
+      "NLL": 6.697379112243652,
+      "Perplexity": 810.279388480332
+    },
+    {
+      "Run": "C",
+      "Method": "YaRN \u00d72",
+      "Context": 4096,
+      "NLL": 2.482498526573181,
+      "Perplexity": 11.971137287853793
+    },
+    {
+      "Run": "D",
+      "Method": "YaRN \u00d72",
+      "Context": 2048,
+      "NLL": 2.469833771387736,
+      "Perplexity": 11.820481786042235
+    }
+  ],
+  "batch_scaling": [
+    {
+      "Batch": 3,
+      "Median GPU ms": 33.679935455322266,
+      "Min GPU ms": 33.56828689575195,
+      "Max GPU ms": 33.936798095703125,
+      "Input tokens per second": 364846.30489569984,
+      "Peak allocated MiB": 1247.861328125
+    },
+    {
+      "Batch": 6,
+      "Median GPU ms": 61.8361930847168,
+      "Min GPU ms": 61.48080062866211,
+      "Max GPU ms": 62.06275177001953,
+      "Input tokens per second": 397437.1443974631,
+      "Peak allocated MiB": 1968.26611328125
+    },
+    {
+      "Batch": 12,
+      "Median GPU ms": 146.27069091796875,
+      "Min GPU ms": 146.00880432128906,
+      "Max GPU ms": 146.82054138183594,
+      "Input tokens per second": 336034.51034196134,
+      "Peak allocated MiB": 3409.94970703125
+    },
+    {
+      "Batch": 24,
+      "Median GPU ms": 313.8050842285156,
+      "Min GPU ms": 313.7084655761719,
+      "Max GPU ms": 314.1392822265625,
+      "Input tokens per second": 313264.5229177172,
+      "Peak allocated MiB": 6290.69189453125
+    },
+    {
+      "Batch": 48,
+      "Median GPU ms": 618.7736206054688,
+      "Min GPU ms": 618.7105102539062,
+      "Max GPU ms": 618.8564453125,
+      "Input tokens per second": 317738.1734657975,
+      "Peak allocated MiB": 12053.92626953125
+    }
+  ],
+  "extra_prefix_nll_change": 0.011804739634195963,
+  "max_mean_nll_drift_from_historical_pilot": 0.0,
+  "input_hashes": [
+    {
+      "title": "Du Fu",
+      "available_tokens": 5464,
+      "text_sha256": "3b80db1f99b36370814c3af1d85aecaf62de778d5411c3299bc81dd2c47b4884",
+      "tokens_sha256": "016d8c4c42b97e03917cb17e34344d0910e2ca5307d223d93671c0299ea9c982"
+    },
+    {
+      "title": "Ise @-@ class battleship",
+      "available_tokens": 9611,
+      "text_sha256": "d2f2ca6c6c062e7d972c951922ebcf6fc4a72173078ec5c9af446858e5693206",
+      "tokens_sha256": "1fa159379ba94005d1f428e8796da6a3d303200768e739ab980fa87a34e7b971"
+    },
+    {
+      "title": "Second Battle of Naktong Bulge",
+      "available_tokens": 12495,
+      "text_sha256": "bcea803d1e4765817f9bec49a5244a77870b69e8de6b6709a990752ca17bc712",
+      "tokens_sha256": "7b59ff5b37fa48dd75869b3deaf105fcd859a7ed33a0870ebba6761b852ea68d"
+    }
+  ]
+}

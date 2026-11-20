@@ -30,8 +30,8 @@ Rule 0 overrides rule 1: a held-out document is kept even if its pack's licence 
 - **Not usable:** any NC (non-commercial), any ND (no derivatives), and unstated licences. A copy with an unusable licence never survives.
 - If no copy in a group has a usable licence, every train copy is removed.
 - **Applied per pack.** The sample has no per-document licence column, so a pack's licence applies to all its documents. `dedup.json` holds the map (`licence_usable`, with `default_licence_usable` for packs not listed).
-- **For this experiment only, all 38 sample-v0 packs are treated as usable** (TSAI, 12 Nov). TSAI approved every pack into sample v0, and G10's licence table on `main` (`teams/10-post-training/licences/licence_table.md`, "Stage 0: Foundation data") excludes none of them: it lists 8 of the 38 (`code-python`, `code-go`, `code-js-ts`, `ind-mr-fw2`, `ind-kn-fw2`, `ind-ta-sangraha-v`, `ind-hi-indiccorp`, `ind-hi-hplt`), all with the decision "TSAI reserves", and does not list the other 30. So `licence_usable` stays empty and every pack uses `default_licence_usable: true`; `dedup.json` is unchanged. **G10 owns the final licence decision.**
-- **Not verified: `code-js-ts` and `ind-hi-hplt`.** G10's table leaves both open: `code-js-ts` ("training-use rights require further verification") and `ind-hi-hplt` (CC0 for the packaging only; web terms for the text). On the 5 Nov run neither changed the remove list: `code-js-ts`'s only cross-pack matches were the empty documents, which are set aside, and `ind-hi-hplt` had no qualifying duplicates. This is checked again on the rerun. If G10 excludes a pack, set it to `false` in `licence_usable` and rerun `dedup.py` (seconds).
+- **All 38 sample-v0 packs are usable, from G10's licence table** (18 Nov). G10's table on `main` (`teams/10-post-training/licences/licence_table.md`, "Stage 0: Foundation data", #524, 17 Nov) lists all 38 packs, each with the decision "TSAI reserves" (In). `dedup.json` now lists every pack in `licence_usable` as `true`, with `default_licence_usable: false`, so a pack missing from the map is unusable, never silently usable; a pack that joins later needs its G10 row first. On the rerun's files this changes no output: the remove list, log, groups and both reports are byte-identical, and only `licence_default_used_for` in the summary goes from 38 packs to none. **G10 owns the licence decision.**
+- **Earlier (11–12 Nov):** G10's table then listed 8 of the 38 packs, so `licence_usable` stayed empty and every pack used `default_licence_usable: true`, for that experiment only (TSAI, 12 Nov). `code-js-ts` (per-file upstream licences) and `ind-hi-hplt` (CC0 packaging, web terms for the text) were left open; G10's Stage 0 rows now cover both, with `ind-hi-hplt`'s web terms noted for TSAI. Neither changed the remove list on the 5 Nov run or the rerun.
 
 ## Rule 2: provenance
 
@@ -79,5 +79,5 @@ Preferring the copy that cleaning changed least was considered and dropped, beca
 
 ## Open items
 
-- G10: the final licence decision, including `code-js-ts` and `ind-hi-hplt` (not verified; treated as usable for this experiment only).
+- G10: licence rows for any pack that joins after the 38 sample packs (they are unusable until listed).
 - Data B lead: any objection to the alphabetical order of their 25 packs, with a reason, by Fri 13 Nov 2026.

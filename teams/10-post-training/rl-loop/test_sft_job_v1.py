@@ -164,6 +164,7 @@ def test_a4_runs_a2s_completed_steps_without_base_eval_and_rows_are_removed(tmp_
 
     monkeypatch.setattr(job.probe, "check_pins", lambda *a: {"checks": {}})
     monkeypatch.setattr(job, "check_run_and_inputs", lambda a: {"block_size": 2048})
+    monkeypatch.setattr(job, "check_g5_sources", lambda a: {})
     monkeypatch.setattr(job.probe, "run_sft_arm", fake_arm)
     monkeypatch.setattr(sl, "build", fake_build)
     import make_adapter_config
@@ -233,6 +234,75 @@ def test_inputs_present_and_pinned_pass(tmp_path, monkeypatch):
                         "--heldout", "h", "--packs", str(pack), "--rl-tasks", str(pool), "--out", "o"])
     r = job.check_run_and_inputs(a)
     assert r["block_size"] == 2048 and r["rl_pool_sha256"] == job.RL_POOL_SHA256
+
+
+def _g5_and_run(tmp_path, run_model_py=None):
+    """A stand-in lab checkout with the four Team 5 files and a run folder whose manifest records their hashes
+    (model.py's recorded hash replaced when run_model_py is given). Synthetic fixtures."""
+    from team5_adapter import RUN_FOLDER_SOURCE_FILES
+    root = tmp_path / "lab"
+    sources = {}
+    for name, rel in RUN_FOLDER_SOURCE_FILES.items():
+        f = root / "teams" / "05-architecture" / rel
+        f.parent.mkdir(parents=True, exist_ok=True)
+        f.write_text(f"# fixture {name}\n")
+        sources[name] = job.probe.sha256_file(f)
+    if run_model_py:
+        sources["model.py"] = run_model_py
+    run = tmp_path / "run"
+    run.mkdir()
+    (run / "manifest.json").write_text(json.dumps({"sources": sources}))
+    return root, run
+
+
+def _args_for(root, run):
+    return job.parse_args(["--g5-root", str(root), "--run-folder", str(run), "--tokenizer", "t", "--byte-table", "b",
+                           "--heldout", "h", "--packs", "p", "--out", "o"])
+
+
+def test_g5_sources_matching_checkout_passes(tmp_path):
+    root, run = _g5_and_run(tmp_path)
+    r = job.check_g5_sources(_args_for(root, run))["g5_sources"]
+    assert set(r) == {"train_week2.py", "model.py", "config.py", "artifacts.py"}
+    assert all(v["run_manifest"] == v["g5_root"] for v in r.values())
+
+
+def test_g5_sources_different_model_py_is_still_refused_with_both_hashes(tmp_path):
+    other = "0" * 64
+    root, run = _g5_and_run(tmp_path, run_model_py=other)
+    with pytest.raises(ValueError) as e:
+        job.check_g5_sources(_args_for(root, run))
+    msg = str(e.value)
+    have = job.probe.sha256_file(root / "teams" / "05-architecture" / "harness" / "week2" / "model.py")
+    assert "model.py" in msg and other in msg and have in msg and "manifest.json 'sources'" in msg
+    assert "config.py" not in msg  # only the files that differ are named
+
+
+def test_g5_sources_missing_or_unrecorded_is_refused(tmp_path):
+    root, run = _g5_and_run(tmp_path)
+    (run / "manifest.json").write_text(json.dumps({}))  # an old manifest with no sources: the adapter refuses it too
+    with pytest.raises(ValueError, match="not the checkout"):
+        job.check_g5_sources(_args_for(root, run))
+
+
+def test_wrong_checkout_stops_in_pins_before_any_row(tmp_path, monkeypatch):
+    root, run = _g5_and_run(tmp_path, run_model_py="1" * 64)
+    (run / "checkpoint.pt").write_bytes(b"x")
+    pack, pool, ids = tmp_path / "pack.jsonl", tmp_path / "cc.jsonl", tmp_path / "ids.txt"
+    for f in (pack, pool, ids):
+        f.write_text("x")
+    m = json.loads((run / "manifest.json").read_text())
+    m["config"] = {"model": {"block_size": 2048}}
+    (run / "manifest.json").write_text(json.dumps(m))
+    monkeypatch.setattr(job, "RL_POOL_SHA256", job.probe.sha256_file(pool))
+    monkeypatch.setattr(job.probe, "check_pins", lambda *a: {"checks": {}})
+    monkeypatch.setattr(sl, "build", lambda *a, **k: pytest.fail("rows built after a source mismatch"))
+    out = tmp_path / "out"
+    args = ["--g5-root", str(root), "--run-folder", str(run), "--tokenizer", "t", "--byte-table", "b", "--heldout", "h",
+            "--packs", str(pack), "--rl-tasks", str(pool), "--rl-ids", str(ids), "--out", str(out)]
+    assert job.main(args) == 1
+    assert json.loads((out / "summary.json").read_text())["failed_steps"] == ["pins"]
+    assert "not the checkout" in json.loads((out / "pins.json").read_text())["error"]
 
 
 def test_sft_g5_accepts_no_before():

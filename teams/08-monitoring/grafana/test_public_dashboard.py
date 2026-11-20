@@ -61,3 +61,33 @@ def test_public_descriptions_name_teams_only_no_handles():
         texts.append(p.get("description", ""))
     blob = "\n".join(texts)
     assert re.search(r"@[A-Za-z0-9_-]+", blob) is None, "public dashboard text must not contain @handles"
+
+
+# Team 11 Release's approved sentences, one per public panel (TSAI approved in #598).
+DASHBOARD_TEXT = HERE.parents[1] / "11-release" / "dashboard" / "dashboard_text.md"
+
+
+def _approved_sentences():
+    rows = re.findall(r"^\|\s*(.+?)\s*\|\s*(This panel .+?)\s*\|\s*$", DASHBOARD_TEXT.read_text(encoding="utf-8"), re.M)
+    return dict(rows)
+
+
+def test_panel_descriptions_are_team11_approved_sentences():
+    approved = _approved_sentences()
+    charts = [p for p in _load()["panels"] if p["type"] != "row"]
+    assert {p["title"] for p in charts} == set(approved), "public panel titles must match dashboard_text.md"
+    for p in charts:
+        assert p["description"] == approved[p["title"]], f"panel {p['id']} text differs from dashboard_text.md"
+
+
+def test_no_placeholder_text_or_dashes():
+    d = _load()
+    texts = [d.get("title", ""), d.get("description", "")]
+    texts += [t for p in d["panels"] for t in (p.get("title", ""), p.get("description", ""))]
+    for t in texts:
+        assert "to be confirmed" not in t.lower(), t
+        assert "—" not in t and "–" not in t, f"no em or en dash in public text: {t!r}"
+
+
+def test_times_shown_in_ist():
+    assert _load()["timezone"] == "Asia/Kolkata"

@@ -203,3 +203,9 @@ claim that the proposed cache/resume repair is merged or approved.
 The original [#337](https://github.com/theschoolofai/era-v5-lab/pull/337) is superseded;
 its execution history remains available. These links separate review ownership
 without changing the historical notebook execution pins.
+
+## Context-extension pilot
+
+[context_extension.ipynb](context_extension.ipynb) contains the separate fixed-weight
+WikiText YaRN pilot. See [its run instructions](context_extension_README.md) for
+Jupyter setup, recorded-result scope and fresh CUDA execution.

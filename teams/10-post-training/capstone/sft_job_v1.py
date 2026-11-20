@@ -12,8 +12,10 @@ what forgetting cost?
 Steps (each writes out/<step>.json; summary.json last; exit 1 if any step failed):
   pins        tokenizer sha256 and byte-table content hash against the run manifest (day_one_probe.check_pins), then
               every input present (run folder checkpoint and manifest, the four pack shards, the RL pool and ids), the
-              run's block size equal to --max-tokens, and the RL pool's sha256; any failure stops the job before any
-              rows are built, with a message naming the missing or mismatched input
+              run's block size equal to --max-tokens, the RL pool's sha256, and the four Team 5 source files of the
+              run folder's manifest (train_week2.py, model.py, config.py, artifacts.py) against --g5-root (the same
+              pin the adapter applies later); any failure stops the job before any rows are built, with a message
+              naming the missing or mismatched input
   inputs      capstone/sft_slice_v1.py: firewalled pack shards (sha256-checked against the committed firewall record),
               rows <= the model's block size, re-tokenised and checked against the pack ids, dev split by statement,
               A2 and A4 forms of the same rows. Rows live in out/_inputs/ and are deleted at exit
@@ -171,6 +173,27 @@ def check_run_and_inputs(a) -> dict:
     return {"block_size": block, "rl_pool_sha256": rl_sha, "inputs_present": sorted(need)}
 
 
+def check_g5_sources(a) -> dict:
+    """The adapter refuses a run folder whose Team 5 source files differ from --g5-root (team5_adapter, run folder
+    source pin). Apply the same comparison before any row is built, so a wrong checkout stops the job at once with
+    both hashes and the remedy, not after the slice. Not a relaxation: the adapter's own check still runs."""
+    from team5_adapter import RUN_FOLDER_SOURCE_FILES  # noqa: PLC0415
+    recorded = json.loads((a.run_folder / "manifest.json").read_text(encoding="utf-8")).get("sources") or {}
+    team5 = Path(a.g5_root) / "teams" / "05-architecture"
+    rows = {}
+    for name, rel in RUN_FOLDER_SOURCE_FILES.items():
+        f = team5 / rel
+        rows[name] = {"run_manifest": recorded.get(name), "g5_root": probe.sha256_file(f) if f.is_file() else None}
+    bad = [n for n, r in rows.items() if r["run_manifest"] != r["g5_root"]]
+    if bad:
+        raise ValueError(
+            "--g5-root is not the checkout this run folder was trained from; the adapter would refuse the pair. "
+            + "; ".join(f"{n}: run manifest {rows[n]['run_manifest']}, --g5-root {rows[n]['g5_root']}" for n in bad)
+            + ". Point --g5-root at a lab checkout whose teams/05-architecture/harness files have the hashes in the "
+              "run folder's manifest.json 'sources'.")
+    return {"g5_sources": rows}
+
+
 def run(a, out: Path) -> int:
     t_end = time.monotonic() + a.deadline_minutes * 60 if a.deadline_minutes else None
 
@@ -178,7 +201,7 @@ def run(a, out: Path) -> int:
         return None if t_end is None else t_end - time.monotonic()
 
     results = {"pins": probe.step(out, "pins", lambda: {**probe.check_pins(a.run_folder, a.tokenizer, a.byte_table),
-                                                        **check_run_and_inputs(a)})}
+                                                        **check_run_and_inputs(a), **check_g5_sources(a)})}
     if not results["pins"]["ok"]:
         return probe.finish(out, results)
     from make_adapter_config import write_config  # noqa: PLC0415

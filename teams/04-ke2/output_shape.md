@@ -1,8 +1,9 @@
-# KE2 output shape (for G5)
+# KE2 output shape (for G5 and G12)
 
 **Status:** Gate 3 p1536-s0 is the current frozen tokenizer (16 Nov); its exact file hash passed
 the loader gate and both P = 32 and P = 64 were measured. C3-s0 remains a historical result.
-Both P values are supported; P = 32 is recommended.
+Both P values are supported; P = 32 is recommended and is the path dry run 1 trains (#475).
+For export and serving (Team 12), see [Export: fold into a normal embedding table](#export-fold-into-a-normal-embedding-table-for-g12).
 
 ## Shape
 
@@ -70,9 +71,105 @@ token in a future tokenizer would be cut off.
 
 KE2's size does not depend on V, so adding special-token slots does not change it.
 
-## Not covered
+## Output side
 
-The output side (the model's next-token layer) is not decided. KE2 decision: 14 Nov.
+No KE2 output head is chosen. Dry run 1 and the Team 5 trainer use a dense untied head,
+`nn.Linear(d_model, 131072, bias=False)` (TSAI, 15 Nov; `trainer_adapter.md`). KE2 is on the input only.
+
+## Export: fold into a normal embedding table (for G12)
+
+KE2 needs no runtime code at inference. The code of a token depends only on its ID, and the projection is
+linear, so every ID has one fixed embedding row. Computing all rows once gives an ordinary `V × d_model`
+table, which llama.cpp loads as `token_embd.weight` and Hugging Face / vLLM load as
+`model.embed_tokens.weight`. The fold is exact: a lookup in the folded table returns the same vector the
+trainer computes.
+
+### What is in the checkpoint
+
+A `train_week2.py` `checkpoint.pt` holds the state dict under `"model"`. The KE2 part is:
+
+| Key | Shape, dtype | What |
+|---|---|---|
+| `embedding.projection.weight` | `(d_model, 8192)`, float32 | the only learned KE2 weight, `W` |
+| `embedding.rows` | `(131072, 32)`, uint8 | buffer: the raw byte table, one row per ID |
+| `embedding.lengths` | `(131072,)`, int64 | buffer: the byte length L of each ID |
+| `head.weight` | `(131072, d_model)` | the dense untied output head; export as is (`output.weight`) |
+| `mtp_head.weight` | `(131072, d_model)` | only if the run uses MTP; G12 drops it at export |
+
+Before folding, check that `embedding.rows` and `embedding.lengths` are the frozen p1536 table: content
+sha256 `21072027b19ef6f05d57ead7a2fc9fb4c52129e491186bf38d0ba079e8d5168a` over
+`"ke2-table-v2|raw|32|"` + bytes + lengths (int16), as in `trainer_adapter.md`.
+
+### The fold
+
+For an ID with raw bytes b_0 … b_(L−1):
+
+```
+E[id] = (high[L] − low[L]) · Σ_{p<L} W[:, b_p · 32 + p]  +  low[L] · Σ_j W[:, j]
+```
+
+`high[L]` and `low[L]` are the two values of the z-normalised code (Lemma 1): with D = 8,192, v = 1/√L,
+mean = L·v/D, var = (L·(v − mean)² + (D − L)·mean²)/(D − 1) and s = √var + 1e-6,
+high = (v − mean)/s and low = −mean/s (`src/ke2/codec.py`, `code_values`). The 1e-6 is added to the
+standard deviation, not to the variance. This is the same arithmetic as Team 5's `KE2.projected`.
+
+The simplest correct fold runs Team 5's `KE2` module over `torch.arange(131072)` in fp32, which is what
+G12's `scripts/export_hf.py` (`fold_ke2`) does. Each row is computed independently of the others, so the
+chunk size does not matter.
+
+### Measured (`src/export/fold_check.py`, `results/fold/fold_check_P32.md`)
+
+Frozen p1536 table, d_model 512 (T2 width), with a random projection at Team 5's initialisation (no trained
+checkpoint is in the repository yet). CPU. The bit-for-bit check uses 16,384 sampled IDs; the fp32, bf16 and
+special-token checks use all 131,072 IDs.
+
+| Check | Result |
+|---|---|
+| Folded-table lookup vs Team 5 `KE2(ids)`, 16,384 sampled IDs (eight random `(8, 256)` batches) | 0 of 16,384 rows differ, bit for bit |
+| fp32 fold vs the float64 closed form, all 131,072 IDs | max abs error 1.4e-6; 3.8e-7 of the row's largest entry |
+| Folded table stored in bf16 vs float64, all 131,072 IDs | max 3.87e-3 of the row's largest entry (median 2.33e-3); the bf16 unit roundoff is 2⁻⁸ = 3.91e-3 |
+| Special tokens (356 IDs, Team 3 p1536 manifest) | every row finite and non-zero |
+| Fold time | 5 s on a laptop CPU |
+
+How to read this for export:
+
+- **fp32 storage reproduces training exactly.** bf16 storage adds only the usual bf16 rounding of each
+  entry; nothing KE2-specific is lost. Quantizing `token_embd` further (Q8_0, Q4_K) is measured like any
+  other tensor.
+- **Special tokens need no special case.** Each of the 356 special IDs is encoded from its literal bytes,
+  so it has its own non-zero row, including pad (130726). eos is ID 130822 `<|endoftext|>`; ID 36 has no
+  role. No two IDs share a code (0 raw collisions, `results/tables/p1536-s0/`), so no two rows of `E` are
+  forced to be equal.
+- **Unchanged by the fold:** the tokenizer, the token IDs, the output head, and the shape
+  `(B, T, d_model)`. The served model needs neither the byte table nor the KE2 codec.
+
+### Size after the fold
+
+The fold gives up KE2's parameter saving at inference: the table grows with V, while training stored only
+the projection.
+
+| d_model | Trained KE2 projection (8,192 × d_model) | Folded table (131,072 × d_model) | Folded table in bf16 |
+|---:|---:|---:|---:|
+| 256 (T1) | 2.10 M | 33.55 M | 64 MiB |
+| 512 (T2, dry run 1) | 4.19 M | 67.11 M | 128 MiB |
+| 640 (T3) | 5.24 M | 83.89 M | 160 MiB |
+| 4,096 | 33.55 M | 536.87 M | 1 GiB |
+
+When a model card or a size table counts parameters, say which one it uses: the training count has the
+projection, and the served count has the folded table.
+
+### On a trained checkpoint
+
+`fold_check.py --checkpoint <run>/checkpoint.pt` repeats the checks with the trained projection. It first
+checks that the checkpoint's byte table is the p1536 table. Dry-run checkpoints stay on TSAI's machines, so
+this runs inside G12's export job (#508), next to G12's logit test (export vs Team 5's model on 64 prompts).
+The fold itself does not depend on the trained values: a lookup in the folded table equals `KE2(ids)` for
+any `W`.
+
+Notes for `teams/12-quantization/docs/unsupported_parts.md` §1:
+- The projection is `embedding.projection.weight`, not `ke2.proj.weight`.
+- `ke2.codec.encode_ids` wraps the upstream library's fp32 codec. The reference for the trained model is
+  Team 5's `KE2` module, which `export_hf.py` already uses.
 
 ## Tokenizer-candidate revalidation
 

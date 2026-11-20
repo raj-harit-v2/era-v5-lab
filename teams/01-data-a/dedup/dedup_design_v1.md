@@ -173,7 +173,7 @@ Findings from local test runs on raw sample v0 parts (details in `results_v1.md`
   - `overlap_rules.gram_set`: decoded with NumPy in `1c89f9a`; `np.intersect1d` for the rest (mixed code/text pairs only).
   - `dedup.py`: done before the dedup job request (kunal2016/era-v5-lab#2): pyarrow reads (`pc.is_in`, `value_counts`, `take`), the gold check with `pc.is_in`, and `connected_components` for the clusters, byte-identical on three real inputs; peak memory 1,044 → 400 MB on TSAI's files (Kunal Sinha).
 - **F2 groups:** done (12 Nov). `dedup.py` writes `dedup_groups.csv`: every duplicate group, one row per member (`group_id, group_size, priority_rule, role, pack_id, split, part, row_in_part, doc_id`; role is `survivor` or `removed`); the F2 step counts and lists the groups whose survivor it removes from it.
-- **Licence:** G10 owns the final decision. `code-js-ts` and `ind-hi-hplt` are not verified; all 38 packs are treated as usable for this experiment only.
+- **Licence:** G10 owns the decision. Its table on `main` (#524, 17 Nov) lists all 38 sample packs as "TSAI reserves" (In); `dedup.json` lists them all as usable, with `default_licence_usable: false` (18 Nov).
 
 ## Decision log
 
@@ -203,3 +203,4 @@ It covers this file and `source_priority_v1.md`. The body states the decisions; 
 | 16 Nov 2026 | Dedup job (`jobs/2026-11-14-dedup.md`) approved at `6cfc24a`, with the expected values from the local run on the rerun's returned files (1,345 removed, 64 by rule 0, 0 held-out) | Vijay Patil (Data A lead) | PR #255; G1, 16 Nov |
 | 16 Nov 2026 | One pipeline job runs F2, then tokenizes and shards, then verifies, adopting the verified #244 and #255 outputs; no separate F2 job. E4 review files go to the readers privately, not on GitHub | TSAI | G1, TSAI's answers to Vijay, points 2 and 6 |
 | 17 Nov 2026 | Final remove list for sample v0: TSAI's dedup run with urls, 1,345 removed (0.095%), 0 held-out; matches the local run, with 13 different survivors in groups decided by rule 2 | TSAI run; checked by Kunal Sinha | #547; `jobs/logs/2026-11-17-dedup-tsai-check.txt`; `results_v1.md`, section 1 |
+| 18 Nov 2026 | Licence map filled from G10's table on `main` (#524): all 38 sample packs usable in `licence_usable`, `default_licence_usable: false`. On the rerun's files every output is byte-identical (`remove_list.csv` `c894d43d…` without urls); `licence_default_used_for` is empty | Data A team (Kunal Sinha); G10's table | `dedup.json`; `source_priority_v1.md`, rule 1; `tests/test_dedup.py` |

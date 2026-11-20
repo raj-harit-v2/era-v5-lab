@@ -5,7 +5,8 @@ prompts and check that reasoning and tool calls come back in the right fields (G
         --vllm-arg=--max-model-len=4096 --out out
 
 Starts `vllm serve` with:
-  * --chat-template      teams/10-post-training/chat-format/chat_template.jinja (G10 v0, unchanged)
+  * --chat-template      teams/12-quantization/tokenizer/chat_template.jinja (G10's template as merged on lab main,
+                         copied unchanged; renders `tools` as a "Tools:" block in the first system turn)
   * --reasoning-parser   g10 (plugin g10_parsers.py): <|think|> ... <|/think|>  -> message.reasoning
   * --tool-call-parser   g10 (same plugin), --enable-auto-tool-choice: <|tool_call|>{json}<|/tool_call|> -> message.tool_calls
 Then it sends prompts_v1.jsonl (100 prompts, tools from tools_v1.json) at temperature 0, plus a streamed copy of
@@ -27,9 +28,9 @@ only --out. --base-url uses a server that is already running and skips the launc
 
 Stand-in models. Until a config v1 checkpoint is exported (unsupported_parts.md §8), a stand-in model that never
 saw our markers is served. --format-hint on (the default) adds a system message that teaches the markers. Use
---format-hint off for a model trained on the G10 format. The G10 template does not render the request's `tools`
-list. --tools-in-system auto (the default) therefore writes the tool schemas into the system message when the
-template does not mention `tools`.
+--format-hint off for a model trained on the G10 format. The merged G10 template renders the request's `tools`
+itself, so --tools-in-system auto (the default) adds nothing. It writes the schemas into the system message only for
+a template that does not mention `tools` (the first G10 template did not).
 """
 from __future__ import annotations
 
@@ -57,6 +58,7 @@ sys.path.insert(0, str(HERE))
 from g10_parsers import CALL, MARKERS, THINK, THINK_END, parse_tool_calls, split_reasoning  # noqa: E402
 
 NATIVE_MARKERS = ("<think>", "</think>", "<tool_call>", "</tool_call>")   # a stand-in falling back to its own format
+DEFAULT_TEMPLATE = REPO / "teams" / "12-quantization" / "tokenizer" / "chat_template.jinja"
 CATEGORIES = ("chat", "reason", "tool", "tool_result", "no_tool")
 TEXT_CAP = 2000
 
@@ -130,6 +132,12 @@ def versions() -> dict:
         except metadata.PackageNotFoundError:
             out[pkg] = None
     return out
+
+
+def tools_in_system(mode: str, template_text: str) -> bool:
+    """Write the tool schemas into the system message ourselves? "auto": only when the template never mentions
+    `tools`, i.e. would not show them to the model (the first G10 template). The merged one renders them."""
+    return mode == "on" or (mode == "auto" and "tools" not in template_text)
 
 
 def leaks(text: str | None, markers) -> list[str]:
@@ -448,8 +456,7 @@ def main(argv=None):
     p.add_argument("--port", type=int, default=8000)
     p.add_argument("--vllm-arg", action="append", default=[], help="extra `vllm serve` argument, repeatable: "
                    "--vllm-arg=--max-model-len=4096")
-    p.add_argument("--chat-template", type=Path,
-                   default=REPO / "teams" / "10-post-training" / "chat-format" / "chat_template.jinja")
+    p.add_argument("--chat-template", type=Path, default=DEFAULT_TEMPLATE)
     p.add_argument("--parsers", type=Path, default=HERE / "g10_parsers.py")
     p.add_argument("--prompts", type=Path, default=HERE / "prompts_v1.jsonl")
     p.add_argument("--tools", type=Path, default=HERE / "tools_v1.json")
@@ -476,8 +483,7 @@ def main(argv=None):
         rows = rows[: args.limit]
     tools_db = json.loads(args.tools.read_text(encoding="utf-8"))
     template_text = args.chat_template.read_text(encoding="utf-8")
-    args.tools_in_system_on = (args.tools_in_system == "on" or
-                               (args.tools_in_system == "auto" and "tools" not in template_text))
+    args.tools_in_system_on = tools_in_system(args.tools_in_system, template_text)
     args.served_name = args.served_name or (Path(args.model).name if args.model else "model")
     label = args.label or args.served_name
 

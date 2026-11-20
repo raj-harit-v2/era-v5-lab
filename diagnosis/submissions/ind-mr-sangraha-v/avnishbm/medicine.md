@@ -2,13 +2,13 @@
 
 Counts are documents among all 500 reviewed rows. Medicines operate on copies; the source pack is never modified.
 
-## Interim gold harm-test status
+## Current gold harm-test status (17 Nov)
 
-The pack-specific gold snapshot in PR #161 is interim, not yet an approved final gold set. This test pins commit `74b28869841475189445e88dba7af4d8e57a537a`, file `teams/02-data-b/gold/ind-mr-sangraha-v_gold.csv`: 88 unique documents agreed clean by `avnishbm` and `patilvijay23`, all present in the untouched source parquet. Coverage is 88/500 pack documents.
+This test pins upstream main commit `5aed520fd4a4707b64795ed2e722eba368477978`, file `teams/02-data-b/gold/ind-mr-sangraha-v_gold.csv`: 99 unique documents agreed clean by `avnishbm` and `patilvijay23`, all present in the untouched source parquet (SHA-256 `ad598b6ac2330c00b423b26f826f6d120d8940f0eb7f5412fca2fcd045b4ef30`). Coverage is 99/500 pack documents. This replaces the earlier 88-document snapshot in PR #161; the gold list gained 11 IDs and removed none.
 
-Every medicine below changed 0, dropped 0, and affected 0/88 documents (0.00%), so each passes the at-most-1% harm threshold on this interim snapshot. With 88 documents, even one affected document would be 1.14% and fail.
+Every medicine below changed 0, dropped 0, and affected 0/99 documents (0.00%), so each passes the at-most-1% harm threshold on this snapshot.
 
-A6 exercises an automatic text rule, while D3 is intentionally an identity function. B4, C1, C3, C4, C5, D4, and F1 require confirmed disease/action metadata; the clean gold rows supply no such actions, so their zero-impact result validates the application gate only—not a detector, recall, or repair quality. These results must be rerun if PR #161 changes or an approved/fuller gold set becomes available.
+A6 exercises an automatic text rule, while D3 is intentionally an identity function. B4, C1, C3, C4, C5, D4, and F1 require confirmed disease/action metadata; the clean gold rows supply no such actions, so their zero-impact result validates the application gate only, not detection, recall, or repair quality. Rerun on any later gold revision.
 
 ## A6: 14 documents
 
@@ -31,7 +31,7 @@ def fix_reviewed_ordinal_ocr(text: str) -> str:
 
 **Side effects:** A legitimate ordinal indicator before Devanagari text would be changed; mixed-script cases outside this exact pattern are not fixed.
 
-**Interim-gold harm test:** PASS for automatic exact-pattern rule — changed 0, dropped 0, affected union 0/88 (0.00%). Gold snapshot and limitations are recorded above.
+**Current-gold harm test:** PASS for automatic exact-pattern rule — changed 0, dropped 0, affected union 0/99 (0.00%). Gold snapshot and limitations are recorded above.
 
 ## B4: 17 documents
 
@@ -53,7 +53,7 @@ def restore_literal_newlines(text: str, confirmed_b4: bool) -> str:
 
 **Side effects:** Source code, paths, regular expressions, or prose intentionally discussing `\n` would be damaged without the confirmation gate.
 
-**Interim-gold harm test:** PASS for the confirmation gate; no action metadata exists on the clean gold rows — changed 0, dropped 0, affected union 0/88 (0.00%). Gold snapshot and limitations are recorded above.
+**Current-gold harm test:** PASS for the confirmation gate; no action metadata exists on the clean gold rows — changed 0, dropped 0, affected union 0/99 (0.00%). Gold snapshot and limitations are recorded above.
 
 ## C1: 98 documents
 
@@ -79,7 +79,7 @@ def remove_confirmed_spans(text: str, spans: list[tuple[int, int]]) -> str:
 
 **Side effects:** A span can be substantive in another document. Offsets must be independently confirmed against the untouched original.
 
-**Interim-gold harm test:** PASS for the confirmation gate; no action metadata exists on the clean gold rows — changed 0, dropped 0, affected union 0/88 (0.00%). Gold snapshot and limitations are recorded above.
+**Current-gold harm test:** PASS for the confirmation gate; no action metadata exists on the clean gold rows — changed 0, dropped 0, affected union 0/99 (0.00%). Gold snapshot and limitations are recorded above.
 
 ## C3: 19 documents
 
@@ -101,7 +101,7 @@ def handle_truncation(text: str, unrecoverable: bool) -> str | None:
 
 **Side effects:** A complete excerpt can look truncated outside its publication context, so automatic punctuation or sentence-ending heuristics over-drop valid text.
 
-**Interim-gold harm test:** PASS for the confirmation gate; no action metadata exists on the clean gold rows — changed 0, dropped 0, affected union 0/88 (0.00%). Gold snapshot and limitations are recorded above.
+**Current-gold harm test:** PASS for the confirmation gate; no action metadata exists on the clean gold rows — changed 0, dropped 0, affected union 0/99 (0.00%). Gold snapshot and limitations are recorded above.
 
 ## C4: 10 documents
 
@@ -123,7 +123,7 @@ def handle_joined(text: str, confirmed_join: bool) -> str | None:
 
 **Side effects:** News roundups, bulletins, related sidebars, and book chapter transitions may legitimately contain several topics.
 
-**Interim-gold harm test:** PASS for the confirmation gate; no action metadata exists on the clean gold rows — changed 0, dropped 0, affected union 0/88 (0.00%). Gold snapshot and limitations are recorded above.
+**Current-gold harm test:** PASS for the confirmation gate; no action metadata exists on the clean gold rows — changed 0, dropped 0, affected union 0/99 (0.00%). Gold snapshot and limitations are recorded above.
 
 ## C5: 9 documents
 
@@ -145,7 +145,7 @@ def handle_link_list(text: str, link_only: bool) -> str | None:
 
 **Side effects:** Ordinary tables of contents, schedules, bibliographies, and substantive lists can resemble link spam.
 
-**Interim-gold harm test:** PASS for the confirmation gate; no action metadata exists on the clean gold rows — changed 0, dropped 0, affected union 0/88 (0.00%). Gold snapshot and limitations are recorded above.
+**Current-gold harm test:** PASS for the confirmation gate; no action metadata exists on the clean gold rows — changed 0, dropped 0, affected union 0/99 (0.00%). Gold snapshot and limitations are recorded above.
 
 ## D3: 77 documents
 
@@ -167,7 +167,7 @@ def preserve_contextual_mixing(text: str) -> str:
 
 **Side effects:** Blanket English removal or translation destroys legitimate Marathi usage. D3 is descriptive and requires contextual review.
 
-**Interim-gold harm test:** PASS for the intentional identity medicine — changed 0, dropped 0, affected union 0/88 (0.00%). Gold snapshot and limitations are recorded above.
+**Current-gold harm test:** PASS for the intentional identity medicine — changed 0, dropped 0, affected union 0/99 (0.00%). Gold snapshot and limitations are recorded above.
 
 ## D4: 28 documents
 
@@ -189,7 +189,7 @@ def handle_bad_translation(text: str, pervasive: bool) -> str | None:
 
 **Side effects:** OCR damage, speech-recognition errors, dialect, archaic Marathi, and awkward original writing can be mistaken for machine translation.
 
-**Interim-gold harm test:** PASS for the confirmation gate; no action metadata exists on the clean gold rows — changed 0, dropped 0, affected union 0/88 (0.00%). Gold snapshot and limitations are recorded above.
+**Current-gold harm test:** PASS for the confirmation gate; no action metadata exists on the clean gold rows — changed 0, dropped 0, affected union 0/99 (0.00%). Gold snapshot and limitations are recorded above.
 
 ## F1: 18 documents
 
@@ -214,4 +214,4 @@ def redact_confirmed(text: str, spans: list[tuple[int, int]]) -> str:
 
 **Side effects:** Names, dates, public officials, organization contacts, and public-event locations must not be redacted merely because they match a broad pattern.
 
-**Interim-gold harm test:** PASS for the confirmation gate; no private spans exist on the clean gold rows — changed 0, dropped 0, affected union 0/88 (0.00%). Gold snapshot and limitations are recorded above.
+**Current-gold harm test:** PASS for the confirmation gate; no private spans exist on the clean gold rows — changed 0, dropped 0, affected union 0/99 (0.00%). Gold snapshot and limitations are recorded above.
