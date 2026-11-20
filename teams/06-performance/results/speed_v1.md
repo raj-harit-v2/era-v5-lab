@@ -9,7 +9,7 @@ One table of measured runs for baseline, CE A/B, and MoE dispatch. Fill empty ar
 | Fused / Triton CE A/B | Filled: 2a/2b cross-SHA (A100-40GB); 2c same-SHA on `7ef9f14` (A100-80GB, plus T4) |
 | Triton CE/LN backends | Merged tip #52 @ `710f53e` — **opt-in only**; defaults stay torch |
 | MoE loop / sorted / grouped | Filled (#53 / Adinath) |
-| Config arms t1–t3 (job requests) | Awaiting (jobs not filed) |
+| Config arms t1–t3 (job requests) | T1/T2 reported by TSAI; T3 rerun pending (§4) |
 | Recommendation | Polished below (Gate 2 ask) |
 | Repeat check scope | Windows WDDM out of scope ([repeat_check_v1 §4](repeat_check_v1.md#4-rtx-5070-ti-windows-wddm--out-of-scope-2727-code-parts-pass-windows-disk-gap-recorded)) |
 
@@ -244,15 +244,36 @@ same CE, so the A/B is clean. Across arms, compare the **dispatch** column, not 
 
 ---
 
-## 4. Config arm jobs (awaiting)
+## 4. Config arm jobs — TSAI-reported results
 
-| Run | Config | Status |
-| :--- | :--- | :--- |
-| arm t1 | `arms/t1.yaml` | Job not filed / awaiting TSAI |
-| arm t2 | `arms/t2.yaml` | Job not filed / awaiting TSAI |
-| arm t3 | `arms/t3.yaml` | Job not filed / awaiting TSAI |
+**Source:** TSAI update shared in G7 chat, 19 November 2026.
+Job requests: [T1 #408](https://github.com/theschoolofai/era-v5-lab/pull/408),
+[T2 #409](https://github.com/theschoolofai/era-v5-lab/pull/409),
+[T3 #410](https://github.com/theschoolofai/era-v5-lab/pull/410).
 
-G5 Colab MoE §3 timed t1/t2 **shapes** for dispatch A/B only — not TSAI arm job rows.
+| Run | Config | tokens/s | MFU | GPU / execution SHA | Status |
+| :--- | :--- | ---: | ---: | :--- | :--- |
+| T1 | `arms/t1.yaml` | 31,620 | 11.95% | Unavailable / unavailable | Completed; TSAI chat |
+| T2 | `arms/t2.yaml` | 1,695 | 1.61% | Unavailable / unavailable | Completed; TSAI chat |
+| T3 | `arms/t3.yaml` | Unavailable | Unavailable | Unavailable / unavailable | Pending rerun |
+
+**MFU provenance:** T1/T2 MFU values are instructor-reported
+in TSAI chat; **confirm with TSAI/G8 before G11 or inclusion
+in the public Gate pack**.
+
+**T3 attempts:** r2 exited 124 (timeout); r3 exited 1
+(CUDA event teardown error). TSAI attributed the latter
+to runtime teardown rather than a configuration/code problem.
+T3 remains pending until rerun evidence is returned.
+
+**Limitations:** GPU, execution SHA and detailed run logs
+were not provided with the chat summary. These are
+instructor-reported results, not independently verified
+performance measurements. Do not infer step latency,
+memory usage or comparative speedups from these rows.
+
+G5 Colab MoE §3 timed T1/T2 shapes for dispatch A/B only;
+those results are separate from these TSAI arm jobs.
 
 ---
 
