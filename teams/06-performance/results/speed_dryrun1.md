@@ -1,124 +1,110 @@
 # Speed — dry run 1
 
-**Status:** stub — awaiting TSAI job logs.  
-**Owners:** a2a/tables → Vaibhav · ckpt → Siva · MoE analysis → Adinath · per-rank → Sunil · Lead QA → Raj  
-**Rule:** GPU + SHA per table. Stay `mfu_method=g6-v1` until CAP flips. Linux for checkpoint gate.
+**Status:** §1–4 and §6 filled; §1 loop dispatch only (the sorted / grouped A/B is in `kernels_dryrun2.md`).  
+**Sources:** G6 runs on Modal A100s (20 Nov 2026) and the lab's dry run 1 evidence (class #620). Nothing else.  
+**Rule:** GPU + SHA per table. Member-GPU runs give shares, counts and sizes only; step time comes from the lab run. `mfu_method=g6-v1` until CAP flips.  
+**TSAI lab column:** to be filled from the lab's dry run 1 profile when it is shared; #620 has no profile, so those cells are _pending_.
 
 | Field | Value |
 | :--- | :--- |
-| GPU | _awaiting_ |
-| Commit | _awaiting_ |
-| Config / layout | _G5 config · G7 parallel layout_ |
-| Job tags | `dryrun1_a2a`, `dryrun1_ckpt` (+ profile SHA if shared) |
-| a2a job | class [#496](https://github.com/theschoolofai/era-v5-lab/pull/496), `jobs/2026-11-14-dryrun1-a2a.md`, pin `aec75af` (config_v1, #447) |
-| TSAI log / gist | _awaiting_ |
+| GPU | NVIDIA A100-SXM4-80GB (Modal): one GPU for §1 and §3, two in one container for §2 |
+| Commit | `7b2ee0e3` + the `configs/g5_t2_base.yaml` change in this PR (`muon_impl: loop`, `data.source: synthetic`, `bench.modes: [clean, layer, trace]`) |
+| Config | `configs/g5_t2_base.yaml` (dry run 1 model, class #475), B=8, T=2048, bf16, synthetic data |
+| Software | torch 2.11.0+cu130, CUDA 13.0, cuDNN 91900, Triton 3.6.0, NCCL (torch wheel). The lab run used torch 2.14.1+cu130 (#620 manifest). |
+| Runner | `benchmarking/modal_dryrun1.py` (`--what bench`, `ckpt`, `comm`) |
+| Run folders | `repeatbatch8` (profile, §1), `a2a` (§2), `ckpt` (§3); profile details in `profile_dryrun1.md` |
+| Raw outputs | <https://gist.github.com/vaibh27/e4e60f177d4fe675ba0444054928d341>: `a2a_*` (§2), `ckpt_*` (§3), `profile_*` and `nsys_*` (§1), logs and provenance |
 
 ## 1. MoE dispatch (compute)
 
-Method: level-3 sum of `fwd:block*.moe.dispatch` medians; default **`model.moe.dispatch=sorted`**.  
-Source: needs a `--modes layer --level 3` run. The #496 job runs `--modes comm` only, so it gives `clean step_ms` but no dispatch regions.
+Method: perfkit layer pass, level 3, sum of `fwd:block*.moe.dispatch` over the 8 layers; `model.moe.dispatch=loop` (the dry run 1 setting). Two runs in separate processes (`--repeat 2`, PASS); run 2 in brackets.
 
-| metric | ms | source SHA |
-| :--- | ---: | :--- |
-| moe.dispatch (sum) | _awaiting_ | |
-| clean step_ms | | |
+| metric | G6 (Modal A100) | TSAI lab | source |
+| :--- | ---: | ---: | :--- |
+| `moe.dispatch`, share of the layer pass | 6.0% (6.1%) | _pending_ | `repeatbatch8` |
+| of which the 16 expert calls (`moe.dispatch.expert*`) | 5.4% (5.4%) | _pending_ | `repeatbatch8` |
+| `moe.router`, share of the layer pass | 0.3% | _pending_ | `repeatbatch8` |
+| `moe.shared` (shared expert), share of the layer pass | 1.0% | _pending_ | `repeatbatch8` |
+| `fwd:block*.moe.dispatch` rank among the slowest parts | 5th, 3.7% (3.8%) of the step | _pending_ | `repeatbatch8` |
+| host syncs per step from the dispatch (Nsight `cudaStreamSynchronize`) | 256 | _pending_ | `nsys-b8` |
+| host time inside `moe.dispatch` (Nsight NVTX, share of a traced step) | 19.1% | _pending_ | `nsys-b8` |
+
+- Routing state: the perfkit rows above were measured with a collapsed router (18 of 128 expert slots with tokens, synthetic data; `profile_dryrun1.md`, Routing state), so the GPU shares understate the dispatch cost; the Nsight rows (256 syncs, 19.1%) had all 128 slots active.
+- The GPU cost is small; the host cost is not. `dispatch_loop` reads two values back to the host per expert per layer (`tok.any()` and `nonzero`, `models/moe.py:79`, `:81`): 8 layers × 16 experts × 2 = 256 syncs per step with every expert active. Each one stops the CPU until the GPU queue drains, so the first expert of every block (`expert0`) holds about half of that block's dispatch range in Nsight.
+- Not measured here: `dispatch=sorted` and `dispatch=grouped` (same-container A/B in `kernels_dryrun2.md`).
 
 ## 2. MoE all-to-all (`comm`)
 
-Job: class #496, 1 GPU: `cd teams/06-performance && python jobs/run_dryrun1_a2a.py --nproc 1 --out out`.  
-Isolated a2a (no compute overlap). On 1 GPU the comm latency (`per_call_ms`, `per_step_ms`) is not measured; payload and calls/step still come from the log.  
-Fill after TSAI posts the #496 logs. Multi-GPU later: same wrapper with `--nproc ≥2`.
+Dry run 1 ran on one GPU, so it had no all-to-all. This is a forecast for a multi-GPU run of the same model: perfkit `--modes comm` under `torchrun`, 2 ranks on 2 A100-SXM4-80GB in one container, NCCL, isolated all-to-all (no overlap with compute).
 
-| metric | value | source SHA |
-| :--- | :--- | :--- |
-| per_call_ms (slowest rank) | _awaiting_ | |
-| calls_per_step | _awaiting_ | |
-| per_step_ms | _awaiting_ | |
-| payload_mb_per_call | _awaiting_ | |
+| metric | G6 (Modal A100) | TSAI lab | source |
+| :--- | :--- | :--- | :--- |
+| world size / backend | 2 / NCCL | n/a: dry run 1 ran on 1 GPU | `a2a` |
+| calls per step | 32 (4 per layer × 8 layers) | n/a | `a2a` |
+| payload per call | 64 MiB (B × T × top-2 × d × 4 bytes: fp32 payload, an upper bound for a bf16 run) | n/a | `a2a` |
+| all-to-all per step, share of the clean step (rank 0, same container) | 1.7% | n/a | `a2a` |
+| per-call spread (p10..p90, 30 timed calls) | 15% | n/a | `a2a` |
+| slowest rank against the median call | 0.6% above | n/a | `a2a` |
 
-## 3. Checkpoint — small-width TSAI job #485
+- The all-to-all is a small part of the step for this model on 2 GPUs in one node, even counted with no overlap and an fp32 payload.
+- Not covered: more than 2 ranks, more than one node (no inter-node network), other payload sizes (one point, no α-β fit), and the link type: `nvidia-smi topo -m` fails inside the Modal sandbox, so NVLink against PCIe is not reported.
 
-**Owner:** Siva  
-**Scope:** Small-width synthetic MoE; not full-width Dry Run 1.  
-**Evidence:** TSAI instructor update, 17 Nov 2026; job [#485](https://github.com/theschoolofai/era-v5-lab/pull/485) and class [checkpoint_dryrun1.md](https://github.com/theschoolofai/era-v5-lab/blob/main/teams/06-performance/results/checkpoint_dryrun1.md) (merged PR #557).  
+## 3. Checkpoint
 
+Full-size save of the dry run 1 model: model weights, every optimizer's state and the scaler. 10 timed saves after one warm save that is not counted. Timed in two parts: GPU → CPU copy into pinned buffers, then serialise + write + fsync. Written to the container's local disk (512 GB overlay), not to a network volume.
 
-| Metric | TSAI-reported result |
-| :--- | :--- |
-| Timing repeats | 10 |
-| Optimizer-state coverage | Complete |
-| GPU-to-CPU copy share | 8% |
-| File-write share | 92% |
-| `save_ms` | Unavailable |
-| `to_cpu_ms` | Unavailable |
-| `write_ms` | Unavailable |
-| `size_mb` | Unavailable |
-| `write_mb_per_s` | Unavailable |
+| metric | G6 (Modal A100) | TSAI lab | source |
+| :--- | :--- | :--- | :--- |
+| checkpoint size | 2,081 MiB | _pending_ | `ckpt` |
+| GPU → CPU copy, share of the save | 6.5% | _pending_ | `ckpt` |
+| serialise + write + fsync, share of the save | 93.6% | _pending_ | `ckpt` |
+| save time in clean steps (same container) | 2.2 steps | _pending_ | `ckpt` |
+| write rate to the container disk | 1,554 MiB/s | _pending_ | `ckpt` |
+| save spread (p10..p90, 10 saves) | 4.9% | _pending_ | `ckpt` |
 
-**Execution GPU / Git SHA:** Unavailable (TSAI did not report either).  
-**Evidence source:** Class checkpoint results PR #557; tip PR #83.  
-
-The 8% and 92% figures are **shares of checkpoint save time**,
-not absolute timings. File writing dominated the measured save.
-
-TSAI retained absolute timing and GPU details. No execution SHA
-or checkpoint size was supplied in the instructor's update.
-
-Earlier CPU smoke and Kaggle measurements are not substituted
-for TSAI GPU results. These findings must not be interpreted
-as a full-width checkpoint measurement.
-
-Profile job #486 did not measure checkpoint or communication
-time (Rule 3b); checkpoint results here come from job #485.
-
-References:
-- https://github.com/theschoolofai/era-v5-lab/pull/485
-- https://github.com/theschoolofai/era-v5-lab/pull/557
+- Size check: 2,081 MiB is the full fp32 training state: 237.06 M weights (904 MiB) + Muon momentum on 165.7 M matrix parameters (632 MiB) + AdamW's two moments on 71.3 M parameters (544 MiB).
+- The disk write is the cost (94%); the GPU copy is not. At one save every 1,000 steps the save is about 0.2% of training time.
+- The write rate is a property of this host's disk; the lab's disk is not known.
 
 ## 4. Per-rank step time + slow ranks
 
-**Owner:** Sunil · **Scope (agreed with Raj, G6 16–17 Nov):** TSAI runs 1-GPU jobs only this week, so per-rank = **one rank**; slow ranks are deferred until a multi-GPU run with the G7 layout.  
-**Source:** class [#486](https://github.com/theschoolofai/era-v5-lab/pull/486) (`dryrun1_prof`, `--modes clean,layer,trace --level 3`, 1 GPU), results as posted by TSAI in the G6 group, 17 Nov 2026 12:44 IST. TSAI kept absolute times and device details, so this section has **shares and counts only** (no invented ms).  
-**Width:** small-width. The job maps G5's signed `config_v1.yaml` settings (pin `aec75af`, #447) onto `configs/base.yaml` because `config_v1` leaves model sizes open; MoE 16 routed + 1 shared, top-2, `dispatch=sorted`, Muon, `mfu_method=g6-v1`.
+Dry run 1 ran on one GPU (#620 manifest: NVIDIA GeForce RTX 3090, torch 2.14.1+cu130), so per-rank = **one rank**.
 
-### 4a. Per-rank step time
+### 4a. Rank 0 step time (lab, class #620)
 
-| rank | step_ms | GPU busy (share of step) | kernels / step | host syncs / step | GPU starved (steps) | source |
+From `metrics.jsonl` (`tokens_per_second`, 16,384 tokens per step), steps 11–1221 (1,211 steps):
+
+| rank | median | p10 | p90 | p99 | max | source |
 | ---: | ---: | ---: | ---: | ---: | ---: | :--- |
-| 0 (only rank) | _unavailable (TSAI held absolutes)_ | 31.1% | 3,693 | 19 | 20 of 20 | #486 |
+| 0 (only rank) | 1,897.6 ms | 1,772.3 ms | 2,054.6 ms | 2,207.9 ms | 2,420.6 ms | #620 |
 
-GPU / SHA: _unavailable (TSAI held device details; run SHA not reported)_. Job file: class `main` at the #486 merge, `b016b71`.
+- Step 1: 4,430 ms (warm-up: allocator, autotune). Throughput 8,634 tokens/s; peak allocated 3.56 GB; sum of steps 2,335 s of 2,481 s wall.
+- No drift: median of steps 11–110 is 1,894.4 ms, of steps 1121–1221 1,889.1 ms.
+- Tail: 75 of 1,211 steps are more than 10% above the median, 7 more than 20% (steps 30, 292, 316, 321, 337, 1148, 1154), 3 more than 25%. They come in two clusters (292–337, 1148–1154) rather than at a fixed interval, so they are not a periodic eval or log step; cause not identified (the log has no per-step host timing).
 
-### 4b. Where rank 0's step goes (share of one training step, #486)
+### 4b. Where rank 0's step goes
 
-| part | share of step |
-| :--- | ---: |
-| backward of the block gradients | 17.7% |
-| Muon Newton-Schulz update | 5.3% |
-| backward of the head and loss | 5.2% |
-| MoE dispatch (`sorted` path; profiler region named `dispatch.grouped`), recompute pass | 2.3% |
-| MoE dispatch (`sorted` path; profiler region named `dispatch.grouped`), forward pass | 2.3% |
-
-Caveats from TSAI's report:
-
-- The GPU ran out of queued work in all 20 recorded steps, so these part times **include host time** (time the GPU spent waiting for Python to launch work), not only kernel time.
-- 22 gated parts had a repeat spread above 10% (the 5% repeat gate does not hold for them); read small differences between parts as noise.
-- Rule 3b: checkpoint and comm were **not** measured in this run (checkpoint is §3 / #485; a2a is §2 / #496).
+The lab returned no profile, so the split is the member-GPU profile of the same model (`profile_dryrun1.md`, A100, B=8 in one pass): `fwd` 35.6%, `bwd` 45.7%, `opt` 18.4% of the step; GPU busy 75–77%; 256 host syncs and about 30,300 kernel launches per step (Nsight).
 
 ### 4c. Slow ranks
 
-**Not measurable on 1 GPU.** A slow rank only exists when ranks are compared, and a step on N GPUs takes as long as its slowest rank (every collective waits for it). Deferred until TSAI runs a multi-GPU job with the G7 layout; then this table gets one row per rank (median / p95 / max step_ms and ratio to the cross-rank median), mapped to node and GPU.
+**Not measurable on 1 GPU.** A slow rank only exists when ranks are compared; a step on N GPUs takes as long as its slowest rank, because every collective waits for it. The 2-rank all-to-all run (§2) is the only multi-rank data: its slowest rank's all-to-all is 0.6% above the median, so the collective itself adds no skew there. Per-rank step tables (median / p95 / max and ratio to the cross-rank median, mapped to node and GPU) need a multi-GPU training run with the G7 layout.
 
-**What one rank already shows:** rank 0 is bound by the host, not by the GPU. With the GPU busy 31.1% of the step and starved in every recorded step, about two-thirds of the step is the GPU waiting for the CPU (3,693 kernel launches and 19 host syncs per step). On more GPUs every rank pays this, and host jitter becomes rank-to-rank skew, so cutting launches and syncs comes before any slow-rank work. Analysis and kernel proposals: §5 and `kernels_dryrun2.md`.
+What one rank already shows: the step is host-heavy (256 host syncs from the loop dispatch, about 30,300 launches, most of them Muon's loop path). On N GPUs every rank pays this, and host jitter turns into rank-to-rank skew, so cutting syncs and launches comes before any slow-rank work.
 
-## 5. MoE analysis (Adinath)
+## 5. MoE analysis
 
-_Bottlenecks, imbalance, dispatch vs a2a vs ckpt story. Cite tables above. Hot kernels (2–4) for Tharun / kernels_dryrun2:_
+| part of the MoE path | G6 GPU-side share | G6 host-side cost | TSAI lab | source |
+| :--- | :--- | :--- | :--- | :--- |
+| dispatch (loop over 16 experts) | 6.0% of the layer pass | 256 syncs per step, 19.1% of host time | _pending_ | §1 |
+| router + shared expert | 1.3% of the layer pass | small | _pending_ | §1 |
+| all-to-all (forecast, 2 GPUs) | 1.7% of the step | n/a | n/a (1 GPU) | §2 |
+| checkpoint | 2.2 steps per save | disk write 94% of the save | _pending_ | §3 |
 
-1. _awaiting_  
-2.  
-3.  
+1. **Loop dispatch syncs:** the largest MoE cost is on the host, not the GPU. Candidate: `model.moe.dispatch=grouped` (fixed capacity, no host sync) or `sorted` (one sync per call); measured in `kernels_dryrun2.md`.
+2. **All-to-all:** small at 2 GPUs in one node; worth re-measuring at the main run's rank count and across nodes before it is ruled out.
+3. **Checkpoint:** disk-bound; save less often or asynchronously (copy to pinned CPU memory, write in a background thread) if the main run's disk is slower than this one.
 
 ## 6. G4 KE2 footnote
 
-_Awaiting Team 4 KE2 timing row._
+From the same profile (`repeatbatch8`): the KE2 embedding (`fwd:embed.ke`) is 0.7% of the layer pass, `fwd:embed` 0.7% and `bwd:embed` 0.5% of the step. KE2 is not a speed bottleneck in dry run 1.

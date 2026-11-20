@@ -104,8 +104,8 @@ if triton is not None:
             w = tl.load(W + col, col < N, 0., eviction_policy="evict_last").to(tl.float32)
         acc_w = tl.full((BLOCK,), 0., tl.float32)
         acc_b = tl.full((BLOCK,), 0., tl.float32)
-        stride = GROUPS.to(tl.int64) * ROWS
-        for tile in range(tl.cdiv(M.to(tl.int64), stride)):
+        stride = tl.cast(GROUPS, tl.int64) * ROWS   # tl.cast: GROUPS is a plain int in torch.compile's kernel analysis
+        for tile in range(tl.cdiv(tl.cast(M, tl.int64), stride)):
             row = group * ROWS + tile.to(tl.int64) * stride + offsets
             mask = (row[:, None] < M) & (col[None, :] < N)
             dy = tl.load(DY + _offset(row[:, None], col[None, :], N), mask, 0.,
