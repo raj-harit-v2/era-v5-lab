@@ -3,7 +3,8 @@
 **Status:** done for B=8: torch.profiler + layer profile (repeat 2, PASS) and Nsight Systems, both on the dry run 1 model.  
 **Sources:** G6 runs on one Modal A100 (20 Nov 2026) and the lab's dry run 1 evidence (class #620). Nothing else.  
 **Rule:** every number cites **GPU name + git SHA**. Member-GPU runs give shares and counts only; step time comes from the lab run. Traces → [gist](https://gist.github.com/vaibh27/e4e60f177d4fe675ba0444054928d341) (not under `results/`).  
-**TSAI lab column:** to be filled from the lab's dry run 1 profile when it is shared; #620 has no profile, so those cells are _pending_.
+**TSAI lab column:** to be filled from the lab's dry run 1 profile when it is shared; #620 has no profile, so those cells are _pending_.  
+**TSAI column fill (20 Nov, from #486):** the counts below come from TSAI's #486 post (G6 group, 17 Nov 2026 12:44 IST) — the #486 job (`dryrun1_prof`), **not** the #620 lab run. Labels: **sorted vs loop** — #486 ran `model.moe.dispatch=sorted` with G5's signed `config_v1.yaml` pin **`aec75af`** (#447) mapped onto `configs/base.yaml` at small width (MoE 16 routed + 1 shared, top-2, Muon, `ke2`, eager, synthetic, 20 recorded steps), while the G6 column ran `dispatch=loop` on `g5_t2_base.yaml` (commit `7b2ee0e3`, B=8, 8 layers) — different dispatch **and** different width, so the two columns are not directly comparable; read them as sorted-vs-loop evidence, not as one model measured twice. TSAI retained absolute ms, GPU name and run SHA (job file = class `main` at the #486 merge `b016b71`), so this column is **shares and counts only — no invented ms**. Cells with no #486 data stay `_pending_`.
 
 | Field | Value |
 | :--- | :--- |
@@ -44,11 +45,11 @@ The two tools saw different routing, because the router collapses on synthetic d
 
 | | G6 perfkit runs (torch.profiler + layer pass) | G6 Nsight | TSAI lab |
 | :--- | :--- | :--- | :--- |
-| measured after | about 200 training steps (10 warmup + 100 clean steps + the layer pass) | 5 warmup steps | _pending_ |
-| expert slots with tokens (8 layers × 16 experts = 128) | 18 per step (`aten::nonzero` / `index_add_` calls in the trace) | 128 per step | _pending_ |
-| Muon Newton-Schulz calls per step | 102 | 432 | _pending_ |
-| host syncs per step | 147 (128 `tok.any()` + 18 `nonzero` + 1) | 256 (2 per slot) | _pending_ |
-| kernels per step | 7,949 | about 30,300 | _pending_ |
+| measured after | about 200 training steps (10 warmup + 100 clean steps + the layer pass) | 5 warmup steps | 20 recorded steps (#486 capture); steps before the capture not posted |
+| expert slots with tokens (8 layers × 16 experts = 128) | 18 per step (`aten::nonzero` / `index_add_` calls in the trace) | 128 per step | _pending_ (not posted; `sorted` dispatch has no per-expert `nonzero` skip) |
+| Muon Newton-Schulz calls per step | 102 | 432 | _pending_ (not posted) |
+| host syncs per step | 147 (128 `tok.any()` + 18 `nonzero` + 1) | 256 (2 per slot) | 19 (#486; `sorted` syncs once per dispatch call, not once per expert slot) |
+| kernels per step | 7,949 | about 30,300 | 3,693 (#486) |
 
 - Why: synthetic data has nothing to learn (loss stays at about 11.9), `bias_gamma=0` adds no load balancing, so a few experts take every token. The loop dispatch skips experts with no tokens, and Muon skips weights with no gradient.
 - Effect: the perfkit shares (MoE dispatch 6%, Muon 12.5% of the layer pass, and the step breakdown) **understate the MoE and Muon cost** of a run with tokens spread over the experts. The Nsight section is the closer view of balanced routing.
@@ -98,11 +99,13 @@ Inside the blocks (layer pass, summed over the 8 layers; information only, not g
 
 | metric | G6 (Modal A100) | TSAI lab |
 | :--- | ---: | ---: |
-| GPU busy, share of the traced step | 74.8% (76.9%) | _pending_ |
-| kernels per step (torch.profiler) | 7,949 | _pending_ |
-| host syncs per step (sync-debug mode) | 147 | _pending_ |
-| kernel launches per step (Nsight) | about 30,100 | _pending_ |
-| host syncs per step (Nsight `cudaStreamSynchronize`) | 256 | _pending_ |
+| GPU busy, share of the traced step | 74.8% (76.9%) | 31.1% (#486) |
+| kernels per step (torch.profiler) | 7,949 | 3,693 (#486) |
+| host syncs per step (sync-debug mode) | 147 | 19 (#486; counting mode not posted) |
+| kernel launches per step (Nsight) | about 30,100 | _pending_ (no TSAI Nsight) |
+| host syncs per step (Nsight `cudaStreamSynchronize`) | 256 | _pending_ (no TSAI Nsight) |
+
+- #486 host-bound shape: the GPU ran out of queued work in all 20 recorded steps (busy 31.1%), so the TSAI part shares below include host time, like the layer pass here.
 
 - Host syncs (sync-debug mode): 147 per step, at `models/moe.py:79` (128, `if not tok.any()`) and `models/moe.py:81` (18, `nonzero`, one per expert slot with tokens): the loop dispatch. Nsight counts 256 with every expert active (see Routing state).
 
@@ -110,11 +113,13 @@ Inside the blocks (layer pass, summed over the 8 layers; information only, not g
 
 | rank | part | G6 share of step | TSAI lab share of step | part trace |
 | ---: | :--- | ---: | ---: | :--- |
-| 1 | `bwd:block*` | 20.2% (20.7%) | _pending_ | `1_bwd_block4.json` |
-| 2 | `fwd:block*.attn.sdpa` | 8.9% (9.1%) | _pending_ | `2_fwd_block4.attn.sdpa.json` |
-| 3 | `opt:opt.muon.ns` | 7.8% (7.8%) | _pending_ | `3_opt_opt.muon.ns.json` |
-| 4 | `bwd:head+loss` | 7.6% (7.9%) | _pending_ | `4_bwd_head+loss.json` |
-| 5 | `fwd:block*.moe.dispatch` | 3.7% (3.8%) | _pending_ | `5_fwd_block4.moe.dispatch.json` |
+| 1 | `bwd:block*` | 20.2% (20.7%) | 17.7% (#486: `bwd:block*.grad`) | `1_bwd_block4.json` |
+| 2 | `fwd:block*.attn.sdpa` | 8.9% (9.1%) | _pending_ (not in TSAI's top-5 post) | `2_fwd_block4.attn.sdpa.json` |
+| 3 | `opt:opt.muon.ns` | 7.8% (7.8%) | 5.3% (#486) | `3_opt_opt.muon.ns.json` |
+| 4 | `bwd:head+loss` | 7.6% (7.9%) | 5.2% (#486) | `4_bwd_head+loss.json` |
+| 5 | `fwd:block*.moe.dispatch` | 3.7% (3.8%) | 2.3% (#486: `fwd:block*.moe.dispatch.grouped` — the sorted path's batched-expert GEMMs) | `5_fwd_block4.moe.dispatch.json` |
+
+- #486 region naming: under `dispatch=sorted` the profiler calls the dispatch parts `moe.dispatch.grouped` (batched-expert GEMMs of the sorted path, not `dispatch=grouped`). TSAI's post also had the recompute-pass dispatch at 2.3% (`bwd.recompute:block*.moe.dispatch.grouped`) — no row for it above. No part traces or gists came back with the #486 post.
 
 ## Nsight Systems (B=8)
 
@@ -163,6 +168,59 @@ Top single kernels: `direct_copy` 9.9% (1,311 calls), `bfloat16_copy` 6.6% (1,32
 
 - Same ranking at the top: copy / cast kernels, the fp32 full-vocab log-softmax, and eager attention's mask + softmax lead both.
 - Launch counts (7,949 against about 30,300 per step) and syncs (147 against 256) differ because of the routing state: 18 of 128 expert slots active in the perfkit runs, all 128 in Nsight (see Routing state). The extra Nsight launches are the experts' GEMMs and Muon's Newton-Schulz kernels for the experts that the collapsed router left idle.
+
+## Colab L4 capture — `dispatch=sorted` (#492; appended 20 Nov, nothing above overwritten)
+
+Appended per the group's request because it is the only `sorted`-dispatch Nsight trace, and the runs above are all `dispatch=loop`. **Owner:** Shashank; **source:** Colab capture of class [#492](https://github.com/theschoolofai/era-v5-lab/pull/492) (`dryrun1_nsys`; TSAI has no Nsight Systems, so Raj approved a Colab run, 16–17 Nov). **Gist** (stats CSVs, `dryrun1_nsys.md`, `result.json`, run log, 0.87 MB `.nsys-rep`): <https://gist.github.com/shank343/84a47207c3e150ee0f5688567a11e>. Shares and counts from a traced run, no ms.
+
+| Field | Value |
+| :--- | :--- |
+| GPU | NVIDIA L4 (Colab), bf16 |
+| Commit | `aec75af` (dirty) — dirty path: `teams/06-performance/jobs/run_dryrun1_nsys.py` only, added from `8ce4fb0` (#492), byte-identical to class `main` (blob `130e7f6c2293`); no config differs from the pin |
+| Model | same mapping as #486: `config_v1.yaml` @ `aec75af` → `configs/base.yaml`, **small width** (d=256, 6 layers), MoE 16 routed + 1 shared, top-2, **`dispatch=sorted`**, Muon, `ke2`, eager attention, synthetic, B=16, T=256 |
+| Capture | nsys 2025.3.1, `--trace=cuda,nvtx`, 5 untraced warmup + 3 traced steps; perfkit regions as NVTX ranges (level 3) |
+
+### Top GPU kernels (share of GPU kernel time, L4)
+
+| rank | kernel group | share | calls / step |
+| ---: | :--- | ---: | ---: |
+| 1 | loss log-softmax, forward + backward (`cunn_SoftMaxForward/Backward`, fp32 over the 131,072 vocab) | 26.7% | 2 |
+| 2 | dtype-cast / copy kernels (`bfloat16_copy_kernel`, `direct_copy_kernel`) | 22.1% | ~1,080 |
+| 3 | all GEMMs (cuBLAS + CUTLASS, bf16) | 19.4% | — |
+| 4 | optimizer and grad-clip elementwise (momentum lerp, fused AdamW, norms, scale) | 5.4% | — |
+| 5 | fills / zeroing (`FillFunctor`) | 3.9% | 36 |
+| 6 | GELU forward + backward | 3.3% | — |
+| 7 | expert-weight stacking (`CatArrayBatchedCopy`) | 2.9% | 77 |
+| 8 | softmax in eager attention and the router | 2.5% | — |
+
+Kernel launches: about 3,699 per step across 120 kernel types.
+
+### NVTX regions (host-side time in each region, share of a traced step)
+
+| region | share |
+| :--- | ---: |
+| `bwd` | 72.1% |
+| `bwd.invert:block5.moe.dispatch` | 39.6% |
+| `fwd` | 13.5% |
+| `opt` | 11.9% |
+| `opt:opt.muon` (Newton-Schulz `opt.muon.ns` 3.1%) | 9.0% |
+| `fwd:block0.moe.dispatch` | 4.3% |
+| every other `moe.dispatch` (16 more calls) | ~0.6% each |
+
+NVTX time is CPU time inside a range, not GPU time. The two large `moe.dispatch` ranges are where the host waits for the GPU queue, not dispatch work.
+
+### Memcpy and CUDA API (L4)
+
+- **Memcpy:** device-to-device is 89.6% of copy time (66 copies / step, about 750 MB / step); host↔device copies are negligible. All copies together are about 1% of GPU kernel time.
+- **Host syncs:** 18 `cudaStreamSynchronize` per step, 76.4% of CUDA API time. 18 = 6 blocks × 3 passes (forward, reversible invert, recompute): `dispatch_sorted` reads `int(counts.max())` on the host, one sync per call (`models/moe.py`).
+- **Launches:** `cudaLaunchKernel` is 16.4% of CUDA API time.
+
+### What the L4 run adds to the tables above (sorted vs loop)
+
+- **Sync shape:** `sorted` syncs once per dispatch call (18/step on the L4 = 6 blocks × 3 passes; 19/step in the #486 TSAI run) instead of the loop path's two per expert slot (256/step in the Nsight section above) — the same direction as the #486 TSAI column.
+- **Different width, so compare directions, not magnitudes:** L4 is small width (d=256, 6 layers, B=16, T=256) against the B=8 dry-run-1 model above (d=512, 8 layers, T=2048); ≈3,699 launches/step against 7,949 (profiler) / ≈30,300 (Nsight, balanced routing).
+- **GPU-busy contrast:** on the L4 kernels filled about 80% of a traced step, so the full-vocab loss leads the ranking (26.7%); the #486 TSAI run was 31.1% busy (host-starved) and the A100 profiler run 74.8%. Same model, three different bounds.
+- **Naming:** the `moe.dispatch.grouped` parts in #486 are the sorted path's batched-expert GEMMs, not `dispatch=grouped`.
 
 ## Findings (candidates for Dry Run 2; not measured fixes)
 
