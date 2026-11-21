@@ -1,7 +1,7 @@
 # Speed — dry run 1
 
-**Status:** §1–4 and §6 filled; §1 loop dispatch only (the sorted / grouped A/B is in `kernels_dryrun2.md`).  
-**Sources:** G6 runs on Modal A100s (20 Nov 2026) and the lab's dry run 1 evidence (class #620). Nothing else.  
+**Status:** §1–4 and §6 filled; §2 now includes the WO1 / #496 **modeled** α-β calibrate (21 Nov); §1 loop dispatch only (the sorted / grouped A/B is in `kernels_dryrun2.md`).  
+**Sources:** G6 runs on Modal A100s (20 Nov 2026), the lab's dry run 1 evidence (class #620), and the WO1 Modal nccl-tests + perfkit sweep (21 Nov, gist below). Nothing else.  
 **Rule:** GPU + SHA per table. Member-GPU runs give shares, counts and sizes only; step time comes from the lab run. `mfu_method=g6-v1` until CAP flips.  
 **TSAI lab column:** to be filled from the lab's dry run 1 profile when it is shared; #620 has no profile, so those cells are _pending_.
 
@@ -35,7 +35,11 @@ Method: perfkit layer pass, level 3, sum of `fwd:block*.moe.dispatch` over the 8
 
 ## 2. MoE all-to-all (`comm`)
 
-Dry run 1 ran on one GPU, so it had no all-to-all. This is a forecast for a multi-GPU run of the same model: perfkit `--modes comm` under `torchrun`, 2 ranks on 2 A100-SXM4-80GB in one container, NCCL, isolated all-to-all (no overlap with compute).
+Dry run 1 ran on one GPU, so it had no all-to-all. Below: (A) the existing Modal **measured** forecast for the dry-run-1 shape, and (B) the WO1 / class #496 **modeled** α-β estimate for the `base.yaml` shape (**8 MiB × 48**). Both are **member-GPU / Modal**, not a live TSAI multi-GPU fabric measurement.
+
+### 2a. Measured forecast — dry-run-1 shape (64 MiB × 32)
+
+perfkit `--modes comm` under `torchrun`, 2 ranks on 2 A100-SXM4-80GB in one container, NCCL, isolated all-to-all (no overlap with compute). Source: #89 `a2a` run.
 
 | metric | G6 (Modal A100) | TSAI lab | source |
 | :--- | :--- | :--- | :--- |
@@ -47,7 +51,30 @@ Dry run 1 ran on one GPU, so it had no all-to-all. This is a forecast for a mult
 | slowest rank against the median call | 0.6% above | n/a | `a2a` |
 
 - The all-to-all is a small part of the step for this model on 2 GPUs in one node, even counted with no overlap and an fp32 payload.
-- Not covered: more than 2 ranks, more than one node (no inter-node network), other payload sizes (one point, no α-β fit), and the link type: `nvidia-smi topo -m` fails inside the Modal sandbox, so NVLink against PCIe is not reported.
+
+### 2b. Modeled estimate — `base.yaml` shape (8 MiB × 48) — WO1 / #496
+
+**Label: modeled estimate — not a live class-fabric a2a job.** Calibrated once on Modal (21 Nov 2026): one container, A100-SXM4-80GB ×4 (NVLink up; `nvidia-smi topo -m` still fails in the sandbox, as in #89). Tip pin for the sweep: `g6/dev` @ `eac9c46e` (clean). Evidence: [gist jssunil/3091f90](https://gist.github.com/jssunil/3091f90bc1d48d2fcfe9bc12fca26267) (`raw.log`, `nccl_W*.csv`, `torch_W*.csv`, `fit.json`).
+
+Two series on the same host (W=2 primary for §2):
+
+1. **nccl-tests** `alltoall_perf` (v2.21.1 `afd59ab`, NCCL 2.25.1), out-of-place time, sizes 8 B → 256 MiB.
+2. **G6 perfkit** `perfkit.bench.run_comm` (`all_to_all_single`, fp32, 30 timed calls, slowest rank; torch 2.11.0+cu130, NCCL 2.28.9) — same path as §2a / #89.
+
+Fit: \(T(m)=\alpha + m/\beta\) (β in GB/s), relative least squares on sizes ≥ 64 KiB (13 points). Max relative fit error ~15–22% (latency floor below ~8 MiB); **at 8 MiB quote the measured point**; use α-β for other sizes.
+
+| series (W=2) | α (µs) | β (GB/s) | 8 MiB per call (measured) | ×48 per step (measured) | ×48 α-β model |
+| :--- | ---: | ---: | ---: | ---: | ---: |
+| nccl-tests `alltoall_perf` | 17.6 | 280 | 0.059 ms | **2.9 ms** | 2.3 ms |
+| G6 perfkit `run_comm` | 57.3 | 326 | 0.068 ms | **3.3 ms** | 4.0 ms |
+
+**Headline for WO1 / #496 close:** use the **G6 perfkit measured** step cost **~3.3 ms** (8 MiB × 48, W=2, Modal A100, isolated a2a). nccl-tests measured ~2.9 ms is the Admin-wording twin on the same host. Against #89's clean-step median (~509 ms), that is ~0.6–0.7% of a step at the `base.yaml` shape (smaller messages than dry-run-1's 64 MiB × 32).
+
+Check vs §2a / #89: perfkit W=2 at 64 MiB = 0.272 ms/call vs #89's 0.269 ms (ratio 1.009) — same code path, same GPU type, new container.
+
+W=4 (same gist, not the §2 headline): perfkit measured 8 MiB × 48 ≈ 4.2 ms/step; β drops ~20% vs W=2.
+
+- Not covered: multi-node / inter-node fabric, bf16 payload (fp32 is an upper bound — halve bytes for a bf16 estimate), overlap with compute, uneven expert loads, TSAI class interconnect (no fabric sweep posted; this is **Modal**, not “our fabric”).
 
 ## 3. Checkpoint
 
@@ -98,7 +125,8 @@ What one rank already shows: the step is host-heavy (256 host syncs from the loo
 | :--- | :--- | :--- | :--- | :--- |
 | dispatch (loop over 16 experts) | 6.0% of the layer pass | 256 syncs per step, 19.1% of host time | _pending_ | §1 |
 | router + shared expert | 1.3% of the layer pass | small | _pending_ | §1 |
-| all-to-all (forecast, 2 GPUs) | 1.7% of the step | n/a | n/a (1 GPU) | §2 |
+| all-to-all (forecast, 2 GPUs; dry-run-1 64 MiB×32) | 1.7% of the step | n/a | n/a (1 GPU) | §2a |
+| all-to-all (modeled, 2 GPUs; base.yaml 8 MiB×48) | ~3.3 ms/step (~0.6% of a ~509 ms step) | n/a | n/a (Modal, not fabric) | §2b |
 | checkpoint | 2.2 steps per save | disk write 94% of the save | _pending_ | §3 |
 
 1. **Loop dispatch syncs:** the largest MoE cost is on the host, not the GPU. Candidate: `model.moe.dispatch=grouped` (fixed capacity, no host sync) or `sorted` (one sync per call); measured in `kernels_dryrun2.md`.
