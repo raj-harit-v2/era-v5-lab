@@ -1,9 +1,9 @@
 # Speed — dry run 1
 
-**Status:** §1–4 and §6 filled; §2 now includes the WO1 / #496 **modeled** α-β calibrate (21 Nov); §1 loop dispatch only (the sorted / grouped A/B is in `kernels_dryrun2.md`).  
-**Sources:** G6 runs on Modal A100s (20 Nov 2026), the lab's dry run 1 evidence (class #620), and the WO1 Modal nccl-tests + perfkit sweep (21 Nov, gist below). Nothing else.  
+**Status:** §1–4 and §6 filled; §2 now includes the WO1 / #496 **modeled** α-β calibrate (21 Nov); §4d adds class **#690 partial** clean step (22 Nov); §1 loop dispatch only (the sorted / grouped A/B is in `kernels_dryrun2.md`).  
+**Sources:** G6 runs on Modal A100s (20 Nov 2026), the lab's dry run 1 evidence (class #620), the WO1 Modal nccl-tests + perfkit sweep (21 Nov, gist below), and Admin #690 partial clean timing (22 Nov). Nothing else.  
 **Rule:** GPU + SHA per table. Member-GPU runs give shares, counts and sizes only; step time comes from the lab run. `mfu_method=g6-v1` until CAP flips.  
-**TSAI lab column:** to be filled from the lab's dry run 1 profile when it is shared; #620 has no profile, so those cells are _pending_.
+**TSAI lab column:** #690 **partial** (clean only) → §4d median ~12.0 s/step @ B=8. Share/% / sync / ckpt TSAI cells stay `_pending_` until a slim layer follow-up. Keep **loop / `g5_t2_base` / #690** distinct from #620 and from #486 sorted.
 
 | Field | Value |
 | :--- | :--- |
@@ -118,6 +118,20 @@ The lab returned no profile, so the split is the member-GPU profile of the same 
 **Not measurable on 1 GPU.** A slow rank only exists when ranks are compared; a step on N GPUs takes as long as its slowest rank, because every collective waits for it. The 2-rank all-to-all run (§2) is the only multi-rank data: its slowest rank's all-to-all is 0.6% above the median, so the collective itself adds no skew there. Per-rank step tables (median / p95 / max and ratio to the cross-rank median, mapped to node and GPU) need a multi-GPU training run with the G7 layout.
 
 What one rank already shows: the step is host-heavy (256 host syncs from the loop dispatch, about 30,300 launches, most of them Muon's loop path). On N GPUs every rank pays this, and host jitter turns into rank-to-rank skew, so cutting syncs and launches comes before any slow-rank work.
+
+### 4d. Clean step (lab, class #690 partial)
+
+Admin chat 22 Nov 2026 (after machine crash + rerun). Job `dryrun1_tsai` / `configs/g5_t2_base.yaml`, `dispatch=loop`, B=8. Only `clean` finished inside the 90-min cap (layer/trace/nsys/ckpt not returned; no `result.json`).
+
+| metric | value | source |
+| :--- | :--- | :--- |
+| batch | 8 (no OOM on ~24 GB card) | #690 Admin |
+| measured steps | 100 | #690 Admin |
+| median step | **~12.0 s** (11.5–12.9 s) | #690 Admin |
+| temp | 73–79°C | #690 Admin |
+| wall | ~98 min (cap 90; clean only) | #690 Admin |
+
+Label: **loop / `g5_t2_base` / #690** — not #620 full-run metrics, not #486 sorted. Share/% TSAI cells stay `_pending_` until a slim layer follow-up.
 
 ## 5. MoE analysis
 
