@@ -28,6 +28,7 @@ Evaluation runs in FP32 (TF32 off on CUDA) on every backend. No dataset or bench
 from __future__ import annotations
 
 import argparse
+import contextlib
 import hashlib
 import importlib.util
 import json
@@ -276,7 +277,36 @@ def score_exec(generations: Path, tasks_path: Path, limit: int, workers: int) ->
 # ---------------------------------------------------------------- (d) forgetting
 
 
-def forgetting_bpb(model, tok, heldout: Path, sources: Path, device: str, window: int, budget: int) -> dict:
+def resolve_compute_dtype(device: str, dtype_arg: str = "float32") -> tuple[str, bool]:
+    """Match Team 9's eval watcher dtype rule: bf16 autocast on native-bf16 CUDA GPUs, float32 elsewhere.
+
+    Returns (compute_dtype_label, use_bf16_autocast). Weights are never cast.
+    """
+    import torch
+
+    if dtype_arg == "float32":
+        return "float32 (TF32 off)", False
+    has_cuda_bf16 = device.startswith("cuda") and torch.cuda.is_available() and torch.cuda.is_bf16_supported()
+    if dtype_arg == "auto":
+        return ("bfloat16", True) if has_cuda_bf16 else ("float32 (TF32 off)", False)
+    if dtype_arg == "bfloat16":
+        if device.startswith("cuda") and not has_cuda_bf16:
+            raise RuntimeError(f"--dtype bfloat16 requested on {device}, which lacks native bf16 support")
+        return "bfloat16", True
+    raise ValueError(f"unsupported --dtype {dtype_arg!r}")
+
+
+def _autocast_ctx(device: str, use_bf16: bool):
+    import torch
+
+    if not use_bf16:
+        return contextlib.nullcontext()
+    dev_type = "cuda" if device.startswith("cuda") else "cpu"
+    return torch.autocast(device_type=dev_type, dtype=torch.bfloat16)
+
+
+def forgetting_bpb(model, tok, heldout: Path, sources: Path, device: str, window: int, budget: int,
+                   use_bf16: bool = False) -> dict:
     import torch
     import torch.nn.functional as F
 
@@ -308,7 +338,7 @@ def forgetting_bpb(model, tok, heldout: Path, sources: Path, device: str, window
             tgt[j, : len(b)] = torch.tensor(b)
             attn[j, : len(a)] = 1
         inp, tgt, attn = inp.to(device), tgt.to(device), attn.to(device)
-        with torch.no_grad():
+        with torch.no_grad(), _autocast_ctx(device, use_bf16):
             h = model.model(input_ids=inp, attention_mask=None if len(idx) == 1 else attn).last_hidden_state
             sel = tgt != -100
             logits = model.lm_head(h[sel]).float()
@@ -317,7 +347,7 @@ def forgetting_bpb(model, tok, heldout: Path, sources: Path, device: str, window
         counts = sel.sum(dim=1).tolist()
         sums = torch.split(per, counts)
         for j, i in enumerate(idx):
-            nats[wslice[i]] = nats.get(wslice[i], 0.0) + float(sums[j].double().sum())
+            nats[wslice[i]] = nats.get(wslice[i], 0.0) + float(sums[j].cpu().double().sum())
         n_tok += int(sel.sum())
     per_slice = {k: nats[k] / LN2 / slice_bytes[k] for k in nats}
     groups = scoring.group_metrics(per_slice)
@@ -330,9 +360,10 @@ def forgetting_bpb(model, tok, heldout: Path, sources: Path, device: str, window
 # ---------------------------------------------------------------- (e) eval-mini
 
 
-def eval_mini(model_dir: str, python: str, runs_dir: Path, device: str, tasks: list[str]) -> dict:
+def eval_mini(model_dir: str, python: str, runs_dir: Path, device: str, tasks: list[str],
+              dtype: str = "float32") -> dict:
     runner = REPO / "teams" / "09-evaluation" / "harness" / "run_eval_mini.py"
-    cmd = [python, str(runner), "--model", model_dir, "--profile", "mini", "--tasks", *tasks, "--dtype", "float32",
+    cmd = [python, str(runner), "--model", model_dir, "--profile", "mini", "--tasks", *tasks, "--dtype", dtype,
            "--device", device, "--runs-dir", str(runs_dir)]
     t0 = time.perf_counter()
     env = {**os.environ, "HF_HUB_DISABLE_PROGRESS_BARS": "1"}
@@ -376,6 +407,9 @@ def main(argv=None) -> int:
     ap.add_argument("--eval-mini-python")
     ap.add_argument("--eval-mini-tasks", default="arc_challenge,hellaswag")
     ap.add_argument("--device", default=None)
+    ap.add_argument("--dtype", default="float32", choices=("float32", "bfloat16", "auto"),
+                    help="compute dtype: float32 (default, TF32 off), bfloat16 (autocast, weights not cast), "
+                         "or auto (bfloat16 on native-bf16 CUDA GPUs, float32 elsewhere, matching Team 9 watcher)")
     ap.add_argument("--out", required=True)
     args = ap.parse_args(argv)
     for out_path in (args.out, args.generations_out):
@@ -387,15 +421,17 @@ def main(argv=None) -> int:
     if device.startswith("cuda"):
         torch.backends.cuda.matmul.allow_tf32 = False
         torch.backends.cudnn.allow_tf32 = False
+    compute_dtype, use_bf16 = resolve_compute_dtype(device, args.dtype)
     report: dict = {"schema": "g10-bench-eval/1", "device": device, "torch": torch.__version__,
-                    "compute_dtype": "float32 (TF32 off)"}
+                    "compute_dtype": compute_dtype}
     if args.score_exec:
         report["exec"] = score_exec(Path(args.generations), Path(args.exec_tasks), args.exec_limit, args.exec_workers)
         report["generations_sha256"] = sha256_file(args.generations)
         report["exec_tasks_sha256"] = sha256_file(args.exec_tasks)
     elif args.eval_mini:
         report["eval_mini"] = eval_mini(args.model, args.eval_mini_python, Path(args.out).with_suffix(".runs"), device,
-                                        args.eval_mini_tasks.split(","))
+                                        args.eval_mini_tasks.split(","),
+                                        dtype="bfloat16" if use_bf16 else "float32")
     else:
         from tokenizers import Tokenizer
 
@@ -424,7 +460,7 @@ def main(argv=None) -> int:
                 report["generations_sha256"] = sha256_file(args.generations_out)
         if "forget" in metrics:
             report["forgetting"] = forgetting_bpb(model, tok, Path(args.heldout), Path(args.heldout_sources), device,
-                                                  args.forget_window, args.token_budget)
+                                                  args.forget_window, args.token_budget, use_bf16=use_bf16)
         if device.startswith("cuda"):
             report["cuda_peak_allocated_mb"] = round(torch.cuda.max_memory_allocated() / 2**20, 1)
     Path(args.out).write_text(json.dumps(report, indent=1), encoding="utf-8")

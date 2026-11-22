@@ -1,0 +1,564 @@
+# Laptop rehearsal of the dry run 2 watcher path: #608's trainer, two eval watchers, a kill and a restore
+# (Team 9, week 4, task 1: the test log of the dry run 2 watcher job request). Sat 21 Nov 2026, Windows 11
+# laptop (4 cores, 8 threads, 7.3 GB RAM), CPU only. Each command with its output, exit code and wall time.
+#
+# Code: the repo at #608's head 2424e4a2 (Team 5 train_week2.py with Team 7's Checkpointer). #608 is merged on main
+#   as 4d783632 with the same Team 5 code. Against main a2e7fc6a (checked after the run, 21 Nov 20:30), the folders
+#   this run used (teams/05-architecture harness and configs, 04-ke2/src, 07-infrastructure, 08-monitoring/clickhouse,
+#   09-evaluation harness_lab, harness_code_indic, results, decontam) differ only in docs and Team 8's new
+#   replay_latency.py and its test, which this run does not use. So every file this run ran is main's.
+#   git -c core.autocrlf=false archive 2424e4a2 (4170 files, LF); eval_mini_v0_spec.json sha256 94de47d2334eff1d....
+# Inputs: the C3 tokenizer (sha256 15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3; the frozen p1536 is not on this laptop, the code path
+#   is the same), its byte table raw_table_P32.npz (file sha256 29a6947764066b653a792a562016b4118ff04339bd64a79a0e7d059413babbcd), Team 5's
+#   synthetic_train.jsonl and synthetic_heldout.jsonl. The Hugging Face cache of #549, offline, no token.
+#
+# TEST ONLY: the scorer is rehearsal_scorer:team5, lm_eval_lab:team5 with the export's probe-loss compare
+#   skipped. A #608 commit saves its probe loss (NLL summed over validation batch 0) under the device class it
+#   trained on. On the GPU slot that is cuda:<name>, the export runs on cpu, so Team 7's export_safetensors
+#   finds no cpu probe and skips the compare (ckpt.py: ok = saved is None or bits == saved). This run trains
+#   on cpu, so the compare runs, and it fails because lm_eval_lab's probe is another quantity (mean loss on
+#   random ids). The wrapper returns the saved cpu bits: the same skip as on the slot. Everything else (file
+#   sha256, strict keys, scoring, records, the watcher) is the real code. Its full source:
+#     """TEST ONLY, never for a lab job: lm_eval_lab:team5 with the export's probe-loss compare skipped.
+#
+#     Why: a #608 trainer saves its probe loss (NLL summed over validation batch 0) under the device class it trained on.
+#     On the GPU eval slot the trainer's class is cuda:<name> and the export runs on cpu, so Team 7's export_safetensors
+#     finds no cpu probe and skips the compare (ckpt.py: ``ok = saved is None or bits == saved``). A laptop rehearsal
+#     trains on cpu, so the compare runs and fails, because lm_eval_lab's probe is a different quantity. This wrapper
+#     returns the saved cpu bits, which is the same as the skip on the slot. Everything else (file sha256, strict keys,
+#     scoring, records) is the real lm_eval_lab:team5 path.
+#
+#         run_lab_ckpt.py --scorer rehearsal_scorer:team5 <the same arguments as lm_eval_lab:team5>
+#     """
+#     import struct
+#
+#     import lm_eval_lab
+#
+#
+#     class RehearsalScorer:
+#         def __init__(self, inner):
+#             self.inner = inner
+#             self.name = inner.name
+#             self.saved = None
+#
+#         def check(self, manifest):
+#             self.inner.check(manifest)
+#             bits = (manifest.get("probe_loss") or {}).get("cpu")
+#             self.saved = struct.unpack(">d", bytes.fromhex(bits))[0] if bits else None
+#
+#         def factory(self):
+#             return self.inner.factory()
+#
+#         def probe(self, model):
+#             return self.saved if self.saved is not None else self.inner.probe(model)
+#
+#         def score(self, model, device):
+#             return self.inner.score(model, device)
+#
+#         def __getattr__(self, name):  # anything else run_lab_ckpt.py reads from the scorer
+#             return getattr(self.inner, name)
+#
+#
+#     def team5(argv):
+#         return RehearsalScorer(lm_eval_lab.team5(argv))
+#
+# Differences from the job (dry run 2 on the eval slot):
+#   scorer lm_eval_lab:team5         -> rehearsal_scorer:team5                         (the probe compare above)
+#   GPU, bf16                        -> CPU, fp32                                      (laptop)
+#   Tier B --every 10                -> --every 3                                      (9 commits; it still skips step 0)
+#   full item sets, --interval 60    -> --limit 2, --interval 5                        (time)
+#   rows loaded into ClickHouse      -> --no-load (the same parse, no write)           (local only)
+#   dry run 2 shape, KAS head        -> arms/t1.yaml (AdamW), --smoke, trainer on 1 thread (Muon's step-0 state takes too long on CPU; the KAS head is checked separately)
+#   SIGKILL                          -> TerminateProcess (Popen.kill)                  (Windows; no handler runs in either)
+# Scores: --limit 2 items per task (Tier A: 122 freeze-set items) on a model a few steps from random, so they
+#   test the path, not the step-0 bands of eval_schedule.md section 5.2 (those need the full item sets).
+# Edits to this log: progress-bar lines are left out; the laptop folders are shown as <rehearsal>, <lab>,
+#   <c3>, <tmp>, <home>, the venv interpreter as python, the host name as <host>.
+# Result: 10 of 10 run checks pass (K1-K10 at the end; K11, K12 below).
+
+# 0. Versions
+$ python -c "import sys, platform, os, torch, lm_eval, datasets, tokenizers, numpy, safetensors; from importlib.metadata import version as v; print('env: python', sys.version.split()[0], 'torch', torch.__version__, 'lm_eval', v('lm_eval'), 'datasets', datasets.__version__, 'tokenizers', tokenizers.__version__, 'numpy', numpy.__version__, 'safetensors', v('safetensors'), '|', platform.platform(), '| CPU only,', os.cpu_count(), 'logical cores, torch threads', torch.get_num_threads())"
+env: python 3.12.10 torch 2.14.1+cpu lm_eval 0.4.13 datasets 5.1.0 tokenizers 0.23.3 numpy 2.5.4 safetensors 0.8.0 | Windows-11-10.0.26200-SP0 | CPU only, 8 logical cores, torch threads 4
+[exit 0, 13.8 s wall]
+
+# 1. The run, in order (rehearsal_dr2.py). Watchers start once the run folder and out1/manifest.json exist;
+#    the trainer is killed right after commit 4; steps 0 and the restored-from step are pinned; then restore
+# rehearsal_dr2.py started 2026-11-21 20:03:53, available RAM 2.0 GB
+[20:03:53] start versions (pid 33688): $ python -c "import sys, platform, os, torch, lm_eval, datasets, tokenizers, numpy, safetensors; from importlib.metadata import version as v; print('env: python', sys.version.split()[0], 'torch', torch.__version__, 'lm_eval', v('lm_eval'), 'datasets', datasets.__version__, 'tokenizers', tokenizers.__version__, 'numpy', numpy.__version__, 'safetensors', v('safetensors'), '|', platform.platform(), '| CPU only,', os.cpu_count(), 'logical cores, torch threads', torch.get_num_threads())"
+[20:04:06] versions: exit 0, 13.8 s wall
+[20:04:06] start trainer-1 (pid 11776): $ python teams/05-architecture/harness/train_week2.py --config teams/05-architecture/configs/arms/t1.yaml --runtime teams/05-architecture/configs/runtime.yaml --tokenizer <c3>/tokenizer.json --tokenizer-release frozen-c3 --byte-table <lab>/inputs/c3_tables/raw_table_P32.npz --train-data <lab>/inputs/synthetic_train.jsonl --heldout-data <lab>/inputs/synthetic_heldout.jsonl --device cpu --seed 1234 --lr 0.001 --smoke --smoke-steps 8 --smoke-seq-len 160 --smoke-batch-size 1 --checkpoint-store <rehearsal>/run/store --run-id dr2-rehearsal --checkpoint-interval-s 0.001 --checkpoint-at-start --out <rehearsal>/run/out1
+[20:04:21] start watcher-tier-a (pid 28272): $ python teams/09-evaluation/harness_lab/eval_watcher.py --run-dir <rehearsal>/run/store/dr2-rehearsal --label tier-a --every 1 --out-dir ./out/watcher/dr2-rehearsal.tier-a.every1 --until-final --no-load --interval 5 --scorer rehearsal_scorer:team5 -- --device cpu --tier A --limit 2 --model-config <rehearsal>/run/out1/manifest.json --tokenizer <c3>/tokenizer.json --tokenizer-sha256 15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3 --byte-table <lab>/inputs/c3_tables/raw_table_P32.npz --hf-home <lab>/hf --offline
+[20:04:21] start watcher-tier-b (pid 22396): $ python teams/09-evaluation/harness_lab/eval_watcher.py --run-dir <rehearsal>/run/store/dr2-rehearsal --label tier-b --every 3 --out-dir ./out/watcher/dr2-rehearsal.tier-b.every3 --until-final --no-load --interval 5 --scorer rehearsal_scorer:team5 -- --device cpu --tier B --limit 2 --model-config <rehearsal>/run/out1/manifest.json --tokenizer <c3>/tokenizer.json --tokenizer-sha256 15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3 --byte-table <lab>/inputs/c3_tables/raw_table_P32.npz --hf-home <lab>/hf --offline
+[20:06:46] trainer-1: exit 1, 159.3 s wall
+[20:06:46] killed trainer-1 after 4 commit(s); trainer process gone after 2.4 s; latest.json step 3 (main/step_00000003-e1, epoch 1); watchers alive: {'tier-a': True, 'tier-b': True}
+[20:06:48] start pin (pid 33212): $ python -c "import sys
+from ckpt.store import open_store
+st = open_store(sys.argv[1])
+pins = st.get_json('pins.json') if st.exists('pins.json') else []
+st.put_json('pins.json', sorted(set(pins) | {int(s) for s in sys.argv[2:]}))
+print('pins.json:', st.get_json('pins.json'))
+" <rehearsal>/run/store/dr2-rehearsal 0 3
+[20:06:48] pin: exit 0, 0.3 s wall
+[20:06:48] start trainer-2 (pid 9824): $ python teams/05-architecture/harness/train_week2.py --config teams/05-architecture/configs/arms/t1.yaml --runtime teams/05-architecture/configs/runtime.yaml --tokenizer <c3>/tokenizer.json --tokenizer-release frozen-c3 --byte-table <lab>/inputs/c3_tables/raw_table_P32.npz --train-data <lab>/inputs/synthetic_train.jsonl --heldout-data <lab>/inputs/synthetic_heldout.jsonl --device cpu --seed 1234 --lr 0.001 --smoke --smoke-steps 8 --smoke-seq-len 160 --smoke-batch-size 1 --checkpoint-store <rehearsal>/run/store --run-id dr2-rehearsal --checkpoint-interval-s 0.001 --resume-committed --out <rehearsal>/run/out2
+[20:10:53] trainer-2: exit 0, 244.9 s wall
+[20:18:43] watcher-tier-a: exit 0, 862.3 s wall
+[20:19:26] watcher-tier-b: exit 0, 904.5 s wall
+[20:19:26] start watcher-tier-a-rerun (pid 23364): $ python teams/09-evaluation/harness_lab/eval_watcher.py --run-dir <rehearsal>/run/store/dr2-rehearsal --label tier-a --every 1 --out-dir ./out/watcher/dr2-rehearsal.tier-a.every1 --until-final --no-load --interval 5 --scorer rehearsal_scorer:team5 --once -- --device cpu --tier A --limit 2 --model-config <rehearsal>/run/out1/manifest.json --tokenizer <c3>/tokenizer.json --tokenizer-sha256 15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3 --byte-table <lab>/inputs/c3_tables/raw_table_P32.npz --hf-home <lab>/hf --offline
+[20:19:26] watcher-tier-a-rerun: exit 0, 0.4 s wall
+[20:19:26] start tier-c-step0 (pid 11052): $ python teams/09-evaluation/harness_lab/run_lab_ckpt.py --run-dir <rehearsal>/run/store/dr2-rehearsal --step 0 --out ./out/watcher/tier-c/step-0.tier-b.json --scorer rehearsal_scorer:team5 --device cpu --tier B --limit 2 --model-config <rehearsal>/run/out1/manifest.json --tokenizer <c3>/tokenizer.json --tokenizer-sha256 15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3 --byte-table <lab>/inputs/c3_tables/raw_table_P32.npz --hf-home <lab>/hf --offline
+[20:20:06] tier-c-step0: exit 0, 40.2 s wall
+[20:20:06] start parse-step0 (pid 6904): $ python -c "import json, sys
+sys.path.insert(0, 'teams/08-monitoring/clickhouse')
+import load_jsonl
+info = load_jsonl.parse_source(sys.argv[1], run_id_override=sys.argv[2])
+n = len(json.load(open(sys.argv[1], encoding='utf-8'))['records'])
+print(json.dumps({'target_table': info['target_table'], 'metric_rows': info['metric_rows'], 'records': n, 'run_id': sys.argv[2]}))
+sys.exit(0 if info['target_table'] == 'eval_mini' and info['metric_rows'] == n else 1)
+" ./out/watcher/tier-c/step-0.tier-b.json dr2-rehearsal:step-0:tier-c
+[20:20:07] parse-step0: exit 0, 0.5 s wall
+[20:20:07] start tier-c-step3 (pid 18844): $ python teams/09-evaluation/harness_lab/run_lab_ckpt.py --run-dir <rehearsal>/run/store/dr2-rehearsal --step 3 --out ./out/watcher/tier-c/step-3.tier-b.json --scorer rehearsal_scorer:team5 --device cpu --tier B --limit 2 --model-config <rehearsal>/run/out1/manifest.json --tokenizer <c3>/tokenizer.json --tokenizer-sha256 15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3 --byte-table <lab>/inputs/c3_tables/raw_table_P32.npz --hf-home <lab>/hf --offline
+[20:20:47] tier-c-step3: exit 0, 39.9 s wall
+[20:20:47] start parse-step3 (pid 8828): $ python -c "import json, sys
+sys.path.insert(0, 'teams/08-monitoring/clickhouse')
+import load_jsonl
+info = load_jsonl.parse_source(sys.argv[1], run_id_override=sys.argv[2])
+n = len(json.load(open(sys.argv[1], encoding='utf-8'))['records'])
+print(json.dumps({'target_table': info['target_table'], 'metric_rows': info['metric_rows'], 'records': n, 'run_id': sys.argv[2]}))
+sys.exit(0 if info['target_table'] == 'eval_mini' and info['metric_rows'] == n else 1)
+" ./out/watcher/tier-c/step-3.tier-b.json dr2-rehearsal:step-3:tier-c
+[20:20:47] parse-step3: exit 0, 0.5 s wall
+[20:20:47] start retention-cli (pid 21724): $ python teams/07-infrastructure/ckpt/ckpt.py retention --run <rehearsal>/run/store/dr2-rehearsal --keep 3 --protect-every 3 --dry-run
+[20:20:57] retention-cli: exit 0, 9.3 s wall
+[20:20:57] start retention-shim (pid 29076): $ python -c "import json, os, sys
+from ckpt import store
+_list = store.LocalStore.list
+store.LocalStore.list = lambda self, prefix='': [dict(o, key=o['key'].replace(os.sep, '/')) for o in _list(self, prefix)]
+from ckpt.ckpt import run_retention
+print(json.dumps(run_retention(sys.argv[1], int(sys.argv[2]), int(sys.argv[3]), dry_run=True), indent=1))
+" <rehearsal>/run/store/dr2-rehearsal 3 3
+[20:21:05] retention-shim: exit 0, 8.9 s wall
+PASS K1 watchers started before the step-0 commit
+PASS K2 commits: each step once, start..final, epoch 1 then 2
+PASS K3 Tier A scored every commit once
+PASS K4 Tier B scored lines 3, 6, ... once, not step 0
+PASS K5 killed between commits, watchers alive
+PASS K6 restored from the latest commit
+PASS K7 watchers ended by themselves after the final commit
+PASS K8 a restart scores nothing again
+PASS K9 Tier C on step 0 and the restored-from step
+PASS K10 retention dry run keeps every protected commit
+DRIVER DONE 10 PASS 0 FAIL; exit 0; lowest available RAM 0.02 GB
+
+# 2. The store: commits.jsonl (Team 7 only appends), latest.json at the kill, pins.json
+{"step": 0, "branch": "main", "path": "main/step_00000000-e1", "time": 1795271696.7655022, "reason": "start", "epoch": 1}
+{"step": 1, "branch": "main", "path": "main/step_00000001-e1", "time": 1795271731.7762883, "reason": "interval", "epoch": 1}
+{"step": 2, "branch": "main", "path": "main/step_00000002-e1", "time": 1795271771.6521592, "reason": "interval", "epoch": 1}
+{"step": 3, "branch": "main", "path": "main/step_00000003-e1", "time": 1795271806.1997964, "reason": "interval", "epoch": 1}
+{"step": 4, "branch": "main", "path": "main/step_00000004-e2", "time": 1795271895.4654377, "reason": "interval", "epoch": 2}
+{"step": 5, "branch": "main", "path": "main/step_00000005-e2", "time": 1795271935.1730287, "reason": "interval", "epoch": 2}
+{"step": 6, "branch": "main", "path": "main/step_00000006-e2", "time": 1795271968.7916472, "reason": "interval", "epoch": 2}
+{"step": 7, "branch": "main", "path": "main/step_00000007-e2", "time": 1795272005.2898922, "reason": "interval", "epoch": 2}
+{"step": 8, "branch": "main", "path": "main/step_00000008-e2", "time": 1795272046.1115558, "reason": "final", "epoch": 2}
+latest.json at the kill: {"branch": "main", "epoch": 1, "job": null, "path": "main/step_00000003-e1", "step": 3}
+pins.json: [
+ 0,
+ 3
+]
+Team 7 commit events: step reason commit_latency_s bytes
+  0 start 7.5974 703798480
+  1 interval 8.9461 703797749
+  2 interval 13.6288 703798235
+  3 interval 7.7988 703798721
+  4 interval 11.2855 703799204
+  5 interval 9.319 703799682
+  6 interval 8.1726 703800153
+  7 interval 11.4406 703800627
+  8 final 8.632 703801289
+step folders in the store: step_00000000-e1, step_00000001-e1, step_00000002-e1, step_00000003-e1, step_00000004-e2, step_00000005-e2, step_00000006-e2, step_00000007-e2, step_00000008-e2
+Team 7 events for step 4 up to the kill (none of it reached the store, so the kill came between two committed saves):
+  2026-11-21T14:36:43.868Z checkpoint.started
+  2026-11-21T14:36:46.264Z checkpoint.backpressure
+restore.done: {"step": 3, "from_path": "main/step_00000003-e1", "probe_recorded": true, "env_override": [], "restore_s": 30.453}
+
+# 3. The trainer, both segments (Team 5 train_week2.py: it prints little; its summary is out2/summary.json)
+$ python teams/05-architecture/harness/train_week2.py --config teams/05-architecture/configs/arms/t1.yaml --runtime teams/05-architecture/configs/runtime.yaml --tokenizer <c3>/tokenizer.json --tokenizer-release frozen-c3 --byte-table <lab>/inputs/c3_tables/raw_table_P32.npz --train-data <lab>/inputs/synthetic_train.jsonl --heldout-data <lab>/inputs/synthetic_heldout.jsonl --device cpu --seed 1234 --lr 0.001 --smoke --smoke-steps 8 --smoke-seq-len 160 --smoke-batch-size 1 --checkpoint-store <rehearsal>/run/store --run-id dr2-rehearsal --checkpoint-interval-s 0.001 --checkpoint-at-start --out <rehearsal>/run/out1
+[exit 1, 159.3 s wall]
+$ python -c "import sys
+from ckpt.store import open_store
+st = open_store(sys.argv[1])
+pins = st.get_json('pins.json') if st.exists('pins.json') else []
+st.put_json('pins.json', sorted(set(pins) | {int(s) for s in sys.argv[2:]}))
+print('pins.json:', st.get_json('pins.json'))
+" <rehearsal>/run/store/dr2-rehearsal 0 3
+pins.json: [0, 3]
+[exit 0, 0.3 s wall]
+$ python teams/05-architecture/harness/train_week2.py --config teams/05-architecture/configs/arms/t1.yaml --runtime teams/05-architecture/configs/runtime.yaml --tokenizer <c3>/tokenizer.json --tokenizer-release frozen-c3 --byte-table <lab>/inputs/c3_tables/raw_table_P32.npz --train-data <lab>/inputs/synthetic_train.jsonl --heldout-data <lab>/inputs/synthetic_heldout.jsonl --device cpu --seed 1234 --lr 0.001 --smoke --smoke-steps 8 --smoke-seq-len 160 --smoke-batch-size 1 --checkpoint-store <rehearsal>/run/store --run-id dr2-rehearsal --checkpoint-interval-s 0.001 --resume-committed --out <rehearsal>/run/out2
+[exit 0, 244.9 s wall]
+{
+  "status": "SMOKE",
+  "run_id": "dr2-rehearsal",
+  "steps": 8,
+  "wall_seconds": 346.67940889985766,
+  "timed_out": false,
+  "team7_checkpoint_path": "main/step_00000008-e2",
+  "first_ce": 11.876041412353516,
+  "last_ce": 7.929352283477783,
+  "final_model_sha256": "7dd298535d78308cbfe86cad550467fa1a7d596f263feef060630e3a73af082f",
+  "eligible_for_quality_comparison": false
+}
+
+# 4. The two watchers (their own output; each scorer process writes to <out folder>/logs/)
+$ python teams/09-evaluation/harness_lab/eval_watcher.py --run-dir <rehearsal>/run/store/dr2-rehearsal --label tier-a --every 1 --out-dir ./out/watcher/dr2-rehearsal.tier-a.every1 --until-final --no-load --interval 5 --scorer rehearsal_scorer:team5 -- --device cpu --tier A --limit 2 --model-config <rehearsal>/run/out1/manifest.json --tokenizer <c3>/tokenizer.json --tokenizer-sha256 15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3 --byte-table <lab>/inputs/c3_tables/raw_table_P32.npz --hf-home <lab>/hf --offline
+watching <rehearsal>\run\store\dr2-rehearsal (label tier-a, every 1, scorer rehearsal_scorer:team5, no load); out <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1
+step 0 (main/step_00000000-e1): scored in 105.09 s, 105.6 s after its commit, 5 record(s) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000000-e1.json
+step 0: 5 row(s) parsed (--no-load) as run_id dr2-rehearsal:main/step_00000000-e1:tier-a:8b38945059cb in 0.28 s
+waiting for the GPU slot (<rehearsal>\src\out\watcher\gpu_slot.lock)
+step 1 (main/step_00000001-e1): scored in 92.59 s, 215.9 s after its commit, 5 record(s) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000001-e1.json
+step 1: 5 row(s) parsed (--no-load) as run_id dr2-rehearsal:main/step_00000001-e1:tier-a:887c16da02c6 in 0.0 s
+step 2 (main/step_00000002-e1): scored in 95.97 s, 272.1 s after its commit, 5 record(s) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000002-e1.json
+step 2: 5 row(s) parsed (--no-load) as run_id dr2-rehearsal:main/step_00000002-e1:tier-a:13e88668c818 in 0.02 s
+step 3 (main/step_00000003-e1): scored in 84.19 s, 321.8 s after its commit, 5 record(s) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000003-e1.json
+step 3: 5 row(s) parsed (--no-load) as run_id dr2-rehearsal:main/step_00000003-e1:tier-a:caaac7f1245f in 0.0 s
+waiting for the GPU slot (<rehearsal>\src\out\watcher\gpu_slot.lock)
+step 4 (main/step_00000004-e2): scored in 67.08 s, 344.1 s after its commit, 5 record(s) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000004-e2.json
+step 4: 5 row(s) parsed (--no-load) as run_id dr2-rehearsal:main/step_00000004-e2:tier-a:3897988584c9 in 0.0 s
+step 5 (main/step_00000005-e2): scored in 67.55 s, 372.0 s after its commit, 5 record(s) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000005-e2.json
+step 5: 5 row(s) parsed (--no-load) as run_id dr2-rehearsal:main/step_00000005-e2:tier-a:1f3c714fad05 in 0.0 s
+step 6 (main/step_00000006-e2): scored in 68.02 s, 406.5 s after its commit, 5 record(s) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000006-e2.json
+step 6: 5 row(s) parsed (--no-load) as run_id dr2-rehearsal:main/step_00000006-e2:tier-a:ee49447876fa in 0.0 s
+step 7 (main/step_00000007-e2): scored in 74.97 s, 445.0 s after its commit, 5 record(s) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000007-e2.json
+step 7: 5 row(s) parsed (--no-load) as run_id dr2-rehearsal:main/step_00000007-e2:tier-a:96a7670b10af in 0.02 s
+step 8 (main/step_00000008-e2): scored in 72.33 s, 476.5 s after its commit, 5 record(s) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000008-e2.json
+step 8: 5 row(s) parsed (--no-load) as run_id dr2-rehearsal:main/step_00000008-e2:tier-a:79e20065c49e in 0.0 s
+the run committed its final checkpoint and every owned commit is done
+time: 9 checkpoint(s) scored, 80.9 s mean and 105.1 s max per checkpoint, lag after commit 476.5 s max
+done: {"parsed": 9}; exit 0
+[exit 0, 862.3 s wall]
+$ python teams/09-evaluation/harness_lab/eval_watcher.py --run-dir <rehearsal>/run/store/dr2-rehearsal --label tier-b --every 3 --out-dir ./out/watcher/dr2-rehearsal.tier-b.every3 --until-final --no-load --interval 5 --scorer rehearsal_scorer:team5 -- --device cpu --tier B --limit 2 --model-config <rehearsal>/run/out1/manifest.json --tokenizer <c3>/tokenizer.json --tokenizer-sha256 15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3 --byte-table <lab>/inputs/c3_tables/raw_table_P32.npz --hf-home <lab>/hf --offline
+watching <rehearsal>\run\store\dr2-rehearsal (label tier-b, every 3, scorer rehearsal_scorer:team5, no load); out <rehearsal>\src\out\watcher\dr2-rehearsal.tier-b.every3
+waiting for the GPU slot (<rehearsal>\src\out\watcher\gpu_slot.lock)
+step 2 (main/step_00000002-e1): scored in 52.09 s, 83.1 s after its commit, 11 record(s) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-b.every3\main__step_00000002-e1.json
+step 2: 11 row(s) parsed (--no-load) as run_id dr2-rehearsal:main/step_00000002-e1:tier-b:13e88668c818 in 0.16 s
+waiting for the GPU slot (<rehearsal>\src\out\watcher\gpu_slot.lock)
+step 5 (main/step_00000005-e2): scored in 44.14 s, 237.1 s after its commit, 11 record(s) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-b.every3\main__step_00000005-e2.json
+step 5: 11 row(s) parsed (--no-load) as run_id dr2-rehearsal:main/step_00000005-e2:tier-b:1f3c714fad05 in 0.0 s
+waiting for the GPU slot (<rehearsal>\src\out\watcher\gpu_slot.lock)
+step 8 (main/step_00000008-e2): scored in 42.25 s, 518.9 s after its commit, 11 record(s) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-b.every3\main__step_00000008-e2.json
+step 8: 11 row(s) parsed (--no-load) as run_id dr2-rehearsal:main/step_00000008-e2:tier-b:79e20065c49e in 0.0 s
+the run committed its final checkpoint and every owned commit is done
+time: 3 checkpoint(s) scored, 46.2 s mean and 52.1 s max per checkpoint, lag after commit 518.9 s max
+done: {"parsed": 3}; exit 0
+[exit 0, 904.5 s wall]
+
+# 5. Each owned commit's record in state.json
+tier-a (every 1): line step status attempts seconds slot_wait_s lag_s run_id
+  1 0 scored 1 105.09 0.02 105.6 dr2-rehearsal:main/step_00000000-e1:tier-a:8b38945059cb
+  2 1 scored 1 92.59 47.36 215.9 dr2-rehearsal:main/step_00000001-e1:tier-a:887c16da02c6
+  3 2 scored 1 95.97 0.0 272.1 dr2-rehearsal:main/step_00000002-e1:tier-a:13e88668c818
+  4 3 scored 1 84.19 0.0 321.8 dr2-rehearsal:main/step_00000003-e1:tier-a:caaac7f1245f
+  5 4 scored 1 67.08 39.41 344.1 dr2-rehearsal:main/step_00000004-e2:tier-a:3897988584c9
+  6 5 scored 1 67.55 0.0 372.0 dr2-rehearsal:main/step_00000005-e2:tier-a:1f3c714fad05
+  7 6 scored 1 68.02 0.0 406.5 dr2-rehearsal:main/step_00000006-e2:tier-a:ee49447876fa
+  8 7 scored 1 74.97 0.0 445.0 dr2-rehearsal:main/step_00000007-e2:tier-a:96a7670b10af
+  9 8 scored 1 72.33 0.0 476.5 dr2-rehearsal:main/step_00000008-e2:tier-a:79e20065c49e
+tier-b (every 3): line step status attempts seconds slot_wait_s lag_s run_id
+  3 2 scored 1 52.09 30.3 83.1 dr2-rehearsal:main/step_00000002-e1:tier-b:13e88668c818
+  6 5 scored 1 44.14 187.89 237.1 dr2-rehearsal:main/step_00000005-e2:tier-b:1f3c714fad05
+  9 8 scored 1 42.25 345.47 518.9 dr2-rehearsal:main/step_00000008-e2:tier-b:79e20065c49e
+
+# 6. A restart of the Tier A watcher scores nothing again
+$ python teams/09-evaluation/harness_lab/eval_watcher.py --run-dir <rehearsal>/run/store/dr2-rehearsal --label tier-a --every 1 --out-dir ./out/watcher/dr2-rehearsal.tier-a.every1 --until-final --no-load --interval 5 --scorer rehearsal_scorer:team5 --once -- --device cpu --tier A --limit 2 --model-config <rehearsal>/run/out1/manifest.json --tokenizer <c3>/tokenizer.json --tokenizer-sha256 15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3 --byte-table <lab>/inputs/c3_tables/raw_table_P32.npz --hf-home <lab>/hf --offline
+watching <rehearsal>\run\store\dr2-rehearsal (label tier-a, every 1, scorer rehearsal_scorer:team5, no load); out <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1
+time: no checkpoint scored in this run
+done: {"parsed": 9}; exit 0
+[exit 0, 0.4 s wall]
+
+# 7. Tier C: Tier B on step 0 and on the restored-from step, then Team 8's parse (what --no-load does)
+$ python teams/09-evaluation/harness_lab/run_lab_ckpt.py --run-dir <rehearsal>/run/store/dr2-rehearsal --step 0 --out ./out/watcher/tier-c/step-0.tier-b.json --scorer rehearsal_scorer:team5 --device cpu --tier B --limit 2 --model-config <rehearsal>/run/out1/manifest.json --tokenizer <c3>/tokenizer.json --tokenizer-sha256 15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3 --byte-table <lab>/inputs/c3_tables/raw_table_P32.npz --hf-home <lab>/hf --offline
+checkpoint: lab:dr2-rehearsal step 0 branch main epoch 1 (main/step_00000000-e1)
+export ok: step 0, probe loss bits equal the saved ones
+lm-eval (AMD64 Family 23 Model 104 Stepping 1, AuthenticAMD, fp32): 60 requests in 24 forward rows, encode fallbacks 10; setup 1.5 s, task index 0.9 s, scoring 15.3 s
+RESULT arc_challenge acc/none = 50.0 (n=2) -> out\watcher\tier-c\step-0.tier-b.json
+RESULT arc_challenge acc_norm/none = 0.0 (n=2) -> out\watcher\tier-c\step-0.tier-b.json
+RESULT hellaswag acc/none = 0.0 (n=2) -> out\watcher\tier-c\step-0.tier-b.json
+RESULT hellaswag acc_norm/none = 50.0 (n=2) -> out\watcher\tier-c\step-0.tier-b.json
+RESULT leaderboard_mmlu_pro acc/none = 50.0 (n=2) -> out\watcher\tier-c\step-0.tier-b.json
+RESULT belebele_hin_Deva acc/none = 50.0 (n=2) -> out\watcher\tier-c\step-0.tier-b.json
+RESULT belebele_hin_Deva acc_norm/none = 50.0 (n=2) -> out\watcher\tier-c\step-0.tier-b.json
+RESULT belebele_tel_Telu acc/none = 0.0 (n=2) -> out\watcher\tier-c\step-0.tier-b.json
+RESULT belebele_tel_Telu acc_norm/none = 0.0 (n=2) -> out\watcher\tier-c\step-0.tier-b.json
+RESULT belebele_tam_Taml acc/none = 0.0 (n=2) -> out\watcher\tier-c\step-0.tier-b.json
+RESULT belebele_tam_Taml acc_norm/none = 0.0 (n=2) -> out\watcher\tier-c\step-0.tier-b.json
+TIME export 7.6 s, score 16.3 s, total 38.6 s (rehearsal_scorer:team5, cpu)
+[exit 0, 40.2 s wall]
+$ python -c "import json, sys
+sys.path.insert(0, 'teams/08-monitoring/clickhouse')
+import load_jsonl
+info = load_jsonl.parse_source(sys.argv[1], run_id_override=sys.argv[2])
+n = len(json.load(open(sys.argv[1], encoding='utf-8'))['records'])
+print(json.dumps({'target_table': info['target_table'], 'metric_rows': info['metric_rows'], 'records': n, 'run_id': sys.argv[2]}))
+sys.exit(0 if info['target_table'] == 'eval_mini' and info['metric_rows'] == n else 1)
+" ./out/watcher/tier-c/step-0.tier-b.json dr2-rehearsal:step-0:tier-c
+{"target_table": "eval_mini", "metric_rows": 11, "records": 11, "run_id": "dr2-rehearsal:step-0:tier-c"}
+[exit 0, 0.5 s wall]
+$ python teams/09-evaluation/harness_lab/run_lab_ckpt.py --run-dir <rehearsal>/run/store/dr2-rehearsal --step 3 --out ./out/watcher/tier-c/step-3.tier-b.json --scorer rehearsal_scorer:team5 --device cpu --tier B --limit 2 --model-config <rehearsal>/run/out1/manifest.json --tokenizer <c3>/tokenizer.json --tokenizer-sha256 15468e66457b43af79f695cbe585c0d03e3cfe7a4a5d04d189dd3c6b9f02ddc3 --byte-table <lab>/inputs/c3_tables/raw_table_P32.npz --hf-home <lab>/hf --offline
+checkpoint: lab:dr2-rehearsal step 3 branch main epoch 1 (main/step_00000003-e1)
+export ok: step 3, probe loss bits equal the saved ones
+lm-eval (AMD64 Family 23 Model 104 Stepping 1, AuthenticAMD, fp32): 60 requests in 24 forward rows, encode fallbacks 10; setup 1.5 s, task index 0.8 s, scoring 14.1 s
+RESULT arc_challenge acc/none = 50.0 (n=2) -> out\watcher\tier-c\step-3.tier-b.json
+RESULT arc_challenge acc_norm/none = 0.0 (n=2) -> out\watcher\tier-c\step-3.tier-b.json
+RESULT hellaswag acc/none = 0.0 (n=2) -> out\watcher\tier-c\step-3.tier-b.json
+RESULT hellaswag acc_norm/none = 50.0 (n=2) -> out\watcher\tier-c\step-3.tier-b.json
+RESULT leaderboard_mmlu_pro acc/none = 50.0 (n=2) -> out\watcher\tier-c\step-3.tier-b.json
+RESULT belebele_hin_Deva acc/none = 0.0 (n=2) -> out\watcher\tier-c\step-3.tier-b.json
+RESULT belebele_hin_Deva acc_norm/none = 0.0 (n=2) -> out\watcher\tier-c\step-3.tier-b.json
+RESULT belebele_tel_Telu acc/none = 50.0 (n=2) -> out\watcher\tier-c\step-3.tier-b.json
+RESULT belebele_tel_Telu acc_norm/none = 50.0 (n=2) -> out\watcher\tier-c\step-3.tier-b.json
+RESULT belebele_tam_Taml acc/none = 0.0 (n=2) -> out\watcher\tier-c\step-3.tier-b.json
+RESULT belebele_tam_Taml acc_norm/none = 0.0 (n=2) -> out\watcher\tier-c\step-3.tier-b.json
+TIME export 7.5 s, score 14.9 s, total 38.4 s (rehearsal_scorer:team5, cpu)
+[exit 0, 39.9 s wall]
+$ python -c "import json, sys
+sys.path.insert(0, 'teams/08-monitoring/clickhouse')
+import load_jsonl
+info = load_jsonl.parse_source(sys.argv[1], run_id_override=sys.argv[2])
+n = len(json.load(open(sys.argv[1], encoding='utf-8'))['records'])
+print(json.dumps({'target_table': info['target_table'], 'metric_rows': info['metric_rows'], 'records': n, 'run_id': sys.argv[2]}))
+sys.exit(0 if info['target_table'] == 'eval_mini' and info['metric_rows'] == n else 1)
+" ./out/watcher/tier-c/step-3.tier-b.json dr2-rehearsal:step-3:tier-c
+{"target_table": "eval_mini", "metric_rows": 11, "records": 11, "run_id": "dr2-rehearsal:step-3:tier-c"}
+[exit 0, 0.5 s wall]
+
+# 8. Retention, dry run (deletes nothing): Team 7's CLI, then the same with '/' keys (test-only shim)
+#    On Windows LocalStore.list returns keys with '\' (os.path.relpath) and run_retention splits them on '/',
+#    so the CLI finds no step folder here; on the Linux slot the keys use '/'. The shim changes only that.
+$ python teams/07-infrastructure/ckpt/ckpt.py retention --run <rehearsal>/run/store/dr2-rehearsal --keep 3 --protect-every 3 --dry-run
+{
+ "deleted": [],
+ "orphans": [],
+ "protected": [
+  "main/step_00000000-e1",
+  "main/step_00000002-e1",
+  "main/step_00000003-e1",
+  "main/step_00000005-e2",
+  "main/step_00000008-e2"
+ ],
+ "freed_bytes": 0,
+ "kept": [
+  "main/step_00000000-e1",
+  "main/step_00000002-e1",
+  "main/step_00000003-e1",
+  "main/step_00000005-e2",
+  "main/step_00000006-e2",
+  "main/step_00000007-e2",
+  "main/step_00000008-e2"
+ ],
+ "store": "local"
+}
+[exit 0, 9.3 s wall]
+$ python -c "import json, os, sys
+from ckpt import store
+_list = store.LocalStore.list
+store.LocalStore.list = lambda self, prefix='': [dict(o, key=o['key'].replace(os.sep, '/')) for o in _list(self, prefix)]
+from ckpt.ckpt import run_retention
+print(json.dumps(run_retention(sys.argv[1], int(sys.argv[2]), int(sys.argv[3]), dry_run=True), indent=1))
+" <rehearsal>/run/store/dr2-rehearsal 3 3
+{
+ "deleted": [
+  "main/step_00000001-e1",
+  "main/step_00000004-e2"
+ ],
+ "orphans": [],
+ "protected": [
+  "main/step_00000000-e1",
+  "main/step_00000002-e1",
+  "main/step_00000003-e1",
+  "main/step_00000005-e2",
+  "main/step_00000008-e2"
+ ],
+ "freed_bytes": 1407779378,
+ "kept": [
+  "main/step_00000000-e1",
+  "main/step_00000002-e1",
+  "main/step_00000003-e1",
+  "main/step_00000005-e2",
+  "main/step_00000006-e2",
+  "main/step_00000007-e2",
+  "main/step_00000008-e2"
+ ],
+ "store": "local"
+}
+[exit 0, 8.9 s wall]
+expected deleted (lines i % 3 == 0, the final commit, pins and latest protected; newest 3 kept): ['main/step_00000001-e1', 'main/step_00000004-e2']
+
+# 9. What each scorer process did (lines of its log in <out folder>/logs/)
+dr2-rehearsal.tier-a.every1/main__step_00000000-e1.log: checkpoint: lab:dr2-rehearsal step 0 branch main epoch 1 (main/step_00000000-e1)
+dr2-rehearsal.tier-a.every1/main__step_00000000-e1.log: export ok: step 0, probe loss bits equal the saved ones
+dr2-rehearsal.tier-a.every1/main__step_00000000-e1.log: lm-eval (AMD64 Family 23 Model 104 Stepping 1, AuthenticAMD, fp32): 488 requests in 143 forward rows, encode fallbacks 15; setup 2.3 s, task index 4.4 s, scoring 61.5 s
+dr2-rehearsal.tier-a.every1/main__step_00000000-e1.log: GUARD pooled freeze-set accuracy 30.33 on 122 items, complete False, below the 22.2 floor False
+dr2-rehearsal.tier-a.every1/main__step_00000000-e1.log: RESULT mmlu acc/none = 28.95 (n=114) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000000-e1.json
+dr2-rehearsal.tier-a.every1/main__step_00000000-e1.log: RESULT milu_Hindi acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000000-e1.json
+dr2-rehearsal.tier-a.every1/main__step_00000000-e1.log: RESULT milu_Telugu acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000000-e1.json
+dr2-rehearsal.tier-a.every1/main__step_00000000-e1.log: RESULT milu_Tamil acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000000-e1.json
+dr2-rehearsal.tier-a.every1/main__step_00000000-e1.log: RESULT milu_Bengali acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000000-e1.json
+dr2-rehearsal.tier-a.every1/main__step_00000000-e1.log: TIME export 11.9 s, score 66.0 s, total 100.8 s (rehearsal_scorer:team5, cpu)
+dr2-rehearsal.tier-a.every1/main__step_00000001-e1.log: checkpoint: lab:dr2-rehearsal step 1 branch main epoch 1 (main/step_00000001-e1)
+dr2-rehearsal.tier-a.every1/main__step_00000001-e1.log: export ok: step 1, probe loss bits equal the saved ones
+dr2-rehearsal.tier-a.every1/main__step_00000001-e1.log: lm-eval (AMD64 Family 23 Model 104 Stepping 1, AuthenticAMD, fp32): 488 requests in 143 forward rows, encode fallbacks 15; setup 2.0 s, task index 2.0 s, scoring 50.8 s
+dr2-rehearsal.tier-a.every1/main__step_00000001-e1.log: GUARD pooled freeze-set accuracy 31.14 on 122 items, complete False, below the 22.2 floor False
+dr2-rehearsal.tier-a.every1/main__step_00000001-e1.log: RESULT mmlu acc/none = 29.82 (n=114) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000001-e1.json
+dr2-rehearsal.tier-a.every1/main__step_00000001-e1.log: RESULT milu_Hindi acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000001-e1.json
+dr2-rehearsal.tier-a.every1/main__step_00000001-e1.log: RESULT milu_Telugu acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000001-e1.json
+dr2-rehearsal.tier-a.every1/main__step_00000001-e1.log: RESULT milu_Tamil acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000001-e1.json
+dr2-rehearsal.tier-a.every1/main__step_00000001-e1.log: RESULT milu_Bengali acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000001-e1.json
+dr2-rehearsal.tier-a.every1/main__step_00000001-e1.log: TIME export 15.7 s, score 53.0 s, total 89.2 s (rehearsal_scorer:team5, cpu)
+dr2-rehearsal.tier-a.every1/main__step_00000002-e1.log: checkpoint: lab:dr2-rehearsal step 2 branch main epoch 1 (main/step_00000002-e1)
+dr2-rehearsal.tier-a.every1/main__step_00000002-e1.log: export ok: step 2, probe loss bits equal the saved ones
+dr2-rehearsal.tier-a.every1/main__step_00000002-e1.log: lm-eval (AMD64 Family 23 Model 104 Stepping 1, AuthenticAMD, fp32): 488 requests in 143 forward rows, encode fallbacks 15; setup 1.9 s, task index 1.6 s, scoring 54.9 s
+dr2-rehearsal.tier-a.every1/main__step_00000002-e1.log: GUARD pooled freeze-set accuracy 30.33 on 122 items, complete False, below the 22.2 floor False
+dr2-rehearsal.tier-a.every1/main__step_00000002-e1.log: RESULT mmlu acc/none = 28.95 (n=114) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000002-e1.json
+dr2-rehearsal.tier-a.every1/main__step_00000002-e1.log: RESULT milu_Hindi acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000002-e1.json
+dr2-rehearsal.tier-a.every1/main__step_00000002-e1.log: RESULT milu_Telugu acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000002-e1.json
+dr2-rehearsal.tier-a.every1/main__step_00000002-e1.log: RESULT milu_Tamil acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000002-e1.json
+dr2-rehearsal.tier-a.every1/main__step_00000002-e1.log: RESULT milu_Bengali acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000002-e1.json
+dr2-rehearsal.tier-a.every1/main__step_00000002-e1.log: TIME export 9.6 s, score 56.6 s, total 91.1 s (rehearsal_scorer:team5, cpu)
+dr2-rehearsal.tier-a.every1/main__step_00000003-e1.log: checkpoint: lab:dr2-rehearsal step 3 branch main epoch 1 (main/step_00000003-e1)
+dr2-rehearsal.tier-a.every1/main__step_00000003-e1.log: export ok: step 3, probe loss bits equal the saved ones
+dr2-rehearsal.tier-a.every1/main__step_00000003-e1.log: lm-eval (AMD64 Family 23 Model 104 Stepping 1, AuthenticAMD, fp32): 488 requests in 143 forward rows, encode fallbacks 15; setup 1.6 s, task index 1.7 s, scoring 47.8 s
+dr2-rehearsal.tier-a.every1/main__step_00000003-e1.log: GUARD pooled freeze-set accuracy 25.41 on 122 items, complete False, below the 22.2 floor False
+dr2-rehearsal.tier-a.every1/main__step_00000003-e1.log: RESULT mmlu acc/none = 23.68 (n=114) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000003-e1.json
+dr2-rehearsal.tier-a.every1/main__step_00000003-e1.log: RESULT milu_Hindi acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000003-e1.json
+dr2-rehearsal.tier-a.every1/main__step_00000003-e1.log: RESULT milu_Telugu acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000003-e1.json
+dr2-rehearsal.tier-a.every1/main__step_00000003-e1.log: RESULT milu_Tamil acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000003-e1.json
+dr2-rehearsal.tier-a.every1/main__step_00000003-e1.log: RESULT milu_Bengali acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000003-e1.json
+dr2-rehearsal.tier-a.every1/main__step_00000003-e1.log: TIME export 9.5 s, score 49.8 s, total 81.2 s (rehearsal_scorer:team5, cpu)
+dr2-rehearsal.tier-a.every1/main__step_00000004-e2.log: checkpoint: lab:dr2-rehearsal step 4 branch main epoch 2 (main/step_00000004-e2)
+dr2-rehearsal.tier-a.every1/main__step_00000004-e2.log: export ok: step 4, probe loss bits equal the saved ones
+dr2-rehearsal.tier-a.every1/main__step_00000004-e2.log: lm-eval (AMD64 Family 23 Model 104 Stepping 1, AuthenticAMD, fp32): 488 requests in 143 forward rows, encode fallbacks 15; setup 1.7 s, task index 0.9 s, scoring 40.6 s
+dr2-rehearsal.tier-a.every1/main__step_00000004-e2.log: GUARD pooled freeze-set accuracy 26.23 on 122 items, complete False, below the 22.2 floor False
+dr2-rehearsal.tier-a.every1/main__step_00000004-e2.log: RESULT mmlu acc/none = 24.56 (n=114) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000004-e2.json
+dr2-rehearsal.tier-a.every1/main__step_00000004-e2.log: RESULT milu_Hindi acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000004-e2.json
+dr2-rehearsal.tier-a.every1/main__step_00000004-e2.log: RESULT milu_Telugu acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000004-e2.json
+dr2-rehearsal.tier-a.every1/main__step_00000004-e2.log: RESULT milu_Tamil acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000004-e2.json
+dr2-rehearsal.tier-a.every1/main__step_00000004-e2.log: RESULT milu_Bengali acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000004-e2.json
+dr2-rehearsal.tier-a.every1/main__step_00000004-e2.log: TIME export 8.0 s, score 41.6 s, total 65.0 s (rehearsal_scorer:team5, cpu)
+dr2-rehearsal.tier-a.every1/main__step_00000005-e2.log: checkpoint: lab:dr2-rehearsal step 5 branch main epoch 2 (main/step_00000005-e2)
+dr2-rehearsal.tier-a.every1/main__step_00000005-e2.log: export ok: step 5, probe loss bits equal the saved ones
+dr2-rehearsal.tier-a.every1/main__step_00000005-e2.log: lm-eval (AMD64 Family 23 Model 104 Stepping 1, AuthenticAMD, fp32): 488 requests in 143 forward rows, encode fallbacks 15; setup 1.6 s, task index 0.9 s, scoring 40.5 s
+dr2-rehearsal.tier-a.every1/main__step_00000005-e2.log: GUARD pooled freeze-set accuracy 27.05 on 122 items, complete False, below the 22.2 floor False
+dr2-rehearsal.tier-a.every1/main__step_00000005-e2.log: RESULT mmlu acc/none = 25.44 (n=114) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000005-e2.json
+dr2-rehearsal.tier-a.every1/main__step_00000005-e2.log: RESULT milu_Hindi acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000005-e2.json
+dr2-rehearsal.tier-a.every1/main__step_00000005-e2.log: RESULT milu_Telugu acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000005-e2.json
+dr2-rehearsal.tier-a.every1/main__step_00000005-e2.log: RESULT milu_Tamil acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000005-e2.json
+dr2-rehearsal.tier-a.every1/main__step_00000005-e2.log: RESULT milu_Bengali acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000005-e2.json
+dr2-rehearsal.tier-a.every1/main__step_00000005-e2.log: TIME export 8.0 s, score 41.5 s, total 65.7 s (rehearsal_scorer:team5, cpu)
+dr2-rehearsal.tier-a.every1/main__step_00000006-e2.log: checkpoint: lab:dr2-rehearsal step 6 branch main epoch 2 (main/step_00000006-e2)
+dr2-rehearsal.tier-a.every1/main__step_00000006-e2.log: export ok: step 6, probe loss bits equal the saved ones
+dr2-rehearsal.tier-a.every1/main__step_00000006-e2.log: lm-eval (AMD64 Family 23 Model 104 Stepping 1, AuthenticAMD, fp32): 488 requests in 143 forward rows, encode fallbacks 15; setup 1.6 s, task index 0.8 s, scoring 42.1 s
+dr2-rehearsal.tier-a.every1/main__step_00000006-e2.log: GUARD pooled freeze-set accuracy 27.05 on 122 items, complete False, below the 22.2 floor False
+dr2-rehearsal.tier-a.every1/main__step_00000006-e2.log: RESULT mmlu acc/none = 25.44 (n=114) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000006-e2.json
+dr2-rehearsal.tier-a.every1/main__step_00000006-e2.log: RESULT milu_Hindi acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000006-e2.json
+dr2-rehearsal.tier-a.every1/main__step_00000006-e2.log: RESULT milu_Telugu acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000006-e2.json
+dr2-rehearsal.tier-a.every1/main__step_00000006-e2.log: RESULT milu_Tamil acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000006-e2.json
+dr2-rehearsal.tier-a.every1/main__step_00000006-e2.log: RESULT milu_Bengali acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000006-e2.json
+dr2-rehearsal.tier-a.every1/main__step_00000006-e2.log: TIME export 7.8 s, score 43.0 s, total 66.1 s (rehearsal_scorer:team5, cpu)
+dr2-rehearsal.tier-a.every1/main__step_00000007-e2.log: checkpoint: lab:dr2-rehearsal step 7 branch main epoch 2 (main/step_00000007-e2)
+dr2-rehearsal.tier-a.every1/main__step_00000007-e2.log: export ok: step 7, probe loss bits equal the saved ones
+dr2-rehearsal.tier-a.every1/main__step_00000007-e2.log: lm-eval (AMD64 Family 23 Model 104 Stepping 1, AuthenticAMD, fp32): 488 requests in 143 forward rows, encode fallbacks 15; setup 1.8 s, task index 1.1 s, scoring 45.0 s
+dr2-rehearsal.tier-a.every1/main__step_00000007-e2.log: GUARD pooled freeze-set accuracy 26.23 on 122 items, complete False, below the 22.2 floor False
+dr2-rehearsal.tier-a.every1/main__step_00000007-e2.log: RESULT mmlu acc/none = 25.44 (n=114) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000007-e2.json
+dr2-rehearsal.tier-a.every1/main__step_00000007-e2.log: RESULT milu_Hindi acc/none = 0.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000007-e2.json
+dr2-rehearsal.tier-a.every1/main__step_00000007-e2.log: RESULT milu_Telugu acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000007-e2.json
+dr2-rehearsal.tier-a.every1/main__step_00000007-e2.log: RESULT milu_Tamil acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000007-e2.json
+dr2-rehearsal.tier-a.every1/main__step_00000007-e2.log: RESULT milu_Bengali acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000007-e2.json
+dr2-rehearsal.tier-a.every1/main__step_00000007-e2.log: TIME export 8.9 s, score 46.2 s, total 73.2 s (rehearsal_scorer:team5, cpu)
+dr2-rehearsal.tier-a.every1/main__step_00000008-e2.log: checkpoint: lab:dr2-rehearsal step 8 branch main epoch 2 (main/step_00000008-e2)
+dr2-rehearsal.tier-a.every1/main__step_00000008-e2.log: export ok: step 8, probe loss bits equal the saved ones
+dr2-rehearsal.tier-a.every1/main__step_00000008-e2.log: lm-eval (AMD64 Family 23 Model 104 Stepping 1, AuthenticAMD, fp32): 488 requests in 143 forward rows, encode fallbacks 15; setup 1.7 s, task index 1.0 s, scoring 43.4 s
+dr2-rehearsal.tier-a.every1/main__step_00000008-e2.log: GUARD pooled freeze-set accuracy 27.05 on 122 items, complete False, below the 22.2 floor False
+dr2-rehearsal.tier-a.every1/main__step_00000008-e2.log: RESULT mmlu acc/none = 25.44 (n=114) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000008-e2.json
+dr2-rehearsal.tier-a.every1/main__step_00000008-e2.log: RESULT milu_Hindi acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000008-e2.json
+dr2-rehearsal.tier-a.every1/main__step_00000008-e2.log: RESULT milu_Telugu acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000008-e2.json
+dr2-rehearsal.tier-a.every1/main__step_00000008-e2.log: RESULT milu_Tamil acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000008-e2.json
+dr2-rehearsal.tier-a.every1/main__step_00000008-e2.log: RESULT milu_Bengali acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-a.every1\main__step_00000008-e2.json
+dr2-rehearsal.tier-a.every1/main__step_00000008-e2.log: TIME export 8.0 s, score 44.4 s, total 70.5 s (rehearsal_scorer:team5, cpu)
+dr2-rehearsal.tier-b.every3/main__step_00000002-e1.log: checkpoint: lab:dr2-rehearsal step 2 branch main epoch 1 (main/step_00000002-e1)
+dr2-rehearsal.tier-b.every3/main__step_00000002-e1.log: export ok: step 2, probe loss bits equal the saved ones
+dr2-rehearsal.tier-b.every3/main__step_00000002-e1.log: lm-eval (AMD64 Family 23 Model 104 Stepping 1, AuthenticAMD, fp32): 60 requests in 24 forward rows, encode fallbacks 10; setup 1.7 s, task index 1.3 s, scoring 17.7 s
+dr2-rehearsal.tier-b.every3/main__step_00000002-e1.log: RESULT arc_challenge acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-b.every3\main__step_00000002-e1.json
+dr2-rehearsal.tier-b.every3/main__step_00000002-e1.log: RESULT arc_challenge acc_norm/none = 0.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-b.every3\main__step_00000002-e1.json
+dr2-rehearsal.tier-b.every3/main__step_00000002-e1.log: RESULT hellaswag acc/none = 0.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-b.every3\main__step_00000002-e1.json
+dr2-rehearsal.tier-b.every3/main__step_00000002-e1.log: RESULT hellaswag acc_norm/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-b.every3\main__step_00000002-e1.json
+dr2-rehearsal.tier-b.every3/main__step_00000002-e1.log: RESULT leaderboard_mmlu_pro acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-b.every3\main__step_00000002-e1.json
+dr2-rehearsal.tier-b.every3/main__step_00000002-e1.log: RESULT belebele_hin_Deva acc/none = 100.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-b.every3\main__step_00000002-e1.json
+dr2-rehearsal.tier-b.every3/main__step_00000002-e1.log: RESULT belebele_hin_Deva acc_norm/none = 100.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-b.every3\main__step_00000002-e1.json
+dr2-rehearsal.tier-b.every3/main__step_00000002-e1.log: RESULT belebele_tel_Telu acc/none = 0.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-b.every3\main__step_00000002-e1.json
+dr2-rehearsal.tier-b.every3/main__step_00000002-e1.log: RESULT belebele_tel_Telu acc_norm/none = 0.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-b.every3\main__step_00000002-e1.json
+dr2-rehearsal.tier-b.every3/main__step_00000002-e1.log: RESULT belebele_tam_Taml acc/none = 0.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-b.every3\main__step_00000002-e1.json
+dr2-rehearsal.tier-b.every3/main__step_00000002-e1.log: RESULT belebele_tam_Taml acc_norm/none = 0.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-b.every3\main__step_00000002-e1.json
+dr2-rehearsal.tier-b.every3/main__step_00000002-e1.log: TIME export 9.8 s, score 19.1 s, total 49.2 s (rehearsal_scorer:team5, cpu)
+dr2-rehearsal.tier-b.every3/main__step_00000005-e2.log: checkpoint: lab:dr2-rehearsal step 5 branch main epoch 2 (main/step_00000005-e2)
+dr2-rehearsal.tier-b.every3/main__step_00000005-e2.log: export ok: step 5, probe loss bits equal the saved ones
+dr2-rehearsal.tier-b.every3/main__step_00000005-e2.log: lm-eval (AMD64 Family 23 Model 104 Stepping 1, AuthenticAMD, fp32): 60 requests in 24 forward rows, encode fallbacks 10; setup 1.6 s, task index 1.0 s, scoring 15.5 s
+dr2-rehearsal.tier-b.every3/main__step_00000005-e2.log: RESULT arc_challenge acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-b.every3\main__step_00000005-e2.json
+dr2-rehearsal.tier-b.every3/main__step_00000005-e2.log: RESULT arc_challenge acc_norm/none = 0.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-b.every3\main__step_00000005-e2.json
+dr2-rehearsal.tier-b.every3/main__step_00000005-e2.log: RESULT hellaswag acc/none = 0.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-b.every3\main__step_00000005-e2.json
+dr2-rehearsal.tier-b.every3/main__step_00000005-e2.log: RESULT hellaswag acc_norm/none = 100.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-b.every3\main__step_00000005-e2.json
+dr2-rehearsal.tier-b.every3/main__step_00000005-e2.log: RESULT leaderboard_mmlu_pro acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-b.every3\main__step_00000005-e2.json
+dr2-rehearsal.tier-b.every3/main__step_00000005-e2.log: RESULT belebele_hin_Deva acc/none = 0.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-b.every3\main__step_00000005-e2.json
+dr2-rehearsal.tier-b.every3/main__step_00000005-e2.log: RESULT belebele_hin_Deva acc_norm/none = 0.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-b.every3\main__step_00000005-e2.json
+dr2-rehearsal.tier-b.every3/main__step_00000005-e2.log: RESULT belebele_tel_Telu acc/none = 0.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-b.every3\main__step_00000005-e2.json
+dr2-rehearsal.tier-b.every3/main__step_00000005-e2.log: RESULT belebele_tel_Telu acc_norm/none = 0.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-b.every3\main__step_00000005-e2.json
+dr2-rehearsal.tier-b.every3/main__step_00000005-e2.log: RESULT belebele_tam_Taml acc/none = 100.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-b.every3\main__step_00000005-e2.json
+dr2-rehearsal.tier-b.every3/main__step_00000005-e2.log: RESULT belebele_tam_Taml acc_norm/none = 100.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-b.every3\main__step_00000005-e2.json
+dr2-rehearsal.tier-b.every3/main__step_00000005-e2.log: TIME export 7.4 s, score 16.5 s, total 42.5 s (rehearsal_scorer:team5, cpu)
+dr2-rehearsal.tier-b.every3/main__step_00000008-e2.log: checkpoint: lab:dr2-rehearsal step 8 branch main epoch 2 (main/step_00000008-e2)
+dr2-rehearsal.tier-b.every3/main__step_00000008-e2.log: export ok: step 8, probe loss bits equal the saved ones
+dr2-rehearsal.tier-b.every3/main__step_00000008-e2.log: lm-eval (AMD64 Family 23 Model 104 Stepping 1, AuthenticAMD, fp32): 60 requests in 24 forward rows, encode fallbacks 10; setup 1.7 s, task index 1.0 s, scoring 15.3 s
+dr2-rehearsal.tier-b.every3/main__step_00000008-e2.log: RESULT arc_challenge acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-b.every3\main__step_00000008-e2.json
+dr2-rehearsal.tier-b.every3/main__step_00000008-e2.log: RESULT arc_challenge acc_norm/none = 0.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-b.every3\main__step_00000008-e2.json
+dr2-rehearsal.tier-b.every3/main__step_00000008-e2.log: RESULT hellaswag acc/none = 0.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-b.every3\main__step_00000008-e2.json
+dr2-rehearsal.tier-b.every3/main__step_00000008-e2.log: RESULT hellaswag acc_norm/none = 100.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-b.every3\main__step_00000008-e2.json
+dr2-rehearsal.tier-b.every3/main__step_00000008-e2.log: RESULT leaderboard_mmlu_pro acc/none = 50.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-b.every3\main__step_00000008-e2.json
+dr2-rehearsal.tier-b.every3/main__step_00000008-e2.log: RESULT belebele_hin_Deva acc/none = 0.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-b.every3\main__step_00000008-e2.json
+dr2-rehearsal.tier-b.every3/main__step_00000008-e2.log: RESULT belebele_hin_Deva acc_norm/none = 0.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-b.every3\main__step_00000008-e2.json
+dr2-rehearsal.tier-b.every3/main__step_00000008-e2.log: RESULT belebele_tel_Telu acc/none = 0.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-b.every3\main__step_00000008-e2.json
+dr2-rehearsal.tier-b.every3/main__step_00000008-e2.log: RESULT belebele_tel_Telu acc_norm/none = 0.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-b.every3\main__step_00000008-e2.json
+dr2-rehearsal.tier-b.every3/main__step_00000008-e2.log: RESULT belebele_tam_Taml acc/none = 100.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-b.every3\main__step_00000008-e2.json
+dr2-rehearsal.tier-b.every3/main__step_00000008-e2.log: RESULT belebele_tam_Taml acc_norm/none = 100.0 (n=2) -> <rehearsal>\src\out\watcher\dr2-rehearsal.tier-b.every3\main__step_00000008-e2.json
+dr2-rehearsal.tier-b.every3/main__step_00000008-e2.log: TIME export 7.2 s, score 16.3 s, total 40.6 s (rehearsal_scorer:team5, cpu)
+
+# 10. Checks
+PASS K1 watchers started before the step-0 commit
+PASS K2 commits: each step once, start..final, epoch 1 then 2
+PASS K3 Tier A scored every commit once
+PASS K4 Tier B scored lines 3, 6, ... once, not step 0
+PASS K5 killed between commits, watchers alive
+PASS K6 restored from the latest commit
+PASS K7 watchers ended by themselves after the final commit
+PASS K8 a restart scores nothing again
+PASS K9 Tier C on step 0 and the restored-from step
+PASS K10 retention dry run keeps every protected commit
+lowest available RAM during the run: 0.02 GB (at the start 2.04 GB)
+
+# 11. Firewall (eval_firewall.md section 3, rule 5): the lab canary, then item text, in every result file,
+#    state file, scorer and process log, event file, and in this log so far
+$ python teams/09-evaluation/decontam/canary_scan.py <rehearsal>/src/out/watcher <its 12 scorer logs> <rehearsal>/run/proc/*.log <rehearsal>/run/events <this log> --lab-only
+canaries 1 from era-v5-lab
+docs 134 with_canary 0 hits 0
+[exit 0]
+$ python <rehearsal>\tools\firewall_check.py <rehearsal>\watcher_dry_run_2_rehearsal.log <lab>\hf <rehearsal>\src\out\watcher <rehearsal>\run\proc
+item-text probes: 25 from 5 datasets; files searched: 45; found: 0
+Using the latest cached version of the dataset since cais/mmlu couldn't be found on the Hugging Face Hub (offline mode is enabled).
+Found the latest cached dataset configuration 'abstract_algebra' at <lab>\hf\datasets\cais___mmlu\abstract_algebra\0.0.0\c30699e8356da336a370243923dbaf21066bb9fe (last modified on Thu Nov 12 17:03:21 2026).
+Using the latest cached version of the dataset since ai4bharat/MILU couldn't be found on the Hugging Face Hub (offline mode is enabled).
+Found the latest cached dataset configuration 'Hindi' at <lab>\hf\datasets\ai4bharat___milu\Hindi\0.0.0\846d7016558b2004386f30e59a2158731262492f (last modified on Thu Nov 12 19:10:18 2026).
+Using the latest cached version of the dataset since allenai/ai2_arc couldn't be found on the Hugging Face Hub (offline mode is enabled).
+Found the latest cached dataset configuration 'ARC-Challenge' at <lab>\hf\datasets\allenai___ai2_arc\ARC-Challenge\0.0.0\210d026faf9955653af8916fad021475a3f00453 (last modified on Thu Nov 12 19:06:23 2026).
+Using the latest cached version of the dataset since TIGER-Lab/MMLU-Pro couldn't be found on the Hugging Face Hub (offline mode is enabled).
+Found the latest cached dataset configuration 'default' at <lab>\hf\datasets\TIGER-Lab___mmlu-pro\default\0.0.0\b189ec765aa7ed75c8acfea42df31fdae71f97be (last modified on Thu Nov 12 19:10:55 2026).
+Using the latest cached version of the dataset since facebook/belebele couldn't be found on the Hugging Face Hub (offline mode is enabled).
+Found the latest cached dataset configuration 'hin_Deva' at <lab>\hf\datasets\facebook___belebele\hin_Deva\0.0.0\7899cdfa4e1e0d733fd77c848e2c273cb1d32be2 (last modified on Thu Nov 12 19:11:01 2026).
+[exit 0]
+PASS K11 canary scan and item-text probe both exit 0
+PASS K12 this log holds no personal path (0 found) and no host name (0 found)

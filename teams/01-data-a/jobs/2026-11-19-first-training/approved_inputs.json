@@ -1,8 +1,8 @@
 {
   "name": "first-training-input-scope",
   "status": "final_source_scope_and_split_contract",
-  "approval_basis": "Assumption until TSAI says otherwise: the 38 unique sample-v0 pack IDs are the allowed training-source universe; pull additional raw Parquets of the same source/subsets, with the same pack and train/heldout layout.",
-  "tsai_manifest_approval": "not_recorded_in_this_file",
+  "approval_basis": "CONFIRMED by TSAI 22 Nov 2026 (was: assumption pending confirmation).",
+  "tsai_manifest_approval": "confirmed_22_nov_2026: the 38 unique sample-v0 pack IDs are the final allowed training-source universe for corpus-v1. Pull full raw Parquets of the same source/subsets, same pack and train/heldout layout. No additional packs admitted without a separate ruling.",
   "baseline_commit": "1135778201b442f56a9c3273bbf612233149cf51",
   "sample_reference": {
     "file": "teams/01-data-a/jobs/2026-11-02-tokenizer-sample-v0-clean/tokenizer_sample_v0_manifest.json",

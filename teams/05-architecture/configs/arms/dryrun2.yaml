@@ -1,0 +1,22 @@
+# Dry run 2 training recipe (week-4 task 3). Values from TSAI, 05 Architecture, 22 Nov 2026, taken from the KE2
+# team's runs and NOT validated at the lab's batch size: "treat these as a starting point, not a tuned answer".
+# The model stays exp2_muon's T2 shape; the KE2/KAS head (Udit, week-4 task 1) is added to this arm when it lands.
+inherit: exp2_muon.yaml
+intended:
+  arm: dryrun2
+  owner: Deepjyoti Saha
+  comparison_final: false
+optim:
+  # Muon peak 0.003 (config v1, TSAI 21 Nov); AdamW peak lr 0.001 comes from exp2_muon (config v1, provisional).
+  muon_lr: 0.003
+  # WSD for both optimizers: linear warmup over the first 5% of steps (TSAI: "roughly 4-5%"; 0.05 chosen,
+  # decision B8), flat, then linear decay over the last 10% to zero.
+  schedule: wsd
+  warmup_frac: 0.05
+  decay_frac: 0.1
+  final_lr_frac: 0.0
+  # Head SGD-momentum: off for dry run 2 (TSAI 22 Nov: optional, unconfirmed at scale).
+  head_sgd: false
+run:
+  # TST ("Secret Sauce"): off for dry run 2 (TSAI 22 Nov: unconfirmed on KE2; keep the head integration test clean).
+  tst: false

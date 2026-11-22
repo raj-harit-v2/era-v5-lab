@@ -65,5 +65,23 @@ class CheckpointPathTests(unittest.TestCase):
         self.assertFalse((self.dir / 'work' / 'hf').exists())
 
 
+class OfflineTagTests(unittest.TestCase):
+    """A prepared --work folder answers llama_tag without git ls-remote (a job has no network)."""
+    def test_checkout_of_the_binaries_commit_gives_the_tag_without_the_network(self):
+        with tempfile.TemporaryDirectory() as d:
+            src = Path(d) / 'llama.cpp-b123'; src.mkdir()
+            git = lambda *a: subprocess.run(['git', '-C', str(src), *a], capture_output=True, text=True, check=True).stdout.strip()
+            git('init', '-q'); git('-c', 'user.name=t', '-c', 'user.email=t@t', 'commit', '-q', '--allow-empty', '-m', 'x')
+            commit = git('rev-parse', 'HEAD')
+            real_run, calls = q.subprocess.run, []
+            q.subprocess.run = lambda cmd, *a, **k: (calls.append(cmd), real_run(cmd, *a, **k))[1] if cmd[1] != 'ls-remote' else (_ for _ in ()).throw(AssertionError('network'))
+            try:
+                self.assertEqual(q.llama_tag(123, commit[:9], d), 'b123')
+                with self.assertRaises(AssertionError):   # another commit: falls through to ls-remote
+                    q.llama_tag(123, 'deadbeef', d)
+            finally:
+                q.subprocess.run = real_run
+
+
 if __name__ == '__main__':
     unittest.main(verbosity=1)

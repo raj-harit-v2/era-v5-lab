@@ -35,7 +35,7 @@ This confirms the outline only. TSAI still approves the final text.
 | Training data | The public data sources, and the problems we found in them | Data A, Data B | empty | Data A OK @patilvijay23; Data B OK @shankarpandala |
 | Data cleaning | How we cleaned the data and removed duplicates | Data A, Data B | empty | Data A OK @patilvijay23; Data B OK @shankarpandala |
 | Tokenizer | How the model splits text into pieces | Tokenizer | empty | OK @rjvim |
-| KE2 | Whether the model uses KE2, in general terms, with no design details | KE2 | empty | pending |
+| KE2 | Whether the model uses KE2, in general terms, with no design details. This includes the KE2 output head, which replaced the dense untied head on 21 Nov 2026 | KE2 | empty | pending |
 | Architecture | The shape of the model, in general terms | Architecture | empty | OK @shivman |
 | Training | How the lab trained the model | Performance, Architecture | empty | Performance OK @raj-harit-v2; Architecture OK @shivman |
 | Training infrastructure | How the run saves, restores and restarts after a crash | Infrastructure | empty | pending |
@@ -50,6 +50,12 @@ This confirms the outline only. TSAI still approves the final text.
 | Licence and attribution | The licence of the model, and credit for each data source | Post-training, Data A, Data B | empty | Post-training OK @saitej123; Data A OK @patilvijay23; Data B OK @shankarpandala |
 | Contributors | The teams that did the work, with no person names | Release | empty | Release OK @pyru |
 | How to find more | A link to the public lab repository | Release | empty | Release OK @pyru |
+
+## Changes to this outline
+
+- 21 Nov 2026: TSAI chose the KE2 output head in place of the dense untied head
+  (`teams/04-ke2/gate3.md`, [#694](https://github.com/theschoolofai/era-v5-lab/pull/694)). The KE2 section now covers the output head too, in
+  general terms. The KE2 lead confirms the new scope in the Lead OK column. The Gate 3 update records the decision.
 
 ## Rules for every section
 

@@ -14,9 +14,13 @@ interval = min( max(Young, 10 min, 1.2 x save pipeline), 30 min )      Young = s
   it gives 10 min at 64 to 256 GPUs and up to 30 min on a single 8-GPU node.
 - Retention follows the interval, so the rollback reach in minutes does not shrink (section 5).
 
-**Status: provisional.** The save time is Team 6's week-1 baseline. Team 6's full-size save time is due Thu 19 Nov
-(D5). It replaces these inputs, and the table in section 3 is generated again. The model sizes in config v1 are
-still empty, so section 3 runs over 1B, 7B and 30B parameters.
+**Status: provisional, small width.** The save time is still Team 6's week-1 baseline. Team 6's D5 timing job
+(#485, result in [checkpoint_dryrun1.md](../../06-performance/results/checkpoint_dryrun1.md)) ran at small width
+and returned shares only: 8% of the save is the copy to host memory, 92% is the file write. It gave no save time
+in ms and no checkpoint size, so the inputs in section 1 and the table in section 3 stay as they are. Both sources
+agree that the file write, which runs in the background, is most of the save (92% there, 98% in the baseline). The
+table is generated again when Team 6 posts full-size numbers. The model sizes in config v1 are still empty, so
+section 3 runs over three example sizes from 1B up.
 
 ## 1. Inputs
 
@@ -87,10 +91,10 @@ So the floor is 10 min. The cap stays 30 min, the most work we accept losing in 
 Reading it:
 
 - At 64 GPUs or more the rule gives 10 to 27 min. A fixed 10 min is never more than 0.03% worse than the rule there.
-- On one 8-GPU node failures are rare, so the rule gives 18 to 30 min. A 30B model on 8 GPUs has a large stall
+- On one 8-GPU node failures are rare, so the rule gives 18 to 30 min. The largest model on 8 GPUs has a large stall
   (3.7 s); 10 min would cost 0.4% more there.
 - The stall is at most 3.7 s, far under the 2% budget at any interval in the table (12 s at 10 min).
-- The pipeline is at most 226 s (30B on 8 GPUs), under the 10 min floor. The rule's 1.2 x pipeline floor only
+- The pipeline is at most 226 s (the largest model on 8 GPUs), under the 10 min floor. The rule's 1.2 x pipeline floor only
   matters if the measured upload is far slower than the assumed 10 GB/s.
 
 Restore time does not move the interval. Young's formula has no restore term. A slower restore adds the same time
@@ -161,7 +165,7 @@ cadence; this keeps their 2.5 h spacing until they name a step count.
 
 | Item | Owner | When |
 |---|---|---|
-| Full-size save time (stall, write, size per rank); generate section 3 again | Team 6 | Thu 19 Nov (D5) |
+| Full-size save time (stall, write, size per rank); generate section 3 again | Team 6 | D5 (Thu 19 Nov) returned small-width shares only; still open |
 | Upload and commit time on the real store (the 1.2 x pipeline floor) | dry run 1, events | Wed 18 to Fri 20 Nov |
 | Model size and GPU count for the main run | Team 5 config, TSAI layout at Gate 3 | Sat 21 Nov |
 | MTBF measured on our nodes, in place of the published priors | dry run 1 and later | after Gate 3 |

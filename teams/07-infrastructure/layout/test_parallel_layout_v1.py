@@ -227,4 +227,4 @@ def test_command_line(tmp_path, capsys):
     assert v1.main(["--arm", str(ARMS / "t2.yaml"), "--decisions", decisions(tmp_path), "--world", "1",
                      "--device-gib", "80", "--markdown"]) == 0
     out = capsys.readouterr().out
-    assert "muon=165,740,544" in out and "| single | 8 | 1 | 16384 |" in out
+    assert "muon=165,675,008" in out and "| single | 8 | 1 | 16384 |" in out

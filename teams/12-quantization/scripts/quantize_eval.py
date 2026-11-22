@@ -107,9 +107,13 @@ def llama_build(cli):
     return int(m.group(1)), m.group(2)
 
 
-def llama_tag(build, commit):
+def llama_tag(build, commit, work=None):
     """llama.cpp tag of the binaries' commit. Release builds are tagged b<build>; a source build from a
-    shallow clone reports build 1, so the tag is found by commit (v0.7.0 and b11669 are the same commit)."""
+    shallow clone reports build 1, so the tag is found by commit (v0.7.0 and b11669 are the same commit).
+    No network if work/llama.cpp-b<build> is already a checkout of that commit (a prepared --work folder)."""
+    if work:
+        head = subprocess.run(['git', '-C', str(Path(work) / f'llama.cpp-b{build}'), 'rev-parse', 'HEAD'], capture_output=True, text=True)
+        if head.returncode == 0 and commit and head.stdout.startswith(commit): return f'b{build}'
     out = subprocess.run(['git', 'ls-remote', '--tags', 'https://github.com/ggml-org/llama.cpp'],
                          capture_output=True, text=True, check=True).stdout
     tags = {ref.removeprefix('refs/tags/').removesuffix('^{}') for sha, ref in (l.split('\t') for l in out.splitlines())
@@ -471,7 +475,7 @@ def main():
         args.prompt_mode = 'chat' if re.search(r'instruct|chat', model, re.I) else 'completion'
     qbin, sbin = (find_bin(b, args.llama_bin) for b in ('llama-quantize', 'llama-server'))
     build, commit = llama_build(sbin)  # llama-quantize does not print its version
-    tag = llama_tag(build, commit)
+    tag = llama_tag(build, commit, work)
     runtime = f'llama.cpp {tag} ({commit})'
     machine = machine_string()
     log(f'{runtime} | {machine}')

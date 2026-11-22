@@ -81,5 +81,8 @@ Team 2 replies (handle, language, what was checked, link) will be listed here as
 
 ## 7. Questions for TSAI and the lead
 
-1. Is a person-written template whose values are drawn by a program allowed as training text? The easy rung (`rl-data/easy_rung.py`) asked the same question for code.
-2. Should the Indic share of RL data v1 be fixed per language, or follow the native Indic share in `teams/02-data-b/native_indic_share_v1.md`?
+1. **Is a person-written template whose values are drawn by a program allowed as training text?** The easy rung (`rl-data/easy_rung.py`) asked the same question for code.
+   - *TSAI ruling (21 Nov 2026):* **Proceed** with programmatic value fills on human-written templates (same pattern as the rest of the lab's data rule), **conditional on Team 2's reader sign-off actually completing before admission**. AI-written seed tasks remain `eligibility: eval` only.
+2. **Should the Indic share of RL data v1 be fixed per language, or follow the native Indic share in `teams/02-data-b/native_indic_share_v1.md`?**
+   - *Team 10 lead recommendation (20 Nov 2026, `saitej123`):* **Follow Team 2's `native_indic_share_v1.md` proportions** with a small per-language floor so every covered language has verifiable RL signal. Awaits TSAI confirmation at Gate 3.
+3. **Current template status (20 Nov 2026):** `rl/indic/templates/indic_templates.yaml` still holds 0 human-written training templates (and 0 Team 2 reader sign-offs). Per TSAI's 3 Nov data rule, training templates are not model-generated and await human authoring + Team 2 review before entering RL training.

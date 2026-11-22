@@ -1,0 +1,20 @@
+corpus60/Hi.txt: 2,386,877 tokens, 21,082 distinct ids (3s)
+corpus_s0/Hi.txt: 49,179,029 tokens, 51,942 distinct ids (64s)
+corpus60/Bn.txt: 2,371,868 tokens, 15,273 distinct ids (67s)
+corpus60/Ta.txt: 5,844,504 tokens, 29,006 distinct ids (73s)
+corpus60/Te.txt: 6,897,411 tokens, 28,250 distinct ids (80s)
+corpus60/Kn.txt: 6,476,409 tokens, 22,803 distinct ids (87s)
+corpus60/Ml.txt: 5,890,997 tokens, 23,378 distinct ids (101s)
+corpus60/Mr.txt: 2,183,288 tokens, 14,596 distinct ids (104s)
+corpus_s0/Mr.txt: 14,605,870 tokens, 33,824 distinct ids (125s)
+corpus_s0/Gu.txt: 16,856,359 tokens, 35,949 distinct ids (150s)
+corpus60/Pa.txt: 2,577,454 tokens, 15,287 distinct ids (152s)
+corpus_s0/Or.txt: 15,298,421 tokens, 28,065 distinct ids (178s)
+corpus60/As.txt: 2,408,382 tokens, 15,684 distinct ids (181s)
+usage/En.txt: 6,499,222 tokens, 63,839 distinct ids (186s)
+usage/Code.txt: 4,763,502 tokens, 48,697 distinct ids (190s)
+{"tokens": 144239593, "ids_seen": 121370, "ids_zero": 9702, "special_ids_seen": 0, "docs": 288350} -> counts (190s)
+sha256 of the outputs:
+0768b5982825645a796abc76ec23c737837cfacc8f6b089335e5ce5446def3a6  p1536_counts.json
+241f161bdcd46b252540f9abf49b1b26a0c13d023349edb0cc7307bea0704b82  p1536_counts_by_source.json
+cf86d54c2ce7eeb81f870f0a604185ef276b479d121a6dee86dc7e9d0149a19b  count_p1536.py

@@ -65,11 +65,11 @@ class SplitTests(unittest.TestCase):
         for expected in [
             "blocks.0.attn.q.weight",
             "blocks.0.attn.o.weight",
-            "blocks.0.moe.router.weight",
             "blocks.0.moe.experts.0.gate.weight",
             "blocks.0.moe.shared.0.down.weight",
         ]:
             self.assertIn(expected, names)
+        self.assertNotIn("blocks.0.moe.router.weight", names)
         for n, p in m.named_parameters():
             if (
                 n.startswith("embedding.")
@@ -81,6 +81,22 @@ class SplitTests(unittest.TestCase):
         self.assertTrue(all(p.ndim == 2 for n, p in m.named_parameters() if n in names))
         self.assertEqual(opt["muon"].param_groups[0]["lr"], 0.02)
         self.assertEqual(opt["adamw"].param_groups[0]["lr"], 1e-3)
+
+    def test_router_switch(self):
+        """Default: router on AdamW (TSAI, 21 Nov). router_on_muon: true moves it back, for the comparison run."""
+        for flag, on_muon in [(None, False), (False, False), (True, True)]:
+            c, rows, lengths = muon_fixture()
+            if flag is not None:
+                c["optim"]["router_on_muon"] = flag
+            m = LanguageModel(c["model"], rows, lengths)
+            opt = dict(build_optimizer(m, c["optim"]).named)
+            muon = {id(p) for g in opt["muon"].param_groups for p in g["params"]}
+            names = {n for n, p in m.named_parameters() if id(p) in muon}
+            self.assertEqual("blocks.0.moe.router.weight" in names, on_muon)
+            self.assertIn("blocks.0.attn.q.weight", names)
+            d = describe(m, c["optim"])
+            self.assertEqual(d["router_on_muon"], on_muon)
+            self.assertEqual(d["muon_parameters"] + d["adamw_parameters"], m.parameter_count())
 
     def test_adamw_arm_unchanged(self):
         c, rows, lengths = fixture()
@@ -184,6 +200,14 @@ class ConfigTests(unittest.TestCase):
         c = self.resolved("exp1/lr_1e-3.yaml")
         c["optim"]["muon_lr"] = 0.01
         self.assertTrue(any("muon_lr" in e for e in validate(c)))
+
+    def test_router_switch_validated(self):
+        c = self.resolved("muon_screen/muon_1e-2.yaml")
+        c["optim"]["router_on_muon"] = "yes"
+        self.assertTrue(any("router_on_muon" in e for e in validate(c)))
+        c = self.resolved("exp1/lr_1e-3.yaml")
+        c["optim"]["router_on_muon"] = True
+        self.assertTrue(any("router_on_muon" in e for e in validate(c)))
 
     def test_unknown_optimizer_rejected(self):
         c = self.resolved("muon_screen/muon_1e-2.yaml")

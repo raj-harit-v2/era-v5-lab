@@ -203,6 +203,7 @@ class MoE(nn.Module):
         h = m["moe"]["ffn_hidden"]
         cfg = m["moe"]
         self.topk = cfg["top_k"]
+        self.expert_load = None
         self.router = nn.Linear(w, cfg["num_experts"], bias=False)
         self.experts = nn.ModuleList(
             SwiGLU(w, h, cfg["bias"]) for _ in range(cfg["num_experts"])
@@ -218,6 +219,10 @@ class MoE(nn.Module):
         with torch.autocast(device_type=x.device.type, enabled=False):
             scores = F.linear(flat.float(), self.router.weight.float()).softmax(-1)
         gates, choice = scores.topk(self.topk, dim=-1)
+        if self.expert_load is not None and self.training:
+            selected = torch.zeros_like(scores, dtype=torch.bool)
+            selected.scatter_(-1, choice, True)
+            self.expert_load.add_((selected & active[:, None]).sum(dim=0))
         gates = gates / gates.sum(-1, keepdim=True)
         output = torch.zeros_like(flat)
         # Execution-only fast path (TSAI): every expert runs on every token in one batched product, then each
@@ -281,6 +286,18 @@ class LanguageModel(nn.Module):
             if return_mtp
             else logits
         )
+
+    def start_expert_load(self):
+        for block in self.blocks:
+            moe = block.moe
+            moe.expert_load = moe.router.weight.new_zeros(len(moe.experts), dtype=torch.long)
+
+    def finish_expert_load(self):
+        counts = []
+        for block in self.blocks:
+            counts.append(block.moe.expert_load)
+            block.moe.expert_load = None
+        return torch.stack(counts).tolist()
 
     def parameter_count(self):
         return sum(p.numel() for p in self.parameters())

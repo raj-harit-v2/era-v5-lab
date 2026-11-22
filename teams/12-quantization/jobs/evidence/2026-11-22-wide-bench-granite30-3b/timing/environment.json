@@ -1,0 +1,40 @@
+{
+ "started": "2026-11-21T20:20:18",
+ "platform": "kaggle",
+ "output_dir": "/kaggle/working/eval_mini_out",
+ "run_by": "SomaKorada07",
+ "notebook_version": "369bd6f1b306",
+ "settings": {
+  "LIMIT": null,
+  "FORMATS": [
+   "bf16"
+  ],
+  "BASE": "bf16",
+  "MODEL": "ibm-granite/granite-3.0-3b-a800m-base",
+  "REVISION": "142d2c8e3f7fb8844011cfa5565f0e520f0824b9",
+  "LLAMA_TAG": "b11669",
+  "LLAMA_CPP_PYTHON": "0.3.36",
+  "BF16_FALLBACK_GPU_LAYERS": 12
+ },
+ "python": "3.13.16",
+ "formats": {
+  "bf16": {
+   "gpu_layers": -1,
+   "gguf_bytes": 6754445120,
+   "wall_clock_s": 449,
+   "finished": "2026-11-21T20:32:17"
+  }
+ },
+ "gpu": "Tesla T4, 15360 MiB, 580.178.04\nTesla T4, 15360 MiB, 580.178.04",
+ "packages": {
+  "python": "3.13.16",
+  "llama_cpp_python": "0.3.36",
+  "lm_eval": "0.4.13",
+  "datasets": "5.1.0",
+  "gpu_offload": true,
+  "torch_visible": false,
+  "transformers_visible": false
+ },
+ "bf16_gguf_bytes": 6754445120,
+ "finished": "2026-11-21T20:32:17"
+}

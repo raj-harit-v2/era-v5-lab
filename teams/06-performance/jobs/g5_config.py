@@ -25,6 +25,7 @@ G5_TO_BASE_KEY = {
     "run.grad_clip": "run.grad_clip",
     "optim.name": "optim.name",
     "optim.lr": "optim.lr",
+    "optim.muon_lr": "optim.muon_lr",
     "tokenizer.vocab_size": "model.vocab_size",
     "embedding.pos_dim": "model.ke_max_pos",
     "attention.impl": "model.attn_impl",

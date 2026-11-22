@@ -1,0 +1,56 @@
+{
+ "prompts_sha256": "da3f6851467d5ac57ff9577fa3d341ee98c0bf82293d32da9b5f3fecc90f4919",
+ "max_tokens": 128,
+ "n_ctx": 2048,
+ "decoding": "greedy (temperature 0, top_k 1), seed 0",
+ "formats": {
+  "bf16": {
+   "gguf_sha256": "b4404b0430814c01e2776d13332ec7b5af468757cb9f3fa21fb50957e7b676bb",
+   "size_bytes": 606017344,
+   "finish": {
+    "stop": 0,
+    "length": 100
+   },
+   "mean_tokens_per_s": 442.5,
+   "wall_s": 29.0
+  },
+  "Q8_0": {
+   "gguf_sha256": "ba46d9ffd480d27aace601aa011907f77d29422baca085dd2f3a8c1d1db0db82",
+   "size_bytes": 324867904,
+   "finish": {
+    "stop": 0,
+    "length": 100
+   },
+   "mean_tokens_per_s": 577.27,
+   "wall_s": 22.2,
+   "agreement_with_bf16": {
+    "identical_outputs": 0,
+    "of": 100,
+    "mean_shared_prefix_fraction": 0.1021
+   }
+  },
+  "Q4_K_M": {
+   "gguf_sha256": "cd6bece997a1a2a96c0d722afc2a1198b70b57fed98a5016d13c1842a750a6b5",
+   "size_bytes": 215437120,
+   "finish": {
+    "stop": 0,
+    "length": 100
+   },
+   "mean_tokens_per_s": 624.16,
+   "wall_s": 20.5,
+   "agreement_with_bf16": {
+    "identical_outputs": 0,
+    "of": 100,
+    "mean_shared_prefix_fraction": 0.0116
+   }
+  }
+ },
+ "gguf_dir": "given (quantize_eval.py --work); converted and quantized there",
+ "tokenizer_sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b",
+ "total_s": 72.5,
+ "machine": "arm64 Darwin",
+ "versions": {
+  "Python": "3.12.15",
+  "llama-cpp-python": "0.3.36"
+ }
+}

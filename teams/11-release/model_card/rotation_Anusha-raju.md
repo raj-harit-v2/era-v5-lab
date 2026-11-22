@@ -50,3 +50,9 @@ These choices have approved, public evidence.
 | 8 | The context length | Empty in config v1 | no evidence |
 | 9 | The output head | Empty in config v1. TSAI decides the output head | no evidence |
 | 10 | Claims 5 and 6 rest on test results | #374 records no result for the attention or expert choices. The attention screen on main is one seed and marked preliminary. #450 and #466 quote later results only for comparison | no evidence. Only the Gate 2 decision supports them |
+
+## Update after the review
+
+21 Nov 2026: TSAI chose the KE2 output head in place of the dense untied head
+(`teams/04-ke2/gate3.md`, [#694](https://github.com/theschoolofai/era-v5-lab/pull/694)). Claim 9 now has a TSAI decision. The KE2 row of the
+model card outline covers the output head, in general terms.

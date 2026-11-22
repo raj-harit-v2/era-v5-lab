@@ -1,0 +1,8 @@
+Error in sitecustomize; set PYTHONVERBOSE for traceback:
+ModuleNotFoundError: No module named 'wrapt'
+FAIL model does not rank ' Paris' in its top-5 after 'The capital of France is' ({' Par': np.float32(-0.93836904), ' located': np.float32(-2.9286988), ' the': np.float32(-3.1792614), '...': np.float32(-3.3280728), ' not': np.float32(-3.5828564)}); use a stronger model
+1 check(s) failed
+Error in sitecustomize; set PYTHONVERBOSE for traceback:
+ModuleNotFoundError: No module named 'wrapt'
+granite-3.0-3b-a800m-base-bf16.gguf: log p(' Par') = -0.930, generation -0.938, off-by-one value -13.587; cache max diff 0.0434
+PASS

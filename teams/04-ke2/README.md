@@ -98,7 +98,8 @@ original tokenizer hash. The p1536 table and collision results do not rerun thos
 TSAI's Gate 3 notice (16 Nov) replaced C3 with p1536 (Team 3, #414): `tokenizer.json` SHA-256
 `e6b93a93…a64b`, with the same 356 special tokens and ids as C3. Its raw P = 32 table, rebuilt with
 `build_tables.py --pos-dims 32`, has content SHA-256 `21072027…168a`: 0 truncated rows and 131,072 distinct
-rows. The table is not committed (lab rule, 15 Nov); anyone can rebuild it and check that hash.
+rows. #498 committed it as `results/tables/p1536-s0/raw_table_P32.npz`, so `KE2_FROZEN_TABLE` can point there;
+anyone can also rebuild it and check that hash.
 
 `tests/test_every_id.py` checks, on every token ID of that table and of the committed table:
 - that each code, fp32 and bf16, decodes back to its own ID, both with the structural decode (Theorem 2) and with
@@ -107,7 +108,9 @@ rows. The table is not committed (lab rule, 15 Nov); anyone can rebuild it and c
   codec, outputs and gradient, with Team 6's `correctness.framework` tolerances, on every ID's own row;
 - that Team 5's code rounded to bf16 equals the upstream codec's bf16 code bit for bit.
 
-The output head is not tested: dry run 1 keeps the dense untied head (TSAI, 16 Nov).
+The output head is not tested: dry run 1 kept the dense untied head (TSAI, 16 Nov). The capstone's output head is
+the KE2/KAS head (TSAI, 21 Nov, final). TSAI asks for nothing further to test or prove from Team 4's side; the
+handoff to Team 5 is in `gate3.md`, section "Handoff of the reference implementation to Team 5".
 
 ```bash
 .venv/bin/python -m pytest teams/04-ke2/tests/test_every_id.py -q     # a sample of IDs, seconds; p1536 cases skip without the tokenizer

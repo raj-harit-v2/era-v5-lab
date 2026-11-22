@@ -1,0 +1,9 @@
+# Test log: recipe_job.py --config <cfg_e9_17b shape with local paths, device cpu, fp32, dry_run: true, arms A4,A2v2>, run from a clean git archive of commit 0a0e0c93, Mac M1 Pro CPU, 17 Nov 2026, 52 s, exit 0
+2026-11-17 22:04:20 E9 start model=~/.cache/huggingface/hub/models--HuggingFaceTB--SmolLM2-135M/snapshots/93efa2f097d58c2a74874c7e644dbc9b0cee75a2 arms=['A4', 'A2v2'] gpus=[None] device=cpu
+2026-11-17 22:04:20 E9 A4 train start
+2026-11-17 22:04:36 E9 A4 screen start
+2026-11-17 22:04:45 E9 A4 done
+2026-11-17 22:04:45 E9 A2v2 train start
+2026-11-17 22:05:02 E9 A2v2 screen start
+2026-11-17 22:05:11 E9 A2v2 done
+2026-11-17 22:05:11 E9 end {"A4": {"rest": {"ladder": {"closed": 0.0, "closed_content": 0.0, "valid_format": 0.0, "code_block": 0.0, "parses": 0.0, "runs": 0.0, "pass_kept": 0.0}, "mixed": 0.0}, "rung1": {"ladder": {"closed": 0.0, "closed_content": 0.0, "valid_format": 0.0, "code_block": 0.0, "parses": 0.0, "runs": 0.0, "pass_kept": 0.0}, "mixed": 0.0}}, "A2v2": {"rest": {"ladder": {"closed": 0.0, "closed_content": 0.0, "valid_format": 0.0, "code_block": 0.0, "parses": 0.0, "runs": 0.0, "pass_kept": 0.0}, "mixed": 0.0}, "rung1": {"ladder": {"closed": 0.0, "closed_content": 0.0, "valid_format": 0.0, "code_block": 0.0, "parses": 0.0, "runs": 0.0, "pass_kept": 0.0}, "mixed": 0.0}}}

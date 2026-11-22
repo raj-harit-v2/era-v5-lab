@@ -95,7 +95,11 @@ def load_runtime(arm_path, runtime_path=None):
         "runtime.model",
     )
     _unknown(runtime["model"]["moe"], ["bias", "bias_gamma"], "runtime.model.moe")
-    _unknown(runtime["optim"], ["betas", "eps", "schedule"], "runtime.optim")
+    _unknown(
+        runtime["optim"],
+        ["betas", "eps", "schedule", "warmup_frac", "decay_frac", "final_lr_frac"],
+        "runtime.optim",
+    )
     _unknown(
         runtime["run"],
         ["micro_batch_size", "eval_every_steps", "compile", "flush_every_steps"],
@@ -193,7 +197,14 @@ def load_runtime(arm_path, runtime_path=None):
             "lr",
             "weight_decay",
             "muon_lr",
+            "router_on_muon",
             "schedule",
+            "warmup_frac",
+            "decay_frac",
+            "final_lr_frac",
+            "head_sgd",
+            "head_sgd_lr",
+            "head_sgd_momentum",
             "warmup_steps",
             "betas",
             "eps",
@@ -210,6 +221,9 @@ def load_runtime(arm_path, runtime_path=None):
             "compile",
             "steps",
             "max_time_min",
+            "tst",
+            "tst_bag",
+            "tst_frac",
         ],
         "lead run",
     )
@@ -287,7 +301,7 @@ def load_runtime(arm_path, runtime_path=None):
     model["moe"]["ffn_hidden"] = width
     optim = merge(runtime["optim"], declared["optim"])
     if optim.get("warmup_steps", 0) != 0:
-        raise ValueError("Warmup schedule not implemented; do not ignore it")
+        raise ValueError("warmup_steps is not used; set schedule: wsd with warmup_frac instead")
     optim.pop("warmup_steps", None)
     run = merge(runtime["run"], runtime["budgets"][profile])
     run = merge(run, declared["run"])
@@ -442,8 +456,52 @@ def validate(c):
         errors.append("Explicit finite positive Muon LR (muon_lr) required")
     if o.get("name") == "adamw" and o.get("muon_lr") is not None:
         errors.append("muon_lr set on an AdamW arm would be ignored")
-    if o.get("schedule") != "constant":
-        errors.append("Only lead's constant schedule supported")
+    if "router_on_muon" in o and type(o["router_on_muon"]) is not bool:
+        errors.append("optim.router_on_muon must be true or false")
+    if o.get("name") == "adamw" and o.get("router_on_muon"):
+        errors.append("router_on_muon set on an AdamW arm would be ignored")
+    tst = r.get("tst")
+    if tst is not None and type(tst) is not bool:
+        errors.append("run.tst must be true or false")
+    elif tst:
+        if type(r.get("tst_bag")) is not int or r["tst_bag"] < 2:
+            errors.append("tst needs an explicit integer tst_bag >= 2 (TSAI: 6)")
+        if not number(r.get("tst_frac")) or not 0 < r["tst_frac"] < 1:
+            errors.append("tst needs an explicit tst_frac in (0, 1) (TSAI: 0.3)")
+        if type(r.get("tst_bag")) is int and r["tst_bag"] >= 2 and m.get("block_size", 0) < 2 * r["tst_bag"]:
+            errors.append("tst needs block_size of at least two bags")
+    elif r.get("tst_bag") is not None or r.get("tst_frac") is not None:
+        errors.append("tst_bag or tst_frac set while tst is off would be ignored")
+    head_sgd = o.get("head_sgd")
+    if head_sgd is not None and type(head_sgd) is not bool:
+        errors.append("optim.head_sgd must be true or false")
+    elif head_sgd:
+        if not number(o.get("head_sgd_lr")) or o["head_sgd_lr"] <= 0:
+            errors.append("head_sgd needs an explicit positive head_sgd_lr; no default is assumed")
+        if not number(o.get("head_sgd_momentum")) or not 0 <= o["head_sgd_momentum"] < 1:
+            errors.append("head_sgd needs an explicit head_sgd_momentum in [0, 1) (TSAI: 0.99)")
+    elif o.get("head_sgd_lr") is not None or o.get("head_sgd_momentum") is not None:
+        errors.append("head_sgd_lr or head_sgd_momentum set while head_sgd is off would be ignored")
+    schedule = o.get("schedule")
+    wsd = {k: o.get(k) for k in ("warmup_frac", "decay_frac", "final_lr_frac")}
+    if schedule not in ["constant", "wsd"]:
+        errors.append("optim.schedule must be constant or wsd")
+    elif schedule == "constant" and any(v is not None for v in wsd.values()):
+        errors.append("warmup_frac, decay_frac or final_lr_frac set on a constant schedule would be ignored")
+    elif schedule == "wsd":
+        missing = [k for k, v in wsd.items() if not number(v)]
+        if missing:
+            errors.append("wsd schedule needs explicit " + ", ".join(missing) + "; no default is assumed")
+        elif not (
+            0 <= wsd["warmup_frac"] < 1
+            and 0 < wsd["decay_frac"] <= 1
+            and wsd["warmup_frac"] + wsd["decay_frac"] <= 1
+            and 0 <= wsd["final_lr_frac"] <= 1
+        ):
+            errors.append(
+                "wsd needs 0 <= warmup_frac < 1, 0 < decay_frac <= 1, warmup_frac + decay_frac <= 1, "
+                "0 <= final_lr_frac <= 1"
+            )
     if not number(o.get("lr")) or o["lr"] <= 0:
         errors.append("Explicit finite positive arm LR required")
     betas = o.get("betas")

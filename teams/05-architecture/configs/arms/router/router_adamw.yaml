@@ -1,0 +1,10 @@
+# Router comparison arm B: the MoE router on AdamW (the #706 default, TSAI's 21 Nov recommendation).
+# The only difference from router_muon.yaml is optim.router_on_muon.
+inherit: ../exp2_muon.yaml
+intended:
+  arm: router-adamw
+  owner: Deepjyoti Saha
+  comparison_final: false
+optim:
+  muon_lr: 0.003
+  router_on_muon: false

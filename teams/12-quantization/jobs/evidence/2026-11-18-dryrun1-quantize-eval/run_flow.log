@@ -1,0 +1,67 @@
+$ python teams/12-quantization/scripts/quantize_eval.py --checkpoint ./inputs/standin-t2 --tokenizer ./inputs/tokenizer.json --eval teams/12-quantization/prompts/eval_own_20.json --formats bf16,Q8_0,Q4_K_M --work ./work --runs-csv ./out/runs.csv --scores-out ./out/scores.json
+[23:09:40] llama.cpp b11669 (620d2225c) | Apple M5 16GB, macOS 26.6.2, Metal
+[23:09:42] context 2048 (the model's trained length), not --ctx 4096
+[23:09:42] eval: own-eval-20 (G12: 10 multiple-choice + 10 arithmetic items written for the flow test, not a benchmark), 20 items
+[23:09:44] bf16: sha256 b4404b0430814c01e2776d13332ec7b5af468757cb9f3fa21fb50957e7b676bb -> manifest_2026-11-19.json
+[23:09:44] $ /opt/homebrew/bin/llama-server -m ./work/run-2c78e04d-bf16.gguf --port 53931 -ngl 99 -c 2048 --temp 0 --seed 0 --no-webui -np 1
+[23:09:57] bf16: score 0.0 {"mcq": 0.0, "numeric": 0.0} | 0.61 GB, 16.0 bpw | quant 0.0s, eval 11.1s, 388.0 tok/s
+[23:09:59] Q8_0: sha256 ba46d9ffd480d27aace601aa011907f77d29422baca085dd2f3a8c1d1db0db82 -> manifest_2026-11-19.json
+[23:09:59] $ /opt/homebrew/bin/llama-server -m ./work/run-2c78e04d-Q8_0.gguf --port 53955 -ngl 99 -c 2048 --temp 0 --seed 0 --no-webui -np 1
+[23:10:09] Q8_0: score 0.05 {"mcq": 0.0, "numeric": 0.1} | 0.32 GB, 8.58 bpw | quant 0.6s, eval 8.6s, 432.9 tok/s
+[23:10:11] Q4_K_M: sha256 cd6bece997a1a2a96c0d722afc2a1198b70b57fed98a5016d13c1842a750a6b5 -> manifest_2026-11-19.json
+[23:10:11] $ /opt/homebrew/bin/llama-server -m ./work/run-2c78e04d-Q4_K_M.gguf --port 53979 -ngl 99 -c 2048 --temp 0 --seed 0 --no-webui -np 1
+[23:10:21] Q4_K_M: score 0.0 {"mcq": 0.0, "numeric": 0.0} | 0.22 GB, 5.69 bpw | quant 1.7s, eval 8.7s, 540.8 tok/s
+[23:10:21] scores: ./out/scores.json
+$ python teams/12-quantization/scripts/flow_fixed_prompts.py --gguf-dir ./work --formats Q8_0,Q4_K_M --scores ./out/scores.json --out ./out/prompts --delete-ggufs
+{
+ "prompts_sha256": "da3f6851467d5ac57ff9577fa3d341ee98c0bf82293d32da9b5f3fecc90f4919",
+ "max_tokens": 128,
+ "n_ctx": 2048,
+ "decoding": "greedy (temperature 0, top_k 1), seed 0",
+ "formats": {
+  "bf16": {
+   "gguf_sha256": "b4404b0430814c01e2776d13332ec7b5af468757cb9f3fa21fb50957e7b676bb",
+   "size_bytes": 606017344,
+   "finish": {
+    "stop": 0,
+    "length": 100
+   },
+   "mean_tokens_per_s": 442.5,
+   "wall_s": 29.0
+  },
+  "Q8_0": {
+   "gguf_sha256": "ba46d9ffd480d27aace601aa011907f77d29422baca085dd2f3a8c1d1db0db82",
+   "size_bytes": 324867904,
+   "finish": {
+    "stop": 0,
+    "length": 100
+   },
+   "mean_tokens_per_s": 577.27,
+   "wall_s": 22.2,
+   "agreement_with_bf16": {
+    "identical_outputs": 0,
+    "of": 100,
+    "mean_shared_prefix_fraction": 0.1021
+   }
+  },
+  "Q4_K_M": {
+   "gguf_sha256": "cd6bece997a1a2a96c0d722afc2a1198b70b57fed98a5016d13c1842a750a6b5",
+   "size_bytes": 215437120,
+   "finish": {
+    "stop": 0,
+    "length": 100
+   },
+   "mean_tokens_per_s": 624.16,
+   "wall_s": 20.5,
+   "agreement_with_bf16": {
+    "identical_outputs": 0,
+    "of": 100,
+    "mean_shared_prefix_fraction": 0.0116
+   }
+  }
+ },
+ "gguf_dir": "given (quantize_eval.py --work); converted and quantized there",
+ "tokenizer_sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b",
+ "total_s": 72.5,
+ "machine": "arm64 Darwin"
+}

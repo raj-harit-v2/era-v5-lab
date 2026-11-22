@@ -1,0 +1,11 @@
+# Router comparison arm A: the MoE router on Muon (the setup before #706).
+# TSAI, 21 Nov: put the router on AdamW, "but test it, don't assume it's settled". This arm and router_adamw.yaml
+# differ only in optim.router_on_muon. Both take muon_lr 0.003 (config v1, TSAI 21 Nov) instead of exp2_muon's 0.01.
+inherit: ../exp2_muon.yaml
+intended:
+  arm: router-muon
+  owner: Deepjyoti Saha
+  comparison_final: false
+optim:
+  muon_lr: 0.003
+  router_on_muon: true

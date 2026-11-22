@@ -377,6 +377,26 @@ def sync(device: str) -> None:
 # ---------------------------------------------------------------- main loop
 
 
+def resume_key(args) -> str:
+    """What a resumed run must share with the run that saved the state (everything but paths and logging)."""
+    return json.dumps({k: v for k, v in sorted(vars(args).items()) if k not in ("out", "log_every", "save_every")})
+
+
+def take_by_targets(order: list[int], n_tgt: list[int], budget: int, rng: random.Random) -> list[int]:
+    """Pop rows from `order` (refilled with a fresh shuffled epoch when empty) until their supervised targets reach
+    `budget`. Mutates `order`. Every row is used once per epoch, as in the fixed-row path."""
+    take, got = [], 0
+    while got < budget:
+        if not order:
+            perm = list(range(len(n_tgt)))
+            rng.shuffle(perm)
+            order += perm
+        i = order.pop(0)
+        take.append(i)
+        got += n_tgt[i]
+    return take
+
+
 def lr_at(step: int, args) -> float:
     """Linear warmup then cosine to min_lr_ratio * lr (step counts from 0)."""
     if step < args.warmup:
@@ -470,12 +490,36 @@ def train(args) -> dict:
     per100 = []
     pad_id = 0
     seen_rows = 0
-    for step in range(args.steps):
-        if len(order) < args.batch:
-            perm = list(range(len(rows)))
-            rng.shuffle(perm)
-            order += perm
-        take, order = order[: args.batch], order[args.batch :]
+    # --save-every: resumable state (a crash or a killed session continues from the last save, bit-identical on CPU)
+    ckpt = Path(args.out) / "train_state.pt"
+    start_step, prior_s = 0, 0.0
+    if args.save_every and args.method == "dt":
+        raise SystemExit("--save-every is not implemented for dt (mask schedules keep their own step counters)")
+    if args.save_every and ckpt.exists():
+        st = torch.load(ckpt, map_location="cpu", weights_only=False)
+        if st["key"] != resume_key(args):
+            raise SystemExit(f"{ckpt} belongs to a different run; delete it or change --out")
+        model.load_state_dict(st["model"])
+        opt.load_state_dict(st["opt"])
+        rng.setstate(st["rng"])
+        random.setstate(st["py_random"])
+        torch.set_rng_state(st["torch_rng"])
+        order[:], log[:], per100[:] = st["order"], st["log"], st["per100"]
+        checks.update(st["checks"])
+        seen_rows, start_step, prior_s = st["seen_rows"], st["step"], st["elapsed_s"]
+        print(json.dumps({"resumed_from_step": start_step}), flush=True)
+    n_tgt = [sum(r["loss_mask"][1:]) for r in rows] if args.batch_target_tokens else None
+    for step in range(start_step, args.steps):
+        if device == "mps":  # cached blocks of earlier shapes kept MPS ~0.5 GB under its cap; one long batch then OOMed
+            torch.mps.empty_cache()
+        if args.batch_target_tokens:  # equal trained tokens per update across data sets with different row lengths
+            take = take_by_targets(order, n_tgt, args.batch_target_tokens, rng)
+        else:
+            if len(order) < args.batch:
+                perm = list(range(len(rows)))
+                rng.shuffle(perm)
+                order += perm
+            take, order = order[: args.batch], order[args.batch :]
         groups = plan_microbatches([rows[i] for i in take], args.micro_tokens)
         mbs = [collate(g, pad_id) for g in groups]
         lr = lr_at(step, args)
@@ -517,8 +561,16 @@ def train(args) -> dict:
         log.append(rec)
         if not math.isfinite(loss):
             raise SystemExit(f"non-finite loss at step {step + 1}")
+        if args.save_every and (step + 1) % args.save_every == 0 and step + 1 < args.steps:
+            Path(args.out).mkdir(parents=True, exist_ok=True)
+            tmp = ckpt.with_suffix(".pt.tmp")
+            torch.save({"key": resume_key(args), "step": step + 1, "model": model.state_dict(), "opt": opt.state_dict(),
+                        "rng": rng.getstate(), "py_random": random.getstate(), "torch_rng": torch.get_rng_state(),
+                        "order": list(order), "log": list(log), "per100": list(per100), "checks": dict(checks),
+                        "seen_rows": seen_rows, "elapsed_s": prior_s + time.perf_counter() - t_start}, tmp)
+            os.replace(tmp, ckpt)
     sync(device)
-    train_seconds = time.perf_counter() - t_start
+    train_seconds = prior_s + time.perf_counter() - t_start
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
     model.eval()
@@ -594,6 +646,8 @@ def train(args) -> dict:
     if device == "mps":
         report["mps_driver_mb_end"] = round(torch.mps.driver_allocated_memory() / 2**20, 1)
     (out / "train_report.json").write_text(json.dumps(report, indent=1), encoding="utf-8")
+    if ckpt.exists():  # the finished model is saved and checked; the resume state is no longer needed
+        ckpt.unlink()
     return report
 
 
@@ -606,6 +660,8 @@ def parse_args(argv=None):
     ap.add_argument("--method", choices=METHODS, default="full")
     ap.add_argument("--steps", type=int, default=400)
     ap.add_argument("--batch", type=int, default=8, help="rows per optimizer update")
+    ap.add_argument("--batch-target-tokens", type=int, default=0,
+                    help="if > 0: rows per update are drawn until their supervised targets reach this many (replaces --batch)")
     ap.add_argument("--micro-tokens", type=int, default=4096, help="rows x longest row per microbatch")
     ap.add_argument("--max-tokens", type=int, default=2048)
     ap.add_argument("--grad-checkpointing", action="store_true")
@@ -634,6 +690,7 @@ def parse_args(argv=None):
                     help="with --untie-head: train the marker rows of the embedding, of the LM head, or of both")
     ap.add_argument("--device", default="mps" if torch.backends.mps.is_available() else "cpu")
     ap.add_argument("--log-every", type=int, default=10)
+    ap.add_argument("--save-every", type=int, default=0, help="write resumable state every N updates (0 = off)")
     ap.add_argument("--out", required=True)
     return ap.parse_args(argv)
 

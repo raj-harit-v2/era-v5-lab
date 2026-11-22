@@ -43,6 +43,8 @@ Usage (from teams/10-post-training)
 from __future__ import annotations
 
 import argparse
+import copy
+import ast
 import hashlib
 import importlib.util
 import json
@@ -266,6 +268,9 @@ def resolve_prompts(manifest: dict, source_dirs: dict[str, Path], verify_files: 
                 checked[path] = sha256_file(path)
             if checked[path] != s["file_sha256"]:
                 raise SourceError(f"{path}: sha256 {checked[path]} != pinned {s['file_sha256']}")
+        if s["checker"] == "api_call":
+            out[s["slot"]] = _resolve_api_call(s, Path(source_dirs[key]), path, verify_files)
+            continue
         cols = [s["field"]] + list(s.get("checker_fields", []))
         row = _read_row(path, s["row_index"], cols)
         text = row[s["field"]]
@@ -277,6 +282,10 @@ def resolve_prompts(manifest: dict, source_dirs: dict[str, Path], verify_files: 
             task["time_limit_s"] = s["time_limit_s"]
             if sha256_text(json.dumps(task["tests"], ensure_ascii=False, sort_keys=True)) != s["tests_sha256"]:
                 raise SourceError(f"slot {s['slot']}: tests hash does not match the manifest")
+        elif s["checker"] == "answer_key":
+            if sha256_text(row["answerKey"]) != s["answer_sha256"]:
+                raise SourceError(f"slot {s['slot']}: answer key hash does not match the manifest")
+            task["answer"] = row["answerKey"]
         elif s["checker"] == "math" and last_boxed is not None:
             answer = last_boxed(row["solution"])
             if answer is None or sha256_text(answer) != s["answer_sha256"]:
@@ -284,6 +293,169 @@ def resolve_prompts(manifest: dict, source_dirs: dict[str, Path], verify_files: 
             task["answer"] = answer
         out[s["slot"]] = Prompt(s["slot"], s["category"], s["task_id"], text, s["checker"], task)
     return out
+
+
+# --- v2 slots: API-Bank calls and closed-form questions (proposed manifest) ------------------------------
+
+# Fixed harness instructions for the two new kinds. They live in code, not in the manifest, and are not part of any
+# hashed prompt text. A team-written --instruction file for the same kind replaces them.
+DEFAULT_INSTRUCTIONS = {
+    "answer_key": "Answer the multiple-choice question below. Reply with the letter of the correct option and "
+                  "nothing else.\n\n{problem}",
+    "api_call": "Based on the API descriptions and the conversation, write the one API call the AI should make next, "
+                "in the format [ApiName(key1='value1', key2='value2')]. Output only that call.\n\n{problem}",
+}
+
+
+def apibank_docs(api_dir: Path) -> dict[str, tuple[str, str]]:
+    """{ApiName: (file relative to the api-bank folder, description JSON)} read with ast, never executed.
+
+    The JSON has the same keys and order as the set's tool_manager.get_api_description: name, description,
+    input_parameters, output_parameters.
+    """
+    docs: dict[str, tuple[str, str]] = {}
+    for f in sorted(Path(api_dir).glob("*.py")):
+        for node in ast.parse(f.read_text(encoding="utf-8")).body:
+            if not isinstance(node, ast.ClassDef):
+                continue
+            attrs = {}
+            for st in node.body:
+                if isinstance(st, ast.Assign) and len(st.targets) == 1 and isinstance(st.targets[0], ast.Name) \
+                        and st.targets[0].id in ("description", "input_parameters", "output_parameters"):
+                    attrs[st.targets[0].id] = ast.literal_eval(st.value)
+            if len(attrs) == 3:
+                info = {"name": node.name, **{k: attrs[k] for k in ("description", "input_parameters",
+                                                                       "output_parameters")}}
+                docs[node.name] = (f"apis/{f.name}", json.dumps(info))
+    return docs
+
+
+def apibank_history_line(item: dict) -> str:
+    """One dialogue turn in the set's own rendering (evaluator.py): User:/AI: text, API turns as call + Response."""
+    if item["role"] in ("User", "AI"):
+        return f"{item['role']}: {item['text']}"
+    if item["role"] == "API":
+        args = ", ".join(f"{k}='{v}'" for k, v in item["param_dict"].items())
+        return f"[{item['api_name']}({args})] Response: {item['result']['output']}"
+    raise SourceError(f"unknown dialogue role {item['role']!r}")
+
+
+def apibank_prompt(rows: list[dict], call_index: int, docs: dict[str, tuple[str, str]]) -> tuple[str, list[str]]:
+    """(prompt text, doc files used) for the API call at rows[call_index]: the set's API descriptions for every API
+    in the dialogue (sorted by name) and the dialogue before that call. Only the set's own text."""
+    names = sorted({r["api_name"] for r in rows if r["role"] == "API"})
+    body = "\n".join(docs[n][1] for n in names)
+    history = "\n".join(apibank_history_line(r) for r in rows[:call_index])
+    return f"API descriptions:\n{body}\n\n{history}", sorted({docs[n][0] for n in names})
+
+
+def _resolve_api_call(s: dict, base: Path, path: Path, verify_files: bool) -> "Prompt":
+    docs_files = s["doc_files"]
+    if verify_files:
+        if sha256_file(path) != s["file_sha256"]:
+            raise SourceError(f"{path}: sha256 differs from the pin")
+        for rel, want in docs_files.items():
+            if sha256_file(base / rel) != want:
+                raise SourceError(f"{base / rel}: sha256 differs from the pin")
+    rows = [json.loads(x) for x in path.read_text(encoding="utf-8").splitlines() if x.strip()]
+    docs = apibank_docs(base / "apis")
+    text, used = apibank_prompt(rows, s["row_index"], docs)
+    if sorted(docs_files) != used or sha256_text(text) != s["text_sha256"]:
+        raise SourceError(f"slot {s['slot']}: prompt text hash does not match the manifest")
+    gold = rows[s["row_index"]]
+    if gold["role"] != "API":
+        raise SourceError(f"slot {s['slot']}: row {s['row_index']} is not an API call")
+    task = {"id": s["task_id"], "api_name": gold["api_name"], "param_dict": gold["param_dict"]}
+    if sha256_text(json.dumps(task["param_dict"], sort_keys=True, ensure_ascii=False) + "|" + task["api_name"]) \
+            != s["gold_sha256"]:
+        raise SourceError(f"slot {s['slot']}: gold call hash does not match the manifest")
+    return Prompt(s["slot"], s["category"], s["task_id"], text, s["checker"], task)
+
+
+def _final_text(completion: str) -> str:
+    """The completion with closed think spans removed (the part after the reasoning trace)."""
+    return re.sub(f"{re.escape(T['think'])}.*?{re.escape(T['think_end'])}", "", completion, flags=re.S)
+
+
+_LETTER = r"[A-H]"
+_ANSWER_LINE = re.compile(rf"(?i:answer)\s*(?i:is|:)\s*\(?({_LETTER})\)?(?![A-Za-z0-9])")
+_BARE_LETTER = re.compile(rf"\(?({_LETTER})\)?[.)]?")
+
+
+def extract_answer_key(completion: str) -> str | None:
+    """The single option letter A-H the completion commits to, or None.
+
+    Rules, first hit wins, on the text after any closed think span: (1) the content of the last \\boxed{...}
+    (as the math checker takes a final answer from the last box), if that content is one capital letter, optionally
+    in parentheses; (2) the last "answer is X" or "answer: X" phrase (case-insensitive on the phrase, capital
+    letter X); (3) the whole reply is one capital letter with optional parentheses or a trailing full stop.
+    Anything else, including a letter buried in prose, is None. The letter is not compared case-insensitively.
+    """
+    text = _final_text(completion).strip()
+    if not text:
+        return None
+    boxes = list(re.finditer(r"\\(?:boxed|fbox)\s*\{\s*\(?(" + _LETTER + r")\)?\s*\}", text))
+    if boxes:
+        return boxes[-1].group(1)
+    hits = list(_ANSWER_LINE.finditer(text))
+    if hits:
+        return hits[-1].group(1)
+    m = _BARE_LETTER.fullmatch(text)
+    return m.group(1) if m else None
+
+
+def score_answer_key(task: dict, completion: str) -> dict:
+    out = {"task_id": task["id"], "reward": 0}
+    got = extract_answer_key(completion)
+    if got is None:
+        return {**out, "reason": "no answer found"}
+    ok = got == task["answer"]
+    return {**out, "reward": int(ok), "reason": "correct" if ok else "wrong answer"}
+
+
+_API_CALL = re.compile(r"\[(\w+)\((.*?)\)\]", re.S)
+
+
+def parse_one_api_call(completion: str) -> tuple[str, dict] | None:
+    """Parse exactly one call in API-Bank's bracket format [Name(key='value', ...)] from the text after any closed
+    think span. Keyword arguments only, literal values only. Returns (name, {key: value}) or None when there is no
+    call, more than one call, a positional argument, a repeated key or a value that is not a literal."""
+    text = _final_text(completion)
+    calls = list(_API_CALL.finditer(text))
+    if len(calls) != 1:
+        return None
+    name, args = calls[0].group(1), calls[0].group(2)
+    try:
+        node = ast.parse(f"f({args})", mode="eval").body
+        if node.args or any(k.arg is None for k in node.keywords):
+            return None
+        keys = [k.arg for k in node.keywords]
+        if len(set(keys)) != len(keys):
+            return None
+        return name, {k.arg: ast.literal_eval(k.value) for k in node.keywords}
+    except (SyntaxError, ValueError):
+        return None
+
+
+def score_api_call(task: dict, completion: str) -> dict:
+    """1 only if the API name and every parameter equal the gold call; a value matches when it equals the gold value
+    or has the same string form. An extra or a missing parameter fails. Stricter than the set's own evaluator,
+    which executes the call and uses a per-API tolerance."""
+    out = {"task_id": task["id"], "reward": 0}
+    parsed = parse_one_api_call(completion)
+    if parsed is None:
+        return {**out, "reason": "no single well-formed API call found"}
+    name, params = parsed
+    if name != task["api_name"]:
+        return {**out, "reason": f"API name mismatch: {name}"}
+    gold = task["param_dict"]
+    if set(params) != set(gold):
+        return {**out, "reason": f"parameter names differ: missing {sorted(set(gold) - set(params))}, "
+                                 f"extra {sorted(set(params) - set(gold))}"}
+    bad = [k for k in gold if params[k] != gold[k] and str(params[k]) != str(gold[k])]
+    if bad:
+        return {**out, "reason": f"parameter values differ: {sorted(bad)}"}
+    return {**out, "reward": 1, "reason": "correct"}
 
 
 def apply_instruction(prompt_text: str, instruction: str | None) -> str:
@@ -299,7 +471,8 @@ def apply_instruction(prompt_text: str, instruction: str | None) -> str:
 
 def load_checkers(checker_dir: Path, execute_code: bool) -> tuple[dict, dict, Callable | None]:
     """({kind: score_fn or None}, {kind: reason when None}, last_boxed or None)."""
-    fns: dict[str, Callable | None] = {"math": None, "stdio": None, "none": None}
+    fns: dict[str, Callable | None] = {"math": None, "stdio": None, "none": None,
+                                       "answer_key": score_answer_key, "api_call": score_api_call}
     why = {"none": "no automatic checker for this category (needs the team's blinded human rubric)"}
     last_boxed = None
     mpath = checker_dir / "math_check.py"
@@ -809,6 +982,98 @@ def build_manifest(args) -> dict:
     return seal(manifest)
 
 
+def build_v2_manifest(args) -> dict:
+    """The proposed v2 manifest: v1 unchanged, plus 20 API-Bank call slots (tool_agentic) and 10 QASC slots
+    (general), picked with v1's rule: lowest sha256(selection_seed:id), one slot per distinct question (QASC) or per
+    dialogue file and per API name (API-Bank). The 15 indic slots stay unavailable."""
+    v1 = json.loads(Path(args.v1).read_text(encoding="utf-8"))
+    seed = v1["selection_seed"]
+    pins = json.loads(Path(args.pins).read_text(encoding="utf-8"))
+    qdir, adir = Path(args.qasc_dir), Path(args.apibank_dir)
+    qfile = "data/validation-00000-of-00001.parquet"
+    import pyarrow.parquet as pq  # noqa: PLC0415
+    qrows = pq.read_table(qdir / qfile, columns=["id", "question", "answerKey", "formatted_question"]).to_pylist()
+    for i, r in enumerate(qrows):
+        r["row_index"] = i
+    seen, qpick = set(), []
+    for r in sorted(qrows, key=lambda r: _rank(seed, r["id"])):
+        if r["question"] in seen:
+            continue
+        seen.add(r["question"])
+        qpick.append(r)
+        if len(qpick) == COMPOSITION["general"]:
+            break
+    docs = apibank_docs(adir / "apis")
+    ddir = adir / "lv1-lv2-samples" / "level-1-given-desc"
+    cand = []
+    for f in sorted(ddir.glob("*-level-1-*.jsonl")):
+        rows = [json.loads(x) for x in f.read_text(encoding="utf-8").splitlines() if x.strip()]
+        cand += [{"id": f"apibank/{f.name}#{i}", "file": f.name, "row_index": i, "rows": rows}
+                 for i, r in enumerate(rows) if r["role"] == "API"]
+    used, used_apis, apick = set(), set(), []
+    for r in sorted(cand, key=lambda r: _rank(seed, r["id"])):
+        api = r["rows"][r["row_index"]]["api_name"]
+        # one call per dialogue file and per API: the set has several near-identical dialogues for one API
+        # (same gold call), which would count one item twice
+        if r["file"] in used or api in used_apis:
+            continue
+        used.add(r["file"])
+        used_apis.add(api)
+        apick.append(r)
+        if len(apick) == COMPOSITION["tool_agentic"]:
+            break
+    q_rev, a_rev = args.qasc_revision, args.apibank_revision
+    new: dict[str, dict] = {}
+    for i, r in enumerate(apick):
+        text, used_docs = apibank_prompt(r["rows"], r["row_index"], docs)
+        gold = r["rows"][r["row_index"]]
+        rel = f"lv1-lv2-samples/level-1-given-desc/{r['file']}"
+        new[f"tool_agentic-{i:02d}"] = {
+            "slot": f"tool_agentic-{i:02d}", "category": "tool_agentic", "status": "resolved", "task_id": r["id"],
+            "group": r["file"], "source": "api_bank", "dataset": "AlibabaResearch/DAMO-ConvAI (api-bank)",
+            "revision": a_rev, "split": "lv1-lv2-samples/level-1-given-desc", "file": rel,
+            "file_sha256": pins[f"api-bank/{rel}"], "row_index": r["row_index"], "field": "api_descriptions+dialogue",
+            "doc_files": {d: pins[f"api-bank/{d}"] for d in used_docs}, "text_sha256": sha256_text(text),
+            "checker": "api_call",
+            "gold_sha256": sha256_text(json.dumps(gold["param_dict"], sort_keys=True, ensure_ascii=False) + "|"
+                                       + gold["api_name"]),
+            "licence": "Apache-2.0", "licence_decision": "proposed 20 Nov 2026: licence row awaiting lead sign-off",
+            "generator": "none (annotator-written evaluation dialogues; the API results in them are the set's own)"}
+    for i, r in enumerate(qpick):
+        new[f"general-{i:02d}"] = {
+            "slot": f"general-{i:02d}", "category": "general", "status": "resolved", "task_id": f"qasc-{r['id']}",
+            "group": f"qasc/{r['id']}", "source": "qasc", "dataset": "allenai/qasc", "revision": q_rev,
+            "split": "validation", "file": qfile, "file_sha256": pins[f"qasc/{qfile}"], "row_index": r["row_index"],
+            "field": "formatted_question", "checker_fields": ["answerKey"],
+            "text_sha256": sha256_text(r["formatted_question"]), "checker": "answer_key",
+            "answer_sha256": sha256_text(r["answerKey"]), "licence": "CC-BY-4.0",
+            "licence_decision": "proposed 20 Nov 2026: licence row awaiting lead sign-off",
+            "generator": "none (human-authored crowd-sourced questions)"}
+    out = copy.deepcopy(v1)
+    out.pop("manifest_sha256")
+    out["suite"] = "g10-effort-dev-v2-proposed"
+    out["frozen"] = True
+    out["note"] = (v1["note"] + " PROPOSED v2 (20 Nov 2026): v1's 55 resolved slots unchanged, 30 new slots resolved "
+                   "(20 API-Bank calls, 10 QASC questions), 15 indic slots still unavailable. It becomes the suite "
+                   "only when the lead signs the two licence rows; effort_manifest.json (v1) is not changed.")
+    out["selection_v2"] = {
+        "rule": "lowest sha256(selection_seed:id) over every candidate; QASC: one slot per distinct question text "
+                "(validation split, 926 rows, 902 distinct questions), id = the row id; API-Bank: every API call in "
+                "the level-1 dialogue files (lv1-lv2-samples/level-1-given-desc, files named *-level-1-*), at most "
+                "one call per dialogue file and at most one call per API name, id = apibank/<file>#<line index>",
+        "qasc_candidates": len(qrows), "apibank_candidates": len(cand), "apibank_files": len({c['file'] for c in cand})}
+    out["sources"]["qasc"] = {"dataset": "allenai/qasc", "revision": q_rev, "split": "validation",
+                              "licence": "CC-BY-4.0"}
+    out["sources"]["api_bank"] = {"dataset": "AlibabaResearch/DAMO-ConvAI api-bank/", "revision": a_rev,
+                                  "split": "lv1-lv2-samples/level-1-given-desc", "licence": "Apache-2.0",
+                                  "licence_file": "api-bank/LICENSE (the repository root has a different licence)"}
+    out["slots"] = [new.get(s["slot"], s) for s in v1["slots"]]
+    resolved = [s for s in out["slots"] if s["status"] == "resolved"]
+    out["training_exclusion"] = {**v1["training_exclusion"], "task_ids": [s["task_id"] for s in resolved],
+                                 "text_sha256": [s["text_sha256"] for s in resolved]}
+    return seal(out)
+
+
 # --- CLI --------------------------------------------------------------------------------------------------
 
 def _dirs(pairs: list[str]) -> dict[str, Path]:
@@ -822,11 +1087,12 @@ def _dirs(pairs: list[str]) -> dict[str, Path]:
 
 
 def _instructions(pairs: list[str]) -> dict[str, str | None]:
-    out: dict[str, str | None] = {"math": None, "stdio": None, "none": None}
+    out: dict[str, str | None] = {"math": None, "stdio": None, "none": None, **DEFAULT_INSTRUCTIONS}
     for p in pairs or []:
         k, _, v = p.partition("=")
         if k not in out or not v:
-            raise SystemExit(f"--instruction needs kind=FILE with kind in math, stdio, none; got {p!r}")
+            raise SystemExit("--instruction needs kind=FILE with kind in math, stdio, none, answer_key, api_call; "
+                             f"got {p!r}")
         out[k] = Path(v).read_text(encoding="utf-8")
         apply_instruction("x", out[k])
     return out
@@ -882,6 +1148,15 @@ def build_parser() -> argparse.ArgumentParser:
     b.add_argument("--seed", default="g10-effort-dev-v1")
     b.add_argument("--base-seed", type=int, default=20261111)
     b.add_argument("--out", required=True)
+
+    b2 = sub.add_parser("build-v2-manifest", help="seal the proposed v2 manifest (v1 slots + API-Bank + QASC)")
+    b2.add_argument("--v1", default=str(HERE / "effort_manifest.json"))
+    b2.add_argument("--pins", required=True, help="JSON {relative path: sha256} of the downloaded files")
+    b2.add_argument("--qasc-dir", required=True)
+    b2.add_argument("--qasc-revision", required=True)
+    b2.add_argument("--apibank-dir", required=True)
+    b2.add_argument("--apibank-revision", required=True)
+    b2.add_argument("--out", required=True)
     return ap
 
 
@@ -890,6 +1165,12 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.cmd == "build-manifest":
         m = build_manifest(args)
+        Path(args.out).write_text(json.dumps(m, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+        print(json.dumps({"manifest_sha256": m["manifest_sha256"],
+                          "resolved": sum(s["status"] == "resolved" for s in m["slots"])}))
+        return 0
+    if args.cmd == "build-v2-manifest":
+        m = build_v2_manifest(args)
         Path(args.out).write_text(json.dumps(m, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
         print(json.dumps({"manifest_sha256": m["manifest_sha256"],
                           "resolved": sum(s["status"] == "resolved" for s in m["slots"])}))

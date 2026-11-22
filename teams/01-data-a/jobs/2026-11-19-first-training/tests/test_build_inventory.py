@@ -124,7 +124,8 @@ def test_prepare_run_pins_the_actual_inventory_and_refuses_incomplete_pack_metad
                                         f2_workers=30).read_text())
     assert cfg['inventory'] == 'out/inputs/expected_inventory.json'
     assert cfg['stages']['clean']['expected_parts'] == {'train': 38, 'heldout': 38}
-    assert cfg['stages']['shards']['dataset_version'] == 'first-training-v1'
+    assert cfg['run_id'] == 'first-training-v1'
+    assert cfg['stages']['shards']['dataset_version'] == 'corpus-v1'  # not derived from run_id
     assert cfg['intermediates'] == 'keep' and cfg['stages']['h3']['mode'] == 'run'
     assert cfg['stages']['f2'] == {'pool': True, 'workers': 30}
     (out / 'run.json').unlink()

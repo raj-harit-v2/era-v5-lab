@@ -85,7 +85,32 @@ def check_pins(run_folder: Path, tokenizer: Path, table: Path) -> dict:
     return {"checks": checks, "not_recorded": [k for k, c in checks.items() if c["match"] is None]}
 
 
-def run_sft_arm(out: Path, arm: str, cmd: list[str], timeout: float | None = None) -> dict:
+CANARY_FILES = ("model.safetensors", "dt_keep_masks.bin", "dt_keep_masks.bin.json")
+
+
+def copy_canary_state(arm_out: Path, dest: Path) -> dict:
+    """Copy the three files a DT canary reads (the arm's weights and its two mask files) into `dest`, write SHA256SUMS
+    there ("<sha256>  <file>" lines) and return {"dir", "sha256": {file: sha256}}. Raises when a file is missing."""
+    import hashlib  # noqa: PLC0415
+    import shutil  # noqa: PLC0415
+    missing = [n for n in CANARY_FILES if not (arm_out / n).is_file()]
+    if missing:
+        raise RuntimeError(f"keep-canary-state: the arm wrote no {missing} (the method must write DT mask files)")
+    dest.mkdir(parents=True, exist_ok=True)
+    sums = {}
+    for n in CANARY_FILES:
+        shutil.copyfile(arm_out / n, dest / n)
+        h = hashlib.sha256()
+        with (dest / n).open("rb") as f:  # hashed in 1 MiB chunks: the weights file is about 1 GB on the real model
+            for chunk in iter(lambda: f.read(1 << 20), b""):
+                h.update(chunk)
+        sums[n] = h.hexdigest()
+    (dest / "SHA256SUMS").write_text("".join(f"{v}  {k}\n" for k, v in sums.items()))
+    return {"dir": str(dest), "sha256": sums}
+
+
+def run_sft_arm(out: Path, arm: str, cmd: list[str], timeout: float | None = None,
+                canary_dest: Path | None = None) -> dict:
     """Keep reports but remove model text/weights even when an arm fails. `timeout` (seconds): the arm's process is
     killed at that point and the arm fails with a deadline message (weights and generations are still removed)."""
     arm_out = out / f"sft_{arm}"
@@ -100,6 +125,8 @@ def run_sft_arm(out: Path, arm: str, cmd: list[str], timeout: float | None = Non
         keep = ("method", "train_seconds", "stopped_early", "mask_checks", "writeback_step1",
                 "frozen_weights_unchanged", "reload_parity", "first_loss", "last_loss")
         kept = {"kept_weights": rep["kept_weights"]} if rep.get("kept_weights") else {}  # only when --keep-weights-dir was given
+        if canary_dest is not None:  # default off: the kept arm's weights and DT masks are copied before the finally clause deletes them
+            kept["kept_canary_state"] = copy_canary_state(arm_out, canary_dest)
         return {**{k: rep.get(k) for k in keep}, "before": rep["before"], "after": rep["after"], **kept}
     finally:
         # A process-level kill still requires the job runner's cleanup; finally covers ordinary failures.
@@ -113,6 +140,9 @@ def finish(out: Path, results: dict) -> int:
     kept = {n: r["kept_weights"] for n, r in results.items() if r.get("kept_weights")}
     if kept:  # only when --keep-weights-dir was given: where the run folder is, its manifest sha256 and the saved step
         summary["kept_weights"] = kept
+    canary = {n: r["kept_canary_state"] for n, r in results.items() if r.get("kept_canary_state")}
+    if canary:  # only when --keep-canary-state-dir was given
+        summary["kept_canary_state"] = canary
     (out / "summary.json").write_text(json.dumps(summary, indent=1))
     print(json.dumps(summary), flush=True)
     return int(bool(failed))

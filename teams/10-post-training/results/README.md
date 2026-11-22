@@ -2,6 +2,18 @@
 
 Index of the files in this folder. Each entry says what produced it and what it does not show. Numbers live in the linked file, not here.
 
+## Week 3 / Gate 3 summary & core reports
+
+| File | What it is | Limits |
+|---|---|---|
+| `gate3_summary.md` | Gate 3 evidence checklist, Week 3 Tasks 1–11 status, cross-team handoffs, and open TSAI decisions (20 Nov). | Index only; numbers live in the linked reports. |
+| `rl_data_v1_close.md`, `rl_data_v1_closure.md` | RL data v1 rebuild kit, pool flags (`3,577` code close pool, `7,209` reserved MATH), verifier two-test evidence, and Team 9 handoff. | Pool bytes stay outside Git (rebuilt by TSAI in #564; checked 6/6 by Team 9 in #661). |
+| `objective_v1_trainer.md` | Session 18 objective (`rl/objective_v1.py`) integration in `rl-loop/train.py`. | Mechanics verification; not a capstone quality claim. |
+| `small_sft.md`, `small_sft_evidence/` | Small SFT run (`SmolLM2-135M`, OCR-2 slice) with `forgetting.py` verdicts (`0.05` bpb limit, `0.01` at-limit mark). | Surrogate model on C3 slice; not re-run on p1536. |
+| `small_rl.md`, `code_rl_e1_20261115.md` | Small RL run on code verifiers (`Qwen2.5-Coder-7B-Instruct`, held-out pass@1 `0.151 -> 0.251`, 60 steps). | Surrogate model, one seed; dry-run-1 RL job queued in `jobs/2026-11-19-g10-rl-dryrun1.md`. |
+| `dt_vs_fft.md`, `dt_sft_surrogate.md`, `dt_toy_sharpness_check_20261117.md`, `dt_lr_check_20261118.md` | Deletion Tuning (candidate, not decided) vs LoRA vs full FT comparison (`SmolLM2-135M`/`1.7B`) + deletion-fraction & target-layer sweeps + sharpness `100 -> 1000` & lr port checks. | Surrogate models; TSAI decides at Gate 3. |
+| `dt_then_rl.md`, `dt_then_rl_evidence/` | Deletion Tuning SFT followed by small RL (3-seed CPU rehearsal on stand-in Team 5 MoE; 348,469 deleted weights stayed 0). | Toy reward on CPU; code-verifier GPU canary staged in `jobs/2026-11-17-dt-then-rl-code.md` and `jobs/2026-11-20-g10-dt-sft-dryrun1.md`. |
+
 ## Effort suite (`eval/`)
 
 | File | What it is | Limits |

@@ -35,6 +35,8 @@ STEPS = 20
 
 @fixture
 def saved(tmp_path, monkeypatch):
+    # Team 5's harness/train.py (reached through run_lab_ckpt.tiny_pieces) imports the pip package kronecker_embeddings
+    pytest.importorskip("kronecker_embeddings", reason="Team 5's harness/train.py needs the pip package kronecker_embeddings")
     monkeypatch.setenv("V5_EVENTS_DIR", str(tmp_path / "events"))
     sys.modules.pop("train", None)  # rl-loop/train.py may be imported by another test file: Team 5's must win here
     monkeypatch.syspath_prepend(str(rl.HARNESS05))

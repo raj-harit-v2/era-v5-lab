@@ -3,9 +3,11 @@
 The path: Team 5's trainer and its ``week2.model.KE2`` (#475), the dense untied head, bf16 autocast at T2 width 512.
 The tokenizer: TSAI's Gate 3 notice (16 Nov) replaced C3 with p1536 (Team 3, #414), ``tokenizer.json`` sha256
 ``e6b93a93…``, and Team 4 rebuilds its raw P = 32 byte table. This file pins that table's content sha256
-(``21072027…``, from ``src/build_tables.py --pos-dims 32``). The table is rebuilt locally and never committed
-(lab rule, 15 Nov). TSAI (16 Nov): the output head stays dense and the KE2 cosine decoder is an evaluation-time
-tool, so its round trip is checked here and no output-head check is.
+(``21072027…``, from ``src/build_tables.py --pos-dims 32``). The table is rebuilt locally; since #498 a copy is also
+committed at ``results/tables/p1536-s0/raw_table_P32.npz`` (``KE2_FROZEN_TABLE`` can point there). TSAI (16 Nov):
+dry run 1's output head stays dense and the KE2 cosine decoder is an evaluation-time tool, so its round trip is
+checked here and no output-head check is. TSAI (21 Nov, final): the capstone's output head is the KE2/KAS head,
+with nothing further to test or prove from Team 4's side.
 
 Every check runs on each table: the frozen p1536 table (skipped until it is available, see Environment) and the
 committed ``results/tables/raw_table_P32.npz`` (week 2's table, always present).

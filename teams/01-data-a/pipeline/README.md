@@ -33,7 +33,7 @@ Data A's pipeline, as one command: `run_pipeline.py --config <file>`. It runs (o
 > 3. **An offline LaBSE model for H3**, at the `model_path` in `jobs/2026-11-19-first-training/h3.json`; `prepare_run.py` refuses a missing model folder and one whose `model.safetensors`, `2_Dense/model.safetensors` or `config.json` differs (size or sha256) from LaBSE revision `836121a0533e5664b21c7aacc5d22951f2b8b25b`. H3 is report only: it measures translation matches and removes nothing.
 > 4. **The job's own rehearsal.** Done on sample v0 at `4dd2802`: all 86 raw parts (38 packs), the frozen p1536, H3, the job's pinned environment on Linux, 59 of 59 checks; and on 5 of those parts, a forced rollover, an interrupted shard stage, damaged shards and a part left out whole (`jobs/logs/2026-11-19-first-training-rehearsal-38packs/`, #62, the job request's test log). The same chain with `inventory`, from `prepare_run.py`'s own `run.json` at `2691c44` (F2 at 30 workers): 74/74, the same counts and shard data. For the job: `prepare_run.py --f2-workers N` sets F2's workers (default 1; about 3.1 h on sample v0 with 1, against 12 min with 30), so set it for the host.
 >
-> Every shard run also needs `stages.shards.dataset_version` (`"first-training-v1"` for the first training shards, as `prepare_run.py` sets it): `--plan` and the run stop without it; `any_tokenizer` shards stay `"test"`.
+> Every shard run also needs `stages.shards.dataset_version` (`"corpus-v1"` for the corpus-v1 shards, as `prepare_run.py` sets it): `--plan` and the run stop without it; `any_tokenizer` shards stay `"test"`.
 
 <br>
 
@@ -172,7 +172,7 @@ One run of `run_pipeline.py`, from the raw training parts to reconciled shards. 
     "dedup":   { "mode": "run", "settings": "teams/01-data-a/dedup/dedup.json" },
     "f2":      { "pool": true, "workers": <cores> },
     "ledger":  { "raw": "<folder of the raw training parts>" },          // mode B: required with "inventory"
-    "shards":  { "tokenizer": "<p1536>/tokenizer.json", "dataset_version": "first-training-v1",
+    "shards":  { "tokenizer": "<p1536>/tokenizer.json", "dataset_version": "corpus-v1",
                  "pack_table": "<the job's pack table>" },
     "reconcile": {}
   }
@@ -711,7 +711,7 @@ The run config is JSON. Paths are relative to the repository root, or absolute; 
 | `stages.shards.packs` | list of pack ids (optional) | only these packs (`--pack`); with `inventory`, exactly the inventory's packs or left out |
 | `stages.shards.pack_table` | file (optional) | a pack table other than `shards/pack_table.json`: the job's. A row that gives `license` and `license_source` has both written into its shards' manifests. A row may leave out both, and its shards then carry no licence: `run_shards.py` allows that, but the job's `prepare_run.py` refuses a pack table without both for every pack (gate 5) |
 | `stages.shards.tokens` | whole number ≥ 1 (optional) | token limit per shard (the writer's default is 2^26) |
-| `stages.shards.dataset_version` | text (**required**, unless `any_tokenizer`) | the corpus release every shard manifest records, e.g. `"first-training-v1"` (the first training shards; `prepare_run.py` sets it) or `"sample"`; never `"test"`. With `any_tokenizer` leave it out: those shards are `"test"` |
+| `stages.shards.dataset_version` | text (**required**, unless `any_tokenizer`) | the corpus release every shard manifest records, e.g. `"corpus-v1"` (the corpus-v1 shards; `prepare_run.py` sets it) or `"sample"`; never `"test"`. With `any_tokenizer` leave it out: those shards are `"test"` |
 | `stages.shards.script` · `.any_tokenizer` | path · `true` | `run_shards.py` (default `teams/01-data-a/shards/run_shards.py`); `any_tokenizer: true` accepts another tokenizer (tests only) |
 | `stages.reconcile` | `{}` | adds the reconciliation after shards (needs `stages.shards`); it takes no keys and uses `stages.shards.packs` |
 
@@ -1113,7 +1113,7 @@ The data is made up inside the tests (`conftest.py`), in dedup's real formats (`
 | `shards: run_shards.py failed … and wrote no shards_summary.json` | `run_shards.py` stopped before any part: for example the pack table is malformed (`<pack> has fields […], expected […], with or without license and license_source`: a row with only one of the two licence fields) | see `logs/shards.log`; give both licence fields in every row, or neither |
 | `shards: no part was cut short …` · `reconcile: … not_reached` | rows of a written part were never read into a shard: the writer rolls over, so this is a writer fault | see `logs/shards.log` and the part's entry in `shards_summary.json`, and report it with the part named |
 | `shards: the shard files on disk verify …` failed · `shards: the shards could not be verified: …` | a shard file is missing or differs from its manifest, or a manifest disagrees with the pack table, the tokenizer, the F2 set or `final/` (the first 3 problems are named); or the check could not run (an unreadable tokenizer, manifest or pack table) | find out why (a damaged copy, another pack table or tokenizer than the run's), then write the shards again into a new `stages.shards.out` with `"from": "shards"` |
-| `config: stages.shards.dataset_version is …` | no corpus release named, or `"test"` without `any_tokenizer` | set it, e.g. `"first-training-v1"` for the first training shards (`prepare_run.py` writes it into the job's config) |
+| `config: stages.shards.dataset_version is …` | no corpus release named, or `"test"` without `any_tokenizer` | set it, e.g. `"corpus-v1"` for the corpus-v1 shards (`prepare_run.py` writes it into the job's config) |
 | `ledger: --raw: … has no cleaning report with input_rows, actions and input_sha256` | mode B on a clean step that wrote no per-part reports | have the clean step write them (as `clean_job.py` does), or leave out `stages.ledger.raw` (mode C) |
 | `reconcile: … missing` · `… at no kept ledger position` | the shards do not match this run's ledger | shard this run's `final/` again (`"from": "shards"`), and look at `reconcile/reconcile_docs.parquet` |
 | `config: "inventory" needs stages.ledger.raw` | a run with an expected inventory must account for every raw document | set `stages.ledger.raw` to the raw parts the clean job read |

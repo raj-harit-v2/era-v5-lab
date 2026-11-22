@@ -1,0 +1,153 @@
+{
+  "config": {
+    "intended": {
+      "arm": "exp3-shared-0",
+      "official_step_time": false,
+      "instructor_expert_ffn": 768,
+      "loaded_expert_ffn": null,
+      "mlp_ratio": null,
+      "activation_intended": "SwiGLU",
+      "position_intended": "RoPE",
+      "tied_embeddings_intended": true,
+      "profile": "T2",
+      "lead_intent": {
+        "arm": "exp3-shared-0",
+        "official_step_time": false,
+        "instructor_expert_ffn": 768,
+        "loaded_expert_ffn": null,
+        "mlp_ratio": null,
+        "activation_intended": "SwiGLU",
+        "position_intended": "RoPE",
+        "tied_embeddings_intended": true
+      }
+    },
+    "model": {
+      "activation": "swiglu",
+      "position": "rope",
+      "rope_theta": 10000.0,
+      "rotary_fraction": 1.0,
+      "norm_eps": 1e-06,
+      "mtp_weight": 0.0,
+      "moe": {
+        "bias": false,
+        "bias_gamma": 0.0,
+        "num_experts": 16,
+        "top_k": 2,
+        "num_shared": 0,
+        "dispatch": "loop",
+        "ffn_hidden": 768
+      },
+      "embedding": "ke1",
+      "attn_impl": "eager",
+      "mtp": false,
+      "reversible": false,
+      "ce_impl": "torch",
+      "vocab_size": 131072,
+      "block_size": 8,
+      "n_layer": 8,
+      "n_head": 8,
+      "n_kv_head": 2,
+      "n_embd": 512,
+      "ke_max_pos": 32
+    },
+    "optim": {
+      "betas": [
+        0.9,
+        0.999
+      ],
+      "eps": 1e-08,
+      "schedule": "constant",
+      "name": "adamw",
+      "lr": 0.001,
+      "weight_decay": 0.0
+    },
+    "run": {
+      "micro_batch_size": 1,
+      "eval_every_steps": 50,
+      "compile": false,
+      "flush_every_steps": 10,
+      "steps": 6,
+      "max_time_min": 90,
+      "seed": 1241,
+      "batch_size": 1,
+      "grad_clip": 1.0,
+      "dtype": "fp32"
+    },
+    "approval": {
+      "status": "smoke_only",
+      "reference": "G5 implementation check; NOT an approved experimental baseline"
+    },
+    "evaluation": {
+      "boundary_policy": "bos_then_all_text_tokens_document_isolated",
+      "approved": false
+    },
+    "provenance": {
+      "arm_sources": [
+        {
+          "path": "configs/arms/exp3_shared_0.yaml",
+          "sha256": "3ded77015792414b221b5c61d49c0036526dfdae8133c90d51b56f47c4170ee9"
+        },
+        {
+          "path": "configs/arms/t2.yaml",
+          "sha256": "76849b12db618aa695055c52dda66e2e3eaf8f57749c501075ff1813ee120b86"
+        }
+      ],
+      "runtime_sha256": "cee02ccadbad0ac39866ce227f06ba5194249ed56144249fc368dfa173481244",
+      "plan_sha256": "b9edabe7696d5e33ed1e885bcba02d5cb2db61724007306e63966c8d11a3f0c5",
+      "plan_hash_normalization": "UTF-8 with LF newlines",
+      "lead_snapshot": "3a2f898b990d253d8422419f31e147ae65ec1747",
+      "expert_width_source": "model.moe.ffn_hidden",
+      "lead_explicit_choices": {
+        "model.reversible": false,
+        "model.mtp": false
+      },
+      "g6_inheritance": "not loaded; explicit G5 declarations only"
+    }
+  },
+  "artifacts": {
+    "tokenizer_sha256": "2de039f20d17afd17615095c406c43087359673b767ed0fe2c480b995f2af8e5",
+    "table_file_sha256": "5e99508660799f43508a0df0060590e96fa253dd1bb69e2575d8e0f302fdd77f",
+    "table_content_sha256": "47d411a9c6cae6fa2075935567243e51f4efbc377ccef3eef42c32fce66f869f",
+    "vocab_size": 131072,
+    "pos_dim": 32,
+    "bos_id": 130725,
+    "pad_id": 130726
+  },
+  "train_sha256": "f216bad100db485b8271fe69f72c30bc9d952072d89e6ec6b0ced9722ce3e6b0",
+  "heldout_sha256": "4e1a8a9ee4c8bc38cf9f1adbbb7dcb92cd75bd8941604df51904b91a47bf3510",
+  "heldout_sources_sha256": null,
+  "heldout_checksum_sha256": null,
+  "sources": {
+    "train_week2.py": "ab211932306383ca1dbb33261532d6d4439b1db462f23306aa50abfbd4e8edcf",
+    "config.py": "ef7fa77490217a8f019fff20f9b8b560d3241be068b0cd5f5ad44a60f10c186a",
+    "watchdog.py": "1bfa1b4eaa18eed7dd551112b81f65544c0ccca4a151658c0a0ad706b7979b0a",
+    "scoring.py": "009f0b9a16c15f46603265e73085003ab985211ae2e944fe01cf4bd81b4803c7",
+    "evaluation.py": "126620af86fe02b96c0932fca95dcaf8696b995d58d4530eb240fea34580ce6e",
+    "__init__.py": "efb6f85c6ea25364a24baddf112017ba5522f0006376f91f78ff3ea4c472a8a4",
+    "model.py": "9d3826793f5e32439fb7d2f67f5e91e14ce7a6bc0b2c03851f833031884a7fb2",
+    "artifacts.py": "1fb80b0bb9bcfea10c795c7a5583981dcbc8fe8a7e298b3509ee0ba32934457d",
+    "optim.py": "e7dcf458e45d04f13d16ba7d3171cec5949215966b36735f200cf9fbc6ba7b7d",
+    "data.py": "e5c9e15e35e4361e3038daa8d4b85c79f769ef12a62db26c76acb007e40a4535",
+    "team7_checkpoints.py": "8842f0fbb0c8c96a871207361e51f5d93da246eddceb21db6ffcec1ddbf46aff"
+  },
+  "device": "cpu",
+  "torch": "2.5.1",
+  "smoke": true,
+  "consolidate_step_checks": true,
+  "run_id": "993be12c3e0f4ce28264f9a064d3b016",
+  "identity_sha256": "4284a8c6c493028401aa17ee013d6ce2c62c9577d728dfa61d268323313a2063",
+  "baseline_commit": "3a2f898b990d253d8422419f31e147ae65ec1747",
+  "parameters": 227615232,
+  "optimizer": {
+    "name": "adamw",
+    "lr": 0.001,
+    "parameters": 227615232
+  },
+  "gpu": null,
+  "status": "SMOKE_NOT_A_QUALITY_RESULT",
+  "heldout_provenance": null,
+  "g8_external_writer": false,
+  "token_budget_note": "Input positions include right padding; scored tokens/bytes reported separately",
+  "train_documents": 64,
+  "heldout_documents": 8
+}

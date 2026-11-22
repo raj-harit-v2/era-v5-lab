@@ -2,7 +2,7 @@
 
 Checked on 17 November 2026 against TSAI main
 `8de78eced899111ddea295d6822d024e3c6faecc`. These are the two shards
-assigned to `@AvnishMidha` in the G9 rotation post. Raghav's
+assigned to `@avnishbm` in the G9 rotation post. Raghav's
 `results/decontam_shards.md` remains the main report for all shards.
 
 ## R1: full fingerprint set and canaries
@@ -29,7 +29,7 @@ report for either shard.
 
 Checked on 18 November 2026 against class main
 `431f9b33feb674acbc370fbea6d64159bf9551ac`. These four shards were
-assigned to `@AvnishMidha` in the Task 2 split. The same frozen p1536
+assigned to `@avnishbm` in the Task 2 split. The same frozen p1536
 tokenizer and unfiltered fingerprints v2 set were used for every row.
 
 | shard_id | payload_sha256 | docs scanned | docs flagged | canary hits | fingerprints v2 set_sha256 |

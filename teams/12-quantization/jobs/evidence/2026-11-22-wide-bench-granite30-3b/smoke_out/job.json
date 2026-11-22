@@ -1,0 +1,58 @@
+{
+ "model": "ibm-granite/granite-3.0-3b-a800m-base",
+ "revision": "142d2c8e3f7fb8844011cfa5565f0e520f0824b9",
+ "formats": [
+  "bf16",
+  "Q4_K_M"
+ ],
+ "cap": 2,
+ "tasks": [
+  "mmlu",
+  "arc_challenge"
+ ],
+ "n_ctx": 4096,
+ "started": "2026-11-21T20:43:07",
+ "steps": {
+  "convert": {
+   "rc": 0,
+   "seconds": 110.7
+  },
+  "test_llamacpp_lm_bf16": {
+   "rc": 0,
+   "seconds": 36.0
+  },
+  "run_bf16": {
+   "rc": 0,
+   "seconds": 58.4
+  },
+  "quantize_Q4_K_M": {
+   "rc": 0,
+   "seconds": 156.9
+  },
+  "test_llamacpp_lm_Q4_K_M": {
+   "rc": 0,
+   "seconds": 2.9
+  },
+  "run_Q4_K_M": {
+   "rc": 0,
+   "seconds": 25.7
+  },
+  "paired": {
+   "rc": 0,
+   "seconds": 0.1
+  }
+ },
+ "gguf": {
+  "bf16": {
+   "file": "granite-3.0-3b-a800m-base-bf16.gguf",
+   "bytes": 6754445248,
+   "sha256": "6ec765fcd81fbecf86724fe3a32baf808c1115dad4247ca68be5816e5f1faad6"
+  },
+  "Q4_K_M": {
+   "file": "granite-3.0-3b-a800m-base-Q4_K_M.gguf",
+   "bytes": 2077632448,
+   "sha256": "5b8c6492e0d465fd4e191383e50b6f94bfa3773eab7941644d0ebcf59fe29540"
+  }
+ },
+ "finished": "2026-11-21T20:50:02"
+}

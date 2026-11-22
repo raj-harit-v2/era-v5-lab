@@ -1,0 +1,123 @@
+{
+  "model": "run",
+  "revision": "2c78e04d29b34b32eb6a09202e0bdaad01a54073e728640ff45673e9173e3c44",
+  "checkpoint": "./inputs/standin-t2",
+  "tokenizer_sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b",
+  "gguf": {
+    "arch": "granitemoe",
+    "n_ctx_train": 2048,
+    "pre": "granite-embed-multi-97m",
+    "n_vocab": 131072,
+    "eos_id": 130822
+  },
+  "export_a1": {
+    "test": "A1",
+    "prompts": 64,
+    "tokens_per_prompt": 64,
+    "max_abs_logit_diff": 8.106231689453125e-06,
+    "tolerance": 0.001,
+    "same_top1": 4096,
+    "positions": 4096,
+    "passed": true
+  },
+  "gguf_a3": {
+    "test": "A3",
+    "prompts": 16,
+    "skipped": 0,
+    "tokens_per_prompt": 48,
+    "same_top1": 16,
+    "max_abs_logprob_diff": 0.03718376159667969,
+    "tolerance": 0.05,
+    "passed": true
+  },
+  "tokenizer_roundtrip": null,
+  "runtime": "llama.cpp b11669 (620d2225c)",
+  "machine": "Apple M5 16GB, macOS 26.6.2, Metal",
+  "eval_set": "own-eval-20 (G12: 10 multiple-choice + 10 arithmetic items written for the flow test, not a benchmark)",
+  "n_items": 20,
+  "prompt_mode": "completion",
+  "context": 2048,
+  "formats": [
+    {
+      "date": "2026-11-19",
+      "model": "run",
+      "revision": "2c78e04d29b3",
+      "format": "bf16",
+      "bpw": 16.0,
+      "size_gb": 0.61,
+      "router_type": "F32",
+      "output_type": "BF16",
+      "eval_set": "own-eval-20 (G12: 10 multiple-choice + 10 arithmetic items written for the flow test, not a benchmark)",
+      "n_items": 20,
+      "score": 0.0,
+      "score_by_kind": {
+        "mcq": 0.0,
+        "numeric": 0.0
+      },
+      "quant_time_s": 0.0,
+      "eval_time_s": 11.1,
+      "gen_tok_s": 388.0,
+      "machine": "Apple M5 16GB, macOS 26.6.2, Metal",
+      "runtime": "llama.cpp b11669 (620d2225c)",
+      "notes": "prompt=completion; tokenizer=e6b93a93a605",
+      "file": "./work/run-2c78e04d-bf16.gguf",
+      "sha256": "b4404b0430814c01e2776d13332ec7b5af468757cb9f3fa21fb50957e7b676bb",
+      "size_bytes": 606017344,
+      "prompts_over_context": 0
+    },
+    {
+      "date": "2026-11-19",
+      "model": "run",
+      "revision": "2c78e04d29b3",
+      "format": "Q8_0",
+      "bpw": 8.58,
+      "size_gb": 0.32,
+      "router_type": "F32",
+      "output_type": "Q8_0",
+      "eval_set": "own-eval-20 (G12: 10 multiple-choice + 10 arithmetic items written for the flow test, not a benchmark)",
+      "n_items": 20,
+      "score": 0.05,
+      "score_by_kind": {
+        "mcq": 0.0,
+        "numeric": 0.1
+      },
+      "quant_time_s": 0.6,
+      "eval_time_s": 8.6,
+      "gen_tok_s": 432.9,
+      "machine": "Apple M5 16GB, macOS 26.6.2, Metal",
+      "runtime": "llama.cpp b11669 (620d2225c)",
+      "notes": "prompt=completion; tokenizer=e6b93a93a605",
+      "file": "./work/run-2c78e04d-Q8_0.gguf",
+      "sha256": "ba46d9ffd480d27aace601aa011907f77d29422baca085dd2f3a8c1d1db0db82",
+      "size_bytes": 324867904,
+      "prompts_over_context": 0
+    },
+    {
+      "date": "2026-11-19",
+      "model": "run",
+      "revision": "2c78e04d29b3",
+      "format": "Q4_K_M",
+      "bpw": 5.69,
+      "size_gb": 0.22,
+      "router_type": "F32",
+      "output_type": "Q8_0",
+      "eval_set": "own-eval-20 (G12: 10 multiple-choice + 10 arithmetic items written for the flow test, not a benchmark)",
+      "n_items": 20,
+      "score": 0.0,
+      "score_by_kind": {
+        "mcq": 0.0,
+        "numeric": 0.0
+      },
+      "quant_time_s": 1.7,
+      "eval_time_s": 8.7,
+      "gen_tok_s": 540.8,
+      "machine": "Apple M5 16GB, macOS 26.6.2, Metal",
+      "runtime": "llama.cpp b11669 (620d2225c)",
+      "notes": "prompt=completion; tokenizer=e6b93a93a605",
+      "file": "./work/run-2c78e04d-Q4_K_M.gguf",
+      "sha256": "cd6bece997a1a2a96c0d722afc2a1198b70b57fed98a5016d13c1842a750a6b5",
+      "size_bytes": 215437120,
+      "prompts_over_context": 0
+    }
+  ]
+}

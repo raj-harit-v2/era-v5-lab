@@ -3,7 +3,8 @@
 Muon is the plain loop path of teams/06-performance/models/optim.py (commit 0968eb8): momentum 0.95
 with Nesterov, five Newton-Schulz steps with coefficients (3.4445, -4.7750, 2.0315), and the update
 scaled by sqrt(max(1, rows/cols)). Timing regions, the batched path and polar_muon_adamw are not ported.
-Muon takes optim.muon_lr; AdamW keeps optim.lr, betas, eps and weight_decay from the arm chain.
+Muon takes optim.muon_lr and no weight decay (TSAI, 21 Nov); AdamW keeps optim.lr, betas, eps and weight_decay from
+the arm chain.
 """
 
 from __future__ import annotations
@@ -116,9 +117,58 @@ class Optimizers:
 
 
 # Muon handles the selected block matrices. AdamW handles the remaining parameters.
-def uses_muon(name, p):
-    """Attention, router and expert matrices inside the blocks. Embedding projection, heads and norm gains stay on AdamW."""
-    return p.ndim == 2 and name.startswith("blocks.") and name.endswith(".weight")
+def uses_muon(name, p, router_on_muon=False):
+    """Attention and expert matrices inside the blocks. The MoE router, embedding projection, heads and norm gains stay
+    on AdamW. Router on AdamW: TSAI and KE2, 21 Nov (small and sensitive, like a head; to be tested, not settled).
+    optim.router_on_muon: true puts the router back on Muon, for the router comparison run only."""
+    return (
+        p.ndim == 2
+        and name.startswith("blocks.")
+        and name.endswith(".weight")
+        and (router_on_muon or ".moe.router." not in name)
+    )
+
+
+WSD_KEYS = ("warmup_frac", "decay_frac", "final_lr_frac")
+
+
+def lr_scale(step, total, o):
+    """Learning-rate multiplier at 1-based step `step` of a `total`-step run (TSAI's recipe, 21 Nov: WSD).
+
+    constant: 1.0 at every step. wsd ("warmup, stable, decay"): linear warmup from 0 over the first
+    round(warmup_frac * total) steps, flat at 1.0, then linear decay over the last round(decay_frac * total) steps,
+    ending at final_lr_frac on the last step. The same multiplier scales every optimizer's own peak rate
+    (Muon's muon_lr and AdamW's lr), as TSAI described ("same WSD shape as AdamW"). It depends only on the step,
+    so a resumed run continues the same curve without saving any schedule state.
+    """
+    if o.get("schedule", "constant") == "constant":
+        return 1.0
+    warm = round(o["warmup_frac"] * total)
+    decay = round(o["decay_frac"] * total)
+    if warm and step <= warm:
+        return step / warm
+    start = total - decay
+    if decay and step > start:
+        return 1.0 - (1.0 - o["final_lr_frac"]) * (step - start) / decay
+    return 1.0
+
+
+def set_lr_scale(optimizer, scale):
+    """Set every parameter group's rate to its peak rate times `scale`; works for AdamW alone and for Optimizers.
+
+    The peak rate is kept in the group as base_lr, so it travels with the optimizer state through checkpoints.
+    """
+    inner = [o for _, o in optimizer.named] if isinstance(optimizer, Optimizers) else [optimizer]
+    for opt in inner:
+        for group in opt.param_groups:
+            group.setdefault("base_lr", group["lr"])
+            group["lr"] = group["base_lr"] * scale
+
+
+def uses_head_sgd(name, o):
+    """The whole output head group (TSAI, 21 Nov: "the whole head group together ... don't split it"), when
+    optim.head_sgd is on. All output-head parameters live under head.* (Udit's convention, TSAI-approved)."""
+    return bool(o.get("head_sgd", False)) and name.startswith("head.")
 
 
 def build_optimizer(model, o):
@@ -129,33 +179,57 @@ def build_optimizer(model, o):
         eps=o["eps"],
         weight_decay=o["weight_decay"],
     )
-    if o["name"] == "adamw":
-        return adamw(model.parameters())
-    if o["name"] != "muon":
+    if o["name"] not in ["adamw", "muon"]:
         raise ValueError(
             "Unknown optimizer " + repr(o["name"]) + "; never replaced silently"
         )
     named = list(model.named_parameters())
-    muon = [p for n, p in named if uses_muon(n, p)]
-    rest = [p for n, p in named if not uses_muon(n, p)]
+    # Optional (TSAI recipe, 21 Nov): plain SGD with momentum on the head group only, off by default.
+    head = [p for n, p in named if uses_head_sgd(n, o)]
+    if o.get("head_sgd") and not head:
+        raise ValueError("head_sgd is on but the model has no head.* parameters")
+    sgd = (
+        [("sgd", torch.optim.SGD(head, lr=o["head_sgd_lr"], momentum=o["head_sgd_momentum"]))]
+        if head
+        else []
+    )
+    if o["name"] == "adamw":
+        if not sgd:
+            return adamw(model.parameters())
+        return Optimizers([("adamw", adamw([p for n, p in named if not uses_head_sgd(n, o)]))] + sgd)
+    rom = bool(o.get("router_on_muon", False))
+    muon = [p for n, p in named if uses_muon(n, p, rom)]
+    rest = [p for n, p in named if not uses_muon(n, p, rom) and not uses_head_sgd(n, o)]
     if not muon or not rest:
         raise ValueError("Muon needs block matrices and AdamW parameters")
     return Optimizers(
         [
             (
                 "muon",
-                Muon(muon, lr=o["muon_lr"], weight_decay=o["weight_decay"], **MUON),
+                Muon(muon, lr=o["muon_lr"], weight_decay=0.0, **MUON),
             ),
             ("adamw", adamw(rest)),
         ]
+        + sgd
     )
 
 
 def describe(model, o):
     """What the run really used, for the manifest."""
-    if o["name"] == "adamw":
-        return {"name": "adamw", "lr": o["lr"], "parameters": model.parameter_count()}
     named = list(model.named_parameters())
+    head_sgd = (
+        {
+            "head_sgd": True,
+            "head_sgd_lr": o["head_sgd_lr"],
+            "head_sgd_momentum": o["head_sgd_momentum"],
+            "head_sgd_parameters": sum(p.numel() for n, p in named if uses_head_sgd(n, o)),
+        }
+        if o.get("head_sgd")
+        else {"head_sgd": False}
+    )
+    if o["name"] == "adamw":
+        return {"name": "adamw", "lr": o["lr"], "parameters": model.parameter_count(), **head_sgd}
+    rom = bool(o.get("router_on_muon", False))
     return {
         "name": "muon",
         "source": "teams/06-performance/models/optim.py@0968eb8 (loop path)",
@@ -163,6 +237,10 @@ def describe(model, o):
         "adamw_lr": o["lr"],
         **MUON,
         "ns_coefficients": list(NS_COEFFS),
-        "muon_parameters": sum(p.numel() for n, p in named if uses_muon(n, p)),
-        "adamw_parameters": sum(p.numel() for n, p in named if not uses_muon(n, p)),
+        "router_on_muon": rom,
+        "muon_parameters": sum(p.numel() for n, p in named if uses_muon(n, p, rom)),
+        "adamw_parameters": sum(
+            p.numel() for n, p in named if not uses_muon(n, p, rom) and not uses_head_sgd(n, o)
+        ),
+        **head_sgd,
     }

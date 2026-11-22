@@ -1,14 +1,15 @@
 # KE2 trainer adapter note (week 3, task 1)
 
 The contract between Team 4 (KE2) and Team 5 (Architecture) for the KE2 path in the trainer. Both teams point to this
-file. Status: 16 Nov 2026, after dry run 1 (#475).
+file. Status: 16 Nov 2026, after dry run 1 (#475). Open items 1 and 2 updated 21 Nov; the output head row and items 3
+and 4 change with the integration PR (`gate3.md`, handoff section).
 
 ## The chosen path
 
 | Item | Value | Source |
 |---|---|---|
 | Input embedding | KE2: fixed Kronecker byte code, then one learned `Linear(8192, d_model, bias=False)` | Gate 2 |
-| Output head | Dense untied `nn.Linear(d_model, 131072, bias=False)`. No KE2 output head | TSAI, 15 Nov; `HARNESS_WEEK2.md` |
+| Output head | Dense untied `nn.Linear(d_model, 131072, bias=False)`. No KE2 output head. **Superseded 21 Nov** (TSAI; corrected in #702): the capstone output head is the KE2/KAS head, untied, with its own output projection; this row changes with the integration PR (`gate3.md`, handoff section) | TSAI, 15 Nov; `HARNESS_WEEK2.md` |
 | Trainer class | `KE2` in `teams/05-architecture/harness/week2/model.py` | Team 5, 16 Nov |
 | Arm setting | `embedding: ke2`; `ke1` stays accepted as the older name for the same path | #472 |
 | Tokenizer | p1536, `tokenizer.json` sha256 `e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b`, V = 131,072 | TSAI Gate 3 notice; `teams/03-tokenizer/release/` |
@@ -71,12 +72,15 @@ python -m pytest teams/05-architecture/tests/test_week2_tokenizer_release.py -q
 
 ## Open items
 
-1. The dry run 1 manifest is not yet in the repository. It should show `tokenizer_sha256` `e6b93a93…a64b` and
-   `table_content_sha256` `21072027…168a`.
-2. Trainer support for p1536 lands with this note's pull request: `--tokenizer-release frozen-p1536` in
+1. Done: the dry run 1 manifest is in the repository (#620,
+   `teams/05-architecture/jobs/evidence/2026-11-15-dryrun1-full/manifest.json`). It shows `tokenizer_sha256`
+   `e6b93a93…a64b` and `table_content_sha256` `21072027…168a`.
+2. Done: trainer support for p1536 merged with this note (#515): `--tokenizer-release frozen-p1536` in
    `train_week2.py` and `check_week2.py`, the pin in `artifacts.py`, and original-byte BPB for the normalizing releases
-   (C3 and p1536), as #474's C3 patch did at run time. Until it is merged the trainer on main accepts v0 only.
-3. A KE2 output head is not chosen. The cosine decoder (`src/decode_ref.py`) is an evaluation tool only, and tau is
+   (C3 and p1536). The default stays v0.
+3. Superseded 21 Nov (TSAI; corrected in #702): the capstone output head is the KE2/KAS head, untied; see `gate3.md`,
+   handoff section.
+   The 16 Nov text follows. A KE2 output head is not chosen. The cosine decoder (`src/decode_ref.py`) is an evaluation tool only, and tau is
    decided by TSAI at Gate 3.
 4. Parked (lead, 17 Nov): the cosine decode of predicted vectors and the tau rerun on real vectors. With the head dense,
    the decoder is an inspection tool; risk 2 of `decision_input.md` stays open until a run's saved vectors exist.

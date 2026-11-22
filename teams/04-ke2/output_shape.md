@@ -3,6 +3,7 @@
 **Status:** Gate 3 p1536-s0 is the current frozen tokenizer (16 Nov); its exact file hash passed
 the loader gate and both P = 32 and P = 64 were measured. C3-s0 remains a historical result.
 Both P values are supported; P = 32 is recommended and is the path dry run 1 trains (#475).
+The capstone output head is the KE2/KAS head (TSAI, 21 Nov, final); see [Output side](#output-side).
 For export and serving (Team 12), see [Export: fold into a normal embedding table](#export-fold-into-a-normal-embedding-table-for-g12).
 
 ## Shape
@@ -73,8 +74,15 @@ KE2's size does not depend on V, so adding special-token slots does not change i
 
 ## Output side
 
-No KE2 output head is chosen. Dry run 1 and the Team 5 trainer use a dense untied head,
-`nn.Linear(d_model, 131072, bias=False)` (TSAI, 15 Nov; `trainer_adapter.md`). KE2 is on the input only.
+Decided 21 Nov, final (TSAI): the capstone output head is the KE2/KAS head, with a unigram log-prior scalar and a
+rank-64 per-token correction. It has its own separate output projection and is not tied to the input embedding
+(TSAI's correction, #702). It reads raw tokenizer bytes with a 32-byte limit. The handoff, and the questions Team 5
+settles first (codec width and vocabulary; weight tying is settled as untied), are in `gate3.md`, section "Handoff of
+the reference implementation to Team 5". The codec question may also change the input path described above.
+
+Dry run 1 and the week-2 trainer used a dense untied head, `nn.Linear(d_model, 131072, bias=False)` (TSAI, 15 Nov),
+with KE2 on the input only. The export notes below were written for that run. With the KAS head, the export of the
+output side follows Team 5's integration.
 
 ## Export: fold into a normal embedding table (for G12)
 
@@ -93,7 +101,7 @@ A `train_week2.py` `checkpoint.pt` holds the state dict under `"model"`. The KE2
 | `embedding.projection.weight` | `(d_model, 8192)`, float32 | the only learned KE2 weight, `W` |
 | `embedding.rows` | `(131072, 32)`, uint8 | buffer: the raw byte table, one row per ID |
 | `embedding.lengths` | `(131072,)`, int64 | buffer: the byte length L of each ID |
-| `head.weight` | `(131072, d_model)` | the dense untied output head; export as is (`output.weight`) |
+| `head.weight` | `(131072, d_model)` | dry run 1's dense untied output head; export as is (`output.weight`). The KAS head's keys follow Team 5's integration |
 | `mtp_head.weight` | `(131072, d_model)` | only if the run uses MTP; G12 drops it at export |
 
 Before folding, check that `embedding.rows` and `embedding.lengths` are the frozen p1536 table: content
@@ -140,8 +148,9 @@ How to read this for export:
   so it has its own non-zero row, including pad (130726). eos is ID 130822 `<|endoftext|>`; ID 36 has no
   role. No two IDs share a code (0 raw collisions, `results/tables/p1536-s0/`), so no two rows of `E` are
   forced to be equal.
-- **Unchanged by the fold:** the tokenizer, the token IDs, the output head, and the shape
-  `(B, T, d_model)`. The served model needs neither the byte table nor the KE2 codec.
+- **Unchanged by the fold:** the tokenizer, the token IDs, and the shape `(B, T, d_model)`. For dry run 1 the dense
+  output head is unchanged too, and the served model needs neither the byte table nor the KE2 codec. With the KAS
+  head, the head's export follows Team 5's integration (see `gate3.md`, the handoff section).
 
 ### Size after the fold
 

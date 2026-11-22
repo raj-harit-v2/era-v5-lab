@@ -22,3 +22,9 @@ Checked against main at commit `85639f0`.
 - The section covers the public data sources: no section text yet. Evidence comes when Data A and Data B write the section.
 - The section covers the problems found in those sources: no section text yet. Evidence comes when Data A and Data B write the section.
 - Data B's draft text for this section is in [#525](https://github.com/theschoolofai/era-v5-lab/pull/525) (open). It is not on main yet, so both claims above stay No evidence.
+
+## Update after the review
+
+21 Nov 2026: [#525](https://github.com/theschoolofai/era-v5-lab/pull/525) merged on 17 Nov. Data B's part of the
+section text is on main in `teams/02-data-b/model_card/training_data.md`. The model card has no text for this section
+yet, so the first two claims stay No evidence.

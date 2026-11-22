@@ -26,7 +26,8 @@ output_ids), so no benchmark text or answer reaches the repo. The comparison wit
 4. runs every prompt on bf16 and on each format: greedy (temperature 0), seed 0, same max tokens, token ids kept.
 
 Writes out/prompts_<format>.jsonl (per prompt: id, output token ids, sha256 of the text, the text, finish reason, tokens/s)
-and out/summary.json (finish reasons, mean tokens/s, agreement with bf16: identical outputs and mean shared prefix, GGUF
+and out/summary.json (finish reasons, mean tokens/s, agreement with bf16: identical outputs and mean shared prefix, with
+--manifest reported separately for Team 10's 55 slots (g10_55) and our 45 fill slots (g12_fill_45), GGUF
 sha256s, versions, wall time). The prompts are our own, not from a benchmark. The GGUF files go to out/_work and are removed
 at the end (--keep to keep them), so out/ stays small. The tokenizer round trip on held-out text needs the network and is
 tokenizer/convert_frozen.py's own run (#467); it is not repeated here.
@@ -162,6 +163,19 @@ def agreement(base: list[dict], other: list[dict]) -> dict:
     return {"identical_outputs": same, "of": len(base), "mean_shared_prefix_fraction": round(prefix / len(base), 4)}
 
 
+def agreement_by_source(base: list[dict], other: list[dict]) -> dict:
+    """agreement() as is for a plain run. With --manifest: one entry per source, Team 10's slots ("g10_55") and our fill
+    ("g12_fill_45") reported separately, never pooled."""
+    if not any("source" in r for r in base):
+        return agreement(base, other)
+    out = {}
+    for src, name in (("g10", "g10_{}"), ("g12", "g12_fill_{}")):
+        pairs = [(a, b) for a, b in zip(base, other) if a.get("source") == src]
+        if pairs:
+            out[name.format(len(pairs))] = agreement([a for a, _ in pairs], [b for _, b in pairs])
+    return out
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--checkpoint", type=Path)
@@ -228,7 +242,7 @@ def main() -> None:
         summary["formats"][fmt] |= {"gguf_sha256": rt.sha256(g), "size_bytes": g.stat().st_size,
                                     **{k: runs[fmt][k] for k in ("finish", "mean_tokens_per_s", "wall_s")}}
         if fmt != "bf16":
-            summary["formats"][fmt]["agreement_with_bf16"] = agreement(runs["bf16"]["rows"], runs[fmt]["rows"])
+            summary["formats"][fmt]["agreement_with_bf16"] = agreement_by_source(runs["bf16"]["rows"], runs[fmt]["rows"])
     import llama_cpp
     summary |= {"total_s": round(time.time() - t0, 1), "machine": f"{platform.machine()} {platform.system()}",
                 "versions": {"Python": platform.python_version(), "llama-cpp-python": llama_cpp.__version__}}

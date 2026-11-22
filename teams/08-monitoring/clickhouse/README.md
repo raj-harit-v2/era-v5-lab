@@ -108,3 +108,101 @@ python -I teams/08-monitoring/clickhouse/load_node_logs.py --dry-run <path_to_re
 python -I teams/08-monitoring/clickhouse/load_node_logs.py --selftest
 ```
 
+## 7. Live loader for a growing `metrics.jsonl` (`watch_jsonl.py`, Issue #27)
+
+`load_jsonl.py` deletes a run and reloads its whole file, which suits a finished file. `watch_jsonl.py` is for a file the trainer is still writing. Every `--poll` seconds it reads the bytes added since its last batch, inserts the complete lines into `metrics_raw` and writes one row to `ingest_batches`. It never deletes rows.
+
+```bash
+# Catch-up load of a finished file, exit after 10 s with no new line
+python -I teams/08-monitoring/clickhouse/watch_jsonl.py \
+  teams/05-architecture/jobs/evidence/2026-11-15-dryrun1-full/metrics.jsonl \
+  --run-id dryrun1-watch --poll 2 --idle-exit 10
+
+# Live run: no --idle-exit, stop with Ctrl-C; run_id comes from the rows (#606)
+python -I teams/08-monitoring/clickhouse/watch_jsonl.py runs/r7/g8/metrics.jsonl --poll 2
+```
+
+Output of the catch-up load (1,222 steps, 19,753 rows, the same as Sandeep's full load in `alarms_dryrun1.md`):
+
+```text
+watching teams/05-architecture/jobs/evidence/2026-11-15-dryrun1-full/metrics.jsonl every 2 s
+steps 0..1221 lines=1222 rows=19753 skipped=0 bytes 0..593221 inserted_at=2026-11-19 18:50:35.065
+run_id='dryrun1-watch' source=teams/05-architecture/jobs/evidence/2026-11-15-dryrun1-full/metrics.jsonl batches=1 lines=1222 rows=19753 skipped=0 offset=593221
+```
+
+The watcher creates `ingest_batches` (`ingest_batches.sql`) on start. To create it by hand:
+
+```bash
+docker exec -i era-v5-clickhouse clickhouse-client --multiquery < teams/08-monitoring/clickhouse/ingest_batches.sql
+```
+
+### How it reads the file
+
+- **Byte offset.** Each `ingest_batches` row records the byte range it loaded (`start_offset`, `end_offset`). On start, the watcher continues from `max(end_offset)` for its run and file, so a restart loads nothing twice.
+- **Complete lines only.** It loads up to the last newline. A line the writer is still writing stays in the file and is read again from its first byte on the next poll.
+- **Same rows as a full load.** It parses with `load_jsonl.py`'s parser. Lines without `time` (Team 5's own `metrics.jsonl`) get the same invented time as a full load, 28 Oct 2026 00:00 UTC plus the line number in seconds, because the watcher passes `start_index` = `sum(lines)` of the earlier batches.
+- **Run id.** `--run-id`, else the `run_id` field of the first line, else the parent folder name. Pass `--run-id` for files without a `run_id` field; otherwise every `g8/metrics.jsonl` would be stored as run `g8`.
+
+### Resumed runs (#606)
+
+After a checkpoint restore, the trainer writes a new `g8/metrics.jsonl` in a new folder. It starts with the steps already written before the crash, then continues. At start, the watcher reads the `(step, rank)` pairs already stored for the run and skips lines that repeat one. `skipped_lines` counts them. Steps the old file never flushed (checkpoint newer than the last flush, see #512) are not stored yet, so they are inserted from the new file.
+
+Start the watcher for the new file after the old file's watcher has caught up and exited.
+
+### When it stops
+
+It exits with code 1 and prints the reason and the offset it reached:
+
+| Cause | Message starts with |
+|---|---|
+| Any ClickHouse error: server down, timeout, rejected SQL | `error: ClickHouse at <url> failed, watcher stopped` |
+| A complete line that isn't valid JSON | `error: <file>: line N at byte B can't be parsed` |
+| The file is shorter than the saved offset (truncated or replaced) | `error: <file> is N bytes, shorter than the resume offset` |
+| A line with a different `run_id` | `error: <file>: line N at byte B has run_id ...` |
+| A second watcher on the same file (lock in the temp folder, not on Windows) | `error: another watch_jsonl.py is already loading` |
+
+It doesn't retry a ClickHouse error: a watcher polling a dead server would look alive while loading nothing. After fixing the cause, run the same command again. It resumes from `ingest_batches`.
+
+**Crash window.** The rows go into `metrics_raw` first, then the `ingest_batches` row. If the watcher dies between the two, the offset doesn't move. The restarted watcher reads that batch again, finds its steps already stored and skips them. The duplicate-pair check below confirms it.
+
+### Checks after a load
+
+```sql
+-- Steps, rows and NULLs: dry run 1 gives 1222, 19753, 0
+SELECT uniqExact(step), count(), countIf(value IS NULL) FROM metrics_raw WHERE run_id = 'dryrun1-watch';
+
+-- Duplicate pairs: must be 0
+SELECT count() FROM (
+  SELECT step, name, rank FROM metrics_raw WHERE run_id = 'dryrun1-watch'
+  GROUP BY step, name, rank HAVING count() > 1);
+
+-- Batches that don't start where the previous one ended, per file: must be 0
+SELECT source_file, countIf(start_offset != prev_end) FROM (
+  SELECT source_file, start_offset,
+         lagInFrame(end_offset, 1, 0) OVER (PARTITION BY source_file ORDER BY start_offset) AS prev_end
+  FROM ingest_batches WHERE run_id = 'dryrun1-watch')
+GROUP BY source_file;
+
+-- Lines loaded and skipped, and how far into each file: end_offset should equal the file size
+SELECT source_file, sum(lines), sum(skipped_lines), max(end_offset)
+FROM ingest_batches WHERE run_id = 'dryrun1-watch' GROUP BY source_file;
+```
+
+`ingest_batches.inserted_at` is when each batch's rows reached ClickHouse; latency per step is `inserted_at` minus the time the step was written to the file.
+
+### Tests
+
+```bash
+PYTHONPATH=teams/08-monitoring pytest teams/08-monitoring/clickhouse/tests/test_watch_jsonl.py -q
+```
+
+The offline tests use a fake ClickHouse: half-written lines, restarts, resumed runs, broken and truncated files, a crash between the two inserts, and a dead server. `test_live_dryrun1_catch_up_load` loads the full dry run 1 file into the ClickHouse on `CLICKHOUSE_URL` and deletes its rows afterwards. It **fails** when no server is running, so a green run always includes the live check.
+
+
+## 8. Live latency test (`replay_jsonl.py`, `replay_latency.py`, Issue #27)
+
+`replay_jsonl.py` writes a finished `metrics.jsonl` at its real pace, flushing like `MetricsWriter`, and logs each step's write time. Run `watch_jsonl.py` on its `--out`, then `replay_latency.py` matches each logged step to the `ingest_batches` row that loaded it and prints p50 / p95 / max of the lag. The commands and the dry run 1 result are in `../alarms_dryrun1.md` section 5.
+
+```bash
+PYTHONPATH=teams/08-monitoring pytest teams/08-monitoring/clickhouse/tests/test_replay_jsonl.py teams/08-monitoring/clickhouse/tests/test_replay_latency.py -q
+```

@@ -1,0 +1,24 @@
+# E9 at SmolLM2-1.7B base on one GPU (TSAI job request / any CUDA machine): two SFT arms (A4, A2v2), full fine-tune, then the RL
+# screen. Inputs are staged under inputs/ (no network).
+cmd: e9
+model: inputs/SmolLM2-1.7B-effd688a          # HuggingFaceTB/SmolLM2-1.7B @ effd688a12921b4cc83e3312b6feb579f70f9c71
+data: inputs/g10-e9                          # ocr2_clean_v2.tok.jsonl, ocr2_short_v2.tok.jsonl
+tasks: inputs/g10-e9/cc.jsonl                # RL data v1 code records restricted to the screen tasks (sha256 in the request)
+rung: inputs/g10-e9/rung1_s128_ids.txt
+rest: inputs/g10-e9/rest_s32_ids.txt
+arms: A4,A2v2                                # A4 first (short, ~15 min) so a time limit still returns it; short answers vs full traces, both on the clean v2 rows (E9 amendment 7)
+steps: 150
+batch_target_tokens: 8000
+lr: 0.0001
+autocast: bf16                               # FP32 weights / grads / AdamW, bf16 compute (CUDA >= sm80)
+grad_ckpt: true
+micro_tokens: 8192
+k: 8
+max_new: 2048                                # 1,024 measured truncation, not ability (E9 amendment 6)
+gen_batch: 64
+screen_dtype: bfloat16                       # sampling dtype on the A100 (fp32 everywhere else)
+kv_cache_gb: 30
+device: cuda
+workers: 4
+stdio_runner: docker                         # or local (Linux, root); the expected outputs never reach the program
+out: out/e9

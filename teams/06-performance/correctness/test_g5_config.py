@@ -27,6 +27,7 @@ SIGNED_CONFIG_V1_OVERRIDES = [
     "run.grad_clip=1.0",
     "optim.name=muon",
     "optim.lr=0.001",
+    "optim.muon_lr=0.003",
     "model.vocab_size=131072",
     "model.embedding=ke2",
     "model.ke_max_pos=32",

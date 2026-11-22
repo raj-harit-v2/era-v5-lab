@@ -12,7 +12,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[3]
 TOKENIZER_SHA256 = "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b"
-DATASET_VERSION = "first-training-v1"
+DATASET_VERSION = "corpus-v1"
 MODEL_REVISION = "836121a0533e5664b21c7aacc5d22951f2b8b25b"
 MODEL_FILES = {
     "model.safetensors": (1883734344, "77d8e1f2dbab6eb5d3c261ce9d3dbf1e3c69e02938c95f934f94f42c22dfa31f"),

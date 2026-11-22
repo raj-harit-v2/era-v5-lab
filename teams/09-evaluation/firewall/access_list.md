@@ -1,6 +1,6 @@
 # Eval access list
 
-Who may read the eval folder, as defined in [eval_firewall.md](eval_firewall.md), section 2. Last updated Tue 17 Nov 2026.
+Who may read the eval folder, as defined in [eval_firewall.md](eval_firewall.md), section 2. Last updated Sat 21 Nov 2026.
 
 This list is a record, not a lock. It sets no permission. On the lab compute, TSAI places eval files only for an
 approved Team 9 job (`eval_firewall.md`, section 3, rule 4). Everyone listed follows the handling rules in section 4 of
@@ -15,7 +15,7 @@ the G9 group yet. Never add emails or keys here.
 | Handle | Role | From | Until | Also works on |
 |---|---|---|---|---|
 | `theschoolofai` | TSAI, runs approved jobs | 24 Oct | open | not applicable |
-| `rahulni` | Team 9 lead | 24 Oct | open | Team 3 (weeks 2 to 3), Team 5 (weeks 3 to 5) |
+| `rahulni` | Team 9 lead | 24 Oct | open | Team 3 (week 2), Team 5 (week 3) |
 | `Anusha-raju` | Core member | 24 Oct | open | to confirm |
 | `maheshsv` | Core member | 24 Oct | open | Team 1 (week 2) |
 | `Nisarg189` | Core member (role A) | 24 Oct | open | to confirm |
@@ -34,12 +34,12 @@ the date here.
 
 | Handle | From team | Benchmark (model) | Status on 4 Nov | Ended |
 |---|---|---|---|---|
-| `sandeepkunkunuru` | Team 8 lead | BBH (Qwen2.5-1.5B) | Row open, #199 | |
+| `sandeepkunkunuru` | Team 8 lead | BBH (Qwen2.5-1.5B) | Row merged, #199; deletion confirmed in G9 on 19 Nov | 11 Nov |
 | `sureshmantha` | Team 7 lead | MuSR (Qwen2.5-0.5B) | Row merged, #251; deletion to confirm | 3 Nov |
 | `udisinghania` | Team 5 | ARC-Challenge (Qwen2.5-1.5B) | Row merged, #303; deletion confirmed in G9 on 10 Nov | 10 Nov |
 | `shank343` | Team 6 | BBH (llama-3.2-3b) | Row merged, #290; deletion confirmed in G9 on 5 Nov | 4 Nov |
 | `millermuttu` | Team 7 | BBH (gemma-2-2b) | Row merged, #279; deletion confirmed in G9 on 14 Nov; results.json not kept | 11 Nov |
-| `saitej123` | Team 10 lead | MMLU-Pro (Qwen2.5-1.5B) | Row open, #271 | |
+| `saitej123` | Team 10 lead | MMLU-Pro (Qwen2.5-1.5B) | Row merged, #271; deletion confirmed in G9 on 18 Nov | 4 Nov |
 | `arunnayan` | to confirm | to confirm | to confirm | |
 | `tejaswivinnakota` (to confirm) | to confirm | to confirm | to confirm | |
 | `vedang-patel-10` | Team 5 | MuSR (llama-3.2-3b) | Row merged, #389; deletion confirmed in G9 on 12 Nov | 12 Nov |
@@ -64,13 +64,14 @@ files, so these rotators do not download any benchmark for this task.
 
 ## 4. Accepted reads outside Team 9
 
-TSAI accepted these on 4 Nov. They are recorded here so that the list matches what happens.
+TSAI accepted the first three on 4 Nov and the Codeforces read on 21 Nov. They are recorded here so that the list matches what happens.
 
 | Who | What they read | Where it shows | Decision |
 |---|---|---|---|
 | Team 12: `s9k96`, `SreekanthZipsy`, `therahulbhati` | Eval-mini items, for quantized formats | `teams/12-quantization/eval_mini/README.md`, #219 | Named exception under section 4 of `eval_firewall.md` (section 7, point 2) |
 | Rotators and others on Team 12 runs: `TharunSivamani`, `ranjani-cse`, `shishir13` | Eval-mini items | #236, #259 and `TharunSivamani`'s rotation PRs | Same |
 | Whoever runs Team 3's scripts | FLORES-200, HumanEval, MBPP; also GSM8K's train split, which the fingerprints do not cover | `teams/03-tokenizer/harness/run_harness.py`, `teams/03-tokenizer/train/fetch_heldout.py` | Allowed as measuring reads (`eval_firewall.md`, section 7, point 3) |
+| Team 10's OCR-2 pack job, run by TSAI | `open-r1/codeforces` @ `fbe3f6e9`, test split only, to build the protected-family index; matching training problems are removed. No scoring | `teams/10-post-training/jobs/2026-11-17-ocr2-pack-v1-p1536.md` (#565); the older C3 record `2026-11-16-ocr2-pack-v1-c3.md` (#524) | Decontamination read, accepted by TSAI on 21 Nov (G9) |
 
 ## 5. Everyone else
 

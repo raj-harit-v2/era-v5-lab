@@ -209,13 +209,24 @@ def resolve_source_text(source: str) -> tuple[str, str, str]:
     raise FileNotFoundError(f"Cannot find source file on disk or in git refs: {source}")
 
 
-def _parse_jsonl_content(text: str, default_run_id: str, run_id_override: str | None = None) -> dict:
+def _parse_jsonl_content(
+    text: str,
+    default_run_id: str,
+    run_id_override: str | None = None,
+    start_index: int = 0,
+) -> dict:
+    """Parse JSONL text into `metrics_raw` rows.
+
+    `start_index` is the number of non-blank lines that come before `text` in its file. A loader that reads a
+    file in pieces (`watch_jsonl.py`) passes it so the invented time and the fallback step continue from the
+    previous piece; the rows then match a parse of the whole file.
+    """
     raw_lines = [ln for ln in text.splitlines() if ln.strip()]
     rows: list[dict] = []
     null_rows = 0
     resolved_run_id = run_id_override or default_run_id
 
-    for idx, line in enumerate(raw_lines):
+    for idx, line in enumerate(raw_lines, start=start_index):
         rec = json.loads(line)
         if not isinstance(rec, dict):
             raise ValueError(f"Line {idx + 1} is not a JSON object")

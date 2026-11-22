@@ -71,9 +71,9 @@ checkpoint save fixes it.
 
 TSAI ran both jobs on 17 Nov, single GPU, the same setup as #475. The numbers below are from TSAI's result note of
 17 Nov, which went to the Team 06 group chat by mistake (TSAI confirmed this in the Team 07 group on 17 Nov), and from
-TSAI's answer on C5, given in the Team 07 group on 18 Nov. Neither is on GitHub yet: the request on #573 has no reply.
-@theschoolofai, please post the job A and job B results as a comment on #633; this section will link to it once it is
-there. The job outputs were not added to the repository. The dry run 1 files they were compared with are on main since #620:
+TSAI's answer on C5, given in the Team 07 group on 18 Nov. TSAI posted both on the record on 20 Nov, as a comment on
+#633: [job A and job B results](https://github.com/theschoolofai/era-v5-lab/pull/633#issuecomment-7038897309). The
+job outputs were not added to the repository. The dry run 1 files they were compared with are on main since #620:
 [`2026-11-15-dryrun1-full/`](../../05-architecture/jobs/evidence/2026-11-15-dryrun1-full/) (`summary.json`: COMPLETED, 1,221 steps, `final_model_sha256` `93e5f454…1981`).
 
 | Number | Job A (restore the final checkpoint) | Job B (stop at 610, restore, continue) |

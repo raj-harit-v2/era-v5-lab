@@ -118,3 +118,9 @@ the held-out part as two more pool files when given the two lists (`../jobs/2026
 rebuild from scratch gives 14 of 14 expected outputs in 90.7 s. Two E1 held-out tasks are statement-less (finding R6: they
 score 0 for every policy); they stay in the held-out list as used on 15 Nov, and the report counts them.
 
+## TSAI Gate 3 rulings (21 Nov 2026)
+
+- **`rl-math-hendrycks` (7,209 reserved MATH tasks):** **`excluded`** from RL v1 training (benchmark data never trains the model, reserved or not; `licences/licence_table.md` updated).
+- **`python2_only` (1,545 code tasks):** **kept in RL v1** (nothing disqualifies it; real coverage). The RL v1 code close pool stays 3,577 tasks (`3,251` train / `255` held-out).
+
+

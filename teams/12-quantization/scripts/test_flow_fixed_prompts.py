@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""flow_fixed_prompts.py reads the tokenizer sha256 from quantize_eval.py's scores.json:  python test_flow_fixed_prompts.py"""
+"""flow_fixed_prompts.py: tokenizer sha256 from scores.json, public rows, agreement per source:  python test_flow_fixed_prompts.py"""
 import json, sys, tempfile, unittest
 from pathlib import Path
 
@@ -51,6 +51,28 @@ class PublicRowTests(unittest.TestCase):
         r = self.row(False)
         self.assertEqual(f.public_row(r)["output_ids"], [5, 6, 7])
         f.public_row(self.row(True)); self.assertIn("private", r)
+
+
+class AgreementBySourceTests(unittest.TestCase):
+    def rows(self, outs, srcs):
+        return [{"id": i, "output_ids": o, **({"source": s} if s else {})} for i, (o, s) in enumerate(zip(outs, srcs))]
+
+    def test_manifest_run_reports_the_two_sources_apart_and_no_pooled_number(self):
+        srcs = ["g10", "g10", "g10", "g12", "g12"]
+        base = self.rows([[1, 2], [1, 2], [1, 2], [3, 4], [3, 4]], srcs)
+        other = self.rows([[1, 2], [1, 9], [7, 7], [3, 4], [3, 4]], srcs)
+        a = f.agreement_by_source(base, other)
+        self.assertEqual(list(a), ["g10_3", "g12_fill_2"])
+        self.assertEqual(a["g10_3"], {"identical_outputs": 1, "of": 3, "mean_shared_prefix_fraction": 0.5})
+        self.assertEqual(a["g12_fill_2"], {"identical_outputs": 2, "of": 2, "mean_shared_prefix_fraction": 1.0})
+
+    def test_a_source_with_no_rows_is_left_out(self):
+        base = self.rows([[1]], ["g12"])
+        self.assertEqual(list(f.agreement_by_source(base, base)), ["g12_fill_1"])
+
+    def test_plain_run_is_unchanged(self):
+        base, other = self.rows([[1, 2], [3]], [None, None]), self.rows([[1, 2], [4]], [None, None])
+        self.assertEqual(f.agreement_by_source(base, other), f.agreement(base, other))
 
 
 if __name__ == "__main__":

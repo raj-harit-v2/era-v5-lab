@@ -1,0 +1,31 @@
+Rotation R1 reduced CPU smoke of train_week2.py: exp3-shared-0 (no shared expert) at seed 1241
+Code: lab main a2e7fc6a2969d3262fd8e9ef5603d859d28bd652 (includes the Gate 2 speed fixes from #521)
+Runtime: teams/05-architecture/configs/runtime.yaml (the runtime file on main)
+Environment: Python 3.12, PyTorch 2.5.1 (harness/requirements-week2.txt pins), CPU fp32, macOS arm64. A smoke, not a result.
+Inputs: the synthetic train/heldout JSONL and tokenizer v0 + P32 table already committed in
+  jobs/evidence/2026-11-15-rotation-attn4-seed1239/inputs/ (not re-committed here).
+Tokenizer: tokenizer_v0.json sha256 2de039f20d17afd17615095c406c43087359673b767ed0fe2c480b995f2af8e5 (matches teams/03-tokenizer/v0/SHA256SUMS).
+Byte table: raw_table_P32.npz file sha256 5e99508660799f43508a0df0060590e96fa253dd1bb69e2575d8e0f302fdd77f,
+  content sha256 47d411a9c6cae6fa2075935567243e51f4efbc377ccef3eef42c32fce66f869f (same as the TSAI T2 runs).
+Scope: six steps at sequence length 8, batch size 1, no checkpoint. Fixture resolution (configs/small/smoke_resolution.yaml).
+
+Config check:
+python teams/05-architecture/harness/check_week2.py teams/05-architecture/configs/arms/exp3_shared_0.yaml --runtime teams/05-architecture/configs/runtime.yaml --resolution teams/05-architecture/configs/small/smoke_resolution.yaml --lr 0.001 --tokenizer ./inputs/tokenizer_v0.json --byte-table ./inputs/raw_table_P32.npz
+-> "Runtime specification valid; smoke-only status is not experimental approval"
+
+Command (run twice, out dirs ...-a and ...-b):
+python teams/05-architecture/harness/train_week2.py --config teams/05-architecture/configs/arms/exp3_shared_0.yaml --runtime teams/05-architecture/configs/runtime.yaml --resolution teams/05-architecture/configs/small/smoke_resolution.yaml --tokenizer ./inputs/tokenizer_v0.json --byte-table ./inputs/raw_table_P32.npz --train-data ./inputs/train.jsonl --heldout-data ./inputs/heldout.jsonl --device cpu --lr 0.001 --seed 1241 --out ./out/exp3-shared-0-1241-a --smoke --smoke-steps 6 --smoke-seq-len 8 --smoke-batch-size 1 --no-checkpoint
+
+Results (from manifest.json, summary.json, losses.txt):
+run a  exit=0 status=SMOKE steps=6 routed=16 shared=0 top_k=2 ffn_hidden=768 seed=1241 final_model_sha256=83aa9dcdf3651563b8d451ab0b0c44a5ded66bb6be4c097e67449735505cbd32
+run b  exit=0 status=SMOKE steps=6 routed=16 shared=0 top_k=2 ffn_hidden=768 seed=1241 final_model_sha256=83aa9dcdf3651563b8d451ab0b0c44a5ded66bb6be4c097e67449735505cbd32
+train CE per step (both runs): 12.2005 10.4733 8.6758 8.0648 12.1318 8.9245  (all finite, no NaN/inf)
+losses.txt: byte-identical between run a and run b (cmp)
+synthetic held-out bpb: 2.7826 at step 0 -> 2.1714 at step 6
+manifest.json records model.moe num_shared 0, num_experts 16, top_k 2, ffn_hidden 768.
+
+Note: an earlier smoke of the same command at trainer 71bc0fb (first version of this PR) gave the same CE for steps 1-2
+and differences in the third decimal from step 3 (8.6684 vs 8.6758). Expected: #521 batches the expert projections,
+which changes floating-point rounding, not the maths.
+
+Not checked: CUDA, bf16, the real training bundle. Smoke on synthetic text, not a quality result.

@@ -493,3 +493,51 @@ def test_format_judge():
     assert evaluate.judge(t, prompt, [6] + gen[:-2])["reason"] == "foreign_special_token"
     no_reply = t.encode("<jupyter_script>\nx\n<empty_output>\n<|im_end|>", add_special_tokens=False).ids
     assert evaluate.judge(t, prompt, no_reply)["reason"] == "empty_visible_reply"
+
+
+def test_crash_and_resume_equals_uninterrupted(tiny_setup, monkeypatch):
+    whole = _run_extra(tiny_setup, "whole", ["--save-every", "2"], method="full", steps=7)
+    real = train.accumulate
+    calls = {"n": 0}
+
+    def dying(*a, **kw):
+        calls["n"] += 1
+        if calls["n"] == 6:  # killed during update 6, after the state of update 4 was saved
+            raise KeyboardInterrupt("simulated crash")
+        return real(*a, **kw)
+
+    monkeypatch.setattr(train, "accumulate", dying)
+    with pytest.raises(KeyboardInterrupt):
+        _run_extra(tiny_setup, "crashed", ["--save-every", "2"], method="full", steps=7)
+    monkeypatch.setattr(train, "accumulate", real)
+    assert (tiny_setup / "crashed" / "train_state.pt").exists()
+    done = _run_extra(tiny_setup, "crashed", ["--save-every", "2"], method="full", steps=7)
+    assert [r["loss"] for r in done["log"]] == [r["loss"] for r in whole["log"]]
+    assert done["saved_state_sha256"] == whole["saved_state_sha256"] and done["checks"]["writeback_step1"]["pass"]
+    assert not (tiny_setup / "crashed" / "train_state.pt").exists()
+
+
+def test_resolve_compute_dtype_matches_team9_watcher(monkeypatch):
+    assert evaluate.resolve_compute_dtype("cpu", "float32") == ("float32 (TF32 off)", False)
+    assert evaluate.resolve_compute_dtype("cpu", "auto") == ("float32 (TF32 off)", False)
+    assert evaluate.resolve_compute_dtype("cpu", "bfloat16") == ("bfloat16", True)
+    monkeypatch.setattr(torch.cuda, "is_available", lambda: True)
+    monkeypatch.setattr(torch.cuda, "is_bf16_supported", lambda: True)
+    assert evaluate.resolve_compute_dtype("cuda", "auto") == ("bfloat16", True)
+    assert evaluate.resolve_compute_dtype("cuda", "bfloat16") == ("bfloat16", True)
+    assert evaluate.resolve_compute_dtype("cuda", "float32") == ("float32 (TF32 off)", False)
+    monkeypatch.setattr(torch.cuda, "is_bf16_supported", lambda: False)
+    assert evaluate.resolve_compute_dtype("cuda", "auto") == ("float32 (TF32 off)", False)
+    with pytest.raises(RuntimeError, match="native bf16"):
+        evaluate.resolve_compute_dtype("cuda", "bfloat16")
+
+
+def test_autocast_ctx_leaves_fp32_weights_uncast():
+    layer = torch.nn.Linear(8, 8)
+    assert layer.weight.dtype == torch.float32
+    x = torch.randn(2, 8)
+    with torch.no_grad(), evaluate._autocast_ctx("cpu", True):
+        y = layer(x)
+    assert layer.weight.dtype == torch.float32
+    assert y.dtype == torch.bfloat16
+

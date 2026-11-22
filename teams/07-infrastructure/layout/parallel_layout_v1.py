@@ -146,7 +146,8 @@ def load_shape(arm: str, decisions: str = None, sets: dict = None) -> tuple:
 
 # ---------------------------------------------------------------- parameter counts (exact for Team 5 week2/model.py)
 def matrices(s: Shape) -> dict:
-    """Every 2D block weight of one layer, (rows, cols), by group. These are the Muon matrices (uses_muon)."""
+    """Every 2D block weight of one layer, (rows, cols), by group. All but the router are the Muon matrices (uses_muon);
+    the MoE router is on AdamW (G5, 21 Nov, TSAI's recommendation)."""
     f, kv = s.ffn_hidden, s.n_kv * s.hd
     attn = [(s.d, s.d), (kv, s.d), (kv, s.d), (s.d, s.d)]                         # q, k, v, o
     swiglu = [(f, s.d), (f, s.d), (s.d, f)]                                         # gate, up, down
@@ -162,7 +163,7 @@ def param_counts(s: Shape) -> dict:
     embed = N_BYTES * s.ke_pos * s.d                                                # KE2 projection, no bias
     head = s.vocab * s.d * (2 if s.mtp else 1) + s.d                                # head (+ mtp head) + final norm
     total = s.layers * (dense_layer + expert_layer) + embed + head
-    muon = s.layers * (dense_matrix + expert_layer) if s.optimizer == "muon" else 0
+    muon = s.layers * (dense_matrix - mats["router"] + expert_layer) if s.optimizer == "muon" else 0
     swiglu = 3 * s.d * s.ffn_hidden
     active = s.layers * (mats["attn"] + mats["router"] + (s.top_k + s.n_shared) * swiglu) + s.vocab * s.d * (
         2 if s.mtp else 1)
@@ -317,7 +318,8 @@ def memory_stages(s: Shape, lay: Layout, device: str = "cuda") -> list:
         exps = L * pc["expert_layer"] / lay.ep
         weights = shard(w * (dmat + dadam), n_dense, 3) + shard(w * exps, n_exp, 3)
         grads = shard(g * (dmat + dadam), n_dense, 2) + shard(g * exps, n_exp, 2)
-        opt = shard(dense_matrix_b * dmat + adam_b * dadam, n_dense, 1) + shard(exp_b * exps, n_exp, 1)
+        drouter = L * s.n_exp * s.d / lay.tp                                       # router: AdamW, not Muon
+        opt = shard(dense_matrix_b * (dmat - drouter) + adam_b * (dadam + drouter), n_dense, 1) + shard(exp_b * exps, n_exp, 1)
         # bf16 autocast keeps a bf16 copy of every matrix it multiplies with (the whole layer, also under ZeRO-3);
         # the router runs outside autocast and the KE2 projection is read in fp32.
         cast = 0.0
@@ -346,7 +348,7 @@ def muon_tflop(s: Shape, lay: Layout) -> float:
     mats = matrices(s)
     L = math.ceil(s.layers / lay.pp)
     ns = lambda r, c: 5 * (4 * min(r, c) ** 2 * max(r, c) + 2 * min(r, c) ** 3)
-    dense = sum(ns(r, c) for k in ("attn", "router", "shared") for r, c in mats[k])
+    dense = sum(ns(r, c) for k in ("attn", "shared") for r, c in mats[k])         # the router is on AdamW
     experts = sum(ns(r, c) for r, c in mats["experts"]) / lay.ep
     return L * (dense + experts) / 1e12
 
@@ -451,7 +453,7 @@ def header_text(s: Shape, pc: dict, notes: list, device: str) -> str:
              "Parameters",
              f"  total     {pc['total']:>13,}   routed experts {pc['routed_experts']:,}",
              f"  Muon      {pc['muon']:>13,}   " + ("block matrices" if s.optimizer == "muon" else "(not used)"),
-             f"  AdamW     {pc['adamw']:>13,}   " + ("embedding, head, norms" if s.optimizer == "muon" else "all"),
+             f"  AdamW     {pc['adamw']:>13,}   " + ("embedding, head, norms, router" if s.optimizer == "muon" else "all"),
              f"  active    {pc['active_matmul']:>13,}   matmul parameters per token"]
     if empty:
         lines.append("Config v1 leaves empty (arm test values used): " + ", ".join(empty))

@@ -1,8 +1,7 @@
 # First-training input preparation
 
 `approved_inputs.json` allows the 38 unique sample-v0 pack IDs, with their pinned
-dedup policy, source restrictions and licence provenance. Scope assumption until
-TSAI says otherwise: additional production Parquets use these same sources and
+dedup policy, source restrictions and licence provenance. Scope confirmed by TSAI on 22 Nov 2026 (corpus-v1): additional production Parquets use these same sources and
 `<raw>/<train|heldout>/<pack_id>/part-<number>.parquet` layout. Sample-v0's 86 parts
 are a reference, not the production part count.
 
@@ -61,7 +60,7 @@ and H3 requirements agree on NumPy 2.4.3 and PyArrow 23.0.1.
 | `stages.clean.input` / `stages.ledger.raw` | Same staged raw root |
 | `stages.clean.expected_parts` | Actual generated train/heldout counts |
 | `stages.shards.packs` | All allowed IDs, or omit to select all |
-| `stages.shards.dataset_version` | Production release ID |
+| `stages.shards.dataset_version` | `corpus-v1` (fixed by `prepare_run.py`; independent of `--run-id`) |
 | `stages.reconcile` | Enabled |
 | `stages.f2.workers` | Selected with `--f2-workers` |
 | `stages.shards.pack_table` | Generated `out/first-training-inputs/pack_metadata.json` |
