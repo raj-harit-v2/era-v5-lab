@@ -1,9 +1,9 @@
 # Speed — dry run 1
 
-**Status:** §1–4 and §6 filled; §2 now includes the WO1 / #496 **modeled** α-β calibrate (21 Nov); §4d adds class **#690 partial** clean step (22 Nov); §1 loop dispatch only (the sorted / grouped A/B is in `kernels_dryrun2.md`).  
-**Sources:** G6 runs on Modal A100s (20 Nov 2026), the lab's dry run 1 evidence (class #620), the WO1 Modal nccl-tests + perfkit sweep (21 Nov, gist below), and Admin #690 partial clean timing (22 Nov). Nothing else.  
+**Status:** §1–4 and §6 filled; §2 now includes the WO1 / #496 modeled α-β calibrate (21 Nov); §4d adds class #690 partial clean step (22 Nov); §1 loop dispatch only (the sorted / grouped A/B is in `kernels_dryrun2.md`).  
+**Sources:** G6 runs on Modal A100s (20 Nov 2026), the lab's dry run 1 evidence (class #620), the WO1 Modal nccl-tests + perfkit sweep (21 Nov, gist below), and [Admin #690](https://github.com/theschoolofai/era-v5-lab/pull/690) partial clean timing (chat 22 Nov). Nothing else.  
 **Rule:** GPU + SHA per table. Member-GPU runs give shares, counts and sizes only; step time comes from the lab run. `mfu_method=g6-v1` until CAP flips.  
-**TSAI lab column:** #690 **partial** (clean only) → §4d median ~12.0 s/step @ B=8. Share/% / sync / ckpt TSAI cells stay `_pending_` until a slim layer follow-up. Keep **loop / `g5_t2_base` / #690** distinct from #620 and from #486 sorted.
+**TSAI lab column:** #690 partial (clean only) → §4d median ~12.0 s/step @ B=8. Share/% / sync / ckpt TSAI cells stay `_pending_` until a slim layer follow-up. Keep loop / `g5_t2_base` / #690 distinct from #620 and from #486 sorted.
 
 | Field | Value |
 | :--- | :--- |
@@ -121,17 +121,19 @@ What one rank already shows: the step is host-heavy (256 host syncs from the loo
 
 ### 4d. Clean step (lab, class #690 partial)
 
-Admin chat 22 Nov 2026 (after machine crash + rerun). Job `dryrun1_tsai` / `configs/g5_t2_base.yaml`, `dispatch=loop`, B=8. Only `clean` finished inside the 90-min cap (layer/trace/nsys/ckpt not returned; no `result.json`).
+[Admin #690](https://github.com/theschoolofai/era-v5-lab/pull/690) chat 22 Nov 2026 (after machine crash + rerun). Job `dryrun1_tsai` / `configs/g5_t2_base.yaml`, `dispatch=loop`, B=8. Only `clean` finished; layer/trace/nsys/ckpt not returned; no `result.json`.
 
 | metric | value | source |
 | :--- | :--- | :--- |
-| batch | 8 (no OOM on ~24 GB card) | #690 Admin |
-| measured steps | 100 | #690 Admin |
-| median step | **~12.0 s** (11.5–12.9 s) | #690 Admin |
-| temp | 73–79°C | #690 Admin |
-| wall | ~98 min (cap 90; clean only) | #690 Admin |
+| GPU | not reported by TSAI (~24 GB card) | Admin #690 |
+| run SHA | not reported by TSAI | Admin #690 |
+| batch | 8 (no OOM) | Admin #690 |
+| measured steps | 100 | Admin #690 |
+| median step | ~12.0 s (11.5–12.9 s) | Admin #690 |
+| temp | 73–79°C | Admin #690 |
+| wall | ~98 min; ran past the 90-min cap (clean only) | Admin #690 |
 
-Label: **loop / `g5_t2_base` / #690** — not #620 full-run metrics, not #486 sorted. Share/% TSAI cells stay `_pending_` until a slim layer follow-up.
+Label: loop / `g5_t2_base` / #690 — not #620 full-run metrics, not #486 sorted. Share/% TSAI cells stay `_pending_` until a slim layer follow-up.
 
 ## 5. MoE analysis
 
