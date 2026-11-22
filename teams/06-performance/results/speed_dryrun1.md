@@ -68,7 +68,7 @@ Fit: \(T(m)=\alpha + m/\beta\) (β in GB/s), relative least squares on sizes ≥
 | nccl-tests `alltoall_perf` | 17.6 | 280 | 0.059 ms | **2.9 ms** | 2.3 ms |
 | G6 perfkit `run_comm` | 57.3 | 326 | 0.068 ms | **3.3 ms** | 4.0 ms |
 
-**Headline for WO1 / #496 close:** use the **G6 perfkit measured** step cost **~3.3 ms** (8 MiB × 48, W=2, Modal A100, isolated a2a). nccl-tests measured ~2.9 ms is the Admin-wording twin on the same host. Against #89's clean-step median (~509 ms), that is ~0.6–0.7% of a step at the `base.yaml` shape (smaller messages than dry-run-1's 64 MiB × 32).
+**Headline for WO1 / #496 close:** use the **G6 perfkit measured** step cost **~3.3 ms** (8 MiB × 48, W=2, Modal A100, isolated a2a). nccl-tests measured ~2.9 ms is the Admin-wording twin on the same host. Note: stock `base.yaml` is dense (no a2a); the 8 MiB × 48 shape is `base.yaml` **with `model.ffn=moe`**. On that MoE-on-base step (~100 ms clean median in the same gist follow-up), a2a is **~3–4%** of the step — not ~0.6% of the dry-run-1 509 ms step. Dry-run-1 shape (64 MiB × 32) stays ~1.7% (§2a).
 
 Check vs §2a / #89: perfkit W=2 at 64 MiB = 0.272 ms/call vs #89's 0.269 ms (ratio 1.009) — same code path, same GPU type, new container.
 
@@ -126,7 +126,7 @@ What one rank already shows: the step is host-heavy (256 host syncs from the loo
 | dispatch (loop over 16 experts) | 6.0% of the layer pass | 256 syncs per step, 19.1% of host time | _pending_ | §1 |
 | router + shared expert | 1.3% of the layer pass | small | _pending_ | §1 |
 | all-to-all (forecast, 2 GPUs; dry-run-1 64 MiB×32) | 1.7% of the step | n/a | n/a (1 GPU) | §2a |
-| all-to-all (modeled, 2 GPUs; base.yaml 8 MiB×48) | ~3.3 ms/step (~0.6% of a ~509 ms step) | n/a | n/a (Modal, not fabric) | §2b |
+| all-to-all (modeled, 2 GPUs; base.yaml+MoE 8 MiB×48) | ~3.3 ms/step (~3–4% of ~100 ms MoE-on-base step) | n/a | n/a (Modal, not fabric) | §2b |
 | checkpoint | 2.2 steps per save | disk write 94% of the save | _pending_ | §3 |
 
 1. **Loop dispatch syncs:** the largest MoE cost is on the host, not the GPU. Candidate: `model.moe.dispatch=grouped` (fixed capacity, no host sync) or `sorted` (one sync per call); measured in `kernels_dryrun2.md`.
