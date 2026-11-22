@@ -1,0 +1,11 @@
+# Dry run 2 recipe with fused SDPA attention on the global layers, for the eager vs SDPA A/B only.
+# Official Gate 2 A/B (#536, gate2_speedup_ab.md): 1.098x median step, peak 11.12 -> 9.56 GiB.
+# SDPA changes the numeric trace (fused softmax, bf16 scores instead of fp32); loss trace and model hash
+# will not match the eager run. Config v1 keeps attention.impl eager until TSAI accepts this.
+inherit: dryrun2.yaml
+intended:
+  arm: dryrun2-sdpa
+  owner: Team 6
+  comparison_final: false
+model:
+  attn_impl: sdpa
