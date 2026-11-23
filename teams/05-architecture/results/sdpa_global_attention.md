@@ -1,6 +1,6 @@
 # Global SDPA attention (follow-up to #536)
 
-**Status:** code and CPU tests done; CUDA tests and the dry run 2 A/B pending.
+**Status:** code, CPU and CUDA tests done; dry run 2 A/B done on one A100-80GB (1.05x, 1.5 GB less peak).
 **Decision asked of TSAI:** accept `model.attn_impl: sdpa` for dry run 2, knowing the numeric trace changes.
 
 ## What changes
@@ -24,6 +24,15 @@ Official Gate 2 A/B by TSAI (#536 at `91e00cd`, T2 Muon arm, seed 1234, bf16, st
 | eager | 2,088.1 ms | 1.000x | 11.12 GiB |
 | SDPA | 1,902.3 ms | 1.098x | 9.56 GiB |
 
+Dry run 2 A/B on one A100-80GB (Modal, torch 2.14.1+cu130, 20 timed steps + 3 warm-up, synthetic dry run 2 data; `g5_speed_week4.md`):
+
+| variant | median step | baseline / variant | peak allocation | first step |
+| :--- | ---: | ---: | ---: | ---: |
+| eager (`dryrun2.yaml`) | 687 ms | 1.000x | 10.19 GB | 3,096 ms |
+| SDPA | 655 ms | 1.049x | 8.65 GB | 2,063 ms |
+
+The loss trace differs from the same-container baseline by at most 8.1e-5. The 2-step smoke run's 1.20x was noise; the 20-step run gives 1.05x. `test_bf16_sdpa_backward_repeats_bitwise` confirms a same-seed SDPA run repeats bitwise.
+
 ## Tests (`tests/test_week2_sdpa.py`)
 
 | test | checks | result |
@@ -33,10 +42,10 @@ Official Gate 2 A/B by TSAI (#536 at `91e00cd`, T2 Muon arm, seed 1234, bf16, st
 | `test_local_layers_stay_eager` | local layers keep the eager window and sink under `sdpa` | PASS (CPU) |
 | `test_sdpa_adds_no_parameters_or_state` | same state-dict keys and shapes | PASS (CPU) |
 | `test_dryrun2_sdpa_arm_is_valid_and_only_changes_attention` | the arm differs from `dryrun2.yaml` only in `attn_impl` | PASS (CPU) |
-| `test_bf16_sdpa_close_to_eager` | bf16 autocast output and input gradient close to eager | pending (CUDA) |
-| `test_bf16_sdpa_backward_repeats_bitwise` | two backward passes give identical gradients under deterministic mode | pending (CUDA) |
+| `test_bf16_sdpa_close_to_eager` | bf16 autocast output and input gradient close to eager | PASS (CUDA) |
+| `test_bf16_sdpa_backward_repeats_bitwise` | two backward passes give identical gradients under deterministic mode | PASS (CUDA) |
 
-Full G5 suite on CPU (torch 2.14.1): 212 passed, 6 skipped.
+Full G5 suite on CPU (torch 2.14.1): 212 passed, 6 skipped. On CUDA (A100-80GB, per-branch container) the two new SDPA tests pass; the container's 8 suite failures were `ModuleNotFoundError: g5_adapter` because the archived tree omitted `teams/08-monitoring`, not code failures (`g5_speed_week4.md`).
 
 ## Other teams
 
