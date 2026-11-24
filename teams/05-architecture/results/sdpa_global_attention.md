@@ -1,8 +1,8 @@
 # Global SDPA attention (follow-up to #536)
 
 **Status:** code, CPU and CUDA tests done; dry run 2 A/B on the current `dryrun2.yaml` done on one A100-80GB (1.05x, 1.5 GB less peak).
-**Decision asked of TSAI:** accept `model.attn_impl: sdpa` for dry run 2, knowing the numeric trace changes.
-**Scope:** WO2 is the G5 trainer that dry run 2 runs. The G6 perfkit default is unchanged (perfkit already has `attn_impl: sdpa`).
+**Default:** unchanged (eager). Switching dry run 2 is a Team 5/TSAI call; the `dryrun2_sdpa` arm is ready.
+**Scope:** WO2 is the G5 trainer that dry run 2 runs. The G6 perfkit default stays eager (perfkit supports `attn_impl: sdpa` as an option).
 
 ## What changes
 

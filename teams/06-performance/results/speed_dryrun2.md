@@ -1,5 +1,7 @@
 # Speed for dry run 2: G6 week-4 work on the G5 trainer
 
+**In PR #97:** only the SDPA switch. The other rows (step caches, grouped_mm, compile, micro-batch, fused, and the combined runs) come from separate branches that are not merged; their PRs follow.
+
 **Status:** GPU smoke, full per-branch run and merged run done. All switches on (except grouped_mm) plus compile: 1.66x at micro-batch 1, 2.02x at micro-batch 2, 0 graph breaks. Open: grouped_mm on pre-SM90 GPUs.
 **Raw results:** https://gist.github.com/vaibh27/87b8ba41c1abb3a092edd29e26e07bdf
 **Target:** `teams/05-architecture/harness/train_week2.py` with `configs/arms/dryrun2.yaml` (dry run 2 and the main run).
