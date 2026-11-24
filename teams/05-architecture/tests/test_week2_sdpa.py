@@ -161,6 +161,34 @@ class SdpaCudaTests(unittest.TestCase):
         self.assertTrue(torch.equal(first[1], second[1]))
         self.assertTrue(all(torch.equal(a, b) for a, b in zip(first[2], second[2])))
 
+    def cuda_kernels(self, attn, x):
+        """Names of the CUDA kernels one bf16 forward + backward launches."""
+        from torch.profiler import ProfilerActivity, profile
+
+        self.run_bf16(attn, x)   # warm-up outside the capture
+        torch.cuda.synchronize()
+        with profile(activities=[ProfilerActivity.CUDA]) as prof:
+            self.run_bf16(attn, x)
+            torch.cuda.synchronize()
+        return sorted({e.key for e in prof.key_averages()})
+
+    def test_flash_backend_runs_under_the_trainer_settings(self):
+        """Flash alone can serve the trainer's call: GQA, causal, bf16, deterministic mode, head dim 64."""
+        from torch.nn.attention import SDPBackend, sdpa_kernel
+
+        _, sdpa, x = self.attention_pair()
+        with sdpa_kernel([SDPBackend.FLASH_ATTENTION]):
+            out, dx, grads = self.run_bf16(sdpa, x)
+        self.assertTrue(torch.isfinite(out).all() and torch.isfinite(dx).all())
+        self.assertTrue(all(torch.isfinite(g).all() for g in grads))
+
+    def test_default_backend_is_flash(self):
+        """With no backend forced (as in the trainer), the fused kernels are Flash, not the math fallback."""
+        _, sdpa, x = self.attention_pair()
+        kernels = self.cuda_kernels(sdpa, x)
+        attention = [k for k in kernels if "flash" in k.lower() or "fmha" in k.lower() or "efficient" in k.lower()]
+        self.assertTrue(any("flash" in k.lower() for k in attention), "attention kernels: " + "; ".join(kernels))
+
 
 if __name__ == "__main__":
     unittest.main()

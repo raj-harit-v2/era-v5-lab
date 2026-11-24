@@ -2,11 +2,13 @@
 
 **Status:** code, CPU and CUDA tests done; dry run 2 A/B on the current `dryrun2.yaml` done on one A100-80GB (1.05x, 1.5 GB less peak).
 **Decision asked of TSAI:** accept `model.attn_impl: sdpa` for dry run 2, knowing the numeric trace changes.
+**Scope:** WO2 is the G5 trainer that dry run 2 runs. The G6 perfkit default is unchanged (perfkit already has `attn_impl: sdpa`).
 
 ## What changes
 
 - `model.attn_impl` accepts `eager` (default, unchanged) or `sdpa`.
 - With `sdpa`, global layers call `F.scaled_dot_product_attention(q, k, v, is_causal=True, enable_gqa=...)` on the shared K/V heads. No `T x T` score matrix is materialised and K/V are not copied per query head.
+- Backend: Flash. Profiled on A100 with no backend forced, under the trainer's deterministic settings: the attention kernels are Flash, not the math fallback, and Flash alone serves the call (GQA, causal, bf16, head dim 64).
 - Local layers (window, sinks) always use the eager path. Config v1 has no local layers, so every layer uses SDPA there.
 - No new parameters or state: checkpoints load in either mode.
 - Arm `configs/arms/dryrun2_sdpa.yaml` is `dryrun2.yaml` plus `model.attn_impl: sdpa`, for the A/B.
@@ -45,6 +47,8 @@ The loss traces of the two arms differ by at most 4.8e-4. An earlier A/B on the 
 | `test_unknown_attention_impl_is_refused` | validation accepts only `eager` and `sdpa` | PASS (CPU) |
 | `test_bf16_sdpa_close_to_eager` | bf16 autocast output and input gradient close to eager | PASS (CUDA) |
 | `test_bf16_sdpa_backward_repeats_bitwise` | two backward passes give identical gradients under deterministic mode | PASS (CUDA) |
+| `test_flash_backend_runs_under_the_trainer_settings` | Flash alone runs the call (GQA, causal, bf16, deterministic mode) | PASS (CUDA) |
+| `test_default_backend_is_flash` | with no backend forced, the profiled attention kernels are Flash | PASS (CUDA) |
 
 Full G5 suite on CPU (torch 2.14.1): 263 passed, 6 skipped. On CUDA (A100-80GB): the SDPA tests pass, and the full suite passes apart from one Team 9 loader test whose script was not uploaded to the GPU container (it passes on CPU).
 

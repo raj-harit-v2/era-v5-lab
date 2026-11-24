@@ -146,6 +146,7 @@ Class main changed `dryrun2.yaml` after the runs above: KAS V2 output head (#717
 | sdpa | 1315 | **1.049** | 8.85 | 2744 | trace diff 4.8e-4 |
 
 - Same SDPA ratio as on the older config (1.049x) and the same 1.5 GB saving.
+- Backend: Flash. Profiled with no backend forced under the trainer's deterministic settings, the attention kernels are Flash (not the math fallback); Flash alone also serves the call, and its backward repeats bitwise.
 - The dry run 2 step on the same GPU type doubled with the new config (687 -> 1378 ms base). The KAS V2 head is the likely cause; worth a profile for Team 5.
 - CUDA: SDPA tests pass; full suite passes apart from one Team 9 loader test whose script was not uploaded (passes on CPU; the driver now uploads it).
 
