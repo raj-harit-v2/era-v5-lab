@@ -83,8 +83,8 @@ Full-size save of the dry run 1 model: model weights, every optimizer's state an
 | metric | G6 (Modal A100) | TSAI lab | source |
 | :--- | :--- | :--- | :--- |
 | checkpoint size | 2,081 MiB | _pending_ | `ckpt` |
-| GPU → CPU copy, share of the save | 6.5% | _pending_ | `ckpt` |
-| serialise + write + fsync, share of the save | 93.6% | _pending_ | `ckpt` |
+| GPU → CPU copy, share of the save | 6.5% | 8% | `ckpt`; class #485 |
+| serialise + write + fsync, share of the save | 93.6% | 92% | `ckpt`; class #485 |
 | save time in clean steps (same container) | 2.2 steps | _pending_ | `ckpt` |
 | write rate to the container disk | 1,554 MiB/s | _pending_ | `ckpt` |
 | save spread (p10..p90, 10 saves) | 4.9% | _pending_ | `ckpt` |
@@ -92,6 +92,7 @@ Full-size save of the dry run 1 model: model weights, every optimizer's state an
 - Size check: 2,081 MiB is the full fp32 training state: 237.06 M weights (904 MiB) + Muon momentum on 165.7 M matrix parameters (632 MiB) + AdamW's two moments on 71.3 M parameters (544 MiB).
 - The disk write is the cost (94%); the GPU copy is not. At one save every 1,000 steps the save is about 0.2% of training time.
 - The write rate is a property of this host's disk; the lab's disk is not known.
+- **TSAI #485 provenance:** 8% GPU-to-CPU copy and 92% serialization/write are reported shares from a **smaller synthetic checkpoint; not full-size Modal**. They are not a same-workload comparison. See [class #485](https://github.com/theschoolofai/era-v5-lab/pull/485) and [checkpoint evidence #557](https://github.com/theschoolofai/era-v5-lab/pull/557). TSAI absolute size, duration, write rate and spread remain pending.
 
 ## 4. Per-rank step time + slow ranks
 
