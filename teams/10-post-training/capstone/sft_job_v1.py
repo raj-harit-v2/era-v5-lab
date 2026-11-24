@@ -220,9 +220,9 @@ def run(a, out: Path) -> int:
                                                         **check_run_and_inputs(a), **check_g5_sources(a)})}
     if not results["pins"]["ok"]:
         return probe.finish(out, results)
-    from make_adapter_config import write_config  # noqa: PLC0415
+    from make_adapter_config import load_probe, write_config  # noqa: PLC0415
     cfg = write_config(out / "adapter.yaml", a.g5_root, a.run_folder, a.tokenizer, a.byte_table, TEAM10, a.origin,
-                       not a.no_git)
+                       not a.no_git, **({"probe": load_probe(a.probe_file)} if a.probe_file else {}))
     inp = out / "_inputs"
 
     def inputs():
@@ -305,6 +305,8 @@ def parse_args(argv=None):
     ap.add_argument("--seed", type=int, default=1)
     ap.add_argument("--no-git", action="store_true")
     ap.add_argument("--origin", default="g10_rehearsal", choices=("g10_rehearsal", "g5_delivery"))
+    ap.add_argument("--probe-file", type=Path, help="json {ids, expected_mean_nll[, atol]} for the delivered weights "
+                    "(capstone/make_probe_file.py); required with --origin g5_delivery")
     ap.add_argument("--device", default="cuda")
     ap.add_argument("--keep-weights-dir", type=Path,
                     help="default off: also keep ONE arm's final plain weights as a Team 7 run folder <dir>/g10-sft-<arm> "
@@ -315,6 +317,9 @@ def parse_args(argv=None):
                          "dt_keep_masks.bin.json to <dir>/<arm>/ with SHA256SUMS (the inputs of the Task 11 canary); summary.json records the paths and sha256")
     ap.add_argument("--out", type=Path, required=True)
     a = ap.parse_args(argv)
+    if a.origin == "g5_delivery" and a.probe_file is None:
+        ap.error("--origin g5_delivery needs --probe-file: team5_adapter refuses a delivered run folder without "
+                 "probe.ids and probe.expected_mean_nll (make one with capstone/make_probe_file.py)")
     if bool(a.keep_weights_dir or a.keep_canary_state_dir) != bool(a.keep_arm):
         ap.error("--keep-weights-dir or --keep-canary-state-dir and --keep-arm go together: name the one arm whose weights leave the job")
     if a.keep_canary_state_dir and a.method != "dt_markers":

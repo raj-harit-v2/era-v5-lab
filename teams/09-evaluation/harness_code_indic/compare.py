@@ -245,7 +245,9 @@ def main():
           "computed only when all 11 exist; until then the row is DEFERRED. The rule was fixed before the remaining runs (see the README).",
           *milu_notes,
           "- MILU per-language rows: the five deferred on 25 Oct were run on 29-30 Oct on a second machine (RTX 4060 Ti 16 GB, Windows) with this harness at the pinned revisions; all PASS (largest |Δ| 0.88). As a cross-machine check, gemma-2-2b MILU-en scored 51.16 there against 51.05 in the gate row.",
-          "- NOT RUN: BBH (optional; MMLU-Pro already covers general ability against the same leaderboard).", "",
+          "- NOT RUN: BBH (optional; MMLU-Pro already covers general ability against the same leaderboard). The three full-set BBH "
+          "checks were run later as rotation checks and all PASS: Qwen2.5-1.5B +0.04, gemma-2-2b 0.00, Llama-3.2-3B +0.05 "
+          "([rotation checks](rotation_checks.md)).", "",
           "| Model | Benchmark | Published | Ours | Δ | Verdict | Source |", "|---|---|---|---|---|---|---|", *rows, "",
           "The `deepseek-coder-1.3b` and `phi-2` rows were registered on 25 Oct, after the first code FAILs and before either model was "
           "run, to check code scoring against a reference with a documented protocol (EvalPlus leaderboard: HumanEval+ v0.1.10, "

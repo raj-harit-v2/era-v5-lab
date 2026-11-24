@@ -239,11 +239,16 @@ def main() -> int:
     ap.add_argument("--probe-max-new", type=int, default=128)
     ap.add_argument("--no-git", action="store_true")
     ap.add_argument("--origin", default="g10_rehearsal", choices=("g10_rehearsal", "g5_delivery"))
+    ap.add_argument("--probe-file", type=Path, help="json {ids, expected_mean_nll[, atol]} for the delivered weights "
+                    "(capstone/make_probe_file.py); required with --origin g5_delivery")
     ap.add_argument("--device", default="cuda")
     ap.add_argument("--out", type=Path, required=True)
     a = ap.parse_args()
     if not (a.sft_eval or a.sft_dolly):
         ap.error("give --sft-eval or --sft-dolly")
+    if a.origin == "g5_delivery" and a.probe_file is None:
+        ap.error("--origin g5_delivery needs --probe-file: team5_adapter refuses a delivered run folder without "
+                 "probe.ids and probe.expected_mean_nll (make one with capstone/make_probe_file.py)")
     out = a.out.resolve()
     out.mkdir(parents=True, exist_ok=True)
     try:
@@ -256,9 +261,9 @@ def run(a, out: Path) -> int:
     results = {"pins": step(out, "pins", lambda: check_pins(a.run_folder, a.tokenizer, a.byte_table))}
     if not results["pins"]["ok"]:
         return finish(out, results)  # wrong tokenizer or table: no model work, no rows built
-    from make_adapter_config import write_config  # noqa: PLC0415
+    from make_adapter_config import load_probe, write_config  # noqa: PLC0415
     cfg = write_config(out / "adapter.yaml", a.g5_root, a.run_folder, a.tokenizer, a.byte_table, TEAM10, a.origin,
-                       not a.no_git)
+                       not a.no_git, **({"probe": load_probe(a.probe_file)} if a.probe_file else {}))
     py = sys.executable
 
     def record(name, fn):

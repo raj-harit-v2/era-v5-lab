@@ -1,0 +1,48 @@
+# CPU stand-in log for jobs/2026-11-26-g10-dryrun2-dt-vs-fft.md (written 23 Nov 2026)
+# Covers: DENSE output head (nn.Linear), Apple Mac CPU, fp32, a 20-step random-init stand-in run folder trained with this
+# branch's Team 5 harness (train_week2.py --smoke --smoke-steps 20), --origin g10_rehearsal, tiny settings below.
+# Does NOT cover: the KE2/KAS head (not on main yet), --origin g5_delivery, GPU, the real dry run 2 checkpoint, any quality
+# number (the screens run but a 20-step random model scores 0). Code: commit shown in the first line below.
+# Paths: <REPO> = lab checkout, <WORK> = local staging, <STANDIN> = stand-in folder. Inputs are the real staged files:
+# OCR-2 firewalled pack shards 0-3, Team 5 held-out v1 (bal60k), RL data v1 cc.jsonl, frozen p1536 tokenizer + KE2 table.
+# Command:
+#   G10_STDIO_RUNNER=docker python teams/10-post-training/capstone/dryrun2_dt_compare.py --g5-root <REPO> \
+#     --run-folder <STANDIN>/runs/dense --tokenizer <WORK>/.../tokenizer_p1536.json --byte-table <WORK>/.../raw_table_P32.npz \
+#     --heldout <WORK>/.../heldout_v1_bal60k.jsonl --heldout-sources <WORK>/.../heldout_v1_bal60k_sources.jsonl \
+#     --packs <PACK>/shard-0000{0,1,2,3}/pack.firewalled.jsonl --rl-tasks <POOL>/out/v1/cc.jsonl \
+#     --rl-ids teams/10-post-training/capstone/probe_rl_easy_ids.txt --probe-file <probe from capstone/make_probe_file.py> \
+#     --slice-arm a4 --steps 3 --batch 2 --dev-rows 8 --dt-calib-rows 4 --gen-limit 2 --gen-max-new 16 --gen-seconds 3 \
+#     --rl-limit 2 --rl-k 2 --rl-max-new 16 --rl-seconds 3 --max-train-seconds 600 --deadline-minutes 40 \
+#     --keep-canary-state-dir <OUT>/keep_canary --keep-weights-dir <OUT>/keep_t7 --keep-weights-arms full,lora,dt \
+#     --device cpu --seed 1 --out <OUT>/out --origin g10_rehearsal
+# Result: compare.md steps matched True (3 each); eval NLL base/full/lora/dt 10.6712/10.6674/10.6692/10.6713; forgetting
+# dbpb -0.0001/-0.0000/+0.0000 (ok); keep_canary/dt has the 3 files + SHA256SUMS (shasum -c OK); keep_t7/g10-dr2-{full,lora,dt} written.
+date: Mon Nov 23 02:41:57 IST 2026  head: 9a117bf6e2a5e565303cc8de7b5dc33633d14b7b  g5_root=<REPO> run_folder=<STANDIN>/runs/dense
+{"pins": {"tokenizer_sha256": ["e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b", "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b"], "table_content_sha256": ["21072027b19ef6f05d57ead7a2fc9fb4c52129e491186bf38d0ba079e8d5168a", "21072027b19ef6f05d57ead7a2fc9fb4c52129e491186bf38d0ba079e8d5168a"], "table_file_sha256": ["e19a6cae8a6e9e5f74c47748f459df4b156bb61b8cec2af485b439c7132a39b0", "e19a6cae8a6e9e5f74c47748f459df4b156bb61b8cec2af485b439c7132a39b0"]}}
+{"step": "pins", "ok": true, "seconds": 1.1}
+{"step": "inputs", "ok": true, "seconds": 30.5}
+{"step": "sft_full", "ok": true, "seconds": 114.7}
+{"step": "sft_lora", "ok": true, "seconds": 58.7}
+{"step": "sft_dt", "ok": true, "seconds": 60.7}
+{"step": "compare", "ok": true, "seconds": 0.0}
+{"ok": true, "steps": 6, "failed_steps": [], "kept_weights": {"sft_full": {"run_dir": "<STANDIN>/runs/wrapper_dense_k2w/keep_t7/g10-dr2-full", "step": 3, "manifest_path": "g10-dr2-full/main/step_00000003-e1/MANIFEST.json", "manifest_sha256": "7222a4a23f97f4b69239ef33c8104009c86203cce174835abe8b7960646204c9", "state_digest": "08f39eff906ff25440b4cad965e85b2eb4d50003bbd8a223be49c9530593f0dc"}, "sft_lora": {"run_dir": "<STANDIN>/runs/wrapper_dense_k2w/keep_t7/g10-dr2-lora", "step": 3, "manifest_path": "g10-dr2-lora/main/step_00000003-e1/MANIFEST.json", "manifest_sha256": "72ba1322c17a1c2bb7bb5d995cb9b4c6b364dc1e2915003ddea157f4e39b905a", "state_digest": "29e6cd40f20da60f999b0d50be7e9c95f8ca2874c9d27bb36d104a68b0a0dffd"}, "sft_dt": {"run_dir": "<STANDIN>/runs/wrapper_dense_k2w/keep_t7/g10-dr2-dt", "step": 3, "manifest_path": "g10-dr2-dt/main/step_00000003-e1/MANIFEST.json", "manifest_sha256": "809a4a67c4f32bee38ef6a7047de72339af15eb6bd9b63aed8987f5c1efb822a", "state_digest": "321c7f30b20ee14f9a774198eedb2ed7c332cc3a71dcf3a5e39b6d22aff6feec"}}, "kept_canary_state": {"sft_dt": {"dir": "<STANDIN>/runs/wrapper_dense_k2w/keep_canary/dt", "sha256": {"model.safetensors": "bff271ee2e2fa9eeccdbea8dc25caeae15b84550e130a26dd85c337c6423cc82", "dt_keep_masks.bin": "e05b78ab3626a39b7e7520b458adb63c1b777a945f620c4ccd05a7f2715224b0", "dt_keep_masks.bin.json": "b8e1afc67b09a85ab7f2f40347000453b7d77ff3d812a7609ac77d122251fe88"}}}}
+      266.58 real       263.63 user       144.26 sys
+          4237836288  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+            44776281  page reclaims
+                 856  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                9688  voluntary context switches
+             1794894  involuntary context switches
+        271413445322  instructions retired
+         80250316086  cycles elapsed
+           648236032  peak memory footprint
+exit=0
+date: Mon Nov 23 02:46:24 IST 2026

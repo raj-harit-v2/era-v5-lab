@@ -4,7 +4,9 @@
 
 2a export_safetensors succeeds; 2b the exported weights load strictly into a fresh model and give the same logits;
 2c Team 9's run_lab_ckpt.py reads the folder (pointer, manifest, export, smoke score on a synthetic stream);
-2d one flipped byte in a saved shard is refused by Team 7's integrity check.
+2d one flipped byte in a saved shard is refused by Team 7's integrity check;
+2e a store written the way Team 5's train_week2.py writes it (#608: real optimizer state, frozen keys, a stateful loader,
+  reason interval) is read by the same Team 9 reader and exports the same weights as the keep_weights folder.
 Not covered here: scoring on benchmark data (lm_eval_lab:team5 needs tokenizer, byte table, HF cache not on disk).
 """
 from __future__ import annotations
@@ -122,3 +124,51 @@ def test_only_weights_are_saved_and_grad_flags_come_back(saved):
     weights = sum(p.numel() * p.element_size() for p in saved["model"].state_dict().values())
     assert weights <= size < 1.2 * weights
     assert all(p.requires_grad for p in saved["model"].parameters())
+
+
+def _g5_style_store(saved, run_id="g5-tiny", step=7):
+    """Save the same model the way train_week2.py does (#608): Checkpointer with frozen_keys and code_paths, a real AdamW
+    that has taken a step (its state is saved too), a stateful loader, probe_fn from the factory's own probe."""
+    from ckpt.ckpt import Checkpointer
+    from trainer.tiny import SyntheticLoader
+    model = saved["model"]
+    # train_week2.py freezes embedding.rows and embedding.lengths; the tiny MoE has no such keys, so freeze two it does
+    # have, which takes the same fingerprint path in Team 7's save
+    frozen = tuple(list(model.state_dict())[:2])
+    optim = torch.optim.AdamW(model.parameters(), lr=0.0, weight_decay=0.0)  # lr 0: the weights stay what they are
+    model.train()
+    loss = model(torch.zeros((2, 8), dtype=torch.long))[0].float().mean()
+    loss.backward()
+    optim.step()
+    optim.zero_grad()
+    model.eval()
+    remote = saved["tmp"] / "g5"
+    ck = Checkpointer(run_id, str(saved["tmp"] / "g5-local"), str(remote), seed=0, frozen_keys=frozen,
+                      code_paths=(str(Path(__file__).resolve()),))
+    assert ck.save(step, model, optim, SyntheticLoader(0, 2, 0, 1), saved["probe"], tokens=99, reason="interval")
+    assert ck.wait()
+    run_dir = remote / run_id
+    step_dir = run_dir / json.loads((run_dir / "latest.json").read_text(encoding="utf-8"))["path"]
+    assert set(json.loads((step_dir / "MANIFEST.json").read_text(encoding="utf-8"))["frozen"]) == set(frozen)
+    return run_dir
+
+
+def test_2e_a_g5_style_store_reads_the_same_as_the_keep_weights_folder(saved, capsys):
+    from ckpt.ckpt import export_safetensors
+    from safetensors.torch import load_file
+    g5 = _g5_style_store(saved)
+    exported = {}
+    for name, run_dir in (("kw", Path(saved["info"]["run_dir"])), ("g5", g5)):
+        out = saved["tmp"] / f"{name}.json"
+        assert rl.main(["--run-dir", str(run_dir), "--steps", str(STEPS), "--out", str(out)]) == 0
+        (rec, *_) = json.loads(out.read_text(encoding="utf-8"))["records"]
+        manifest = run_dir / json.loads((run_dir / "latest.json").read_text(encoding="utf-8"))["path"] / "MANIFEST.json"
+        assert rec["model_revision"] == rl.sha256_bytes(manifest.read_bytes())
+        assert rec["checkpoint"]["step"] == 7 and rec["checkpoint"]["run"] == run_dir.name
+        st = saved["tmp"] / f"{name}.safetensors"
+        export_safetensors(str(run_dir), saved["factory"], saved["probe"], str(st), step=7)
+        exported[name] = load_file(str(st))
+    assert "probe loss bits equal the saved ones" in capsys.readouterr().out
+    assert set(exported["kw"]) == set(exported["g5"]) == set(saved["model"].state_dict())
+    for k in exported["kw"]:
+        assert torch.equal(exported["kw"][k], exported["g5"][k]), k  # the same weights, whichever route wrote them

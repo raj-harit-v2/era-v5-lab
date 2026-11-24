@@ -1,0 +1,2 @@
+{"tier": "T2", "device": "cuda", "kind": "parity", "max_abs_dlogit": 0.29052734375, "tolerance": 0.0001}
+{"tier": "T2", "device": "cuda", "kind": "decode", "mode": "batched", "rows": 128, "k": 8, "prompts": 16, "max_new": 1536, "prompt_lens": [195, 300, 414, 512], "dtype": "fp16", "seconds": 153.9426, "tokens": 196608, "tok_per_s": 1277.2, "ms_per_step": 100.223, "peak_gb": 3.383}

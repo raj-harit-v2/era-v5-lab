@@ -220,7 +220,7 @@ These models run inside a data job and are never trained on, fine-tuned or used 
 | Set | Source | Used for | Licence | Decision |
 | --- | --- | --- | --- | --- |
 | model-labse | [sentence-transformers/LaBSE](https://huggingface.co/sentence-transformers/LaBSE) | Data A H3 (`h3.py`): finds translations, Indic ↔ English and Sanskrit ↔ Hindi | apache-2.0 (Hub tag, rev `836121a053`; Google's original LaBSE on Kaggle: Apache 2.0) | allowed (G10 sign-off) |
-| model-bge-m3 | [BAAI/bge-m3](https://huggingface.co/BAAI/bge-m3) | Data A H3: second encoder checked for Sanskrit (E5a′); in no job yet | mit (Hub tag, rev `5617a9f61b`; FlagEmbedding code: MIT) | allowed (G10 sign-off) |
+| model-bge-m3 | [BAAI/bge-m3](https://huggingface.co/BAAI/bge-m3) | Data A H3: second encoder for Sanskrit (sa ↔ en, sa ↔ hi), report-only, in job [#666](https://github.com/theschoolofai/era-v5-lab/pull/666) | mit (Hub tag, rev `5617a9f61b`; FlagEmbedding code: MIT) | allowed (G10 sign-off) |
 
 ---
 
@@ -2060,7 +2060,7 @@ Verifiable-answer and test-based sets for RL (math, code, SWE tasks). Each entry
 - **Stage:** data pipeline (Data A dedup, H3). Not training data.
 - **Source:** [sentence-transformers/LaBSE](https://huggingface.co/sentence-transformers/LaBSE), revision `836121a0533e5664b21c7aacc5d22951f2b8b25b`. It is a PyTorch port of Google's LaBSE ([kaggle.com/models/google/labse](https://www.kaggle.com/models/google/labse), formerly `tfhub.dev/google/LaBSE`).
 - **Licence:** `apache-2.0` (Hub tag). Google's Kaggle page for the original model: Apache 2.0. Both read on 20 Nov 2026.
-- **Weights used:** `model.safetensors` SHA-256 `deaceb20157886981bdedad1da11f39687e2343e978abc10e909939fb95d40c5`; `2_Dense/model.safetensors` `f866c945fa2147ce4940c8ead0b4b20af4217e0f4664bd35f41c2a0967c4fe77`. Each run of `h3.py` records them in its `h3_summary.json`.
+- **Weights used:** the files of revision `836121a`, which TSAI stages directly ([#625](https://github.com/theschoolofai/era-v5-lab/pull/625), 20 Nov 2026): `model.safetensors` (1,883,734,344 bytes) SHA-256 `77d8e1f2dbab6eb5d3c261ce9d3dbf1e3c69e02938c95f934f94f42c22dfa31f`; `2_Dense/model.safetensors` `f866c945fa2147ce4940c8ead0b4b20af4217e0f4664bd35f41c2a0967c4fe77`; `config.json` `b6bd83d561db8d2ccb7f44dafcd945e39bea16dc2819072ffb10adb45608b029`. Each run of `h3.py` records the weights' SHA-256 in its `h3_summary.json`.
 - **What it does:** `teams/01-data-a/dedup/h3.py` encodes each document's first sentences and then its sentences, to find the same content in two languages. Its outputs are cosines and coverage scores (`h3_*.csv`), never text. With `h3.remove: true` (only after E5c and the harm check pass, TSAI [#625](https://github.com/theschoolofai/era-v5-lab/pull/625)), it decides which train documents are removed as translations of held-out documents. It adds nothing to the data.
 - **Generator model:** none. It writes no text.
 - **Redistribution:** none. TSAI stages the weights at `../models/LaBSE`, outside the repository.
@@ -2073,9 +2073,10 @@ Verifiable-answer and test-based sets for RL (math, code, SWE tasks). Each entry
 - **Stage:** data pipeline (Data A dedup, H3). Not training data.
 - **Source:** [BAAI/bge-m3](https://huggingface.co/BAAI/bge-m3), revision `5617a9f61b028005a4858fdac845db406aefb181`. Code: [FlagOpen/FlagEmbedding](https://github.com/FlagOpen/FlagEmbedding).
 - **Licence:** `mit` (Hub tag). FlagEmbedding's `LICENSE`: MIT. Both read on 20 Nov 2026.
-- **What it does:** the second encoder in E5a′ (`teams/01-data-a/dedup/h3_bge_m3_check_results_v1.md`): on FLORES-200 it finds Sanskrit translations that LaBSE misses at the same threshold. TSAI ([#625](https://github.com/theschoolofai/era-v5-lab/pull/625)) asked for this comparison before a Sanskrit encoder is chosen. It is in no job yet. If chosen, it would run in `h3.py` in LaBSE's place, with the same outputs (scores, never text).
+- **Weights used:** the files of revision `5617a9f`, as pinned in job [#666](https://github.com/theschoolofai/era-v5-lab/pull/666): `pytorch_model.bin` (2,271,145,830 bytes) SHA-256 `b5e0ce3470abf5ef3831aa1bd5553b486803e83251590ab7ff35a117cf6aad38`; `config.json` `26159e7ad065073448460117eb24b7a4572f6f4e78eadff65dc0a11c052449fa`. Each run of `h3.py` records the weights' SHA-256 in its `h3_summary.json`.
+- **What it does:** the second encoder in E5a′ (`teams/01-data-a/dedup/h3_bge_m3_check_results_v1.md`): on FLORES-200 it finds Sanskrit translations that LaBSE misses at the same threshold. TSAI ([#625](https://github.com/theschoolofai/era-v5-lab/pull/625)) asked for this comparison before a Sanskrit encoder is chosen. Job [#666](https://github.com/theschoolofai/era-v5-lab/pull/666) (merged 20 Nov 2026) runs it on E5c's Sanskrit pairs (sa ↔ en, sa ↔ hi), report-only. If chosen, it would run in `h3.py` in LaBSE's place, with the same outputs (scores, never text).
 - **Generator model:** none. It writes no text.
-- **Redistribution:** none. The weights would be staged outside the repository, as LaBSE's are.
+- **Redistribution:** none. TSAI stages the weights at `../models/bge-m3`, outside the repository.
 - **Decision:** `allowed (G10 sign-off)`
 - **Added by:** Aneesha Das (aneeshads), Data A, 20 Nov 2026. A tag is not legal clearance.
 

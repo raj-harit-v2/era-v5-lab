@@ -37,6 +37,9 @@ def build(root, out, scope_file):
 
     scope = json.loads(scope_file.read_bytes())
     policy = scope['dedup_policy']
+    approval = scope.get('tsai_manifest_approval')
+    if not isinstance(approval, str) or not approval.strip():
+        raise ValueError('approved scope has no tsai_manifest_approval text to record')
     config = REPO / policy['file']
     if sha256(config) != policy['sha256']:
         raise ValueError('dedup.json changed: review and refresh the approved scope first')
@@ -106,7 +109,7 @@ def build(root, out, scope_file):
         raise ValueError('input part list changed while scanning')
     manifest = {
         'name': 'era-v5-lab first training inputs',
-        '_scope': 'User-approved source scope; actual files enumerated before cleaning.',
+        '_scope': 'Source scope as approved in approved_inputs.json (approved_inputs_sha256); actual files enumerated before cleaning.',
         '_source_metadata': 'Source labels copied from sample v0; fetch revisions require separate provenance.',
         'approved_inputs_sha256': sha256(scope_file),
         'source_policy': scope['source_policy'],
@@ -120,7 +123,7 @@ def build(root, out, scope_file):
     manifest_bytes = encoded(manifest)
     inventory = {
         '_status': 'materialized_from_staged_raw_inputs',
-        '_approval': 'Source scope authorized by user assumption; no TSAI manifest approval recorded here.',
+        '_approval': approval,
         'input_manifest_sha256': hashlib.sha256(manifest_bytes).hexdigest(),
         'packs': ids,
         'parts': [{'part': p['path'], 'split': p['split'], 'pack_id': p['pack_id'],

@@ -1,7 +1,9 @@
 # Gate 2 decision, 14 Nov 2026.
 # Muon, v0 attention, 16 routed experts plus 1 shared, top-2.
 # optim.lr stays 1e-3 and stays provisional.
-# 21 Nov 2026: optim.muon_lr is 0.003 (TSAI, Muon with the KE2/KAS head).
+# 21 Nov 2026: optim.muon_lr set to 0.003 (TSAI, Muon with the KE2/KAS head).
+# 22 Nov 2026: optim.muon_lr corrected to 0.006 (TSAI, both optimizers tuned at batch 32x256).
+# 23 Nov 2026: optim.router_on_muon set to true (TSAI, #712 router comparison).
 # Model sizes and embedding.ke2_output_dim stay empty.
 # The reasons are in decisions.md.
 settings:
@@ -19,8 +21,11 @@ settings:
     open: true
     source: "Gate 2, 14 Nov 2026. The learning rate 1e-3 stays provisional. The T1 table still stands: lowest whole-file val/bpb on all three seeds, smallest spread, mean 1.9686, SD 0.0070, for 245-step T1 runs. Three-group, code, and Indic values were not measured."
   - key: optim.muon_lr
-    value: 0.003
-    source: "TSAI, 05 Architecture, 21 Nov 2026: Muon on the 2D block matrices at lr 0.003; AdamW on the embeddings, the KE2/KAS head and the other scalars. 1.5889 bpb against 1.6170 for AdamW at the same setup. One seed at 2,048 tokens per step, so 0.003 is the starting point to validate at the training batch size."
+    value: 0.006
+    source: "TSAI, 05 Architecture, 22 Nov 2026 correction: at batch 32x256 with both optimizers tuned, Muon's best lr is 0.006 (1.5437 bpb) and AdamW's 1.5e-4 (1.5595 bpb), a 0.016 bpb gap on one seed. The best Muon lr moved with about the square root of the batch ratio (8 to 32), so 0.006 is the better current estimate, not final; expect one more retune at the training batch size. Earlier, 21 Nov 2026: Muon on the 2D block matrices at lr 0.003; AdamW on the embeddings, the KE2/KAS head and the other scalars. 1.5889 bpb against 1.6170 for AdamW at the same setup. One seed at 2,048 tokens per step, so 0.003 is the starting point to validate at the training batch size."
+  - key: optim.router_on_muon
+    value: true
+    source: "TSAI, 05 Architecture, 23 Nov 2026. #712 (one seed per arm, T2, seed 1234, frozen p1536): router on Muon val/bpb 1.4999 vs router on AdamW 1.5018, a 0.0019 gap, far below the T2 seed spread (0.0254) -- no measurable quality difference. Resource check (same run pair): optimizer-memory and gradient-norm/clipping differences are noise-level; step-time difference was confounded by two mid-run restarts on the Muon arm and not treated as a signal. Reverses the 21 Nov default (router on AdamW, #706), which was precautionary, not evidence-based. Matches current field practice: Kolibri (Aleph Alpha) and DeepSeek-V4.1-Flash both treat the MoE router as an ordinary 2D matrix on Muon, with no AdamW carve-out. Expert-load-balance telemetry (#607) was off for #712; a confirmatory rerun with it on is in progress but not blocking this default."
   - key: tokenizer.name
     value: BrahmicTokenizer-131K
     source: "G3 week-1 note. BrahmicTokenizer-131K is tokenizer v0. The file arrives 28 Oct."
@@ -65,6 +70,9 @@ settings:
   - key: moe.top_k
     value: 2
     source: "Gate 2, 14 Nov 2026. Top-2."
+  - key: moe.bias_gamma
+    value: 0.001
+    source: "TSAI, Session general, 23 Nov 2026. Loss-free load balancing is in the training plan. Session 14: the bias is added only for the expert choice, then b moves by gamma times the sign of mean load minus load. Gamma 0.001 is that note. Expert Linear bias stays off."
   - key: loss.train_on
     value: ntp
     source: "The logged training loss is next-token loss. A second head is trained on t+2 and logged as loss_mtp."

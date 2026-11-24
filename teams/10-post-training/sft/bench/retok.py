@@ -33,6 +33,7 @@ import bisect
 import hashlib
 import importlib.util
 import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -56,34 +57,83 @@ convert = _load("g10_convert_for_bench", SFT / "convert.py")
 render = convert.render
 T = render.T
 
-SURROGATE = {
-    "model": "HuggingFaceTB/SmolLM2-135M",
-    "revision": "93efa2f097d58c2a74874c7e644dbc9b0cee75a2",
-    "tokenizer_sha256": "9ca9acddb6525a194ec8ac7a87f24fbba7232a9a15ffa1af0c1224fcd888e47c",
-}
-# G10 marker name -> (surrogate surface, surrogate id)
-MARKER_MAP: dict[str, tuple[str, int]] = {
-    "endoftext": ("<|endoftext|>", 0),
-    "im_start": ("<|im_start|>", 1),
-    "im_end": ("<|im_end|>", 2),
-    "think": ("<jupyter_script>", 15),
-    "think_end": ("<empty_output>", 16),
+# Surrogate profiles: G10 marker name -> (surrogate surface, surrogate id) per tokenizer. The profile is chosen once per
+# process from the environment variable G10_SURROGATE_PROFILE (default "smollm2", the WP2/WP3 bench), so every importer
+# (train.py, evaluate.py, rl_screen.py, slice.py) sees the same map. `check_tokenizer` refuses a tokenizer that disagrees.
+PROFILES: dict[str, dict] = {
+    "smollm2": {
+        "surrogate": {
+            "model": "HuggingFaceTB/SmolLM2-135M",
+            "revision": "93efa2f097d58c2a74874c7e644dbc9b0cee75a2",
+            "tokenizer_sha256": "9ca9acddb6525a194ec8ac7a87f24fbba7232a9a15ffa1af0c1224fcd888e47c",
+        },
+        "marker_map": {
+            "endoftext": ("<|endoftext|>", 0),
+            "im_start": ("<|im_start|>", 1),
+            "im_end": ("<|im_end|>", 2),
+            "think": ("<jupyter_script>", 15),
+            "think_end": ("<empty_output>", 16),
+        },
+        # ids 0..16, in id order
+        "specials": (
+            "<|endoftext|>", "<|im_start|>", "<|im_end|>", "<repo_name>", "<reponame>", "<file_sep>", "<filename>",
+            "<gh_stars>", "<issue_start>", "<issue_comment>", "<issue_closed>", "<jupyter_start>", "<jupyter_text>",
+            "<jupyter_code>", "<jupyter_output>", "<jupyter_script>", "<empty_output>",
+        ),
+        "first_special_id": 0,
+    },
+    # Qwen3 Base 1.7B/4B/8B share tokenizer.json sha256 c0382117... (checked on the pinned revisions, 23 Nov 2026). That file
+    # has 22 added tokens (151643..151664); <think>/</think> exist only in tokenizer_config.json, so the think markers reuse
+    # two existing specials, as the SmolLM2 map does. Ids 151644-151649 share one embedding norm in the 4B Base checkpoint
+    # (0.3566, below the 1st percentile 0.83 of ordinary rows): rows that look untrained, like SmolLM2's ids 15/16.
+    "qwen3": {
+        "surrogate": {
+            "model": "Qwen/Qwen3-4B-Base",
+            "revision": "906bfd4b4dc7f14ee4320094d8b41684abff8539",
+            "tokenizer_sha256": "c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539",
+        },
+        "marker_map": {
+            "endoftext": ("<|endoftext|>", 151643),
+            "im_start": ("<|im_start|>", 151644),
+            "im_end": ("<|im_end|>", 151645),
+            "think": ("<|object_ref_start|>", 151646),
+            "think_end": ("<|object_ref_end|>", 151647),
+        },
+        # ids 151643..151664, in id order (tokenizer.json added_tokens)
+        "specials": (
+            "<|endoftext|>", "<|im_start|>", "<|im_end|>", "<|object_ref_start|>", "<|object_ref_end|>", "<|box_start|>",
+            "<|box_end|>", "<|quad_start|>", "<|quad_end|>", "<|vision_start|>", "<|vision_end|>", "<|vision_pad|>",
+            "<|image_pad|>", "<|video_pad|>", "<tool_call>", "</tool_call>", "<|fim_prefix|>", "<|fim_middle|>",
+            "<|fim_suffix|>", "<|fim_pad|>", "<|repo_name|>", "<|file_sep|>",
+        ),
+        "first_special_id": 151643,
+    },
 }
 UNMAPPED = ("tool_call", "tool_call_end", "tool_result", "tool_result_end")
-SURROGATE_SPECIALS = (
-    "<|endoftext|>", "<|im_start|>", "<|im_end|>", "<repo_name>", "<reponame>", "<file_sep>", "<filename>",
-    "<gh_stars>", "<issue_start>", "<issue_comment>", "<issue_closed>", "<jupyter_start>", "<jupyter_text>",
-    "<jupyter_code>", "<jupyter_output>", "<jupyter_script>", "<empty_output>",
-)
-IM_END_ID = MARKER_MAP["im_end"][1]
-EOS_ID = MARKER_MAP["endoftext"][1]
-
-_G10_SURFACE_TO_NAME = {T[name]: name for name in (*MARKER_MAP, *UNMAPPED)}
+_G10_SURFACE_TO_NAME = {T[name]: name for name in (*PROFILES["smollm2"]["marker_map"], *UNMAPPED)}
 _G10_RE = re.compile("|".join(re.escape(s) for s in sorted(_G10_SURFACE_TO_NAME, key=len, reverse=True)))
-_SURR_TO_G10 = {surf: T[name] for name, (surf, _) in MARKER_MAP.items()}
-_SURR_RE = re.compile("|".join(re.escape(s) for s in sorted(_SURR_TO_G10, key=len, reverse=True)))
-# surfaces that may not appear in content: every surrogate special that is not also a G10 marker surface
-_FOREIGN = tuple(s for s in SURROGATE_SPECIALS if s not in _G10_SURFACE_TO_NAME)
+
+
+def set_profile(name: str) -> None:
+    """Rebind the module-level map for one surrogate tokenizer (call before any row is converted)."""
+    global PROFILE, SURROGATE, MARKER_MAP, SURROGATE_SPECIALS, SPECIAL_IDS, IM_END_ID, EOS_ID, _SURR_TO_G10, _SURR_RE, _FOREIGN
+    if name not in PROFILES:
+        raise SystemExit(f"G10_SURROGATE_PROFILE={name!r}: expected one of {sorted(PROFILES)}")
+    prof = PROFILES[name]
+    PROFILE = name
+    SURROGATE = dict(prof["surrogate"])
+    MARKER_MAP = dict(prof["marker_map"])
+    SURROGATE_SPECIALS = tuple(prof["specials"])
+    SPECIAL_IDS = frozenset(range(prof["first_special_id"], prof["first_special_id"] + len(SURROGATE_SPECIALS)))
+    IM_END_ID = MARKER_MAP["im_end"][1]
+    EOS_ID = MARKER_MAP["endoftext"][1]
+    _SURR_TO_G10 = {surf: T[n] for n, (surf, _) in MARKER_MAP.items()}
+    _SURR_RE = re.compile("|".join(re.escape(s) for s in sorted(_SURR_TO_G10, key=len, reverse=True)))
+    # surfaces that may not appear in content: every surrogate special that is not also a G10 marker surface
+    _FOREIGN = tuple(s for s in SURROGATE_SPECIALS if s not in _G10_SURFACE_TO_NAME)
+
+
+set_profile(os.environ.get("G10_SURROGATE_PROFILE", "smollm2"))
 
 
 class RetokReject(ValueError):
@@ -193,7 +243,7 @@ def retokenize(rows: list[dict], tok, max_tokens: int | None = None) -> tuple[li
         if max_tokens is not None and len(ids) > max_tokens:
             rejected["over_max_tokens"] = rejected.get("over_max_tokens", 0) + 1
             continue
-        n_special = sum(1 for t in ids if t < len(SURROGATE_SPECIALS))
+        n_special = sum(1 for t in ids if t in SPECIAL_IDS)
         if n_special != len(moves):
             rejected["special_count_mismatch"] = rejected.get("special_count_mismatch", 0) + 1
             continue

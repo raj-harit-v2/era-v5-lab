@@ -1,8 +1,9 @@
 # Eval schedule v1 (Team 09)
 
-**Status:** v1.1, Thu 19 Nov 2026 (v1 plus the review points on #662), week-3 task 4. Lead: `rahulni`. This is Team
-9's proposal. TSAI decides the eval schedule at Gate 3 (Sat 21 Nov): "The eval schedule for the run [decide]: TSAI
-decides at Gate 3" (Team 9 week-3 work order, section 5).
+**Status:** v1.2, Sun 22 Nov 2026 (v1.1 plus the real slot times from #549 in section 3, and the facts that changed
+on 21 and 22 Nov), week-4 task 5. Lead: `rahulni`. This is Team 9's proposal. Gate 3 (Sat 21 Nov) left the eval schedule
+open: "watcher plan accepted; lag alarm still to build (unblocked, #606 merged)" (Capstone Lab 4 briefing, Gate 3
+decisions). Week-4 work order, task 5: "Update the eval schedule with real slot times from #549's actual run."
 
 Week-3 work order, task 4: "Write `eval_schedule.md`: the benchmarks for each step of the run. Add the post-training
 benchmarks and the accuracy per effort level (Session 18)." This file replaces the v0 schedule in section 6 of
@@ -57,16 +58,33 @@ not fixed yet (section 3), so a rule in commits stays right when the interval ch
 - Checkpoint interval: dry run 1 `INTERVAL_S=600` (10 min), "Status: provisional". Main run: "the same rule, re-run
   when the model size and the GPU count are fixed", which "gives 10 min at 64 to 256 GPUs and up to 30 min on a single
   8-GPU node" ([`../07-infrastructure/docs/checkpoint_interval.md`](../07-infrastructure/docs/checkpoint_interval.md),
-  the summary at the top and section 4). It names no interval for dry run 2.
-- Measured time per checkpoint at the dry run 1 shape (T2, 237M parameters) on a Tesla T4 in fp32, which has no
-  native bf16, so these are upper bounds for the bf16 eval slot (job file above, "Max time"):
+  the summary at the top and section 4). It names no interval for dry run 2. Team 5's dry run 2 job request (#720,
+  merged 22 Nov) sets `--checkpoint-interval-s 600`.
+- Measured time per checkpoint at the dry run 1 shape (T2, 237M parameters). TSAI ran the dry run 1 job "on a GPU
+  eval slot (not a training node), bf16, offline, `--team5-run`": "Tier A 168.8 s, Tier B 112.3 s" (TSAI's result
+  comment on #549, 20 Nov). The Tesla T4 rows (fp32, no native bf16) are from the job file above ("Max time") and the
+  TIME lines of [`harness_lab/logs/watcher_gpu_test.log`](harness_lab/logs/watcher_gpu_test.log):
 
-  | Path | Tier A | Tier B | Per checkpoint (A + B/10) |
-  |---|---:|---:|---:|
-  | Team 7 store (export + scoring) | 95.6 s | 133.5 s | 108.9 s |
-  | Team 5 run folder (`--team5-run`) | 53.6 s | 81.4 s | 61.7 s |
+  | Path | Where | Tier A | Tier B | Per checkpoint (A + B/10) |
+  |---|---|---:|---:|---:|
+  | Team 5 run folder (`--team5-run`) | eval slot, bf16 (#549) | 168.8 s | 112.3 s | 180.0 s |
+  | Team 7 store (export + scoring) | eval slot, estimate (below) | about 207 s | about 159 s | about 223 s |
+  | Team 5 run folder (`--team5-run`) | Tesla T4, fp32 | 53.6 s | 81.4 s | 61.7 s |
+  | Team 7 store (export + scoring) | Tesla T4, fp32 | 95.6 s | 133.5 s | 108.9 s |
 
-- At a 600 s interval that is 144 commits a day, so about 15,700 s or **4.4 GPU-hours a day** on the store path.
+- v1.1 called the T4 times upper bounds for the slot. They are not: on the slot Tier A took 3.1 times as long and
+  Tier B 1.4 times. Tier A also took longer than Tier B there, though it sends about half the requests (3,880
+  against 7,617, job file above). The result does not say what the times include.
+- The store path has not run on the slot yet. Its estimate is the #549 time plus the T4 export, less the T4 checkpoint
+  load (export 43.2 s and 51.5 s, load 4.7 s: +38.5 s for Tier A, +46.8 s for Tier B), the same as in the dry run 2
+  watcher job (#707). Dry run 2's watchers keep each commit's scorer time, slot wait and lag in `state.json`
+  (`seconds`, `slot_wait_s`, `lag_s`), and the next version of this file uses them.
+- The job scores the spec items (970 in Tier A, 1,500 in Tier B), so the times are for those. The Items column of the
+  #549 result lists each benchmark's full size, but every score fits the spec counts: `mmlu` 26.14 is 149 of 570, and
+  each 100-item task has a whole-number score.
+- At a 600 s interval that is 144 commits a day: about 25,900 s or **7.2 GPU-hours a day** on the `--team5-run` path
+  (measured), and about 32,100 s or **8.9 GPU-hours a day** on the store path (estimate). A 10th commit (Tier A and
+  Tier B) takes about 366 s on the store path, still under 600 s.
 - Session 18 (14 Nov, auto-transcript): at a checkpoint "main training is continuing"; "if evaluation is let's say
   half an hour you know we are good"; if it is bad, "we stop … and we start from there"; so "your validation should be
   very fast". It also warns that a badly run evaluation means "interfering with the main cluster", and asks for the
@@ -80,8 +98,10 @@ not fixed yet (section 3), so a rule in commits stays right when the interval ch
   score in its state file, and stops a scorer after `--timeout 1800` s.
 - If the slot cannot keep up, Tier A drops to every k-th commit (with `--protect-every` changed to match, section 4),
   and this file says so.
-- **Open:** measure the time per checkpoint again at the main-run size on the eval slot before 28 Nov. The 4.4
-  GPU-hours a day is for the T2 shape only. TSAI approves the slot size.
+- **Open:** measure the time per checkpoint again at the main-run size on the eval slot after Gate 4 (Sat 28 Nov),
+  when TSAI sets the exact size inside the 30B to 120B range (Capstone Lab 4 briefing, section 7). TSAI (10
+  Post-training group, 21 Nov): "actual capstone sizing only happens after Gate 4's go/no-go". The 7.2 and 8.9
+  GPU-hours a day are for the T2 shape only. TSAI approves the slot size.
 
 ## 4. Retention: protected checkpoints
 
@@ -105,20 +125,21 @@ every 100 min, and 1.5 times the protected storage of 15. Team 7 agreed in the 0
 ### 5.1 Where step 0 comes from
 
 **Facts:**
-- Nothing on `main` commits step 0 today: `train_week2.py` refuses `--stop-after 0`. Team 9 asked for an opt-in step-0
+- `train_week2.py` refuses `--stop-after 0` ("Step counts must be positive"), so Team 9 asked for an opt-in step-0
   commit on #608 (18 Nov). The author asked whether Gate 4 needs "an evaluation-only snapshot of the initial weights or
   a checkpoint that must also resume training from step 0", and Team 9 asked for the resumable one (D8 below).
-- #608 (open, ready for review) adds `--checkpoint-at-start`: "Commit resumable step-0 state on a fresh run before
+- #608 (merged 21 Nov) adds `--checkpoint-at-start`: "Commit resumable step-0 state on a fresh run before
   training"; resumes skip it. The author on #608 (19 Nov): its tests check that a restore from step 0 gives identical
   loss traces and final model hashes, and that a pin keeps step 0 through retention. The author asked Team 9 to check
-  that it meets the watcher's Gate 4 needs.
+  that it meets the watcher's Gate 4 needs, and Team 9 approved it (20 Nov).
 - TSAI (G9, 17 Nov): "Dry run 2 (24 to 26 Nov) is planned under the Team 7 supervisor and Checkpointer. Keep the
   watcher able to read both formats."
 
 **Proposal (D8):** a normal, resumable Checkpointer commit at step 0 on a fresh run (skipped on resume), pinned by
 Team 7. Evaluation needs only the weights, but a normal commit means the watcher, `run_lab_ckpt.py`, the pin and
-retention all work unchanged, with no second path to build or test. **Open:** #608 to merge, and the dry run 2 job
-to pass `--checkpoint-at-start` (Team 5 and Team 7). Without both, dry run 2 has no step 0 to score.
+retention all work unchanged, with no second path to build or test. Team 5's dry run 2 job request passes
+`--checkpoint-at-start` (#720, merged 22 Nov): it "commits step 0 before the first optimizer update and is skipped on
+resume" (the job file, `../05-architecture/jobs/2026-11-22-dryrun2.md`).
 
 ### 5.2 Near random at step 0
 
@@ -159,14 +180,18 @@ Team 9 reports it to TSAI at once.
 
 **Fact (Team 7, 19 Nov):** the planned failure is "SIGKILL between two commits, so the restore goes back to the last
 COMPLETE one". Team 7 owns the drill plan, and adds: "Dry run 2's planned failure only tests G7's path if #608 lands
-first." Plan sheet, week 4: "Check that the watcher scores the restored checkpoint
+first." #608 merged on 21 Nov. Plan sheet, week 4: "Check that the watcher scores the restored checkpoint
 after the planned failure."
+
+**Fact (TSAI, 07 Infrastructure group, 21 Nov):** "I'll run both kill variants during dry run 2, (a) midway between
+two committed saves and (b) mid-save using the upload_delay_s switch, time permitting. If only one fits on the day,
+(a) takes priority".
 
 **Proposal (evidence for Gate 4):**
 1. The Tier A and Tier B watchers' state files show every owned commit scored once across the kill: none missing, none
    scored twice.
-2. The restored checkpoint is scored. If the restore commits a step again, the newer commit is scored and the older one
-   is marked `superseded` (watcher rule).
+2. The restored checkpoint is scored after each kill. If the restore commits a step again, the newer commit is scored
+   and the older one is marked `superseded` (watcher rule).
 3. The commit-to-score lag table covers the time of the kill.
 
 **Fact:** panel 28 shows one score per step and series, the newest:
@@ -193,8 +218,9 @@ Part (b) needs a baseline run, and a single training run has none.
 
 **Open:** an eval alarm. Team 8 has none on `eval_mini` today, so a stopped watcher would go unseen. Team 9 asked Team 8
 (18 Nov) for a page when a run's newest `eval_mini` step lags its newest training step by more than 2 checkpoint
-intervals. That needs one run ID in both tables (#606, merged 19 Nov). Until the alarm exists, Team 9 checks panel 28
-once a day. The on-call note for eval failures is a week-4 task.
+intervals. That needs one run ID in both tables (#606, merged 19 Nov). Team 8 and Team 9 build it in week 4 (task 1
+of Team 8's work order, task 2 of Team 9's, both due Tue 24 Nov), and Gate 3 left the eval schedule open for it. Until
+the alarm exists, Team 9 checks panel 28 once a day. The on-call note for eval failures is a week-4 task (plan sheet).
 
 ## 7. Later benchmarks on pre-training checkpoints
 
@@ -229,9 +255,10 @@ only chance.
   benchmarks run internally only, and their items are never published or copied into the repo (Decisions 3, 5, 8).
 - No runner for these benchmarks exists in the lab repo yet. Team 10's SFT and RL jobs keep no weights yet; the next
   one will save through Team 7's Checkpointer and `export_safetensors()`, which the watcher reads (Team 10 lead, 18 Nov;
-  #634, drafts not runnable). Team 10 has since built a default-off `--keep-weights-dir` on the SFT and RL job scripts,
-  saved through Team 7's Checkpointer and readable by `run_lab_ckpt.py`; its PR goes to Team 10's week-3 branch (10
-  Post-training group, 19 Nov 20:17).
+  #634, drafts not runnable). Team 10's default-off `--keep-weights-dir` on the SFT and RL job scripts, saved through
+  Team 7's Checkpointer and readable by `run_lab_ckpt.py`, is on `main` (#634, 20 Nov). Both job requests that would
+  use it are still drafts (Team 10's `jobs/2026-11-18-g10-sft-keep-weights.md` and
+  `jobs/2026-11-20-g10-keep-weights.md`).
 
 **Proposal (D4):** post-training benchmark set v1 = the 10 benchmarks above, built in waves. Wave 1, one per priority
 area: SWE-bench Verified, MILU, GPQA Diamond, MMLU. Each wave needs its own job request and a test log.
@@ -247,7 +274,8 @@ set, any number on them is labelled "not decontaminated". TSAI decides.
 (first 500) and HellaSwag (first 400) before and after SFT, with bits per byte. Its `forgetting.py` refuses reports
 that differ in device, dtype, metric, item count or few-shot count. **Proposal:** the watcher scores the base and the
 after-SFT checkpoint with the same command, slot, dtype and items (the Tier B rows have exactly these two tasks and
-item counts).
+item counts). TSAI (10 Post-training group, 21 Nov): "Confirmed, that split works -- Team 9 scores ARC/HellaSwag on
+base + after-SFT, you run held-out bpb only." Team 10's own eval-mini forgetting job is withdrawn (#681).
 
 **Fact (Team 10 lead, lab G, 19 Nov 19:41):** `forgetting.py` reads the eval-mini rows. It needs one record per task
 for `arc_challenge` and `hellaswag` with task, metric, filter, value, stderr, n_items and num_fewshot, and returncode 0
@@ -276,7 +304,8 @@ briefing, section 4). It is not built yet.
 - Session 18: the serving stack's reasoning parser lets users select the level. The transcript gives no format for the
   per-level readout.
 - Team 10 lead (18 Nov): at 2,048 tokens the 4k, 16k and 64k budgets cannot fit; plan 1k on dry run 1 and placeholders
-  for the rest until TSAI sets the context length. TSAI decides the context length for each phase at Gate 3.
+  for the rest until TSAI sets the context length. Gate 3 did not set it (Capstone Lab 4 briefing, Gate 3 decisions):
+  Team 5's production context-length recommendation is due Thu 26 Nov (05 Architecture group, 21 Nov).
 
 **Proposal (D5):**
 - Benchmarks: GPQA Diamond (198), the Tier A MILU spec items (Hindi, Telugu, Tamil, Bengali, 400), and one code set
@@ -301,14 +330,19 @@ briefing, section 4). It is not built yet.
   `allenai/ai2_arc` `210d026f…`, `Rowan/hellaswag` `218ec52e…`, `TIGER-Lab/MMLU-Pro` `b189ec76…`,
   `facebook/belebele` `7899cdfa…`.
 - **Output head:** the scorer calls the model's dense output head (`model.head`). Config v1 leaves the output head to
-  TSAI (`embedding.ke2_output_dim` is empty), and dry run 1 used the dense untied head. **Open:** if TSAI picks a KE2
-  output head for a later run, the scorer changes first (Team 9 with Team 4).
+  TSAI (`embedding.ke2_output_dim` is empty), and dry run 1 used the dense untied head. The capstone output head is now
+  the KE2/KAS head ([`../04-ke2/output_shape.md`](../04-ke2/output_shape.md): "Decided 21 Nov, final (TSAI)", on
+  `main` through #694). TSAI plans dry run 2 with it (10 Post-training group, 21 Nov); Team 5's dry run 2 job request
+  adds it to the arm once Team 5's head integration is on `main` (#720, merged 22 Nov). Team 4's docs on `main` say
+  untied since #702 and #715 (both merged 22 Nov): "its own separate 2048-wide projection, NOT tied" (#702).
+  **Open:** Team 9 tests the scorer on Team 5's head PR, and changes it first if needed, before it scores a run with
+  that head (Team 5 builds the head into the trainer, due Wed 25 Nov).
 - **Storage:** Team 8's `eval_mini` table in ClickHouse database `default`
   ([`../08-monitoring/clickhouse/schema_v1.sql`](../08-monitoring/clickhouse/schema_v1.sql)), one `run_id` per checkpoint
   and tier: `<run>:<commit path>:<label>:<model_revision[:12]>`. Panel 28 of the private dashboard plots it. Records
   follow the eval-mini v1 schema ([`results/eval_mini_v1_schema.md`](results/eval_mini_v1_schema.md), section 6).
-- **Open:** the ClickHouse address of the eval slot (TSAI). Without it the watcher runs with `--no-load`, and the rows
-  are loaded later with `load_jsonl.py`.
+- **ClickHouse:** job files leave `<ClickHouse URL>` for TSAI to fill in, and TSAI loaded #549's rows into `eval_mini`
+  (20 Nov). Without a URL the watcher runs with `--no-load`, and the rows are loaded later with `load_jsonl.py`.
 - **Firewall:** eval files are placed only in an approved Team 9 job's folder and deleted when it ends. Scores only: no
   `--log-samples`, no item text in `out/` or logs, and `canary_scan.py … --lab-only` exits 0 before results return
   (`eval_firewall.md`, section 3).
@@ -321,8 +355,9 @@ briefing, section 4). It is not built yet.
   bf16 scores. Quantized evaluation runs only through Team 12's flow and limits, so Tier A and Tier B stay bf16.
 - **Public text** (Team 11 review, `../11-release/model_card/rotation_SreekanthZipsy.md`): name only benchmarks marked
   "Evaluation"; write `[number: waiting for TSAI]` until TSAI approves a score; say which benchmarks have no fingerprint
-  coverage. TSAI approves each public score (plan sheet, week 4). No eval panel is public until TSAI decides the public
-  dashboard panels (Gate 3).
+  coverage. TSAI approves each public score (plan sheet, week 4). No eval panel is public: Gate 3 accepted Team 8's
+  panels ("Panels and monitoring", Capstone Lab 4 briefing), and
+  [`../08-monitoring/grafana/public_v1.json`](../08-monitoring/grafana/public_v1.json) has no `eval_mini` panel.
 - **Proposal (D11):** a public contamination number counts a flag with only one matching 13-word run only if the
   document also holds the item's options or answer. #656: of the 351 one-run flags in `verdicts_v0-clean.csv`, the
   first pass labels 321 false-hit and 0 real, and all 44 `real` flags have two or more runs. This is for reports only:
@@ -334,9 +369,9 @@ Compute rule: "You get no keys and no machine access. Send a job request." Each 
 
 | # | Job | State |
 |---|---|---|
-| 1 | Dry run 1 checkpoint, Tier A and Tier B | [`jobs/2026-11-15-eval-watcher-dry-run-1.md`](jobs/2026-11-15-eval-watcher-dry-run-1.md), on `main` (#549). Not run yet: TSAI restarted its job runner and queued it on 19 Nov (07 Infrastructure group, 15:13). Gate 3 evidence |
-| 2 | Dry run 2 watcher: Tier A every commit, Tier B every 10th, step 0 and the restored checkpoint | to file before 24 Nov |
-| 3 | Main-run watcher | to file before 28 Nov, with the time per checkpoint at the main-run size |
+| 1 | Dry run 1 checkpoint, Tier A and Tier B | [`jobs/2026-11-15-eval-watcher-dry-run-1.md`](jobs/2026-11-15-eval-watcher-dry-run-1.md), on `main` (#549). Ran 20 Nov on the eval slot: Tier A and Tier B scored and loaded into `eval_mini`, 0 canary hits (TSAI's result comment on #549); times in section 3. Gate 3 evidence |
+| 2 | Dry run 2 watcher: Tier A every commit, Tier B every 10th, step 0 and the restored checkpoint | [`jobs/2026-11-21-eval-watcher-dry-run-2.md`](jobs/2026-11-21-eval-watcher-dry-run-2.md), on `main` (#707, merged 22 Nov). Its run details come from Team 5's dry run 2 job request (#720, merged 22 Nov: run ID `dryrun2-1234`, store `/shared/ckpt`, `--checkpoint-interval-s 600`) |
+| 3 | Main-run watcher | to file after Gate 4 (Sat 28 Nov), with the time per checkpoint at the main-run size |
 | 4 | Post-training evaluation (section 8 wave 1, the forgetting check, section 9) | after an SFT or RL job keeps weights |
 
 ## 13. Before each gate
@@ -351,21 +386,22 @@ Compute rule: "You get no keys and no machine access. Send a job request." Each 
 
 | # | Item | Owner | When |
 |---|---|---|---|
-| 1 | Run the #549 dry run 1 job; the ClickHouse address of the eval slot | TSAI | Gate 3 evidence, Fri 20 Nov |
-| 2 | Step-0 commit in dry run 2: merge #608 (`--checkpoint-at-start`) and use it in the dry run 2 job | Team 5, Team 7 | before 24 Nov |
-| 3 | `--protect-every 10` in `checkpoint_interval.md` section 5 (asked 19 Nov; not on `main` yet) | Team 7 | before 24 Nov |
-| 4 | Eval-lag alarm on `eval_mini` | Team 8 | dry run 2 |
-| 5 | Main-run size, sequence length, context length per phase, precision, output head | TSAI (Gate 3), Team 4 for the head | Sat 21 Nov |
-| 6 | Time per checkpoint at the main-run size on the eval slot; slot size | Team 9, TSAI | before 28 Nov |
-| 7 | Which SFT and RL checkpoints come to Team 9, and when | TSAI, Team 10 | before 27 Nov |
+| 1 | Closed 20 Nov: #549 ran on the eval slot and loaded its rows into `eval_mini`; its times are in section 3 | TSAI | done |
+| 2 | Step-0 commit in dry run 2: #608 (`--checkpoint-at-start`) merged 21 Nov; Team 5's dry run 2 job request passes the flag (#720, merged 22 Nov) | Team 5, TSAI | Tue 24 Nov |
+| 3 | `--protect-every 10` in `checkpoint_interval.md` section 5 (asked 19 Nov and again 21 Nov; not on `main` yet; Team 7 offered a PR, 22 Nov) | Team 7 | before 24 Nov |
+| 4 | Eval-lag alarm on `eval_mini` (week-4 work orders: Team 8 task 1, Team 9 task 2) | Team 8, Team 9 | Tue 24 Nov |
+| 5 | Main-run size: Gate 3 set the range, 30B to 120B; Gate 4 sets the exact point. Head: KE2/KAS (`../04-ke2/output_shape.md`, #694; untied per #702 and #715, both merged 22 Nov). Still open: the exact size, sequence and context length per phase, precision | TSAI (Gate 4), Team 5 | Sat 28 Nov |
+| 6 | Time per checkpoint at the main-run size on the eval slot; slot size | Team 9, TSAI | after Gate 4 (Sat 28 Nov) |
+| 7 | Which SFT and RL checkpoints come to Team 9, and when. TSAI confirmed (21 Nov) that Team 9 scores ARC and HellaSwag on base and after-SFT (section 8) | TSAI, Team 10 | before 27 Nov |
 | 8 | Fingerprint the six missing benchmarks (D6) | TSAI decides | before the main-run data check |
 | 9 | Closed 19 Nov: `forgetting.py` reads the watcher's rows, with value and stderr in fractions (section 8) | Team 10 | done |
 | 10 | Team 6's full-size save time (moves the interval). #485 gave shares only (a save is 8% copy to CPU, 92% file write); TSAI keeps the absolute times, so the 600 s interval stays provisional | Team 6, Team 7 | due Thu 19 Nov; still open |
 
 ## 15. Changes
 
-Each change to this schedule is a pull request that TSAI approves. **Proposal:** once TSAI accepts it at Gate 3, the
-schedule is frozen with the launch config, and changes after 26 Nov need TSAI's approval.
+Each change to this schedule is a pull request that TSAI approves. **Proposal:** once TSAI closes the eval schedule
+decision (open after Gate 3, see the status line), the schedule is frozen with the launch config, and changes after 26
+Nov need TSAI's approval.
 
 ## Sources
 
@@ -387,3 +423,10 @@ schedule is frozen with the launch config, and changes after 26 Nov need TSAI's 
   [`../10-post-training/sft/eval_v1.md`](../10-post-training/sft/eval_v1.md); #634; Team 10 lead in the CAP G group,
   18 and 19 Nov.
 - [`../11-release/model_card/rotation_SreekanthZipsy.md`](../11-release/model_card/rotation_SreekanthZipsy.md); #460.
+- Week 4 (v1.2): TSAI's result comment on #549 (20 Nov); Capstone Lab 4 briefing (21 Nov), Gate 3 decisions and
+  section 7; Team 9 and Team 8 week-4 work orders (21 Nov); TSAI in the 10 Post-training and 07 Infrastructure groups
+  (21 Nov); 05 Architecture group (21 Nov);
+  [`harness_lab/logs/watcher_gpu_test.log`](harness_lab/logs/watcher_gpu_test.log);
+  [`../04-ke2/output_shape.md`](../04-ke2/output_shape.md);
+  [`../08-monitoring/grafana/public_v1.json`](../08-monitoring/grafana/public_v1.json); #608, #634, #681, #694, #702,
+  #707, #715, #720.

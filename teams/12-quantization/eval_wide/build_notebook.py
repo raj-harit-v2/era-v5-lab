@@ -50,6 +50,7 @@ FORMATS   = ["bf16"]           # <-- your formats: bf16, Q8_0, Q6_K, Q5_K_M, Q4_
 RUN_BY    = ""                 # <-- your GitHub handle, recorded with the results
 CAP       = 20                 # items per task (MMLU: per subject); None = full splits. Same cap for every format of a model
 SKIP_GATED = False             # True leaves MILU out (no HF_TOKEN)
+TASKS     = None               # None = every task of run_wide_gguf.WIDE; or a list, e.g. ["mmlu", "arc_challenge"]
 N_CTX     = 4096
 BASE      = "bf16"
 MODEL, REVISION = "sarvamai/sarvam-1", "e9607337286ddf496d4a2562b194e489dcf3feea"   # Granite 3.0 MoE: pin from #643
@@ -89,7 +90,8 @@ RUNS = f"{OUT}/runs_" + "-".join(FORMATS) + (f"_cap{CAP}" if CAP else "_full")
 def run_format(fmt, gguf, gpu_layers):
     sh(f"cd {CODE} && {EVAL_PY} run_wide_gguf.py --gguf {gguf} --format {fmt} --out {RUNS} --g9-dir {G9_DIR} "
        f"--model {MODEL} --revision {REVISION} --n-ctx {N_CTX} --n-gpu-layers {gpu_layers}"
-       + (f" --cap {CAP}" if CAP else "") + (" --skip-gated" if SKIP_GATED else ""), log=f"{OUT}/logs/run_{fmt}.log")
+       + (f" --cap {CAP}" if CAP else "") + (" --skip-gated" if SKIP_GATED else "")
+       + (" --tasks " + " ".join(TASKS) if TASKS else ""), log=f"{OUT}/logs/run_{fmt}.log")
 
 for fmt in FORMATS:
     t0 = time.time()

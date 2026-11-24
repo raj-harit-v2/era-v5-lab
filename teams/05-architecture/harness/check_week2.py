@@ -41,7 +41,7 @@ def main():
                     "kv_heads": m["n_kv_head"],
                     "expert_ffn": m["moe"]["ffn_hidden"],
                     "context": m["block_size"],
-                    "output_head": "dense_untied",
+                    "output_head": m.get("head_mode", "dense_untied"),
                     "baseline_approval": cfg["approval"]["status"],
                     "provenance": cfg["provenance"],
                 },

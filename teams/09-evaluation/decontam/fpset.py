@@ -326,18 +326,31 @@ class Fingerprints:
     def check(self, text, min_hits=1):
         """Return (flagged, hits). hits: list of dicts, best item first."""
         ws = self.norm.words_with_offsets(text)
+        # The same key as int(gram_hash(words), 16), without a list, a str join and a hex round trip per gram:
+        # the UTF-8 words are joined once, and each gram is a slice of that buffer (its words joined by one space).
+        enc = [w.encode("utf-8") for w, _ in ws]
+        starts, pos = [], 0
+        for e in enc:
+            starts.append(pos)
+            pos += len(e) + 1
+        buf = memoryview(b" ".join(enc))
+        blake2b, from_bytes = hashlib.blake2b, int.from_bytes
         matched, first = {}, {}   # matched: item -> unique grams found
         for n, table in self.owner.items():
             seen = set()
+            get = table.get
             for i in range(len(ws) - n + 1):
-                k = int(gram_hash([w for w, _ in ws[i:i + n]]), 16)
-                o = table.get(k)
+                j = i + n - 1
+                k = from_bytes(blake2b(buf[starts[i]:starts[j] + len(enc[j])], digest_size=HASH_BYTES).digest(),
+                               "big")
+                o = get(k)
                 if o is None or k in seen:
                     continue
                 seen.add(k)
+                off = ws[i][1]
                 for idx in (o if isinstance(o, tuple) else (o,)):
                     matched[idx] = matched.get(idx, 0) + 1
-                    first[idx] = min(first.get(idx, ws[i][1]), ws[i][1])
+                    first[idx] = min(first.get(idx, off), off)
         hits = [{"item": self.refs[idx], "grams": c, "item_grams": self.size[idx],
                  "coverage": round(c / self.size[idx], 3), "offset": first[idx]}
                 for idx, c in matched.items()]

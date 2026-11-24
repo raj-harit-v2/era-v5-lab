@@ -286,6 +286,29 @@ def test_outputs_over_max_output_mb_fail_after_they_are_written(tmp_path, monkey
     assert (tmp_path / "out" / "t" / "overlap_summary.json").exists()
 
 
+def test_max_output_mb_counts_only_the_returned_outputs_and_the_summary(tmp_path, monkeypatch):
+    """The three files kept in TSAI's job storage are hashed and sized in the summary but not counted: a cap between
+    the returned size and the total passes, and a cap just under the returned size still fails."""
+    inputs = make_sample(tmp_path, SAMPLE)
+    out, _, s = run(monkeypatch, tmp_path, make_config(tmp_path, inputs))
+    assert {name for name, meta in s["outputs"].items() if not meta["returned"]} == {
+        "overlap_pairs.csv", "overlap_matrix.npz", "overlap_docs.parquet"}
+    summary_bytes = (out / "overlap_summary.json").stat().st_size
+    returned = sum(m["bytes"] for m in s["outputs"].values() if m["returned"]) + summary_bytes
+    total = sum(m["bytes"] for m in s["outputs"].values()) + summary_bytes
+    assert total - returned > 2048   # room for the summary to differ by a few bytes between the runs below
+
+    between = (returned + (total - returned) // 2) / (1 << 20)
+    _, _, ok = run(monkeypatch, tmp_path, make_config(tmp_path, inputs, out="out/u", max_output_mb=between))
+    assert ok["status"] == "complete" and ok["outputs"]["overlap_docs.parquet"]["bytes"] > 0
+
+    under = (returned - 1024) / (1 << 20)
+    with pytest.raises(SystemExit, match="returned outputs and the summary .* over max_output_mb"):
+        run(monkeypatch, tmp_path, make_config(tmp_path, inputs, out="out/v", max_output_mb=under))
+    failed = json.loads((tmp_path / "out" / "v" / "overlap_summary.json").read_text())
+    assert failed["status"] == "failed_output_limit"
+
+
 # The config
 
 

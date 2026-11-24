@@ -426,6 +426,9 @@ def main():
         identity["bpb_policy"] = (
             f"original UTF-8 bytes, with {args.tokenizer_release} tokenizer normalization"
         )
+    if hasattr(model, "prior_identity"):
+        from week2.kas_v2 import FIXTURE_SHA
+        identity["kas_v2"] = {"codec_fixture_sha256": FIXTURE_SHA, "prior": model.prior_identity}
     # Resume checks bind the checkpoint to the resolved inputs and source hashes.
     identity_hash = hashlib.sha256(
         json.dumps(identity, sort_keys=True).encode()
@@ -486,6 +489,9 @@ def main():
             try:
                 probe_model.eval()
                 with amp():
+                    if cfg["model"].get("head_mode") == "kas_v2":
+                        from week2.kas_v2 import checkpoint_probe
+                        return checkpoint_probe(probe_model)
                     return float(scored_ntp_loss(probe_model, probe_x, probe_y))
             finally:
                 probe_model.train(training)
@@ -493,7 +499,7 @@ def main():
         checkpointer = Checkpointer(
             run_id, str(args.out / "checkpoint-cache"), args.checkpoint_store,
             config_path=str(args.config), seed=seed,
-            frozen_keys=("embedding.rows", "embedding.lengths"), code_paths=source_files,
+            frozen_keys=("embedding.rows", "embedding.lengths") + (("codec.G", "codec.Phi") if hasattr(model, "codec") else ()), code_paths=source_files,
         )
         if not args.resume_committed and checkpointer.store.exists("latest.json"):
             p.error("Team 7 run ID already exists. Use --resume-committed or a fresh run ID")
@@ -688,6 +694,7 @@ def main():
             if sample_expert_load:
                 model.start_expert_load()
             micro = cfg["run"]["micro_batch_size"]
+            model.clear_router_bias_load()
             for start in range(0, len(x), micro):
                 tx, ty = x[start : start + micro], y[start : start + micro]
                 # Normalize each microbatch by the full batch target count.
@@ -724,6 +731,7 @@ def main():
                     ntp_value += float(ntp.detach())
                     if mtp is not None:
                         mtp_value += float(mtp.detach())
+            model.update_router_bias()
             if not args.consolidate_step_checks:
                 grads = [q.grad for q in model.parameters() if q.grad is not None]
                 if grads and not bool(torch.isfinite(torch.stack(torch._foreach_norm(grads))).all()):

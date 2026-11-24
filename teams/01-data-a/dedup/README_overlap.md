@@ -96,7 +96,9 @@ not the share removed after retaining one survivor. A singleton source with no m
 
 ## Outputs
 
-All files are written to `out/overlap/`; the total, including the summary, must fit the job's 50 MiB cap.
+All files are written to `out/overlap/`. `overlap_pairs.csv`, `overlap_matrix.npz` and `overlap_docs.parquet` stay
+in TSAI's job storage: the summary records their size and SHA-256 with `"returned": false`. They grow with the
+corpus. The other files and the summary are returned to the repository and must fit the job's 50 MiB cap.
 
 | File | Contents |
 |---|---|
@@ -129,7 +131,7 @@ Paths in the JSON config are relative to the repository root. Unknown keys fail.
 | `k` | Words per raw shingle; fixed at 5 for this design | 5 |
 | `block` | Positive document rows per sparse multiplication block | 256 |
 | `top` | Number of diagnostic pairs printed | 20 |
-| `max_output_mb` | Total output cap, above 0 and at most 50 MiB | 50 |
+| `max_output_mb` | Cap on the returned outputs and the summary (not the three job-storage files), above 0 and at most 50 MiB | 50 |
 
 The TSAI job uses `overlap.json` for all 38 cleaned packs. `overlap_local.json` retains the five-pack local run's
 input path and inventory, independently of the TSAI job config.

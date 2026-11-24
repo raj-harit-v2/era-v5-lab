@@ -60,7 +60,7 @@ retok = _load("g10_bench_retok", HERE / "retok.py")
 render = retok.render
 T = render.T
 SPECIAL_TO_G10 = {sid: T[name] for name, (_, sid) in retok.MARKER_MAP.items()}
-N_SPECIAL = len(retok.SURROGATE_SPECIALS)
+SPECIAL_IDS = retok.SPECIAL_IDS  # ids of every surrogate special (profile-dependent; SmolLM2: 0..16)
 
 
 # ---------------------------------------------------------------- inputs
@@ -148,7 +148,7 @@ def ids_to_g10(tok, ids: list[int]) -> tuple[str, str | None]:
 
     problem = None
     for t in ids:
-        if t < N_SPECIAL:
+        if t in SPECIAL_IDS:
             piece = flush()
             if any(s in piece for s in retok.SURROGATE_SPECIALS) and problem is None:
                 problem = "special_surface_as_plain_text"
@@ -277,6 +277,14 @@ def score_exec(generations: Path, tasks_path: Path, limit: int, workers: int) ->
 # ---------------------------------------------------------------- (d) forgetting
 
 
+def _native_bf16() -> bool:
+    """Native bf16 only, as Team 9's lm_eval_lab.py asks (including_emulation=False). torch's default (True) also says yes
+    for a GPU that emulates bf16 (T4, V100), where the watcher scores in fp32 and the two rows would not be comparable."""
+    import torch
+
+    return bool(torch.cuda.is_bf16_supported(including_emulation=False))
+
+
 def resolve_compute_dtype(device: str, dtype_arg: str = "float32") -> tuple[str, bool]:
     """Match Team 9's eval watcher dtype rule: bf16 autocast on native-bf16 CUDA GPUs, float32 elsewhere.
 
@@ -286,7 +294,7 @@ def resolve_compute_dtype(device: str, dtype_arg: str = "float32") -> tuple[str,
 
     if dtype_arg == "float32":
         return "float32 (TF32 off)", False
-    has_cuda_bf16 = device.startswith("cuda") and torch.cuda.is_available() and torch.cuda.is_bf16_supported()
+    has_cuda_bf16 = device.startswith("cuda") and torch.cuda.is_available() and _native_bf16()
     if dtype_arg == "auto":
         return ("bfloat16", True) if has_cuda_bf16 else ("float32 (TF32 off)", False)
     if dtype_arg == "bfloat16":
@@ -321,7 +329,7 @@ def forgetting_bpb(model, tok, heldout: Path, sources: Path, device: str, window
         ids = enc.ids
         for start in range(0, len(ids), window):
             target = ids[start : start + window]
-            prev = retok.EOS_ID if start == 0 else ids[start - 1]  # SmolLM2 bos = <|endoftext|> = 0
+            prev = retok.EOS_ID if start == 0 else ids[start - 1]  # document separator: <|endoftext|> (SmolLM2 bos, id 0; Qwen3 has no bos)
             windows.append(([prev] + target[:-1], target))
             wslice.append(name)
     nats: dict[str, float] = {}
@@ -368,7 +376,8 @@ def eval_mini(model_dir: str, python: str, runs_dir: Path, device: str, tasks: l
     t0 = time.perf_counter()
     env = {**os.environ, "HF_HUB_DISABLE_PROGRESS_BARS": "1"}
     proc = subprocess.run(cmd, capture_output=True, text=True, env=env)
-    out = {"command": " ".join(cmd[1:]), "returncode": proc.returncode, "seconds": round(time.perf_counter() - t0, 1)}
+    out = {"command": " ".join(cmd[1:]), "dtype": dtype, "returncode": proc.returncode,
+           "seconds": round(time.perf_counter() - t0, 1)}
     summaries = sorted(runs_dir.rglob("summary.json"))
     if proc.returncode != 0 or not summaries:
         out["error_tail"] = [l for l in proc.stderr.splitlines() if "Error" in l or "error" in l][-3:]

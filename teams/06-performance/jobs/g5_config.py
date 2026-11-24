@@ -32,6 +32,7 @@ G5_TO_BASE_KEY = {
     "moe.n_expert": "model.moe.num_experts",
     "moe.n_shared": "model.moe.num_shared",
     "moe.top_k": "model.moe.top_k",
+    "moe.bias_gamma": "model.moe.bias_gamma",   # same rule both sides: bias += gamma * sign(mean load - load)
     "model.n_layer": "model.n_layer",
     "model.d_model": "model.n_embd",
     "model.n_head": "model.n_head",
@@ -75,6 +76,12 @@ def load_g5_overrides(cfg_path: Path) -> Tuple[List[str], Dict[str, object]]:
             continue
         if key == "embedding.type":
             overrides.append(f"model.embedding={'ke2' if str(val).lower() in ('kronecker', 'ke2') else val}")
+            continue
+        if key == "optim.router_on_muon":
+            # perfkit's Muon already takes every 2D block weight, routers included (models/optim.py), so true needs
+            # no override. false (router on AdamW) has no perfkit equivalent, so it stops the job.
+            if val is not True:
+                unmapped.append(f"{key}={val} (perfkit's Muon always includes the router)")
             continue
         if key == "loss.train_on":
             mode = str(val).lower()

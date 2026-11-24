@@ -1,0 +1,113 @@
+B5 patch for the RL dry run 1 job request (ours: saitej123/era-v5-lab#139, head 1bd2df53). NOT applied anywhere yet:
+apply once the lead agrees to switch the sampler, and only after the B5 PR (g5_decode.sample_many, sampler kind g5_batch) is
+merged into the base, because train.py refuses g5_batch without it.
+
+Why (results/b5_sampler_2026-11-23.md): with sampler policy the job decodes its 16 prompts one after another; on a T4 at the
+job's settings r = 44.3 s per prompt's 8 samples, above the 9.4 s the job's time table goes to, so after the SFT rebuild the
+enough_time rule would take the screen-only branch. g5_batch is 12.8x faster on the same T4 (r = 3.45 s).
+
+What it changes in capstone/rl_job_v1.py (default stays policy, so nothing changes unless the flag is passed):
+  --sampler {policy,g5_batch}, --sampler-max-rows (default 128) -> written into rl_config.yaml (train.sampler,
+  train.sampler_max_rows); under g5_batch the rate probe times ONE bundle.sample_many over the rate-probe prompts (real stops,
+  bf16 autocast on cuda) instead of the per-prompt screen, and the SFT rebuild's per-prompt rate is not used.
+Tested at 1bd2df53 + this patch (+ the B5 rl-loop files overlaid): capstone/test_rl_job_v1.py 17 passed; batched_rate on the
+CPU stand-in returned r = 0.171 s (4 prompts, k 2, 32 new).
+
+Job request text (jobs/2026-11-19-g10-rl-dryrun1.md), lines to change:
+  Command: add  --sampler g5_batch  after  --origin g5_delivery
+  Time section, after "because r is the unknown:" add: "B5 (23 Nov, Colab T4, T2 fp16, 16 x 8 x 1,536, stop disabled) measured
+  r = 44.3 s with sampler policy and 3.45 s with sampler g5_batch (results/b5_sampler_2026-11-23.md); this job uses g5_batch,
+  and its rate probe times the batched path."
+  Estimate line in the header: "Estimate 46-81 minutes" -> unchanged (the table's r range 1-9.4 s now covers g5_batch).
+
+diff --git a/teams/10-post-training/capstone/rl_job_v1.py b/teams/10-post-training/capstone/rl_job_v1.py
+index 672dfbe7..4d068ea7 100644
+--- a/teams/10-post-training/capstone/rl_job_v1.py
++++ b/teams/10-post-training/capstone/rl_job_v1.py
+@@ -29,6 +29,7 @@ from __future__ import annotations
+ 
+ import argparse
+ import collections
++import contextlib
+ import hashlib
+ import json
+ import os
+@@ -384,14 +385,15 @@ def write_train_config(a, out: Path, init_state: Path | None, init_sha: str | No
+                      **({"init_state": str(init_state), "init_state_sha256": init_sha} if init_state else {})},
+            "task": {"kind": "stdio", "require_verifier": True, "tasks": str(a.rl_tasks),
+                     "train_ids": str(out / "train_ids.txt"), "heldout_ids": str(out / "heldout_ids.txt")},
+-           "train": {"algo": "objective_v1", "sampler": "policy", "steps": a.updates, "prompts_per_step": a.prompts_per_step,
++           "train": {"algo": "objective_v1", "sampler": a.sampler, "steps": a.updates, "prompts_per_step": a.prompts_per_step,
+                      "k": a.k, "max_new": a.max_new, "temperature": 1.0, "lr": a.lr, "ppo_epochs": 1, "kl_coef": 0.0,
+                      "grad_clip": 1.0, "weight_decay": 0.0, "tr_epsilon": a.tr_epsilon, "fp32_master": True,
+                      "autocast": "bf16" if a.device.startswith("cuda") else None, "eval_every": a.updates, "eval_k": a.eval_k,
+                      "reward_workers": 4, "reward_pool": a.reward_pool,
+                      "screen": {"n": screen_n, "k": a.k, "min_mixed": a.min_mixed},
+                      "state_dir": str(out / "rl_state"), "state_every": a.state_every, "deadline_unix": deadline_unix,
+-                     **({"max_steps_this_call": a.max_steps_this_call} if a.max_steps_this_call else {})}}
++                     **({"max_steps_this_call": a.max_steps_this_call} if a.max_steps_this_call else {}),
++                     **({"sampler_max_rows": a.sampler_max_rows} if a.sampler == "g5_batch" else {})}}
+     if cfg["train"]["autocast"] is None:
+         del cfg["train"]["autocast"]
+     if getattr(a, "keep_weights_dir", None):  # default off: train.py writes its trainable tensors here (bf16), keep_final_weights completes them
+@@ -539,11 +541,40 @@ def rate_probe(a, out: Path, init_state) -> dict:
+     bundle = ta.build(out / "adapter.yaml", device=a.device).require_bundle()
+     if init_state:
+         bundle.model.load_state_dict(load_file(str(init_state)), strict=True)
++    if a.sampler == "g5_batch":
++        return batched_rate(a, bundle, ids)
+     rep = probe.rl_screen_bundle(bundle, a.rl_tasks, ids_file, a.k, a.max_new, a.device, 0, a.rate_probe_seconds)
+     return {"decode_seconds_per_prompt": rep["seconds"] / rep["prompts"] if rep["prompts"] else None, "prompts": rep["prompts"],
+             "seconds": rep["seconds"], "stopped_at_budget": rep["stopped_at_budget"]}
+ 
+ 
++def batched_rate(a, bundle, ids: list[str]) -> dict:
++    """r for sampler g5_batch: one bundle.sample_many over the rate-probe prompts (real stops, bf16 autocast on cuda as the
++    trainer samples), seconds divided by the number of prompts. Fewer rows than a 16-prompt step, so it overstates r."""
++    import torch  # noqa: PLC0415
++    by_id = {}
++    for line in a.rl_tasks.read_text(encoding="utf-8").splitlines():
++        if line.strip():
++            t = json.loads(line)
++            by_id[t["id"]] = t
++    codec = bundle.codec()
++    block = bundle.spec["block_size"]
++    prompts = [p for p in (codec.encode_prompt(by_id[i]["statement"]) for i in ids if i in by_id) if block - len(p) >= 16]
++    if not prompts:
++        return {"decode_seconds_per_prompt": None, "prompts": 0, "seconds": 0.0, "sampler": "g5_batch"}
++    mn = min(a.max_new, block - max(len(p) for p in prompts))
++    gen = torch.Generator(device=a.device).manual_seed(0)
++    amp = torch.autocast("cuda", dtype=torch.bfloat16) if a.device.startswith("cuda") else contextlib.nullcontext()
++    t0 = time.perf_counter()
++    with amp:
++        bundle.sample_many(prompts, a.k, mn, 1.0, gen)
++    if a.device.startswith("cuda"):
++        torch.cuda.synchronize()
++    dt = time.perf_counter() - t0
++    return {"decode_seconds_per_prompt": dt / len(prompts), "prompts": len(prompts), "seconds": round(dt, 2),
++            "max_new": mn, "sampler": "g5_batch", "stopped_at_budget": False}
++
++
+ def screen_only(a, out: Path, init_state, screen_n: int, seconds: float) -> dict:
+     """Not enough time left for screen + 3 updates + the last evaluation: run the screen (time-budgeted), save the survey, stop."""
+     import team5_adapter as ta  # noqa: PLC0415
+@@ -603,7 +634,8 @@ def run(a, out: Path) -> int:
+         if not results["sft"]["ok"]:
+             return probe.finish(out, results)
+         init_state, init_sha = Path(results["sft"]["weights"]), results["sft"]["weights_sha256"]
+-        rate = rate or results["sft"].get("decode_seconds_per_prompt")
++        if a.sampler != "g5_batch":  # the rebuild's rate is per prompt; g5_batch measures its own batched rate below
++            rate = rate or results["sft"].get("decode_seconds_per_prompt")
+         sft_s = results["sft"]["seconds"]
+     else:
+         from make_adapter_config import write_config  # noqa: PLC0415
+@@ -687,6 +719,9 @@ def parse_args(argv=None):
+                     help="g5_delivery: Team 5's delivered run folder (non-smoke manifest); g10_rehearsal is a stand-in and train.py refuses it without --allow-fixture-smoke")
+     ap.add_argument("--probe-file", type=Path, help="json {ids, expected_mean_nll[, atol]} supplied with Team 5's checkpoint; required for --origin g5_delivery")
+     ap.add_argument("--allow-fixture-smoke", action="store_true", help="DRY RUN ONLY: let train.py load a rehearsal adapter; its output is never a result")
++    ap.add_argument("--sampler", choices=("policy", "g5_batch"), default="policy",
++                    help="policy: one decode per prompt; g5_batch: every prompt of a step in one decode (B5, 23 Nov: 12.8x on a T4)")
++    ap.add_argument("--sampler-max-rows", type=int, default=128, help="g5_batch: rows decoded together at most")
+     ap.add_argument("--seed", type=int, default=1)
+     ap.add_argument("--device", default="cuda")
+     ap.add_argument("--keep-weights-dir", type=Path,

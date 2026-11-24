@@ -1,0 +1,146 @@
+env mac_cpu_final_smoke: gpu None torch 2.14.1 dtype fp32 tier T2 params 237,052,416
+env mac_cpu_t2_fp32: gpu None torch 2.14.1 dtype fp32 tier T2 params 237,052,416
+env t4_run1_t2_bf16: gpu Tesla T4 torch 2.14.1+cu130 dtype bf16 tier T2 params 237,052,416
+env t4_run1_t2_fp16_detail: gpu Tesla T4 torch 2.14.1+cu130 dtype fp16 tier T2 params 237,052,416
+env t4_run1_t2_fp16_planned: gpu Tesla T4 torch 2.14.1+cu130 dtype fp16 tier T2 params 237,052,416
+env t4_run1_t2_fp16_sweep: gpu Tesla T4 torch 2.14.1+cu130 dtype fp16 tier T2 params 237,052,416
+env t4_run1_t2_fp32: gpu Tesla T4 torch 2.14.1+cu130 dtype fp32 tier T2 params 237,052,416
+env t4_run1_t3_fp16: gpu Tesla T4 torch 2.14.1+cu130 dtype fp16 tier T3 params 391,529,600
+env t4_run2_v1_planned_repeat: gpu Tesla T4 torch 2.14.1+cu130 dtype fp16 tier T2 params 237,052,416
+env t4_run2_v1_sweep_256_512: gpu Tesla T4 torch 2.14.1+cu130 dtype fp16 tier T2 params 237,052,416
+env t4_run2_v2_planned: gpu Tesla T4 torch 2.14.1+cu130 dtype fp16 tier T2 params 237,052,416
+env t4_run2_v2_sweep: gpu Tesla T4 torch 2.14.1+cu130 dtype fp16 tier T2 params 237,052,416
+
+## decode (stop disabled: rows x max_new tokens)
+| arm | tier | dtype | mode | rows | prompts x k | max_new | seconds | tok/s | ms per decode step | peak GB |
+|---|---|---|---|---:|---|---:|---:|---:|---:|---:|
+| mac_cpu_final_smoke | T2 | fp32 | batched | 8 | 1 x 8 | 16 | 2.2599 | 56.6 | 141.243 | None |
+| mac_cpu_final_smoke | T2 | fp32 | batched | 16 | 2 x 8 | 16 | 2.4502 | 104.5 | 153.135 | None |
+| mac_cpu_final_smoke | T2 | fp32 | per_prompt | 8 | 1 x 8 | 16 | 2.5027 | 51.1 | 156.421 | None |
+| mac_cpu_final_smoke | T2 | fp32 | per_prompt | 16 | 2 x 8 | 16 | 5.1066 | 50.1 | 159.581 | None |
+| mac_cpu_final_smoke | T2 | fp32 | one_call | 8 | 1 x 8 | 16 | 3.0061 | 42.6 | 187.881 | None |
+| mac_cpu_final_smoke | T2 | fp32 | one_call | 16 | 1 x 16 | 16 | 3.1994 | 80.0 | 199.965 | None |
+| mac_cpu_t2_fp32 | T2 | fp32 | batched | 8 | 1 x 8 | 32 | 4.1664 | 61.4 | 130.201 | None |
+| mac_cpu_t2_fp32 | T2 | fp32 | batched | 128 | 16 x 8 | 32 | 29.7584 | 137.6 | 929.951 | None |
+| mac_cpu_t2_fp32 | T2 | fp32 | per_prompt | 8 | 1 x 8 | 32 | 4.9888 | 51.3 | 155.899 | None |
+| mac_cpu_t2_fp32 | T2 | fp32 | per_prompt | 128 | 16 x 8 | 32 | 93.54 | 43.8 | 182.695 | None |
+| t4_run1_t2_bf16 | T2 | bf16 | one_call | 8 | 1 x 8 | 256 | 8.2581 | 248.0 | 32.258 | 1.528 |
+| t4_run1_t2_bf16 | T2 | bf16 | one_call | 128 | 1 x 128 | 256 | 29.6562 | 1104.9 | 115.845 | 7.681 |
+| t4_run1_t2_bf16 | T2 | bf16 | batched | 8 | 1 x 8 | 256 | 7.9527 | 257.5 | 31.065 | 1.166 |
+| t4_run1_t2_bf16 | T2 | bf16 | batched | 128 | 16 x 8 | 256 | 22.4308 | 1460.8 | 87.62 | 2.122 |
+| t4_run1_t2_fp16_detail | T2 | fp16 | one_call | 8 | 1 x 8 | 1536 | 43.9623 | 279.5 | 28.621 | 1.528 |
+| t4_run1_t2_fp16_planned | T2 | fp16 | batched | 128 | 16 x 8 | 1536 | 145.0358 | 1355.6 | 94.424 | 3.383 |
+| t4_run1_t2_fp16_planned | T2 | fp16 | per_prompt | 128 | 16 x 8 | 1536 | 708.4841 | 277.5 | 28.828 | 1.621 |
+| t4_run1_t2_fp16_planned | T2 |  | per_prompt | 128 | | | call over 300.0 s | | | |
+| t4_run1_t2_fp16_sweep | T2 | fp16 | one_call | 1 | 1 x 1 | 512 | 14.1202 | 36.3 | 27.579 | 1.185 |
+| t4_run1_t2_fp16_sweep | T2 | fp16 | one_call | 8 | 1 x 8 | 512 | 14.4786 | 282.9 | 28.278 | 1.528 |
+| t4_run1_t2_fp16_sweep | T2 | fp16 | one_call | 16 | 1 x 16 | 512 | 14.893 | 550.1 | 29.088 | 1.923 |
+| t4_run1_t2_fp16_sweep | T2 | fp16 | one_call | 64 | 1 x 64 | 512 | 21.9397 | 1493.5 | 42.851 | 4.372 |
+| t4_run1_t2_fp16_sweep | T2 | fp16 | one_call | 128 | 1 x 128 | 512 | 35.9915 | 1820.9 | 70.296 | 7.681 |
+| t4_run1_t2_fp16_sweep | T2 | fp16 | one_call | 256 | 1 x 256 | 512 | 65.4147 | 2003.7 | 127.763 | 14.297 |
+| t4_run1_t2_fp16_sweep | T2 | fp16 | one_call | 512 | | | OOM | | | |
+| t4_run1_t2_fp16_sweep | T2 |  | one_call | 512 | | | oom | | | |
+| t4_run1_t2_fp16_sweep | T2 | fp16 | batched | 1 | 1 x 1 | 512 | 14.3507 | 35.7 | 28.029 | 1.167 |
+| t4_run1_t2_fp16_sweep | T2 | fp16 | batched | 8 | 1 x 8 | 512 | 14.8167 | 276.4 | 28.939 | 1.173 |
+| t4_run1_t2_fp16_sweep | T2 | fp16 | batched | 16 | 2 x 8 | 512 | 15.477 | 529.3 | 30.228 | 1.236 |
+| t4_run1_t2_fp16_sweep | T2 | fp16 | batched | 64 | 8 x 8 | 512 | 21.6965 | 1510.3 | 42.376 | 1.659 |
+| t4_run1_t2_fp16_sweep | T2 | fp16 | batched | 128 | 16 x 8 | 512 | 35.8384 | 1828.7 | 69.997 | 2.255 |
+| t4_run1_t2_fp16_sweep | T2 | fp16 | batched | 256 | 32 x 8 | 512 | 64.9935 | 2016.7 | 126.94 | 3.447 |
+| t4_run1_t2_fp16_sweep | T2 | fp16 | batched | 512 | 64 x 8 | 512 | 123.0497 | 2130.4 | 240.331 | 5.828 |
+| t4_run1_t2_fp16_sweep | T2 | fp16 | per_prompt | 1 | 1 x 1 | 512 | 14.5133 | 35.3 | 28.346 | 1.165 |
+| t4_run1_t2_fp16_sweep | T2 | fp16 | per_prompt | 8 | 1 x 8 | 512 | 14.8423 | 276.0 | 28.989 | 1.32 |
+| t4_run1_t2_fp16_sweep | T2 | fp16 | per_prompt | 16 | 2 x 8 | 512 | 29.7066 | 275.8 | 29.01 | 1.527 |
+| t4_run1_t2_fp16_sweep | T2 | fp16 | per_prompt | 64 | 8 x 8 | 512 | 119.3812 | 274.5 | 29.146 | 1.62 |
+| t4_run1_t2_fp16_sweep | T2 | fp16 | per_prompt | 128 | 16 x 8 | 512 | 238.0278 | 275.3 | 29.056 | 1.62 |
+| t4_run1_t2_fp16_sweep | T2 | fp16 | per_prompt | 256 | 32 x 8 | 512 | 476.7677 | 274.9 | 29.1 | 1.621 |
+| t4_run1_t2_fp16_sweep | T2 |  | per_prompt | 256 | | | call over 240.0 s | | | |
+| t4_run1_t2_fp32 | T2 | fp32 | one_call | 8 | 1 x 8 | 256 | 6.9673 | 293.9 | 27.216 | 1.637 |
+| t4_run1_t2_fp32 | T2 | fp32 | one_call | 128 | | | OOM | | | |
+| t4_run1_t2_fp32 | T2 |  | one_call | 128 | | | oom | | | |
+| t4_run1_t2_fp32 | T2 | fp32 | batched | 8 | 1 x 8 | 256 | 7.3077 | 280.3 | 28.546 | 1.022 |
+| t4_run1_t2_fp32 | T2 | fp32 | batched | 128 | 16 x 8 | 256 | 17.0769 | 1918.9 | 66.707 | 2.624 |
+| t4_run1_t3_fp16 | T3 | fp16 | batched | 128 | 16 x 8 | 512 | 55.2138 | 1186.9 | 107.839 | 3.178 |
+| t4_run1_t3_fp16 | T3 | fp16 | per_prompt | 128 | 16 x 8 | 512 | 317.9313 | 206.1 | 38.81 | 2.4 |
+| t4_run1_t3_fp16 | T3 |  | per_prompt | 128 | | | call over 300.0 s | | | |
+| t4_run1_t3_fp16 | T3 | fp16 | one_call | 128 | 1 x 128 | 512 | 54.9674 | 1192.3 | 107.358 | 9.969 |
+| t4_run2_v1_planned_repeat | T2 | fp16 | batched | 128 | 16 x 8 | 1536 | 153.9426 | 1277.2 | 100.223 | 3.383 |
+| t4_run2_v1_sweep_256_512 | T2 | fp16 | batched | 256 | 32 x 8 | 512 | 64.9983 | 2016.5 | 126.95 | 3.446 |
+| t4_run2_v1_sweep_256_512 | T2 | fp16 | batched | 512 | 64 x 8 | 512 | 123.208 | 2127.7 | 240.641 | 5.828 |
+| t4_run2_v2_planned | T2 | fp16 | batched | 128 | 16 x 8 | 1536 | 55.2652 | 3557.5 | 35.98 | 2.254 |
+| t4_run2_v2_sweep | T2 | fp16 | batched | 8 | 1 x 8 | 512 | 15.1071 | 271.1 | 29.506 | 1.173 |
+| t4_run2_v2_sweep | T2 | fp16 | batched | 64 | 8 x 8 | 512 | 16.5803 | 1976.3 | 32.383 | 1.635 |
+| t4_run2_v2_sweep | T2 | fp16 | batched | 128 | 16 x 8 | 512 | 17.5321 | 3738.1 | 34.242 | 2.136 |
+| t4_run2_v2_sweep | T2 | fp16 | batched | 256 | 32 x 8 | 512 | 23.3222 | 5620.1 | 45.551 | 3.137 |
+| t4_run2_v2_sweep | T2 | fp16 | batched | 512 | 64 x 8 | 512 | 39.6149 | 6617.3 | 77.373 | 5.14 |
+
+## matched pairs: batched (sample_many) vs per_prompt (one call per prompt), same prompts, same rows
+- mac_cpu_final_smoke rows 8 max_new 16: per_prompt 2.5027 s, batched 2.2599 s, speedup 1.11x; seconds per prompt's k samples (r): per_prompt 2.50, batched 2.26
+- mac_cpu_final_smoke rows 16 max_new 16: per_prompt 5.1066 s, batched 2.4502 s, speedup 2.08x; seconds per prompt's k samples (r): per_prompt 2.55, batched 1.23
+- mac_cpu_t2_fp32 rows 8 max_new 32: per_prompt 4.9888 s, batched 4.1664 s, speedup 1.20x; seconds per prompt's k samples (r): per_prompt 4.99, batched 4.17
+- mac_cpu_t2_fp32 rows 128 max_new 32: per_prompt 93.54 s, batched 29.7584 s, speedup 3.14x; seconds per prompt's k samples (r): per_prompt 5.85, batched 1.86
+- t4_run1_t2_fp16_planned rows 128 max_new 1536: per_prompt 708.4841 s, batched 145.0358 s, speedup 4.88x; seconds per prompt's k samples (r): per_prompt 44.28, batched 9.06
+- t4_run1_t2_fp16_sweep rows 1 max_new 512: per_prompt 14.5133 s, batched 14.3507 s, speedup 1.01x; seconds per prompt's k samples (r): per_prompt 14.51, batched 14.35
+- t4_run1_t2_fp16_sweep rows 8 max_new 512: per_prompt 14.8423 s, batched 14.8167 s, speedup 1.00x; seconds per prompt's k samples (r): per_prompt 14.84, batched 14.82
+- t4_run1_t2_fp16_sweep rows 16 max_new 512: per_prompt 29.7066 s, batched 15.477 s, speedup 1.92x; seconds per prompt's k samples (r): per_prompt 14.85, batched 7.74
+- t4_run1_t2_fp16_sweep rows 64 max_new 512: per_prompt 119.3812 s, batched 21.6965 s, speedup 5.50x; seconds per prompt's k samples (r): per_prompt 14.92, batched 2.71
+- t4_run1_t2_fp16_sweep rows 128 max_new 512: per_prompt 238.0278 s, batched 35.8384 s, speedup 6.64x; seconds per prompt's k samples (r): per_prompt 14.88, batched 2.24
+- t4_run1_t2_fp16_sweep rows 256 max_new 512: per_prompt 476.7677 s, batched 64.9935 s, speedup 7.34x; seconds per prompt's k samples (r): per_prompt 14.90, batched 2.03
+- t4_run1_t3_fp16 rows 128 max_new 512: per_prompt 317.9313 s, batched 55.2138 s, speedup 5.76x; seconds per prompt's k samples (r): per_prompt 19.87, batched 3.45
+
+## attention fix before/after (same T4, same command; arms named v1_* = before, v2_* = after)
+- rows 128 max_new 1536: before (t4_run2_v1_planned_repeat) 153.9426 s 1277.2 tok/s peak 3.383 GB; after (t4_run2_v2_planned) 55.2652 s 3557.5 tok/s peak 2.254 GB; 2.79x
+- rows 256 max_new 512: before (t4_run2_v1_sweep_256_512) 64.9983 s 2016.5 tok/s peak 3.446 GB; after (t4_run2_v2_sweep) 23.3222 s 5620.1 tok/s peak 3.137 GB; 2.79x
+- rows 512 max_new 512: before (t4_run2_v1_sweep_256_512) 123.208 s 2127.7 tok/s peak 5.828 GB; after (t4_run2_v2_sweep) 39.6149 s 6617.3 tok/s peak 5.14 GB; 3.11x
+
+## time per decode step against position (instrumented call)
+- mac_cpu_final_smoke rows 8 prompt 64: prefill 322.053 ms; median step 162.00 ms; first-10% median 162.00, last-10% median 151.87 ms; forward share of step 0.83; samples pos 64: 162.004, pos 67: 206.238, pos 71: 147.238, pos 75: 160.421, pos 78: 151.871
+- t4_run1_t2_fp16_detail rows 8 prompt 416: prefill 121.507 ms; median step 26.83 ms; first-10% median 26.28, last-10% median 26.40 ms; forward share of step 0.95; samples pos 416: 28.85, pos 799: 26.578, pos 1183: 43.322, pos 1567: 30.571, pos 1950: 25.931
+- t4_run1_t2_fp16_detail rows 128 prompt 416: prefill 1959.469 ms; median step 100.30 ms; first-10% median 54.70, last-10% median 143.33 ms; forward share of step 0.94; samples pos 416: 57.18, pos 799: 76.879, pos 1183: 100.386, pos 1567: 126.843, pos 1950: 147.439
+
+## one decode step split into Team 5's modules (median of 20 synced calls, ms)
+| arm | dtype | rows | cache | embed | attention (1 layer) | cat (1 layer) | MoE (1 layer) | head | softmax+draw | step est. | shares |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| mac_cpu_final_smoke | fp32 | 8 | 256 | 0.5333 | 2.0821 | 0.0985 | 14.6913 | 11.8661 | 13.2624 | 159.849 | attention 0.104, cache_cat 0.005, moe 0.735, head 0.074, embedding 0.003, sample 0.083 |
+| mac_cpu_t2_fp32 | fp32 | 8 | 1024 | 0.4966 | 4.8322 | 0.2827 | 12.2341 | 9.7687 | 13.0678 | 159.863 | attention 0.242, cache_cat 0.014, moe 0.612, head 0.061, embedding 0.003, sample 0.082 |
+| mac_cpu_t2_fp32 | fp32 | 128 | 1024 | 3.0615 | 86.3637 | 6.787 | 15.7601 | 19.9143 | 200.6403 | 1040.606 | attention 0.664, cache_cat 0.052, moe 0.121, head 0.019, embedding 0.003, sample 0.193 |
+| t4_run1_t2_bf16 | bf16 | 128 | 1024 | 0.6298 | 9.0492 | 0.6033 | 3.777 | 7.9977 | 3.1339 | 114.371 | attention 0.633, cache_cat 0.042, moe 0.264, head 0.07, embedding 0.006, sample 0.027 |
+| t4_run1_t2_fp16_detail | fp16 | 1 | 256 | 0.5818 | 1.6452 | 0.0303 | 1.7701 | 0.5809 | 0.1891 | 28.674 | attention 0.459, cache_cat 0.008, moe 0.494, head 0.02, embedding 0.02, sample 0.007 |
+| t4_run1_t2_fp16_detail | fp16 | 1 | 1024 | 0.5688 | 2.5291 | 0.0304 | 1.7969 | 0.5543 | 0.1965 | 35.928 | attention 0.563, cache_cat 0.007, moe 0.4, head 0.015, embedding 0.016, sample 0.005 |
+| t4_run1_t2_fp16_detail | fp16 | 1 | 1952 | 0.5532 | 1.5889 | 0.0358 | 1.7683 | 0.5571 | 0.1816 | 28.149 | attention 0.452, cache_cat 0.01, moe 0.503, head 0.02, embedding 0.02, sample 0.006 |
+| t4_run1_t2_fp16_detail | fp16 | 8 | 256 | 0.5461 | 1.6573 | 0.032 | 1.8234 | 0.731 | 0.2601 | 29.383 | attention 0.451, cache_cat 0.009, moe 0.496, head 0.025, embedding 0.019, sample 0.009 |
+| t4_run1_t2_fp16_detail | fp16 | 8 | 1024 | 0.5727 | 1.738 | 0.0526 | 1.823 | 0.7271 | 0.2622 | 30.05 | attention 0.463, cache_cat 0.014, moe 0.485, head 0.024, embedding 0.019, sample 0.009 |
+| t4_run1_t2_fp16_detail | fp16 | 8 | 1952 | 0.5893 | 2.0445 | 0.0874 | 1.8177 | 0.7707 | 0.3268 | 32.584 | attention 0.502, cache_cat 0.021, moe 0.446, head 0.024, embedding 0.018, sample 0.01 |
+| t4_run1_t2_fp16_detail | fp16 | 128 | 256 | 0.5894 | 3.1219 | 0.165 | 2.071 | 0.9085 | 3.164 | 46.205 | attention 0.541, cache_cat 0.029, moe 0.359, head 0.02, embedding 0.013, sample 0.068 |
+| t4_run1_t2_fp16_detail | fp16 | 128 | 1024 | 0.6375 | 9.1802 | 0.6375 | 2.0964 | 0.9057 | 3.166 | 94.922 | attention 0.774, cache_cat 0.054, moe 0.177, head 0.01, embedding 0.007, sample 0.033 |
+| t4_run1_t2_fp16_detail | fp16 | 128 | 1952 | 0.6007 | 16.3797 | 1.1571 | 2.0731 | 0.9131 | 3.1606 | 152.297 | attention 0.86, cache_cat 0.061, moe 0.109, head 0.006, embedding 0.004, sample 0.021 |
+| t4_run1_t2_fp16_detail | fp16 | 512 | 256 | 1.4103 | 9.3636 | 0.6123 | 3.1897 | 3.5714 | 11.954 | 117.362 | attention 0.638, cache_cat 0.042, moe 0.217, head 0.03, embedding 0.012, sample 0.102 |
+| t4_run1_t2_fp16_detail | fp16 | 512 | 1024 | 1.3687 | 34.4431 | 2.4297 | 3.0678 | 4.0352 | 11.9644 | 317.455 | attention 0.868, cache_cat 0.061, moe 0.077, head 0.013, embedding 0.004, sample 0.038 |
+| t4_run1_t2_fp16_detail | fp16 | 512 | 1952 | 1.4877 | 63.9603 | 4.6729 | 3.0279 | 3.5467 | 11.9474 | 552.887 | attention 0.925, cache_cat 0.068, moe 0.044, head 0.006, embedding 0.003, sample 0.022 |
+| t4_run1_t2_fp32 | fp32 | 128 | 1024 | 0.6334 | 7.4037 | 1.1768 | 2.6418 | 6.6209 | 3.2304 | 90.849 | attention 0.652, cache_cat 0.104, moe 0.233, head 0.073, embedding 0.007, sample 0.036 |
+| t4_run1_t3_fp16 | fp16 | 128 | 1024 | 0.6954 | 10.9534 | 0.6028 | 2.7327 | 1.1232 | 3.1841 | 141.864 | attention 0.772, cache_cat 0.042, moe 0.193, head 0.008, embedding 0.005, sample 0.022 |
+
+## the trainer's update on one group (k rows of prompt + max_new)
+| arm | tier | dtype | rows | micro rows | seq len | old log-probs s | fwd+bwd s | clip+AdamW s | peak GB |
+|---|---|---|---:|---:|---:|---:|---:|---:|---:|
+| mac_cpu_final_smoke | T2 | fp32 | 8 | 8 | 80 | 0.7356 | 2.4062 | 1.3604 | None |
+| t4_run1_t2_fp16_detail | T2 | fp16 | 8 | 8 | 1952 | OOM | | | |
+| t4_run1_t2_fp16_detail | T2 | fp16 | 8 | 4 | 1952 | OOM | | | |
+| t4_run1_t2_fp16_detail | T2 | fp16 | 8 | 2 | 1952 | OOM | | | |
+| t4_run1_t2_fp16_detail | T2 | fp16 | 8 | 1 | 1952 | 1.1431 | 2.9151 | 0.0847 | 9.755 |
+| t4_run1_t3_fp16 | T3 | fp16 | 8 | 4 | 928 | OOM | | | |
+| t4_run1_t3_fp16 | T3 | fp16 | 8 | 2 | 928 | 0.6988 | 1.8205 | 0.1382 | 12.006 |
+| t4_run1_t3_fp16 | T3 | fp16 | 8 | 1 | 928 | 0.7589 | 2.0702 | 0.1388 | 9.345 |
+
+## parity under each dtype (max |dlogit| vs Team 5's full forward; tolerance 1e-4 is for fp32)
+- mac_cpu_final_smoke (T2): 2.98e-06
+- mac_cpu_t2_fp32 (T2): 2.98e-06
+- t4_run1_t2_bf16 (T2): 0.0156
+- t4_run1_t2_fp16_detail (T2): 0.291
+- t4_run1_t2_fp16_planned (T2): 0.291
+- t4_run1_t2_fp16_sweep (T2): 0.291
+- t4_run1_t2_fp32 (T2): 3.1e-06
+- t4_run1_t3_fp16 (T3): 0.00195
+- t4_run2_v1_planned_repeat (T2): 0.291
+- t4_run2_v1_sweep_256_512 (T2): 0.291
+- t4_run2_v2_planned (T2): 0.291
+- t4_run2_v2_sweep (T2): 0.291

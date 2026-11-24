@@ -282,3 +282,31 @@ def test_boundary_fraction_values_zero_and_one_are_accepted():
         rep["eval_mini"]["records"][0]["stderr"] = 0.0
     assert fg.compare(b, a)["forgetting"] is False
 
+
+
+def with_dtype(r, mini_dtype=None, compute="float32 (TF32 off)"):
+    r["compute_dtype"] = compute
+    if mini_dtype is not None:
+        r["eval_mini"]["dtype"] = mini_dtype
+    return r
+
+
+@parametrize("mini,compute", [("float32", "float32 (TF32 off)"), ("bfloat16", "bfloat16"), ("bf16", "bfloat16"),
+                              (None, "float32 (TF32 off)"), (None, "bfloat16")])
+def test_benchmark_dtype_that_matches_the_bits_per_byte_dtype_or_is_not_named_is_accepted(mini, compute):
+    fg.compare(with_dtype(report(), mini, compute), with_dtype(report(), mini, compute))
+
+
+@parametrize("which", ["before", "after"])
+@parametrize("mini,compute", [("bfloat16", "float32 (TF32 off)"), ("float32", "bfloat16")])
+def test_benchmark_rows_in_another_dtype_than_the_bits_per_byte_are_refused(which, mini, compute):
+    b, a = with_dtype(report(), None, compute), with_dtype(report(), None, compute)
+    with_dtype(b if which == "before" else a, mini, compute)
+    with pytest.raises(fg.ReportError, match=f"{which}: the benchmark rows were scored in"):
+        fg.compare(b, a)
+
+
+def test_an_unknown_benchmark_dtype_is_refused_not_guessed():
+    a = with_dtype(report(), "float16")
+    with pytest.raises(fg.ReportError, match="float16"):
+        fg.compare(report(), a)

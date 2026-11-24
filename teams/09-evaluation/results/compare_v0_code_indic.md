@@ -13,7 +13,7 @@ Companion report for the general tasks: `compare_v0.md` (PR #21).
 - MILU-avg llama-3.2-3b, the 11 scores: Bengali 32.41, English 50.76, Gujarati 31.33, Hindi 35.10, Kannada 31.17, Malayalam 29.18, Marathi 33.46, Odia 28.35, Punjabi 31.74, Tamil 31.59, Telugu 29.45
 - MILU-avg llama-3.2-3b: Bengali, Kannada, Malayalam, Odia, Punjabi, Tamil ran with `--full-logits`. Each has answer options longer than the 512 positions the default path keeps (up to 1,112 tokens), so the guard stops the default run. Same log-likelihoods either way: on milu_Marathi (200 items, both paths) all 800 option log-likelihoods were identical.
 - MILU per-language rows: the five deferred on 25 Oct were run on 29-30 Oct on a second machine (RTX 4060 Ti 16 GB, Windows) with this harness at the pinned revisions; all PASS (largest |Δ| 0.88). As a cross-machine check, gemma-2-2b MILU-en scored 51.16 there against 51.05 in the gate row.
-- NOT RUN: BBH (optional; MMLU-Pro already covers general ability against the same leaderboard).
+- NOT RUN: BBH (optional; MMLU-Pro already covers general ability against the same leaderboard). The three full-set BBH checks were run later as rotation checks and all PASS: Qwen2.5-1.5B +0.04, gemma-2-2b 0.00, Llama-3.2-3B +0.05 ([rotation checks](rotation_checks.md)).
 
 | Model | Benchmark | Published | Ours | Δ | Verdict | Source |
 |---|---|---|---|---|---|---|

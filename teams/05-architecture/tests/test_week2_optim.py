@@ -58,6 +58,7 @@ class SplitTests(unittest.TestCase):
 
     def test_block_matrices_on_muon_rest_on_adamw(self):
         c, rows, lengths = muon_fixture()
+        c["optim"]["router_on_muon"] = False
         m = LanguageModel(c["model"], rows, lengths)
         opt = dict(build_optimizer(m, c["optim"]).named)
         muon = {id(p) for g in opt["muon"].param_groups for p in g["params"]}
@@ -83,8 +84,8 @@ class SplitTests(unittest.TestCase):
         self.assertEqual(opt["adamw"].param_groups[0]["lr"], 1e-3)
 
     def test_router_switch(self):
-        """Default: router on AdamW (TSAI, 21 Nov). router_on_muon: true moves it back, for the comparison run."""
-        for flag, on_muon in [(None, False), (False, False), (True, True)]:
+        """Default: router on Muon (TSAI, 23 Nov, #712). router_on_muon: false moves it to AdamW, for the comparison run."""
+        for flag, on_muon in [(None, True), (False, False), (True, True)]:
             c, rows, lengths = muon_fixture()
             if flag is not None:
                 c["optim"]["router_on_muon"] = flag

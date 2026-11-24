@@ -1,0 +1,32 @@
+{
+ "source": "main f360a794 dry run 2 arm (teams/05-architecture/configs/arms/dryrun2.yaml) as resolved by train_week2.py into the CPU stand-in run manifest, 23 Nov 2026",
+ "model": {
+  "activation": "swiglu",
+  "position": "rope",
+  "rope_theta": 10000.0,
+  "rotary_fraction": 1.0,
+  "norm_eps": 1e-05,
+  "mtp_weight": 0.0,
+  "moe": {
+   "bias": false,
+   "bias_gamma": 0.0,
+   "num_experts": 16,
+   "top_k": 2,
+   "num_shared": 1,
+   "dispatch": "loop",
+   "ffn_hidden": 768
+  },
+  "embedding": "ke1",
+  "attn_impl": "eager",
+  "mtp": false,
+  "reversible": false,
+  "ce_impl": "torch",
+  "vocab_size": 131072,
+  "block_size": 2048,
+  "n_layer": 8,
+  "n_head": 8,
+  "n_kv_head": 2,
+  "n_embd": 512,
+  "ke_max_pos": 32
+ }
+}

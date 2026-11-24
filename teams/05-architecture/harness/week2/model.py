@@ -1,6 +1,6 @@
 """Reference GQA/RoPE/SwiGLU MoE with G4-compatible projected byte codes.
 
-Dense untied output head per TSAI review; Kronecker projection is input-only.
+Historical arms use the dense untied head; kas_v2 selects the public #765 codec/head.
 No fused kernels, reversible layers or expert parallelism are claimed.
 """
 
@@ -204,6 +204,11 @@ class MoE(nn.Module):
         cfg = m["moe"]
         self.topk = cfg["top_k"]
         self.expert_load = None
+        self.balance_gamma = float(cfg.get("bias_gamma") or 0.0)
+        self._balance_load = None
+        # Loss-free balancer (Session 14). A buffer, not a parameter: it is added only when choosing
+        # the experts. It is not part of the gate that multiplies the expert output.
+        self.register_buffer("router_bias", torch.zeros(cfg["num_experts"]))
         self.router = nn.Linear(w, cfg["num_experts"], bias=False)
         self.experts = nn.ModuleList(
             SwiGLU(w, h, cfg["bias"]) for _ in range(cfg["num_experts"])
@@ -212,13 +217,33 @@ class MoE(nn.Module):
             SwiGLU(w, h, cfg["bias"]) for _ in range(cfg["num_shared"])
         )
 
+    def _load_from_state_dict(self, state_dict, prefix, local_metadata, strict, missing_keys, unexpected_keys, error_msgs):
+        # A checkpoint from before this buffer has no router_bias. Zeros are the
+        # starting value, and gamma 0 never reads the bias, so the old run stays exact.
+        key = prefix + "router_bias"
+        if key not in state_dict:
+            state_dict[key] = self.router_bias.detach().clone().zero_()
+        super()._load_from_state_dict(
+            state_dict, prefix, local_metadata, strict, missing_keys, unexpected_keys, error_msgs
+        )
+
     def forward(self, x, valid):
         shape = x.shape
         flat = x.reshape(-1, shape[-1])
         active = valid.reshape(-1)
         with torch.autocast(device_type=x.device.type, enabled=False):
             scores = F.linear(flat.float(), self.router.weight.float()).softmax(-1)
-        gates, choice = scores.topk(self.topk, dim=-1)
+        if self.balance_gamma != 0.0:
+            # Bias changes which experts are chosen. The gate values stay the unbiased softmax.
+            choice = (scores.detach() + self.router_bias.to(scores.dtype)).topk(self.topk, dim=-1).indices
+            gates = scores.gather(-1, choice)
+        else:
+            gates, choice = scores.topk(self.topk, dim=-1)
+        if self.balance_gamma != 0.0 and self.training:
+            selected = torch.zeros_like(scores, dtype=torch.bool)
+            selected.scatter_(-1, choice, True)
+            counts = (selected & active[:, None]).sum(dim=0)
+            self._balance_load = counts if self._balance_load is None else self._balance_load + counts
         if self.expert_load is not None and self.training:
             selected = torch.zeros_like(scores, dtype=torch.bool)
             selected.scatter_(-1, choice, True)
@@ -244,6 +269,14 @@ class MoE(nn.Module):
             output = output + expert(flat) * active[:, None]
         return output.reshape(shape)
 
+    def apply_balance_update(self):
+        load = self._balance_load
+        self._balance_load = None
+        if load is None or self.balance_gamma == 0.0:
+            return
+        load = load.float()
+        self.router_bias.add_(self.balance_gamma * torch.sign(load.mean() - load))
+
 
 class Block(nn.Module):
     def __init__(self, m, layer_index=0):
@@ -264,16 +297,36 @@ class LanguageModel(nn.Module):
     def __init__(self, m, rows, lengths):
         super().__init__()
         self.spec = m
-        self.embedding = KE2(rows, lengths, m["n_embd"])
+        kas = m.get("head_mode") == "kas_v2"
+        if kas:
+            from .kas_v2 import KASCodec, KASInput, KASHead, initialize_prior
+            if len(rows) != m["vocab_size"]:
+                raise ValueError("KAS model/token table vocabulary mismatch")
+            self.codec = KASCodec()
+            self.embedding = KASInput(rows, lengths, m["n_embd"], self.codec)
+        else:
+            self.embedding = KE2(rows, lengths, m["n_embd"])
         self.blocks = nn.ModuleList(Block(m, i) for i in range(m["n_layer"]))
         self.norm = RMSNorm(m["n_embd"], m["norm_eps"])
         self.mtp_head = (
             nn.Linear(m["n_embd"], m["vocab_size"], bias=False) if m["mtp"] else None
         )
-        self.head = nn.Linear(m["n_embd"], m["vocab_size"], bias=False)
+        if kas:
+            self.head = KASHead(rows, lengths, m["n_embd"], self.codec)
+            self.prior_identity = initialize_prior(self.head, m.get("kas_prior", {}))
+        else:
+            self.head = nn.Linear(m["n_embd"], m["vocab_size"], bias=False)
 
     def hidden(self, ids, valid):
-        x = self.embedding(ids)
+        return self.hidden_from_embeddings(self.embedding(ids), valid)
+
+    def hidden_from_embeddings(self, x, valid):
+        """Run the normal stack on caller-supplied [B, T, n_embd] inputs.
+
+        Recipe code owns any embedding aggregation and its validity mask. This
+        path applies no additional embedding lookup or aggregation. Positions
+        retain the stack's existing RoPE treatment at the supplied sequence length.
+        """
         for block in self.blocks:
             x = block(x, valid)
         return self.norm(x)
@@ -298,6 +351,15 @@ class LanguageModel(nn.Module):
             counts.append(block.moe.expert_load)
             block.moe.expert_load = None
         return torch.stack(counts).tolist()
+
+    def clear_router_bias_load(self):
+        for block in self.blocks:
+            block.moe._balance_load = None
+
+    def update_router_bias(self):
+        """One whole-batch update after the step's forwards. Not once per microbatch."""
+        for block in self.blocks:
+            block.moe.apply_balance_update()
 
     def parameter_count(self):
         return sum(p.numel() for p in self.parameters())

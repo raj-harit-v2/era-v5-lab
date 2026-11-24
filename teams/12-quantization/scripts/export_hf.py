@@ -20,6 +20,13 @@ and `attention_multiplier = head_dim ** -0.5` (9.5). Sizes are read from the ten
 spec. Anything this export cannot represent stops it with a message: an attention gate (attn-4), partial RoPE
 (attn-3), a local window or sink (attn-2), expert biases, or a tensor name it does not know.
 
+router_bias (G5 #748, the selection bias of balance_gamma): a checkpoint from before it has none, which is fine. A
+checkpoint that has it exports only if it is all zeros or `moe.bias_gamma` is 0 (then it is never used for routing);
+the key is dropped and export_report.json says so. A non-zero bias with a non-zero bias_gamma stops the export:
+GraniteMoeShared has no selection bias, so the exported model would pick other experts. --drop-router-bias exports
+anyway and records the largest bias and a warning in export_report.json; A1 (and A3) then show how far routing differs
+and A1 does not stop the export.
+
 --verify N runs test A1 of section 12: N random prompts through G5's model and through `transformers`'
 GraniteMoeSharedForCausalLM loaded from the export, both fp32 on CPU. It exits 1 unless the largest logit
 difference is below --verify-tol and the top-1 token is the same at every position.
@@ -37,6 +44,26 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 HARNESS = REPO_ROOT / 'teams/05-architecture/harness'
 SPEC_KEYS = ('n_head', 'rope_theta', 'norm_eps')          # not readable from tensor shapes
 UNSUPPORTED = 'see teams/12-quantization/docs/unsupported_parts.md, section 10'
+
+
+def load_reference(ref, state: dict) -> None:
+    """Load a G5 state_dict into the harness model. A router_bias missing from the state (a checkpoint from before G5
+    #748) starts at zero, as in the harness; a router_bias the model does not have is left out. Any other difference
+    still fails."""
+    import torch
+    want = ref.state_dict()
+    fill = {k: torch.zeros_like(v) for k, v in want.items() if k.endswith('.router_bias') and k not in state}
+    ref.load_state_dict({k: v for k, v in {**state, **fill}.items() if k in want or not k.endswith('.router_bias')}, strict=True)
+
+
+def router_bias_report(state: dict, spec: dict) -> dict:
+    """What the checkpoint's router_bias does to routing: {present, max_abs, layer (of the largest), bias_gamma, active}."""
+    keys = sorted(k for k in state if k.endswith('.router_bias'))
+    worst = {k: float(state[k].abs().max()) for k in keys}
+    layer = max(worst, key=worst.get) if worst else None
+    gamma = spec['moe'].get('bias_gamma')
+    return dict(present=bool(keys), max_abs=worst[layer] if layer else 0.0, layer=layer, bias_gamma=gamma,
+                active=bool(layer and worst[layer] > 0 and gamma != 0))
 
 
 def file_sha256(path) -> str:
@@ -125,7 +152,8 @@ def resolve_spec(state: dict, given: dict) -> dict:
     spec = dict(vocab_size=vocab, n_embd=width, n_layer=n_layer, n_head=n_head, n_kv_head=n_kv,
                 rope_theta=float(given['rope_theta']), norm_eps=float(given['norm_eps']),
                 block_size=int(given.get('block_size') or 0), mtp='mtp_head.weight' in state,
-                moe=dict(num_experts=n_exp, num_shared=n_shared, top_k=int(given['moe']['top_k']), ffn_hidden=hidden, bias=False))
+                moe=dict(num_experts=n_exp, num_shared=n_shared, top_k=int(given['moe']['top_k']), ffn_hidden=hidden, bias=False,
+                         bias_gamma=given['moe'].get('bias_gamma')))
     # the spec must not contradict the tensors: a wrong spec file would export a different model silently
     for key, got in (('vocab_size', vocab), ('n_embd', width), ('n_layer', n_layer), ('n_kv_head', n_kv)):
         if given.get(key) not in (None, got):
@@ -201,7 +229,7 @@ def hf_config(spec: dict, bos_id, eos_id, pad_id, dtype: str):
         architectures=['GraniteMoeSharedForCausalLM'])
 
 
-def verify(state: dict, spec: dict, config, new_state: dict, n_prompts: int, tol: float, seed: int = 0) -> dict:
+def verify(state: dict, spec: dict, config, new_state: dict, n_prompts: int, tol: float, seed: int = 0) -> dict:  # state may hold router_bias
     """Test A1: G5's LanguageModel against transformers' GraniteMoeSharedForCausalLM, fp32, random prompts."""
     import torch
     from transformers import GraniteMoeSharedForCausalLM
@@ -209,7 +237,7 @@ def verify(state: dict, spec: dict, config, new_state: dict, n_prompts: int, tol
     from week2.model import LanguageModel
     ref = LanguageModel(dict(spec, mtp='mtp_head.weight' in state), state['embedding.rows'].numpy(),
                         state['embedding.lengths'].numpy()).eval()
-    ref.load_state_dict(state, strict=True)
+    load_reference(ref, state)
     hf = GraniteMoeSharedForCausalLM(config).float().eval()
     hf.load_state_dict(new_state, strict=True)
     T = min(spec['block_size'] or 64, 64)
@@ -235,13 +263,19 @@ def token_id(tokenizer_json: Path, token: str):
 
 def export(checkpoint: Path, out: Path, spec_path: Path | None = None, tokenizer: Path | None = None,
            bos: str = '<|begin_of_text|>', eos: str = '<|endoftext|>', pad: str = '<|pad|>', dtype: str = 'bf16',
-           n_verify: int = 0, tol: float = 1e-3) -> dict:
+           n_verify: int = 0, tol: float = 1e-3, drop_router_bias: bool = False) -> dict:
     import torch
     from safetensors.torch import save_file
     from transformers import GraniteMoeSharedForCausalLM
     weights, found_spec = find_checkpoint(Path(checkpoint))
     state = load_state(weights)
     spec = resolve_spec(state, load_spec(spec_path or found_spec))
+    rb = router_bias_report(state, spec)
+    if rb['active'] and not drop_router_bias:
+        sys.exit(f'refusing: {rb["layer"]} is not zero (largest absolute value {rb["max_abs"]:.3g}, bias_gamma {rb["bias_gamma"]}). '
+                 f'The router_bias picks the experts in G5, and GraniteMoeShared (Hugging Face and llama.cpp) has no selection bias, '
+                 f'so the exported model would route differently from the checkpoint. --drop-router-bias exports anyway; '
+                 f'A1 and A3 then show the difference.')
     ids = {name: token_id(tokenizer, tok) if tokenizer else None for name, tok in (('bos', bos), ('eos', eos), ('pad', pad))}
     if tokenizer:
         n_tok = 1 + max(max(json.loads(Path(tokenizer).read_text(encoding='utf-8'))['model']['vocab'].values()),
@@ -262,14 +296,21 @@ def export(checkpoint: Path, out: Path, spec_path: Path | None = None, tokenizer
         sys.exit(f'export does not match transformers\' GraniteMoeSharedForCausalLM: {diff[:5]}')
     report = dict(checkpoint=str(weights), checkpoint_sha256=file_sha256(weights), spec=spec, dtype=dtype,
                   parameters=sum(v.numel() for v in new_state.values()),
-                  dropped=sorted(k for k in state if k == 'mtp_head.weight' or k.startswith('embedding.')),
+                  dropped=sorted(k for k in state if k == 'mtp_head.weight' or k.startswith('embedding.') or k.endswith('.router_bias')),
                   token_ids=ids)
+    report['router_bias'] = dict(
+        rb, action=('absent from the checkpoint' if not rb['present'] else 'dropped with --drop-router-bias' if rb['active']
+                    else 'dropped: all zero' if rb['max_abs'] == 0 else 'dropped: bias_gamma is 0, so it never picked an expert'),
+        **({'warning': f'routing differs from the checkpoint: {rb["layer"]} has max |router_bias| {rb["max_abs"]:.3g} (bias_gamma '
+                       f'{rb["bias_gamma"]}), which GraniteMoeShared cannot represent. Read A1 and A3 with that in mind.'}
+           if rb['active'] else {}))
+    if rb['active']: print('WARNING:', report['router_bias']['warning'], flush=True)
     if n_verify:
         report['verify'] = verify(state, spec, config, new_state, n_verify, tol)
         v = report['verify']
         print(f'A1: max logit difference {v["max_abs_logit_diff"]:.3g} (limit {tol:g}), same top-1 on '
               f'{v["same_top1"]}/{v["positions"]} positions: {"PASS" if v["passed"] else "FAIL"}', flush=True)
-        if not v['passed']:
+        if not v['passed'] and not rb['active']:   # with --drop-router-bias a difference is expected and is in the report
             sys.exit(1)
     out = Path(out)
     out.mkdir(parents=True, exist_ok=True)
@@ -305,8 +346,10 @@ def main():
     ap.add_argument('--dtype', choices=['bf16', 'fp32'], default='bf16')
     ap.add_argument('--verify', type=int, default=0, metavar='N', help='run test A1 on N random prompts first')
     ap.add_argument('--verify-tol', type=float, default=1e-3, help='largest fp32 logit difference allowed in A1')
+    ap.add_argument('--drop-router-bias', action='store_true', help='export a checkpoint whose router_bias is not zero, '
+                    'although the exported model routes differently (recorded in export_report.json)')
     a = ap.parse_args()
-    export(a.checkpoint, a.out, a.spec, a.tokenizer, a.bos, a.eos, a.pad, a.dtype, a.verify, a.verify_tol)
+    export(a.checkpoint, a.out, a.spec, a.tokenizer, a.bos, a.eos, a.pad, a.dtype, a.verify, a.verify_tol, a.drop_router_bias)
 
 
 if __name__ == '__main__':

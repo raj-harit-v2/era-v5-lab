@@ -128,3 +128,5 @@ scoring and the report exist only once the screen finishes); the arms not reache
 
 Tokenizer, architecture (KE2 MoE with an untied head), pre-training data and token count, optimizer (Muon), and the SFT
 context. The thresholds (sizes where mixed groups appear) must be re-measured on the capstone checkpoint.
+
+**Correction, 21 Nov 2026:** 3 of the 8 mixed prompts behind the 6.3% at 360M (A2, 2,048 tokens) are prompts that one fixed output passes on every kept test (`cc-codechef-pd31`, `cc-hackerearth-balanced_strings`, `cc-hackerearth-p1_6`); the passing programs are wrong (they print the answer the tests share). On the remaining prompts the 360M share is 5/128 = 3.9% (LoRA 3/128; 135M A4 unchanged at 4/128). Found by re-running the saved samples with every test run and comparing each task with the best constant output computed from its kept tests (`rl-data/free_reward_ids.py`); all three are now in `capstone/rl_exclusions_v1/free_reward_ids.txt`.

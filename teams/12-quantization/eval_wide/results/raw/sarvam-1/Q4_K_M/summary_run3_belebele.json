@@ -1,0 +1,82 @@
+{
+ "run_meta": {
+  "model": "sarvamai/sarvam-1",
+  "model_revision": "e9607337286ddf496d4a2562b194e489dcf3feea",
+  "format": "Q4_K_M",
+  "gguf": "sarvam-1-Q4_K_M.gguf",
+  "gguf_bytes": 1581512288,
+  "eval_set": "G12 wide pass",
+  "cap": 2500,
+  "backend": "llama-cpp-python 0.3.36 (in-process, logits_all)",
+  "lm_eval": "0.4.13",
+  "hardware": "Tesla T4, 15360 MiB + Tesla T4, 15360 MiB",
+  "n_ctx": 4096,
+  "n_gpu_layers": -1,
+  "seed": 42,
+  "load_s": 1.2,
+  "run_date": "2026-11-23",
+  "runner_sha256": "66f9de0b6b168f49"
+ },
+ "records": [
+  {
+   "task": "belebele_kan_Knda",
+   "metric": "acc",
+   "filter": "none",
+   "value": 0.5011111111111111,
+   "n_items": 900,
+   "stderr": 0.016675892473931104,
+   "num_fewshot": 5,
+   "cap": 2500,
+   "truncated_requests": 0,
+   "wall_clock_s": 151.0
+  },
+  {
+   "task": "belebele_hin_Deva",
+   "metric": "acc",
+   "filter": "none",
+   "value": 0.5455555555555556,
+   "n_items": 900,
+   "stderr": 0.01660657398802067,
+   "num_fewshot": 5,
+   "cap": 2500,
+   "truncated_requests": 0,
+   "wall_clock_s": 148.6
+  },
+  {
+   "task": "belebele_tel_Telu",
+   "metric": "acc",
+   "filter": "none",
+   "value": 0.4722222222222222,
+   "n_items": 900,
+   "stderr": 0.01665017929607566,
+   "num_fewshot": 5,
+   "cap": 2500,
+   "truncated_requests": 0,
+   "wall_clock_s": 148.1
+  },
+  {
+   "task": "belebele_tam_Taml",
+   "metric": "acc",
+   "filter": "none",
+   "value": 0.5188888888888888,
+   "n_items": 900,
+   "stderr": 0.0166640297835778,
+   "num_fewshot": 5,
+   "cap": 2500,
+   "truncated_requests": 0,
+   "wall_clock_s": 152.8
+  },
+  {
+   "task": "belebele_ben_Beng",
+   "metric": "acc",
+   "filter": "none",
+   "value": 0.4722222222222222,
+   "n_items": 900,
+   "stderr": 0.01665017929607566,
+   "num_fewshot": 5,
+   "cap": 2500,
+   "truncated_requests": 0,
+   "wall_clock_s": 156.2
+  }
+ ]
+}

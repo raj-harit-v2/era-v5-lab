@@ -5,6 +5,7 @@ import hashlib
 import json
 import numpy as np
 from tokenizers import Tokenizer
+from .raw_vocab import VocabHoleError, raw_token_bytes
 
 import os
 V0_SHA256 = os.environ.get("TOKBPB_SHA", "2de039f20d17afd17615095c406c43087359673b767ed0fe2c480b995f2af8e5")
@@ -46,8 +47,6 @@ class Artifacts:
         self.tokenizer = Tokenizer.from_file(str(tokenizer_path))
         self.tokenizer.no_padding()
         self.tokenizer.no_truncation()
-        if self.tokenizer.get_vocab_size(with_added_tokens=True) != expected_vocab:
-            raise ValueError("Vocabulary mismatch")
         with np.load(table_path, allow_pickle=False) as z:
             if int(z["format_version"]) != 2 or str(z["kind"]) != "raw":
                 raise ValueError(
@@ -69,7 +68,10 @@ class Artifacts:
             expected_vocab,
         ):
             raise ValueError("Invalid table shape")
-        if np.any(self.lengths <= 0) or np.any(self.lengths > self.pos_dim):
+        if np.any(self.lengths == 0):
+            tid = int(np.flatnonzero(self.lengths == 0)[0])
+            raise VocabHoleError(f"token id {tid} yields an empty byte string in the raw table")
+        if np.any(self.lengths < 0) or np.any(self.lengths > self.pos_dim):
             raise ValueError("Invalid byte lengths")
         h = hashlib.sha256(f"ke2-table-v2|raw|{self.pos_dim}|".encode())
         h.update(np.ascontiguousarray(self.bytes).tobytes())
@@ -78,23 +80,10 @@ class Artifacts:
             raise ValueError("Table content hash mismatch")
         # Independently check all rows against the tokenizer JSON, not just sample text.
         spec = json.loads(Path(tokenizer_path).read_text(encoding="utf8"))
-        alphabet = list(range(33, 127)) + list(range(161, 173)) + list(range(174, 256))
-        chars = alphabet.copy()
-        extra = 0
-        for b in range(256):
-            if b not in alphabet:
-                alphabet.append(b)
-                chars.append(256 + extra)
-                extra += 1
-        inverse = {chr(c): b for b, c in zip(alphabet, chars)}
-        pieces = {i: piece for piece, i in spec["model"]["vocab"].items()}
-        added = {a["id"]: a["content"] for a in spec.get("added_tokens", [])}
-        for i in range(expected_vocab):
-            expected = (
-                added[i].encode("utf8")
-                if i in added
-                else bytes(inverse[c] for c in pieces[i])
-            )
+        raw_rows = raw_token_bytes(spec, expected_vocab, max_bytes=self.pos_dim)
+        if self.tokenizer.get_vocab_size(with_added_tokens=True) != expected_vocab:
+            raise ValueError("Vocabulary mismatch")
+        for i, expected in enumerate(raw_rows):
             actual = self.bytes[i, : int(self.lengths[i])].tobytes()
             if expected != actual:
                 raise ValueError(f"Raw table/tokenizer row mismatch at ID {i}")

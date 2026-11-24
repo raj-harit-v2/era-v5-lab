@@ -1,0 +1,4 @@
+{"tier": "T2", "device": "cuda", "kind": "parity", "max_abs_dlogit": 0.29052734375, "tolerance": 0.0001}
+{"tier": "T2", "device": "cuda", "kind": "decode", "mode": "batched", "rows": 128, "k": 8, "prompts": 16, "max_new": 1536, "prompt_lens": [195, 300, 414, 512], "dtype": "fp16", "seconds": 145.0358, "tokens": 196608, "tok_per_s": 1355.6, "ms_per_step": 94.424, "peak_gb": 3.383}
+{"tier": "T2", "device": "cuda", "kind": "decode", "mode": "per_prompt", "rows": 128, "k": 8, "prompts": 16, "max_new": 1536, "prompt_lens": [195, 300, 414, 512], "dtype": "fp16", "seconds": 708.4841, "tokens": 196608, "tok_per_s": 277.5, "ms_per_step": 28.828, "peak_gb": 1.621}
+{"tier": "T2", "device": "cuda", "kind": "decode", "mode": "per_prompt", "stopped_after_rows": 128, "reason": "call over 300.0 s"}

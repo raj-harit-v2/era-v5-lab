@@ -27,7 +27,7 @@ CONFIG (JSON; keys starting with "_" are comments)
   out                 the output folder, inside out/                             (default out/overlap)
   floor               raw word-score reporting floor, above 0 and at most 0.80   (default 0.5)
   k, block, top       words per shingle, matrix rows per step, pairs printed     (default 5, 256, 20)
-  max_output_mb       fail if the outputs are larger                             (default 50)
+  max_output_mb       fail if the returned outputs are larger (see below)        (default 50)
   expected_packs      optional exact inventory check; [] discovers whatever is present
 
 WHAT IT WRITES (in out)
@@ -44,7 +44,12 @@ WHAT IT WRITES (in out)
   overlap_by_pack.csv     pack x pack: pairs at or above each level (the floor, the E1 thresholds, 1.0) and exact pairs
   overlap_histogram.csv   all N(N-1)/2 pairs in bins of 0.01, including the pairs that share nothing (Jaccard 0)
   overlap_summary.json    the counts, the input parts and document counts, wall time, peak RSS, package versions, and
-                          each other output's size and sha256
+                          each other output's size, sha256 and whether it is returned
+
+overlap_pairs.csv, overlap_matrix.npz and overlap_docs.parquet stay in TSAI's job storage: only their size and sha256
+come back, in the summary ("returned": false). They grow with the corpus (overlap_docs.parquet: one row per document).
+max_output_mb (at most 50, the limit JOB_REQUEST.md sets on a job's outputs) counts the other outputs and the summary,
+once everything is written; over it, the summary's status is failed_output_limit and the script exits with an error.
 """
 import sys
 sys.dont_write_bytecode = True   # write only to ./out/: no __pycache__ beside the scripts
@@ -64,6 +69,9 @@ DEFAULTS = {"inputs": "out/tokenizer_sample_v0_clean",
             "splits": ["train", "heldout"], "out": "out/overlap", "floor": 0.5, "k": 5, "block": 256, "top": 20,
             "max_output_mb": 50, "expected_packs": []}
 CHUNK = 2000   # documents per block of shingle digests while reading
+# Not returned to the repository, so not counted against max_output_mb: TSAI kept these three in job storage for the
+# 2026-11-04 and 2026-11-12 overlap jobs (their results READMEs), and the first-training job keeps every Parquet there.
+KEPT_IN_JOB_STORAGE = ("overlap_pairs.csv", "overlap_matrix.npz", "overlap_docs.parquet")
 
 
 def load_config(path):
@@ -304,8 +312,10 @@ def main():
 
     written = ("overlap_pairs.csv", "overlap_matrix.npz", "overlap_docs.parquet", "overlap_by_pack.csv",
                "overlap_histogram.csv", "overlap_matches.csv", "overlap_matrix.csv", "overlap_matrix_counts.csv")
-    files = {f: {"bytes": (out / f).stat().st_size, "sha256": sha256_file(out / f)} for f in written}
+    files = {f: {"bytes": (out / f).stat().st_size, "sha256": sha256_file(out / f),
+                 "returned": f not in KEPT_IN_JOB_STORAGE} for f in written}
     output_bytes = sum(v["bytes"] for v in files.values())
+    returned_bytes = sum(v["bytes"] for v in files.values() if v["returned"])
     output_mb = round(output_bytes / (1 << 20), 1)
     h1 = [n for n in Counter(sha).values() if n > 1]
     per_split = Counter((d[0], d[1]) for d in docs)
@@ -359,11 +369,15 @@ def main():
     print(f"\nTop {min(cfg['top'], len(S))} pairs:")
     for x, y, s, e in list(zip(I.tolist(), J.tolist(), S.tolist(), exact.tolist()))[:cfg["top"]]:
         print(f"  {s:.4f}  {'exact ' if e else '      '}{ids[x]}  {ids[y]}")
-    print(f"\nWrote {', '.join(files)} and overlap_summary.json to {out.relative_to(REPO)} ({output_mb} MB)")
-    if output_bytes + (out / "overlap_summary.json").stat().st_size > cfg["max_output_mb"] * (1 << 20):
+    returned_bytes += (out / "overlap_summary.json").stat().st_size
+    returned_mb = round(returned_bytes / (1 << 20), 1)
+    print(f"\nWrote {', '.join(files)} and overlap_summary.json to {out.relative_to(REPO)} ({output_mb} MB; "
+          f"returned with the summary: {returned_mb} MB, max_output_mb {cfg['max_output_mb']})")
+    if returned_bytes > cfg["max_output_mb"] * (1 << 20):
         summary["status"] = "failed_output_limit"
         (out / "overlap_summary.json").write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
-        sys.exit(f"ERROR: the outputs are {output_mb} MB, over max_output_mb {cfg['max_output_mb']}; job failed")
+        sys.exit(f"ERROR: the returned outputs and the summary are {returned_mb} MB (not counting "
+                 f"{', '.join(KEPT_IN_JOB_STORAGE)}), over max_output_mb {cfg['max_output_mb']}; job failed")
 
 
 if __name__ == "__main__":

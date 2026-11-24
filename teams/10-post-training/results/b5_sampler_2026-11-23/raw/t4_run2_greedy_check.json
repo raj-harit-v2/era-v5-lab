@@ -1,0 +1,23 @@
+{
+ "parity_many_fp16_v1": 0.1171875,
+ "parity_many_fp16_v2": 0.1171875,
+ "v2_vs_v1_batched": {
+  "token_share_equal": 1.0,
+  "rows_identical": 16,
+  "rows": 16
+ },
+ "v1_batched_vs_per_prompt": {
+  "token_share_equal": 1.0,
+  "rows_identical": 16,
+  "rows": 16
+ },
+ "v2_batched_vs_per_prompt": {
+  "token_share_equal": 1.0,
+  "rows_identical": 16,
+  "rows": 16
+ },
+ "parity_many_fp32_v1": 3.5762786865234375e-06,
+ "parity_many_fp32_v2": 3.0994415283203125e-06,
+ "fp32_v2_eq_v1": true,
+ "fp32_v2_eq_per_prompt": true
+}
