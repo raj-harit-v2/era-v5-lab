@@ -1,0 +1,32 @@
+{
+  "documents_minhash": 1395320,
+  "documents_exact": 1416236,
+  "documents_shared": 1395320,
+  "shingle_count_differences": 0,
+  "exact_matches_within_shared": 2647,
+  "exact_rules": {
+    "H1": 97,
+    "H2": 2550
+  },
+  "minhash_rules": {
+    "H1": 78,
+    "H2": 2550
+  },
+  "h2_exact": 2550,
+  "h2_found": 2550,
+  "h2_missed": 0,
+  "h2_added": 0,
+  "missed_examples": [],
+  "groups_exact": 1060,
+  "groups_minhash": 1060,
+  "groups_identical": true,
+  "documents_in_groups_exact": 2377,
+  "documents_in_groups_minhash": 2377,
+  "dedup_exact_exit": 0,
+  "dedup_minhash_exit": 0,
+  "remove_list_rows_exact": 1317,
+  "remove_list_rows_minhash": 1317,
+  "remove_list_sha256_exact": "8461bf1b4c774fd34515319b746a90a31a65352b062e8ecd8f29a1f0744692bc",
+  "remove_list_sha256_minhash": "8461bf1b4c774fd34515319b746a90a31a65352b062e8ecd8f29a1f0744692bc",
+  "remove_list_identical": true
+}

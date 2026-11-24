@@ -117,3 +117,146 @@ def sample(lm, prompt: list[int], k: int, max_new: int, temperature: float, gene
             h = forward_cached(lm, nxt[:, None], caches, len(prompt) + t)[:, -1]
     lm.train(was)
     return seq, cmask, reason
+
+
+# --- many prompts in one decode: left padding, per-row positions, a key mask, a preallocated cache ---------------------
+
+def _rotary_rows(attn, x: torch.Tensor, pos: torch.Tensor) -> torch.Tensor:
+    """Team 5's GQA.rotary with a position per row and token: x [R, H, T, d], pos [R, T] (same formula as _rotary)."""
+    rd = attn.rotary_dim
+    inv = attn.theta ** (-torch.arange(0, rd, 2, device=x.device).float() / rd)
+    angle = pos.float()[:, None, :, None] * inv  # [R, 1, T, rd/2]
+    a, b = x.float()[..., :rd:2], x.float()[..., 1:rd:2]
+    rotated = torch.stack((a * angle.cos() - b * angle.sin(), a * angle.sin() + b * angle.cos()), -1).flatten(-2)
+    rotated = rotated.to(x.dtype)
+    return rotated if rd == attn.d else torch.cat((rotated, x[..., rd:]), dim=-1)
+
+
+def _attend_rows(attn, x: torch.Tensor, cache: dict, slot: int, pos: torch.Tensor, key_ok: torch.Tensor) -> torch.Tensor:
+    """_attend for left-padded rows. x [R, T, w] fills cache slots slot..slot+T-1 (written in place, no torch.cat);
+    pos [R, T] are the RoPE positions (0 at each row's first real token); key_ok [R, S] marks real slots. A query sees
+    real keys at or before its own slot; a padding query sees only itself, so its row stays finite and is never read."""
+    b, t, w = x.shape
+    q = _rotary_rows(attn, attn.q(x).view(b, t, attn.nh, attn.d).transpose(1, 2), pos)
+    k = _rotary_rows(attn, attn.k(x).view(b, t, attn.nkv, attn.d).transpose(1, 2), pos)
+    v = attn.v(x).view(b, t, attn.nkv, attn.d).transpose(1, 2)
+    if cache.get("k") is None:
+        cache["k"] = k.new_zeros(b, attn.nkv, cache["size"], attn.d)
+        cache["v"] = v.new_zeros(b, attn.nkv, cache["size"], attn.d)
+    cache["k"][:, :, slot:slot + t] = k
+    cache["v"][:, :, slot:slot + t] = v
+    total = slot + t
+    rep = attn.nh // attn.nkv
+    kk, vv = cache["k"][:, :, :total], cache["v"][:, :, :total]  # views: no copy of the cache per step
+    # Grouped heads instead of repeat_interleave: query head h = g*rep + j reads K/V group g, as in Team 5's GQA, so
+    # q [R, nh, T, d] is viewed as [R, nkv, rep*T, d] against the group's [R, nkv, S, d]. Team 5 takes fp32 logits
+    # (q.float() @ k.float()); under autocast that matmul runs in the autocast dtype anyway, so the fp32 copy of the
+    # cache is skipped there (same values) and kept without autocast (fp32 on CPU).
+    amp = torch.is_autocast_enabled(x.device.type)
+    qg = q.reshape(b, attn.nkv, rep * t, attn.d)
+    logits = ((qg if amp else qg.float()) @ (kk if amp else kk.float()).transpose(-2, -1) / math.sqrt(attn.d))
+    logits = logits.view(b, attn.nh, t, total)
+    qs = torch.arange(slot, total, device=x.device)[:, None]
+    ks = torch.arange(total, device=x.device)[None, :]
+    allowed = (ks <= qs)[None] & (key_ok[:, None, :total] | (ks == qs)[None])  # [R, T, S]
+    logits = logits.masked_fill(~allowed[:, None], float("-inf"))
+    a = logits.softmax(-1).to(vv.dtype).view(b, attn.nkv, rep * t, total)
+    return attn.o((a @ vv).view(b, attn.nh, t, attn.d).transpose(1, 2).reshape(b, t, w))
+
+
+def forward_rows(lm, ids: torch.Tensor, caches: list[dict], slot: int, pos: torch.Tensor, key_ok: torch.Tensor):
+    """Hidden states of ids [R, T] at cache slots slot..slot+T-1; padding tokens get no MoE output (valid False)."""
+    x = lm.embedding(ids)
+    valid = key_ok[:, slot:slot + ids.shape[1]]
+    for block, cache in zip(lm.blocks, caches):
+        x = x + _attend_rows(block.attn, block.n1(x), cache, slot, pos, key_ok)
+        x = x + block.moe(block.n2(x), valid)
+    return lm.norm(x)
+
+
+@no_grad()
+def parity_many(lm, rows: list[list[int]], steps: int) -> float:
+    """Max |logit difference| between Team 5's full forward of each row alone and the left-padded batched path:
+    one prefill of every row's prompt (all but its last `steps` tokens; rows may differ in length), then `steps`
+    one-token steps. Covers every prompt position and every stepped position."""
+    check_supported(lm)
+    dev = lm.head.weight.device
+    lens = [len(r) - steps for r in rows]
+    if min(lens) < 1:
+        raise ValueError("every row needs at least one prompt token")
+    width = max(lens)
+    off = torch.tensor([width - L for L in lens], device=dev)
+    ids = torch.tensor([[0] * (width - L) + r[:L] for r, L in zip(rows, lens)], device=dev)
+    key_ok = torch.arange(width + steps, device=dev)[None, :] >= off[:, None]
+    caches = [{"size": width + steps} for _ in lm.blocks]
+    pos = (torch.arange(width, device=dev)[None, :] - off[:, None]).clamp_min(0)
+    got = [lm.head(forward_rows(lm, ids, caches, 0, pos, key_ok)).float()]
+    for t in range(steps):
+        nxt = torch.tensor([[r[L + t]] for r, L in zip(rows, lens)], device=dev)
+        got.append(lm.head(forward_rows(lm, nxt, caches, width + t, (off.new_tensor(lens) + t)[:, None], key_ok)).float())
+    got = torch.cat(got, 1)  # [R, width + steps, V]; row i's real positions start at off[i]
+    worst = 0.0
+    for i, r in enumerate(rows):
+        full = lm(torch.tensor([r], device=dev), torch.ones(1, len(r), dtype=torch.bool, device=dev)).float()[0]
+        worst = max(worst, float((got[i, int(off[i]):] - full).abs().max()))
+    return worst
+
+
+@no_grad()
+def sample_many(lm, prompts: list[list[int]], k: int, max_new: int, temperature: float, generator, stop_ids: list[int],
+                pad_id: int, device: str):
+    """k completions of EVERY prompt in one decode (rows = len(prompts) x k, prompt-major). Returns one
+    (seq [k, len(prompt)+max_new], completion_mask [k, max_new], reasons) per prompt, the contract of sample().
+
+    Each prompt is prefilled once (P rows, left-padded to the longest prompt) and its cache and last hidden state are
+    copied to its k rows; then one token per row per step. RoPE positions count from each row's first real token, and
+    padding slots are masked out of every attention, so each row computes what sample() computes for its prompt alone
+    (within float reduction order: checked by parity_many). The random draws differ from per-prompt calls (one
+    multinomial over all rows per step), so temperature > 0 gives different, equally distributed tokens."""
+    check_supported(lm)
+    if not prompts or any(not p for p in prompts) or k <= 0 or max_new <= 0:
+        raise ValueError("need non-empty prompts, k > 0 and max_new > 0")
+    was = lm.training
+    lm.eval()
+    n_p = len(prompts)
+    lens = torch.tensor([len(p) for p in prompts], device=device)
+    width = int(lens.max())
+    off = width - lens
+    ids = torch.tensor([[pad_id] * (width - len(p)) + list(p) for p in prompts], dtype=torch.long, device=device)
+    key_ok_p = torch.arange(width + max_new, device=device)[None, :] >= off[:, None]
+    caches = [{"size": width + max_new} for _ in lm.blocks]
+    pos = (torch.arange(width, device=device)[None, :] - off[:, None]).clamp_min(0)
+    h = forward_rows(lm, ids, caches, 0, pos, key_ok_p)[:, -1]
+    for c in caches:  # one prefill per prompt, then k rows per prompt
+        c["k"], c["v"] = c["k"].repeat_interleave(k, 0), c["v"].repeat_interleave(k, 0)
+    h, key_ok, lens_r = h.repeat_interleave(k, 0), key_ok_p.repeat_interleave(k, 0), lens.repeat_interleave(k)
+    rows = n_p * k
+    comp = torch.full((rows, max_new), pad_id, dtype=torch.long, device=device)
+    alive = torch.ones(rows, dtype=torch.bool, device=device)
+    cmask = torch.zeros(rows, max_new, dtype=torch.bool, device=device)
+    reason = ["length"] * rows
+    stop_t = torch.tensor(stop_ids, dtype=torch.long, device=device)
+    for t in range(max_new):
+        logits = lm.head(h).float()
+        if temperature <= 0:
+            nxt = logits.argmax(-1)
+        else:
+            nxt = torch.multinomial(torch.softmax(logits / temperature, -1), 1, generator=generator).squeeze(-1)
+        nxt = torch.where(alive, nxt, torch.full_like(nxt, pad_id))
+        cmask[:, t] = alive
+        comp[:, t] = nxt
+        hit = alive & torch.isin(nxt, stop_t)
+        for r in hit.nonzero().flatten().tolist():
+            reason[r] = f"stop:{int(nxt[r])}"
+        alive = alive & ~hit
+        if not bool(alive.any()):
+            break
+        if t + 1 < max_new:
+            h = forward_rows(lm, nxt[:, None], caches, width + t, (lens_r + t)[:, None], key_ok)[:, -1]
+    lm.train(was)
+    out = []
+    for i, p in enumerate(prompts):
+        sl = slice(i * k, (i + 1) * k)
+        prompt = torch.tensor([list(p)] * k, dtype=torch.long, device=device)
+        out.append((torch.cat([prompt, comp[sl]], 1), cmask[sl], reason[sl]))
+    return out

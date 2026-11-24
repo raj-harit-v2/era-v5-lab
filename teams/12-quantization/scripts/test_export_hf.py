@@ -154,5 +154,69 @@ class ExportTests(unittest.TestCase):
         self.refused(spec(), 'unknown tensors', edit=lambda s: s.update({'extra.weight': torch.zeros(1)}))
 
 
+class RouterBiasTests(unittest.TestCase):
+    """G5 #748: a router_bias buffer picks the experts when moe.bias_gamma is not 0; Granite has no such bias."""
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory(); self.dir = Path(self.tmp.name)
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def run_folder(self, gamma=0.001, bias=None, old=False):
+        """bias: value added to the experts of every layer, as [0, x, 0, ...]. old: the state has no router_bias (before #748)."""
+        m = spec(moe=dict(bias_gamma=gamma))
+        model = random_model(m)
+        state = model.state_dict()
+        keys = [k for k in state if k.endswith('.router_bias')]
+        self.assertTrue(keys, 'this harness has no router_bias: the tests need G5 #748')
+        with torch.no_grad():
+            for k in keys:
+                if bias: state[k][1] = bias
+        if old:
+            state = {k: v for k, v in state.items() if k not in keys}
+        folder = self.dir / 'run'; folder.mkdir(exist_ok=True)
+        torch.save({'model': state, 'step': 3}, folder / 'checkpoint.pt')
+        (folder / 'manifest.json').write_text(json.dumps({'config': {'model': m}}), encoding='utf-8')
+        return folder
+
+    def export(self, folder, **kw):
+        return quiet_export(folder, self.dir / 'hf', dtype='fp32', n_verify=4, tol=1e-4, **kw)
+
+    def test_checkpoint_from_before_router_bias_exports_and_passes_a1(self):
+        r = self.export(self.run_folder(old=True))
+        self.assertTrue(r['verify']['passed']); self.assertEqual(r['router_bias']['action'], 'absent from the checkpoint')
+
+    def test_zero_router_bias_is_dropped_and_noted(self):
+        r = self.export(self.run_folder())
+        self.assertTrue(r['verify']['passed']); self.assertEqual(r['router_bias']['action'], 'dropped: all zero')
+        self.assertTrue(any(k.endswith('.router_bias') for k in r['dropped']))
+
+    def test_nonzero_router_bias_is_refused_with_layer_and_size(self):
+        with self.assertRaises(SystemExit) as c:
+            self.export(self.run_folder(bias=0.5))
+        msg = str(c.exception)
+        for part in ('blocks.', '.router_bias', '0.5', 'no selection bias', '--drop-router-bias'):
+            self.assertIn(part, msg)
+
+    def test_flag_exports_anyway_and_the_report_says_routing_differs(self):
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            r = export_hf.export(self.run_folder(bias=0.5), self.dir / 'hf', dtype='fp32', n_verify=4, tol=1e-4, drop_router_bias=True)
+        self.assertEqual(r['router_bias']['action'], 'dropped with --drop-router-bias')
+        self.assertAlmostEqual(r['router_bias']['max_abs'], 0.5); self.assertIn('routing differs', r['router_bias']['warning'])
+        self.assertFalse(r['verify']['passed'])   # a bias of 0.5 changes the experts, so A1 sees it, and it did not stop the export
+        self.assertTrue((self.dir / 'hf' / 'model.safetensors').exists()); self.assertIn('WARNING', out.getvalue())
+
+    def test_nonzero_bias_with_gamma_zero_never_routed_so_it_is_dropped(self):
+        r = self.export(self.run_folder(gamma=0.0, bias=0.5))
+        self.assertTrue(r['verify']['passed']); self.assertIn('bias_gamma is 0', r['router_bias']['action'])
+
+    def test_a_really_missing_weight_still_fails(self):
+        m = spec(); model = random_model(m); state = model.state_dict()
+        del state['blocks.0.attn.q.weight']
+        with self.assertRaises(RuntimeError):
+            export_hf.load_reference(random_model(m), state)
+
+
 if __name__ == '__main__':
     unittest.main(verbosity=1)

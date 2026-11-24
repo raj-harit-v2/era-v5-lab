@@ -117,10 +117,11 @@ class Optimizers:
 
 
 # Muon handles the selected block matrices. AdamW handles the remaining parameters.
-def uses_muon(name, p, router_on_muon=False):
-    """Attention and expert matrices inside the blocks. The MoE router, embedding projection, heads and norm gains stay
-    on AdamW. Router on AdamW: TSAI and KE2, 21 Nov (small and sensitive, like a head; to be tested, not settled).
-    optim.router_on_muon: true puts the router back on Muon, for the router comparison run only."""
+def uses_muon(name, p, router_on_muon=True):
+    """Attention, expert and router matrices inside the blocks. The embedding projection, heads and norm gains stay
+    on AdamW. Router on Muon: TSAI, 23 Nov (default since #712 showed no quality or cost difference vs AdamW at one
+    seed each, and current SOTA practice -- Kolibri, DeepSeek-V4.1-Flash -- treats the router as an ordinary 2D
+    matrix). optim.router_on_muon: false moves it back to AdamW, for the router comparison run only."""
     return (
         p.ndim == 2
         and name.startswith("blocks.")
@@ -197,7 +198,7 @@ def build_optimizer(model, o):
         if not sgd:
             return adamw(model.parameters())
         return Optimizers([("adamw", adamw([p for n, p in named if not uses_head_sgd(n, o)]))] + sgd)
-    rom = bool(o.get("router_on_muon", False))
+    rom = bool(o.get("router_on_muon", True))
     muon = [p for n, p in named if uses_muon(n, p, rom)]
     rest = [p for n, p in named if not uses_muon(n, p, rom) and not uses_head_sgd(n, o)]
     if not muon or not rest:
@@ -229,7 +230,7 @@ def describe(model, o):
     )
     if o["name"] == "adamw":
         return {"name": "adamw", "lr": o["lr"], "parameters": model.parameter_count(), **head_sgd}
-    rom = bool(o.get("router_on_muon", False))
+    rom = bool(o.get("router_on_muon", True))
     return {
         "name": "muon",
         "source": "teams/06-performance/models/optim.py@0968eb8 (loop path)",

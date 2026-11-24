@@ -16,6 +16,9 @@ Verdict (the limits are arguments, the defaults are the ones in eval_v1.md):
 
 The limits only set the verdict line. Every number is printed, and a result within `--at-limit-margin` (0.01) of
 its limit, on either side, is marked "at the limit": the verdict there is a coin flip, read the numbers.
+
+If a report's `eval_mini` block names the dtype it ran in (`"dtype": "float32"` or `"bfloat16"`, as `evaluate.py --eval-mini` writes it
+and as Team 9's rows record it), it must equal that report's `compute_dtype`: benchmark rows and bits per byte have to be scored the same way.
 """
 
 from __future__ import annotations
@@ -113,6 +116,32 @@ def _records(report: dict, label: str) -> dict[str, dict]:
     return out
 
 
+_DTYPES = {"float32": "float32", "fp32": "float32", "bfloat16": "bfloat16", "bf16": "bfloat16"}
+
+
+def _dtype_of(label: str, where: str) -> str:
+    """'float32 (TF32 off)' or 'bf16' -> 'float32' or 'bfloat16'. Anything else is refused, not guessed."""
+    key = str(label).split(" ")[0].lower()
+    if key not in _DTYPES:
+        raise ReportError(f"{where}: dtype {label!r} is not float32 or bfloat16")
+    return _DTYPES[key]
+
+
+def _check_benchmark_dtype(report: dict, label: str) -> None:
+    """Benchmark rows and bits per byte must be scored in the same dtype (Team 9's watcher uses bf16 on bf16 GPUs, fp32 elsewhere).
+
+    Only when the eval_mini block says which dtype it ran in (`dtype`, as Team 9's v1 rows do); older reports do not, and
+    nothing is checked for them.
+    """
+    mini = report.get("eval_mini")
+    if not isinstance(mini, dict) or mini.get("dtype") is None:
+        return
+    bench, bpb = _dtype_of(mini["dtype"], f"{label} eval_mini"), _dtype_of(report.get("compute_dtype", ""), f"{label} compute_dtype")
+    if bench != bpb:
+        raise ReportError(f"{label}: the benchmark rows were scored in {bench} but the bits per byte in {bpb}; "
+                          "score both in the same dtype")
+
+
 def _near(value: float, limit: float, margin: float) -> bool:
     """True when `value` is within `margin` of `limit` (a tiny slack keeps 0.06 - 0.05 inside a 0.01 margin)."""
     return abs(value - limit) <= margin + 1e-9
@@ -133,6 +162,8 @@ def compare(before: dict, after: dict, *, max_bpb_rise: float = 0.05, sigmas: fl
     for key in ("device", "compute_dtype"):
         if before.get(key) != after.get(key):
             raise ReportError(f"before and after ran on a different {key}: {before.get(key)} vs {after.get(key)}")
+    _check_benchmark_dtype(before, "before")
+    _check_benchmark_dtype(after, "after")
 
     delta = fa["bpb_all"] - fb["bpb_all"]
     gb, ga = _groups(fb), _groups(fa)

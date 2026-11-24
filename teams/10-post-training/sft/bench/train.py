@@ -469,7 +469,10 @@ def train(args) -> dict:
         groups = []
     if marker_params:
         groups.append({"params": marker_params, "base_lr": args.marker_lr})
-    opt = torch.optim.AdamW(groups, lr=args.lr, betas=(0.9, 0.95), eps=1e-8, weight_decay=args.wd)
+    # default (None) lets torch pick: foreach on CUDA, which holds one FP32 temporary the size of all trainable weights
+    # during the step (4 B per weight); --adam-fused uses the fused kernel, same update rule, no such temporary
+    opt = torch.optim.AdamW(groups, lr=args.lr, betas=(0.9, 0.95), eps=1e-8, weight_decay=args.wd,
+                            fused=True if args.adam_fused else None)
     # the tensor watched by the step-1 writeback check
     if args.method == "full":
         watch_name, watch = "model.layers.0.self_attn.q_proj.weight", model.model.layers[0].self_attn.q_proj.weight
@@ -632,7 +635,7 @@ def train(args) -> dict:
         "schema": "g10-bench-train/1", "args": vars(args), "method": method_info, "rows": len(rows),
         "rejected": rejected, "rows_seen": seen_rows, "epochs": round(seen_rows / len(rows), 3),
         "train_sha256": hashlib.sha256(Path(args.train).read_bytes()).hexdigest(),
-        "device": device, "hardware": hardware_label(device), "dtype": "float32 weights/grads/AdamW state; compute " + ("bf16 autocast (CUDA)" if AUTOCAST["dtype"] else "float32 (TF32 off)"),
+        "device": device, "adam_impl": "fused" if args.adam_fused else "torch default (foreach on CUDA)", "hardware": hardware_label(device), "dtype": "float32 weights/grads/AdamW state; compute " + ("bf16 autocast (CUDA)" if AUTOCAST["dtype"] else "float32 (TF32 off)"),
         "torch": torch.__version__, "train_seconds": round(train_seconds, 1), "seconds_per_100_steps": per100,
         "peak_rss_mb": round(peak_rss_mb(), 1), "checks": checks,
         "first_loss": log[0]["loss"], "last_loss": log[-1]["loss"],
@@ -671,6 +674,8 @@ def parse_args(argv=None):
     ap.add_argument("--min-lr-ratio", type=float, default=0.1)
     ap.add_argument("--wd", type=float, default=0.0)
     ap.add_argument("--clip", type=float, default=1.0)
+    ap.add_argument("--adam-fused", action="store_true",
+                    help="fused AdamW kernel (no step temporary of trainable-weight size; needed for 8B full FT on one H200)")
     ap.add_argument("--seed", type=int, default=1)
     ap.add_argument("--lora-r", type=int, default=4)
     ap.add_argument("--lora-alpha", type=float, default=8.0)

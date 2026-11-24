@@ -149,6 +149,27 @@ or the same arm on SmolLM2-135M-Instruct, whose chat markers are trained.
 Modal spend for WP3: about **$2.21 estimated** (6,295 container-seconds at list price: A10 $0.000306/s + 2 cores + 8 GiB),
 not read from billing.
 
+## Week 4 re-check of the forgetting route (22 Nov 2026, CPU)
+
+This re-runs the held-out bits-per-byte half and `forgetting.py` on the current lab `main`, with `bench/evaluate.py --dtype auto` as the
+handoff with Team 9 describes (Team 10 runs `--metrics forget` only and never reads benchmark items). It is a check of the tools, not a new
+model result.
+
+| Check | Command (from the repository root) | Result |
+|---|---|---|
+| Base bits per byte, CPU | `python teams/10-post-training/sft/bench/evaluate.py --model <SmolLM2-135M @ 93efa2f0 folder> --metrics forget --dtype auto --device cpu --heldout teams/05-architecture/heldout_v1/data/heldout_v1.jsonl --heldout-sources teams/05-architecture/heldout_v1/data/heldout_v1_sources.jsonl --out base_forget.json` | `compute_dtype` "float32 (TF32 off)", torch 2.14.1+cpu; 1,059 documents, 2,331,761 tokens, 1,910 windows, held-out sha256 `21c6e4b2...`; **bpb_all 1.0980975** against 1.0981069 recorded on the A10 (difference 9.4e-6, as expected for fp32 on another device); 55 min wall on 18 cores |
+| `forgetting.py` on the recorded base and LoRA r=4 reports | see "Forgetting verdict" above | JSON identical to `small_sft_evidence/forgetting_check/lora-lr1e-3-s1.json`; verdict "No forgetting", exit 0 |
+| New CPU base against a recorded CUDA report | same | refused: `before and after ran on a different device: cpu vs cuda` (the guard works; the before and after reports must come from the same device and dtype) |
+| Benchmark rows in points, as `results/eval_mini_v1.json` writes them (47.35, 1.46) | same | refused: `value 47.35 is outside [0, 1] (pass fractions 0..1, not points 0..100)` |
+| The same two rows divided by 100 | same | accepted; table and verdict printed (plumbing check only: the rows are from `eval_mini_v1.json`, not from these checkpoints, and before and after were the same report, so all deltas are 0 and this is not a result) |
+
+What this does not show: a real after-SFT checkpoint scored by Team 9's watcher (this check did not use the lab checkpoint store; dry run 2 hands over
+an after-SFT checkpoint on 26 Nov), and any GPU run of `evaluate.py --dtype auto` (the T4 rule is checked in PR #136). `forgetting.py` compares `device` and
+`compute_dtype` of the two bits-per-byte reports, but not the dtype of the benchmark rows against them: Team 9's v1 rows carry
+`dtype` and `format`; the records in the `eval_mini` block that `forgetting.py` reads do not (the dtype appears only inside the free-text
+`command` string), so a bf16 benchmark row beside an fp32 bits-per-byte report
+passes unnoticed.
+
 ## Not measured / gaps
 - The Mac did not complete 400 steps. The 400-step runs are on Modal A10 (controller-authorised change). There is no matched
   MPS-versus-CUDA comparison, and no claim of cross-device bit identity.

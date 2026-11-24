@@ -37,6 +37,8 @@ STUB = textwrap.dedent('''
         with torch.no_grad():
             return float(model(torch.ones(2, 4)).square().mean())
 
+    SEEN = []   # (phase, deterministic algorithms on, torch threads), as the scorer sees them
+
     class Scorer:
         name = "stub"
 
@@ -52,9 +54,11 @@ STUB = textwrap.dedent('''
             return Tiny()
 
         def probe(self, model):
+            SEEN.append(("probe", torch.are_deterministic_algorithms_enabled(), torch.get_num_threads()))
             return probe(model)
 
         def score(self, model, device):
+            SEEN.append(("score", torch.are_deterministic_algorithms_enabled(), torch.get_num_threads()))
             return [{"task": "stub_task", "metric": "acc", "filter": "none", "primary": True,
                      "value": round(100 * probe(model), 2) % 100, "stderr": None, "n_items": 2,
                      "item_set": "limit:2", "num_fewshot": 0, "decoding": "loglikelihood", "notes": self.argv,
@@ -101,6 +105,23 @@ def test_a_module_scorer_gets_the_unknown_arguments_and_sets_its_fields(store, t
     assert list(rec)[-4:] == ["seed", "harness", "hardware", "run_date"]
     printed = capsys.readouterr().out
     assert "probe loss bits equal the saved ones" in printed and "TIME export" in printed
+
+
+def test_deterministic_algorithms_are_on_for_the_export_only(store, tmp_path):
+    import stub_scorer
+
+    saved = torch.are_deterministic_algorithms_enabled(), torch.get_num_threads()
+    torch.use_deterministic_algorithms(False)
+    torch.set_num_threads(2)
+    try:
+        assert rl.main(["--run-dir", str(store), "--step", "10", "--scorer", "stub_scorer:make",
+                        "--out", str(tmp_path / "o.json")]) == 0
+        assert ("probe", True, 1) in stub_scorer.SEEN       # the export: the settings the saved bits were made with
+        assert stub_scorer.SEEN[-1] == ("score", False, 2)  # scoring: back to what the caller had
+        assert not torch.are_deterministic_algorithms_enabled()
+    finally:
+        torch.use_deterministic_algorithms(saved[0])
+        torch.set_num_threads(saved[1])
 
 
 def test_a_scorer_can_refuse_a_checkpoint(store, tmp_path):
@@ -161,6 +182,19 @@ def test_team5_run_is_scored_with_its_weights_hash_as_revision(team5_run, tmp_pa
     assert src["sha256"] == hashlib.sha256((team5_run / "manifest.json").read_bytes()).hexdigest()
     printed = capsys.readouterr().out
     assert "weights hash equals summary.json final_model_sha256" in printed and "TIME export" in printed
+
+
+def test_team5_run_never_turns_deterministic_algorithms_on(team5_run, tmp_path):
+    import stub_scorer
+
+    saved = torch.are_deterministic_algorithms_enabled()
+    torch.use_deterministic_algorithms(False)
+    try:
+        assert rl.main(["--team5-run", str(team5_run), "--scorer", "stub_scorer:make", "--out", str(tmp_path / "o.json")]) == 0
+        assert [phase for phase, _, _ in stub_scorer.SEEN] == ["score"]   # no export, so no probe
+        assert stub_scorer.SEEN[0][1] is False
+    finally:
+        torch.use_deterministic_algorithms(saved)
 
 
 def test_team5_run_with_other_weights_is_refused(team5_run, tmp_path):

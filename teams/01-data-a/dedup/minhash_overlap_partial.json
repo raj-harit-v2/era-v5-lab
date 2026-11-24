@@ -1,0 +1,19 @@
+{
+  "_comment": "Partial scope (TSAI, 23 Nov 2026): run on the packs staged so far (33 of the 38; 5 blocked on source resolution). expected_packs is empty, so every pack present under inputs is read and none is required; the summary lists the packs it found. Otherwise the same as minhash_overlap.json.",
+  "inputs": "out/tokenizer_sample_v0_clean",
+  "splits": [
+    "train",
+    "heldout"
+  ],
+  "out": "out/overlap",
+  "floor": 0.5,
+  "k": 5,
+  "top": 20,
+  "max_output_mb": 50,
+  "hashes": 128,
+  "bands": 32,
+  "seed": 20261122,
+  "workers": 0,
+  "max_bucket": 2000,
+  "expected_packs": []
+}

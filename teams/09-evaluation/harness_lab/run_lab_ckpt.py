@@ -43,8 +43,10 @@ weights hash must equal summary.json ``final_model_sha256``, which becomes ``mod
         --tokenizer-sha256 e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b \\
         --byte-table teams/04-ke2/results/tables/p1536-s0/raw_table_P32.npz --tier A --hf-home <HF cache> --offline
 
-The export runs on CPU with deterministic algorithms and one thread (the settings the saved probe-loss bits were made
-with); the model then moves to --device for scoring. The last line gives the wall time of each phase.
+A Team 7 store export runs on CPU with deterministic algorithms and one thread (the settings the saved probe-loss bits
+were made with). Only that export does: both settings are undone before scoring, so scoring on CUDA is not slowed by them,
+and --team5-run (no export) never sets them. The model then moves to --device for scoring. The last line gives the wall
+time of each phase.
 """
 from __future__ import annotations
 
@@ -378,9 +380,7 @@ def main(argv=None) -> int:
     elif a.device == "cuda" and not torch.cuda.is_available():
         ap.error("--device cuda: CUDA is not available")
     threads = torch.get_num_threads()
-    # the saved probe-loss bits were made with these two settings (restore_test.py); other settings change the last bit
-    torch.use_deterministic_algorithms(True)
-    torch.set_num_threads(1)
+    # a Team 7 export needs deterministic algorithms and one thread (below); CUDA reads this at its first use
     os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
     scorer = SmokeScorer(a) if a.scorer == "smoke" else load_scorer(a.scorer)(rest)
     team5 = a.team5_run is not None
@@ -406,7 +406,15 @@ def main(argv=None) -> int:
         load_team5_weights(run_dir / "checkpoint.pt", model, facts["model_revision"])
         print("load ok: checkpoint.pt state['model'] (strict), weights hash equals summary.json final_model_sha256")
     else:
-        model = export_store(run_dir, facts, scorer)
+        # the saved probe-loss bits were made with these two settings (restore_test.py); other settings change the last bit.
+        # They are for this export only: scoring runs with the settings it had on entry.
+        was_deterministic = torch.are_deterministic_algorithms_enabled()
+        torch.use_deterministic_algorithms(True)
+        torch.set_num_threads(1)
+        try:
+            model = export_store(run_dir, facts, scorer)
+        finally:
+            torch.use_deterministic_algorithms(was_deterministic)
     t_export = time.perf_counter() - t_export
     torch.set_num_threads(threads)
     dtype = str(next(model.parameters()).dtype)

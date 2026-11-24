@@ -1,0 +1,25 @@
+47 cleaned parts, 2 workers
+step 1: 47 parts (0 reused from work/), 2324.0s
+step 3: 646651 word and 27352 code candidate pairs, 15.5s
+{
+ "documents_all": 1395320,
+ "qualifying_pairs_by_rule": {
+  "H1": 78,
+  "H2": 2550
+ },
+ "stage_seconds": {
+  "signatures": 2324.0,
+  "h1": 0.9,
+  "lsh": 15.5,
+  "verify_words": 23.1,
+  "rules": 4.9,
+  "outputs": 2.1
+ },
+ "wall_seconds": 2374.5,
+ "peak_rss_mb": {
+  "main": 4240.9,
+  "largest_worker": 3223.4
+ },
+ "returned_mb": 0.49
+}
+exit 0

@@ -532,7 +532,7 @@ grep -h '"restore.failed"' $V5_EVENTS_DIR/*.jsonl | tail -5         # which comm
 
 Then section 6 (`--from-step K --skip N --branch <new>`), after `verify` and `pin` of step K.
 
-**Keep a good step reachable.** Retention keeps `--keep 9 --protect-every 15` in dry run 1, about the last 90 min
+**Keep a good step reachable.** Retention keeps `--keep 9 --protect-every 10` from dry run 2 on (15 in dry run 1), about the last 90 min
 ([checkpoint_interval.md](checkpoint_interval.md) §5). A bad checkpoint found later than that can only roll back to
 a protected or pinned step. So **pin the last known-good step** as soon as a CK-04, CK-05 or loss alarm fires,
 before retention runs again. Pinned steps are never deleted (`pins.json`).

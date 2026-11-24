@@ -63,10 +63,9 @@ def test_the_check_can_fail_without_the_hook():
     assert kz.deleted_nonzero() == 0
 
 
-def test_weight_decay_needs_enforce_and_bad_masks_are_refused():
+def test_weight_decay_is_accepted_and_bad_masks_are_refused():
     w, free, keep = _toy_params()
-    with pytest.raises(ValueError, match="weight decay"):
-        keep_zero.KeepZero([("w", w)], {"w": keep}, weight_decay=0.1)
+    keep_zero.KeepZero([("w", w)], {"w": keep}, weight_decay=0.1)
     keep_zero.KeepZero([("w", w)], {"w": keep}, enforce=True, weight_decay=0.1)
     with pytest.raises(ValueError, match="not trainable"):
         keep_zero.KeepZero([("w", w)], {"missing": keep})
@@ -75,6 +74,32 @@ def test_weight_decay_needs_enforce_and_bad_masks_are_refused():
     # a deleted entry that is not zero is a nonzero count, whatever the reason
     w2 = torch.nn.Parameter(torch.ones(8, 16))
     assert keep_zero.KeepZero([("w", w2)], {"w": keep}).deleted_nonzero() == int((~keep).sum())
+
+
+def test_an_optimizer_the_gradient_mask_cannot_protect_is_refused_unless_enforce():
+    class Muonish(torch.optim.Optimizer):  # stands in for Team 5's Muon / Optimizers wrapper
+        def __init__(self, params):
+            super().__init__(params, {"lr": 0.01})
+    w, free, keep = _toy_params()
+    kz = keep_zero.KeepZero([("w", w), ("free", free)], {"w": keep})
+    kz.check_optimizer(torch.optim.AdamW([w, free], lr=0.05, weight_decay=0.0))
+    with pytest.raises(ValueError, match="needs Adam/AdamW"):
+        kz.check_optimizer(Muonish([w, free]))
+    keep_zero.KeepZero([("w", w), ("free", free)], {"w": keep}, enforce=True).check_optimizer(Muonish([w, free]))
+
+
+def test_adamw_with_weight_decay_passes_the_check_and_keeps_deleted_weights_at_zero():
+    w, free, keep = _toy_params()
+    kz = keep_zero.KeepZero([("w", w), ("free", free)], {"w": keep}, enforce=False, weight_decay=0.1)
+    opt = torch.optim.AdamW([w, free], lr=0.05, weight_decay=0.1)
+    kz.check_optimizer(opt)
+    kept_before = w.detach()[keep].clone()
+    for _ in range(5):
+        opt.zero_grad()
+        _loss(w, free).backward()
+        opt.step()
+        assert kz.check("toy wd 0.1") == 0  # decoupled decay of an exact 0 is 0
+    assert (w.detach()[~keep] == 0).all() and not torch.equal(w.detach()[keep], kept_before)
 
 
 def test_packed_mask_roundtrip(tmp_path):
@@ -145,6 +170,27 @@ def test_trainer_keeps_deleted_weights_at_zero_while_other_weights_train(tmp_pat
     recs = [json.loads(line) for line in (tmp_path / "run" / "metrics.jsonl").read_text().splitlines()]
     assert all(r["deleted_nonzero"] == 0 and 0 < r["zero_share"] < 1 for r in recs)
     assert all(r["times_s"]["keep_zero_checks"] >= 0 for r in recs)
+
+
+def test_trainer_with_weight_decay_starts_and_keeps_deleted_weights_at_zero(tmp_path):
+    cfg = _cfg(tmp_path / "run")
+    keep = _deleted_start_state(tmp_path, cfg)
+    cfg["train"]["weight_decay"] = 0.1  # enforce stays off: the gradient mask alone holds the deletion
+    s = train.train(cfg)
+    kz = s["keep_zero"]
+    assert kz["deleted_at_start"] == sum(int((~k).sum()) for k in keep.values()) > 0
+    assert kz["max_deleted_nonzero"] == 0 and kz["deleted_nonzero_end"] == 0
+    assert s["objective"]["steps_with_optimizer_update"] > 0 and s["trainable_weight_change"]["share_changed"] > 0
+    recs = [json.loads(line) for line in (tmp_path / "run" / "metrics.jsonl").read_text().splitlines()]
+    assert recs and all(r["deleted_nonzero"] == 0 for r in recs)
+
+
+def test_trainer_still_refuses_a_non_adam_optimizer_without_enforce(tmp_path, monkeypatch):
+    cfg = _cfg(tmp_path / "run")
+    _deleted_start_state(tmp_path, cfg)
+    monkeypatch.setattr(torch.optim, "AdamW", lambda params, lr, weight_decay: torch.optim.SGD(params, lr=lr))
+    with pytest.raises(ValueError, match="needs Adam/AdamW, got SGD"):
+        train.train(cfg)
 
 
 def test_trainer_fails_loudly_when_the_gradient_mask_is_missing(tmp_path, monkeypatch):

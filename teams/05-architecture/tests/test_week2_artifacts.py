@@ -9,7 +9,7 @@ from tokenizers import Tokenizer, models
 
 TEAM = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(TEAM / "harness"))
-from week2.artifacts import Artifacts, sha256
+from week2.artifacts import Artifacts, VocabHoleError, sha256
 from week2.data import DocumentWindows
 
 
@@ -95,6 +95,20 @@ class ArtifactTests(unittest.TestCase):
     def test_lossy_text_roundtrip_rejected(self):
         with self.assertRaisesRegex(ValueError, "reconstruct"):
             self.load().encode("A")
+
+    def test_vocab_hole_raises_explicit_error_instead_of_key_error(self):
+        spec = json.loads(self.tokpath.read_text(encoding="utf8"))
+        del spec["model"]["vocab"]["b"]
+        self.tokpath.write_text(json.dumps(spec), encoding="utf8")
+        self.save()
+        with self.assertRaisesRegex(VocabHoleError, "token id 1.*hole"):
+            self.load()
+
+    def test_empty_table_row_raises_vocab_hole_error(self):
+        self.lengths[1] = 0
+        self.save()
+        with self.assertRaisesRegex(VocabHoleError, "token id 1.*empty"):
+            self.load()
 
     def test_duplicate_heldout_ids_rejected(self):
         path = self.root / "heldout.jsonl"

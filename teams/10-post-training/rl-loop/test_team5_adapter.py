@@ -773,7 +773,7 @@ model:
   n_head: 2
   n_kv_head: 1
   n_embd: 16
-  moe: {num_experts: 4, top_k: 2, num_shared: 1, dispatch: loop}
+  moe: {num_experts: 4, top_k: 2, num_shared: 1, dispatch: loop, ffn_hidden: 32}  # t2 now pins ffn_hidden: 768
 run:
   batch_size: 2
   dtype: fp32

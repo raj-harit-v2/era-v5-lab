@@ -39,7 +39,7 @@ def check(checkpoint: Path, gguf: Path, server: Path, spec_path: Path | None = N
     # The reference uses the weights the GGUF holds: every matrix rounded to bf16, and the folded embedding table
     # in place of KE2. What is left is the runtime's own arithmetic, so a small tolerance is a real test.
     bf16 = lambda t: t.to(torch.bfloat16).float() if t.is_floating_point() and t.ndim > 1 else t
-    ref.load_state_dict({k: bf16(v) for k, v in state.items()})
+    export_hf.load_reference(ref, {k: bf16(v) for k, v in state.items()})
     table = bf16(export_hf.fold_ke2(state, spec['n_embd']))
     ref.embedding.forward = lambda ids: table[ids]
     length = min(length, spec['block_size'] or length)

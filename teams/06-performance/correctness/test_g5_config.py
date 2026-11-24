@@ -27,7 +27,7 @@ SIGNED_CONFIG_V1_OVERRIDES = [
     "run.grad_clip=1.0",
     "optim.name=muon",
     "optim.lr=0.001",
-    "optim.muon_lr=0.003",
+    "optim.muon_lr=0.006",
     "model.vocab_size=131072",
     "model.embedding=ke2",
     "model.ke_max_pos=32",
@@ -35,6 +35,7 @@ SIGNED_CONFIG_V1_OVERRIDES = [
     "model.moe.num_experts=16",
     "model.moe.num_shared=1",
     "model.moe.top_k=2",
+    "model.moe.bias_gamma=0.001",   # G5 #748, loss-free balancing (TSAI, 23 Nov)
     "model.mtp=false",
     "model.moe.dispatch=sorted",
 ]
@@ -83,6 +84,23 @@ def test_unknown_train_on_stops_the_job(tmp_path):
 def test_train_on_maps(tmp_path, mode, expected):
     overrides, _ = g5_config.load_g5_overrides(_settings(tmp_path, f"{{key: loss.train_on, value: {mode}}}"))
     assert overrides == [expected]
+
+
+def test_router_on_muon_true_needs_no_override(tmp_path):
+    """perfkit's Muon already includes the router (G5 #736 default), so true maps to nothing."""
+    overrides, applied = g5_config.load_g5_overrides(_settings(tmp_path, "{key: optim.router_on_muon, value: true}"))
+    assert overrides == [] and applied == {"optim.router_on_muon": True}
+
+
+def test_router_on_adamw_stops_the_job(tmp_path):
+    with pytest.raises(ValueError, match=r"optim\.router_on_muon=False"):
+        g5_config.load_g5_overrides(_settings(tmp_path, "{key: optim.router_on_muon, value: false}"))
+
+
+def test_bias_gamma_maps(tmp_path):
+    """G5 #748's loss-free balancing step size reaches perfkit's SparseMoE (same update rule)."""
+    overrides, _ = g5_config.load_g5_overrides(_settings(tmp_path, "{key: moe.bias_gamma, value: 0.001}"))
+    assert "model.moe.bias_gamma=0.001" in overrides
 
 
 def test_other_tokenizer_stops_the_job(tmp_path):

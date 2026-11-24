@@ -1,0 +1,3 @@
+# Keep Team 1's pinned spec copy byte for byte. test_spec_v1_is_the_pinned_team_1_file checks its sha256, and a CRLF
+# checkout (Git on Windows with core.autocrlf=true) changes it. The other files here follow the normal rules.
+g1_spec_v1_normalize.py -text

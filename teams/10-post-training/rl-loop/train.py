@@ -26,7 +26,9 @@ Model kinds (config `model.kind`):
 Task kinds (config `task.kind`): toy (see tasks.py), code_tasks (rl/tasks via rl/reward.py; needs an hf tokenizer).
 
 GPU-run options (config `train.*`, all optional):
-    sampler        policy | hf_batch | vllm (rollout.py). Default hf_batch for HF models, policy otherwise.
+    sampler        policy | g5_batch | hf_batch | vllm (rollout.py). Default hf_batch for HF models, policy otherwise.
+                   g5_batch (G5 only): every prompt of a step in one KV-cached decode; sampler_max_rows (default 128)
+                   caps the rows decoded together.
     vllm           kwargs for the colocated engine, e.g. {gpu_memory_utilization: 0.3, max_model_len: 2048}
     fp32_master    default true: trainable weights in fp32 under bf16 autocast (policy.use_fp32_master)
     autocast       bf16 | unset (default): force bf16 autocast for the policy's forward. Needed for a G5 checkpoint,
@@ -38,6 +40,12 @@ GPU-run options (config `train.*`, all optional):
     fail_on_lost_update  objective_v1 only, default true: raise when, of the probed trainable entries that had a
                    nonzero gradient, fewer than min_stored_update_ratio (default 0.5) changed in storage after the
                    optimizer step (a small update rounded away in bf16); false = warn and log only
+    update_mode    train (default, unchanged) | eval: old_lp and the update forward run in eval mode, the samplers' mode,
+                   so a train-only layer (an output head's vocabulary dropout) cannot put noise into the ratio. Not with dt
+    logprob_gate   opt-in (true, or {mean_abs_tol: 0.01, outside_frac_tol: 0.005, eps, prompts: 1, max_new: 256}):
+                   before the screen and the first update, sample k completions of the first train prompt(s) with an own
+                   generator, score them as the update will and compare with the behaviour log-probs at identical
+                   weights; stop with an error above the tolerance; logprob_gate.json and summary["logprob_gate"]. Not with dt
 metrics.jsonl adds per-step timings (rollout, reward, old_logprobs, train, sync), sampled tokens and tokens/s,
 GPU memory, and the sampler/trainer mismatch. summary.json adds the paired-bootstrap CI of the held-out change,
 the trainable-weight change, and the library versions.
@@ -295,8 +303,12 @@ def state_identity(cfg: dict, trainable_named, *, init_state_sha256: str | None 
             "micro_rows", "weight_decay", "fp32_master", "sampler", "clip_eps", "kl_coef", "grad_clip", "screen")
     if t.get("autocast") is not None:  # preserve identities of runs saved before this option existed
         keys += ("autocast",)
+    if t.get("sampler_max_rows") is not None:  # chunking changes which random draws each row gets
+        keys += ("sampler_max_rows",)
     if t.get("dt"):  # only present for Deletion Tuning runs, so states saved before train.dt existed stay valid
         keys += ("dt",)
+    if t.get("update_mode", "train") != "train":  # default runs keep the identities they had
+        keys += ("update_mode",)
     model = {k_: cfg["model"].get(k_) for k_ in ("kind", "path", "dtype", "config")}
     if init_state_sha256 is not None:
         model["init_state_sha256"] = init_state_sha256
@@ -520,6 +532,57 @@ def chunked_logprobs(policy, seq: torch.Tensor, plen: int, micro_rows: int | Non
                       for i in range(0, seq.shape[0], micro_rows)], 0)
 
 
+UPDATE_MODES = ("train", "eval")
+GATE_MEAN_ABS_TOL = 0.01      # nats; work/lpgate-2026-11-23/PREREG.md (fixed before any run)
+GATE_OUTSIDE_FRAC_TOL = 0.005  # share of real tokens whose equal-weights ratio leaves [1 - eps, 1 + eps]
+
+
+def update_forward_mode(model, update_mode: str) -> None:
+    """Module mode of the forwards that feed the ratio. "train" (default) is the trainer's historical behaviour: the update
+    runs after model.train(), and old_lp in whatever mode the model is in (eval at step 1, train mode after). "eval" runs
+    old_lp and the update in eval mode, the mode every sampler here uses, so train-only layers (dropout, e.g. an output
+    head's vocabulary dropout) cannot put noise into ratio = exp(new_lp - old_lp). Gradients flow the same in eval mode."""
+    model.train(update_mode == "train")
+
+
+def logprob_gate(policy, model, items, update_mode: str, eps: float, micro_rows: int | None,
+                 mean_abs_tol: float = GATE_MEAN_ABS_TOL, outside_frac_tol: float = GATE_OUTSIDE_FRAC_TOL) -> dict:
+    """Identical-weights check before the first update: score sampled tokens with the training forward exactly as the
+    update will (module mode `update_mode`, same autocast, same row chunks) and compare with the behaviour policy.
+
+    items: (seq [k, P+T], cmask [k, T], plen, behaviour_lp [k, T] or None). The behaviour log-probs are the sampler's
+    own (vLLM rollout_lp) when it reports them; otherwise the eval-mode full forward under the same autocast, i.e. the
+    sampler's mode and dtype without its KV cache (the cache's own gap is measured offline, work/lpgate-2026-11-23).
+    One extra forward when the reference is given; two when it is not. One host sync. Never changes the weights."""
+    was = model.training
+    gaps, refs = [], []
+    with torch.no_grad():
+        for seq, cmask, plen, ref in items:
+            if ref is None:
+                model.eval()
+                ref = chunked_logprobs(policy, seq, plen, micro_rows)
+                refs.append("eval_forward")
+            else:
+                refs.append("rollout_lp")
+            update_forward_mode(model, update_mode)
+            cur = chunked_logprobs(policy, seq, plen, micro_rows)
+            gaps.append((cur.double() - ref.double())[cmask])
+    model.train(was)
+    d = torch.cat(gaps) if gaps else torch.zeros(0, dtype=torch.float64)
+    n = int(d.numel())
+    if n == 0:
+        return {"ok": True, "tokens": 0, "note": "no real tokens"}
+    a = d.abs()
+    r = torch.exp(d)
+    vals = torch.stack([a.max(), a.mean(), ((r < 1 - eps) | (r > 1 + eps)).double().mean(),
+                        torch.isfinite(d).all().double()]).tolist()  # one host sync
+    rec = {"tokens": n, "max_abs": float(f"{vals[0]:.4g}"), "mean_abs": float(f"{vals[1]:.4g}"),
+           "outside_frac": round(vals[2], 6), "finite": bool(vals[3]), "eps": eps, "update_mode": update_mode,
+           "reference": sorted(set(refs)), "mean_abs_tol": mean_abs_tol, "outside_frac_tol": outside_frac_tol}
+    rec["ok"] = rec["finite"] and vals[1] <= mean_abs_tol and vals[2] <= outside_frac_tol
+    return rec
+
+
 def backward_group(policy, group, algo: str, clip_eps: float, kl_coef: float, n_groups: int,
                    micro_rows: int | None) -> tuple[float, dict]:
     """Loss and backward for one group, optionally in row chunks. Every loss in grpo.py is a mean over the group's
@@ -715,6 +778,19 @@ def train(cfg: dict) -> dict:
         if t.get("tis_clip"):
             raise ValueError("objective_v1 uses the sampler ratio only as a mask; tis_clip would add IS weighting")
     tr_eps = float(t.get("tr_epsilon", grpo.TR_EPSILON))
+    update_mode = t.get("update_mode", "train")  # default: unchanged behaviour (see update_forward_mode)
+    if update_mode not in UPDATE_MODES:
+        raise ValueError(f"train.update_mode must be one of {UPDATE_MODES}")
+    if update_mode == "eval" and t.get("dt"):
+        raise ValueError("train.update_mode eval is not for Deletion Tuning: its mask layers are soft only in train mode")
+    gate_cfg = t.get("logprob_gate")  # opt-in identical-weights check before the first update (logprob_gate)
+    if gate_cfg is True:
+        gate_cfg = {}
+    if gate_cfg not in (None, False) and not isinstance(gate_cfg, dict):
+        raise ValueError("train.logprob_gate must be true or a mapping {mean_abs_tol, outside_frac_tol, eps, prompts, max_new}")
+    if isinstance(gate_cfg, dict) and t.get("dt"):
+        raise ValueError("train.logprob_gate is not for Deletion Tuning: its soft (train) and hard (eval) masks differ by design")
+    gate_rec = None
     state_dir = Path(t["state_dir"]) if t.get("state_dir") else None
     state_every = int(t.get("state_every", t.get("eval_every", 10)))
     deadline = float(t["deadline_unix"]) if t.get("deadline_unix") is not None else None
@@ -728,8 +804,10 @@ def train(cfg: dict) -> dict:
         # vLLM reports log-probabilities of the raw model distribution; they equal the sampling distribution only at
         # temperature 1 without truncation (rollout.py), and objective_v1 uses them as the ratio denominator.
         raise ValueError("objective_v1 with the vllm sampler needs temperature 1.0 (sampler ratio contract)")
-    if cfg["model"]["kind"] == "team5_adapter" and sampler_kind != "policy":
-        raise ValueError(f"sampler {sampler_kind} is not available for the G5 LanguageModel; use sampler: policy")
+    if cfg["model"]["kind"] == "team5_adapter" and sampler_kind not in ("policy", "g5_batch"):
+        raise ValueError(f"sampler {sampler_kind} is not available for the G5 LanguageModel; use sampler: policy or g5_batch")
+    if sampler_kind == "g5_batch" and cfg["model"]["kind"] != "team5_adapter":
+        raise ValueError("sampler g5_batch is for the G5 LanguageModel (model.kind team5_adapter)")
     pool = None
     if int(t.get("reward_pool", 0)) > 0:  # before any model loads: the workers must be forked from a small process
         if cfg["task"]["kind"] != "stdio":
@@ -839,7 +917,8 @@ def train(cfg: dict) -> dict:
     def sync_named():  # what the sampler must hold after an update
         return dt_hard_weights(dtmask, model) if dt_cfg else trainable_named
     pad_id = tok.pad_token_id if tok is not None and tok.pad_token_id is not None else None
-    sampler = rollout.make_sampler(sampler_kind, policy, vllm, pad_id)
+    sampler = rollout.make_sampler(sampler_kind, policy, vllm, pad_id,
+                                   **({"max_rows": int(t.get("sampler_max_rows", 128))} if sampler_kind == "g5_batch" else {}))
     ref = None
     if float(t.get("kl_coef", 0)) > 0:
         ref = copy.deepcopy(policy)
@@ -848,6 +927,8 @@ def train(cfg: dict) -> dict:
     start_w = StartWeights(model)  # CPU copy of the trainable weights: weight-change check, and KL to start
     opt = torch.optim.AdamW([p for _, p in trainable_named], lr=float(t["lr"]),
                             weight_decay=float(t.get("weight_decay", 0.0)))
+    if kz is not None:
+        kz.check_optimizer(opt)
     tis_clip = float(t["tis_clip"]) if t.get("tis_clip") else None
     micro_rows = int(t["micro_rows"]) if t.get("micro_rows") else None
     probe_w = UpdateProbe(trainable_named) if v1 else None
@@ -860,7 +941,7 @@ def train(cfg: dict) -> dict:
     log_routing = bool(t.get("routing_log", False)) and bool(routing.router_modules(model))
     n_experts = getattr(getattr(model, "config", None), "num_experts", None)
     # Native sampling draws on the model's device, so its generator lives there; HF/vLLM keep host-side generators.
-    gen_device = device if sampler_kind == "policy" and not isinstance(policy, HFPolicy) else "cpu"
+    gen_device = device if sampler_kind in ("policy", "g5_batch") and not isinstance(policy, HFPolicy) else "cpu"
     gen = torch.Generator(device=gen_device).manual_seed(seed)
     order = list(range(len(task.train)))
     fixture_smoke = adapter is not None and adapter.status != "READY"
@@ -994,6 +1075,28 @@ def train(cfg: dict) -> dict:
         (out / "vllm_sync_check.json").write_text(json.dumps(sync_check, indent=1))
         if sync_check.get("ok") is False:
             raise RuntimeError(f"vLLM weight sync does not work: {sync_check}")
+    if isinstance(gate_cfg, dict):
+        # Before the screen, so a failure costs no screen and no evaluation. Its own generator: the run's generators
+        # (gen, gen_cohort, gen_extra) are untouched. Runs again on a resume (any weights are identical to themselves).
+        c0 = time.time()
+        g_prompts = task.train[:int(gate_cfg.get("prompts", 1))]
+        g_new = min(max_new, int(gate_cfg.get("max_new", 256)))
+        g_rolls = sampler.sample(g_prompts, k, g_new, temperature, torch.Generator(device=gen_device).manual_seed(seed + 4))
+        gate_rec = logprob_gate(policy, model, [(r_.seq, r_.cmask, len(p_), r_.rollout_lp) for p_, r_ in zip(g_prompts, g_rolls)],
+                                update_mode, float(gate_cfg.get("eps", tr_eps)), micro_rows,
+                                float(gate_cfg.get("mean_abs_tol", GATE_MEAN_ABS_TOL)),
+                                float(gate_cfg.get("outside_frac_tol", GATE_OUTSIDE_FRAC_TOL)))
+        gate_rec.update(prompts=len(g_prompts), k=k, max_new=g_new, seconds=round(time.time() - c0, 3))
+        (out / "logprob_gate.json").write_text(json.dumps(gate_rec, indent=1))
+        print(json.dumps({"logprob_gate": gate_rec}), flush=True)
+        if not gate_rec["ok"]:
+            metrics_f.close()
+            raise RuntimeError(
+                f"logprob gate: at identical weights the update forward (mode {update_mode}) differs from the behaviour "
+                f"log-probs by mean {gate_rec['mean_abs']} nats (max {gate_rec['max_abs']}); {gate_rec['outside_frac']:.4g} "
+                f"of tokens leave the trust region (tolerances {gate_rec['mean_abs_tol']}, {gate_rec['outside_frac_tol']}). "
+                f"A train-only layer such as dropout is the usual cause: set train.update_mode: eval "
+                f"(rl_job_v1: --update-mode eval).")
     screen = t.get("screen")  # mixed-band selection on TRAIN prompts only; the held-out set is never filtered
     if resumed is not None and cohort_ids is not None:  # the cohort screened before the restart, in its saved order
         by_env = {env: list(key) for key, env in task._items.items()}
@@ -1028,7 +1131,7 @@ def train(cfg: dict) -> dict:
         (out / "screen.json").write_text(json.dumps(rec_s, indent=1))
         print(json.dumps({"screen": {k_: v for k_, v in rec_s.items() if k_ not in ("per_task", "mixed_ids")}}),
               flush=True)
-        if len(mixed) < need:
+        if len(mixed) < max(need, 1):  # min_mixed 0 with no mixed prompt would train on an empty list
             metrics_f.close()
             summary = {"status": "NO_GO_MIXED_BAND", "algo": algo, "screen": {k_: v for k_, v in rec_s.items()
                                                                               if k_ != "per_task"},
@@ -1113,6 +1216,8 @@ def train(cfg: dict) -> dict:
         c0 = time.time()
         if dt_cfg:
             model.eval()  # hard mask: the engine-mismatch metric compares the same policy in both engines
+        if update_mode == "eval":
+            update_forward_mode(model, update_mode)  # old_lp in the same mode as the update and the sampler
         for p, r, adv in scored:
             if adv is None:
                 dropped += 1
@@ -1151,7 +1256,7 @@ def train(cfg: dict) -> dict:
         if v1 and groups and n_tok > 0:
             if vllm is not None:
                 vllm.sleep()
-            model.train()
+            update_forward_mode(model, update_mode)  # default "train": model.train(), as before
             epochs = []
             for _ in range(int(t.get("ppo_epochs", 1))):
                 opt.zero_grad()
@@ -1215,7 +1320,7 @@ def train(cfg: dict) -> dict:
                 idx_before = routing.routing(policy, g[0], fmask)
             if vllm is not None:
                 vllm.sleep()
-            model.train()
+            update_forward_mode(model, update_mode)  # default "train": model.train(), as before
             for _ in range(int(t.get("ppo_epochs", 1))):
                 opt.zero_grad()
                 for g_ in groups:
@@ -1363,6 +1468,10 @@ def train(cfg: dict) -> dict:
                                 "group_kinds_total": {k_: sum(r["group_kinds"][k_] for r in recs)
                                                       for k_ in recs[0]["group_kinds"]} if recs else {}}
     summary["saved_trainable_weights"] = saved_weights
+    if update_mode != "train":
+        summary["update_mode"] = update_mode
+    if gate_cfg not in (None, False):
+        summary["logprob_gate"] = gate_rec
     if init_state_info:
         summary["init_state"] = init_state_info
     if kz is not None:

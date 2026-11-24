@@ -2,11 +2,88 @@
 
 **Status:** Gate 3 p1536-s0 is the current frozen tokenizer (16 Nov); its exact file hash passed
 the loader gate and both P = 32 and P = 64 were measured. C3-s0 remains a historical result.
-Both P values are supported; P = 32 is recommended and is the path dry run 1 trains (#475).
+Both P values are supported by the historical V1 codec; P = 32 is the path dry run 1 trains (#475).
+The selected KAS V2 codec fixes L_max = 32 and D = 2048, as described below.
 The capstone output head is the KE2/KAS head (TSAI, 21 Nov, final); see [Output side](#output-side).
 For export and serving (Team 12), see [Export: fold into a normal embedding table](#export-fold-into-a-normal-embedding-table-for-g12).
 
-## Shape
+## Implemented KAS V2 integration (24 Nov 2026, G5 #717)
+
+The G5 implementation now follows the public [#765 contract](fixtures/kas_v2/README.md).
+Select `model.head_mode: kas_v2`; `dryrun2.yaml` and `kas_v2_smoke.yaml` select it. Existing arms
+without this setting retain V1.
+
+| Component | Shape / rule |
+|---|---|
+| Raw table | `(131072, 32)` uint8 bytes and `(131072,)` lengths; tokenizer raw bytes, never decoded text |
+| Fixed codec | `G` (256, 64), `Phi` (32, 32), `d_c = 64`, `L_max = 32`, `D = 2048`; constants supplied by #765 |
+| Position matrix | `M_pos[v]` (64, 32), column `p = G[b_p] / sqrt(L_v)` for `p < L_v`, zero otherwise |
+| Input code | `K_v = (M_pos[v] @ Phi).reshape(2048)` in channel/frequency row-major order; no z-normalization |
+| Input projection | `embedding.projection.weight` (d_model, 2048), bias-free; output `(B, T, d_model)` |
+| Output projection | `head.W_out` (d_model, 2048), independent of the input projection |
+| Position-domain scores | `S = (h @ head.W_out).reshape(..., 64, 32)`; no Phi applied on output |
+| Logits | `(B, T, 131072)`, or `(N, 131072)` for selected rows; `head.out_features = 131072` |
+
+The input and head use byte-occupancy projections rather than allocating the complete vocabulary
+code table during training. Tokens must have true lengths in 1..32; longer or empty rows are rejected,
+and artifact validation preserves `VocabHoleError` for missing IDs. Special-token bytes remain distinct;
+PAD is excluded from scored targets.
+
+The output adds `head.beta[L_v] * <M_pos[v], S>`, the centered add-one `head.unigram[v]`, and the
+rank-64 term `(h @ head.tok_c.T) @ head.tok_u[v]`. A fresh inverted 5% row mask applies only to
+`tok_u` on each training head forward, including each accumulation microbatch; evaluation disables it.
+See [trainer_adapter.md](trainer_adapter.md) for prior provenance, the explicit optional EOS policy
+and parameter initialization.
+
+### KAS V2 checkpoint keys
+
+A native `checkpoint.pt` stores model tensors under `"model"`. The KAS-specific tensors are:
+
+| Key | Shape / initial dtype |
+|---|---|
+| `codec.G` | (256, 64), fixed float64 buffer |
+| `codec.Phi` | (32, 32), fixed float64 buffer |
+| `embedding.rows` | (131072, 32), uint8 buffer |
+| `embedding.lengths` | (131072,), int64 buffer |
+| `embedding.projection.weight` | (d_model, 2048), float32 trainable |
+| `head.W_out` | (d_model, 2048), float32 trainable |
+| `head.beta` | (33,), float32 trainable |
+| `head.unigram` | (131072,), float32 trainable |
+| `head.tok_u` | (131072, 64), float32 trainable |
+| `head.tok_c` | (64, d_model), float32 trainable |
+
+The model owns the fixed codec once. Head occupancy indices, offsets and scales are derived
+nonpersistent buffers rebuilt from the verified byte table. The trainer records the fixture hash and
+prior provenance/policy in checkpoint identity. Construct with the saved model configuration and the
+same verified artifacts before strict loading. V1's `head.weight` and 8192-wide input projection are
+not KAS V2 keys; no automatic V1 checkpoint conversion is provided. MTP, if enabled separately,
+retains its existing `mtp_head.weight` contract.
+
+### KAS V2 export boundary and validation
+
+In evaluation, the public equations imply a normal input embedding table and an affine output head:
+
+```text
+E[v] = K_v @ embedding.projection.weight.T
+output.weight[v] = head.beta[L_v] * (M_pos[v].reshape(2048) @ head.W_out.T)
+                   + head.tok_u[v] @ head.tok_c
+output.bias[v] = head.unigram[v]
+```
+
+This is the export identity, not an implemented or validated G5 exporter. The output must retain its
+unigram bias, and folding must run with vocabulary dropout disabled. G4 links separate V2 fold evidence
+in the #765 README (era-v5-ke2 #12); the existing V1 export script and measurements below do not
+establish G5 V2 export correctness. Team 12 must validate its V2 fold against the integrated model.
+
+Local CPU validation: 21 tests passed across the G5 KAS V2, unigram/dropout and G4 fixture suites.
+This includes float64 fixture parity at 1e-10 absolute tolerance, fused fp32 logits at the specified
+row-relative tolerance, gradients, both full-p1536 canonical fp32/bf16 code hashes, actual-head AdamW
+membership, strict reload, step-zero/committed resume and Team 9 native loading/probe compatibility.
+Canonical code hashes are computed on CPU; CUDA/bf16 training, full watcher/scoring and G5 V2
+folded export remain unvalidated. Recomputed head forwards must reuse their original dropout mask
+if activation checkpointing or reversible recomputation is added later.
+
+## Historical V1 shape (dry run 1)
 
 KE2 replaces the token-embedding table. Each token ID becomes a fixed vector (no learned
 weights), followed by one learned linear layer.
@@ -26,7 +103,7 @@ so `T` for a given text is the same as with a standard embedding.
 | **32 (recommended)** | **8,192** |
 | 64 | 16,384 |
 
-## Settings
+## Historical V1 settings
 
 | Setting | Value | Source |
 |---|---|---|
@@ -53,7 +130,7 @@ On every measured candidate both retain every token's bytes; P = 64 costs twice 
 with no gain. The longest token is exactly 32 bytes, so P = 32 has no spare room: any longer
 token in a future tokenizer would be cut off.
 
-## Properties of the code
+## Historical V1 code properties
 
 - Index layout: byte value `b` at position `p` maps to index `b · P + p`.
 - Normalised per token: mean ≈ 0, std ≈ 0.9999 (library epsilon 1e-6).
@@ -62,7 +139,7 @@ token in a future tokenizer would be cut off.
 - Special tokens (BOS, EOS, PAD, UNK, …) are encoded from their literal text, so each has
   its own non-zero vector, including PAD.
 
-## Parameter count (input side)
+## Historical V1 input parameter count
 
 | | Formula | Example at `d_model = 768` |
 |---|---|---|
@@ -74,17 +151,15 @@ KE2's size does not depend on V, so adding special-token slots does not change i
 
 ## Output side
 
-Decided 21 Nov, final (TSAI): the capstone output head is the KE2/KAS head, with a unigram log-prior scalar and a
-rank-64 per-token correction. It has its own separate output projection and is not tied to the input embedding
-(TSAI's correction, #702). It reads raw tokenizer bytes with a 32-byte limit. The handoff, and the questions Team 5
-settles first (codec width and vocabulary; weight tying is settled as untied), are in `gate3.md`, section "Handoff of
-the reference implementation to Team 5". The codec question may also change the input path described above.
-
-Dry run 1 and the week-2 trainer used a dense untied head, `nn.Linear(d_model, 131072, bias=False)` (TSAI, 15 Nov),
-with KE2 on the input only. The export notes below were written for that run. With the KAS head, the export of the
-output side follows Team 5's integration.
+The capstone path is the untied KAS V2 head described above, selected as `a10_kas_tokdrop`
+(TSAI, 21 Nov; untied correction #702). Its codec dimensions and equations are settled by TSAI's
+23 Nov migration decision and the public #765 fixture; those are no longer open integration questions.
+Dry run 1 used an untied dense `nn.Linear(d_model, 131072, bias=False)` with KE2 only on input.
 
 ## Export: fold into a normal embedding table (for G12)
+
+**Historical V1 implementation and evidence.** The remainder of this export section concerns dry run 1.
+Use the KAS V2 keys and export boundary above for the new head; the V1 script is not validated for V2.
 
 KE2 needs no runtime code at inference. The code of a token depends only on its ID, and the projection is
 linear, so every ID has one fixed embedding row. Computing all rows once gives an ordinary `V × d_model`

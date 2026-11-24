@@ -355,6 +355,13 @@ def test_screen_keeps_mixed_train_prompts_and_stops_on_no_go(tmp_path):
     assert s["status"] == "NO_GO_MIXED_BAND" and (tmp_path / "nogo" / "metrics.jsonl").read_text() == ""
 
 
+def test_screen_with_min_mixed_zero_and_no_mixed_prompt_stops_instead_of_training_on_nothing(tmp_path):
+    # k=1 can never be mixed (0 < passes < 1); min_mixed 0 used to leave task.train empty and crash in the first step
+    s = train.train(_toy_cfg(tmp_path, "none", screen={"n": 8, "k": 1, "min_mixed": 0}))
+    assert s["status"] == "NO_GO_MIXED_BAND" and s["screen"]["mixed"] == 0
+    assert (tmp_path / "none" / "metrics.jsonl").read_text() == ""
+
+
 def test_max_train_seconds_stops_and_still_evaluates_where_it_stopped(tmp_path):
     s = train.train(_toy_cfg(tmp_path, "cap", steps=50, max_train_seconds=0.0))
     assert s["steps"] == 1 and s["steps_planned"] == 50 and [c[0] for c in s["heldout_curve"]] == [0, 1]

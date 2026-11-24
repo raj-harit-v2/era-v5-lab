@@ -124,8 +124,8 @@ def apply_method(lm: nn.Module, method: str, args) -> dict:
         gen = torch.Generator().manual_seed(args.seed)
         wrapped = []
         for name, module in list(lm.named_modules()):
-            if name.endswith(".router") or name == "head":
-                continue
+            if name.endswith(".router") or name == "head" or name.startswith("head."):
+                continue  # the output head (dense or KE2/KAS, with any inner Linears) is never LoRA-wrapped
             for child_name, child in list(module.named_children()):
                 if child_name in G5_LORA_TARGETS and isinstance(child, nn.Linear):
                     setattr(module, child_name, bench.LoRALinear(child, args.lora_r, args.lora_alpha, gen))
@@ -142,8 +142,17 @@ def apply_method(lm: nn.Module, method: str, args) -> dict:
 
 
 def enable_head_rows(lm: nn.Module, ids: list[int]) -> nn.Parameter:
-    """Train only head.weight rows `ids`: a gradient hook zeroes every other row (with wd 0 AdamW leaves them exact)."""
-    w = lm.head.weight
+    """Train only rows `ids` of the output head's per-token matrix (dense `head.weight` or KE2/KAS `head.tok_u`,
+    resolved by team5_adapter.head_access, which raises on a head of unknown kind)."""
+    import team5_adapter as ta  # noqa: PLC0415  rl-loop/team5_adapter.py
+
+    try:
+        info = ta.head_access(lm)
+    except ta.ArtifactError as e:
+        raise ValueError(f"--marker-rows: {e}") from None
+    w = info["per_token"]
+    if max(ids) >= w.shape[0]:
+        raise ValueError(f"--marker-rows: marker id {max(ids)} outside {info['per_token_name']} rows {w.shape[0]}")
     rowmask = torch.zeros(w.shape[0], 1, dtype=w.dtype, device=w.device)
     rowmask[ids] = 1
     w.requires_grad_(True)
@@ -396,7 +405,7 @@ def run(args) -> dict:
     elif args.method == "lora":
         watch_name, watch = "blocks.0.attn.q.lora_B", lm.blocks[0].attn.q.lora_B
     elif args.method == "markers":
-        watch_name, watch = "head.weight (marker rows)", marker_param
+        watch_name, watch = f"{ta.head_access(lm)['per_token_name']} (marker rows)", marker_param
     else:
         watch_name, watch = "blocks.0.attn.q.weight", lm.blocks[0].attn.q.weight
     lm.train()
@@ -665,7 +674,8 @@ def parse_args(argv=None):
     p.add_argument("--team7-export-path", type=Path, default=None, help="output path for Team 7 export_safetensors")
     p.add_argument("--keep-weights-dir", type=Path,
                    help="default off: also save the final plain weights as a Team 7 run folder <dir>/<keep-run-id>")
-    p.add_argument("--keep-run-id", default="g10-sft", help="run id (folder name) of the kept weights")
+    p.add_argument("--keep-run-id", "--keep-weights-id", dest="keep_run_id", default="g10-sft",
+                   help="run id (folder name) of the kept weights; --keep-weights-id is the spelling dryrun2_dt_compare.py passes")
     p.add_argument("--out", type=Path, required=True)
     return p.parse_args(argv)
 

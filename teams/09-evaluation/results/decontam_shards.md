@@ -87,9 +87,47 @@ A zero result is only useful if the chain would have found a leak. Four checks:
    canary into a sixth. `decontam_check.py` flagged exactly those 6 documents, each with the planted item (the sixth as
    `era-v5-lab:canary`), and nothing else;
    `canary_scan.py` found the canary in the planted document only. The copy was then deleted.
-4. **Same numbers as the rotators.** The rotation files on main and in open PRs on 18 Nov (17:30 UTC) cover 30 of the 41
-   shards: all 30 have the same `payload_sha256` and document count as this table, and 0 flagged, 0 canary hits. The other
-   11 are still with rotators (due Thu 19); the cross-check of every rotation file is on this PR.
+4. **Same numbers as the second checks.** All 41 shards now have a second check: 36 in the rotation files on main
+   (`results/rotation_*.md`) and the last 5 in the week-4 section below. All 41 give the same document count as this table,
+   and 0 flagged, 0 canary hits. Every second check that gives a `payload_sha256` gives the same one as this table. The two
+   rotation rows without one, `code-go-train-000000` and `ind-hi-sangraha-v-train-000000` (`rotation_ranjani-cse.md`), get
+   their `payload_sha256` and token count in the same section; both match this table.
+
+## Second check of the last 5 shards (week 4, task 3)
+
+The 5 shards that no rotator had checked, from the Team 9 lead's week-4 post (G9, 21 Nov). Run by Team 9 on
+23 Nov 2026, 19:52–20:10 IST, at main `e5544324`, with the same chain as above: `decode_shard.py` (frozen p1536,
+sha256 `e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b`) → `decontam_check.py` (fingerprints v2,
+`set_sha256 2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a`, full set) → `canary_scan.py`
+(4 canaries). Shard files from TSAI's `shard_links.tsv` of 23 Nov; `decode_shard.py` accepted every shard against its
+manifest (payload, index and docs sha256, document and token counts, EOS id, tokenizer sha256), and each decoded as
+`split: train`, `dataset_version: sample`.
+
+| shard_id | payload_sha256 | docs | tokens | flagged | canary hits |
+|---|---|---:|---:|---:|---:|
+| `code-cpp-train-000000` | `511b3e97a96627c2ac71c6772b0a91fa05522dff1467d3248d295269bcfb1761` | 40,355 | 66,915,318 | 0 | 0 |
+| `code-rust-train-000001` | `b747ac07155d28fb9cb70871bfaddbbbe446c1806e375ff52ba20ee7444b93e1` | 15,028 | 21,040,035 | 0 | 0 |
+| `ind-gu-fw2-train-000000` | `d10b573a08bcecf70cc8a8e193fefbcd502a50b9fa3c17c37fb006dbd8d41f5f` | 22,689 | 16,066,252 | 0 | 0 |
+| `ind-kn-sangraha-v-train-000000` | `8d978e3e1929ceb920091cc1159c3c29d0d1e24fa11ec0ebaedf68114db8949a` | 8,354 | 4,761,130 | 0 | 0 |
+| `ind-mr-sangraha-v-train-000000` | `043e1ff61f9f7db24600f13e63c62605671925dbdebcbfa59984908e6e0b3742` | 12,164 | 7,259,040 | 0 | 0 |
+
+All 5 have the same `payload_sha256`, documents and tokens as the per-shard table above. `decontam_check.py` printed
+`flagged 0 (0.00%) by benchmark {}` and `canary_scan.py` printed `with_canary 0 hits 0` for each, so there are no hits
+to report.
+
+**Payload hash and token count for two rotation rows.** `rotation_ranjani-cse.md` has the documents scanned, 0 flagged,
+the `set_sha256` and 0 canary hits for these two; it lacks only the `payload_sha256` and the token count. Same run
+and chain:
+
+| shard_id | payload_sha256 | docs | tokens | flagged | canary hits |
+|---|---|---:|---:|---:|---:|
+| `code-go-train-000000` | `b68bf390d5800853f476ede764289f045993384fd6c771db0739b74adcc5b500` | 56,588 | 56,698,571 | 0 | 0 |
+| `ind-hi-sangraha-v-train-000000` | `78aca29173b76840de617be0b1335b9417a340adce7b0b0564b23e195b919ab1` | 14,483 | 9,254,413 | 0 | 0 |
+
+Both match the per-shard table above and the document counts in `rotation_ranjani-cse.md`.
+
+`pytest teams/09-evaluation/decontam/tests` at `e5544324`: 152 passed, 2 skipped. All exit codes were 0.
+Environment: Windows, Python 3.14.4, tokenizers 0.23.3, pyarrow 26.0.0, numpy 2.5.4. Decoded `.text.parquet` files stay local.
 
 ## Notes
 

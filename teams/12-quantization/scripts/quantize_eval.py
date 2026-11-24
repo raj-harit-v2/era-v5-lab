@@ -223,7 +223,8 @@ def prepare_checkpoint(args, py, work, name):
     if not report.exists():  # the report is written last, so a folder without it is a broken export
         if out.exists(): shutil.rmtree(out)
         run([py, EXPORT_HF, '--checkpoint', ckpt, '--out', out, '--tokenizer', args.tokenizer, '--bos', args.bos,
-             '--eos', args.eos, '--verify', args.verify, *(['--spec', args.spec] if args.spec else [])])
+             '--eos', args.eos, '--verify', args.verify, *(['--spec', args.spec] if args.spec else []),
+             *(['--drop-router-bias'] if args.drop_router_bias else [])])
     return out, json.loads(report.read_text(encoding='utf-8'))
 
 
@@ -434,6 +435,8 @@ def main():
     ap.add_argument('--bos', default='<|begin_of_text|>')
     ap.add_argument('--eos', default='<|endoftext|>', help='end of document in the frozen tokenizer')
     ap.add_argument('--verify', type=int, default=64, help='prompts for test A1 during the export of a G5 checkpoint')
+    ap.add_argument('--drop-router-bias', action='store_true', help='export a G5 checkpoint whose router_bias is not zero (export_hf.py): '
+                    'the exported model routes differently, and A1/A3 show by how much')
     ap.add_argument('--roundtrip', action='store_true', help='also run tokenizer/gguf_roundtrip.py on the bf16 GGUF: llama.cpp '
                     'must give the token ids of --tokenizer on held-out text (downloads about 20 MB the first time)')
     ap.add_argument('--no-a3', action='store_true', help="skip test A3 (llama.cpp on the bf16 GGUF against G5's model)")

@@ -18,7 +18,8 @@ _spec = importlib.util.spec_from_file_location("paired_stats", _p)
 stats = importlib.util.module_from_spec(_spec); _spec.loader.exec_module(stats)
 
 PRIMARY = {"mmlu": "acc", "arc_challenge": "acc_norm", "milu_Kannada": "acc", "milu_Hindi": "acc",
-           "milu_Telugu": "acc", "milu_Tamil": "acc", "milu_Bengali": "acc"}
+           "milu_Telugu": "acc", "milu_Tamil": "acc", "milu_Bengali": "acc",
+           **{f"belebele_{lang}": "acc" for lang in ("kan_Knda", "hin_Deva", "tel_Telu", "tam_Taml", "ben_Beng")}}
 
 
 def load(fmt_dir: Path) -> dict[str, dict]:

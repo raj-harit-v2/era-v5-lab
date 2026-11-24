@@ -33,12 +33,24 @@ for p in (TEAM07, TEAM07 / "support" / "simulation"):
 PROBE_SHAPE, PROBE_SEED = (2, 32), 1234
 
 
+def _model_vocab_size(model) -> int:
+    head = getattr(model, "head", None)
+    for obj, attr in ((head, "out_features"), (head, "vocab_size"), (head, "n_vocab"),
+                      (model, "vocab_size"), (model, "n_vocab")):
+        val = getattr(obj, attr, None)
+        if isinstance(val, int) and val > 0:
+            return val
+    if head is not None and hasattr(head, "tok_u") and head.tok_u.ndim == 2:
+        return int(head.tok_u.shape[0])
+    raise ValueError(f"cannot determine vocab size from {type(model).__name__}.head ({type(head).__name__})")
+
+
 def team5_probe(model) -> float:
     """Next-token loss of a Team 5 LanguageModel on Team 9's fixed seeded batch (identical to lm_eval_lab.probe_loss)."""
     import torch
     import torch.nn.functional as F
 
-    vocab = model.head.out_features
+    vocab = _model_vocab_size(model)
     ids = torch.randint(0, vocab, PROBE_SHAPE, generator=torch.Generator().manual_seed(PROBE_SEED))
     ids = ids.to(next(model.parameters()).device)
     model.eval()

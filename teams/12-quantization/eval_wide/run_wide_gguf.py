@@ -34,6 +34,14 @@ WIDE = {
     "milu_Telugu": (5, "acc", True, True),
     "milu_Tamil": (5, "acc", True, True),
     "milu_Bengali": (5, "acc", True, True),
+    # Belebele (reading comprehension, 900 items per language, not gated; 5-shot as G9's eval-mini v0). Added 22 Nov:
+    # sarvam-1 bf16 scored 28 to 30% on MILU kn/hi/te (2,500 items each), too close to the 25% chance line to show
+    # drift; Belebele's answer is in the passage, so an Indic-trained model should sit well above chance.
+    "belebele_kan_Knda": (5, "acc", False, False),
+    "belebele_hin_Deva": (5, "acc", False, False),
+    "belebele_tel_Telu": (5, "acc", False, False),
+    "belebele_tam_Taml": (5, "acc", False, False),
+    "belebele_ben_Beng": (5, "acc", False, False),
 }
 
 

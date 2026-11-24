@@ -7,8 +7,9 @@ intended:
   owner: Deepjyoti Saha
   comparison_final: false
 optim:
-  # Muon peak 0.003 (config v1, TSAI 21 Nov); AdamW peak lr 0.001 comes from exp2_muon (config v1, provisional).
-  muon_lr: 0.003
+  # Muon peak 0.006 (config v1; TSAI 22 Nov correction, was 0.003); AdamW peak lr 0.001 comes from exp2_muon
+  # (config v1, provisional).
+  muon_lr: 0.006
   # WSD for both optimizers: linear warmup over the first 5% of steps (TSAI: "roughly 4-5%"; 0.05 chosen,
   # decision B8), flat, then linear decay over the last 10% to zero.
   schedule: wsd
@@ -20,3 +21,9 @@ optim:
 run:
   # TST ("Secret Sauce"): off for dry run 2 (TSAI 22 Nov: unconfirmed on KE2; keep the head integration test clean).
   tst: false
+model:
+  head_mode: kas_v2
+  moe:
+    # Loss-free balancer. Session 14, and TSAI in Session general on 23 Nov: the bias is added only
+    # for the expert choice. Expert Linear bias stays false (runtime moe.bias).
+    bias_gamma: 0.001

@@ -1,0 +1,65 @@
+# Test log for jobs/2026-11-23-g10-dt-large-model.md
+
+## 1. CPU dry run of every arm (Mac M1 Pro, 23 Nov 2026 03:26:05 to 03:32:15 IST by `date`, 370 s wall, exit 0)
+python 3.12.16, torch 2.14.1, transformers 5.22.1, CPU, FP32 (no autocast)
+Command: python teams/10-post-training/dt/run_ladder.py --config <dry.yaml>
+dry.yaml = dt/ladder_qwen3.yaml with: dry_run: true (tiny random Qwen3 models built from the pinned 4B and 8B config.json:
+hidden 64, 2 layers, real vocab 151,936, real tie setting: tied at 4B, untied at 8B; real Qwen3 tokenizer sha256 c0382117...),
+steps 3 (dtm_800: 6), batch 2, micro_tokens 2048, device cpu, autocast none, dt_calib_rows 4; the first 40 train and 12 test rows
+of slice-v1-qwen3; evaluation metrics bpb,format,forget with gen_limit 3, max_total_tokens 1200 and one held-out v1 document
+per slice (15 slices). Proves the commands, files, marker map, every arm's checks and the bookkeeping; no number in it means anything.
+
+| arm | status | train checks | test bpb | format valid | format reasons | forgetting bpb_all | model deleted after eval |
+|---|---|---|---|---|---|---|---|
+| 4b/base | ok | - | 5.0465 | 0/3 | {'no_im_end': 3} | 8.5020 | False |
+| 4b/dt | ok | writeback_step1=True, frozen_weights_unchanged=True, bake_parity=True, reload_parity=True | 5.0465 | 0/3 | {'no_im_end': 3} | 8.5021 | True |
+| 4b/dtm | ok | writeback_step1=True, frozen_weights_unchanged=True, bake_parity=True, reload_parity=True | 5.0465 | 0/3 | {'no_im_end': 3} | 8.5021 | True |
+| 4b/full | ok | writeback_step1=True, reload_parity=True | 5.0456 | 0/3 | {'no_im_end': 3} | 8.5019 | True |
+| 4b/lora | ok | writeback_step1=True, frozen_weights_unchanged=True, reload_parity=True | 5.0462 | 0/3 | {'no_im_end': 3} | 8.5020 | True |
+| 8b/base | ok | - | 5.0487 | 0/3 | {'no_im_end': 3} | 8.5124 | False |
+| 8b/dt | ok | writeback_step1=True, frozen_weights_unchanged=True, bake_parity=True, reload_parity=True | 5.0487 | 0/3 | {'no_im_end': 3} | 8.5123 | True |
+| 8b/dtm | ok | writeback_step1=True, frozen_weights_unchanged=True, bake_parity=True, reload_parity=True | 5.0486 | 0/3 | {'no_im_end': 3} | 8.5123 | True |
+| 8b/full | ok | writeback_step1=True, reload_parity=True | 5.0479 | 0/3 | {'no_im_end': 3} | 8.5123 | True |
+| 8b/lora | ok | writeback_step1=True, frozen_weights_unchanged=True, reload_parity=True | 5.0484 | 0/3 | {'foreign_special_token': 2, 'no_im_end': 1} | 8.5124 | True |
+| 8b/full_lo | ok | writeback_step1=True, reload_parity=True | 5.0486 | 0/3 | {'foreign_special_token': 1, 'no_im_end': 2} | 8.5124 | True |
+| 4b-steps/dtm_800 | ok | writeback_step1=True, frozen_weights_unchanged=True, bake_parity=True, reload_parity=True | 5.0465 | 0/3 | {'no_im_end': 3} | 8.5021 | True |
+
+8b/dtm (untied head): hybrid marker rows [151643, 151644, 151645, 151646, 151647], scope both; deletion_final {'deleted': 32, 'targeted': 16384, 'model_weights': 19521920, 'deleted_frac_of_targeted': 0.001953125, 'deleted_frac_of_all_weights': 1.6391830311772612e-06, 'per_layer_min': 0.001708984375, 'per_layer_max': 0.002197265625}
+Final line: {"summary": ".../out/ladder_summary.json", "complete": true, "not_ok": []}
+
+Exec scoring path (after the job): G10_SURROGATE_PROFILE=qwen3 python sft/bench/evaluate.py --score-exec --generations <8b/dtm/test.gens.jsonl> --exec-tasks <slice-v1 test.exec.jsonl> --exec-limit 3 --out exec.json
+-> exec: problems 3, passed 0, reasons {'no code block': 3}, runner docker (random-model text has no code block; the sandbox itself was exercised by the 1.7B table)
+
+== Kaggle T4 measurement (23 Nov 2026, kernel dtl-t4-measure-t4, 1 Tesla T4, 6,558 s) ==
+torch 2.11.0+cu130, transformers 5.20.2, Python 3.13. run_ladder.py with the same train.py/evaluate.py, profile qwen3.
+Qwen3-0.6B-Base @ da87bfb608c1 (dt, dtm, lora, full), Qwen3-1.7B-Base @ ea980cb0a6c2 (base, lora, dt); steps 20, batch 8,
+micro_tokens 2048, autocast bf16, grad checkpointing; eval bpb (300 rows) + format (16 prompts), token_budget 8192, dtype auto -> float32.
+
+| arm | status | train s (20 steps) | peak alloc MiB | peak reserved MiB | checks | test bpb | format |
+|---|---|---|---|---|---|---|---|
+| 0.6b/dt | ok | 519.7 | 7082.2 | 10606.0 | writeback_step1, frozen_weights_unchanged, bake_parity, reload_parity = True | 0.4099 | 0/16 (no_im_end) |
+| 0.6b/dtm | ok | 542.3 | 8867.7 | 10608.0 | same, all True | 0.4077 | 0/16 |
+| 0.6b/lora | ok | 558.6 | 5763.9 | 14684.0 | writeback_step1, frozen_weights_unchanged, reload_parity = True | 0.4128 | 0/16 |
+| 0.6b/full | ok | 604.0 | 12944.8 | 14728.0 | writeback_step1, reload_parity = True | 0.4145 | 0/16 |
+| 1.7b/lora | failed_eval | 1277.8 | 10587.6 | 14758.0 | writeback_step1, frozen_weights_unchanged, reload_parity = True | OOM in bpb pass (fp32) | |
+| 1.7b/dt | failed_train | | | | CUDA OOM in backward (memory model predicted 16.7 GB) | | |
+| 1.7b/base | failed_eval | | | | OOM in bpb pass (fp32) | | |
+
+0.6b/dt deletion: 0.82% of gate_proj weights (0.18% at init); mask artifact 1.04 MB compressed.
+Memory model at micro 2048 (decimal GB, predicted / measured): 0.6b full 13.1/13.57, lora 6.0/6.04, dt 7.4/7.43, dtm 9.2/9.30; 1.7b lora 11.0/11.10.
+Final line: {"summary": "/kaggle/working/out/ladder_summary.json", "complete": false, "not_ok": ["1.7b/base", "1.7b/lora", "1.7b/dt"]}
+Generations were returned privately and are not in Git. 20 steps: no number here is a result.
+
+== 8B full FT memory fix (23 Nov 2026 06:09 IST) ==
+torch 2.14.1 AdamW default on CUDA is foreach (optimizer._default_to_fused_or_foreach). Instrumented step on CPU, 10M params:
+new foreach-list bytes per parameter byte: foreach=True 1.0, foreach=False 0.0, fused=True 0.0. At 8B full FT: 16 B x 8.19B
+(weights, grads, Adam) + 4 B x 8.19B (that temporary) = 164 GB at the step, over one H200. Config: 8b/full and 8b/full_lo get
+adam_fused: true (train.py --adam-fused). CPU dry run, tiny random Qwen3 8B-shaped model, both arms, fused:
+8b/full ok fused micro 2048 checks writeback_step1=True reload_parity=True first/last loss 11.943700790405273 / 11.939133644104004
+8b/full_lo ok fused micro 2048 checks writeback_step1=True reload_parity=True 11.943700790405273 / 11.940035820007324
+(default implementation in the earlier dry run: the same first/last losses to every printed digit)
+OOM retry (micro_tokens 4096 -> 2048): train.py full, tiny model, 2 steps x 8 rows, CPU:
+4096: step 1 loss 11.939970016479492 grad_norm 0.6101834774 targets 8454 microbatches 4; step 2 loss 11.942950248 grad_norm 0.5412933826
+2048: step 1 loss 11.939970016479492 grad_norm 0.6101835370 targets 8454 microbatches 7; step 2 loss 11.942950248 grad_norm 0.5412934422
+max |w4096 - w2048| after 2 steps 4.6e-08 (largest update 1.5e-05). Longest training row 1,945 tokens (none over 2,048).
+Activation term at 8B (memory model): 10.38 GB at micro 4096, 5.19 GB at 2048.

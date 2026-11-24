@@ -20,3 +20,8 @@
 | Language code | A short code that names a language, such as hi for Hindi or ta for Tamil. In the tokens per byte chart, the line named all covers every language together. |
 | Mixture-of-experts load balance | In the least balanced layer, divide the busiest expert's token assignments by the average number of assignments per expert. An expert is a part of the model that processes selected tokens. The value is lowest when every expert gets the same share of tokens. |
 | Routed expert | An expert that gets only the tokens that the model sends to it. The model picks a few experts for each token. |
+| Pack | A set of training text from one public source, in one language or on one subject. |
+| Checkpoint | A saved copy of the model at one training step. |
+| Benchmark | A public set of test questions with known answers, used to score a model. |
+| Restart | A new start of the training run from its last checkpoint, for example after a crash. |
+| Alarm | A warning that Monitoring raises when a measure of the training run looks wrong. |

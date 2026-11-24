@@ -1,0 +1,46 @@
+{
+ "run_meta": {
+  "model": "ibm-granite/granite-3.0-3b-a800m-base",
+  "model_revision": "142d2c8e3f7fb8844011cfa5565f0e520f0824b9",
+  "format": "Q8_0",
+  "gguf": "granite-3.0-3b-a800m-base-Q8_0.gguf",
+  "gguf_bytes": 3592988480,
+  "eval_set": "G12 wide pass",
+  "cap": null,
+  "backend": "llama-cpp-python 0.3.36 (in-process, logits_all)",
+  "lm_eval": "0.4.13",
+  "hardware": "Tesla T4, 15360 MiB + Tesla T4, 15360 MiB",
+  "n_ctx": 4096,
+  "n_gpu_layers": -1,
+  "seed": 42,
+  "load_s": 1.7,
+  "run_date": "2026-11-23",
+  "runner_sha256": "66f9de0b6b168f49"
+ },
+ "records": [
+  {
+   "task": "mmlu",
+   "metric": "acc",
+   "filter": "none",
+   "value": 0.47414898162654895,
+   "n_items": 14042,
+   "stderr": 0.00407818331544332,
+   "num_fewshot": 0,
+   "cap": null,
+   "truncated_requests": 0,
+   "wall_clock_s": 1451.4
+  },
+  {
+   "task": "arc_challenge",
+   "metric": "acc_norm",
+   "filter": "none",
+   "value": 0.4616040955631399,
+   "n_items": 1172,
+   "stderr": 0.014568245550296302,
+   "num_fewshot": 0,
+   "cap": null,
+   "truncated_requests": 0,
+   "wall_clock_s": 245.3
+  }
+ ]
+}

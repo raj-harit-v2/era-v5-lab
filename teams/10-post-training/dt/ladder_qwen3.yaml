@@ -1,0 +1,49 @@
+# Job 2026-11-23-g10-dt-large-model: DT vs full FT vs LoRA on Qwen3-4B-Base and Qwen3-8B-Base, seed 1.
+# Settings are the 1.7B table's (results/dt_sft_surrogate.md); preregistered before any Qwen3 run.
+# Order: 8B first (the size the question turns on), then 4B, then the 4B step-count arm; a time limit returns finished arms.
+# Paths are relative to the repository root (TSAI stages inputs under ./inputs/, outputs go to ./out/).
+profile: qwen3                       # marker map in sft/bench/retok.py (PROFILES["qwen3"])
+slice_dir: inputs/g10-dtl/slice-v1-qwen3
+out: out/dtl
+keep_models: false                   # delete each arm's saved FP32 model after its evaluation (DT masks are kept)
+oom_retry: true                      # a training arm that runs out of CUDA memory is retried once at half micro_tokens
+# 8B full arms use the fused AdamW kernel: torch's default (foreach) holds a 4 B/weight temporary in the step, 20 B x 8.19B
+# = 164 GB in all, over one H200; fused keeps the step at 16 B/weight (131 GB) and the backward peak at about 141 GB
+train_common:                        # flags of sft/bench/train.py
+  steps: 400
+  batch: 8
+  seed: 1
+  device: cuda
+  autocast: bf16
+  micro_tokens: 4096
+  grad_checkpointing: true
+  log_every: 25
+eval_common:                         # flags of sft/bench/evaluate.py
+  metrics: bpb,format,forget
+  gen_limit: 200
+  gen_batch: 37
+  token_budget: 16384
+  device: cuda
+  dtype: auto                        # bf16 autocast on a native-bf16 GPU, as Team 9's eval watcher
+sizes:
+  - name: 8b
+    model_dir: inputs/Qwen3-8B-Base-49e3418f
+    arms:
+      - {name: base, method: base}
+      - {name: dt, method: dt, train: {lr: 2.0e-3}}
+      - {name: dtm, method: dt, train: {lr: 2.0e-3, train_marker_rows: true, marker_lr: 1.0e-4}}
+      - {name: full, method: full, train: {lr: 1.0e-4, adam_fused: true}}
+      - {name: lora, method: lora, train: {lr: 1.0e-3}}
+      - {name: full_lo, method: full, train: {lr: 1.0e-5, adam_fused: true}}
+  - name: 4b
+    model_dir: inputs/Qwen3-4B-Base-906bfd4b
+    arms:
+      - {name: base, method: base}
+      - {name: dt, method: dt, train: {lr: 2.0e-3}}
+      - {name: dtm, method: dt, train: {lr: 2.0e-3, train_marker_rows: true, marker_lr: 1.0e-4}}
+      - {name: full, method: full, train: {lr: 1.0e-4}}
+      - {name: lora, method: lora, train: {lr: 1.0e-3}}
+  - name: 4b-steps                   # step-count check (E3), last so a time limit costs only this arm
+    model_dir: inputs/Qwen3-4B-Base-906bfd4b
+    arms:
+      - {name: dtm_800, method: dt, train: {lr: 2.0e-3, train_marker_rows: true, marker_lr: 1.0e-4, steps: 800}}

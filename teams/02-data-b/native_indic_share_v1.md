@@ -1,5 +1,10 @@
 # Native Indic share: Data B's proposal for Gate 2 (v1.1, draft of 12 Nov 2026, numbers updated 14 Nov)
 
+> **Superseded (16 Nov 2026).** TSAI set the mix at Gate 2: native-script Indic is a fixed **8% of every batch**, and
+> romanised Indic is capped at **1% of tokens per language**, a ceiling and not a target (#481, proposal B). The split
+> of the 8% across languages is in `mix/indic_share_v1.md`. The 12% floor and the Option A/B/C shares below are Data
+> B's proposal, not the decided mix. This file is kept as that proposal and its evidence.
+
 Deliverable of #217 ("Our proposal for the native Indic share, by Thu 12 Nov") and the first item of #216. TSAI decides
 the share at Gate 2 (14 Nov) and said that a pack with few clean documents is important evidence for it (G2, 31 Oct).
 This file brings that evidence and a proposal. **What is measured and what is a proposed value is kept apart below.**

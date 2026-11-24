@@ -14,20 +14,21 @@ interval = min( max(Young, 10 min, 1.2 x save pipeline), 30 min )      Young = s
   it gives 10 min at 64 to 256 GPUs and up to 30 min on a single 8-GPU node.
 - Retention follows the interval, so the rollback reach in minutes does not shrink (section 5).
 
-**Status: provisional, small width.** The save time is still Team 6's week-1 baseline. Team 6's D5 timing job
-(#485, result in [checkpoint_dryrun1.md](../../06-performance/results/checkpoint_dryrun1.md)) ran at small width
-and returned shares only: 8% of the save is the copy to host memory, 92% is the file write. It gave no save time
-in ms and no checkpoint size, so the inputs in section 1 and the table in section 3 stay as they are. Both sources
-agree that the file write, which runs in the background, is most of the save (92% there, 98% in the baseline). The
-table is generated again when Team 6 posts full-size numbers. The model sizes in config v1 are still empty, so
-section 3 runs over three example sizes from 1B up.
+**Status: full-size save time in (Team 6, #688); main-run size still open.** Team 6 timed 10 saves of the full
+dry run 1 model on one A100 ([speed_dryrun1.md](../../06-performance/results/speed_dryrun1.md) section 3): 2,081 MiB
+per save, written at 1,554 MiB/s, so 1.34 s for the write and 1.43 s for the whole save, of which 6.5% (0.09 s)
+is the copy to host memory. The inputs in section 1 and the table in section 3 now use these numbers. The decision
+does not change. All three sources agree that the file write, which runs in the background, is most of the save
+(94% here, 92% in Team 6's D5 shares, 98% in the week-1 baseline). The model sizes in config v1 are still empty, so
+section 3 still runs over three example sizes from 1B up. The TSAI lab column in #688 is pending.
 
 ## 1. Inputs
 
 | Input | Value | Measured or assumed | Source |
 |---|---|---|---|
-| Stall per save (copy to host memory) | 37 ms for 445 MB, 67 ms for 829 MB: **12 GB/s** per GPU | measured, 1 GPU | Team 6 [baseline_v0.md](../../06-performance/results/baseline_v0.md), design section 13 |
-| Background write and fsync | 1.9 s for 445 MB, 3.5 s for 829 MB: **0.24 GB/s** per GPU | measured, 1 GPU, local disk | same |
+| Stall per save (copy to host memory) | 0.09 s for 2,081 MiB (6.5% of a 1.43 s save): **23.5 GB/s** per GPU | measured, 1 A100, pinned buffers, 10 saves | Team 6 [speed_dryrun1.md](../../06-performance/results/speed_dryrun1.md) section 3 (#688) |
+| Background serialise, write and fsync | 1.34 s for 2,081 MiB (1,554 MiB/s): **1.63 GB/s** per GPU | measured, 1 A100, container local disk, not a network volume | same |
+| Week-1 baseline, kept as the slow case | copy 12 GB/s (37 ms for 445 MB); write 0.24 GB/s (1.9 s for 445 MB) | measured, 1 GPU, small model | Team 6 [baseline_v0.md](../../06-performance/results/baseline_v0.md), design section 13 |
 | Upload to the store | 10 GB/s per node | **assumed** ([prices.yaml](../metrics/prices.yaml)) | not measured yet |
 | Restore | 0.03 to 0.08 s (tiny model, CPU), 0.71 s (tiny model, 1 GPU), 2.5 to 2.8 s per GB (synthetic, CPU) | measured | [runbook.md](runbook.md) section 8 |
 | Restore, slow machine | 116 s for 1.6 GB, about 72 s per GB | measured, hosted CPU | [runbook_restore_restart_time_w3.md](runbook_restore_restart_time_w3.md) |
@@ -40,16 +41,17 @@ Only the stall stops training. The write, upload and commit run in the backgroun
 ## 2. What the measured numbers change
 
 Design section 7 says that Young's formula "alone would allow 1–5 h", so failures do not set the interval and the
-30 min cap does. With the measured stall, that is not right. The stall is 0.003 s to 0.5 s per save, and the MTBF is
-39 h to 6,300 h. Young's interval is then **0.5 to 27 min** at 64 GPUs or more. It is below 30 min in every case.
+30 min cap does. With the measured stall, that is not right. The stall is 0.002 s to 0.24 s per save at 64 GPUs or
+more, and the MTBF is 39 h to 6,300 h. Young's interval is then **0.4 to 20 min** at 64 GPUs or more. It is below
+30 min in every case.
 The cost report on main shows the same thing (`binding: young`, 6 to 12 min, [cost_report.md](../support/cost/cost_report.md)).
 
 So saving more often is cheaper than 30 min. The gain is small at 64 GPUs and larger at 256 GPUs:
 
 | | 30 min | 10 min | Young |
 |---|---:|---:|---:|
-| Time lost, 7B, 64 GPUs, S15 prior | 0.18% | 0.09% | 0.09% |
-| Time lost, 7B, 256 GPUs, S15 prior | 0.70% | 0.28% | 0.28% |
+| Time lost, 7B, 64 GPUs, S15 prior | 0.18% | 0.08% | 0.08% |
+| Time lost, 7B, 256 GPUs, S15 prior | 0.70% | 0.27% | 0.27% |
 
 At 256 GPUs, 0.4% of a two-week run is about 1.3 hours of the whole cluster.
 
@@ -64,50 +66,54 @@ So the floor is 10 min. The cap stays 30 min, the most work we accept losing in 
 
 ## 3. Table
 
-12 bytes per parameter, sharded evenly over all GPUs. Stall = per-rank size / 12 GB/s. Pipeline = per-rank write at
-0.24 GB/s + per-node upload at 10 GB/s. Time lost = stall / interval + (interval / 2 + MTTR) / MTBF, with MTTR 80 s.
+12 bytes per parameter, sharded evenly over all GPUs. Stall = per-rank size / 23.5 GB/s. Pipeline = per-rank write
+at 1.63 GB/s + per-node upload at 10 GB/s. Time lost = stall / interval + (interval / 2 + MTTR) / MTBF, with MTTR 80 s.
+Inputs from Team 6's full-size timing (#688); the week-1 table (12 GB/s, 0.24 GB/s) is in this file's history and
+gave the same decision.
 
 | Params | GPUs | Failure prior | Per-rank GB | Stall s | Pipeline s | MTBF h | Young min | **Rule min** | Lost at 30 min | Lost at 10 min | Lost at rule |
 |---:|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| 1B | 8 | S15 reference run | 1.50 | 0.125 | 8 | 1,240 | 17.6 | **18** | 0.03% | 0.03% | 0.03% |
-| 1B | 8 | Llama 3 | 1.50 | 0.125 | 8 | 6,335 | 39.8 | **30** | 0.01% | 0.02% | 0.01% |
-| 1B | 64 | S15 reference run | 0.19 | 0.016 | 1 | 155 | 2.2 | **10** | 0.18% | 0.07% | 0.07% |
-| 1B | 64 | Llama 3 | 0.19 | 0.016 | 1 | 792 | 5.0 | **10** | 0.04% | 0.02% | 0.02% |
-| 1B | 256 | S15 reference run | 0.05 | 0.004 | 0 | 39 | 0.5 | **10** | 0.70% | 0.27% | 0.27% |
-| 1B | 256 | Llama 3 | 0.05 | 0.004 | 0 | 198 | 1.2 | **10** | 0.14% | 0.05% | 0.05% |
-| 7B | 8 | S15 reference run | 10.50 | 0.873 | 53 | 1,240 | 46.5 | **30** | 0.07% | 0.15% | 0.07% |
-| 7B | 8 | Llama 3 | 10.50 | 0.873 | 53 | 6,335 | 105.2 | **30** | 0.05% | 0.15% | 0.05% |
-| 7B | 64 | S15 reference run | 1.31 | 0.109 | 7 | 155 | 5.8 | **10** | 0.18% | 0.09% | 0.09% |
-| 7B | 64 | Llama 3 | 1.31 | 0.109 | 7 | 792 | 13.1 | **13** | 0.04% | 0.03% | 0.03% |
-| 7B | 256 | S15 reference run | 0.33 | 0.027 | 2 | 39 | 1.5 | **10** | 0.70% | 0.28% | 0.28% |
-| 7B | 256 | Llama 3 | 0.33 | 0.027 | 2 | 198 | 3.3 | **10** | 0.14% | 0.06% | 0.06% |
-| 30B | 8 | S15 reference run | 45.00 | 3.742 | 226 | 1,240 | 96.3 | **30** | 0.23% | 0.63% | 0.23% |
-| 30B | 8 | Llama 3 | 45.00 | 3.742 | 226 | 6,335 | 217.7 | **30** | 0.21% | 0.63% | 0.21% |
-| 30B | 64 | S15 reference run | 5.62 | 0.468 | 28 | 155 | 12.0 | **12** | 0.20% | 0.15% | 0.14% |
-| 30B | 64 | Llama 3 | 5.62 | 0.468 | 28 | 792 | 27.2 | **27** | 0.06% | 0.09% | 0.06% |
-| 30B | 256 | S15 reference run | 1.41 | 0.117 | 7 | 39 | 3.0 | **10** | 0.71% | 0.29% | 0.29% |
-| 30B | 256 | Llama 3 | 1.41 | 0.117 | 7 | 198 | 6.8 | **10** | 0.14% | 0.07% | 0.07% |
+| 1B | 8 | S15 reference run | 1.50 | 0.064 | 2 | 1,240 | 12.6 | **13** | 0.03% | 0.02% | 0.02% |
+| 1B | 8 | Llama 3 | 1.50 | 0.064 | 2 | 6,335 | 28.5 | **28** | 0.01% | 0.01% | 0.01% |
+| 1B | 64 | S15 reference run | 0.19 | 0.008 | 0 | 155 | 1.6 | **10** | 0.18% | 0.07% | 0.07% |
+| 1B | 64 | Llama 3 | 0.19 | 0.008 | 0 | 792 | 3.6 | **10** | 0.03% | 0.01% | 0.01% |
+| 1B | 256 | S15 reference run | 0.05 | 0.002 | 0 | 39 | 0.4 | **10** | 0.70% | 0.27% | 0.27% |
+| 1B | 256 | Llama 3 | 0.05 | 0.002 | 0 | 198 | 0.9 | **10** | 0.14% | 0.05% | 0.05% |
+| 7B | 8 | S15 reference run | 10.50 | 0.447 | 15 | 1,240 | 33.3 | **30** | 0.05% | 0.08% | 0.05% |
+| 7B | 8 | Llama 3 | 10.50 | 0.447 | 15 | 6,335 | 75.3 | **30** | 0.03% | 0.08% | 0.03% |
+| 7B | 64 | S15 reference run | 1.31 | 0.056 | 2 | 155 | 4.2 | **10** | 0.18% | 0.08% | 0.08% |
+| 7B | 64 | Llama 3 | 1.31 | 0.056 | 2 | 792 | 9.4 | **10** | 0.04% | 0.02% | 0.02% |
+| 7B | 256 | S15 reference run | 0.33 | 0.014 | 0 | 39 | 1.0 | **10** | 0.70% | 0.27% | 0.27% |
+| 7B | 256 | Llama 3 | 0.33 | 0.014 | 0 | 198 | 2.4 | **10** | 0.14% | 0.06% | 0.06% |
+| 30B | 8 | S15 reference run | 45.00 | 1.918 | 64 | 1,240 | 69.0 | **30** | 0.13% | 0.33% | 0.13% |
+| 30B | 8 | Llama 3 | 45.00 | 1.918 | 64 | 6,335 | 155.9 | **30** | 0.11% | 0.32% | 0.11% |
+| 30B | 64 | S15 reference run | 5.62 | 0.240 | 8 | 155 | 8.6 | **10** | 0.19% | 0.11% | 0.11% |
+| 30B | 64 | Llama 3 | 5.62 | 0.240 | 8 | 792 | 19.5 | **19** | 0.05% | 0.05% | 0.04% |
+| 30B | 256 | S15 reference run | 1.41 | 0.060 | 2 | 39 | 2.2 | **10** | 0.71% | 0.28% | 0.28% |
+| 30B | 256 | Llama 3 | 1.41 | 0.060 | 2 | 198 | 4.9 | **10** | 0.14% | 0.06% | 0.06% |
 
 Reading it:
 
-- At 64 GPUs or more the rule gives 10 to 27 min. A fixed 10 min is never more than 0.03% worse than the rule there.
-- On one 8-GPU node failures are rare, so the rule gives 18 to 30 min. The largest model on 8 GPUs has a large stall
-  (3.7 s); 10 min would cost 0.4% more there.
-- The stall is at most 3.7 s, far under the 2% budget at any interval in the table (12 s at 10 min).
-- The pipeline is at most 226 s (the largest model on 8 GPUs), under the 10 min floor. The rule's 1.2 x pipeline floor only
-  matters if the measured upload is far slower than the assumed 10 GB/s.
+- At 64 GPUs or more the rule gives 10 to 19 min. A fixed 10 min is never more than 0.01% worse than the rule there.
+- On one 8-GPU node failures are rare, so the rule gives 13 to 30 min. The largest model on 8 GPUs has the largest
+  stall (1.9 s); 10 min would cost 0.2% more there.
+- The stall is at most 1.9 s, far under the 2% budget at any interval in the table (12 s at 10 min).
+- The pipeline is at most 64 s (the largest model on 8 GPUs), under the 10 min floor. The write was timed to a
+  container's local disk; at the week-1 rate (0.24 GB/s) it would be 226 s, still under the floor. The rule's
+  1.2 x pipeline floor only matters if the measured upload is far slower than the assumed 10 GB/s.
 
 Restore time does not move the interval. Young's formula has no restore term. A slower restore adds the same time
 to every failure at any interval. At 72 s per GB (the slowest machine measured), a 5.6 GB rank adds about 400 s per
 failure. That is a CK-13 matter (LOW 600 s), not an interval one.
 
-To generate the table again (from `teams/07-infrastructure/`; change the four inputs on the first line when Team 6
-posts the full-size numbers):
+To generate the table again (from `teams/07-infrastructure/`; change the inputs on the first two lines when the TSAI
+lab column in #688 or the measured upload comes in):
 
 ```bash
 python - <<'EOF'
 import sys; sys.path.insert(0, "support/cost"); from cost_model import young, waste_share, MTBF_PRIORS
-COPY, WRITE, UPLOAD, MTTR = 445e6 / 0.037, 445e6 / 1.878, 10e9, 80.0
+SIZE = 2081 * 2**20; WRITE_S = SIZE / (1554 * 2**20); SAVE_S = WRITE_S / 0.936  # Team 6 #688: 93.6% of the save is the write
+COPY, WRITE, UPLOAD, MTTR = SIZE / (SAVE_S * 0.065), SIZE / WRITE_S, 10e9, 80.0  # week 1: 445e6 / 0.037, 445e6 / 1.878
 for P in (1e9, 7e9, 30e9):
     for G in (8, 64, 256):
         for name, gph in MTBF_PRIORS.items():
@@ -154,18 +160,20 @@ minutes stays the same:
 | Interval | `--keep` | `--protect-every` | Reach | Protected |
 |---:|---:|---:|---|---|
 | 30 min (before) | 3 | 5 | last 90 min | every 2.5 h |
-| **10 min** | **9** | **15** | last 90 min | every 2.5 h |
+| **10 min** | **9** | **10** | last 90 min | every 100 min |
 
 The cost: the store holds 9 recent checkpoints instead of 3, so recent-checkpoint storage triples (7B at 12 bytes
-per parameter: 756 GB instead of 252 GB). Protected storage per month does not change, because the spacing is the
-same. If the store cannot take it, `--keep 6` (last 60 min, 504 GB at 7B) is the fallback. Team 9 sets the protected
-cadence; this keeps their 2.5 h spacing until they name a step count.
+per parameter: 756 GB instead of 252 GB). Protected storage per month is 1.5 times the 30-min setting, because a
+protected checkpoint now comes every 100 min instead of every 2.5 h. If the store cannot take it, `--keep 6` (last
+60 min, 504 GB at 7B) is the fallback. Team 9 sets the protected cadence and named 10 on 21 Nov: their Tier B watcher
+scores lines 10, 20, 30 … of `commits.jsonl`, the same count retention uses, so no Tier B checkpoint is deleted
+before it is scored.
 
 ## 6. Open items
 
 | Item | Owner | When |
 |---|---|---|
-| Full-size save time (stall, write, size per rank); generate section 3 again | Team 6 | D5 (Thu 19 Nov) returned small-width shares only; still open |
+| Full-size save time (stall, write, size per rank); generate section 3 again | Team 6 | Done: #688 (A100), section 3 regenerated 23 Nov. TSAI lab column still pending |
 | Upload and commit time on the real store (the 1.2 x pipeline floor) | dry run 1, events | Wed 18 to Fri 20 Nov |
 | Model size and GPU count for the main run | Team 5 config, TSAI layout at Gate 3 | Sat 21 Nov |
 | MTBF measured on our nodes, in place of the published priors | dry run 1 and later | after Gate 3 |

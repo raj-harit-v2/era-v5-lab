@@ -5,7 +5,7 @@
         --rl-tasks <POOL>/out/v1/cc.jsonl --train-pool rl-code-v1-train.pool.jsonl --heldout-pool rl-code-v1-heldout.pool.jsonl \
         --sft-arm a4 --packs <shard-0000N>/pack.firewalled.jsonl ... --heldout H.jsonl --device cuda --out out/
 
-One question: do a bounded number of objective_v1 RL updates, on the code pool minus the 23 free-reward and 55 effort-suite
+One question: do a bounded number of objective_v1 RL updates, on the code pool minus the 66 free-reward and 55 effort-suite
 ids, raise the pass rate on unfiltered RL held-out problems, and is the gain more than a format gain? (work/rl-real-job-
 request PREREG and its amendments; the request is jobs/2026-11-19-g10-rl-dryrun1.md.)
 
@@ -22,13 +22,16 @@ Steps (each writes out/<step>.json; summary.json last; exit 1 if a step failed; 
   plan     time table; screen size = largest of 64/128/256 that fits 10 minutes at the measured decode rate;
            if the time left cannot hold screen + 3 updates + the last evaluation: screen only, then stop
   rl       rl-loop/train.py (objective_v1, screen, resumable state, deadline) with a literal-sample detector on the
-           held-out evaluations; report.json applies the decision rule
+           held-out evaluations; report.json applies the decision rule. Before the first update the log-prob gate checks
+           that the update forward reproduces the sampler's log-probs at identical weights (--no-logprob-gate skips it;
+           --update-mode eval is the switch it asks for when a train-only layer such as head dropout breaks it)
 Weights, built rows and resumable state are deleted at exit (state only when the run is complete or stopped at the screen).
 """
 from __future__ import annotations
 
 import argparse
 import collections
+import contextlib
 import hashlib
 import json
 import os
@@ -49,7 +52,9 @@ import day_one_probe as probe  # noqa: E402
 TRAIN_POOL_SHA256 = "cd1aa76ef1216f6fc6fdcf63fc0b69c98fa6a5d58a510f28be9050fecbedcce1"  # rl-code-v1-train.pool.jsonl (#564), 3,251 ids
 HELDOUT_POOL_SHA256 = "935857bb0246172aa0439445dd54ef9bbbe282ad2b5ea87ddd100429c9e31ae5"  # rl-code-v1-heldout.pool.jsonl (#564), 255 ids
 EASY_IDS_SHA256 = "452178c10e7325bc1cea62b0ad567a68dc32f6596f273b97dc8a36728f985c6f"  # capstone/probe_rl_easy_ids.txt (#587's screen ids)
-FREE_IDS_SHA256 = "3709f52b460a361b33f97da03e9a4bb8895d61df752ef4c5c14224e9aa5664c7"  # capstone/rl_exclusions_v1/free_reward_ids.txt (23)
+FREE_IDS_SHA256 = "c97568952d2374be473e747184ea2b23098601797c936aad35363d8e0539aa2e"  # capstone/rl_exclusions_v1/free_reward_ids.txt (66)
+# 66 = the 23 of the 18 Nov verifier audit (first 23 lines, unchanged) + 43 found from the kept tests alone by
+# rl-data/free_reward_ids.py (one fixed output, or one fixed token per case, passes every scored test); was 3709f52b... (23)
 EFFORT_MANIFEST = TEAM10 / "eval" / "effort_manifest.json"  # training_exclusion.task_ids (55)
 FREE_IDS = HERE / "rl_exclusions_v1" / "free_reward_ids.txt"
 EASY_IDS = HERE / "probe_rl_easy_ids.txt"
@@ -61,7 +66,7 @@ MIN_UPDATES_TO_START = 3  # Amendment 1: fewer than screen + 3 updates + last ev
 STDIN_MARKERS = ("input(", "sys.stdin", "open(0", "fileinput", "readline", "os.read(0")
 
 # the no-skill programs of the 18 Nov verifier audit (work/verifier-audit-code-2026-11-18/RESULTS.md); sample-hardcode is
-# not rebuilt here: its 13 tasks are among the 23 free-reward ids, which are out of training
+# not rebuilt here: its 13 tasks are among the 66 free-reward ids, which are out of training
 TRICKS = {"prints_nothing": "pass", "echo_stdin": "import sys\nsys.stdout.write(sys.stdin.read())", "zero": "print(0)",
           "one": "print(1)", "minus_one": "print(-1)", "YES": "print('YES')", "NO": "print('NO')",
           "Yes": "print('Yes')", "No": "print('No')"}
@@ -382,14 +387,19 @@ def write_train_config(a, out: Path, init_state: Path | None, init_sha: str | No
                      **({"init_state": str(init_state), "init_state_sha256": init_sha} if init_state else {})},
            "task": {"kind": "stdio", "require_verifier": True, "tasks": str(a.rl_tasks),
                     "train_ids": str(out / "train_ids.txt"), "heldout_ids": str(out / "heldout_ids.txt")},
-           "train": {"algo": "objective_v1", "sampler": "policy", "steps": a.updates, "prompts_per_step": a.prompts_per_step,
+           "train": {"algo": "objective_v1", "sampler": a.sampler, "steps": a.updates, "prompts_per_step": a.prompts_per_step,
                      "k": a.k, "max_new": a.max_new, "temperature": 1.0, "lr": a.lr, "ppo_epochs": 1, "kl_coef": 0.0,
                      "grad_clip": 1.0, "weight_decay": 0.0, "tr_epsilon": a.tr_epsilon, "fp32_master": True,
                      "autocast": "bf16" if a.device.startswith("cuda") else None, "eval_every": a.updates, "eval_k": a.eval_k,
                      "reward_workers": 4, "reward_pool": a.reward_pool,
                      "screen": {"n": screen_n, "k": a.k, "min_mixed": a.min_mixed},
                      "state_dir": str(out / "rl_state"), "state_every": a.state_every, "deadline_unix": deadline_unix,
-                     **({"max_steps_this_call": a.max_steps_this_call} if a.max_steps_this_call else {})}}
+                     **({"max_steps_this_call": a.max_steps_this_call} if a.max_steps_this_call else {}),
+                     **({"sampler_max_rows": a.sampler_max_rows} if a.sampler == "g5_batch" else {}),
+                     # identical-weights check before the first update (rl-loop/train.py logprob_gate); stops the job
+                     # if the update forward does not reproduce the sampler's log-probs (work/lpgate-2026-11-23)
+                     **({"logprob_gate": True} if getattr(a, "logprob_gate", True) else {}),
+                     **({"update_mode": a.update_mode} if getattr(a, "update_mode", "train") != "train" else {})}}
     if cfg["train"]["autocast"] is None:
         del cfg["train"]["autocast"]
     if getattr(a, "keep_weights_dir", None):  # default off: train.py writes its trainable tensors here (bf16), keep_final_weights completes them
@@ -518,6 +528,7 @@ def rl_step(a, out: Path, init_state, init_sha, deadline_unix, screen_n) -> dict
                optimizer_steps=(summary.get("objective") or {}).get("steps_with_optimizer_update"),
                time_split_s_per_step=summary.get("mean_times_s_after_step1"), step1_s=summary.get("step1_s"),
                trainable_weight_change=summary.get("trainable_weight_change"), router_unchanged=summary.get("router_unchanged"),
+               logprob_gate=summary.get("logprob_gate"), update_mode=summary.get("update_mode", "train"),
                decision=decide_rl(summary["heldout_change"], wrong[0] if wrong else None, wrong[-1] if wrong else None,
                                   lit_rep[0]["literal_share_of_passes"] if lit_rep else None,
                                   lit_rep[-1]["literal_share_of_passes"] if lit_rep else None),
@@ -537,9 +548,38 @@ def rate_probe(a, out: Path, init_state) -> dict:
     bundle = ta.build(out / "adapter.yaml", device=a.device).require_bundle()
     if init_state:
         bundle.model.load_state_dict(load_file(str(init_state)), strict=True)
+    if a.sampler == "g5_batch":
+        return batched_rate(a, bundle, ids)
     rep = probe.rl_screen_bundle(bundle, a.rl_tasks, ids_file, a.k, a.max_new, a.device, 0, a.rate_probe_seconds)
     return {"decode_seconds_per_prompt": rep["seconds"] / rep["prompts"] if rep["prompts"] else None, "prompts": rep["prompts"],
             "seconds": rep["seconds"], "stopped_at_budget": rep["stopped_at_budget"]}
+
+
+def batched_rate(a, bundle, ids: list[str]) -> dict:
+    """r for sampler g5_batch: one bundle.sample_many over the rate-probe prompts (real stops, bf16 autocast on cuda as the
+    trainer samples), seconds divided by the number of prompts. Fewer rows than a 16-prompt step, so it overstates r."""
+    import torch  # noqa: PLC0415
+    by_id = {}
+    for line in a.rl_tasks.read_text(encoding="utf-8").splitlines():
+        if line.strip():
+            t = json.loads(line)
+            by_id[t["id"]] = t
+    codec = bundle.codec()
+    block = bundle.spec["block_size"]
+    prompts = [p for p in (codec.encode_prompt(by_id[i]["statement"]) for i in ids if i in by_id) if block - len(p) >= 16]
+    if not prompts:
+        return {"decode_seconds_per_prompt": None, "prompts": 0, "seconds": 0.0, "sampler": "g5_batch"}
+    mn = min(a.max_new, block - max(len(p) for p in prompts))
+    gen = torch.Generator(device=a.device).manual_seed(0)
+    amp = torch.autocast("cuda", dtype=torch.bfloat16) if a.device.startswith("cuda") else contextlib.nullcontext()
+    t0 = time.perf_counter()
+    with amp:
+        bundle.sample_many(prompts, a.k, mn, 1.0, gen)
+    if a.device.startswith("cuda"):
+        torch.cuda.synchronize()
+    dt = time.perf_counter() - t0
+    return {"decode_seconds_per_prompt": dt / len(prompts), "prompts": len(prompts), "seconds": round(dt, 2),
+            "max_new": mn, "sampler": "g5_batch", "stopped_at_budget": False}
 
 
 def screen_only(a, out: Path, init_state, screen_n: int, seconds: float) -> dict:
@@ -601,7 +641,8 @@ def run(a, out: Path) -> int:
         if not results["sft"]["ok"]:
             return probe.finish(out, results)
         init_state, init_sha = Path(results["sft"]["weights"]), results["sft"]["weights_sha256"]
-        rate = rate or results["sft"].get("decode_seconds_per_prompt")
+        if a.sampler != "g5_batch":  # the rebuild's rate is per prompt; g5_batch measures its own batched rate below
+            rate = rate or results["sft"].get("decode_seconds_per_prompt")
         sft_s = results["sft"]["seconds"]
     else:
         from make_adapter_config import write_config  # noqa: PLC0415
@@ -670,6 +711,11 @@ def parse_args(argv=None):
     ap.add_argument("--eval-k", type=int, default=4)
     ap.add_argument("--tricks-limit", type=int, default=128, help="screen candidates the no-skill programs are scored on")
     ap.add_argument("--reward-pool", type=int, default=16, help="scorer worker processes (score_pool); must be > 0")
+    ap.add_argument("--no-logprob-gate", dest="logprob_gate", action="store_false",
+                    help="skip the identical-weights log-prob check before the first update (on by default)")
+    ap.add_argument("--update-mode", choices=("train", "eval"), default="train",
+                    help="module mode of old_lp and the update forward (rl-loop/train.py update_mode); eval when the "
+                         "checkpoint has a train-only layer such as a head's vocabulary dropout (the gate says so)")
     ap.add_argument("--state-every", type=int, default=5)
     ap.add_argument("--max-steps-this-call", type=int, default=0, help="dry run: pause after this many updates, rerun to resume")
     ap.add_argument("--deadline-minutes", type=float, default=85.0)
@@ -685,6 +731,9 @@ def parse_args(argv=None):
                     help="g5_delivery: Team 5's delivered run folder (non-smoke manifest); g10_rehearsal is a stand-in and train.py refuses it without --allow-fixture-smoke")
     ap.add_argument("--probe-file", type=Path, help="json {ids, expected_mean_nll[, atol]} supplied with Team 5's checkpoint; required for --origin g5_delivery")
     ap.add_argument("--allow-fixture-smoke", action="store_true", help="DRY RUN ONLY: let train.py load a rehearsal adapter; its output is never a result")
+    ap.add_argument("--sampler", choices=("policy", "g5_batch"), default="policy",
+                    help="policy: one decode per prompt; g5_batch: every prompt of a step in one decode (B5, 23 Nov: 12.8x on a T4)")
+    ap.add_argument("--sampler-max-rows", type=int, default=128, help="g5_batch: rows decoded together at most")
     ap.add_argument("--seed", type=int, default=1)
     ap.add_argument("--device", default="cuda")
     ap.add_argument("--keep-weights-dir", type=Path,

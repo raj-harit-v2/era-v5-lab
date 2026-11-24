@@ -7,6 +7,8 @@ Every sampler returns one Rollout per prompt, in the same shape the trainer alre
 
 Samplers (config `train.sampler`):
     policy     the old path: one generate per prompt (Team 5's model has no padding mask, so it needs this)
+    g5_batch   Team 5's model: all prompts x k in one KV-cached decode (g5_decode.sample_many: left padding, per-row
+               positions, padding masked in our attention), in chunks of at most `max_rows` rows
     hf_batch   one left-padded model.generate over all prompts x k (Hugging Face models)
     vllm       a vLLM engine in the same process and on the same GPU; after each optimiser step the trainer
                pushes the trainable weights into it with sync(). Only the trainable tensors move (attention only:
@@ -50,6 +52,24 @@ class PolicySampler:
 
     def sample(self, prompts, k, max_new, temperature, generator=None) -> list[Rollout]:
         return [Rollout(*self.policy.sample(p, k, max_new, temperature, generator)) for p in prompts]
+
+
+class G5BatchSampler:
+    """All prompts x k in one decode through policy.sample_many (Team 5's model, g5_decode.sample_many). Prompts are
+    taken in chunks of at most max_rows rows (KV cache and the [rows, vocab] logits grow with rows)."""
+
+    def __init__(self, policy, max_rows: int = 128):
+        if max_rows < 1:
+            raise ValueError("sampler_max_rows must be at least 1")
+        self.policy = policy
+        self.max_rows = max_rows
+
+    def sample(self, prompts, k, max_new, temperature, generator=None) -> list[Rollout]:
+        per = max(1, self.max_rows // k)
+        out = []
+        for i in range(0, len(prompts), per):
+            out += [Rollout(s, m) for s, m in self.policy.sample_many(prompts[i:i + per], k, max_new, temperature, generator)]
+        return out
 
 
 class HFBatchSampler:
@@ -183,13 +203,17 @@ class VLLMSampler:
             self.llm.wake_up()
 
 
-def make_sampler(kind: str, policy, vllm: VLLMSampler | None = None, pad_id: int | None = None):
+def make_sampler(kind: str, policy, vllm: VLLMSampler | None = None, pad_id: int | None = None, max_rows: int = 128):
     if kind == "policy":
         return PolicySampler(policy)
+    if kind == "g5_batch":
+        if not hasattr(policy, "sample_many"):
+            raise ValueError("sampler g5_batch needs a policy with sample_many (Team 5's adapter policy)")
+        return G5BatchSampler(policy, max_rows)
     if kind == "hf_batch":
         return HFBatchSampler(policy, pad_id)
     if kind == "vllm":
         if vllm is None:
             raise ValueError("sampler vllm needs a VLLMSampler created before the model")
         return vllm.bind(policy.eos_id, pad_id, policy.device)
-    raise ValueError(f"unknown sampler {kind!r}; choose policy, hf_batch or vllm")
+    raise ValueError(f"unknown sampler {kind!r}; choose policy, g5_batch, hf_batch or vllm")

@@ -1,0 +1,597 @@
+{
+  "status": "complete",
+  "method": "minhash_lsh",
+  "config": {
+    "inputs": "out/s1",
+    "splits": [
+      "train"
+    ],
+    "out": "out/mh_full",
+    "floor": 0.5,
+    "k": 5,
+    "block": 256,
+    "top": 20,
+    "max_output_mb": 50,
+    "expected_packs": [],
+    "hashes": 128,
+    "bands": 32,
+    "seed": 20261122,
+    "workers": 2,
+    "max_bucket": 2000,
+    "work": "out/mh_full/work"
+  },
+  "normalize_id": "g1-spec-v1",
+  "key": "h1_key of h1_sha256.py: normalize.match_key, then NFKC, casefold, whitespace runs to one space",
+  "shingles": "word 5-grams of the key as 64-bit hashes (jaccard_matrix.shingles), exactly as overlap.py",
+  "inputs": {
+    "root": "out/s1",
+    "checksum_verification": "sha256",
+    "parts": [
+      {
+        "part": "train/cadj-commits/part-00000.parquet",
+        "documents": 74753,
+        "sha256": "298325e27cff6553929a8577326c0132e1504cd21dd1e109b4fcae55f0d414f6"
+      },
+      {
+        "part": "train/cadj-notebooks/part-00000.parquet",
+        "documents": 15563,
+        "sha256": "dc343b813d8d4899272f442588b90e2dce3784696cd36cdd5c87d483dccf8572"
+      },
+      {
+        "part": "train/cadj-stackexchange/part-00000.parquet",
+        "documents": 41396,
+        "sha256": "510ea2e244253efdd70810ae8add6bcd5d52af7db372154282c66163ababea14"
+      },
+      {
+        "part": "train/code-cpp/part-00000.parquet",
+        "documents": 40418,
+        "sha256": "c445482684f015a9ce72cc6c34811b265c6c78183beff17b61ecfb9fcb7e3fd5"
+      },
+      {
+        "part": "train/code-cpp/part-00001.parquet",
+        "documents": 14170,
+        "sha256": "b98f1f7f56a2a731c6e551c7489c9667805a457783d28704653fb8c0c0f31b72"
+      },
+      {
+        "part": "train/code-go/part-00000.parquet",
+        "documents": 56702,
+        "sha256": "c54f8a6b673b7a45aa3e6f3fe7cc68589c62ba1fac37271496fd81867a27ead6"
+      },
+      {
+        "part": "train/code-go/part-00001.parquet",
+        "documents": 20253,
+        "sha256": "b003f01f57f4366fe311a23bb8b9dcb0a7a048d085396154fa9ec663f19772a4"
+      },
+      {
+        "part": "train/code-java/part-00000.parquet",
+        "documents": 62443,
+        "sha256": "8251d51398d3cc5e01d97e8eda2136643d3831843a982e96e0dad777e4f2484b"
+      },
+      {
+        "part": "train/code-java/part-00001.parquet",
+        "documents": 22236,
+        "sha256": "064ade4cee91a9ddf073fbb4f2bb38dbab2eb9d1e4a523727e57279153438376"
+      },
+      {
+        "part": "train/code-js-ts/part-00000.parquet",
+        "documents": 85595,
+        "sha256": "fbd8c3fa3e6367d576918ff5e89f3e3213ac32b80ff7465fc81d70c788860f96"
+      },
+      {
+        "part": "train/code-js-ts/part-00001.parquet",
+        "documents": 30468,
+        "sha256": "007a6b31a933657290f86d0b40c2cc8d077b5b65b45c7bd8f44c87e4488d626a"
+      },
+      {
+        "part": "train/code-python/part-00000.parquet",
+        "documents": 53419,
+        "sha256": "1ea06089a9cf4bd58e5ffb21f6a6e92d7cb1a986de7f5af7addd078374909068"
+      },
+      {
+        "part": "train/code-python/part-00001.parquet",
+        "documents": 19185,
+        "sha256": "ee73f83bb2daffe4fec15e54fca77e06d0cd4a1b19b1873bc9db392e3529f726"
+      },
+      {
+        "part": "train/code-rust/part-00000.parquet",
+        "documents": 43155,
+        "sha256": "2c87ab7c4079a442caaa50c01541ae038ed83f475a61d217e3b981f1dbacb1b1"
+      },
+      {
+        "part": "train/code-rust/part-00001.parquet",
+        "documents": 15045,
+        "sha256": "6c812a886af67ab0dd6826d4b538ffa549083e78518af1e022b0c5ed267dfd1b"
+      },
+      {
+        "part": "train/en-dclm/part-00000.parquet",
+        "documents": 45369,
+        "sha256": "34fdfc2879ef81c50b5912867a9e4fbdb29005b203852610303827f1c334c34b"
+      },
+      {
+        "part": "train/en-dclm/part-00001.parquet",
+        "documents": 14843,
+        "sha256": "0674a7af8be15bdc957b84c1f9ab792b17aeb3812e4b450b26c24adf2234d3f4"
+      },
+      {
+        "part": "train/en-fineweb-edu/part-00000.parquet",
+        "documents": 53598,
+        "sha256": "2d0ac7331258ba29acd652875b2eb012417741bda82b776fa8f5069084ac434b"
+      },
+      {
+        "part": "train/en-fineweb-edu/part-00001.parquet",
+        "documents": 17776,
+        "sha256": "f2f89744215cf72cfe34b5c9e597d594ffd38ca27ebcdb82c0ec75a20120c2d7"
+      },
+      {
+        "part": "train/en-nemotroncc/part-00000.parquet",
+        "documents": 66074,
+        "sha256": "56ded7e8d4277d84f665a86e7aa12860177e75dc14dcdccfcf6b238af1c2a877"
+      },
+      {
+        "part": "train/en-nemotroncc/part-00001.parquet",
+        "documents": 22194,
+        "sha256": "277ece79c797c6191ef374109f6b15f9449303128d5f40507b0a6ac19ae51b41"
+      },
+      {
+        "part": "train/en-nemotroncc-synth/part-00000.parquet",
+        "documents": 147598,
+        "sha256": "8d0d8aa581f0d56bd3984e9d010c0f1dbe37ff9e4aea799155eb7d45e4722648"
+      },
+      {
+        "part": "train/en-nemotroncc-synth/part-00001.parquet",
+        "documents": 49309,
+        "sha256": "30fedabc6fc8befc6d2395e6a5439f74b0c31fed3bdfc0e1ae2ee05ab8f61971"
+      },
+      {
+        "part": "train/ind-bn-fw2/part-00000.parquet",
+        "documents": 10645,
+        "sha256": "611865114451be0ba79472c64878d6869738ed973a5907bda09dc0235be95131"
+      },
+      {
+        "part": "train/ind-bn-sangraha-v/part-00000.parquet",
+        "documents": 10113,
+        "sha256": "1d1b94ae7a0dcc7f37b83e16ea6e862421ba279e4c2e1867d64bc168d32a4127"
+      },
+      {
+        "part": "train/ind-gu-fw2/part-00000.parquet",
+        "documents": 22773,
+        "sha256": "c320572cd7bb1d480c29468a1e3db0fe2e574dc27642275139aaf5447ca8a8f8"
+      },
+      {
+        "part": "train/ind-hi-fw2/part-00000.parquet",
+        "documents": 14125,
+        "sha256": "aca5f6d613f73e6445644bb6ab764fb84b32ee538d8cf5f8ee3d41744f34a518"
+      },
+      {
+        "part": "train/ind-hi-hplt/part-00000.parquet",
+        "documents": 8626,
+        "sha256": "25278716d89932eca78682281e69bb2f7763df59bb410d1d506f5afdb0a98d01"
+      },
+      {
+        "part": "train/ind-hi-indiccorp/part-00000.parquet",
+        "documents": 110757,
+        "sha256": "a64a60537d68ecec1af088470e8c7f7bfa4404181350f6ee4bc81bb04d84b7de"
+      },
+      {
+        "part": "train/ind-hi-sangraha-s/part-00000.parquet",
+        "documents": 8280,
+        "sha256": "80a392e855bec00b1101b796642969a8e2fec6825a0f677c5e6f5e7060943ff5"
+      },
+      {
+        "part": "train/ind-hi-sangraha-v/part-00000.parquet",
+        "documents": 14709,
+        "sha256": "13570df82df624da82e73989177a018a5ca85a14ecf30393bb31dd8ea2a75c67"
+      },
+      {
+        "part": "train/ind-kn-fw2/part-00000.parquet",
+        "documents": 7685,
+        "sha256": "a8f5a325851c091190748e8f2e055f5e3638a67f7863653ed168c6a2531e3aa7"
+      },
+      {
+        "part": "train/ind-kn-sangraha-s/part-00000.parquet",
+        "documents": 5169,
+        "sha256": "18809bf01c03365dcba32302febeb1249888103b402798a23e3fbe3f902f5f9f"
+      },
+      {
+        "part": "train/ind-kn-sangraha-v/part-00000.parquet",
+        "documents": 8361,
+        "sha256": "2925b64729036678b34a861826e1108577d3f4c99bc25aa529e8a7437c3a12aa"
+      },
+      {
+        "part": "train/ind-ml-fw2/part-00000.parquet",
+        "documents": 18976,
+        "sha256": "b61a6b52ea69f0822c225f8cda02b066c577a4f9291444d116b598e152ffcfca"
+      },
+      {
+        "part": "train/ind-mr-fw2/part-00000.parquet",
+        "documents": 11271,
+        "sha256": "eaa0080ed584a7765804013b960fe6a3115c28e103c6482ebdfdbf27dfb03de0"
+      },
+      {
+        "part": "train/ind-mr-sangraha-v/part-00000.parquet",
+        "documents": 12172,
+        "sha256": "f312fe1aa13d60dadf41f83965fb78ba9353b97d63c5885c5408ab7a5d5e9f2d"
+      },
+      {
+        "part": "train/ind-or-fw2/part-00000.parquet",
+        "documents": 33684,
+        "sha256": "b4e607a0d37486803713e310924cff5a8aa637baabe442008b6c79ecae56c93f"
+      },
+      {
+        "part": "train/ind-sa-fw2/part-00000.parquet",
+        "documents": 5667,
+        "sha256": "17ac43d6e67c57cf733e8fe8cf89a13f9ef7dbb397d814b38c3253e575cd7d1d"
+      },
+      {
+        "part": "train/ind-ta-fw2/part-00000.parquet",
+        "documents": 6766,
+        "sha256": "4a539ff401f6a3a844d6d5ebd0cf6d51290ffdd4d888c0d53c50e7bdc8e70077"
+      },
+      {
+        "part": "train/ind-ta-sangraha-s/part-00000.parquet",
+        "documents": 4336,
+        "sha256": "0d06e5b1eba9182b4efc3f79c99fbff017e18efe563191f7894b2e224c7d2838"
+      },
+      {
+        "part": "train/ind-te-fw2/part-00000.parquet",
+        "documents": 4957,
+        "sha256": "ec82d332fe3b908aeab5d112c9145bcbda6f03cf7c4e04f58402461ae0b7ef0c"
+      },
+      {
+        "part": "train/ind-te-sangraha-s/part-00000.parquet",
+        "documents": 4424,
+        "sha256": "d525c4030ce34e5b35673ac75b5af782ce716371296d8f46e5254b653455fcd9"
+      },
+      {
+        "part": "train/ind-te-sangraha-v/part-00000.parquet",
+        "documents": 8095,
+        "sha256": "2c1a1c2957a36984dc00ef8d0c5979c03bcffd0755fc0eee2a82e786a847b6a2"
+      },
+      {
+        "part": "train/math-finemath/part-00000.parquet",
+        "documents": 28522,
+        "sha256": "7b3366baf9b8b756eb8b8579940918cbc4cd5eac7b54394e639a722ce117d339"
+      },
+      {
+        "part": "train/math-megamath/part-00000.parquet",
+        "documents": 17634,
+        "sha256": "152c811a29bdd254f4c8778553222b6dcc5df04081267bba69d82345c3c87715"
+      },
+      {
+        "part": "train/sci-finepdfs/part-00000.parquet",
+        "documents": 6011,
+        "sha256": "db4736df225c893181adb0f3242176656dcac1278f947de1ecce3c32ab3ddbf6"
+      }
+    ]
+  },
+  "documents": {
+    "cadj-commits": {
+      "train": 74753,
+      "all": 74753
+    },
+    "cadj-notebooks": {
+      "train": 15563,
+      "all": 15563
+    },
+    "cadj-stackexchange": {
+      "train": 41396,
+      "all": 41396
+    },
+    "code-cpp": {
+      "train": 54588,
+      "all": 54588
+    },
+    "code-go": {
+      "train": 76955,
+      "all": 76955
+    },
+    "code-java": {
+      "train": 84679,
+      "all": 84679
+    },
+    "code-js-ts": {
+      "train": 116063,
+      "all": 116063
+    },
+    "code-python": {
+      "train": 72604,
+      "all": 72604
+    },
+    "code-rust": {
+      "train": 58200,
+      "all": 58200
+    },
+    "en-dclm": {
+      "train": 60212,
+      "all": 60212
+    },
+    "en-fineweb-edu": {
+      "train": 71374,
+      "all": 71374
+    },
+    "en-nemotroncc": {
+      "train": 88268,
+      "all": 88268
+    },
+    "en-nemotroncc-synth": {
+      "train": 196907,
+      "all": 196907
+    },
+    "ind-bn-fw2": {
+      "train": 10645,
+      "all": 10645
+    },
+    "ind-bn-sangraha-v": {
+      "train": 10113,
+      "all": 10113
+    },
+    "ind-gu-fw2": {
+      "train": 22773,
+      "all": 22773
+    },
+    "ind-hi-fw2": {
+      "train": 14125,
+      "all": 14125
+    },
+    "ind-hi-hplt": {
+      "train": 8626,
+      "all": 8626
+    },
+    "ind-hi-indiccorp": {
+      "train": 110757,
+      "all": 110757
+    },
+    "ind-hi-sangraha-s": {
+      "train": 8280,
+      "all": 8280
+    },
+    "ind-hi-sangraha-v": {
+      "train": 14709,
+      "all": 14709
+    },
+    "ind-kn-fw2": {
+      "train": 7685,
+      "all": 7685
+    },
+    "ind-kn-sangraha-s": {
+      "train": 5169,
+      "all": 5169
+    },
+    "ind-kn-sangraha-v": {
+      "train": 8361,
+      "all": 8361
+    },
+    "ind-ml-fw2": {
+      "train": 18976,
+      "all": 18976
+    },
+    "ind-mr-fw2": {
+      "train": 11271,
+      "all": 11271
+    },
+    "ind-mr-sangraha-v": {
+      "train": 12172,
+      "all": 12172
+    },
+    "ind-or-fw2": {
+      "train": 33684,
+      "all": 33684
+    },
+    "ind-sa-fw2": {
+      "train": 5667,
+      "all": 5667
+    },
+    "ind-ta-fw2": {
+      "train": 6766,
+      "all": 6766
+    },
+    "ind-ta-sangraha-s": {
+      "train": 4336,
+      "all": 4336
+    },
+    "ind-te-fw2": {
+      "train": 4957,
+      "all": 4957
+    },
+    "ind-te-sangraha-s": {
+      "train": 4424,
+      "all": 4424
+    },
+    "ind-te-sangraha-v": {
+      "train": 8095,
+      "all": 8095
+    },
+    "math-finemath": {
+      "train": 28522,
+      "all": 28522
+    },
+    "math-megamath": {
+      "train": 17634,
+      "all": 17634
+    },
+    "sci-finepdfs": {
+      "train": 6011,
+      "all": 6011
+    }
+  },
+  "documents_all": 1395320,
+  "h1_exact_groups": 70,
+  "documents_in_h1_exact_groups": 148,
+  "empty_documents": 7,
+  "minhash": {
+    "hashes": 128,
+    "bands": 32,
+    "rows_per_band": 4,
+    "seed": 20261122,
+    "parts_reused": 47,
+    "word": {
+      "buckets_2_or_more": 62544,
+      "largest_bucket": 507,
+      "star_buckets": 0,
+      "pairs_before_dedup": 865154,
+      "representatives_banded": 1395241,
+      "candidate_pairs_representatives": 645520,
+      "candidate_pairs": 646651
+    },
+    "code": {
+      "buckets_2_or_more": 7500,
+      "largest_bucket": 115,
+      "star_buckets": 0,
+      "pairs_before_dedup": 59946,
+      "candidate_pairs": 27352,
+      "eligible_documents": 362078
+    },
+    "p_found_at": {
+      "0.70": 0.9998471708406208,
+      "0.80": 0.9999999525011427,
+      "0.85": 0.9999999999448543,
+      "0.90": 0.9999999999999986
+    }
+  },
+  "pairs_verified": 646651,
+  "pairs_at_or_above": {
+    "0.70": 4426,
+    "0.75": 3222,
+    "0.80": 2245,
+    "0.85": 1429,
+    "0.90": 737,
+    "0.95": 204
+  },
+  "pairs_at_or_above_note": "among verified LSH candidates only; complete at >= 0.80 within LSH recall",
+  "qualifying_pairs_by_rule": {
+    "H1": 78,
+    "H2": 2550
+  },
+  "h1_edges": "star: each member of an H1 group paired with the group's first row",
+  "duplicate_rules": {
+    "prose": "word Jaccard >= 0.80; both >= 50 words",
+    "math": "word Jaccard >= 0.90; identical signed number multisets",
+    "code": "token Jaccard >= 0.85; both >= 20 nonblank lines after comment removal",
+    "mixed_domains": "both domains' rules must pass on both documents",
+    "h1": "same H1 SHA256; bypasses H2 guards",
+    "translations": "not detected"
+  },
+  "pack_domains": {
+    "cadj-commits": "prose",
+    "cadj-notebooks": "prose",
+    "cadj-stackexchange": "prose",
+    "code-cpp": "code",
+    "code-go": "code",
+    "code-java": "code",
+    "code-js-ts": "code",
+    "code-python": "code",
+    "code-rust": "code",
+    "en-dclm": "prose",
+    "en-fineweb-edu": "prose",
+    "en-nemotroncc": "prose",
+    "en-nemotroncc-synth": "prose",
+    "ind-bn-fw2": "prose",
+    "ind-bn-sangraha-v": "prose",
+    "ind-gu-fw2": "prose",
+    "ind-hi-fw2": "prose",
+    "ind-hi-hplt": "prose",
+    "ind-hi-indiccorp": "prose",
+    "ind-hi-sangraha-s": "prose",
+    "ind-hi-sangraha-v": "prose",
+    "ind-kn-fw2": "prose",
+    "ind-kn-sangraha-s": "prose",
+    "ind-kn-sangraha-v": "prose",
+    "ind-ml-fw2": "prose",
+    "ind-mr-fw2": "prose",
+    "ind-mr-sangraha-v": "prose",
+    "ind-or-fw2": "prose",
+    "ind-sa-fw2": "prose",
+    "ind-ta-fw2": "prose",
+    "ind-ta-sangraha-s": "prose",
+    "ind-te-fw2": "prose",
+    "ind-te-sangraha-s": "prose",
+    "ind-te-sangraha-v": "prose",
+    "math-finemath": "math",
+    "math-megamath": "math",
+    "sci-finepdfs": "prose"
+  },
+  "stage_seconds": {
+    "signatures": 2.1,
+    "h1": 0.8,
+    "lsh": 13.7,
+    "verify_words": 26.8,
+    "rules": 5.9,
+    "outputs": 2.5
+  },
+  "peak_rss_mb_after_stage": {
+    "signatures": {
+      "main": 109.3,
+      "largest_worker": 63.8
+    },
+    "table": {
+      "main": 912.6,
+      "largest_worker": 63.8
+    },
+    "lsh": {
+      "main": 1378.7,
+      "largest_worker": 63.8
+    },
+    "verify_words": {
+      "main": 1378.7,
+      "largest_worker": 1471.5
+    },
+    "rules": {
+      "main": 1696.0,
+      "largest_worker": 1485.0
+    }
+  },
+  "wall_seconds": 53.7,
+  "workers": 2,
+  "peak_rss_mb": {
+    "main": 1969.1,
+    "largest_worker": 1485.0
+  },
+  "versions": {
+    "python": "3.13.18",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "pandas": "3.0.5",
+    "pyarrow": "26.0.1",
+    "pygments": "2.21.0",
+    "platform": "Linux-6.18.44-fc-v726-x86_64-with-glibc2.39"
+  },
+  "outputs": {
+    "overlap_matches.csv": {
+      "bytes": 199418,
+      "sha256": "b01637cabf3ec4a62b238edf5eb3124a601e10d01f75c3fefb6abd5320e91c24"
+    },
+    "overlap_matrix.csv": {
+      "bytes": 18854,
+      "sha256": "78346cfeffb81c7226ede82196180c7f65b4d78a79e135be9deaf530dcc6685b"
+    },
+    "overlap_matrix_counts.csv": {
+      "bytes": 49502,
+      "sha256": "f0f776d44a4b3b56c1bdcd081167cfb6d60f256a9b53be7df056fb2fe6513aac"
+    },
+    "overlap_by_pack.csv": {
+      "bytes": 224564,
+      "sha256": "b55940309cf4e2882d8a72001c4de9300cb67153503d9f43cffd3388e1d26d0b"
+    },
+    "overlap_docs.parquet": {
+      "bytes": 33955779,
+      "sha256": "bf97adbeab0d90e37b85cc44411ddcc762cbf9e1c69d7e85f8d96becbeb9d225"
+    },
+    "overlap_pairs.csv": {
+      "bytes": 6245435,
+      "sha256": "dce1d15f34c05c20f5a9b98fbcbdf25d89fada11e12b4d35f0fea7e5bdf30b67"
+    }
+  },
+  "returned_files": [
+    "overlap_matches.csv",
+    "overlap_matrix.csv",
+    "overlap_matrix_counts.csv",
+    "overlap_by_pack.csv",
+    "overlap_summary.json"
+  ],
+  "job_storage_files": [
+    "overlap_docs.parquet",
+    "overlap_pairs.csv",
+    "out/mh_full/work"
+  ],
+  "returned_mb": 0.49
+}

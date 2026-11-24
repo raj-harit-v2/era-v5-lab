@@ -339,6 +339,74 @@ def _select(model, moe_cls, tcfg: dict) -> dict:
 
 # --- the bundle ---------------------------------------------------------------------------------------
 
+# --- output head access: the one place that knows what LanguageModel.head may be ---------------------------------
+
+def head_access(model) -> dict:
+    """What G10 code needs from G5's output head. Two kinds are known; anything else raises ArtifactError.
+
+    dense: dry run 1's untied `nn.Linear(n_embd, V)`; per-token matrix `head.weight` [V, n_embd].
+    kas:   Team 5's KE2/KAS untied head (#694/#702/#706), recognised by a 2-D Parameter `head.tok_u` [V, r] (the
+           rank-r per-token correction). Before Team 5's code lands this rests on two assumptions: `head(h)` maps
+           hidden states [..., n_embd] to logits [..., V] (Team 5's own trainer calls it that way), and the
+           correction is named `tok_u`.
+    Returns {"kind", "vocab_size", "per_token" (Parameter whose row i belongs to token i), "per_token_name", "tied"};
+    "tied" is True when any head tensor shares storage with the input embedding.
+    """
+    head = getattr(model, "head", None)
+    if isinstance(head, torch.nn.Linear):
+        kind, per_token, name, vocab = "dense", head.weight, "head.weight", int(head.out_features)
+    elif (isinstance(head, torch.nn.Module) and isinstance(getattr(head, "tok_u", None), torch.nn.Parameter)
+          and head.tok_u.ndim == 2):
+        kind, per_token, name, vocab = "kas", head.tok_u, "head.tok_u", int(head.tok_u.shape[0])
+    else:
+        mats = (sorted(n for n, q in head.named_parameters() if q.ndim == 2) if isinstance(head, torch.nn.Module)
+                else [])
+        raise ArtifactError(f"unknown G5 output head {type(head).__name__}: G10 handles a dense nn.Linear or a "
+                            f"KE2/KAS head with a 2-D `tok_u` [V, r]; its 2-D parameters: {mats}")
+    emb = getattr(model, "embedding", None)
+    emb_ptrs = {q.data_ptr() for q in emb.parameters()} if isinstance(emb, torch.nn.Module) else set()
+    tied = any(q.data_ptr() in emb_ptrs for q in head.parameters())
+    return {"kind": kind, "vocab_size": vocab, "per_token": per_token, "per_token_name": name, "tied": tied}
+
+
+INPUT_CODES = {256: "ke2_raw_table", 64: "ke2_code_2048"}  # per-position code width -> input kind
+
+
+def input_access(model, pos_dim: int) -> dict:
+    """What G10 checks of G5's input layer, detected by name and shape (never by assuming 8,192).
+
+    ke2_raw_table: main's dry run 2 KE2, `embedding.projection.weight` [n_embd, 256 * P] (P = 32: 8,192).
+    ke2_code_2048: the TSAI ruling of 23 Nov (G4 chat): Linear(2048, d_model) over a fixed code, d_c = 64 per byte
+                   position, L_max = P = 32. Not in Team 5's code yet (#717 at 319f2dd7 still has 8,192).
+    Both need the byte table buffers `embedding.rows` uint8 [V, P] and `embedding.lengths` [V], which G10 compares
+    with the validated KE2 table. Anything else raises ArtifactError instead of being read as one of these.
+    """
+    emb = getattr(model, "embedding", None)
+    if not isinstance(emb, torch.nn.Module):
+        raise ArtifactError(f"G5 model has no `embedding` module (got {type(emb).__name__})")
+    found = {f"embedding.{n}": tuple(t.shape) for n, t in [*emb.named_buffers(), *emb.named_parameters()]}
+    rows, lengths = getattr(emb, "rows", None), getattr(emb, "lengths", None)
+    if not (isinstance(rows, torch.Tensor) and rows.ndim == 2 and rows.shape[1] == pos_dim
+            and isinstance(lengths, torch.Tensor) and tuple(lengths.shape) == (rows.shape[0],)):
+        raise ArtifactError(f"G5 input layer has no KE2 byte table buffers embedding.rows [V, {pos_dim}] and "
+                            f"embedding.lengths [V]: G10 cannot check it against the validated table; found {found}")
+    proj = getattr(getattr(emb, "projection", None), "weight", None)
+    if not (isinstance(proj, torch.Tensor) and proj.ndim == 2):
+        raise ArtifactError(f"G5 input layer has no 2-D embedding.projection.weight; found {found}")
+    width = int(proj.shape[1])
+    per_pos = width // pos_dim
+    if width % pos_dim or per_pos not in INPUT_CODES:
+        raise ArtifactError(f"G5 input projection width {width} is neither 256 x {pos_dim} (raw KE2 table) nor "
+                            f"64 x {pos_dim} (the 2,048 code); found {found}")
+    return {"kind": INPUT_CODES[per_pos], "width": width, "per_position": per_pos, "n_embd": int(proj.shape[0]),
+            "tensors": found}
+
+
+def head_logits(model, h: torch.Tensor) -> torch.Tensor:
+    """Logits [..., V] from final hidden states [..., n_embd]: G5's own `head(h)` call, for either known kind."""
+    return model.head(h)
+
+
 @dataclass
 class Bundle:
     mode: str
@@ -475,7 +543,7 @@ class Bundle:
             self.check_batch(seq, valid)
             # only the last position is sampled: project it alone through the 131,072-row head (same values as
             # forward()[:, -1]; the full-sequence head was L times the work and memory at every step)
-            logits = self.model.head(self.model.hidden(seq, valid)[:, -1]).float()
+            logits = head_logits(self.model, self.model.hidden(seq, valid)[:, -1]).float()
             if temperature <= 0:
                 nxt = logits.argmax(-1)
             else:
@@ -493,6 +561,26 @@ class Bundle:
         self.model.train(was)
         return seq, cmask, reason
 
+    @torch.no_grad()
+    def sample_many(self, prompts: list[list[int]], k: int, max_new: int, temperature: float,
+                    generator: torch.Generator | None, stop_ids: list[int] | None = None):
+        """k completions of every prompt in one KV-cached decode (rl-loop/g5_decode.sample_many); same checks and
+        per-prompt return contract as sample()."""
+        stop = list(self.special["stop_ids"] if stop_ids is None else stop_ids)
+        if not prompts or any(not p for p in prompts) or k <= 0 or max_new <= 0:
+            raise ValueError("need non-empty prompts, k > 0 and max_new > 0")
+        longest = max(len(p) for p in prompts)
+        if longest + max_new > self.spec["block_size"]:
+            raise ValueError(f"prompt {longest} + max_new {max_new} exceeds block_size {self.spec['block_size']}")
+        if temperature > 0:
+            if generator is None:
+                raise ValueError("sampling with temperature > 0 needs an explicit generator")
+            if torch.device(generator.device).type != torch.device(self.device).type:
+                raise ValueError(f"generator on {generator.device}, model on {self.device}")
+        import g5_decode  # noqa: PLC0415  rl-loop/g5_decode.py
+        return g5_decode.sample_many(self.model, [list(p) for p in prompts], k, max_new, temperature, generator, stop,
+                                     self.special["pad_id"], self.device)
+
     def policy(self):
         """A rl-loop Policy whose forward is the checked bundle.forward and whose sampling stops at every stop id."""
         from policy import Policy  # noqa: PLC0415  rl-loop/policy.py, unchanged
@@ -509,6 +597,12 @@ class Bundle:
                 with self.autocast():
                     seq, cmask, _ = bundle.sample(prompt, k, max_new, temperature, generator)
                 return seq, cmask
+
+            @torch.no_grad()
+            def sample_many(self, prompts, k, max_new, temperature=1.0, generator=None):
+                with self.autocast():  # same compute dtype as sample() and the trainer
+                    rolls = bundle.sample_many(prompts, k, max_new, temperature, generator)
+                return [(seq, cmask) for seq, cmask, _ in rolls]
 
         return Team5Policy(self.model, lambda m, ids, mask: bundle.forward(ids, mask),
                            self.special["tokens"]["end_of_turn"]["id"], self.device)
@@ -697,9 +791,10 @@ def _finish(mode, cfg, g5src, spec, tok, art, special, sd, is_fixture_ckpt, ck_e
     ref = model.state_dict()
     bad = [(k, tuple(sd[k].shape), tuple(ref[k].shape)) for k in sorted(want) if tuple(sd[k].shape) != tuple(ref[k].shape)]
     if bad:
-        if any(k == "head.weight" or k.startswith("embedding.") for k, _, _ in bad):
+        if any(k.startswith(("head.", "embedding.")) for k, _, _ in bad):
             raise ArtifactError(f"vocabulary/KE2 shape mismatch in checkpoint: {bad[:3]}")
         raise ArtifactError(f"checkpoint tensor shapes differ from the G5 model: {bad[:3]}")
+    inp = input_access(model, art.pos_dim)  # refuses an input layer G10 cannot check (by name and shape)
     # The KE2 code table is a buffer of the checkpoint; it must be exactly the validated table.
     if not torch.equal(sd["embedding.rows"].to(torch.uint8), torch.as_tensor(art.bytes)):
         raise ArtifactError("checkpoint KE2 rows differ from the validated KE2 table")
@@ -709,8 +804,11 @@ def _finish(mode, cfg, g5src, spec, tok, art, special, sd, is_fixture_ckpt, ck_e
         if sd[k].dtype != ref[k].dtype:
             raise ArtifactError(f"dtype of {k} is {sd[k].dtype}, G5 model stores {ref[k].dtype}")
     model.load_state_dict(sd, strict=True)
-    if model.head.weight.data_ptr() == model.embedding.projection.weight.data_ptr():
+    head = head_access(model)  # raises on a head of unknown kind
+    if head["tied"]:
         raise ArtifactError("output head unexpectedly tied to the KE2 projection")
+    if head["vocab_size"] != spec["vocab_size"]:
+        raise ArtifactError(f"output head vocabulary {head['vocab_size']} != model spec {spec['vocab_size']}")
     if (model.mtp_head is not None) != bool(spec.get("mtp")):
         raise ArtifactError("MTP head presence disagrees with the resolved spec")
     model.requires_grad_(True)
@@ -729,7 +827,9 @@ def _finish(mode, cfg, g5src, spec, tok, art, special, sd, is_fixture_ckpt, ck_e
         "n_parameters": sum(p.numel() for p in model.parameters()),
         "model_hash_g5": mods["train_week2"].model_hash(model),
         "selection": selection,
-        "head": {"tied": False, "mtp_head": model.mtp_head is not None, "forward_returns": "main head logits"},
+        "head": {"kind": head["kind"], "tied": False, "mtp_head": model.mtp_head is not None,
+                 "forward_returns": "main head logits"},
+        "input": {k: v for k, v in inp.items() if k != "tensors"},
     })
     template = _load_render(Path(__file__).resolve().parents[1])
     bundle = Bundle(mode, model, spec, art, special, selection, manifest, tok["template_path"], template)

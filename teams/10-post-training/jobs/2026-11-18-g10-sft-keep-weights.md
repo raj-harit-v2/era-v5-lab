@@ -55,5 +55,11 @@ flag and its test are unchanged by PR 126. What PR 126 adds next to it:
   item 4. Not shown: a GPU run or the real checkpoint.
 - Item 5 (test log): `capstone/test_keep_weights.py`, `test_keep_weights_adapters.py`, `test_keep_weights_wiring.py`,
   `test_keep_weights_real_model.py`, and the end-to-end log of `sft_job_v1.py` with the two flags (PR 126 body).
-- Still open: 1 (#587 results), 3 (route decision, lead), 4 (Team 9's confirmation of which format their watcher reads), 6 (lead approval).
+- Still open: 1 (#587 results), 4 (Team 9 real `lm_eval_lab:team5` scoring check on a kept run folder), 6 (lead approval once #587 picks the arm).
+
+## Lead route decision (21 Nov 2026, `saitej123`)
+
+- **Canonical route for Team 9 evaluation handoff (item 3, closed):** use `--keep-weights-dir` (`capstone/keep_weights.py`), which writes weights-only Team 7 `Checkpointer` run folders using Team 9's exact `lm_eval_lab.probe_loss`, so Team 7 `export_safetensors` and Team 9 `run_lab_ckpt.py --run-dir` read the same artifact without storing 3x optimizer state. Keep `--team7-ckpt-remote` in `capstone/sft_g5.py` for jobs that explicitly need resumable optimizer state.
+- **Eval-mini job withdrawn (confirmed by TSAI, 21 Nov 2026):** `jobs/2026-11-18-g10-eval-mini-forgetting.md` is superseded/withdrawn per the eval firewall; Team 9's watcher scores ARC-Challenge and HellaSwag on base + kept SFT folders and hands fraction-scaled rows (`value/100`, `stderr/100`) to `sft/tests/forgetting.py`.
+- **Status:** remains **NOT RUNNABLE** in lead review (Week 4 Task 4) until `#587` returns and selects `a2` vs `a4`.
 - Measured, not estimated: the #587 model (Team 5 `configs/arms/t2.yaml`, built on CPU) has 237,052,416 parameters, which matches the line above.

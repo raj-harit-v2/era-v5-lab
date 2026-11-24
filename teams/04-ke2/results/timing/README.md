@@ -24,12 +24,13 @@ This confirms the updated command completes locally, but it was run from a
 dirty follow-up checkout and is only a smoke check, not a gate result.
 
 The CUDA microbenchmark is approved for a three-step smoke followed by a
-100-step diagnostic run from the merged main SHA. For D5 / dry-run-1 KE cost, use the G6
-layer/trace harness with the same one-layer, width-64 configuration, code SHA,
-GPU, and p1536 table pin. The current G6 `load_g4_table` path still selects the
-earlier table, so that matched run must wait for explicit p1536 table support
-in the G6 harness. Do not substitute the isolated `model.tok(x)` result for
-the Level-3 region result.
+100-step diagnostic run from the merged main SHA. For in-step KE cost, use
+Team 6's Level-3 layer/trace harness. The [job-scoped p1536 adapter and exact
+commands](g6_p1536_layer_job.md) run its KE2 input and dense-tied arms on the
+same GPU while preserving the older-tokenizer dense reference and Team 6's
+checked-in defaults. Local CPU smoke produced a `fwd:embed.ke` region; CUDA
+results are pending lead review and the lab run. Do not substitute the
+isolated `model.tok(x)` result for the Level-3 region result.
 
 ## Historical exploratory outputs from merged PR #588
 
