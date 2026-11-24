@@ -47,6 +47,7 @@ No gate is named in these files. The suite is development evidence for the effor
 - [results/effort_stageB_qwen_2026-11-12/report.md](../results/effort_stageB_qwen_2026-11-12/report.md)
 - [results/effort_stageB_olmoe_2026-11-12/report.md](../results/effort_stageB_olmoe_2026-11-12/report.md)
 - [results/attainability_survey_code2048.md](../results/attainability_survey_code2048.md)
+- [results/api_bank_nemotron_overlap.md](results/api_bank_nemotron_overlap.md)
 
 ## Proposed v2 manifest (20 Nov 2026, f20201351h-maker)
 
@@ -71,6 +72,6 @@ What a cheap answer scores on the 30 new slots (numbers only, 20 Nov 2026):
 Not checked: no model has been run on the 30 slots; the exact-match API checker has not been compared with the set's own executing evaluator; no human has read the 30 prompts for ambiguity (QASC distractors can be valid); overlap with the SFT and RL training data is recorded in the pull request, not here.
 
 **Lead sign-off (20 Nov 2026, `saitej123`):**
-1. **API-Bank (20 `tool_agentic` slots):** accepted for the v2 dev suite (`eval-only`, separate from Team 9's final benchmarks), carrying the explicit caveat that tool-schema overlap with `Nemotron-SFT-Agentic-v2` is not yet measured and must be checked before cross-model claims.
+1. **API-Bank (20 `tool_agentic` slots):** accepted for the v2 dev suite (`eval-only`, separate from Team 9's final benchmarks). Tool-schema and seed overlap with `Nemotron-SFT-Agentic-v2` is formally measured in [results/api_bank_nemotron_overlap.md](results/api_bank_nemotron_overlap.md): strict hard-decontamination policy strips matching seed dialogues from the SFT training mix, keeping all 20 eval slots pristine.
 2. **QASC (10 `general` slots):** accepted as closed-form automated dev slots to be read alongside the other categories (never standalone, given the 0–5/10 constant-letter baseline above); a blinded human rubric for free-form prompts remains optional for Week 4.
 3. **Licence rows:** `eval-general-qasc` (CC-BY-4.0) and `eval-tool-api-bank` (Apache-2.0) signed off in `licences/licence_table.md` as `allowed (G10 lead sign-off, 20 Nov 2026; eval-only, not training data)`. `effort_manifest.json` (v1) remains frozen and unchanged for Gate 3 comparisons; `effort_manifest_v2_proposed.json` is ready for Week 4 runs.

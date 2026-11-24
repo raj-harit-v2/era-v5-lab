@@ -1,8 +1,12 @@
 """``harness/save_hidden_vectors.py``: the saved rows are the head inputs at scored positions."""
 
 from pathlib import Path
+import json
 import sys
+import tempfile
+from types import SimpleNamespace
 import unittest
+from unittest.mock import patch
 
 import numpy as np
 import torch
@@ -12,6 +16,8 @@ sys.path.insert(0, str(TEAM / "harness"))
 from save_hidden_vectors import _batches, collect
 from week2.config import load, load_runtime, merge
 from week2.model import LanguageModel
+import save_hidden_vectors as exporter
+import test_week2_kas_v2 as kas_fixture
 
 VOCAB = 31
 WIDTH = 16
@@ -128,6 +134,44 @@ class SaveHiddenVectorsTests(unittest.TestCase):
             self.assertLessEqual(len(batch) * width, 16)
         with self.assertRaisesRegex(ValueError, "budget"):
             list(_batches(self.data.windows, order, 1))
+
+    def test_cli_uses_saved_tokenizer_identity_and_kas_metadata(self):
+        helper = kas_fixture.ModelIntegration()
+        self.addCleanup(helper.doCleanups)
+        cfg, byte_rows, lengths, model = helper.model()
+        # Artifacts and DocumentWindows are mocked below; p1536.json is never opened.
+        # The real release hash is only a saved-manifest identity to forward to the
+        # loader. The synthetic 31-token model does not validate the p1536 tokenizer.
+        recorded = {"tokenizer_sha256": "e6b93a93a60520d7b1af2e9242485f443b5596a1e116b8f8798d83bbad25a64b"}
+        artifacts = SimpleNamespace(bytes=byte_rows, lengths=lengths, pos_dim=32,
+                                    tokenizer_sha=recorded["tokenizer_sha256"], table_content_sha="b" * 64,
+                                    identity=lambda: recorded)
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            (root / "manifest.json").write_text(json.dumps({
+                "config": cfg, "artifacts": recorded,
+                "identity_sha256": "test-run-identity", "status": "SMOKE_NOT_A_QUALITY_RESULT",
+                "heldout_sha256": "c" * 64,
+            }), encoding="utf8")
+            torch.save({"model": model.state_dict(), "identity_sha256": "test-run-identity", "step": 1},
+                       root / "checkpoint.pt")
+            heldout = root / "heldout.jsonl"
+            heldout.write_text('{"text":"heldout"}\n', encoding="utf8")
+            output = root / "hidden.npz"
+            args = ["save_hidden_vectors", "--run", str(root), "--tokenizer", "p1536.json",
+                    "--byte-table", "raw.npz", "--heldout-data", str(heldout), "--out", str(output),
+                    "--rows", "7"]
+            with patch.object(sys, "argv", args), patch.object(exporter, "Artifacts", return_value=artifacts) as loader, \
+                    patch.object(exporter, "DocumentWindows", return_value=Windows()):
+                exporter.main()
+            loader.assert_called_once_with(Path("p1536.json"), Path("raw.npz"),
+                                           expected_tokenizer_sha=recorded["tokenizer_sha256"], expected_vocab=31)
+            with np.load(output, allow_pickle=False) as z:
+                self.assertEqual(str(z["kind"]), "hidden_before_kas_head")
+                self.assertEqual(str(z["head_mode"]), "kas_v2")
+                self.assertEqual(int(z["ke2_code_dim"]), 2048)
+                self.assertEqual(z["vectors"].shape, (7, 16))
+                self.assertEqual(float(z["head_top1"]), float(z["dense_head_top1"]))
 
 
 if __name__ == "__main__":

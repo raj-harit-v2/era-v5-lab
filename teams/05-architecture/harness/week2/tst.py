@@ -58,9 +58,8 @@ def tst_loss(model, x, y, s):
     b, n = valid.shape
     emb = model.embedding(inputs)
     h = emb.float().reshape(b, n, s, -1).mean(2).to(emb.dtype)
-    for block in model.blocks:
-        h = block(h, valid)
-    h = model.norm(h)
+    # The model's own stack on recipe-supplied embeddings (#717's hook), so TST follows any change to it.
+    h = model.hidden_from_embeddings(h, valid)
     logp = F.log_softmax(model.head(h[valid]).float(), dim=-1)
     t = targets[valid]
     keep = t != -100

@@ -706,6 +706,210 @@
         }
       ],
       "type": "trend"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 34
+      },
+      "id": 28,
+      "panels": [],
+      "title": "Training Pace",
+      "type": "row",
+      "description": "Training throughput and step duration."
+    },
+    {
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "${ds}"
+      },
+      "description": "This panel shows how many tokens the run processes each second.",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "lineWidth": 2,
+            "showPoints": "auto"
+          },
+          "unit": "short",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "step"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "short"
+              },
+              {
+                "id": "custom.axisLabel",
+                "value": "step"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 35
+      },
+      "id": 29,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        },
+        "xField": "step"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "${ds}"
+          },
+          "editorType": "sql",
+          "format": 1,
+          "queryType": "table",
+          "rawSql": "SELECT step, run_id, pace_value AS value FROM (SELECT step, run_id, coalesce(anyIf(value, name = 'tokens_per_second'), anyIf(value, name = 'tokens_per_s')) AS pace_value FROM metrics_raw WHERE name IN ('tokens_per_second', 'tokens_per_s') AND run_id IN ($run) AND value IS NOT NULL GROUP BY run_id, step, rank) ORDER BY step",
+          "refId": "A"
+        }
+      ],
+      "title": "Training Pace: Tokens per Second",
+      "transformations": [
+        {
+          "id": "partitionByValues",
+          "options": {
+            "fields": [
+              "run_id"
+            ],
+            "naming": {
+              "asLabels": true
+            }
+          }
+        },
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "step",
+            "mode": "outer"
+          }
+        }
+      ],
+      "type": "trend"
+    },
+    {
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "${ds}"
+      },
+      "description": "This panel shows how long each training step takes.",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "lineWidth": 2,
+            "showPoints": "auto"
+          },
+          "unit": "ms",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "step"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "short"
+              },
+              {
+                "id": "custom.axisLabel",
+                "value": "step"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 35
+      },
+      "id": 30,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        },
+        "xField": "step"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "${ds}"
+          },
+          "editorType": "sql",
+          "format": 1,
+          "queryType": "table",
+          "rawSql": "SELECT step, run_id, pace_value AS value FROM (SELECT step, run_id, coalesce(anyIf(value, name = 'perf/step_ms'), anyIf(value, name = 'step_time_ms')) AS pace_value FROM metrics_raw WHERE name IN ('perf/step_ms', 'step_time_ms') AND run_id IN ($run) AND value IS NOT NULL GROUP BY run_id, step, rank) ORDER BY step",
+          "refId": "A"
+        }
+      ],
+      "title": "Training Pace: Step Time",
+      "transformations": [
+        {
+          "id": "partitionByValues",
+          "options": {
+            "fields": [
+              "run_id"
+            ],
+            "naming": {
+              "asLabels": true
+            }
+          }
+        },
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "step",
+            "mode": "outer"
+          }
+        }
+      ],
+      "type": "trend"
     }
   ],
   "refresh": "",

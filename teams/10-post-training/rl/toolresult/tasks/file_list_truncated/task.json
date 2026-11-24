@@ -1,0 +1,15 @@
+{
+ "id": "file_list_truncated",
+ "title": "Report the total of a truncated listing, not the entries shown",
+ "difficulty": "medium",
+ "effort": "1k",
+ "source": "original: written by Claude (AI assistant) for naveen333nav, 2026-11-23; not from any benchmark; evaluation-only (TSAI data rule, 3 Nov)",
+ "author": "naveen333nav",
+ "eligibility": "eval",
+ "tags": [
+  "tool-result",
+  "number",
+  "truncated"
+ ],
+ "note": "The tool output is cut off on purpose: it shows 5 names of 1342. A reply that counts the names shown lacks the total and scores 0."
+}

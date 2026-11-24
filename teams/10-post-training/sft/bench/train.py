@@ -289,8 +289,10 @@ def enable_marker_rows(model: nn.Module, ids: list[int], scope: str = "both") ->
 
 
 def frozen_sha256(model: nn.Module, marker_ids: list[int] | None = None) -> str:
-    """sha256 over every parameter that must not change: all frozen tensors, plus the non-marker rows of a
-    marker-trainable embedding. Mask logits and adapter tensors are excluded (they are the trained state)."""
+    """sha256 over every tensor that must not change: all frozen parameters, the non-marker rows of a marker-trainable
+    embedding, and every buffer (job ADP, 24 Nov: Team 5's MoE `router_bias`, which changes routing but is never a
+    parameter, the KAS `codec.G`/`codec.Phi` and the byte table `embedding.rows`/`lengths`). Mask logits and adapter
+    tensors are excluded (they are the trained state)."""
     h = hashlib.sha256()
     for name, p in sorted(model.named_parameters(remove_duplicate=True), key=lambda kv: kv[0]):
         if name.endswith(".gate") or "lora_" in name:
@@ -304,6 +306,9 @@ def frozen_sha256(model: nn.Module, marker_ids: list[int] | None = None) -> str:
             t = t[keep]
         h.update(name.encode())
         h.update(t.to("cpu").contiguous().numpy().tobytes())
+    for name, b in sorted(model.named_buffers(), key=lambda kv: kv[0]):
+        h.update(b"buffer:" + name.encode() + str(b.dtype).encode())
+        h.update(b.detach().to("cpu").contiguous().view(-1).view(torch.uint8).numpy().tobytes())  # any dtype, bit-exact
     return h.hexdigest()
 
 

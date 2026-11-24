@@ -1,0 +1,346 @@
+{
+  "schema": "g10-api-bank-overlap/1",
+  "manifest_path": "teams/10-post-training/eval/effort_manifest_v2_proposed.json",
+  "total_api_bank_slots": 20,
+  "target_set": "nvidia/Nemotron-SFT-Agentic-v2 (tool-calling part)",
+  "generator_models": "DeepSeek-V3.2 (MIT) and GLM-4.6 (MIT, open weights)",
+  "declared_seed_toolsets": {
+    "UltraTool": "Synthetic tool interaction dialogues",
+    "ToolEyes": "Real-world user intent and API execution",
+    "AutoTools": "Automated API schema generation and chaining",
+    "API-Bank": "Annotator-written evaluation dialogues and tool APIs (AlibabaResearch/DAMO-ConvAI)",
+    "Glaive-v2": "Synthetic function calling dialogues (Apache-2.0)",
+    "Toucan-1.5M": "Agent-Ark/Toucan-1.5M multi-turn agent sample (Apache-2.0)"
+  },
+  "decontamination_policy": "strict_hard_decontamination",
+  "action_required": "Filter out API-Bank seed trajectories from training mix; keep 20 eval slots held out.",
+  "slots_audited": [
+    {
+      "slot": "tool_agentic-00",
+      "task_id": "apibank/QueryReminder-level-1-1.jsonl#5",
+      "group": "QueryReminder-level-1-1.jsonl",
+      "api_names": [
+        "QueryReminder"
+      ],
+      "doc_files": [
+        "apis/get_user_token.py",
+        "apis/query_reminder.py"
+      ],
+      "text_sha256": "1ecffc653476dc63875a7624a80e2a98b13380671b2fa1baf8366df000773586",
+      "seed_provenance": "AlibabaResearch/DAMO-ConvAI api-bank (reminder)",
+      "schema_risk": "high_seed_origin",
+      "contamination_verdict": "held_out_eval_retained",
+      "remediation": "Exclude any Nemotron-SFT-Agentic-v2 training rows referencing QueryReminder or its schema; Retain slot tool_agentic-00 as clean held-out test instance in effort v2."
+    },
+    {
+      "slot": "tool_agentic-01",
+      "task_id": "apibank/AddAlarm-level-1-1.jsonl#8",
+      "group": "AddAlarm-level-1-1.jsonl",
+      "api_names": [
+        "AddAlarm"
+      ],
+      "doc_files": [
+        "apis/add_alarm.py",
+        "apis/get_user_token.py"
+      ],
+      "text_sha256": "7ecc1bb5ac9bfe6684cded704bcfeaf7e8a8175f52d6b27dd1ea61fb5afc1dc0",
+      "seed_provenance": "AlibabaResearch/DAMO-ConvAI api-bank (alarm)",
+      "schema_risk": "high_seed_origin",
+      "contamination_verdict": "held_out_eval_retained",
+      "remediation": "Exclude any Nemotron-SFT-Agentic-v2 training rows referencing AddAlarm or its schema; Retain slot tool_agentic-01 as clean held-out test instance in effort v2."
+    },
+    {
+      "slot": "tool_agentic-02",
+      "task_id": "apibank/RegisterUser-level-1-2.jsonl#7",
+      "group": "RegisterUser-level-1-2.jsonl",
+      "api_names": [
+        "RegisterUser"
+      ],
+      "doc_files": [
+        "apis/register_user.py"
+      ],
+      "text_sha256": "968e6f8101bcf28575e8b1cf9ce41f22627cc7938ef75dfcd566f7e801c994d1",
+      "seed_provenance": "AlibabaResearch/DAMO-ConvAI api-bank (account)",
+      "schema_risk": "high_seed_origin",
+      "contamination_verdict": "held_out_eval_retained",
+      "remediation": "Exclude any Nemotron-SFT-Agentic-v2 training rows referencing RegisterUser or its schema; Retain slot tool_agentic-02 as clean held-out test instance in effort v2."
+    },
+    {
+      "slot": "tool_agentic-03",
+      "task_id": "apibank/Dictionary-level-1-3.jsonl#2",
+      "group": "Dictionary-level-1-3.jsonl",
+      "api_names": [
+        "Dictionary"
+      ],
+      "doc_files": [
+        "apis/dictionary.py"
+      ],
+      "text_sha256": "48d846f50f4c942f572eeb4fda7816965163d6940c7f5f91310404761b3121c4",
+      "seed_provenance": "AlibabaResearch/DAMO-ConvAI api-bank (reference)",
+      "schema_risk": "high_seed_origin",
+      "contamination_verdict": "held_out_eval_retained",
+      "remediation": "Exclude any Nemotron-SFT-Agentic-v2 training rows referencing Dictionary or its schema; Retain slot tool_agentic-03 as clean held-out test instance in effort v2."
+    },
+    {
+      "slot": "tool_agentic-04",
+      "task_id": "apibank/ModifyMeeting-level-1-1.jsonl#9",
+      "group": "ModifyMeeting-level-1-1.jsonl",
+      "api_names": [
+        "ModifyMeeting"
+      ],
+      "doc_files": [
+        "apis/get_user_token.py",
+        "apis/modify_meeting.py"
+      ],
+      "text_sha256": "bea9190ce31578418cd5a68b7bb0077d728e09c4f40416b02fb2c3b978e4bf28",
+      "seed_provenance": "AlibabaResearch/DAMO-ConvAI api-bank (calendar)",
+      "schema_risk": "high_seed_origin",
+      "contamination_verdict": "held_out_eval_retained",
+      "remediation": "Exclude any Nemotron-SFT-Agentic-v2 training rows referencing ModifyMeeting or its schema; Retain slot tool_agentic-04 as clean held-out test instance in effort v2."
+    },
+    {
+      "slot": "tool_agentic-05",
+      "task_id": "apibank/TimedSwitch-level-1-2.jsonl#5",
+      "group": "TimedSwitch-level-1-2.jsonl",
+      "api_names": [
+        "TimedSwitch"
+      ],
+      "doc_files": [
+        "apis/timed_switch.py"
+      ],
+      "text_sha256": "36f476b5af9ea42794fab3f4caa00294a147c6d61b2f296c4d43064b56161dca",
+      "seed_provenance": "AlibabaResearch/DAMO-ConvAI api-bank (iot)",
+      "schema_risk": "high_seed_origin",
+      "contamination_verdict": "held_out_eval_retained",
+      "remediation": "Exclude any Nemotron-SFT-Agentic-v2 training rows referencing TimedSwitch or its schema; Retain slot tool_agentic-05 as clean held-out test instance in effort v2."
+    },
+    {
+      "slot": "tool_agentic-06",
+      "task_id": "apibank/Translate-level-1-1.jsonl#2",
+      "group": "Translate-level-1-1.jsonl",
+      "api_names": [
+        "Translate"
+      ],
+      "doc_files": [
+        "apis/translate.py"
+      ],
+      "text_sha256": "44b284023065b61ce26394d0d9d25cd4f2707b13294a334240b3d59ca24941b9",
+      "seed_provenance": "AlibabaResearch/DAMO-ConvAI api-bank (language)",
+      "schema_risk": "high_seed_origin",
+      "contamination_verdict": "held_out_eval_retained",
+      "remediation": "Exclude any Nemotron-SFT-Agentic-v2 training rows referencing Translate or its schema; Retain slot tool_agentic-06 as clean held-out test instance in effort v2."
+    },
+    {
+      "slot": "tool_agentic-07",
+      "task_id": "apibank/GetMeeting-level-1-1.jsonl#5",
+      "group": "GetMeeting-level-1-1.jsonl",
+      "api_names": [
+        "GetMeeting"
+      ],
+      "doc_files": [
+        "apis/get_user_token.py",
+        "apis/query_meeting.py"
+      ],
+      "text_sha256": "e637e29c1ed350e4e40059dc32db0435afd8d9f5f015c7754f953e8746cb0617",
+      "seed_provenance": "AlibabaResearch/DAMO-ConvAI api-bank (calendar)",
+      "schema_risk": "high_seed_origin",
+      "contamination_verdict": "held_out_eval_retained",
+      "remediation": "Exclude any Nemotron-SFT-Agentic-v2 training rows referencing GetMeeting or its schema; Retain slot tool_agentic-07 as clean held-out test instance in effort v2."
+    },
+    {
+      "slot": "tool_agentic-08",
+      "task_id": "apibank/BookHotel-level-1-4.jsonl#11",
+      "group": "BookHotel-level-1-4.jsonl",
+      "api_names": [
+        "BookHotel"
+      ],
+      "doc_files": [
+        "apis/book_hotel.py"
+      ],
+      "text_sha256": "3aed3b7158a2b0bde7dceca49183b42cb7d6e42ba2169b35df3411b090cdfacf",
+      "seed_provenance": "AlibabaResearch/DAMO-ConvAI api-bank (hospitality)",
+      "schema_risk": "high_seed_origin",
+      "contamination_verdict": "held_out_eval_retained",
+      "remediation": "Exclude any Nemotron-SFT-Agentic-v2 training rows referencing BookHotel or its schema; Retain slot tool_agentic-08 as clean held-out test instance in effort v2."
+    },
+    {
+      "slot": "tool_agentic-09",
+      "task_id": "apibank/OpenBankAccount-level-1-3.jsonl#8",
+      "group": "OpenBankAccount-level-1-3.jsonl",
+      "api_names": [
+        "OpenBankAccount"
+      ],
+      "doc_files": [
+        "apis/open_bank_account.py"
+      ],
+      "text_sha256": "f1d838dfd785cb5a108eb3c546fa2c249e009fca623df5b0a0a7f0cc75e9d3d5",
+      "seed_provenance": "AlibabaResearch/DAMO-ConvAI api-bank (banking)",
+      "schema_risk": "high_seed_origin",
+      "contamination_verdict": "held_out_eval_retained",
+      "remediation": "Exclude any Nemotron-SFT-Agentic-v2 training rows referencing OpenBankAccount or its schema; Retain slot tool_agentic-09 as clean held-out test instance in effort v2."
+    },
+    {
+      "slot": "tool_agentic-10",
+      "task_id": "apibank/CancelRegistration-level-1-3.jsonl#2",
+      "group": "CancelRegistration-level-1-3.jsonl",
+      "api_names": [
+        "CancelRegistration"
+      ],
+      "doc_files": [
+        "apis/cancel_registration.py"
+      ],
+      "text_sha256": "170d98d2dfa6608aeb70261fa9173d99a6ab41b80fdd8235e4679436fb4b7efd",
+      "seed_provenance": "AlibabaResearch/DAMO-ConvAI api-bank (account)",
+      "schema_risk": "high_seed_origin",
+      "contamination_verdict": "held_out_eval_retained",
+      "remediation": "Exclude any Nemotron-SFT-Agentic-v2 training rows referencing CancelRegistration or its schema; Retain slot tool_agentic-10 as clean held-out test instance in effort v2."
+    },
+    {
+      "slot": "tool_agentic-11",
+      "task_id": "apibank/DocumentQA-level-1-1.jsonl#3",
+      "group": "DocumentQA-level-1-1.jsonl",
+      "api_names": [
+        "DocumentQA"
+      ],
+      "doc_files": [
+        "apis/document_qa.py"
+      ],
+      "text_sha256": "e374e634fbe2ab2e1d0dbeddfe897aca0db6b0ec5d250c33de59678cf8f0f6d0",
+      "seed_provenance": "AlibabaResearch/DAMO-ConvAI api-bank (search)",
+      "schema_risk": "high_seed_origin",
+      "contamination_verdict": "held_out_eval_retained",
+      "remediation": "Exclude any Nemotron-SFT-Agentic-v2 training rows referencing DocumentQA or its schema; Retain slot tool_agentic-11 as clean held-out test instance in effort v2."
+    },
+    {
+      "slot": "tool_agentic-12",
+      "task_id": "apibank/ModifyAgenda-level-1-2.jsonl#9",
+      "group": "ModifyAgenda-level-1-2.jsonl",
+      "api_names": [
+        "ModifyAgenda"
+      ],
+      "doc_files": [
+        "apis/get_user_token.py",
+        "apis/modify_agenda.py"
+      ],
+      "text_sha256": "c19468640cc57c4e4d76b21707b06b1b2054a9e9fa0fa912613b1e1b4bf98bc3",
+      "seed_provenance": "AlibabaResearch/DAMO-ConvAI api-bank (calendar)",
+      "schema_risk": "high_seed_origin",
+      "contamination_verdict": "held_out_eval_retained",
+      "remediation": "Exclude any Nemotron-SFT-Agentic-v2 training rows referencing ModifyAgenda or its schema; Retain slot tool_agentic-12 as clean held-out test instance in effort v2."
+    },
+    {
+      "slot": "tool_agentic-13",
+      "task_id": "apibank/DeleteScene-level-1-3.jsonl#2",
+      "group": "DeleteScene-level-1-3.jsonl",
+      "api_names": [
+        "DeleteScene"
+      ],
+      "doc_files": [
+        "apis/delete_scene.py"
+      ],
+      "text_sha256": "d69a2fafbab2ac0b9c3c74a649121849f62e569f75e9129e90ca589e3271ccc6",
+      "seed_provenance": "AlibabaResearch/DAMO-ConvAI api-bank (iot)",
+      "schema_risk": "high_seed_origin",
+      "contamination_verdict": "held_out_eval_retained",
+      "remediation": "Exclude any Nemotron-SFT-Agentic-v2 training rows referencing DeleteScene or its schema; Retain slot tool_agentic-13 as clean held-out test instance in effort v2."
+    },
+    {
+      "slot": "tool_agentic-14",
+      "task_id": "apibank/CancelTimedSwitch-level-1-2.jsonl#6",
+      "group": "CancelTimedSwitch-level-1-2.jsonl",
+      "api_names": [
+        "CancelTimedSwitch"
+      ],
+      "doc_files": [
+        "apis/cancel_timed_switch.py"
+      ],
+      "text_sha256": "295c30037948ec8c5adb09605655c5b42cd3f0272e771486d218ec0ba1b5bb5c",
+      "seed_provenance": "AlibabaResearch/DAMO-ConvAI api-bank (iot)",
+      "schema_risk": "high_seed_origin",
+      "contamination_verdict": "held_out_eval_retained",
+      "remediation": "Exclude any Nemotron-SFT-Agentic-v2 training rows referencing CancelTimedSwitch or its schema; Retain slot tool_agentic-14 as clean held-out test instance in effort v2."
+    },
+    {
+      "slot": "tool_agentic-15",
+      "task_id": "apibank/SymptomSearch-level-1-2.jsonl#4",
+      "group": "SymptomSearch-level-1-2.jsonl",
+      "api_names": [
+        "SymptomSearch"
+      ],
+      "doc_files": [
+        "apis/symptom_search.py"
+      ],
+      "text_sha256": "64c7e5efb49ea9c0d6081da11add5a3699fb1f1144d5f9788abb6beaafb66bc1",
+      "seed_provenance": "AlibabaResearch/DAMO-ConvAI api-bank (medical)",
+      "schema_risk": "high_seed_origin",
+      "contamination_verdict": "held_out_eval_retained",
+      "remediation": "Exclude any Nemotron-SFT-Agentic-v2 training rows referencing SymptomSearch or its schema; Retain slot tool_agentic-15 as clean held-out test instance in effort v2."
+    },
+    {
+      "slot": "tool_agentic-16",
+      "task_id": "apibank/QueryScene-level-1-1.jsonl#2",
+      "group": "QueryScene-level-1-1.jsonl",
+      "api_names": [
+        "QueryScene"
+      ],
+      "doc_files": [
+        "apis/query_scene.py"
+      ],
+      "text_sha256": "04a1bda7ce99a020901c2fa166f4d4470e9f644e2d2a595be4de19ea7bc14c79",
+      "seed_provenance": "AlibabaResearch/DAMO-ConvAI api-bank (iot)",
+      "schema_risk": "high_seed_origin",
+      "contamination_verdict": "held_out_eval_retained",
+      "remediation": "Exclude any Nemotron-SFT-Agentic-v2 training rows referencing QueryScene or its schema; Retain slot tool_agentic-16 as clean held-out test instance in effort v2."
+    },
+    {
+      "slot": "tool_agentic-17",
+      "task_id": "apibank/GetReminder-level-1-1.jsonl#6",
+      "group": "GetReminder-level-1-1.jsonl",
+      "api_names": [
+        "GetReminder"
+      ],
+      "doc_files": [
+        "apis/get_user_token.py",
+        "apis/query_reminder.py"
+      ],
+      "text_sha256": "9650280f2e627e29cf213c58afd511d824684bd70497bd62394138172c469d25",
+      "seed_provenance": "AlibabaResearch/DAMO-ConvAI api-bank (reminder)",
+      "schema_risk": "high_seed_origin",
+      "contamination_verdict": "held_out_eval_retained",
+      "remediation": "Exclude any Nemotron-SFT-Agentic-v2 training rows referencing GetReminder or its schema; Retain slot tool_agentic-17 as clean held-out test instance in effort v2."
+    },
+    {
+      "slot": "tool_agentic-18",
+      "task_id": "apibank/RecordHealthData-level-1-1.jsonl#3",
+      "group": "RecordHealthData-level-1-1.jsonl",
+      "api_names": [
+        "RecordHealthData"
+      ],
+      "doc_files": [
+        "apis/record_health_data.py"
+      ],
+      "text_sha256": "1f803cbc53cdb9f6a1eef562bc2b25edb108c70bf34c8b8df0f859646a46e19e",
+      "seed_provenance": "AlibabaResearch/DAMO-ConvAI api-bank (health)",
+      "schema_risk": "high_seed_origin",
+      "contamination_verdict": "held_out_eval_retained",
+      "remediation": "Exclude any Nemotron-SFT-Agentic-v2 training rows referencing RecordHealthData or its schema; Retain slot tool_agentic-18 as clean held-out test instance in effort v2."
+    },
+    {
+      "slot": "tool_agentic-19",
+      "task_id": "apibank/DeleteMeeting-level-1-1.jsonl#8",
+      "group": "DeleteMeeting-level-1-1.jsonl",
+      "api_names": [
+        "DeleteMeeting"
+      ],
+      "doc_files": [
+        "apis/delete_meeting.py",
+        "apis/get_user_token.py"
+      ],
+      "text_sha256": "9941c7c49e19aea2ed988179cae667f936c8f599a9fe5e55b89d6d3d4d34640a",
+      "seed_provenance": "AlibabaResearch/DAMO-ConvAI api-bank (calendar)",
+      "schema_risk": "high_seed_origin",
+      "contamination_verdict": "held_out_eval_retained",
+      "remediation": "Exclude any Nemotron-SFT-Agentic-v2 training rows referencing DeleteMeeting or its schema; Retain slot tool_agentic-19 as clean held-out test instance in effort v2."
+    }
+  ]
+}

@@ -30,6 +30,7 @@ MAX_ANSWER_CHARS = 200
 ELIGIBILITY = ("eval", "train")
 
 _STRIP = {0x200B: None, 0xFEFF: None}
+_GLYPHS = {"½": "1/2", "¼": "1/4", "¾": "3/4", "⅓": "1/3", "⅔": "2/3"}
 _EDGE = " .,;:!?\"'()[]{}\u0964\u0965\u201c\u201d\u2018\u2019"
 _ANSWER = re.compile(r"<answer>(.*?)</answer>", re.DOTALL)
 _WS = re.compile(r"\s+")
@@ -45,6 +46,8 @@ _NUMBER = re.compile(r"^[-\u2212]?(?:\d+(?:\.\d+)?|\d+\s*/\s*\d+)$")
 def normalise(text: str) -> str:
     text = unicodedata.normalize("NFC", text.casefold())
     text = text.translate(_STRIP)
+    for glyph, repl in _GLYPHS.items():
+        text = text.replace(glyph, repl)
     text = _WS.sub(" ", text)
     return text.strip(_EDGE)
 
@@ -68,28 +71,109 @@ def _unwrap(raw: str) -> str:
 
 
 def _fracs_to_slash(s: str) -> str:
-    s = _FRAC.sub(r"\1/\2", s)
-    s = _FRAC_SHORT.sub(r"\1/\2", s)
+    prev = None
+    while prev != s:
+        prev = s
+        s = _FRAC.sub(r"(\1)/(\2)", s)
+        s = _FRAC_SHORT.sub(r"\1/\2", s)
     return s
 
 
 _LATEX_SCRUB = re.compile(r"\\[()\[\]]|\$|\\boxed|\\text|\\mathrm|\{|\}")
+_MIXED = re.compile(r"\d\s*\(?\s*-?\d+\s*/\s*\d+\s*\)?")
+
+
+class _FracParser:
+    """Recursive-descent evaluator: int, '/', parentheses, leading sign."""
+
+    def __init__(self, text: str) -> None:
+        self.s = text
+        self.i = 0
+
+    def _skip(self) -> None:
+        while self.i < len(self.s) and self.s[self.i] in " \t":
+            self.i += 1
+
+    def parse(self):
+        v = self._expr()
+        self._skip()
+        return v if self.i == len(self.s) else None
+
+    def _expr(self):
+        self._skip()
+        sign = 1
+        while self.i < len(self.s) and self.s[self.i] in "+-":
+            if self.s[self.i] == "-":
+                sign = -sign
+            self.i += 1
+        num = self._atom()
+        if num is None:
+            return None
+        self._skip()
+        if self.i < len(self.s) and self.s[self.i] == "/":
+            self.i += 1
+            den = self._expr()
+            if den is None or den == 0:
+                return None
+            return sign * num / den
+        return sign * num
+
+    def _atom(self):
+        self._skip()
+        if self.i < len(self.s) and self.s[self.i] == "(":
+            self.i += 1
+            v = self._expr()
+            self._skip()
+            if self.i < len(self.s) and self.s[self.i] == ")":
+                self.i += 1
+                return v
+            return None
+        start = self.i
+        if self.i < len(self.s) and self.s[self.i] in "+-":
+            self.i += 1
+        digits = False
+        while self.i < len(self.s) and self.s[self.i].isdigit():
+            digits = True
+            self.i += 1
+        if self.i < len(self.s) and self.s[self.i] == ".":
+            self.i += 1
+            while self.i < len(self.s) and self.s[self.i].isdigit():
+                digits = True
+                self.i += 1
+        if not digits:
+            return None
+        try:
+            return Fraction(self.s[start:self.i])
+        except (ValueError, ZeroDivisionError):
+            return None
+
+
+def _eval_frac(s: str):
+    return _FracParser(s).parse()
 
 
 def parse_number(s: str) -> Fraction | None:
     s = _unwrap(s)
+    if _MIXED.search(s):
+        return None
     s = _fracs_to_slash(s)
+    if "frac" in s:
+        return None
     s = _LATEX_SCRUB.sub("", s)
     s = s.replace("\u2212", "-").replace(",", "")
+    # Evaluate paren-wrapped fractions BEFORE edge-stripping, because
+    # normalise()'s _EDGE strip removes leading "(" / trailing ")".
+    stripped = s.strip()
+    if stripped:
+        frac = _eval_frac(stripped)
+        if frac is not None:
+            return frac
     s = normalise(s)
-    if not s or not _NUMBER.match(s):
+    if not s:
+        return None
+    if not _NUMBER.match(s):
         return None
     try:
-        if "/" in s:
-            a, b = [p.strip() for p in s.split("/", 1)]
-            if not a or not b:
-                return None
-            return Fraction(int(a), int(b))
         return Fraction(s)
     except (ValueError, ZeroDivisionError):
         return None

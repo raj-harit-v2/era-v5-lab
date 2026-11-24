@@ -40,12 +40,19 @@ GPU-run options (config `train.*`, all optional):
     fail_on_lost_update  objective_v1 only, default true: raise when, of the probed trainable entries that had a
                    nonzero gradient, fewer than min_stored_update_ratio (default 0.5) changed in storage after the
                    optimizer step (a small update rounded away in bf16); false = warn and log only
-    update_mode    train (default, unchanged) | eval: old_lp and the update forward run in eval mode, the samplers' mode,
-                   so a train-only layer (an output head's vocabulary dropout) cannot put noise into the ratio. Not with dt
+    update_mode    auto (default) | train | eval | train_quiet. eval: old_lp and the update forward run in eval mode, the
+                   samplers' mode, so a train-only random layer (an output head's vocabulary dropout) cannot put noise into
+                   the ratio; not with dt. train_quiet: model.train() but every train-mode-random module (train_mode_randomness)
+                   in eval, so Deletion Tuning keeps its soft masks and the head is quiet. auto resolves from the MODULES,
+                   not a config name: no train-mode randomness -> train (the historical behaviour, identity unchanged);
+                   randomness -> eval, or train_quiet with dt. The summary records requested, resolved and why.
     logprob_gate   opt-in (true, or {mean_abs_tol: 0.01, outside_frac_tol: 0.005, eps, prompts: 1, max_new: 256}):
                    before the screen and the first update, sample k completions of the first train prompt(s) with an own
                    generator, score them as the update will and compare with the behaviour log-probs at identical
                    weights; stop with an error above the tolerance; logprob_gate.json and summary["logprob_gate"]. Not with dt
+    time_sync      default false: on CUDA, synchronize before each phase clock read so times_s splits a step exactly
+                   (sampling = rollout, scoring = reward, update = old_logprobs + train); rows then carry times_synced.
+                   Off, the clocks read host time only and queued GPU work can land in a later phase
 metrics.jsonl adds per-step timings (rollout, reward, old_logprobs, train, sync), sampled tokens and tokens/s,
 GPU memory, and the sampler/trainer mismatch. summary.json adds the paired-bootstrap CI of the held-out change,
 the trainable-weight change, and the library versions.
@@ -458,6 +465,18 @@ def length_stats(rolls, max_new: int, eos_id) -> dict:
     return {"truncated": round(cut / max(n, 1), 4), "mean_tokens": round(toks / max(n, 1), 1)}
 
 
+def phase_clock(sync_device: str | None):
+    """Clock for the per-step phase times. With a CUDA device, wait for the queued GPU work before reading the time, so
+    each phase owns its kernels (train.time_sync); without one, plain host time (the default, no added synchronization)."""
+    if sync_device is None:
+        return time.time
+
+    def clock() -> float:
+        torch.cuda.synchronize(sync_device)
+        return time.time()
+    return clock
+
+
 def gpu_memory() -> dict:
     if not torch.cuda.is_available():
         return {}
@@ -532,7 +551,34 @@ def chunked_logprobs(policy, seq: torch.Tensor, plen: int, micro_rows: int | Non
                       for i in range(0, seq.shape[0], micro_rows)], 0)
 
 
-UPDATE_MODES = ("train", "eval")
+UPDATE_MODES = ("train", "eval", "train_quiet")
+
+
+def train_mode_randomness(model) -> list[str]:
+    """Modules whose forward is random in train mode only: torch dropout with p > 0, and any module with a numeric
+    `tok_dropout` > 0 (Team 5's KASHead: vocabulary dropout on head.tok_u rows, teams/05-architecture/harness/week2/
+    kas_v2.py). Detected from the module tree, so a renamed config or arm cannot hide it."""
+    found = []
+    for name, m in model.named_modules():
+        p = getattr(m, "tok_dropout", None)
+        if isinstance(m, torch.nn.modules.dropout._DropoutNd) and float(m.p) > 0:
+            found.append(f"{name or '<model>'}: {type(m).__name__}(p={m.p})")
+        elif isinstance(p, (int, float)) and not isinstance(p, bool) and p > 0:
+            found.append(f"{name or '<model>'}: {type(m).__name__}.tok_dropout={p}")
+    return found
+
+
+def resolve_update_mode(requested, model, dt: bool) -> dict:
+    """The update mode a run uses. auto (or unset) never refuses: a refused one-shot job is a lost job."""
+    rand = train_mode_randomness(model)
+    if requested in (None, "auto"):
+        mode = ("train_quiet" if dt else "eval") if rand else "train"
+        why = ("no train-mode randomness: historical train mode" if not rand else
+               f"train-mode randomness would add noise to the ratio: {mode}" + (" (dt needs train-mode soft masks)" if dt else ""))
+    else:
+        mode, why = requested, "explicit" + (f"; WARNING train-mode randomness present and update_mode train: the ratio "
+                                             f"carries its noise" if rand and requested == "train" else "")
+    return {"requested": requested or "auto", "resolved": mode, "train_mode_randomness": rand, "reason": why}
 GATE_MEAN_ABS_TOL = 0.01      # nats; work/lpgate-2026-11-23/PREREG.md (fixed before any run)
 GATE_OUTSIDE_FRAC_TOL = 0.005  # share of real tokens whose equal-weights ratio leaves [1 - eps, 1 + eps]
 
@@ -541,8 +587,14 @@ def update_forward_mode(model, update_mode: str) -> None:
     """Module mode of the forwards that feed the ratio. "train" (default) is the trainer's historical behaviour: the update
     runs after model.train(), and old_lp in whatever mode the model is in (eval at step 1, train mode after). "eval" runs
     old_lp and the update in eval mode, the mode every sampler here uses, so train-only layers (dropout, e.g. an output
-    head's vocabulary dropout) cannot put noise into ratio = exp(new_lp - old_lp). Gradients flow the same in eval mode."""
-    model.train(update_mode == "train")
+    head's vocabulary dropout) cannot put noise into ratio = exp(new_lp - old_lp). Gradients flow the same in eval mode.
+    "train_quiet": model.train(), then every module train_mode_randomness names goes back to eval (DT soft masks stay)."""
+    model.train(update_mode != "eval")
+    if update_mode == "train_quiet":
+        names = {r.split(":")[0] for r in train_mode_randomness(model)}
+        for name, m in model.named_modules():
+            if (name or "<model>") in names:
+                m.training = False  # this module only: DT masks below it (if any) keep train mode
 
 
 def logprob_gate(policy, model, items, update_mode: str, eps: float, micro_rows: int | None,
@@ -778,9 +830,9 @@ def train(cfg: dict) -> dict:
         if t.get("tis_clip"):
             raise ValueError("objective_v1 uses the sampler ratio only as a mask; tis_clip would add IS weighting")
     tr_eps = float(t.get("tr_epsilon", grpo.TR_EPSILON))
-    update_mode = t.get("update_mode", "train")  # default: unchanged behaviour (see update_forward_mode)
-    if update_mode not in UPDATE_MODES:
-        raise ValueError(f"train.update_mode must be one of {UPDATE_MODES}")
+    update_mode = t.get("update_mode")  # None/auto: resolved from the model's modules once it is built
+    if update_mode not in (None, "auto", *UPDATE_MODES):
+        raise ValueError(f"train.update_mode must be one of {('auto',) + UPDATE_MODES}")
     if update_mode == "eval" and t.get("dt"):
         raise ValueError("train.update_mode eval is not for Deletion Tuning: its mask layers are soft only in train mode")
     gate_cfg = t.get("logprob_gate")  # opt-in identical-weights check before the first update (logprob_gate)
@@ -797,6 +849,8 @@ def train(cfg: dict) -> dict:
     cohort_k = int(t.get("cohort_eval_k", 0))
     call_steps = int(t["max_steps_this_call"]) if t.get("max_steps_this_call") else None
     max_train_s = float(t["max_train_seconds"]) if t.get("max_train_seconds") is not None else None
+    time_sync = bool(t.get("time_sync", False)) and str(device).startswith("cuda")
+    clock = phase_clock(device if time_sync else None)
     sampler_kind = t.get("sampler") or ("hf_batch" if cfg["model"]["kind"] in ("hf", "tiny_olmoe") else "policy")
     if sampler_kind == "vllm" and cfg["model"].get("init_state"):
         raise ValueError("model.init_state is incompatible with the vLLM sampler; use a sampler backed by the trainer")
@@ -833,6 +887,11 @@ def train(cfg: dict) -> dict:
     task = build_task(cfg["task"], tok, seed) if pool is None else build_task(cfg["task"], tok, seed, pool)
 
     model = policy.model
+    mode_rec = resolve_update_mode(update_mode, model, bool(t.get("dt")))
+    update_mode = mode_rec["resolved"]
+    print(json.dumps({"update_mode": mode_rec}), flush=True)
+    t = {**t, "update_mode": update_mode}  # the resolved mode is what state_identity sees (key only when != train)
+    cfg = {**cfg, "train": t}
     adapter = getattr(tok, "adapter_result", None)  # team5_adapter: one router/trainable set for everything below
     if adapter is not None:
         if t.get("trainable") or cfg.get("router_patterns") or t.get("router_trainable"):
@@ -857,6 +916,7 @@ def train(cfg: dict) -> dict:
     if adapter is not None and frozen != adapter.bundle.selection["router_names"]:
         raise RuntimeError(f"frozen routers {frozen} differ from the adapter's {adapter.bundle.selection['router_names']}")
     checksum_before = "dense model: no router" if dense else router.router_checksum(model, patterns)
+    bias_before = router.router_bias_checksum(model)
     dt_cfg, dtmask, dt_info = t.get("dt"), None, None
     if dt_cfg:  # Deletion Tuning as the RL method: the only trainable tensors are the mask logits
         if not v1 or adapter is not None or t.get("trainable"):
@@ -1173,11 +1233,11 @@ def train(cfg: dict) -> dict:
         times = {}
         random.shuffle(order)
         batch = [task.train[i] for i in order[: int(t["prompts_per_step"])]]
-        c0 = time.time()
+        c0 = clock()
         rolls = sampler.sample(batch, k, max_new, temperature, gen)
-        times["rollout"] = time.time() - c0
+        times["rollout"] = clock() - c0
         sampled_tokens = int(sum(int(r.cmask.sum()) for r in rolls))
-        c0 = time.time()
+        c0 = clock()
         groups, rewards_all, dropped, mism = [], [], 0, []
         scored = []
         sub_fn, subgroups = getattr(task, "subgroup_of", None), {}
@@ -1211,13 +1271,15 @@ def train(cfg: dict) -> dict:
                 rl_ = rewards.tolist()
                 kinds["singleton" if len(rl_) < 2 else "mixed" if max(rl_) != min(rl_) else
                       "all_one" if rl_[0] == 1.0 else "all_zero" if rl_[0] == 0.0 else "tied_other"] += 1
-        times["reward"] = time.time() - c0
+        times["reward"] = clock() - c0
         step_reasons = pop_reasons(task)
-        c0 = time.time()
+        c0 = clock()
         if dt_cfg:
             model.eval()  # hard mask: the engine-mismatch metric compares the same policy in both engines
         if update_mode == "eval":
             update_forward_mode(model, update_mode)  # old_lp in the same mode as the update and the sampler
+        elif update_mode == "train_quiet" and not dt_cfg:
+            update_forward_mode(model, update_mode)  # (with dt old_lp stays on the hard eval mask set just above)
         for p, r, adv in scored:
             if adv is None:
                 dropped += 1
@@ -1237,7 +1299,7 @@ def train(cfg: dict) -> dict:
                 groups.append((r.seq, r.cmask, adv.to(device), sampler_lp, old_lp if dt_cfg else None, len(p), None))
                 continue
             groups.append((r.seq, r.cmask, adv.to(device), old_lp, ref_lp, len(p), isw))
-        times["old_logprobs"] = time.time() - c0
+        times["old_logprobs"] = clock() - c0
         stats = {"clip_frac": 0.0, "ratio_mean": 1.0, "kl": 0.0}
         loss_val = 0.0
         step_flip = step_top1 = step_mass = None
@@ -1252,7 +1314,7 @@ def train(cfg: dict) -> dict:
             v1_rec = {"tr_epsilon": tr_eps, "group_kinds": dict(kinds), "tokens": n_tok,
                       "passes": int(sum(1 for x in rewards_all if x == 1.0)), "rollouts": len(rewards_all),
                       "ratio_source": ratio_src if groups else None, "optimizer_stepped": False}
-        c0 = time.time()
+        c0 = clock()
         if v1 and groups and n_tok > 0:
             if vllm is not None:
                 vllm.sleep()
@@ -1338,7 +1400,7 @@ def train(cfg: dict) -> dict:
         if kz is not None and device.startswith("cuda"):
             # Attribute pending optimizer work to training before timing the mask scans.
             torch.cuda.synchronize(device)
-        times["train"] = time.time() - c0
+        times["train"] = clock() - c0
         kz_rec = {}
         if kz is not None:
             c0 = time.perf_counter()
@@ -1352,19 +1414,19 @@ def train(cfg: dict) -> dict:
                     kz.check(f"step {step}")
             kz_rec["zero_share"] = round(kz.zero_share(), 6)
             times["keep_zero_checks"] = time.perf_counter() - c0
-        c0 = time.time()
+        c0 = clock()
         sync_bytes = 0
         if vllm is not None:
             vllm.wake_up()
             if groups:
                 sync_bytes = vllm.sync(sync_named())
-        times["sync"] = time.time() - c0
+        times["sync"] = clock() - c0
         rec = {"step": step, "train_reward": sum(rewards_all) / len(rewards_all), "groups_used": len(groups),
                "groups_dropped": dropped, "loss": loss_val, **stats, **v1_rec, **kz_rec,
                "sampled_tokens": sampled_tokens,
                "rollout_tokens_per_s": round(sampled_tokens / max(times["rollout"], 1e-9), 1),
                "times_s": {k_: round(v, 3) for k_, v in times.items()}, "step_s": round(sum(times.values()), 3),
-               "sync_mb": round(sync_bytes / 2**20, 1), **gpu_memory(),
+               "sync_mb": round(sync_bytes / 2**20, 1), **gpu_memory(), **({"times_synced": True} if time_sync else {}),
                "seconds": round(prior_s + time.time() - start, 1)}
         if step_reasons is not None:
             rec["reasons"] = step_reasons
@@ -1430,6 +1492,11 @@ def train(cfg: dict) -> dict:
                          "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
 
     checksum_after = "dense model: no router" if dense else router.router_checksum(model, patterns)
+    router.clear_router_bias_load(model)
+    bias_after = router.router_bias_checksum(model)
+    # pass False also when the arm's config says a bias exists but no router_bias buffer is found (job BNP)
+    bias_rec = router.router_bias_record(model, bias_before, bias_after,
+                                         adapter.bundle.spec if adapter is not None else None)
     recs = [json.loads(line) for line in metrics_path.read_text().splitlines()]
     later = recs[1:] or recs  # step 1 includes warm-up (compilation, caches); report it separately
     last = max(heldout_scores)
@@ -1438,6 +1505,8 @@ def train(cfg: dict) -> dict:
                "fp32_master_params": n_fp32, "tis_clip": tis_clip,
                "router_params_frozen": frozen, "router_checksum_before": checksum_before,
                "router_checksum_after": checksum_after, "router_unchanged": checksum_before == checksum_after,
+               "router_bias_checksum": bias_after, "router_bias_unchanged": bias_rec["pass"],
+               "router_bias_check": bias_rec,
                "heldout_reward_start": h0, "heldout_reward_end": heldout_curve[-1][1], "heldout_curve": heldout_curve,
                "heldout_change": heldout.paired_bootstrap(heldout_scores[0], heldout_scores[last], seed=seed),
                "groups_used_total": sum(r["groups_used"] for r in recs),
@@ -1470,6 +1539,11 @@ def train(cfg: dict) -> dict:
     summary["saved_trainable_weights"] = saved_weights
     if update_mode != "train":
         summary["update_mode"] = update_mode
+    summary["update_mode_resolution"] = mode_rec
+    if not summary["router_bias_unchanged"]:  # recorded with every output; the callers fail the run after writing them
+        summary.setdefault("failures", []).append(
+            f"router_bias check failed: {bias_rec['reason']}" if bias_rec["expected"] and not bias_rec["buffers"] else
+            "router_bias changed during RL: something called update_router_bias(); the bias stays as delivered")
     if gate_cfg not in (None, False):
         summary["logprob_gate"] = gate_rec
     if init_state_info:
@@ -1531,6 +1605,7 @@ def train(cfg: dict) -> dict:
         (out / "summary.json").write_text(json.dumps(summary, indent=1))
     if not summary["router_unchanged"] and not router_trainable:
         raise RuntimeError("router checksum changed during RL")
+
     return summary
 
 
@@ -1563,7 +1638,7 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps({"status": e.result.status, "reasons": e.result.reasons}))
         return 3
     print(json.dumps({k: v for k, v in s.items() if k != "heldout_curve"}))
-    return 0
+    return 4 if s.get("failures") else 0
 
 
 if __name__ == "__main__":

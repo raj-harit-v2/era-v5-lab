@@ -108,7 +108,25 @@ Text in Indian languages, in their own scripts, is 8% of every training batch.
 
 ## Evaluation
 
-[text: waiting for Evaluation]
+Evaluation tests the model on public benchmarks, and keeps benchmark items out of the training text. During
+training, Evaluation scores each checkpoint, a saved copy of the model, on a small set of benchmark questions. These
+scores do not come from the full benchmarks.
+
+During training, Evaluation uses the benchmarks MMLU and MILU. MMLU has questions on school and professional subjects,
+such as mathematics, history and law, in English. MILU has questions from Indian exams on many subjects, including
+Indian history, arts and laws. Evaluation uses its questions in Hindi, Telugu, Tamil and Bengali. Each question has
+answer choices, and the answer of the model is the choice that it rates most likely.
+
+| Benchmark | What it tests | Score | Score of a random guess | Training step |
+|---|---|---|---|---|
+| MMLU | School and professional subjects, in English | [number: waiting for TSAI] | [number: waiting for TSAI] | [number: waiting for TSAI] |
+| MILU (Hindi) | Subjects from Indian exams, in Hindi | [number: waiting for TSAI] | [number: waiting for TSAI] | [number: waiting for TSAI] |
+| MILU (Telugu) | Subjects from Indian exams, in Telugu | [number: waiting for TSAI] | [number: waiting for TSAI] | [number: waiting for TSAI] |
+| MILU (Tamil) | Subjects from Indian exams, in Tamil | [number: waiting for TSAI] | [number: waiting for TSAI] | [number: waiting for TSAI] |
+| MILU (Bengali) | Subjects from Indian exams, in Bengali | [number: waiting for TSAI] | [number: waiting for TSAI] | [number: waiting for TSAI] |
+
+Each score is in points out of 100. The check of the training text covers both benchmarks. Every file of training
+text is checked against their questions before training reads it.
 
 ## Limitations and risks
 
@@ -168,8 +186,8 @@ How to fill it:
 | Overview | Release | who made the model: yes. What the model is: no | `launch/launch_announcement_v0.md` ([#600](https://github.com/theschoolofai/era-v5-lab/pull/600), [#603](https://github.com/theschoolofai/era-v5-lab/pull/603)) | yes (the Release lead wrote this draft) |
 | Training data: the Indian-language and code-adjacent text | Data B | yes, with no edit. The problems in the code-adjacent text: no, Data B adds them later | `teams/02-data-b/model_card/training_data.md` ([#525](https://github.com/theschoolofai/era-v5-lab/pull/525)). Its source table gives the TSAI approval of each number | Data B: yes ([comment on #759](https://github.com/theschoolofai/era-v5-lab/pull/759#issuecomment-7108567909)) |
 | Training data: the general text and code | Data A | no | waiting for Data A | Data A: no |
-| Licence and attribution | Post-training, Data A, Data B | no | waiting for the Post-training text. Facts so far: `teams/10-post-training/licences/licence_table.md` | no |
-| Evaluation | Evaluation | no | waiting for the Evaluation text. Plan so far: `teams/09-evaluation/eval_schedule.md` | no |
+| Licence and attribution | Post-training, Data A, Data B | no | waiting for the Post-training text. Facts so far: `teams/10-post-training/licences/licence_table.md`. MILU is under CC BY 4.0, so this section credits its authors ([comment on #770](https://github.com/theschoolofai/era-v5-lab/pull/770#issuecomment-7123142597)) | no |
+| Evaluation | Evaluation | what Evaluation does: yes, from text that TSAI approved. The benchmarks, the table rows and the check of the training text: yes, from the Evaluation lead, with no edit. The scores: no, TSAI approves each score. Before a score from an early step goes in, check with Evaluation, because early scores can be above a random guess without any learning | the Evaluation line of `launch/launch_announcement_v0.md` ([#753](https://github.com/theschoolofai/era-v5-lab/pull/753)); the Eval-Mini panel text in `dashboard/dashboard_text_new_panels.md` and the format in `dashboard/score_text_format.md` ([#760](https://github.com/theschoolofai/era-v5-lab/pull/760)). Benchmarks and table rows: [comment on #770](https://github.com/theschoolofai/era-v5-lab/pull/770#issuecomment-7123142597). Plan: `teams/09-evaluation/eval_schedule.md` | Evaluation: yes ([comment on #770](https://github.com/theschoolofai/era-v5-lab/pull/770#issuecomment-7121407240)); the Evaluation lead sent the benchmark text |
 | Contributors | Release | yes | `launch/launch_announcement_v0.md` ([#600](https://github.com/theschoolofai/era-v5-lab/pull/600), [#603](https://github.com/theschoolofai/era-v5-lab/pull/603)) | yes (the Release lead wrote this draft) |
 | How to find more | Release | yes | the public lab repository | yes (the Release lead wrote this draft) |
 | Every other section | the owner team in `model_card_outline.md` | no | waiting for the owner team | no |

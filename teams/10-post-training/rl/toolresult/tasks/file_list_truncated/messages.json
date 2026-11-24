@@ -1,0 +1,26 @@
+[
+ {
+  "role": "system",
+  "content": "You can call tools. When a tool has answered, reply to the user from its result and copy every value exactly as the tool wrote it: the same digits, letters, letter case and units.\nTools: [{\"description\": \"List the files in a directory. Returns at most `limit` names and the total count.\", \"name\": \"list_dir\", \"parameters\": {\"properties\": {\"limit\": {\"type\": \"number\"}, \"path\": {\"type\": \"string\"}}, \"required\": [\"path\"], \"type\": \"object\"}}]"
+ },
+ {
+  "role": "user",
+  "content": "How many files are in data/raw?"
+ },
+ {
+  "role": "assistant",
+  "tool_calls": [
+   {
+    "name": "list_dir",
+    "arguments": {
+     "path": "data/raw",
+     "limit": 5
+    }
+   }
+  ]
+ },
+ {
+  "role": "tool",
+  "content": "{\"path\": \"data/raw\", \"total\": 1342, \"returned\": 5, \"truncated\": true, \"files\": [\"2026-11-01.csv\", \"2026-11-02.csv\", \"2026-11-03.csv\", \"2026-11-04.csv\", \"2026-11-05.csv\"]}"
+ }
+]

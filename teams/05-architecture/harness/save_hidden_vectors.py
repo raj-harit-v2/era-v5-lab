@@ -4,9 +4,8 @@ Team 4 asked for this to re-run its tau sweep on vectors from a real run (KE2 op
 TSAI supports it.
 
 The vectors are what ``LanguageModel.hidden`` returns at scored positions: the output of the
-last norm, which is the input of the dense untied head. Their width is the model width
-(``n_embd``), not the KE2 code width (256 * P). No projection into code space is applied here,
-because the output head is dense and TSAI has not chosen a KE2 output head.
+last norm, which is the input of the selected dense or KAS head. Their width is the model width
+(``n_embd``), not the input codec width. No projection into code space is applied here.
 
 Output, one ``.npz``:
     vectors   (N, n_embd) float32
@@ -68,7 +67,7 @@ def collect(
     autocast_context=nullcontext,
     max_batch_tokens=BATCH_TOKENS,
 ):
-    """Return (vectors, true_ids, dense head top-1 hits) for ``rows`` scored positions.
+    """Return (vectors, true_ids, selected-head top-1 hits) for ``rows`` scored positions.
 
     Windows are visited in an order fixed by ``seed``. Every scored position of a visited window
     is taken, in row order, until ``rows`` positions are held. Nothing is taken from padding.
@@ -132,7 +131,11 @@ def main():
         p.error("Output file exists; name a new file")
     manifest = json.loads((args.run / "manifest.json").read_text(encoding="utf8"))
     cfg = manifest["config"]
-    artifacts = Artifacts(args.tokenizer, args.byte_table)
+    artifacts = Artifacts(
+        args.tokenizer, args.byte_table,
+        expected_tokenizer_sha=manifest["artifacts"]["tokenizer_sha256"],
+        expected_vocab=cfg["model"]["vocab_size"],
+    )
     if artifacts.identity() != manifest["artifacts"]:
         p.error("Tokenizer or byte table differs from the ones the run used")
     device = torch.device(args.device)
@@ -172,9 +175,10 @@ def main():
         args.out,
         vectors=vectors,
         true_ids=true_ids,
-        kind="hidden_before_dense_head",
+        kind="hidden_before_kas_head" if cfg["model"].get("head_mode") == "kas_v2" else "hidden_before_dense_head",
+        head_mode=cfg["model"].get("head_mode", "dense_untied"),
         n_embd=cfg["model"]["n_embd"],
-        ke2_code_dim=256 * artifacts.pos_dim,
+        ke2_code_dim=model.embedding.projection.in_features,
         step=checkpoint["step"],
         run_status=manifest["status"],
         run_identity_sha256=manifest["identity_sha256"],
@@ -183,7 +187,8 @@ def main():
         table_content_sha256=artifacts.table_content_sha,
         text_sha256=heldout_hash,
         text_is_the_run_heldout=heldout_hash == manifest["heldout_sha256"],
-        dense_head_top1=float(hits.mean()),
+        head_top1=float(hits.mean()),
+        dense_head_top1=float(hits.mean()),  # Legacy field retained for existing readers.
         autocast="bf16" if bf16 else "none",
         seed=args.seed,
     )

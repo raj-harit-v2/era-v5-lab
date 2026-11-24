@@ -67,6 +67,17 @@ def test_resume_goes_into_the_generated_clean_config_only_when_it_is_true(repo, 
     assert sa.generated_values("clean", folders, repo, clean_spec(repo, resume=True))["resume"] is True
 
 
+def test_workers_of_the_run_config_replace_the_one_in_the_settings(repo, folders):
+    settings(repo, "job", {"workers": 4, "batch_size": 128})
+    for spec, workers in ((clean_spec(repo, workers=2), 2), (clean_spec(repo), 4)):
+        sa.build("clean", spec, folders, repo / "cfg", repo)
+        made = json.loads((repo / "cfg" / "clean.json").read_text(encoding="utf-8"))
+        assert (made["workers"], made["batch_size"]) == (workers, 128)  # the other settings are kept
+    settings(repo, "job", {})
+    sa.build("clean", clean_spec(repo), folders, repo / "cfg", repo)
+    assert "workers" not in json.loads((repo / "cfg" / "clean.json").read_text(encoding="utf-8"))
+
+
 @pytest.mark.parametrize("value", ["yes", 1, None, "true"])
 def test_resume_must_be_true_or_false(repo, folders, value):
     settings(repo, "job", {})

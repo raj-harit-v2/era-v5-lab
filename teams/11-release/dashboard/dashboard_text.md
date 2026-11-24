@@ -11,3 +11,5 @@ One plain sentence for each panel on the public dashboard. The panel names match
 | Learning Rate Schedule | This panel shows how the learning rate, which helps set the size of each model update, changes from one training step to the next. |
 | Tokens per Byte (All Text & by Language) | This panel shows how many tokens the tokenizer makes from each byte of text, for all text together and for each language. |
 | Mixture-of-Experts Load Balance | This panel shows how evenly the model spreads tokens across its routed experts, comparing the busiest expert with the average in the least balanced layer. |
+| Training Pace: Tokens per Second | This panel shows how many tokens the run processes each second. |
+| Training Pace: Step Time | This panel shows how long each training step takes. |

@@ -27,6 +27,11 @@ GraniteMoeShared has no selection bias, so the exported model would pick other e
 anyway and records the largest bias and a warning in export_report.json; A1 (and A3) then show how far routing differs
 and A1 does not stop the export.
 
+A kas_v2 checkpoint (G5 #717, `head.W_out`) exports too: the input codec x projection becomes embed_tokens [V, d], and
+the head becomes lm_head.weight = beta[L_v] * (positions_v @ W_out.T) + tok_u @ tok_c [V, d], both in token-id order.
+The head also has an output bias (head.unigram, one value per token) that GraniteMoeShared cannot carry: the export
+stops unless --drop-head-bias is given, which exports without it and records its statistics and measured effect.
+
 --verify N runs test A1 of section 12: N random prompts through G5's model and through `transformers`'
 GraniteMoeSharedForCausalLM loaded from the export, both fp32 on CPU. It exits 1 unless the largest logit
 difference is below --verify-tol and the top-1 token is the same at every position.
@@ -63,7 +68,7 @@ def router_bias_report(state: dict, spec: dict) -> dict:
     layer = max(worst, key=worst.get) if worst else None
     gamma = spec['moe'].get('bias_gamma')
     return dict(present=bool(keys), max_abs=worst[layer] if layer else 0.0, layer=layer, bias_gamma=gamma,
-                active=bool(layer and worst[layer] > 0 and gamma != 0))
+                active=bool(layer and worst[layer] > 0 and gamma))  # G5 reads a missing bias_gamma as 0
 
 
 def file_sha256(path) -> str:
@@ -122,7 +127,8 @@ def load_spec(path: Path | None) -> dict:
 
 def resolve_spec(state: dict, given: dict) -> dict:
     """The full harness spec: sizes from the tensor shapes, the rest from `given`. Stops on anything not exportable."""
-    known = ('embedding.', 'blocks.', 'norm.weight', 'head.weight', 'mtp_head.weight')
+    kas = is_kas(state)
+    known = ('embedding.', 'blocks.', 'norm.weight', 'mtp_head.weight') + (('head.', 'codec.') if kas else ('head.weight',))
     strange = sorted(k for k in state if not k.startswith(known))
     if strange:
         sys.exit(f'not a G5 LanguageModel checkpoint: unknown tensors {strange[:5]}')
@@ -131,7 +137,7 @@ def resolve_spec(state: dict, given: dict) -> dict:
         hit = [k for k in state if part in k or k.endswith(part)]
         if hit:
             sys.exit(f'cannot export {why}: {hit[0]}; {UNSUPPORTED}')
-    vocab, width = state['head.weight'].shape
+    vocab, width = (state['head.unigram'].shape[0], state['head.W_out'].shape[0]) if kas else state['head.weight'].shape
     n_layer = 1 + max(int(k.split('.')[1]) for k in state if k.startswith('blocks.'))
     moe = 'blocks.0.moe.'
     n_exp = state[moe + 'router.weight'].shape[0]
@@ -153,7 +159,9 @@ def resolve_spec(state: dict, given: dict) -> dict:
                 rope_theta=float(given['rope_theta']), norm_eps=float(given['norm_eps']),
                 block_size=int(given.get('block_size') or 0), mtp='mtp_head.weight' in state,
                 moe=dict(num_experts=n_exp, num_shared=n_shared, top_k=int(given['moe']['top_k']), ffn_hidden=hidden, bias=False,
-                         bias_gamma=given['moe'].get('bias_gamma')))
+                         bias_gamma=given['moe'].get('bias_gamma')),
+                **(dict(head_mode='kas_v2', ke_max_pos=int(state['embedding.rows'].shape[1]),
+                        **({'kas_prior': given['kas_prior']} if given.get('kas_prior') else {})) if kas else {}))
     # the spec must not contradict the tensors: a wrong spec file would export a different model silently
     for key, got in (('vocab_size', vocab), ('n_embd', width), ('n_layer', n_layer), ('n_kv_head', n_kv)):
         if given.get(key) not in (None, got):
@@ -166,9 +174,57 @@ def resolve_spec(state: dict, given: dict) -> dict:
     return spec
 
 
-def fold_ke2(state: dict, width: int, chunk: int = 8192):
+def is_kas(state: dict) -> bool:
+    """A kas_v2 checkpoint (G5 #717): the codec, a 2,048-wide input projection and the KAS head instead of head.weight."""
+    return 'head.W_out' in state
+
+
+def kas_codec(state: dict):
+    """The harness' fixed codec, checked against the constants stored in the checkpoint."""
+    import torch
+    sys.path.insert(0, str(HARNESS))
+    from week2.kas_v2 import KASCodec
+    codec = KASCodec()
+    for k in ('G', 'Phi'):
+        if 'codec.' + k in state and not torch.equal(state['codec.' + k].double(), getattr(codec, k)):
+            sys.exit(f'codec.{k} of the checkpoint differs from the public #765 fixture: not the KAS V2 codec')
+    return codec
+
+
+def fold_kas_input(state: dict, width: int, chunk: int = 8192, dtype=None):
+    """KAS input: byte codes (2,048) times the projection, for every id, by running the harness' KASInput in float64."""
+    import torch
+    sys.path.insert(0, str(HARNESS))
+    from week2.kas_v2 import KASInput
+    codec = kas_codec(state)
+    rows, lengths = state['embedding.rows'], state['embedding.lengths']
+    inp = KASInput(rows, lengths, width, codec).double()
+    inp.projection.weight.data.copy_(state['embedding.projection.weight'].double())
+    with torch.no_grad():
+        return torch.cat([inp(torch.arange(i, min(i + chunk, len(rows)))).to(dtype or torch.float32) for i in range(0, len(rows), chunk)])
+
+
+def fold_kas_head(state: dict, chunk: int = 8192, dtype=None):
+    """KAS head -> (weight [V, d] in the original id order, bias [V]): logits = h @ weight.T + bias, exactly (float64):
+    weight = beta[L_v] * (positions_v @ W_out.T) + tok_u @ tok_c, bias = unigram (G5's own identity in test_week2_kas_consumers)."""
+    import torch
+    codec = kas_codec(state)
+    rows, lengths = state['embedding.rows'], state['embedding.lengths'].long()
+    W, beta, U, C = (state[k].double() for k in ('head.W_out', 'head.beta', 'head.tok_u', 'head.tok_c'))
+    with torch.no_grad():
+        parts = []
+        for i in range(0, len(rows), chunk):
+            j = min(i + chunk, len(rows))
+            pos = codec.positions(rows[i:j], lengths[i:j]).reshape(j - i, -1)
+            parts.append((beta[lengths[i:j], None] * (pos @ W.t()) + U[i:j] @ C).to(dtype or torch.float32))
+        return torch.cat(parts), state['head.unigram'].to(dtype or torch.float32)
+
+
+def fold_ke2(state: dict, width: int, chunk: int = 8192, dtype=None):
     """9.1: the embedding of every id, from the harness module itself (so it includes its eps and std convention)."""
     import torch
+    if is_kas(state):
+        return fold_kas_input(state, width, chunk, dtype)
     sys.path.insert(0, str(HARNESS))
     from week2.model import KE2
     rows, lengths = state['embedding.rows'], state['embedding.lengths']
@@ -191,7 +247,7 @@ def convert_state(state: dict, spec: dict) -> dict:
     import torch
     f = lambda k: state[k].float()
     out = {'model.embed_tokens.weight': fold_ke2(state, spec['n_embd']),
-           'model.norm.weight': f('norm.weight'), 'lm_head.weight': f('head.weight')}
+           'model.norm.weight': f('norm.weight'), 'lm_head.weight': fold_kas_head(state)[0] if is_kas(state) else f('head.weight')}
     E, S = spec['moe']['num_experts'], spec['moe']['num_shared']
     for i in range(spec['n_layer']):
         g, h = f'blocks.{i}.', f'model.layers.{i}.'
@@ -243,16 +299,33 @@ def verify(state: dict, spec: dict, config, new_state: dict, n_prompts: int, tol
     T = min(spec['block_size'] or 64, 64)
     gen = torch.Generator().manual_seed(seed)
     worst, same, total = 0.0, 0, 0
+    kas = is_kas(state)
+    eff = dict(same_top1=0, max_abs_logit_diff=0.0, kl_nats_sum=0.0)
     with torch.no_grad():
         for _ in range(n_prompts):
             ids = torch.randint(0, spec['vocab_size'], (1, T), generator=gen)
             a = ref(ids, torch.ones_like(ids, dtype=torch.bool))
             b = hf(input_ids=ids).logits
+            if kas:   # the HF head has no output bias: A1 tests the fold without it, and the bias effect is measured apart
+                full = a
+                a = a - state['head.unigram'].float()
+                eff['same_top1'] += (full.argmax(-1) == b.argmax(-1)).sum().item()
+                eff['max_abs_logit_diff'] = max(eff['max_abs_logit_diff'], (full - b).abs().max().item())
+                eff['kl_nats_sum'] += torch.nn.functional.kl_div(b.log_softmax(-1), full.log_softmax(-1), log_target=True,
+                                                                 reduction='sum').item()
             worst = max(worst, (a - b).abs().max().item())
-            same += (a.argmax(-1) == b.argmax(-1)).sum().item()
+            # a position whose two best logits are within 2 x tol may flip within the tolerance, so it does not count against top-1
+            top2 = a.topk(2, dim=-1).values
+            same += ((a.argmax(-1) == b.argmax(-1)) | (top2[..., 0] - top2[..., 1] <= 2 * tol)).sum().item()
             total += T
-    return dict(test='A1', prompts=n_prompts, tokens_per_prompt=T, max_abs_logit_diff=worst, tolerance=tol,
-                same_top1=same, positions=total, passed=bool(worst <= tol and same == total))
+    out = dict(test='A1', prompts=n_prompts, tokens_per_prompt=T, max_abs_logit_diff=worst, tolerance=tol,
+               same_top1=same, positions=total, passed=bool(worst <= tol and same == total))
+    if kas:
+        out['head_bias_effect'] = dict(
+            note='G5 model with its unigram bias against the export without it, same random prompts and random ids: not a trained model',
+            same_top1=eff['same_top1'], positions=total, max_abs_logit_diff=eff['max_abs_logit_diff'],
+            mean_kl_nats=eff['kl_nats_sum'] / total)
+    return out
 
 
 def token_id(tokenizer_json: Path, token: str):
@@ -263,7 +336,7 @@ def token_id(tokenizer_json: Path, token: str):
 
 def export(checkpoint: Path, out: Path, spec_path: Path | None = None, tokenizer: Path | None = None,
            bos: str = '<|begin_of_text|>', eos: str = '<|endoftext|>', pad: str = '<|pad|>', dtype: str = 'bf16',
-           n_verify: int = 0, tol: float = 1e-3, drop_router_bias: bool = False) -> dict:
+           n_verify: int = 0, tol: float = 1e-3, drop_router_bias: bool = False, drop_head_bias: bool = False) -> dict:
     import torch
     from safetensors.torch import save_file
     from transformers import GraniteMoeSharedForCausalLM
@@ -276,6 +349,15 @@ def export(checkpoint: Path, out: Path, spec_path: Path | None = None, tokenizer
                  f'The router_bias picks the experts in G5, and GraniteMoeShared (Hugging Face and llama.cpp) has no selection bias, '
                  f'so the exported model would route differently from the checkpoint. --drop-router-bias exports anyway; '
                  f'A1 and A3 then show the difference.')
+    kas_bias = None
+    if is_kas(state):
+        u = state['head.unigram'].float()
+        kas_bias = dict(max_abs=float(u.abs().max()), std=float(u.std()), mean=float(u.mean()), min=float(u.min()), max=float(u.max()))
+        if kas_bias['max_abs'] > 0 and not drop_head_bias:
+            sys.exit(f'refusing: the KAS V2 head has an output bias (head.unigram, one value per token, largest absolute value '
+                     f'{kas_bias["max_abs"]:.3g}, std {kas_bias["std"]:.3g}), and GraniteMoeShared (Hugging Face and llama.cpp) has no lm_head bias. '
+                     f'The exported model would score every token without its log prior. --drop-head-bias exports anyway and records '
+                     f'the bias statistics and its measured effect in export_report.json.')
     ids = {name: token_id(tokenizer, tok) if tokenizer else None for name, tok in (('bos', bos), ('eos', eos), ('pad', pad))}
     if tokenizer:
         n_tok = 1 + max(max(json.loads(Path(tokenizer).read_text(encoding='utf-8'))['model']['vocab'].values()),
@@ -296,17 +378,25 @@ def export(checkpoint: Path, out: Path, spec_path: Path | None = None, tokenizer
         sys.exit(f'export does not match transformers\' GraniteMoeSharedForCausalLM: {diff[:5]}')
     report = dict(checkpoint=str(weights), checkpoint_sha256=file_sha256(weights), spec=spec, dtype=dtype,
                   parameters=sum(v.numel() for v in new_state.values()),
-                  dropped=sorted(k for k in state if k == 'mtp_head.weight' or k.startswith('embedding.') or k.endswith('.router_bias')),
+                  dropped=sorted(k for k in state if k == 'mtp_head.weight' or k.startswith(('embedding.', 'codec.')) or k.endswith('.router_bias') or (kas_bias is not None and k.startswith('head.'))),
                   token_ids=ids)
     report['router_bias'] = dict(
         rb, action=('absent from the checkpoint' if not rb['present'] else 'dropped with --drop-router-bias' if rb['active']
-                    else 'dropped: all zero' if rb['max_abs'] == 0 else 'dropped: bias_gamma is 0, so it never picked an expert'),
+                    else 'dropped: all zero' if rb['max_abs'] == 0 else 'dropped: bias_gamma is 0 or not set, so it never picked an expert'),
         **({'warning': f'routing differs from the checkpoint: {rb["layer"]} has max |router_bias| {rb["max_abs"]:.3g} (bias_gamma '
                        f'{rb["bias_gamma"]}), which GraniteMoeShared cannot represent. Read A1 and A3 with that in mind.'}
            if rb['active'] else {}))
     if rb['active']: print('WARNING:', report['router_bias']['warning'], flush=True)
+    if kas_bias is not None:
+        report['kas_v2'] = dict(folded='input codec x projection -> embed_tokens [V, d]; head -> lm_head.weight [V, d] in id order',
+                                head_bias=dict(kas_bias, action='dropped with --drop-head-bias' if kas_bias['max_abs'] > 0 else 'all zero, dropped',
+                                               **({'warning': 'the export has no unigram output bias: logits differ from the checkpoint by head.unigram '
+                                                              '(see verify.head_bias_effect)'} if kas_bias['max_abs'] > 0 else {})))
+        if kas_bias['max_abs'] > 0: print('WARNING:', report['kas_v2']['head_bias']['warning'], flush=True)
     if n_verify:
         report['verify'] = verify(state, spec, config, new_state, n_verify, tol)
+        if kas_bias is not None and 'head_bias_effect' in report['verify']:
+            report['kas_v2']['head_bias']['effect'] = report['verify']['head_bias_effect']
         v = report['verify']
         print(f'A1: max logit difference {v["max_abs_logit_diff"]:.3g} (limit {tol:g}), same top-1 on '
               f'{v["same_top1"]}/{v["positions"]} positions: {"PASS" if v["passed"] else "FAIL"}', flush=True)
@@ -348,8 +438,10 @@ def main():
     ap.add_argument('--verify-tol', type=float, default=1e-3, help='largest fp32 logit difference allowed in A1')
     ap.add_argument('--drop-router-bias', action='store_true', help='export a checkpoint whose router_bias is not zero, '
                     'although the exported model routes differently (recorded in export_report.json)')
+    ap.add_argument('--drop-head-bias', action='store_true', help='export a KAS V2 checkpoint without its output bias (head.unigram), '
+                    'which GraniteMoeShared cannot carry; the bias statistics and effect go to export_report.json')
     a = ap.parse_args()
-    export(a.checkpoint, a.out, a.spec, a.tokenizer, a.bos, a.eos, a.pad, a.dtype, a.verify, a.verify_tol, a.drop_router_bias)
+    export(a.checkpoint, a.out, a.spec, a.tokenizer, a.bos, a.eos, a.pad, a.dtype, a.verify, a.verify_tol, a.drop_router_bias, a.drop_head_bias)
 
 
 if __name__ == '__main__':

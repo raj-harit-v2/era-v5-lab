@@ -162,9 +162,9 @@ class RouterBiasTests(unittest.TestCase):
     def tearDown(self):
         self.tmp.cleanup()
 
-    def run_folder(self, gamma=0.001, bias=None, old=False):
+    def run_folder(self, gamma=0.001, bias=None, old=False):  # gamma None: the manifest has no bias_gamma
         """bias: value added to the experts of every layer, as [0, x, 0, ...]. old: the state has no router_bias (before #748)."""
-        m = spec(moe=dict(bias_gamma=gamma))
+        m = spec(moe={} if gamma is None else dict(bias_gamma=gamma))
         model = random_model(m)
         state = model.state_dict()
         keys = [k for k in state if k.endswith('.router_bias')]
@@ -211,11 +211,87 @@ class RouterBiasTests(unittest.TestCase):
         r = self.export(self.run_folder(gamma=0.0, bias=0.5))
         self.assertTrue(r['verify']['passed']); self.assertIn('bias_gamma is 0', r['router_bias']['action'])
 
+    def test_nonzero_bias_without_bias_gamma_never_routed_so_it_is_dropped(self):
+        r = self.export(self.run_folder(gamma=None, bias=0.5))
+        self.assertTrue(r['verify']['passed']); self.assertIn('bias_gamma is 0 or not set', r['router_bias']['action'])
+
     def test_a_really_missing_weight_still_fails(self):
         m = spec(); model = random_model(m); state = model.state_dict()
         del state['blocks.0.attn.q.weight']
         with self.assertRaises(RuntimeError):
             export_hf.load_reference(random_model(m), state)
+
+
+FIXTURE = HERE.parents[1] / '04-ke2/fixtures/kas_v2'
+
+
+class KasV2Tests(unittest.TestCase):
+    """G5 #717: the KAS V2 input codec and head fold into a plain embedding table and a linear head (bias = unigram)."""
+    @classmethod
+    def setUpClass(cls):
+        sys.path.insert(0, str(FIXTURE))
+        import check_kas_v2_fixture as fx
+        cls.z = np.load(fx.NPZ, allow_pickle=False)
+        z, T = cls.z, torch.from_numpy
+        cls.state = {'codec.G': T(z['G']), 'codec.Phi': T(z['Phi']), 'embedding.rows': T(z['bytes']), 'embedding.lengths': T(z['lengths']),
+                     'embedding.projection.weight': T(z['W_proj'].T.copy()), 'head.W_out': T(z['W_out']), 'head.beta': T(z['beta']),
+                     'head.unigram': T(z['unigram']), 'head.tok_u': T(z['tok_u']), 'head.tok_c': T(z['tok_c'])}
+
+    def test_folded_embedding_is_the_fixtures_E(self):
+        E = export_hf.fold_ke2(self.state, 32, dtype=torch.float64).numpy()
+        self.assertLess(np.abs(E - self.z['E']).max(), 1e-10)
+
+    def test_folded_head_is_the_fixtures_logits_with_the_bias_and_without_it_is_off_by_the_unigram(self):
+        W, b = export_hf.fold_kas_head(self.state, dtype=torch.float64)
+        h = torch.from_numpy(self.z['h'])
+        self.assertLess((h @ W.T + b - torch.from_numpy(self.z['logits'])).abs().max().item(), 1e-10)
+        self.assertEqual(tuple(W.shape), (48, 32))   # [V, d], in the fixture's (id) order
+        no_bias = h @ W.T - torch.from_numpy(self.z['logits'])
+        self.assertLess((no_bias + b).abs().max().item(), 1e-10)   # what dropping the bias costs is exactly -unigram
+
+    def test_other_codec_constants_are_refused(self):
+        bad = dict(self.state, **{'codec.G': self.state['codec.G'] * 2})
+        with self.assertRaises(SystemExit):
+            export_hf.fold_kas_head(bad)
+
+    def test_kas_checkpoint_is_recognised_and_old_one_is_not(self):
+        self.assertTrue(export_hf.is_kas(self.state)); self.assertFalse(export_hf.is_kas({'head.weight': 0}))
+
+
+class KasExportTests(unittest.TestCase):
+    """A small random kas_v2 model on the real p1536 vocabulary size (the prior needs 131,072 ids)."""
+    @classmethod
+    def setUpClass(cls):
+        cls.m = spec(vocab_size=131072, head_mode='kas_v2', moe=dict(bias_gamma=0.0))
+        cls.model = random_model(cls.m)
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory(); self.dir = Path(self.tmp.name)
+        run = self.dir / 'run'; run.mkdir()
+        torch.save({'model': self.model.state_dict(), 'step': 3}, run / 'checkpoint.pt')
+        (run / 'manifest.json').write_text(json.dumps({'config': {'model': self.m}}), encoding='utf-8')
+        self.run = run
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def test_without_the_flag_the_output_bias_stops_the_export(self):
+        with self.assertRaises(SystemExit) as c:
+            quiet_export(self.run, self.dir / 'hf', dtype='fp32')
+        for part in ('head.unigram', 'no lm_head bias', '--drop-head-bias'):
+            self.assertIn(part, str(c.exception))
+
+    def test_flag_exports_a_table_and_a_head_that_match_g5_without_the_bias(self):
+        r = quiet_export(self.run, self.dir / 'hf', dtype='fp32', n_verify=2, tol=1e-4, drop_head_bias=True)
+        self.assertTrue(r['verify']['passed'], r['verify'])            # the fold is exact; only the bias is missing
+        hb = r['kas_v2']['head_bias']
+        self.assertEqual(hb['action'], 'dropped with --drop-head-bias'); self.assertGreater(hb['max_abs'], 0)
+        self.assertIn('same_top1', hb['effect']); self.assertIn('warning', hb)
+        self.assertGreater(hb['effect']['max_abs_logit_diff'], 0)       # the bias is not nothing
+        from safetensors.torch import load_file
+        t = load_file(str(self.dir / 'hf' / 'model.safetensors'))
+        self.assertEqual(tuple(t['lm_head.weight'].shape), (131072, 32)); self.assertEqual(tuple(t['model.embed_tokens.weight'].shape), (131072, 32))
+        self.assertNotIn('lm_head.bias', t)
 
 
 if __name__ == '__main__':

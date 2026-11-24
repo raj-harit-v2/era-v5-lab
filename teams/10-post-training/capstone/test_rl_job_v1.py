@@ -180,6 +180,49 @@ def test_logprob_gate_on_by_default_and_update_mode_switch(tmp_path):
         _full_args(tmp_path, update_mode="inference")
 
 
+def test_sampler_stays_policy_by_default_and_g5_batch_and_time_sync_are_opt_in(tmp_path):
+    t = yaml.safe_load(job.write_train_config(_full_args(tmp_path), tmp_path, None, None, 1234.0, 64).read_text())["train"]
+    assert t["sampler"] == "policy" and "sampler_max_rows" not in t and "time_sync" not in t  # default config unchanged
+    a = job.parse_args(["--g5-root", "g", "--run-folder", "r", "--tokenizer", "t", "--byte-table", "b", "--rl-tasks", "cc.jsonl",
+                        "--train-pool", "tp", "--heldout-pool", "hp", "--device", "cpu", "--out", str(tmp_path),
+                        "--sampler", "g5_batch", "--sampler-max-rows", "64", "--time-sync"])
+    t = yaml.safe_load(job.write_train_config(a, tmp_path, None, None, 1234.0, 64).read_text())["train"]
+    assert (t["sampler"], t["sampler_max_rows"], t["time_sync"]) == ("g5_batch", 64, True)
+    with pytest.raises(SystemExit):
+        _full_args(tmp_path, sampler="vllm")
+
+
+def test_rate_probe_under_g5_batch_times_one_batched_decode_of_the_probe_prompts(tmp_path):
+    torch = pytest.importorskip("torch")
+    tasks = tmp_path / "cc.jsonl"
+    tasks.write_text("".join(json.dumps({"id": i, "statement": s}) + "\n"
+                             for i, s in (("a", "xx"), ("b", "xxxx"), ("long", "x" * 60))))
+
+    class Codec:
+        def encode_prompt(self, text):
+            return list(range(len(text)))
+
+    class Bundle:
+        spec = {"block_size": 64}
+        calls = []
+
+        def codec(self):
+            return Codec()
+
+        def sample_many(self, prompts, k, max_new, temperature, gen):
+            self.calls.append((prompts, k, max_new, temperature))
+
+    b = Bundle()
+    a = _full_args(tmp_path, sampler="g5_batch", k=2, max_new=100)
+    a.rl_tasks = tasks
+    rep = job.batched_rate(a, b, ["a", "b", "long", "missing"])
+    # one decode over every prompt that leaves 16 tokens of room ("long" does not, "missing" is not in the file);
+    # max_new is cut to the room the longest kept prompt leaves (64 - 4)
+    assert len(b.calls) == 1 and [len(p) for p in b.calls[0][0]] == [2, 4] and b.calls[0][1:] == (2, 60, 1.0)
+    assert rep["prompts"] == 2 and rep["sampler"] == "g5_batch" and rep["max_new"] == 60
+    assert rep["decode_seconds_per_prompt"] == pytest.approx(rep["seconds"] / 2, abs=0.01)
+
+
 def test_detector_counts_literal_prints_only_in_heldout_evaluations(tmp_path):
     """train.evaluate / train.score_completions are patched in place; train.py is unchanged. Stand-in module, no model."""
     class Task:
@@ -341,3 +384,14 @@ def test_sampler_flag_defaults_to_policy_and_writes_g5_batch_config(tmp_path):
     assert cfg_b["train"]["sampler"] == "g5_batch"
     assert cfg_b["train"]["sampler_max_rows"] == 64
 
+
+
+def test_micro_rows_defaults_to_1_and_0_means_the_whole_group(tmp_path):
+    """Job RLG: the update of a whole group of 8 x 2,048 tokens does not fit (10.2 GiB for one row on a T4), so the
+    config carries micro_rows 1 unless the job says otherwise; 0 leaves the key out (train.py: the whole group)."""
+    t = yaml.safe_load(job.write_train_config(_full_args(tmp_path), tmp_path, None, None, 1234.0, 64).read_text())["train"]
+    assert t["micro_rows"] == 1
+    t = yaml.safe_load(job.write_train_config(_full_args(tmp_path, micro_rows=2), tmp_path, None, None, 1234.0, 64).read_text())["train"]
+    assert t["micro_rows"] == 2
+    t = yaml.safe_load(job.write_train_config(_full_args(tmp_path, micro_rows=0), tmp_path, None, None, 1234.0, 64).read_text())["train"]
+    assert "micro_rows" not in t

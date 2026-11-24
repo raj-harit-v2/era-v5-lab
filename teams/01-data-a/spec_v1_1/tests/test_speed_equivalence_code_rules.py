@@ -175,10 +175,10 @@ def test_a4_the_rule_in_clean_py_acts_only_on_the_code_packs_and_equals_the_old_
 # =====================================================================================================================
 
 def a6_reference():
-    """DA-A6-001 as it was before its speed-up (clean.py 716c9a90093f, specv1_1.md medicine 3): MIXED is run on every text."""
+    """DA-A6-001 without its speed guard, with the #86 consecutive-Cyrillic exclusion (clean.py 716c9a90093f, specv1_1.md medicine 3): MIXED is run on every text."""
     HOMO = str.maketrans("аеорсухіјѕАВЕКМНОРСТХІЈЅ",
                          "aeopcyxijsABEKMHOPCTXIJS")
-    MIXED = re.compile(r"\b(?=\w*[A-Za-z])(?=\w*[Ѐ-ӿ])\w+\b")
+    MIXED = re.compile(r"\b(?=\w*[A-Za-z])(?=\w*[Ѐ-ӿ])(?!\w*[Ѐ-ӿ]{2})\w+\b")
 
     def medicine_a6(doc):
         t = MIXED.sub(lambda m: m.group().translate(HOMO), doc["text"])
@@ -198,7 +198,7 @@ def test_a6_the_patterns_are_the_old_ones():
 def test_a6_the_guard_range_is_the_range_of_mixed_and_every_match_holds_one():
     assert A6_NEW["CYRILLIC"].pattern == "[Ѐ-ӿ]"
     assert "[Ѐ-ӿ]" in A6_OLD["MIXED"].pattern
-    for t in ("pаss", "Ѐa", "aӿ", "x_і_y", "abас"):
+    for t in ("pаss", "Ѐa", "aӿ", "x_і_y"):
         m = A6_OLD["MIXED"].search(t)
         assert m and A6_NEW["CYRILLIC"].search(m.group())
 

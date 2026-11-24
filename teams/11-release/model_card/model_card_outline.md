@@ -47,7 +47,7 @@ The draft of the model card is `model_card_v0.md`. Each section there has the te
 | Alignment | How the lab trained the model on checked scores of its own answers, and how it scores tasks with no test | Post-training | empty | OK @saitej123 |
 | Quantized versions | The smaller versions of the model, and what they lose | Quantization | empty | OK @SreekanthZipsy |
 | Serving | How to run the model and chat with it in the lab's chat format, and how the smaller formats were checked against the full model | Quantization | empty | OK @SreekanthZipsy |
-| Evaluation | The benchmarks, and the scores that TSAI approves | Evaluation | empty | OK @rahulni |
+| Evaluation | The benchmarks, and the scores that TSAI approves | Evaluation | in progress | OK @rahulni |
 | Limitations and risks | What the model gets wrong, and the known risks | Evaluation, Release | empty | Evaluation OK @rahulni; Release OK @pyru |
 | Licence and attribution | The licence of the model, and credit for each data source | Post-training, Data A, Data B | empty | Post-training OK @saitej123; Data A OK @patilvijay23; Data B OK @shankarpandala |
 | Contributors | The teams that did the work, with no person names | Release | in progress | Release OK @pyru |

@@ -382,7 +382,9 @@ def env_manifest(config_path: str = None, code_paths=()) -> dict:
         "torch": torch.__version__,
         "numpy": np.__version__,
         "cuda": torch.version.cuda or "none",
-        "nccl": ".".join(map(str, torch.cuda.nccl.version())) if torch.cuda.is_available() else "none",
+        "nccl": ".".join(map(str, torch.cuda.nccl.version()))
+        if torch.cuda.is_available() and torch.distributed.is_available() and torch.distributed.is_nccl_available()
+        else "none",  # CUDA also exists on single-process Windows builds without NCCL.
         "tokenizer_sha": os.environ.get("TOKENIZER_SHA", "unknown"),
         "config_sha256": sha256_file(config_path) if config_path and os.path.exists(config_path) else "none",
         # Found in the Docker test: OMP_NUM_THREADS changes the last bits of the loss on CPU even with

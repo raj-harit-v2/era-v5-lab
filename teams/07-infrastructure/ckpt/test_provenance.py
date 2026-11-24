@@ -13,6 +13,7 @@ import sys
 from pathlib import Path
 
 import pytest
+import torch
 
 TEAM = Path(__file__).resolve().parents[1]
 REPO = TEAM.parents[1]
@@ -26,6 +27,36 @@ needs_git = pytest.mark.skipif(not HEAD, reason="needs a git checkout")
 # Prints env_manifest() as JSON. Run from another folder to prove the cwd does not matter.
 PRINT_ENV = f"import sys, json; sys.path.insert(0, {str(TEAM)!r}); from ckpt.ckpt import env_manifest; " \
             "print(json.dumps(env_manifest()))"
+
+
+def test_cuda_without_nccl_can_record_checkpoint_environment(monkeypatch):
+    monkeypatch.setattr(torch.cuda, "is_available", lambda: True)
+    monkeypatch.setattr(torch.distributed, "is_available", lambda: True)
+    monkeypatch.setattr(torch.distributed, "is_nccl_available", lambda: False)
+
+    def unavailable():
+        raise AssertionError("CUDA-only builds must not query an absent NCCL backend")
+
+    monkeypatch.setattr(torch.cuda.nccl, "version", unavailable)
+    assert env_manifest()["nccl"] == "none"
+
+
+def test_available_nccl_version_is_preserved(monkeypatch):
+    monkeypatch.setattr(torch.cuda, "is_available", lambda: True)
+    monkeypatch.setattr(torch.distributed, "is_available", lambda: True)
+    monkeypatch.setattr(torch.distributed, "is_nccl_available", lambda: True)
+    monkeypatch.setattr(torch.cuda.nccl, "version", lambda: (2, 21, 5))
+    assert env_manifest()["nccl"] == "2.21.5"
+
+
+def test_cpu_environment_does_not_query_nccl(monkeypatch):
+    monkeypatch.setattr(torch.cuda, "is_available", lambda: False)
+
+    def unavailable():
+        raise AssertionError("CPU environment must not query NCCL")
+
+    monkeypatch.setattr(torch.cuda.nccl, "version", unavailable)
+    assert env_manifest()["nccl"] == "none"
 
 
 def env_in_subprocess(tmp_path, **extra):

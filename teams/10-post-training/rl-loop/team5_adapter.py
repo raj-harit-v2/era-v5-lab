@@ -66,6 +66,10 @@ RUN_FOLDER_ORIGINS = ("g10_rehearsal", "g5_delivery")
 # Files Team 5's train_week2.py hashes into manifest["sources"] (by basename) that must equal the pinned import.
 RUN_FOLDER_SOURCE_FILES = {"train_week2.py": "harness/train_week2.py", "model.py": "harness/week2/model.py",
                            "config.py": "harness/week2/config.py", "artifacts.py": "harness/week2/artifacts.py"}
+# Compared too when the run's manifest recorded them (Team 5 hashes every week2/*.py, train_week2.py:406): the KAS V2 head
+# and input (#717). A changed head forward would otherwise load cleanly and pass a probe computed with the same new code.
+RUN_FOLDER_SOURCE_FILES_IF_RECORDED = {"kas_v2.py": "harness/week2/kas_v2.py", "kas_terms.py": "harness/week2/kas_terms.py",
+                                       "unigram.py": "harness/week2/unigram.py", "raw_vocab.py": "harness/week2/raw_vocab.py"}
 
 FIXTURE_MARKER_KEY = "g10_fixture"  # top-level key in a .pt dict / safetensors metadata key
 FIXTURE_MARKER_VALUE = "FIXTURE_NOT_A_G5_ARTIFACT"
@@ -345,10 +349,9 @@ def head_access(model) -> dict:
     """What G10 code needs from G5's output head. Two kinds are known; anything else raises ArtifactError.
 
     dense: dry run 1's untied `nn.Linear(n_embd, V)`; per-token matrix `head.weight` [V, n_embd].
-    kas:   Team 5's KE2/KAS untied head (#694/#702/#706), recognised by a 2-D Parameter `head.tok_u` [V, r] (the
-           rank-r per-token correction). Before Team 5's code lands this rests on two assumptions: `head(h)` maps
-           hidden states [..., n_embd] to logits [..., V] (Team 5's own trainer calls it that way), and the
-           correction is named `tok_u`.
+    kas:   Team 5's KAS V2 untied head (#717, kas_v2.KASHead), recognised by a 2-D Parameter `head.tok_u` [V, 64] (the
+           rank-64 per-token correction). Per token it owns `tok_u[v]` and `unigram[v]`; `W_out`, `tok_c`, `beta` are
+           shared; there is no `head.weight`. `head(h)` maps [..., n_embd] to [..., V].
     Returns {"kind", "vocab_size", "per_token" (Parameter whose row i belongs to token i), "per_token_name", "tied"};
     "tied" is True when any head tensor shares storage with the input embedding.
     """
@@ -369,6 +372,25 @@ def head_access(model) -> dict:
     return {"kind": kind, "vocab_size": vocab, "per_token": per_token, "per_token_name": name, "tied": tied}
 
 
+def router_state(model, moe_cls) -> dict:
+    """Team 5's loss-free balancer (#748): the expert choice is topk(scores + router_bias) only when moe.bias_gamma != 0;
+    with gamma 0 the buffer is ignored. A non-zero bias under gamma 0 is never valid: the delivered model routed with the
+    bias, this one would not, and nothing else errors (job ADP test h). Our trainers never call update_router_bias(), so the
+    bias stays as delivered (the owner's rule, 23 Nov: "The bias stays as delivered. Do not keep updating it in SFT or RL")."""
+    layers = [(n, m) for n, m in model.named_modules() if isinstance(m, moe_cls)]
+    bad = [n for n, m in layers if getattr(m, "balance_gamma", 0.0) == 0.0 and isinstance(getattr(m, "router_bias", None),
+                                                                                         torch.Tensor)
+           and bool(m.router_bias.ne(0).any())]
+    if bad:
+        raise ArtifactError(f"router_bias is non-zero in {bad[:3]} ({len(bad)} layers) but the resolved model.moe.bias_gamma "
+                            f"is 0, so this model would ignore the bias the checkpoint routed with: build from the arm the "
+                            f"run used (dry run 2: bias_gamma 0.001)")
+    absmax = [float(m.router_bias.abs().max()) if isinstance(getattr(m, "router_bias", None), torch.Tensor) else None
+              for _, m in layers]
+    return {"bias_gamma": sorted({float(getattr(m, "balance_gamma", 0.0)) for _, m in layers}),
+            "router_bias_absmax": absmax, "bias_updated_by_g10": False}
+
+
 INPUT_CODES = {256: "ke2_raw_table", 64: "ke2_code_2048"}  # per-position code width -> input kind
 
 
@@ -377,7 +399,7 @@ def input_access(model, pos_dim: int) -> dict:
 
     ke2_raw_table: main's dry run 2 KE2, `embedding.projection.weight` [n_embd, 256 * P] (P = 32: 8,192).
     ke2_code_2048: the TSAI ruling of 23 Nov (G4 chat): Linear(2048, d_model) over a fixed code, d_c = 64 per byte
-                   position, L_max = P = 32. Not in Team 5's code yet (#717 at 319f2dd7 still has 8,192).
+                   position, L_max = P = 32. Team 5's KASInput (#717, merged 24 Nov as 61f0a3ae; head_mode kas_v2).
     Both need the byte table buffers `embedding.rows` uint8 [V, P] and `embedding.lengths` [V], which G10 compares
     with the validated KE2 table. Anything else raises ArtifactError instead of being read as one of these.
     """
@@ -775,6 +797,19 @@ def build(config, device: str = "cpu") -> Result:
                    {"path_name": ck_path.name, "sha256": ck_sha, "format": ck["format"]}, manifest, device)
 
 
+def check_keys(model, sd: dict) -> set:
+    """The checkpoint must carry exactly the model's state_dict keys, checked BEFORE load_state_dict: Team 5's MoE fills a
+    missing `router_bias` with zeros on load (#750), so a strict load alone accepts a checkpoint that lost the bias and
+    routes differently. Returns the key set."""
+    want = set(model.state_dict())
+    have = set(sd)
+    missing, unexpected = sorted(want - have), sorted(have - want)
+    if missing or unexpected:
+        raise ArtifactError(f"checkpoint keys do not match the G5 model: missing {missing[:5]} ({len(missing)}), "
+                            f"unexpected {unexpected[:5]} ({len(unexpected)})")
+    return want
+
+
 def _finish(mode, cfg, g5src, spec, tok, art, special, sd, is_fixture_ckpt, ck_extra, ck_info, manifest, device,
             status=None, require_probe=None):
     """Shared tail of every mode: build G5's LanguageModel, load and check the state dict, select trainables, probe."""
@@ -782,12 +817,7 @@ def _finish(mode, cfg, g5src, spec, tok, art, special, sd, is_fixture_ckpt, ck_e
     torch_state = torch.random.get_rng_state()
     model = mods["week2.model"].LanguageModel(spec, art.bytes, art.lengths)  # init values are overwritten below
     torch.random.set_rng_state(torch_state)  # building must not advance the caller's RNG
-    want = set(model.state_dict())
-    have = set(sd)
-    missing, unexpected = sorted(want - have), sorted(have - want)
-    if missing or unexpected:
-        raise ArtifactError(f"checkpoint keys do not match the G5 model: missing {missing[:5]} ({len(missing)}), "
-                            f"unexpected {unexpected[:5]} ({len(unexpected)})")
+    want = check_keys(model, sd)
     ref = model.state_dict()
     bad = [(k, tuple(sd[k].shape), tuple(ref[k].shape)) for k in sorted(want) if tuple(sd[k].shape) != tuple(ref[k].shape)]
     if bad:
@@ -804,6 +834,7 @@ def _finish(mode, cfg, g5src, spec, tok, art, special, sd, is_fixture_ckpt, ck_e
         if sd[k].dtype != ref[k].dtype:
             raise ArtifactError(f"dtype of {k} is {sd[k].dtype}, G5 model stores {ref[k].dtype}")
     model.load_state_dict(sd, strict=True)
+    router = router_state(model, mods["week2.model"].MoE)  # refuses a non-zero router_bias the config would ignore
     head = head_access(model)  # raises on a head of unknown kind
     if head["tied"]:
         raise ArtifactError("output head unexpectedly tied to the KE2 projection")
@@ -830,6 +861,7 @@ def _finish(mode, cfg, g5src, spec, tok, art, special, sd, is_fixture_ckpt, ck_e
         "head": {"kind": head["kind"], "tied": False, "mtp_head": model.mtp_head is not None,
                  "forward_returns": "main head logits"},
         "input": {k: v for k, v in inp.items() if k != "tensors"},
+        "router": router,
     })
     template = _load_render(Path(__file__).resolve().parents[1])
     bundle = Bundle(mode, model, spec, art, special, selection, manifest, tok["template_path"], template)
@@ -892,6 +924,14 @@ def _build_run_folder(cfg: dict, base: Path, device: str) -> Result:
         if sources.get(name) != want:
             raise ArtifactError(f"run folder was trained with a different {name} ({sources.get(name)}) than the "
                                 f"pinned G5 import ({want})")
+    for name, rel in RUN_FOLDER_SOURCE_FILES_IF_RECORDED.items():
+        if name not in sources:
+            continue
+        here = g5src["team"] / rel
+        want = g5src["files_sha256"].get(rel) or (sha256_file(here) if here.is_file() else None)
+        if sources[name] != want:
+            raise ArtifactError(f"run folder was trained with a different {name} ({sources[name]}) than the pinned G5 "
+                                f"import ({want or 'file missing'})")
     rcfg = copy.deepcopy(_need(g5_manifest, "config", "manifest.json"))
     errors = g5src["mods"]["week2.config"].validate(rcfg)
     if errors:

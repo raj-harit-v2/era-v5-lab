@@ -76,6 +76,17 @@ class Team7CheckpointTests(unittest.TestCase):
                             train_week2.main()
                         self.assertEqual(failure.exception.code, 78)
                         save.assert_not_called()
+                    notes = list((root / "notes").rglob("exit-*.json"))
+                    self.assertEqual(len(notes), 1)
+                    note = json.loads(notes[0].read_text())
+                    self.assertEqual(note["code"], 78)
+                    self.assertEqual(note["cause"], "NonfiniteTrainingError")
+                    self.assertLessEqual(len(note["detail"]), 400)
+                    if fault == "gradient" and not flags:
+                        self.assertIn("after clipping", note["detail"])
+                        self.assertIn("tensors:", note["detail"])
+                    elif fault == "loss":
+                        self.assertIn("objective", note["detail"])
                     self.assertEqual(len(updates), 1)
                     updates[0].assert_not_called()
                     self.assertFalse((root / "out" / "checkpoint.pt").exists())

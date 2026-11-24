@@ -636,7 +636,7 @@ def test_tool_result_every_shipped_task_scores_its_known_outputs():
     import reward as entry
 
     ids = [i for i in entry.list_envs() if i.startswith("toolresult/")]
-    assert len(ids) == 10
+    assert len(ids) == len(list(entry.TOOLRESULT_TASKS.glob("*/task.json"))) >= 12
     for env_id in ids:
         good, bad = entry.known_outputs(env_id)
         assert entry.reward(env_id, good)[0] == 1.0, env_id

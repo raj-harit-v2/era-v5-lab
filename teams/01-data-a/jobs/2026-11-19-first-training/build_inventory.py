@@ -32,7 +32,7 @@ def identity(st):
     return st.st_dev, st.st_ino, st.st_size, st.st_mtime_ns, st.st_ctime_ns
 
 
-def build(root, out, scope_file):
+def build(root, out, scope_file, selected_packs=None):
     import pyarrow.parquet as pq
 
     scope = json.loads(scope_file.read_bytes())
@@ -50,6 +50,15 @@ def build(root, out, scope_file):
         raise ValueError('approved scope must list distinct pack IDs')
     if scope['allowed_train_packs'] != ids:
         raise ValueError('allowed train list differs from the approved pack list')
+    deferred = []
+    if selected_packs is not None:
+        if (not isinstance(selected_packs, list) or len(selected_packs) != 33
+                or not all(isinstance(p, str) for p in selected_packs)
+                or len(set(selected_packs)) != 33 or not set(selected_packs) <= set(ids)):
+            raise ValueError('partial selection must list exactly 33 distinct approved pack IDs')
+        deferred = [p for p in ids if p not in selected_packs]
+        packs = [p for p in packs if p['pack_id'] in selected_packs]
+        ids = [p['pack_id'] for p in packs]
     if scope['split_policy']['shard_splits'] != ['train']:
         raise ValueError('only train may be sharded')
     if (set(scope['splits']) != {'train', 'heldout'}
@@ -120,6 +129,11 @@ def build(root, out, scope_file):
                                    'language', 'script', 'domain', 'lane')} for p in packs],
         'shards': shards,
     }
+    if selected_packs is not None:
+        manifest['pack_selection'] = {
+            'selected_packs': ids, 'deferred_packs': deferred,
+            'approval': 'TSAI 23 Nov 2026: proceed with 33 staged packs; defer five source-resolution blockers',
+        }
     manifest_bytes = encoded(manifest)
     inventory = {
         '_status': 'materialized_from_staged_raw_inputs',
@@ -146,9 +160,14 @@ def main():
     parser.add_argument('--input-root', type=Path, required=True)
     parser.add_argument('--out', type=Path, required=True, help='new folder for the two frozen JSON files')
     parser.add_argument('--scope', type=Path, default=HERE / 'approved_inputs.json')
+    parser.add_argument('--packs-file', type=Path,
+                        help='JSON array of exactly 33 staged approved pack IDs; omitted means all 38')
     args = parser.parse_args()
     try:
-        summary = build(args.input_root.resolve(), args.out.resolve(), args.scope.resolve())
+        selected = json.loads(args.packs_file.read_bytes()) if args.packs_file else None
+        if args.packs_file and not isinstance(selected, list):
+            raise ValueError('packs-file must contain a JSON array of 33 approved pack IDs')
+        summary = build(args.input_root.resolve(), args.out.resolve(), args.scope.resolve(), selected)
     except (ValueError, OSError, KeyError) as exc:
         parser.exit(1, f'build_inventory: {exc}\n')
     print(json.dumps(summary, sort_keys=True))

@@ -1,0 +1,14 @@
+# Bounded CUDA/bf16 mechanics validation. Synthetic data, never a quality result.
+# Retain dryrun2's T2 model dimensions, full p1536 vocabulary and optimizer/recipe.
+# Shorten context and batch for an 8 GiB validation GPU; keep microbatch 1.
+inherit: dryrun2.yaml
+intended:
+  arm: kas-t2-cuda-validation
+  comparison_final: false
+model:
+  block_size: 32
+run:
+  batch_size: 2
+  dtype: bf16
+  steps: 3
+  max_time_min: 15

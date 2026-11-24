@@ -4,13 +4,13 @@
 - **What it holds:** 246 rules and the shared F1: code 24, English 23, math 22, sci 24, Indic 153.
 - **How it runs:** `clean(doc)` takes `{doc_id, text, url, lang_label, pack_id}` and returns `(action, text)`, the action being `keep`, `fix` or `drop`. It picks the pack's family by `pack_id`, runs that family's rules in sheet order, then the shared F1.
 - **Run order:** each family's spec v1 rules first, then its spec v1.1 rules. In English, `DA-F1-005` is last.
-- **Packs with no rules** pass through unchanged: cadj-commits, cadj-notebooks, cadj-stackexchange, ind-ml-fw2, ind-or-fw2, ind-ta-fw2 and ind-ta-sangraha-s.
+- **Packs with no rules** pass through unchanged: cadj-notebooks, cadj-stackexchange, ind-ml-fw2, ind-or-fw2, ind-ta-fw2 and ind-ta-sangraha-s. cadj-commits has no rules of its own either, but gets the shared F1 for e-mail addresses only (family `code-adjacent`, an empty pipeline).
 - **It is generated:** don't edit it. Change the sheet, then rebuild.
 - **It includes the fixes of #49** (the team fork, merged as `34bc882`):
   - speed fixes to `DA-F1-005`, `DA-C1-001` and `DA-D3-005` in the sheet, and to the shared F1 in `build/f1_rule.py`, each with the same output;
   - one change of output: the shared F1 picks its path by `pack_id`, not by the language label, so it also runs on science docs labelled `en`, as in the tokenizer sample.
 - **The build is in `build/`:** `build_clean.py` and `f1_rule.py` are spec v1's, with the changes of #49. By default they build `sheets/specv1_1.md` into `spec_v1_1/clean.py`. No file in `spec_v1/` or `tests/spec_v1/` changes: they are as on TSAI main.
-- **It includes the speed fixes of #50** (the team fork, merged as `5c4456e`) in the sheet: five code rules (`DA-A6-001`, `DA-A4-002`, `DA-E2-001`, `DA-E3-003`, `DA-E3-004`) and three math rules (`DA-A5-002`, `DA-A8-001`, `DA-C7-001`). On every run in `results/cleaner/`, its output is byte for byte that of the build before them (`ea14b0899085…`).
+- **It includes the speed fixes of #50** (the team fork, merged as `5c4456e`) in the sheet: five code rules (`DA-A6-001`, `DA-A4-002`, `DA-E2-001`, `DA-E3-003`, `DA-E3-004`) and three math rules (`DA-A5-002`, `DA-A8-001`, `DA-C7-001`). On the historical speed runs in `results/cleaner/`, its output was byte for byte that of the build before them (`ea14b0899085…`).
 
 Paths are from `teams/01-data-a`.
 
@@ -19,7 +19,7 @@ Paths are from `teams/01-data-a`.
 - **The tools are spec v1's, unchanged:** `spec_v1/run_clean.py`, `spec_v1/run_tokenizer_sample.py` and `spec_v1/validate/make_harm_tests.py`. Each does `import clean`. `use_clean.py` loads `spec_v1_1/clean.py` as `clean` first, then runs the tool, so the tool cleans with spec v1.1.
 - **`clean.py` holds two things,** both put in by `build/build_clean.py`:
   - the rules of `sheets/specv1_1.md`, each block's code as the sheet has it, except for its pack lines (below) and two edits by the build: it drops the `AUTHOR` line, and stops `DA-B4-009` from rewriting the `<EMAIL>` tag;
-  - the shared F1, from `build/f1_rule.py`. It runs after the rules on the code, math, sci and Indic packs. English runs its own F1 rule, `DA-F1-005`, instead.
+  - the shared F1, from `build/f1_rule.py`. It runs after the rules on the code, math, sci and Indic packs, and on cadj-commits for e-mail addresses only (its phone-like numbers are IP addresses, part numbers and data). English runs its own F1 rule, `DA-F1-005`, instead.
 - **The packs a rule runs on are in `SCOPE`,** the table at the top of `clean.py`: 247 entries, one per rule and one for the shared F1.
   - In the sheet, each block names its packs in `SPEC_PACKS`. A block that also guards on its own `ORIGIN` packs (`PACKS` or `_PACKS`) runs only where both allow.
   - The build writes that set once, into `SCOPE`, and points the block's `SPEC_PACKS`, `PACKS` and `_PACKS` at its `SCOPE` entry.
@@ -37,11 +37,32 @@ Paths are from `teams/01-data-a`.
 | [`spec_v1_1/tests/test_speed_equivalence_*.py`](tests/) | Each speed fix of #49 and #50 against a frozen copy of the rule before it (5 files, pytest) |
 | [`spec_v1_1/results/speed_v1_1.md`](results/speed_v1_1.md) | The speed logs of each fix, rule by rule (#55) |
 | [`spec_v1_1/jobs/tokenizer_sample_v0_clean.json`](jobs/tokenizer_sample_v0_clean.json) | The tokenizer-sample job config, pinned to this `clean.py` |
-| [`spec_v1_1/results/cleaner/harm_tests.md`](results/cleaner/harm_tests.md) | `clean()` harm on the 500-doc sample packs of all 31 packs it has rules for |
+| [`spec_v1_1/results/cleaner/harm_tests.md`](results/cleaner/harm_tests.md) | Current `clean()` gold harm, including cadj-commits email-only coverage |
 | [`spec_v1_1/results/cleaner/speed.md`](results/cleaner/speed.md) | Wall time on each 500-doc sample pack, spec v1 against spec v1.1 |
 | [`spec_v1_1/results/cleaner/tokenizer_sample_run.md`](results/cleaner/tokenizer_sample_run.md) | The end-to-end run on all 86 parts of the tokenizer sample v0 (a sample, not the full packs) |
 
-## Harm, in short
+## Current harm validation (after merged #88)
+
+The cleaner rebuild is byte-identical to merged #88:
+`d275556ee87a259b05ac5e474ed40b569c2e821aaaffa99d5d07035e40948989`. It retains the five scoped #86 preservation guards and adds
+email-only shared F1 on `cadj-commits` with an empty `code-adjacent` pipeline.
+Both active job configs pin this cleaner.
+
+Fresh full-gold harm: **4,768 documents, 33 testable packs; 28 of 32 supported
+packs PASS, four FAIL**. `cadj-commits` now has cleaning coverage and passes all
+413 gold documents with zero changes or drops. Every full-pipeline outcome and
+affected ID matches the previous run. Only `ind-ta-fw2` remains testable but
+unsupported; five packs lack gold. No execution or Indic Unicode-audit errors.
+
+The full 500-document `cadj-commits` pack has 40 email-only changes, zero drops
+and no second-pass changes; the other two code-adjacent packs pass through.
+**1,952 cleaner tests and nine subtests PASS; 125 job/preparation tests PASS.**
+See [the replaced current harm report](results/cleaner/harm_tests.md) for fresh
+evidence, raw failures, missing gold and clearly labelled historical comparisons.
+Reproduce the gold run with
+`scripts/run_current_harm.py --packs <original-packs-folder> --out <output>`.
+
+## Historical harm summary (17 Nov 2026)
 
 From [`results/cleaner/harm_tests.md`](results/cleaner/harm_tests.md), on TSAI's 500-doc sample packs:
 - **27 of the 31 packs PASS.** No rule changes a doc on a pack outside its scope.

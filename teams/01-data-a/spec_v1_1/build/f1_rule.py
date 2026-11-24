@@ -7,12 +7,23 @@ from functools import cache
 import re
 
 _F1_TREE = {"cpp", "go", "java", "javascript", "python", "rust", "typescript"}
+_F1_CODE_PACKS = {"code-cpp": "cpp", "code-go": "go", "code-java": "java",
+                  "code-js-ts": "typescript", "code-python": "python", "code-rust": "rust"}
 _F1_LANGS = set(_F1_TREE)  # families with a harm test so far. Prose families go here after theirs; prose has no tree, so regex alone decides
 # Prose packs with their own harm test run the prose path below instead (block context, contact cards, people tables), not the
 # line regex. The pack decides, by pack_id prefix, not the language label: "en" is shared with the English family, which has its
 # own F1 rule, and the label for one pack differs between the week-1 sample packs ("eng_Latn" for science) and the week-2 data
 # ("en"). A doc without a pack_id never takes this path.
 _F1_PROSE = ("math-", "sci-")
+# Code-adjacent packs mix prose, code and data in one text, with no single parser for it. In cadj-commits only e-mail addresses
+# are masked, never a phone or an address and never a drop: on the sample, the phone and address patterns hit IP addresses,
+# part numbers, colour values and pixel arrays. As in the cadj-commits medicine (diagnosis/submissions/cadj-commits/kunal2016/
+# medicine.md, medicine 1), made-up addresses at test domains and mail@ stay. Deferred (24 Nov 2026): cadj-notebooks and
+# cadj-stackexchange (no gold set; on the sample, stackexchange's e-mail-like strings are ssh and git logins, URLs with a user
+# name, systemd units and code), and the medicine's LinkedIn profile URLs.
+_F1_EMAIL_ONLY = ("cadj-commits",)
+_F1_CADJ_SAFE = re.compile(r"(?i)(^|\.)(test\.com|domain\.com|email\.com|noreply\.github\.com)$")
+_F1_CADJ_ROLE = re.compile(r"(?i)^mail$")
 _F1_EMAIL = re.compile(r"(?<![\w.+%-])([A-Za-z0-9._%+-]+)@([A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,})(?![\w-])")
 _F1_ROLE = re.compile(r"(?i)^(info|contact|contacts|support|help|helpdesk|admin|administrator|sales|office|press|media|hello|enquiries|inquiries|"
                       r"webmaster|postmaster|noreply|no-reply|donotreply|service|services|customerservice|billing|careers|jobs|hr|legal|security|abuse|team|git|root)$")
@@ -53,10 +64,30 @@ def _f1_is_phone(m, line):
     return bool(re.fullmatch(r"\(?\d{3}\)?[ -]\d{3}-\d{4}", m.group()))  # the plain US form; digit groups alone are too common in data
 
 
+def _f1_emails(line):
+    """(start, end, "<EMAIL>") of each private e-mail address on one line: not a role mailbox, an example domain or a file name."""
+    return [(m.start(), m.end(), "<EMAIL>") for m in _F1_EMAIL.finditer(line)
+            if not (_F1_ROLE.match(m.group(1)) or _F1_SAFE_DOMAIN.search(m.group(2)) or _F1_FILE_END.search(m.group(2)))] if "@" in line else []
+
+
+def _f1_emails_only(text):
+    """The text with each private e-mail address replaced by <EMAIL> (cadj-commits)."""
+    if "@" not in text:
+        return text
+    out = []
+    for line in text.split("\n"):
+        for s, e, tag in reversed(_f1_emails(line)):
+            m = _F1_EMAIL.match(line, s)
+            if _F1_CADJ_SAFE.search(m.group(2)) or _F1_CADJ_ROLE.match(m.group(1)):
+                continue
+            line = line[:s] + tag + line[e:]
+        out.append(line)
+    return "\n".join(out)
+
+
 def _f1_hits(line, previous):
     """(start, end, tag) of a private person's details on one line. An organisation on this line or the one above keeps its phone and address."""
-    out = [(m.start(), m.end(), "<EMAIL>") for m in _F1_EMAIL.finditer(line)
-           if not (_F1_ROLE.match(m.group(1)) or _F1_SAFE_DOMAIN.search(m.group(2)) or _F1_FILE_END.search(m.group(2)))] if "@" in line else []
+    out = _f1_emails(line)
     if not _F1_DIGIT.search(line):
         return out  # email finditer already orders the spans; no phone/address can match
     org = None
@@ -376,6 +407,13 @@ def f1(doc):
     """F1: <PHONE>, <EMAIL>, <ADDRESS> for a private person. Drop when lines with such details hold most of the text."""
     text, lang = doc["text"], doc.get("lang_label")
     pack = str(doc.get("pack_id") or "")
+    # Code packs use the generic tag "code"; choose their parser without changing row metadata.
+    # Keep an explicit language tag (notably JavaScript versus TypeScript) when supplied.
+    if lang == "code":
+        lang = _F1_CODE_PACKS.get(pack, lang)
+    if pack in _F1_EMAIL_ONLY:                  # cadj-commits: e-mail addresses only, never a drop
+        new = _f1_emails_only(text)
+        return ("fix" if new != text else "keep", new)
     if pack.startswith("ind-"):                 # Indic packs: any language tag
         new = _f1_indic(text)
         return ("fix" if new != text else "keep", new)

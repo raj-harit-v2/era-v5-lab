@@ -36,6 +36,8 @@ From the trainer, use the shared entry point: `reward.reward("toolresult/<task_i
 
 It scores 1 only if all of these hold:
 
+0. **Readable text.** The completion is a string of valid Unicode with no control character other than tab and
+   newline. Bytes, `None`, a lone surrogate, NUL or an ANSI colour code score 0, with a reason; they never crash.
 1. **One assistant turn.** The completion is read with `chat-format/render.py` `parse()`, as in `sft/tests/scorers.py`.
    It must be exactly one valid assistant turn. A reply that runs on into a made-up `tool` or `user` turn, uses
    look-alike markers (`<tool_call>`, `<think>`, `<｜think｜>`) or leaves `<|think|>` open scores 0. The closing
@@ -50,8 +52,14 @@ It scores 1 only if all of these hold:
 (`test_the_ground_truth_is_never_in_the_prompt`).
 
 **Exact text.** Letter case, digits, units and spelling must match the tool. Only these are evened out, on both sides:
-Unicode NFC (two encodings of one Indic letter agree; ZWJ and ZWNJ are kept, never NFKC), the removal of U+200B and
-U+FEFF (the G10 text rule in `swe-task/hindi_text_prep.py`), and runs of whitespace read as one space.
+- Unicode NFC: two encodings of one Indic letter agree. Never NFKC.
+- Invisible characters that never change a value are removed: U+200B and U+FEFF (the G10 text rule in
+  `swe-task/hindi_text_prep.py`), and every other format character (soft hyphen, word joiner, direction marks and
+  isolates), variation selectors and the combining grapheme joiner. Without this, `3<word joiner>2` would hide the
+  wrong value `32` from the reader's eyes but not from the check.
+- **ZWJ and ZWNJ** are kept inside an Indic word, where they change the spelling (`कर्<ZWJ>हाड`). After a digit, a
+  Latin letter, a space or punctuation they join nothing, so they are removed (`3<ZWJ>1` is `31`).
+- Runs of whitespace read as one space.
 
 **A whole value** is not part of a longer word or number:
 
@@ -62,8 +70,14 @@ U+FEFF (the G10 text rule in `swe-task/hindi_text_prep.py`), and runs of whitesp
 | `1,250.00` | `₹1,250.00.` | |
 | `test_leap_year` | `tests/test_dates.py::test_leap_year failed` | `test_leap_years` |
 | `क्ष` | | `क्षि` (a vowel sign follows) |
+| `क्<ZWNJ>ष` | `क्<ZWNJ>ष` | `क्ष` (ZWNJ dropped), `क्<ZWJ>ष` (the other joiner) |
 
 A reply may quote other values of the tool result ("31.6 °C, feels like 34.2 °C" scores 1).
+
+**Cut-off replies.** A reply cut off by the length limit is scored on what it holds. Cut inside a value ("It is
+31."), inside the think span or inside a tool call, it scores 0. Cut after the full value ("It is 31.6 °C and"), it
+scores 1: the RL reward view drops `<|im_end|>` (`rl-loop/team5_adapter.py`, `keep_stop=False`), so a finished reply
+and a cut one look the same to the verifier. The trainer knows which replies hit the length limit.
 
 ## Writing a task
 
@@ -85,12 +99,17 @@ A task is a folder `tasks/<task_id>/`, where the folder name equals `id`.
 Then add the task's correct and wrong reply to `CASES` in `test_toolresult_verifier.py`. A test fails when a task has
 no entry there.
 
-**Who may write a training task.** TSAI's data rule of 3 Nov (`../../rl-data/README.md`): training problems are written
-by people. A task with `"eligibility": "train"` fails the lint if its `source` names a model. The ten tasks here were
-written by Claude (AI assistant) for naveen333nav. Each `task.json` says so, and each is `"eligibility": "eval"`. They
-test the verifier and can be used for evaluation.
+**A broken task stops the run.** When scoring, a `hidden/expected.json` that is not JSON, has a duplicate key, has an
+empty or non-list `required` or `wrong`, a value that is not a non-empty string, or a value that is both required and
+wrong raises `ValueError`; a missing one raises `FileNotFoundError`. It is never scored as the model's mistake (an
+empty `required` list would otherwise give 1 to every reply). `--check-task` reports the same problems as a list.
 
-## Tasks so far (10)
+**Who may write a training task.** TSAI's data rule of 3 Nov (`../../rl-data/README.md`): training problems are written
+by people. A task with `"eligibility": "train"` fails the lint if its `source` names a model. The twelve tasks here were
+written by Claude (AI assistant) for naveen333nav (ten on 16 Nov, two on 23 Nov). Each `task.json` says so, and each
+is `"eligibility": "eval"`. They test the verifier and can be used for evaluation.
+
+## Tasks so far (12)
 
 | Task | What a wrong reply does | Required | Wrong |
 |---|---|---|---|
@@ -104,6 +123,8 @@ test the verifier and can be used for evaluation.
 | `event_id_case` | changes the letter case of an ID | `evt_7Hq2Lx` | `evt_7hq2lx`, `evt_7Hq2Ix`, `EVT_7HQ2LX` |
 | `queue_retry_latest` | reports the first, failed call instead of the retry | `4318` | `4381`, `4,381` |
 | `disk_usage_unit` | changes GiB to GB | `3.7 GiB` | `3.7 GB`, `3.97 GB`, `4 GiB` |
+| `file_list_truncated` | the tool output is cut off (5 names of 1342); the reply counts the names shown | `1342` | `1340`, `1300`, `1,342` |
+| `rate_api_error_page` | the tool returns an nginx HTML error page instead of JSON; the reply invents a rate | `502 Bad Gateway` | `502 Bad Request`, `503 Service Unavailable`, `504 Gateway Timeout` |
 
 The Marathi spelling in `parcel_city_joiner` still has to be confirmed by a native reader (its `task.json` `note`).
 
@@ -115,14 +136,23 @@ The Marathi spelling in `parcel_city_joiner` still has to be confirmed by a nati
   wrong values are refused.
 - **Exact means exact.** `1,250` for `1,250.00`, `21,033.13` for `21033.13` or `3.7GiB` for `3.7 GiB` score 0. The system
   turn of every task asks the model to copy values exactly as the tool wrote them.
+- **One spelling, one encoding.** Marathi also writes the eyelash RA as `ऱ्` (U+0931 + virama). NFC keeps it apart
+  from the tool's `र्<ZWJ>`, so `कऱ्हाड` scores 0 on `parcel_city_joiner`
+  (`test_the_other_encoding_of_eyelash_ra_is_a_different_spelling`). A native reader should say whether both should
+  pass.
+- **Look-alike letters are not mapped.** A Cyrillic `Е` inside a wrong value hides it from the wrong-value check, as
+  NFKC is not used. The required value must still be there in the tool's own letters.
+- **An invented value next to a reported error passes.** In `rate_api_error_page` a reply that reports
+  `502 Bad Gateway` and also guesses a rate scores 1. Only listed wrong values are refused.
 - **The tasks are hand-written and few.** They show that the verifier works; they are not a training set.
 
 ## Decontamination
 
-Run on 17 Nov 2026 with `teams/09-evaluation/decontam/decontam_check.py` and `canary_scan.py` from course `main` at
-`5aed520`, fingerprints v2 full set (`set_sha256` `2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a`),
-on 20 documents: the rendered prompt (`prompt_text()`) and `hidden/expected.json` of each task, one JSONL line each
-(`doc_id`, `text`). Result: **0 flagged, 0 canary hits** (canaries era-v5-lab, gpqa_diamond, hle, terminal_bench_2).
-Input file sha256: `245d0229f86490bb6a814ba4bb755bc22104db62ac705c5401141e11b10992d2`, written outside the
-repository. To repeat it, write the same lines (`doc_id` `toolresult/<task_id>/prompt` and `.../expected`) and run
-both scripts on them.
+Run on 23 Nov 2026 for all 12 tasks with `teams/09-evaluation/decontam/decontam_check.py` and `canary_scan.py` from
+course `main` at `e554432`, fingerprints v2 full set (`set_sha256`
+`2826a3b883210c653979103c09ce1c79e40fc4f7034b54027f2836482370d22a`), on 24 documents: the rendered prompt
+(`prompt_text()`) and `hidden/expected.json` of each task, one JSONL line each (`doc_id`, `text`). Result: **0
+flagged, 0 canary hits** (canaries era-v5-lab, gpqa_diamond, hle, terminal_bench_2). Input file sha256:
+`861a01cf652b9d91429b886ef8df4e43f7aeb512d564515497cae124f30dea9e`, written outside the repository. To repeat it, write
+the same lines (`doc_id` `toolresult/<task_id>/prompt` and `.../expected`) and run both scripts on them. The first ten
+tasks were also checked on 17 Nov 2026 (`main` at `5aed520`, 20 documents, 0 flagged, 0 hits).

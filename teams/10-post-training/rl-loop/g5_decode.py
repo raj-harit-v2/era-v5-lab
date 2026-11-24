@@ -121,24 +121,46 @@ def sample(lm, prompt: list[int], k: int, max_new: int, temperature: float, gene
 
 # --- many prompts in one decode: left padding, per-row positions, a key mask, a preallocated cache ---------------------
 
-def _rotary_rows(attn, x: torch.Tensor, pos: torch.Tensor) -> torch.Tensor:
-    """Team 5's GQA.rotary with a position per row and token: x [R, H, T, d], pos [R, T] (same formula as _rotary)."""
+def _rotary_table(attn, pos: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
+    """cos and sin of Team 5's RoPE angles for positions pos [R, T]: [R, 1, T, rd/2] each (same formula as _rotary)."""
     rd = attn.rotary_dim
-    inv = attn.theta ** (-torch.arange(0, rd, 2, device=x.device).float() / rd)
+    inv = attn.theta ** (-torch.arange(0, rd, 2, device=pos.device).float() / rd)
     angle = pos.float()[:, None, :, None] * inv  # [R, 1, T, rd/2]
+    return angle.cos(), angle.sin()
+
+
+def _rotary_rows(attn, x: torch.Tensor, pos: torch.Tensor, table=None) -> torch.Tensor:
+    """Team 5's GQA.rotary with a position per row and token: x [R, H, T, d], pos [R, T] (same formula as _rotary).
+    `table` = _rotary_table(attn, pos), computed once per step and shared by every layer's q and k (same values)."""
+    rd = attn.rotary_dim
+    cos, sin = table if table is not None else _rotary_table(attn, pos)
     a, b = x.float()[..., :rd:2], x.float()[..., 1:rd:2]
-    rotated = torch.stack((a * angle.cos() - b * angle.sin(), a * angle.sin() + b * angle.cos()), -1).flatten(-2)
+    rotated = torch.stack((a * cos - b * sin, a * sin + b * cos), -1).flatten(-2)
     rotated = rotated.to(x.dtype)
     return rotated if rd == attn.d else torch.cat((rotated, x[..., rd:]), dim=-1)
 
 
-def _attend_rows(attn, x: torch.Tensor, cache: dict, slot: int, pos: torch.Tensor, key_ok: torch.Tensor) -> torch.Tensor:
+def _step_tables(attn, x: torch.Tensor, slot: int, pos: torch.Tensor, key_ok: torch.Tensor) -> dict:
+    """What every layer of one forward_rows call shares (Team 5's blocks all use one rope_theta and rotary_dim, checked
+    in forward_rows): the RoPE cos/sin and the [R, 1, T, S] attention mask. Computed once per call instead of per layer."""
+    t = x.shape[1]
+    total = slot + t
+    qs = torch.arange(slot, total, device=x.device)[:, None]
+    ks = torch.arange(total, device=x.device)[None, :]
+    allowed = (ks <= qs)[None] & (key_ok[:, None, :total] | (ks == qs)[None])  # [R, T, S]
+    return {"rot": _rotary_table(attn, pos), "not_allowed": ~allowed[:, None]}
+
+
+def _attend_rows(attn, x: torch.Tensor, cache: dict, slot: int, pos: torch.Tensor, key_ok: torch.Tensor,
+                 tables: dict | None = None) -> torch.Tensor:
     """_attend for left-padded rows. x [R, T, w] fills cache slots slot..slot+T-1 (written in place, no torch.cat);
     pos [R, T] are the RoPE positions (0 at each row's first real token); key_ok [R, S] marks real slots. A query sees
     real keys at or before its own slot; a padding query sees only itself, so its row stays finite and is never read."""
     b, t, w = x.shape
-    q = _rotary_rows(attn, attn.q(x).view(b, t, attn.nh, attn.d).transpose(1, 2), pos)
-    k = _rotary_rows(attn, attn.k(x).view(b, t, attn.nkv, attn.d).transpose(1, 2), pos)
+    if tables is None:
+        tables = _step_tables(attn, x, slot, pos, key_ok)
+    q = _rotary_rows(attn, attn.q(x).view(b, t, attn.nh, attn.d).transpose(1, 2), pos, tables["rot"])
+    k = _rotary_rows(attn, attn.k(x).view(b, t, attn.nkv, attn.d).transpose(1, 2), pos, tables["rot"])
     v = attn.v(x).view(b, t, attn.nkv, attn.d).transpose(1, 2)
     if cache.get("k") is None:
         cache["k"] = k.new_zeros(b, attn.nkv, cache["size"], attn.d)
@@ -156,10 +178,7 @@ def _attend_rows(attn, x: torch.Tensor, cache: dict, slot: int, pos: torch.Tenso
     qg = q.reshape(b, attn.nkv, rep * t, attn.d)
     logits = ((qg if amp else qg.float()) @ (kk if amp else kk.float()).transpose(-2, -1) / math.sqrt(attn.d))
     logits = logits.view(b, attn.nh, t, total)
-    qs = torch.arange(slot, total, device=x.device)[:, None]
-    ks = torch.arange(total, device=x.device)[None, :]
-    allowed = (ks <= qs)[None] & (key_ok[:, None, :total] | (ks == qs)[None])  # [R, T, S]
-    logits = logits.masked_fill(~allowed[:, None], float("-inf"))
+    logits = logits.masked_fill(tables["not_allowed"], float("-inf"))
     a = logits.softmax(-1).to(vv.dtype).view(b, attn.nkv, rep * t, total)
     return attn.o((a @ vv).view(b, attn.nh, t, attn.d).transpose(1, 2).reshape(b, t, w))
 
@@ -168,8 +187,11 @@ def forward_rows(lm, ids: torch.Tensor, caches: list[dict], slot: int, pos: torc
     """Hidden states of ids [R, T] at cache slots slot..slot+T-1; padding tokens get no MoE output (valid False)."""
     x = lm.embedding(ids)
     valid = key_ok[:, slot:slot + ids.shape[1]]
+    a0 = lm.blocks[0].attn
+    shared = all(b.attn.theta == a0.theta and b.attn.rotary_dim == a0.rotary_dim for b in lm.blocks)
+    tables = _step_tables(a0, ids, slot, pos, key_ok) if shared else None  # else: per layer, as before
     for block, cache in zip(lm.blocks, caches):
-        x = x + _attend_rows(block.attn, block.n1(x), cache, slot, pos, key_ok)
+        x = x + _attend_rows(block.attn, block.n1(x), cache, slot, pos, key_ok, tables)
         x = x + block.moe(block.n2(x), valid)
     return lm.norm(x)
 
@@ -180,7 +202,7 @@ def parity_many(lm, rows: list[list[int]], steps: int) -> float:
     one prefill of every row's prompt (all but its last `steps` tokens; rows may differ in length), then `steps`
     one-token steps. Covers every prompt position and every stepped position."""
     check_supported(lm)
-    dev = lm.head.weight.device
+    dev = next(lm.parameters()).device  # not lm.head.weight: a KAS V2 head (#717) has no .weight
     lens = [len(r) - steps for r in rows]
     if min(lens) < 1:
         raise ValueError("every row needs at least one prompt token")

@@ -33,4 +33,119 @@
 #   wrong: [a + b]
 #
 # Empty on purpose until people on the team write the templates.
-[]
+
+- id: ta_appalam_sub
+  author: ranjani-cse
+  team2_reviewer: ""
+  eligibility: eval
+  language: ta
+  script: Taml
+  answer_type: integer
+  difficulty: easy
+  prompt: |
+    ஒரு கடையில் {a} அப்பளங்கள் இருந்தன. வாடிக்கையாளர் {b} அப்பளங்களை வாங்கினார்.
+    மீதம் எத்தனை அப்பளங்கள் உள்ளன? உங்கள் இறுதி விடையை <answer>எண்</answer> வடிவில் மட்டும் எழுதுங்கள்.
+  params:
+    a: {int: [20, 90]}
+    b: {int: [1, 19]}
+  require: [a > b]
+  answer: a - b
+  wrong: [a + b]
+
+- id: ta_pen_mult
+  author: ranjani-cse
+  team2_reviewer: ""
+  eligibility: eval
+  language: ta
+  script: Taml
+  answer_type: integer
+  difficulty: easy
+  prompt: |
+    ஒரு பேனாவின் விலை {a} ரூபாய். {b} பேனாக்களை வாங்கினால் மொத்த விலை எவ்வளவு?
+    உங்கள் இறுதி விடையை <answer>எண்</answer> வடிவில் மட்டும் எழுதுங்கள்.
+  params:
+    a: {int: [10, 40]}
+    b: {int: [3, 9]}
+  answer: a * b
+  wrong: [a + b]
+
+- id: hi_f1_left                     # F1: one subtraction
+  author: gmrammohan15
+  team2_reviewer: ""
+  eligibility: eval
+  language: hi
+  script: Deva
+  answer_type: integer
+  difficulty: easy
+  prompt: |
+    {person} के पास {a} टिकेट थे। उसने {b} टिकेट दिए। अब उसके पास कितने टिकेट बचे हैं?
+    आकड़ी उत्तर लिखिए, <answer>संख्या</answer> में
+  params:
+    a: {int: [20, 90]}
+    b: {int: [2, 19]}
+    person: {pick: [राम , श्याम, गोपाल, हरि]}
+  require: [a > b]
+  answer: a - b
+  wrong: [a + b, a - b - 1]          # added instead of subtracting; off by one
+
+- id: hi_f1_change                   # F1/F6: two steps with rupees (buy, then change from a note)
+  author: gmrammohan15
+  team2_reviewer: ""
+  eligibility: eval
+  language: hi
+  script: Deva
+  answer_type: integer
+  difficulty: medium
+  prompt: |
+    {person} ने {x} वस्तुएं खरीदीं प्रति वस्तु {p} रुपये में। उसने {note} रुपये का नोट दिया। उसे कितने रुपये बचे?
+    आकड़ी उत्तर लिखिए, <answer>संख्या</answer> में
+  params:
+    x: {int: [2, 9]}
+    p: {int: [5, 45]}
+    note: {pick: [100, 200, 500]}
+    person: {pick: [राम , श्याम, गोपाल, हरि]}
+  derive:
+    cost: x * p
+  require: [note > cost]
+  answer: note - cost
+  wrong: [cost, note - x - p]        # gave the cost, not the change; added the price once instead of multiplying
+
+- id: hi_f6_minutes                  # F6: hours and minutes to minutes
+  author: gmrammohan15
+  team2_reviewer: ""
+  eligibility: eval
+  language: hi
+  script: Deva
+  answer_type: integer
+  difficulty: easy
+  prompt: |
+    राम ने {h} घंटा {m} मिनट का ट्रेन यात्रा की। उसे कितने मिनट की यात्रा थी?
+    आकड़ी उत्तर लिखिए, <answer>संख्या</answer> मे
+  params:
+    h: {int: [1, 6]}
+    m: {int: [5, 55]}
+  answer: h * 60 + m
+  wrong: [h * 100 + m, h + m]        # treated an hour as 100 minutes; just added the two numbers
+
+- id: hi_f3_weekday                  # F3: weekday n days from today (text answer)
+  author: gmrammohan15
+  team2_reviewer: ""
+  eligibility: eval
+  language: hi
+  script: Deva
+  answer_type: text
+  difficulty: easy
+  prompt: |
+    राम को आज के दिन का नाम ({today}) दिया गया है। उसे आज से {n} दिन बाद का दिन कौनसा सप्ताह का दिन होगा?
+    केवल दिन का नाम ही लिखिए, <answer>दिन का नाम</answer>
+  params:
+    start: {int: [0, 6]}
+    n: {int: [2, 45]}
+  lists:
+    days: [सोमवार , मंगलवार , बुधवार , गुरुवार , शुक्रवार , शनिवार , रविवार ]
+  derive:
+    today: days[start]
+    target: days[(start + n) % 7]
+  require: [n % 7 != 0]
+  answer: target
+  wrong: ["days[(start + n + 1) % 7]", "days[(start + n - 1) % 7]"]   # off by one day either way

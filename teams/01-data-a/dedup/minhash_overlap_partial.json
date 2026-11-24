@@ -1,5 +1,5 @@
 {
-  "_comment": "Partial scope (TSAI, 23 Nov 2026): run on the packs staged so far (33 of the 38; 5 blocked on source resolution). expected_packs is empty, so every pack present under inputs is read and none is required; the summary lists the packs it found. Otherwise the same as minhash_overlap.json.",
+  "_comment": "Partial scope (TSAI, 23 Nov 2026): run on the packs staged so far (33 of the 38; 5 blocked on source resolution). expected_packs is empty, so every pack present under inputs is read and none is required; the summary lists the packs it found. Otherwise the same as minhash_overlap.json. workers 16: one worker peaked at 0.8-0.9 GB on the largest sample parts (per-part signatures) and 1.5 GB while re-reading candidates, so 16 workers stay under about 24 GB on the 64 GiB job host; 0 (all cores) could use about 48 GB on 32 vCPU.",
   "inputs": "out/tokenizer_sample_v0_clean",
   "splits": [
     "train",
@@ -13,7 +13,7 @@
   "hashes": 128,
   "bands": 32,
   "seed": 20261122,
-  "workers": 0,
+  "workers": 16,
   "max_bucket": 2000,
   "expected_packs": []
 }

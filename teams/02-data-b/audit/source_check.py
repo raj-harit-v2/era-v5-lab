@@ -1,9 +1,11 @@
 """source_check.py - is a reader's damage row also in the raw text (source), or did cleaning make it?
 
 For every G1-G4 row in the given reader or rotation files, compare the shard text (decoded with p1536 by
-read_shard from indic_audit.py) with the document's raw sample-v0 text after NFC:
+read_shard from indic_audit.py) with the document's raw sample-v0 text after p1536's own normalizer (NFC, plus the
+folds NFC does not make, such as the Bengali nukta letters; with NFC alone, unchanged Bengali text looks changed):
   source  the document is unchanged by cleaning, or the 12 characters on each side of the row's offset are
-          also in the raw text; for a cut start or end (the note says so), the raw text starts or ends the same way
+          also in the raw text; for a cut start or end (the note says so, and the offset is within 50 characters
+          of the start or the end), the raw text starts or ends the same way
   CHECK   none of these: read the row by hand
 Day files have a shard column. Rotation files have none: give the shard after a colon, FILE:SHARD.
 Prints counts per file, the rows to check by hand and the wall time. IDs, codes and offsets only.
@@ -33,6 +35,7 @@ DAY_ROW = re.compile(r"^\|\s*`?([0-9a-f]{16})`?\s*\|\s*`?([\w-]+)`?\s*\|\s*(?:ok
 ROTATION_ROW = re.compile(r"^\|\s*`?([0-9a-f]{16})`?\s*\|\s*(G[1-4])\s*\|\s*(\d+)\s*\|[^|]*\|([^|]*)\|", re.M)
 START = re.compile(r"start|opening|begin", re.I)
 END = re.compile(r"\bend\b|ends|stops|breaks off", re.I)
+EDGE = 50  # a cut start or end is reported within this many characters of the text's start or end
 
 
 def rows(path, shard):
@@ -46,9 +49,9 @@ def rows(path, shard):
 def tag(shard_text, raw_text, offset, note):
     if shard_text == raw_text:
         return "source"
-    if START.search(note):
+    if START.search(note) and offset < EDGE:
         return "source" if raw_text[:40] == shard_text[:40] else "CHECK"
-    if END.search(note):
+    if END.search(note) and len(shard_text) - offset < EDGE:
         return "source" if raw_text.rstrip()[-40:] == shard_text.rstrip()[-40:] else "CHECK"
     window = shard_text[max(0, offset - 12): offset + 12]
     return "source" if window and window in raw_text else "CHECK"
@@ -63,6 +66,7 @@ def main():
     a = ap.parse_args()
     t0 = time.time()
     tok = Tokenizer.from_file(a.tokenizer)
+    normalize = tok.normalizer.normalize_str if tok.normalizer else (lambda s: unicodedata.normalize("NFC", s))
     cache = {}
 
     def texts(shard):  # one read per shard: {doc_id: shard text}, {doc_id: raw text}
@@ -83,7 +87,7 @@ def main():
         counts = Counter()
         for doc_id, sh, code, offset, note in rows(path, shard):
             shard_texts, raw_texts = texts(sh)
-            t = tag(shard_texts[doc_id], unicodedata.normalize("NFC", raw_texts[doc_id]), offset, note)
+            t = tag(shard_texts[doc_id], normalize(raw_texts[doc_id]), offset, note)
             counts[f"{code} {t}"] += 1
             if t == "CHECK":
                 check.append(f"{Path(path).name} {doc_id} {code} {offset}")

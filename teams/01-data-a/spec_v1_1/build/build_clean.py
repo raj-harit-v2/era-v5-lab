@@ -32,6 +32,8 @@ BLOCK = re.compile(r"^```python(?: deferred)?\n(.*?)^```", re.S | re.M)  # defer
 CODE_ORDER = ["A1", "A2", "A6", "A4", "A5", "A3", "B1", "B2", "B5", "B3", "E1", "E2", "C3", "C4", "C5", "D4", "E4", "C1", "C2", "D1", "D3", "B4", "E3", "F1"]  # RULES order; each family runs in its own sheet order
 SHARED_F1 = "f1_rule.py"  # the shared F1 (TSAI ruling of 31 Oct), in SCOPE under this name: it runs last on the packs of these families
 SHARED_F1_FAMILIES = ("code", "math", "sci", "indic")  # code with tree-sitter, math and sci with the prose path (TSAI, 1 Nov), indic with the Indic path. English keeps DA-F1-005
+SHARED_F1_ONLY = ("cadj-commits",)  # code-adjacent packs: no medicine of their own; the shared F1 masks e-mail addresses only (24 Nov 2026). cadj-notebooks, cadj-stackexchange: deferred, see f1_rule.py
+SHARED_F1_ONLY_FAMILY = "code-adjacent"  # their family: an empty pipeline in _PIPELINES, so every _FAMILY value is a _PIPELINES key
 MUST_KEEP = {"DA-F1-005": "english"}  # the instructor's F1 rule: on every pack of its family, never left out
 
 
@@ -126,7 +128,8 @@ def _run(doc, *factories):
 CLEAN = """
 
 def clean(doc):
-    \"\"\"The whole pipeline for one document: its pack's family in sheet order, then the shared F1 (code, math, sci and Indic packs).
+    \"\"\"The whole pipeline for one document: its pack's family in sheet order, then the shared F1 (code, math, sci and Indic packs;
+    e-mail addresses only on cadj-commits).
     A missing or unknown pack_id passes unchanged; such a document is not eligible for release.\"\"\"
     return _run(doc, *_PIPELINES.get(_FAMILY.get(doc.get("pack_id")), ()), _shared_f1_rule)
 """
@@ -146,7 +149,8 @@ def build(sheet, dest):
         r = next((r for r in rs if r["id"] == rid), None)
         assert r and r["code"] == "F1" and r["packs"] == family_packs[fam], f"{rid} must be in the sheet, under F1, on every {fam} pack"
     assert not set(SHARED_F1_FAMILIES) & set(MUST_KEEP.values()), "a family with its own required F1 must not get the shared F1"
-    f1_packs = set().union(*(family_packs[f] for f in SHARED_F1_FAMILIES))
+    assert not set(SHARED_F1_ONLY) & set().union(*family_packs.values()), "a code-adjacent pack also has medicines"
+    f1_packs = set().union(*(family_packs[f] for f in SHARED_F1_FAMILIES)) | set(SHARED_F1_ONLY)
     codes = [c for c in CODE_ORDER if c != "F1" and any(r["code"] == c for r in rs)]
     codes += sorted({r["code"] for r in rs} - set(CODE_ORDER))
     if any(r["code"] == "F1" for r in rs):
@@ -162,7 +166,8 @@ def build(sheet, dest):
            "# The packs each rule applies to: SPEC_PACKS in the sheet (and a math rule's own ORIGIN packs). Each rule reads its entry.\n"
            "SCOPE = {\n"]
     out += [scope_line(r["id"], r["packs"], f'{r["family"]} {r["code"]}, medicine {r["n"]}') for r in rs]
-    out.append(scope_line(SHARED_F1, f1_packs, f"the shared F1, spec_v1/tools/f1_rule.py: {', '.join(SHARED_F1_FAMILIES)} packs, last"))
+    out.append(scope_line(SHARED_F1, f1_packs, f"the shared F1, spec_v1/tools/f1_rule.py: {', '.join(SHARED_F1_FAMILIES)} packs, "
+                                               f"and e-mail addresses only on {', '.join(SHARED_F1_ONLY)}, last"))
     out.append("}\n\n\n")
     deferred = {r["id"]: r["reason"] for r in inventory if r["status"] == "DEFERRED"}
     out.append(f"DEFERRED_RULES = {deferred!r}  # documented candidates excluded from execution\n\n")
@@ -178,7 +183,9 @@ def build(sheet, dest):
     out.append("\n\nRULES = {" + ", ".join(f'"{c}": {c.lower()}' for c in codes) + "}  # disease code -> function, the form harm_test.py reads\n")
     out.append("# each family's rules in sheet order; clean() runs the shared F1 after them\n_PIPELINES = {\n")
     out += [f'    "{f}": ({", ".join(r["name"] for r in x)},),\n' for f, x in families.items()]
+    out.append(f'    "{SHARED_F1_ONLY_FAMILY}": (),  # no rules of their own: clean() runs only the shared F1\n')
     out.append("}\n_FAMILY = {pack: family for family, rules in _PIPELINES.items() for make in rules for pack in SCOPE[_ID[make]]}  # pack_id -> family\n")
+    out.append(f"_FAMILY.update({dict.fromkeys(SHARED_F1_ONLY, SHARED_F1_ONLY_FAMILY)!r})  # no rules of their own: only the shared F1 (e-mail addresses)\n")
     out.append(CLEAN)
     dest.write_text("".join(out), encoding="utf-8", newline="\n")
     print(f"{dest.name}: rules {len(rs)} + shared F1 |", ", ".join(f"{f} {len(x)} rules on {len(family_packs[f])} packs" for f, x in families.items()),

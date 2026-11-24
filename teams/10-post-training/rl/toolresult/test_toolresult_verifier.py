@@ -51,6 +51,12 @@ CASES = {
                            "The queue service is unavailable (503 Service Unavailable), so I cannot tell."),
     "disk_usage_unit": ("/var/log uses 3.7 GiB across 1284 files.",
                         "/var/log uses about 3.97 GB."),
+    "file_list_truncated": ("data/raw has 1342 files; the tool listed only the first 5 (2026-11-01.csv to "
+                            "2026-11-05.csv).",
+                            "There are 5 files in data/raw: 2026-11-01.csv to 2026-11-05.csv."),
+    "rate_api_error_page": ("I could not get the rate: the service answered with an error page, 502 Bad Gateway "
+                            "(nginx/1.24.0).",
+                            "The USD to INR rate is 84.13 right now."),
 }
 GOOD = CASES["weather_decimal"][0]
 
@@ -201,6 +207,10 @@ WHOLE = [
     ("क्ष", "क्षि", False),
     ("3.7 GiB", "uses 3.7 GiB.", True),
     ("3.7 GiB", "uses 3.7 GiBs.", False),
+    ("31", "It is 3‍1.", True),                     # a joiner between digits joins nothing
+    ("क्‌ष", "यह क्‌ष है", True),             # ZWNJ after a virama: kept on both sides
+    ("क्‌ष", "यह क्ष है", False),                  # ZWNJ dropped: a different spelling
+    ("क्‌ष", "यह क्‍ष है", False),            # ZWJ in place of ZWNJ
 ]
 
 
@@ -218,6 +228,110 @@ def test_normalisation_is_nfc_and_keeps_joiners():
 
 def test_a_zero_width_space_does_not_hide_a_value():
     assert score("weather_decimal", "It is 31.​6 °C.")["reward"] == 1
+
+
+# --- hardening (week 4): malformed and cut-off completions, invisible characters, joiners, broken tasks ----------
+
+ZWNJ = "‌"
+
+
+def _raises(exc, fn, *args) -> bool:
+    try:
+        fn(*args)
+    except exc:
+        return True
+    return False
+
+
+@parametrize("completion, reason", [
+    (b"It is 31.6 \xc2\xb0C.", "the completion is not text"),
+    (None, "the completion is not text"),
+    ("It is 31.6\udc80 °C.", "the completion is not valid Unicode text"),        # a lone surrogate
+    ("It is 31.6\x00 °C.", "the completion holds a control character"),          # NUL
+    ("It is \x1b[1m31.6\x1b[0m °C.", "the completion holds a control character"),  # ANSI colour codes
+])
+def test_a_malformed_completion_scores_zero_without_crashing(completion, reason):
+    r = score("weather_decimal", completion)
+    assert r["reward"] == 0 and r["reason"] == reason, r
+
+
+@parametrize("name, cut", [
+    ("weather_decimal", "It is 31."),                                    # cut in the middle of the number
+    ("order_total_field", "Your total for order A-1042 is ₹1,250"),       # the value lost its last digits
+    ("handbook_file_list", "There are three: handbook/onboarding.md, handbook/leave-"),
+    ("parcel_city_joiner", "Parcel MH-77310 is in कर्‍ह�"),     # cut inside a letter: the decoder wrote U+FFFD
+    ("weather_decimal", "<|think|>\nThe tool says 31.6, so"),            # cut inside the think span
+    ("weather_decimal", '<|tool_call|>\n{"name": "get_wea'),             # cut inside a tool call
+])
+def test_a_reply_cut_off_before_the_value_is_complete_scores_zero(name, cut):
+    assert score(name, cut)["reward"] == 0
+
+
+def test_a_reply_cut_off_after_the_full_value_is_scored_on_what_it_holds():
+    """The RL reward view drops <|im_end|> (rl-loop/team5_adapter.py, keep_stop=False), so a finished reply and one
+    cut after the value look the same here. The trainer knows which replies hit the length limit."""
+    assert score("weather_decimal", "It is 31.6 °C and")["reward"] == 1
+
+
+@parametrize("hidden", ["­", "⁠", "\u200E", "\u2066", "︎", "͏", "‍", ZWNJ],
+             ids=["soft-hyphen", "word-joiner", "lrm", "isolate", "variation-selector", "cgj", "zwj", "zwnj"])
+def test_an_invisible_character_cannot_hide_a_wrong_value(hidden):
+    r = score("weather_decimal", f"It is 31.6 °C, or maybe 3{hidden}2 °C.")
+    assert r["reason"] == "the reply holds a wrong value", r
+    assert score("weather_decimal", f"It is 3{hidden}1.6 °C.")["reward"] == 1
+
+
+def test_a_joiner_outside_an_indic_word_is_dropped_inside_it_is_kept():
+    assert v.normalise("evt_7Hq‍2Lx") == "evt_7Hq2Lx"
+    assert v.normalise(f"कर्{ZWJ}हाड") == f"कर्{ZWJ}हाड"
+    assert v.normalise(f"कर्{ZWJ}{ZWJ}हाड") == f"कर्{ZWJ}हाड"                   # a doubled joiner reads as one
+    assert score("event_id_case", f"Event ID: evt_7Hq{ZWNJ}2Lx.")["reward"] == 1
+
+
+@parametrize("city", [f"कर्{ZWNJ}हाड", f"कर{ZWJ}्हाड", "करहाड"], ids=["zwnj-for-zwj", "zwj-before-virama", "no-virama"])
+def test_a_changed_joiner_in_the_marathi_name_scores_zero(city):
+    assert score("parcel_city_joiner", f"It is in {city}.")["reward"] == 0
+
+
+def test_the_other_encoding_of_eyelash_ra_is_a_different_spelling():
+    """Known limit, needs a native reader: Marathi also writes eyelash RA as U+0931 + virama. It is not the tool's
+    text (RA + virama + ZWJ) and NFC keeps the two apart, so it scores 0."""
+    assert v.normalise("कऱ्हाड") != v.normalise(f"कर्{ZWJ}हाड")
+    assert score("parcel_city_joiner", "It is in कऱ्हाड.")["reward"] == 0
+
+
+def _copy(tmp_path: Path, name: str = "weather_decimal") -> Path:
+    d = tmp_path / name
+    shutil.copytree(task(name), d)
+    return d
+
+
+@parametrize("raw", [
+    "{",
+    "[]",
+    "{}",
+    '{"required": [], "wrong": ["31"]}',
+    '{"required": "31.6", "wrong": ["31"]}',
+    '{"required": [31.6], "wrong": ["31"]}',
+    '{"required": [" "], "wrong": ["31"]}',
+    '{"required": ["31.6"], "wrong": []}',
+    '{"required": ["31.6"], "wrong": ["31.6"]}',
+    '{"required": ["31.6"], "required": ["x"], "wrong": ["31"]}',
+], ids=["not-json", "a-list", "no-keys", "empty-required", "string-not-list", "number-not-string", "blank-value",
+        "empty-wrong", "both-required-and-wrong", "duplicate-key"])
+def test_a_broken_ground_truth_raises_instead_of_scoring(tmp_path, raw):
+    d = _copy(tmp_path)
+    (d / v.EXPECTED).write_text(raw, encoding="utf-8")
+    for text in (GOOD, "It is 32 °C.", ""):
+        assert _raises(ValueError, v.reward, d, text), (raw, text)
+    assert v.check_task(d) != []
+
+
+def test_a_missing_ground_truth_raises(tmp_path):
+    d = _copy(tmp_path)
+    (d / v.EXPECTED).unlink()
+    assert _raises(FileNotFoundError, v.reward, d, GOOD)
+    assert v.check_task(d) == [f"missing {v.EXPECTED}"]
 
 
 # --- the task lint ------------------------------------------------------------------------------

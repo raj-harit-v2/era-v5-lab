@@ -111,7 +111,8 @@ def test_changed_weights_change_the_number_and_mixed_up_files_are_refused(tmp_pa
     # a checkpoint with one changed weight tensor: summary.json's final hash no longer matches, so Team 5's check stops it
     ck = torch.load(rf / "checkpoint.pt", map_location="cpu", weights_only=False)
     # (doubled, not shifted: adding one constant to every head weight moves all logits equally and leaves the NLL as it was)
-    ck["model"]["head.weight"] = ck["model"]["head.weight"] * 2.0
+    key = "head.weight" if "head.weight" in ck["model"] else "head.W_out"  # dense head, or the KAS V2 head (#717)
+    ck["model"][key] = ck["model"][key] * 2.0
     torch.save(ck, rf / "checkpoint.pt")
     with pytest.raises(ValueError, match="final_model_sha256"):
         mpf.compute(REPO, rf, TOK, TAB)

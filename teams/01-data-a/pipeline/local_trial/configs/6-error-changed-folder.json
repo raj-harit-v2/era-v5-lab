@@ -7,6 +7,7 @@
     "clean": {
       "mode": "run",
       "settings": "teams/01-data-a/pipeline/clean.json",
+      "workers": 2,
       "input": "inputs/local_trial",
       "manifest_sha256": "7fd647c8d4662d17e2310efbcc20981d70656fdad2fabb7663c266a2153a1b7e",
       "expected_parts": {

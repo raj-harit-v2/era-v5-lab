@@ -100,7 +100,7 @@ The JavaScript verifier, its runner, the Docker image and the JavaScript tasks a
 | `math_pool/` | The pool-pinned math verifier set: boxed exact answer, pins into the RL data v1 math pool, tests. |
 | `agentic/` | The agentic verifier set: command and patch checks, its tasks and tests. |
 | `indic/` | The Indic verifier set: exact-answer reward, its tasks and tests, and the template generator. |
-| `toolresult/` | The tool-result verifier set: exact tool-result text in the reply, its ten tasks and tests. |
+| `toolresult/` | The tool-result verifier set: exact tool-result text in the reply, its twelve tasks and tests. |
 | `js/` | The JavaScript verifier set: Node.js 26, sandboxed execution, its tasks and tests. |
 | `indic_prompts_v0.md` | Indic prompt families with checkable answers, who writes them, the Team 2 check and the status. |
 | `objective_v1.py`, `objective_v1.md`, `test_objective_v1.py` | Session 18 objective: group advantage, equal-reward drop, trust-region mask. |

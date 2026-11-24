@@ -140,6 +140,70 @@ def test_a_module_that_fakes_jest_globals_cannot_pass():
     assert v.reward(d, fence(d, code))["reward"] == 0
 
 
+# --- TypeScript edge cases (Docker) --------------------------------------------------------------
+# Both answer ts/secret-handshake correctly at run time, so the score depends only on the TS feature under test.
+
+TS_ONLY_SYNTAX = """\
+enum Shake { Wink = 1, DoubleBlink = 2, CloseEyes = 4, Jump = 8, Reverse = 16 }
+
+interface Step {
+  readonly flag: Shake
+  readonly name: string
+}
+
+const STEPS = [
+  { flag: Shake.Wink, name: 'wink' },
+  { flag: Shake.DoubleBlink, name: 'double blink' },
+  { flag: Shake.CloseEyes, name: 'close your eyes' },
+  { flag: Shake.Jump, name: 'jump' },
+] as const satisfies readonly Step[]
+
+class Decoder<T extends Step> {
+  constructor(private readonly steps: readonly T[]) {}
+
+  decode(handshake: number): string[] {
+    const out = this.steps.filter((s) => (handshake & s.flag) !== 0).map((s) => s.name!)
+    return handshake & Shake.Reverse ? out.reverse() : out
+  }
+}
+
+export const commands = (handshake: number): string[] => new Decoder<Step>(STEPS).decode(handshake)
+"""
+
+# FIXTURE written to attack the verifier, not task data or training data.
+TS_IMPORT_REQUIRE = """\
+import cp = require('child_process')
+
+export const commands = (handshake: number): string[] => {
+  cp.execSync('true')
+  const names = ['wink', 'double blink', 'close your eyes', 'jump']
+  const out = names.filter((_, i) => handshake & (1 << i))
+  return handshake & 16 ? out.reverse() : out
+}
+"""
+
+
+def _ts_task(task_id: str) -> Path:
+    return next(d for d in TASK_DIRS if meta(d)["language"] == "ts" and d.name == task_id)
+
+
+@needs_image
+def test_a_correct_answer_using_ts_only_syntax_scores_one():
+    # enum, interface, `as const satisfies`, generics, parameter properties, non-null `!`: babel must strip or
+    # compile all of them, or a correct TS answer is scored 0 (a false negative in the RL reward).
+    d = _ts_task("secret-handshake")
+    out = v.reward(d, fence(d, TS_ONLY_SYNTAX))
+    assert out["reward"] == 1 and out["passed"] == meta(d)["expected_tests"], out
+
+
+@needs_image
+def test_ts_import_equals_require_scores_zero():
+    # `import x = require(...)` is TS-only syntax that babel compiles to a plain require(); the membrane context has
+    # no `require`, so the module fails to load even though its logic is right.
+    d = _ts_task("secret-handshake")
+    assert v.reward(d, fence(d, TS_IMPORT_REQUIRE))["reward"] == 0
+
+
 @needs_image
 def test_a_wrong_but_plausible_module_scores_zero_for_every_task():
     for d in TASK_DIRS:

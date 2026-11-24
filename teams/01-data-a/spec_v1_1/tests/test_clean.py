@@ -48,7 +48,7 @@ class Build(unittest.TestCase):
         self.assertEqual(len(c._RULE), 247)
         self.assertIn("f1_rule.py", c._RULE)
         counts = {family: len(rules) for family, rules in c._PIPELINES.items()}
-        self.assertEqual(counts, {"code": 24, "english": 23, "math": 22, "sci": 24, "indic": 153})
+        self.assertEqual(counts, {"code": 24, "english": 23, "math": 22, "sci": 24, "indic": 153, "code-adjacent": 0})
 
     def test_every_v1_1_rule_runs_on_its_origin_packs_only(self):
         self.assertEqual(len(V11), 24)

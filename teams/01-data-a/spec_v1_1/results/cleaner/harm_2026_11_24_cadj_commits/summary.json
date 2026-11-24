@@ -1,0 +1,278 @@
+{
+ "clean_sha256": "d275556ee87a259b05ac5e474ed40b569c2e821aaaffa99d5d07035e40948989",
+ "compare_sha256": "aa1f8e534820e5218f74c9bdec4ada217002ff467ee00256113ba59978e2b393",
+ "gold": {
+  "pack": "cadj-commits",
+  "gold": 413,
+  "changed": 0,
+  "dropped": 0,
+  "allowed": 4,
+  "result": "PASS"
+ },
+ "week1": {
+  "cadj-commits": {
+   "docs": 500,
+   "changed": 40,
+   "drops": 0,
+   "other_changes": 0,
+   "not_idempotent": 0,
+   "changed_ids": [
+    "e0c1e30626b9b1ff",
+    "6454d40260da86f0",
+    "49b151d5092e2af4",
+    "1a04398a8eb0d640",
+    "ad8d26fb7fc543f0",
+    "657218c9c3ab3831",
+    "19c86ce5aabab9b7",
+    "a2a76259799729fa",
+    "59db3993ab02a2c9",
+    "e7c1647714ab6ee6",
+    "d8136c75de468ac6",
+    "f9b766f8d70fd170",
+    "a74ed5caf45ae502",
+    "e79c7bd2ebb438da",
+    "d903e4efac48eab8",
+    "4d5a5879fa9978bd",
+    "50b4d4f01a80e8b5",
+    "97182afd7192fe66",
+    "8ae8af60edff9ffb",
+    "e2347a156b344836",
+    "014b5b2147006b90",
+    "abd2e71e0f18d22a",
+    "b3d1223883e251b4",
+    "13208b2f948e8596",
+    "2e67b64a19631ac7",
+    "9c5459fa4064712d",
+    "bce6aea34c38b7d7",
+    "5cd576385b620016",
+    "4c25f9f3425b8be1",
+    "75b7f3f5f2d69c0a",
+    "3f4afa6706cfd149",
+    "e48466dfa7cb6431",
+    "dc30900570719dd8",
+    "50ef1e872544de9c",
+    "721a163bb2f6f55a",
+    "3b6ff81414d752f8",
+    "a4ffb844ba967bbd",
+    "223a8ae8ceabbf16",
+    "b7a6d322bb43620d",
+    "433ee82463d071b0"
+   ]
+  },
+  "cadj-notebooks": {
+   "docs": 500,
+   "changed": 0,
+   "drops": 0,
+   "other_changes": 0,
+   "not_idempotent": 0,
+   "changed_ids": []
+  }
+ },
+ "f1_labelled": {
+  "labelled": 45,
+  "in_pack": 45,
+  "fixed": 40,
+  "not_fixed_ids": [
+   "17874ea94ee0e7e0",
+   "1ed9b4ca0577b614",
+   "8ec5fd44a7449e14",
+   "bb55c9242d2f7e4f",
+   "d6617dadff45989c"
+  ]
+ },
+ "equivalence": {
+  "cadj-commits": {
+   "docs": 1000,
+   "differ": 60,
+   "differ_not_email": 0
+  },
+  "cadj-notebooks": {
+   "docs": 1000,
+   "differ": 0,
+   "differ_not_email": 0
+  },
+  "cadj-stackexchange": {
+   "docs": 1000,
+   "differ": 0,
+   "differ_not_email": 0
+  },
+  "code-cpp": {
+   "docs": 1000,
+   "differ": 0,
+   "differ_not_email": 0
+  },
+  "code-go": {
+   "docs": 1000,
+   "differ": 0,
+   "differ_not_email": 0
+  },
+  "code-java": {
+   "docs": 1000,
+   "differ": 0,
+   "differ_not_email": 0
+  },
+  "code-js-ts": {
+   "docs": 1000,
+   "differ": 0,
+   "differ_not_email": 0
+  },
+  "code-python": {
+   "docs": 1000,
+   "differ": 0,
+   "differ_not_email": 0
+  },
+  "code-rust": {
+   "docs": 1000,
+   "differ": 0,
+   "differ_not_email": 0
+  },
+  "en-dclm": {
+   "docs": 1000,
+   "differ": 0,
+   "differ_not_email": 0
+  },
+  "en-fineweb-edu": {
+   "docs": 1000,
+   "differ": 0,
+   "differ_not_email": 0
+  },
+  "en-nemotroncc": {
+   "docs": 1000,
+   "differ": 0,
+   "differ_not_email": 0
+  },
+  "en-nemotroncc-synth": {
+   "docs": 1000,
+   "differ": 0,
+   "differ_not_email": 0
+  },
+  "ind-bn-fw2": {
+   "docs": 1000,
+   "differ": 0,
+   "differ_not_email": 0
+  },
+  "ind-bn-sangraha-v": {
+   "docs": 1000,
+   "differ": 0,
+   "differ_not_email": 0
+  },
+  "ind-gu-fw2": {
+   "docs": 1000,
+   "differ": 0,
+   "differ_not_email": 0
+  },
+  "ind-hi-fw2": {
+   "docs": 1000,
+   "differ": 0,
+   "differ_not_email": 0
+  },
+  "ind-hi-hplt": {
+   "docs": 1000,
+   "differ": 0,
+   "differ_not_email": 0
+  },
+  "ind-hi-indiccorp": {
+   "docs": 1000,
+   "differ": 0,
+   "differ_not_email": 0
+  },
+  "ind-hi-sangraha-s": {
+   "docs": 1000,
+   "differ": 0,
+   "differ_not_email": 0
+  },
+  "ind-hi-sangraha-v": {
+   "docs": 1000,
+   "differ": 0,
+   "differ_not_email": 0
+  },
+  "ind-kn-fw2": {
+   "docs": 1000,
+   "differ": 0,
+   "differ_not_email": 0
+  },
+  "ind-kn-sangraha-s": {
+   "docs": 1000,
+   "differ": 0,
+   "differ_not_email": 0
+  },
+  "ind-kn-sangraha-v": {
+   "docs": 1000,
+   "differ": 0,
+   "differ_not_email": 0
+  },
+  "ind-ml-fw2": {
+   "docs": 1000,
+   "differ": 0,
+   "differ_not_email": 0
+  },
+  "ind-mr-fw2": {
+   "docs": 1000,
+   "differ": 0,
+   "differ_not_email": 0
+  },
+  "ind-mr-sangraha-v": {
+   "docs": 1000,
+   "differ": 0,
+   "differ_not_email": 0
+  },
+  "ind-or-fw2": {
+   "docs": 1000,
+   "differ": 0,
+   "differ_not_email": 0
+  },
+  "ind-sa-fw2": {
+   "docs": 1000,
+   "differ": 0,
+   "differ_not_email": 0
+  },
+  "ind-ta-fw2": {
+   "docs": 1000,
+   "differ": 0,
+   "differ_not_email": 0
+  },
+  "ind-ta-sangraha-s": {
+   "docs": 1000,
+   "differ": 0,
+   "differ_not_email": 0
+  },
+  "ind-te-fw2": {
+   "docs": 1000,
+   "differ": 0,
+   "differ_not_email": 0
+  },
+  "ind-te-sangraha-s": {
+   "docs": 1000,
+   "differ": 0,
+   "differ_not_email": 0
+  },
+  "ind-te-sangraha-v": {
+   "docs": 1000,
+   "differ": 0,
+   "differ_not_email": 0
+  },
+  "math-finemath": {
+   "docs": 1000,
+   "differ": 0,
+   "differ_not_email": 0
+  },
+  "math-megamath": {
+   "docs": 1000,
+   "differ": 0,
+   "differ_not_email": 0
+  },
+  "sci-finepdfs": {
+   "docs": 1000,
+   "differ": 0,
+   "differ_not_email": 0
+  }
+ },
+ "sample_cadj_commits": {
+  "docs": 74753,
+  "changed": 4529,
+  "addresses_masked": 7954,
+  "drops": 0,
+  "other_changes": 0
+ },
+ "result": "PASS"
+}

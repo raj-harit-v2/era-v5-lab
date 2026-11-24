@@ -159,6 +159,34 @@ def test_oversized_and_nul_code_are_refused():
     assert jv.reward(SNAKE, "```javascript\nfunction camelToSnake\x00(s){}\n```")["reason"] == "NUL byte in code"
 
 
+# --- think-span handling -------------------------------------------------------------------------
+# Parity with jsts_verifier.py: strip reasoning traces; reject unclosed spans.
+
+def test_unclosed_think_span_scores_zero():
+    """Code inside an unclosed <|think|> span must be rejected, not executed."""
+    text = "<|think|>\n" + fence(CORRECT_SNAKE)
+    assert jv.reward(SNAKE, text)["reason"] == "think span not closed"
+    assert jv.reward(SNAKE, text)["reward"] == 0
+    code, reason = jv.extract_code("<|think|>\n```javascript\nfunction camelToSnake(s){ return s; }\n```\n")
+    assert code is None and reason == "think span not closed"
+
+
+def test_closed_think_span_stripped_before_extraction():
+    """Everything up to and including <|/think|> is discarded; the code after is used."""
+    text = "<|think|>\nsome reasoning\n<|/think|>\n" + fence(CORRECT_SNAKE)
+    code, reason = jv.extract_code(text)
+    assert reason == "ok" and code is not None
+
+
+def test_wrong_code_in_think_span_correct_code_outside():
+    """Wrong code inside a closed think span, correct code after — the outer code wins."""
+    wrong_inside = "<|think|>\n```javascript\nfunction camelToSnake(s){ return s; }\n```\n<|/think|>\n"
+    text = wrong_inside + fence(CORRECT_SNAKE)
+    code, reason = jv.extract_code(text)
+    assert reason == "ok"
+    assert code == CORRECT_SNAKE
+
+
 # --- correct and incorrect answers ---------------------------------------------------------------
 
 @needs_node

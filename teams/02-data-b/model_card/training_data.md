@@ -1,6 +1,6 @@
 # Model card text: Training data, Data B part
 
-Date: 16 Nov 2026
+Date: 16 Nov 2026; the code-adjacent problems added on 24 Nov 2026
 
 Section "Training data" of `teams/11-release/model_card/model_card_outline.md`: the public data sources, and the
 problems we found in them. Owner teams: Data A, Data B (Data A leads). This file is the Data B part: the
@@ -33,6 +33,18 @@ The readers found these problems:
   at 1% of the tokens of each language.
 - Malayalam and Odia had no second reader, so Data B could not measure their clean share.
 
+In the code-adjacent text, the readers found these problems:
+
+- Commit messages are mostly clean. Their main problem is personal data: the e-mail addresses of the people who
+  wrote the commits, in author and sign-off lines. Cleaning replaces these addresses with a placeholder. Long licence
+  headers also repeat in many commits.
+- Many notebooks have text around the code that is not part of the work, such as headers and links, and leftover
+  template text.
+- Every question-and-answer post has format markers left in its text. Some posts also contain HTML tags, carry a
+  thread from another question, or repeat in other posts.
+- Only the commit messages have a gold set, so no cleaning rule was tested on the notebooks and the posts.
+  [text: waiting for TSAI, whether the notebooks and the posts are cleaned before training]
+
 Indian scripts break easily. Data B looked for invisible characters, text in the wrong script, words cut before a vowel
 sign, and lost joiner characters (ZWJ and ZWNJ). In the cleaned training shards, no joiner was lost from the text that
 cleaning kept.
@@ -51,6 +63,9 @@ Text in Indian languages, in their own scripts, is 8% of every training batch.
 | Romanised text rare; cap of 1% | `romanised/romanised_policy_v1.md`, #481; TSAI approved the number for public text on #460 |
 | Joiners kept in the cleaned shards | #523 (`audit/audit_v1.csv`) |
 | 8% of every batch | TSAI's comment on #460 (16 Nov) |
+| Code-adjacent problems | the week-1 label sheets in `diagnosis/submissions/cadj-commits/`, `cadj-notebooks/` and `cadj-stackexchange/`: 500 documents each, three readers on commits and posts, one on notebooks |
+| E-mail addresses replaced in commit messages | `teams/01-data-a/spec_v1_1/clean.py` on main (#767): the shared F1 masks e-mail addresses only, on `cadj-commits` |
+| Gold set for commits only; no rule tested on notebooks and posts | `teams/02-data-b/gold/cadj-commits_gold.csv`; `clean.py` (#767): notebooks and posts deferred, no gold set |
 
-No other number is in the text, so no `[number: waiting for TSAI]` is needed. Problems that Data B found in the
-code-adjacent packs are not in this version: their readers add them.
+No other number is in the text, so no `[number: waiting for TSAI]` is needed. The one open point is marked
+`[text: waiting for TSAI]`.

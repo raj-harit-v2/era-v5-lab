@@ -199,9 +199,16 @@ def part(tmp_path, pack="en-dclm", split="train"):
 
 @pytest.mark.parametrize("platform, rss", [("darwin", 512 * 1024 * 1024), ("linux", 512 * 1024)])
 def test_peak_memory_uses_platform_units(platform, rss, monkeypatch):
-    monkeypatch.setattr(job, "resource", SimpleNamespace(RUSAGE_SELF=0, getrusage=lambda _: SimpleNamespace(ru_maxrss=rss)))
+    monkeypatch.setattr(job, "resource", SimpleNamespace(RUSAGE_SELF=0, RUSAGE_CHILDREN=1, getrusage=lambda _: SimpleNamespace(ru_maxrss=rss)))
     monkeypatch.setattr(job.sys, "platform", platform)
     assert job.peak_rss_mib() == 512.0
+
+
+def test_peak_memory_is_the_largest_process_the_job_or_a_worker(monkeypatch):
+    usage = {0: 100 * 1024, 1: 300 * 1024}  # Linux units: KiB
+    monkeypatch.setattr(job, "resource", SimpleNamespace(RUSAGE_SELF=0, RUSAGE_CHILDREN=1, getrusage=lambda who: SimpleNamespace(ru_maxrss=usage[who])))
+    monkeypatch.setattr(job.sys, "platform", "linux")
+    assert job.peak_rss_mib() == 300.0
 
 
 def test_peak_memory_is_unavailable_without_resource(monkeypatch):
@@ -236,7 +243,7 @@ def test_streaming_output_and_rule_counts_match_cleaner(tmp_path):
 
 
 def test_unknown_pack_is_explicit_passthrough(tmp_path):
-    path, shard, rows = part(tmp_path, "cadj-commits")
+    path, shard, rows = part(tmp_path, "cadj-stackexchange")
     out = tmp_path / "out"
     result = job.process_part(path, shard, out, 2)
     assert result["status"] == "unsupported_passthrough"
@@ -308,7 +315,7 @@ def test_all_dropped_part_still_has_a_valid_parquet_schema(tmp_path):
 
 
 def test_aggregate_includes_zero_rules_and_explicit_partial_manifest(tmp_path):
-    path, shard, _ = part(tmp_path, "cadj-commits")
+    path, shard, _ = part(tmp_path, "cadj-stackexchange")
     out = tmp_path / "out"
     report = job.process_part(path, shard, out, 2)
     summary = job.write_aggregate(out, [report], {"sample": "synthetic"}, 86)
@@ -656,3 +663,153 @@ def test_the_rule_counts_of_a_resumed_job_are_the_sum_of_every_part(sample, monk
     for rid, row in rows.items():
         for kind in ("keep", "fix", "drop", "error"):
             assert int(row[kind]) == sum(r["rule_counts"].get(rid, {}).get(kind, 0) for r in reports)
+
+
+# --- workers: parts cleaned by several processes at once --------------------------------------------------------------------
+def summary_of(folder):
+    """job_summary.json without what legitimately differs between two runs of the same job (time, attempts, workers)."""
+    data = json.loads((folder / "job_summary.json").read_text())
+    for key in ("wall_seconds", "peak_rss_mib", "attempts", "workers", "config_sha256", "resumed_parts"):
+        data.pop(key)
+    for report in data["parts"]:
+        report.pop("seconds")
+    return data
+
+
+def same_output(a, b):
+    assert outputs(a) == outputs(b)
+    assert (a / "rule_examples.csv").read_text() == (b / "rule_examples.csv").read_text()
+    assert summary_of(a) == summary_of(b)
+
+
+@pytest.mark.parametrize("bad", [0, -1, True, 1.5, "2", None])
+def test_workers_must_be_a_whole_number_of_one_or_more(sample, bad):
+    tmp, shards, run = sample
+    with pytest.raises(job.JobError, match="workers must be a whole number, 1 or more"):
+        run(workers=bad)
+    assert not (tmp / "out").exists()
+
+
+def test_the_default_is_one_worker_in_this_process_and_needs_no_pool(sample, monkeypatch):
+    tmp, shards, run = sample
+    monkeypatch.setattr(job, "clean_in_pool", lambda *a, **k: pytest.fail("a pool was started"))
+    assert run() == 0
+    assert run(out="out/one", workers=1) == 0
+    assert json.loads((tmp / "out/one/job_summary.json").read_text())["workers"] == 1
+
+
+def test_several_workers_make_the_output_of_one(sample):
+    tmp, shards, run = sample
+    run(out="out/one")
+    assert run(out="out/three", workers=3) == 0
+    same_output(tmp / "out/three", tmp / "out/one")
+    summary = json.loads((tmp / "out/three/job_summary.json").read_text())
+    assert summary["workers"] == 3
+    assert [p["part"] for p in summary["parts"]] == [s["path"] for s in shards]  # manifest order, not finishing order
+
+
+def test_more_workers_than_parts_start_only_as_many_as_there_are_parts(sample):
+    tmp, shards, run = sample
+    run(out="out/one")
+    assert run(out="out/many", workers=16) == 0
+    same_output(tmp / "out/many", tmp / "out/one")
+    assert json.loads((tmp / "out/many/job_summary.json").read_text())["workers"] == len(shards)
+
+
+def test_workers_started_by_spawn_load_the_pinned_cleaner_and_make_the_same_output(sample, monkeypatch):
+    tmp, shards, run = sample  # nothing is inherited from this process: each worker loads and checks the cleaner itself
+    run(out="out/one")
+    assert job.start_method() == "spawn"  # the default
+    assert run(out="out/spawned", workers=2) == 0
+    same_output(tmp / "out/spawned", tmp / "out/one")
+
+
+def test_the_biggest_parts_go_first(tmp_path, monkeypatch):
+    shards = [dict(path=f"train/p/part-{n}.parquet", rows=rows) for n, rows in enumerate([5, 90, 7, 90, 40])]
+    submitted = []
+
+    class Pool:
+        def __init__(self, **kwargs):
+            pass
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *exc):
+            return False
+
+        def submit(self, fn, task):
+            submitted.append(task[1]["path"])
+            future = job.Future()
+            future.set_result({"part": task[1]["path"]})
+            return future
+
+    monkeypatch.setattr(job, "ProcessPoolExecutor", Pool)
+    monkeypatch.setattr(job, "clean", SimpleNamespace(__file__="clean.py"))
+    done = job.clean_in_pool(shards, {s["path"]: s["path"] for s in shards}, tmp_path, 1, 0, 2, "pin")
+    assert submitted == ["train/p/part-1.parquet", "train/p/part-3.parquet", "train/p/part-4.parquet",
+                         "train/p/part-2.parquet", "train/p/part-0.parquet"]  # by rows, equal sizes by path
+    assert sorted(done) == sorted(s["path"] for s in shards)
+
+
+def test_a_failure_with_workers_stops_the_job_and_a_resume_with_another_number_finishes_it(sample, monkeypatch):
+    tmp, shards, run = sample
+    run(out="out/fresh")
+    with monkeypatch.context() as m:
+        m.setattr(job, "start_method", lambda: "fork")  # a forked worker inherits the patch below; a spawned one would not
+        fail_on(m, "train/en-dclm/part-00001.parquet")
+        with pytest.raises(job.JobError, match="injected failure"):
+            run(workers=2)
+    out = tmp / "out/job"
+    assert not (out / "job_summary.json").exists()
+    assert not (out / "train/en-dclm/part-00001.parquet").exists()  # the failed part was not published
+    state = json.loads((out / "job_state.json").read_text())
+    assert [a["status"] for a in state["attempts"]] == ["failed"] and "injected failure" in state["attempts"][0]["error"]
+    assert run(resume=True, workers=1) == 0  # not part of what a resume checks
+    same_output(out, tmp / "out/fresh")
+    assert json.loads((out / "job_summary.json").read_text())["completed_parts"] == 4
+
+
+def test_a_cleaner_error_in_workers_leaves_the_record_of_the_failure_the_job_reports(sample, monkeypatch):
+    tmp, shards, run = sample
+
+    def broken(doc):
+        raise ValueError("synthetic private content that must not appear in reports")
+
+    broken_rule = lambda: broken
+    monkeypatch.setattr(job.clean, "_RULE", {"DA-A1-004": broken_rule, "f1_rule.py": job.clean._shared_f1_rule})
+    monkeypatch.setattr(job.clean, "_ID", {broken_rule: "DA-A1-004", job.clean._shared_f1_rule: "f1_rule.py"})
+    monkeypatch.setattr(job.clean, "_PIPELINES", {"english": (broken_rule,)})
+    monkeypatch.setattr(job, "start_method", lambda: "fork")  # the workers inherit the patched cleaner...
+    monkeypatch.setattr(job, "load_clean", lambda path, pin: job.clean)  # ...and neither they nor the job load the real one over it
+    with pytest.raises(job.JobError, match="cleaner error: (?P<part>\\S+) doc_id=.* type=ValueError") as caught:
+        run(workers=3)  # all three en-dclm parts fail, in different workers
+    named = caught.value.args[0].split()[2]
+    out = tmp / "out/job"
+    failure = (out / "failure.json").read_text()
+    assert "synthetic private content" not in failure
+    assert json.loads(failure)["part"] == named and json.loads(failure)["error_type"] == "ValueError"  # the one the job reports
+    assert json.loads(failure)["rule_counts"]["DA-A1-004"]["error"] == 1
+    assert sorted(p.name for p in out.glob("failure*")) == ["failure.json"]  # no temporary files
+
+
+def test_a_worker_that_dies_is_named_and_the_job_can_be_resumed(sample, monkeypatch):
+    tmp, shards, run = sample
+    run(out="out/fresh")
+    parent = job.os.getpid()
+    real = job.process_part
+
+    def dies(source, shard, output, batch_size, **more):
+        if job.os.getpid() != parent and shard["path"] == "train/en-dclm/part-00001.parquet":
+            job.os._exit(1)  # as if the kernel had killed it
+        return real(source, shard, output, batch_size, **more)
+
+    with monkeypatch.context() as m:
+        m.setattr(job, "start_method", lambda: "fork")
+        m.setattr(job, "process_part", dies)
+        with pytest.raises(job.JobError, match='a worker process died .*"resume": true'):
+            run(workers=2)
+    state = json.loads((tmp / "out/job/job_state.json").read_text())
+    assert [a["status"] for a in state["attempts"]] == ["failed"]
+    assert run(resume=True, workers=2) == 0
+    same_output(tmp / "out/job", tmp / "out/fresh")

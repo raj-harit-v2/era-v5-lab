@@ -1,0 +1,178 @@
+{
+  "date_ist": "2026-11-24",
+  "base_commit": "eef1834d0c9f85ef53e8a541e0e9b6f12600f539",
+  "scope": "Local bounded integration validation; not a quality result or full Dry Run 2",
+  "environment": {
+    "torch": "2.5.1+cu124",
+    "cuda": "12.4",
+    "gpu": "NVIDIA GeForce RTX 3070 Laptop GPU",
+    "capability": [
+      8,
+      6
+    ],
+    "bf16_supported": true
+  },
+  "validation_arm": "teams/05-architecture/configs/arms/kas_v2_cuda_validation.yaml",
+  "shape": {
+    "parameters": 176398881,
+    "vocab_size": 131072,
+    "n_layer": 8,
+    "n_embd": 512,
+    "routed_experts": 16,
+    "shared_experts": 1,
+    "expert_ffn": 768,
+    "context": 32,
+    "batch_size": 2,
+    "micro_batch_size": 1,
+    "steps": 3,
+    "tst": false,
+    "head_sgd": false
+  },
+  "optimizer_parameters": {
+    "muon": 165740544,
+    "adamw": 10658337
+  },
+  "fixes": [
+    "Hidden-vector CLI selects tokenizer identity from the saved manifest, reports the actual 2048 codec width and identifies KAS head inputs; retains the legacy top1 field."
+  ],
+  "tests": {
+    "g5_full_cuda": {
+      "passed": 282,
+      "failed": 0,
+      "condition": "Historical full-suite pass with the separately prepared G7 metadata guard applied. The standalone G5 branch still encounters the existing Windows CUDA/NCCL checkpoint failure until that fix lands."
+    },
+    "cuda_focused": {
+      "passed": 4,
+      "scope": "Three GPU tests and one configuration test"
+    },
+    "g8_g9_subset": {
+      "passed": 115,
+      "skipped": 3,
+      "excluded_module": "test_lm_eval_lab.py requires absent lm_eval; two scorer modules require torch >=2.14.1; one watcher case needs POSIX process groups."
+    },
+    "g10_core_subset": {
+      "passed": 19,
+      "skipped": 1,
+      "deselected": 3,
+      "scope": "Input/head adapters, including actual KAS model; SFT cases requiring the Windows-unavailable resource module excluded."
+    },
+    "additional_environment_limits": "Initial G10/G12 broader run had three Windows resource import failures and eighteen transformers/huggingface_hub dependency failures; these are not a qualified full export/SFT run.",
+    "g5_isolated_after_split": {
+      "passed": 14,
+      "failed": 0,
+      "scope": "KAS CUDA/config, real downstream adapters/affine equation, and hidden-vector tests; G7 source files unchanged from main."
+    }
+  },
+  "cuda_cli": {
+    "passed": true,
+    "runs": [
+      {
+        "name": "cuda-baseline",
+        "exit_code": 0
+      },
+      {
+        "name": "cuda-stopped",
+        "exit_code": 0
+      },
+      {
+        "name": "cuda-resumed",
+        "exit_code": 0
+      }
+    ],
+    "checks": {
+      "model": true,
+      "optimizer": true,
+      "stream": true,
+      "torch_rng": true,
+      "cuda_rng": true,
+      "python_rng": true,
+      "numpy_rng": true,
+      "loss_trace": true,
+      "step_zero_preserves_first_loss": true,
+      "bf16_recorded": true,
+      "gradient_accumulation": true,
+      "full_p1536": true,
+      "t2_weights": true,
+      "head_sgd_off": true,
+      "tst_off": true,
+      "committed_step_zero": true
+    },
+    "condition": "Uninterrupted training passed without the G7 guard. The committed step-zero/stop/resume evidence was obtained with the separate G7 guard applied; it is not a standalone Windows checkpoint pass."
+  },
+  "safetensors_exchange": {
+    "step": 3,
+    "strict_load": true,
+    "native_model_hash": "759addd5a9eb1d4343c60d9e701b4ca305a340937737f8ff7b82433b5487e215",
+    "exported_model_hash": "759addd5a9eb1d4343c60d9e701b4ca305a340937737f8ff7b82433b5487e215",
+    "weights_match": true,
+    "saved_probe_devices": [
+      "cuda:NVIDIA GeForce RTX 3070 Laptop GPU"
+    ],
+    "export_probe_device": "cpu",
+    "same_device_probe_available": false,
+    "scope": "Team 7 safetensors weight exchange, not a G12 folded HF export",
+    "condition": "The source checkpoint was created on Windows CUDA with the separately prepared G7 guard. Strict loading and weight exchange preserve the model; this does not qualify standalone Windows checkpoint creation."
+  },
+  "hidden_vector_cli": {
+    "passed": true,
+    "shape": [
+      8,
+      512
+    ],
+    "device": "cuda",
+    "autocast": "bf16",
+    "head_mode": "kas_v2",
+    "ke2_code_dim": 2048
+  },
+  "g12_existing_exporter": {
+    "g12_current_export_accepts_kas": false,
+    "message": "not a G5 LanguageModel checkpoint: unknown tensors ['codec.G', 'codec.Phi', 'head.W_out', 'head.beta', 'head.tok_c']"
+  },
+  "remaining": [
+    "Full production-context/batch, staged-data, long-running Dry Run 2 evidence on the job host.",
+    "Team 9 full watcher/benchmark scoring with its supported runtime and lm_eval dependencies.",
+    "Team 12 KAS-aware folded HF export, including unigram output bias and router-bias compatibility.",
+    "Review/merge the separate Team 7 Windows CUDA/NCCL metadata guard before claiming standalone Windows CUDA committed-checkpoint support; validate its legacy restore job on the supported runtime."
+  ],
+  "cache_boundary": "p1536 is a normalizing tokenizer: retain the existing G5_DOCUMENT_CACHE_DIR refusal; numeric cache support is not extended here.",
+  "reproduce_tests": [
+    "python -m pytest -q teams/05-architecture",
+    "python -m pytest -q teams/05-architecture/tests/test_week2_kas_cuda.py"
+  ],
+  "reproduction_notes": "Use the pinned CUDA build, set ERA_P1536_TOKENIZER to the verified release, PYTHONDONTWRITEBYTECODE=1, OMP_NUM_THREADS=1, and CUBLAS_WORKSPACE_CONFIG=:4096:8. Run the CUDA validation arm with synthetic disjoint JSONL train/heldout files in --smoke mode. Compare an uninterrupted three-step run against --checkpoint-at-start --stop-after 1 followed by --resume-committed, using the same run ID/store for the interrupted pair. On Windows CUDA, apply the separate G7 guard before the full suite or committed checkpoint smoke; the focused KAS CUDA tests and uninterrupted training do not require it.",
+  "synthetic_inputs_sha256": {
+    "train.jsonl": "01d7ee05b8f68046a0b67da4150b7d7f72342d964b11ca3579886d1c1d8ee277",
+    "heldout.jsonl": "18584b07de14ef8d6a1cb9f5ba46cfcaeaab5dc91a8ae129157c7b74af6cc53f"
+  },
+  "tested_worktree_file_sha256": {
+    "teams/05-architecture/configs/arms/kas_v2_cuda_validation.yaml": "873ff5fc122c9c1899e5769bd9ed052afcea90d005add33ce37506f8e95ec267",
+    "teams/05-architecture/harness/save_hidden_vectors.py": "f470b5b18bb0a075e9aa7752a83de5d99e08951e4a9ff87740bc23c3df722d1b",
+    "teams/05-architecture/tests/test_week2_kas_cuda.py": "703d023a24cab3c4fd3e40632cb493d627f982fcec35feedc6eff5810490cace",
+    "teams/05-architecture/tests/test_week2_kas_consumers.py": "cea7e0612d9c2c2c02691923c9944f855668a18fb3647aa904e00460ab6736fb",
+    "teams/05-architecture/tests/test_week2_save_hidden_vectors.py": "eb0bb4dc5a86353e459ac4352d3d819ea5058952e49122452508284a545fa9e5"
+  },
+  "hash_note": "File hashes identify tested worktree bytes before commit; platform checkout newline conversion may alter byte hashes.",
+  "external_validation_dependencies": [
+    {
+      "name": "Windows CUDA/NCCL checkpoint metadata guard",
+      "local_branch": "G7-cuda-checkpoint-fix",
+      "status": "Prepared separately locally; no external PR opened or merge assumed",
+      "patch_file": "g7-windows-cuda-nccl.patch",
+      "patch_sha256": "2a8779e7e7b2fc65d96710ed37a793b0108ff97a268b62972121dca3427354b1",
+      "tested_worktree_file_sha256": {
+        "teams/07-infrastructure/ckpt/ckpt.py": "b2f44d7404e506e0f76c5095a5b90c30b548136b8a06f09287d1e993a8f65d51",
+        "teams/07-infrastructure/ckpt/test_provenance.py": "f12a8a6b19882b7b55db4ff1804133e02a418510d7e00d371cd7c42968e2b769"
+      },
+      "g7_provenance": {
+        "passed": 12,
+        "legacy_restore_case": "Initial missing kronecker-embeddings dependency was installed; direct recheck then confirmed the legacy job requires torch >=2.14.1. Not qualified on the G5 2.5.1 runtime."
+      },
+      "requirement": "Required for Windows CUDA committed checkpoint creation/resume; it does not alter KAS equations or optimizer behavior.",
+      "isolated_new_regressions": {
+        "passed": 3,
+        "deselected": 10,
+        "local_branch": "G7-cuda-checkpoint-fix"
+      }
+    }
+  ]
+}

@@ -12,13 +12,39 @@ match `subset_requirements`. Other pack IDs are rejected.
 ## Prepare the manifest and inventory
 
 Stage the complete selected raw-file set, with at least one train and one heldout
-part per allowed pack. Numeric part indices must be unique within a pack/split.
+part per selected pack. By default all 38 approved packs are required. Numeric part indices must be unique within a pack/split.
 Record upstream revisions/configs and verify the fetch against its source catalog.
 With PyArrow installed, run from the repository root:
 
 ```bash
-python -I teams/01-data-a/jobs/2026-11-19-first-training/build_inventory.py --input-root /path/to/raw --out out/first-training-inputs
+python -I teams/01-data-a/jobs/2026-11-19-first-training/build_inventory.py --input-root /path/to/raw --out out/first-training-inputs --packs-file teams/01-data-a/jobs/2026-11-19-first-training/staged_packs_33.json
 ```
+
+TSAI confirmed the exact selection in G1 at **24 Nov 2026, 08:23:26 IST**.
+The committed [`staged_packs_33.json`](staged_packs_33.json) contains that list.
+The five blocked packs are **en-dclm, en-nemotroncc, en-nemotroncc-synth,
+math-finemath and ind-hi-hplt**; exclude their files from this run's raw root.
+This selects a subset of the approved 38-source universe, without changing
+`approved_inputs.json` or its policy hash. Local audit-pack availability does
+not change the confirmed production selection. To prepare all 38 for a separate
+rehearsal, omit `--packs-file`.
+
+For a partial run, supply `--packs-file staged_packs_33.json` to
+`build_inventory.py`. That file must be a JSON array naming exactly 33 distinct
+IDs from `approved_inputs.json`, confirmed against TSAI's staged source catalog.
+Do not infer the list from an incomplete download. Stage only those selected
+packs under the supplied raw root; files from deferred packs are rejected.
+The manifest records the selected 33 and deferred five in `pack_selection`,
+while retaining the hash and licence provenance of the full approved scope.
+Every selected pack still requires both splits. Omitting a selected pack or
+split fails; the builder never silently shrinks the inventory.
+
+`prepare_run.py` consumes this frozen selection without another selection flag.
+It writes metadata for exactly the selected packs and selects
+`minhash_overlap.py` with `minhash_overlap_partial.json`. Full-scope preparation
+also selects MinHash, with `minhash_overlap.json`. The existing inventory gates
+continue to require exactly the selected parts through ledger and sharding.
+H3 stays report-only with its existing measurement scope.
 
 The output folder must be new. The builder reads all staged Parquets, checks the
 allowlist, schema columns and file identities, and publishes:

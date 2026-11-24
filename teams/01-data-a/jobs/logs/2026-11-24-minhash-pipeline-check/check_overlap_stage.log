@@ -1,0 +1,20 @@
+python 3.13.18 on Linux-6.18.44-fc-v819-x86_64-with-glibc2.39
+PASS  prepare_run.py: overlap stage script: teams/01-data-a/dedup/minhash_overlap.py
+PASS  prepare_run.py: overlap settings for 33-pack selection: teams/01-data-a/dedup/minhash_overlap_partial.json
+PASS  prepare_run.py: overlap settings for all 38 packs: teams/01-data-a/dedup/minhash_overlap.json
+PASS  33-pack selection: stage_args.build runs minhash_overlap.py: teams/01-data-a/dedup/minhash_overlap.py
+PASS  33-pack selection: generated inputs and out are the run's folders
+PASS  33-pack selection: workers 16: 16
+PASS  33-pack selection: 128 hashes in 32 bands: 128 x 32
+PASS  33-pack selection: required packs: 0
+PASS  33-pack selection: minhash_overlap.py accepts the generated config
+PASS  all 38 packs: stage_args.build runs minhash_overlap.py: teams/01-data-a/dedup/minhash_overlap.py
+PASS  all 38 packs: generated inputs and out are the run's folders
+PASS  all 38 packs: workers 16: 16
+PASS  all 38 packs: 128 hashes in 32 bands: 128 x 32
+PASS  all 38 packs: required packs: 38
+PASS  all 38 packs: minhash_overlap.py accepts the generated config
+note  test_f2_pool.py left out: lab_canary (G9) is not importable from here
+$ python3 -B -m pytest -q -p no:warnings teams/01-data-a/pipeline/tests teams/01-data-a/jobs/2026-11-19-first-training/tests teams/01-data-a/dedup/tests/test_minhash_overlap.py teams/01-data-a/dedup/tests/test_minhash_sizing.py --ignore=teams/01-data-a/pipeline/tests/test_f2_pool.py
+PASS  pytest: 706 passed, 2 skipped in 186.81s (0:03:06)
+ALL CHECKS PASSED

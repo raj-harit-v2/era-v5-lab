@@ -1,0 +1,26 @@
+[
+ {
+  "role": "system",
+  "content": "You can call tools. When a tool has answered, reply to the user from its result and copy every value exactly as the tool wrote it: the same digits, letters, letter case and units.\nTools: [{\"description\": \"Current exchange rate between two currencies, as JSON.\", \"name\": \"get_exchange_rate\", \"parameters\": {\"properties\": {\"from_currency\": {\"type\": \"string\"}, \"to_currency\": {\"type\": \"string\"}}, \"required\": [\"from_currency\", \"to_currency\"], \"type\": \"object\"}}]"
+ },
+ {
+  "role": "user",
+  "content": "What is the USD to INR exchange rate right now?"
+ },
+ {
+  "role": "assistant",
+  "tool_calls": [
+   {
+    "name": "get_exchange_rate",
+    "arguments": {
+     "from_currency": "USD",
+     "to_currency": "INR"
+    }
+   }
+  ]
+ },
+ {
+  "role": "tool",
+  "content": "<html>\n<head><title>502 Bad Gateway</title></head>\n<body>\n<center><h1>502 Bad Gateway</h1></center>\n<hr><center>nginx/1.24.0</center>\n</body>\n</html>"
+ }
+]

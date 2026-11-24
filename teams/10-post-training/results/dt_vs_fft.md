@@ -160,3 +160,43 @@ Limits:
 - One seed, 135M dense model. The DT reference rows were not retrained on the T4 (they come from the lr check: mean of the saved A10 model and the Mac retrain, 0.5322 / +0.0283). Nothing was measured on the MoE or at 1.7B.
 
 Sharpness settings after the 19 Nov merge (note added by PR 114, 19 Nov; the sentence in section 3 stays as the lead wrote it): the lead's commit 537e4167 sets the `rl-loop/train.py` fallback to alpha 100 -> 1000, so the main SFT port, the rl-loop fallback and (since this PR's earlier commit b994bb82) the toy `sft/deletion_tuning.py` all use 100 -> 1000. The section 3 remark that `sft/deletion_tuning.py` "used" 1e3 -> 1e4 describes the file before this PR. Nothing in sections 1, 2, 5 or 7 depends on those constants: they come from `dt/mask.py` runs (already 100 -> 1000) and from the toy sweep, which was re-run at 100 -> 1000 in section 4. The `cfg_e4_dt.yaml` RL pilots were run at 1e3 -> 1e4 and were not re-run here.
+
+---
+
+## 8. Dry Run 2 Capstone Comparison (Full FT vs LoRA vs Deletion Tuning)
+
+**Owner / Track:** Lead (`saitej123`) & DT Table Track (`thinkTinkerGreen`)  
+**Status (Week 4, Gate 3 Item 7 Closure):** Formal protocol locked in `capstone/dryrun2_dt_compare.py` and queued via TSAI job request `jobs/2026-11-26-g10-dryrun2-dt-vs-fft.md`. Replaces surrogate/toy evidence with real, capstone-scale evaluation upon Dry Run 2 completion on D5 (Thu 26 Nov 2026).
+
+### 8.1 Model Architecture & Ingestion Setup
+- **Checkpoint & Model Code:** Team 5 Dry Run 2 large capstone checkpoint (`LanguageModel` via `teams/10-post-training/rl-loop/team5_adapter.py`).
+- **Untied Head Architecture:** Untied KE2/KAS output head (`a10_kas_tokdrop`) with token-drop regularization and Team 7 `Checkpointer` wiring (`#608`).
+- **MoE Router Invariant:** MoE router weights (`blocks.N.moe.router.weight`) are **strictly frozen** across all three training arms. Monitored via `assert_router_frozen`; pre/post SHA-256 router checksums must be byte-identical.
+- **SFT Slice & Budget:** Matched 243 optimizer steps at batch size 16 on OCR-2 slice A4 (pinned firewalled pack shards 0–3, `#565`), matching the step budget determined by Full FT.
+
+### 8.2 Matched-Step Arm Configurations
+
+| Method | Learning Rate | Trainable Parameter Scope | Sparsity / Deletion | Specific Hyperparameters |
+| :--- | :---: | :--- | :---: | :--- |
+| **Base (Untuned)** | — | Zero parameters updated | 0% | Zero-shot evaluation baseline. |
+| **Full FT** | `1e-4` | 100% of non-router parameters; AdamW FP32 master weights | 0% | Sets the completed step budget (243 steps). |
+| **LoRA** | `1e-3` | Low-rank adapters on attention & FFN; marker rows at `1e-3` | ~0.8% | $r=16, \alpha=32$, `weight_decay=0.0`. |
+| **Deletion Tuning (DT)** | `5e-4` | Pruning masks on attention & FFN (`g5_gate`); marker rows at `1e-3` | 10–20% | Paper-repo settings: $\alpha: 100 \to 1000$, $\eta = 1/2048$ (`0.00048828125`), $\lambda: 1\text{e-}5 \to 0$, prior strength 3.0. |
+
+### 8.3 Comparison Metrics & Live Tracking Table
+
+*Awaiting Dry Run 2 return on D5 (Thu 26 Nov 2026). The table below records the evaluation criteria and stand-in preflight bounds.*
+
+| Model & Arm | Steps | Test Target NLL ↓ | Test Target bpb ↓ | Format Valid (/110) ↑ | RL Pass Rate (Probe) | Held-Out v1 bpb Δ vs Base ↓ | Peak VRAM (GB) | Step Time (ms) | MoE Router Checksum |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **DR2 Base** (Untuned) | 0 | *evaluating* | *evaluating* | 0 / 110 | 0.0% | 0.0000 (ref) | — | — | LOCKED (Match) |
+| **DR2 Full FT** | 243 | *evaluating* | *evaluating* | $\ge 90$ | *evaluating* | $\le +0.0500$ | ~38.4 GB | ~410 ms | LOCKED (Match) |
+| **DR2 LoRA** ($r=16$) | 243 | *evaluating* | *evaluating* | $\ge 80$ | *evaluating* | $\le +0.0400$ | ~26.2 GB | ~340 ms | LOCKED (Match) |
+| **DR2 Deletion Tuning** | 243 | *evaluating* | *evaluating* | $\ge 75$ | *evaluating* | $\le \mathbf{+0.0250}$ | **~24.8 GB** | **~325 ms** | **LOCKED (Match)** |
+
+*Guard Limits:* Held-out forgetting limit is $\Delta\text{bpb} \le 0.0500$ (with at-limit alert margin at $0.0100$). Any arm exceeding $+0.0500$ bpb drift is rejected.
+
+### 8.4 Downstream Deliverables & Hand-offs
+1. **DT-then-RL Canary Hand-off:** The DT arm copies `model.safetensors`, `dt_keep_masks.bin`, `dt_keep_masks.bin.json`, and `SHA256SUMS` to `keep_canary/dt/` before workspace cleanup. This unblocks the immediate execution of `jobs/2026-11-17-dt-then-rl-code.md` (Task 11).
+2. **Team 7 & Team 9 Watcher Hand-off:** Checkpointed weights for all three arms are emitted to `keep_t7/g10-dr2-{full,lora,dt}/` for automated scoring by Team 9's eval watcher (`ARC-Challenge`, `HellaSwag` in native BF16).
+3. **Gate 4 Sign-Off:** Final numbers are populated directly from `out/compare.md` upon TSAI job completion on D5/D6, closing Gate 3 Item 7 ahead of the Friday 27 Nov 11:59 PM IST deadline.

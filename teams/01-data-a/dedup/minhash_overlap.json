@@ -1,5 +1,5 @@
 {
-  "_comment": "MinHash + LSH overlap for corpus-v1 (TSAI, 23 Nov 2026: exact all-pairs overlap is not run at corpus scale). Same inputs, splits, floor and pack inventory as overlap.json; 128 hashes in 32 bands of 4 (agreement test, dedup v2 item 11: every qualifying H1/H2 pair of the exact method found). workers 0 = all cores. Paths are relative to the repository root.",
+  "_comment": "MinHash + LSH overlap for corpus-v1 (TSAI, 23 Nov 2026: exact all-pairs overlap is not run at corpus scale). Same inputs, splits, floor and pack inventory as overlap.json; 128 hashes in 32 bands of 4 (agreement test, dedup v2 item 11: every qualifying H1/H2 pair of the exact method found). Paths are relative to the repository root. workers 16: one worker peaked at 0.8-0.9 GB on the largest sample parts (per-part signatures) and 1.5 GB while re-reading candidates, so 16 workers stay under about 24 GB on the 64 GiB job host; 0 (all cores) could use about 48 GB on 32 vCPU.",
   "inputs": "out/tokenizer_sample_v0_clean",
   "splits": [
     "train",
@@ -13,7 +13,7 @@
   "hashes": 128,
   "bands": 32,
   "seed": 20261122,
-  "workers": 0,
+  "workers": 16,
   "max_bucket": 2000,
   "expected_packs": [
     "cadj-commits",

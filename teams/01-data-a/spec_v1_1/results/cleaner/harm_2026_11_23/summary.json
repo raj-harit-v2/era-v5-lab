@@ -1,0 +1,676 @@
+{
+  "cleaner_sha256": "d275556ee87a259b05ac5e474ed40b569c2e821aaaffa99d5d07035e40948989",
+  "sheet_sha256": "8b5835ef9b97a627965f4b0fca5ce55ec3d7c2dac863c714cac8e90b87aab770",
+  "shared_f1_sha256": "4a210f8cf557c871d0d4a2c4501d33b3d50c19431b3dc46de4ae213fe99cbab9",
+  "adapter_sha256": "634a4e805d840dc476e9e7f6921f07a11ee787b7847a77c616888158e94c661d",
+  "data_a_harm_sha256": "4dcc04bf8ac553c9c0b39c8812bd7275aee9c8727b80a7a5a026d0e3f7bbafd2",
+  "data_b_harm_sha256": "22d3064adf58478ec7c9677e8f5dd8fafd5455ca7ead9b16288493f1f22d10bb",
+  "packs_root": "/mnt/c/Users/heman/Documents/vijay/erav5-lab-other-files/packs",
+  "limit_percent": 1,
+  "timeout_seconds": 5,
+  "legacy_suite": "blocked: historical spec/spec_v1.md absent",
+  "packs": [
+    {
+      "pack": "code-go",
+      "team": "01-data-a",
+      "supported": true,
+      "gold": "teams/01-data-a/gold/code-go_gold.csv",
+      "pack_sha256": "30fc352199a6b3773d76a692420d25469835e8668ded2cfe8a6be09d71958661",
+      "status": "PASS",
+      "gold_sha256": "81942db337e2e191b15b916941a2cf4160d1f581296c58b07167be1660c677a6",
+      "gold_count": 163
+    },
+    {
+      "pack": "code-js-ts",
+      "team": "01-data-a",
+      "supported": true,
+      "gold": "teams/01-data-a/gold/code-js-ts_gold.csv",
+      "pack_sha256": "4aa4dea19a83b8db922156838b6772e107f39c4ce6af76bf19b3008a57b27018",
+      "status": "PASS",
+      "gold_sha256": "1dd36cc9e2bd1411b81fc00e35a2178840c6c56de87b1642824abf99775b63d7",
+      "gold_count": 204
+    },
+    {
+      "pack": "code-java",
+      "team": "01-data-a",
+      "supported": true,
+      "gold": "teams/01-data-a/gold/code-java_gold.csv",
+      "pack_sha256": "739dc95cdb4241847b051e8c55f5a723a4597919c62f9d6e4ebb9a957d445b00",
+      "status": "PASS",
+      "gold_sha256": "223d555f68e1bd7ecc93f4d3510e7b3425401539729443b2bff8ed1b0212e869",
+      "gold_count": 116
+    },
+    {
+      "pack": "code-cpp",
+      "team": "01-data-a",
+      "supported": true,
+      "gold": "teams/01-data-a/gold/code-cpp_gold.csv",
+      "pack_sha256": "2aa25660b81ccaea5e153ab30c0abd80df2a0cf42531421094c5ff9c96401bd5",
+      "status": "PASS",
+      "gold_sha256": "143d6cbdc97684d8baa2efa515a2de838be101b87f4bff63073c344e22ac8120",
+      "gold_count": 122
+    },
+    {
+      "pack": "code-rust",
+      "team": "01-data-a",
+      "supported": true,
+      "gold": "teams/01-data-a/gold/code-rust_gold.csv",
+      "pack_sha256": "c5822b7df0e76a6bbca95ea6d73a94f19970fe8a71e5645e9205195193a227e5",
+      "status": "PASS",
+      "gold_sha256": "89855018827c2f6c185b50ed35225798552d64283bd54becd6b41e1ba9661dc5",
+      "gold_count": 234
+    },
+    {
+      "pack": "code-python",
+      "team": "01-data-a",
+      "supported": true,
+      "gold": "teams/01-data-a/gold/code-python_gold.csv",
+      "pack_sha256": "b79698620cd7526f9fcb6157376c86274616367baa7757976568c50a6b802e1f",
+      "status": "PASS",
+      "gold_sha256": "80f2144b9adc3ca21143eef556f4feea715e4f61c0ff2b8399eb71bc965480d2",
+      "gold_count": 141
+    },
+    {
+      "pack": "en-fineweb-edu",
+      "team": "01-data-a",
+      "supported": true,
+      "gold": "teams/01-data-a/gold/en-fineweb-edu_gold.csv",
+      "pack_sha256": "3a0ad16983c03e9d8b6a40d8e58d769d9b89e68406a3b86e79fd7b8d68e022de",
+      "status": "PASS",
+      "gold_sha256": "a06212a5f4952b9bf0922d3e21dc72ee3110e53dec60fec533af9deb87084190",
+      "gold_count": 158
+    },
+    {
+      "pack": "en-dclm",
+      "team": "01-data-a",
+      "supported": true,
+      "gold": "teams/01-data-a/gold/en-dclm_gold.csv",
+      "pack_sha256": "d5ae1e7e991de478eb443ec6ca991308473c22922a986c3ebbba71ebfe0fa2b4",
+      "status": "PASS",
+      "gold_sha256": "8165439648189b96fb5b7986435761a05fd34a50474a6d30a196c5308d27767d",
+      "gold_count": 62
+    },
+    {
+      "pack": "en-nemotroncc-synth",
+      "team": "01-data-a",
+      "supported": true,
+      "gold": "teams/01-data-a/gold/en-nemotroncc-synth_gold.csv",
+      "pack_sha256": "0f1c3a9866ada7fb5ea2a244135d9766375351bec366c13cd9c5abfb3d82573c",
+      "status": "PASS",
+      "gold_sha256": "075d0f0fe43592787e0ec46761053118419a042a2cb189e75c93e73b63373ee5",
+      "gold_count": 326
+    },
+    {
+      "pack": "en-nemotroncc",
+      "team": "01-data-a",
+      "supported": true,
+      "gold": "teams/01-data-a/gold/en-nemotroncc_gold.csv",
+      "pack_sha256": "6eae1507bc689c79ec8b73011b264f5b4558ef8eb3ddbf866a598588b7cf0fbb",
+      "status": "FAIL",
+      "gold_sha256": "955598fb766f49633d0ea4c5a9621bc5f4b8e1bff8f4121c69438118685de735",
+      "gold_count": 129
+    },
+    {
+      "pack": "math-megamath",
+      "team": "01-data-a",
+      "supported": true,
+      "gold": "teams/01-data-a/gold/math-megamath_gold.csv",
+      "pack_sha256": "07cdf1aa40a57f86377474a3c940e7a23b67929acce92d263185d4184954400b",
+      "status": "PASS",
+      "gold_sha256": "fe865ce3454414234fd50511a45d02d94c4454998b101bdb4806ffb57f6f04d3",
+      "gold_count": 26
+    },
+    {
+      "pack": "math-finemath",
+      "team": "01-data-a",
+      "supported": true,
+      "gold": "teams/01-data-a/gold/math-finemath_gold.csv",
+      "pack_sha256": "99aec0d9ece5d6c7f4f13feaad87d165b4f87ca728ecff482f5b30ebd0b3764b",
+      "status": "FAIL",
+      "gold_sha256": "633f6b6c370a32b42340169f1a72328fa4cd6d3e5e2f09ebc98061e5fb4c4cab",
+      "gold_count": 86
+    },
+    {
+      "pack": "sci-finepdfs",
+      "team": "01-data-a",
+      "supported": true,
+      "gold": "teams/01-data-a/gold/sci-finepdfs_gold.csv",
+      "pack_sha256": "5a3228b797f57234ad252fb89bf9a78c66084069540c6ac8564d062c313ea249",
+      "status": "FAIL",
+      "gold_sha256": "0aa12af6cd0a2a52435111621dac7e65766554e57da58643bdfb14b57d0648d8",
+      "gold_count": 202
+    },
+    {
+      "pack": "cadj-commits",
+      "team": "02-data-b",
+      "supported": true,
+      "gold": "teams/02-data-b/gold/cadj-commits_gold.csv",
+      "pack_sha256": "ce7aba1b82f49c7ea8b96f76f4b021b5b7619240e93c63f3cab1ed4e616fd7be",
+      "status": "PASS",
+      "gold_sha256": "ba4da5c2233e5ef68a906eca4293e1f076eb68b41e1e421c0c88b5861ea589ed",
+      "gold_count": 413
+    },
+    {
+      "pack": "cadj-notebooks",
+      "team": "02-data-b",
+      "supported": false,
+      "gold": "teams/02-data-b/gold/cadj-notebooks_gold.csv",
+      "pack_sha256": "843af7f959206ef9a52ea03a396575196f333325f44cafb5baf0c470a6ac7fe6",
+      "status": "NOT_TESTABLE",
+      "reason": "gold file missing"
+    },
+    {
+      "pack": "cadj-stackexchange",
+      "team": "02-data-b",
+      "supported": false,
+      "gold": "teams/02-data-b/gold/cadj-stackexchange_gold.csv",
+      "pack_sha256": "64224f772243ae393fa1769fc10185864bf05a380c085c4eb358d9fb28339327",
+      "status": "NOT_TESTABLE",
+      "reason": "gold file missing"
+    },
+    {
+      "pack": "ind-bn-fw2",
+      "team": "02-data-b",
+      "supported": true,
+      "gold": "teams/02-data-b/gold/ind-bn-fw2_gold.csv",
+      "pack_sha256": "b5f91af826c982b548f7fc06404a2d53623b1393d511049f2e004b0353847913",
+      "status": "PASS",
+      "gold_sha256": "fb5538fa063daedf1dfbd2c1fcdf8e43267217de93794206bda8398e5877b7ff",
+      "gold_count": 227
+    },
+    {
+      "pack": "ind-bn-sangraha-v",
+      "team": "02-data-b",
+      "supported": true,
+      "gold": "teams/02-data-b/gold/ind-bn-sangraha-v_gold.csv",
+      "pack_sha256": "e64c471dd6391dac861e039c2ad1d3c3732b21b97f29efd4b9bcaf0bf54baf81",
+      "status": "PASS",
+      "gold_sha256": "9d3253995474f72207a938e6bfc8c2a667755d6d41a77c6ca8b37bec30cf2f0e",
+      "gold_count": 145
+    },
+    {
+      "pack": "ind-gu-fw2",
+      "team": "02-data-b",
+      "supported": true,
+      "gold": "teams/02-data-b/gold/ind-gu-fw2_gold.csv",
+      "pack_sha256": "9f58ad695beac877b7f71f9773328c141e5f19385b9f292ebc9c2b21b19daa6a",
+      "status": "PASS",
+      "gold_sha256": "1a1592f183e6c8a153b5d6a3573848f73bee05d553d66d106437208301616a14",
+      "gold_count": 80
+    },
+    {
+      "pack": "ind-hi-fw2",
+      "team": "02-data-b",
+      "supported": true,
+      "gold": "teams/02-data-b/gold/ind-hi-fw2_gold.csv",
+      "pack_sha256": "f9e1a898c982fcdfb788a931910f79f2204c177e530709df71a2d3b8223f5169",
+      "status": "PASS",
+      "gold_sha256": "b499a619533c9478b7524e6148dbc9fb38321a946812f2ad0b323096e0a1d689",
+      "gold_count": 185
+    },
+    {
+      "pack": "ind-hi-hplt",
+      "team": "02-data-b",
+      "supported": true,
+      "gold": "teams/02-data-b/gold/ind-hi-hplt_gold.csv",
+      "pack_sha256": "497533fc4d6407b1ef2e83f7304d65ab7f9fe7892fee09ab6d10f45c913eadc6",
+      "status": "PASS",
+      "gold_sha256": "53b7cbdbed01a111b70454d4e241f0ca7bba83932fbe54b225fefa73fff0d9a3",
+      "gold_count": 37
+    },
+    {
+      "pack": "ind-hi-indiccorp",
+      "team": "02-data-b",
+      "supported": true,
+      "gold": "teams/02-data-b/gold/ind-hi-indiccorp_gold.csv",
+      "pack_sha256": "c55b80d3d5c820fb34cab3b0bf8ccaabd2e73496cea42267c08d05cc34ecd612",
+      "status": "PASS",
+      "gold_sha256": "a0b3f7021b6a168666eacb60c3d517feb403f302d8afa791bf176a6920d5718a",
+      "gold_count": 425
+    },
+    {
+      "pack": "ind-hi-sangraha-s",
+      "team": "02-data-b",
+      "supported": true,
+      "gold": "teams/02-data-b/gold/ind-hi-sangraha-s_gold.csv",
+      "pack_sha256": "7fd34f97729659a7c0c7f6bed0190e7f4eda29ed8a0f9b9eacbfe4a607a3ff6d",
+      "status": "PASS",
+      "gold_sha256": "f3943ff76a96e9e67896a88130bb41ee3b08b2025c010381d8e052807e10ea80",
+      "gold_count": 24
+    },
+    {
+      "pack": "ind-hi-sangraha-v",
+      "team": "02-data-b",
+      "supported": true,
+      "gold": "teams/02-data-b/gold/ind-hi-sangraha-v_gold.csv",
+      "pack_sha256": "b0fb32f2327aa39badc9a55110c992303ce273b02711e0973f877d465a00557e",
+      "status": "PASS",
+      "gold_sha256": "5f1992d87749bed3d71655168905076538a45849666bb67c0d4ecc3baba1e1a9",
+      "gold_count": 219
+    },
+    {
+      "pack": "ind-kn-fw2",
+      "team": "02-data-b",
+      "supported": true,
+      "gold": "teams/02-data-b/gold/ind-kn-fw2_gold.csv",
+      "pack_sha256": "3859c21e3f715ff7c0fbe978dcd0719b48ead11cff58fe215afa23f1175fd3ee",
+      "status": "PASS",
+      "gold_sha256": "3f8661f313b07d8e5f8aa598d32db591d6cd46ba939d22afe7d417ddeabbb381",
+      "gold_count": 115
+    },
+    {
+      "pack": "ind-kn-sangraha-s",
+      "team": "02-data-b",
+      "supported": true,
+      "gold": "teams/02-data-b/gold/ind-kn-sangraha-s_gold.csv",
+      "pack_sha256": "a161966005c037a1bdb70245c2b6135520967c57c5fc618cba5f29d9e248f427",
+      "status": "PASS",
+      "gold_sha256": "4aacabee4d5ab012f3041d63cd91310a7188cf68877692c644d7bc080c055556",
+      "gold_count": 22
+    },
+    {
+      "pack": "ind-kn-sangraha-v",
+      "team": "02-data-b",
+      "supported": true,
+      "gold": "teams/02-data-b/gold/ind-kn-sangraha-v_gold.csv",
+      "pack_sha256": "39d2bce100b2b2016fbe44d0f58ccbf5d2df8df24d8b3418051e691115d877fc",
+      "status": "PASS",
+      "gold_sha256": "42b45e25c85f3c793a0e0de0740ed6d3352e74d81bb8e10f1d6af10684305645",
+      "gold_count": 99
+    },
+    {
+      "pack": "ind-ml-fw2",
+      "team": "02-data-b",
+      "supported": false,
+      "gold": "teams/02-data-b/gold/ind-ml-fw2_gold.csv",
+      "pack_sha256": "b2d84bcc393beb0d85098dbd5e69d9f0cd6a661f63bca400bd62ba85722f6056",
+      "status": "NOT_TESTABLE",
+      "reason": "gold file missing"
+    },
+    {
+      "pack": "ind-mr-fw2",
+      "team": "02-data-b",
+      "supported": true,
+      "gold": "teams/02-data-b/gold/ind-mr-fw2_gold.csv",
+      "pack_sha256": "94a1d14caa9a46f40c2212c6d2c436b9ebb03093ac60ec04658023adeb2d3e2b",
+      "status": "PASS",
+      "gold_sha256": "401a155d5768b1e44cacdd6f5e813365bff625828a1ee7ebfbbed565512f65d0",
+      "gold_count": 158
+    },
+    {
+      "pack": "ind-mr-sangraha-v",
+      "team": "02-data-b",
+      "supported": true,
+      "gold": "teams/02-data-b/gold/ind-mr-sangraha-v_gold.csv",
+      "pack_sha256": "ad598b6ac2330c00b423b26f826f6d120d8940f0eb7f5412fca2fcd045b4ef30",
+      "status": "PASS",
+      "gold_sha256": "a38541f77304d18871b7fc30c275969452e5c74eea2a9f13ae4bbb0b4a6c3f61",
+      "gold_count": 99
+    },
+    {
+      "pack": "ind-or-fw2",
+      "team": "02-data-b",
+      "supported": false,
+      "gold": "teams/02-data-b/gold/ind-or-fw2_gold.csv",
+      "pack_sha256": "7c15eab17ff4c5484694b27c0b262176b038d01ab4fee73fee017e3487ca98e9",
+      "status": "NOT_TESTABLE",
+      "reason": "gold file missing"
+    },
+    {
+      "pack": "ind-sa-fw2",
+      "team": "02-data-b",
+      "supported": true,
+      "gold": "teams/02-data-b/gold/ind-sa-fw2_gold.csv",
+      "pack_sha256": "95e08d6b9ef1c3baf2d98c7f6bef3a0d12236d6b7c54583e5d4565884b3108e0",
+      "status": "PASS",
+      "gold_sha256": "bfa93e597a4ab341f2c597388ce8b7c8e3912e728283e867fca8fa5970046865",
+      "gold_count": 71
+    },
+    {
+      "pack": "ind-ta-fw2",
+      "team": "02-data-b",
+      "supported": false,
+      "gold": "teams/02-data-b/gold/ind-ta-fw2_gold.csv",
+      "pack_sha256": "aa91d1bf261713b57f37632d07d54b6a52d648bab8fc387dee6887ef4b91ce7b",
+      "status": "PASS",
+      "gold_sha256": "a360e8cf25ca549afa4213b444dd1e2e3ceb2d5651b3f2a11093a7b8542b88d3",
+      "gold_count": 218
+    },
+    {
+      "pack": "ind-ta-sangraha-s",
+      "team": "02-data-b",
+      "supported": false,
+      "gold": "teams/02-data-b/gold/ind-ta-sangraha-s_gold.csv",
+      "pack_sha256": "40509e609fb6020649a86baf1b8e849659442ef8e807b02a842ac8f9f757b74d",
+      "status": "NOT_TESTABLE",
+      "reason": "gold file missing"
+    },
+    {
+      "pack": "ind-ta-sangraha-v",
+      "team": "02-data-b",
+      "supported": true,
+      "gold": "teams/02-data-b/gold/ind-ta-sangraha-v_gold.csv",
+      "pack_sha256": "1df8e92c0f6a18d510ec8af5bf97d41aacf4834746fb9f24dc97821018057d78",
+      "status": "PASS",
+      "gold_sha256": "da9e3ff4db5df66b3886dc957ea7db35828083d2c78ed8a7fc8760a386af6948",
+      "gold_count": 141
+    },
+    {
+      "pack": "ind-te-fw2",
+      "team": "02-data-b",
+      "supported": true,
+      "gold": "teams/02-data-b/gold/ind-te-fw2_gold.csv",
+      "pack_sha256": "f893df548895804bd63f47b5d6405b51393d79f0647e4389665956198cdaf5bb",
+      "status": "PASS",
+      "gold_sha256": "25c25c78467ce64f812582f46f2e27e2b15a2c78dc97fe7eaeb5167f3c25da3d",
+      "gold_count": 17
+    },
+    {
+      "pack": "ind-te-sangraha-s",
+      "team": "02-data-b",
+      "supported": true,
+      "gold": "teams/02-data-b/gold/ind-te-sangraha-s_gold.csv",
+      "pack_sha256": "feeb676e76dee102d132846c1af2a92c3ea4d1018e0fd5239f50fc0da0fb6069",
+      "status": "PASS",
+      "gold_sha256": "410ce1d6483c56086e8c9f6d1f23265278246999520e2f6f20845010ebc0f3e3",
+      "gold_count": 24
+    },
+    {
+      "pack": "ind-te-sangraha-v",
+      "team": "02-data-b",
+      "supported": true,
+      "gold": "teams/02-data-b/gold/ind-te-sangraha-v_gold.csv",
+      "pack_sha256": "d3d928606d1fd0a7a81fcbce10db3e3d8f4b7df74486bc51c9a9d30299812817",
+      "status": "FAIL",
+      "gold_sha256": "f73858bf14d7d4d37537644f573b5d492c681a7a2f07644e7760202793ade075",
+      "gold_count": 80
+    }
+  ],
+  "run_label": "post-#88 full gold rerun",
+  "run_utc": "2026-11-24T05:02:51.665168+00:00",
+  "git_commit": "31015c56a9b0b07666693f74d8212e7271981fd7",
+  "status_counts": {
+    "PASS": 29,
+    "FAIL": 4,
+    "NOT_TESTABLE": 5
+  },
+  "supported_status_counts": {
+    "PASS": 28,
+    "FAIL": 4
+  },
+  "gold_documents": 4768,
+  "previous_pipeline_gold_results_identical": true,
+  "existing_rule_gold_results_identical": true,
+  "historical_failed_ids_match": true,
+  "cleaner_tests": {
+    "passed": 1952,
+    "subtests_passed": 9
+  },
+  "job_tests": {
+    "passed": 125
+  },
+  "rebuild_identical": true,
+  "cleaner_differs_from_merged_pr_88": false,
+  "sample_comparison_note": "comparison.json is historical pre-#88 evidence for cleaner aa1f8e53; not rerun here",
+  "indic_audit_counts": {
+    "errors": 0,
+    "joiners": 0,
+    "form": 0
+  },
+  "targeted_amendments": [
+    {
+      "pack": "code-go",
+      "rule": "DA-A6-001",
+      "result": "PASS",
+      "changed": 0,
+      "dropped": 0
+    },
+    {
+      "pack": "code-go",
+      "rule": "f1_rule.py",
+      "result": "PASS",
+      "changed": 0,
+      "dropped": 0
+    },
+    {
+      "pack": "code-js-ts",
+      "rule": "DA-A6-001",
+      "result": "PASS",
+      "changed": 0,
+      "dropped": 0
+    },
+    {
+      "pack": "code-js-ts",
+      "rule": "f1_rule.py",
+      "result": "PASS",
+      "changed": 0,
+      "dropped": 0
+    },
+    {
+      "pack": "code-java",
+      "rule": "DA-A6-001",
+      "result": "PASS",
+      "changed": 0,
+      "dropped": 0
+    },
+    {
+      "pack": "code-java",
+      "rule": "f1_rule.py",
+      "result": "PASS",
+      "changed": 0,
+      "dropped": 0
+    },
+    {
+      "pack": "code-cpp",
+      "rule": "DA-A6-001",
+      "result": "PASS",
+      "changed": 0,
+      "dropped": 0
+    },
+    {
+      "pack": "code-cpp",
+      "rule": "f1_rule.py",
+      "result": "PASS",
+      "changed": 0,
+      "dropped": 0
+    },
+    {
+      "pack": "code-rust",
+      "rule": "DA-A6-001",
+      "result": "PASS",
+      "changed": 0,
+      "dropped": 0
+    },
+    {
+      "pack": "code-rust",
+      "rule": "f1_rule.py",
+      "result": "PASS",
+      "changed": 0,
+      "dropped": 0
+    },
+    {
+      "pack": "code-python",
+      "rule": "DA-A6-001",
+      "result": "PASS",
+      "changed": 0,
+      "dropped": 0
+    },
+    {
+      "pack": "code-python",
+      "rule": "f1_rule.py",
+      "result": "PASS",
+      "changed": 0,
+      "dropped": 0
+    },
+    {
+      "pack": "en-fineweb-edu",
+      "rule": "DA-C3-003",
+      "result": "PASS",
+      "changed": 0,
+      "dropped": 0
+    },
+    {
+      "pack": "en-fineweb-edu",
+      "rule": "DA-C2-003",
+      "result": "PASS",
+      "changed": 0,
+      "dropped": 0
+    },
+    {
+      "pack": "en-fineweb-edu",
+      "rule": "DA-F1-005",
+      "result": "PASS",
+      "changed": 0,
+      "dropped": 0
+    },
+    {
+      "pack": "en-dclm",
+      "rule": "DA-C3-003",
+      "result": "PASS",
+      "changed": 0,
+      "dropped": 0
+    },
+    {
+      "pack": "en-dclm",
+      "rule": "DA-C2-003",
+      "result": "PASS",
+      "changed": 0,
+      "dropped": 0
+    },
+    {
+      "pack": "en-dclm",
+      "rule": "DA-F1-005",
+      "result": "PASS",
+      "changed": 0,
+      "dropped": 0
+    },
+    {
+      "pack": "en-nemotroncc-synth",
+      "rule": "DA-C3-003",
+      "result": "PASS",
+      "changed": 0,
+      "dropped": 0
+    },
+    {
+      "pack": "en-nemotroncc-synth",
+      "rule": "DA-C2-003",
+      "result": "PASS",
+      "changed": 0,
+      "dropped": 0
+    },
+    {
+      "pack": "en-nemotroncc-synth",
+      "rule": "DA-F1-005",
+      "result": "PASS",
+      "changed": 0,
+      "dropped": 0
+    },
+    {
+      "pack": "en-nemotroncc",
+      "rule": "DA-C3-003",
+      "result": "PASS",
+      "changed": 0,
+      "dropped": 0
+    },
+    {
+      "pack": "en-nemotroncc",
+      "rule": "DA-C2-003",
+      "result": "PASS",
+      "changed": 0,
+      "dropped": 0
+    },
+    {
+      "pack": "en-nemotroncc",
+      "rule": "DA-F1-005",
+      "result": "PASS",
+      "changed": 0,
+      "dropped": 0
+    },
+    {
+      "pack": "sci-finepdfs",
+      "rule": "DA-C2-004",
+      "result": "PASS",
+      "changed": 0,
+      "dropped": 0
+    },
+    {
+      "pack": "cadj-commits",
+      "rule": "f1_rule.py",
+      "result": "PASS",
+      "changed": 0,
+      "dropped": 0
+    },
+    {
+      "pack": "ind-sa-fw2",
+      "rule": "DB-B4-004",
+      "result": "PASS",
+      "changed": 0,
+      "dropped": 0
+    }
+  ],
+  "cadj_week1_checks": {
+    "cadj-commits": {
+      "documents": 500,
+      "changed_ids": [
+        "e0c1e30626b9b1ff",
+        "6454d40260da86f0",
+        "49b151d5092e2af4",
+        "1a04398a8eb0d640",
+        "ad8d26fb7fc543f0",
+        "657218c9c3ab3831",
+        "19c86ce5aabab9b7",
+        "a2a76259799729fa",
+        "59db3993ab02a2c9",
+        "e7c1647714ab6ee6",
+        "d8136c75de468ac6",
+        "f9b766f8d70fd170",
+        "a74ed5caf45ae502",
+        "e79c7bd2ebb438da",
+        "d903e4efac48eab8",
+        "4d5a5879fa9978bd",
+        "50b4d4f01a80e8b5",
+        "97182afd7192fe66",
+        "8ae8af60edff9ffb",
+        "e2347a156b344836",
+        "014b5b2147006b90",
+        "abd2e71e0f18d22a",
+        "b3d1223883e251b4",
+        "13208b2f948e8596",
+        "2e67b64a19631ac7",
+        "9c5459fa4064712d",
+        "bce6aea34c38b7d7",
+        "5cd576385b620016",
+        "4c25f9f3425b8be1",
+        "75b7f3f5f2d69c0a",
+        "3f4afa6706cfd149",
+        "e48466dfa7cb6431",
+        "dc30900570719dd8",
+        "50ef1e872544de9c",
+        "721a163bb2f6f55a",
+        "3b6ff81414d752f8",
+        "a4ffb844ba967bbd",
+        "223a8ae8ceabbf16",
+        "b7a6d322bb43620d",
+        "433ee82463d071b0"
+      ],
+      "dropped_ids": [],
+      "non_email_changes": [],
+      "non_idempotent_ids": []
+    },
+    "cadj-notebooks": {
+      "documents": 500,
+      "changed_ids": [],
+      "dropped_ids": [],
+      "non_email_changes": [],
+      "non_idempotent_ids": []
+    },
+    "cadj-stackexchange": {
+      "documents": 500,
+      "changed_ids": [],
+      "dropped_ids": [],
+      "non_email_changes": [],
+      "non_idempotent_ids": []
+    }
+  },
+  "cadj_week1_changed_ids_match_pr88_evidence": true
+}

@@ -8,6 +8,11 @@ expected_parts, sample). The cleaner is read once: its sha256 must be the pin, a
 runs. The input set is the manifest, checked by clean_manifest.validate (the check --plan runs too): any number of parts,
 as long as they match expected_parts.
 
+Workers. "workers" in the config (pipeline/clean.json, default 1) is how many parts are cleaned at once, each part by one
+process; the biggest parts go first. The reports are put back in manifest order, so the output does not depend on the number
+of workers or on which part finishes first. The first failure cancels the parts that have not started; the ones running
+finish, so they are kept for a resume. "workers" is not part of what a resume checks: a job may continue with another number.
+
 Offline. Writes exclusively beneath ./out/. Train and heldout stay separate. No source text is printed or added to
 reports. The original clean.clean() and _run() execute; factories are wrapped only for counting. F2 is not part of this
 job. A pack the cleaner has no rules for is copied through with the status unsupported_passthrough.
@@ -31,6 +36,7 @@ from functools import cache
 import hashlib
 import importlib.metadata
 import json
+import multiprocessing as mp
 import os
 from pathlib import Path
 try:
@@ -40,6 +46,8 @@ except ImportError:  # Windows: the run works, peak memory is not recorded
 import time
 import types
 import zlib
+from concurrent.futures import Future, ProcessPoolExecutor, as_completed
+from concurrent.futures.process import BrokenProcessPool
 
 import pyarrow as pa
 import pyarrow.parquet as pq
@@ -83,7 +91,8 @@ def digest(path):
 def peak_rss_mib():
     if resource is None:
         return None
-    rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+    # the largest of this process and of its finished worker processes (the peak of one process, not their sum)
+    rss = max(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss, resource.getrusage(resource.RUSAGE_CHILDREN).ru_maxrss)
     unit = 1024 * 1024 if sys.platform == 'darwin' else 1024
     return round(rss / unit, 3)
 
@@ -304,7 +313,10 @@ def applicable_rules(pack):
     return [rid for rid in clean._RULE if pack in clean.SCOPE[rid]]
 
 
-def process_part(source, shard, output, batch_size, audit_samples=0):
+def process_part(source, shard, output, batch_size, audit_samples=0, write_failure=True):
+    """Clean one part and write it with its report. A cleaner error raises a JobError whose `failure` is the record for
+    failure.json; process_part writes that file itself unless `write_failure` is False (a worker of the pool: the job writes
+    the record of the first failure, so the file always belongs to the failure the job reports)."""
     started = time.monotonic()
     relative, pack = shard['path'], shard['pack_id']
     destination = output / relative
@@ -335,10 +347,13 @@ def process_part(source, shard, output, batch_size, audit_samples=0):
                     try:
                         action, text = clean.clean(row)
                     except Exception as exc:
-                        write_json(output / 'failure.json', {'part': relative, 'doc_id': doc_id,
-                                   'error_type': type(exc).__name__, 'processed_rows': rows,
-                                   'rule_counts': dict(counter.counts)})
-                        raise JobError('cleaner error: ' + relative + ' doc_id=' + doc_id + ' type=' + type(exc).__name__) from None
+                        failure = {'part': relative, 'doc_id': doc_id, 'error_type': type(exc).__name__, 'processed_rows': rows,
+                                   'rule_counts': {rid: dict(counts) for rid, counts in counter.counts.items()}}
+                        if write_failure:
+                            write_json(output / 'failure.json', failure)
+                        error = JobError('cleaner error: ' + relative + ' doc_id=' + doc_id + ' type=' + type(exc).__name__)
+                        error.failure = failure  # travels with the exception out of a worker process
+                        raise error from None
                     actions[action] += 1
                     if action != 'drop':
                         kept.append(dict(row, text=text))
@@ -376,6 +391,57 @@ def process_part(source, shard, output, batch_size, audit_samples=0):
     write_json(report_path, result)
     print(json.dumps({k: result[k] for k in ('part', 'status', 'input_rows', 'output_rows', 'actions', 'errors', 'seconds')}, sort_keys=True), flush=True)
     return result
+
+
+def start_method():
+    """spawn everywhere: each worker is a fresh interpreter that loads the pinned cleaner itself. fork would be quicker to start
+    (seconds, on a job of minutes) but copies a process that already runs pyarrow's threads, which Python warns can deadlock,
+    and macOS and Windows have no safe fork. Tests that patch the job in-process ask for fork instead."""
+    return 'spawn'
+
+
+def _worker_start(path, pin):
+    load_clean(path, pin)  # each worker process holds the cleaner, checked against the pin like the parent's copy
+
+
+def _clean_one(task):
+    source, shard, output, batch_size, audit_samples = task
+    return process_part(source, shard, output, batch_size, audit_samples=audit_samples, write_failure=False)
+
+
+def clean_in_pool(todo, resolved, output, batch_size, audit_samples, workers, pin):
+    """{part path: report} for the parts in `todo`, cleaned by up to `workers` processes at once, the biggest parts first so
+    that none is left to finish alone at the end. A worker prints its own progress line when it finishes a part. The first
+    failure cancels the parts that have not started; the running ones finish and stay on disk for a resume. That failure is
+    raised once everything has stopped, and a cleaner error's record is written to failure.json then."""
+    ordered = sorted(todo, key=lambda s: (-s['rows'], s['path']))
+    reports, failed = {}, None
+    sys.stdout.flush()  # a forked worker must not inherit unflushed output and print it again
+    sys.stderr.flush()
+    with ProcessPoolExecutor(max_workers=min(workers, len(ordered)), mp_context=mp.get_context(start_method()),
+                             initializer=_worker_start, initargs=(clean.__file__, pin)) as pool:
+        futures = {pool.submit(_clean_one, (resolved[s['path']], s, output, batch_size, audit_samples)): s for s in ordered}
+        for future in as_completed(futures):
+            if future.cancelled():
+                continue
+            try:
+                reports[futures[future]['path']] = future.result()
+            except BrokenProcessPool:
+                error = JobError('a worker process died (killed, or out of memory); parts that finished are kept: run again '
+                                 'with "resume": true, with fewer workers if memory is short')
+            except Exception as exc:
+                error = exc
+            else:
+                continue
+            if failed is None:
+                failed = error
+                for other in futures:
+                    other.cancel()
+    if failed is not None:
+        if getattr(failed, 'failure', None):  # the first failure the job saw is the one it reports and records
+            write_json(output / 'failure.json', failed.failure)
+        raise failed
+    return reports
 
 
 EXAMPLE_COLUMNS = ['pack_id', 'rule_id', 'rank', 'doc_id', 'split', 'part', 'action', 'chars_before', 'chars_after',
@@ -434,6 +500,11 @@ def write_aggregate(output, reports, provenance, expected_count, audit_samples=0
     return summary
 
 
+def print_kept(report):
+    print(json.dumps({**{k: report[k] for k in ('part', 'status', 'input_rows', 'output_rows', 'actions', 'errors', 'seconds')},
+                      'resumed': True}, sort_keys=True), flush=True)
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--config', type=Path, required=True)
@@ -457,6 +528,9 @@ def main(argv=None):
         raise JobError('batch_size must be a positive integer')
     if type(config['audit_samples']) is not int or config['audit_samples'] < 0:
         raise JobError('audit_samples must be a whole number, 0 or more (0 writes no audit samples)')
+    workers = config.get('workers', 1)
+    if type(workers) is not int or workers < 1:
+        raise JobError('workers must be a whole number, 1 or more')
     if not isinstance(config.get('resume', False), bool):
         raise JobError('resume must be true or false')
     resume = config.get('resume', False) or args.resume
@@ -502,25 +576,30 @@ def main(argv=None):
     print(json.dumps({'event':'start', 'selected_parts':len(shards), 'manifest_parts':len(data['shards']),
                       'sample_rows':data['total_docs'], 'clean_sha256':provenance['clean_sha256'],
                       'runner_sha256':provenance['runner_sha256'], 'scope':provenance['scope'],
-                      'resumed':resumed, 'kept_parts':len(kept)}, sort_keys=True), flush=True)
+                      'resumed':resumed, 'kept_parts':len(kept), 'workers':min(workers, len(todo)) or 1}, sort_keys=True), flush=True)
     reports = []
     try:
-        for shard in shards:
-            if shard['path'] in kept:
-                report = kept[shard['path']]
-                reports.append(report)
-                print(json.dumps({**{k: report[k] for k in ('part', 'status', 'input_rows', 'output_rows', 'actions', 'errors', 'seconds')},
-                                  'resumed': True}, sort_keys=True), flush=True)
-            else:
-                reports.append(process_part(resolved[shard['path']], shard, output, config['batch_size'],
-                                            audit_samples=config['audit_samples']))
+        if workers > 1 and len(todo) > 1:
+            for shard in shards:  # the kept parts first; the others are reported by the workers as they finish
+                if shard['path'] in kept:
+                    print_kept(kept[shard['path']])
+            done = clean_in_pool(todo, resolved, output, config['batch_size'], config['audit_samples'], workers, config['clean_sha256'])
+            reports = [kept.get(s['path']) or done[s['path']] for s in shards]  # manifest order, whoever finished first
+        else:
+            for shard in shards:
+                if shard['path'] in kept:
+                    reports.append(kept[shard['path']])
+                    print_kept(kept[shard['path']])
+                else:
+                    reports.append(process_part(resolved[shard['path']], shard, output, config['batch_size'],
+                                                audit_samples=config['audit_samples']))
     except JobError as exc:
         attempt.update(status='failed', error=str(exc), ended=now())
         write_json(output / STATE, state)
         raise
     attempt.update(status='complete', ended=now())
     provenance.update(wall_seconds=round(time.monotonic()-started,3),
-                      peak_rss_mib=peak_rss_mib(), resumed_parts=len(kept), attempts=state['attempts'])
+                      workers=min(workers, len(todo)) or 1, peak_rss_mib=peak_rss_mib(), resumed_parts=len(kept), attempts=state['attempts'])
     summary = write_aggregate(output, reports, provenance, len(data['shards']), config['audit_samples'])
     write_json(output / STATE, state)
     print(json.dumps({'event':'complete', **{key:summary[key] for key in ('completed_parts','input_rows','output_rows','errors','actions','wall_seconds','peak_rss_mib')}}, sort_keys=True), flush=True)

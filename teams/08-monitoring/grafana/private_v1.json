@@ -2239,6 +2239,301 @@
         }
       ],
       "type": "trend"
+    },
+    {
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "${ds}"
+      },
+      "description": "Eval-watcher lag alarm (alarms/eval_lag.py): the training time from the newest Tier A step in eval_mini to the newest training step, and the page limit (2 checkpoint intervals). Empty until the alarm runs.",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "lineWidth": 2
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 125
+      },
+      "id": 29,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "${ds}"
+          },
+          "editorType": "sql",
+          "format": 0,
+          "queryType": "timeseries",
+          "rawSql": "SELECT checked_at AS time, concat(run_id, ' lag') AS series, lag_s AS value FROM eval_lag_checks WHERE run_id IN ($lag_run) AND $__timeFilter(checked_at) ORDER BY checked_at",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "${ds}"
+          },
+          "editorType": "sql",
+          "format": 0,
+          "queryType": "timeseries",
+          "rawSql": "SELECT checked_at AS time, concat(run_id, ' limit') AS series, threshold_s AS value FROM eval_lag_checks WHERE run_id IN ($lag_run) AND $__timeFilter(checked_at) ORDER BY checked_at",
+          "refId": "B"
+        }
+      ],
+      "title": "Eval-watcher lag (eval_lag_checks)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "${ds}"
+      },
+      "description": "Each page of the eval-watcher lag alarm, newest first. A page means Tier A scores stopped keeping up with training: check that the Tier A eval watcher is running.",
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 12,
+        "y": 125
+      },
+      "id": 30,
+      "options": {
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "${ds}"
+          },
+          "editorType": "sql",
+          "format": 1,
+          "queryType": "table",
+          "rawSql": "SELECT checked_at AS time, run_id, train_step, eval_step, lag_s, threshold_s, detail FROM eval_lag_checks WHERE paged = 1 AND run_id IN ($lag_run) AND $__timeFilter(checked_at) ORDER BY checked_at DESC",
+          "refId": "A"
+        }
+      ],
+      "title": "Lag alarm pages",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "${ds}"
+      },
+      "description": "Seconds since the lag alarm last checked these runs. It writes a row every poll (60 s) only while a run trains, so during training a number that keeps growing, or 'no check yet', means the alarm is not running. Red after 300 s (5 polls). After a run ends the number grows by design.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "noValue": "no check yet",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 300
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 4,
+        "x": 20,
+        "y": 125
+      },
+      "id": 31,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "value"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "${ds}"
+          },
+          "editorType": "sql",
+          "format": 1,
+          "queryType": "table",
+          "rawSql": "SELECT dateDiff('second', max(checked_at), now64(3)) AS value FROM eval_lag_checks WHERE run_id IN ($lag_run) HAVING count() > 0",
+          "refId": "A"
+        }
+      ],
+      "title": "Lag alarm: seconds since last check",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "${ds}"
+      },
+      "description": "Open infrastructure health per run, counted from stored rows in run_events (so the numbers do not reset on refresh): restarts (restore.done, a new process restored a committed checkpoint), failed restores, committed and failed checkpoints (Team 07 v5-event lines), and alarm hits by severity (alarms.py output). Loaded by clickhouse/load_run_events.py. A blank cell means that input was never loaded for the run (no Team 07 events, or alarms not run), not zero; a 0 means it was loaded and nothing happened.",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto"
+          },
+          "unit": "short",
+          "decimals": 0
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 133
+      },
+      "id": 32,
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "${ds}"
+          },
+          "editorType": "sql",
+          "format": 1,
+          "queryType": "table",
+          "rawSql": "SELECT run_id, if(countIf(event = 'events.loaded') = 0, NULL, countIf(kind = 'restart')) AS restarts, if(countIf(event = 'events.loaded') = 0, NULL, countIf(kind = 'restart_failed')) AS failed_restores, if(countIf(event = 'events.loaded') = 0, NULL, countIf(kind = 'checkpoint')) AS checkpoints, if(countIf(event = 'events.loaded') = 0, NULL, countIf(kind = 'checkpoint_failed')) AS failed_checkpoints, if(countIf(event = 'alarms.loaded') = 0, NULL, countIf(kind = 'alarm' AND severity = 'stop')) AS alarm_stop, if(countIf(event = 'alarms.loaded') = 0, NULL, countIf(kind = 'alarm' AND severity = 'page')) AS alarm_page, if(countIf(event = 'alarms.loaded') = 0, NULL, countIf(kind = 'alarm' AND severity = 'warn')) AS alarm_warn, maxIf(step, kind != 'coverage') AS last_event_step FROM run_events FINAL WHERE run_id IN ($event_run) GROUP BY run_id ORDER BY run_id",
+          "refId": "A"
+        }
+      ],
+      "title": "Open infrastructure health per run (run_events)",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "${ds}"
+      },
+      "description": "Cumulative count of each kind of run event against the training step, one line per run and kind: restart, restart_failed, checkpoint, checkpoint_failed, alarm. A step where a line rises is where the event happened. Events with no step are left out. From run_events (clickhouse/load_run_events.py).",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "axisLabel": "events so far",
+            "lineWidth": 2,
+            "showPoints": "auto"
+          },
+          "decimals": 0,
+          "min": 0,
+          "unit": "short",
+          "displayName": "${__field.labels.series}"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "step"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "short"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "custom.axisLabel",
+                "value": "step"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 141
+      },
+      "id": 33,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        },
+        "xField": "step"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "${ds}"
+          },
+          "editorType": "sql",
+          "format": 1,
+          "queryType": "table",
+          "refId": "A",
+          "rawSql": "SELECT step, concat(run_id, ' ', kind) AS series, count() OVER (PARTITION BY run_id, kind ORDER BY step, event_key ROWS UNBOUNDED PRECEDING) AS value FROM run_events FINAL WHERE run_id IN ($event_run) AND step IS NOT NULL AND kind IN ('restart', 'restart_failed', 'checkpoint', 'checkpoint_failed', 'alarm') ORDER BY step"
+        }
+      ],
+      "title": "Restarts, checkpoints and alarm hits by step (run_events)",
+      "transformations": [
+        {
+          "id": "partitionByValues",
+          "options": {
+            "fields": [
+              "series"
+            ],
+            "naming": {
+              "asLabels": true
+            }
+          }
+        },
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "step",
+            "mode": "outer"
+          }
+        }
+      ],
+      "type": "trend"
     }
   ],
   "refresh": "10s",
@@ -2336,6 +2631,41 @@
         "multi": true,
         "name": "eval_task",
         "query": "SELECT DISTINCT task FROM eval_mini WHERE primary = 1 AND checkpoint_step IS NOT NULL AND checkpoint_run IN ($eval_run) ORDER BY task",
+        "refresh": 2,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": {
+          "type": "grafana-clickhouse-datasource",
+          "uid": "${ds}"
+        },
+        "definition": "SELECT DISTINCT run_id FROM eval_lag_checks ORDER BY run_id",
+        "description": "Runs the eval-watcher lag alarm has checked (panels 29 to 31), including runs with no eval_mini row yet.",
+        "includeAll": true,
+        "label": "lag alarm run",
+        "multi": true,
+        "name": "lag_run",
+        "query": "SELECT DISTINCT run_id FROM eval_lag_checks ORDER BY run_id",
+        "refresh": 2,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": {
+          "type": "grafana-clickhouse-datasource",
+          "uid": "${ds}"
+        },
+        "definition": "SELECT DISTINCT run_id FROM run_events ORDER BY run_id",
+        "includeAll": true,
+        "label": "event run",
+        "multi": true,
+        "name": "event_run",
+        "query": "SELECT DISTINCT run_id FROM run_events ORDER BY run_id",
         "refresh": 2,
         "sort": 1,
         "type": "query"

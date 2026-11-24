@@ -91,3 +91,19 @@ def test_no_placeholder_text_or_dashes():
 
 def test_times_shown_in_ist():
     assert _load()["timezone"] == "Asia/Kolkata"
+
+
+def test_training_pace_queries_cover_harness_and_public_names():
+    panels = {p["title"]: p for p in _load()["panels"]}
+    for title, names, unit in (
+        ("Training Pace: Tokens per Second", ("tokens_per_second", "tokens_per_s"), "short"),
+        ("Training Pace: Step Time", ("perf/step_ms", "step_time_ms"), "ms"),
+    ):
+        panel = panels[title]
+        sql = panel["targets"][0]["rawSql"]
+        assert all("'" + name + "'" in sql for name in names)
+        assert "run_id IN ($run)" in sql and "value IS NOT NULL" in sql
+        assert panel["fieldConfig"]["defaults"]["unit"] == unit
+        step = next(o for o in panel["fieldConfig"]["overrides"] if o["matcher"]["options"] == "step")
+        props = {p["id"]: p["value"] for p in step["properties"]}
+        assert props == {"unit": "short", "custom.axisLabel": "step"}

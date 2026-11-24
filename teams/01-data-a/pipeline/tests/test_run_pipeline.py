@@ -600,6 +600,36 @@ def test_clean_resume_reaches_the_job_the_record_and_the_plan(staged):
     assert "resume = True" not in rp.plan(path)
 
 
+def test_clean_workers_of_the_run_config_reach_the_job_and_the_plan(staged):
+    path, repo = staged
+    m = rp.run(path, to="clean")  # without the key the settings file's value stands: nothing is written over it
+    assert "workers" not in json.loads((repo / "out" / "runs" / "test-run" / "cfg" / "clean.json").read_text(encoding="utf-8"))
+    assert "workers = " not in rp.plan(path)
+    edit_stage(path, "clean", workers=3)
+    assert "workers = 3" in rp.plan(path)
+    shutil.rmtree(repo / "out" / "runs")
+    rp.run(path, to="clean")
+    assert json.loads((repo / "out" / "runs" / "test-run" / "cfg" / "clean.json").read_text(encoding="utf-8"))["workers"] == 3
+
+
+@pytest.mark.parametrize("workers", [0, -2, "4", 1.5, True, None])
+def test_bad_clean_workers_stop_before_anything_runs(staged, workers):
+    path, repo = staged
+    edit_stage(path, "clean", workers=workers)
+    with pytest.raises(rp.Stop, match=r"stages.clean.workers is .*, expected a whole number >= 1"):
+        rp.run(path)
+    assert not (repo / "out" / "runs" / "test-run" / "clean").exists()
+
+
+def test_clean_workers_need_a_clean_stage_that_runs_from_settings(staged, tsai_outputs):
+    path, repo = staged
+    prev = repo / "out" / "earlier" / "clean"
+    shutil.copytree(tsai_outputs["cleaned"], prev)
+    set_stage(path, "clean", {"mode": "adopt", "output": str(prev), "workers": 2})
+    with pytest.raises(rp.Stop, match="stages.clean.workers sets the clean job's workers"):
+        rp.run(path)
+
+
 def test_a_run_without_resume_does_not_tell_the_job_so(staged):
     path, repo = staged
     m = rp.run(path, to="clean")

@@ -58,6 +58,7 @@ _RC_CHILD = 4   # runner exited non-zero (infrastructure problem, not the candid
 
 _TIMEOUT_MIN = 0.1    # seconds — consistent with the runner's 100 ms floor
 _TIMEOUT_MAX = 300.0  # seconds — prevents runaway timeouts
+THINK_START, THINK_END = "<|think|>", "<|/think|>"
 
 
 def _check_time_limit(value) -> str | None:
@@ -198,8 +199,14 @@ def _run_docker(workdir: Path, task_time_s: float) -> str | None:
 
 def extract_code(completion: str) -> tuple[str | None, str]:
     """Last fenced block labelled js/javascript/mjs (or unlabelled)."""
+    text = completion or ""
+    end = text.rfind(THINK_END)
+    if end >= 0:
+        text = text[end + len(THINK_END):]
+    if THINK_START in text:
+        return None, "think span not closed"
     blocks, opened, label, buf = [], False, "", []
-    for line in (completion or "").splitlines():
+    for line in text.splitlines():
         m = _FENCE_LINE.match(line)
         if m and not opened:
             opened, label, buf = True, m.group(1).lower(), []

@@ -1,15 +1,16 @@
 """run_lab_ckpt.py --team5-run on a real Team 5 LanguageModel (CPU, no network, a few seconds).
 
 test_run_lab_ckpt_scorer.py checks the --team5-run path with a stub model. Here the model is Team 5's own
-week2.model.LanguageModel (KE2 embedding, MoE blocks, dense head), built from the small fixture of Team 5's tests,
-trained for a few steps with Team 5's optimizers, and saved in train_week2.py's checkpoint.pt layout. The scorer loads
+week2.model.LanguageModel (KE2 embedding, MoE blocks, and either the dense head or the untied KAS V2 head), built from the
+small fixtures of Team 5's tests, trained for a few steps with Team 5's optimizers, and saved in train_week2.py's checkpoint.pt layout. The scorer loads
 it strictly, checks Team 5's weights hash and reads ``model.head.out_features``, as lm_eval_lab.py does. If Team 5 changes
-the head (the KE2/KAS head, #691), this is the test to run on their branch.
+the head again (the KE2/KAS head, #691), this is the test to run on their branch.
 
     python -m pytest teams/09-evaluation/harness_lab/tests/test_run_lab_ckpt_team5_model.py -q
 
 Needs torch >= 2.14.1, safetensors and tokenizers, as Team 5's harness does; skipped otherwise.
 """
+import hashlib
 import importlib.util
 import json
 import sys
@@ -31,17 +32,38 @@ if rl.version_key(torch.__version__) < rl.version_key(rl.MIN_TORCH):
 
 SCORER = textwrap.dedent('''
     """A scorer for the small Team 5 model: the contract of run_lab_ckpt.py, a probe batch instead of lm-eval."""
+    import hashlib
+    import json
+    import numpy as np
     import torch
     from test_week2_model import fixture
     from week2.model import LanguageModel
 
     LAYERS = {"n_layer": None}   # a test sets this to build the model with another depth
+    HEAD = {"mode": "dense"}     # a test sets this to "kas_v2" for the untied KAS V2 head
+
+    def kas_v2(c, rows, workdir):
+        """The settings of Team 5's own KAS V2 model test (test_week2_kas_v2.ModelIntegration)."""
+        rows = np.pad(rows, ((0, 0), (0, 28)))
+        n = len(rows)
+        path = workdir / "counts.json"
+        spec = {"tokenizer_sha256": "a" * 64, "vocab_size": n, "total": [1] * n, "special_ids": [0, 1], "eos_id": 0,
+                "summary": {"tokens": n, "ids_seen": n, "ids_zero": 0, "special_ids_seen": 2, "docs": 1},
+                "sources": {"fixture": {"sha256": "b" * 64, "bytes": n, "tokens": n, "docs": 1}}}
+        path.write_text(json.dumps(spec))
+        c["model"].update(head_mode="kas_v2", ke_max_pos=32, kas_prior={
+            "path": str(path), "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+            "tokenizer_sha256": "a" * 64, "add_eos_per_document": False})
+        c["optim"].update(name="muon", muon_lr=0.006)
+        return rows
 
     def config():
         c, rows, lengths = fixture()
         if LAYERS["n_layer"]:
             c["model"]["n_layer"] = LAYERS["n_layer"]
-        return c["model"], rows, lengths
+        if HEAD["mode"] == "kas_v2":
+            rows = kas_v2(c, rows, HEAD["workdir"])
+        return c, rows, lengths
 
     class Scorer:
         name = "team5_small"
@@ -53,9 +75,9 @@ SCORER = textwrap.dedent('''
             pass
 
         def factory(self):
-            m, rows, lengths = config()
+            c, rows, lengths = config()
             torch.manual_seed(0)
-            return LanguageModel(m, rows, lengths)
+            return LanguageModel(c["model"], rows, lengths)
 
         def probe(self, model):
             return 0.0
@@ -86,9 +108,10 @@ def probe_loss(model, vocab):
     return round(torch.nn.functional.cross_entropy(logits[:, :-1].reshape(-1, vocab), ids[:, 1:].reshape(-1)).item(), 6)
 
 
-@pytest.fixture
-def small(tmp_path, monkeypatch):
-    """(scorer module, trained model, run folder) for a few real optimizer steps on the small Team 5 model."""
+@pytest.fixture(params=["dense", "kas_v2"])
+def small(request, tmp_path, monkeypatch):
+    """(scorer module, trained model, run folder, fresh loss) for a few real optimizer steps on the small Team 5 model,
+    with the dense head and with the untied KAS V2 head."""
     import numpy as np
 
     (tmp_path / "team5_small.py").write_text(SCORER, encoding="utf-8")
@@ -98,9 +121,8 @@ def small(tmp_path, monkeypatch):
     from train_week2 import model_hash
     from week2.optim import build_optimizer
 
-    from test_week2_model import fixture
-
-    c, _, _ = fixture()
+    team5_small.HEAD.update(mode=request.param, workdir=tmp_path)
+    c, _, _ = team5_small.config()
     model = team5_small.Scorer([]).factory()
     fresh = probe_loss(model, 31)
     opt = build_optimizer(model, c["optim"])
@@ -148,5 +170,6 @@ def test_a_checkpoint_of_another_shape_is_refused_and_nothing_is_written(small, 
 def test_the_head_the_scorer_reads_is_the_models_output_layer(small):
     """lm_eval_lab.py reads model.head.out_features (the vocabulary). A head without that attribute fails here first."""
     team5_small, trained, _, _ = small
-    m, _, _ = team5_small.config()
-    assert trained.head.out_features == m["vocab_size"] == 31
+    c, _, _ = team5_small.config()
+    assert type(trained.head).__name__ == {"dense": "Linear", "kas_v2": "KASHead"}[c["model"].get("head_mode", "dense")]
+    assert trained.head.out_features == c["model"]["vocab_size"] == 31

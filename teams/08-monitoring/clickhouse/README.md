@@ -206,3 +206,55 @@ The offline tests use a fake ClickHouse: half-written lines, restarts, resumed r
 ```bash
 PYTHONPATH=teams/08-monitoring pytest teams/08-monitoring/clickhouse/tests/test_replay_jsonl.py teams/08-monitoring/clickhouse/tests/test_replay_latency.py -q
 ```
+
+## 9. Run events: restarts, checkpoints, alarm hits (`load_run_events.py`, `run_events.sql`)
+
+`run_events` holds one row per checkpoint commit or failure, restore (a restart) and alarm hit, for the open
+infrastructure health panels (private panels 32 and 33). The counts come from stored rows, so they do not reset on a
+browser refresh, and loading the same file again does not double-count (ReplacingMergeTree on `(run_id, event_key)`,
+read with `FINAL`).
+
+Two inputs, both written by existing code with no change:
+
+| Input | Written by | Rows |
+|---|---|---|
+| `--events FILE_OR_DIR` | Team 07 `common/events.py` (`v5-event/1`, one JSON line per event in `$V5_EVENTS_DIR/<host>-<pid>.jsonl`) | `restore.done` → `restart`, `restore.failed` → `restart_failed`, `checkpoint.committed` → `checkpoint`, `checkpoint.failed` / `checkpoint.fenced` → `checkpoint_failed`, any other event → `other` (stored, not counted) |
+| `--alarms FILE` | `alarms/alarms.py --jsonl metrics.jsonl` (stdout) | one `alarm` row per hit, `severity` stop / page / warn, `event` = `alarm.<rule>` |
+
+```bash
+# Team 07 events (a V5_EVENTS_DIR or a single file); --run-id overrides the run_id inside the events
+python teams/08-monitoring/clickhouse/load_run_events.py --events ./events --run-id dryrun2-1234 --dry-run
+python teams/08-monitoring/clickhouse/load_run_events.py --events ./events --run-id dryrun2-1234
+
+# Alarm hits: run the alarms over the run's metrics.jsonl, then load the hits under the same run id
+python teams/08-monitoring/alarms/alarms.py --jsonl metrics.jsonl > alarms.jsonl
+python teams/08-monitoring/clickhouse/load_run_events.py --alarms alarms.jsonl --run-id dryrun2-1234
+```
+
+Use the run id that `metrics_raw` has for the run (#606), so the panels line up with the training curves.
+
+**Never stored:** host names, job ids, store paths, file names, free-text error details and throughput numbers. Only
+an allowed list of fields goes into `detail` (`SAFE_EVENT_FIELDS`, `SAFE_ALARM_FIELDS` in the loader). A line that is
+not a `v5-event/1` record or an alarm hit (a torn last line from a killed process, a supervisor line, a log prefix) is
+skipped and counted; a text prefix before the JSON, as in Team 07's results files (`restore.done: {...}`), is allowed.
+
+Each load also writes one `coverage` marker per run and input (`events.loaded`, `alarms.loaded`), even for an alarm
+file with no hits. Panel 32 shows a **blank** cell, not 0, for a column whose input was never loaded for that run; a 0
+means the input was loaded and nothing happened. Example: dry run 1 ran without Team 07's checkpointer, so its restart
+and checkpoint cells stay blank, while its alarm cells show the 3 `spike_score` pages from `alarms_dryrun1.md`.
+
+```sql
+-- What panel 32 shows for one run
+SELECT countIf(kind = 'restart') AS restarts, countIf(kind = 'checkpoint') AS checkpoints,
+       countIf(kind = 'alarm') AS alarm_hits
+FROM run_events FINAL WHERE run_id = 'dryrun2-1234';
+```
+
+```bash
+PYTHONPATH=teams/08-monitoring pytest teams/08-monitoring/clickhouse/tests/test_run_events.py -q
+```
+
+The tests cover each event kind, that host / job / path fields never reach a row, torn and prefixed lines, stable
+keys, Team 07's CPU restart drill (`teams/07-infrastructure/results/restart_cpu_rotation_03.txt`: 4 kills, 4
+restarts), real `alarms.py --jsonl` output, and, when ClickHouse is running, a double load checked with panel 32's
+and panel 33's own SQL.

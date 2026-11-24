@@ -1,0 +1,625 @@
+{
+  "before_sha256": "4b5e46ba1d1d347d3650e3a060abc8b95e1dd9ec67970b2704c2c50ac0678755",
+  "cleaner_sha256": "aa1f8e534820e5218f74c9bdec4ada217002ff467ee00256113ba59978e2b393",
+  "scope_and_rule_order_unchanged": true,
+  "packs": [
+    {
+      "pack": "cadj-commits",
+      "documents": 500,
+      "pipeline_changed_ids": [],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [],
+        "DA-C2-003": [],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    },
+    {
+      "pack": "cadj-notebooks",
+      "documents": 500,
+      "pipeline_changed_ids": [],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [],
+        "DA-C2-003": [],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    },
+    {
+      "pack": "cadj-stackexchange",
+      "documents": 500,
+      "pipeline_changed_ids": [],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [],
+        "DA-C2-003": [],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    },
+    {
+      "pack": "code-cpp",
+      "documents": 500,
+      "pipeline_changed_ids": [
+        "782bc9665f0acdf7"
+      ],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [
+          "782bc9665f0acdf7"
+        ],
+        "DA-C2-003": [],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    },
+    {
+      "pack": "code-go",
+      "documents": 500,
+      "pipeline_changed_ids": [],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [
+          "48b3b124a7aaa5fc"
+        ],
+        "DA-C2-003": [],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    },
+    {
+      "pack": "code-java",
+      "documents": 500,
+      "pipeline_changed_ids": [],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [],
+        "DA-C2-003": [],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    },
+    {
+      "pack": "code-js-ts",
+      "documents": 500,
+      "pipeline_changed_ids": [],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [],
+        "DA-C2-003": [],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    },
+    {
+      "pack": "code-python",
+      "documents": 500,
+      "pipeline_changed_ids": [],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [],
+        "DA-C2-003": [],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    },
+    {
+      "pack": "code-rust",
+      "documents": 500,
+      "pipeline_changed_ids": [],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [],
+        "DA-C2-003": [],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    },
+    {
+      "pack": "en-dclm",
+      "documents": 500,
+      "pipeline_changed_ids": [],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [],
+        "DA-C2-003": [],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    },
+    {
+      "pack": "en-fineweb-edu",
+      "documents": 500,
+      "pipeline_changed_ids": [],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [],
+        "DA-C2-003": [],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    },
+    {
+      "pack": "en-nemotroncc-synth",
+      "documents": 500,
+      "pipeline_changed_ids": [
+        "ac2d7bac43b4a937"
+      ],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [],
+        "DA-C2-003": [
+          "ac2d7bac43b4a937"
+        ],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    },
+    {
+      "pack": "en-nemotroncc",
+      "documents": 500,
+      "pipeline_changed_ids": [],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [],
+        "DA-C2-003": [],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    },
+    {
+      "pack": "ind-bn-fw2",
+      "documents": 500,
+      "pipeline_changed_ids": [],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [],
+        "DA-C2-003": [],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    },
+    {
+      "pack": "ind-bn-sangraha-v",
+      "documents": 500,
+      "pipeline_changed_ids": [],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [],
+        "DA-C2-003": [],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    },
+    {
+      "pack": "ind-gu-fw2",
+      "documents": 500,
+      "pipeline_changed_ids": [],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [],
+        "DA-C2-003": [],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    },
+    {
+      "pack": "ind-hi-fw2",
+      "documents": 500,
+      "pipeline_changed_ids": [],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [],
+        "DA-C2-003": [],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    },
+    {
+      "pack": "ind-hi-hplt",
+      "documents": 500,
+      "pipeline_changed_ids": [],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [],
+        "DA-C2-003": [],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    },
+    {
+      "pack": "ind-hi-indiccorp",
+      "documents": 500,
+      "pipeline_changed_ids": [],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [],
+        "DA-C2-003": [],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    },
+    {
+      "pack": "ind-hi-sangraha-s",
+      "documents": 500,
+      "pipeline_changed_ids": [],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [],
+        "DA-C2-003": [],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    },
+    {
+      "pack": "ind-hi-sangraha-v",
+      "documents": 500,
+      "pipeline_changed_ids": [],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [],
+        "DA-C2-003": [],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    },
+    {
+      "pack": "ind-kn-fw2",
+      "documents": 500,
+      "pipeline_changed_ids": [],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [],
+        "DA-C2-003": [],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    },
+    {
+      "pack": "ind-kn-sangraha-s",
+      "documents": 500,
+      "pipeline_changed_ids": [],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [],
+        "DA-C2-003": [],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    },
+    {
+      "pack": "ind-kn-sangraha-v",
+      "documents": 500,
+      "pipeline_changed_ids": [],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [],
+        "DA-C2-003": [],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    },
+    {
+      "pack": "ind-ml-fw2",
+      "documents": 500,
+      "pipeline_changed_ids": [],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [],
+        "DA-C2-003": [],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    },
+    {
+      "pack": "ind-mr-fw2",
+      "documents": 500,
+      "pipeline_changed_ids": [],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [],
+        "DA-C2-003": [],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    },
+    {
+      "pack": "ind-mr-sangraha-v",
+      "documents": 500,
+      "pipeline_changed_ids": [],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [],
+        "DA-C2-003": [],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    },
+    {
+      "pack": "ind-or-fw2",
+      "documents": 500,
+      "pipeline_changed_ids": [],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [],
+        "DA-C2-003": [],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    },
+    {
+      "pack": "ind-sa-fw2",
+      "documents": 500,
+      "pipeline_changed_ids": [],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [],
+        "DA-C2-003": [],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    },
+    {
+      "pack": "ind-ta-fw2",
+      "documents": 500,
+      "pipeline_changed_ids": [],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [],
+        "DA-C2-003": [],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    },
+    {
+      "pack": "ind-ta-sangraha-s",
+      "documents": 500,
+      "pipeline_changed_ids": [],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [],
+        "DA-C2-003": [],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    },
+    {
+      "pack": "ind-ta-sangraha-v",
+      "documents": 500,
+      "pipeline_changed_ids": [],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [],
+        "DA-C2-003": [],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    },
+    {
+      "pack": "ind-te-fw2",
+      "documents": 500,
+      "pipeline_changed_ids": [],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [],
+        "DA-C2-003": [],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    },
+    {
+      "pack": "ind-te-sangraha-s",
+      "documents": 500,
+      "pipeline_changed_ids": [],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [],
+        "DA-C2-003": [],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    },
+    {
+      "pack": "ind-te-sangraha-v",
+      "documents": 500,
+      "pipeline_changed_ids": [],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [],
+        "DA-C2-003": [],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    },
+    {
+      "pack": "math-finemath",
+      "documents": 500,
+      "pipeline_changed_ids": [],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [],
+        "DA-C2-003": [],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    },
+    {
+      "pack": "math-megamath",
+      "documents": 500,
+      "pipeline_changed_ids": [],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [],
+        "DA-C2-003": [],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    },
+    {
+      "pack": "sci-finepdfs",
+      "documents": 500,
+      "pipeline_changed_ids": [],
+      "newly_dropped_ids": [],
+      "recovered_ids": [],
+      "new_idempotence_failures": [],
+      "out_of_scope_violations": [],
+      "rule_changed_ids": {
+        "DA-A6-001": [],
+        "DA-C2-003": [],
+        "DA-C2-004": [],
+        "DA-C3-003": [],
+        "DA-F1-005": []
+      }
+    }
+  ]
+}
