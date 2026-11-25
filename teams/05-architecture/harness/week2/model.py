@@ -100,6 +100,8 @@ class GQA(nn.Module):
         self.rotary_dim = 2 * math.floor(m.get("rotary_fraction", 1.0) * self.d / 2)
         pattern = m.get("attn_pattern", ["G"] * m["n_layer"])
         self.local = pattern[layer_index] == "L"
+        # SDPA covers causal global layers only; local layers keep the eager window and sink.
+        self.sdpa = m.get("attn_impl", "eager") == "sdpa" and not self.local
         self.window = m.get("attn_window") if self.local else None
         self.sink = (
             nn.Parameter(torch.zeros(self.nh, dtype=torch.float32))
@@ -152,20 +154,33 @@ class GQA(nn.Module):
     def forward(self, x, residual=None):
         b, t, w = x.shape
         q = self.rotary(self.q(x).view(b, t, self.nh, self.d).transpose(1, 2))
-        k = self.rotary(
-            self.k(x).view(b, t, self.nkv, self.d).transpose(1, 2)
-        ).repeat_interleave(self.nh // self.nkv, dim=1)
-        v = (
-            self.v(x)
-            .view(b, t, self.nkv, self.d)
-            .transpose(1, 2)
-            .repeat_interleave(self.nh // self.nkv, dim=1)
-        )
+        k = self.rotary(self.k(x).view(b, t, self.nkv, self.d).transpose(1, 2))
+        v = self.v(x).view(b, t, self.nkv, self.d).transpose(1, 2)
+        if self.sdpa:
+            # Fused causal attention on the shared K/V heads, without a T x T score matrix.
+            heads = F.scaled_dot_product_attention(
+                q, k, v, is_causal=True, enable_gqa=self.nh != self.nkv
+            )
+        else:
+            heads = self.eager_attention(q, k, v)
+        out = heads.transpose(1, 2).reshape(b, t, w)
+        # Apply the channel gate before mixing heads with the output projection.
+        if self.gate is not None:
+            gate_input = x if self.gate_input == "normalized" else residual
+            if gate_input is None:
+                raise ValueError("Residual gate input requires the pre-norm residual")
+            out = out * torch.sigmoid(self.gate(gate_input))
+        return self.o(out)
+
+    def eager_attention(self, q, k, v):
+        b, _, t, _ = q.shape
+        k = k.repeat_interleave(self.nh // self.nkv, dim=1)
+        v = v.repeat_interleave(self.nh // self.nkv, dim=1)
         logits = q.float() @ k.float().transpose(-2, -1) / math.sqrt(self.d)
-        mask = torch.ones(t, t, dtype=torch.bool, device=x.device).tril()
+        mask = torch.ones(t, t, dtype=torch.bool, device=q.device).tril()
         # Intersect the causal mask with the local window on local layers.
         if self.local:
-            positions = torch.arange(t, device=x.device)
+            positions = torch.arange(t, device=q.device)
             mask = mask & ((positions[:, None] - positions[None, :]) < self.window)
         logits = logits.masked_fill(~mask, float("-inf"))
         # A disabled (-inf) sink takes the exact legacy softmax path. This also
@@ -175,14 +190,7 @@ class GQA(nn.Module):
             a = torch.cat((logits, sink), dim=-1).softmax(-1)[..., :t].to(v.dtype)
         else:
             a = logits.softmax(-1).to(v.dtype)
-        out = (a @ v).transpose(1, 2).reshape(b, t, w)
-        # Apply the channel gate before mixing heads with the output projection.
-        if self.gate is not None:
-            gate_input = x if self.gate_input == "normalized" else residual
-            if gate_input is None:
-                raise ValueError("Residual gate input requires the pre-norm residual")
-            out = out * torch.sigmoid(self.gate(gate_input))
-        return self.o(out)
+        return a @ v
 
 
 class SwiGLU(nn.Module):
