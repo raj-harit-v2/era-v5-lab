@@ -1,9 +1,9 @@
 # Speed — dry run 1
 
-**Status:** §1–6 filled; §2 now includes the WO1 / #496 modeled α-β calibrate (21 Nov); §4d adds class #690 partial clean step (22 Nov); §5 MoE analysis carries the #486 TSAI column and the sorted/grouped verdict (24 Nov); §1 loop dispatch only (the sorted / grouped A/B is in `kernels_dryrun2.md`).  
-**Sources:** G6 runs on Modal A100s (20 Nov 2026), the lab's dry run 1 evidence (class #620), the WO1 Modal nccl-tests + perfkit sweep (21 Nov, gist below), and [Admin #690](https://github.com/theschoolofai/era-v5-lab/pull/690) partial clean timing. Nothing else.  
+**Status:** §1–6 filled; §2 WO1 / #496 modeled α-β (21 Nov); §4d #690 clean step (22 Nov); §5 MoE / #486 + sorted/grouped verdict (24 Nov); §4b + `profile_dryrun1.md` loop step shares from [#776](https://github.com/theschoolofai/era-v5-lab/pull/776#issuecomment-7131723877) (24 Nov); §1 loop dispatch only (sorted / grouped A/B in `kernels_dryrun2.md`).  
+**Sources:** G6 Modal A100s (20 Nov); lab #620; WO1 Modal nccl+perfkit (21 Nov, gist below); [Admin #690](https://github.com/theschoolofai/era-v5-lab/pull/690) clean; [Admin #776](https://github.com/theschoolofai/era-v5-lab/pull/776#issuecomment-7131723877) layer shares; §5 cites #485/#486.  
 **Rule:** GPU + SHA per table. Member-GPU runs give shares, counts and sizes only; step time comes from the lab run. `mfu_method=g6-v1` until CAP flips.  
-**TSAI lab column:** #690 partial (clean only) → §4d median ~12.0 s/step @ B=8. Loop step share/% from class [#776](https://github.com/theschoolofai/era-v5-lab/pull/776#issuecomment-7131723877) (tip fill [#102](https://github.com/vaibh27/era-v5-lab/pull/102)); fine §1 MoE/Nsight rows stay `_pending_` when not posted. §5's checkpoint TSAI cell cites the dedicated #485 ckpt job (8% / 92%, `checkpoint_dryrun1.md`), not #690. Keep loop / `g5_t2_base` / #690+#776 distinct from #620 and from #486 sorted.
+**TSAI lab column:** #690 → §4d median ~12.0 s/step @ B=8 (clean SoT). #776 → loop step shares in `profile_dryrun1.md` + §4b (fwd 24.2 / bwd 66.7 / opt 6.9; memory-spill caveat — **shares only**, no absolute ms/tok/s). Fine §1 MoE/Nsight rows stay `_pending_` when not posted. §5 checkpoint TSAI cites #485 (8% / 92%, `checkpoint_dryrun1.md`), not #690. Keep loop / `g5_t2_base` / #690+#776 distinct from #620 and from #486 sorted.
 
 | Field | Value |
 | :--- | :--- |
@@ -112,7 +112,9 @@ From `metrics.jsonl` (`tokens_per_second`, 16,384 tokens per step), steps 11–1
 
 ### 4b. Where rank 0's step goes
 
-The lab returned no profile, so the split is the member-GPU profile of the same model (`profile_dryrun1.md`, A100, B=8 in one pass): `fwd` 35.6%, `bwd` 45.7%, `opt` 18.4% of the step; GPU busy 75–77%; 256 host syncs and about 30,300 kernel launches per step (Nsight).
+**Loop / lab shares ([#776](https://github.com/theschoolofai/era-v5-lab/pull/776#issuecomment-7131723877)):** `fwd` 24.2%, `bwd` 66.7%, `opt` 6.9% of the median step; `fwd:stack` 2.3% *within fwd*; `bwd:stack` 5.2% *within bwd*; `data` 0.0%. Layer-only, 40 steps, B=8, synthetic. **Caveat:** memory spill past target card class — use shares only; do **not** use this run’s absolute step ms or tokens/s. Details in `profile_dryrun1.md` step breakdown.
+
+Member-GPU reference (same model, Modal A100, B=8): `fwd` 35.6%, `bwd` 45.7%, `opt` 18.4%; GPU busy 75–77%; 256 host syncs and about 30,300 kernel launches per step (Nsight).
 
 ### 4c. Slow ranks
 
@@ -134,7 +136,7 @@ What one rank already shows: the step is host-heavy (256 host syncs from the loo
 | temp | 73–79°C | Admin #690 |
 | wall | ~98 min; ran past the 90-min cap (clean only) | Admin #690 |
 
-Label: loop / `g5_t2_base` / #690 clean step — not #620 full-run metrics, not #486 sorted. Loop step shares: class [#776](https://github.com/theschoolofai/era-v5-lab/pull/776#issuecomment-7131723877) / tip [#102](https://github.com/vaibh27/era-v5-lab/pull/102).
+Label: loop / `g5_t2_base` / #690 clean step — not #620 full-run metrics, not #486 sorted. Loop step shares from [#776](https://github.com/theschoolofai/era-v5-lab/pull/776#issuecomment-7131723877) (see §4b / `profile_dryrun1.md`); fine MoE/Nsight rows still `_pending_` when not posted.
 
 ## 5. MoE analysis
 

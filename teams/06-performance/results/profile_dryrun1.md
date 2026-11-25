@@ -1,10 +1,10 @@
 # Profile — dry run 1
 
 **Status:** done for B=8: torch.profiler + layer profile (repeat 2, PASS) and Nsight Systems, both on the dry run 1 model.  
-**Sources:** G6 runs on one Modal A100 (20 Nov 2026) and the lab's dry run 1 evidence (class #620). Nothing else.  
+**Sources:** G6 runs on one Modal A100 (20 Nov 2026); lab dry run 1 evidence (class #620); [Admin #690](https://github.com/theschoolofai/era-v5-lab/pull/690) clean step; [Admin #776](https://github.com/theschoolofai/era-v5-lab/pull/776#issuecomment-7131723877) slim layer shares.  
 **Rule:** every number cites **GPU name + git SHA**. Member-GPU runs give shares and counts only; step time comes from the lab run. Traces → [gist](https://gist.github.com/vaibh27/e4e60f177d4fe675ba0444054928d341) (not under `results/`).  
-**TSAI lab column (loop / #690):** class #690 partial (clean timing only) — ~12.0 s @ B=8 (see `speed_dryrun1.md` §4d; [Admin #690](https://github.com/theschoolofai/era-v5-lab/pull/690)). Loop share/% / sync-count cells stay `_pending_` until a slim layer follow-up — do not invent Modal shares into this column.  
-**TSAI column fill (20 Nov, from #486):** the counts below come from TSAI's #486 post (G6 group, 17 Nov 2026 12:44 IST) — the #486 job (`dryrun1_prof`), **not** the #620 lab run and **not** #690. Labels: **sorted vs loop** — #486 ran `model.moe.dispatch=sorted` with G5's signed `config_v1.yaml` pin **`aec75af`** (#447) mapped onto `configs/base.yaml` at small width (MoE 16 routed + 1 shared, top-2, Muon, `ke2`, eager, synthetic, 20 recorded steps), while the G6 column ran `dispatch=loop` on `g5_t2_base.yaml` (commit `7b2ee0e3`, B=8, 8 layers) — different dispatch **and** different width, so the two columns are not directly comparable; read them as sorted-vs-loop evidence, not as one model measured twice. TSAI retained absolute ms, GPU name and run SHA (job file = class `main` at the #486 merge `b016b71`), so this column is **shares and counts only — no invented ms**. Cells with no #486 data stay `_pending_`.
+**TSAI lab column (loop / #690 + #776):** clean step from #690 (~12.0 s @ B=8; see `speed_dryrun1.md` §4d). Loop **step shares** (`fwd` / `bwd` / `opt` / stack-within) from [#776](https://github.com/theschoolofai/era-v5-lab/pull/776#issuecomment-7131723877) layer-only (`result.json` exit 0, 40 steps, B=8, synthetic). **Caveat:** Admin reports memory spill past the target card class — use **shares only**; do **not** use #776 absolute step ms or tokens/s. Fine-grained rows (moe.dispatch, top ops, Nsight syncs, …) stay `_pending_` when not in the #776 post. Do not invent Modal shares into this column.  
+**TSAI column fill (20 Nov, from #486):** the counts below come from TSAI's #486 post (G6 group, 17 Nov 2026 12:44 IST) — the #486 job (`dryrun1_prof`), **not** the #620 lab run and **not** #690/#776. Labels: **sorted vs loop** — #486 ran `model.moe.dispatch=sorted` with G5's signed `config_v1.yaml` pin **`aec75af`** (#447) mapped onto `configs/base.yaml` at small width (MoE 16 routed + 1 shared, top-2, Muon, `ke2`, eager, synthetic, 20 recorded steps), while the G6 column ran `dispatch=loop` on `g5_t2_base.yaml` (commit `7b2ee0e3`, B=8, 8 layers) — different dispatch **and** different width, so the two columns are not directly comparable; read them as sorted-vs-loop evidence, not as one model measured twice. TSAI retained absolute ms, GPU name and run SHA (job file = class `main` at the #486 merge `b016b71`), so this column is **shares and counts only — no invented ms**. Cells with no #486 data stay `_pending_`.
 
 | Field | Value |
 | :--- | :--- |
@@ -59,16 +59,18 @@ The two tools saw different routing, because the router collapses on synthetic d
 
 ### Step breakdown (share of the clean step; run 1, run 2 in brackets)
 
-| part | G6 (Modal A100) | TSAI lab |
+| part | G6 (Modal A100) | TSAI lab (loop / #776) |
 | :--- | ---: | ---: |
-| `fwd` | 35.6% (35.7%) | _pending_ |
-| `fwd:stack` (8 blocks) | 24.4% (24.5%) | _pending_ |
-| `fwd:head+loss` | 10.5% (10.6%) | _pending_ |
-| `bwd` | 45.7% (46.0%) | _pending_ |
-| `bwd:stack` (8 blocks) | 32.8% (32.9%) | _pending_ |
-| `bwd:head+loss` | 12.4% (12.5%) | _pending_ |
-| `opt` | 18.4% (18.0%) | _pending_ |
-| `opt:opt.muon` | 17.7% (17.4%) | _pending_ |
+| `fwd` | 35.6% (35.7%) | 24.2% |
+| `fwd:stack` (8 blocks) | 24.4% (24.5%) | 2.3% *within fwd* |
+| `fwd:head+loss` | 10.5% (10.6%) | _pending_ (not in #776 post) |
+| `bwd` | 45.7% (46.0%) | 66.7% |
+| `bwd:stack` (8 blocks) | 32.8% (32.9%) | 5.2% *within bwd* |
+| `bwd:head+loss` | 12.4% (12.5%) | _pending_ (not in #776 post) |
+| `opt` | 18.4% (18.0%) | 6.9% |
+| `opt:opt.muon` | 17.7% (17.4%) | _pending_ (not in #776 post) |
+
+- **#776 provenance:** [Admin comment](https://github.com/theschoolofai/era-v5-lab/pull/776#issuecomment-7131723877) — layer-only, median step shares, 40 steps, synthetic, B=8; `data` 0.0%. Memory-spill caveat: shares OK for direction; **no** absolute step ms / tokens/s from this run. Clean step SoT remains #690 (~12.0 s). Stack rows are **within** parent (Admin wording), not same denominator as G6 step-share column — do not treat 2.3%/5.2% as step %.
 
 Inside the blocks (layer pass, summed over the 8 layers; information only, not gated):
 
