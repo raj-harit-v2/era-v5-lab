@@ -446,8 +446,11 @@ def validate(c):
         errors.append("Explicit finite nonnegative MTP weight required")
     if m.get("mtp") is False and m.get("mtp_weight") not in (None, 0.0):
         errors.append("MTP off requires weight 0")
-    if m.get("ce_impl") != "torch" or m.get("attn_impl") != "eager":
-        errors.append("Only eager attention/torch CE implemented")
+    if m.get("ce_impl") != "torch":
+        errors.append("Only torch CE implemented")
+    # sdpa changes the numeric trace (fused softmax, bf16 scores); local layers stay eager.
+    if m.get("attn_impl") not in ("eager", "sdpa"):
+        errors.append("attn_impl must be eager or sdpa")
     if "tie_embeddings" in m or ("head_mode" in m and m["head_mode"] != "kas_v2"):
         errors.append("Output head must be legacy dense untied or explicit kas_v2; tying is unsupported")
     if "kas_prior" in m and (m.get("head_mode") != "kas_v2" or not isinstance(m["kas_prior"], dict)):
