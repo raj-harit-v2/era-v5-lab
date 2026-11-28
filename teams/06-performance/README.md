@@ -64,6 +64,18 @@ Each file's docstring says what it does; the run JSON format is `REQUIRED` in `p
   5. Time and token goodput.
   6. A multi-process (DDP) optimizer test: the optimizers are single-process only, not tested under DDP or sharding.
 
+## Lab-5 throughput rates
+
+Every result that claims speed must report three rates (plus peak memory and bpb). Definitions live in
+[`docs/METRICS.md`](docs/METRICS.md) §4. Short form:
+
+- **positions/s** — `batch × sequence / step time` (same as the existing `tokens_per_s` field; that key is kept)
+- **scored tokens/s** — unmasked target positions / step time (headline for “2× per token” unless TSAI says otherwise)
+- **bytes/s** — scored token UTF-8 bytes / step time
+
+On synthetic data with no document mask, positions/s equals scored tokens/s. DR2 reference (cite only): 16,384
+positions per step; scored median about 6,751 per step.
+
 ## How to run
 
 Every command runs from `teams/06-performance/` and reads `configs/base.yaml`; add `key=value` overrides for any of

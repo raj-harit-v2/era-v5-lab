@@ -594,12 +594,44 @@ def memory_with_identity(memory: dict | None, meta: dict) -> dict | None:
     }
 
 
-def compute_metrics(s: Setup, step_ms: float, peak, peak_reason: str | None = None) -> dict:
-    """Tokens/s from the clean step time; MFU and HFU from perfkit.metrics (method: docs/METRICS.md)."""
+def throughput_rates(step_ms: float, *, positions_per_step: float, scored_tokens_per_step: float,
+                     scored_bytes_per_step: float) -> dict:
+    """positions/s, scored tokens/s, bytes/s from one step time (docs/METRICS.md §4)."""
+    if not (isinstance(step_ms, (int, float)) and step_ms > 0 and math.isfinite(step_ms)):
+        raise ValueError(f"step_ms must be a positive finite number, got {step_ms!r}")
+    sec = step_ms / 1e3
+    return {
+        "positions_per_s": positions_per_step / sec,
+        "scored_tokens_per_s": scored_tokens_per_step / sec,
+        "bytes_per_s": scored_bytes_per_step / sec,
+    }
+
+
+def compute_metrics(s: Setup, step_ms: float, peak, peak_reason: str | None = None,
+                    scored_tokens_per_step: float | None = None,
+                    scored_bytes_per_step: float | None = None) -> dict:
+    """Tokens/s from the clean step time; MFU and HFU from perfkit.metrics (method: docs/METRICS.md).
+
+    Also records positions_per_s / scored_tokens_per_s / bytes_per_s. ``tokens_per_s`` stays
+    positions-based (batch x sequence) so Gate-4 and G8 comparisons keep working. With no mask,
+    scored tokens default to positions. Bytes default to mean token length x scored tokens when
+    ``loader.token_bytes`` exists; pass ``scored_bytes_per_step`` for an exact batch sum.
+    """
     tokens = s.loader.B * s.loader.T
     f = M.flops_per_token(s.core, s.loader.T, s.opt.flops(), tokens)
     tps = tokens / (step_ms / 1e3)
-    return {"tokens_per_step": tokens, "tokens_per_s": tps, **f, "peak_tflops": peak,
+    scored = tokens if scored_tokens_per_step is None else scored_tokens_per_step
+    if scored_bytes_per_step is None:
+        tb = getattr(s.loader, "token_bytes", None)
+        if callable(tb):
+            max_pos = getattr(getattr(s.core, "config", None), "ke_max_pos", 32)
+            _, lens = tb(max_pos)
+            scored_bytes_per_step = float(lens.float().mean()) * scored
+        else:
+            scored_bytes_per_step = float(scored)   # 1 byte/token when no length table (unit tests)
+    rates = throughput_rates(step_ms, positions_per_step=tokens, scored_tokens_per_step=scored,
+                             scored_bytes_per_step=scored_bytes_per_step)
+    return {"tokens_per_step": tokens, "tokens_per_s": tps, **rates, **f, "peak_tflops": peak,
             "mfu_method": M.DEFAULT_METHOD, "mfu_scope": "selected_gpu",   # local tokens/s over this GPU's peak
             **M.mfu(f, tps, peak, peak_reason)}
 

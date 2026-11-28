@@ -155,10 +155,23 @@ same MFU / HFU formulas can then be reused with those FLOPs.
   half of NVIDIA's 101 TFLOPS figure, which includes 2:4 sparsity. No FP8 or FP4 peaks are defined yet; those
   lookups return `None` until authoritative dense values are added.
 
-## 4. Tokens per second
+## 4. Tokens per second (and the three Lab-5 rates)
 
 `tokens_per_s` = `tokens_per_step` (batch x sequence) / the clean median step time. Report and G8 must use the
-value stored in the run JSON, not recompute their own.
+value stored in the run JSON, not recompute their own. This field is **positions-based** and stays the Gate-4 /
+compare key; do not rename it.
+
+Bench also records three Lab-5 rates (same clean median step time). Headline claim for “2× per token” uses
+**scored tokens/s** unless TSAI names another:
+
+| Field | Definition |
+|---|---|
+| `positions_per_s` | `(batch × sequence)` / step time (= `tokens_per_s` today) |
+| `scored_tokens_per_s` | unmasked target positions / step time (equals positions/s when there is no document mask) |
+| `bytes_per_s` | sum of UTF-8 byte lengths of scored tokens / step time (from `Loader.token_bytes` lengths; exact batch sum when passed in, else mean vocab length × scored tokens) |
+
+`throughput_rates(step_ms, positions_per_step=..., scored_tokens_per_step=..., scored_bytes_per_step=...)` in
+`perfkit/bench.py` is the pure formula; `compute_metrics` calls it.
 
 ## 5. Peak memory
 
